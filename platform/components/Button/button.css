@@ -519,7 +519,7 @@
   --plx-state-button-pressed-text: var(--plx-comp-button-tertiary-hover-text);
 }
 /* raised action buttons (the owner's pick G-R4-H, #610): secondary, tertiary, primary and danger take the Card builder's
-   Glow (the fill to 55%, fading to its rim) with the Halo shadow at rest, the Glow on the hover fill with Lifted on hover,
+   Glow, made very subtle (the fill to 75%, fading to its rim; #910), with the card's Halo shadow at rest and on hover,
    and are flat when pressed or disabled. Primary and danger: the border is the glow's rim and the bottom edge one shade
    deeper, so the outermost line is the darkest. Ghost stays flat, and so does the 2xs size (its tinted hover). A bar
    sets the context hooks --plx-comp-button-context-glow and --plx-comp-button-context-elevation (none) on its own

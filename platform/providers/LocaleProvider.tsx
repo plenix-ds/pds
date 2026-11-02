@@ -130,10 +130,23 @@ const LocaleContext = React.createContext<LocaleValue | null>(null);
 
 export function LocaleProvider({ locale, catalogs, messages, fallbackLocale = 'en', timeZone, dir, digits = 'auto', root = false, children }: LocaleProviderProps) {
   const language = canonical(locale || F.formatLocale());
+  // a language whose built-in words are not on the page yet (the CDN's plenix.js leaves Arabic to plenix-ar.js, issue 882):
+  // ask the page loader for them, and draw again when they arrive ('plenix:language', i18n/optional.js). A switch to Arabic
+  // without a reload gets its words; in this checkout and the npm builds Arabic is built in, so nothing is asked
+  const [arrived, setArrived] = React.useState(0);
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return undefined;
+    const base = language.split('-')[0], slot = BUILT_IN[base];
+    const heard = () => setArrived((n) => n + 1);
+    window.addEventListener('plenix:language', heard);
+    const loader = (window as unknown as { PlenixLoader?: { loadLanguage?: (code: string) => void } }).PlenixLoader;
+    if (slot && !Object.keys(slot).length && loader && typeof loader.loadLanguage === 'function') loader.loadLanguage(base);
+    return () => window.removeEventListener('plenix:language', heard);
+  }, [language]);
   const value = React.useMemo((): LocaleValue => {
     const sources = Object.assign({}, catalogs, messages ? { [language]: messages } : {});
     return Object.assign(createTranslator(language, sources, fallbackLocale), { timeZone: timeZone || undefined, dir: dir || directionOf(language), digits: F.digitsOf(F.numeralLocale(language, digits === 'auto' ? undefined : digits)), format: bind(language, timeZone, digits === 'auto' ? undefined : digits) });
-  }, [language, catalogs, messages, fallbackLocale, timeZone, dir, digits]);
+  }, [language, catalogs, messages, fallbackLocale, timeZone, dir, digits, arrived]);
   return <LocaleContext.Provider value={value}><DirectionProvider locale={language} dir={value.dir} root={root}>{children}</DirectionProvider></LocaleContext.Provider>;
 }
 
