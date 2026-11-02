@@ -14,7 +14,7 @@ import { Notice } from '../../components/Notice/Notice.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { cx } from '../../utils/cx.ts';
 import { Timeline } from '../../components/Timeline/Timeline.tsx';
-import { VersionLabel } from '../../components/VersionLabel/VersionLabel.jsx';
+import { VersionLabel } from '../../components/VersionLabel/VersionLabel.tsx';
 import { Dialog } from '../../components/Dialog/Dialog.tsx';
 import { Badge } from '../../components/Badge/Badge.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';

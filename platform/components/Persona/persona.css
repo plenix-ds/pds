@@ -1,5 +1,5 @@
 /* Plenix · Persona (platform/components/Persona). The avatar, then the name (with a role badge) over one detail; the
-   named size steps the avatar, the gap and both text sizes together. Anatomy and API: Persona.jsx. */
+   named size steps the avatar, the gap and both text sizes together. Anatomy and API: Persona.tsx. */
 .plx-persona{align-items:center;display:flex;min-inline-size:0;}
 .plx-persona__text{display:flex;flex-direction:column;min-inline-size:0;}
 .plx-persona__primary{align-items:center;column-gap:var(--plx-comp-persona-role-gap);display:flex;min-inline-size:0;}

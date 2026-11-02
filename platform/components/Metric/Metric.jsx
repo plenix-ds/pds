@@ -41,7 +41,7 @@ import React from 'react';
 import { devWarn } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
 import { dataWhenText } from '../../utils/dataText.tsx';
-import { Card } from '../Card/Card.jsx';
+import { Card } from '../Card/Card.tsx';
 import { Sparkline } from '../../charts/Sparkline.jsx';
 
 export function Metric({ value, label, unit, change, changeTone = 'neutral', description, size = 'md', trend, trendVariant = 'line', trendLabel, trendColor,

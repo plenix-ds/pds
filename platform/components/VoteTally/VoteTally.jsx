@@ -41,7 +41,7 @@
 */
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
-import { Avatar } from '../Avatar/Avatar.jsx';
+import { Avatar } from '../Avatar/Avatar.tsx';
 import { Badge } from '../Badge/Badge.tsx';
 import { Button } from '../Button/Button.tsx';
 import { Text } from '../Text/Text.tsx';

@@ -33,9 +33,9 @@ import { ProductOptions } from '../../components/ProductOptions/ProductOptions.j
 import { Pagination } from '../../components/Pagination/Pagination.tsx';
 import { EmptyState } from '../../components/EmptyState/EmptyState.tsx';
 import { SearchField } from '../../components/SearchField/SearchField.tsx';
-import { Card } from '../../components/Card/Card.jsx';
-import { Carousel } from '../../components/Carousel/Carousel.jsx';
-import { Image } from '../../components/Image/Image.jsx';
+import { Card } from '../../components/Card/Card.tsx';
+import { Carousel } from '../../components/Carousel/Carousel.tsx';
+import { Image } from '../../components/Image/Image.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { Badge } from '../../components/Badge/Badge.tsx';
 import { Rating } from '../../components/Rating/Rating.tsx';

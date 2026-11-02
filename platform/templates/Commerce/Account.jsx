@@ -32,7 +32,7 @@ import { DataGrid } from '../../components/DataGrid/DataGrid.jsx';
 import { Badge } from '../../components/Badge/Badge.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { ConfirmDialog } from '../../components/Dialog/Dialog.tsx';
-import { Panel } from '../../components/Card/Card.jsx';
+import { Panel } from '../../components/Card/Card.tsx';
 import { Timeline } from '../../components/Timeline/Timeline.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { Link } from '../../components/Link/Link.tsx';

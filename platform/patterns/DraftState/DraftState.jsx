@@ -11,7 +11,7 @@
 */
 import React from 'react';
 import { Badge } from '../../components/Badge/Badge.tsx';
-import { VersionLabel } from '../../components/VersionLabel/VersionLabel.jsx';
+import { VersionLabel } from '../../components/VersionLabel/VersionLabel.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Dialog } from '../../components/Dialog/Dialog.tsx';
 import { Notice } from '../../components/Notice/Notice.tsx';

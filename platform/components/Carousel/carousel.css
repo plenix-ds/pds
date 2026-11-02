@@ -1,7 +1,7 @@
 /* Plenix · Carousel (platform/components/Carousel). A strip of slides that scrolls sideways and snaps to a slide, its
    scroll bar hidden (the controls and the keys move it); with several per view, a part of the next slide shows at the end.
    Under it, centered: Pause (autoplay only), Previous, a dot per page (the current one in the default content color, the
-   others in the strong border color, as on iOS), Next. Anatomy and API: Carousel.jsx. */
+   others in the strong border color, as on iOS), Next. Anatomy and API: Carousel.tsx. */
 .plx-carousel{display:flex;flex-direction:column;min-inline-size:0;row-gap:var(--plx-comp-carousel-controls-gap);}
 .plx-carousel__track{column-gap:var(--plx-comp-carousel-gap);display:flex;outline-style:none;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:none;}
 .plx-carousel__track::-webkit-scrollbar{display:none;}

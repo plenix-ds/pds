@@ -11,8 +11,8 @@ import { Stack, Inline } from '../../components/Stack/Stack.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Badge } from '../../components/Badge/Badge.tsx';
-import { AvatarGroup } from '../../components/AvatarGroup/AvatarGroup.jsx';
-import { Persona } from '../../components/Persona/Persona.jsx';
+import { AvatarGroup } from '../../components/AvatarGroup/AvatarGroup.tsx';
+import { Persona } from '../../components/Persona/Persona.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import PersonIcon from 'plenix-platform/icons/plenix/person';
 export function PresenceBar({people=[],mode='viewers',max=4,onPerson,strings,className,...rest}) {

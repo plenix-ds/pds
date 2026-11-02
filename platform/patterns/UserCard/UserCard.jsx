@@ -40,10 +40,10 @@
 import React from 'react';
 import { devWarn } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
-import { Card } from '../../components/Card/Card.jsx';
-import { Avatar } from '../../components/Avatar/Avatar.jsx';
+import { Card } from '../../components/Card/Card.tsx';
+import { Avatar } from '../../components/Avatar/Avatar.tsx';
 import { Badge } from '../../components/Badge/Badge.tsx';
-import { Image } from '../../components/Image/Image.jsx';
+import { Image } from '../../components/Image/Image.tsx';
 import { Link } from '../../components/Link/Link.tsx';
 import { List } from '../../components/List/List.tsx';
 import { Text } from '../../components/Text/Text.tsx';

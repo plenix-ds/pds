@@ -62,7 +62,7 @@ import { Fieldset } from '../../components/Fieldset/Fieldset.tsx';
 import { Icon } from '../../components/Icon/Icon.tsx';
 import { Input, Textarea } from '../../components/Input/Input.tsx';
 import { Notice } from '../../components/Notice/Notice.tsx';
-import { RoleLabel } from '../../components/RoleLabel/RoleLabel.jsx';
+import { RoleLabel } from '../../components/RoleLabel/RoleLabel.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { ResourceList } from '../ResourceList/ResourceList.jsx';
 import { PermissionSummary } from '../PermissionSummary/PermissionSummary.jsx';
