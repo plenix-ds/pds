@@ -61,8 +61,12 @@ function lazyIndex(DS, bundle, chunks) {
   // what each part's labs and written sections are about (run each chunk alone, with a stand-in for the lab registry)
   const about = {}, labsOf = {};
   Object.keys(chunks).forEach((name) => {
-    const c = { window: { DS: { registerLab: (id) => { (about[name] = about[name] || new Set()).add(id); (labsOf[id] = labsOf[id] || new Set()).add(name); } }, DSLabs: {} }, console: { log() {}, warn() {}, error() {} } };
-    c.window.window = c.window; vm.createContext(c);
+    // a stand-in for the spec's helpers: any property is another stand-in, so a lab part that builds on another lab's spec
+    // (DS.labs['x'] with Object.assign) runs to its registerLab call
+    const any = () => new Proxy(function () {}, { get: (t, k) => (k === Symbol.toPrimitive ? () => '' : k === 'then' ? undefined : any()), apply: () => any(), construct: () => any() });
+    const DSS = new Proxy({ registerLab: (id) => { (about[name] = about[name] || new Set()).add(id); (labsOf[id] = labsOf[id] || new Set()).add(name); } }, { get: (t, k) => (k in t ? t[k] : any()) });
+    const c = { window: { DS: DSS, DSLabs: {} }, console: { log() {}, warn() {}, error() {} } };
+    c.window.window = c.window; c.DS = c.window.DS; c.DSLabs = c.window.DSLabs; vm.createContext(c);
     try { vm.runInContext(chunks[name], c, { filename: name + '.js' }); } catch (e) { throw new Error('spec-chunks/' + name + '.js does not run: ' + e.message); }
     (c.window.DSParts.docs || []).forEach((d) => Object.keys(d).forEach((id) => (about[name] = about[name] || new Set()).add(id)));
   });
@@ -85,7 +89,13 @@ function lazyIndex(DS, bundle, chunks) {
   order.sort();
   const parts = {};
   order.forEach((p) => { parts[p] = order.filter((q) => find(q) === find(p)); });
-  const touched = {}; Object.keys(touch).sort().forEach((id) => { touched[id] = [...touch[id]].sort(); });
+  // a page draws its lab (labId, a variant page's labId, an extra lab): the parts that register that lab load with the page
+  records.forEach((r) => {
+    const ids = [r.labId || r.id].concat((r.variantPages || []).map((v) => v.labId), (r.extraLabs || []).map((x) => x.id)).filter(Boolean);
+    ids.forEach((lab) => { if (labsOf[lab]) labsOf[lab].forEach((part) => { if (owner[r.id] !== part) addTouch(r.id, part); }); });
+  });
+  const isRecord = new Set(records.map((r) => r.id));
+  const touched = {}; Object.keys(touch).sort().filter((id) => isRecord.has(id)).forEach((id) => { touched[id] = [...touch[id]].sort(); });
   const slim = (v) => { const o = {}; ['leaf', 'group', 'name', 'also', 'labId'].forEach((k) => { if (v[k] !== undefined) o[k] = v[k]; }); if (v.lab) o.lab = true; return o; };
   const metaOf = (r) => {
     const m = {};
