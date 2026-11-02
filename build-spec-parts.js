@@ -87,16 +87,33 @@ function lazyIndex(DS, bundle, chunks) {
   order.forEach((p) => { parts[p] = order.filter((q) => find(q) === find(p)); });
   const touched = {}; Object.keys(touch).sort().forEach((id) => { touched[id] = [...touch[id]].sort(); });
   const slim = (v) => { const o = {}; ['leaf', 'group', 'name', 'also', 'labId'].forEach((k) => { if (v[k] !== undefined) o[k] = v[k]; }); if (v.lab) o.lab = true; return o; };
-  const index = [];
-  records.forEach((r) => {
-    const part = owner[r.id]; if (!part) return;
-    const m = { part };
+  const metaOf = (r) => {
+    const m = {};
     META.forEach((k) => { if (r[k] !== undefined && typeof r[k] !== 'function') m[k] = r[k]; });
     if (r.lab) m.lab = true;
     if (r.variantPages) m.variantPages = r.variantPages.map(slim);
-    index.push(m);
+    return m;
+  };
+  const index = [];
+  records.forEach((r) => {
+    const part = owner[r.id]; if (!part) return;
+    index.push(Object.assign({ part }, metaOf(r)));
   });
-  return { parts, touch: touched, records: index, count: records.length };
+  // what the parts change of inventory.js's own records, in what the lists read (the home's "Platform exports placed" reads
+  // each record's plenix names): until those parts load, the page shows the records as the bundle leaves them
+  const plain = { window: {}, console: { log() {}, warn() {}, error() {} }, React: ctx.React };
+  plain.window.React = ctx.React; plain.window.Plenix = new Proxy({}, { get: (_, k) => k });
+  vm.createContext(plain);
+  vm.runInContext(fs.readFileSync(path.join(DS, 'inventory.js'), 'utf8'), plain, { filename: 'inventory.js' });
+  const was = {}; plain.window.DSInventory.forEach((r) => { was[r.id] = metaOf(r); });
+  const base = {};
+  records.forEach((r) => {
+    if (owner[r.id] || !touched[r.id] || !was[r.id]) return;
+    const now = metaOf(r), diff = {};
+    new Set([...Object.keys(now), ...Object.keys(was[r.id])]).forEach((k) => { if (JSON.stringify(now[k]) !== JSON.stringify(was[r.id][k])) diff[k] = now[k] === undefined ? null : now[k]; });
+    if (Object.keys(diff).length) base[r.id] = diff;
+  });
+  return { parts, touch: touched, base, records: index, count: records.length };
 }
 function chunkText(name, files, read, q) {
   const body = files.map((f) => {

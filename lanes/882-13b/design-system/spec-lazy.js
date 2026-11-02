@@ -25,6 +25,7 @@
     start: function (helpers, fillDefaults, records) {
       H = helpers; fill = fillDefaults; list = records;
       Object.keys(I.touch).forEach(function (id) { var r = byId(id); if (!r || r.part) return; pristine[id] = {}; Object.keys(r).forEach(function (k) { pristine[id][k] = copy(r[k]); }); });
+      overlay();
       window.DSLazy.started = true;
     },
     ready: function (id) { return window.DSLazy.partsFor(id).every(function (n) { return whole[n]; }); },
@@ -91,6 +92,7 @@
       docs.forEach(function (x) { Object.assign(window.DSDocs, x.d); Object.keys(x.d).forEach(function (id) { touched[id] = 1; }); });
       list.forEach(function (r) { if (r.docsFrom && !window.DSDocs[r.id] && window.DSDocs[r.docsFrom]) window.DSDocs[r.id] = window.DSDocs[r.docsFrom]; });
       all.forEach(function (n) { whole[n] = true; });
+      overlay();
       var ids = Object.keys(touched);
       listeners.forEach(function (f) { f(ids); });
     }
@@ -102,6 +104,16 @@
     v.record = function (id) { var r = H.record(id); return r && r.part && r.part > part ? null : r; };
     v.iconOf = function (id) { var r = v.record(id); return (r && r.icon) || H.ICON[id] || 'doc-text'; };
     return v;
+  }
+  // until the parts that change one of inventory.js's own records have loaded, the record reads as the bundle leaves it in what
+  // the lists use (the index's base: its level, source and plenix names), so the home reads the same either way
+  function overlay() {
+    var B = I.base || {};
+    Object.keys(B).forEach(function (id) {
+      var r = byId(id); if (!r) return;
+      if ((I.touch[id] || []).every(function (n) { return whole[n]; })) return;
+      Object.keys(B[id]).forEach(function (k) { if (B[id][k] === null) delete r[k]; else r[k] = copy(B[id][k]); });
+    });
   }
   // inventory.js's own records the parts change, as inventory.js made them
   var pristine = {}, baseDocs = {}, docsTaken = false;

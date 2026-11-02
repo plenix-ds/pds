@@ -321,6 +321,12 @@ async function lazyCheck() {
   const w0 = page(), I = w0.DSIndex, ids = I.records.map((r) => r.id);
   if (w0.DSInventory.length !== recs.length) add('lazy', 'the lazy page lists ' + w0.DSInventory.length + ' records, the bundle ' + recs.length);
   w0.DSInventory.forEach((r, i) => { if (r.id !== recs[i].id) add('lazy', 'record ' + i + ' is ' + r.id + ' lazy, ' + recs[i].id + ' in the bundle (the order differs)'); });
+  // before any part loads, the records the parts change read in the lists as the bundle leaves them (the home's counts and lists)
+  for (const id of Object.keys(I.base || {})) {
+    const r = w0.DSInventory.find((x) => x.id === id), e = eager[id];
+    const bad = Object.keys(I.base[id]).filter((k) => k !== 'variantPages' && k !== 'lab' && !same(e[k], r[k]));
+    if (bad.length) add('lazy', id + ' (before its parts load) differs from the bundle in: ' + bad.join(', '));
+  }
   const done = {};
   for (const id of ids) {
     const part = I.records.find((r) => r.id === id).part, key = [part].concat((w0.DSLazy.partsFor(id))).join('|');

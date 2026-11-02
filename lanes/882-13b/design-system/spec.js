@@ -1382,6 +1382,8 @@ function sheetText(url) {
     var vals = t.resolved.all != null ? [['Every theme and density', t.resolved.all]] : Object.keys(t.resolved).map(function (k) { return [k.replace('/', ' · '), t.resolved[k] == null ? '—' : t.resolved[k]]; });
     var body = [crumbs,
       h(P.EntityHeader, { key: 'rh', title: name, subtitle: t.description || TIER[t.tier] + ' token.', headingLevel: 1, media: { icon: 'database', hue: 'surface' }, facts: [{ label: 'Tier', value: TIER[t.tier] }, t.type ? { label: 'Type', value: t.type } : null] }),
+      // a token going away (VERSIONING.md, Deprecation; issue 882): its $deprecated text from the token index
+      t.deprecated ? h(P.Notice, { key: 'dep', tone: 'warning', title: 'Deprecated' }, t.deprecated) : null,
       h(SPanel, { key: 'value', id: 'sec-value', title: 'Value', description: t.local ? 'Its base value (the first rule that sets it), resolved in light and dark at each density; the rules under Definition change it where they apply.' : 'What it resolves to, in light and dark at each density.' }, table('Value', ['Theme · density', 'Value', 'Visual'], vals.map(function (v) { return [v[0], h(P.Text, { variant: 'data' }, v[1]), h(ValueVisual, { value: v[1], name: name })]; }))),
       h(SPanel, { key: 'def', id: 'sec-def', title: 'Definition', description: t.local ? 'Every rule that sets it.' : 'Each token set that gives it a value; the last that applies wins.' },
         table('Definition', ['Source (edit here)', 'Written under', 'Value as written', 'Visual'], t.sets.map(function (x) { return [h(FileName, { path: t.local ? x.file : 'platform/tokens/' + x.file }), h(P.Text, { variant: 'data' }, x.selector), dataValue(x.value), h(ValueVisual, { value: x.value, name: name })]; }))),
