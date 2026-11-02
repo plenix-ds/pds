@@ -30,6 +30,18 @@ function Gap({ count, kind = 'record' }) {
   ) : null;
 }
 
+// the space for the cards a long card list does not draw (issue 809): px whole pixels, in pieces of the spacer unit
+export function PixelGap({ px }) {
+  const n = Math.max(0, Math.round(px || 0));
+  return n > 0 ? (
+    <div className="plx-data-grid__gap plx-data-grid__gap--px" aria-hidden="true">
+      {gapPieces(n).map((p, i) => (
+        <div key={i} className="plx-virtual-gap__piece" data-plx-span={String(p)} />
+      ))}
+    </div>
+  ) : null;
+}
+
 export function RowGap({ rows }) {
   const counts = rows.reduce(
     (all, row) => {

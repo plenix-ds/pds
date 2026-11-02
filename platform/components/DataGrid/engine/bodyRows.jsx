@@ -75,7 +75,7 @@ export function bodyRows({
   emit,
   setOwnOpen,
   focusCell,
-  chunked,
+  cardList,
   cellRange,
   pickCheckbox,
   kindsOf,
@@ -295,7 +295,7 @@ export function bodyRows({
             emit('rowDblClick', e, rowApi);
           }
         }}
-        onKeyDown={rowKeys({ chooseRow, row, emit, rowApi, props, record, on, unread, setOwnOpen, focusCell, model, chunked })}
+        onKeyDown={rowKeys({ chooseRow, row, emit, rowApi, props, record, on, unread, setOwnOpen, focusCell, model, cardList })}
       >
         {selectable ? (
           <div
@@ -404,7 +404,7 @@ export function bodyRows({
                 column,
                 frame,
                 focusCell,
-                chunked,
+                cardList,
                 cellRange,
                 kept: card ? tpl.keep : undefined,
               })}

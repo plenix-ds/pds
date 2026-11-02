@@ -14,8 +14,9 @@
      rowKeys({ chooseRow, row, emit, rowApi, props, record, on, unread, setOwnOpen, focusCell, model });
      cellKeys({ isStatic, value, canEdit, setEditing, row, c, model, ordered, column, frame, focusCell, cellRange, kept });
      tableKeys({ focusCell, first }).
-     The card list drawn in chunks (issue 809): makeFocusCell's drawTo(rowIndex) draws up to that card before focusing it, and
-       rowKeys and cellKeys take chunked: End (or Ctrl or Command with End) on a card goes to the last card.
+     The card list (issue 809): makeFocusCell's cards (the long card list's virtualizer) scrolls a card into view, which draws
+       it, and focuses it once drawn; rowKeys and cellKeys take cardList: End (or Ctrl or Command with End) on a card goes to
+       the last card.
    Notes:
      Moved out of DataGridEngine.jsx without any change to the handlers' code (issue 714, the keyboard concern): each handler
      was an inline function of the engine's markup; it is the same function text, built from the same names, at the same place.
@@ -56,23 +57,26 @@ export const resizeKeys =
   };
 
 export const makeFocusCell =
-  ({ model, ordered, virtualized, virtual, displayElements, drawTo }) =>
+  ({ model, ordered, virtualized, virtual, displayElements, cards }) =>
   (rowIndex, columnIndex, step = 1) => {
     while (model[rowIndex] && !model[rowIndex].original) rowIndex += step;
     const record = model[rowIndex],
       column = ordered[columnIndex];
     if (!record || (columnIndex !== null && !column)) return;
     if (virtualized) virtual.scrollToIndex(rowIndex, { align: 'auto' });
-    // the card list draws in chunks (issue 809): a card past the drawn ones is drawn first, then focused
-    if (drawTo) drawTo(rowIndex);
-    requestAnimationFrame(() =>
-      requestAnimationFrame(() => {
-        const node = displayElements.current.get(record.displayKey || record.id);
-        (columnIndex === null ? node : node?.querySelector('[data-plx-field="' + CSS.escape(column.id) + '"]'))?.focus({
-          preventScroll: true
-        });
-      })
-    );
+    // the long card list (issue 809): scroll the card into view (it is drawn there), then focus it once it is drawn
+    if (cards) cards.scrollToIndex(rowIndex, { align: 'auto' });
+    const target = () => {
+      const node = displayElements.current.get(record.displayKey || record.id);
+      return columnIndex === null ? node : node?.querySelector('[data-plx-field="' + CSS.escape(column.id) + '"]');
+    };
+    let tries = cards ? 20 : 1;
+    const settle = () => {
+      const node = target();
+      if (node || --tries <= 0) node?.focus({ preventScroll: true });
+      else requestAnimationFrame(settle);
+    };
+    requestAnimationFrame(() => requestAnimationFrame(settle));
   };
 
 export const groupKeys =
@@ -100,10 +104,10 @@ export const groupKeys =
   };
 
 export const rowKeys =
-  ({ chooseRow, row, emit, rowApi, props, record, on, unread, setOwnOpen, focusCell, model, chunked }) =>
+  ({ chooseRow, row, emit, rowApi, props, record, on, unread, setOwnOpen, focusCell, model, cardList }) =>
   (e) => {
     // the card list (issue 809): End on a card, or Ctrl (Command) with End, draws every card and focuses the last
-    if (chunked && e.key === 'End' && !e.defaultPrevented && (e.target === e.currentTarget || e.ctrlKey || e.metaKey)) {
+    if (cardList && e.key === 'End' && !e.defaultPrevented && (e.target === e.currentTarget || e.ctrlKey || e.metaKey)) {
       e.preventDefault();
       focusCell(model.length - 1, null, -1);
       return;
@@ -130,12 +134,12 @@ export const rowKeys =
   };
 
 export const cellKeys =
-  ({ isStatic, value, canEdit, setEditing, row, c, model, ordered, column, frame, focusCell, cellRange, kept, chunked }) =>
+  ({ isStatic, value, canEdit, setEditing, row, c, model, ordered, column, frame, focusCell, cellRange, kept, cardList }) =>
   (event) => {
     if (isStatic || event.target !== event.currentTarget) return;
     // the card list (issue 809): End (or Ctrl or Command with End) on a card's cell draws every card and focuses the last card's
     // cell in this column (a card is a row, so End goes to the last row, as in a list)
-    if (chunked && event.key === 'End' && !event.shiftKey && !event.altKey) {
+    if (cardList && event.key === 'End' && !event.shiftKey && !event.altKey) {
       event.preventDefault();
       focusCell(model.length - 1, ordered.indexOf(column), -1);
       return;
