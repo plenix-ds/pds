@@ -22,8 +22,9 @@ const { spawnSync } = require('child_process');
 const EXT = 'com.plenix';
 const TIERS = ['plx-ref', 'plx-sys', 'plx-comp'];
 const CONDITION_FILE = /\.(forced-colors|more-contrast|print|reduced-motion)\.tokens\.json$/;
-const toCss = (v) => String(v).replace(/\{(plx-(?:ref|sys|comp))\.([a-z0-9-]+)\}/g, 'var(--$1-$2)');
-const refsOf = (v) => [...String(v).matchAll(/\{(plx-(?:ref|sys|comp))\.([a-z0-9-]+)\}/g)].map((m) => '--' + m[1] + '-' + m[2]);
+const { css: cssText } = require('./token-value.js');   // a $value as CSS text: the W3C typed values too (#872)
+const toCss = (v) => cssText(v).replace(/\{(plx-(?:ref|sys|comp))\.([a-z0-9-]+)\}/g, 'var(--$1-$2)');
+const refsOf = (v) => [...(typeof v === 'string' ? v : '').matchAll(/\{(plx-(?:ref|sys|comp))\.([a-z0-9-]+)\}/g)].map((m) => '--' + m[1] + '-' + m[2]);
 
 // Style Dictionary's json output for every group: build/sd/index/<group>.json
 function styleDictionary(root) {
@@ -188,7 +189,7 @@ function tokenIndex(root, written, groups = styleDictionary(root)) {
       if (v.$value === undefined) { walk(v, name); continue; }
       const o = v.original || v;
       const x = (o.$extensions && o.$extensions.plenix) || {}, web = x.web && typeof x.web === 'object' ? x.web.token : x.web;
-      const rec = { name, value: o.$value, type: o.$type, description: o.$description || '', source: x.source || null };
+      const rec = { name, value: typeof o.$value === 'number' ? o.$value : cssText(o.$value), type: o.$type, description: o.$description || '', source: x.source || null };
       if (x.web && typeof x.web === 'object') rec.role = x.web.class;
       if (web && byName[web]) { const t = byName[web]; t.platforms = t.platforms || {}; (t.platforms[plat] = t.platforms[plat] || []).push(rec); }
       else platformOnly.push(Object.assign({ platform: plat }, rec, web ? { web } : {}));

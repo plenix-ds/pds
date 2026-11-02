@@ -18,6 +18,7 @@
 // (:root and the density and interaction contexts, batch 221), so it would not see the local value.
 const fs = require('fs');
 const path = require('path');
+const { css, typed } = require('./tools/token-value.js');   // the W3C typed values (#872): compared as CSS text, written typed
 const ROOT = __dirname;
 const P = path.join(ROOT, 'platform');
 const TOKENS = path.join(P, 'tokens', 'components.tokens.json');
@@ -96,8 +97,8 @@ for (const m of body.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
     const short = nameFor[p] || SHORT[p] || p;
     let name = block + (ctx ? '-' + ctx : '') + '-' + short;
     const value = toJson(v);
-    if (taken(name) && taken(name).$value !== value) { let i = 2; while (taken(name + '-' + i) && taken(name + '-' + i).$value !== value) i++; name = name + '-' + i; }
-    if (!taken(name)) { comp[name] = { $value: value, $type: TYPE(short) }; added.push('--plx-comp-' + name + ' = ' + value); }
+    if (taken(name) && css(taken(name).$value) !== value) { let i = 2; while (taken(name + '-' + i) && css(taken(name + '-' + i).$value) !== value) i++; name = name + '-' + i; }
+    if (!taken(name)) { comp[name] = { $value: typed(value, TYPE(short)), $type: TYPE(short) }; added.push('--plx-comp-' + name + ' = ' + value); }
     return p + ':var(--plx-comp-' + name + ')';
   });
   // a rule written one declaration per line (the reflowed sheets, issue 688) stays that way; a one-line rule stays one line

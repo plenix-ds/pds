@@ -76,12 +76,18 @@ async function save(body, person) {
   const file = path.join(WORK, body.file);
   if (!fs.existsSync(file)) return [400, { error: 'bad-file', message: body.file + ' is not in the repository.' }];
   const json = JSON.parse(fs.readFileSync(file, 'utf8'));
+  // a value in the W3C typed form ({ value, unit }, a color object, a font list; #872) is compared as its CSS text, and an
+  // edit of a typed value is written typed again: the checkout's own tools/token-value.js (a checkout without it has
+  // text values only)
+  const tv = path.join(WORK, 'tools', 'token-value.js');
+  delete require.cache[tv];   // the checkout moves with main: read its current copy
+  const { css, typed } = fs.existsSync(tv) ? require(tv) : { css: String, typed: (t) => t };
   for (const c of changes) {
     const own = (o, k) => !!o && Object.prototype.hasOwnProperty.call(o, k);   // own properties only: a token named constructor is not the Object function (issue 695)
     const m = TOKEN_RE.exec(c.token), group = own(json, m[1]) ? json[m[1]] : null, entry = own(group, m[2]) ? group[m[2]] : null;
     if (!entry) return [400, { error: 'unknown-token', message: c.token + ' is not in ' + body.file + '.' }];
-    if (c.from !== undefined && String(entry.$value) !== String(c.from)) return [409, { error: 'conflict', message: c.token + ' changed since the dialog opened (now ' + entry.$value + '). Reload and edit again.' }];
-    entry.$value = c.to;
+    if (c.from !== undefined && css(entry.$value) !== String(c.from)) return [409, { error: 'conflict', message: c.token + ' changed since the dialog opened (now ' + css(entry.$value) + '). Reload and edit again.' }];
+    entry.$value = typeof entry.$value !== 'string' ? typed(String(c.to), entry.$type) : c.to;
   }
   fs.writeFileSync(file, JSON.stringify(json, null, 2) + '\n');
   // the build and the check: a change that breaks the system is not proposed

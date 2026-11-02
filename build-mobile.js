@@ -10,6 +10,7 @@
 // applies to every platform (1.5). Run by build-app.js; alone: node build-mobile.js
 const fs = require('fs');
 const path = require('path');
+const { css } = require('./tools/token-value.js');   // a $value as text: the W3C typed values too (#872)
 
 const camel = (s) => s.replace(/^--plx-(sys|ref|comp)-/, '').replace(/-([a-z0-9])/g, (m, c) => c.toUpperCase());
 const pascal = (s) => { const c = camel(s); return c.charAt(0).toUpperCase() + c.slice(1); };
@@ -53,7 +54,7 @@ module.exports = function buildMobile(root) {
       const p = (v.$extensions && v.$extensions.plenix) || {}, web = p.web && typeof p.web === 'object' ? p.web.token : p.web;
       if (web && !known.has(web)) throw new Error(file + ': ' + id + ' maps to ' + web + ', which is not a token');
       if (p.web && typeof p.web === 'object' && !/^plx-text--[a-z]+$/.test(p.web.class || '')) throw new Error(file + ': ' + id + ' names no text role');
-      out.push({ id: id.replace(/-([a-z0-9])/g, (m, c) => c.toUpperCase()), value: v.$value, type: v.$type, desc: v.$description || '', src: p.source,
+      out.push({ id: id.replace(/-([a-z0-9])/g, (m, c) => c.toUpperCase()), value: css(v.$value), type: v.$type, desc: v.$description || '', src: p.source,
         web: p.web && typeof p.web === 'object' ? '.' + p.web.class + (web ? ' ' + web : '') : web || null });
     } else if (v && typeof v === 'object') flat(v, id, out, file); } return out; };
   const set = (f, key) => flat(JSON.parse(fs.readFileSync(path.join(T, f), 'utf8'))[key], '', [], f);

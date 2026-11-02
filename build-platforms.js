@@ -5,6 +5,7 @@
 // Markdown (code, bold, links) stays in the strings and the spec renders it. Run by build-app.js; alone: node build-platforms.js
 const fs = require('fs');
 const path = require('path');
+const { css } = require('./tools/token-value.js');   // a $value as text: the W3C typed values too (#872)
 
 function parse(md) {
   const lines = md.replace(/\r\n/g, '\n').split('\n');
@@ -119,7 +120,7 @@ function tokenMap(root) {
       const web = p.web && typeof p.web === 'object' ? '.' + p.web.class + (p.web.token ? ' (' + p.web.token + ')' : '') : p.web || '';
       const row = rows.get(name) || { name, web: '', ios: '', android: '', iosSource: '', androidSource: '' };
       if (web) row.web = web;
-      row[plat] = String(v.$value);
+      row[plat] = css(v.$value);
       row[plat + 'Source'] = s.name ? s.framework + ': ' + s.name + (s.plenix !== undefined ? ' (published ' + s.published + ', Plenix ' + s.plenix + ')' : '') : '';
       rows.set(name, row);
     } else if (v && typeof v === 'object') walk(v, name, plat);

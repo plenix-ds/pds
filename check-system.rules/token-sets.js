@@ -22,6 +22,7 @@
 // Alone: node check-system.rules/token-sets.js   -> TOKEN_SETS_OK, or the findings and exit 1
 const fs = require('fs');
 const path = require('path');
+const { css } = require('../tools/token-value.js');   // a $value as CSS text: the W3C typed values too (#872)
 
 const NAME = 'token-sets';
 const ROOT = path.join(__dirname, '..');
@@ -157,7 +158,7 @@ function findings(root = ROOT) {
           const data = withConditions(th.foundations, read(at(th.foundations)));
           if (data) {
             const toks = tokensOf(data, at(th.foundations)), list = toks.map((x) => x.name).sort().join(',');
-            toks.forEach((x) => { if (COLOR_LITERAL.test(String(x.token.$value))) say(at(th.foundations), th.foundations + ': ' + x.name + ' writes a color (' + x.token.$value + ')'); });
+            toks.forEach((x) => { if (COLOR_LITERAL.test(css(x.token.$value))) say(at(th.foundations), th.foundations + ': ' + x.name + ' writes a color (' + css(x.token.$value) + ')'); });
             if (scales === null) scales = list; else if (list !== scales) say(at(th.foundations), th.foundations + ': does not define the same foundations as the default theme');
             print(data, at(th.foundations));
           }
@@ -166,7 +167,7 @@ function findings(root = ROOT) {
           if (!th[mode]) { say(path.join(root, 'platform', 'standards', 'themes.json'), name + ': no ' + mode + ' token file'); continue; }
           const data = withConditions(th[mode], read(at(th[mode]))); if (!data) continue;
           const toks = tokensOf(data, at(th[mode]));
-          toks.forEach((x) => { if (COLOR_LITERAL.test(String(x.token.$value))) say(at(th[mode]), th[mode] + ': ' + x.name + ' writes a color (' + x.token.$value + '): point to a palette color, e.g. {plx-ref.color-blue-400}'); });
+          toks.forEach((x) => { if (COLOR_LITERAL.test(css(x.token.$value))) say(at(th[mode]), th[mode] + ': ' + x.name + ' writes a color (' + css(x.token.$value) + '): point to a palette color, e.g. {plx-ref.color-blue-400}'); });
           const list = toks.map((x) => x.name).sort().join(',');
           if (roles === null && mode === 'light') roles = list;
           else if (list !== roles) say(at(th[mode]), th[mode] + ': does not define the same roles as the default theme');

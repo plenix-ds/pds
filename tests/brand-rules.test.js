@@ -7,6 +7,7 @@
 const shared = require('./check.js');   // the shared check helper: parts (TEST_ONLY) and the results file (TEST_RESULTS)
 const fs = require('fs');
 const path = require('path');
+const { css: tokenCss } = require('../tools/token-value.js');   // a $value as CSS text: the W3C typed values too (#872)
 const changed = require('./changed.js');
 require('./limit.js');
 if (!changed.wants({ units: ['brand', 'components/Brand'] })) changed.none('BRAND_RULES_OK 0 checks');
@@ -31,7 +32,7 @@ walk(TOK);
 files.sort((a, b) => (/\.(density|interaction|dark|light)-?/.test(path.basename(a)) ? 1 : 0) - (/\.(density|interaction|dark|light)-?/.test(path.basename(b)) ? 1 : 0));
 for (const f of files) {
   const j = json(f);
-  for (const tier of Object.keys(TIERS)) for (const [k, v] of Object.entries(j[tier] || {})) if (v && v.$value !== undefined && !(k in TIERS[tier])) TIERS[tier][k] = v.$value;
+  for (const tier of Object.keys(TIERS)) for (const [k, v] of Object.entries(j[tier] || {})) if (v && v.$value !== undefined && !(k in TIERS[tier])) TIERS[tier][k] = tokenCss(v.$value);
 }
 const px = (value, depth = 0) => {
   if (depth > 10 || value === undefined) return NaN;

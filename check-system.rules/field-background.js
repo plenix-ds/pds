@@ -16,6 +16,7 @@
 // Alone: node check-system.rules/field-background.js     -> FIELD_BACKGROUND_OK, or the findings and exit 1
 const fs = require('fs');
 const path = require('path');
+const { css } = require('../tools/token-value.js');   // a $value as CSS text: the W3C typed values too (#872)
 const { CONDITION_FILE } = require('./token-sets.js');
 
 const NAME = 'field-background';
@@ -37,11 +38,11 @@ function files(root) {
 // the findings of one set of component tokens: [text]; `all` resolves {plx-comp.x} references to their source
 function scan(comp, all) {
   const out = [];
-  const resolve = (v, seen) => { const m = /^\{plx-comp\.([a-z0-9-]+)\}$/.exec(v || ''); if (!m || seen.has(m[1]) || !all[m[1]]) return v; seen.add(m[1]); return resolve(all[m[1]].$value, seen); };
+  const resolve = (v, seen) => { const m = /^\{plx-comp\.([a-z0-9-]+)\}$/.exec(v || ''); if (!m || seen.has(m[1]) || !all[m[1]]) return v; seen.add(m[1]); return resolve(css(all[m[1]].$value), seen); };
   for (const [name, t] of Object.entries(comp || {})) {
     if (!FIELD.test(name) || ALLOWED.includes(name) || !t) continue;
-    const v = resolve(t.$value, new Set());
-    if (v !== WHITE) out.push('--plx-comp-' + name + ' is ' + t.$value + ': a text field\'s background is the field background role ' + WHITE);
+    const v = resolve(css(t.$value), new Set());
+    if (v !== WHITE) out.push('--plx-comp-' + name + ' is ' + css(t.$value) + ': a text field\'s background is the field background role ' + WHITE);
   }
   return out;
 }
