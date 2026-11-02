@@ -874,7 +874,12 @@ function NextEngine(props) {
     isNarrow && props.rowTemplate && props.rowTemplate.layout !== 'wide'
       ? (() => {
           const n = remoteMode ? remote?.total || 0 : table.getFilteredRowModel().rows.length;
-          return loc.t('dataGrid.cardCount', { count: n, n: formatNumber(n) });
+          // the words: strings.cardCount (an app names its records: "6 members"), else the catalog's; a plural object picks its
+          // form by the locale's plural rules (an exact "=n" first, then the category, then other), a text is used as it is
+          const words = S.cardCount, values = { count: n, n: formatNumber(n) };
+          if (!words || typeof words !== 'object') return words ? String(words).replace(/\{n\}/g, values.n) : loc.t('dataGrid.cardCount', values);
+          const form = words['=' + n] !== undefined ? words['=' + n] : words[loc.plural(n)] !== undefined ? words[loc.plural(n)] : words.other;
+          return String(form).replace(/\{n\}/g, values.n);
         })()
       : null;
   return gridFrame({
