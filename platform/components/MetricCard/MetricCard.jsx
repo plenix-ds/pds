@@ -83,7 +83,7 @@ import { useUid } from '../../utils/layer.ts';
 import { formatPercent } from '../../utils/format.ts';
 import { Icon, asIcon as iconElement, isIconModule } from '../Icon/Icon.tsx';
 import { Badge } from '../Badge/Badge.tsx';
-import { Avatar } from '../Avatar/Avatar.jsx';
+import { Avatar } from '../Avatar/Avatar.tsx';
 import { Count } from '../Count/Count.tsx';
 import { Button } from '../Button/Button.tsx';
 import { Menu } from '../Menu/Menu.tsx';

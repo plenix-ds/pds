@@ -59,7 +59,7 @@ import React from 'react';
 import { devWarn } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
 import { formatCurrency } from '../../utils/format.ts';
-import { Image } from '../../components/Image/Image.jsx';
+import { Image } from '../../components/Image/Image.tsx';
 import { Badge } from '../../components/Badge/Badge.tsx';
 import { Rating } from '../../components/Rating/Rating.tsx';
 import { Button } from '../../components/Button/Button.tsx';

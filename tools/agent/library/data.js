@@ -12,9 +12,9 @@ const EX = {   // existing Platform code (for extend targets)
   Preview: ['platform/components/Preview/Preview.tsx', 'platform/components/Preview/preview.css'],
   ContentGrid: ['platform/patterns/ContentGrid/ContentGrid.jsx', 'platform/patterns/ContentGrid/content-grid.css'],
   AppShell: ['platform/patterns/AppShell/AppShell.tsx', 'platform/patterns/AppShell/app-shell.css'],
-  BrandMark: ['platform/components/Brand/Brand.jsx', 'platform/components/Brand/brand.css', 'platform/brand/'],
-  ColorSwatch: ['platform/components/ColorSwatch/ColorSwatch.jsx', 'platform/components/ColorSwatch/color-swatch.css'],
-  Avatar: ['platform/components/Avatar/Avatar.jsx', 'platform/components/Avatar/avatar.css'],
+  BrandMark: ['platform/components/Brand/Brand.tsx', 'platform/components/Brand/brand.css', 'platform/brand/'],
+  ColorSwatch: ['platform/components/ColorSwatch/ColorSwatch.tsx', 'platform/components/ColorSwatch/color-swatch.css'],
+  Avatar: ['platform/components/Avatar/Avatar.tsx', 'platform/components/Avatar/avatar.css'],
   StatusDot: ['platform/components/StatusDot/StatusDot.tsx', 'platform/components/StatusDot/status-dot.css'],
   Icon: ['platform/components/Icon/Icon.tsx', 'platform/components/Icon/icon.css'],
   Notice: ['platform/components/Notice/Notice.tsx', 'platform/components/Notice/notice.css'],
@@ -33,14 +33,14 @@ const EX = {   // existing Platform code (for extend targets)
   Tabs: ['platform/components/Tabs/Tabs.jsx', 'platform/components/Tabs/tabs.css'],
   NavPane: ['platform/patterns/NavPane/NavPane.jsx', 'platform/patterns/NavPane/nav-pane.css'],
   AppHeader: ['platform/patterns/AppHeader/AppHeader.jsx', 'platform/patterns/AppHeader/app-header.css'],
-  Card: ['platform/components/Card/Card.jsx', 'platform/components/Card/card.css'],
+  Card: ['platform/components/Card/Card.tsx', 'platform/components/Card/card.css'],
   Metric: ['platform/components/Metric/Metric.jsx', 'platform/components/Metric/metric.css'],
   DropZone: ['platform/components/DropZone/DropZone.tsx', 'platform/components/DropZone/drop-zone.css'],
   ActionBar: ['platform/patterns/ActionBar/ActionBar.jsx', 'platform/patterns/ActionBar/action-bar.css'],
   Chat: ['platform/components/Chat/Chat.jsx', 'platform/components/Chat/chat.css'],
   ThemeProvider: ['platform/providers/ThemeProvider.jsx', 'platform/providers/themes.js', 'platform/standards/themes.json'],
   SearchWorkspace: ['platform/patterns/SearchWorkspace/SearchWorkspace.jsx', 'platform/patterns/SearchWorkspace/search-workspace.css'],
-  ColorPicker: ['platform/components/ColorSwatch/ColorSwatch.jsx', 'platform/components/ColorSwatch/color-swatch.css'],
+  ColorPicker: ['platform/components/ColorSwatch/ColorSwatch.tsx', 'platform/components/ColorSwatch/color-swatch.css'],
   CollapsibleSection: ['platform/components/CollapsibleSection/CollapsibleSection.tsx']
 };
 const T = {};
@@ -264,7 +264,7 @@ t('dnd', 'foundation', 'L', 10, 'C', ['press-focus-select', 'LiveRegion'], ['sor
 t('SortableList', 'pattern', 'M', 10, 'C', ['dnd'], ['vertical', 'grid', 'handles', 'with move buttons'], 'Sortable list = Reordering');
 t('DragHandle', 'component', 'S', 10, 'C', ['dnd'], ['vertical', 'horizontal'], '');
 t('DropZone', 'extend', 'S', 10, 'C', ['dnd'], ['data drop target', 'accepts/rejects'], 'DropZone accepts data items, not only files', EX.DropZone);
-t('Resizable', 'component', 'S', 10, 'C', [], ['horizontal', 'vertical', 'both', 'snapped to size steps'], 'PanelSplitter promoted from AppShell.tsx into its own component (AppShell imports and re-exports it)', ['platform/components/Resizable/Resizable.jsx', 'platform/components/Resizable/resizable.css', 'platform/tokens/components/resizable.tokens.json', 'platform/patterns/AppShell/AppShell.tsx']);
+t('Resizable', 'component', 'S', 10, 'C', [], ['horizontal', 'vertical', 'both', 'snapped to size steps'], 'PanelSplitter promoted from AppShell.tsx into its own component (AppShell imports and re-exports it)', ['platform/components/Resizable/Resizable.tsx', 'platform/components/Resizable/resizable.css', 'platform/tokens/components/resizable.tokens.json', 'platform/patterns/AppShell/AppShell.tsx']);
 
 /* ───────── wave 11: import/export, sharing, auth, access, onboarding ───────── */
 t('ImportDialog', 'pattern', 'M', 11, 'A', ['FileInput', 'DropZone'], ['file', 'paste', 'url'], 'Import (actions) = Import (patterns)');

@@ -55,7 +55,7 @@
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { formatBytes, formatDate, formatNumber, formatPercent, dateTimeAttr } from '../../utils/format.ts';
-import { File } from '../File/File.jsx';
+import { File } from '../File/File.tsx';
 import { Checkbox } from '../Checkbox/Checkbox.tsx';
 import { Button } from '../Button/Button.tsx';
 import { Icon } from '../Icon/Icon.tsx';

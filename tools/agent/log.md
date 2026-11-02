@@ -8,7 +8,7 @@
 
 ## Batch 440 (2026-10-19): Styling Standard, Phase 2, batch 6 (SplitView → Resizable)
 - resizable.css: --fill and --divider rules (SplitView's, with Resizable's own modifier, at the end of the file);
-  Resizable.jsx variant and fill (named fillContent inside: fill() is the strings helper — the first build crashed both
+  Resizable.tsx variant and fill (named fillContent inside: fill() is the strings helper — the first build crashed both
   pages, caught by the audit); 9 divider tokens in resizable.tokens.json; SplitView sets the divider size from its gap.
   Design system: Resizable "Variant" cards, SplitView statesFrom resizable.
 - Checked: build, SYSTEM_OK, SPEC_OK, ownership --shrink (198 selectors), clash audit app (no element changed but the

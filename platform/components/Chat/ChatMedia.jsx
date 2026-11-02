@@ -12,7 +12,7 @@ import { cx } from '../../utils/cx.ts';
 import { Button } from '../Button/Button.tsx';
 import { Icon } from '../Icon/Icon.tsx';
 import { Text } from '../Text/Text.tsx';
-import { MediaViewer } from '../MediaViewer/MediaViewer.jsx';
+import { MediaViewer } from '../MediaViewer/MediaViewer.tsx';
 import { useStrings, useDigits } from '../../providers/LocaleProvider.tsx';
 import { announce } from '../../utils/announce.tsx';
 import { formatBytes, formatNumber, formatDuration, formatLocale, numeralLocale } from '../../utils/format.ts';

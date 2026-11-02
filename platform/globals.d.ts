@@ -16,5 +16,9 @@ declare module 'react' {
   interface HTMLAttributes<T> {
     popover?: '' | 'auto' | 'manual';
   }
+  // an image's fetch priority (Image's priority), written as the browser reads it: not in @types/react 18
+  interface ImgHTMLAttributes<T> {
+    fetchpriority?: 'high' | 'low' | 'auto';
+  }
 }
 export {};

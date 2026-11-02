@@ -56,7 +56,7 @@ import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { useUid } from '../../utils/layer.ts';
 import { RadioTiles } from '../RadioTiles/RadioTiles.tsx';
-import { ColorSwatch } from '../ColorSwatch/ColorSwatch.jsx';
+import { ColorSwatch } from '../ColorSwatch/ColorSwatch.tsx';
 import { NumberInput } from '../NumberInput/NumberInput.tsx';
 import { Field } from '../Field/Field.tsx';
 import { Icon } from '../Icon/Icon.tsx';

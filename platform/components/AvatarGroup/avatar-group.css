@@ -1,5 +1,5 @@
 /* Plenix · AvatarGroup (platform/components/AvatarGroup). A row of avatars of one size: overlapped in a stack (each ringed
-   in the surface color) or spaced in a wrapping grid, then a +N tile in the neutral fill. Anatomy and API: AvatarGroup.jsx. */
+   in the surface color) or spaced in a wrapping grid, then a +N tile in the neutral fill. Anatomy and API: AvatarGroup.tsx. */
 .plx-avatar-group{align-items:center;display:inline-flex;flex-wrap:nowrap;min-inline-size:0;}
 /* stack: each avatar after the first overlaps the one before it; the ring keeps the edges apart */
 .plx-avatar-group--stack .plx-avatar-group__avatar,.plx-avatar-group--stack .plx-avatar-group__more{box-shadow:var(--plx-comp-avatar-group-ring);}

@@ -10,7 +10,7 @@
 */
 import React from 'react';
 import { devWarn } from '../../utils/devWarn.ts';
-import { Panel } from '../../components/Card/Card.jsx';
+import { Panel } from '../../components/Card/Card.tsx';
 import { FileRow, FileRowList } from '../../components/FileRow/FileRow.jsx';
 import { Badge } from '../../components/Badge/Badge.tsx';
 import { Notice } from '../../components/Notice/Notice.tsx';

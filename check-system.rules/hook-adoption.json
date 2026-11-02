@@ -5,7 +5,7 @@
     "platform/components/Checkbox/Checkbox.tsx",
     "platform/components/Slider/Slider.tsx",
     "platform/components/SegmentedControl/SegmentedControl.tsx",
-    "platform/components/ColorSwatch/ColorSwatch.jsx",
+    "platform/components/ColorSwatch/ColorSwatch.tsx",
     "platform/components/PromptInput/PromptInput.jsx",
     "platform/components/TimeZoneSelect/TimeZoneSelect.jsx",
     "platform/components/NumberInput/NumberInput.tsx",
@@ -32,7 +32,7 @@
   ],
   "LiveRegion": [
     "platform/components/CodeBlock/CodeBlock.jsx",
-    "platform/components/Resizable/Resizable.jsx",
+    "platform/components/Resizable/Resizable.tsx",
     "platform/patterns/WidgetGrid/WidgetGrid.jsx",
     "platform/patterns/ColumnsMenu/ColumnsMenu.jsx",
     "platform/patterns/CommandBar/panel-parts.jsx"
@@ -67,6 +67,6 @@
   ],
   "useGesture": [
     "platform/components/Sheet/Sheet.tsx",
-    "platform/components/MediaViewer/MediaViewer.jsx"
+    "platform/components/MediaViewer/MediaViewer.tsx"
   ]
 }

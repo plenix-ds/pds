@@ -31,9 +31,9 @@ const ROOT = path.join(__dirname, '..');
 // the names that stay text on purpose: file, where (a named function or constant of that file, or a parameter's default)
 // and why
 const EXCEPTIONS = [
-  { file: 'platform/components/File/File.jsx', inside: ['fileIcon', 'BY_EXT'],
+  { file: 'platform/components/File/File.tsx', inside: ['fileIcon', 'BY_EXT'],
     reason: 'fileIcon(name, type) is public and returns a name (a caller may print or compare it); the File draws fileIconModule, the same icon imported' },
-  { file: 'platform/components/Thumbnail/Thumbnail.jsx', param: 'document',
+  { file: 'platform/components/Thumbnail/Thumbnail.tsx', param: 'document',
     reason: 'the documented default of the icon prop (the spec reads defaults from the signature); the component draws its module' },
   { file: 'platform/patterns/PermissionSummary/PermissionSummary.jsx', param: 'lock',
     reason: 'the documented default of the icon prop (the spec reads defaults from the signature); the component draws its module' },
