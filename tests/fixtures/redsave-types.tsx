@@ -17,6 +17,9 @@ export const alias = <DataTable label="Records" data={rows} columns={columns} />
 // rowMenu is one fixed list or one list per row: (record) => items (#455)
 export const rowMenuList = <DataGrid label="Records" data={rows} columns={columns} rowMenu={[{ label: 'Open', onSelect: (record: Row) => record.id }, { separator: true }, { label: 'Delete', danger: true }]} />;
 export const rowMenuPerRow = <DataGrid label="Records" data={rows} columns={columns} rowMenu={(record: Row) => (record.status === 'open' ? [{ label: 'Close' }] : [{ label: 'Reopen' }])} />;
+// openKey: a key, or null for no open row (RedSave P-63: 0.84 rejected null, so the app needed a helper)
+export const openNone = <DataGrid label="Records" data={rows} columns={columns} openKey={null} />;
+export const openOne = <DataGrid label="Records" data={rows} columns={columns} openKey="r1" />;
 
 // Tabs onChange receives the tab's value, not a DOM event
 export function TabsUse() {

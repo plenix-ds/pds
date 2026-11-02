@@ -18,7 +18,7 @@ import { Checkbox } from '../Checkbox/Checkbox.tsx';
 import { ProgressBar } from '../ProgressBar/ProgressBar.tsx';
 import { Button } from '../Button/Button.tsx';
 import { Text } from '../Text/Text.tsx';
-import { CollapsibleSection } from '../CollapsibleSection/CollapsibleSection.jsx';
+import { CollapsibleSection } from '../CollapsibleSection/CollapsibleSection.tsx';
 import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 

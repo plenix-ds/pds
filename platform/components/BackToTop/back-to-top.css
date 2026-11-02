@@ -1,6 +1,6 @@
 /* Plenix · BackToTop (platform/components/BackToTop). Floating: an icon button fixed at the end of the window's bottom
    edge, hidden (and out of the Tab order) until the sentinel above it has left the view; inline: a ghost button in the
-   flow. The sentinel is as tall as the reveal distance and takes no room. Anatomy and API: BackToTop.jsx. */
+   flow. The sentinel is as tall as the reveal distance and takes no room. Anatomy and API: BackToTop.tsx. */
 .plx-back-to-top__anchor{block-size:0;display:block;position:relative;}
 .plx-back-to-top__sentinel{block-size:var(--plx-comp-back-to-top-reveal-distance);display:block;inline-size:var(--plx-comp-back-to-top-sentinel-width);inset-block-start:0;inset-inline-start:0;pointer-events:none;position:absolute;visibility:hidden;}
 .plx-back-to-top--floating{box-shadow:var(--plx-comp-back-to-top-shadow);inset-block-end:var(--plx-comp-back-to-top-inset-block-end);inset-inline-end:var(--plx-comp-back-to-top-inset-inline-end);opacity:0;position:fixed;transition-duration:var(--plx-comp-back-to-top-duration);transition-property:opacity,visibility;visibility:hidden;z-index:var(--plx-comp-back-to-top-z-index);}

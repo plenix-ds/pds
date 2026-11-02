@@ -38,17 +38,17 @@
     "platform/patterns/CommandBar/panel-parts.jsx"
   ],
   "usePressable": [
-    "platform/components/RowButton/RowButton.jsx",
+    "platform/components/RowButton/RowButton.tsx",
     "platform/components/DataGrid/engine/parts.jsx"
   ],
   "useFocusGroup": [
-    "platform/components/Toolbar/Toolbar.jsx",
-    "platform/patterns/ToolRail/ToolRail.jsx"
+    "platform/components/Toolbar/Toolbar.tsx",
+    "platform/patterns/ToolRail/ToolRail.tsx"
   ],
   "useFloating": [
-    "platform/components/Menu/Menu.jsx",
+    "platform/components/Menu/Menu.tsx",
     "platform/components/Tooltip/Tooltip.tsx",
-    "platform/components/Popover/Popover.jsx",
+    "platform/components/Popover/Popover.tsx",
     "platform/components/Combobox/Combobox.tsx",
     "platform/components/Cascader/Cascader.jsx",
     "platform/components/TimePicker/TimePicker.jsx"
@@ -66,7 +66,7 @@
     "platform/patterns/SettingsLayout/SettingsLayout.jsx"
   ],
   "useGesture": [
-    "platform/components/Sheet/Sheet.jsx",
+    "platform/components/Sheet/Sheet.tsx",
     "platform/components/MediaViewer/MediaViewer.jsx"
   ]
 }

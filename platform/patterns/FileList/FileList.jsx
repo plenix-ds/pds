@@ -74,7 +74,7 @@ import { Badge } from '../../components/Badge/Badge.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { EmptyState } from '../../components/EmptyState/EmptyState.tsx';
-import { Menu, MenuItem, MenuRadioGroup, MenuSub } from '../../components/Menu/Menu.jsx';
+import { Menu, MenuItem, MenuRadioGroup, MenuSub } from '../../components/Menu/Menu.tsx';
 import { RenameAction } from '../RenameAction/RenameAction.jsx';
 import { DeleteFlow } from '../DeleteFlow/DeleteFlow.jsx';
 import { useDraggable, useDropTarget } from '../../utils/dnd.ts';

@@ -108,7 +108,7 @@ import { SIZE_STEPS } from '../../utils/sizeSteps.js';
 import { Avatar } from '../../components/Avatar/Avatar.jsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Icon } from '../../components/Icon/Icon.tsx';
-import { Menu, MenuItem } from '../../components/Menu/Menu.jsx';
+import { Menu, MenuItem } from '../../components/Menu/Menu.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { Badge } from '../../components/Badge/Badge.tsx';
 import { AvatarGroup } from '../../components/AvatarGroup/AvatarGroup.jsx';

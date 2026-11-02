@@ -19,7 +19,7 @@
        the list, the row height in the gallery. The menu stays open while choosing (keepOpen).
      The button reads "View" with the thin chevron; icons only, its icon and tooltip. */
 import React from 'react';
-import { Menu, MenuItem, MenuDivider, MenuGroup, MenuRadioGroup } from '../../components/Menu/Menu.jsx';
+import { Menu, MenuItem, MenuDivider, MenuGroup, MenuRadioGroup } from '../../components/Menu/Menu.tsx';
 import { Tooltip } from '../../components/Tooltip/Tooltip.tsx';
 import { CommandBarButton, useCommandBar } from '../CommandBar/CommandBar.jsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';

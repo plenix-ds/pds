@@ -14,7 +14,7 @@
 */
 import React from 'react';
 import { Stack } from '../../components/Stack/Stack.tsx';
-import { Dialog } from '../../components/Dialog/Dialog.jsx';
+import { Dialog } from '../../components/Dialog/Dialog.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Checklist } from '../../components/Checklist/Checklist.jsx';
 import { Tour } from '../Tour/Tour.jsx';

@@ -6,7 +6,7 @@
        Shift+Tab comes back to the tool focused last; exactly one tool is in the Tab order
    Proof first: the behavior was measured identical before and after the move (the rail's own key handler, then
      useFocusGroup), so these lines pass on both. What fails on a slide back is check-system's hook-adoption rule
-     (ToolRail.jsx is listed under useFocusGroup).
+     (ToolRail.tsx is listed under useFocusGroup).
    Usage: node tests/focus-group-6a.test.js   → FOCUS_GROUP_6A_OK */
 const assert = require('assert/strict'), { serve, launch } = require('./lib');
 require('./limit.js');   // the hard time limit (TEST_TIMEOUT_MS)

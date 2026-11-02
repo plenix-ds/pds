@@ -1,4 +1,4 @@
 /* Plenix · DownloadButton (platform/components/DownloadButton). A Button with the download icon; the file's format and
-   size after the label, and the percent while it downloads, in the data font. Anatomy and API: DownloadButton.jsx. */
+   size after the label, and the percent while it downloads, in the data font. Anatomy and API: DownloadButton.tsx. */
 .plx-download-button__meta{color:var(--plx-comp-download-button-meta-text);font-family:var(--plx-comp-download-button-meta-font-family);font-size:var(--plx-comp-download-button-meta-font-size);font-weight:var(--plx-comp-download-button-meta-font-weight);letter-spacing:var(--plx-sys-text-caption-letter-spacing);line-height:var(--plx-sys-text-caption-line-height);margin-inline-start:var(--plx-comp-download-button-meta-gap);word-spacing:var(--plx-sys-font-data-word-spacing);}
 .plx-download-button__percent{font-family:var(--plx-comp-download-button-percent-font-family);font-variant-numeric:tabular-nums;margin-inline-start:var(--plx-comp-download-button-percent-gap);word-spacing:var(--plx-sys-font-data-word-spacing);}

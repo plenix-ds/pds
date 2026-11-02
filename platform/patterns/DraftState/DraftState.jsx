@@ -13,7 +13,7 @@ import React from 'react';
 import { Badge } from '../../components/Badge/Badge.tsx';
 import { VersionLabel } from '../../components/VersionLabel/VersionLabel.jsx';
 import { Button } from '../../components/Button/Button.tsx';
-import { Dialog } from '../../components/Dialog/Dialog.jsx';
+import { Dialog } from '../../components/Dialog/Dialog.tsx';
 import { Notice } from '../../components/Notice/Notice.tsx';
 import { Stack, Inline } from '../../components/Stack/Stack.tsx';
 import { SaveStatus } from '../Autosave/Autosave.jsx';

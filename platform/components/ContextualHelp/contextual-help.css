@@ -1,7 +1,7 @@
 /* Plenix · ContextualHelp (platform/components/ContextualHelp). The info button sits on its label's line; the
    explanation is a Popover's body (a paragraph, then a standalone link). The inline tip is the explanation in place:
    the info icon in a box one text line tall, so it centers on the first line, then the text in the muted color.
-   Anatomy and API: ContextualHelp.jsx. */
+   Anatomy and API: ContextualHelp.tsx. */
 .plx-contextual-help--info{display:inline-flex;vertical-align:middle;}
 .plx-contextual-help__text{margin-block-end:0;margin-block-start:0;}
 .plx-contextual-help__more{margin-block-end:0;margin-block-start:var(--plx-comp-contextual-help-link-margin-block-start);}

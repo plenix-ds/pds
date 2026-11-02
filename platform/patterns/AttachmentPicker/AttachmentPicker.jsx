@@ -14,7 +14,7 @@ import { Text } from '../../components/Text/Text.tsx';
 import { cx } from '../../utils/cx.ts';
 import { FileInput } from '../../components/FileInput/FileInput.tsx';
 import { FileRow, FileRowList } from '../../components/FileRow/FileRow.jsx';
-import { MenuItem } from '../../components/Menu/Menu.jsx';
+import { MenuItem } from '../../components/Menu/Menu.tsx';
 import { Tag, TagList } from '../../components/Tag/Tag.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 export function AttachmentPicker({value=[],onChange,variant='inline',accept='',multiple=true,maxFiles,maxSize,disabled=false,strings,className}){

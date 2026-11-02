@@ -17,7 +17,7 @@
 */
 import React from 'react';
 import { typeOf, kinds, interactive, typeIcons } from './helpers.jsx';
-import { MenuDivider, MenuItem, Menu, ContextMenu } from '../../Menu/Menu.jsx';
+import { MenuDivider, MenuItem, Menu, ContextMenu } from '../../Menu/Menu.tsx';
 import SortAscendingIcon from 'plenix-platform/icons/plenix/sort-ascending';
 import SortDescendingIcon from 'plenix-platform/icons/plenix/sort-descending';
 import FilterIcon from 'plenix-platform/icons/plenix/filter';
@@ -27,9 +27,9 @@ import { cx } from '../../../utils/cx.ts';
 import { headerKeys, resizeKeys } from '../engine/keys.js';
 import { Icon } from '../../Icon/Icon.tsx';
 import CircleInfoIcon from 'plenix-platform/icons/plenix/circle-info';
-import { DragHandle } from '../../DragHandle/DragHandle.jsx';
+import { DragHandle } from '../../DragHandle/DragHandle.tsx';
 import EdTextIcon from 'plenix-platform/icons/plenix/ed-text';
-import { Popover } from '../../Popover/Popover.jsx';
+import { Popover } from '../../Popover/Popover.tsx';
 import { Select, Input } from '../../Input/Input.tsx';
 import { Button } from '../../Button/Button.tsx';
 import ChevronDownIcon from 'plenix-platform/icons/plenix/chevron-down';

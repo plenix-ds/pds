@@ -105,6 +105,8 @@ function typeOf(name, text, def, called) {
   if (name === 'tag' && /\{ label, tone, icon, category \}/.test(text)) return BY_NAME.entityTag;
   if (name === 'template' && /^\{\s*title,\s*subtitle/.test(text.trim())) return BY_NAME.rowTemplate;
   // the text starts with what it is (a pinned header): "a string: …", "a ref to …"
+  // a key that may also be null ("a string, a number or null: …"; DataGrid's openKey, RedSave P-63)
+  if (/^(a )?(string, a number or null|number, a string or null)\b/i.test(text.trim())) return 'number | string | null';
   if (/^(a )?(string or a number|number or a string)\b/i.test(text.trim())) return 'number | string';
   if (/^true or a number\b/i.test(text.trim())) return 'boolean | number';
   if (/^(a )?string or null\b/i.test(text.trim())) return 'string | null';

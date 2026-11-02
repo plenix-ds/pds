@@ -1,7 +1,7 @@
 # Audit of the web against platforms.md (2026-10-11)
 
 1. Drag alternatives (2.5.7), PARTLY: every drag has keys; almost none has a single-pointer (click or menu) path.
-   - PanelSplitter (platform/patterns/AppShell/AppShell.jsx:154-178; used by NavPane, SidePanel, SecondaryPane) has
+   - PanelSplitter (platform/patterns/AppShell/AppShell.tsx:154-178; used by NavPane, SidePanel, SecondaryPane) has
      arrows, Home/End and Enter, plus a collapse button. There is no click way to change the width.
    - WidgetGrid (platform/patterns/WidgetGrid/WidgetGrid.jsx:59-65) handle takes arrows only.
    - DataGrid row move, wireRows (DataGrid.jsx:380-401), is native drag only (used in dam BrowseDialogs.jsx:204, 243).
@@ -18,7 +18,7 @@
    - DAM SystemSettingsPage.jsx:403 and MyAccountPage.jsx:26 use replaceState where they should push.
 4. Focus not obscured (2.4.11), MISSING:
    - no scroll-padding or scroll-margin in the platform CSS;
-   - sticky parts that can cover focus: ActionBar (action-bar.css:4), the Narrow bottom bar (AppShell.jsx:144),
+   - sticky parts that can cover focus: ActionBar (action-bar.css:4), the Narrow bottom bar (AppShell.tsx:144),
      StatusBar, and the sticky table headers.
 5. Sheet, MISSING; inspector at Narrow, PARTLY. No Sheet component; Dialog has only a side variant. SidePanel becomes
    an overlay below 1024px but has no Narrow form (a bottom sheet or a screen).
