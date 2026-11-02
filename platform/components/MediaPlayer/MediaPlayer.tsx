@@ -86,7 +86,7 @@ export const MediaPlayer = React.forwardRef(function MediaPlayer({ src, audio, k
       onLoadedMetadata={() => { setReady(true); setError(''); }} onTimeUpdate={(e) => { if (onTimeChange) onTimeChange(e.currentTarget.currentTime); }}
       onVolumeChange={event => { setVolume(event.currentTarget.volume); setMuted(event.currentTarget.muted); }}
       onRateChange={event => setRate(event.currentTarget.playbackRate)}
-      // @ts-expect-error React 18 has no picture-in-picture events (no type, no dispatch); kept as it is in this slice
+      // @ts-expect-error React 18 has no picture-in-picture events (no type, no dispatch); kept as it is in this slice (issue 937)
       onEnterPictureInPicture={() => setPip(true)} onLeavePictureInPicture={() => setPip(false)}
       onError={(e) => { setReady(false); setError(t.failed); if (onError) onError(e); }}>
       {tracks.map((a, i) => <track key={a.src + i} src={a.src} kind={a.kind || 'captions'} srcLang={a.language} label={a.label} default={!!a.default} />)}

@@ -89,11 +89,11 @@ export function DocumentViewer({kind='text',src,pages=[],text='',label,thumbnail
  const move=(n: number)=>{const next=Math.max(1,Math.min(count,n));setPage(next);onPageChange?.(next);};
  return <Stack className={cx('plx-document-viewer',className)} aria-label={label||t.document} role="region">
  {count?<Inline wrap><Button onClick={()=>move(current-1)} disabled={current<=1||!count}>{t.previous}</Button>
-{/* @ts-expect-error Text has no kind prop (variant="data" is its data font); kept as it is in this slice */}
+{/* @ts-expect-error Text has no kind prop (variant="data" is its data font); kept as it is in this slice (issue 938) */}
 <Text kind="data" role="status">{t.page+' '+current+' / '+count}</Text><Button onClick={()=>move(current+1)} disabled={current>=count||!count}>{t.next}</Button><Field label={t.zoom}><Select data value={zoom} onChange={e=>setZoom(Number(e.target.value))} options={ZOOMS.map(z=>({value:z,label:z+'%'}))}/></Field></Inline>:null}
  {loading?<Text role="status">{t.loading}</Text>:null}{error?<Notice tone="danger" actions={<Button onClick={()=>setAttempt(v=>v+1)}>{t.retry}</Button>}>{error}</Notice>:null}
  {thumbnails&&count>1?<Inline wrap role="group" aria-label={t.thumbnails}>{Array.from({length:count},(_,i)=><Button key={i} aria-current={current===i+1?'page':undefined} onClick={()=>move(i+1)}>{kind==='pdf'&&pdf?<PdfThumbnail pdf={pdf} number={i+1} label={t.page+' '+(i+1)}/>:kind==='images'&&pages[i]?.thumbnail?<Image src={pages[i].thumbnail} alt={pages[i].alt||t.page+' '+(i+1)}/>:<>{t.page}{' '}
-{/* @ts-expect-error Text has no kind prop (variant="data" is its data font); kept as it is in this slice */}
+{/* @ts-expect-error Text has no kind prop (variant="data" is its data font); kept as it is in this slice (issue 938) */}
 <Text as="span" kind="data">{i+1}</Text></>}</Button>)}</Inline>:null}
  <div ref={viewport} className="plx-document-viewer__viewport" dir={kind==='text'?undefined:'ltr'} data-zoom={zoom} tabIndex={0} role="region" aria-label={label||t.page} aria-busy={loading||undefined}>
  {kind==='pdf'&&pdf?<><canvas ref={canvas} role="img" aria-label={(label||t.page)+' '+current}/><Text className="plx-document-viewer__pdf-text">{accessible}</Text></>:kind==='images'&&pages[current-1]?<Image key={pages[current-1].src} src={pages[current-1].src} alt={pages[current-1].alt||t.page+' '+current} fit="contain"/>:kind==='text'&&text?<pre className="plx-document-viewer__text">{text}</pre>:!loading&&!error?<Text>{t.empty}</Text>:null}
