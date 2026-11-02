@@ -144,6 +144,8 @@ child({ units: ['components/RichTextEditor', 'components/DatePicker', 'patterns/
 child({ units: ['components/Dialog'] }, 'drawer-motion-912.test.js');
 // the gray category is "gray"; "grey" still works, Deprecated (issue 882, item 14)
 child({ units: ['components/Tag', 'components/DataPill', 'components/ColorSwatch'] }, 'gray-category-882.test.js');
+// Carousel and Tabs effects run when their inputs change, not after every render (issue 882, item 5)
+child({ units: ['components/Carousel', 'components/Tabs'] }, 'effect-deps-882.test.js');
 child({ units: ['patterns/AppShell'], apps: ['dashboard', 'projects', 'messages', 'contacts', 'calendar', 'tasks', 'notes', 'bookmarks', 'files', 'settings', 'dam'] }, 'rtl-whole-page.test.js');
 if (!changed.wants({ units: ['patterns/AppShell', 'patterns/SettingsLayout', 'patterns/SplitView', 'components/Toolbar', 'patterns/ActionBar', 'components/VisuallyHidden', 'providers/DirectionProvider', 'components/Checkbox', 'components/Fieldset', 'components/Icon'] })) {
   if (failedChildren.length) { console.log(childSummary() + ' (Layout\'s own checks: nothing in scope)'); process.exit(1); }

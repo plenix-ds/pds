@@ -395,10 +395,12 @@ function NextEngine(props) {
   // the area to watch the end in: the grid's own scroll area when it scrolls, else the window (a grid that grows with the
   // page); read after each layout, so it follows the grid's height
   const [cardRoot, setCardRoot] = React.useState(null);
+  const cardRootNow = React.useRef(null);
   React.useLayoutEffect(() => {
     if (!moreCards) return;
     const h = holder.current, next = h && h.scrollHeight > h.clientHeight + 1 ? holder : null;
-    setCardRoot((was) => (was === next ? was : next));
+    // set only on a change, compared outside the state updater (the pattern that looped in useVirtualizer, #825; #882)
+    if (cardRootNow.current !== next) { cardRootNow.current = next; setCardRoot(next); }
   });
   // a fresh observer for each chunk (the root object is new per cardLimit), so its first report says whether the end is still
   // near after the cards just drawn: one chunk per report, never a run of chunks on a stale answer

@@ -82,7 +82,7 @@ function useTabsFit(rootRef, listRef, count, key) {
       return r.right > box.right + 0.5 || r.left < box.left - 0.5;
     });
     if (out) setFit(fit - 1);
-  });
+  }, [fit, count, key, width]);   // again after each step down, and after each reset (#882: not after every render)
   return Math.max(1, Math.min(fit, count));
 }
 
@@ -96,7 +96,8 @@ export function Tabs({ variant = 'contained', orientation = 'horizontal', items,
   const refs = React.useRef({});
   const root = React.useRef(null), list = React.useRef(null);
   const vertical = orientation === 'vertical';
-  const measured = useTabsFit(root, list, items.length, items.map((t) => t.label).join('|') + '|' + String(current));
+  // what changes a tab's width: its label, its count and whether it has an icon, and the selected tab
+  const measured = useTabsFit(root, list, items.length, items.map((t) => t.label + (t.count !== undefined ? '#' + t.count : '') + (t.icon ? '*' : '')).join('|') + '|' + String(current));
   const fit = vertical ? items.length : measured;
   // the shown tabs: the first `fit`; the selected tab takes the last place when it is not among them
   const at = items.findIndex((t) => t.value === current);

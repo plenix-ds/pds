@@ -87,13 +87,17 @@ export function Carousel({ label, children, perView = 1, controls = 'both', auto
   }, [per, n]);
   const go = (p) => { const q = clamp(p, 0, pages - 1); setPage(q); scrollTo(q); };
 
-  // the page in view, from the scroll position (the strip may have been scrolled by touch, a trackpad or the keys)
+  // the page in view, from the scroll position (the strip may have been scrolled by touch, a trackpad or the keys). The
+  // listener is added once; it reads the current page and counts from a ref, so a render does not re-add it (#882)
+  const latest = React.useRef(null);
+  latest.current = { page, pages, per, setPage };
   React.useEffect(() => {
     const el = track.current;
     if (!el) return undefined;
     let frame = 0;
     const read = () => {
       frame = 0;
+      const { page, pages, per, setPage } = latest.current;
       if (el.children.length < 1) return;
       const first = el.children[0].getBoundingClientRect(), second = el.children[1] ? el.children[1].getBoundingClientRect() : null;
       const pitch = second ? Math.abs(second.left - first.left) : first.width;
@@ -105,7 +109,7 @@ export function Carousel({ label, children, perView = 1, controls = 'both', auto
     el.addEventListener('scroll', onScroll, { passive: true });
     if (shown.current !== per) { if (shown.current) onScroll(); shown.current = per; }   // fewer or more slides at once move the pages under the same scroll position: read them again
     return () => { el.removeEventListener('scroll', onScroll); if (frame) cancelAnimationFrame(frame); };
-  });
+  }, []);
 
   // a page set from outside scrolls the strip
   React.useEffect(() => { if (pageProp !== undefined) scrollTo(pageProp); }, [pageProp]);
