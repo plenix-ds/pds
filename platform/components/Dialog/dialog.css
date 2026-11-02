@@ -3,7 +3,9 @@
 .plx-modal-layer::before{background-color:var(--plx-comp-modal-layer-before-background);content:"";inset-block-end:0;inset-block-start:0;inset-inline-end:0;inset-inline-start:0;opacity:var(--plx-comp-modal-layer-before-opacity);position:absolute;z-index:var(--plx-comp-modal-layer-before-z-index);}
 .plx-modal-layer--drawer{align-items:stretch;justify-content:flex-end;padding-block-end:0;padding-block-start:0;padding-inline-end:0;padding-inline-start:0;}
 .plx-modal-layer--start{justify-content:flex-start;}
-.plx-dialog{background-color:var(--plx-comp-dialog-background);border-bottom-left-radius:var(--plx-comp-dialog-radius);border-bottom-right-radius:var(--plx-comp-dialog-radius);border-top-left-radius:var(--plx-comp-dialog-radius);border-top-right-radius:var(--plx-comp-dialog-radius);box-shadow:var(--plx-comp-dialog-shadow);color:var(--plx-comp-dialog-text);display:flex;flex-direction:column;inline-size:100%;max-block-size:100%;outline-color:var(--plx-sys-boundary-outline-color);outline-width:var(--plx-sys-boundary-outline-width);overflow-x:hidden;overflow-y:hidden;position:relative;}
+/* its motion pops in (moved from motion.css, Styling Standard 3.6: each component owns its own; reduced motion sets the durations to 0s);
+   it comes before the Drawer's rules, so a Drawer (also a .plx-dialog) slides in with its own motion (issue 912) */
+.plx-dialog{animation-duration:var(--plx-sys-motion-duration-quick);animation-name:motion-pop-in;animation-timing-function:var(--plx-sys-motion-ease-enter);background-color:var(--plx-comp-dialog-background);border-bottom-left-radius:var(--plx-comp-dialog-radius);border-bottom-right-radius:var(--plx-comp-dialog-radius);border-top-left-radius:var(--plx-comp-dialog-radius);border-top-right-radius:var(--plx-comp-dialog-radius);box-shadow:var(--plx-comp-dialog-shadow);color:var(--plx-comp-dialog-text);display:flex;flex-direction:column;inline-size:100%;max-block-size:100%;outline-color:var(--plx-sys-boundary-outline-color);outline-width:var(--plx-sys-boundary-outline-width);overflow-x:hidden;overflow-y:hidden;position:relative;}
 .plx-dialog:focus,
 .plx-dialog:where(:not(.is-focused)){outline-style:solid;}
 .plx-dialog.is-focused{outline-style:none;}
@@ -34,7 +36,5 @@
 .plx-modal-layer--non-modal{pointer-events:none;}
 .plx-modal-layer--non-modal::before{content:none;}
 .plx-dialog--non-modal{pointer-events:auto;}
-/* its motion (moved from motion.css, Styling Standard 3.6: each component owns its own; reduced motion sets the durations to 0s) */
-.plx-dialog{animation-duration:var(--plx-sys-motion-duration-quick);animation-name:motion-pop-in;animation-timing-function:var(--plx-sys-motion-ease-enter);}
 /* the modal backdrop fades in (moved from motion.css; Sheet and CommandPalette use the same layer) */
 :where(.plx-modal-layer)::before{animation-duration:var(--plx-sys-motion-duration-quick);animation-name:motion-fade-in;animation-timing-function:var(--plx-sys-motion-ease-standard);}

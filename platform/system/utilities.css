@@ -4,7 +4,10 @@
    shrink, basis 0). They win over component rules (as the inline styles they replaced did), so an application never sets
    style itself. A color that comes from the data is a hue name on data-plx-color, read by plx-u-bg-data (batch 280: no
    style attribute, ever). Generated in batch 151 from the suite applications; add a class here (sorted,
-   token values only) when a layout needs one, never a style in an application. */
+   token values only) when a layout needs one, never a style in an application.
+   Going away (issue 882; VERSIONING.md, Deprecation): the classes listed in platform/standards/deprecated-classes.json,
+   which nothing used when they were marked. They keep working until they are removed, no earlier than the next minor
+   release; check-style fails on a new use (rule deprecated-classes). */
 .plx-u-absolute{position:absolute;}
 .plx-u-auto-rows-auto{grid-auto-rows:auto;}
 .plx-u-auto-rows-max-content{grid-auto-rows:max-content;}

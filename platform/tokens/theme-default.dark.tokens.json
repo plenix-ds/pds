@@ -3555,6 +3555,7 @@
     },
     "data-grid-menu-button-hover": {
       "$value": "{plx-ref.color-gray-800}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): it keeps working, and is removed no earlier than the next minor release.",
       "$type": "color",
       "$extensions": {
         "plenix": {

@@ -8,4 +8,9 @@ const slots = {};
 // the one catalog object LocaleProvider holds for a language, filled in place by addLanguage
 export function languageSlot(code) { return slots[code] || (slots[code] = {}); }
 // turn a language on: its built-in words, before the first render (a translator made earlier keeps what it had)
-export function addLanguage(code, catalog) { Object.assign(languageSlot(code), catalog); }
+// The page hears it ('plenix:language', issue 882): a LocaleProvider already showing that language draws again with its words
+// (the CDN's plenix-ar.js can arrive after the first render, when a person switches to Arabic without a reload)
+export function addLanguage(code, catalog) {
+  Object.assign(languageSlot(code), catalog);
+  if (typeof window !== 'undefined' && typeof window.dispatchEvent === 'function' && typeof CustomEvent === 'function') window.dispatchEvent(new CustomEvent('plenix:language', { detail: { code } }));
+}

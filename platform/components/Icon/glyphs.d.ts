@@ -9,5 +9,7 @@ export declare const NAMES: Record<string, [string, number]>;
 export declare const MIRRORED: string;
 /** the whole Material library's symbol names, space separated */
 export declare const LIBRARY: string;
+/** the four name tables together, as the npm package's ES modules load them (library.ts loadNames) */
+export type IconNames = { SYMBOLS: string; NAMES: Record<string, [string, number]>; MIRRORED: string; LIBRARY: string };
 /** the Material Symbols commit the library is taken from */
 export declare const LIBRARY_COMMIT: string;

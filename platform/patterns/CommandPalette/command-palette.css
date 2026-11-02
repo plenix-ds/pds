@@ -2,5 +2,4 @@
    at the top of the modal layer (inside its inset), so the list grows downward and the field never moves while the
    results change; the body keeps the dialog padding. Anatomy and API: CommandPalette.jsx. */
 .plx-modal-layer:has(> .plx-command-palette){align-items:flex-start;}
-.plx-command-palette .plx-command-palette__menu{row-gap:var(--plx-comp-command-palette-gap);}
-.plx-command-palette .plx-command-palette__menu{--plx-comp-command-menu-context-list-max-height:var(--plx-comp-command-palette-list-max-height);}
+.plx-command-palette .plx-command-palette__menu{--plx-comp-command-menu-context-list-max-height:var(--plx-comp-command-palette-list-max-height);row-gap:var(--plx-comp-command-palette-gap);}

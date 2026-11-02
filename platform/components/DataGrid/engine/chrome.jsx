@@ -23,8 +23,8 @@ import { cx } from '../../../utils/cx.ts';
 import { Inline } from '../../Stack/Stack.tsx';
 import { words } from './helpers.jsx';
 import { Text } from '../../Text/Text.tsx';
-import { Select } from '../../Input/Input.jsx';
-import { Pagination } from '../../Pagination/Pagination.jsx';
+import { Select } from '../../Input/Input.tsx';
+import { Pagination } from '../../Pagination/Pagination.tsx';
 
 export function failureState({ failed, B, S, onRetry, remoteError, setRetry }) {
   return failed ? (

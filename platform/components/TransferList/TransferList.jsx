@@ -48,7 +48,7 @@ import { devWarn } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
 import { announce } from '../../utils/announce.tsx';
 import { Button } from '../Button/Button.tsx';
-import { SearchField } from '../SearchField/SearchField.jsx';
+import { SearchField } from '../SearchField/SearchField.tsx';
 import { useVirtualizer, VirtualGap, VirtualProbe } from '../../hooks/useVirtualizer.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import { useReadOnly } from '../../providers/ReadOnly.tsx';

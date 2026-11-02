@@ -14,8 +14,8 @@
 import React from 'react';
 import { Stack } from '../../components/Stack/Stack.tsx';
 import { EmptyState } from '../../components/EmptyState/EmptyState.tsx';
-import { Field } from '../../components/Field/Field.jsx';
-import { Textarea } from '../../components/Input/Input.jsx';
+import { Field } from '../../components/Field/Field.tsx';
+import { Textarea } from '../../components/Input/Input.tsx';
 import { Badge } from '../../components/Badge/Badge.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Notice } from '../../components/Notice/Notice.tsx';

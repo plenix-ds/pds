@@ -15,9 +15,9 @@
 import React from 'react';
 import { Dialog } from '../../components/Dialog/Dialog.jsx';
 import { Stack } from '../../components/Stack/Stack.tsx';
-import { Field } from '../../components/Field/Field.jsx';
-import { Select } from '../../components/Input/Input.jsx';
-import { Checkbox } from '../../components/Checkbox/Checkbox.jsx';
+import { Field } from '../../components/Field/Field.tsx';
+import { Select } from '../../components/Input/Input.tsx';
+import { Checkbox } from '../../components/Checkbox/Checkbox.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Badge } from '../../components/Badge/Badge.tsx';
 import { Link } from '../../components/Link/Link.tsx';

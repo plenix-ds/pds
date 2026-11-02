@@ -13,8 +13,8 @@
 */
 import React from 'react';
 import { Stack } from '../../components/Stack/Stack.tsx';
-import { Field } from '../../components/Field/Field.jsx';
-import { Input, Textarea } from '../../components/Input/Input.jsx';
+import { Field } from '../../components/Field/Field.tsx';
+import { Input, Textarea } from '../../components/Input/Input.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { WizardDialog } from '../WizardDialog/WizardDialog.jsx';

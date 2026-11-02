@@ -87,6 +87,9 @@ jobs:
       - name: Plenix style check (the style rules Stylelint cannot check; style-plan-30)
         run: node check-style.js
 
+      - name: "Import check (ESLint import/no-unresolved: every relative import names a file that exists as written; #708)"
+        run: npm run lint:js
+
       - name: Spec check
         run: |
           if [ -f platform/design-system/inventory.js ]; then node check-spec.js; else echo "skipped: no design system"; fi

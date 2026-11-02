@@ -30,7 +30,7 @@ import CircleInfoIcon from 'plenix-platform/icons/plenix/circle-info';
 import { DragHandle } from '../../DragHandle/DragHandle.jsx';
 import EdTextIcon from 'plenix-platform/icons/plenix/ed-text';
 import { Popover } from '../../Popover/Popover.jsx';
-import { Select, Input } from '../../Input/Input.jsx';
+import { Select, Input } from '../../Input/Input.tsx';
 import { Button } from '../../Button/Button.tsx';
 import ChevronDownIcon from 'plenix-platform/icons/plenix/chevron-down';
 

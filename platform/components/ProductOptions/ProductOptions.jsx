@@ -55,10 +55,10 @@
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { useUid } from '../../utils/layer.ts';
-import { RadioTiles } from '../RadioTiles/RadioTiles.jsx';
+import { RadioTiles } from '../RadioTiles/RadioTiles.tsx';
 import { ColorSwatch } from '../ColorSwatch/ColorSwatch.jsx';
-import { NumberInput } from '../NumberInput/NumberInput.jsx';
-import { Field } from '../Field/Field.jsx';
+import { NumberInput } from '../NumberInput/NumberInput.tsx';
+import { Field } from '../Field/Field.tsx';
 import { Icon } from '../Icon/Icon.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import AlertIcon from 'plenix-platform/icons/plenix/alert';

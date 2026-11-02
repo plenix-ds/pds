@@ -372,6 +372,7 @@
     },
     "space-stack-2xl": {
       "$value": "{plx-ref.space-32px}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): it keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
     "space-inset-xs": {
@@ -408,6 +409,7 @@
     },
     "space-cluster-lg": {
       "$value": "{plx-ref.space-16px}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): it keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
     "space-layout-sm": {

@@ -11,4 +11,10 @@ declare global {
   /** the release, from package.json (Vite's define in vite.platform.config.mjs and vite.packages.config.mjs; platform/version.ts) */
   const __PLENIX_VERSION__: string | undefined;
 }
+// the popover attribute (the top layer, utils/floating.ts): in browsers, not yet in @types/react 18
+declare module 'react' {
+  interface HTMLAttributes<T> {
+    popover?: '' | 'auto' | 'manual';
+  }
+}
 export {};

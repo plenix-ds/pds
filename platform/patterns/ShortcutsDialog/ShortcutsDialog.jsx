@@ -13,7 +13,7 @@
 import React from 'react';
 import { Dialog } from '../../components/Dialog/Dialog.jsx';
 import { Stack, Inline } from '../../components/Stack/Stack.tsx';
-import { SearchField } from '../../components/SearchField/SearchField.jsx';
+import { SearchField } from '../../components/SearchField/SearchField.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { Kbd } from '../../components/Kbd/Kbd.tsx';
 import { Button } from '../../components/Button/Button.tsx';

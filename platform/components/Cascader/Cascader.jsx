@@ -67,7 +67,7 @@ import { cx } from '../../utils/cx.ts';
 import { highlightMatch, matchesText } from '../../utils/highlight.tsx';
 import { useDescribedBy } from '../../utils/describedBy.ts';
 import { useReadOnly } from '../../providers/ReadOnly.tsx';
-import { Tag } from '../Tag/Tag.jsx';
+import { Tag } from '../Tag/Tag.tsx';
 import { MillerColumns } from '../MillerColumns/MillerColumns.jsx';
 import { useBranchLoader } from '../../hooks/useBranchLoader.ts';
 import { announce } from '../../utils/announce.tsx';

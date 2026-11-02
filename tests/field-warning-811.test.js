@@ -16,7 +16,7 @@ const read = (f) => fs.readFileSync(path.join(ROOT, f), 'utf8');
 let passed = 0, failed = 0;
 const check = (name, fn) => { if (!shared.wanted(name)) return; try { fn(); passed++; shared.record(name, true); } catch (e) { failed++; shared.record(name, false, e.message); console.log('FAIL ' + name + ': ' + e.message); } };
 
-const field = read('components/Field/Field.jsx');
+const field = read('components/Field/Field.tsx');
 check('Field takes warning, shows it with an icon and the word, politely', () => {
   assert.ok(/error, warning, required/.test(field), 'the prop');
   assert.ok(/role="status"/.test(field) && /plx-field__warning/.test(field), 'the status line');
@@ -29,16 +29,17 @@ check('the control gets warning unless it sets its own', () => assert.ok(/child\
 
 const controls = ['Input/Input', 'Combobox/Combobox', 'Cascader/Cascader', 'TreeSelect/TreeSelect', 'TimeZoneSelect/TimeZoneSelect', 'TimePicker/TimePicker', 'DatePicker/DatePicker', 'EntityPicker/EntityPicker', 'OtpInput/OtpInput'];
 check('every control that sets aria-invalid marks data-plx-warning beside it', () => controls.forEach((c) => {
-  const s = read('components/' + c + '.jsx');
+  // the control's source under whichever name it has now: TypeScript (.tsx, #708) or not yet (.jsx)
+  const s = read(['.tsx', '.jsx'].map((x) => 'components/' + c + x).find((f) => fs.existsSync(path.join(ROOT, f))) || 'components/' + c + '.jsx');
   const a = (s.match(/aria-invalid=\{/g) || []).length, w = (s.match(/data-plx-warning=\{warning \|\| undefined\}/g) || []).length;
   assert.ok(a > 0 && w === a, c + ': ' + a + ' aria-invalid, ' + w + ' data-plx-warning');
 }));
 check('the controls that draw their own box take warning too', () => {
   assert.ok(/data-plx-warning=\{warning \|\| undefined\}>/.test(read('components/CodeEditor/CodeEditor.jsx')), 'CodeEditor');
   assert.ok(/data-plx-warning=\{warning \|\| undefined\} \{\.\.\.rest\}/.test(read('components/RichTextEditor/RichTextEditor.jsx')), 'RichTextEditor');
-  assert.ok(/data-plx-warning=\{isWarning \|\| undefined\}/.test(read('components/InputGroup/InputGroup.jsx')), 'InputGroup');
-  assert.ok(/warning=\{warning\}/.test(read('components/NumberInput/NumberInput.jsx')), 'NumberInput passes it to its group');
-  assert.ok(/warning=\{warning\}/.test(read('components/RelativeDateInput/RelativeDateInput.jsx')), 'RelativeDateInput passes it on');
+  assert.ok(/data-plx-warning=\{isWarning \|\| undefined\}/.test(read('components/InputGroup/InputGroup.tsx')), 'InputGroup');
+  assert.ok(/warning=\{warning\}/.test(read('components/NumberInput/NumberInput.tsx')), 'NumberInput passes it to its group');
+  assert.ok(/warning=\{warning\}/.test(read('components/RelativeDateInput/RelativeDateInput.tsx')), 'RelativeDateInput passes it on');
 });
 
 const input = read('components/Input/input.css');

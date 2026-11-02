@@ -36,7 +36,7 @@
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { Button } from '../../components/Button/Button.tsx';
-import { Input } from '../../components/Input/Input.jsx';
+import { Input } from '../../components/Input/Input.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { Tooltip } from '../../components/Tooltip/Tooltip.tsx';
 import { PanelTrigger, PanelHead, Pick, MultiPick, useReorder } from '../CommandBar/panel-parts.jsx';

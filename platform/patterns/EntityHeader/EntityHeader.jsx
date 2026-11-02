@@ -113,7 +113,7 @@ import { Text } from '../../components/Text/Text.tsx';
 import { Badge } from '../../components/Badge/Badge.tsx';
 import { AvatarGroup } from '../../components/AvatarGroup/AvatarGroup.jsx';
 import { ProgressBar } from '../../components/ProgressBar/ProgressBar.tsx';
-import { Tag } from '../../components/Tag/Tag.jsx';
+import { Tag } from '../../components/Tag/Tag.tsx';
 import { Link } from '../../components/Link/Link.tsx';
 import AddIcon from 'plenix-platform/icons/plenix/add';
 import DocTextIcon from 'plenix-platform/icons/plenix/doc-text';

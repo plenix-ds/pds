@@ -12,8 +12,8 @@ import { Button } from '../Button/Button.tsx';
 import { Notice } from '../Notice/Notice.tsx';
 import { Menu, MenuItem, MenuSub } from '../Menu/Menu.jsx';
 import { Dialog } from '../Dialog/Dialog.jsx';
-import { Field } from '../Field/Field.jsx';
-import { Textarea } from '../Input/Input.jsx';
+import { Field } from '../Field/Field.tsx';
+import { Textarea } from '../Input/Input.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import SparkleIcon from 'plenix-platform/icons/plenix/sparkle';
 export function RefineMenu({ onRefine, disabled = false, label, strings, className }) {

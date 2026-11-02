@@ -53,9 +53,9 @@ check('matchesText: found and absent', () => { assert.strictEqual(matchesText('M
 check('matchesText agrees with the marks', () => ['Maya', 'مُحَمَّد', 'كـتاب'].forEach((l) => [l.slice(1, 3), 'zz', 'محمد'].forEach((t) => assert.strictEqual(matchesText(l, t), spans(html(l, t)).length > 0, l + ' / ' + t))));
 
 const read = (f) => fs.readFileSync(path.join(ROOT, 'platform', 'components', f), 'utf8');
-check('SearchField, Combobox, Cascader and TreeSelect use highlightMatch', () => ['SearchField/SearchField.jsx', 'Combobox/Combobox.jsx', 'Cascader/Cascader.jsx', 'TreeSelect/TreeSelect.jsx'].forEach((f) => assert.ok(/highlightMatch\(/.test(read(f)), f)));
-check('Combobox, Cascader and TreeSelect decide what is listed with matchesText', () => ['Combobox/Combobox.jsx', 'Cascader/Cascader.jsx', 'TreeSelect/TreeSelect.jsx'].forEach((f) => { const s = read(f); assert.ok(/matchesText\(/.test(s), f); assert.ok(!/label\)\.toLowerCase\(\)\.indexOf/.test(s), f + ' keeps its own match'); }));
-check('SearchField keeps no match function of its own', () => assert.ok(!/function marked\(/.test(read('SearchField/SearchField.jsx'))));
+check('SearchField, Combobox, Cascader and TreeSelect use highlightMatch', () => ['SearchField/SearchField.tsx', 'Combobox/Combobox.tsx', 'Cascader/Cascader.jsx', 'TreeSelect/TreeSelect.jsx'].forEach((f) => assert.ok(/highlightMatch\(/.test(read(f)), f)));
+check('Combobox, Cascader and TreeSelect decide what is listed with matchesText', () => ['Combobox/Combobox.tsx', 'Cascader/Cascader.jsx', 'TreeSelect/TreeSelect.jsx'].forEach((f) => { const s = read(f); assert.ok(/matchesText\(/.test(s), f); assert.ok(!/label\)\.toLowerCase\(\)\.indexOf/.test(s), f + ' keeps its own match'); }));
+check('SearchField keeps no match function of its own', () => assert.ok(!/function marked\(/.test(read('SearchField/SearchField.tsx'))));
 // ───────── in the browser: a match right after a space keeps the space (Combobox without marks) ─────────
 const CASES = [
   { dir: 'ltr', name: 'Combobox ltr: a match right after a space keeps the space', options: ['Banana split', 'Maya Chen', 'Dan Anders'], label: 'Dan Anders', text: 'an' },

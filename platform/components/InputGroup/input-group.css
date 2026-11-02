@@ -27,8 +27,7 @@
 .plx-input-group__affix--suffix{padding-inline-end:var(--plx-comp-input-group-padding-inline);}
 .plx-input-group__icon+.plx-input-group__affix--prefix{padding-inline-start:var(--plx-comp-input-group-affix-gap);}
 .plx-input-group.plx-input-group--data .plx-input-group__affix{font-family:var(--plx-comp-input-group-data-font-family);word-spacing:var(--plx-sys-font-data-word-spacing);}
-.plx-input-group__icon{align-items:center;color:var(--plx-comp-input-group-icon-color);display:inline-flex;flex-shrink:0;padding-inline-start:var(--plx-comp-input-group-padding-inline);}
-.plx-input-group__icon{--plx-comp-icon-size:var(--plx-comp-input-group-icon-size);}
+.plx-input-group__icon{--plx-comp-icon-size:var(--plx-comp-input-group-icon-size);align-items:center;color:var(--plx-comp-input-group-icon-color);display:inline-flex;flex-shrink:0;padding-inline-start:var(--plx-comp-input-group-padding-inline);}
 .plx-input-group__box.is-disabled>.plx-input-group__affix,.plx-input-group__box.is-disabled>.plx-input-group__icon{color:var(--plx-comp-input-group-disabled-text);}
 /* attached buttons and selects keep their width; their joined edges are their own (Button and Select joined) */
 .plx-input-group>:not(.plx-input-group__box){flex-shrink:0;}

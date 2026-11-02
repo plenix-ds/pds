@@ -16,7 +16,7 @@ import { cx } from '../../utils/cx.ts';
 import { Dialog } from '../../components/Dialog/Dialog.jsx';
 import { Tree } from '../../components/Tree/Tree.jsx';
 import { FileRow,FileRowList } from '../../components/FileRow/FileRow.jsx';
-import { SearchField } from '../../components/SearchField/SearchField.jsx';
+import { SearchField } from '../../components/SearchField/SearchField.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 export function FilePicker({open=false,onClose,items=[],folders=[],mode='files',multiple=false,initialSelected=[],onPick,strings,className}){
  const t=useStrings('filePicker',strings),[selected,setSelected]=React.useState(initialSelected),[folder,setFolder]=React.useState(null),[query,setQuery]=React.useState(''),[busy,setBusy]=React.useState(false),[error,setError]=React.useState('');

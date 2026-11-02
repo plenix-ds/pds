@@ -14,8 +14,7 @@
 .plx-inline-edit--data .plx-inline-edit__read{font-family:var(--plx-comp-inline-edit-read-data-font-family);word-spacing:var(--plx-sys-font-data-word-spacing);}
 /* a text area's read view keeps its lines and the text area's padding */
 .plx-inline-edit--textarea .plx-inline-edit__read{align-items:flex-start;padding-block-end:var(--plx-comp-inline-edit-read-textarea-padding-block);padding-block-start:var(--plx-comp-inline-edit-read-textarea-padding-block);white-space:pre-wrap;}
-.plx-inline-edit__hint{color:var(--plx-comp-inline-edit-hint-text);display:inline-flex;flex-shrink:0;visibility:hidden;}
-.plx-inline-edit__hint{--plx-comp-icon-size:var(--plx-comp-inline-edit-hint-size);}
+.plx-inline-edit__hint{--plx-comp-icon-size:var(--plx-comp-inline-edit-hint-size);color:var(--plx-comp-inline-edit-hint-text);display:inline-flex;flex-shrink:0;visibility:hidden;}
 .plx-inline-edit__read:hover .plx-inline-edit__hint,
 .plx-inline-edit__read.is-hover .plx-inline-edit__hint,
 .plx-inline-edit__read:focus-visible .plx-inline-edit__hint,

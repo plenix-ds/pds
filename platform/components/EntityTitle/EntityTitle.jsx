@@ -32,7 +32,7 @@ import { cx } from '../../utils/cx.ts';
 import { useTruncated } from '../../utils/overflow.ts';
 import { asIcon } from '../Icon/Icon.tsx';
 import { Badge } from '../Badge/Badge.tsx';
-import { Tag } from '../Tag/Tag.jsx';
+import { Tag } from '../Tag/Tag.tsx';
 import { Tooltip } from '../Tooltip/Tooltip.tsx';
 import { Skeleton } from '../Loading/Loading.tsx';
 

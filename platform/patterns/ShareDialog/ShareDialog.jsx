@@ -17,8 +17,8 @@
 import React from 'react';
 import { Dialog } from '../../components/Dialog/Dialog.jsx';
 import { Stack, Inline } from '../../components/Stack/Stack.tsx';
-import { Field } from '../../components/Field/Field.jsx';
-import { Select } from '../../components/Input/Input.jsx';
+import { Field } from '../../components/Field/Field.tsx';
+import { Select } from '../../components/Input/Input.tsx';
 import { EntityPicker } from '../../components/EntityPicker/EntityPicker.jsx';
 import { RoleLabel } from '../../components/RoleLabel/RoleLabel.jsx';
 import { CopyButton } from '../../components/CopyButton/CopyButton.jsx';

@@ -86,10 +86,10 @@
    "combinator | .plx-brand-lockup--size-md .plx-brand-lockup__mark": 1,
    "combinator | .plx-brand-lockup--size-lg .plx-brand-lockup__mark": 1,
    "combinator | .plx-brand-lockup--size-xl .plx-brand-lockup__mark": 1,
-   "combinator | .plx-brand-lockup--size-sm .plx-brand-lockup__tile": 2,
-   "combinator | .plx-brand-lockup--size-md .plx-brand-lockup__tile": 2,
-   "combinator | .plx-brand-lockup--size-lg .plx-brand-lockup__tile": 2,
-   "combinator | .plx-brand-lockup--size-xl .plx-brand-lockup__tile": 2,
+   "combinator | .plx-brand-lockup--size-sm .plx-brand-lockup__tile": 1,
+   "combinator | .plx-brand-lockup--size-md .plx-brand-lockup__tile": 1,
+   "combinator | .plx-brand-lockup--size-lg .plx-brand-lockup__tile": 1,
+   "combinator | .plx-brand-lockup--size-xl .plx-brand-lockup__tile": 1,
    "combinator | .plx-brand-lockup--tone-brand .plx-brand-lockup__mark": 1,
    "combinator | .plx-brand-lockup--tone-brand .plx-brand-lockup__tile": 1,
    "combinator | .plx-brand-lockup--tone-mono .plx-brand-lockup__tile": 1,
@@ -195,7 +195,7 @@
   "platform/components/Details/details.css": {
    "combinator | .plx-details[open]>.plx-details__summary .plx-details__chevron--open": 1,
    "combinator | .plx-details[open]>.plx-details__summary .plx-details__chevron--closed": 1,
-   "combinator | .plx-details--bordered>.plx-details__summary": 2,
+   "combinator | .plx-details--bordered>.plx-details__summary": 1,
    "combinator | .plx-details--bordered>.plx-details__content": 1,
    "combinator | .plx-details--inline>.plx-details__summary": 1,
    "combinator | .plx-details--inline>.plx-details__summary:hover": 1,
@@ -877,7 +877,7 @@
   },
   "platform/patterns/CommandPalette/command-palette.css": {
    "relational | .plx-modal-layer:has(> .plx-command-palette)": 1,
-   "combinator | .plx-command-palette .plx-command-palette__menu": 2
+   "combinator | .plx-command-palette .plx-command-palette__menu": 1
   },
   "platform/patterns/ComparisonView/comparison-view.css": {
    "relational | .plx-comparison-view__pane:has(.plx-comparison-view__body--scroll:focus-visible)": 1

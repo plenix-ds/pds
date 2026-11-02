@@ -13,7 +13,7 @@ import { Button } from '../Button/Button.tsx';
 import { Text } from '../Text/Text.tsx';
 import { Notice } from '../Notice/Notice.tsx';
 import { Icon } from '../Icon/Icon.tsx';
-import { Chip } from '../Tag/Tag.jsx';
+import { Chip } from '../Tag/Tag.tsx';
 import { Card } from '../Card/Card.jsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import SparkleIcon from 'plenix-platform/icons/plenix/sparkle';

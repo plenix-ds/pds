@@ -12,10 +12,10 @@ import { Stack } from '../../components/Stack/Stack.tsx';
 import { Notice } from '../../components/Notice/Notice.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { cx } from '../../utils/cx.ts';
-import { FileInput } from '../../components/FileInput/FileInput.jsx';
+import { FileInput } from '../../components/FileInput/FileInput.tsx';
 import { FileRow, FileRowList } from '../../components/FileRow/FileRow.jsx';
 import { MenuItem } from '../../components/Menu/Menu.jsx';
-import { Tag, TagList } from '../../components/Tag/Tag.jsx';
+import { Tag, TagList } from '../../components/Tag/Tag.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 export function AttachmentPicker({value=[],onChange,variant='inline',accept='',multiple=true,maxFiles,maxSize,disabled=false,strings,className}){
   devWarn('AttachmentPicker', { variant }, { variant: ['inline','chips'] });

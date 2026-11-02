@@ -1,6 +1,6 @@
 {
   "name": "plenix",
-  "version": "0.82.0",
+  "version": "0.83.0",
   "private": true,
   "description": "Plenix Platform: the design system, component library and apps",
   "scripts": {
@@ -43,6 +43,7 @@
     "test:navigation": "node tests/navigation.test.js",
     "test:types": "node tests/types.test.js",
     "lint:css": "stylelint \"platform/**/*.css\" \"services/**/*.css\"",
+    "lint:js": "eslint platform suite dam/app dashboard projects messages contacts calendar tasks notes bookmarks files settings",
     "lint:unused": "knip --no-exit-code",
     "lint:bundle": "node check-bundle.js",
     "typecheck": "tsc --noEmit"
@@ -51,8 +52,12 @@
     "@babel/standalone": "^7.29.9",
     "@types/react": "18.3.12",
     "@types/react-dom": "18.3.1",
+    "@typescript-eslint/parser": "8.71.2",
     "axe-core": "4.10.3",
     "esbuild": "0.25.10",
+    "eslint": "9.39.5",
+    "eslint-plugin-import": "2.32.0",
+    "eslint-plugin-react-hooks": "7.1.1",
     "knip": "^6.43.0",
     "postcss": "^8.5.32",
     "puppeteer-core": "25.12.0",

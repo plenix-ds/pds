@@ -38,8 +38,8 @@ import { announce } from '../utils/announce.tsx';
 import { fill } from '../utils/fill.ts';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 import type { Catalog } from '../providers/LocaleProvider.tsx';
-import { Button } from '../components/Button/Button.jsx';
-import { Spinner } from '../components/Loading/Loading.jsx';
+import { Button } from '../components/Button/Button.tsx';
+import { Spinner } from '../components/Loading/Loading.tsx';
 
 const h = React.createElement;
 // the props this hook gives Button and Spinner (both still JavaScript, issue 708: their props are not typed yet)

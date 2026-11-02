@@ -3,6 +3,6 @@
 export { Form } from '../patterns/Form/Form.jsx';
 export { FormSection } from '../patterns/Form/Form.jsx';
 export { FormActions } from '../patterns/Form/Form.jsx';
-export { OtpInput } from '../components/OtpInput/OtpInput.jsx';
-export { FieldLayoutContext } from '../components/Field/Field.jsx';
+export { OtpInput } from '../components/OtpInput/OtpInput.tsx';
+export { FieldLayoutContext } from '../components/Field/Field.tsx';
 export { useSearchHistory } from '../hooks/useSearchHistory.ts';

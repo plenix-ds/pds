@@ -1,3 +1,3 @@
-/* Plenix · CountrySelect (platform/components/CountrySelect). Anatomy and API: CountrySelect.jsx. A Combobox
+/* Plenix · CountrySelect (platform/components/CountrySelect). Anatomy and API: CountrySelect.tsx. A Combobox
    (combobox.css) at the large field width: the longest names fit and the field never spans a wide form. */
 .plx-combobox.plx-country-select{max-inline-size:var(--plx-comp-country-select-max-width);}

@@ -10,11 +10,11 @@
 */
 import React from 'react';
 import { devWarn } from '../../utils/devWarn.ts';
-import { InlineEdit } from '../../components/InlineEdit/InlineEdit.jsx';
+import { InlineEdit } from '../../components/InlineEdit/InlineEdit.tsx';
 import { Stack, Inline } from '../../components/Stack/Stack.tsx';
-import { Field } from '../../components/Field/Field.jsx';
-import { Input, Textarea, Select } from '../../components/Input/Input.jsx';
-import { Checkbox } from '../../components/Checkbox/Checkbox.jsx';
+import { Field } from '../../components/Field/Field.tsx';
+import { Input, Textarea, Select } from '../../components/Input/Input.tsx';
+import { Checkbox } from '../../components/Checkbox/Checkbox.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Badge } from '../../components/Badge/Badge.tsx';
 import { Notice } from '../../components/Notice/Notice.tsx';

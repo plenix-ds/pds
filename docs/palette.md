@@ -2,7 +2,7 @@
 
 70 canonical colors in 12 families, including Black and White. Applied from the owner’s revised 70-color chart; no new hex values. Transparent tokens are separate.
 
-Higher numbered shades are darker by Oklab L. System and category role names are preserved. Deprecated aliases last one release; reused names carry only their new meaning.
+Higher numbered shades are darker by Oklab L. System and category role names are preserved; reused names carry only their new meaning. The retired palette aliases (deprecated in 0.48.0) were removed in issue 882 (the changelog's upgrade note names each one's replacement), except `--plx-ref-color-orange-700`, which CTM still uses: it stays Deprecated until CTM moves off it.
 
 | Family | Colors |
 |---|---|
@@ -162,102 +162,4 @@ Higher numbered shades are darker by Oklab L. System and category role names are
 
 | Alias | Destination |
 |---|---|
-| `--plx-ref-color-orange-900` | `{plx-ref.color-brown-800}` |
-| `--plx-ref-color-orange-800` | `{plx-ref.color-brown-700}` |
 | `--plx-ref-color-orange-700` | `{plx-ref.color-brown-500}` |
-| `--plx-ref-color-brown-300` | `{plx-ref.color-orange-300}` |
-| `--plx-ref-color-brown-200` | `{plx-ref.color-orange-200}` |
-| `--plx-ref-color-brown-100` | `{plx-ref.color-orange-100}` |
-| `--plx-ref-color-yellow-900` | `{plx-ref.color-brown-800}` |
-| `--plx-ref-color-yellow-700` | `{plx-ref.color-brown-600}` |
-| `--plx-ref-color-yellow-600` | `{plx-ref.color-green-500}` |
-| `--plx-ref-color-yellow-400` | `{plx-ref.color-yellow-500}` |
-| `--plx-ref-color-yellow-250` | `{plx-ref.color-orange-200}` |
-| `--plx-ref-color-yellow-175` | `{plx-ref.color-yellow-150}` |
-| `--plx-ref-color-green-150` | `{plx-ref.color-yellow-150}` |
-| `--plx-ref-color-cyan-500` | `{plx-ref.color-cyan-300}` |
-| `--plx-ref-color-blue-800` | `{plx-ref.color-blue-700}` |
-| `--plx-ref-color-blue-500` | `{plx-ref.color-blue-400}` |
-| `--plx-ref-color-brown-950` | `{plx-ref.color-brown-900}` |
-| `--plx-ref-color-purple-visited` | `{plx-ref.color-purple-900}` |
-| `--plx-ref-color-purple-visited-light` | `{plx-ref.color-purple-300}` |
-| `--plx-ref-color-category-red` | `{plx-ref.color-red-500}` |
-| `--plx-ref-color-category-red-100` | `{plx-ref.color-red-100}` |
-| `--plx-ref-color-category-red-300` | `{plx-ref.color-red-200}` |
-| `--plx-ref-color-category-red-700` | `{plx-ref.color-red-800}` |
-| `--plx-ref-color-category-green` | `{plx-ref.color-green-300}` |
-| `--plx-ref-color-category-green-100` | `{plx-ref.color-green-100}` |
-| `--plx-ref-color-category-green-300` | `{plx-ref.color-green-200}` |
-| `--plx-ref-color-category-green-700` | `{plx-ref.color-green-700}` |
-| `--plx-ref-color-category-yellow` | `{plx-ref.color-yellow-150}` |
-| `--plx-ref-color-category-yellow-100` | `{plx-ref.color-yellow-100}` |
-| `--plx-ref-color-category-yellow-300` | `{plx-ref.color-yellow-300}` |
-| `--plx-ref-color-category-yellow-700` | `{plx-ref.color-brown-600}` |
-| `--plx-ref-color-category-blue` | `{plx-ref.color-blue-400}` |
-| `--plx-ref-color-category-blue-100` | `{plx-ref.color-blue-100}` |
-| `--plx-ref-color-category-blue-300` | `{plx-ref.color-blue-300}` |
-| `--plx-ref-color-category-blue-700` | `{plx-ref.color-blue-700}` |
-| `--plx-ref-color-category-orange` | `{plx-ref.color-orange-500}` |
-| `--plx-ref-color-category-orange-100` | `{plx-ref.color-orange-100}` |
-| `--plx-ref-color-category-orange-300` | `{plx-ref.color-orange-300}` |
-| `--plx-ref-color-category-orange-700` | `{plx-ref.color-brown-700}` |
-| `--plx-ref-color-category-purple` | `{plx-ref.color-purple-500}` |
-| `--plx-ref-color-category-purple-100` | `{plx-ref.color-purple-100}` |
-| `--plx-ref-color-category-purple-300` | `{plx-ref.color-purple-300}` |
-| `--plx-ref-color-category-purple-700` | `{plx-ref.color-purple-700}` |
-| `--plx-ref-color-category-cyan` | `{plx-ref.color-cyan-300}` |
-| `--plx-ref-color-category-cyan-100` | `{plx-ref.color-cyan-100}` |
-| `--plx-ref-color-category-cyan-300` | `{plx-ref.color-cyan-300}` |
-| `--plx-ref-color-category-cyan-700` | `{plx-ref.color-cyan-700}` |
-| `--plx-ref-color-category-magenta` | `{plx-ref.color-magenta-500}` |
-| `--plx-ref-color-category-magenta-100` | `{plx-ref.color-magenta-100}` |
-| `--plx-ref-color-category-magenta-300` | `{plx-ref.color-magenta-300}` |
-| `--plx-ref-color-category-magenta-700` | `{plx-ref.color-magenta-700}` |
-| `--plx-ref-color-category-lime` | `{plx-ref.color-yellow-150}` |
-| `--plx-ref-color-category-lime-100` | `{plx-ref.color-green-100}` |
-| `--plx-ref-color-category-lime-300` | `{plx-ref.color-green-200}` |
-| `--plx-ref-color-category-lime-700` | `{plx-ref.color-green-700}` |
-| `--plx-ref-color-category-pink` | `{plx-ref.color-pink-300}` |
-| `--plx-ref-color-category-pink-100` | `{plx-ref.color-pink-100}` |
-| `--plx-ref-color-category-pink-300` | `{plx-ref.color-pink-300}` |
-| `--plx-ref-color-category-pink-700` | `{plx-ref.color-pink-700}` |
-| `--plx-ref-color-category-teal` | `{plx-ref.color-teal-500}` |
-| `--plx-ref-color-category-teal-100` | `{plx-ref.color-teal-100}` |
-| `--plx-ref-color-category-teal-300` | `{plx-ref.color-teal-300}` |
-| `--plx-ref-color-category-teal-700` | `{plx-ref.color-teal-700}` |
-| `--plx-ref-color-category-lavender` | `{plx-ref.color-purple-300}` |
-| `--plx-ref-color-category-lavender-100` | `{plx-ref.color-purple-100}` |
-| `--plx-ref-color-category-lavender-300` | `{plx-ref.color-purple-300}` |
-| `--plx-ref-color-category-lavender-700` | `{plx-ref.color-purple-700}` |
-| `--plx-ref-color-category-brown` | `{plx-ref.color-orange-500}` |
-| `--plx-ref-color-category-brown-100` | `{plx-ref.color-orange-100}` |
-| `--plx-ref-color-category-brown-300` | `{plx-ref.color-orange-300}` |
-| `--plx-ref-color-category-brown-700` | `{plx-ref.color-brown-700}` |
-| `--plx-ref-color-category-beige` | `{plx-ref.color-yellow-100}` |
-| `--plx-ref-color-category-beige-100` | `{plx-ref.color-yellow-100}` |
-| `--plx-ref-color-category-beige-300` | `{plx-ref.color-orange-200}` |
-| `--plx-ref-color-category-beige-700` | `{plx-ref.color-brown-600}` |
-| `--plx-ref-color-category-maroon` | `{plx-ref.color-red-800}` |
-| `--plx-ref-color-category-maroon-100` | `{plx-ref.color-red-100}` |
-| `--plx-ref-color-category-maroon-300` | `{plx-ref.color-red-200}` |
-| `--plx-ref-color-category-maroon-700` | `{plx-ref.color-red-800}` |
-| `--plx-ref-color-category-mint` | `{plx-ref.color-green-100}` |
-| `--plx-ref-color-category-mint-100` | `{plx-ref.color-green-100}` |
-| `--plx-ref-color-category-mint-300` | `{plx-ref.color-green-200}` |
-| `--plx-ref-color-category-mint-700` | `{plx-ref.color-green-700}` |
-| `--plx-ref-color-category-olive` | `{plx-ref.color-green-500}` |
-| `--plx-ref-color-category-olive-100` | `{plx-ref.color-yellow-100}` |
-| `--plx-ref-color-category-olive-300` | `{plx-ref.color-orange-200}` |
-| `--plx-ref-color-category-olive-700` | `{plx-ref.color-brown-600}` |
-| `--plx-ref-color-category-apricot` | `{plx-ref.color-orange-200}` |
-| `--plx-ref-color-category-apricot-100` | `{plx-ref.color-orange-100}` |
-| `--plx-ref-color-category-apricot-300` | `{plx-ref.color-orange-300}` |
-| `--plx-ref-color-category-apricot-700` | `{plx-ref.color-brown-700}` |
-| `--plx-ref-color-category-navy` | `{plx-ref.color-blue-950}` |
-| `--plx-ref-color-category-navy-100` | `{plx-ref.color-blue-100}` |
-| `--plx-ref-color-category-navy-300` | `{plx-ref.color-blue-300}` |
-| `--plx-ref-color-category-navy-700` | `{plx-ref.color-blue-700}` |
-| `--plx-ref-color-category-grey` | `{plx-ref.color-gray-400}` |
-| `--plx-ref-color-category-grey-100` | `{plx-ref.color-gray-100}` |
-| `--plx-ref-color-category-grey-300` | `{plx-ref.color-gray-300}` |
-| `--plx-ref-color-category-grey-700` | `{plx-ref.color-gray-700}` |

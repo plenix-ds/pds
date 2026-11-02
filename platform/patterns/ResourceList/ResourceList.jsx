@@ -56,7 +56,7 @@ import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { useUid } from '../../utils/layer.ts';
 import { useSelection } from '../../hooks/useSelection.ts';
-import { Checkbox } from '../../components/Checkbox/Checkbox.jsx';
+import { Checkbox } from '../../components/Checkbox/Checkbox.tsx';
 import { Thumbnail } from '../../components/Thumbnail/Thumbnail.jsx';
 import { Avatar } from '../../components/Avatar/Avatar.jsx';
 import { SectionHeading } from '../../components/SectionHeading/SectionHeading.tsx';

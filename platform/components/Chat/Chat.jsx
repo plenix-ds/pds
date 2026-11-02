@@ -115,7 +115,7 @@ import { Icon } from '../Icon/Icon.tsx';
 import { Spinner } from '../Loading/Loading.tsx';
 import { ProgressSteps } from '../ProgressSteps/ProgressSteps.tsx';
 import { Text } from '../Text/Text.tsx';
-import { Textarea } from '../Input/Input.jsx';
+import { Textarea } from '../Input/Input.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import { Badge } from '../Badge/Badge.tsx';
 import { Popover } from '../Popover/Popover.jsx';

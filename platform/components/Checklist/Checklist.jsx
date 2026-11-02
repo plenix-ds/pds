@@ -14,7 +14,7 @@
 */
 import React from 'react';
 import { Stack, Inline } from '../Stack/Stack.tsx';
-import { Checkbox } from '../Checkbox/Checkbox.jsx';
+import { Checkbox } from '../Checkbox/Checkbox.tsx';
 import { ProgressBar } from '../ProgressBar/ProgressBar.tsx';
 import { Button } from '../Button/Button.tsx';
 import { Text } from '../Text/Text.tsx';

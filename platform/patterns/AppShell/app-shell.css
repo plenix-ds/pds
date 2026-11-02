@@ -1,5 +1,5 @@
 /* Plenix · AppShell. */
-.plx-app-shell{block-size:var(--plx-sys-print-block-size,100dvh);display:flex;flex-direction:column;}
+.plx-app-shell{block-size:var(--plx-sys-print-block-size,100dvh);display:flex;flex-direction:column;padding-block-end:var(--plx-comp-app-shell-padding-block-end);padding-block-start:var(--plx-comp-app-shell-padding-block-start);padding-inline-end:var(--plx-comp-app-shell-padding-inline-end);padding-inline-start:var(--plx-comp-app-shell-padding-inline-start);}
 .plx-app-shell__main{display:flex;flex-basis:0%;flex-grow:1;flex-shrink:1;min-block-size:0;min-inline-size:0;}
 .plx-app-shell__main:focus,
 .plx-app-shell__main.is-focused{outline-style:none;}
@@ -36,7 +36,6 @@
 
 /* the safe areas (Platforms Standard 3.5; every page sets viewport-fit=cover): the header below the top inset, the footer
    or bottom bar above the bottom inset, both sides inside theirs. 0 on a device that keeps nothing (batch 311) */
-.plx-app-shell{padding-block-end:var(--plx-comp-app-shell-padding-block-end);padding-block-start:var(--plx-comp-app-shell-padding-block-start);padding-inline-end:var(--plx-comp-app-shell-padding-inline-end);padding-inline-start:var(--plx-comp-app-shell-padding-inline-start);}
 /* Narrow: the shell's slots for the parent row (above the body) and the bottom navigation bar (below the footer) */
 .plx-app-shell__parent-slot,.plx-app-shell__bar-slot{display:contents;}
 /* Narrow: the shell is clipped, never scrolled: a tooltip or menu reaching past the window's edge cannot shift the page

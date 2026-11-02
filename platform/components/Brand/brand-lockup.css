@@ -25,14 +25,10 @@
 .plx-brand-lockup--size-md .plx-brand-lockup__mark{--plx-comp-icon-size:var(--plx-comp-brand-md-mark-size);}
 .plx-brand-lockup--size-lg .plx-brand-lockup__mark{--plx-comp-icon-size:var(--plx-comp-brand-lg-mark-size);}
 .plx-brand-lockup--size-xl .plx-brand-lockup__mark{--plx-comp-icon-size:var(--plx-comp-brand-xl-mark-size);}
-.plx-brand-lockup--size-sm .plx-brand-lockup__tile{block-size:var(--plx-comp-brand-sm-tile-size);border-radius:var(--plx-comp-brand-sm-tile-radius);inline-size:var(--plx-comp-brand-sm-tile-size);}
-.plx-brand-lockup--size-md .plx-brand-lockup__tile{block-size:var(--plx-comp-brand-md-tile-size);border-radius:var(--plx-comp-brand-md-tile-radius);inline-size:var(--plx-comp-brand-md-tile-size);}
-.plx-brand-lockup--size-lg .plx-brand-lockup__tile{block-size:var(--plx-comp-brand-lg-tile-size);border-radius:var(--plx-comp-brand-lg-tile-radius);inline-size:var(--plx-comp-brand-lg-tile-size);}
-.plx-brand-lockup--size-xl .plx-brand-lockup__tile{block-size:var(--plx-comp-brand-xl-tile-size);border-radius:var(--plx-comp-brand-xl-tile-radius);inline-size:var(--plx-comp-brand-xl-tile-size);}
-.plx-brand-lockup--size-sm .plx-brand-lockup__tile{--plx-comp-icon-size:var(--plx-comp-brand-sm-icon-size);}
-.plx-brand-lockup--size-md .plx-brand-lockup__tile{--plx-comp-icon-size:var(--plx-comp-brand-md-icon-size);}
-.plx-brand-lockup--size-lg .plx-brand-lockup__tile{--plx-comp-icon-size:var(--plx-comp-brand-lg-icon-size);}
-.plx-brand-lockup--size-xl .plx-brand-lockup__tile{--plx-comp-icon-size:var(--plx-comp-brand-xl-icon-size);}
+.plx-brand-lockup--size-sm .plx-brand-lockup__tile{--plx-comp-icon-size:var(--plx-comp-brand-sm-icon-size);block-size:var(--plx-comp-brand-sm-tile-size);border-radius:var(--plx-comp-brand-sm-tile-radius);inline-size:var(--plx-comp-brand-sm-tile-size);}
+.plx-brand-lockup--size-md .plx-brand-lockup__tile{--plx-comp-icon-size:var(--plx-comp-brand-md-icon-size);block-size:var(--plx-comp-brand-md-tile-size);border-radius:var(--plx-comp-brand-md-tile-radius);inline-size:var(--plx-comp-brand-md-tile-size);}
+.plx-brand-lockup--size-lg .plx-brand-lockup__tile{--plx-comp-icon-size:var(--plx-comp-brand-lg-icon-size);block-size:var(--plx-comp-brand-lg-tile-size);border-radius:var(--plx-comp-brand-lg-tile-radius);inline-size:var(--plx-comp-brand-lg-tile-size);}
+.plx-brand-lockup--size-xl .plx-brand-lockup__tile{--plx-comp-icon-size:var(--plx-comp-brand-xl-icon-size);block-size:var(--plx-comp-brand-xl-tile-size);border-radius:var(--plx-comp-brand-xl-tile-radius);inline-size:var(--plx-comp-brand-xl-tile-size);}
 /* the clear space (brand-rules.json): around a lockup that stands on its own, on the 4px grid */
 .plx-brand-lockup--clear.plx-brand-lockup--size-sm{padding-block-end:var(--plx-comp-brand-sm-clear-space);padding-block-start:var(--plx-comp-brand-sm-clear-space);padding-inline-end:var(--plx-comp-brand-sm-clear-space);padding-inline-start:var(--plx-comp-brand-sm-clear-space);}
 .plx-brand-lockup--clear.plx-brand-lockup--size-md{padding-block-end:var(--plx-comp-brand-md-clear-space);padding-block-start:var(--plx-comp-brand-md-clear-space);padding-inline-end:var(--plx-comp-brand-md-clear-space);padding-inline-start:var(--plx-comp-brand-md-clear-space);}

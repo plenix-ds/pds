@@ -32,13 +32,13 @@
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { Button } from '../../components/Button/Button.tsx';
-import { Checkbox } from '../../components/Checkbox/Checkbox.jsx';
+import { Checkbox } from '../../components/Checkbox/Checkbox.tsx';
 import { Dialog } from '../../components/Dialog/Dialog.jsx';
-import { Field } from '../../components/Field/Field.jsx';
+import { Field } from '../../components/Field/Field.tsx';
 import { Icon } from '../../components/Icon/Icon.tsx';
 import { Menu, MenuItem } from '../../components/Menu/Menu.jsx';
-import { Select } from '../../components/Input/Input.jsx';
-import { SearchField } from '../../components/SearchField/SearchField.jsx';
+import { Select } from '../../components/Input/Input.tsx';
+import { SearchField } from '../../components/SearchField/SearchField.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { LiveRegion } from '../../utils/announce.tsx';
 import { PanelTrigger, toggle } from '../CommandBar/panel-parts.jsx';

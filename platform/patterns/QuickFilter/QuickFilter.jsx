@@ -34,10 +34,10 @@
 import React from 'react';
 import { singleChoice } from './single-choice.js';
 import { Button } from '../../components/Button/Button.tsx';
-import { Checkbox, RadioGroup } from '../../components/Checkbox/Checkbox.jsx';
-import { Field } from '../../components/Field/Field.jsx';
-import { Input } from '../../components/Input/Input.jsx';
-import { SearchField } from '../../components/SearchField/SearchField.jsx';
+import { Checkbox, RadioGroup } from '../../components/Checkbox/Checkbox.tsx';
+import { Field } from '../../components/Field/Field.tsx';
+import { Input } from '../../components/Input/Input.tsx';
+import { SearchField } from '../../components/SearchField/SearchField.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { Inline } from '../../components/Stack/Stack.tsx';
 import { formatNumber } from '../../utils/format.ts';

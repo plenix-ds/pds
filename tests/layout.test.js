@@ -68,6 +68,8 @@ child({ units: ['components/Icon'] }, 'icon-module-url-284.test.js');
 child({ units: ['components/Icon'] }, 'icon-retry-283.test.js');
 child({ units: ['components/Icon'] }, 'icon-mv3-284.test.js');
 child({ units: ['components/Icon'] }, 'icon-package-assets-284.test.js');
+// the npm package's ES modules load the icon name tables only when an Icon meets a name (issue 882, item 11)
+child({ units: ['components/Icon'] }, 'icon-names-lazy-882.test.js');
 // the Card accent is removed (issue 621): when the Card or one of the application pages that used it changed
 child({ units: ['components/Card'], apps: ['dashboard', 'calendar', 'settings', 'projects'] }, 'card-accent-621.test.js');
 // a fetched icon asks for one file, a few at a time (issue 642): when the Icon component changed
@@ -89,6 +91,7 @@ child({ units: ['components/Metric', 'charts', 'patterns/RecordPage', 'patterns/
 // the Messages app on the Chat parts and the Chat spec page (issue 637, slice 6): messages/ is an app in changed.js, not a unit (issue 756)
 child({ units: ['components/Chat', 'components/Avatar'], apps: ['messages'] }, 'messages-chat-s6.test.js');
 child({ units: ['utils/richTextClean.ts', 'components/RichText', 'components/RichTextEditor'] }, 'rich-text-clean-689.test.js');   // the rich-text sanitizer against hostile input (issue 689)
+child({ units: ['utils/richTextClean.ts', 'components/RichTextEditor'] }, 'rte-insert-image-884.test.js');   // the editor's Insert image works, left to right and right to left (issue 884)
 // the keyboard patterns of the parts keyboard.test.js does not cover (issue 691)
 child({ units: ['components/Menu', 'components/SplitButton', 'components/Combobox', 'components/Dialog', 'components/Sheet', 'components/Popover', 'patterns/Popconfirm', 'components/Slider', 'components/Checkbox', 'patterns/SplitView', 'components/Resizable', 'components/Calendar', 'components/OtpInput'] }, 'keyboard-apg-691.test.js');
 // the last parts without a keyboard test, and the APG gaps (issue 706)
@@ -137,6 +140,8 @@ child({ units: ['patterns/AppShell', 'patterns/AppHeader', 'patterns/NavPane', '
 child({ units: ['providers/DirectionProvider'] }, 'rtl-charts.test.js');
 child({ units: ['components/NavList', 'components/Fieldset', 'components/Checkbox', 'providers/DirectionProvider'] }, 'rtl-ctm-question.test.js');
 child({ units: ['components/RichTextEditor', 'components/DatePicker', 'patterns/TimeGrid', 'components/Carousel', 'components/DocumentViewer'] }, 'rtl-editing-time.test.js');
+// a Drawer slides in with its own motion, not the dialog's pop-in; reduced motion stills both (issue 912)
+child({ units: ['components/Dialog'] }, 'drawer-motion-912.test.js');
 child({ units: ['patterns/AppShell'], apps: ['dashboard', 'projects', 'messages', 'contacts', 'calendar', 'tasks', 'notes', 'bookmarks', 'files', 'settings', 'dam'] }, 'rtl-whole-page.test.js');
 if (!changed.wants({ units: ['patterns/AppShell', 'patterns/SettingsLayout', 'patterns/SplitView', 'components/Toolbar', 'patterns/ActionBar', 'components/VisuallyHidden', 'providers/DirectionProvider', 'components/Checkbox', 'components/Fieldset', 'components/Icon'] })) {
   if (failedChildren.length) { console.log(childSummary() + ' (Layout\'s own checks: nothing in scope)'); process.exit(1); }

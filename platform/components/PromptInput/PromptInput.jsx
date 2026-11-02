@@ -17,12 +17,12 @@
 */
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
-import { Input, Textarea } from '../Input/Input.jsx';
+import { Input, Textarea } from '../Input/Input.tsx';
 import { Stack, Inline } from '../Stack/Stack.tsx';
-import { Field } from '../Field/Field.jsx';
+import { Field } from '../Field/Field.tsx';
 import { Button } from '../Button/Button.tsx';
-import { FileInput } from '../FileInput/FileInput.jsx';
-import { Chip } from '../Tag/Tag.jsx';
+import { FileInput } from '../FileInput/FileInput.tsx';
+import { Chip } from '../Tag/Tag.tsx';
 import { Menu, MenuItem, MenuRadioGroup } from '../Menu/Menu.jsx';
 import { Notice } from '../Notice/Notice.tsx';
 import { useReadOnly } from '../../providers/ReadOnly.tsx';

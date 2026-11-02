@@ -13,7 +13,7 @@
      Plain text is not an identity store: retain IDs through onMention. Rich HTML is cleaned by RichTextEditor.
 */
 import React from 'react';
-import { Textarea } from '../Input/Input.jsx';
+import { Textarea } from '../Input/Input.tsx';
 import { RichTextEditor } from '../RichTextEditor/RichTextEditor.jsx';
 import { EntityPicker } from '../EntityPicker/EntityPicker.jsx';
 import { Button } from '../Button/Button.tsx';

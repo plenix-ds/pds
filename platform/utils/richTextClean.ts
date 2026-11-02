@@ -5,7 +5,9 @@
    Behavior: Elements outside the list are unwrapped (their text stays); scripts, event and style attributes are dropped,
      except the person's color, background color, font, size and alignment on their text; links keep http(s), mailto and
      relative addresses only; pictures keep http(s) and relative sources only. Returns '' with no document (server).
-   Notes: Used by RichText (its html prop) and RichTextEditor (its value and onChange); published as cleanRichText. */
+   Notes: Used by RichText (its html prop) and RichTextEditor (its value and onChange); published as cleanRichText.
+     SAFE_HREF and SAFE_SRC, its address checks for links and pictures, are also what RichTextEditor's Insert link and Insert
+     image accept (one rule in one place, issue 884). */
 const MENTION_CLASS = 'plx-rich-text-editor__mention';
 const CHECK_CLASS = 'plx-check__input';
 const ALLOWED: Record<string, number> = { P: 1, BR: 1, STRONG: 1, EM: 1, U: 1, S: 1, CODE: 1, SUB: 1, SUP: 1, MARK: 1, A: 1, SPAN: 1, H1: 1, H2: 1, H3: 1, H4: 1, H5: 1, H6: 1,
@@ -16,7 +18,7 @@ const USER_STYLE: Record<string, string[]> = { SPAN: ['color', 'background-color
   P: ['text-align'], H1: ['text-align'], H2: ['text-align'], H3: ['text-align'], H4: ['text-align'], H5: ['text-align'], H6: ['text-align'], TH: ['text-align'], TD: ['text-align'] };
 export const RICH_TEXT_STYLE_PROPERTIES = ['color', 'background-color', 'font-family', 'font-size', 'text-align'];
 export const SAFE_HREF = /^(https?:|mailto:|\/|\.|#|[^:]*$)/i;
-const SAFE_SRC = /^(https?:|\/|\.|[^:]*$)/i;
+export const SAFE_SRC = /^(https?:|\/|\.|[^:]*$)/i;
 
 // the allow-list: a clean copy of the HTML (elements renamed or unwrapped, attributes dropped, styles kept to the person's formatting)
 export function cleanRichText(html: unknown): string {

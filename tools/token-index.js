@@ -44,7 +44,7 @@ function byFile(groups) {
     if (!t || !t.filePath || !t.isSource) continue;
     const o = t.original || {};
     const token = {};
-    for (const k of ['$value', '$type', '$description', '$extensions']) if (o[k] !== undefined) token[k] = o[k];
+    for (const k of ['$value', '$type', '$description', '$extensions', '$deprecated']) if (o[k] !== undefined) token[k] = o[k];
     (files[t.filePath] = files[t.filePath] || []).push({ name: '--' + tier + '-' + key, token });
   }
   return files;
@@ -119,6 +119,8 @@ function tokenIndex(root, written, groups = styleDictionary(root)) {
     t.sets.push({ file: s.file, output: s.output, selector: s.selector, value: toCss(token.$value) });
     for (const r of refsOf(token.$value)) if (!t.refs.includes(r)) t.refs.push(r);
     if (!t.type && token.$type) t.type = token.$type;
+    // a token going away (VERSIONING.md, Deprecation): its W3C $deprecated text, for the spec's token page (issue 882)
+    if (token.$deprecated && !t.deprecated) t.deprecated = token.$deprecated === true ? 'Deprecated.' : String(token.$deprecated);
     // a color role's group and purpose ($extensions.plenix, the color groups of 2026-10-13; check-system rule color-groups)
     const px = token.$extensions && token.$extensions.plenix;
     if (px && px.group && !t.group) { t.group = px.group; t.purpose = px.purpose || ''; }

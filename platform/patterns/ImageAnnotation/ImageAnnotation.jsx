@@ -10,12 +10,12 @@ import { cx } from '../../utils/cx.ts';
 import { Stack, Inline } from '../../components/Stack/Stack.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { Button } from '../../components/Button/Button.tsx';
-import { Field } from '../../components/Field/Field.jsx';
-import { Textarea } from '../../components/Input/Input.jsx';
+import { Field } from '../../components/Field/Field.tsx';
+import { Textarea } from '../../components/Input/Input.tsx';
 import { useReposition } from '../../utils/dnd.ts';
 import { snapToGrid } from '../../utils/grid.ts';
 import { Image } from '../../components/Image/Image.jsx';
-import { Input, Select } from '../../components/Input/Input.jsx';
+import { Input, Select } from '../../components/Input/Input.tsx';
 import { CommentThread } from '../CommentThread/CommentThread.jsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 function AnnotationMark({ annotation, index, active, onSelect, strings }) {

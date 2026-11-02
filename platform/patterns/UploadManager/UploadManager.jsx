@@ -76,7 +76,7 @@ import { Badge } from '../../components/Badge/Badge.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Icon } from '../../components/Icon/Icon.tsx';
 import { ProgressBar } from '../../components/ProgressBar/ProgressBar.tsx';
-import { DropZone } from '../../components/DropZone/DropZone.jsx';
+import { DropZone } from '../../components/DropZone/DropZone.tsx';
 import { Dialog } from '../../components/Dialog/Dialog.jsx';
 import { MenuItem } from '../../components/Menu/Menu.jsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';

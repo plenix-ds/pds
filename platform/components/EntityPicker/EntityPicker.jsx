@@ -47,7 +47,7 @@
 */
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
-import { Tag } from '../Tag/Tag.jsx';
+import { Tag } from '../Tag/Tag.tsx';
 import { Avatar } from '../Avatar/Avatar.jsx';
 import { Icon } from '../Icon/Icon.tsx';
 import { Spinner } from '../Loading/Loading.tsx';

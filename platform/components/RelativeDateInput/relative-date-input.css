@@ -1,6 +1,6 @@
 /* Plenix · RelativeDateInput (platform/components/RelativeDateInput). One row of Platform fields (the preset Select, and
    for a custom range the direction, the amount and the unit), then the dates it means today in the data font, muted.
-   Anatomy and API: RelativeDateInput.jsx. */
+   Anatomy and API: RelativeDateInput.tsx. */
 .plx-relative-date-input{display:flex;flex-direction:column;flex-shrink:var(--plx-comp-field-context-content-flex-shrink,1);inline-size:var(--plx-comp-field-context-content-inline-size,var(--plx-comp-field-context-stretch-inline-size,auto));max-inline-size:100%;row-gap:var(--plx-comp-relative-date-input-row-gap);}
 .plx-relative-date-input__row{align-items:center;column-gap:var(--plx-comp-relative-date-input-row-column-gap);display:flex;flex-wrap:wrap;row-gap:var(--plx-comp-relative-date-input-row-row-gap);}
 .plx-relative-date-input__preset{inline-size:var(--plx-comp-relative-date-input-preset-width);}

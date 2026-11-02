@@ -48,7 +48,7 @@ import { LiveRegion } from '../../utils/announce.tsx';
 import { Icon } from '../Icon/Icon.tsx';
 import { Kbd } from '../Kbd/Kbd.tsx';
 import { Button } from '../Button/Button.tsx';
-import { SearchField } from '../SearchField/SearchField.jsx';
+import { SearchField } from '../SearchField/SearchField.tsx';
 import ArrowLeftIcon from 'plenix-platform/icons/plenix/arrow-left';
 import ChevronRightIcon from 'plenix-platform/icons/plenix/chevron-right';
 import { useStrings } from '../../providers/LocaleProvider.tsx';

@@ -70,19 +70,20 @@
      A bare class name (plx-icon plx-icon--<name>, no component) is deprecated (owner, issue 277 Q3): it still draws the mask from
        the stylesheet in this release, and development warns (dev/style-audit.js); iconMarkup(icon) writes the component's
        markup where a page builds HTML.
-     The Material library's names (library.ts) are built into the browser global, the CDN's plenix.esm.js and the suite. The
-       npm package's ES modules load them the first time a name is not a Plenix name or a registered module (issue 702):
-       until they arrive that icon draws nothing, then it draws; an unknown name warns after they arrive. With
-       library="material" every name that is not a registered module waits for them, so a name in both sets never draws
-       the Plenix symbol first.
+     The name tables (library.ts: the Plenix names, symbols and mirrored symbols, and the Material library's names) are
+       built into the browser global, the CDN's plenix.esm.js and the suite. The npm package's ES modules load them the
+       first time a name is not a registered module (issues 702 and 882): until they arrive that icon draws nothing, then
+       it draws; an unknown name warns after they arrive. An imported or registered module never waits, so an app that
+       draws only modules never loads them. iconMarkup of a name with a registered module writes its drawing at once.
      StatusIcon's colors and sizes are its own tokens (--plx-comp-status-icon-*, components/Icon/status-icon.css); the label
        keeps the text color and size of where it sits.
 */
 import React from 'react';
 import { devWarn, development } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
-import { SYMBOLS, NAMES, MIRRORED, LIBRARY_COMMIT } from './glyphs.js';
-import { LIBRARY, loadLibrary } from './library.ts';
+import { LIBRARY_COMMIT } from './glyphs.js';
+import type { IconNames } from './glyphs.js';
+import { SYMBOLS, NAMES, MIRRORED, LIBRARY, loadNames } from './library.ts';
 import { checkIconSvg, checkDrawing, ICON_LIMITS } from '../../utils/iconSafety.ts';
 import type { IconDrawing } from '../../utils/iconSafety.ts';
 import AlertIcon from 'plenix-platform/icons/plenix/alert';
@@ -118,21 +119,31 @@ type Glyph = [string, string, Partial<Pick<IconDrawing, 'transform' | 'fillRule'
 // The outline or the filled version, at optical sizes 20 and 24: the stylesheet shows the one the context draws (icon.css).
 const LARGE: Record<string, boolean> = { lg: true, xl: true };
 const VARIANT = ['', '-fill', '-24', '-24-fill'];   // outline 20, filled 20, outline 24, filled 24
-const plenix = new Set(SYMBOLS.split(' ')), mirroredSymbols = new Set(MIRRORED.split(' '));
-// the whole library's names: built in (library.ts), or in the npm package's ES modules loaded the first time a name is
-// not found without them (issue 702); until they arrive such a name draws nothing and does not warn
-let library = new Set(LIBRARY ? LIBRARY.split(' ') : []), libraryLoad: Promise<void> | null = null, libraryDone = !!LIBRARY || !loadLibrary;
+// The name tables (library.ts): the Plenix names, symbols and mirrored symbols, and the whole Material library's names.
+// Built in, or in the npm package's ES modules loaded the first time an Icon meets a name (issues 702 and 882): until they
+// arrive a name resolves to nothing, draws nothing and does not warn, and Icon redraws when they arrive (useDrawings).
+// An imported or registered module never waits for them.
+let names: Record<string, [string, number]> = {}, plenix = new Set<string>(), mirroredSymbols = new Set<string>(), library = new Set<string>();
+// a Plenix symbol -> its Plenix name (the dashed spelling: the asset layout's file names; an alias has no file of its own)
+const nameOfSymbol = new Map<string, string>();
+function takeNames(t: Partial<IconNames> | null | undefined): void {
+  names = (t && t.NAMES) || {};
+  plenix = new Set(String((t && t.SYMBOLS) || '').split(' ').filter(Boolean));
+  mirroredSymbols = new Set(String((t && t.MIRRORED) || '').split(' ').filter(Boolean));
+  library = new Set(String((t && t.LIBRARY) || '').split(' ').filter(Boolean));
+  nameOfSymbol.clear();
+  for (const n of Object.keys(names)) if (!n.includes('_') && !nameOfSymbol.has(names[n][0])) nameOfSymbol.set(names[n][0], n);
+}
+let libraryLoad: Promise<void> | null = null, libraryDone = !!NAMES || !loadNames;
+if (NAMES) takeNames({ SYMBOLS, NAMES, MIRRORED, LIBRARY });
 function libraryWaits(): Promise<void> | null {
   if (libraryDone) return null;
-  if (!libraryLoad) libraryLoad = Promise.resolve().then(loadLibrary as () => Promise<string>).then((names) => { library = new Set(String(names || '').split(' ').filter(Boolean)); }, () => {})
+  if (!libraryLoad) libraryLoad = Promise.resolve().then(loadNames as () => Promise<IconNames>).then(takeNames, () => {})
     .then(() => { libraryDone = true; });
   return libraryLoad;
 }
-// a name in the library: asking starts the load when the names are not here yet (resolveIcon answers null until then)
+// a name in the library: asking starts the load when the tables are not here yet (resolveIcon answers null until then)
 const inLibrary = (symbol: string) => { libraryWaits(); return library.has(symbol); };
-// a Plenix symbol -> its Plenix name (the dashed spelling: the asset layout's file names; an alias has no file of its own)
-const nameOfSymbol = new Map<string, string>();
-for (const n of Object.keys(NAMES)) if (!n.includes('_') && !nameOfSymbol.has(NAMES[n][0])) nameOfSymbol.set(NAMES[n][0], n);
 // imported icon modules (#282): { name, set, symbol, fillOutline, mirrored, drawings: { 20: { outline, fill }, 24: … } }.
 // The registry (#281): per library, a name (and its symbol's spelling) -> its module. registerIcons(...modules) puts each
 // module in its own set's library ("plenix", "material"); registerIcons(...modules, { library: 'acme' }) makes a
@@ -209,16 +220,19 @@ export function resolveIcon(name: unknown, options?: { library?: string | null }
   // a registered Plenix module, then the Plenix set: a registered Material module never replaces a Plenix name (importing
   // material/home must not swap every <Icon name="home"> on the page); it serves only names outside the Plenix set
   const reg = fromRegistry('plenix'); if (reg) return reg;
+  // the npm ES modules: until the tables arrive, wait (null) rather than draw a registered Material module for a Plenix name
+  if (libraryWaits()) return null;
   const p = resolvePlenix(n); if (p && p.kind === 'plenix') return p;
   return fromRegistry('material') || p;
 }
 // a Plenix name -> its symbol, its fill flag and its file in the Plenix asset layout (the name, dashed: an alias has no
 // file of its own, so mic_off loads mic-off's files)
 function resolvePlenix(n: string): IconFound | null {
-  const named = (key: string): IconFound => ({ kind: 'plenix', symbol: NAMES[key][0], fillOutline: NAMES[key][1] === 1, file: key.includes('_') && NAMES[key.replace(/_/g, '-')] ? key.replace(/_/g, '-') : key });
-  if (NAMES[n]) return named(n);
+  if (libraryWaits()) return null;   // the npm ES modules: the tables are on their way
+  const named = (key: string): IconFound => ({ kind: 'plenix', symbol: names[key][0], fillOutline: names[key][1] === 1, file: key.includes('_') && names[key.replace(/_/g, '-')] ? key.replace(/_/g, '-') : key });
+  if (names[n]) return named(n);
   const dashed = n.toLowerCase().replace(/_/g, '-');
-  if (NAMES[dashed]) return named(dashed);
+  if (names[dashed]) return named(dashed);
   const symbol = n.toLowerCase().replace(/-/g, '_');
   if (plenix.has(symbol) && nameOfSymbol.has(symbol)) return { kind: 'plenix', symbol, fillOutline: false, file: nameOfSymbol.get(symbol) };
   if (inLibrary(symbol)) return { kind: 'library', symbol, fillOutline: false };
@@ -324,7 +338,7 @@ function warnUnknown(name: unknown): void {
   if (!n || warned.has(n)) return;
   warned.add(n);
   const key = n.toLowerCase().replace(/[-_\s]+/g, '');
-  const near = [...Object.keys(NAMES), ...library].filter((c) => { const k = c.replace(/[-_]/g, ''); return k.includes(key) || key.includes(k); }).slice(0, 6);
+  const near = [...Object.keys(names), ...library].filter((c) => { const k = c.replace(/[-_]/g, ''); return k.includes(key) || key.includes(k); }).slice(0, 6);
   if (typeof console !== 'undefined') console.warn('[Plenix] Icon: no icon is named "' + n + '"; nothing is drawn.' + (near.length ? ' Closest: ' + near.join(', ') + '.' : ''));
 }
 // a name drawn by a run-time fetch: development warns once that production should import or register it

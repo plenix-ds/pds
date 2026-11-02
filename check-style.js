@@ -36,6 +36,8 @@
 //   token-definitions (check-system.rules/token-definitions.js) no new colors (the reference palette is frozen; gray 250
 //               the one addition), everything on the 4px grid, corners 2 to 6px (and 0); a backlog that only shrinks
 //   color-groups, field-background, unused-component-tokens (check-system.rules/<name>.js)
+//   deprecated-classes (check-system.rules/deprecated-classes.js, issue 882) no new use of a class going away
+//               (platform/standards/deprecated-classes.json)
 const fs = require('fs');
 const { SPEC_PAGE, STYLE_MODULES, collect, reporter } = require('./check-common.js');
 

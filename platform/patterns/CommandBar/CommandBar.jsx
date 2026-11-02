@@ -93,7 +93,7 @@ import { Divider } from '../../components/Divider/Divider.tsx';
 import { Tooltip } from '../../components/Tooltip/Tooltip.tsx';
 import { announce } from '../../utils/announce.tsx';
 import { formatNumber } from '../../utils/format.ts';
-import { SearchField } from '../../components/SearchField/SearchField.jsx';
+import { SearchField } from '../../components/SearchField/SearchField.tsx';
 import { BarActions, foldOrder } from './BarActions.jsx';
 import { MenuSub, MenuItem, MenuRadioGroup } from '../../components/Menu/Menu.jsx';
 import { QuickFilter } from '../QuickFilter/QuickFilter.jsx';

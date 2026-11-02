@@ -69,7 +69,7 @@ import { MediaCard } from '../../components/Card/Card.jsx';
 import { fileIcon, fileExtension } from '../../components/File/File.jsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { EmptyState } from '../../components/EmptyState/EmptyState.tsx';
-import { DropZone } from '../../components/DropZone/DropZone.jsx';
+import { DropZone } from '../../components/DropZone/DropZone.tsx';
 import { Resizable } from '../../components/Resizable/Resizable.jsx';
 import { PromptDialog } from '../../components/Dialog/Dialog.jsx';
 import { CommandBar, CommandBarSearch } from '../CommandBar/CommandBar.jsx';

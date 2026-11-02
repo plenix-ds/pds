@@ -24,7 +24,7 @@ const PLAIN = 'div|span|p|li|td|section|article|img|i';
 // containers whose click handler reacts to the controls inside them (the controls are buttons and links, so the
 // keyboard reaches each one): file (from platform/) and the element's class, with the reason
 const DELEGATES = {
-  'components/Combobox/Combobox.jsx|plx-combobox__field': 'a click on the field’s padding focuses its input; the input is the keyboard path',
+  'components/Combobox/Combobox.tsx|plx-combobox__field': 'a click on the field’s padding focuses its input; the input is the keyboard path',
   'components/Tree/Tree.jsx|plx-tree__row': 'the row is inside its treeitem, which takes focus and the keys (Enter, Space, the arrows)',
   'patterns/NavPane/NavPane.jsx|plx-nav-pane__body': 'closes the overlay pane after a link or button inside it is chosen',
   'patterns/SecondaryPane/SecondaryPane.jsx|plx-secondary-pane__body': 'opens the detail after a row button inside the list is chosen (list-detail)',

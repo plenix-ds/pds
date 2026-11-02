@@ -22,10 +22,10 @@
 import React from 'react';
 import { useSeparateAudio } from './useSeparateAudio.js';
 import { Stack, Inline } from '../Stack/Stack.tsx';
-import { Field } from '../Field/Field.jsx';
-import { Select } from '../Input/Input.jsx';
+import { Field } from '../Field/Field.tsx';
+import { Select } from '../Input/Input.tsx';
 import { Button } from '../Button/Button.tsx';
-import { Slider } from '../Slider/Slider.jsx';
+import { Slider } from '../Slider/Slider.tsx';
 import { Text } from '../Text/Text.tsx';
 import { Notice } from '../Notice/Notice.tsx';
 import { Link } from '../Link/Link.tsx';

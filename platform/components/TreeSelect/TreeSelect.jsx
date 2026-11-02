@@ -63,7 +63,7 @@ import { Icon, asIcon, iconKey } from '../Icon/Icon.tsx';
 import { Popover } from '../Popover/Popover.jsx';
 import { Tooltip } from '../Tooltip/Tooltip.tsx';
 import { useTruncated } from '../../utils/overflow.ts';
-import { SearchField } from '../SearchField/SearchField.jsx';
+import { SearchField } from '../SearchField/SearchField.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import { useReadOnly } from '../../providers/ReadOnly.tsx';
 import { useBranchLoader, BranchStatus } from '../../hooks/useBranchLoader.ts';

@@ -81,8 +81,8 @@ import { cx } from '../../utils/cx.ts';
 import { focusables, useLayer, useUid } from '../../utils/layer.ts';
 import { asIcon } from '../Icon/Icon.tsx';
 import { Button } from '../Button/Button.tsx';
-import { Field } from '../Field/Field.jsx';
-import { Input } from '../Input/Input.jsx';
+import { Field } from '../Field/Field.tsx';
+import { Input } from '../Input/Input.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import CloseIcon from 'plenix-platform/icons/plenix/close';
 

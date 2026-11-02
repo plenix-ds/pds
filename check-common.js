@@ -24,7 +24,7 @@ const SOURCES = [
   { dir: DAM, app: 'asset manager', flat: true },
 ];
 // the check-system.rules/ modules that are style rules: check-style.js runs them, check-system.js skips them
-const STYLE_MODULES = ['inline-style', 'cascade-layers', 'selector-kinds', 'text-contract', 'token-definitions', 'color-groups', 'field-background', 'unused-component-tokens'];
+const STYLE_MODULES = ['inline-style', 'cascade-layers', 'selector-kinds', 'text-contract', 'token-definitions', 'color-groups', 'field-background', 'unused-component-tokens', 'deprecated-classes'];
 const SPEC_PAGE = /[\\/]platform[\\/]design-system[\\/]/;
 const rel = (f) => path.relative(path.dirname(ROOT), f).split(path.sep).join('/');
 

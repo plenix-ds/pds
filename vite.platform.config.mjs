@@ -26,6 +26,10 @@ import { defineConfig } from 'vite';
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const require = createRequire(import.meta.url);
 const ENTRY = path.join(ROOT, 'platform', 'index.js');
+// PLENIX_GLOBAL=cdn (build-packages.js, issue 882): the CDN's plenix.js, without the built-in Arabic words. LocaleProvider's
+// import of ../i18n/ar.js resolves to the empty catalog plenix-ar.js fills (tools/npm-esm/ar.js, as the npm ES modules do);
+// it writes build/vite/cdn/plenix.js. Without it: platform/dist/platform.js, Arabic built in
+const CDN = process.env.PLENIX_GLOBAL === 'cdn';
 const GLOBALS = { 'react': 'React', 'react-dom': 'ReactDOM', 'react-dom/client': 'ReactDOM' };
 const BANNER = '/*\n * GENERATED FILE — DO NOT EDIT\n * Source: platform/index.js and the modules it imports\n * Build: node build-app.js (Vite, vite.platform.config.mjs)\n */\n';
 // the old bundle's error for a missing global, in its words; it runs before the bundle passes React and ReactDOM in
@@ -111,16 +115,17 @@ export default defineConfig({
   publicDir: false,
   logLevel: 'warn',
   plugins: [plenixIcons, finish],
+  resolve: CDN ? { alias: [{ find: /^\.\.\/i18n\/ar\.js$/, replacement: path.join(ROOT, 'tools', 'npm-esm', 'ar.js') }] } : {},
   define: { 'process.env.NODE_ENV': JSON.stringify('production'), __PLENIX_VERSION__: JSON.stringify(require('./package.json').version) },
   esbuild: { include: /\.[cm]?[jt]sx?$/, exclude: [], charset: 'ascii', jsx: 'transform', jsxFactory: 'React.createElement', jsxFragment: 'React.Fragment' },   // charset ascii: no non-ASCII byte in the output (a page loaded without a charset still runs)
   build: {
-    outDir: path.join(ROOT, 'build', 'vite'),
+    outDir: path.join(ROOT, 'build', 'vite', CDN ? 'cdn' : ''),
     emptyOutDir: false,
     minify: false,
     sourcemap: 'hidden',
     target: 'es2020',
     reportCompressedSize: false,
-    lib: { entry: ENTRY, formats: ['iife'], name: 'Plenix', fileName: () => 'platform.js' },
+    lib: { entry: ENTRY, formats: ['iife'], name: 'Plenix', fileName: () => (CDN ? 'plenix.js' : 'platform.js') },
     rollupOptions: {
       external: Object.keys(GLOBALS),
       output: { globals: GLOBALS },

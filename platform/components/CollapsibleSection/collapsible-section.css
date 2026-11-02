@@ -12,10 +12,9 @@
 .plx-collapsible-section__title{-webkit-box-orient:vertical;-webkit-line-clamp:var(--plx-comp-collapsible-section-title-lines);display:-webkit-box;flex-basis:0%;flex-grow:1;flex-shrink:1;line-height:var(--plx-comp-collapsible-section-title-line-height);min-inline-size:0;overflow-wrap:anywhere;overflow-x:hidden;overflow-y:hidden;padding-block-end:var(--plx-comp-collapsible-section-title-wrap-padding-block);padding-block-start:var(--plx-comp-collapsible-section-title-wrap-padding-block);text-wrap:balance;}
 /* the Tooltip's wrapper is the heading row's flex child: it takes the room the toggle took, so the chevron stays at the end of the row */
 .plx-collapsible-section__tip{flex-basis:0%;flex-grow:1;flex-shrink:1;min-inline-size:0;}
-.plx-collapsible-section__chevron{--plx-comp-icon-size:var(--plx-sys-control-icon-prominent);display:inline-flex;flex-shrink:0;transform:rotate(180deg);transition-duration:var(--plx-comp-collapsible-section-chevron-duration);transition-property:transform;transition-timing-function:var(--plx-comp-collapsible-section-chevron-easing);}
+.plx-collapsible-section__chevron{--plx-comp-icon-mask-size:var(--plx-comp-collapsible-section-chevron-icon-mask-size);--plx-comp-icon-size:var(--plx-sys-control-icon-prominent);display:inline-flex;flex-shrink:0;transform:rotate(180deg);transition-duration:var(--plx-comp-collapsible-section-chevron-duration);transition-property:transform;transition-timing-function:var(--plx-comp-collapsible-section-chevron-easing);}
 .plx-collapsible-section.is-expanded>.plx-collapsible-section__heading .plx-collapsible-section__chevron{transform:rotate(0deg);}
 .plx-collapsible-section__actions{align-items:center;column-gap:var(--plx-comp-collapsible-section-actions-gap);display:inline-flex;flex-shrink:0;}
 .plx-collapsible-section__body{padding-block-end:var(--plx-comp-collapsible-section-body-padding-block-end);padding-block-start:var(--plx-comp-collapsible-section-body-padding-block-start);}
 .plx-collapsible-section__body[hidden]{display:none;}
 /* the chevron keeps its icon slot (on the 4px grid, the same box as the section icon) and draws the arrow at 16px inside it (the set’s own padding makes it read about 13px): quieter than the title it belongs to */
-.plx-collapsible-section__chevron{--plx-comp-icon-mask-size:var(--plx-comp-collapsible-section-chevron-icon-mask-size);}

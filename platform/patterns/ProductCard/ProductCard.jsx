@@ -61,7 +61,7 @@ import { cx } from '../../utils/cx.ts';
 import { formatCurrency } from '../../utils/format.ts';
 import { Image } from '../../components/Image/Image.jsx';
 import { Badge } from '../../components/Badge/Badge.tsx';
-import { Rating } from '../../components/Rating/Rating.jsx';
+import { Rating } from '../../components/Rating/Rating.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { Icon } from '../../components/Icon/Icon.tsx';

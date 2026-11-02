@@ -43,7 +43,7 @@ import { Image } from '../../components/Image/Image.jsx';
 import { Link } from '../../components/Link/Link.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { Icon } from '../../components/Icon/Icon.tsx';
-import { NumberInput } from '../../components/NumberInput/NumberInput.jsx';
+import { NumberInput } from '../../components/NumberInput/NumberInput.tsx';
 import { Notice } from '../../components/Notice/Notice.tsx';
 import { ProductPrice } from '../../patterns/ProductCard/ProductCard.jsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';

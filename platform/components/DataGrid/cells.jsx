@@ -12,7 +12,7 @@
 import React from 'react';
 import { Avatar } from '../Avatar/Avatar.jsx';
 import { Badge } from '../Badge/Badge.tsx';
-import { Tag } from '../Tag/Tag.jsx';
+import { Tag } from '../Tag/Tag.tsx';
 import { DataPill } from '../DataPill/DataPill.jsx';
 import { formatBytes } from '../../utils/format.ts';
 import { Isolate } from '../Isolate/Isolate.tsx';
