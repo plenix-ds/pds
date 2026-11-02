@@ -42,22 +42,27 @@
     },
     "toolbar-padding-inline": {
       "$value": "{plx-ref.space-12px}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-space-component-gap-lg instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
     "card-padding": {
       "$value": "{plx-ref.space-12px}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-space-component-gap-lg instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
     "card-title-content-gap": {
       "$value": "{plx-ref.space-8px}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-space-component-gap-md instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
     "card-content-actions-gap": {
       "$value": "{plx-ref.space-12px}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-space-component-gap-lg instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
     "dialog-padding": {
       "$value": "{plx-ref.space-16px}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-space-container-inset-lg instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
     "dialog-action-gap": {
@@ -66,6 +71,7 @@
     },
     "drawer-padding": {
       "$value": "{plx-ref.space-12px}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-space-component-gap-lg instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
     "check-padding-block": {

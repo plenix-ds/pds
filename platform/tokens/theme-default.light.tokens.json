@@ -438,6 +438,7 @@
     },
     "feedback-neutral-solid-label": {
       "$value": "{plx-ref.color-gray-600}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-feedback-neutral-solid instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color",
       "$extensions": {
         "plenix": {
@@ -508,6 +509,7 @@
     },
     "feedback-info-solid-label": {
       "$value": "{plx-ref.color-blue-400}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-feedback-info-solid instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color",
       "$extensions": {
         "plenix": {
@@ -578,6 +580,7 @@
     },
     "feedback-success-solid-label": {
       "$value": "{plx-ref.color-green-500}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-feedback-success-solid instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color",
       "$extensions": {
         "plenix": {
@@ -639,6 +642,7 @@
     },
     "feedback-warning-on-solid": {
       "$value": "{plx-ref.color-white}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-feedback-info-on-solid instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color",
       "$extensions": {
         "plenix": {
@@ -649,6 +653,7 @@
     },
     "feedback-warning-solid-label": {
       "$value": "{plx-ref.color-brown-500}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-feedback-warning-solid instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color",
       "$description": "The warning badge and count-pill fill: orange-700, white text 7.0:1 (owner, 2026-10-14, docs/pills-and-colors.md).",
       "$extensions": {
@@ -660,6 +665,7 @@
     },
     "feedback-warning-solid-border": {
       "$value": "{plx-ref.color-brown-800}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): no role or component token has its values in every theme and density; the nearest is --plx-sys-feedback-warning-solid (the warning fill it edges, lighter). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color",
       "$description": "The warning solid edge: orange-900, two shades darker than its orange-700 fill (owner, 2026-10-14, docs/pills-and-colors.md).",
       "$extensions": {
@@ -725,6 +731,7 @@
     },
     "feedback-danger-solid-label": {
       "$value": "{plx-ref.color-red-700}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-feedback-danger-solid instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color",
       "$extensions": {
         "plenix": {
@@ -846,6 +853,7 @@
     },
     "status-done": {
       "$value": "{plx-ref.color-green-500}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-feedback-success-solid instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color",
       "$description": "Done: green-500, the success solid.",
       "$extensions": {
@@ -857,6 +865,7 @@
     },
     "status-in-progress": {
       "$value": "{plx-ref.color-blue-400}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-feedback-info-solid instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color",
       "$description": "In progress: blue-400, the information solid.",
       "$extensions": {
@@ -868,6 +877,7 @@
     },
     "status-blocked": {
       "$value": "{plx-ref.color-red-700}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-feedback-danger-solid instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color",
       "$description": "Blocked: red-700, the danger solid.",
       "$extensions": {
@@ -879,6 +889,7 @@
     },
     "status-not-started": {
       "$value": "{plx-ref.color-gray-600}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-status-offline instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color",
       "$description": "Not started: gray-600, the neutral solid.",
       "$extensions": {
@@ -1935,6 +1946,7 @@
     },
     "table-header-line": {
       "$value": "{plx-ref.color-gray-300}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-comp-data-grid-header-column-line instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color",
       "$extensions": {
         "plenix": {
@@ -2005,6 +2017,7 @@
     },
     "table-border": {
       "$value": "{plx-ref.color-gray-300}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-data-grid-border instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color",
       "$extensions": {
         "plenix": {
@@ -2118,6 +2131,7 @@
     },
     "data-grid-danger": {
       "$value": "{plx-ref.color-red-700}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): no role or component token has its values in every theme and density; the nearest is --plx-sys-feedback-danger-solid (lighter in dark mode). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color",
       "$extensions": {
         "plenix": {
@@ -2128,6 +2142,7 @@
     },
     "data-grid-menu-shadow": {
       "$value": "0 {plx-ref.space-8px} {plx-ref.space-24px} {plx-ref.color-black-alpha-14}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): no role or component token has its values in every theme and density; the nearest is --plx-sys-shadow-menu (a larger shadow on every side). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "shadow"
     },
     "data-color-blue": {

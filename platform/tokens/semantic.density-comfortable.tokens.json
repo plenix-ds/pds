@@ -46,6 +46,7 @@
     },
     "control-icon-dialog": {
       "$value": "{plx-ref.size-24px}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): no role or component token has its values in every theme and density; the nearest is --plx-sys-control-icon-inline (16px instead of 20px when compact). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
     "control-height-dialog-destructive": {
@@ -54,6 +55,7 @@
     },
     "control-icon-dialog-destructive": {
       "$value": "{plx-ref.size-24px}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): no role or component token has its values in every theme and density; the nearest is --plx-sys-control-icon-inline (16px instead of 20px when compact). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
     "card-grid-gap": {
@@ -138,6 +140,7 @@
     },
     "table-row-height": {
       "$value": "{plx-ref.size-48px}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-data-grid-row-height instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
     "data-grid-font-size": {
@@ -146,6 +149,7 @@
     },
     "table-font-size": {
       "$value": "{plx-ref.font-size-13}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-data-grid-font-size instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     }
   }

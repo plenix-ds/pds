@@ -1554,6 +1554,7 @@
     },
     "table-radius": {
       "$value": "{plx-sys.radius-table-2px}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-radius-table-2px (its value) instead. It keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension",
       "$description": "Table: the frame corner, 2px (owner, 2026-10-19)."
     },
@@ -2933,6 +2934,7 @@
     },
     "tabs-tab-text": {
       "$value": "{plx-sys.content-muted}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-content-muted (its value) instead. It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color"
     },
     "tabs-tab-gap": {
@@ -2941,6 +2943,7 @@
     },
     "tabs-tab-font-weight": {
       "$value": "{plx-sys.font-weight-medium}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-font-weight-medium (its value) instead. It keeps working, and is removed no earlier than the next minor release.",
       "$type": "fontWeight"
     },
     "tabs-tab-disabled-text": {
@@ -2949,10 +2952,12 @@
     },
     "tabs-tab-selected-text": {
       "$value": "{plx-sys.content-default}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-content-default (its value) instead. It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color"
     },
     "tabs-tab-selected-font-weight": {
       "$value": "{plx-sys.font-weight-semibold}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-font-weight-semibold (its value) instead. It keeps working, and is removed no earlier than the next minor release.",
       "$type": "fontWeight"
     },
     "tabs-segmented-list-gap": {
