@@ -39,7 +39,7 @@ Use the existing soft fill, soft border and on-soft text roles; radius 4px. Stat
 | olive | `{plx-ref.color-green-500}` `#107c10` | `{plx-ref.color-yellow-100}` `#fff8df` | `{plx-ref.color-orange-200}` `#f8d0ad` | `{plx-ref.color-brown-600}` `#765600` | 6.37 |
 | apricot | `{plx-ref.color-orange-200}` `#f8d0ad` | `{plx-ref.color-orange-100}` `#fff0e3` | `{plx-ref.color-orange-300}` `#f2ad70` | `{plx-ref.color-brown-700}` `#7a3400` | 8.12 |
 | navy | `{plx-ref.color-blue-950}` `#000075` | `{plx-ref.color-blue-100}` `#ebf0f7` | `{plx-ref.color-blue-300}` `#a2c0e3` | `{plx-ref.color-blue-700}` `#005a9e` | 6.20 |
-| grey | `{plx-ref.color-gray-400}` `#a3a6ad` | `{plx-ref.color-gray-100}` `#f3f3f3` | `{plx-ref.color-gray-300}` `#d0d0d0` | `{plx-ref.color-gray-700}` `#56585e` | 6.41 |
+| gray | `{plx-ref.color-gray-400}` `#a3a6ad` | `{plx-ref.color-gray-100}` `#f3f3f3` | `{plx-ref.color-gray-300}` `#d0d0d0` | `{plx-ref.color-gray-700}` `#56585e` | 6.41 |
 
 ## Categories — dark
 
@@ -63,7 +63,7 @@ Use the existing soft fill, soft border and on-soft text roles; radius 4px. Stat
 | olive | `{plx-ref.color-green-500}` `#107c10` | `{plx-ref.color-yellow-100}` `#fff8df` | `{plx-ref.color-orange-200}` `#f8d0ad` | `{plx-ref.color-brown-600}` `#765600` | 6.37 |
 | apricot | `{plx-ref.color-orange-200}` `#f8d0ad` | `{plx-ref.color-orange-100}` `#fff0e3` | `{plx-ref.color-orange-300}` `#f2ad70` | `{plx-ref.color-brown-700}` `#7a3400` | 8.12 |
 | navy | `{plx-ref.color-blue-950}` `#000075` | `{plx-ref.color-blue-100}` `#ebf0f7` | `{plx-ref.color-blue-300}` `#a2c0e3` | `{plx-ref.color-blue-700}` `#005a9e` | 6.20 |
-| grey | `{plx-ref.color-gray-400}` `#a3a6ad` | `{plx-ref.color-gray-100}` `#f3f3f3` | `{plx-ref.color-gray-300}` `#d0d0d0` | `{plx-ref.color-gray-700}` `#56585e` | 6.41 |
+| gray | `{plx-ref.color-gray-400}` `#a3a6ad` | `{plx-ref.color-gray-100}` `#f3f3f3` | `{plx-ref.color-gray-300}` `#d0d0d0` | `{plx-ref.color-gray-700}` `#56585e` | 6.41 |
 
 ## Owner decisions
 

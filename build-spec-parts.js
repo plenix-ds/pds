@@ -61,8 +61,12 @@ function lazyIndex(DS, bundle, chunks) {
   // what each part's labs and written sections are about (run each chunk alone, with a stand-in for the lab registry)
   const about = {}, labsOf = {};
   Object.keys(chunks).forEach((name) => {
-    const c = { window: { DS: { registerLab: (id) => { (about[name] = about[name] || new Set()).add(id); (labsOf[id] = labsOf[id] || new Set()).add(name); } }, DSLabs: {} }, console: { log() {}, warn() {}, error() {} } };
-    c.window.window = c.window; vm.createContext(c);
+    // a stand-in for the spec's helpers: any property is another stand-in, so a lab part that builds on another lab's spec
+    // (DS.labs['x'] with Object.assign) runs to its registerLab call
+    const any = () => new Proxy(function () {}, { get: (t, k) => (k === Symbol.toPrimitive ? () => '' : k === 'then' ? undefined : any()), apply: () => any(), construct: () => any() });
+    const DSS = new Proxy({ registerLab: (id) => { (about[name] = about[name] || new Set()).add(id); (labsOf[id] = labsOf[id] || new Set()).add(name); } }, { get: (t, k) => (k in t ? t[k] : any()) });
+    const c = { window: { DS: DSS, DSLabs: {} }, console: { log() {}, warn() {}, error() {} } };
+    c.window.window = c.window; c.DS = c.window.DS; c.DSLabs = c.window.DSLabs; vm.createContext(c);
     try { vm.runInContext(chunks[name], c, { filename: name + '.js' }); } catch (e) { throw new Error('spec-chunks/' + name + '.js does not run: ' + e.message); }
     (c.window.DSParts.docs || []).forEach((d) => Object.keys(d).forEach((id) => (about[name] = about[name] || new Set()).add(id)));
   });
@@ -85,18 +89,41 @@ function lazyIndex(DS, bundle, chunks) {
   order.sort();
   const parts = {};
   order.forEach((p) => { parts[p] = order.filter((q) => find(q) === find(p)); });
-  const touched = {}; Object.keys(touch).sort().forEach((id) => { touched[id] = [...touch[id]].sort(); });
-  const slim = (v) => { const o = {}; ['leaf', 'group', 'name', 'also', 'labId'].forEach((k) => { if (v[k] !== undefined) o[k] = v[k]; }); if (v.lab) o.lab = true; return o; };
-  const index = [];
+  // a page draws its lab (labId, a variant page's labId, an extra lab): the parts that register that lab load with the page
   records.forEach((r) => {
-    const part = owner[r.id]; if (!part) return;
-    const m = { part };
+    const ids = [r.labId || r.id].concat((r.variantPages || []).map((v) => v.labId), (r.extraLabs || []).map((x) => x.id)).filter(Boolean);
+    ids.forEach((lab) => { if (labsOf[lab]) labsOf[lab].forEach((part) => { if (owner[r.id] !== part) addTouch(r.id, part); }); });
+  });
+  const isRecord = new Set(records.map((r) => r.id));
+  const touched = {}; Object.keys(touch).sort().filter((id) => isRecord.has(id)).forEach((id) => { touched[id] = [...touch[id]].sort(); });
+  const slim = (v) => { const o = {}; ['leaf', 'group', 'name', 'also', 'labId'].forEach((k) => { if (v[k] !== undefined) o[k] = v[k]; }); if (v.lab) o.lab = true; return o; };
+  const metaOf = (r) => {
+    const m = {};
     META.forEach((k) => { if (r[k] !== undefined && typeof r[k] !== 'function') m[k] = r[k]; });
     if (r.lab) m.lab = true;
     if (r.variantPages) m.variantPages = r.variantPages.map(slim);
-    index.push(m);
+    return m;
+  };
+  const index = [];
+  records.forEach((r) => {
+    const part = owner[r.id]; if (!part) return;
+    index.push(Object.assign({ part }, metaOf(r)));
   });
-  return { parts, touch: touched, records: index, count: records.length };
+  // what the parts change of inventory.js's own records, in what the lists read (the home's "Platform exports placed" reads
+  // each record's plenix names): until those parts load, the page shows the records as the bundle leaves them
+  const plain = { window: {}, console: { log() {}, warn() {}, error() {} }, React: ctx.React };
+  plain.window.React = ctx.React; plain.window.Plenix = new Proxy({}, { get: (_, k) => k });
+  vm.createContext(plain);
+  vm.runInContext(fs.readFileSync(path.join(DS, 'inventory.js'), 'utf8'), plain, { filename: 'inventory.js' });
+  const was = {}; plain.window.DSInventory.forEach((r) => { was[r.id] = metaOf(r); });
+  const base = {};
+  records.forEach((r) => {
+    if (owner[r.id] || !touched[r.id] || !was[r.id]) return;
+    const now = metaOf(r), diff = {};
+    new Set([...Object.keys(now), ...Object.keys(was[r.id])]).forEach((k) => { if (JSON.stringify(now[k]) !== JSON.stringify(was[r.id][k])) diff[k] = now[k] === undefined ? null : now[k]; });
+    if (Object.keys(diff).length) base[r.id] = diff;
+  });
+  return { parts, touch: touched, base, records: index, count: records.length };
 }
 function chunkText(name, files, read, q) {
   const body = files.map((f) => {

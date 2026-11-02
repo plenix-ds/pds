@@ -31,7 +31,9 @@ const LEVELS = 12;
 // the widest grid line a pane and a Resizable box get a rule for: the one place they are set; utils/sizeSteps.js (written
 // below) exports them, and the panes and Resizable clamp to them, so a size is never drawn without a rule. One rule per
 // grid line (owner, 2026-10-26: a dragged edge stays on the grid) grew steps.css to about 245 KB (17.6 KB gzipped).
-const GRID_MIN = 4, GRID_PANE_MAX = 1600, GRID_BOX_MAX = 1600;   // a pane of the shell goes as wide as a Resizable box (owner, #463)
+// A dragged edge stops on every 8px grid line (DRAG_STEP; owner, 2026-11-02, issue 882: 8px, not 4px, halving these rules,
+// about 99 KB): still on the grid, and every size token keeps its own rule.
+const DRAG_STEP = 8, GRID_MIN = 8, GRID_PANE_MAX = 1600, GRID_BOX_MAX = 1600;   // a pane of the shell goes as wide as a Resizable box (owner, #463)
 const ASPECTS = [['4/3', '4 / 3'], ['3/2', '3 / 2'], ['1/1', '1 / 1'], ['16/9', '16 / 9']];
 
 module.exports = function buildSteps(root) {
@@ -61,18 +63,18 @@ module.exports = function buildSteps(root) {
     out.push('.plx-side-panel[data-plx-width="' + s + '"]{--plx-comp-side-panel-width:var(--plx-ref-size-' + s + ');}');
     ['inspector', 'filter'].forEach((p) => out.push(':root[data-plx-panel-' + p + '-width="' + s + '"]{--plx-sys-panel-' + p + '-width:var(--plx-ref-size-' + s + ');}'));
   });
-  // grid lines (owner, 2026-10-26): a dragged pane or box moves one 4px grid line at a time, so each line has a rule;
+  // grid lines (owner, 2026-10-26; 8px since issue 882): a dragged pane or box moves one DRAG_STEP line at a time, so each line has a rule;
   // a size token keeps its own rule (above, and resizable.css), so no step is defined twice
   const tokenPx = new Set(sizes.map((x) => parseInt(x, 10)));
   const onGrid = (n) => 'calc(var(--plx-ref-size-4px) * ' + n / 4 + ')';
-  for (let v = GRID_MIN; v <= GRID_PANE_MAX; v += 4) {
+  for (let v = GRID_MIN; v <= GRID_PANE_MAX; v += DRAG_STEP) {
     if (tokenPx.has(v)) continue;
     ['nav-pane', 'secondary-pane', 'side-panel'].forEach((c) => out.push('.plx-' + c + '[data-plx-width="' + v + 'px"]{--plx-comp-' + c + '-width:' + onGrid(v) + ';}'));
   }
   const resizableCss = fs.readFileSync(path.join(P, 'components', 'Resizable', 'resizable.css'), 'utf8');
   const has = (axis) => new Set([...resizableCss.matchAll(new RegExp('\\.plx-resizable\\[data-plx-' + axis + '="(\\d+)px"\\]', 'g'))].map((m) => +m[1]));
   [['width', has('width')], ['height', has('height')]].forEach(([axis, set]) => {
-    const values = new Set([...tokenPx]); for (let v = GRID_MIN; v <= GRID_BOX_MAX; v += 4) values.add(v);
+    const values = new Set([...tokenPx]); for (let v = GRID_MIN; v <= GRID_BOX_MAX; v += DRAG_STEP) values.add(v);
     [...values].sort((x, y) => x - y).filter((v) => !set.has(v)).forEach((v) => out.push('.plx-resizable[data-plx-' + axis + '="' + v + 'px"]{--plx-comp-resizable-' + axis + ':'
       + (tokenPx.has(v) ? 'var(--plx-ref-size-' + v + 'px)' : onGrid(v)) + ';}'));
   });
@@ -90,8 +92,9 @@ module.exports = function buildSteps(root) {
     '     none: SIZE_STEPS lists the sizes in pixels, smallest first; snapSize(px, min, max) and stepSize(px, dir, min, max)',
     '*/',
     'export const SIZE_STEPS = ' + JSON.stringify(sizes.map((s) => parseInt(s, 10)).sort((a, b) => a - b)) + ';',
-    '// the grid lines system/steps.css has a rule for (build-steps.js): a pane is drawn from GRID_MIN to GRID_PANE_MAX, a Resizable box to GRID_BOX_MAX',
-    'export const GRID_MIN = ' + GRID_MIN + ', GRID_PANE_MAX = ' + GRID_PANE_MAX + ', GRID_BOX_MAX = ' + GRID_BOX_MAX + ';',
+    '// the grid lines system/steps.css has a rule for (build-steps.js): every DRAG_STEP px (8px, issue 882) from GRID_MIN to GRID_PANE_MAX for a pane',
+    '// and to GRID_BOX_MAX for a Resizable box, plus every size token; a dragged edge and a remembered width land on one of them',
+    'export const DRAG_STEP = ' + DRAG_STEP + ', GRID_MIN = ' + GRID_MIN + ', GRID_PANE_MAX = ' + GRID_PANE_MAX + ', GRID_BOX_MAX = ' + GRID_BOX_MAX + ';',
     'const within = (min, max) => SIZE_STEPS.filter((s) => s >= min && s <= max);',
     '// the size token nearest to px within [min, max] (the limit itself when no token lies between them)',
     'export function snapSize(px, min, max) { const c = within(min, max); if (!c.length) return Math.max(min, Math.min(max, px)); return c.reduce((a, b) => (Math.abs(b - px) < Math.abs(a - px) ? b : a)); }',
@@ -129,39 +132,9 @@ module.exports = function buildSteps(root) {
   each(E.textTop.min, E.textTop.max, E.step, (v) => out.push('.plx-image-editor__text[data-plx-top="' + v + '"]{--plx-comp-image-editor-text-top:' + v + '%;}'));
   each(E.overlay.opacity.min, E.overlay.opacity.max, E.step, (v) => out.push('.plx-image-editor__overlay[data-plx-opacity="' + v + '"]{--plx-comp-image-editor-overlay-opacity:' + v / 100 + ';}'));
   each(E.overlay.scale.min, E.overlay.scale.max, E.overlay.scale.step, (v) => out.push('.plx-image-editor__overlay[data-plx-scale="' + v + '"]{--plx-comp-image-editor-overlay-scale:' + v / 100 + ';}'));
-  // Static Table: its steps file and its base, generated from the grid's stylesheet; widths belong to the React renderer.
-  const gridFiles = [];
-  // the offsets and heights are Table's base (table-base.css, generated below from the grid's stylesheet), flat (zero
-  // overlap): this file keeps only the pointer, so the two never define a step twice
-  const g = ["/* Plenix · Table steps. GENERATED by build-steps.js (do not edit). A pinned column's offset (data-plx-sticky) and",
-    "   the grid's height (data-plx-height) come with Table's base (table-base.css, from the grid's stylesheet). */"];
-  const gf = path.join(P, 'components', 'Table', 'table-steps.css'), gt = g.join('\n') + '\n';
-  if (!fs.existsSync(gf) || fs.readFileSync(gf, 'utf8') !== gt) fs.writeFileSync(gf, gt);
-  gridFiles.push(gf);
-  // Table's base: the grid's look under Table's own block (plx-table), generated from the grid's stylesheet so the two never
-  // drift; a static Table looks like the grid without being one (owner, 2026-10-19: Table is static, DataGrid is the grid)
-  // the grid's own parts stay out (#460): the cell editor, the length probe, the floating scrollbars and their thumbs, and
-  // the row gaps are drawn only as plx-data-grid__* (DataGridEngine.jsx, environment.js, scrollbars.jsx write those names
-  // literally, inside a static Table too), so their plx-table copies could never match; every one is a one-line rule.
-  // The exact classes, so a later name (__scroll-hint, __gap-label) is never caught; a dropped rule must name one of them
-  // in every one of its selectors, or the build stops
-  const GRID_CLASS = /plx-data-grid__(?:editor|length-probe|scroll(?:--[xy])?|thumb(?:--[xy])?|gap--(?:group|add|band|separated))(?![\w-])/;
-  const GRID_KEYFRAMES = /^@keyframes plx-data-grid-thumb-(?:y|x|x-rtl)\b/;
-  let leftOut = 0;
-  const gridCss = fs.readFileSync(path.join(P, 'components', 'DataGrid', 'data-grid.css'), 'utf8').replace(/^\/\*[\s\S]*?\*\/\n/, '')
-    .split('\n').filter((line) => {
-      if (GRID_KEYFRAMES.test(line)) { leftOut++; return false; }
-      if (!GRID_CLASS.test(line)) return true;
-      const open = line.indexOf('{'), selectors = open > 0 && /\}\s*$/.test(line) ? line.slice(0, open).split(',') : null;
-      if (!selectors || !selectors.every((sel) => GRID_CLASS.test(sel))) throw new Error('table-base.css: a rule mixes grid-only and shared parts: split it: ' + line.slice(0, 160));
-      leftOut++; return false;
-    }).join('\n');
-  console.log('table-base.css: left out ' + leftOut + ' grid-only rules');
-  const tb = "/* Plenix · Table base. GENERATED by build-steps.js from components/DataGrid/data-grid.css (do not edit): the grid's\n"
-    + "   look under Table's own block (plx-table). Table's own rules are in table.css. */\n" + gridCss.split('plx-data-grid').join('plx-table');
-  const tf = path.join(P, 'components', 'Table', 'table-base.css');
-  if (!fs.existsSync(tf) || fs.readFileSync(tf, 'utf8') !== tb) fs.writeFileSync(tf, tb);
-  gridFiles.push(tf);
+  // Static Table (issue 882, owner: one shared copy, replacing his 2026-10-19 "each its own block"): Table renders the
+  // grid's own block (plx-data-grid, with plx-data-grid--static and plx-table on its root), so data-grid.css and its steps
+  // style both; the generated copy under plx-table (table-base.css, 93 KB) and its pointer file (table-steps.css) are gone
   // the time grid: its hours and days, and each event's start and length in quarter hours
   for (let h = 1; h <= 24; h++) out.push('.plx-time-grid[data-plx-hours="' + h + '"]{--plx-comp-time-grid-hours:' + h + ';}');
   for (let d = 1; d <= 7; d++) out.push('.plx-time-grid[data-plx-days="' + d + '"]{--plx-comp-time-grid-days:' + d + ';}');

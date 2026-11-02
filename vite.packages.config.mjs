@@ -89,6 +89,8 @@ const BUILDS = {
   esm: { entry: partEntries, outDir: path.join(ROOT, 'packages', 'react', 'dist'), optional: true },
   cjs: { entry: () => path.join(P, 'index.js'), outDir: path.join(ROOT, 'packages', 'react', 'dist'), format: 'cjs', file: 'index.cjs' },
   cdn: { entry: () => path.join(P, 'index.js'), outDir: path.join(ROOT, 'release', 'cdn', VERSION), format: 'es', file: 'plenix.esm.js', banner: BANNER + '\nconst __plenixModuleUrl = import.meta.url;' },
+  // the CDN's plenix-ar.js (issue 882): the built-in Arabic words, for an Arabic page that loads the CDN's plenix.js
+  ar: { entry: () => path.join(P, 'i18n', 'ar.global.js'), outDir: path.join(ROOT, 'release', 'cdn', VERSION), format: 'iife', file: 'plenix-ar.js', banner: '/* ' + SCOPE + ' ' + VERSION + ' · plenix-ar.js: Plenix\'s built-in Arabic words, after plenix.js (generated) */' },
 };
 
 export function packageConfig(name, overrides = {}) {
@@ -118,7 +120,7 @@ export function packageConfig(name, overrides = {}) {
       reportCompressedSize: false,
       lib: b.optional
         ? { entry: b.entry(), formats: ['es'], fileName: (format, entryName) => entryName + '.js' }
-        : { entry: b.entry(), formats: [b.format], fileName: () => b.file },
+        : { entry: b.entry(), formats: [b.format], fileName: () => b.file, name: 'PlenixLanguage' },
       rollupOptions: {
         external: EXTERNAL,
         output: b.optional

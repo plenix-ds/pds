@@ -134,6 +134,9 @@
        in a card that names its layout or template: map every field a person needs while scanning; the rest shows when the row is opened (the default card
        keeps such fields as "Label: value" lines under its last line). Selection, the open row, the keyboard and the row menu work in every layout
      empty: shown when no row matches; error and onRetry(): the error state and its one recovery; strings: the words
+     strings.cardCount: the count over the template cards names the app's records (issue 679), a plural message in the
+       locale's forms with {n}: { one: '{n} member', other: '{n} members' }; Arabic { zero: 'لا يوجد أعضاء', one: 'عضو واحد',
+       two: 'عضوان', few: '{n} أعضاء', many: '{n} عضوًا', other: '{n} عضو' }. Without it the count says records
      className: more classes on the frame
    Behavior:
      Cell selection copy: copied cells keep their text as is: a value starting with =, +, - or @ is read by spreadsheet apps as a formula when

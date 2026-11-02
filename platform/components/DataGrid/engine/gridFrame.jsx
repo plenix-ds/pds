@@ -115,6 +115,7 @@ export function gridFrame({
         className={cx(
           B,
           isStatic && B + '--static',
+          isStatic && 'plx-table',
           pinnedAt >= 0 && B + '--row-header',
           listed && B + '--list',
           isNarrow && B + '--narrow',

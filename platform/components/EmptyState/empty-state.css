@@ -2,12 +2,11 @@
 .plx-empty-state{align-items:center;color:var(--plx-comp-empty-state-text);display:flex;flex-direction:column;justify-content:center;row-gap:var(--plx-comp-empty-state-row-gap);text-align:center;}
 .plx-empty-state--inline{font-size:var(--plx-comp-empty-state-inline-font-size);padding-block-end:var(--plx-comp-empty-state-inline-padding-block);padding-block-start:var(--plx-comp-empty-state-inline-padding-block);padding-inline-end:var(--plx-comp-empty-state-inline-padding-inline);padding-inline-start:var(--plx-comp-empty-state-inline-padding-inline);}
 .plx-empty-state--page{font-size:var(--plx-comp-empty-state-page-font-size);padding-block-end:var(--plx-comp-empty-state-page-padding-block);padding-block-start:var(--plx-comp-empty-state-page-padding-block);padding-inline-end:var(--plx-comp-empty-state-page-padding-inline);padding-inline-start:var(--plx-comp-empty-state-page-padding-inline);}
-.plx-empty-state__icon{color:var(--plx-comp-empty-state-icon-text);font-size:var(--plx-comp-empty-state-icon-font-size);line-height:var(--plx-comp-empty-state-icon-line-height);}
+.plx-empty-state__icon{--plx-comp-icon-size:var(--plx-ref-size-24px);color:var(--plx-comp-empty-state-icon-text);font-size:var(--plx-comp-empty-state-icon-font-size);line-height:var(--plx-comp-empty-state-icon-line-height);}
 .plx-empty-state__title{color:var(--plx-comp-empty-state-title-text);font-size:var(--plx-comp-empty-state-title-font-size);font-weight:var(--plx-comp-empty-state-title-font-weight);}
 .plx-empty-state__text{max-inline-size:var(--plx-comp-empty-state-text-max-width);}
 .plx-empty-state__action{margin-block-start:var(--plx-comp-empty-state-action-margin-block-start);}
 /* the icon: 24px (the empty state's illustration size) */
-.plx-empty-state__icon{--plx-comp-icon-size:var(--plx-ref-size-24px);}
 /* the error tone (platforms.md 5.5): the icon in the danger color; the title says what failed */
 .plx-empty-state--error .plx-empty-state__icon{color:var(--plx-comp-empty-state-error-icon-text);}
 /* the warning and success tones (library wave 4): the icon in the tone's solid color, on the surface; the words say what

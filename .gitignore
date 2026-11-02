@@ -40,8 +40,6 @@ build/sd/
 /platform/components/Brand/brand.css
 /platform/components/ColorSwatch/categoryColors.js
 /platform/components/ColorSwatch/dataColors.js
-/platform/components/Table/table-base.css
-/platform/components/Table/table-steps.css
 /platform/components/DataGrid/data-grid-steps.css
 /platform/patterns/ImageEditor/imageEditorSteps.js
 /platform/utils/sizeSteps.js
@@ -60,3 +58,5 @@ build/sd/
 /lanes/*/design-system/styling-standard.js
 /lanes/*/design-system/reviewed.js
 /lanes/*/design-system/usage.js
+/lanes/*/design-system/spec-index.js
+/lanes/*/design-system/spec-chunks/

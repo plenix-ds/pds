@@ -599,7 +599,7 @@ export default {
       "olive": "Olive",
       "apricot": "Apricot",
       "navy": "Navy",
-      "grey": "Grey",
+      "grey": "Gray",
       "brown": "Brown",
       "gray": "Gray"
     }

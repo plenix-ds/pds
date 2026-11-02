@@ -3,7 +3,7 @@
 .plx-event-chip--fill{align-items:flex-start;block-size:100%;flex-direction:column;inline-size:100%;}
 .plx-event-chip__time{color:var(--plx-comp-event-chip-time-text);flex-shrink:0;font-family:var(--plx-comp-event-chip-time-font-family);font-size:var(--plx-sys-text-caption-font-size);font-variant-numeric:tabular-nums;font-weight:var(--plx-sys-text-caption-font-weight);letter-spacing:var(--plx-sys-text-caption-letter-spacing);line-height:var(--plx-sys-text-caption-line-height);word-spacing:var(--plx-sys-font-data-word-spacing);}
 .plx-event-chip__title{font-weight:var(--plx-comp-event-chip-title-font-weight);min-inline-size:0;overflow-x:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.plx-event-chip--interactive{cursor:pointer;}
+.plx-event-chip--interactive{cursor:pointer;transition-duration:var(--plx-sys-motion-duration-instant);transition-property:background-color, border-color, box-shadow, color, transform;transition-timing-function:var(--plx-sys-motion-ease-standard);}
 .plx-event-chip--interactive:hover,
 .plx-event-chip--interactive.is-hover{background-color:var(--plx-comp-event-chip-interactive-hover-background);}
 .plx-event-chip--interactive:focus-visible,
@@ -11,5 +11,4 @@
 /* the event's data color (batch 280) */
 .plx-event-chip[data-plx-color]{--plx-comp-event-chip-color:var(--plx-comp-data-color);}
 /* its motion (moved from motion.css, Styling Standard 3.6: each component owns its own; reduced motion sets the durations to 0s) */
-.plx-event-chip--interactive{transition-duration:var(--plx-sys-motion-duration-instant);transition-property:background-color, border-color, box-shadow, color, transform;transition-timing-function:var(--plx-sys-motion-ease-standard);}
 .plx-event-chip--interactive:active:where(:not(:disabled, [aria-disabled="true"])){transform:scale(var(--plx-sys-motion-press-scale));}

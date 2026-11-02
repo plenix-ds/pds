@@ -105,7 +105,7 @@ export const CONTRAST_PAIRS = Object.freeze([
   { fg: 'category-olive-on-soft', bg: 'category-olive-soft', rule: T, use: 'Category pill text: olive' },
   { fg: 'category-apricot-on-soft', bg: 'category-apricot-soft', rule: T, use: 'Category pill text: apricot' },
   { fg: 'category-navy-on-soft', bg: 'category-navy-soft', rule: T, use: 'Category pill text: navy' },
-  { fg: 'category-grey-on-soft', bg: 'category-grey-soft', rule: T, use: 'Category pill text: grey' }
+  { fg: 'category-gray-on-soft', bg: 'category-gray-soft', rule: T, use: 'Category pill text: gray' }
 ]);
 
 // a color as three channels, 0 to 255

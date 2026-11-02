@@ -56,7 +56,16 @@ jobs:
           node-version: 22
           cache: npm
 
+      - name: Lane design-system files (lanes/<task>/design-system into the submodule) before npm ci, whose build reads the design system
+        run: node tools/agent/lane-overlay.js
+
       - run: npm ci
+
+      # npm ci builds (package.json's prepare: build-app.js, which runs build-exports.js): a committed library block of
+      # platform/index.js or platform.css that is not what build-exports.js makes from platform/exports shows as a change here
+      - name: "Exports block (the committed library block of platform/index.js and platform.css equals the one the build makes)"
+        run: |
+          git diff --exit-code HEAD -- platform/index.js platform/platform.css || { echo "The library block is stale: run node build-exports.js and commit platform/index.js and platform/platform.css"; exit 1; }
 
       # known advisories of the production dependencies (issue 696): it informs and never blocks (the run stays green, the log and the
       # job summary show what it found); the dev dependencies and the vendored libraries are not read
@@ -69,9 +78,6 @@ jobs:
         # the PR's own commits: from where its head left the base branch (as it is now) to its head. Not base.sha to the
         # PR's merge commit, which counts the base's newer commits (its "Generated files rebuilt") as the branch's (#623)
         run: node tools/agent/generated.js --check origin/${{ github.base_ref }} ${{ github.event.pull_request.head.sha }}
-
-      - name: Lane design-system files (lanes/<task>/design-system into the submodule)
-        run: node tools/agent/lane-overlay.js
 
       - name: Build
         run: |
@@ -161,6 +167,9 @@ jobs:
         with:
           node-version: 22
           cache: npm
+
+      - name: Lane design-system files before npm ci (its build reads the design system)
+        run: node tools/agent/lane-overlay.js
 
       - run: npm ci
 

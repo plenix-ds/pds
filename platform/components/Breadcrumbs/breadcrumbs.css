@@ -3,7 +3,7 @@
 .plx-breadcrumbs__list{align-items:center;column-gap:var(--plx-comp-breadcrumbs-list-gap);display:flex;flex-wrap:wrap;font-size:var(--plx-comp-breadcrumbs-list-font-size);list-style-type:none;margin-block-end:0;margin-block-start:0;padding-inline-start:0;row-gap:var(--plx-comp-breadcrumbs-list-row-gap);}
 .plx-breadcrumbs__item{align-items:center;column-gap:var(--plx-comp-breadcrumbs-item-gap);display:inline-flex;}
 .plx-breadcrumbs__item+.plx-breadcrumbs__item::before{color:var(--plx-comp-breadcrumbs-item-before-text);content:"›";}
-.plx-breadcrumbs__link{color:var(--plx-comp-breadcrumbs-link-text);position:relative;text-decoration-line:none;}
+.plx-breadcrumbs__link{color:var(--plx-comp-breadcrumbs-link-text);position:relative;text-decoration-line:none;transition-duration:var(--plx-sys-motion-duration-instant);transition-property:background-color, border-color, box-shadow, color, transform;transition-timing-function:var(--plx-sys-motion-ease-standard);}
 /* the link's target reaches the minimum target size (24px with a mouse, 44px with touch) through an invisible extension
    centered on it, so the look does not change (Platforms Standard 3.1); with touch a wrapped trail's rows part far enough
    that one row's targets do not cover the next */
@@ -15,4 +15,3 @@
 .plx-breadcrumbs__text{color:var(--plx-comp-breadcrumbs-text-text);}
 .plx-breadcrumbs__current{color:var(--plx-comp-breadcrumbs-current-text);}
 /* its motion (moved from motion.css, Styling Standard 3.6: each component owns its own; reduced motion sets the durations to 0s) */
-.plx-breadcrumbs__link{transition-duration:var(--plx-sys-motion-duration-instant);transition-property:background-color, border-color, box-shadow, color, transform;transition-timing-function:var(--plx-sys-motion-ease-standard);}

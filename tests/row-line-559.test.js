@@ -10,7 +10,7 @@
          is the line inside its top edge (top 0, height w, bottom border w in c).
      Without the fix the shadow is "none" and no row carries --first, so every check fails.
    Table: a Table has no selection and no row hover (its rows are static), so the states are forced: the test adds
-     plx-table__grid-selected to one row and plx-table__grid-selectable to another and hovers it, then checks the same
+     plx-data-grid__grid-selected to one row and plx-data-grid__grid-selectable to another and hovers it, then checks the same
      computed styles. It also reads the two rules from the loaded stylesheets and checks that Table's are DataGrid's with
      the block name swapped, so the two stay the same rule.
    Usage: node tests/row-line-559.test.js   (started by tests/data-grid.test.js when the DataGrid or the Table changed).
@@ -111,12 +111,12 @@ function first(part, what, m) {
     check('DataGrid: a row that is neither hovered nor selected has no top line', await page.evaluate((s) => getComputedStyle(document.querySelector(s)).boxShadow === 'none', row('g1', 'r2')), 'r2');
 
     // ---- Table (no selection, no row hover: the states are forced with the classes the rule keys on)
-    const tableFirst = await page.evaluate((s) => { const r = document.querySelector(s); return !!r && /plx-table__grid-row--first\b/.test(r.className); }, row('t', 'r1'));
-    check('Table: the first row carries plx-table__grid-row--first', tableFirst, 'r1');
+    const tableFirst = await page.evaluate((s) => { const r = document.querySelector(s); return !!r && /plx-data-grid__grid-row--first\b/.test(r.className); }, row('t', 'r1'));
+    check('Table: the first row carries plx-data-grid__grid-row--first', tableFirst, 'r1');
     await page.evaluate((a, b, c) => {
-      document.querySelector(a).classList.add('plx-table__grid-selected');
-      document.querySelector(b).classList.add('plx-table__grid-selectable');
-      document.querySelector(c).classList.add('plx-table__grid-selected');
+      document.querySelector(a).classList.add('plx-data-grid__grid-selected');
+      document.querySelector(b).classList.add('plx-data-grid__grid-selectable');
+      document.querySelector(c).classList.add('plx-data-grid__grid-selected');
     }, row('t', 'r3'), row('t', 'r5'), row('t', 'r1'));
     await settle();
     notFirst('Table', 'a selected row (class forced)', await page.evaluate(MEASURE, row('t', 'r3')));
@@ -125,7 +125,8 @@ function first(part, what, m) {
     notFirst('Table', 'a hovered row (selectable class forced)', await page.evaluate(MEASURE, row('t', 'r5')));
     await away(); await settle();
 
-    // the stylesheet: Table's two row-line rules are DataGrid's with the block name swapped
+    // the stylesheet: DataGrid's two row-line rules, which apply to a static Table too: since issue 882 (one shared copy of the
+    // table and grid styles) a Table's rows carry DataGrid's classes and there is no Table copy of the rules
     const rules = await page.evaluate(() => {
       const out = [];
       const walk = (list) => { for (const r of list) {
@@ -138,8 +139,10 @@ function first(part, what, m) {
     });
     const of = (block) => rules.filter((r) => r.sel.startsWith('.plx-' + block + '__')).map((r) => ({ sel: r.sel.split('plx-' + block + '__').join('B__'), css: r.css })).sort((a, b) => (a.sel < b.sel ? -1 : 1));
     const grid = of('data-grid'), table = of('table');
-    check('Table: the shadow rule and the first-row rule are in the stylesheet', table.some((r) => /box-shadow/.test(r.css) && /:not\(\.B__grid-row--first\)/.test(r.sel)) && table.some((r) => /::after/.test(r.sel) && /B__grid-row--first/.test(r.sel)), rules);
-    check('Table: its row-line rules match DataGrid\'s', grid.length >= 2 && JSON.stringify(grid) === JSON.stringify(table), { grid, table });
+    check('DataGrid: the shadow rule and the first-row rule are in the stylesheet', grid.some((r) => /box-shadow/.test(r.css) && /:not\(\.B__grid-row--first\)/.test(r.sel)) && grid.some((r) => /::after/.test(r.sel) && /B__grid-row--first/.test(r.sel)), rules);
+    check('Table: no copy of the row-line rules of its own (the grid\'s apply)', table.length === 0, table);
+    const tableRow = await page.evaluate((s) => { const r = document.querySelector(s); return r ? r.className : null; }, row('t', 'r2'));
+    check('Table: its rows carry DataGrid\'s row class, so DataGrid\'s row-line rules draw them', !!tableRow && /\bplx-data-grid__grid-row\b/.test(tableRow) && !/plx-table__/.test(tableRow), tableRow);
 
     check('DataGrid: no script errors', errors.length === 0, errors);
   } finally { if (browser) await browser.close(); server.close(); }

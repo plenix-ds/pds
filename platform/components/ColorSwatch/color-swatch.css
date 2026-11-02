@@ -2,7 +2,7 @@
 .plx-color-swatch{background-color:var(--plx-comp-color-swatch-value);border-bottom-color:var(--plx-comp-color-swatch-border-color);border-bottom-left-radius:var(--plx-comp-color-swatch-radius);border-bottom-right-radius:var(--plx-comp-color-swatch-radius);border-bottom-style:solid;border-bottom-width:var(--plx-comp-color-swatch-border-width);border-left-color:var(--plx-comp-color-swatch-border-color);border-left-style:solid;border-left-width:var(--plx-comp-color-swatch-border-width);border-right-color:var(--plx-comp-color-swatch-border-color);border-right-style:solid;border-right-width:var(--plx-comp-color-swatch-border-width);border-top-color:var(--plx-comp-color-swatch-border-color);border-top-left-radius:var(--plx-comp-color-swatch-radius);border-top-right-radius:var(--plx-comp-color-swatch-radius);border-top-style:solid;border-top-width:var(--plx-comp-color-swatch-border-width);display:inline-block;flex-shrink:0;font-family:inherit;forced-color-adjust:none;padding-block-end:0;padding-block-start:0;padding-inline-end:0;padding-inline-start:0;}
 .plx-color-swatch--sm{block-size:var(--plx-comp-color-swatch-sm-height);inline-size:var(--plx-comp-color-swatch-sm-width);}
 .plx-color-swatch--md{block-size:var(--plx-comp-color-swatch-md-height);inline-size:var(--plx-comp-color-swatch-md-width);}
-button.plx-color-swatch{cursor:pointer;}
+button.plx-color-swatch{cursor:pointer;position:relative;}
 .plx-color-swatch[aria-pressed="true"],.plx-color-swatch[data-plx-selected]{box-shadow:var(--plx-comp-color-swatch-pressed-shadow);}
 button.plx-color-swatch:focus-visible,
 button.plx-color-swatch.is-focus-visible{outline-color:var(--plx-comp-color-swatch-focus-outline-color);outline-offset:var(--plx-comp-color-swatch-focus-outline-offset);outline-style:solid;outline-width:var(--plx-comp-color-swatch-focus-outline-width);}
@@ -20,7 +20,6 @@ button.plx-color-swatch.is-focus-visible{outline-color:var(--plx-comp-color-swat
 /* a swatch button's target (Platforms Standard 3.1): an invisible layer that grows it to the minimum target (24px with a
    fine pointer, 44px with touch) without changing the swatch; with touch each swatch's slot in the picker is the minimum
    target wide, so the targets do not overlap */
-button.plx-color-swatch{position:relative;}
 button.plx-color-swatch::before{content:"";inset-block-end:var(--plx-comp-color-swatch-target-inset);inset-block-start:var(--plx-comp-color-swatch-target-inset);inset-inline-end:var(--plx-comp-color-swatch-target-inset);inset-inline-start:var(--plx-comp-color-swatch-target-inset);position:absolute;}
 .plx-color-picker__slot{justify-content:center;min-inline-size:var(--plx-comp-color-picker-slot-min-width);}
 /* a swatch with its name (showLabel, wave 4): the swatch, then the name in the text color; as a button the pair is one

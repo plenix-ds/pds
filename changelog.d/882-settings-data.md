@@ -1,2 +1,0 @@
-### Changed
-- The suite applications load less data (#882): the data only Settings reads (the feature areas, capability documentation, schema and terminology tables, about 280 KB, 88 KB compressed) moved from `suite/plenix-app-data.js` to a new `suite/settings-data.js` that only the Settings page loads. The nine other suite pages go from 310 KB to 20 KB of data. Release folders now hold `apps/suite/settings-data.js`; a page pinned to an older release still works (its own data file holds everything).

@@ -109,11 +109,8 @@
   opacity: var(--plx-comp-find-panel-row-dragging-opacity);
 }
 .plx-find-panel__handle {
-  cursor: grab;
-}
-.plx-find-panel__handle {
   --plx-comp-button-context-icon-color: var(--plx-comp-find-panel-handle-text);
-}
+  cursor: grab;}
 .plx-find-panel__join {
   flex-grow: 0;
   flex-shrink: 0;

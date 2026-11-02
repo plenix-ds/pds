@@ -110,6 +110,7 @@ Each line links to the test's page. A test that a group test starts is listed un
 - [control-cards-804](control-cards-804.md): This test makes sure the choice cards work with a radio, a checkbox or a switch: a click anywhere on a card changes it, with one control named by the card, in both reading directions.
 - [tree-virtual-815](tree-virtual-815.md): This test makes sure a folder tree with thousands of items stays fast, drawing only the rows on screen, while the keys, the screen reader positions and right to left still work.
 - [data-grid-card-chunks-809](data-grid-card-chunks-809.md): This test makes sure a data table with thousands of rows stays fast on a phone: its card form draws the first 100 cards, and more as the person scrolls.
+- [data-grid-card-count-679](data-grid-card-count-679.md): A data table's card list can name its records ("6 members" instead of "6 records"), with the right plural in English and Arabic.
 - [narrow-fit-880](narrow-fit-880.md): This test makes sure a data toolbar's summary ends in "…" inside its row and the bottom navigation bar keeps all five destinations on a phone's width.
 - [date-only](date-only.md): This test makes sure a date with no time, such as a due date of October 18, shows as October 18 for everyone, wherever they are in the world.
 - [time-hook-order-885](time-hook-order-885.md): A date or time on the page does not crash when its value is empty at first and filled in later, or the other way around.
@@ -121,6 +122,7 @@ Each line links to the test's page. A test that a group test starts is listed un
 - [rtl-ctm-question](rtl-ctm-question.md): This test makes sure an Arabic question block inside an English page (and an English block inside an Arabic page) lays out in its own direction, as CTM's bilingual report questions need, using Plenix alone.
 - [rtl-editing-time](rtl-editing-time.md): This test makes sure the text editor, date picker, week grid, carousel and document viewer work the right way round on Arabic (right-to-left) pages.
 - [rtl-whole-page](rtl-whole-page.md): This test makes sure every Plenix app page still looks right when switched to Arabic (right to left): no sideways scrolling, titles starting at the right, and arrows pointing the right way.
+- [metric-card-rank-rtl-897](metric-card-rank-rtl-897.md): A metric card's ranked list reads "#1" on Arabic (right-to-left) pages too, never "1#".
 
 ### Pages and layout
 
@@ -155,6 +157,9 @@ Each line links to the test's page. A test that a group test starts is listed un
 - [labs](labs.md): In the design spec, each component lab's Edit dialog changes the setting it says it changes, so a designer adjusting a color or size edits the right token.
 - [messages-chat-s6](messages-chat-s6.md): The Messages app shows conversations with the shared chat parts (date lines, grouped messages, photos and sent/read status) and still sends replies, and the design spec's Chat page shows every part with the owner's rules.
 - [project-notes-632](project-notes-632.md): In the Projects app, each project shows the notes that belong to it.
+- [drawer-motion-912](drawer-motion-912.md): A side drawer slides in from its own edge, in both reading directions, instead of popping in like a dialog, and stands still with reduced motion.
+- [gray-category-882](gray-category-882.md): The gray category color is spelled "gray", and pages that still write "grey" look exactly the same.
+- [effect-deps-882](effect-deps-882.md): A photo strip and a row of tabs stop redoing work after every screen update, while still following scrolling and wider tabs.
 
 ### Charts
 

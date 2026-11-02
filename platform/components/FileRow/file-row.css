@@ -9,8 +9,7 @@
 }
 .plx-file-row.is-hover{background-color:var(--plx-comp-file-row-hover-background);}
 .plx-file-row.is-selected{background-color:var(--plx-comp-file-row-selected-background);}
-.plx-file-row__select{display:inline-flex;flex-shrink:0;}
-.plx-file-row__select{--plx-comp-check-context-align:center;}
+.plx-file-row__select{--plx-comp-check-context-align:center;display:inline-flex;flex-shrink:0;}
 .plx-file-row__file{display:flex;flex-basis:0;flex-grow:1;min-inline-size:0;}
 .plx-file-row__cell{color:var(--plx-comp-file-row-cell-text);flex-shrink:0;font-size:var(--plx-comp-file-row-cell-font-size);line-height:var(--plx-comp-file-row-cell-line-height);overflow-x:hidden;overflow-y:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .plx-file-row__size{font-family:var(--plx-comp-file-row-data-font-family);inline-size:var(--plx-comp-file-row-size-width);text-align:end;word-spacing:var(--plx-sys-font-data-word-spacing);}
