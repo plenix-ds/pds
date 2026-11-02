@@ -60,7 +60,7 @@
        puts DataGrid.unreadCommands(...).filter in its CommandBar's quickFilters and .selection among its selection commands. The controller exposes getUnreadCount(), markRead(keys), markUnread(keys).
      onRowClick(record, event), onRowDoubleClick(record, event): with them rows are focusable and Enter clicks;
        onCellEdit(record, { field, value, previous })
-     openKey: a string or a number: the key of the record whose details show (the open row); default the row last opened by a click or Enter
+     openKey: a string, a number or null: the key of the record whose details show (the open row); default the row last opened by a click or Enter
        (with onRowClick); null: none. The open row is aria-current="true"; in a grid without selection it takes the
        selected look (the fill and the start bar); with selection, opening a row selects only it, so it is marked too
      density: "compact" (default: tables start Compact, owner 2026-10-22) | "standard" | "comfortable" | "page" (follow the
