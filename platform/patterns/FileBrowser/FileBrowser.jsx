@@ -70,13 +70,8 @@ import { fileIcon, fileExtension } from '../../components/File/File.jsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { EmptyState } from '../../components/EmptyState/EmptyState.tsx';
 import { DropZone } from '../../components/DropZone/DropZone.tsx';
-<<<<<<< HEAD
-import { Resizable } from '../../components/Resizable/Resizable.tsx';
-import { PromptDialog } from '../../components/Dialog/Dialog.jsx';
-=======
 import { Resizable } from '../../components/Resizable/Resizable.tsx';
 import { PromptDialog } from '../../components/Dialog/Dialog.tsx';
->>>>>>> origin/styling/phase-2
 import { CommandBar, CommandBarSearch } from '../CommandBar/CommandBar.jsx';
 import { SortPanel } from '../SortPanel/SortPanel.jsx';
 import { ViewMenu } from '../ViewMenu/ViewMenu.jsx';
