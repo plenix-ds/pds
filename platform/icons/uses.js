@@ -22,8 +22,9 @@ const MARK = /plx-icons:\s*([a-z0-9_\- ]+)/;
 
 let parser = null;
 function parse(code, rel = '') {
-  if (!parser) parser = require('@babel/standalone');
-  return parser.transform(code, { ast: true, code: false, sourceType: 'module', parserOpts: { plugins: /\.[mc]?ts$/.test(rel) ? ['typescript'] : /\.tsx$/.test(rel) ? ['jsx', 'typescript'] : ['jsx'] } }).ast;
+  // @babel/parser (the parser alone): the one dependency of the packaged site-icon tool (@plenix-ds/icons, plenix-site-icons)
+  if (!parser) parser = require('@babel/parser');
+  return parser.parse(code, { sourceType: 'module', plugins: /\.[mc]?ts$/.test(rel) ? ['typescript'] : /\.tsx$/.test(rel) ? ['jsx', 'typescript'] : ['jsx'] });
 }
 const jsxName = (n) => (!n ? '' : n.type === 'JSXIdentifier' ? n.name : n.type === 'JSXMemberExpression' ? jsxName(n.object) + '.' + n.property.name : '');
 const exprName = (n) => (!n ? '' : n.type === 'Identifier' ? n.name : n.type === 'MemberExpression' && !n.computed ? exprName(n.object) + '.' + n.property.name : '');

@@ -185,10 +185,22 @@ const plenixModules = fs.readdirSync(PLENIX_ICONS).filter((n) => n.endsWith('.js
 const plenixIcons = plenixModules.filter((n) => fs.existsSync(path.join(PLENIX_ICONS, n + '.svg')));
 json(path.join(I, 'icons.json'), { version: VERSION, set: 'Material Symbols Sharp, weight 300, optical size 20 (unedited)', count: icons.length, icons,
   plenix: { count: plenixModules.length, modules: plenixModules.map((n) => './plenix/' + n + '.js'), index: './plenix/index.json' } });
+// the site-icon tool (P-64, #931): tools/icons/site-icons.js and the scan it uses (platform/icons/uses.js) as CommonJS
+// files (the package is an ES module package), with the icons it resolves from (site-icons.json: module objects whose
+// drawings passed the allow-list); its one dependency is @babel/parser, the version this repository builds with
+const siteIcons = require('./tools/icons/site-icons.js');
+write(path.join(I, 'bin', 'site-icons.cjs'), '#!/usr/bin/env node\n' + fs.readFileSync(path.join(ROOT, 'tools', 'icons', 'site-icons.js'), 'utf8'));
+fs.chmodSync(path.join(I, 'bin', 'site-icons.cjs'), 0o755);
+copy(path.join(P, 'icons', 'uses.js'), path.join(I, 'bin', 'uses.cjs'));
+const siteData = siteIcons.catalogData(ROOT);
+write(path.join(I, 'bin', 'site-icons.json'), JSON.stringify(siteData));
 json(path.join(I, 'package.json'), manifest('icons', 'Plenix icons: Material Symbols Sharp (weight 300), outline and filled, as SVG files, importable icon modules and an icon stylesheet.', {
   // the modules are ES modules (export default): the package's only JavaScript
   type: 'module',
   exports: { './icons.json': './icons.json', './icon.css': './icon.css', './svg/*': './svg/*', './plenix/*': './plenix/*', './package.json': './package.json' },
+  bin: { 'plenix-site-icons': './bin/site-icons.cjs' },
+  files: ['icons.json', 'icon.css', 'svg/', 'plenix/', 'bin/'],
+  dependencies: { '@babel/parser': require('./package.json').devDependencies['@babel/parser'] },
 }));
 readme('icons', `
 ${icons.length} icons, outline and filled, 20px and 24px: Material Symbols Sharp at weight 300, unedited.
@@ -196,7 +208,8 @@ ${icons.length} icons, outline and filled, 20px and 24px: Material Symbols Sharp
 - \`svg/<name>.svg\`, \`<name>-fill.svg\`, \`<name>-24.svg\`, \`<name>-24-fill.svg\`
 - \`icons.json\`: every name and its files, and the list of Plenix modules.
 - \`plenix/<name>.js\`: ${plenixModules.length} modules. Each of the ${plenixIcons.length} Plenix icons is its own module with its four SVG files beside it. Each of the ${plenixModules.length - plenixIcons.length} aliases (a symbol's underscore spelling, \`add_row_below\`) is a module that imports its icon (\`add-row-below.js\`) and has no SVG files of its own. \`plenix/index.json\` lists the names and aliases. Import only what you use: \`import Add from '${SCOPE}/icons/plenix/add.js'\`, then \`<Icon icon={Add} />\` or \`registerIcons(Add)\`.
-- \`icon.css\`: the stylesheet the Icon component uses (already part of ${SCOPE}/styles).`);
+- \`icon.css\`: the stylesheet the Icon component uses (already part of ${SCOPE}/styles).
+- \`npx plenix-site-icons <site> <folder or file> […] [--out <folder>] [--allow-unknown]\`: writes \`plenix-icons-<site>.js\`, the classic script that registers exactly the icons a site's source uses (load it after plenix.js). It knows every Plenix icon and the ${siteData.material.length} Material symbols in \`svg/\`; another Material Symbols name is reported as unknown (it needs a Plenix checkout, \`node tools/icons/site-icons.js\`), and \`--allow-unknown\` writes the file without it.`);
 
 // ---------- styles ----------
 const S = path.join(PKG, 'styles');
