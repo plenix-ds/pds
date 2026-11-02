@@ -83,7 +83,7 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 import { cx } from '../../utils/cx.ts';
 import { pageLayout } from '../../providers/pageLayouts.js';
-import { PanelSplitter } from '../../components/Resizable/Resizable.jsx';
+import { PanelSplitter } from '../../components/Resizable/Resizable.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import { useMonitorWidth } from '../../utils/monitorWidths.ts';
 

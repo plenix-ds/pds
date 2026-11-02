@@ -270,7 +270,7 @@ export { GeoMap } from './charts/GeoMap.jsx';
 export { useSortable, useDraggable, useDropTarget, useReposition, useDndSession, moveItem, transferItem, setDragOffset, clearDragOffset, mergeDndProps, DND_STRINGS } from './utils/dnd.ts';
 export { DragHandle } from './components/DragHandle/DragHandle.jsx';
 export { SortableList } from './patterns/SortableList/SortableList.jsx';
-export { Resizable, PanelSplitter } from './components/Resizable/Resizable.jsx';
+export { Resizable, PanelSplitter } from './components/Resizable/Resizable.tsx';
 export { RenameAction, baseNameEnd } from './patterns/RenameAction/RenameAction.jsx';
 export { WorkflowStatus, WORKFLOW_STATUSES, ReviewFlow, ReviewQueue } from './patterns/ReviewFlow/ReviewFlow.jsx';
 export { DeleteFlow } from './patterns/DeleteFlow/DeleteFlow.jsx';

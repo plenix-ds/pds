@@ -58,7 +58,7 @@ import { arrowStep, isRtl } from '../../utils/direction.ts';
 import { SIZE_STEPS, DRAG_STEP, GRID_MIN, GRID_BOX_MAX } from '../../utils/sizeSteps.js';
 import { gridWithin } from '../../utils/grid.ts';
 import { paneMax } from '../../utils/paneLimit.ts';
-import { resizeScale } from './resize-scale.js';
+import { resizeScale } from './resize-scale.ts';
 import { useFloating } from '../../utils/floating.ts';
 import { LiveRegion } from '../../utils/announce.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
