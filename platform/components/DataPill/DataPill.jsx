@@ -12,8 +12,9 @@
    Props:
      children: the value
      tone: its color, a category color by name (CATEGORY_COLORS: red, green, yellow, blue, orange, purple, cyan, magenta,
-       lime, pink, teal, lavender, beige, maroon, mint, olive, apricot, navy, gray); default gray. "grey" still works
-       and is Deprecated (issue 882): write "gray"
+       lime, pink, teal, lavender, beige, maroon, mint, olive, apricot, navy, gray). The pill writes exactly the value given
+       (data-plx-category). "grey" is Deprecated (issue 882): write "gray", which draws the same. The default, no tone,
+       is still "grey" in this release (Deprecated: CTM's stylesheet selects it); it becomes "gray" in a later release
      variant: "soft" (default: a soft fill, a 1px border two shades darker, the text in the darkest shade) | "solid" (the
        color as the fill, its own text color: a strong value such as a price band) | "plain" (no box: the icon and the
        text in the color, a name in running text)
@@ -25,7 +26,7 @@
      data: a technical value (a code, a number, a time, a price): the data font
      fill: the pill takes the whole width of its cell or container
      gender: "male" | "female": a person's pill: blue with the person-male icon or pink with the person-female icon, and
-       the gender said to assistive technology; any other value (or none) with a person: gray with the default person
+       the gender said to assistive technology; any other value (or none) with a person: the default (grey) with the default person
        icon. Set person to show the default icon when the gender is unknown
      person: the value is a person (the person icon when no gender is known)
      strings: the words it announces, for other languages: { male: "male", female: "female" }
@@ -57,7 +58,7 @@ export function DataPill({ children, tone, variant = 'soft', size, icon, data = 
   devWarn('DataPill', { variant }, { variant: ['soft', 'solid', 'plain'] });
   const t = useStrings('dataPill', strings);
   const g = GENDER[gender];
-  const color = g ? g.tone : (tone || (variant === 'plain' ? undefined : 'gray'));   // a plain value with no color keeps the text color
+  const color = g ? g.tone : (tone || (variant === 'plain' ? undefined : 'grey'));   // a plain value with no color keeps the text color; the default stays "grey" this release (Deprecated, issue 882: CTM selects it)
   const glyph = icon === false ? null : g ? g.icon : (icon || (person ? PersonIcon : null));   // icon={false}: a picture beside it already says it
   const title = fill && (typeof children === 'string' || typeof children === 'number') ? String(children) : undefined;
   return (

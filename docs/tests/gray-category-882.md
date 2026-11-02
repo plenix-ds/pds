@@ -8,7 +8,7 @@ This test makes sure the gray category color is spelled "gray" (American English
 - At 800 by 600 pixels:
   - the list of category colors ends with "gray" and no longer holds "grey";
   - a Tag in the gray category and one in "grey" draw the same background, border and text colors, the gray category pill colors;
-  - a DataPill with no color is gray;
+  - a DataPill writes exactly the color it is given (gray or grey), with no color still writes the Deprecated default "grey" (CTM's stylesheet selects it), and all three draw the same;
   - each old `--plx-sys-category-grey…` token gives the same color as its gray one.
 - No script errors.
 
