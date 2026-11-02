@@ -20,7 +20,7 @@
      Applications supply authorized sources, captions and transcripts. Browser controls follow the user's OS.
 */
 import React from 'react';
-import { useSeparateAudio } from './useSeparateAudio.js';
+import { useSeparateAudio } from './useSeparateAudio.ts';
 import { Stack, Inline } from '../Stack/Stack.tsx';
 import { Field } from '../Field/Field.tsx';
 import { Select } from '../Input/Input.tsx';

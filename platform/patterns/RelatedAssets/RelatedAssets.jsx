@@ -7,8 +7,8 @@
 */
 import React from 'react';
 import { devWarn } from '../../utils/devWarn.ts';
-import { Carousel } from '../../components/Carousel/Carousel.jsx';
-import { MediaCard } from '../../components/Card/Card.jsx';
+import { Carousel } from '../../components/Carousel/Carousel.tsx';
+import { MediaCard } from '../../components/Card/Card.tsx';
 import { EmptyState } from '../../components/EmptyState/EmptyState.tsx';
 import { ContentGrid } from '../ContentGrid/ContentGrid.jsx';
 import { Stack } from '../../components/Stack/Stack.tsx';

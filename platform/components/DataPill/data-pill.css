@@ -1,5 +1,5 @@
 /* Plenix · DataPill (platform/components/DataPill): a value shown as a pill, at the size of the text around it. Anatomy
-   and API: DataPill.jsx.
+   and API: DataPill.tsx.
    .plx-data-pill            the pill: its height the density's inline control height; colors from [data-plx-category]
    .plx-data-pill--soft      a soft fill (shade 100), a 1px border (shade 300), the text in shade 700
    .plx-data-pill--solid     the color as the fill, its own text color

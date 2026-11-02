@@ -33,7 +33,7 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 import { cx } from '../../utils/cx.ts';
 import { useLayer, useUid } from '../../utils/layer.ts';
-import { MediaPlayer } from '../MediaPlayer/MediaPlayer.jsx';
+import { MediaPlayer } from '../MediaPlayer/MediaPlayer.tsx';
 import { useGesture } from '../../hooks/useGesture.ts';
 import { Icon } from '../Icon/Icon.tsx';
 import { arrowStep } from '../../utils/direction.ts';

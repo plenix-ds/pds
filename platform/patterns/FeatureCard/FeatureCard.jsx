@@ -30,9 +30,9 @@
 import React from 'react';
 import { devWarn } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
-import { Card } from '../../components/Card/Card.jsx';
+import { Card } from '../../components/Card/Card.tsx';
 import { Icon } from '../../components/Icon/Icon.tsx';
-import { Image } from '../../components/Image/Image.jsx';
+import { Image } from '../../components/Image/Image.tsx';
 import SparkleIcon from 'plenix-platform/icons/plenix/sparkle';
 
 const VARIANTS = ['icon', 'image', 'horizontal'];

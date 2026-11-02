@@ -27,7 +27,7 @@
 import React from 'react';
 import { devWarn } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
-import { Avatar } from '../Avatar/Avatar.jsx';
+import { Avatar } from '../Avatar/Avatar.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import { fill } from '../../utils/fill.ts';
 

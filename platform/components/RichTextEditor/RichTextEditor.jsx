@@ -93,7 +93,7 @@ import { Button } from '../Button/Button.tsx';
 import { Input } from '../Input/Input.tsx';
 import { Tooltip } from '../Tooltip/Tooltip.tsx';
 import { Menu, MenuItem, MenuGroup, MenuDivider, MenuRadioGroup, MenuSub } from '../Menu/Menu.tsx';
-import { ColorSwatch } from '../ColorSwatch/ColorSwatch.jsx';
+import { ColorSwatch } from '../ColorSwatch/ColorSwatch.tsx';
 import { CATEGORY_COLORS } from '../ColorSwatch/categoryColors.js';
 import { hotkeyLabel, isMac } from '../../utils/hotkey.ts';
 import { loadTiptap } from './tiptap.js';

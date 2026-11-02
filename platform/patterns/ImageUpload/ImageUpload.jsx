@@ -49,7 +49,7 @@ import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { DropZone } from '../../components/DropZone/DropZone.tsx';
 import { FileInput } from '../../components/FileInput/FileInput.tsx';
-import { Image } from '../../components/Image/Image.jsx';
+import { Image } from '../../components/Image/Image.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Icon } from '../../components/Icon/Icon.tsx';
 import { Slider } from '../../components/Slider/Slider.tsx';

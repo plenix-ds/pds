@@ -2,7 +2,7 @@
    Summary: The Plenix illustration set: each drawing as data (its shapes and the color role of each), for Illustration to
      draw in the theme's colors. Two sets: the empty states and the errors.
    Usage:
-     import { ILLUSTRATIONS, illustrationByName } from './illustrations.js';
+     import { ILLUSTRATIONS, illustrationByName } from './illustrations.ts';
      ILLUSTRATIONS.filter((x) => x.set === 'error').map((x) => x.name)     // error, offline, not-found, no-access
    Props:
      ILLUSTRATIONS[i].name: the name Illustration takes ("no-results")

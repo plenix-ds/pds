@@ -28,7 +28,7 @@
 import React from 'react';
 import { devWarn } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
-import { Avatar } from '../Avatar/Avatar.jsx';
+import { Avatar } from '../Avatar/Avatar.tsx';
 import { Badge } from '../Badge/Badge.tsx';
 import { Link } from '../Link/Link.tsx';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden.tsx';

@@ -93,7 +93,7 @@ const unmapped = new Set();
 function fileIconModule(name, type) {
   const n = fileIcon(name, type);
   if (TYPE_ICONS[n]) return TYPE_ICONS[n];
-  if (!unmapped.has(n) && development() && typeof console !== 'undefined') { unmapped.add(n); console.warn('[Plenix] File: the type icon "' + n + '" has no import in File.jsx (TYPE_ICONS); the document icon is drawn.'); }
+  if (!unmapped.has(n) && development() && typeof console !== 'undefined') { unmapped.add(n); console.warn('[Plenix] File: the type icon "' + n + '" has no import in File.tsx (TYPE_ICONS); the document icon is drawn.'); }
   return DocumentIcon;
 }
 

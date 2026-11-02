@@ -20,12 +20,12 @@
    Notes:
      One illustration per view, in empty, first-run and error states: never in tables, forms or dense work areas. The
        heading and text beside it carry the message; the drawing adds no information and holds no words.
-     The set and its geometry are in illustrations.js; other props pass through to the <svg>.
+     The set and its geometry are in illustrations.ts; other props pass through to the <svg>.
 */
 import React from 'react';
 import { devWarn } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
-import { illustrationByName } from './illustrations.js';
+import { illustrationByName } from './illustrations.ts';
 
 export function Illustration({ name, size = 'md', tone = 'default', label, className, ...rest }) {
   devWarn('Illustration', { size, tone }, { size: ['sm','md','lg'], tone: ['default','on-accent'] });

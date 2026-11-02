@@ -67,7 +67,7 @@
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { formatBytes, formatDate, formatNumber } from '../../utils/format.ts';
-import { File } from '../../components/File/File.jsx';
+import { File } from '../../components/File/File.tsx';
 import { FileRow, FileRowList } from '../../components/FileRow/FileRow.jsx';
 import { DataGrid } from '../../components/DataGrid/DataGrid.jsx';
 import { Badge } from '../../components/Badge/Badge.tsx';
