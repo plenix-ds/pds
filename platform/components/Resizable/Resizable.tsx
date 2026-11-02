@@ -59,9 +59,11 @@ import { SIZE_STEPS, DRAG_STEP, GRID_MIN, GRID_BOX_MAX } from '../../utils/sizeS
 import { gridWithin } from '../../utils/grid.ts';
 import { paneMax } from '../../utils/paneLimit.ts';
 import { resizeScale } from './resize-scale.ts';
+import type { ResizeScale } from './resize-scale.ts';
 import { useFloating } from '../../utils/floating.ts';
 import { LiveRegion } from '../../utils/announce.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import { fill } from '../../utils/fill.ts';
 const useSizeEffect = typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect;
 
@@ -70,22 +72,34 @@ const useSizeEffect = typeof window === 'undefined' ? React.useEffect : React.us
    (the drag grid, DRAG_STEP: 8px since issue 882) within the limits, so it lands on the grid when let go (owner, 2026-10-26). edge: "end" (an area at the start: dragging toward the end widens it) or
    "start" (an area at the end). In a right-to-left page the start is on the right, so the drag and Arrow Left / Right
    are mirrored (arrowStep gives the step in reading order). No size menu (owner, 2026-10-16). */
-export function PanelSplitter({ label, value, min, max, onChange, onCollapse, edge = 'end' }) {
+export type PanelSplitterProps = {
+  label?: string;
+  /** the width now */
+  value: number;
+  min: number;
+  /** the widest it can be now */
+  max: () => number;
+  onChange: (width: number) => void;
+  onCollapse?: () => void;
+  /** "end": an area at the start; "start": an area at the end */
+  edge?: 'end' | 'start';
+};
+export function PanelSplitter({ label, value, min, max, onChange, onCollapse, edge = 'end' }: PanelSplitterProps) {
   const dir = edge === 'end' ? 1 : -1;
   // a width is always on the drag grid, every DRAG_STEP px (owner, 2026-10-26: smooth, then "the nearest grid line"; 8px
   // since 2026-11-02, issue 882), within the limits
   // (and within the grid lines the stylesheet draws a pane at: GRID_MIN to GRID_PANE_MAX)
   // and within the window's share (--plx-sys-shell-pane-window-share: never more than 90% of the window)
-  const clamp = (w, el) => { const lo = Math.max(min, GRID_MIN); return gridWithin(w, lo, paneMax(max(), lo, el), { step: DRAG_STEP }); };
-  const onPointerDown = (e) => {
+  const clamp = (w: number, el?: Element | null) => { const lo = Math.max(min, GRID_MIN); return gridWithin(w, lo, paneMax(max(), lo, el), { step: DRAG_STEP }); };
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (e.button !== 0) return;
     e.preventDefault();
     const x0 = e.clientX, w0 = value, flip = isRtl(e.currentTarget) ? -1 : 1;
-    const move = (ev) => onChange(clamp(w0 + (ev.clientX - x0) * dir * flip, e.currentTarget));
+    const move = (ev: PointerEvent) => onChange(clamp(w0 + (ev.clientX - x0) * dir * flip, e.currentTarget));
     const up = () => { document.removeEventListener('pointermove', move); document.removeEventListener('pointerup', up); document.documentElement.classList.remove('is-resizing-columns'); };
     document.addEventListener('pointermove', move); document.addEventListener('pointerup', up); document.documentElement.classList.add('is-resizing-columns');
   };
-  const onKeyDown = (e) => {
+  const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     const step = arrowStep(e, e.currentTarget, { vertical: false }) * dir;
     if (step) { e.preventDefault(); onChange(clamp(value + step * (tokenPx('--plx-sys-shell-splitter-step') || DRAG_STEP))); }
     else if (e.key === 'Home') { e.preventDefault(); onChange(clamp(min)); }
@@ -102,12 +116,36 @@ export function PanelSplitter({ label, value, min, max, onChange, onCollapse, ed
 
 /* ── Resizable: a box with its own resize edges ── */
 // the default limits are the component's tokens (--plx-comp-resizable-min-width …), read from the page
-const tokenPx = (name) => (typeof document === 'undefined' ? 0 : parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name)) || 0);
-const limit = (v, name) => (v != null ? v : tokenPx('--plx-comp-resizable-' + name));
+const tokenPx = (name: string): number => (typeof document === 'undefined' ? 0 : parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name)) || 0);
+const limit = (v: number | null | undefined, name: string): number => (v != null ? v : tokenPx('--plx-comp-resizable-' + name));
 // One axis's settled sizes: caller steps, or the 8px drag grid; while dragged the size moves one grid line at a time.
+// a box's size in pixels
+export type ResizableSize = { width: number; height: number };
+export type ResizableProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'onResize'> & {
+  /** what is resized: the edges' names ("Preview width") */
+  label: string;
+  variant?: 'default' | 'divider';
+  /** the content is a column whose children fill it */
+  fill?: boolean;
+  axis?: 'horizontal' | 'vertical' | 'both';
+  /** the size when the page keeps it */
+  width?: number;
+  height?: number;
+  /** each live size and the snapped release size */
+  onResize?: (size: ResizableSize) => void;
+  defaultWidth?: number;
+  defaultHeight?: number;
+  minWidth?: number;
+  maxWidth?: number;
+  minHeight?: number;
+  maxHeight?: number;
+  /** the only sizes allowed, smallest first: for the resized axis, or per axis */
+  steps?: number[] | { width?: number[]; height?: number[] };
+  strings?: Catalog | null;
+};
 export function Resizable({ label, variant = 'default', fill: fillContent = false, axis = 'horizontal', width, height, onResize, defaultWidth, defaultHeight, minWidth: minW, maxWidth: maxW,
-  minHeight: minH, maxHeight: maxH, steps, strings, className, children, ...rest }) {
-  const t = useStrings('resizable', strings);
+  minHeight: minH, maxHeight: maxH, steps, strings, className, children, ...rest }: ResizableProps) {
+  const t = useStrings('resizable', strings) as Record<string, string>;
   const minWidth = limit(minW, 'min-width'), maxWidth = limit(maxW, 'max-width'), minHeight = limit(minH, 'min-height'), maxHeight = limit(maxH, 'max-height');
   const doW = axis !== 'vertical', doH = axis !== 'horizontal';
   const wSteps = Array.isArray(steps) ? (doW ? steps : null) : steps && steps.width;
@@ -118,20 +156,20 @@ export function Resizable({ label, variant = 'default', fill: fillContent = fals
   // live (dragging): one grid line at a time within the limits; settled: the steps, or the grid
   // every size within the grid lines the stylesheet draws a box at (GRID_MIN to GRID_BOX_MAX): a larger one lands on the
   // largest, never on the default size
-  const cap = (v) => Math.max(GRID_MIN, Math.min(GRID_BOX_MAX, v));
-  const live = (S, v) => cap(gridWithin(v, S.lo, S.hi, { step: DRAG_STEP }));
+  const cap = (v: number) => Math.max(GRID_MIN, Math.min(GRID_BOX_MAX, v));
+  const live = (S: ResizeScale, v: number) => cap(gridWithin(v, S.lo, S.hi, { step: DRAG_STEP }));
   // the limits it can actually reach (the separator's aria-valuemin / -valuemax and the limit hint): each scale's own,
   // settled and held within GRID_MIN to GRID_BOX_MAX, so a maxWidth past 1600 reports 1600
-  const reach = (S) => ({ lo: cap(S.snap(S.lo)), hi: cap(S.snap(S.hi)) });
+  const reach = (S: ResizeScale) => ({ lo: cap(S.snap(S.lo)), hi: cap(S.snap(S.hi)) });
   const WR = reach(W), HR = reach(H);
   const size = { width: width != null ? (dragging ? live(W, width) : cap(W.snap(width))) : live(W, own.width), height: height != null ? (dragging ? live(H, height) : cap(H.snap(height))) : live(H, own.height) };
-  const root = React.useRef(null);
+  const root = React.useRef<HTMLDivElement>(null);
   // a size reaches the stylesheet as data-plx-width / data-plx-height: one rule per size token (resizable.css) and one per
   // grid line (system/steps.css, build-steps.js), never a style attribute or a style element
   const latest = React.useRef(size); latest.current = size;
-  const dragCleanup = React.useRef(null), motion = React.useRef([]);
+  const dragCleanup = React.useRef<(() => void) | null>(null), motion = React.useRef<Animation[]>([]);
   const stopMotion = () => { motion.current.forEach(animation => animation.cancel()); motion.current = []; };
-  const animate = (element, frames) => {
+  const animate = (element: Element | null, frames: Keyframe[]) => {
     const win = element && element.ownerDocument.defaultView;
     if (!win || !element.animate || win.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const duration = win.getComputedStyle(element).getPropertyValue('--plx-comp-resizable-edge-duration').trim();
@@ -141,7 +179,7 @@ export function Resizable({ label, variant = 'default', fill: fillContent = fals
   React.useEffect(() => () => { if (dragCleanup.current) dragCleanup.current(); stopMotion(); }, []);
   const [notice, setNotice] = React.useState(''), [announcement, setAnnouncement] = React.useState('');
   const input = React.useRef('pointer');
-  const announced = React.useRef(new Set()), anchor = React.useRef(null), bubble = React.useRef(null);
+  const announced = React.useRef(new Set<string>()), anchor = React.useRef<HTMLElement | null>(null), bubble = React.useRef<HTMLSpanElement>(null);
   useFloating(anchor, bubble, { open: !!notice, placement: 'end', offset: 'sm' });
   useSizeEffect(() => {
     const element = bubble.current;
@@ -149,9 +187,9 @@ export function Resizable({ label, variant = 'default', fill: fillContent = fals
     element.showPopover();
     return () => { if (element.matches(':popover-open')) element.hidePopover(); };
   }, [notice]);
-  const reportLimit = next => {
+  const reportLimit = (next: ResizableSize) => {
     let message = '';
-    for (const [which, scale, active] of [['width', WR, doW], ['height', HR, doH]]) {
+    for (const [which, scale, active] of [['width', WR, doW], ['height', HR, doH]] as [keyof ResizableSize, { lo: number; hi: number }, boolean][]) {
       if (!active || (next[which] > scale.lo && next[which] < scale.hi)) continue;
       const smallest = next[which] <= scale.lo, value = smallest ? scale.lo : scale.hi;
       message = fill(t[(smallest ? 'min' : 'max') + (which === 'width' ? 'Width' : 'Height')], { label, value });
@@ -165,7 +203,7 @@ export function Resizable({ label, variant = 'default', fill: fillContent = fals
       if (handle) animate(handle, [{ transform: transform + '(0)' }, { transform: transform + '(var(--plx-ref-size-4px))' }, { transform: transform + '(0)' }]);
     }
   };
-  const set = (next, settle = true) => {
+  const set = (next: ResizableSize, settle = true) => {
     reportLimit(next);
     const s = { width: doW ? (settle ? cap(W.snap(next.width)) : live(W, next.width)) : latest.current.width, height: doH ? (settle ? cap(H.snap(next.height)) : live(H, next.height)) : latest.current.height };
     if (s.width === latest.current.width && s.height === latest.current.height) return;
@@ -173,20 +211,20 @@ export function Resizable({ label, variant = 'default', fill: fillContent = fals
     if (width == null || height == null) setOwn(s);
     if (onResize) onResize(s);
   };
-  const drag = (dx, dy) => (e) => {
+  const drag = (dx: number, dy: number) => (e: React.PointerEvent<HTMLDivElement>) => {
     if (e.pointerType === 'mouse' && e.button !== 0) return;
     e.preventDefault(); input.current = 'pointer'; anchor.current = e.currentTarget;
     const x0 = e.clientX, y0 = e.clientY, w0 = latest.current.width, h0 = latest.current.height, flip = isRtl(e.currentTarget) ? -1 : 1;
     stopMotion(); announced.current.clear(); setAnnouncement('');
     setDragging(true);
     const cls = dx && dy ? 'is-resizing-both' : dy ? 'is-resizing-rows' : 'is-resizing-columns';
-    const move = (ev) => set({ width: w0 + (ev.clientX - x0) * flip * dx, height: h0 + (ev.clientY - y0) * dy }, false);
+    const move = (ev: PointerEvent) => set({ width: w0 + (ev.clientX - x0) * flip * dx, height: h0 + (ev.clientY - y0) * dy }, false);
     const doc = e.currentTarget.ownerDocument;
     if (dragCleanup.current) dragCleanup.current();
     const clear = () => { doc.removeEventListener('pointermove', move); doc.removeEventListener('pointerup', up); doc.removeEventListener('pointercancel', up); doc.documentElement.classList.remove(cls); dragCleanup.current = null; };
     const up = () => {
       const raw = latest.current, settled = { width: W.snap(raw.width), height: H.snap(raw.height) };
-      const before = {}, after = {};
+      const before: Keyframe = {}, after: Keyframe = {};
       if (doW) { before.inlineSize = raw.width + 'px'; after.inlineSize = settled.width + 'px'; }
       if (doH) { before.blockSize = raw.height + 'px'; after.blockSize = settled.height + 'px'; }
       if (raw.width !== settled.width || raw.height !== settled.height) animate(root.current, [before, after]);
@@ -195,14 +233,14 @@ export function Resizable({ label, variant = 'default', fill: fillContent = fals
     dragCleanup.current = clear;
     doc.addEventListener('pointermove', move); doc.addEventListener('pointerup', up); doc.addEventListener('pointercancel', up); doc.documentElement.classList.add(cls);
   };
-  const keys = (which) => (e) => {
+  const keys = (which: keyof ResizableSize) => (e: React.KeyboardEvent<HTMLDivElement>) => {
     input.current = 'keyboard';
     if (e.key === 'Escape') { setNotice(''); return; }
     anchor.current = e.currentTarget;
     const S = which === 'width' ? W : H;
     const step = which === 'width' ? arrowStep(e, e.currentTarget, { vertical: false }) : (e.key === 'ArrowDown' ? 1 : e.key === 'ArrowUp' ? -1 : 0);
     const cur = latest.current[which];
-    let next = null;
+    let next: number | null = null;
     if (step) next = S.step(cur, step);
     else if (e.key === 'Home') next = S.lo;
     else if (e.key === 'End') next = S.hi;
@@ -210,7 +248,7 @@ export function Resizable({ label, variant = 'default', fill: fillContent = fals
     e.preventDefault();
     set(Object.assign({}, latest.current, { [which]: next }));
   };
-  const edge = (which) => {
+  const edge = (which: keyof ResizableSize) => {
     const R = which === 'width' ? WR : HR;
     return (
       <div role="separator" tabIndex={0} aria-orientation={which === 'width' ? 'vertical' : 'horizontal'} aria-label={fill(t[which], { label })}

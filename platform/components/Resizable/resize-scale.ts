@@ -9,14 +9,16 @@
    Notes: No DOM or side effects. */
 import { DRAG_STEP } from '../../utils/sizeSteps.js';
 
-export function resizeScale(steps, min, max, keyboardSteps = []) {
-  const clamp = value => Math.max(min, Math.min(max, Number.isFinite(value) ? value : min));
+// one axis's scale: clamp (within the limits), snap (the settled size), step (the next size, dir 1 or -1) and the reach
+export type ResizeScale = { clamp(value: number): number; snap(value: number): number; step(value: number, dir: number): number; lo: number; hi: number };
+export function resizeScale(steps: number[] | null | undefined, min: number, max: number, keyboardSteps: number[] = []): ResizeScale {
+  const clamp = (value: number) => Math.max(min, Math.min(max, Number.isFinite(value) ? value : min));
   const values = Array.isArray(steps) ? [...new Set(steps.filter(Number.isFinite).filter(value => value >= min && value <= max))].sort((a, b) => a - b) : [];
   // the drag-grid lines inside the limits (a limit off the grid rounds inward)
   const first = Math.ceil(min / DRAG_STEP) * DRAG_STEP, last = Math.max(first, Math.floor(max / DRAG_STEP) * DRAG_STEP);
-  const onGrid = value => Math.max(first, Math.min(last, Math.round(clamp(value) / DRAG_STEP) * DRAG_STEP));
-  const snap = value => values.length ? values.reduce((a, b) => Math.abs(b - value) < Math.abs(a - value) ? b : a) : onGrid(value);
-  const step = (value, dir) => {
+  const onGrid = (value: number) => Math.max(first, Math.min(last, Math.round(clamp(value) / DRAG_STEP) * DRAG_STEP));
+  const snap = (value: number) => values.length ? values.reduce((a, b) => Math.abs(b - value) < Math.abs(a - value) ? b : a) : onGrid(value);
+  const step = (value: number, dir: number) => {
     if (values.length) return values[Math.max(0, Math.min(values.length - 1, values.indexOf(snap(value)) + (dir > 0 ? 1 : -1)))];
     const keys = keyboardSteps.filter(size => size >= min && size <= max && size % DRAG_STEP === 0);
     const top = keys.length ? Math.max(...keys) : min;
