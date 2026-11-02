@@ -1,7 +1,7 @@
 /* Plenix tests · a DataGrid's card count names the app's records (issue 679, the owner's card review): strings.cardCount
    makes "6 records" read "6 members", in the locale's plural forms; with no strings the count is as before.
    Written before the change: the count read the catalog's dataGrid.cardCount only, so a grid's strings were ignored.
-   Summary (the browser, 380 x 600, the narrow cards):
+   Summary (the browser, 380 x 600, the narrow cards: narrow="list", so the cards show whatever the columns need, issue 929):
      English: with strings.cardCount { one, other }, 1 row reads "1 member" and 6 rows "6 members"; with none, 6 rows read
        "6 records"
      Arabic (right to left): with the six forms, 1 row reads "عضو واحد", 2 rows "عضوان", 3 rows the "few" form and 11 rows
@@ -35,7 +35,7 @@ const AR = { zero: 'لا يوجد أعضاء', one: 'عضو واحد', two: 'ع�
       const columns = [{ field: 'name', title: ar ? 'الاسم' : 'Name', width: 200 }, { field: 'role', title: ar ? 'الدور' : 'Role', width: 160 }, { field: 'joined', title: ar ? 'الانضمام' : 'Joined', type: 'date', width: 160 }];
       window.__root = ReactDOM.createRoot(document.getElementById('c'));
       window.__root.render(h(P.LocaleProvider, { locale: ar ? 'ar-EG' : 'en-US', dir },
-        h(P.DataGrid, { label: 'Members', data, columns, index: 'id', selectable: true, strings: cardCount ? { cardCount } : undefined })));
+        h(P.DataGrid, { label: 'Members', data, columns, index: 'id', selectable: true, narrow: 'list', strings: cardCount ? { cardCount } : undefined })));
       await new Promise((r) => setTimeout(r, 900));
       const head = document.querySelector('.plx-data-grid__grid-header--card');
       return head ? head.textContent.replace(/[٠-٩]/g, (d) => String(d.charCodeAt(0) - 0x0660)).trim() : null;

@@ -10,7 +10,8 @@
      narrow="table" keeps the set widths: AITEAM's Issues in a 760px pane scrolls sideways
      a St. John directory (6 columns) at 600: a table; at 390: cards
      a plain 6-column grid at 600: a table; at 390: cards
-     narrow="list" at 1440 stays cards; narrow="table" at 390 stays a table
+     narrow="list" is cards at 500 (under its 600px narrowAt, though the columns would fit) and a table at 1440; narrow="table"
+       at 390 stays a table
      no script errors
    Usage: node tests/data-grid-autofit-929.test.js   → DATA_GRID_AUTOFIT_929_OK */
 const assert = require('assert/strict');
@@ -81,7 +82,9 @@ const SHAPES = {
       assert.equal((await draw('stjohn', dir, 390)).cards, true, d + 'the directory at 390 is cards');
       assert.equal((await draw('plain', dir, 600)).cards, false, d + 'the plain grid at 600 is a table');
       assert.equal((await draw('plain', dir, 390)).cards, true, d + 'the plain grid at 390 is cards');
-      assert.equal((await draw('plain', dir, 1440, null, { narrow: 'list' })).cards, true, d + 'narrow="list" stays cards at 1440');
+      // narrow="list": cards under narrowAt (600px) whatever the columns need, a table above it
+      assert.equal((await draw('plain', dir, 500, null, { narrow: 'list' })).cards, true, d + 'narrow="list" is cards at 500 (under 600), where the columns would fit');
+      assert.equal((await draw('plain', dir, 1440, null, { narrow: 'list' })).cards, false, d + 'narrow="list" is a table at 1440 (above 600)');
       assert.equal((await draw('plain', dir, 390, null, { narrow: 'table' })).cards, false, d + 'narrow="table" stays a table at 390');
     }
     assert.deepEqual(errors, [], 'no script errors');

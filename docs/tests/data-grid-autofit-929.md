@@ -10,7 +10,7 @@ This test makes sure a data table fits its columns to the window and turns into 
   - a St. John directory of six columns at 600: a table; at 390: cards;
   - a plain six-column grid at 600: a table; at 390: cards;
   - the columns size to their content first: at 1024 and 1280 every title reads in full, and Number, Priority and Labels are no wider than their content or header needs;
-  - narrow="list" stays cards at 1440; narrow="table" stays a table at 390 and keeps its set widths (in a 760-pixel pane it scrolls sideways).
+  - narrow="list" is cards at 500 (under its 600-pixel breakpoint, though the columns would fit) and a table at 1440; narrow="table" stays a table at 390 and keeps its set widths (in a 760-pixel pane it scrolls sideways).
 - No script errors.
 
 ## Why it exists
