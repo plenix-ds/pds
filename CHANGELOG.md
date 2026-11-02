@@ -31,9 +31,6 @@ The batch numbers point to the work log (Plenix - DAM/audit/batches/).
 ### Deprecated
 - 32 tokens nothing reads, each with its replacement in its token file and on its design-spec page: the feedback "solid label" roles (`--plx-sys-feedback-{neutral,info,success,danger}-solid-label`, `--plx-sys-feedback-warning-{on-solid,solid-label,solid-border}`), the status colors (`--plx-sys-status-{done,in-progress,blocked,not-started}`), the Table tokens (`--plx-sys-table-{row-height,font-size,header-line,border}`, `--plx-comp-table-radius`), `--plx-comp-tabs-tab-{text,font-weight,selected-text,selected-font-weight}`, `--plx-sys-control-icon-dialog` and `-dialog-destructive`, `--plx-sys-dataviz-{grid-line,label}`, `--plx-sys-data-grid-{danger,menu-shadow}`, and `--plx-comp-{toolbar-padding-inline,card-padding,card-title-content-gap,card-content-actions-gap,dialog-padding,drawer-padding}`. Each keeps working until it is removed, no earlier than the next minor release. #882
 
-### Upgrading
-- **Arabic pages that load `plenix.js` directly from the CDN** (without the page loader) and show Plenix's own words in Arabic: add `<script src="https://design-system.lighthouseway.org/cdn/<version>/plenix-ar.js"></script>` right after `plenix.js`. The npm package and `plenix.esm.js` are unchanged.
-
 ## [0.83.0] - 2026-11-02
 
 **In short.** A clean-up release from the code health check (#882). Pages download less: the nine apps other than Settings no longer load settings data, CDN pages get the minified stylesheet, and small npm imports of icons are about 10 KB lighter. Six library parts show a plain icon instead of an icon in a box. Two bugs are fixed: "Insert image" in the rich-text editor works again, and a Time whose value comes and goes no longer crashes. On a narrow phone, a carousel shows fewer, wider items so each one is readable. 252 unused utility classes and 14 unused tokens are marked "going away", and 98 color names retired since 0.48.0 are removed.
