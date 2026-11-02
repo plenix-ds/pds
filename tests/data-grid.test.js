@@ -87,7 +87,7 @@ if (!ONLY) {
     'remote-fill-522.test.js', 'remote-fill-614.test.js', 'listing-page-522.test.js', 'data-grid-next-capabilities.test.js', 'data-grid-next-independent.test.js',
     // the responsive grid (issue 679): a table while it fits, the row cards when it does not, in a SplitView too
     'data-grid-responsive-679.test.js',
-    // the card list draws in chunks of 100 (issue 809, first step)
+    // the long card list draws only the cards near the view (issue 809)
     'data-grid-card-chunks-809.test.js'].filter((r) => runs(r, GRIDS))) {
     const result = require('child_process').spawnSync(process.execPath, [require('path').join(__dirname, regression)], { stdio: 'inherit', env: process.env });
     if (result.status !== 0) process.exit(result.status || 1);

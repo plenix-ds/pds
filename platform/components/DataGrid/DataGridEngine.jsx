@@ -64,6 +64,8 @@ import { makeFocusCell } from './engine/keys.js';
 import { MemoGridRow, PixelGap } from './engine/parts.jsx';
 // a card list of more cards than this draws only the cards near the view (issue 809)
 const CARD_ALL = 100;
+// the cards drawn beyond each edge of the view in the long card list (issue 809)
+const CARD_OVERSCAN = 6;
 
 function NextEngine(props) {
   const inPane = React.useContext(GridPane);
@@ -404,9 +406,20 @@ function NextEngine(props) {
   const windowed = cardScroller === 'window';
   // the card that has focus stays drawn wherever the list scrolls (Home, a scroll by the wheel), so focus is never lost
   const cardFocus = React.useRef(null);   // the focused card's key
+  // and the headers of the group the view is in (each level) stay drawn, so they stay stuck at the top as their rows scroll,
+  // exactly as when every card was drawn
+  const cardHeads = React.useMemo(() => (cardsVirtual ? model.map((row, i) => (row.__group ? [i, row.__group.depth] : null)).filter(Boolean) : []), [cardsVirtual, model]);
   const cardRange = (range) => {
     const out = defaultRangeExtractor(range), at = cardFocus.current == null ? undefined : cardIndex.current.get(cardFocus.current);
-    if (at !== undefined && at < model.length && !out.includes(at)) { out.push(at); out.sort((a, b) => a - b); }
+    const add = (i) => { if (i !== undefined && i >= 0 && i < model.length && !out.includes(i)) out.push(i); };
+    add(at);
+    // the nearest header before the view at each level, going up the levels
+    let depth = Infinity;
+    for (let k = cardHeads.length - 1; k >= 0 && depth > 0; k -= 1) {
+      const [i, d] = cardHeads[k];
+      if (i <= range.startIndex && d < depth) { add(i); depth = d; }
+    }
+    out.sort((a, b) => a - b);
     return out;
   };
   const cardVirtual = useVirtualizer({
@@ -419,7 +432,7 @@ function NextEngine(props) {
     getItemKey: (i) => model[i]?.displayKey || model[i]?.id,
     scrollMargin: cardTop,
     rangeExtractor: cardRange,
-    overscan: 6,
+    overscan: CARD_OVERSCAN,
     enabled: cardsVirtual,
     redrawOnSize: true,
     initialRect: { width: 0, height: 0 }

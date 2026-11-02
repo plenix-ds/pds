@@ -152,10 +152,12 @@
        (a resize, a pane drag, a column shown or hidden). The cards keep the sort, filter, groups, selection, the open row and
        the saved view (virtualization stays on for the table). In the cards the column headers are hidden: sorting and filtering
        come from the command bar's panels and the saved view.
-     The cards are drawn in chunks (issue 809, first step): the first 100, then the next 100 each time the end of the list comes
-       near the view (in the grid's own scroll area, or the window when the grid grows with the page). End (or Ctrl or Command
-       with End) on a card draws every card and goes to the last; Arrow Down past the drawn ones draws the next chunk first.
-       The counts, select-all, find and filters work on all the rows, and aria-rowcount is the full count. A list of 100 cards
+     A long card list draws only the cards near the view (issue 809): more than 100 cards, each measured at its own height
+       (lines that wrap, an open row), with a space before and after them exactly as tall as the cards not drawn, in the grid's
+       own scroll area or the window when the grid grows with the page. The focused card and the headers of the group in view
+       stay drawn, so focus is never lost and group headers stay stuck at the top; End (or Ctrl or Command with End) on a card
+       goes to the last at once, the arrows to the next card wherever it is. Browser find sees only the drawn cards, as in
+       the table. The counts, select-all, find and filters work on all the rows, and aria-rowcount is the full count. A list of 100 cards
        or fewer draws as before; remote rows keep their own loading.
      In a table (narrow="table", or one that fits), horizontal body scrolling moves the column headers by the same amount; only frozen headers and cells stay pinned.
        Pinned cells use the grid direction for placement, while their values retain automatic text direction.
