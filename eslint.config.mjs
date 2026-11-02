@@ -3,6 +3,7 @@
 // the same name, so an import left on a renamed file's old name builds and type-checks; this rule does not map it and
 // fails instead (#708: hooks/useBranchLoader.ts still named Button.jsx and Loading.jsx after the rename of slice 3).
 // The node resolver adds no extensions here: an import must write its file's own extension, as every Platform import does.
+// The spec files in lanes are parsed only (a syntax error fails; see the lanes block below).
 // More rules come one at a time, each in its own pull request (the #882 findings: unused imports, dead locals).
 import importPlugin from 'eslint-plugin-import';
 import tsParser from '@typescript-eslint/parser';
@@ -31,6 +32,13 @@ export default [
       'react-hooks/rules-of-hooks': 'off',
       'react-hooks/exhaustive-deps': 'off',
     },
+  },
+  {
+    // the design-spec files a pull request carries in a lane (lanes/<task>/design-system/): plain scripts, as in the spec.
+    // No rule: ESLint's parse alone fails a syntax error, which the build would otherwise meet first (#926)
+    files: ['lanes/*/design-system/**/*.js'],
+    languageOptions: { ecmaVersion: 2023, sourceType: 'script' },
+    linterOptions: { reportUnusedDisableDirectives: 'off' },
   },
   {
     files: ['platform/**/*.{ts,tsx}'],
