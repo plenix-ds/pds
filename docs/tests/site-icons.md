@@ -40,5 +40,5 @@ Each site and app loads a small file with exactly the icons it uses, and those f
 - By hand: `node tests/site-icons.test.js`.
 
 ## What it needs
-- Node only (no browser, no server), with the installed packages (`@babel/standalone`).
+- Node only (no browser, no server), with the installed packages (`@babel/standalone`, and `@babel/parser` for the scan).
 - The generated icon files (`node build-app.js`), the generator `tools/icons/site-icons.js`, and `platform/icons/`.
