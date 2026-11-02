@@ -264,7 +264,7 @@ t('dnd', 'foundation', 'L', 10, 'C', ['press-focus-select', 'LiveRegion'], ['sor
 t('SortableList', 'pattern', 'M', 10, 'C', ['dnd'], ['vertical', 'grid', 'handles', 'with move buttons'], 'Sortable list = Reordering');
 t('DragHandle', 'component', 'S', 10, 'C', ['dnd'], ['vertical', 'horizontal'], '');
 t('DropZone', 'extend', 'S', 10, 'C', ['dnd'], ['data drop target', 'accepts/rejects'], 'DropZone accepts data items, not only files', EX.DropZone);
-t('Resizable', 'component', 'S', 10, 'C', [], ['horizontal', 'vertical', 'both', 'snapped to size steps'], 'PanelSplitter promoted from AppShell.tsx into its own component (AppShell imports and re-exports it)', ['platform/components/Resizable/Resizable.jsx', 'platform/components/Resizable/resizable.css', 'platform/tokens/components/resizable.tokens.json', 'platform/patterns/AppShell/AppShell.tsx']);
+t('Resizable', 'component', 'S', 10, 'C', [], ['horizontal', 'vertical', 'both', 'snapped to size steps'], 'PanelSplitter promoted from AppShell.tsx into its own component (AppShell imports and re-exports it)', ['platform/components/Resizable/Resizable.tsx', 'platform/components/Resizable/resizable.css', 'platform/tokens/components/resizable.tokens.json', 'platform/patterns/AppShell/AppShell.tsx']);
 
 /* ───────── wave 11: import/export, sharing, auth, access, onboarding ───────── */
 t('ImportDialog', 'pattern', 'M', 11, 'A', ['FileInput', 'DropZone'], ['file', 'paste', 'url'], 'Import (actions) = Import (patterns)');
