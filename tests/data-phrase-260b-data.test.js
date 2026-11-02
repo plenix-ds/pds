@@ -30,7 +30,7 @@ const assert = require('assert/strict'), { serve, launch } = require('./lib');
           h(P.Table, { label: 'Ministries', columns: [{ title: 'Ministry', field: 'm' }, { title: 'Count', field: 'n', render: (r) => r.n }, { title: 'Node', field: 'k', render: (r) => r.k }],
             data: [{ id: 1, m: 'Choir', n: c.cell, k: h('em', { id: 'own' }, '7 files') }] })));
         await new Promise((r) => setTimeout(r, 1000));
-        const parts = { metric: '.plx-metric__description', chart: '.plx-chart__description', record: '.plx-record-page__description', meta: '.plx-activity-list__meta', cell: '[role="cell"][data-plx-field="n"] .plx-table__value' }, out = {};   // the Count cell: every text cell has a value span, and the first is Ministry's "Choir" (issue 777)
+        const parts = { metric: '.plx-metric__description', chart: '.plx-chart__description', record: '.plx-record-page__description', meta: '.plx-activity-list__meta', cell: '[role="cell"][data-plx-field="n"] .plx-data-grid__value' }, out = {};   // the Count cell: every text cell has a value span, and the first is Ministry's "Choir" (issue 777)
         for (const k of Object.keys(parts)) {
           const el = document.querySelector(parts[k]), monos = [...el.querySelectorAll('*')].filter((e) => !e.children.length && /Mono/i.test(getComputedStyle(e).fontFamily));
           const inner = el.querySelector('.plx-text');

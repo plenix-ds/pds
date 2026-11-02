@@ -2992,145 +2992,6 @@
     "font-size"
    ]
   },
-  "plx-table__cell--name": {
-   "contract": "adjusts",
-   "props": [
-    "font-weight"
-   ]
-  },
-  "plx-table__empty": {
-   "contract": "establishes",
-   "role": "body",
-   "font": "sans",
-   "adjusts": [
-    "font-size",
-    "font-weight"
-   ]
-  },
-  "plx-table__footer": {
-   "contract": "adjusts",
-   "props": [
-    "font-size"
-   ]
-  },
-  "plx-table__grid": {
-   "contract": "follows",
-   "font": "sans",
-   "size": true
-  },
-  "plx-table__grid-cell": {
-   "contract": "adjusts",
-   "props": [
-    "font-weight",
-    "line-height"
-   ]
-  },
-  "plx-table__grid-cell--narrow": {
-   "contract": "establishes",
-   "role": "body",
-   "font": "sans"
-  },
-  "plx-table__grid-col-content--icon": {
-   "contract": "adjusts",
-   "props": [
-    "line-height"
-   ]
-  },
-  "plx-table__grid-col-title": {
-   "contract": "adjusts",
-   "props": [
-    "font-size",
-    "font-weight"
-   ]
-  },
-  "plx-table__grid-header": {
-   "contract": "adjusts",
-   "props": [
-    "font-weight"
-   ]
-  },
-  "plx-table__grid-placeholder-contents": {
-   "contract": "adjusts",
-   "props": [
-    "font-size",
-    "font-weight"
-   ]
-  },
-  "plx-table__grid-row": {
-   "contract": "adjusts",
-   "props": [
-    "font-weight"
-   ]
-  },
-  "plx-table__group-count": {
-   "contract": "establishes",
-   "role": "body",
-   "font": "mono",
-   "adjusts": [
-    "font-size",
-    "font-weight",
-    "line-height"
-   ]
-  },
-  "plx-table__group-eyebrow": {
-   "contract": "establishes",
-   "role": "eyebrow",
-   "font": "sans",
-   "adjusts": [
-    "line-height"
-   ]
-  },
-  "plx-table__group-summary": {
-   "contract": "adjusts",
-   "props": [
-    "line-height"
-   ]
-  },
-  "plx-table__group-summary-name": {
-   "contract": "adjusts",
-   "props": [
-    "font-size",
-    "font-weight"
-   ]
-  },
-  "plx-table__group-summary-value": {
-   "contract": "establishes",
-   "role": "body",
-   "font": "mono",
-   "adjusts": [
-    "font-size",
-    "font-weight",
-    "line-height"
-   ]
-  },
-  "plx-table__group-value": {
-   "contract": "establishes",
-   "role": "body",
-   "font": "sans",
-   "adjusts": [
-    "font-size",
-    "font-weight",
-    "line-height"
-   ]
-  },
-  "plx-table__title-text--wrap": {
-   "contract": "adjusts",
-   "props": [
-    "line-height"
-   ]
-  },
-  "plx-table__value--lines": {
-   "contract": "adjusts",
-   "props": [
-    "line-height"
-   ]
-  },
-  "plx-table__value--sized": {
-   "contract": "adjusts",
-   "props": [
-    "line-height"
-   ]
-  },
   "plx-tabs__tab--contained": {
    "contract": "adjusts",
    "props": [
@@ -3352,25 +3213,6 @@
     "font-size",
     "line-height"
    ]
-  },
-  "plx-table__grid-cell--data": {
-   "contract": "establishes",
-   "role": "body",
-   "font": "mono",
-   "adjusts": [
-    "font-size"
-   ]
-  },
-  "plx-table__grid-group": {
-   "contract": "adjusts",
-   "props": [
-    "font-weight"
-   ]
-  },
-  "plx-table__group-value--data": {
-   "contract": "establishes",
-   "role": "body",
-   "font": "mono"
   },
   "plx-tooltip__bubble": {
    "contract": "establishes",
@@ -3897,55 +3739,6 @@
     "line-height"
    ]
   },
-  "plx-table__cell--slot-title": {
-   "contract": "adjusts",
-   "props": [
-    "font-size",
-    "font-weight"
-   ]
-  },
-  "plx-table__cell--slot-subtitle": {
-   "contract": "establishes",
-   "role": "secondary",
-   "font": "sans",
-   "adjusts": [
-    "line-height"
-   ]
-  },
-  "plx-table__cell--slot-secondary": {
-   "contract": "establishes",
-   "role": "secondary",
-   "font": "sans",
-   "adjusts": [
-    "line-height"
-   ]
-  },
-  "plx-table__cell--slot-date": {
-   "contract": "establishes",
-   "role": "body",
-   "font": "mono",
-   "adjusts": [
-    "font-size",
-    "line-height"
-   ]
-  },
-  "plx-table__cell--slot-primary": {
-   "contract": "establishes",
-   "role": "body",
-   "font": "mono",
-   "adjusts": [
-    "font-weight",
-    "line-height"
-   ]
-  },
-  "plx-table__cell--slot-tertiary": {
-   "contract": "establishes",
-   "role": "caption",
-   "font": "mono",
-   "adjusts": [
-    "line-height"
-   ]
-  },
   "plx-data-grid__cell--detail-line": {
    "contract": "establishes",
    "role": "secondary",
@@ -3955,19 +3748,6 @@
    ]
   },
   "plx-data-grid__card-count": {
-   "contract": "establishes",
-   "role": "label",
-   "font": "sans"
-  },
-  "plx-table__cell--detail-line": {
-   "contract": "establishes",
-   "role": "secondary",
-   "font": "sans",
-   "adjusts": [
-    "line-height"
-   ]
-  },
-  "plx-table__card-count": {
    "contract": "establishes",
    "role": "label",
    "font": "sans"

@@ -209,8 +209,8 @@ if (!VIEWS.length && !IN_PAGE.some((m) => changed.child(m))) changed.none('DATA_
     if (missing) { res.push([name, false, 'no control "' + missing + '"']); continue; }
     if (kind === 'table') {
       // a static Table view: every shown Table drawn with its rows
-      try { await page.waitForFunction((n) => { const t = Array.from(document.querySelectorAll('.plx-table')).filter((g) => g.offsetParent); return t.length >= n && t.every((g) => g.querySelector('.plx-table__grid-row')); }, { timeout: 60000 }, want); }
-      catch (e) { res.push([name, false, 'tables not built: ' + (await page.evaluate(() => Array.from(document.querySelectorAll('.plx-table')).filter((g) => g.offsetParent && g.querySelector('.plx-table__grid-row')).length)) + ' of ' + want]); continue; }
+      try { await page.waitForFunction((n) => { const t = Array.from(document.querySelectorAll('.plx-table')).filter((g) => g.offsetParent); return t.length >= n && t.every((g) => g.querySelector('.plx-data-grid__grid-row')); }, { timeout: 60000 }, want); }
+      catch (e) { res.push([name, false, 'tables not built: ' + (await page.evaluate(() => Array.from(document.querySelectorAll('.plx-table')).filter((g) => g.offsetParent && g.querySelector('.plx-data-grid__grid-row')).length)) + ' of ' + want]); continue; }
       const n = await page.evaluate(() => Array.from(document.querySelectorAll('.plx-table')).filter((g) => g.offsetParent).length);
       res.push([name + ' (' + n + ' Table' + (n === 1 ? '' : 's') + ')', true, '']);
       continue;

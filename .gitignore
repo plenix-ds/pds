@@ -40,8 +40,6 @@ build/sd/
 /platform/components/Brand/brand.css
 /platform/components/ColorSwatch/categoryColors.js
 /platform/components/ColorSwatch/dataColors.js
-/platform/components/Table/table-base.css
-/platform/components/Table/table-steps.css
 /platform/components/DataGrid/data-grid-steps.css
 /platform/patterns/ImageEditor/imageEditorSteps.js
 /platform/utils/sizeSteps.js

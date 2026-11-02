@@ -1,8 +1,6 @@
-/* Plenix · Table (platform/components/Table): static data, its own block (owner, 2026-10-19: Table is static, DataGrid is the grid).
-   (the owner's reference, docs/data-grid-reference.html) without anything interactive, from the Table tokens
-   (--plx-sys-table-*, --plx-comp-table-*), which have the DataGrid's values by default. Table renders
-   <DataGridEngine isStatic>, whose root is plx-table; these rules style only the DataGrid's own
-   parts (Styling Standard, section 4: one owner). Was components/Table/table.css until 2026-10-19. */
-/* Table's look is the engine's static mode, styled with the grid's parts in data-grid.css (its --static rules) and
-   generated for Table's block into table-base.css (build-steps.js), on the Table tokens. Nothing of Table's own is left
-   to declare here (zero overlap, batch 7; the portal's display:contents moved to the base, 2026-10-21). */
+/* Plenix · Table (platform/components/Table): static data in rows and columns, without anything interactive.
+   Table renders <DataGridEngine isStatic>, which draws the grid's own block: plx-data-grid, with plx-data-grid--static and
+   plx-table on its root (issue 882: one shared copy of the table and grid styles, owner's yes; it replaces his 2026-10-19
+   "each its own block" and the generated copy that went with it). Its look is data-grid.css: the grid's parts and their
+   --static rules, on the Table tokens (--plx-sys-table-*, --plx-comp-table-*) where those rules read them. Nothing of
+   Table's own is left to declare here (zero overlap, batch 7). */

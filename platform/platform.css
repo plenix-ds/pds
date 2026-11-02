@@ -59,9 +59,7 @@
 @import url("components/Tabs/tabs.css") layer(plx.components);
 @import url("components/Card/card.css") layer(plx.components);
 @import url("components/DataGrid/data-grid.css") layer(plx.components);
-@import url("components/Table/table-base.css") layer(plx.components);
 @import url("components/Table/table.css") layer(plx.components);
-@import url("components/Table/table-steps.css") layer(plx.components);
 @import url("patterns/ActionBar/action-bar.css") layer(plx.patterns);
 @import url("components/NavList/nav-list.css") layer(plx.components);
 @import url("components/Tree/tree.css") layer(plx.components);

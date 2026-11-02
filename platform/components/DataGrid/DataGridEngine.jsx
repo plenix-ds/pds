@@ -104,7 +104,9 @@ function NextEngine(props) {
   // (issue 679, owner priority 1; it replaces #168's table-in-a-pane default); narrow="table" keeps a fixed table, and a
   // static Table keeps its list below narrowAt
   const narrow = requestedNarrow === undefined ? (isStatic ? 'list' : 'auto') : requestedNarrow;
-  const B = isStatic ? 'plx-table' : GRID; // Table (static) and DataGrid: each its own block (owner, 2026-10-19)
+  // one block for both (issue 882, owner: one shared copy of the table and grid styles, replacing "each its own block" of
+  // 2026-10-19): a static Table draws the grid's parts and marks its root plx-data-grid--static and plx-table
+  const B = GRID;
   const loc = useLocale();
   const S = useStrings('dataGrid', props.strings),
     initial = React.useMemo(() => opening(props), [storageKey]);
