@@ -6,8 +6,7 @@
    field width, ColorPicker, RadioTiles, ChoiceList); categories, tags and project types are cards of rows and renamable
    Tags; the documentation pages are cards of Text, Tables, Cards, Notices, Badges, Metrics and ProgressBars. The style
    guide points at the design system (../platform/design-system/), the point of truth. */
-import { dataPhrase, CommandBar, CommandBarSearch, useCollectionView, Avatar, Badge, Button, choosePicture, Card, ChoiceList, CollapsibleSection, ColorPicker, ColorSwatch, DATA_COLORS, ContentGrid, Count, EmptyState, Inline, Input, Kbd, leavePage, List, Metric, NavList, NavPane, Notice, PageContent, ProgressBar, PropertyList, RadioTiles, RecordPage, SegmentedControl, Select, SettingsRow, SettingsSection, SideNavPortal, Stack, Switch, Table, Tag, TagList, Text, useDensity, useSession, useTheme, useUnsavedGuard } from 'plenix-platform';
-import { Ico } from '../suite/shared.jsx';
+import { dataPhrase, Icon, CommandBar, CommandBarSearch, useCollectionView, Avatar, Badge, Button, choosePicture, Card, ChoiceList, CollapsibleSection, ColorPicker, ColorSwatch, DATA_COLORS, ContentGrid, Count, EmptyState, Inline, Input, Kbd, leavePage, List, Metric, NavList, NavPane, Notice, PageContent, ProgressBar, PropertyList, RadioTiles, RecordPage, SegmentedControl, Select, SettingsRow, SettingsSection, SideNavPortal, Stack, Switch, Table, Tag, TagList, Text, useDensity, useSession, useTheme, useUnsavedGuard } from 'plenix-platform';
 import { CatEditModal } from '../suite/classification.jsx';
 const {useState}=React;
 // the sign-in proxy's sign-out (Authentik's forward-auth outpost on every Plenix host): ends the session; an action, so a Button
@@ -367,7 +366,7 @@ function DocsPanel({docSection,setDocSection}){
           const fieldCount=fields.length;
           return(
             <Section key={key} title={type.label} stateKey={"type-"+key} collapsible defaultExpanded={false}
-              description={<Inline as="span" gap="sm" wrap><Ico n={type.icon||"file"}/><Text>{type.desc}</Text><Text variant="data">{fieldCount} own field{fieldCount!==1?"s":""}</Text><Tag>{type.capability}</Tag></Inline>}>
+              description={<Inline as="span" gap="sm" wrap><Icon name={type.icon||"doc-text"}/>{}<Text>{type.desc}</Text><Text variant="data">{fieldCount} own field{fieldCount!==1?"s":""}</Text><Tag>{type.capability}</Tag></Inline>}>
               <Table label={type.label+" fields"} empty="No own fields" data={fields.map(([n,d])=>({id:n,name:n+(d.required?" *":""),type:d.type,detail:d.enum?"enum: "+d.enum.join(", "):d.desc||d.unit?"unit: "+d.unit:""}))} columns={[
                 {title:"Field",field:"name",kind:"name",rowLabel:true,width:"--plx-ref-size-240px"},
                 {title:"Type",field:"type",kind:"data"},
