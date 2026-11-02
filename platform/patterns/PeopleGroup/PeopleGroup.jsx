@@ -32,8 +32,8 @@
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { formatNumber } from '../../utils/format.ts';
-import { Avatar } from '../../components/Avatar/Avatar.jsx';
-import { AvatarGroup } from '../../components/AvatarGroup/AvatarGroup.jsx';
+import { Avatar } from '../../components/Avatar/Avatar.tsx';
+import { AvatarGroup } from '../../components/AvatarGroup/AvatarGroup.tsx';
 import { Icon } from '../../components/Icon/Icon.tsx';
 import { Link } from '../../components/Link/Link.tsx';
 import { Button } from '../../components/Button/Button.tsx';

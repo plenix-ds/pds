@@ -16,7 +16,7 @@ import { Stack } from '../../components/Stack/Stack.tsx';
 import { Banner } from '../../components/Banner/Banner.tsx';
 import { Badge } from '../../components/Badge/Badge.tsx';
 import { Button } from '../../components/Button/Button.tsx';
-import { Dialog } from '../../components/Dialog/Dialog.jsx';
+import { Dialog } from '../../components/Dialog/Dialog.tsx';
 import { Field } from '../../components/Field/Field.tsx';
 import { Select } from '../../components/Input/Input.tsx';
 import { Notice } from '../../components/Notice/Notice.tsx';

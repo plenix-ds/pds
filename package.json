@@ -1,6 +1,6 @@
 {
   "name": "plenix",
-  "version": "0.84.0",
+  "version": "0.85.0",
   "private": true,
   "description": "Plenix Platform: the design system, component library and apps",
   "scripts": {
@@ -49,6 +49,7 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
+    "@babel/parser": "7.29.9",
     "@babel/standalone": "^7.29.9",
     "@types/react": "18.3.12",
     "@types/react-dom": "18.3.1",

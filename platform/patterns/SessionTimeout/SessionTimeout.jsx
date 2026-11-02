@@ -49,7 +49,7 @@ import { around } from '../../utils/fillNodes.tsx';
 import { useUid } from '../../utils/layer.ts';
 import { announce } from '../../utils/announce.tsx';
 import { Button } from '../../components/Button/Button.tsx';
-import { Dialog } from '../../components/Dialog/Dialog.jsx';
+import { Dialog } from '../../components/Dialog/Dialog.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import { fill } from '../../utils/fill.ts';
 

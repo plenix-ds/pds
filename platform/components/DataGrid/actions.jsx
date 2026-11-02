@@ -8,7 +8,7 @@
    Notes: The selection hook needs the app ToastProvider. DataGrid supplies a local provider for standalone row menus.
 */
 import React from 'react';
-import { useUndo, useToast } from '../Toast/Toast.jsx';
+import { useUndo, useToast } from '../Toast/Toast.tsx';
 export function useDataGridActions(actions, selection, strings) {
   const undoable = useUndo(),
     toast = useToast(),

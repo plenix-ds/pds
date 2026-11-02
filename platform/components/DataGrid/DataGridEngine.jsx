@@ -28,7 +28,7 @@ import { useSortable } from '../../utils/dnd.ts';
 
 import { gridPx } from '../../utils/grid.ts';
 
-import { MenuItem, MenuDivider } from '../Menu/Menu.jsx';
+import { MenuItem, MenuDivider } from '../Menu/Menu.tsx';
 
 import { opening, recordKey, valueAt } from './state.js';
 import { createAdapter } from './adapter.js';

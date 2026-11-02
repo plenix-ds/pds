@@ -37,8 +37,9 @@ require('./limit.js');   // the hard time limit (TEST_TIMEOUT_MS)
       const data = Array.from({ length: n }, (_, i) => ({ id: 'g' + i, donor: (ar ? 'متبرع ' : 'Donor ') + (i + 1), fund: i % 3 ? 'General' : 'Building', amount: (i % 9 + 1) * 25 }));
       const columns = [{ field: 'donor', title: 'Donor', width: 180 }, { field: 'fund', title: 'Fund', width: 140 }, { field: 'amount', title: 'Amount', width: 120, type: 'currency' }];
       window.__root = ReactDOM.createRoot(document.getElementById('c'));
+      // narrow: 'list' (issue 929): the cards under 600px whatever the columns need (three columns now fit 320px at their minimums)
       window.__root.render(h(P.LocaleProvider, { locale: ar ? 'ar-EG' : 'en-US', dir: opts.dir || 'ltr' },
-        h(P.DataGrid, Object.assign({ label: 'Gifts', data, columns, index: 'id', selectable: true,
+        h(P.DataGrid, Object.assign({ label: 'Gifts', data, columns, index: 'id', selectable: true, narrow: 'list',
           onSelectionChange: (s) => { window.__selected = (Array.isArray(s) ? s : Object.keys(s || {})).length; } }, opts.grid || {}))));
       await new Promise((r) => setTimeout(r, 900));
     }, n, opts);

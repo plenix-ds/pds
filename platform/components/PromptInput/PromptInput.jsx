@@ -23,7 +23,7 @@ import { Field } from '../Field/Field.tsx';
 import { Button } from '../Button/Button.tsx';
 import { FileInput } from '../FileInput/FileInput.tsx';
 import { Chip } from '../Tag/Tag.tsx';
-import { Menu, MenuItem, MenuRadioGroup } from '../Menu/Menu.jsx';
+import { Menu, MenuItem, MenuRadioGroup } from '../Menu/Menu.tsx';
 import { Notice } from '../Notice/Notice.tsx';
 import { useReadOnly } from '../../providers/ReadOnly.tsx';
 import SparkleIcon from 'plenix-platform/icons/plenix/sparkle';

@@ -10,6 +10,8 @@
 // They load nothing else, so they work offline and from file://. <Icon name> keeps working without them (until 5c).
 //
 //   node tools/icons/site-icons.js <site> <folder or file> [<folder or file> …] [--out <folder>] [--allow-unknown]
+//   npx plenix-site-icons <site> <folder or file> […]   the same tool from @plenix-ds/icons (no Plenix checkout): every
+//     Plenix icon and the Material symbols the package ships in svg/; another Material Symbols name is reported unknown
 //     <site>: the file's name (plenix-icons-<site>.js): lowercase letters, digits and dashes
 //     reads .js, .jsx, .mjs, .cjs, .ts, .tsx, .mts, .cts, .html and .htm (folders recursively; node_modules, dist, vendor and dot folders skipped)
 //     --out: where to write it (default: the current folder)
@@ -30,8 +32,13 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.resolve(__dirname, '../..');
-const layout = require(path.join(ROOT, 'platform/icons/layout.js'));
-const uses = require(path.join(ROOT, 'platform/icons/uses.js'));
+// packaged (P-64, #931): @plenix-ds/icons ships this file as bin/site-icons.cjs (npx plenix-site-icons), with uses.cjs and
+// site-icons.json beside it (build-packages.js); it then resolves from site-icons.json, not from a Plenix checkout
+const DATA = path.join(__dirname, 'site-icons.json');
+const PACKAGED = fs.existsSync(DATA);
+const layout = PACKAGED ? null : require(path.join(ROOT, 'platform/icons/layout.js'));
+const uses = PACKAGED ? require('./uses.cjs') : require(path.join(ROOT, 'platform/icons/uses.js'));
+const COMMAND = PACKAGED ? 'npx plenix-site-icons' : 'node tools/icons/site-icons.js';
 
 const HEADER = 'GENERATED FILE — DO NOT EDIT';
 const COMPAT = 'platform/dist/plenix-icons-plenix.js';
@@ -95,13 +102,34 @@ function collect(inputs, base, opts = {}) {
   return { names, unresolved, unreadable };
 }
 
+// where the icons come from: a Plenix checkout (root: its folder; every Material symbol of platform/icons/library), or the
+// package's site-icons.json (packageData: the Plenix set and the Material symbols the package ships in svg/)
+// { plenix(): entries, material(): entries, module(set, entry): the module object }
+function catalogOf(root) {
+  if (typeof root !== 'string') return root;
+  return { plenix: () => layout.plenixEntries(root), material: () => layout.materialEntries(root), module: (set, e) => layout.moduleObject(set, e) };
+}
+// the package's catalog: each entry is its module object with its aliases (catalogData writes it)
+function packageCatalog(file = DATA) {
+  const data = JSON.parse(fs.readFileSync(file, 'utf8'));
+  return { plenix: () => data.plenix, material: () => data.material, module: (set, e) => { const m = Object.assign({}, e); delete m.aliases; return m; } };
+}
+// what the package's site-icons.json holds: every Plenix icon, and each Material symbol of the working set (platform/icons,
+// the package's svg/) with its four files, as module objects (each drawing already through the allow-list) with their aliases
+function catalogData(root) {
+  const dir = path.join(root, 'platform', 'icons');
+  const shipped = (e) => ['', '-fill', '-24', '-24-fill'].every((x) => fs.existsSync(path.join(dir, e.symbol + x + '.svg')));
+  const entry = (set) => (e) => Object.assign(layout.moduleObject(set, e), { aliases: e.aliases });
+  return { plenix: layout.plenixEntries(root).map(entry('plenix')), material: layout.materialEntries(root).filter(shipped).map(entry('material')) };
+}
+
 // a name -> the icon it draws, as <Icon name> resolves it: { set, entry } or null
 function resolver(root) {
-  const plenix = new Map();
-  for (const e of layout.plenixEntries(root)) { plenix.set(e.name, e); plenix.set(e.symbol, plenix.get(e.symbol) || e); for (const a of e.aliases) plenix.set(a, e); }
+  const catalog = catalogOf(root), plenix = new Map();
+  for (const e of catalog.plenix()) { plenix.set(e.name, e); plenix.set(e.symbol, plenix.get(e.symbol) || e); for (const a of e.aliases) plenix.set(a, e); }
   let lib = null;
   const materialOf = (n) => {
-    if (!lib) { lib = new Map(); for (const e of layout.materialEntries(root)) { lib.set(e.name, e); lib.set(e.symbol, e); } }
+    if (!lib) { lib = new Map(); for (const e of catalog.material()) { lib.set(e.name, e); lib.set(e.symbol, e); } }
     return lib.get(n) || lib.get(n.replace(/_/g, '-')) || lib.get(n.replace(/-/g, '_')) || null;
   };
   return (raw) => {
@@ -132,7 +160,7 @@ function fileText(site, modules, source, build) {
   });
   const sets = [...new Set(modules.map((m) => m.set))].sort();
   return '/*\n * ' + HEADER + '\n * Plenix icons for ' + site + ': ' + modules.length + ' icon' + (modules.length === 1 ? '' : 's') + ' (' + sets.join(', ') + '), registered with Plenix.registerIcons.\n' +
-    ' * Source: ' + source + '\n * Build: ' + (build || (site === 'plenix' ? 'node build-app.js (tools/icons/site-icons.js)' : 'node tools/icons/site-icons.js ' + site + ' <the site\'s source>')) + '\n' +
+    ' * Source: ' + source + '\n * Build: ' + (build || (site === 'plenix' ? 'node build-app.js (tools/icons/site-icons.js)' : COMMAND + ' ' + site + ' <the site\'s source>')) + '\n' +
     ' * Load it after plenix.js. The drawings are data (paths), checked by the Icon component before they are drawn.\n */\n' +
     '(function () {\n  \'use strict\';\n' +
     '  var P = typeof window !== \'undefined\' ? window.Plenix : undefined;\n' +
@@ -146,13 +174,13 @@ function fileText(site, modules, source, build) {
 // a Plenix name (collect)
 function siteFile(root, site, inputs, base, opts = {}) {
   const { names, unresolved, unreadable } = collect(inputs, base || process.cwd(), { literals: !!opts.literals });
-  const resolve = resolver(root), chosen = new Map(), unknown = [];
+  const catalog = catalogOf(root), resolve = resolver(catalog), chosen = new Map(), unknown = [];
   for (const [raw, at] of [...names.entries()].sort((a, b) => (a[0] < b[0] ? -1 : 1))) {
     const r = resolve(raw);
     if (!r) { if (!raw.startsWith('literal:')) unknown.push([...at][0] + ' ' + JSON.stringify(raw.replace(/^material:/, ''))); continue; }
     chosen.set(r.set + ':' + r.entry.name, r);
   }
-  const modules = [...chosen.values()].sort((a, b) => (a.set + a.entry.name < b.set + b.entry.name ? -1 : 1)).map((r) => layout.moduleObject(r.set, r.entry));
+  const modules = [...chosen.values()].sort((a, b) => (a.set + a.entry.name < b.set + b.entry.name ? -1 : 1)).map((r) => catalog.module(r.set, r.entry));
   const source = opts.source || 'the source of ' + site + ' (' + inputs.length + ' input' + (inputs.length === 1 ? '' : 's') + ')';
   return { text: fileText(site, modules, source, opts.build), icons: modules.length, unknown, unresolved, unreadable, found: names.size };
 }
@@ -219,7 +247,7 @@ function buildCompat(root, opts = {}) {
   return { file: COMPAT, icons: modules.length, bytes: Buffer.byteLength(text), stale, changed: !!stale.length };
 }
 
-module.exports = { collect, siteFile, buildCompat, buildPages, markupOf, PAGES, LOGIN, fileText, inlineScripts, COMPAT, HEADER };
+module.exports = { collect, siteFile, catalogData, packageCatalog, buildCompat, buildPages, markupOf, PAGES, LOGIN, fileText, inlineScripts, COMPAT, HEADER };
 
 if (require.main === module) {
   const args = process.argv.slice(2), flags = new Set(args.filter((a) => a === '--allow-unknown'));
@@ -227,14 +255,15 @@ if (require.main === module) {
   const rest = args.filter((a, i) => a !== '--allow-unknown' && i !== outAt && i !== outAt + 1);
   const [site, ...inputs] = rest;
   if (!site || !/^[a-z0-9][a-z0-9-]*$/.test(site) || !inputs.length) {
-    console.error('usage: node tools/icons/site-icons.js <site> <folder or file> […] [--out <folder>] [--allow-unknown]\n  <site>: lowercase letters, digits and dashes');
+    console.error('usage: ' + COMMAND + ' <site> <folder or file> […] [--out <folder>] [--allow-unknown]\n  <site>: lowercase letters, digits and dashes');
     process.exit(2);
   }
   if (site === 'plenix') { console.error('"plenix" is the compatibility file\'s name (every Plenix icon; node build-app.js writes it): choose your site\'s own name'); process.exit(2); }
   for (const i of inputs) if (!fs.existsSync(i)) { console.error('not found: ' + i); process.exit(2); }
-  const r = siteFile(ROOT, site, inputs, process.cwd());
+  const r = siteFile(PACKAGED ? packageCatalog() : ROOT, site, inputs, process.cwd());
   for (const u of r.unreadable) console.error('cannot read ' + u);
   for (const u of r.unknown) console.error('unknown icon name: ' + u);
+  if (PACKAGED && r.unknown.length) console.error('The package knows every Plenix icon and the Material symbols in its svg/ folder; another Material Symbols name needs a Plenix checkout (node tools/icons/site-icons.js)');
   for (const u of r.unresolved) console.error('name built at run time: ' + u + ' (list its names in a /* plx-icons: … */ comment on its line)');
   if (r.unreadable.length) process.exit(2);
   if ((r.unknown.length || r.unresolved.length) && !flags.has('--allow-unknown')) {

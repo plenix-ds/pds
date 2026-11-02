@@ -18,7 +18,7 @@ import { Inline } from '../Stack/Stack.tsx';
 import { Icon } from '../Icon/Icon.tsx';
 import { Text } from '../Text/Text.tsx';
 import { Button } from '../Button/Button.tsx';
-import { Popover } from '../Popover/Popover.jsx';
+import { Popover } from '../Popover/Popover.tsx';
 import { cx } from '../../utils/cx.ts';
 import SparkleIcon from 'plenix-platform/icons/plenix/sparkle';
 export const AILabel=React.forwardRef(function AILabel({variant='badge',children,explanation,strings,className},ref){

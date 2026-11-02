@@ -52,7 +52,7 @@ import { SegmentedControl } from '../../components/SegmentedControl/SegmentedCon
 import { Switch } from '../../components/Checkbox/Checkbox.tsx';
 import { Slider } from '../../components/Slider/Slider.tsx';
 import { Table } from '../../components/Table/Table.jsx';
-import { Image } from '../../components/Image/Image.jsx';
+import { Image } from '../../components/Image/Image.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import PencilIcon from 'plenix-platform/icons/plenix/pencil';
 

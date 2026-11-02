@@ -5,7 +5,7 @@
     "platform/components/Checkbox/Checkbox.tsx",
     "platform/components/Slider/Slider.tsx",
     "platform/components/SegmentedControl/SegmentedControl.tsx",
-    "platform/components/ColorSwatch/ColorSwatch.jsx",
+    "platform/components/ColorSwatch/ColorSwatch.tsx",
     "platform/components/PromptInput/PromptInput.jsx",
     "platform/components/TimeZoneSelect/TimeZoneSelect.jsx",
     "platform/components/NumberInput/NumberInput.tsx",
@@ -32,23 +32,23 @@
   ],
   "LiveRegion": [
     "platform/components/CodeBlock/CodeBlock.jsx",
-    "platform/components/Resizable/Resizable.jsx",
+    "platform/components/Resizable/Resizable.tsx",
     "platform/patterns/WidgetGrid/WidgetGrid.jsx",
     "platform/patterns/ColumnsMenu/ColumnsMenu.jsx",
     "platform/patterns/CommandBar/panel-parts.jsx"
   ],
   "usePressable": [
-    "platform/components/RowButton/RowButton.jsx",
+    "platform/components/RowButton/RowButton.tsx",
     "platform/components/DataGrid/engine/parts.jsx"
   ],
   "useFocusGroup": [
-    "platform/components/Toolbar/Toolbar.jsx",
-    "platform/patterns/ToolRail/ToolRail.jsx"
+    "platform/components/Toolbar/Toolbar.tsx",
+    "platform/patterns/ToolRail/ToolRail.tsx"
   ],
   "useFloating": [
-    "platform/components/Menu/Menu.jsx",
+    "platform/components/Menu/Menu.tsx",
     "platform/components/Tooltip/Tooltip.tsx",
-    "platform/components/Popover/Popover.jsx",
+    "platform/components/Popover/Popover.tsx",
     "platform/components/Combobox/Combobox.tsx",
     "platform/components/Cascader/Cascader.jsx",
     "platform/components/TimePicker/TimePicker.jsx"
@@ -66,7 +66,7 @@
     "platform/patterns/SettingsLayout/SettingsLayout.jsx"
   ],
   "useGesture": [
-    "platform/components/Sheet/Sheet.jsx",
-    "platform/components/MediaViewer/MediaViewer.jsx"
+    "platform/components/Sheet/Sheet.tsx",
+    "platform/components/MediaViewer/MediaViewer.tsx"
   ]
 }

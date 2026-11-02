@@ -13,7 +13,7 @@ import { Button } from '../../components/Button/Button.tsx';
 import { Badge } from '../../components/Badge/Badge.tsx';
 import { Field } from '../../components/Field/Field.tsx';
 import { Textarea } from '../../components/Input/Input.tsx';
-import { Persona } from '../Persona/Persona.jsx';
+import { Persona } from '../Persona/Persona.tsx';
 import { Time } from '../Time/Time.jsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import CheckIcon from 'plenix-platform/icons/plenix/check';

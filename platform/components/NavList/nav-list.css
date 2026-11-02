@@ -1,5 +1,5 @@
 /* Plenix · NavList. Zero overlap (Styling Standard 3.3): each property once; the row, its icon and the pin take their
-   state as their own classes (NavList.jsx), and the states pick the values in order. Row text: disabled, current,
+   state as their own classes (NavList.tsx), and the states pick the values in order. Row text: disabled, current,
    muted, a subgroup holding the current page, at rest. Row fill: current, hovered (an enabled row), at rest. */
 @property --plx-state-nav-list-item-background{syntax:"*";inherits:false;}
 @property --plx-state-nav-list-item-shadow{syntax:"*";inherits:false;}

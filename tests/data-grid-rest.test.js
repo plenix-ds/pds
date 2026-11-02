@@ -5,7 +5,7 @@ const fs = require('fs'),
 module.exports = async function rest(page) {
   const build = await require('esbuild').build({
     stdin: {
-      contents: (process.env.DT_ENGINE==='next'?"import React from 'react';import {DataGrid as Base} from './platform/components/DataGrid/DataGrid.jsx';export const DataGrid=Object.assign(props=>React.createElement(Base,{...props,engine:'next'}),{useActions:Base.useActions});":"export {DataGrid} from './platform/components/DataGrid/DataGrid.jsx';")+"export {ToastProvider} from './platform/components/Toast/Toast.jsx';export {CommandBar} from './platform/patterns/CommandBar/CommandBar.jsx';export {Button} from './platform/components/Button/Button.tsx';",
+      contents: (process.env.DT_ENGINE==='next'?"import React from 'react';import {DataGrid as Base} from './platform/components/DataGrid/DataGrid.jsx';export const DataGrid=Object.assign(props=>React.createElement(Base,{...props,engine:'next'}),{useActions:Base.useActions});":"export {DataGrid} from './platform/components/DataGrid/DataGrid.jsx';")+"export {ToastProvider} from './platform/components/Toast/Toast.tsx';export {CommandBar} from './platform/patterns/CommandBar/CommandBar.jsx';export {Button} from './platform/components/Button/Button.tsx';",
       resolveDir: ROOT
     },
     bundle: true,
@@ -230,19 +230,24 @@ module.exports = async function rest(page) {
     await wait(250);
     ok(host.querySelector('.plx-data-grid--narrow'), 'Caller narrowAt controls actual list class');
     // auto (issue 679): the grid is the row cards when its visible columns do not all fit its width, not only its key columns
+    // minimum widths (issue 929: the switch weighs each column at its minimum readable width): the key columns need 400px,
+    // all three 560px
     const autoColumns = [{
       title: 'Name',
       field: 'name',
-      width: 200
+      width: 200,
+      minWidth: 200
     }, {
       title: 'Size',
       field: 'size',
       type: 'bytes',
-      width: 200
+      width: 200,
+      minWidth: 200
     }, {
       title: 'Person',
       field: 'person',
-      kind: 'avatar-name'
+      kind: 'avatar-name',
+      minWidth: 160
     }];
     await reset();
     t = await render({
@@ -253,7 +258,7 @@ module.exports = async function rest(page) {
     });
     await wait(300);
     ok(host.querySelector('.plx-data-grid--narrow'), 'Auto: the row cards when the visible columns do not fit the grid (#679)');
-    // 420px holds the two 200px key columns but not the avatar-name column as well: the cards by every visible column (#679),
+    // 420px holds the two key columns (200px minimums) but not the avatar-name column as well: the cards by every visible column (#679),
     // where the key columns alone (before #679) would have kept the table
     await reset();
     host.className = '';

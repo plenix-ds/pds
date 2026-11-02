@@ -14,7 +14,7 @@ import { Field } from '../../components/Field/Field.tsx';
 import { Textarea } from '../../components/Input/Input.tsx';
 import { useReposition } from '../../utils/dnd.ts';
 import { snapToGrid } from '../../utils/grid.ts';
-import { Image } from '../../components/Image/Image.jsx';
+import { Image } from '../../components/Image/Image.tsx';
 import { Input, Select } from '../../components/Input/Input.tsx';
 import { CommentThread } from '../CommentThread/CommentThread.jsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';

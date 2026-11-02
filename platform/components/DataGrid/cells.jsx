@@ -10,10 +10,10 @@
      that follows the table's direction (Isolate; owner, issue 606: a computed identifier reads 01-20261020 in a right-to-left table). Imports no legacy grid implementation. Data still sorts and filters by its raw value. mods: the value classes the
      engine gives every value span (__value--wrap, --sized, --lines). */
 import React from 'react';
-import { Avatar } from '../Avatar/Avatar.jsx';
+import { Avatar } from '../Avatar/Avatar.tsx';
 import { Badge } from '../Badge/Badge.tsx';
 import { Tag } from '../Tag/Tag.tsx';
-import { DataPill } from '../DataPill/DataPill.jsx';
+import { DataPill } from '../DataPill/DataPill.tsx';
 import { formatBytes } from '../../utils/format.ts';
 import { Isolate } from '../Isolate/Isolate.tsx';
 import { localDigits } from '../../utils/digits.ts';

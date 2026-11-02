@@ -1,6 +1,6 @@
 /* Plenix · QRCode (platform/components/QRCode). The code on its light plate (the quiet zone is part of the drawing), a
    cleared center for a logo, and a caption with the value under it. The plate and the modules keep their colors in dark
-   mode: scanners read dark on light. Anatomy and API: QRCode.jsx. */
+   mode: scanners read dark on light. Anatomy and API: QRCode.tsx. */
 .plx-qr-code{align-items:center;display:inline-flex;flex-direction:column;margin-block-end:0;margin-block-start:0;margin-inline-end:0;margin-inline-start:0;row-gap:var(--plx-comp-qr-code-caption-gap);}
 .plx-qr-code__frame{display:block;flex-shrink:0;position:relative;}
 .plx-qr-code__svg{background-color:var(--plx-comp-qr-code-plate-color);block-size:100%;border-bottom-left-radius:var(--plx-comp-qr-code-plate-radius);border-bottom-right-radius:var(--plx-comp-qr-code-plate-radius);border-top-left-radius:var(--plx-comp-qr-code-plate-radius);border-top-right-radius:var(--plx-comp-qr-code-plate-radius);display:block;inline-size:100%;shape-rendering:crispEdges;}

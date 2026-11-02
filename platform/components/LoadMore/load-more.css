@@ -1,6 +1,6 @@
 /* Plenix · LoadMore (platform/components/LoadMore). A centered row at the end of a list: the Load more button (or, while
    an infinite list loads, a spinner and its words), the count so far in the data font, or the end message, all muted
-   but the button. Anatomy and API: LoadMore.jsx. */
+   but the button. Anatomy and API: LoadMore.tsx. */
 .plx-load-more{align-items:center;column-gap:var(--plx-comp-load-more-gap);display:flex;flex-wrap:wrap;justify-content:center;min-block-size:var(--plx-comp-load-more-min-height);padding-block-end:var(--plx-comp-load-more-padding-block);padding-block-start:var(--plx-comp-load-more-padding-block);position:relative;row-gap:var(--plx-comp-load-more-row-gap);}
 .plx-load-more__sentinel{block-size:var(--plx-comp-load-more-sentinel-height);inline-size:100%;inset-block-start:0;inset-inline-start:0;pointer-events:none;position:absolute;}
 .plx-load-more__loading{align-items:center;color:var(--plx-comp-load-more-loading-text);column-gap:var(--plx-comp-load-more-loading-gap);display:flex;font-size:var(--plx-comp-load-more-loading-font-size);}

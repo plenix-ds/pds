@@ -27,7 +27,7 @@
    Notes: No colors or new layout values; existing components own responsive presentation and keyboard behavior.
 */
 import React from 'react';
-import { AppShell, PageContent } from '../../patterns/AppShell/AppShell.jsx';
+import { AppShell, PageContent } from '../../patterns/AppShell/AppShell.tsx';
 import { SidePanel } from '../../patterns/SidePanel/SidePanel.jsx';
 import { RecordPage } from '../../patterns/RecordPage/RecordPage.jsx';
 import { SecondaryPane } from '../../patterns/SecondaryPane/SecondaryPane.jsx';
@@ -41,7 +41,7 @@ import { DataGrid } from '../../components/DataGrid/DataGrid.jsx';
 import { EmptyState } from '../../components/EmptyState/EmptyState.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Link } from '../../components/Link/Link.tsx';
-import { Panel } from '../../components/Card/Card.jsx';
+import { Panel } from '../../components/Card/Card.tsx';
 import { SplitView, ReadingPane } from '../../patterns/SplitView/SplitView.jsx';
 import FolderIcon from 'plenix-platform/icons/plenix/folder';
 const WORDS = { empty: 'No records yet', emptyDescription: 'Create a record to get started.', pane: 'Records', sections: 'On this page', retry: 'Try again', home: 'Go home', search: 'Search results', tools: 'Tools', inspector: 'Options', detail: 'Details', noSelection: 'Nothing selected', noSelectionDescription: 'Choose an item to see it here.' };

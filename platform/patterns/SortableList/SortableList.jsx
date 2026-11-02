@@ -46,8 +46,8 @@
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { useSortable } from '../../utils/dnd.ts';
-import { DragHandle } from '../../components/DragHandle/DragHandle.jsx';
-import { Menu, MenuItem, MenuDivider } from '../../components/Menu/Menu.jsx';
+import { DragHandle } from '../../components/DragHandle/DragHandle.tsx';
+import { Menu, MenuItem, MenuDivider } from '../../components/Menu/Menu.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import ChevronDownIcon from 'plenix-platform/icons/plenix/chevron-down';

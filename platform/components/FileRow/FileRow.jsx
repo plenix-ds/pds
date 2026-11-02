@@ -55,11 +55,11 @@
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { formatBytes, formatDate, formatNumber, formatPercent, dateTimeAttr } from '../../utils/format.ts';
-import { File } from '../File/File.jsx';
+import { File } from '../File/File.tsx';
 import { Checkbox } from '../Checkbox/Checkbox.tsx';
 import { Button } from '../Button/Button.tsx';
 import { Icon } from '../Icon/Icon.tsx';
-import { Menu, MenuItem, MenuDivider } from '../Menu/Menu.jsx';
+import { Menu, MenuItem, MenuDivider } from '../Menu/Menu.tsx';
 import { ProgressBar } from '../ProgressBar/ProgressBar.tsx';
 import { RenameAction } from '../../patterns/RenameAction/RenameAction.jsx';
 import { DeleteFlow } from '../../patterns/DeleteFlow/DeleteFlow.jsx';

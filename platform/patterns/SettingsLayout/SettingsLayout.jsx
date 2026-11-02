@@ -50,7 +50,7 @@
      A section with no title is a static card (a collapsible one needs a title to press).
 */
 import React from 'react';
-import { useAppLayout } from '../AppShell/AppShell.jsx';
+import { useAppLayout } from '../AppShell/AppShell.tsx';
 import { cx } from '../../utils/cx.ts';
 import { dataWhenText } from '../../utils/dataText.tsx';
 import { useUid } from '../../utils/layer.ts';

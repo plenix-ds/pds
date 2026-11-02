@@ -6,6 +6,44 @@ The batch numbers point to the work log (Plenix - DAM/audit/batches/).
 
 ## [Unreleased]
 
+## [0.85.0] - 2026-11-02
+
+**In short.** A DataGrid is a table first: its columns size to their content and fit the window, and it shows the row cards only when the table cannot fit even at every column's smallest readable width (#929). Apps can name their records in the card header ("6 members"). The projects page draws its icons from the Plenix icon bank, and a check now fails on any hand-drawn icon. Panes drag in 8px steps, and Table shares the grid's styles: about 185 KB less CSS. The design spec opens about twice as fast. "gray" replaces "grey" as the category name, the metric card's rank reads right in Arabic, `openKey={null}` is accepted, and `npx plenix-site-icons` ships for apps that build their own icon file.
+
+### Upgrading from 0.84.0
+1. **Grids:** a grid that used to show cards in a medium-width space (a split view, 600 to 1000px) now shows a table whose columns fit their content. A grid that must always show cards there passes `narrow="list"`; one that must keep its set column widths passes `narrow="table"`.
+2. **Gray:** write `gray` for the gray category; `grey` keeps working (deprecated). DataPill's default still writes `grey` in this release.
+3. **Panes:** drag positions and remembered widths land on 8px lines; a width saved at 244 opens at 248.
+4. **Nothing else to change.** Apps on the CDN loader follow this release by themselves; npm apps update the version as usual.
+
+### Added
+- DataGrid's card count can name the app's records (#679): `strings={{ cardCount: { one: '{n} member', other: '{n} members' } }}` makes "6 records" read "6 members", in the locale's plural forms (Arabic gives zero, one, two, few, many and other). Without it the count is unchanged.
+- `@plenix-ds/icons` ships the site-icon tool: `npx plenix-site-icons <site> <folder or file> … [--out <folder>] [--allow-unknown]` writes `plenix-icons-<site>.js` from an app's source, without a Plenix checkout (RedSave P-64, #931). It knows every Plenix icon and the Material symbols the package ships in `svg/`; another Material Symbols name is reported as unknown. The package's one dependency is `@babel/parser`.
+
+### Changed
+- Table draws the DataGrid's own styles (#882, owner): the 93 KB generated copy of the grid's CSS for Table is gone. A static Table looks the same; in the pill view (`cells="pill"`) each column's pills are 4 to 8px narrower, measured exactly as DataGrid measures them.
+- The design spec opens a library page with only that page's parts (#882): its first load goes from about 6 MB to about 3 MB; every page reads the same as before.
+- Carousel, Tabs and the DataGrid's card root run their effects only when what they read changes (#882); no visible change.
+- More of the Platform is TypeScript: slices 6 and 7 (the layer, navigation, display and media parts, Resizable); no behavior change (#708).
+- Checks: a branch commits `platform/index.js`'s library block as the export build writes it, and CI fails a stale one; ESLint also parses spec lane files; Dependabot opens its pull requests against the development branch (#920, #927, #924).
+- The gray category color is named "gray" (#882): `CATEGORY_COLORS` lists `gray`, and the English color word is "Gray". It looks the same. DataPill writes exactly the tone it is given; with no tone it still writes `grey` in this release (CTM's stylesheet selects it), and the default becomes `gray` in a later release.
+
+### Changed (visual)
+- A dragged pane edge (the navigation pane, the secondary pane, a side panel) and a Resizable box now move in 8px steps instead of 4px, and every page's stylesheet is about 92 KB lighter. A width remembered on a 4px-only line opens at the nearest 8px line. The nav pane's 140px minimum is reached at 144px, and a size between two 8px lines settles on the nearest, a tie going up (a SplitView or Resizable default of 540 opens at 544). #882
+- A DataGrid sizes its columns to their content and fits them to its width before it shows cards (#929, the owner: "autosize and autofit"):
+  - Each column starts at its content: its header and its widest value, capped at its set width. Spare room goes to the title (the first key column), else the widest text column.
+  - Over the room, the columns with the most room above their minimum readable width (minWidth, else the header, at least 80px) give it up first, and the title last.
+  - Cards only when every column is at its minimum and it still doesn't fit.
+  - A column the person sized keeps its width. narrow="table" and narrow="list" keep their set widths, as before.
+
+### Fixed
+- Project and data-model icons (#882): the Projects page's navigation and the Settings data-model sections draw Plenix `Icon` (Material symbols) instead of hand-drawn paths. 38 of the 79 project capabilities showed a stand-in notes icon and 30 of the 36 data types showed no icon at all; every one now has its own. `window.PROJ_ICONS` and the suite's `Ico` are removed.
+- MetricCard's ranked list reads "#1" right to left too, instead of "1#" (#897).
+- TypeScript: DataGrid's `openKey` accepts `null` (no row open), as its documentation and the engine already did; 0.84 typed it as a string or a number only, so an app had to work around it (RedSave P-63, #931).
+
+### Deprecated
+- The category name "grey" and its tokens, the British spelling (#882). Use "gray": `tone="gray"`, `category="gray"`, `data-plx-category="gray"`, and `--plx-sys-category-gray`, `-gray-on`, `-gray-soft`, `-gray-soft-border` and `-gray-on-soft`. "grey" and the `--plx-sys-category-grey*` tokens keep working, as aliases of the gray ones, until the next minor release.
+
 ## [0.84.0] - 2026-11-02
 
 **In short.** Pages that are not in Arabic download about 190 KB less: the CDN's `plenix.js` no longer carries the Arabic words, and the page loader adds `plenix-ar.js` on Arabic pages (also when a person switches to Arabic without a reload). Side drawers slide in with their own motion. Buttons have a subtler shadow (the lightest card shadow, at rest and on hover) and a fainter glow. 32 tokens are marked "going away", each naming its replacement, and duplicated style rules are merged, with no visible change.

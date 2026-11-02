@@ -60,7 +60,7 @@
        puts DataGrid.unreadCommands(...).filter in its CommandBar's quickFilters and .selection among its selection commands. The controller exposes getUnreadCount(), markRead(keys), markUnread(keys).
      onRowClick(record, event), onRowDoubleClick(record, event): with them rows are focusable and Enter clicks;
        onCellEdit(record, { field, value, previous })
-     openKey: a string or a number: the key of the record whose details show (the open row); default the row last opened by a click or Enter
+     openKey: a string, a number or null: the key of the record whose details show (the open row); default the row last opened by a click or Enter
        (with onRowClick); null: none. The open row is aria-current="true"; in a grid without selection it takes the
        selected look (the fill and the start bar); with selection, opening a row selects only it, so it is marked too
      density: "compact" (default: tables start Compact, owner 2026-10-22) | "standard" | "comfortable" | "page" (follow the
@@ -113,9 +113,13 @@
        Wrap all columns in the header's right-click menu. A row with a wrapping column starts every cell at the top, at the
        reading line height; rows without one stay centered. wrapColumns ({ field: true|false }) and onWrapColumnsChange(next)
        control it from outside; the saved view keeps it (owner, 2026-10-24)
-     narrow: "auto" (default, a SplitView's grid too; issue 679): a table while its visible columns fit the grid's measured width (their widths
-       plus the selection, row menu and view columns), else the row cards | "table" (a fixed table that may scroll sideways: the
-       escape hatch for a dense specialized grid) | "list" (the row cards under narrowAt, 600px). Row cards (issue 679, owner 2026-11-01: every
+     narrow: "auto" (default, a SplitView's grid too; issue 679): a table while its visible columns fit the grid's measured width at their
+       minimum readable widths (each column's minWidth, else its header and cell space, at least 80px; plus the selection, row
+       menu and view columns; issue 929). Each column starts at its content (its header and widest value, capped at its set
+       width); spare room goes to the title (the first key column), else the widest text column; over the room, the columns
+       with the most room above their minimum give it up first and the title last; a column the person sized keeps its
+       width; else the row cards | "table" (a fixed table at its set widths that may scroll sideways:
+       the escape hatch for a dense specialized grid) | "list" (the row cards under narrowAt, 600px). Row cards (issue 679, owner 2026-11-01: every
        grid, by default): the row template, layout "A" unless the grid names another (see layout): a bar over the cards with the select-all checkbox and the
        count of records, then each record as three aligned lines (the title and the date, the subtitle and the primary value, the secondary and the tertiary)
        with the values the columns' own cells show (their render or formatter), the fields no slot takes as "Label: value" lines under the third, the selection
@@ -177,7 +181,7 @@ import { DataGridEngine } from './DataGridEngine.jsx';
 import { useRowTemplate } from './engine/rowTemplate.js';
 import { useDataGridActions } from './actions.jsx';
 import { unreadCommands } from './unread-commands.js';
-import { ToastProvider, useOptionalToast } from '../Toast/Toast.jsx';
+import { ToastProvider, useOptionalToast } from '../Toast/Toast.tsx';
 
 // a toast when the page has a ToastProvider; nothing otherwise. Toast's own hook, not ReviewFlow's: ReviewFlow would pull the command bar, the quick filter, the avatar and a dialog into every grid (issue 807)
 

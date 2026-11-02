@@ -71,9 +71,9 @@
 */
 import React from 'react';
 import { GridPane } from '../../components/DataGrid/room.js';
-import { useAppLayout } from '../AppShell/AppShell.jsx';
+import { useAppLayout } from '../AppShell/AppShell.tsx';
 import { cx } from '../../utils/cx.ts';
-import { Resizable } from '../../components/Resizable/Resizable.jsx';
+import { Resizable } from '../../components/Resizable/Resizable.tsx';
 import { useStrings, useDigits } from '../../providers/LocaleProvider.tsx';
 import { localDigits } from '../../utils/digits.ts';
 import { shareOf } from '../../utils/paneLimit.ts';
