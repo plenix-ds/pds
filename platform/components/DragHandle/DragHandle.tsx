@@ -34,8 +34,15 @@ import { mergeDndProps } from '../../utils/dnd.ts';
 import { Icon } from '../Icon/Icon.tsx';
 import DragIcon from 'plenix-platform/icons/plenix/drag';
 
-export const DragHandle = React.forwardRef(function DragHandle({ label, orientation = 'vertical', dnd, disabled = false, className, ...rest }, ref) {
-  const props = mergeDndProps(dnd || {}, rest);
+export type DragHandleProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  /** the accessible name ("Move Annual report") */
+  label?: string;
+  orientation?: 'vertical' | 'horizontal';
+  /** the drag source's props (useDragSource().props) */
+  dnd?: Record<string, unknown> | null;
+};
+export const DragHandle = React.forwardRef(function DragHandle({ label, orientation = 'vertical', dnd, disabled = false, className, ...rest }: DragHandleProps, ref: React.ForwardedRef<HTMLButtonElement>) {
+  const props = mergeDndProps(dnd || {}, rest as Record<string, unknown>) as React.ButtonHTMLAttributes<HTMLButtonElement>;
   return (
     <button ref={ref} type="button" {...props} aria-label={label || props['aria-label']} disabled={disabled || props.disabled || undefined}
       className={cx('plx-drag-handle', 'plx-drag-handle--' + (orientation === 'horizontal' ? 'horizontal' : 'vertical'), className)}>

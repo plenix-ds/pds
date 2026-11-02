@@ -29,6 +29,7 @@ import React from 'react';
 import { useFocusGroup } from '../../hooks/useFocusable.ts';
 import { cx } from '../../utils/cx.ts';
 import { stateIcon, asIcon as iconElement } from '../../components/Icon/Icon.tsx';
+import type { IconValue } from '../../components/Icon/Icon.tsx';
 import { Tooltip } from '../../components/Tooltip/Tooltip.tsx';
 
 const LabelsContext = React.createContext(false);
@@ -36,9 +37,11 @@ const LabelsContext = React.createContext(false);
 // its label under it, always shown, and aria-current for the current one
 export const BarContext = React.createContext(false);
 
-export function ToolRail({ label, showLabels = false, className, children }) {
-  const ref = React.useRef(null);
-  const itemsOf = () => (ref.current ? Array.prototype.slice.call(ref.current.querySelectorAll('.plx-tool-rail__item:not([disabled])')) : []);
+export type ToolRailProps = { /** the toolbar's name */ label?: string; showLabels?: boolean; className?: string; children?: React.ReactNode };
+export type ToolRailItemProps = { icon?: IconValue | React.ReactNode; label?: string; pressed?: boolean; disabled?: boolean; onClick?: React.MouseEventHandler<HTMLButtonElement>; className?: string };
+export function ToolRail({ label, showLabels = false, className, children }: ToolRailProps) {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const itemsOf = (): HTMLElement[] => (ref.current ? Array.prototype.slice.call(ref.current.querySelectorAll('.plx-tool-rail__item:not([disabled])')) : []);
   // one Tab stop: Tab enters and leaves the rail; Arrow Up / Down (looping), Home and End move between tools (batch 213).
   // The shared focus group (hooks/useFocusable.ts, issue 262); the rail's own items, and a held modifier still moves, as before
   const { groupProps } = useFocusGroup(ref, { orientation: 'vertical', items: itemsOf, modifiers: true });
@@ -49,7 +52,7 @@ export function ToolRail({ label, showLabels = false, className, children }) {
   );
 }
 
-ToolRail.Item = function ToolRailItem({ icon, label, pressed, disabled = false, onClick, className }) {
+ToolRail.Item = function ToolRailItem({ icon, label, pressed, disabled = false, onClick, className }: ToolRailItemProps) {
   const labels = React.useContext(LabelsContext), bar = React.useContext(BarContext);
   if (bar) return (
     <button type="button" className={cx('plx-nav-bar__item', pressed && 'is-current', className)} aria-current={pressed ? 'page' : undefined}

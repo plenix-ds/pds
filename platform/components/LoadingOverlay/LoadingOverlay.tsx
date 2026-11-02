@@ -34,12 +34,25 @@ import { Spinner } from '../Loading/Loading.tsx';
 import { ProgressBar } from '../ProgressBar/ProgressBar.tsx';
 import { Button } from '../Button/Button.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 
-export function LoadingOverlay({ active = true, fullPage = false, message, progress, delay = 0, onCancel, strings, children, className, ...rest }) {
-  const words = useStrings('loadingOverlay', strings);
+export type LoadingOverlayProps = React.HTMLAttributes<HTMLDivElement> & {
+  active?: boolean;
+  /** covers the page, not its own box */
+  fullPage?: boolean;
+  message?: string;
+  /** 0 to 100: a progress bar instead of the spinner */
+  progress?: number | null;
+  /** ms before it shows (a quick load shows nothing) */
+  delay?: number;
+  onCancel?: () => void;
+  strings?: Catalog | null;
+};
+export function LoadingOverlay({ active = true, fullPage = false, message, progress, delay = 0, onCancel, strings, children, className, ...rest }: LoadingOverlayProps) {
+  const words = useStrings('loadingOverlay', strings) as { loading: string; cancel: string };
   const [shown, setShown] = React.useState(active && !delay);
-  const content = React.useRef(null);
-  const focused = React.useRef(null);
+  const content = React.useRef<HTMLDivElement>(null);
+  const focused = React.useRef<HTMLElement | null>(null);
   React.useEffect(() => {
     if (!active) { setShown(false); return undefined; }
     if (!delay) { setShown(true); return undefined; }
@@ -51,7 +64,7 @@ export function LoadingOverlay({ active = true, fullPage = false, message, progr
     const el = content.current;
     if (!el || !shown) return undefined;
     const a = document.activeElement;
-    focused.current = a && el.contains(a) ? a : null;
+    focused.current = a && el.contains(a) ? a as HTMLElement : null;
     el.inert = true;
     return () => {
       el.inert = false;

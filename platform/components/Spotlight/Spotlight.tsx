@@ -43,10 +43,21 @@ import { snapToGrid } from '../../utils/grid.ts';
 const VARIANTS = ['cutout', 'beacon'];
 const SIDES = ['top', 'bottom', 'start', 'end'];
 
-export function Spotlight({ target, open = false, variant = 'cutout', contained = false, onDismiss, className }) {
+export type SpotlightProps = {
+  /** what it lights: a ref or an element */
+  target?: React.RefObject<HTMLElement | null> | HTMLElement | null;
+  open?: boolean;
+  variant?: 'cutout' | 'beacon';
+  /** inside its positioned parent, not the page */
+  contained?: boolean;
+  /** Escape calls it */
+  onDismiss?: () => void;
+  className?: string;
+};
+export function Spotlight({ target, open = false, variant = 'cutout', contained = false, onDismiss, className }: SpotlightProps) {
   devWarn('Spotlight', { variant }, { variant: ['cutout','beacon'] });
   const v = VARIANTS.indexOf(variant) >= 0 ? variant : 'cutout';
-  const root = React.useRef(null);
+  const root = React.useRef<HTMLDivElement>(null);
   const shown = !!open;
   useLayer(root, shown && !!onDismiss, { onEscape: onDismiss });
   // the target names the anchor (and, contained, the parent scopes it, so each region finds its own target)
@@ -63,19 +74,19 @@ export function Spotlight({ target, open = false, variant = 'cutout', contained 
     const el = target && 'current' in target ? target.current : target;
     if (!shown || FLOATING_ANCHOR || !el || !root.current) return undefined;
     // a length token in pixels (tokens are written in px or rem)
-    const px = (name) => {
+    const px = (name: string) => {
       const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim(), n = parseFloat(v) || 0;
       return /rem$/.test(v) ? n * parseFloat(getComputedStyle(document.documentElement).fontSize) : n;
     };
     const place = () => {
       const box = root.current; if (!box) return;
-      const host = contained ? box.parentElement.getBoundingClientRect() : { left: 0, top: 0, right: window.innerWidth, bottom: window.innerHeight };
+      const host = contained ? box.parentElement!.getBoundingClientRect() : { left: 0, top: 0, right: window.innerWidth, bottom: window.innerHeight };
       const r = el.getBoundingClientRect();   // measured layout: not snapped
       const pad = snapToGrid(px('--plx-comp-spotlight-padding'));   // the clear space, a token, kept on the grid
       const W = host.right - host.left, Hh = host.bottom - host.top;
       const t = r.top - host.top - pad, b = host.bottom - r.bottom - pad, l = r.left - host.left - pad, e = host.right - r.right - pad;
-      const set = (node, v) => { if (node) Object.keys(v).forEach((k) => node.style.setProperty(k, v[k] + 'px')); };   // inline: runtime geometry (owner 2026-10-13)
-      const dim = (part) => box.querySelector('.plx-spotlight__dim--' + part);
+      const set = (node: Element | null, v: Record<string, number>) => { if (node) Object.keys(v).forEach((k) => (node as HTMLElement).style.setProperty(k, v[k] + 'px')); };   // inline: runtime geometry (owner 2026-10-13)
+      const dim = (part: string) => box.querySelector('.plx-spotlight__dim--' + part);
       set(dim('top'), { top: 0, left: 0, right: 0, bottom: Hh - t });
       set(dim('bottom'), { top: Hh - b, left: 0, right: 0, bottom: 0 });
       set(dim('start'), { top: t, bottom: b, left: 0, right: W - l });

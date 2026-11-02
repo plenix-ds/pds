@@ -33,13 +33,23 @@ import { Button } from '../Button/Button.tsx';
 import { useIntersection } from '../../hooks/useIntersection.ts';
 import ArrowUpIcon from 'plenix-platform/icons/plenix/arrow-up';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 
 
-export function BackToTop({ variant = 'floating', scrollRef, focusRef, strings, className }) {
+export type BackToTopProps = {
+  variant?: 'floating' | 'inline';
+  /** the scrolling area (default the page) */
+  scrollRef?: React.RefObject<HTMLElement | null>;
+  /** what takes focus at the top (default the first h1, else the main region) */
+  focusRef?: React.RefObject<HTMLElement | null>;
+  strings?: Catalog | null;
+  className?: string;
+};
+export function BackToTop({ variant = 'floating', scrollRef, focusRef, strings, className }: BackToTopProps) {
   devWarn('BackToTop', { variant }, { variant: ['floating','inline'] });
-  const t = useStrings('backToTop', strings);
+  const t = useStrings('backToTop', strings) as { label: string };
   const floating = variant !== 'inline';
-  const sentinel = React.useRef(null);
+  const sentinel = React.useRef<HTMLSpanElement>(null);
   const { visible: atTop, entry } = useIntersection(sentinel, { root: scrollRef || null, disabled: !floating });
   // shown once the sentinel has been measured and is out of view (not before the first report)
   const shown = floating && !!entry && !atTop;
@@ -48,7 +58,7 @@ export function BackToTop({ variant = 'floating', scrollRef, focusRef, strings, 
     const behavior = reduced() ? 'auto' : 'smooth';
     if (area) area.scrollTo({ top: 0, behavior }); else window.scrollTo({ top: 0, behavior });
     const root = area || document;
-    let target = (focusRef && focusRef.current) || root.querySelector('h1') || root.querySelector('main, [role="main"]') || area;
+    let target = ((focusRef && focusRef.current) || root.querySelector('h1') || root.querySelector('main, [role="main"]') || area) as HTMLElement | null;
     if (!target) return;
     if (!target.matches('a[href],button,input,select,textarea,[tabindex]')) target.setAttribute('tabindex', '-1');
     target.focus({ preventScroll: true });

@@ -49,10 +49,12 @@ import { numeralLocale } from '../../utils/format.ts';
 import { cx } from '../../utils/cx.ts';
 import { useUid } from '../../utils/layer.ts';
 import { Icon, stateIcon, iconKey } from '../Icon/Icon.tsx';
+import type { IconModule, IconValue } from '../Icon/Icon.tsx';
 import { CollapsibleSection } from '../CollapsibleSection/CollapsibleSection.tsx';
 import { Tooltip } from '../Tooltip/Tooltip.tsx';
 import { useTruncated } from '../../utils/overflow.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import ChevronDownIcon from 'plenix-platform/icons/plenix/chevron-down';
 import ChevronRightIcon from 'plenix-platform/icons/plenix/chevron-right';
 import FolderOpenIcon from 'plenix-platform/icons/plenix/folder-open';
@@ -62,12 +64,31 @@ import PinFilledIcon from 'plenix-platform/icons/plenix/pin-filled';
 // the icon takes the row's state as its own (Styling Standard 3.6): filled on the current row; an Icon element the caller
 // gives keeps its own fill when it sets one
 // the current item is the open one: a folder shows as an open folder (filled, like every current icon)
-const OPEN_ICONS = { folder: FolderOpenIcon };
-const iconOf = (icon, on) => (on && OPEN_ICONS[iconKey(icon)]) || icon;
+const OPEN_ICONS: Record<string, IconModule> = { folder: FolderOpenIcon };
+const iconOf = (icon: unknown, on: boolean) => (on && OPEN_ICONS[iconKey(icon) as string]) || icon;
 
-const holds = (item, current) => !!item.children && item.children.some((c) => c.id === current || holds(c, current));
+// one row of the list: a destination, or (with children) a group that opens in place
+export type NavItem = {
+  id: string;
+  label: React.ReactNode;
+  href?: string;
+  icon?: IconValue | React.ReactNode;
+  count?: number | string;
+  muted?: boolean;
+  disabled?: boolean;
+  children?: NavItem[];
+  defaultExpanded?: boolean;
+  actions?: React.ReactNode;
+  pinned?: boolean;
+  onPin?: (id: string) => void;
+};
+export type NavGroup = { heading?: React.ReactNode; items: NavItem[]; collapsible?: boolean; icon?: IconValue | React.ReactNode; defaultExpanded?: boolean };
+type NavWords = { unpinItem: string; pinItem: string; unpin: string; pin: string };
+type RowProps = { item: NavItem; current?: string; onSelect?: (id: string) => void; t: NavWords; loc: string };
 
-function SubGroup({ item, current, onSelect, t, loc }) {
+const holds = (item: NavItem, current: string | undefined): boolean => !!item.children && item.children.some((c) => c.id === current || holds(c, current));
+
+function SubGroup({ item, current, onSelect, t, loc }: RowProps) {
   const inside = holds(item, current);
   const [open, setOpen] = React.useState(!!item.defaultExpanded || inside);
   React.useEffect(() => { if (inside) setOpen(true); }, [inside, current]);
@@ -80,17 +101,17 @@ function SubGroup({ item, current, onSelect, t, loc }) {
         <span className="plx-nav-list__label"><span className="plx-nav-list__name">{item.label}</span>
           {item.count !== undefined ? <span className="plx-nav-list__count">({item.count})</span> : null}</span>
       </button>
-      <ul id={id} aria-label={item.label} hidden={!open} className="plx-nav-list__items plx-nav-list__items--nested">
-        {open ? item.children.map((it) => <Item key={it.id} item={it} current={current} onSelect={onSelect} t={t} loc={loc} />) : null}
+      <ul id={id} aria-label={item.label as string} hidden={!open} className="plx-nav-list__items plx-nav-list__items--nested">
+        {open ? item.children!.map((it) => <Item key={it.id} item={it} current={current} onSelect={onSelect} t={t} loc={loc} />) : null}
       </ul>
     </li>
   );
 }
 
-function Item({ item, current, onSelect, t, loc }) {
+function Item({ item, current, onSelect, t, loc }: RowProps) {
   if (item.children) return <SubGroup item={item} current={current} onSelect={onSelect} t={t} loc={loc} />;
   const on = item.id === current;
-  const props = { className: cx('plx-nav-list__item', item.muted && 'plx-nav-list__item--muted', on && 'is-current', (item.actions || item.onPin) && 'plx-nav-list__item--in-actions'), 'aria-current': on ? 'page' : undefined };
+  const props: React.HTMLAttributes<HTMLElement> = { className: cx('plx-nav-list__item', item.muted && 'plx-nav-list__item--muted', on && 'is-current', (item.actions || item.onPin) && 'plx-nav-list__item--in-actions'), 'aria-current': on ? 'page' : undefined };
   const content = (
     <>
       {item.icon ? <span className={cx('plx-nav-list__icon', item.muted && !on && 'plx-nav-list__icon--muted')}>{stateIcon(iconOf(item.icon, on), on)}</span> : null}
@@ -103,22 +124,22 @@ function Item({ item, current, onSelect, t, loc }) {
       {item.href ? <a href={item.href} {...props} onClick={onSelect ? () => onSelect(item.id) : undefined}>{content}</a>
         : <button type="button" {...props} disabled={item.disabled || undefined} onClick={() => onSelect && onSelect(item.id)}>{content}</button>}
       {item.actions || item.onPin ? <span className="plx-nav-list__actions">
-        {item.onPin ? <button type="button" className={cx('plx-nav-list__pin', item.pinned && 'plx-nav-list__pin--pinned')} aria-pressed={!!item.pinned} aria-label={(item.pinned ? t.unpinItem : t.pinItem).split('{label}').join(item.label)}
-          title={item.pinned ? t.unpin : t.pin} onClick={() => item.onPin(item.id)}><Icon name={item.pinned ? PinFilledIcon : PinIcon} filled={!!item.pinned} /></button> : null}
+        {item.onPin ? <button type="button" className={cx('plx-nav-list__pin', item.pinned && 'plx-nav-list__pin--pinned')} aria-pressed={!!item.pinned} aria-label={(item.pinned ? t.unpinItem : t.pinItem).split('{label}').join(item.label as string)}
+          title={item.pinned ? t.unpin : t.pin} onClick={() => item.onPin!(item.id)}><Icon name={item.pinned ? PinFilledIcon : PinIcon} filled={!!item.pinned} /></button> : null}
         {item.actions}
       </span> : null}
     </li>
   );
 }
 
-function Group({ heading, items, current, onSelect, collapsible = true, icon, defaultExpanded = true, t, loc }) {
+function Group({ heading, items, current, onSelect, collapsible = true, icon, defaultExpanded = true, t, loc }: NavGroup & Omit<RowProps, 'item'>) {
   const id = useUid('plx-nav');
-  const headingRef = React.useRef(null);
+  const headingRef = React.useRef<HTMLSpanElement>(null);
   const cut = useTruncated(headingRef);   // a static heading cut after its lines: its full text goes in a Tooltip
   if (heading && collapsible) {
     return (
       <CollapsibleSection className="plx-nav-list__group" title={heading} icon={icon} defaultExpanded={defaultExpanded} headingLevel={null}>
-        <ul aria-label={heading} className="plx-nav-list__items">
+        <ul aria-label={heading as string} className="plx-nav-list__items">
           {items.map((it) => <Item key={it.id} item={it} current={current} onSelect={onSelect} t={t} loc={loc} />)}
         </ul>
       </CollapsibleSection>
@@ -134,13 +155,27 @@ function Group({ heading, items, current, onSelect, collapsible = true, icon, de
   );
 }
 
-export function NavList({ label, items, groups, value, onSelect, locale, strings, className }) {
-  const t = useStrings('navList', strings);
+export type NavListProps = {
+  /** the navigation's name */
+  label?: string;
+  /** one list without headings */
+  items?: NavItem[];
+  /** lists under headings (collapsible by default) */
+  groups?: NavGroup[];
+  /** the current item's id */
+  value?: string;
+  onSelect?: (id: string) => void;
+  locale?: string;
+  strings?: Catalog | null;
+  className?: string;
+};
+export function NavList({ label, items, groups, value, onSelect, locale, strings, className }: NavListProps) {
+  const t = useStrings('navList', strings) as NavWords;
   const loc = numeralLocale(locale || (typeof document !== 'undefined' && document.documentElement.lang) || undefined);
-  const all = groups || [{ heading: null, items: items || [] }];
+  const all: NavGroup[] = groups || [{ heading: null, items: items || [] }];
   return (
     <nav aria-label={label} className={cx('plx-nav-list', className)}>
-      {all.map((g, i) => <Group key={g.heading || i} heading={g.heading} items={g.items} collapsible={g.collapsible} icon={g.icon} defaultExpanded={g.defaultExpanded} current={value} onSelect={onSelect} t={t} loc={loc} />)}
+      {all.map((g, i) => <Group key={(g.heading || i) as React.Key} heading={g.heading} items={g.items} collapsible={g.collapsible} icon={g.icon} defaultExpanded={g.defaultExpanded} current={value} onSelect={onSelect} t={t} loc={loc} />)}
     </nav>
   );
 }

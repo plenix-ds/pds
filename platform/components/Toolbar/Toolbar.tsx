@@ -44,30 +44,41 @@ import { useBarFit } from '../../utils/barFit.ts';
 import { foldOrder, menuOrder } from '../../utils/foldOrder.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import { Button } from '../Button/Button.tsx';
+import type { ButtonProps } from '../Button/Button.tsx';
 import { Tooltip } from '../Tooltip/Tooltip.tsx';
 import { Menu, MenuItem, MenuDivider } from '../Menu/Menu.tsx';
+import type { MenuProps } from '../Menu/Menu.tsx';
 import MoreIcon from 'plenix-platform/icons/plenix/more';
 
 const POPUP = '[role="dialog"],[role="alertdialog"],[role="menu"],[role="listbox"],[role="tree"],[role="grid"],[role="tablist"]';
 const FOCUSABLE = 'button,input,textarea,select,a[href],[tabindex],[contenteditable="true"]';
 
 // A Button that a toolbar can fold: words it can drop (its icon stays) and, past that, a place in More; an icon-only Button (it has a label) only has the place in More. Not a link or a menu-trigger button.
-const nameOf = (p) => (typeof p.children === 'string' ? p.children : p.iconOnly && typeof p.label === 'string' ? p.label : null);
-const isFoldable = (el) => React.isValidElement(el) && el.type === Button && nameOf(el.props) !== null && !el.props.href && !el.props.caret;
+// a Button's props as the toolbar reads them, and one Button it can fold
+type FoldProps = ButtonProps & { danger?: boolean };
+type Act = { id: number; label: string; iconOnly: boolean; icon: FoldProps['icon']; primary: boolean; danger: boolean; priority: FoldProps['priority']; props: FoldProps };
+const nameOf = (p: FoldProps): string | null => (typeof p.children === 'string' ? p.children : p.iconOnly && typeof p.label === 'string' ? p.label : null);
+const isFoldable = (el: React.ReactNode): el is React.ReactElement<FoldProps> => React.isValidElement(el) && el.type === Button && nameOf(el.props as FoldProps) !== null && !(el.props as FoldProps).href && !(el.props as FoldProps).caret;
 // a menu whose trigger is a Button with an icon and words (Delete ▾): at the icon-only step it drops its words too, and stays where it is
-const isTrimmable = (el) => React.isValidElement(el) && el.type === Menu && React.isValidElement(el.props.trigger) && el.props.trigger.type === Button && typeof el.props.trigger.props.children === 'string' && !!el.props.trigger.props.icon && !el.props.trigger.props.iconOnly;
-const collect = (nodes, out) => {
+const isTrimmable = (el: React.ReactNode): el is React.ReactElement<MenuProps> => React.isValidElement(el) && el.type === Menu && React.isValidElement((el.props as MenuProps).trigger) && (el.props as MenuProps).trigger.type === Button && typeof ((el.props as MenuProps).trigger.props as FoldProps).children === 'string' && !!((el.props as MenuProps).trigger.props as FoldProps).icon && !((el.props as MenuProps).trigger.props as FoldProps).iconOnly;
+const collect = (nodes: React.ReactNode, out: Act[]): Act[] => {
   React.Children.forEach(nodes, (el) => {
     if (!React.isValidElement(el)) return;
-    if (el.type === Toolbar.Group || el.type === React.Fragment) collect(el.props.children, out);
-    else if (isFoldable(el)) out.push({ id: out.length, label: nameOf(el.props), iconOnly: !!el.props.iconOnly, icon: el.props.icon, primary: el.props.variant === 'primary', danger: /^danger/.test(el.props.variant || '') || !!el.props.danger, priority: el.props.priority, props: el.props });
+    if (el.type === Toolbar.Group || el.type === React.Fragment) collect((el.props as { children?: React.ReactNode }).children, out);
+    else if (isFoldable(el)) out.push({ id: out.length, label: nameOf(el.props) as string, iconOnly: !!el.props.iconOnly, icon: el.props.icon, primary: el.props.variant === 'primary', danger: /^danger/.test(el.props.variant || '') || !!el.props.danger, priority: el.props.priority, props: el.props });
   });
   return out;
 };
 
-export function Toolbar({ label, variant = 'default', className, children, onKeyDown, onFocus, ...rest }) {
-  const ref = React.useRef(null);
-  const t = useStrings('commandBar');
+export type ToolbarProps = React.HTMLAttributes<HTMLDivElement> & {
+  /** the toolbar's name */
+  label?: string;
+  /** "bar": a command bar's own (no folding ladder) */
+  variant?: 'default' | 'bar';
+};
+export function Toolbar({ label, variant = 'default', className, children, onKeyDown, onFocus, ...rest }: ToolbarProps) {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const t = useStrings('commandBar') as { moreLabel: string };
   // the ladder (platform/standards/fit-and-overflow.md): one row at every width. Step 0 shows every Button as written; step 1 drops the words of the
   // Buttons that have an icon (the icon stays, with the name as a tooltip and the accessible name); then one Button per step moves into More. A bar variant
   // (CommandBar) has its own ladder and is left as it is. Only a Button with a text label folds; other controls (fields, selects, menus) stay where they are
@@ -77,18 +88,18 @@ export function Toolbar({ label, variant = 'default', className, children, onKey
   const iconOnly = ladder && step >= 1;
   const folded = new Set(foldOrder(acts).slice(0, ladder ? Math.max(0, step - 1) : 0).map((a) => a.id));
   let n = 0;
-  const walk = (nodes) => React.Children.map(nodes, (el) => {
+  const walk = (nodes: React.ReactNode): React.ReactNode => React.Children.map(nodes, (el) => {
     if (!React.isValidElement(el)) return el;
-    if (el.type === Toolbar.Group) return React.cloneElement(el, undefined, walk(el.props.children));
-    if (el.type === React.Fragment) return <>{walk(el.props.children)}</>;
-    if (ladder && isTrimmable(el)) return iconOnly ? React.cloneElement(el, { trigger: React.cloneElement(el.props.trigger, { children: undefined, 'aria-label': el.props.trigger.props.children }) }) : el;
+    if (el.type === Toolbar.Group) return React.cloneElement(el, undefined, walk((el.props as { children?: React.ReactNode }).children));
+    if (el.type === React.Fragment) return <>{walk((el.props as { children?: React.ReactNode }).children)}</>;
+    if (ladder && isTrimmable(el)) return iconOnly ? React.cloneElement(el, { trigger: React.cloneElement(el.props.trigger, { children: undefined, 'aria-label': (el.props.trigger.props as FoldProps).children } as Record<string, unknown>) }) : el;
     if (!ladder || !isFoldable(el)) return el;
     const id = n++;
     if (folded.has(id)) return null;
     const a = acts[id];
     if (!a.icon || a.primary || a.iconOnly) return el;   // no icon to keep (or the primary action: it keeps its words longest): it stays as written
     // always wrapped, so a Button keeps its place (and its focus) when its words go; the tooltip shows only while it is an icon
-    return <Tooltip content={a.label} disabled={!iconOnly}>{iconOnly ? React.cloneElement(el, { iconOnly: true, label: a.label, priority: undefined }) : React.cloneElement(el, { priority: undefined })}</Tooltip>;
+    return <Tooltip content={a.label} disabled={!iconOnly}>{iconOnly ? React.cloneElement(el, { iconOnly: true, label: a.label, priority: undefined }) : React.cloneElement(el, { priority: undefined } as Partial<FoldProps>)}</Tooltip>;
   });
   const away = menuOrder(acts.filter((a) => folded.has(a.id)));
   const more = away.length ? (
@@ -97,8 +108,8 @@ export function Toolbar({ label, variant = 'default', className, children, onKey
         <MenuItem key={a.id} icon={a.icon} danger={a.danger} disabled={a.props.disabled} onSelect={a.props.onClick}>{a.label}</MenuItem>])}
     </Menu>
   ) : null;
-  const itemsOf = () => (ref.current ? Array.prototype.filter.call(ref.current.querySelectorAll(FOCUSABLE), (el) =>
-    el.closest('[role="toolbar"]') === ref.current && (!el.closest(POPUP) || !ref.current.contains(el.closest(POPUP))) && el.getClientRects().length && getComputedStyle(el).visibility === 'visible'
+  const itemsOf = (): HTMLElement[] => (ref.current ? Array.prototype.filter.call(ref.current.querySelectorAll(FOCUSABLE), (el: HTMLElement) =>
+    el.closest('[role="toolbar"]') === ref.current && (!el.closest(POPUP) || !ref.current!.contains(el.closest(POPUP))) && el.getClientRects().length && getComputedStyle(el).visibility === 'visible'
     && !el.matches(':disabled,[aria-disabled="true"]') && !el.closest('[inert],[aria-hidden="true"]')
     && !el.closest('[role="radiogroup"] [aria-checked="false"]')
     && (el.matches('button,input,textarea,select,a[href],[contenteditable="true"]') || el.tabIndex >= 0 || el.hasAttribute('data-plx-roving'))) : []);
@@ -106,13 +117,13 @@ export function Toolbar({ label, variant = 'default', className, children, onKey
     const root = ref.current; if (!root) return;
     const refresh = () => {
       root.querySelectorAll('[data-plx-toolbar-layout]').forEach((el) => { if (el.closest('[role="toolbar"]') === root) el.removeAttribute('data-plx-toolbar-layout'); });
-      const visit = (parent) => Array.from(parent.children).forEach((el) => {
+      const visit = (parent: Element): void => Array.from(parent.children).forEach((el) => {
         if (el.matches('.plx-stack,.plx-inline') && getComputedStyle(el).display !== 'none') { el.setAttribute('data-plx-toolbar-layout', ''); visit(el); }
         else if (el.classList.contains('plx-toolbar__group')) visit(el);
       });
       visit(root);
       const items = itemsOf();
-      roveTo(ref, items, items.find((el) => el.getAttribute('data-plx-roving') === 'current') || items[0]);
+      roveTo(ref, items, (items.find((el) => el.getAttribute('data-plx-roving') === 'current') || items[0]) as HTMLElement);
     };
     refresh();
     const observer = new MutationObserver(refresh);
@@ -126,13 +137,13 @@ export function Toolbar({ label, variant = 'default', className, children, onKey
   // keys stay a text field's, a select's, an editable region's, a popup's and a nested toolbar's own (ignore).
   const { groupProps } = useFocusGroup(ref, {
     items: itemsOf, orientation: 'horizontal', loop: true, modifiers: true, onKeyDown,
-    ignore: (e) => /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable
-      || (e.target.closest(POPUP) && ref.current.contains(e.target.closest(POPUP))) || e.target.closest('[role="toolbar"]') !== ref.current
+    ignore: (e) => /^(INPUT|TEXTAREA|SELECT)$/.test((e.target as HTMLElement).tagName) || (e.target as HTMLElement).isContentEditable
+      || ((e.target as HTMLElement).closest(POPUP) && ref.current!.contains((e.target as HTMLElement).closest(POPUP))) || (e.target as HTMLElement).closest('[role="toolbar"]') !== ref.current
   });
-  const onFocusIn = (e) => { if (onFocus) onFocus(e); groupProps.onFocus(e); };
+  const onFocusIn = (e: React.FocusEvent<HTMLDivElement>) => { if (onFocus) onFocus(e); groupProps.onFocus(e); };
   return <div ref={ref} role="toolbar" aria-label={label} className={cx('plx-toolbar', variant === 'bar' && 'plx-toolbar--bar', className)} onKeyDown={groupProps.onKeyDown} onFocus={onFocusIn} data-plx-fit-shrink={ladder ? (acts.length ? step >= 1 + acts.length : true) || undefined : undefined} {...rest}>{ladder ? walk(children) : children}{more}</div>;
 }
-Toolbar.Group = function ToolbarGroup({ className, children, ...rest }) {
+Toolbar.Group = function ToolbarGroup({ className, children, ...rest }: React.HTMLAttributes<HTMLDivElement>) {
   return <div className={cx('plx-toolbar__group', className)} {...rest}>{children}</div>;
 };
 Toolbar.Spacer = function ToolbarSpacer() {

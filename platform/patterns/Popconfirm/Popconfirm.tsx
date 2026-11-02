@@ -35,20 +35,36 @@ import { cx } from '../../utils/cx.ts';
 import { useUid } from '../../utils/layer.ts';
 import { Button } from '../../components/Button/Button.tsx';
 import { Popover } from '../../components/Popover/Popover.tsx';
+import type { PopoverProps } from '../../components/Popover/Popover.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 
 
-export function Popconfirm({ trigger, title, description, confirmLabel, cancelLabel, tone = 'default', onConfirm, onCancel, placement = 'bottom-start', strings, className }) {
+export type PopconfirmProps = {
+  /** the element that opens it: one element */
+  trigger: React.ReactElement;
+  title?: React.ReactNode;
+  description?: React.ReactNode;
+  confirmLabel?: React.ReactNode;
+  cancelLabel?: React.ReactNode;
+  tone?: 'default' | 'danger';
+  onConfirm?: () => void;
+  onCancel?: () => void;
+  placement?: PopoverProps['placement'];
+  strings?: Catalog | null;
+  className?: string;
+};
+export function Popconfirm({ trigger, title, description, confirmLabel, cancelLabel, tone = 'default', onConfirm, onCancel, placement = 'bottom-start', strings, className }: PopconfirmProps) {
   devWarn('Popconfirm', { tone }, { tone: ['default','danger'] });
-  const t = useStrings('popconfirm', strings);
+  const t = useStrings('popconfirm', strings) as { cancel: string };
   const id = useUid('plx-popconfirm');
   const [open, setOpen] = React.useState(false);
-  const cancelRef = React.useRef(null);
+  const cancelRef = React.useRef<HTMLElement>(null);
   const danger = tone === 'danger';
-  const onOpenChange = (v) => { setOpen(v); if (!v && onCancel) onCancel(); };
+  const onOpenChange = (v: boolean) => { setOpen(v); if (!v && onCancel) onCancel(); };
   const cancel = () => { setOpen(false); if (onCancel) onCancel(); };   // Popover returns focus to the trigger
   const confirm = () => { setOpen(false); if (onConfirm) onConfirm(); };
-  const child = React.Children.only(trigger);
+  const child = React.Children.only(trigger) as React.ReactElement;
   const footer = (
     <>
       <Button ref={cancelRef} onClick={cancel}>{cancelLabel || t.cancel}</Button>

@@ -85,22 +85,34 @@ import { cx } from '../../utils/cx.ts';
 import { pageLayout } from '../../providers/pageLayouts.js';
 import { PanelSplitter } from '../../components/Resizable/Resizable.jsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import { useMonitorWidth } from '../../utils/monitorWidths.ts';
 
 // the five layout modes (the Layout foundation; app-shell.css draws them)
 const LAYOUTS = ['fluid', 'contained', 'hybrid', 'multi-pane', 'focus'];
 
-const LayoutContext = React.createContext(null);
+// a list-detail's Back, handed to the parent row at Narrow
+export type AppLayoutBack = { label: React.ReactNode; onBack(): void; ref?: React.RefObject<HTMLElement | null> };
+// what useAppLayout gives the panes (the same shape as useAppLayout.types.d.ts, which build-types.js publishes until #708 slice 20)
+export type AppLayoutState = {
+  mode: 'inline' | 'rail' | 'overlay' | 'bar' | 'screen' | 'none'; open: boolean; expanded: boolean; width: number | null;
+  setWidth(width: number): void; toggle(): void; close(): void; small: boolean; narrow: boolean;
+  barEl: HTMLElement | null; parentEl: HTMLElement | null; slotEl: HTMLElement | null; hasSideNav: boolean;
+  registerPortal(): () => void; page: string; layout: string;
+  claimPage(kind: string): () => void; parentRow: boolean; claimParentRow(): () => void;
+  detailBack: AppLayoutBack | null; claimBack(back: AppLayoutBack): () => void;
+};
+const LayoutContext = React.createContext<AppLayoutState | null>(null);
 export const useAppLayout = () => React.useContext(LayoutContext);
 /* the shell's sizes and breakpoints come from the tokens, never from numbers here:
    --plx-sys-shell-nav-width, -min-width, -max-width, --plx-sys-shell-splitter-step, --plx-sys-shell-rail-below,
    --plx-sys-shell-inspector-overlay-below */
-export const tokenValue = (name) => (typeof document === 'undefined' ? '' : getComputedStyle(document.documentElement).getPropertyValue(name).trim());
-export const tokenPx = (name) => parseFloat(tokenValue(name)) || 0;
+export const tokenValue = (name: string): string => (typeof document === 'undefined' ? '' : getComputedStyle(document.documentElement).getPropertyValue(name).trim());
+export const tokenPx = (name: string): number => parseFloat(tokenValue(name)) || 0;
 // a media query for "narrower than the breakpoint token" (range syntax: the token's value is used as written)
-export const below = (name) => '(width < ' + (tokenValue(name) || '0px') + ')';
+export const below = (name: string): string => '(width < ' + (tokenValue(name) || '0px') + ')';
 
-export function useMedia(query) {
+export function useMedia(query: string): boolean {
   const get = () => (typeof window !== 'undefined' && window.matchMedia ? window.matchMedia(query).matches : false);
   const [on, setOn] = React.useState(get);
   React.useEffect(() => {
@@ -111,33 +123,49 @@ export function useMedia(query) {
   }, [query]);
   return on;
 }
-const readPref = (key, fallback) => { try { const v = JSON.parse(localStorage.getItem(key)); return v === null || v === undefined ? fallback : v; } catch (e) { return fallback; } };
-const writePref = (key, value) => { try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) { /* not stored: it lasts for this visit */ } };
+const readPref = <T,>(key: string, fallback: T): T => { try { const v = JSON.parse(localStorage.getItem(key) as string); return v === null || v === undefined ? fallback : v; } catch (e) { return fallback; } };
+const writePref = (key: string, value: unknown) => { try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) { /* not stored: it lasts for this visit */ } };
 
-export function AppShell({ header, sideNav, panel, footer, page = 'workspace', mainId = 'main', mainClassName, strings, className, children }) {
+export type AppShellProps = {
+  header?: React.ReactNode;
+  /** the navigation pane (NavPane); a screen can fill it through SideNavPortal instead */
+  sideNav?: React.ReactNode;
+  /** the end pane (an inspector) */
+  panel?: React.ReactNode;
+  footer?: React.ReactNode;
+  /** the page's kind: the design system's layout standard picks its layout mode */
+  page?: string;
+  /** the main region's id (the skip link's target) */
+  mainId?: string;
+  mainClassName?: string;
+  strings?: Catalog | null;
+  className?: string;
+  children?: React.ReactNode;
+};
+export function AppShell({ header, sideNav, panel, footer, page = 'workspace', mainId = 'main', mainClassName, strings, className, children }: AppShellProps) {
   // the page's kind, claimed by a pattern on the page when it is that kind of page (SettingsLayout), else the page prop
-  const [claimed, setClaimed] = React.useState(null);
-  const claimPage = React.useCallback((kind) => { setClaimed(kind); return () => setClaimed((k) => (k === kind ? null : k)); }, []);
+  const [claimed, setClaimed] = React.useState<string | null>(null);
+  const claimPage = React.useCallback((kind: string) => { setClaimed(kind); return () => setClaimed((k) => (k === kind ? null : k)); }, []);
   const layout = pageLayout(claimed || page);   // the design system's layout standard decides the mode
-  const t = useStrings('appShell', strings);
+  const t = useStrings('appShell', strings) as { skip: string };
   const small = useMedia(below('--plx-sys-shell-rail-below'));
   const narrow = useMedia(below('--plx-sys-shell-phone-below'));
-  const [barEl, setBarEl] = React.useState(null);         // where NavPane puts the bottom navigation bar at Narrow
-  const [parentEl, setParentEl] = React.useState(null);   // where it puts the parent row (the way to the pane) at Narrow
+  const [barEl, setBarEl] = React.useState<HTMLElement | null>(null);         // where NavPane puts the bottom navigation bar at Narrow
+  const [parentEl, setParentEl] = React.useState<HTMLElement | null>(null);   // where it puts the parent row (the way to the pane) at Narrow
   const [expanded, setExpanded] = React.useState(() => readPref('plenix.sideNav.expanded', true));
   // the navigation pane's dragged width, remembered per monitor (utils/monitorWidths.ts); the single value saved before is this monitor's first value
-  const [width, setWidth] = useMonitorWidth('nav', { legacy: () => readPref('plenix.sideNav.width', null), min: () => tokenPx('--plx-sys-shell-nav-min-width'), max: () => tokenPx('--plx-sys-shell-nav-max-width') });
+  const [width, setWidth] = useMonitorWidth('nav', { legacy: () => readPref<number | null>('plenix.sideNav.width', null), min: () => tokenPx('--plx-sys-shell-nav-min-width'), max: () => tokenPx('--plx-sys-shell-nav-max-width') });
   const [overlay, setOverlay] = React.useState(false);
-  const [slotEl, setSlotEl] = React.useState(null);   // the side-navigation area a screen fills through SideNavPortal
+  const [slotEl, setSlotEl] = React.useState<HTMLElement | null>(null);   // the side-navigation area a screen fills through SideNavPortal
   const [portals, setPortals] = React.useState(0);
   const registerPortal = React.useCallback(() => { setPortals((n) => n + 1); return () => setPortals((n) => n - 1); }, []);
   const hasSide = !!sideNav || portals > 0;
   // one back control at Narrow: the parent row (NavPane) says it is drawn; a list-detail's Back (SecondaryPane) hands
   // itself to it while the detail shows, so the page never has two back rows
   const [parentRow, setParentRow] = React.useState(false);
-  const [detailBack, setDetailBack] = React.useState(null);
+  const [detailBack, setDetailBack] = React.useState<AppLayoutBack | null>(null);
   const claimParentRow = React.useCallback(() => { setParentRow(true); return () => setParentRow(false); }, []);
-  const claimBack = React.useCallback((b) => { setDetailBack(b); return () => setDetailBack((x) => (x === b ? null : x)); }, []);
+  const claimBack = React.useCallback((b: AppLayoutBack) => { setDetailBack(b); return () => setDetailBack((x) => (x === b ? null : x)); }, []);
   const toggle = React.useCallback(() => {
     if (small) setOverlay((o) => !o);
     else setExpanded((e) => { writePref('plenix.sideNav.expanded', !e); return !e; });
@@ -146,12 +174,12 @@ export function AppShell({ header, sideNav, panel, footer, page = 'workspace', m
   // Ctrl+[ collapses and expands the navigation from anywhere on the page
   React.useEffect(() => {
     if (!hasSide) return undefined;
-    const key = (e) => { if ((e.ctrlKey || e.metaKey) && e.key === '[') { e.preventDefault(); toggle(); } };
+    const key = (e: KeyboardEvent) => { if ((e.ctrlKey || e.metaKey) && e.key === '[') { e.preventDefault(); toggle(); } };
     document.addEventListener('keydown', key);
     return () => document.removeEventListener('keydown', key);
   }, [toggle, hasSide]);
   const mode = !hasSide ? 'none' : narrow ? (overlay ? 'screen' : 'bar') : small ? (overlay ? 'overlay' : 'rail') : expanded ? 'inline' : 'rail';
-  const ctx = React.useMemo(() => ({ hasSideNav: hasSide, slotEl, registerPortal, small, narrow, barEl, parentEl, mode, open: mode === 'inline' || mode === 'overlay' || mode === 'screen',
+  const ctx = React.useMemo((): AppLayoutState => ({ hasSideNav: hasSide, slotEl, registerPortal, small, narrow, barEl, parentEl, mode, open: mode === 'inline' || mode === 'overlay' || mode === 'screen',
     expanded: small ? overlay : expanded, width, setWidth, toggle, close: () => setOverlay(false), page: claimed || page, layout, claimPage,
     parentRow, claimParentRow, detailBack, claimBack }),
   [hasSide, slotEl, registerPortal, small, narrow, barEl, parentEl, mode, overlay, expanded, width, setWidth, toggle, claimed, page, layout, claimPage,
@@ -178,34 +206,38 @@ export function AppShell({ header, sideNav, panel, footer, page = 'workspace', m
    10; the panes (NavPane, SecondaryPane, SidePanel) still import it from here */
 export { PanelSplitter };
 
-export function SideNavPortal({ children }) {
+export function SideNavPortal({ children }: { children?: React.ReactNode }) {
   const layout = useAppLayout();
   React.useEffect(() => (layout && layout.registerPortal ? layout.registerPortal() : undefined), []);
-  if (!layout || !layout.registerPortal) return children;   // outside an AppShell: render in place
+  if (!layout || !layout.registerPortal) return children as React.ReactElement;   // outside an AppShell: render in place
   return layout.slotEl ? createPortal(children, layout.slotEl) : null;
 }
 
 /* <Show> and <Hide>: responsive visibility by the window class (the breakpoint tokens), or on paper; see the header. */
-const BREAKPOINTS = { medium: '--plx-sys-shell-phone-below', wide: '--plx-sys-shell-rail-below', inspector: '--plx-sys-shell-inspector-overlay-below' };
-const breakpointQuery = (b) => (b ? below(BREAKPOINTS[b] || b) : 'not all');
+const BREAKPOINTS: Record<string, string> = { medium: '--plx-sys-shell-phone-below', wide: '--plx-sys-shell-rail-below', inspector: '--plx-sys-shell-inspector-overlay-below' };
+// a window class (medium, wide, inspector) or a breakpoint token's name
+export type Breakpoint = 'medium' | 'wide' | 'inspector' | (string & {});
+const breakpointQuery = (b: Breakpoint | undefined) => (b ? below(BREAKPOINTS[b] || b) : 'not all');
 // true where the window is at or above "above" and under "below" (an omitted bound always holds)
-function useWithin(above, under) {
+function useWithin(above: Breakpoint | undefined, under: Breakpoint | undefined) {
   const underAbove = useMedia(breakpointQuery(above));
   const underBelow = useMedia(breakpointQuery(under));
   return (!above || !underAbove) && (!under || underBelow);
 }
-export function Show({ above, below: under, print = false, fallback = null, children }) {
+export type VisibilityProps = { above?: Breakpoint; below?: Breakpoint; /** on paper only (Show) or never on paper (Hide) */ print?: boolean; fallback?: React.ReactNode; children?: React.ReactNode };
+export function Show({ above, below: under, print = false, fallback = null, children }: VisibilityProps) {
   const within = useWithin(above, under);
   if (print) return <div className="plx-visibility plx-visibility--print-only">{children}</div>;
-  return within ? children : fallback;
+  return (within ? children : fallback) as React.ReactElement;
 }
-export function Hide({ above, below: under, print = false, fallback = null, children }) {
+export function Hide({ above, below: under, print = false, fallback = null, children }: VisibilityProps) {
   const within = useWithin(above, under);
   if (print) return <div className="plx-visibility plx-visibility--no-print">{children}</div>;
-  return (above || under) && within ? fallback : children;
+  return ((above || under) && within ? fallback : children) as React.ReactElement;
 }
 
 /* <PageContent>: the content column of a page inside the main region; see the header comment. */
-export function PageContent({ as: As = 'section', className, children, ...rest }) {
+export type PageContentProps = React.HTMLAttributes<HTMLElement> & { as?: React.ElementType };
+export function PageContent({ as: As = 'section', className, children, ...rest }: PageContentProps) {
   return <As className={cx('plx-page-content', className)} {...rest}>{children}</As>;
 }

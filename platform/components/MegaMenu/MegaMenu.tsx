@@ -35,23 +35,37 @@ import { Button } from '../Button/Button.tsx';
 import { Link } from '../Link/Link.tsx';
 import { NavList } from '../NavList/NavList.tsx';
 import { Popover } from '../Popover/Popover.tsx';
+import type { PopoverProps } from '../Popover/Popover.tsx';
 import { useMedia, below } from '../../patterns/AppShell/AppShell.tsx';
 
-export function MegaMenu({ label, groups = [], featured, layout = 'auto', placement = 'bottom-start', className }) {
+export type MegaMenuLink = { label: React.ReactNode; href?: string; description?: React.ReactNode; current?: boolean };
+export type MegaMenuGroup = { title: React.ReactNode; links: MegaMenuLink[] };
+export type MegaMenuProps = {
+  /** the trigger's words, and the navigation's name */
+  label?: React.ReactNode;
+  groups?: MegaMenuGroup[];
+  /** a feature beside the columns */
+  featured?: React.ReactNode;
+  /** "auto": columns, or the accordion on a narrow screen */
+  layout?: 'auto' | 'columns' | 'accordion';
+  placement?: PopoverProps['placement'];
+  className?: string;
+};
+export function MegaMenu({ label, groups = [], featured, layout = 'auto', placement = 'bottom-start', className }: MegaMenuProps) {
   const id = useUid('plx-mega-menu');
   const narrow = useMedia(below('--plx-sys-shell-phone-below'));
   const accordion = layout === 'accordion' || (layout === 'auto' && narrow);
   const [open, setOpen] = React.useState(false);
 
   if (accordion) {
-    const current = (g) => g.links.some((l) => l.current);
+    const current = (g: MegaMenuGroup) => g.links.some((l) => l.current);
     const navGroups = groups.map((g) => ({ heading: g.title, defaultExpanded: current(g),
       items: g.links.map((l, i) => ({ id: l.href || String(i), label: l.label, href: l.href })) }));
-    const value = (groups.flatMap((g) => g.links).find((l) => l.current) || {}).href;
+    const value = (groups.flatMap((g) => g.links).find((l) => l.current) || {} as Partial<MegaMenuLink>).href;
     return (
       <div className={cx('plx-mega-menu', 'plx-mega-menu--accordion', className)}>
         <Button variant="ghost" caret expanded={open} aria-controls={id} onClick={() => setOpen(!open)} className="plx-mega-menu__toggle">{label}</Button>
-        {open ? <div id={id} className="plx-mega-menu__sections"><NavList label={label} groups={navGroups} value={value} /></div> : null}
+        {open ? <div id={id} className="plx-mega-menu__sections"><NavList label={label as string} groups={navGroups} value={value} /></div> : null}
       </div>
     );
   }

@@ -8,7 +8,7 @@
    menuOrder(actions): the same actions as they sit in the More menu: the others in the bar's order, then the danger ones. */
 const RANKS = ['low', 'normal', 'high'];
 // an action of a bar, as far as folding goes (the bar's own fields pass through)
-export type FoldAction = { id?: string; label?: unknown; priority?: string; danger?: boolean; primary?: boolean };
+export type FoldAction = { id?: string | number; label?: unknown; priority?: string; danger?: boolean; primary?: boolean };
 
 export const foldOrder = <A extends FoldAction>(actions: A[]): A[] => {
   const foldable = actions.filter((a) => !a.primary);

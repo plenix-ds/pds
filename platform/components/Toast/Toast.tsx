@@ -41,6 +41,7 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 import { cx } from '../../utils/cx.ts';
 import { Icon } from '../Icon/Icon.tsx';
+import type { IconModule } from '../Icon/Icon.tsx';
 import { Button } from '../Button/Button.tsx';
 import { tokenMs } from '../../utils/tokenTime.ts';
 import { announce } from '../../utils/announce.tsx';
@@ -51,42 +52,51 @@ import CircleInfoIcon from 'plenix-platform/icons/plenix/circle-info';
 import CloseIcon from 'plenix-platform/icons/plenix/close';
 import WarningIcon from 'plenix-platform/icons/plenix/warning';
 
-const ToastContext = React.createContext(null);
-const TONE_ICON = { info: CircleInfoIcon, success: CircleCheckIcon, warning: WarningIcon, danger: AlertIcon };
+export type ToastTone = 'info' | 'success' | 'warning' | 'danger';
+// why a toast closed: Close, its action, its time ran out
+export type ToastCloseReason = 'dismiss' | 'action' | 'timeout';
+export type ToastAction = { label: React.ReactNode; onAction?: () => void };
+export type ToastOptions = { tone?: ToastTone; /** ms; 0 stays until closed (danger's default) */ duration?: number; action?: ToastAction; onClose?: (reason: ToastCloseReason) => void };
+export type ToastApi = { show: (message: React.ReactNode, options?: ToastOptions) => number; dismiss: (id: number, reason?: ToastCloseReason) => void };
+type ToastItem = { id: number; message: React.ReactNode; tone: ToastTone; action?: ToastAction; leaving: boolean };
+type ToastTimer = { wait: number; timer: ReturnType<typeof setTimeout> | null; onClose?: (reason: ToastCloseReason) => void };
+const ToastContext = React.createContext<ToastApi | null>(null);
+const TONE_ICON: Record<string, IconModule> = { info: CircleInfoIcon, success: CircleCheckIcon, warning: WarningIcon, danger: AlertIcon };
 let nextId = 1;
 
-export function ToastProvider({ duration, children }) {
-  const words = useStrings('toast');
-  const [toasts, setToasts] = React.useState([]);
-  const timers = React.useRef(new Map());   // id -> { wait, timer, onClose }
-  const texts = React.useRef(new Map());    // id -> the message element, read for its announcement
-  const announced = React.useRef(new Set());
-  const remove = React.useCallback((id) => { announced.current.delete(id); setToasts((all) => all.filter((t) => t.id !== id)); }, []);
+export type ToastProviderProps = { /** how long a toast shows, in ms (default the token) */ duration?: number; children?: React.ReactNode };
+export function ToastProvider({ duration, children }: ToastProviderProps) {
+  const words = useStrings('toast') as { dismiss: string };
+  const [toasts, setToasts] = React.useState<ToastItem[]>([]);
+  const timers = React.useRef(new Map<number, ToastTimer>());   // id -> { wait, timer, onClose }
+  const texts = React.useRef(new Map<number, HTMLSpanElement>());    // id -> the message element, read for its announcement
+  const announced = React.useRef(new Set<number>());
+  const remove = React.useCallback((id: number) => { announced.current.delete(id); setToasts((all) => all.filter((t) => t.id !== id)); }, []);
   // each new toast once: its text (as shown) and its action's label; danger interrupts, the others wait; queued, so none is lost
   React.useEffect(() => {
     toasts.forEach((t) => {
       if (t.leaving || announced.current.has(t.id)) return;
       announced.current.add(t.id);
       const el = texts.current.get(t.id);
-      const shown = el ? el.textContent : String(t.message);
+      const shown = (el ? el.textContent : String(t.message)) as string;
       const text = t.action && t.action.label ? shown + (/[.!?\u2026]$/.test(shown) ? ' ' : '. ') + t.action.label : shown;
       announce(text, { politeness: t.tone === 'danger' ? 'assertive' : 'polite', queue: true });
     });
   }, [toasts]);
-  const dismiss = React.useCallback((id, reason = 'dismiss') => {
+  const dismiss = React.useCallback((id: number, reason: ToastCloseReason = 'dismiss') => {
     const t = timers.current.get(id);
-    if (t) { clearTimeout(t.timer); timers.current.delete(id); if (t.onClose) t.onClose(reason); }
+    if (t) { clearTimeout(t.timer as ReturnType<typeof setTimeout>); timers.current.delete(id); if (t.onClose) t.onClose(reason); }
     setToasts((all) => all.map((x) => (x.id === id ? { ...x, leaving: true } : x)));
     setTimeout(() => remove(id), tokenMs('--plx-comp-toast-animation-duration'));
   }, [remove]);
-  const start = React.useCallback((id) => {
+  const start = React.useCallback((id: number) => {
     const t = timers.current.get(id);
     if (!t || !(t.wait > 0)) return;
-    clearTimeout(t.timer);
+    clearTimeout(t.timer as ReturnType<typeof setTimeout>);
     t.timer = setTimeout(() => dismiss(id, 'timeout'), t.wait);
   }, [dismiss]);
-  const hold = React.useCallback((id) => { const t = timers.current.get(id); if (t) clearTimeout(t.timer); }, []);
-  const show = React.useCallback((message, { tone = 'info', duration: ms, action, onClose } = {}) => {
+  const hold = React.useCallback((id: number) => { const t = timers.current.get(id); if (t) clearTimeout(t.timer as ReturnType<typeof setTimeout>); }, []);
+  const show = React.useCallback((message: React.ReactNode, { tone = 'info', duration: ms, action, onClose }: ToastOptions = {}) => {
     const id = nextId++;
     const wait = ms !== undefined ? ms : (tone === 'danger' ? 0 : duration !== undefined ? duration : tokenMs('--plx-comp-toast-duration'));
     timers.current.set(id, { wait, timer: null, onClose });
@@ -94,7 +104,7 @@ export function ToastProvider({ duration, children }) {
     start(id);
     return id;
   }, [start, duration]);
-  const api = React.useMemo(() => ({ show, dismiss }), [show, dismiss]);
+  const api = React.useMemo((): ToastApi => ({ show, dismiss }), [show, dismiss]);
   return (
     <ToastContext.Provider value={api}>
       {children}
@@ -106,10 +116,10 @@ export function ToastProvider({ duration, children }) {
               onAnimationEnd={t.leaving ? () => remove(t.id) : undefined}
               onPointerEnter={t.action ? () => hold(t.id) : undefined} onPointerLeave={t.action ? () => start(t.id) : undefined}
               onFocus={t.action ? () => hold(t.id) : undefined}
-              onBlur={t.action ? (e) => { if (!e.currentTarget.contains(e.relatedTarget)) start(t.id); } : undefined}>
+              onBlur={t.action ? (e) => { if (!e.currentTarget.contains(e.relatedTarget as Node | null)) start(t.id); } : undefined}>
               <span className="plx-toast__icon"><Icon name={TONE_ICON[t.tone] || TONE_ICON.info} /></span>
               <span ref={(el) => { if (el) texts.current.set(t.id, el); else texts.current.delete(t.id); }} className="plx-toast__message">{t.message}</span>
-              {t.action ? <Button size="xs" className="plx-toast__action" onClick={() => { if (t.action.onAction) t.action.onAction(); dismiss(t.id, 'action'); }}>{t.action.label}</Button> : null}
+              {t.action ? <Button size="xs" className="plx-toast__action" onClick={() => { if (t.action!.onAction) t.action!.onAction(); dismiss(t.id, 'action'); }}>{t.action.label}</Button> : null}
               <button type="button" className="plx-toast__close" aria-label={words.dismiss} onClick={() => dismiss(t.id)}><Icon name={CloseIcon} /></button>
             </div>
           ))}
@@ -120,23 +130,24 @@ export function ToastProvider({ duration, children }) {
   );
 }
 
-export function useToast() {
+export function useToast(): ToastApi {
   const api = React.useContext(ToastContext);
   if (!api) throw new Error('useToast needs a <ToastProvider> around the application');
   return api;
 }
 
 // a toast when the page has a ToastProvider; nothing otherwise (DataGrid, ReviewFlow and the flows built on it; one copy, issue 882)
-export function useOptionalToast() {
+export function useOptionalToast(): ToastApi | null {
   try { return useToast(); } catch (e) { return null; }
 }
 
 // the undo pattern: the action is already done; the toast offers Undo for as long as it shows, then the change is final
+export type UndoOptions = { onUndo?: () => void; onCommit?: () => void; label?: React.ReactNode; tone?: ToastTone; duration?: number };
 export function useUndo() {
   const toast = useToast();
-  const words = useStrings('toast');
-  return React.useCallback((message, { onUndo, onCommit, label, tone, duration } = {}) => toast.show(message, {
+  const words = useStrings('toast') as { undo: string };
+  return React.useCallback((message: React.ReactNode, { onUndo, onCommit, label, tone, duration }: UndoOptions = {}) => toast.show(message, {
     tone, duration, action: { label: label ?? words.undo, onAction: onUndo },
-    onClose: (reason) => { if (reason !== 'action' && onCommit) onCommit(); },
+    onClose: (reason: ToastCloseReason) => { if (reason !== 'action' && onCommit) onCommit(); },
   }), [toast, words.undo]);
 }

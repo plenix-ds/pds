@@ -83,22 +83,28 @@ import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { useLayer, useUid } from '../../utils/layer.ts';
 import { Icon, asIcon } from '../Icon/Icon.tsx';
+import type { IconValue } from '../Icon/Icon.tsx';
 import { Portal } from '../../utils/portal.tsx';
 import { useFloating, TOP_LAYER } from '../../utils/floating.ts';
+import type { FloatingPlacement } from '../../utils/floating.ts';
 import { useGesture } from '../../hooks/useGesture.ts';
 import TriangleRightIcon from 'plenix-platform/icons/plenix/triangle-right';
 import CheckIcon from 'plenix-platform/icons/plenix/check-bold';
 
-const MenuContext = React.createContext(null);
-const RadioContext = React.createContext(null);
+// what a menu's items reach: its close(refocus)
+const MenuContext = React.createContext<((refocus: boolean) => void) | null>(null);
+type RadioGroupValue = { value: unknown; onChange?: (value: unknown) => void; keepOpen?: boolean };
+const RadioContext = React.createContext<RadioGroupValue | null>(null);
+// the props Menu and ContextMenu read from, and put on, their one child
+type TriggerProps = { onClick?: (e: React.MouseEvent<HTMLElement>) => void; onKeyDown?: (e: React.KeyboardEvent<HTMLElement>) => void; onContextMenu?: (e: React.MouseEvent<HTMLElement>) => void };
 // the menu's own items (not those of a submenu inside it)
-const itemsIn = (list) => (list ? Array.prototype.filter.call(list.querySelectorAll('[data-plx-menu-item]:not([aria-disabled="true"])'), (el) => el.closest('[role="menu"]') === list) : []);
-const isRtl = (el) => !!el && getComputedStyle(el).direction === 'rtl';
+const itemsIn = (list: HTMLElement | null): HTMLElement[] => (list ? Array.prototype.filter.call(list.querySelectorAll('[data-plx-menu-item]:not([aria-disabled="true"])'), (el: HTMLElement) => el.closest('[role="menu"]') === list) : []);
+const isRtl = (el: Element | null) => !!el && getComputedStyle(el).direction === 'rtl';
 // Arrow keys, Home and End between a list's own items; true when the key moved focus
-function moveIn(list, e) {
+function moveIn(list: HTMLElement | null, e: React.KeyboardEvent) {
   const items = itemsIn(list);
-  const at = items.indexOf(document.activeElement);
-  let next = null;
+  const at = items.indexOf(document.activeElement as HTMLElement);
+  let next: number | null = null;
   if (e.key === 'ArrowDown') next = (at + 1) % items.length;
   else if (e.key === 'ArrowUp') next = (at - 1 + items.length) % items.length;
   else if (e.key === 'Home') next = 0;
@@ -108,29 +114,44 @@ function moveIn(list, e) {
     // Only when focus is on one of this list's own items: a letter from a sub menu or a text field inside the menu is not this list's to take
     if (at < 0) return false;
     const k = e.key.toLocaleLowerCase();
-    const label = (el) => ((el.querySelector('.plx-menu__label') || el).textContent || '').trim().toLocaleLowerCase();
+    const label = (el: HTMLElement) => ((el.querySelector('.plx-menu__label') || el).textContent || '').trim().toLocaleLowerCase();
     const hit = items.slice(at + 1).concat(items.slice(0, at + 1)).find((el) => label(el).startsWith(k));
     if (!hit) return false;
     next = items.indexOf(hit);
   } else return false;
   e.preventDefault();
-  if (items[next]) items[next].focus();
+  if (items[next as number]) items[next as number].focus();
   return true;
 }
 
-export function Menu({ trigger, label, placement = 'bottom-start', open: openProp, openStart, onOpenChange, className, children }) {
+export type MenuStart = 'first' | 'last';
+export type MenuProps = {
+  /** the button that opens it: one element */
+  trigger: React.ReactElement;
+  /** the menu's name */
+  label?: string;
+  placement?: FloatingPlacement;
+  /** controlled open (a MenuBar): with onOpenChange */
+  open?: boolean;
+  /** where focus starts when it opens */
+  openStart?: MenuStart;
+  onOpenChange?: (open: boolean, info: { start: MenuStart }) => void;
+  className?: string;
+  children?: React.ReactNode;
+};
+export function Menu({ trigger, label, placement = 'bottom-start', open: openProp, openStart, onOpenChange, className, children }: MenuProps) {
   const id = useUid('plx-menu');
   // who is open (issue 805): the menu keeps its own open state; a MenuBar passes open and onOpenChange so one of its menus is open at a time
   const [own, setOwn] = React.useState(false);
   const controlled = openProp !== undefined;
   const open = controlled ? !!openProp : own;
-  const [first, setStart] = React.useState('first');
+  const [first, setStart] = React.useState<MenuStart>('first');
   const start = openStart || first;
-  const wrap = React.useRef(null), list = React.useRef(null), button = React.useRef(null);
+  const wrap = React.useRef<HTMLSpanElement>(null), list = React.useRef<HTMLDivElement>(null), button = React.useRef<HTMLElement | null>(null);
   const tell = React.useRef(onOpenChange);
   tell.current = onOpenChange;
-  const setOpen = React.useCallback((next, where) => { if (!controlled) setOwn(next); if (tell.current) tell.current(next, { start: where || 'first' }); }, [controlled]);
-  const close = React.useCallback((refocus) => { setOpen(false); if (refocus && button.current) button.current.focus(); }, [setOpen]);
+  const setOpen = React.useCallback((next: boolean, where?: MenuStart) => { if (!controlled) setOwn(next); if (tell.current) tell.current(next, { start: where || 'first' }); }, [controlled]);
+  const close = React.useCallback((refocus: boolean) => { setOpen(false); if (refocus && button.current) button.current.focus(); }, [setOpen]);
   useLayer(list, open, { onEscape: () => close(true) });
   // placed against its trigger's wrapper by useFloating (anchor positioning, in the top layer); without it, drawn inside the wrapper
   useFloating(wrap, list, { open: open && TOP_LAYER, placement });
@@ -140,22 +161,22 @@ export function Menu({ trigger, label, placement = 'bottom-start', open: openPro
     if (!open) return undefined;
     const items = itemsIn(list.current);
     if (items.length) (start === 'last' ? items[items.length - 1] : items[0]).focus();
-    const outside = (e) => { if (wrap.current && !wrap.current.contains(e.target)) setOpen(false); };
+    const outside = (e: MouseEvent) => { if (wrap.current && !wrap.current.contains(e.target as Node)) setOpen(false); };
     document.addEventListener('mousedown', outside);
     return () => document.removeEventListener('mousedown', outside);
   }, [open]);
-  const openAt = (where) => { setStart(where); setOpen(true, where); };
-  const child = React.Children.only(trigger);
+  const openAt = (where: MenuStart) => { setStart(where); setOpen(true, where); };
+  const child = React.Children.only(trigger) as React.ReactElement<TriggerProps>;
   const triggerEl = React.cloneElement(child, {
     ref: button, 'aria-haspopup': 'menu', 'aria-expanded': open, 'aria-controls': open ? id : undefined, expanded: undefined,
-    onClick: (e) => { if (child.props.onClick) child.props.onClick(e); if (open) close(false); else openAt('first'); },
-    onKeyDown: (e) => {
+    onClick: (e: React.MouseEvent<HTMLElement>) => { if (child.props.onClick) child.props.onClick(e); if (open) close(false); else openAt('first'); },
+    onKeyDown: (e: React.KeyboardEvent<HTMLElement>) => {
       if (child.props.onKeyDown) child.props.onKeyDown(e);
       if (e.key === 'ArrowDown') { e.preventDefault(); openAt('first'); }
       else if (e.key === 'ArrowUp') { e.preventDefault(); openAt('last'); }
     },
-  });
-  const onKeyDown = (e) => {
+  } as Record<string, unknown>);
+  const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Tab') { setOpen(false); return; }
     moveIn(list.current, e);
   };
@@ -171,7 +192,23 @@ export function Menu({ trigger, label, placement = 'bottom-start', open: openPro
   );
 }
 
-export function MenuItem({ icon, danger = false, disabled = false, checked, type, value, keepOpen = false, href, onSelect, className, children, ...rest }) {
+export type MenuItemProps = Omit<React.HTMLAttributes<HTMLElement>, 'onSelect'> & {
+  /** an icon name, an imported module or an element */
+  icon?: IconValue | React.ReactNode;
+  danger?: boolean;
+  disabled?: boolean;
+  /** a check item: on or off */
+  checked?: boolean;
+  /** "radio" in a MenuRadioGroup */
+  type?: 'radio';
+  /** a radio item's value in its group */
+  value?: unknown;
+  keepOpen?: boolean;
+  /** a link item */
+  href?: string;
+  onSelect?: (event: React.MouseEvent<HTMLElement>) => void;
+};
+export function MenuItem({ icon, danger = false, disabled = false, checked, type, value, keepOpen = false, href, onSelect, className, children, ...rest }: MenuItemProps) {
   const close = React.useContext(MenuContext);
   const group = React.useContext(RadioContext);
   const radio = type === 'radio' || (!!group && value !== undefined);
@@ -179,10 +216,10 @@ export function MenuItem({ icon, danger = false, disabled = false, checked, type
   const marked = radio || checked !== undefined;
   const role = radio ? 'menuitemradio' : checked === undefined ? 'menuitem' : 'menuitemcheckbox';
   const stay = keepOpen || (radio && !!group && group.keepOpen);
-  const props = {
+  const props: React.HTMLAttributes<HTMLElement> & Record<string, unknown> = {
     role, tabIndex: -1, 'data-plx-menu-item': '', 'aria-checked': marked ? !!on : undefined,
     'aria-disabled': disabled || undefined, className: cx('plx-menu__item', danger && 'plx-menu__item--danger', className),
-    onClick: (e) => {
+    onClick: (e: React.MouseEvent<HTMLElement>) => {
       if (disabled) { e.preventDefault(); return; }
       if (radio && group && value !== undefined && group.onChange && group.value !== value) group.onChange(value);
       if (onSelect) onSelect(e);
@@ -204,7 +241,8 @@ export function MenuDivider() {
   return <div role="separator" className="plx-menu__divider" />;
 }
 
-export function MenuGroup({ label, children }) {
+export type MenuGroupProps = { label?: React.ReactNode; children?: React.ReactNode };
+export function MenuGroup({ label, children }: MenuGroupProps) {
   const id = useUid('plx-mg');
   return (
     <div role="group" aria-labelledby={id} className="plx-menu__group">
@@ -215,7 +253,8 @@ export function MenuGroup({ label, children }) {
 }
 
 /* MenuRadioGroup: a labeled set of radio items, one checked (a sort order, a view) */
-export function MenuRadioGroup({ label, value, onChange, keepOpen = false, children }) {
+export type MenuRadioGroupProps = { label?: React.ReactNode; value?: unknown; onChange?: (value: unknown) => void; keepOpen?: boolean; children?: React.ReactNode };
+export function MenuRadioGroup({ label, value, onChange, keepOpen = false, children }: MenuRadioGroupProps) {
   const id = useUid('plx-mrg');
   const ctx = React.useMemo(() => ({ value, onChange, keepOpen }), [value, onChange, keepOpen]);
   return (
@@ -227,10 +266,11 @@ export function MenuRadioGroup({ label, value, onChange, keepOpen = false, child
 }
 
 /* MenuSub: an item that opens a submenu beside it (one level) */
-export function MenuSub({ label, icon, disabled = false, className, children }) {
+export type MenuSubProps = { label?: React.ReactNode; icon?: IconValue | React.ReactNode; disabled?: boolean; className?: string; children?: React.ReactNode };
+export function MenuSub({ label, icon, disabled = false, className, children }: MenuSubProps) {
   const id = useUid('plx-menu-sub');
   const [open, setOpen] = React.useState(false);
-  const wrap = React.useRef(null), item = React.useRef(null), list = React.useRef(null), focusFirst = React.useRef(false);
+  const wrap = React.useRef<HTMLDivElement>(null), item = React.useRef<HTMLButtonElement>(null), list = React.useRef<HTMLDivElement>(null), focusFirst = React.useRef(false);
   const back = React.useCallback(() => { setOpen(false); if (item.current) item.current.focus(); }, []);
   useLayer(list, open, { onEscape: back });
   // at the item's end edge, level with it (useFloating end-top; the gap is the menu's own, menu.css)
@@ -242,13 +282,13 @@ export function MenuSub({ label, icon, disabled = false, className, children }) 
     const items = itemsIn(list.current);
     if (items.length) items[0].focus();
   }, [open]);
-  const openIt = (withFocus) => { if (disabled) return; focusFirst.current = withFocus; setOpen(true); };
-  const forward = (e) => (isRtl(wrap.current) ? e.key === 'ArrowLeft' : e.key === 'ArrowRight');
-  const backward = (e) => (isRtl(wrap.current) ? e.key === 'ArrowRight' : e.key === 'ArrowLeft');
-  const onItemKey = (e) => {
+  const openIt = (withFocus: boolean) => { if (disabled) return; focusFirst.current = withFocus; setOpen(true); };
+  const forward = (e: React.KeyboardEvent) => (isRtl(wrap.current) ? e.key === 'ArrowLeft' : e.key === 'ArrowRight');
+  const backward = (e: React.KeyboardEvent) => (isRtl(wrap.current) ? e.key === 'ArrowRight' : e.key === 'ArrowLeft');
+  const onItemKey = (e: React.KeyboardEvent<HTMLButtonElement>) => {
     if (forward(e) || e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); openIt(true); }
   };
-  const onListKey = (e) => {
+  const onListKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (backward(e)) { e.preventDefault(); e.stopPropagation(); back(); return; }
     if (e.key === 'Tab') return;   // the root menu closes
     if (moveIn(list.current, e)) e.stopPropagation();
@@ -256,7 +296,7 @@ export function MenuSub({ label, icon, disabled = false, className, children }) 
   return (
     <div ref={wrap} className={cx('plx-menu-sub', className)}
       onPointerLeave={(e) => { if (e.pointerType === 'mouse') setOpen(false); }}
-      onBlur={(e) => { if (open && e.relatedTarget && wrap.current && !wrap.current.contains(e.relatedTarget)) setOpen(false); }}>
+      onBlur={(e) => { if (open && e.relatedTarget && wrap.current && !wrap.current.contains(e.relatedTarget as Node)) setOpen(false); }}>
       <button ref={item} type="button" role="menuitem" tabIndex={-1} data-plx-menu-item="" aria-haspopup="menu" aria-expanded={open} aria-controls={open ? id : undefined}
         aria-disabled={disabled || undefined} className={cx('plx-menu__item', 'plx-menu-sub__item', open && 'is-open')}
         onClick={(e) => { e.preventDefault(); if (open) setOpen(false); else openIt(true); }} onKeyDown={onItemKey}
@@ -274,27 +314,35 @@ export function MenuSub({ label, icon, disabled = false, className, children }) 
 }
 
 /* ContextMenu: the menu of a target, at the pointer (right-click, long press) or at the target (Shift+F10, Menu key) */
-export function ContextMenu({ target, label, onOpenChange, disabled = false, children }) {
+export type ContextMenuProps = {
+  /** the element whose menu it is: one element */
+  target: React.ReactElement;
+  label?: string;
+  onOpenChange?: (open: boolean) => void;
+  disabled?: boolean;
+  children?: React.ReactNode;
+};
+export function ContextMenu({ target, label, onOpenChange, disabled = false, children }: ContextMenuProps) {
   const id = useUid('plx-context-menu');
-  const [point, setPoint] = React.useState(null);
+  const [point, setPoint] = React.useState<{ x: number; y: number } | null>(null);
   const open = !!point;
-  const anchor = React.useRef(null), list = React.useRef(null), opener = React.useRef(null);
-  const show = React.useCallback((p) => {
-    opener.current = document.activeElement;
+  const anchor = React.useRef<HTMLElement | null>(null), list = React.useRef<HTMLDivElement>(null), opener = React.useRef<HTMLElement | null>(null);
+  const show = React.useCallback((p: { x: number; y: number }) => {
+    opener.current = document.activeElement as HTMLElement | null;
     setPoint(p);
     if (onOpenChange) onOpenChange(true);
   }, [onOpenChange]);
-  const close = React.useCallback((refocus) => {
+  const close = React.useCallback((refocus: boolean) => {
     setPoint(null);
     if (onOpenChange) onOpenChange(false);
     const back = opener.current && opener.current !== document.body && document.contains(opener.current) ? opener.current : anchor.current;
     if (refocus && back && back.focus) back.focus();
   }, [onOpenChange]);
   useLayer(list, open, { onEscape: () => close(true) });
-  useFloating(anchor, list, { open, placement: 'bottom-start', virtual: point });
+  useFloating(anchor, list, { open, placement: 'bottom-start', virtual: point as { x: number; y: number } });
   // at the target: its start edge, below it (where a keyboard opening puts it)
   const atTarget = () => {
-    const r = anchor.current.getBoundingClientRect();
+    const r = anchor.current!.getBoundingClientRect();
     return { x: Math.round(isRtl(anchor.current) ? r.right : r.left), y: Math.round(r.bottom) };
   };
   useGesture(anchor, { disabled, onLongPress: (g) => { if (g.pointerType !== 'mouse' && !open) show({ x: g.x, y: g.y }); } });
@@ -302,25 +350,25 @@ export function ContextMenu({ target, label, onOpenChange, disabled = false, chi
     if (!open) return undefined;
     const items = itemsIn(list.current);
     if (items.length) items[0].focus({ preventScroll: true });
-    const outside = (e) => { if (list.current && !list.current.contains(e.target)) close(false); };
+    const outside = (e: MouseEvent) => { if (list.current && !list.current.contains(e.target as Node)) close(false); };
     document.addEventListener('mousedown', outside);
     return () => document.removeEventListener('mousedown', outside);
   }, [open]);
-  const child = React.Children.only(target);
+  const child = React.Children.only(target) as React.ReactElement<TriggerProps>;
   const targetEl = React.cloneElement(child, disabled ? {} : {
     ref: anchor,   // no popup ARIA on the target: a row or a card keeps its own role (aria-haspopup is for buttons and menu items)
-    onContextMenu: (e) => {
+    onContextMenu: (e: React.MouseEvent<HTMLElement>) => {
       if (child.props.onContextMenu) child.props.onContextMenu(e);
       e.preventDefault();
       // a keyboard opening has no pointer position: the target's is used
       show(e.clientX || e.clientY ? { x: e.clientX, y: e.clientY } : atTarget());
     },
-    onKeyDown: (e) => {
+    onKeyDown: (e: React.KeyboardEvent<HTMLElement>) => {
       if (child.props.onKeyDown) child.props.onKeyDown(e);
       if ((e.shiftKey && e.key === 'F10') || e.key === 'ContextMenu') { e.preventDefault(); show(atTarget()); }
     },
-  });
-  const onKeyDown = (e) => {
+  } as Record<string, unknown>);
+  const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Tab') { close(false); return; }
     moveIn(list.current, e);
   };

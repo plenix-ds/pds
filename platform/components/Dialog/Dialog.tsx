@@ -80,25 +80,27 @@ import { createPortal } from 'react-dom';
 import { cx } from '../../utils/cx.ts';
 import { focusables, useLayer, useUid } from '../../utils/layer.ts';
 import { asIcon } from '../Icon/Icon.tsx';
+import type { IconValue } from '../Icon/Icon.tsx';
 import { Button } from '../Button/Button.tsx';
 import { Field } from '../Field/Field.tsx';
 import { Input } from '../Input/Input.tsx';
+import type { InputProps } from '../Input/Input.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import CloseIcon from 'plenix-platform/icons/plenix/close';
 
 
 // a non-modal dialog: focus moves in when it opens (not trapped), F6 moves between it and its opener, and focus goes back
 // to the opener when it closes from inside (useLayer does this only for modal layers)
-function useNonModalFocus(ref, open, active, firstFocus) {
+function useNonModalFocus(ref: React.RefObject<HTMLDivElement | null>, open: boolean | undefined, active: boolean, firstFocus: () => HTMLElement | null) {
   const inside = React.useRef(false);
   React.useEffect(() => {
     if (!open || !active) return undefined;
-    const opener = document.activeElement;
+    const opener = document.activeElement as HTMLElement | null;
     const root = ref.current;
     const first = firstFocus() || root;
     if (first) first.focus({ preventScroll: true });
     inside.current = true;
-    const f6 = (e) => {
+    const f6 = (e: KeyboardEvent) => {
       if (e.key !== 'F6' || e.ctrlKey || e.metaKey || e.altKey || !ref.current) return;
       const into = !ref.current.contains(document.activeElement);
       const target = into ? (firstFocus() || ref.current) : opener;
@@ -114,25 +116,50 @@ function useNonModalFocus(ref, open, active, firstFocus) {
   return inside;
 }
 
+type DialogWords = { close: string; cancel: string; confirm: string; save: string };
+export type DialogProps = {
+  open?: boolean;
+  onClose?: () => void;
+  title?: React.ReactNode;
+  description?: React.ReactNode;
+  /** an icon name, an imported module or an element before the title */
+  icon?: IconValue | React.ReactNode;
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  /** "dialog" or "alertdialog" */
+  role?: string;
+  footer?: React.ReactNode;
+  /** what takes focus when it opens */
+  initialFocus?: React.RefObject<HTMLElement | null>;
+  closeLabel?: string;
+  /** Close, Escape and the scrim close it (default true) */
+  dismissible?: boolean;
+  flush?: boolean;
+  /** false: a non-modal dialog (the page stays usable; F6 moves between them) */
+  modal?: boolean;
+  className?: string;
+  children?: React.ReactNode;
+};
+export type DrawerProps = Omit<DialogProps, 'size'> & { size?: 'sm' | 'md' | 'lg'; side?: 'start' | 'end' };
+type ModalShellProps = Omit<DialogProps, 'size'> & { kind: 'dialog' | 'drawer'; size: string; side?: 'start' | 'end' };
 function ModalShell({ kind, open, onClose, title, description, icon, size, side, role = 'dialog', footer, initialFocus,
-  closeLabel, dismissible = true, flush = false, modal = true, className, children }) {
-  const t = useStrings('dialog');
-  const ref = React.useRef(null);
+  closeLabel, dismissible = true, flush = false, modal = true, className, children }: ModalShellProps) {
+  const t = useStrings('dialog') as DialogWords;
+  const ref = React.useRef<HTMLDivElement>(null);
   const id = useUid('plx-dlg');
   const firstFocus = () => {
     if (initialFocus && initialFocus.current) return initialFocus.current;
-    const root = ref.current;
+    const root = ref.current as HTMLDivElement;
     return focusables(root.querySelector('.plx-dialog__body'))[0] || focusables(root.querySelector('.plx-dialog__footer'))[0] || null;
   };
   useLayer(ref, open, { modal, onEscape: dismissible && modal ? onClose : null, initialFocus: firstFocus });
   const inside = useNonModalFocus(ref, open, !modal, firstFocus);
   if (!open) return null;
-  const onVeil = (e) => { if (modal && dismissible && e.target === e.currentTarget && onClose) onClose(); };
+  const onVeil = (e: React.MouseEvent<HTMLDivElement>) => { if (modal && dismissible && e.target === e.currentTarget && onClose) onClose(); };
   // non-modal: Escape closes it only while focus is inside it (a menu inside it closes first: its layer stops the key)
-  const onKeyDown = !modal && dismissible ? (e) => { if (e.key === 'Escape' && onClose) { e.stopPropagation(); onClose(); } } : undefined;
-  const track = !modal ? {
+  const onKeyDown = !modal && dismissible ? (e: React.KeyboardEvent<HTMLDivElement>) => { if (e.key === 'Escape' && onClose) { e.stopPropagation(); onClose(); } } : undefined;
+  const track: React.HTMLAttributes<HTMLDivElement> = !modal ? {
     onFocus: () => { inside.current = true; },
-    onBlur: (e) => { inside.current = !!(ref.current && ref.current.contains(e.relatedTarget)); },
+    onBlur: (e) => { inside.current = !!(ref.current && ref.current.contains(e.relatedTarget as Node | null)); },
   } : {};
   return createPortal(
     <div className={cx('plx-modal-layer', 'plx-modal-layer--' + kind, side && 'plx-modal-layer--' + side, !modal && 'plx-modal-layer--non-modal')} onMouseDown={onVeil}>
@@ -154,19 +181,31 @@ function ModalShell({ kind, open, onClose, title, description, icon, size, side,
   );
 }
 
-export function Dialog({ size = 'md', ...props }) {
+export function Dialog({ size = 'md', ...props }: DialogProps) {
   devWarn('Dialog', { size }, { size: ['sm','md','lg','xl','full'] });
   return <ModalShell kind="dialog" size={size} {...props} />;
 }
 
-export function Drawer({ size = 'md', side = 'end', ...props }) {
+export function Drawer({ size = 'md', side = 'end', ...props }: DrawerProps) {
   devWarn('Drawer', { size }, { size: ['sm','md','lg'] });
   return <ModalShell kind="drawer" size={size} side={side} {...props} />;
 }
 
-export function ConfirmDialog({ open, title, message, confirmLabel, cancelLabel, destructive = false, onConfirm, onCancel, children }) {
-  const t = useStrings('dialog');
-  const cancel = React.useRef(null);
+export type ConfirmDialogProps = {
+  open?: boolean;
+  title?: React.ReactNode;
+  message?: React.ReactNode;
+  confirmLabel?: React.ReactNode;
+  cancelLabel?: React.ReactNode;
+  /** a destructive action: the danger button, and focus starts on Cancel */
+  destructive?: boolean;
+  onConfirm?: () => void;
+  onCancel?: () => void;
+  children?: React.ReactNode;
+};
+export function ConfirmDialog({ open, title, message, confirmLabel, cancelLabel, destructive = false, onConfirm, onCancel, children }: ConfirmDialogProps) {
+  const t = useStrings('dialog') as DialogWords;
+  const cancel = React.useRef<HTMLElement>(null);
   return (
     <ModalShell kind="dialog" size="sm" role="alertdialog" open={open} onClose={onCancel} title={title} description={message}
       initialFocus={destructive ? cancel : undefined} className={destructive ? 'plx-dialog--destructive' : undefined}
@@ -176,18 +215,37 @@ export function ConfirmDialog({ open, title, message, confirmLabel, cancelLabel,
   );
 }
 
+export type PromptDialogProps = {
+  open?: boolean;
+  title?: React.ReactNode;
+  message?: React.ReactNode;
+  /** the field's label */
+  label?: React.ReactNode;
+  defaultValue?: string;
+  placeholder?: string;
+  description?: React.ReactNode;
+  confirmLabel?: React.ReactNode;
+  cancelLabel?: React.ReactNode;
+  /** a message when the value is not acceptable, else nothing */
+  validate?: (value: string) => React.ReactNode;
+  onSubmit?: (value: string) => void;
+  onCancel?: () => void;
+  /** more props for the field's Input */
+  inputProps?: InputProps;
+  size?: DialogProps['size'];
+};
 export function PromptDialog({ open, title, message, label, defaultValue = '', placeholder, description, confirmLabel, cancelLabel,
-  validate, onSubmit, onCancel, inputProps, size = 'sm' }) {
+  validate, onSubmit, onCancel, inputProps, size = 'sm' }: PromptDialogProps) {
   devWarn('PromptDialog', { size }, { size: ['sm','md','lg','xl','full'] });
-  const t = useStrings('dialog');
+  const t = useStrings('dialog') as DialogWords;
   const formId = useUid('plx-prompt');
-  const input = React.useRef(null);
+  const input = React.useRef<HTMLInputElement>(null);
   const [value, setValue] = React.useState(defaultValue);
-  const [error, setError] = React.useState('');
+  const [error, setError] = React.useState<React.ReactNode>('');
   // each time it opens: the value starts again from defaultValue, with no error, and its text is selected
   React.useEffect(() => { if (open) { setValue(defaultValue); setError(''); } }, [open]);
   React.useEffect(() => { if (open && input.current && input.current.select) input.current.select(); }, [open]);
-  const submit = (e) => {
+  const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const problem = validate ? validate(value) || '' : '';
     setError(problem);

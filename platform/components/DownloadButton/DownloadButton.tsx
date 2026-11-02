@@ -38,35 +38,53 @@ import React from 'react';
 import { devWarn } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
 import { Button } from '../Button/Button.tsx';
+import type { ButtonProps } from '../Button/Button.tsx';
 import { ProgressCircle } from '../ProgressCircle/ProgressCircle.tsx';
 import { formatBytes, formatPercent } from '../../utils/format.ts';
 import { announce } from '../../utils/announce.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import DownloadArrowIcon from 'plenix-platform/icons/plenix/download-arrow';
 
 
+type DownloadWords = { ready: string; download: string; downloading: string };
+export type DownloadButtonProps = Omit<ButtonProps, 'size'> & {
+  href?: string;
+  fileName?: string;
+  /** a download the page starts itself (no href) */
+  onDownload?: (event: React.MouseEvent<HTMLElement>) => void;
+  /** the file's kind ("PDF") */
+  format?: string;
+  /** the file's size in bytes */
+  size?: number;
+  /** while it downloads: 0 to 100, or true when the amount is unknown */
+  progress?: number | boolean | null;
+  buttonSize?: ButtonProps['size'];
+  locale?: string;
+  strings?: Catalog | null;
+};
 export const DownloadButton = React.forwardRef(function DownloadButton({ href, fileName, onDownload, format, size, progress, iconOnly = false,
-  variant = 'secondary', buttonSize = 'md', locale, strings, children, className, ...rest }, ref) {
+  variant = 'secondary', buttonSize = 'md', locale, strings, children, className, ...rest }: DownloadButtonProps, ref: React.ForwardedRef<HTMLElement>) {
   devWarn('DownloadButton', { variant }, { variant: ['secondary','primary','tertiary','ghost','danger','danger-secondary','quiet'] });
-  const t = useStrings('downloadButton', strings);
+  const t = useStrings('downloadButton', strings) as DownloadWords;
   const busy = progress !== undefined && progress !== null && progress !== false;
   const known = busy && typeof progress === 'number';
-  const pct = known ? Math.max(0, Math.min(100, progress)) : null;
+  const pct = known ? Math.max(0, Math.min(100, progress as number)) : null;
   const bytes = typeof size === 'number' ? formatBytes(size, { locale }) : '';
   const facts = [format, bytes].filter(Boolean);
-  const percent = known ? formatPercent(pct / 100, { locale, decimals: 0 }) : '';
+  const percent = known ? formatPercent((pct as number) / 100, { locale, decimals: 0 }) : '';
   // the finished download is announced once, when progress reaches 100
   const done = React.useRef(false);
   React.useEffect(() => {
-    if (known && pct >= 100 && !done.current) { done.current = true; announce(t.ready + (fileName ? ': ' + fileName : '')); }
+    if (known && (pct as number) >= 100 && !done.current) { done.current = true; announce(t.ready + (fileName ? ': ' + fileName : '')); }
     if (!busy) done.current = false;
   }, [busy, known, pct]);
   const label = children !== undefined && children !== null ? children : t.download;
   const word = typeof label === 'string' ? label : t.download;
   const name = busy ? [t.downloading, fileName, percent].filter(Boolean).join(' ')
     : [word, fileName].filter(Boolean).join(' ') + (facts.length ? ' (' + facts.join(', ') + ')' : '');
-  const icon = busy ? <ProgressCircle size="sm" value={known ? pct : undefined} label={t.downloading} aria-hidden="true" /> : DownloadArrowIcon;
-  const onClick = (e) => { if (busy) { e.preventDefault(); return; } if (onDownload) onDownload(e); };
+  const icon = busy ? <ProgressCircle size="sm" value={known ? pct as number : undefined} label={t.downloading} aria-hidden="true" /> : DownloadArrowIcon;
+  const onClick = (e: React.MouseEvent<HTMLElement>) => { if (busy) { e.preventDefault(); return; } if (onDownload) onDownload(e); };
   return (
     <Button ref={ref} variant={variant} size={buttonSize} icon={icon} iconOnly={iconOnly} label={name}
       href={busy ? undefined : href} download={href && !busy ? (fileName || '') : undefined}

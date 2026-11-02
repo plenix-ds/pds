@@ -64,26 +64,57 @@ import { cx } from '../../utils/cx.ts';
 import { elementMs as ms } from '../../utils/tokenTime.ts';
 import { focusables, useLayer, useUid } from '../../utils/layer.ts';
 import { useFloating, PLACEMENTS, TOP_LAYER } from '../../utils/floating.ts';
+import type { FloatingPlacement } from '../../utils/floating.ts';
 import { Button } from '../Button/Button.tsx';
 import { Sheet } from '../Sheet/Sheet.tsx';
 import { useMedia, below } from '../../patterns/AppShell/AppShell.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import CloseIcon from 'plenix-platform/icons/plenix/close';
 
 const SIZES = ['sm', 'md', 'lg', 'auto'];
 
 
 
+// what Popover reads from, and gives, its trigger
+type PopoverTriggerProps = { onClick?: (e: React.MouseEvent<HTMLElement>) => void };
+export type PopoverProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'title' | 'role'> & {
+  /** the element that opens it: one element */
+  trigger: React.ReactElement;
+  /** "click" (a dialog), "hover" (a hover card) or "manual" (open and onOpenChange only) */
+  triggerOn?: 'click' | 'hover' | 'manual';
+  open?: boolean;
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  title?: React.ReactNode;
+  /** its accessible name when there is no title */
+  label?: string;
+  footer?: React.ReactNode;
+  closeButton?: boolean;
+  placement?: FloatingPlacement;
+  size?: 'sm' | 'md' | 'lg' | 'auto';
+  arrow?: boolean;
+  /** "dialog" (default), or null for no role */
+  role?: string | null;
+  /** what takes focus when it opens */
+  initialFocus?: React.RefObject<HTMLElement | null>;
+  focusOnOpen?: boolean;
+  /** a bottom sheet on a narrow screen (click popovers) */
+  sheetOnNarrow?: boolean;
+  strings?: Catalog | null;
+  /** more classes on the anchor wrapper */
+  anchorClassName?: string;
+};
 export function Popover({ trigger, triggerOn = 'click', open: openProp, defaultOpen = false, onOpenChange, title, label, footer, closeButton = false,
-  placement = 'bottom-start', size = 'md', arrow = false, role = 'dialog', initialFocus, focusOnOpen, sheetOnNarrow = true, strings, className, anchorClassName, children, ...rest }) {
+  placement = 'bottom-start', size = 'md', arrow = false, role = 'dialog', initialFocus, focusOnOpen, sheetOnNarrow = true, strings, className, anchorClassName, children, ...rest }: PopoverProps) {
   devWarn('Popover', { size }, { size: ['md','sm','lg','auto'] });
-  const t = useStrings('popover', strings);
+  const t = useStrings('popover', strings) as { close: string };
   const id = useUid('plx-popover');
   const controlled = openProp !== undefined;
   const [own, setOwn] = React.useState(!!defaultOpen);
   const open = controlled ? !!openProp : own;
-  const setOpen = React.useCallback((v) => { if (!controlled) setOwn(v); if (onOpenChange) onOpenChange(v); }, [controlled, onOpenChange]);
-  const wrap = React.useRef(null), panel = React.useRef(null), anchor = React.useRef(null), timer = React.useRef(null);
+  const setOpen = React.useCallback((v: boolean) => { if (!controlled) setOwn(v); if (onOpenChange) onOpenChange(v); }, [controlled, onOpenChange]);
+  const wrap = React.useRef<HTMLSpanElement>(null), panel = React.useRef<HTMLDivElement>(null), anchor = React.useRef<HTMLElement | null>(null), timer = React.useRef<ReturnType<typeof setTimeout> | null>(null);
   const hover = triggerOn === 'hover', click = triggerOn === 'click';
   const narrow = useMedia(below('--plx-sys-shell-phone-below'));
   const asSheet = click && sheetOnNarrow && narrow;
@@ -92,7 +123,7 @@ export function Popover({ trigger, triggerOn = 'click', open: openProp, defaultO
   const { placement: used } = useFloating(anchor, panel, { open: floating, placement: where, offset: arrow ? 'md' : 'xs', flip: !arrow, shift: !arrow });
   const [side, align] = used.split('-');
 
-  const close = React.useCallback((refocus) => {
+  const close = React.useCallback((refocus: boolean) => {
     setOpen(false);
     if (refocus && anchor.current && anchor.current.focus) anchor.current.focus();
   }, [setOpen]);
@@ -105,17 +136,17 @@ export function Popover({ trigger, triggerOn = 'click', open: openProp, defaultO
   React.useEffect(() => {
     if (!floating) return undefined;
     if (takeFocus) {
-      const root = panel.current;
+      const root = panel.current as HTMLDivElement;
       const wanted = initialFocus && initialFocus.current;
       const first = wanted || focusables(root.querySelector('.plx-popover__body'))[0] || focusables(root)[0] || root;
       if (first) first.focus({ preventScroll: true });
     }
     if (!click) return undefined;
-    const outside = (e) => { if (wrap.current && !wrap.current.contains(e.target)) setOpen(false); };
+    const outside = (e: MouseEvent) => { if (wrap.current && !wrap.current.contains(e.target as Node)) setOpen(false); };
     document.addEventListener('mousedown', outside);
     return () => document.removeEventListener('mousedown', outside);
   }, [floating]);
-  React.useEffect(() => () => clearTimeout(timer.current), []);
+  React.useEffect(() => () => clearTimeout(timer.current as ReturnType<typeof setTimeout>), []);
   // closed while focus was inside it (Close, an action, the open prop): focus goes back to the trigger, not the page
   const inside = React.useRef(false);
   React.useEffect(() => {
@@ -126,26 +157,26 @@ export function Popover({ trigger, triggerOn = 'click', open: openProp, defaultO
   }, [floating]);
 
   // the hover card's timers: open after the open delay, close after the close delay (cancelled by coming back)
-  const later = (v) => {
-    clearTimeout(timer.current);
+  const later = (v: boolean) => {
+    clearTimeout(timer.current as ReturnType<typeof setTimeout>);
     const el = wrap.current;
     timer.current = setTimeout(() => setOpen(v), ms(el, v ? '--plx-comp-popover-hover-open-delay' : '--plx-comp-popover-hover-close-delay'));
   };
-  const hoverProps = hover ? {
+  const hoverProps: React.HTMLAttributes<HTMLSpanElement> = hover ? {
     onPointerEnter: (e) => { if (e.pointerType !== 'touch') later(true); },
     onPointerLeave: (e) => { if (e.pointerType !== 'touch') later(false); },
-    onFocus: (e) => { if (e.target === anchor.current && e.target.matches(':focus-visible')) { clearTimeout(timer.current); setOpen(true); } },
-    onBlur: (e) => { if (!wrap.current.contains(e.relatedTarget)) { clearTimeout(timer.current); setOpen(false); } },
+    onFocus: (e) => { if (e.target === anchor.current && e.target.matches(':focus-visible')) { clearTimeout(timer.current as ReturnType<typeof setTimeout>); setOpen(true); } },
+    onBlur: (e) => { if (!wrap.current!.contains(e.relatedTarget as Node | null)) { clearTimeout(timer.current as ReturnType<typeof setTimeout>); setOpen(false); } },
   } : click ? {
     // Tab out of the popover (or the trigger) to somewhere else closes it; a click on its text does not (no related target)
-    onBlur: (e) => { if (floating && e.relatedTarget && !wrap.current.contains(e.relatedTarget)) setOpen(false); },   // the sheet is a portal: not while it shows
+    onBlur: (e) => { if (floating && e.relatedTarget && !wrap.current!.contains(e.relatedTarget as Node)) setOpen(false); },   // the sheet is a portal: not while it shows
   } : {};
 
-  const child = React.Children.only(trigger);
+  const child = React.Children.only(trigger) as React.ReactElement<PopoverTriggerProps>;
   const triggerEl = React.cloneElement(child, click ? {
     ref: anchor, 'aria-haspopup': role ? 'dialog' : undefined, 'aria-expanded': open, 'aria-controls': open ? id : undefined, expanded: undefined,
-    onClick: (e) => { if (child.props.onClick) child.props.onClick(e); setOpen(!open); },
-  } : { ref: anchor });
+    onClick: (e: React.MouseEvent<HTMLElement>) => { if (child.props.onClick) child.props.onClick(e); setOpen(!open); },
+  } as Record<string, unknown> : { ref: anchor });
 
   const s = SIZES.indexOf(size) >= 0 ? size : 'md';
   const titleId = id + 't';
@@ -163,8 +194,8 @@ export function Popover({ trigger, triggerOn = 'click', open: openProp, defaultO
         <div ref={panel} id={id} role={role || undefined} aria-labelledby={role && title ? titleId : undefined} aria-label={role && !title ? label : undefined} tabIndex={-1}
           popover={TOP_LAYER ? 'manual' : undefined} data-plx-popover-side={side} data-plx-popover-align={align || 'center'}
           className={cx('plx-popover', 'plx-popover--' + s, arrow && 'plx-popover--arrow', hover && 'plx-popover--hover', className)}
-          onFocus={() => { inside.current = true; }} onBlur={(e) => { inside.current = !!(panel.current && panel.current.contains(e.relatedTarget)); }} {...rest}>
-          {arrow ? <span className={cx('plx-popover__arrow', 'plx-popover__arrow--' + side, 'plx-popover__arrow--' + (side === 'top' || side === 'bottom' ? 'inline-' + (align || 'center') : 'block-' + ({ top: 'start', bottom: 'end' }[align] || 'center')))} aria-hidden="true" /> : null}
+          onFocus={() => { inside.current = true; }} onBlur={(e) => { inside.current = !!(panel.current && panel.current.contains(e.relatedTarget as Node | null)); }} {...rest}>
+          {arrow ? <span className={cx('plx-popover__arrow', 'plx-popover__arrow--' + side, 'plx-popover__arrow--' + (side === 'top' || side === 'bottom' ? 'inline-' + (align || 'center') : 'block-' + (({ top: 'start', bottom: 'end' } as Record<string, string>)[align] || 'center')))} aria-hidden="true" /> : null}
           {header}
           <div className="plx-popover__body">{children}</div>
           {footer ? <div className="plx-popover__footer">{footer}</div> : null}

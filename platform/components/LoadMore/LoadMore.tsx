@@ -42,16 +42,36 @@ import { useIntersection } from '../../hooks/useIntersection.ts';
 import { announce } from '../../utils/announce.tsx';
 import { formatNumber } from '../../utils/format.ts';
 import { useStrings, useLocale } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import { dataPhrase } from '../../utils/dataText.tsx';
 
 
+type LoadMoreWords = { added?: string | ((count: number) => string); count: string; end: string; loading: string; moreCount: string; more: string };
+export type LoadMoreProps = React.HTMLAttributes<HTMLDivElement> & {
+  onLoadMore?: () => void;
+  hasMore?: boolean;
+  loading?: boolean;
+  /** how many items show now */
+  shown?: number;
+  /** how many there are in all */
+  total?: number;
+  /** "button": Load more; "infinite": loads as the end comes into view */
+  mode?: 'button' | 'infinite';
+  /** the scrolling area of an infinite list */
+  root?: React.RefObject<Element | null> | Element | null;
+  /** how many a press adds (shown in its label) */
+  pageSize?: number;
+  /** after a press, called with the index of the first new item, to move focus there */
+  onFocusNew?: (index: number) => void;
+  strings?: Catalog | null;
+};
 export const LoadMore = React.forwardRef(function LoadMore({ onLoadMore, hasMore = true, loading = false, shown, total, mode = 'button', root, pageSize,
-  onFocusNew, strings, className, ...rest }, ref) {
-  const t = useStrings('loadMore', strings);
+  onFocusNew, strings, className, ...rest }: LoadMoreProps, ref: React.ForwardedRef<HTMLDivElement>) {
+  const t = useStrings('loadMore', strings) as LoadMoreWords;
   const loc = useLocale();
   // "N more items loaded": a plural message in the catalog (Arabic has six forms); an app's own function in strings still wins
-  const added = (n) => (typeof t.added === 'function' ? t.added(n) : loc.t('loadMore.added', { count: n, n: formatNumber(n) }));
-  const sentinel = React.useRef(null);
+  const added = (n: number) => (typeof t.added === 'function' ? t.added(n) : loc.t('loadMore.added', { count: n, n: formatNumber(n) }));
+  const sentinel = React.useRef<HTMLDivElement>(null);
   const before = React.useRef(shown), fromButton = React.useRef(false);
   const infinite = mode === 'infinite';
   const { visible } = useIntersection(sentinel, { root, rootMargin: '--plx-ref-size-200px', disabled: !infinite || !hasMore });

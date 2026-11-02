@@ -36,15 +36,33 @@ import React from 'react';
 import { devWarn } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
 import { Button } from '../Button/Button.tsx';
+import type { ButtonProps } from '../Button/Button.tsx';
 import { Menu } from '../Menu/Menu.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 
 const PLACES = ['bottom-start', 'bottom-end', 'top-start', 'top-end'];
 
+export type SplitButtonProps = {
+  /** the main action's label */
+  label?: React.ReactNode;
+  onClick?: ButtonProps['onClick'];
+  /** the menu button's name (default "More {label} options") */
+  menuLabel?: string;
+  /** the menu's items */
+  children?: React.ReactNode;
+  variant?: 'secondary' | 'primary';
+  size?: ButtonProps['size'];
+  icon?: ButtonProps['icon'];
+  disabled?: boolean;
+  placement?: 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end';
+  strings?: Catalog | null;
+  className?: string;
+};
 export const SplitButton = React.forwardRef(function SplitButton({ label, onClick, menuLabel, children, variant = 'secondary', size = 'md', icon,
-  disabled = false, placement = 'bottom-end', strings, className }, ref) {
+  disabled = false, placement = 'bottom-end', strings, className }: SplitButtonProps, ref: React.ForwardedRef<HTMLElement>) {
   devWarn('SplitButton', { variant, size }, { variant: ['secondary','primary'], size: ['md','sm','xs','2xs','lg'] });
-  const t = useStrings('splitButton', strings);
+  const t = useStrings('splitButton', strings) as { more: string };
   const v = variant === 'primary' ? 'primary' : 'secondary';
   const more = menuLabel || t.more.replace('{label}', typeof label === 'string' ? label.toLowerCase() : '').replace(/\s+/g, ' ');
   return (

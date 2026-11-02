@@ -34,14 +34,30 @@ import { Button } from '../Button/Button.tsx';
 import { Icon } from '../Icon/Icon.tsx';
 import { Link } from '../Link/Link.tsx';
 import { Popover } from '../Popover/Popover.tsx';
+import type { PopoverProps } from '../Popover/Popover.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import InfoCircleIcon from 'plenix-platform/icons/plenix/info-circle';
 
 
-export function ContextualHelp({ title, children, link, variant = 'info', label, placement = 'bottom-start', size = 'sm', strings, className }) {
+export type ContextualHelpProps = {
+  title?: React.ReactNode;
+  children?: React.ReactNode;
+  /** a link for more: { href, label } */
+  link?: { href?: string; label?: React.ReactNode } | null;
+  /** "info": an (i) that opens a popover; "inline": the tip in the text */
+  variant?: 'info' | 'inline';
+  /** the (i) button's name */
+  label?: string;
+  placement?: PopoverProps['placement'];
+  size?: 'sm' | 'md' | 'lg';
+  strings?: Catalog | null;
+  className?: string;
+};
+export function ContextualHelp({ title, children, link, variant = 'info', label, placement = 'bottom-start', size = 'sm', strings, className }: ContextualHelpProps) {
   devWarn('ContextualHelp', { variant, size }, { variant: ['info','inline'], size: ['sm','md','lg'] });
-  const t = useStrings('contextualHelp', strings);
-  const more = (v) => (link && link.href ? <Link href={link.href} variant={v} className="plx-contextual-help__link">{link.label}</Link> : null);
+  const t = useStrings('contextualHelp', strings) as { more: string; moreUntitled: string };
+  const more = (v: 'inline' | 'standalone') => (link && link.href ? <Link href={link.href} variant={v} className="plx-contextual-help__link">{link.label}</Link> : null);
   if (variant === 'inline') {
     return (
       <div className={cx('plx-contextual-help', 'plx-contextual-help--inline', className)}>

@@ -39,17 +39,34 @@ import { devWarn } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
 import { useClipboard } from '../../utils/clipboard.ts';
 import { Button } from '../Button/Button.tsx';
+import type { ButtonProps } from '../Button/Button.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import CheckIcon from 'plenix-platform/icons/plenix/check';
 import EdCopyIcon from 'plenix-platform/icons/plenix/ed-copy';
 
 
+// what it copies: text, { html, text }, or a function that gives either when it is pressed
+export type CopyValue = string | { html: string; text: string };
+export type CopyButtonProps = Omit<ButtonProps, 'value' | 'label'> & {
+  value?: CopyValue | (() => CopyValue);
+  /** its name (default "Copy") */
+  label?: string;
+  showLabel?: boolean;
+  /** the value in a read-only field with the button joined to it */
+  field?: boolean;
+  fieldLabel?: string;
+  /** how long "Copied" shows, in ms */
+  timeout?: number;
+  onCopy?: (ok: boolean) => void;
+  strings?: Catalog | null;
+};
 export const CopyButton = React.forwardRef(function CopyButton({ value, label, showLabel = false, field = false, fieldLabel, variant, size = 'md', timeout,
-  onCopy, disabled = false, strings, className, ...rest }, ref) {
+  onCopy, disabled = false, strings, className, ...rest }: CopyButtonProps, ref: React.ForwardedRef<HTMLElement>) {
   devWarn('CopyButton', { variant, size }, { variant: ['secondary','primary','tertiary','ghost','danger','danger-secondary','quiet'], size: ['md','sm','xs','2xs','lg'] });
-  const t = useStrings('copyButton', strings);
+  const t = useStrings('copyButton', strings) as { copied: string; failed: string; copy: string };
   const clip = useClipboard({ timeout, strings: { copied: t.copied, failed: t.failed } });
-  const input = React.useRef(null);
+  const input = React.useRef<HTMLInputElement>(null);
   const name = label || t.copy;
   const text = typeof value === 'function' ? null : value;
   const press = async () => {

@@ -32,7 +32,14 @@ import { useScrollLock } from '../../utils/scrollLock.ts';
 
 const VARIANTS = ['modal', 'light', 'inverse'];
 
-export function Scrim({ variant = 'modal', contained = false, lockScroll, onClick, className, ...rest }) {
+export type ScrimProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & {
+  variant?: 'modal' | 'light' | 'inverse';
+  /** covers its positioned parent, not the page */
+  contained?: boolean;
+  /** stops the page scrolling while it shows (default: when it covers the page) */
+  lockScroll?: boolean;
+};
+export function Scrim({ variant = 'modal', contained = false, lockScroll, onClick, className, ...rest }: ScrimProps) {
   devWarn('Scrim', { variant }, { variant: ['modal','light','inverse'] });
   const v = VARIANTS.indexOf(variant) >= 0 ? variant : 'modal';
   useScrollLock(lockScroll !== undefined ? !!lockScroll : !contained);

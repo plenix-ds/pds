@@ -35,11 +35,22 @@ import React from 'react';
 import { devWarn } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
 import { asIcon } from '../Icon/Icon.tsx';
+import type { IconValue } from '../Icon/Icon.tsx';
 
 const SIZES = ['sm', 'md', 'lg'];
 
+export type FloatingActionButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  /** an icon name, an imported module or an element */
+  icon?: IconValue | React.ReactNode;
+  /** the accessible name; with extended, the visible label */
+  label?: string;
+  extended?: boolean;
+  size?: 'sm' | 'md' | 'lg';
+  variant?: 'primary' | 'secondary';
+  placement?: 'corner' | 'inline';
+};
 export const FloatingActionButton = React.forwardRef(function FloatingActionButton({ icon, label, extended = false, size = 'md', variant = 'primary',
-  placement = 'corner', disabled = false, onClick, className, ...rest }, ref) {
+  placement = 'corner', disabled = false, onClick, className, ...rest }: FloatingActionButtonProps, ref: React.ForwardedRef<HTMLButtonElement>) {
   devWarn('FloatingActionButton', { size, variant }, { size: ['md','sm','lg'], variant: ['primary','secondary'] });
   const s = SIZES.indexOf(size) >= 0 ? size : 'md';
   return (

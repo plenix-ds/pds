@@ -49,22 +49,24 @@ import { createPortal } from 'react-dom';
 import { cx } from '../../utils/cx.ts';
 import { focusables, useLayer, useUid } from '../../utils/layer.ts';
 import { asIcon } from '../Icon/Icon.tsx';
+import type { IconValue } from '../Icon/Icon.tsx';
 import { Button } from '../Button/Button.tsx';
 import { Dialog, Drawer } from '../Dialog/Dialog.tsx';
 import { useGesture } from '../../hooks/useGesture.ts';
 import { useMedia, below } from '../../patterns/AppShell/AppShell.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import CloseIcon from 'plenix-platform/icons/plenix/close';
 
 
 // one sheet at a time (HIG › Sheets): the open sheets in the order they opened; only the last one shows
-const openSheets = [];
-const listeners = new Set();
+const openSheets: string[] = [];
+const listeners = new Set<() => void>();
 const notify = () => listeners.forEach((f) => f());
-function useTopSheet(open) {
+function useTopSheet(open: boolean) {
   const id = React.useId();
-  const [, rerender] = React.useReducer((n) => n + 1, 0);
-  React.useEffect(() => { listeners.add(rerender); return () => { listeners.delete(rerender); }; }, []);
+  const [, rerender] = React.useReducer((n: number) => n + 1, 0);
+  React.useEffect(() => { listeners.add(rerender as () => void); return () => { listeners.delete(rerender as () => void); }; }, []);
   React.useEffect(() => {
     if (!open) return undefined;
     openSheets.push(id); notify();
@@ -74,34 +76,61 @@ function useTopSheet(open) {
 }
 
 // the window class decides the form: Narrow a bottom sheet, Medium a side sheet, Wide a dialog
-function useForm(form) {
+export type SheetForm = 'auto' | 'bottom' | 'side' | 'dialog';
+function useForm(form: SheetForm | undefined) {
   const narrow = useMedia(below('--plx-sys-shell-phone-below'));
   const medium = useMedia(below('--plx-sys-shell-rail-below'));
   if (form && form !== 'auto') return form;
   return narrow ? 'bottom' : medium ? 'side' : 'dialog';
 }
 
+type SheetWords = { done: string; cancel: string; close: string; expand: string; shrink: string };
+export type SheetProps = {
+  open?: boolean;
+  onClose?: () => void;
+  title?: React.ReactNode;
+  description?: React.ReactNode;
+  /** an icon name or an imported module before the title */
+  icon?: IconValue | React.ReactNode;
+  /** a task sheet: Cancel and Done in the header */
+  onDone?: () => void;
+  doneLabel?: string;
+  cancelLabel?: string;
+  closeLabel?: string;
+  /** the bottom sheet's height */
+  detent?: 'medium' | 'large';
+  /** default: by the window's width (bottom, side or dialog) */
+  form?: SheetForm;
+  actions?: React.ReactNode;
+  footer?: React.ReactNode;
+  initialFocus?: React.RefObject<HTMLElement | null>;
+  dismissible?: boolean;
+  flush?: boolean;
+  className?: string;
+  strings?: Catalog | null;
+  children?: React.ReactNode;
+};
 export function Sheet({ open, onClose, title, description, icon, onDone, doneLabel, cancelLabel, closeLabel,
-  detent = 'medium', form, actions, footer, initialFocus, dismissible = true, flush = false, className, strings, children }) {
-  const t = useStrings('sheet', strings);
+  detent = 'medium', form, actions, footer, initialFocus, dismissible = true, flush = false, className, strings, children }: SheetProps) {
+  const t = useStrings('sheet', strings) as SheetWords;
   doneLabel = doneLabel ?? t.done; cancelLabel = cancelLabel ?? t.cancel; closeLabel = closeLabel ?? t.close;
   const shown = useTopSheet(!!open);
   const kind = useForm(form);
   const bottom = kind === 'bottom';
-  const ref = React.useRef(null);
+  const ref = React.useRef<HTMLDivElement>(null);
   const id = useUid('plx-sheet');
   const [height, setHeight] = React.useState(detent);
   React.useEffect(() => { if (open) setHeight(detent); }, [open, detent]);
   const firstFocus = () => {
     if (initialFocus && initialFocus.current) return initialFocus.current;
-    const root = ref.current;
+    const root = ref.current as HTMLDivElement;
     return focusables(root.querySelector('.plx-sheet__body'))[0] || focusables(root.querySelector('.plx-sheet__footer'))[0] || null;
   };
-  useLayer(ref, shown && bottom, { modal: true, onEscape: dismissible ? onClose : null, initialFocus: firstFocus });
+  useLayer(ref, shown && bottom, { modal: true, onEscape: dismissible ? onClose : null, initialFocus: firstFocus as () => HTMLElement | null });
   const task = !!onDone;
   // the grabber's drag (the shared gesture hook; a press is the button's click): a drag of at least half the grabber's height
   // up opens the large height, down returns to the medium height or, from there, closes the sheet; a canceled drag does nothing
-  const grabber = React.useRef(null);
+  const grabber = React.useRef<HTMLButtonElement>(null);
   useGesture(grabber, { disabled: !(shown && bottom), axis: 'both', onPanEnd: (g) => {
     const el = grabber.current;
     if (g.canceled || !el || Math.abs(g.dy) < el.offsetHeight / 2) return;   // a press: the click toggles
@@ -124,9 +153,9 @@ export function Sheet({ open, onClose, title, description, icon, onDone, doneLab
   // the grabber: a press moves between the two heights (its drag is the gesture above)
   const toggle = () => setHeight(height === 'medium' ? 'large' : 'medium');
   // capture the pointer at once, so a quick flick that leaves the grabber before the gesture's slop is still followed to its release
-  const onGrabDown = (e) => { if (e.button === 0) { try { e.currentTarget.setPointerCapture(e.pointerId); } catch (err) { /* the pointer is gone */ } } };
-  const onGrabClick = (e) => { if (e.currentTarget.dataset.plxDragged) { delete e.currentTarget.dataset.plxDragged; return; } toggle(); };
-  const onScrim = (e) => { if (dismissible && e.target === e.currentTarget && onClose) onClose(); };
+  const onGrabDown = (e: React.PointerEvent<HTMLButtonElement>) => { if (e.button === 0) { try { e.currentTarget.setPointerCapture(e.pointerId); } catch (err) { /* the pointer is gone */ } } };
+  const onGrabClick = (e: React.MouseEvent<HTMLButtonElement>) => { if (e.currentTarget.dataset.plxDragged) { delete e.currentTarget.dataset.plxDragged; return; } toggle(); };
+  const onScrim = (e: React.MouseEvent<HTMLDivElement>) => { if (dismissible && e.target === e.currentTarget && onClose) onClose(); };
   return createPortal(
     <div className="plx-modal-layer plx-modal-layer--sheet" onMouseDown={onScrim}>
       <div ref={ref} role="dialog" aria-modal="true" aria-labelledby={id + 't'} aria-describedby={description ? id + 'd' : undefined} tabIndex={-1}

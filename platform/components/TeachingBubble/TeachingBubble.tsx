@@ -46,21 +46,44 @@ import { cx } from '../../utils/cx.ts';
 import { useUid } from '../../utils/layer.ts';
 import { Button } from '../Button/Button.tsx';
 import { Popover } from '../Popover/Popover.tsx';
+import type { PopoverProps } from '../Popover/Popover.tsx';
 import { Spotlight } from '../Spotlight/Spotlight.tsx';
 import { SurfaceContext } from '../../providers/Surface.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import CloseIcon from 'plenix-platform/icons/plenix/close';
 import { fillNodes } from '../../utils/fillNodes.tsx';
 
 
 // a string with {name} places filled by numbers in the data font (counts are technical values)
 
+// an action button of the bubble
+export type TeachingBubbleAction = { label: React.ReactNode; onClick?: (event: React.MouseEvent<HTMLElement>) => void };
+export type TeachingBubbleProps = {
+  /** the element it points to: one element */
+  target: React.ReactElement;
+  open?: boolean;
+  onDismiss?: () => void;
+  title?: React.ReactNode;
+  children?: React.ReactNode;
+  media?: React.ReactNode;
+  /** the step in a tour: { n, total } */
+  step?: Record<string, React.ReactNode> | null;
+  primaryAction?: TeachingBubbleAction | null;
+  secondaryAction?: TeachingBubbleAction | null;
+  placement?: PopoverProps['placement'];
+  wide?: boolean;
+  spotlight?: boolean;
+  focusOnOpen?: boolean;
+  strings?: Catalog | null;
+  className?: string;
+};
 export function TeachingBubble({ target, open = false, onDismiss, title, children, media, step, primaryAction, secondaryAction, placement = 'bottom',
-  wide = false, spotlight = true, focusOnOpen = false, strings, className }) {
-  const t = useStrings('teachingBubble', strings);
+  wide = false, spotlight = true, focusOnOpen = false, strings, className }: TeachingBubbleProps) {
+  const t = useStrings('teachingBubble', strings) as { close: string; step: string };
   const id = useUid('plx-teaching-bubble');
   const actions = primaryAction || secondaryAction;
-  const spot = React.useRef(null);   // the target's box: the spotlight's anchor
+  const spot = React.useRef<HTMLSpanElement>(null);   // the target's box: the spotlight's anchor
   return (
     <span ref={spot} className="plx-teaching-bubble__target">
     {spotlight ? <Spotlight target={spot} open={!!open} /> : null}

@@ -35,22 +35,39 @@ import { devWarn } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
 import { useUid } from '../../utils/layer.ts';
 import { Icon, asIcon } from '../Icon/Icon.tsx';
+import type { IconValue } from '../Icon/Icon.tsx';
 import { Button } from '../Button/Button.tsx';
+import type { ButtonProps } from '../Button/Button.tsx';
 import { Tooltip } from '../Tooltip/Tooltip.tsx';
 import { useTruncated } from '../../utils/overflow.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import ChevronDownIcon from 'plenix-platform/icons/plenix/chevron-down';
 import ChevronUpIcon from 'plenix-platform/icons/plenix/chevron-up';
 import { dataPhrase } from '../../utils/dataText.tsx';
 
 
-export function CollapsibleSection({ title, icon, expanded, defaultExpanded = true, onToggle, actions, headingLevel = 3, className, bodyClassName, children }) {
+export type CollapsibleSectionProps = {
+  title?: React.ReactNode;
+  /** an icon name, an imported module or an element before the title */
+  icon?: IconValue | React.ReactNode;
+  expanded?: boolean;
+  defaultExpanded?: boolean;
+  onToggle?: (expanded: boolean) => void;
+  actions?: React.ReactNode;
+  /** the heading level (h1 to h6); 0 or null: a div */
+  headingLevel?: number | null;
+  className?: string;
+  bodyClassName?: string;
+  children?: React.ReactNode;
+};
+export function CollapsibleSection({ title, icon, expanded, defaultExpanded = true, onToggle, actions, headingLevel = 3, className, bodyClassName, children }: CollapsibleSectionProps) {
   const id = useUid('plx-collapsible-section');
   const [own, setOwn] = React.useState(defaultExpanded);
   const open = expanded !== undefined ? expanded : own;
   const toggle = () => { if (expanded === undefined) setOwn(!open); if (onToggle) onToggle(!open); };
-  const Tag = headingLevel ? 'h' + headingLevel : 'div';
-  const titleRef = React.useRef(null);
+  const Tag = (headingLevel ? 'h' + headingLevel : 'div') as React.ElementType;
+  const titleRef = React.useRef<HTMLSpanElement>(null);
   const cut = useTruncated(titleRef);   // the title is cut (past its lines): its full text goes in a Tooltip
   return (
     <section className={cx('plx-collapsible-section', open && 'is-expanded', className)}>
@@ -70,9 +87,16 @@ export function CollapsibleSection({ title, icon, expanded, defaultExpanded = tr
 }
 
 // "Show more (n)" / "Show less" with its chevron after the label: down to show more, up to show less (batch 276)
-export function ShowMore({ expanded = false, count, onToggle, size = '2xs', strings, ...rest }) {
+export type ShowMoreProps = Omit<ButtonProps, 'children'> & {
+  expanded?: boolean;
+  /** the hidden count, shown in "Show more (n)" */
+  count?: number | string | null;
+  onToggle?: (expanded: boolean) => void;
+  strings?: Catalog | null;
+};
+export function ShowMore({ expanded = false, count, onToggle, size = '2xs', strings, ...rest }: ShowMoreProps) {
   devWarn('ShowMore', { size }, { size: ['md','sm','xs','2xs','lg'] });
-  const t = useStrings('collapsibleSection', strings);
+  const t = useStrings('collapsibleSection', strings) as { less: string; more: string; moreCount: string };
   return (
     <Button size={size} iconEnd={expanded ? ChevronUpIcon : ChevronDownIcon} aria-expanded={expanded} onClick={() => { if (onToggle) onToggle(!expanded); }} {...rest}>
       {expanded ? t.less : (count !== undefined && count !== null && count !== '' ? dataPhrase(t.moreCount, { n: count }) : t.more)}

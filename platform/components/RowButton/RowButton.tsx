@@ -24,11 +24,22 @@ import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { usePressable } from '../../hooks/usePressable.ts';
 
+export type RowButtonProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> & {
+  selected?: boolean;
+  /** aria-current ("page", "true", …) */
+  current?: React.AriaAttributes['aria-current'];
+  pressed?: boolean;
+  expanded?: boolean;
+  /** the hover fill (default true) */
+  hover?: boolean;
+  /** the press: the click event */
+  onClick?: (event: React.SyntheticEvent<HTMLElement>) => void;
+};
 export const RowButton = React.forwardRef(function RowButton({ selected = false, current, pressed, expanded, hover = true,
-  className, children, onClick, onPointerDown, onPointerCancel, onKeyDown, onBlur, ...rest }, ref) {
+  className, children, onClick, onPointerDown, onPointerCancel, onKeyDown, onBlur, ...rest }: RowButtonProps, ref: React.ForwardedRef<HTMLButtonElement>) {
   // the browser's click stays the press (usePressable native), and onClick gets that click event; your own
   // onPointerDown, onPointerCancel, onKeyDown and onBlur run first, as before
-  const { pressProps } = usePressable({ native: true, onPress: (p) => { if (onClick) onClick(p.event); }, handlers: { onPointerDown, onPointerCancel, onKeyDown, onBlur } });
+  const { pressProps } = usePressable({ native: true, onPress: (p) => { if (onClick) onClick(p.event); }, handlers: { onPointerDown, onPointerCancel, onKeyDown, onBlur } as Record<string, ((e: React.SyntheticEvent<HTMLElement>) => void) | undefined> });
   return (
     <button ref={ref} type="button"
       aria-current={current || (selected ? 'true' : undefined)} aria-pressed={pressed} aria-expanded={expanded} {...rest} {...pressProps}

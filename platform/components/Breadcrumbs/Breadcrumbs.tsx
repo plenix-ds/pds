@@ -19,8 +19,16 @@ import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 
-export function Breadcrumbs({ items = [], label, className }) {
-  const tw = useStrings('breadcrumbs');
+export type BreadcrumbItem = { label: React.ReactNode; href?: string; onClick?: React.MouseEventHandler<HTMLAnchorElement> };
+export type BreadcrumbsProps = {
+  /** the trail, the current page last */
+  items?: BreadcrumbItem[];
+  /** the navigation's name */
+  label?: string;
+  className?: string;
+};
+export function Breadcrumbs({ items = [], label, className }: BreadcrumbsProps) {
+  const tw = useStrings('breadcrumbs') as { label: string };
   if (label === undefined) label = tw.label;
   return (
     <nav aria-label={label} className={cx('plx-breadcrumbs', className)}>
