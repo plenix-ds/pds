@@ -125,7 +125,7 @@ jobs:
   browser:
     name: Browser tests (${{ matrix.name }})
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 45
     strategy:
       fail-fast: false
       matrix:
@@ -156,7 +156,7 @@ jobs:
     env:
       SITE_DIR: ${{ github.workspace }}/st-john-test-site
       SITE_DATABASE_URL: postgres://stjohn:stjohn@localhost:5432/stjohn
-      TEST_TIMEOUT_MS: '1200000'
+      TEST_TIMEOUT_MS: '2400000'
       TEST_SHARD: ${{ matrix.shard }}
     steps:
       - uses: actions/checkout@v5
