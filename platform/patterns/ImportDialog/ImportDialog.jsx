@@ -13,7 +13,7 @@
      The caller owns parsing, server-side validation and URL fetching. The component never fetches an arbitrary URL.
 */
 import React from 'react';
-import { Dialog } from '../../components/Dialog/Dialog.jsx';
+import { Dialog } from '../../components/Dialog/Dialog.tsx';
 import { Stack } from '../../components/Stack/Stack.tsx';
 import { Tabs } from '../../components/Tabs/Tabs.jsx';
 import { Field } from '../../components/Field/Field.tsx';

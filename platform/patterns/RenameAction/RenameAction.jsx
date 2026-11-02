@@ -49,7 +49,7 @@ import { cx } from '../../utils/cx.ts';
 import { announce } from '../../utils/announce.tsx';
 import { useUid } from '../../utils/layer.ts';
 import { InlineEdit } from '../../components/InlineEdit/InlineEdit.tsx';
-import { Dialog } from '../../components/Dialog/Dialog.jsx';
+import { Dialog } from '../../components/Dialog/Dialog.tsx';
 import { Field } from '../../components/Field/Field.tsx';
 import { Input } from '../../components/Input/Input.tsx';
 import { Button } from '../../components/Button/Button.tsx';

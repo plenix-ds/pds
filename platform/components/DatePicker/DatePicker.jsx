@@ -77,7 +77,7 @@ import { formatLocale, numeralLocale } from '../../utils/format.ts';
 import { Button } from '../Button/Button.tsx';
 import { Input } from '../Input/Input.tsx';
 import { InputGroup } from '../InputGroup/InputGroup.tsx';
-import { Popover } from '../Popover/Popover.jsx';
+import { Popover } from '../Popover/Popover.tsx';
 import { Tooltip } from '../Tooltip/Tooltip.tsx';
 import { useTruncated } from '../../utils/overflow.ts';
 import { Calendar, parseIsoDate, addDays, addMonths, todayIso } from '../Calendar/Calendar.jsx';

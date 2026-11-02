@@ -33,9 +33,9 @@
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { Button } from '../../components/Button/Button.tsx';
-import { Menu, MenuItem, MenuGroup, MenuDivider, MenuRadioGroup, MenuSub } from '../../components/Menu/Menu.jsx';
+import { Menu, MenuItem, MenuGroup, MenuDivider, MenuRadioGroup, MenuSub } from '../../components/Menu/Menu.tsx';
 import { Tooltip } from '../../components/Tooltip/Tooltip.tsx';
-import { Popover } from '../../components/Popover/Popover.jsx';
+import { Popover } from '../../components/Popover/Popover.tsx';
 import { Spinner } from '../../components/Loading/Loading.tsx';
 import { focusables } from '../../utils/layer.ts';
 import { foldOrder, menuOrder } from '../../utils/foldOrder.ts';

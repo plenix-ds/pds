@@ -13,7 +13,7 @@
 */
 import React from 'react';
 import { devWarn } from '../../utils/devWarn.ts';
-import { Dialog } from '../../components/Dialog/Dialog.jsx';
+import { Dialog } from '../../components/Dialog/Dialog.tsx';
 import { Wizard } from '../Wizard/Wizard.jsx';
 import { useUnsavedGuard } from '../../providers/UnsavedGuard.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';

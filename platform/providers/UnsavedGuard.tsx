@@ -31,9 +31,9 @@
 */
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { ConfirmDialog } from '../components/Dialog/Dialog.jsx';
+import { ConfirmDialog } from '../components/Dialog/Dialog.tsx';
 
-// ConfirmDialog as this file draws it (Dialog.jsx is not typed yet: its inferred props would all be required)
+// ConfirmDialog as this file draws it (Dialog.tsx is not typed yet: its inferred props would all be required)
 const LeaveDialog = ConfirmDialog as React.ComponentType<{
   open?: boolean; destructive?: boolean; title?: string; message?: string; confirmLabel?: string; cancelLabel?: string;
   onConfirm?(): void; onCancel?(): void;

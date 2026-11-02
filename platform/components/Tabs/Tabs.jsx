@@ -51,7 +51,7 @@ import { cx } from '../../utils/cx.ts';
 import { useUid } from '../../utils/layer.ts';
 import { Count } from '../Count/Count.tsx';
 import { Icon, stateIcon } from '../Icon/Icon.tsx';
-import { Menu, MenuItem } from '../Menu/Menu.jsx';
+import { Menu, MenuItem } from '../Menu/Menu.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import CaretIcon from 'plenix-platform/icons/plenix/caret';
 

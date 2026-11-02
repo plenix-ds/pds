@@ -19,7 +19,7 @@ import { Button } from '../../components/Button/Button.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { cx } from '../../utils/cx.ts';
 import { Link } from '../Link/Link.tsx';
-import { Popover } from '../Popover/Popover.jsx';
+import { Popover } from '../Popover/Popover.tsx';
 function hrefOf(value){if(typeof value!=='string'||!value.trim())return null;try{const u=new URL(value,'https://plenix.invalid/');return ['http:','https:'].includes(u.protocol)?value:null;}catch(e){return null;}}
 export const Citation=React.forwardRef(function Citation({source,sources=[],variant='inline',index=1,strings,className},ref){
   devWarn('Citation', { variant }, { variant: ['inline','card','list'] });

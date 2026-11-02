@@ -16,12 +16,12 @@
 */
 import React from 'react';
 import { Form, FormActions } from '../Form/Form.jsx';
-import { Dialog, Drawer } from '../../components/Dialog/Dialog.jsx';
+import { Dialog, Drawer } from '../../components/Dialog/Dialog.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Notice } from '../../components/Notice/Notice.tsx';
 import { Fieldset } from '../../components/Fieldset/Fieldset.tsx';
 import { Text } from '../../components/Text/Text.tsx';
-import { useToast } from '../../components/Toast/Toast.jsx';
+import { useToast } from '../../components/Toast/Toast.tsx';
 import { useUnsavedGuard } from '../../providers/UnsavedGuard.tsx';
 import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';

@@ -45,7 +45,7 @@ import { foldOrder, menuOrder } from '../../utils/foldOrder.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import { Button } from '../Button/Button.tsx';
 import { Tooltip } from '../Tooltip/Tooltip.tsx';
-import { Menu, MenuItem, MenuDivider } from '../Menu/Menu.jsx';
+import { Menu, MenuItem, MenuDivider } from '../Menu/Menu.tsx';
 import MoreIcon from 'plenix-platform/icons/plenix/more';
 
 const POPUP = '[role="dialog"],[role="alertdialog"],[role="menu"],[role="listbox"],[role="tree"],[role="grid"],[role="tablist"]';

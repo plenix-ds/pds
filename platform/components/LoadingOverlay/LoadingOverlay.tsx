@@ -29,7 +29,7 @@
 */
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
-import { Scrim } from '../Scrim/Scrim.jsx';
+import { Scrim } from '../Scrim/Scrim.tsx';
 import { Spinner } from '../Loading/Loading.tsx';
 import { ProgressBar } from '../ProgressBar/ProgressBar.tsx';
 import { Button } from '../Button/Button.tsx';

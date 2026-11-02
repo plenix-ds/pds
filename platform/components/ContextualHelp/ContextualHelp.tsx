@@ -33,7 +33,7 @@ import { cx } from '../../utils/cx.ts';
 import { Button } from '../Button/Button.tsx';
 import { Icon } from '../Icon/Icon.tsx';
 import { Link } from '../Link/Link.tsx';
-import { Popover } from '../Popover/Popover.jsx';
+import { Popover } from '../Popover/Popover.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import InfoCircleIcon from 'plenix-platform/icons/plenix/info-circle';
 

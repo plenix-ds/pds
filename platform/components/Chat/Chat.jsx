@@ -118,7 +118,7 @@ import { Text } from '../Text/Text.tsx';
 import { Textarea } from '../Input/Input.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import { Badge } from '../Badge/Badge.tsx';
-import { Popover } from '../Popover/Popover.jsx';
+import { Popover } from '../Popover/Popover.tsx';
 import { Tooltip } from '../Tooltip/Tooltip.tsx';
 import { Attachment, Attachments, Voice, FileIcon } from './ChatMedia.jsx';
 import { fill } from '../../utils/fill.ts';

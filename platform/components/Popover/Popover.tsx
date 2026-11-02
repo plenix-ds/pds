@@ -65,8 +65,8 @@ import { elementMs as ms } from '../../utils/tokenTime.ts';
 import { focusables, useLayer, useUid } from '../../utils/layer.ts';
 import { useFloating, PLACEMENTS, TOP_LAYER } from '../../utils/floating.ts';
 import { Button } from '../Button/Button.tsx';
-import { Sheet } from '../Sheet/Sheet.jsx';
-import { useMedia, below } from '../../patterns/AppShell/AppShell.jsx';
+import { Sheet } from '../Sheet/Sheet.tsx';
+import { useMedia, below } from '../../patterns/AppShell/AppShell.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import CloseIcon from 'plenix-platform/icons/plenix/close';
 

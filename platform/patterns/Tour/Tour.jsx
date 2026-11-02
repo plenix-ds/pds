@@ -14,7 +14,7 @@
 */
 import React from 'react';
 import { Inline } from '../../components/Stack/Stack.tsx';
-import { TeachingBubble } from '../../components/TeachingBubble/TeachingBubble.jsx';
+import { TeachingBubble } from '../../components/TeachingBubble/TeachingBubble.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';

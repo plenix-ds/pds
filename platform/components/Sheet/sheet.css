@@ -1,4 +1,4 @@
-/* Plenix · Sheet (platform/components/Sheet). Anatomy and API: Sheet.jsx. The bottom sheet of a Narrow window: anchored to
+/* Plenix · Sheet (platform/components/Sheet). Anatomy and API: Sheet.tsx. The bottom sheet of a Narrow window: anchored to
    the bottom over the modal layer's scrim, at the medium (about half) or large height, its grabber in a band at the top;
    the side sheet and the dialog are the Drawer and the Dialog (dialog.css). */
 .plx-modal-layer--sheet{align-items:flex-end;padding-block-end:0;padding-block-start:0;padding-inline-end:0;padding-inline-start:0;}

@@ -56,7 +56,7 @@ import { announce } from '../../utils/announce.tsx';
 import { formatNumber } from '../../utils/format.ts';
 import { Button } from '../../components/Button/Button.tsx';
 import { Checkbox, RadioGroup } from '../../components/Checkbox/Checkbox.tsx';
-import { Dialog } from '../../components/Dialog/Dialog.jsx';
+import { Dialog } from '../../components/Dialog/Dialog.tsx';
 import { Field } from '../../components/Field/Field.tsx';
 import { Fieldset } from '../../components/Fieldset/Fieldset.tsx';
 import { Icon } from '../../components/Icon/Icon.tsx';

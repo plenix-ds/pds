@@ -17,8 +17,8 @@
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { Button } from '../../components/Button/Button.tsx';
-import { Menu, MenuItem, MenuRadioGroup } from '../../components/Menu/Menu.jsx';
-import { Popover } from '../../components/Popover/Popover.jsx';
+import { Menu, MenuItem, MenuRadioGroup } from '../../components/Menu/Menu.tsx';
+import { Popover } from '../../components/Popover/Popover.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { Tooltip } from '../../components/Tooltip/Tooltip.tsx';
 import { LiveRegion } from '../../utils/announce.tsx';

@@ -14,7 +14,7 @@
 import React from 'react';
 import { ImportDialog } from '../ImportDialog/ImportDialog.jsx';
 import { Wizard } from '../Wizard/Wizard.jsx';
-import { Dialog } from '../../components/Dialog/Dialog.jsx';
+import { Dialog } from '../../components/Dialog/Dialog.tsx';
 import { Stack } from '../../components/Stack/Stack.tsx';
 import { Field } from '../../components/Field/Field.tsx';
 import { Select } from '../../components/Input/Input.tsx';

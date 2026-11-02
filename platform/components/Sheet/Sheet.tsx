@@ -38,7 +38,7 @@
      The page does not scroll while the sheet is open.
    Notes:
      The window classes: Narrow under --plx-sys-shell-phone-below (600px), Medium under --plx-sys-shell-rail-below (840px).
-     The side sheet and the dialog are the Drawer and the Dialog (Dialog.jsx); Cancel and Done sit in their footer, after
+     The side sheet and the dialog are the Drawer and the Dialog (Dialog.tsx); Cancel and Done sit in their footer, after
        the caller's footer actions, Done last (the Action bar rule).
      A caller with a pane at Wide (SidePanel) renders the sheet only below that width and passes form="bottom".
      The bottom sheet keeps the bottom safe area (--plx-sys-safe-area-bottom).
@@ -50,9 +50,9 @@ import { cx } from '../../utils/cx.ts';
 import { focusables, useLayer, useUid } from '../../utils/layer.ts';
 import { asIcon } from '../Icon/Icon.tsx';
 import { Button } from '../Button/Button.tsx';
-import { Dialog, Drawer } from '../Dialog/Dialog.jsx';
+import { Dialog, Drawer } from '../Dialog/Dialog.tsx';
 import { useGesture } from '../../hooks/useGesture.ts';
-import { useMedia, below } from '../../patterns/AppShell/AppShell.jsx';
+import { useMedia, below } from '../../patterns/AppShell/AppShell.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import CloseIcon from 'plenix-platform/icons/plenix/close';
 

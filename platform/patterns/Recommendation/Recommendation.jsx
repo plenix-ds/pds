@@ -20,7 +20,7 @@ import { cx } from '../../utils/cx.ts';
 import { SuggestedAction } from '../../components/SuggestedAction/SuggestedAction.jsx';
 import { Carousel } from '../../components/Carousel/Carousel.jsx';
 import { Link } from '../../components/Link/Link.tsx';
-import { Popover } from '../../components/Popover/Popover.jsx';
+import { Popover } from '../../components/Popover/Popover.tsx';
 import SparkleIcon from 'plenix-platform/icons/plenix/sparkle';
 export function Recommendation({items=[],variant='row',perView=3,onSelect,strings,className}){
   devWarn('Recommendation', { variant }, { variant: ['row','reason'] });

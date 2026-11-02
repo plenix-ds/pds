@@ -12,7 +12,7 @@ import React from 'react';
 import { devWarn } from '../../utils/devWarn.ts';
 import { Banner } from '../Banner/Banner.tsx';
 import { Card } from '../Card/Card.jsx';
-import { Dialog } from '../Dialog/Dialog.jsx';
+import { Dialog } from '../Dialog/Dialog.tsx';
 import { Stack } from '../Stack/Stack.tsx';
 import { Button } from '../Button/Button.tsx';
 import { Notice } from '../Notice/Notice.tsx';

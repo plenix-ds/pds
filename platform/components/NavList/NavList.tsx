@@ -49,7 +49,7 @@ import { numeralLocale } from '../../utils/format.ts';
 import { cx } from '../../utils/cx.ts';
 import { useUid } from '../../utils/layer.ts';
 import { Icon, stateIcon, iconKey } from '../Icon/Icon.tsx';
-import { CollapsibleSection } from '../CollapsibleSection/CollapsibleSection.jsx';
+import { CollapsibleSection } from '../CollapsibleSection/CollapsibleSection.tsx';
 import { Tooltip } from '../Tooltip/Tooltip.tsx';
 import { useTruncated } from '../../utils/overflow.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
