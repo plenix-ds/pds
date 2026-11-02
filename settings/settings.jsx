@@ -491,7 +491,7 @@ export function Settings({prefs,setPrefs,screen,onBack}){
     {id:2,name:"Client Work",color:"blue",icon:null,subs:[{id:21,name:"Design"},{id:22,name:"Development"},{id:23,name:"Strategy"}]},
     {id:3,name:"Research",color:"purple",icon:null,subs:[{id:31,name:"Market Research"},{id:32,name:"Competitive Analysis"}]},
     {id:4,name:"Travel",color:"brown",icon:null,subs:[]},
-    {id:5,name:"Archive",color:"grey",icon:null,subs:[]},
+    {id:5,name:"Archive",color:"gray",icon:null,subs:[]},
   ]);
   const [catEdit,setCatEdit]=useState(null);
   const saveEdit=()=>{

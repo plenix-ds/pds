@@ -156,6 +156,7 @@ Each line links to the test's page. A test that a group test starts is listed un
 - [messages-chat-s6](messages-chat-s6.md): The Messages app shows conversations with the shared chat parts (date lines, grouped messages, photos and sent/read status) and still sends replies, and the design spec's Chat page shows every part with the owner's rules.
 - [project-notes-632](project-notes-632.md): In the Projects app, each project shows the notes that belong to it.
 - [drawer-motion-912](drawer-motion-912.md): A side drawer slides in from its own edge, in both reading directions, instead of popping in like a dialog, and stands still with reduced motion.
+- [gray-category-882](gray-category-882.md): The gray category color is spelled "gray", and pages that still write "grey" look exactly the same.
 
 ### Charts
 

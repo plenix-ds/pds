@@ -3393,8 +3393,63 @@
         }
       }
     },
-    "category-grey": {
+    "category-gray": {
       "$value": "{plx-ref.color-gray-400}",
+      "$type": "color",
+      "$description": "A category color (batch 290): gray. The same in every theme, so a category is always recognized. [data-plx-category=\"gray\"] applies it.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category color, gray: the same in every theme, so a category is always recognized."
+        }
+      }
+    },
+    "category-gray-on": {
+      "$value": "{plx-ref.color-black}",
+      "$type": "color",
+      "$description": "Text on the gray category color (black: the stronger contrast).",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Text on the gray category color."
+        }
+      }
+    },
+    "category-gray-soft": {
+      "$value": "{plx-ref.color-gray-100}",
+      "$type": "color",
+      "$description": "The gray category pill background: gray-100 of the canonical palette. The same in every theme, so a category is always recognized (owner, 2026-10-15, the palette consolidation; docs/pills-and-colors.md).",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category pill, gray: its soft background."
+        }
+      }
+    },
+    "category-gray-soft-border": {
+      "$value": "{plx-ref.color-gray-300}",
+      "$type": "color",
+      "$description": "The gray category pill border, 1px: gray-300 of the canonical palette. The same in every theme, so a category is always recognized (owner, 2026-10-15, the palette consolidation; docs/pills-and-colors.md).",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category pill, gray: its 1px border."
+        }
+      }
+    },
+    "category-gray-on-soft": {
+      "$value": "{plx-ref.color-gray-700}",
+      "$type": "color",
+      "$description": "The gray category pill text, AA on its background: gray-700 of the canonical palette. The same in every theme, so a category is always recognized (owner, 2026-10-15, the palette consolidation; docs/pills-and-colors.md).",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category pill, gray: its text."
+        }
+      }
+    },
+    "category-grey": {
+      "$value": "{plx-sys.category-gray}",
       "$type": "color",
       "$description": "A category color (batch 290): grey. The same in every theme, so a category is always recognized. [data-plx-category=\"grey\"] applies it.",
       "$extensions": {
@@ -3402,10 +3457,11 @@
           "group": "dataviz",
           "purpose": "A category color, grey: the same in every theme, so a category is always recognized."
         }
-      }
+      },
+      "$deprecated": "Use --plx-sys-category-gray; \"grey\" is the British spelling, and Plenix writes American English (#882). Kept until the next minor release."
     },
     "category-grey-on": {
-      "$value": "{plx-ref.color-black}",
+      "$value": "{plx-sys.category-gray-on}",
       "$type": "color",
       "$description": "Text on the grey category color (black: the stronger contrast).",
       "$extensions": {
@@ -3413,10 +3469,11 @@
           "group": "dataviz",
           "purpose": "Text on the grey category color."
         }
-      }
+      },
+      "$deprecated": "Use --plx-sys-category-gray-on; \"grey\" is the British spelling, and Plenix writes American English (#882). Kept until the next minor release."
     },
     "category-grey-soft": {
-      "$value": "{plx-ref.color-gray-100}",
+      "$value": "{plx-sys.category-gray-soft}",
       "$type": "color",
       "$description": "The grey category pill background: gray-100 of the canonical palette. The same in every theme, so a category is always recognized (owner, 2026-10-15, the palette consolidation; docs/pills-and-colors.md).",
       "$extensions": {
@@ -3424,10 +3481,11 @@
           "group": "dataviz",
           "purpose": "A category pill, grey: its soft background."
         }
-      }
+      },
+      "$deprecated": "Use --plx-sys-category-gray-soft; \"grey\" is the British spelling, and Plenix writes American English (#882). Kept until the next minor release."
     },
     "category-grey-soft-border": {
-      "$value": "{plx-ref.color-gray-300}",
+      "$value": "{plx-sys.category-gray-soft-border}",
       "$type": "color",
       "$description": "The grey category pill border, 1px: gray-300 of the canonical palette. The same in every theme, so a category is always recognized (owner, 2026-10-15, the palette consolidation; docs/pills-and-colors.md).",
       "$extensions": {
@@ -3435,10 +3493,11 @@
           "group": "dataviz",
           "purpose": "A category pill, grey: its 1px border."
         }
-      }
+      },
+      "$deprecated": "Use --plx-sys-category-gray-soft-border; \"grey\" is the British spelling, and Plenix writes American English (#882). Kept until the next minor release."
     },
     "category-grey-on-soft": {
-      "$value": "{plx-ref.color-gray-700}",
+      "$value": "{plx-sys.category-gray-on-soft}",
       "$type": "color",
       "$description": "The grey category pill text, AA on its background: gray-700 of the canonical palette. The same in every theme, so a category is always recognized (owner, 2026-10-15, the palette consolidation; docs/pills-and-colors.md).",
       "$extensions": {
@@ -3446,7 +3505,8 @@
           "group": "dataviz",
           "purpose": "A category pill, grey: its text."
         }
-      }
+      },
+      "$deprecated": "Use --plx-sys-category-gray-on-soft; \"grey\" is the British spelling, and Plenix writes American English (#882). Kept until the next minor release."
     },
     "list-bullet": {
       "$value": "{plx-ref.color-gray-400}",

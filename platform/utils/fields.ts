@@ -42,7 +42,7 @@ export const OPERATORS: Record<string, [string, string][]> = Object.fromEntries(
 // "is within": the past week, month or year
 export const WITHIN: { value: string; label: string; days: number }[] = [{ value: 'week', label: english.fields.within.week, days: 7 }, { value: 'month', label: english.fields.within.month, days: 30 }, { value: 'year', label: english.fields.within.year, days: 365 }];
 // the category colors (Trubetskoy's 20), in the order options take them
-export const CATEGORY_ORDER = ['blue', 'green', 'purple', 'orange', 'teal', 'magenta', 'yellow', 'navy', 'red', 'cyan', 'lavender', 'brown', 'olive', 'pink', 'apricot', 'mint', 'maroon', 'lime', 'beige', 'grey'];
+export const CATEGORY_ORDER = ['blue', 'green', 'purple', 'orange', 'teal', 'magenta', 'yellow', 'navy', 'red', 'cyan', 'lavender', 'brown', 'olive', 'pink', 'apricot', 'mint', 'maroon', 'lime', 'beige', 'gray'];
 
 export const fieldOf = (fields: Field[], key: unknown): Field => fields.find((f) => f.value === key) || fields[0];
 export const valueOf = (f: Field, row: object): unknown => (f.get ? f.get(row) : (row as Record<string, unknown>)[f.value]);

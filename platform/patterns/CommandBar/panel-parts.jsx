@@ -75,7 +75,7 @@ export function Pick({ label, value, options, onChange, size = 'field', disabled
   );
 }
 
-export const Pill = ({ color, children }) => <span className="plx-find-pill" data-plx-category={color || 'grey'}>{children}</span>;
+export const Pill = ({ color, children }) => <span className="plx-find-pill" data-plx-category={color || 'gray'}>{children}</span>;
 
 // a multi-select: the chosen values as pills, or the placeholder
 export function MultiPick({ label, options, value, onChange, placeholder }) {
