@@ -49,8 +49,10 @@ import React from 'react';
 import { devWarn } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
 import { Icon } from '../Icon/Icon.tsx';
+import type { IconModule, IconValue } from '../Icon/Icon.tsx';
 import { StatusDot } from '../StatusDot/StatusDot.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import PersonFemaleIcon from 'plenix-platform/icons/plenix/person-female';
 import PersonMaleIcon from 'plenix-platform/icons/plenix/person-male';
 import AnthropicLogo from 'plenix-platform/icons/plenix/ai-anthropic';
@@ -62,47 +64,72 @@ import MistralLogo from 'plenix-platform/icons/plenix/ai-mistral';
 import PerplexityLogo from 'plenix-platform/icons/plenix/ai-perplexity';
 
 // the built-in AI provider logos (owner, 2026-10-29, #637): the brands' own single-color marks, platform/icons/custom/BRANDS.md
-const AI = { anthropic: AnthropicLogo, claude: ClaudeLogo, deepseek: DeepSeekLogo, gemini: GeminiLogo, meta: MetaLogo, mistral: MistralLogo, perplexity: PerplexityLogo };
+const AI: Record<string, IconModule> = { anthropic: AnthropicLogo, claude: ClaudeLogo, deepseek: DeepSeekLogo, gemini: GeminiLogo, meta: MetaLogo, mistral: MistralLogo, perplexity: PerplexityLogo };
 
 const SIZES = [20, 24, 28, 32, 40, 48, 64];   // the scale its classes define (plx-avatar--24 …)
 // the names pages use: 2xs 20 (inside a small control: the account row in a pane footer), xs 24, sm 28, md 32, lg 40, xl 48, 2xl 64 (numbers are rejected by the system check)
-const NAMED = { '2xs': 20, xs: 24, sm: 28, md: 32, lg: 40, xl: 48, '2xl': 64 };
+const NAMED: Record<string, number> = { '2xs': 20, xs: 24, sm: 28, md: 32, lg: 40, xl: 48, '2xl': 64 };
 // presence (library wave 4): the availability tones, the dot's size for each avatar size, and the words
 const PRESENCE = ['online', 'away', 'busy', 'dnd', 'offline'];
-const DOT = { 20: 'sm', 24: 'sm', 28: 'sm', 32: 'sm', 40: 'md', 48: 'md', 64: 'lg' };
+const DOT: Record<number, 'sm' | 'md' | 'lg'> = { 20: 'sm', 24: 'sm', 28: 'sm', 32: 'sm', 40: 'md', 48: 'md', 64: 'lg' };
 
 // first- and last-name initials: titles (a word ending in a period, e.g. "Fr.") and parenthesized parts are skipped.
 // A word's initial is its first Latin letter or digit, as always; a word with none (an Arabic name, owner ctm-needs-34) takes
 // its first letter of any script. Two Arabic initials are kept apart (a zero-width non-joiner), so they do not join into a word.
 const LATIN = /[A-Za-z0-9]/, ANY = /[\p{L}\p{N}]/u, JOINING = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]/;
-const initialOf = (w) => (w.match(LATIN) || w.match(ANY) || [''])[0];
-export function initialsOf(name) {
+const initialOf = (w: string): string => (w.match(LATIN) || w.match(ANY) || [''])[0];
+export function initialsOf(name: unknown): string {
   const words = String(name || '').replace(/\([^)]*\)/g, ' ').split(/\s+/).filter((w) => w && !/\.$/.test(w) && initialOf(w));
   if (!words.length) return '';
   const first = initialOf(words[0]), last = words.length > 1 ? initialOf(words[words.length - 1]) : '';
   return (first + (JOINING.test(first) && JOINING.test(last) ? '\u200C' : '') + last).toUpperCase();
 }
 
-const GENDER = { male: { tone: 'blue', icon: PersonMaleIcon }, female: { tone: 'pink', icon: PersonFemaleIcon } };
+const GENDER: Record<string, { tone: string; icon: IconModule }> = { male: { tone: 'blue', icon: PersonMaleIcon }, female: { tone: 'pink', icon: PersonFemaleIcon } };
 
-export function Avatar({ name, src, initials, ai, logo, size = 'sm', color, category, gender, label, presence, strings, className, ...rest }) {
+export type AvatarSize = '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+export type AvatarPresence = 'online' | 'away' | 'busy' | 'dnd' | 'offline';
+export type AvatarProps = React.HTMLAttributes<HTMLSpanElement> & {
+  /** the person's name: the initials */
+  name?: string;
+  /** the picture */
+  src?: string;
+  /** the text when there is no name */
+  initials?: string;
+  /** an AI participant's provider, drawn as its logo */
+  ai?: 'claude' | 'anthropic' | 'gemini' | 'perplexity' | 'meta' | 'mistral' | 'deepseek';
+  /** any other logo, as an icon */
+  logo?: IconValue;
+  size?: AvatarSize;
+  /** the person's own data color (a hue name) */
+  color?: string;
+  /** a category color by name, instead of color */
+  category?: string;
+  /** "male" | "female": the gender icon when there is no picture */
+  gender?: string;
+  /** its accessible name; none: decorative */
+  label?: string;
+  presence?: AvatarPresence;
+  strings?: Catalog | null;
+};
+export function Avatar({ name, src, initials, ai, logo, size = 'sm', color, category, gender, label, presence, strings, className, ...rest }: AvatarProps) {
   devWarn('Avatar', { size, ai }, { size: ['2xs','xs','sm','md','lg','xl','2xl'], ai: Object.keys(AI) });
   // a logo first (an AI provider's, or the one given), then the picture, then the gender icon or the initials
-  const mark = AI[ai] || logo || null;
-  const n = NAMED[size] || size;
+  const mark = AI[ai as string] || logo || null;
+  const n = (NAMED[size] || size) as number;
   const s = SIZES.indexOf(n) >= 0 ? n : NAMED.sm;
   const text = name ? initialsOf(name) : initials;
-  const p = PRESENCE.indexOf(presence) >= 0 ? presence : null;
-  const words = useStrings('avatar', strings);
-  const named = label && p ? label + ', ' + words[p] : label;
+  const p = PRESENCE.indexOf(presence as string) >= 0 ? presence : null;
+  const words = useStrings('avatar', strings) as Record<string, string>;
+  const named = label && p ? label + ', ' + words[p as string] : label;
   // a picture that fails to load falls back to the initials (batch 215)
   const [failed, setFailed] = React.useState(false);
   React.useEffect(() => { setFailed(false); }, [src]);
   const picture = !mark && src && !failed;
-  const g = !mark && !picture ? GENDER[gender] : null;   // no logo, no picture and a known gender: the gender icon
+  const g = !mark && !picture ? GENDER[gender as string] : null;   // no logo, no picture and a known gender: the gender icon
   return (
     <span className={cx('plx-avatar', 'plx-avatar--' + s, p && 'plx-avatar--presence', g && 'plx-avatar--gender', className)} data-plx-avatar="" data-plx-color={g ? undefined : color || undefined} data-plx-category={g ? g.tone : category || undefined} role={label ? 'img' : undefined}
       aria-label={named} aria-hidden={label ? undefined : true} {...rest}>{mark ? <Icon name={mark} className="plx-avatar__logo" /> : picture ? <img className="plx-avatar__image" src={src} alt="" loading="lazy" decoding="async" onError={() => setFailed(true)} /> : g ? <Icon name={g.icon} filled className="plx-avatar__gender" /> : text}
-      {p ? <StatusDot tone={p} size={DOT[s]} icon={DOT[s] !== 'sm'} className="plx-avatar__presence" /> : null}</span>
+      {p ? <StatusDot tone={p as AvatarPresence} size={DOT[s]} icon={DOT[s] !== 'sm'} className="plx-avatar__presence" /> : null}</span>
   );
 }

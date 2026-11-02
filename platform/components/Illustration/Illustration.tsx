@@ -27,7 +27,15 @@ import { devWarn } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
 import { illustrationByName } from './illustrations.ts';
 
-export function Illustration({ name, size = 'md', tone = 'default', label, className, ...rest }) {
+export type IllustrationProps = Omit<React.SVGProps<SVGSVGElement>, 'name' | 'label'> & {
+  /** a drawing's name (ILLUSTRATIONS) */
+  name: string;
+  size?: 'sm' | 'md' | 'lg';
+  tone?: 'default' | 'on-accent';
+  /** its accessible name; true: the drawing's own title; none: decorative */
+  label?: string | boolean;
+};
+export function Illustration({ name, size = 'md', tone = 'default', label, className, ...rest }: IllustrationProps) {
   devWarn('Illustration', { size, tone }, { size: ['sm','md','lg'], tone: ['default','on-accent'] });
   const art = illustrationByName(name);
   if (!art) return null;
@@ -35,7 +43,7 @@ export function Illustration({ name, size = 'md', tone = 'default', label, class
   return (
     <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" focusable="false"
       className={cx('plx-illustration', 'plx-illustration--' + size, tone !== 'default' && 'plx-illustration--' + tone, className)}
-      role={named ? 'img' : undefined} aria-label={named || undefined} aria-hidden={named ? undefined : true} data-plx-illustration={art.name} {...rest}>
+      role={named ? 'img' : undefined} aria-label={(named || undefined) as string | undefined} aria-hidden={named ? undefined : true} data-plx-illustration={art.name} {...rest}>
       {art.parts.map(([role, el, attrs], i) => React.createElement(el, { key: i, className: 'plx-illustration__' + role, ...attrs }))}
     </svg>
   );

@@ -53,14 +53,34 @@ import { useOverflow, splitAt } from '../../utils/overflow.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import { useReadOnly } from '../../providers/ReadOnly.tsx';
 
-const nameOf = (h) => h.charAt(0).toUpperCase() + h.slice(1);
+const nameOf = (h: string) => h.charAt(0).toUpperCase() + h.slice(1);
 
-export function ColorSwatch({ color, category, tone, size = 'md', shape = 'square', pressed, label, showLabel = false, unavailable = false, onClick: pick, readOnly, className, ...rest }) {
+export type ColorSwatchProps = Omit<React.HTMLAttributes<HTMLElement>, 'color' | 'onClick'> & {
+  /** a data color by hue name (DATA_COLORS) */
+  color?: string;
+  /** a category color by name (CATEGORY_COLORS), instead of color */
+  category?: string;
+  tone?: 'accent' | 'surface' | 'frost';
+  size?: 'sm' | 'md';
+  shape?: 'square' | 'round';
+  /** a swatch button: chosen */
+  pressed?: boolean;
+  /** its name */
+  label?: string;
+  /** the name beside the swatch */
+  showLabel?: boolean;
+  /** the color is not available */
+  unavailable?: boolean;
+  /** a swatch button: picks the color */
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  readOnly?: boolean;
+};
+export function ColorSwatch({ color, category, tone, size = 'md', shape = 'square', pressed, label, showLabel = false, unavailable = false, onClick: pick, readOnly, className, ...rest }: ColorSwatchProps) {
   if (category === 'brown') category = 'orange';
   devWarn('ColorSwatch', { tone, size }, { tone: ['accent','surface','frost'], size: ['sm','md'] });
   const locked = useReadOnly(readOnly);
   // read-only: a swatch button stays a button (focus, pressed state) but its press picks nothing
-  const onClick = pick ? (locked ? (e) => { e.preventDefault(); } : pick) : undefined;
+  const onClick = pick ? (locked ? (e: React.MouseEvent<HTMLButtonElement>) => { e.preventDefault(); } : pick) : undefined;
   if (showLabel && label) {
     // the swatch and its name as one unit: a button when it picks the color, else a span with the name as text
     const chip = <ColorSwatch color={color} category={category} tone={tone} size={size} shape={shape} pressed={!!onClick && !!pressed} unavailable={unavailable} />;
@@ -74,28 +94,44 @@ export function ColorSwatch({ color, category, tone, size = 'md', shape = 'squar
 }
 
 // the data colors to choose from: each a swatch button named by its hue, the chosen one pressed
-export function ColorPicker({ value, onChange, label, size = 'md', palette = 'data', colors, invalid, required, readOnly, className, ...rest }) {   // invalid and required: from Field, not for a group
+export type ColorPickerProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> & {
+  /** the chosen color's name */
+  value?: string;
+  onChange?: (color: string) => void;
+  /** the group's name */
+  label?: string;
+  size?: 'sm' | 'md';
+  palette?: 'data' | 'category';
+  /** the colors offered (default the whole palette) */
+  colors?: string[];
+  /** from Field; not for a group */
+  invalid?: boolean;
+  /** from Field; not for a group */
+  required?: boolean;
+  readOnly?: boolean;
+};
+export function ColorPicker({ value, onChange, label, size = 'md', palette = 'data', colors, invalid, required, readOnly, className, ...rest }: ColorPickerProps) {   // invalid and required: from Field, not for a group
   devWarn('ColorPicker', { size }, { size: ['sm','md'] });
   const locked = useReadOnly(readOnly);
-  const tw = useStrings('colorSwatch');
+  const tw = useStrings('colorSwatch') as { label: string; colors?: Record<string, string>; more: string; moreChosen: string };
   if (label === undefined) label = tw.label;
-  const colorName = (h) => (tw.colors && tw.colors[h]) || nameOf(h);
+  const colorName = (h: string) => (tw.colors && tw.colors[h]) || nameOf(h);
   const cat = palette === 'category';
   if (cat && value === 'brown') value = 'orange';
   const all = cat ? CATEGORY_COLORS : DATA_COLORS;
   const list = Array.isArray(colors) ? [...new Set(colors.map((h) => cat && h === 'brown' ? 'orange' : h))].filter((h) => all.indexOf(h) >= 0) : all;
-  const ref = React.useRef(null);
+  const ref = React.useRef<HTMLDivElement>(null);
   const fit = useOverflow(ref, list.length, palette + size + list.join());
   const hidden = list.slice(fit);
-  const pick = (h) => { if (onChange && !locked) onChange(h); };
-  const swatch = (h, extra) => <ColorSwatch key={h} color={cat ? undefined : h} category={cat ? h : undefined} size={size} {...extra} />;
+  const pick = (h: string) => { if (onChange && !locked) onChange(h); };
+  const swatch = (h: string, extra?: Partial<ColorSwatchProps>) => <ColorSwatch key={h} color={cat ? undefined : h} category={cat ? h : undefined} size={size} {...extra} />;
   // each swatch in a slot as tall as the row, so every item and the More button share the first row's top
   const items = list.map((h) => <span key={h} data-plx-overflow-item="" className="plx-color-picker__slot">{swatch(h, { label: colorName(h), pressed: value === h, onClick: () => pick(h) })}</span>);
-  const chosenHidden = hidden.indexOf(value) >= 0;
+  const chosenHidden = hidden.indexOf(value as string) >= 0;
   const more = hidden.length ? (
     <span key="plx-more" data-plx-overflow-more="" className="plx-color-picker__more">
       <Menu label={tw.more} placement="bottom-end"
-        trigger={<Button size="2xs" variant={chosenHidden ? 'secondary' : 'ghost'} caret aria-label={chosenHidden ? tw.moreChosen.replace('{name}', colorName(value)) : tw.more}>
+        trigger={<Button size="2xs" variant={chosenHidden ? 'secondary' : 'ghost'} caret aria-label={chosenHidden ? tw.moreChosen.replace('{name}', colorName(value as string)) : tw.more}>
           {chosenHidden ? <ColorSwatch color={cat ? undefined : value} category={cat ? value : undefined} size="sm" /> : '+' + hidden.length}</Button>}>
         {hidden.map((h) => <MenuItem key={h} role="menuitemradio" checked={value === h} icon={swatch(h, { size: 'sm' })} onSelect={() => pick(h)}>{colorName(h)}</MenuItem>)}
       </Menu>

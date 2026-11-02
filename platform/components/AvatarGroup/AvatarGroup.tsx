@@ -28,20 +28,36 @@ import React from 'react';
 import { devWarn } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
 import { Avatar } from '../Avatar/Avatar.tsx';
+import type { AvatarPresence } from '../Avatar/Avatar.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import { fill } from '../../utils/fill.ts';
 
 const SIZES = ['xs', 'sm', 'md', 'lg'];
 
-export function AvatarGroup({ people = [], label, max = 4, size = 'sm', layout = 'stack', onMore, strings, className, ...rest }) {
+// one person in the group
+export type AvatarGroupPerson = { id?: string | number; name?: string; src?: string; color?: string; presence?: AvatarPresence };
+export type AvatarGroupProps = React.HTMLAttributes<HTMLDivElement> & {
+  people?: AvatarGroupPerson[];
+  /** the group's name */
+  label?: string;
+  /** how many show before "+n" */
+  max?: number;
+  size?: 'xs' | 'sm' | 'md' | 'lg';
+  layout?: 'stack' | 'grid';
+  /** "+n" becomes a button that runs this */
+  onMore?: () => void;
+  strings?: Catalog | null;
+};
+export function AvatarGroup({ people = [], label, max = 4, size = 'sm', layout = 'stack', onMore, strings, className, ...rest }: AvatarGroupProps) {
   devWarn('AvatarGroup', { size }, { size: ['xs','sm','md','lg'] });
   const s = SIZES.indexOf(size) >= 0 ? size : 'sm';
   const l = layout === 'grid' ? 'grid' : 'stack';
-  const words = useStrings('avatarGroup', strings);
+  const words = useStrings('avatarGroup', strings) as { more: string; moreLabel: string };
   const limit = Math.max(1, max | 0);
   const shown = people.length > limit ? people.slice(0, limit) : people;
   const rest_ = people.length - shown.length;
-  const restText = (t) => fill(t, { n: rest_ });
+  const restText = (t: string) => fill(t, { n: rest_ });
   const more = rest_ > 0 ? <Avatar initials={restText(words.more)} size={s} label={onMore ? undefined : restText(words.moreLabel)} className="plx-avatar-group__more" /> : null;
   return (
     <div className={cx('plx-avatar-group', 'plx-avatar-group--' + l, 'plx-avatar-group--' + s, className)} role="group" aria-label={label} {...rest}>

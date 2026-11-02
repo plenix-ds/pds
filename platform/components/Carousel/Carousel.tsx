@@ -39,14 +39,28 @@ import { tokenMs, reducedMotion as reduced } from '../../utils/tokenTime.ts';
 import { useGesture } from '../../hooks/useGesture.ts';
 import { Button } from '../Button/Button.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import ChevronLeftIcon from 'plenix-platform/icons/plenix/chevron-left';
 import ChevronRightIcon from 'plenix-platform/icons/plenix/chevron-right';
 import { fill } from '../../utils/fill.ts';
 
-const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
+const clamp = (n: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, n));
 
-export function Carousel({ label, children, perView = 1, controls = 'both', autoplay = false, page: pageProp, onPageChange, strings, className, ...rest }) {
-  const t = useStrings('carousel', strings);
+export type CarouselProps = React.HTMLAttributes<HTMLElement> & {
+  /** the carousel's accessible name */
+  label: string;
+  /** how many slides show at once: 1 to 4 */
+  perView?: number;
+  controls?: 'both' | 'arrows' | 'dots';
+  /** the pages advance by themselves (a Pause button shows) */
+  autoplay?: boolean;
+  /** the page shown, when controlled */
+  page?: number;
+  onPageChange?: (page: number) => void;
+  strings?: Catalog | null;
+};
+export function Carousel({ label, children, perView = 1, controls = 'both', autoplay = false, page: pageProp, onPageChange, strings, className, ...rest }: CarouselProps) {
+  const t = useStrings('carousel', strings) as Record<string, string>;
   const slides = React.Children.toArray(children).filter(Boolean);
   const n = slides.length;
   const asked = clamp(Math.round(perView) || 1, 1, 4);
@@ -59,8 +73,8 @@ export function Carousel({ label, children, perView = 1, controls = 'both', auto
   const page = clamp(pageProp !== undefined ? pageProp : own, 0, pages - 1);
   const [playing, setPlaying] = React.useState(() => !!autoplay && !reduced());
   const [held, setHeld] = React.useState(false);   // pointer over it or focus in it: autoplay waits
-  const root = React.useRef(null), track = React.useRef(null), shown = React.useRef(0);
-  const setPage = (p) => { if (pageProp === undefined) setOwn(p); if (onPageChange && p !== page) onPageChange(p); };
+  const root = React.useRef<HTMLElement>(null), track = React.useRef<HTMLDivElement>(null), shown = React.useRef(0);
+  const setPage = (p: number) => { if (pageProp === undefined) setOwn(p); if (onPageChange && p !== page) onPageChange(p); };
 
   // the strip's width and the least slide width, kept current as the room changes
   React.useLayoutEffect(() => {
@@ -77,7 +91,7 @@ export function Carousel({ label, children, perView = 1, controls = 'both', auto
   }, []);
 
   // scrolls the strip so the page's first slide is at its start edge
-  const scrollTo = React.useCallback((p) => {
+  const scrollTo = React.useCallback((p: number) => {
     const el = track.current;
     if (!el || !el.children.length) return;
     const slide = el.children[clamp(p * per, 0, Math.max(0, n - per))];
@@ -85,11 +99,11 @@ export function Carousel({ label, children, perView = 1, controls = 'both', auto
     const delta = isRtl(el) ? a.right - b.right : a.left - b.left;
     el.scrollBy({ left: delta, behavior: reduced() ? 'auto' : 'smooth' });
   }, [per, n]);
-  const go = (p) => { const q = clamp(p, 0, pages - 1); setPage(q); scrollTo(q); };
+  const go = (p: number) => { const q = clamp(p, 0, pages - 1); setPage(q); scrollTo(q); };
 
   // the page in view, from the scroll position (the strip may have been scrolled by touch, a trackpad or the keys). The
   // listener is added once; it reads the current page and counts from a ref, so a render does not re-add it (#882)
-  const latest = React.useRef(null);
+  const latest = React.useRef<{ page: number; pages: number; per: number; setPage: (p: number) => void } | null>(null);
   latest.current = { page, pages, per, setPage };
   React.useEffect(() => {
     const el = track.current;
@@ -97,7 +111,7 @@ export function Carousel({ label, children, perView = 1, controls = 'both', auto
     let frame = 0;
     const read = () => {
       frame = 0;
-      const { page, pages, per, setPage } = latest.current;
+      const { page, pages, per, setPage } = latest.current!;
       if (el.children.length < 1) return;
       const first = el.children[0].getBoundingClientRect(), second = el.children[1] ? el.children[1].getBoundingClientRect() : null;
       const pitch = second ? Math.abs(second.left - first.left) : first.width;
@@ -128,7 +142,7 @@ export function Carousel({ label, children, perView = 1, controls = 'both', auto
 
   const hold = {
     onPointerEnter: () => setHeld(true), onPointerLeave: () => setHeld(false),
-    onFocus: () => setHeld(true), onBlur: (e) => { if (!root.current || !root.current.contains(e.relatedTarget)) setHeld(false); },
+    onFocus: () => setHeld(true), onBlur: (e: React.FocusEvent<HTMLElement>) => { if (!root.current || !root.current.contains(e.relatedTarget as Node | null)) setHeld(false); },
   };
   const arrows = controls !== 'dots' && pages > 1, dots = controls !== 'arrows' && pages > 1;
   const live = autoplay && playing ? 'off' : 'polite';
@@ -137,7 +151,7 @@ export function Carousel({ label, children, perView = 1, controls = 'both', auto
     <section ref={root} aria-roledescription="carousel" aria-label={label} className={cx('plx-carousel', per > 1 && 'plx-carousel--multiple', className)} data-plx-per-view={per} {...hold} {...rest}>
       <div ref={track} className="plx-carousel__track" tabIndex={0} aria-label={t.strip} aria-live={live}>
         {slides.map((s, i) => (
-          <div key={s.key || i} role="group" aria-roledescription="slide" aria-label={fill(t.slide, { n: i + 1, total: n })} className="plx-carousel__slide">{s}</div>
+          <div key={(s as React.ReactElement).key || i} role="group" aria-roledescription="slide" aria-label={fill(t.slide, { n: i + 1, total: n })} className="plx-carousel__slide">{s}</div>
         ))}
       </div>
       {arrows || dots || autoplay ? (

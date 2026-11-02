@@ -18,10 +18,26 @@ import { Button } from '../Button/Button.tsx';
 import { Notice } from '../Notice/Notice.tsx';
 import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 
-export function Announcement({ id, variant = 'banner', open = true, title, children, actions, dismissible = true, onDismiss, tone = 'info', strings, className }) {
+export type AnnouncementProps = {
+  /** a new id shows it again after a dismissal */
+  id?: string | number;
+  variant?: 'banner' | 'card' | 'dialog';
+  open?: boolean;
+  title?: React.ReactNode;
+  children?: React.ReactNode;
+  actions?: React.ReactNode;
+  dismissible?: boolean;
+  /** runs on Dismiss; a rejected promise keeps it open with an error */
+  onDismiss?: () => void | Promise<unknown>;
+  tone?: 'info' | 'success' | 'warning' | 'danger' | 'neutral';
+  strings?: Catalog | null;
+  className?: string;
+};
+export function Announcement({ id, variant = 'banner', open = true, title, children, actions, dismissible = true, onDismiss, tone = 'info', strings, className }: AnnouncementProps) {
   devWarn('Announcement', { variant, tone }, { variant: ['banner','card','dialog'], tone: ['info','success','warning','danger','neutral'] });
-  const t = useStrings('announcement', strings);
+  const t = useStrings('announcement', strings) as { failed: string; dismiss: string };
   const [closed, setClosed] = React.useState(false), [busy, setBusy] = React.useState(false), [error, setError] = React.useState('');
   const lock = React.useRef(false), epoch = React.useRef(0);
   React.useEffect(() => { epoch.current++; lock.current = false; setClosed(false); setBusy(false); setError(''); return () => { epoch.current++; }; }, [id, open]);

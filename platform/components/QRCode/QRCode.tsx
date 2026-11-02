@@ -35,12 +35,25 @@ const SIZES = ['sm', 'md', 'lg'];
 const QUIET = 4;          // the quiet zone, in modules
 const LOGO_SHARE = 0.25;  // the share of the code's width the logo's clear square takes
 
-export function QRCode({ value, label, level = 'M', size = 'md', logo, caption, showValue = false, onAccent = false, className, ...rest }) {
+export type QRCodeProps = React.HTMLAttributes<HTMLElement> & {
+  value: string | number;
+  /** the code's accessible name */
+  label?: string;
+  /** the error correction level (a logo forces H) */
+  level?: 'L' | 'M' | 'Q' | 'H';
+  size?: 'sm' | 'md' | 'lg';
+  /** an element in the middle (its square is left clear) */
+  logo?: React.ReactNode;
+  caption?: React.ReactNode;
+  showValue?: boolean;
+  onAccent?: boolean;
+};
+export function QRCode({ value, label, level = 'M', size = 'md', logo, caption, showValue = false, onAccent = false, className, ...rest }: QRCodeProps) {
   devWarn('QRCode', { size }, { size: ['sm','md','lg'] });
   const s = SIZES.indexOf(size) >= 0 ? size : 'md';
   const lv = logo ? 'H' : level;
   const code = React.useMemo(() => {
-    try { return qrEncode(value == null ? '' : String(value), { level: lv }); } catch (e) { console.warn('QRCode: ' + e.message); return null; }
+    try { return qrEncode(value == null ? '' : String(value), { level: lv }); } catch (e) { console.warn('QRCode: ' + (e as Error).message); return null; }
   }, [value, lv]);
   const d = React.useMemo(() => {
     if (!code) return '';

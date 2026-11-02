@@ -17,9 +17,12 @@
      The drawings follow the brand mark: square corners and ends, straight strokes, one accent. Add a drawing here (on the
        120-unit square, 4-unit steps) and it is in the set; never color a part by hand.
 */
-const BACK = ['back', 'circle', { cx: 60, cy: 60, r: 52 }];
+// one shape: [its color role, its element (circle, rect, path), its geometry on the 120-unit square]
+export type IllustrationPart = [string, string, Record<string, number | string>];
+export type IllustrationArt = { name: string; set: 'empty' | 'error'; title: string; parts: IllustrationPart[] };
+const BACK: IllustrationPart = ['back', 'circle', { cx: 60, cy: 60, r: 52 }];
 
-export const ILLUSTRATIONS = [
+export const ILLUSTRATIONS: IllustrationArt[] = [
   { name: 'empty-folder', set: 'empty', title: 'An empty folder', parts: [BACK,
     ['shape', 'path', { d: 'M20 36h28l8 8h44v48H20z' }],
     ['shape', 'path', { d: 'M20 52h80v40H20z' }],
@@ -63,4 +66,4 @@ export const ILLUSTRATIONS = [
     ['danger', 'rect', { x: 58, y: 72, width: 4, height: 10 }]] }
 ];
 
-export const illustrationByName = (name) => ILLUSTRATIONS.find((x) => x.name === name) || null;
+export const illustrationByName = (name: string): IllustrationArt | null => ILLUSTRATIONS.find((x) => x.name === name) || null;

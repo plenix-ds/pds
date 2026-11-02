@@ -22,10 +22,19 @@ import React from 'react';
 import { devWarn } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
 import { Icon } from '../Icon/Icon.tsx';
+import type { IconValue } from '../Icon/Icon.tsx';
 
 const SIZES = ['48', '64', '96'];
 
-export function Pictogram({ icon, size = '64', twoTone = false, label, className, ...rest }) {
+export type PictogramProps = React.HTMLAttributes<HTMLSpanElement> & {
+  icon: IconValue;
+  size?: '48' | '64' | '96' | 48 | 64 | 96;
+  /** the filled drawing in two tones */
+  twoTone?: boolean;
+  /** its accessible name; none: decorative */
+  label?: string;
+};
+export function Pictogram({ icon, size = '64', twoTone = false, label, className, ...rest }: PictogramProps) {
   devWarn('Pictogram', { size }, { size: ['48','64','96',48,64,96] });
   const s = SIZES.indexOf(String(size)) >= 0 ? String(size) : '64';
   return (

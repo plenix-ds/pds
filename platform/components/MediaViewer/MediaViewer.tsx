@@ -34,29 +34,47 @@ import { createPortal } from 'react-dom';
 import { cx } from '../../utils/cx.ts';
 import { useLayer, useUid } from '../../utils/layer.ts';
 import { MediaPlayer } from '../MediaPlayer/MediaPlayer.tsx';
+import type { MediaTrack } from '../MediaPlayer/MediaPlayer.tsx';
 import { useGesture } from '../../hooks/useGesture.ts';
 import { Icon } from '../Icon/Icon.tsx';
 import { arrowStep } from '../../utils/direction.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import ChevronDownIcon from 'plenix-platform/icons/plenix/chevron-down';
 import CloseIcon from 'plenix-platform/icons/plenix/close';
 
 
-export function MediaViewer({ open, onClose, items, index, defaultIndex = 0, onIndexChange, label, actions, strings, className }) {
-  const t = useStrings('mediaViewer', strings);
-  const ref = React.useRef(null);
+// one picture or video in the viewer
+export type MediaViewerItem = { src: string; alt?: string; title?: string; meta?: React.ReactNode[]; kind?: 'image' | 'video'; poster?: string; audio?: string; tracks?: MediaTrack[] };
+export type MediaViewerProps = {
+  open?: boolean;
+  onClose?: () => void;
+  items: MediaViewerItem[];
+  /** the shown item, when controlled */
+  index?: number;
+  defaultIndex?: number;
+  onIndexChange?: (index: number) => void;
+  /** the viewer's accessible name */
+  label?: string;
+  actions?: React.ReactNode;
+  strings?: Catalog | null;
+  className?: string;
+};
+export function MediaViewer({ open, onClose, items, index, defaultIndex = 0, onIndexChange, label, actions, strings, className }: MediaViewerProps) {
+  const t = useStrings('mediaViewer', strings) as Record<string, string>;
+  const ref = React.useRef<HTMLDivElement>(null);
   const id = useUid('plx-mv');
   const [own, setOwn] = React.useState(defaultIndex);
   const at = index !== undefined ? index : own;
   useLayer(ref, open, { modal: true, onEscape: onClose });
-  const go = (n) => { const next = (n + items.length) % items.length; if (index === undefined) setOwn(next); if (onIndexChange) onIndexChange(next); };
+  const go = (n: number) => { const next = (n + items.length) % items.length; if (index === undefined) setOwn(next); if (onIndexChange) onIndexChange(next); };
   const item = items[at] || items[0];
   const many = items.length > 1;
-  const stage = React.useRef(null);
+  const stage = React.useRef<HTMLDivElement>(null);
   useGesture(stage, { disabled: !open || !many, axis: 'x', onSwipe: gesture => go(at + (gesture.inline === 'start' ? 1 : -1)) });
   if (!open || !items.length) return null;
-  const onKeyDown = (e) => {
-    if (!many || e.defaultPrevented || e.target.closest('video,audio,input,select,textarea,[contenteditable="true"]')) return;
+  const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (!many || e.defaultPrevented || (e.target as Element).closest('video,audio,input,select,textarea,[contenteditable="true"]')) return;
     const step = arrowStep(e, e.currentTarget, { vertical: false });
     if (step) { e.preventDefault(); go(at + step); }
   };
@@ -68,7 +86,7 @@ export function MediaViewer({ open, onClose, items, index, defaultIndex = 0, onI
       {many ? <button type="button" className="plx-media-viewer__control plx-media-viewer__nav plx-media-viewer__nav--previous" aria-label={t.previous} onClick={() => go(at - 1)}><Icon name={ChevronDownIcon} size="md" /></button> : null}
       <figure className="plx-media-viewer__figure">
         <div ref={stage} className={cx('plx-media-viewer__stage', 'plx-gesture--pan-x', item.kind === 'video' && 'plx-media-viewer__stage--video')}
-          onPointerDownCapture={event => { if (event.target.closest('video,audio,button,input,select,a')) event.stopPropagation(); }}>
+          onPointerDownCapture={event => { if ((event.target as Element).closest('video,audio,button,input,select,a')) event.stopPropagation(); }}>
           {item.kind === 'video' ? <MediaPlayer fill key={at} src={item.src} audio={item.audio} poster={item.poster} tracks={item.tracks} label={item.title || label || t.label} />
             : <img draggable={false} src={item.src} alt={item.alt || ''} className="plx-media-viewer__image" />}
         </div>

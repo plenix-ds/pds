@@ -14,9 +14,11 @@
 */
 import React from 'react';
 import { Icon } from '../Icon/Icon.tsx';
+import type { IconValue } from '../Icon/Icon.tsx';
 import DocumentIcon from 'plenix-platform/icons/plenix/document';
 
-export function Thumbnail({ src, alt = '', icon = 'document' }) {
+export type ThumbnailProps = { /** the picture; without one (or when it fails) the icon */ src?: string; alt?: string; icon?: IconValue };
+export function Thumbnail({ src, alt = '', icon = 'document' }: ThumbnailProps) {
   // the documented default is the name; it draws from its imported module (#280)
   const glyph = icon === 'document' ? DocumentIcon : icon;
   // an image that fails to load falls back to the icon, as when there is none (batch 215)

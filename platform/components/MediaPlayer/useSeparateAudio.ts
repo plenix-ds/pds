@@ -6,7 +6,7 @@
    Notes: The video source is expected to be silent when its sound is supplied separately. No autoplay is added. */
 import React from 'react';
 const DRIFT_SECONDS = 0.25;
-export function useSeparateAudio(video, sound, src, audio, kind) {
+export function useSeparateAudio(video: React.RefObject<HTMLMediaElement | null>, sound: React.RefObject<HTMLAudioElement | null>, src: unknown, audio: unknown, kind?: string): boolean {
   const [failed, setFailed] = React.useState(false);
   React.useEffect(() => {
     setFailed(false);
@@ -30,7 +30,7 @@ export function useSeparateAudio(video, sound, src, audio, kind) {
       if (!a.paused) { align(false); return; }
       align(true);
       const result = a.play();
-      if (result && result.catch) result.catch(error => { if (live && !v.paused && !v.seeking && error.name !== 'AbortError') fail(); });
+      if (result && result.catch) result.catch((error: Error) => { if (live && !v.paused && !v.seeking && error.name !== 'AbortError') fail(); });
     };
     const pause = () => a.pause(), seek = () => { pause(); align(true); }, tick = () => align(false), resume = () => { align(true); play(); };
     const events = { play, playing: play, pause, ended: pause, waiting: pause, stalled: pause, seeking: seek, seeked: resume, ratechange: tick, volumechange: tick, timeupdate: tick, error: pause, emptied: pause };

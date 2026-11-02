@@ -29,19 +29,36 @@ import React from 'react';
 import { devWarn } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
 import { Avatar } from '../Avatar/Avatar.tsx';
+import type { AvatarPresence } from '../Avatar/Avatar.tsx';
 import { Badge } from '../Badge/Badge.tsx';
 import { Link } from '../Link/Link.tsx';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 
 const SIZES = ['xs', 'sm', 'md', 'lg', 'xl'];
 const PRESENCE = ['online', 'away', 'busy', 'dnd', 'offline'];
 
-export function Persona({ name, src, color, secondary, role, presence, size = 'md', href, strings, className, ...rest }) {
+export type PersonaProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'role'> & {
+  name: string;
+  src?: string;
+  /** the person's data color */
+  color?: string;
+  /** the line under the name */
+  secondary?: React.ReactNode;
+  /** a role badge after the name */
+  role?: React.ReactNode;
+  presence?: AvatarPresence;
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  /** the name links here */
+  href?: string;
+  strings?: Catalog | null;
+};
+export function Persona({ name, src, color, secondary, role, presence, size = 'md', href, strings, className, ...rest }: PersonaProps) {
   devWarn('Persona', { size }, { size: ['xs','sm','md','lg','xl'] });
   const s = SIZES.indexOf(size) >= 0 ? size : 'md';
-  const p = PRESENCE.indexOf(presence) >= 0 ? presence : null;
-  const words = useStrings('persona', strings);
+  const p = PRESENCE.indexOf(presence as string) >= 0 ? presence : null;
+  const words = useStrings('persona', strings) as Record<string, string>;
   return (
     <div className={cx('plx-persona', 'plx-persona--' + s, className)} {...rest}>
       <Avatar name={name} src={src} color={color} presence={p || undefined} size={s} className="plx-persona__avatar" />
@@ -49,7 +66,7 @@ export function Persona({ name, src, color, secondary, role, presence, size = 'm
         <div className="plx-persona__primary">
           {href ? <Link href={href} variant="standalone" className="plx-persona__name" title={name}>{name}</Link>
             : <span className="plx-persona__name" title={name}>{name}</span>}
-          {p ? <VisuallyHidden>{', ' + words[p]}</VisuallyHidden> : null}
+          {p ? <VisuallyHidden>{', ' + words[p as string]}</VisuallyHidden> : null}
           {role ? <Badge tone="neutral" size="sm" className="plx-persona__role">{role}</Badge> : null}
         </div>
         {secondary ? <div className="plx-persona__secondary" title={typeof secondary === 'string' ? secondary : undefined}>{secondary}</div> : null}

@@ -32,14 +32,42 @@ import { Link } from '../Link/Link.tsx';
 import { useUid } from '../../utils/layer.ts';
 import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 
-const clock = (seconds) => { const n = Math.max(0, Math.floor(Number(seconds) || 0)); return Math.floor(n / 60) + ':' + String(n % 60).padStart(2, '0'); };
+const clock = (seconds: unknown): string => { const n = Math.max(0, Math.floor(Number(seconds) || 0)); return Math.floor(n / 60) + ':' + String(n % 60).padStart(2, '0'); };
+// a WebVTT text track
+export type MediaTrack = { src: string; label?: string; language?: string; kind?: 'captions' | 'subtitles'; default?: boolean };
+// one transcript line: where it starts, in seconds, and its text
+export type TranscriptSegment = { start: number; text: React.ReactNode };
+export type MediaPlayerProps = {
+  src?: string;
+  /** (video) a separate sound for a silent video */
+  audio?: string;
+  kind?: 'video' | 'audio';
+  /** the media's accessible name */
+  label?: string;
+  poster?: string;
+  crossOrigin?: React.MediaHTMLAttributes<HTMLMediaElement>['crossOrigin'];
+  tracks?: MediaTrack[];
+  transcript?: TranscriptSegment[];
+  showTranscript?: boolean;
+  /** the playback speeds offered */
+  rates?: number[];
+  pictureInPicture?: boolean;
+  /** the current time, in seconds */
+  onTimeChange?: (seconds: number) => void;
+  onError?: (event: React.SyntheticEvent<HTMLMediaElement>) => void;
+  strings?: Catalog | null;
+  className?: string;
+  /** the media fills its container */
+  fill?: boolean;
+};
 export const MediaPlayer = React.forwardRef(function MediaPlayer({ src, audio, kind = 'video', label, poster, crossOrigin, tracks = [], transcript = [], showTranscript = false,
-  rates = [0.5, 1, 1.5, 2], pictureInPicture = true, onTimeChange, onError, strings, className, fill = false }, ref) {
-  const t = useStrings('mediaPlayer', strings);
-  const media = React.useRef(null), id = useUid('plx-media-player'), epoch = React.useRef(0), lock = React.useRef(false);
-  const sound = React.useRef(null), audioFailed = useSeparateAudio(media, sound, src, audio, kind);
-  React.useImperativeHandle(ref, () => media.current, [kind, src]);
+  rates = [0.5, 1, 1.5, 2], pictureInPicture = true, onTimeChange, onError, strings, className, fill = false }: MediaPlayerProps, ref: React.ForwardedRef<HTMLMediaElement>) {
+  const t = useStrings('mediaPlayer', strings) as Record<string, string>;
+  const media = React.useRef<HTMLVideoElement>(null), id = useUid('plx-media-player'), epoch = React.useRef(0), lock = React.useRef(false);
+  const sound = React.useRef<HTMLAudioElement>(null), audioFailed = useSeparateAudio(media, sound, src, audio, kind);
+  React.useImperativeHandle(ref, () => media.current as HTMLMediaElement, [kind, src]);
   const [rate, setRate] = React.useState(1), [visible, setVisible] = React.useState(showTranscript), [ready, setReady] = React.useState(false), [pip, setPip] = React.useState(false), [busy, setBusy] = React.useState(false), [error, setError] = React.useState('');
   const [volume, setVolume] = React.useState(1), [muted, setMuted] = React.useState(false);
   React.useEffect(() => { if (media.current) { setVolume(media.current.volume); setMuted(media.current.muted); } epoch.current++; lock.current = false; setReady(false); setRate(1); setError(''); setPip(false); setBusy(false); return () => { epoch.current++; }; }, [src, kind]);
@@ -51,12 +79,14 @@ export const MediaPlayer = React.forwardRef(function MediaPlayer({ src, audio, k
     catch (e) { if (at === epoch.current) setError(t.pipFailed); }
     finally { if (at === epoch.current) { lock.current = false; setBusy(false); } }
   };
-  const Tag = kind === 'audio' ? 'audio' : 'video';
+  // typed as the video element: the audio element takes the same props here (poster is undefined for it)
+  const Tag = (kind === 'audio' ? 'audio' : 'video') as 'video';
   return <Stack className={cx('plx-media-player', className)} data-plx-fill={fill ? '' : undefined}>
     <Tag key={kind + ':' + src} ref={media} className="plx-media-player__media" src={src} poster={kind === 'audio' ? undefined : poster} controls playsInline preload="metadata" crossOrigin={crossOrigin} aria-label={label}
       onLoadedMetadata={() => { setReady(true); setError(''); }} onTimeUpdate={(e) => { if (onTimeChange) onTimeChange(e.currentTarget.currentTime); }}
       onVolumeChange={event => { setVolume(event.currentTarget.volume); setMuted(event.currentTarget.muted); }}
       onRateChange={event => setRate(event.currentTarget.playbackRate)}
+      // @ts-expect-error React 18 has no picture-in-picture events (no type, no dispatch); kept as it is in this slice
       onEnterPictureInPicture={() => setPip(true)} onLeavePictureInPicture={() => setPip(false)}
       onError={(e) => { setReady(false); setError(t.failed); if (onError) onError(e); }}>
       {tracks.map((a, i) => <track key={a.src + i} src={a.src} kind={a.kind || 'captions'} srcLang={a.language} label={a.label} default={!!a.default} />)}
@@ -65,12 +95,12 @@ export const MediaPlayer = React.forwardRef(function MediaPlayer({ src, audio, k
     {kind !== 'audio' && audio ? <audio ref={sound} src={audio} crossOrigin={crossOrigin} preload="metadata" hidden aria-hidden="true" /> : null}
     <Inline wrap>
       <Field label={t.rate}><Select value={String(rate)} options={speeds.map((n) => ({ value: String(n), label: n + '×' }))} onChange={(e) => { const next = Number(e.target.value); if (media.current) { media.current.playbackRate = next; setRate(next); } }} /></Field>
-      {kind !== 'audio' && audio ? <><Slider className="plx-media-player__volume" label={t.volume} value={Math.round(volume * 100)} min={0} max={100} unit="%" disabled={audioFailed} onChange={next => { if (media.current) media.current.volume = next / 100; }} /><Button pressed={muted} disabled={audioFailed} onClick={() => { if (media.current) media.current.muted = !media.current.muted; }}>{t.mute}</Button></> : null}
+      {kind !== 'audio' && audio ? <><Slider className="plx-media-player__volume" label={t.volume} value={Math.round(volume * 100)} min={0} max={100} unit="%" disabled={audioFailed} onChange={next => { if (media.current) media.current.volume = (next as number) / 100; }} /><Button pressed={muted} disabled={audioFailed} onClick={() => { if (media.current) media.current.muted = !media.current.muted; }}>{t.mute}</Button></> : null}
       {transcript.length ? <Button aria-expanded={visible} aria-controls={id} onClick={() => setVisible(!visible)}>{visible ? t.hideTranscript : t.transcript}</Button> : null}
       {pictureInPicture && capable ? <Button disabled={!ready || busy} onClick={togglePip}>{pip ? t.exitPip : t.pip}</Button> : null}
     </Inline>
     {visible && transcript.length ? <Stack id={id} as="ol" className="plx-media-player__transcript">{transcript.map((segment, i) => <Inline as="li" key={i} align="start">
-      <Button disabled={!ready || !Number.isFinite(segment.start) || segment.start < 0} label={t.seek.replace('{time}', clock(segment.start))} onClick={() => { media.current.currentTime = segment.start; }}><Text variant="data">{clock(segment.start)}</Text></Button><Text>{segment.text}</Text>
+      <Button disabled={!ready || !Number.isFinite(segment.start) || segment.start < 0} label={t.seek.replace('{time}', clock(segment.start))} onClick={() => { media.current!.currentTime = segment.start; }}><Text variant="data">{clock(segment.start)}</Text></Button><Text>{segment.text}</Text>
     </Inline>)}</Stack> : null}
     {audioFailed ? <Notice tone="warning">{t.audioFailed}</Notice> : null}
     {error ? <Notice tone="danger">{error}</Notice> : null}

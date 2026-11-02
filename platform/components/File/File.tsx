@@ -40,9 +40,12 @@
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { formatBytes, formatDate, formatNumber } from '../../utils/format.ts';
+import type { DateInput } from '../../utils/format.ts';
 import { Icon } from '../Icon/Icon.tsx';
+import type { IconModule, IconValue } from '../Icon/Icon.tsx';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import { development } from '../../utils/devWarn.ts';
 import CodeIcon from 'plenix-platform/icons/plenix/code';
 import DocTextIcon from 'plenix-platform/icons/plenix/doc-text';
@@ -60,7 +63,7 @@ import ImageA2Icon from 'plenix-platform/icons/plenix/image-a-2';
 import TableIcon from 'plenix-platform/icons/plenix/table';
 import { fill } from '../../utils/fill.ts';
 
-const BY_EXT = {
+const BY_EXT: Record<string, string> = {
   pdf: 'file-pdf', png: 'file-png', jpg: 'file-jpg', jpeg: 'file-jpg', svg: 'file-svg', psd: 'file-psd', ai: 'file-ai',
   zip: 'file-zip', rar: 'file-zip', '7z': 'file-zip', gz: 'file-zip', tar: 'file-zip',
   doc: 'doc-text', docx: 'doc-text', odt: 'doc-text', rtf: 'doc-text', txt: 'doc-text', md: 'doc-text', pages: 'doc-text',
@@ -70,14 +73,14 @@ const BY_EXT = {
 };
 
 // the part after the last dot (not a leading dot: ".env" has no extension), lowercased
-export function fileExtension(name) {
+export function fileExtension(name: unknown): string {
   const s = String(name || '');
   const i = s.lastIndexOf('.');
   return i > 0 && i < s.length - 1 ? s.slice(i + 1).toLowerCase() : '';
 }
 
 // the icon of a file's type: by its extension, else by its MIME type, else "document"
-export function fileIcon(name, type) {
+export function fileIcon(name: unknown, type?: string | null): string {
   const ext = fileExtension(name);
   if (BY_EXT[ext]) return BY_EXT[ext];
   if (/^image\//.test(type || '')) return 'image-a-2';
@@ -86,32 +89,56 @@ export function fileIcon(name, type) {
 }
 // the same icon as the imported module the File draws (#280): fileIcon stays a name (it is public: a caller may print or
 // compare it); this one is the component's own (plx-icons: is not needed, every name it can return is imported here)
-const TYPE_ICONS = Object.fromEntries([CodeIcon, DocTextIcon, DocumentIcon, FileAiIcon, FileJpgIcon, FilePdfIcon, FilePngIcon, FilePsdIcon, FileSvgIcon, FileZipIcon, ImageA2Icon, TableIcon].map((m) => [m.name, m]));
+const TYPE_ICONS: Record<string, IconModule> = Object.fromEntries([CodeIcon, DocTextIcon, DocumentIcon, FileAiIcon, FileJpgIcon, FilePdfIcon, FilePngIcon, FilePsdIcon, FileSvgIcon, FileZipIcon, ImageA2Icon, TableIcon].map((m) => [m.name, m]));
 // a type whose icon has no import here (one added to BY_EXT alone) draws the document icon, and development says so once,
 // so the icon never silently disappears
-const unmapped = new Set();
-function fileIconModule(name, type) {
+const unmapped = new Set<string>();
+function fileIconModule(name: string, type?: string | null): IconModule {
   const n = fileIcon(name, type);
   if (TYPE_ICONS[n]) return TYPE_ICONS[n];
   if (!unmapped.has(n) && development() && typeof console !== 'undefined') { unmapped.add(n); console.warn('[Plenix] File: the type icon "' + n + '" has no import in File.tsx (TYPE_ICONS); the document icon is drawn.'); }
   return DocumentIcon;
 }
 
-function Picture({ src, icon }) {
+function Picture({ src, icon }: { src?: string | null; icon: IconValue }) {
   const [failed, setFailed] = React.useState(false);
   React.useEffect(() => { setFailed(false); }, [src]);
   if (src && !failed) return <img className="plx-file__picture" src={src} alt="" loading="lazy" decoding="async" onError={() => setFailed(true)} />;
   return <span className="plx-file__icon" aria-hidden="true"><Icon name={icon} /></span>;
 }
 
+export type FileProps = React.HTMLAttributes<HTMLSpanElement> & {
+  /** the file's name, with its extension */
+  name?: string;
+  kind?: 'file' | 'folder';
+  /** in bytes (a string is shown as it is) */
+  size?: number | string | null;
+  /** when it last changed: a Date or "YYYY-MM-DD" */
+  modified?: DateInput;
+  /** a folder's item count */
+  count?: number;
+  /** more after the facts */
+  meta?: React.ReactNode;
+  /** the MIME type (the icon when the extension says nothing) */
+  type?: string;
+  icon?: IconValue;
+  /** a picture instead of the icon */
+  src?: string;
+  /** a folder is open */
+  open?: boolean;
+  appearance?: 'line' | 'chip';
+  href?: string;
+  onOpen?: () => void;
+  strings?: Catalog | null;
+};
 export function File({ name = '', kind = 'file', size, modified, count, meta, type, icon, src, open = false, appearance = 'line',
-  href, onOpen, strings, className, ...rest }) {
-  const t = useStrings('file', strings);
+  href, onOpen, strings, className, ...rest }: FileProps) {
+  const t = useStrings('file', strings) as { item: string; items: string; folder: string };
   const folder = kind === 'folder';
   const ext = folder ? '' : fileExtension(name);
   const base = ext ? name.slice(0, name.length - ext.length - 1) : name;
   const glyph = icon || (folder ? (open ? FolderOpenIcon : FolderIcon) : fileIconModule(name, type));
-  const facts = [];
+  const facts: string[] = [];
   if (!folder && size !== undefined && size !== null && size !== '') facts.push(typeof size === 'number' ? formatBytes(size) : String(size));
   if (folder && typeof count === 'number') facts.push(fill(count === 1 ? t.item : t.items, { n: formatNumber(count) }));
   if (modified) facts.push(formatDate(modified, { dateStyle: 'short' }));

@@ -30,16 +30,30 @@
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { Icon } from '../Icon/Icon.tsx';
+import type { IconModule, IconValue } from '../Icon/Icon.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import PencilIcon from 'plenix-platform/icons/plenix/pencil';
 import PersonIcon from 'plenix-platform/icons/plenix/person';
 import SettingsPermissionsIcon from 'plenix-platform/icons/plenix/settings-permissions';
 import VisibilityIcon from 'plenix-platform/icons/plenix/visibility';
 
-const ICONS = { owner: SettingsPermissionsIcon, editor: PencilIcon, viewer: VisibilityIcon, custom: PersonIcon };
+const ICONS: Record<string, IconModule> = { owner: SettingsPermissionsIcon, editor: PencilIcon, viewer: VisibilityIcon, custom: PersonIcon };
 
-export function RoleLabel({ role = 'viewer', label, icon, category, description, strings, className, ...rest }) {
-  const t = useStrings('roleLabel', strings);
+export type RoleLabelProps = React.HTMLAttributes<HTMLSpanElement> & {
+  /** "owner", "editor", "viewer", or a custom role's name */
+  role?: string;
+  label?: React.ReactNode;
+  /** false: no icon */
+  icon?: IconValue | false;
+  /** a custom role's category color */
+  category?: string;
+  /** what the role may do, read after the name */
+  description?: string;
+  strings?: Catalog | null;
+};
+export function RoleLabel({ role = 'viewer', label, icon, category, description, strings, className, ...rest }: RoleLabelProps) {
+  const t = useStrings('roleLabel', strings) as Record<string, string>;
   const builtIn = role === 'owner' || role === 'editor' || role === 'viewer';
   const kind = builtIn ? role : 'custom';
   const name = label || (builtIn ? t[role] : role === 'custom' ? '' : role);

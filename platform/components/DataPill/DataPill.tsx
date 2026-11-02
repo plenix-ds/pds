@@ -46,18 +46,39 @@ import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { devWarn } from '../../utils/devWarn.ts';
 import { Icon } from '../Icon/Icon.tsx';
+import type { IconModule, IconValue } from '../Icon/Icon.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import { Isolate } from '../Isolate/Isolate.tsx';
 import PersonIcon from 'plenix-platform/icons/plenix/person';
 import PersonFemaleIcon from 'plenix-platform/icons/plenix/person-female';
 import PersonMaleIcon from 'plenix-platform/icons/plenix/person-male';
 
-const GENDER = { male: { tone: 'blue', icon: PersonMaleIcon }, female: { tone: 'pink', icon: PersonFemaleIcon } };
+const GENDER: Record<string, { tone: string; icon: IconModule }> = { male: { tone: 'blue', icon: PersonMaleIcon }, female: { tone: 'pink', icon: PersonFemaleIcon } };
 
-export function DataPill({ children, tone, variant = 'soft', size, icon, data = false, kind, fill = false, gender, person = false, strings, className, ...rest }) {
+export type DataPillProps = React.HTMLAttributes<HTMLSpanElement> & {
+  /** a category color by name (the default is grey, this release) */
+  tone?: string;
+  variant?: 'soft' | 'solid' | 'plain';
+  size?: 'sm' | 'md';
+  /** false: no icon */
+  icon?: IconValue | false;
+  /** a data value (its own reading direction) */
+  data?: boolean;
+  /** "id": an identifier, isolated */
+  kind?: string;
+  /** it fills its cell, cut with an ellipsis */
+  fill?: boolean;
+  /** "male" | "female": the gender icon and color */
+  gender?: string;
+  /** the person icon */
+  person?: boolean;
+  strings?: Catalog | null;
+};
+export function DataPill({ children, tone, variant = 'soft', size, icon, data = false, kind, fill = false, gender, person = false, strings, className, ...rest }: DataPillProps) {
   devWarn('DataPill', { variant }, { variant: ['soft', 'solid', 'plain'] });
-  const t = useStrings('dataPill', strings);
-  const g = GENDER[gender];
+  const t = useStrings('dataPill', strings) as Record<string, string>;
+  const g = GENDER[gender as string];
   const color = g ? g.tone : (tone || (variant === 'plain' ? undefined : 'grey'));   // a plain value with no color keeps the text color; the default stays "grey" this release (Deprecated, issue 882: CTM selects it)
   const glyph = icon === false ? null : g ? g.icon : (icon || (person ? PersonIcon : null));   // icon={false}: a picture beside it already says it
   const title = fill && (typeof children === 'string' || typeof children === 'number') ? String(children) : undefined;
@@ -65,7 +86,7 @@ export function DataPill({ children, tone, variant = 'soft', size, icon, data = 
     <span className={cx('plx-data-pill', size === 'md' && variant !== 'plain' && 'plx-data-pill--md', 'plx-data-pill--' + variant, data && 'plx-data-pill--data', fill && 'plx-data-pill--fill', className)} data-plx-category={color} title={title} {...rest}>
       {glyph ? <Icon name={glyph} size="sm" className="plx-data-pill__icon" filled={!!g} /> : null}
       <span className="plx-data-pill__value" dir={data && kind !== 'id' ? 'auto' : undefined}>{kind === 'id' ? <Isolate kind="id">{children}</Isolate> : children}</span>
-      {g ? <span className="plx-visually-hidden">{', ' + t[gender]}</span> : null}
+      {g ? <span className="plx-visually-hidden">{', ' + t[gender as string]}</span> : null}
     </span>
   );
 }

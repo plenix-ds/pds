@@ -38,13 +38,28 @@ import { devWarn } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
 import { Icon } from '../Icon/Icon.tsx';
 import { appById, appIcon } from '../../providers/apps.ts';
+import type { PlenixApp } from '../../providers/apps.ts';
+import type { IconValue } from '../Icon/Icon.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import HomeIcon from 'plenix-platform/icons/plenix/home';
 
 
-export function BrandMark({ kind = 'mark', tone, size, app, showName = true, clearSpace = false, label, strings, className, ...rest }) {
+export type BrandMarkProps = React.HTMLAttributes<HTMLSpanElement> & {
+  /** "mark" (the symbol), "logo" (the symbol and the name), "wordmark" or "product" (an app's tile and name) */
+  kind?: 'mark' | 'logo' | 'wordmark' | 'product';
+  tone?: 'brand' | 'mono' | 'on-accent';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  /** kind product: the app (its id or its record) */
+  app?: string | PlenixApp;
+  showName?: boolean;
+  clearSpace?: boolean;
+  label?: string;
+  strings?: Catalog | null;
+};
+export function BrandMark({ kind = 'mark', tone, size, app, showName = true, clearSpace = false, label, strings, className, ...rest }: BrandMarkProps) {
   devWarn('BrandMark', { tone, size }, { tone: ['brand','mono','on-accent'], size: ['sm','md','lg','xl'] });
-  const s = useStrings('brand', strings);
+  const s = useStrings('brand', strings) as { name: string };
   if (kind === 'mark') {
     const cls = cx('plx-brand-mark', tone && 'plx-brand-mark--tone-' + tone, size && 'plx-brand-mark--size-' + size, className);
     return label ? <span role="img" aria-label={label} className={cls} {...rest} />
@@ -57,7 +72,7 @@ export function BrandMark({ kind = 'mark', tone, size, app, showName = true, cle
     const name = a ? a.label : s.name;
     return (
       <span className={lockup} role={showName ? undefined : 'img'} aria-label={showName ? undefined : (label || name)} {...rest}>
-        <span className="plx-brand-lockup__tile" aria-hidden="true"><Icon name={a ? appIcon(a) : HomeIcon} /></span>
+        <span className="plx-brand-lockup__tile" aria-hidden="true"><Icon name={(a ? appIcon(a) : HomeIcon) as IconValue} /></span>
         {showName ? <span className="plx-brand-lockup__app">{name}</span> : null}
       </span>
     );

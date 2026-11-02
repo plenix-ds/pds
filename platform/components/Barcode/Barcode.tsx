@@ -30,14 +30,25 @@ import React from 'react';
 import { devWarn } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
 import { encodeBarcode, BARCODE_QUIET_ZONE } from '../../utils/barcode.ts';
+import type { BarcodeFormat } from '../../utils/barcode.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import { fill } from '../../utils/fill.ts';
 
 // the height of the drawing in narrow bars: the stylesheet's height token sets the size, the width follows the viewBox
 const HEIGHT_MODULES = 32;
-export function Barcode({ value, format = 'code128', size = 'md', showText = true, label, strings, className, ...rest }) {
+export type BarcodeProps = React.HTMLAttributes<HTMLDivElement> & {
+  value: string | number;
+  format?: BarcodeFormat;
+  size?: 'sm' | 'md' | 'lg';
+  /** the human-readable line under the bars */
+  showText?: boolean;
+  label?: string;
+  strings?: Catalog | null;
+};
+export function Barcode({ value, format = 'code128', size = 'md', showText = true, label, strings, className, ...rest }: BarcodeProps) {
   devWarn('Barcode', { size }, { size: ['md','sm','lg'] });
-  const t = useStrings('barcode', strings);   // formats merge key by key
+  const t = useStrings('barcode', strings) as { formats: Record<string, string>; invalid: string; label: string };   // formats merge key by key
   const code = React.useMemo(() => encodeBarcode(value, format), [value, format]);
   const name = t.formats[format] || format;
   if (!code) {

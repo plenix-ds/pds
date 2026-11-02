@@ -106,17 +106,41 @@ import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { useUid } from '../../utils/layer.ts';
 import { Icon, asIcon as iconElement } from '../Icon/Icon.tsx';
+import type { IconValue } from '../Icon/Icon.tsx';
 import { Badge } from '../Badge/Badge.tsx';
+import type { BadgeProps } from '../Badge/Badge.tsx';
 import { formatNumber } from '../../utils/format.ts';
 import { development } from '../../utils/devWarn.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import ChevronDownIcon from 'plenix-platform/icons/plenix/chevron-down';
 
 
-const H = ({ level, ...props }) => React.createElement(level ? 'h' + level : 'div', props);
+const H = ({ level, ...props }: { level?: number | null } & React.HTMLAttributes<HTMLElement>) => React.createElement(level ? 'h' + level : 'div', props);
 
-export function Panel({ icon, title, description, actions, footer, surface = 'flat', elevation = 'outline', flush = false, headingLevel = 2, collapsible = false, defaultExpanded = true, expanded, onToggle, strings, className, children, ...rest }) {
-  const t = useStrings('card.panel', strings);
+export type CardSurface = 'flat' | 'glow' | 'inset';
+export type CardElevation = 'outline' | 'halo' | 'lifted';
+export type PanelProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & {
+  /** an icon before the title */
+  icon?: IconValue | React.ReactNode;
+  title?: React.ReactNode;
+  description?: React.ReactNode;
+  actions?: React.ReactNode;
+  footer?: React.ReactNode;
+  surface?: CardSurface;
+  elevation?: CardElevation;
+  /** the body without padding */
+  flush?: boolean;
+  /** the title's heading level (default 2); 0 or null: a div */
+  headingLevel?: number | null;
+  collapsible?: boolean;
+  defaultExpanded?: boolean;
+  expanded?: boolean;
+  onToggle?: (expanded: boolean) => void;
+  strings?: Catalog | null;
+};
+export function Panel({ icon, title, description, actions, footer, surface = 'flat', elevation = 'outline', flush = false, headingLevel = 2, collapsible = false, defaultExpanded = true, expanded, onToggle, strings, className, children, ...rest }: PanelProps) {
+  const t = useStrings('card.panel', strings) as { collapse: string; expand: string; section: string };
   const id = useUid('plx-panel');
   const [own, setOwn] = React.useState(defaultExpanded);
   const open = !collapsible || (expanded === undefined ? own : expanded);
@@ -143,19 +167,48 @@ export function Panel({ icon, title, description, actions, footer, surface = 'fl
   );
 }
 
-function Opener({ href, onOpen, current, className, children }) {
+type OpenerProps = { href?: string; onOpen?: () => void; current?: boolean; className?: string; children?: React.ReactNode };
+function Opener({ href, onOpen, current, className, children }: OpenerProps) {
   if (href) return <a href={href} className={className} aria-current={current ? 'true' : undefined}>{children}</a>;
   if (onOpen) return <button type="button" className={className} aria-current={current ? 'true' : undefined} onClick={onOpen}>{children}</button>;
   return <span className={className}>{children}</span>;
 }
 
 let warnedAccent = false;
+export type CardProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & {
+  /** an icon before the title */
+  icon?: IconValue | React.ReactNode;
+  title?: React.ReactNode;
+  /** the line under the header */
+  meta?: React.ReactNode;
+  actions?: React.ReactNode;
+  surface?: CardSurface;
+  elevation?: CardElevation;
+  selected?: boolean;
+  /** the title opens this */
+  href?: string;
+  /** the title is a button that runs this */
+  onOpen?: () => void;
+  /** the title's heading level (default 3) */
+  headingLevel?: number | null;
+  /** removed (issue 621): ignored */
+  accent?: unknown;
+  expandable?: boolean;
+  defaultExpanded?: boolean;
+  expanded?: boolean;
+  onToggle?: (expanded: boolean) => void;
+  strings?: Catalog | null;
+  layout?: 'default' | 'media-first' | 'media-start';
+  bodyLayout?: 'default' | 'stack';
+  /** the title wraps instead of truncating */
+  titleWrap?: boolean;
+};
 export function Card({ icon, title, meta, actions, surface = 'flat', elevation = 'outline', selected = false, href, onOpen, headingLevel = 3, accent, expandable = false, defaultExpanded = false, expanded, onToggle,
-  strings, className, children, layout = 'default', bodyLayout = 'default', titleWrap = false, ...rest }) {
+  strings, className, children, layout = 'default', bodyLayout = 'default', titleWrap = false, ...rest }: CardProps) {
   // the removed accent prop is ignored; development says so once (issue 621)
   if (accent !== undefined && !warnedAccent && development()) { warnedAccent = true; console.warn('[Plenix] Card: the accent prop was removed (issue 621) and is ignored. Show the color inside the card instead (a ColorSwatch beside the meta, a ProgressBar color); see the Upgrading note.'); }
   const interactive = !!(href || onOpen);
-  const t = useStrings('card.card', strings);
+  const t = useStrings('card.card', strings) as { collapse: string; expand: string; card: string };
   const id = useUid('plx-card');
   const [own, setOwn] = React.useState(defaultExpanded);
   const open = !expandable || (expanded === undefined ? own : expanded);
@@ -182,18 +235,49 @@ export function Card({ icon, title, meta, actions, surface = 'flat', elevation =
   );
 }
 
+// an asset's workflow status as a Badge's parts
+export type MediaCardStatus = { tone?: BadgeProps['tone']; icon?: IconValue | null; label: React.ReactNode };
+export type MediaCardProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & {
+  /** the picture; without one, the icon */
+  src?: string;
+  alt?: string;
+  icon?: IconValue | React.ReactNode;
+  title?: React.ReactNode;
+  meta?: React.ReactNode;
+  /** over the picture's corner */
+  badge?: React.ReactNode;
+  aspect?: '4/3' | '1/1' | '16/9' | '9/16' | '3/4';
+  selected?: boolean;
+  /** a selection is in progress (the boxes show) */
+  selecting?: boolean;
+  /** (checked, event): the card can be selected */
+  onSelectChange?: (checked: boolean, event: React.MouseEvent<HTMLElement> | Event) => void;
+  selectLabel?: string;
+  href?: string;
+  onOpen?: () => void;
+  actions?: React.ReactNode;
+  /** the file type's badge */
+  type?: React.ReactNode;
+  typeIcon?: IconValue | null;
+  status?: React.ReactElement | MediaCardStatus;
+  /** a collection: two sheets behind it */
+  stack?: boolean;
+  /** a collection's count */
+  count?: number;
+  strings?: Catalog | null;
+};
 export function MediaCard({ src, alt = '', icon, title, meta, badge, aspect = '4/3', selected = false, selecting = false, onSelectChange,
-  selectLabel, href, onOpen, actions, type, typeIcon, status, stack = false, count, strings, className, onClick, onDoubleClick, ...rest }) {
-  const t = useStrings('card.mediaCard', strings);
+  selectLabel, href, onOpen, actions, type, typeIcon, status, stack = false, count, strings, className, onClick, onDoubleClick, ...rest }: MediaCardProps) {
+  const t = useStrings('card.mediaCard', strings) as { asset: string; assets: string; select: string; item: string };
   // a collection's count (library wave 12): "24 assets" in the data font, unless the page gives its own meta
   const line = meta || (typeof count === 'number' ? (count === 1 ? t.asset : t.assets).split('{n}').join(formatNumber(count)) : null);
-  const statusEl = status ? (React.isValidElement(status) ? status : <Badge tone={status.tone} icon={status.icon}>{status.label}</Badge>) : null;
+  const statusEl = status ? (React.isValidElement(status) ? status : <Badge tone={(status as MediaCardStatus).tone} icon={(status as MediaCardStatus).icon}>{(status as MediaCardStatus).label}</Badge>) : null;
   const selectable = !!onSelectChange;
   // a selectable card (owner, batch 272: "clicking the card selects it"): a click anywhere but its controls toggles the
   // selection; the title, or a double-click, opens it
-  const inControl = (e) => !!(e.target.closest && e.target.closest('a, button, input, select, textarea, [role=menu], .plx-card__actions'));
-  const click = (e) => { if (onClick) onClick(e); if (!selectable || e.defaultPrevented || inControl(e)) return; onSelectChange(!selected, e); };
-  const dblClick = (e) => { if (onDoubleClick) onDoubleClick(e); if (!selectable || e.defaultPrevented || inControl(e)) return; if (onOpen) onOpen(); else if (href) location.href = href; };
+  const inControl = (e: React.MouseEvent<HTMLElement>) => !!((e.target as Element).closest && (e.target as Element).closest('a, button, input, select, textarea, [role=menu], .plx-card__actions'));
+  const click = (e: React.MouseEvent<HTMLElement>) => { if (onClick) onClick(e); if (!selectable || e.defaultPrevented || inControl(e)) return; onSelectChange!(!selected, e); };
+  const dblClick = (e: React.MouseEvent<HTMLElement>) => { if (onDoubleClick) onDoubleClick(e); if (!selectable || e.defaultPrevented || inControl(e)) return; if (onOpen) onOpen(); else if (href) location.href = href; };
   const card = (
     <article className={cx('plx-media-card', (href || onOpen) && 'plx-media-card--interactive', selectable && 'plx-media-card--selectable', selected && 'is-selected', selecting && 'is-selecting', className)}
       onClick={click} onDoubleClick={dblClick} {...rest}>

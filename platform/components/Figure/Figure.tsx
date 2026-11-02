@@ -25,7 +25,12 @@
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
 
-export function Figure({ children, caption, credit, captionPosition = 'below', className, ...rest }) {
+export type FigureProps = React.HTMLAttributes<HTMLElement> & {
+  caption?: React.ReactNode;
+  credit?: React.ReactNode;
+  captionPosition?: 'below' | 'overlay';
+};
+export function Figure({ children, caption, credit, captionPosition = 'below', className, ...rest }: FigureProps) {
   const overlay = captionPosition === 'overlay' && caption;
   return (
     <figure className={cx('plx-figure', 'plx-figure--' + (overlay ? 'overlay' : 'below'), credit && 'plx-figure--credited', className)} {...rest}>

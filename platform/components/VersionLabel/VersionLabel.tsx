@@ -29,12 +29,20 @@ import { Badge } from '../Badge/Badge.tsx';
 import { Link } from '../Link/Link.tsx';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 
 const STATUSES = ['latest', 'draft'];
 
-export function VersionLabel({ version, status, size = 'md', href, strings, className, ...rest }) {
+export type VersionLabelProps = React.HTMLAttributes<HTMLSpanElement> & {
+  version: string | number;
+  status?: 'latest' | 'draft';
+  size?: 'md' | 'sm';
+  href?: string;
+  strings?: Catalog | null;
+};
+export function VersionLabel({ version, status, size = 'md', href, strings, className, ...rest }: VersionLabelProps) {
   devWarn('VersionLabel', { size }, { size: ['md','sm'] });
-  const words = useStrings('versionLabel', strings);
+  const words = useStrings('versionLabel', strings) as Record<string, string>;
   const s = size === 'sm' ? 'sm' : 'md';
   const numbered = typeof version === 'number' || /^\d+$/.test(String(version));
   const number = (
@@ -47,7 +55,7 @@ export function VersionLabel({ version, status, size = 'md', href, strings, clas
   return (
     <span className={cx('plx-version-label', 'plx-version-label--' + s, className)} {...rest}>
       {href ? <Link href={href} className="plx-version-label__number">{number}</Link> : <span className="plx-version-label__number">{number}</span>}
-      {STATUSES.indexOf(status) >= 0 ? <Badge tone="neutral" size={s === 'sm' ? 'sm' : 'md'} className="plx-version-label__status">{words[status]}</Badge> : null}
+      {STATUSES.indexOf(status as string) >= 0 ? <Badge tone="neutral" size={s === 'sm' ? 'sm' : 'md'} className="plx-version-label__status">{words[status as string]}</Badge> : null}
     </span>
   );
 }

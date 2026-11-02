@@ -42,16 +42,34 @@ import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { Icon } from '../Icon/Icon.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import ImageAN2Icon from 'plenix-platform/icons/plenix/image-a-2';
 
 const RATIOS = ['1-1', '4-3', '3-2', '16-9', '21-9', '3-4', '9-16'];
 
+// one art-direction source: another crop or format by media query
+export type ImageSource = { media?: string; srcSet: string; sizes?: string; type?: string };
+export type ImageProps = Omit<React.ImgHTMLAttributes<HTMLImageElement>, 'placeholder' | 'loading'> & {
+  /** the frame's shape: "auto" (the picture's own) or "1-1", "4-3", "3-2", "16-9", "21-9", "3-4", "9-16" */
+  ratio?: string;
+  fit?: 'cover' | 'contain';
+  sources?: ImageSource[];
+  loading?: 'lazy' | 'eager';
+  /** above the fold: loads first */
+  priority?: boolean;
+  placeholder?: 'color' | 'blur' | 'none';
+  placeholderSrc?: string;
+  rounded?: boolean;
+  /** what shows when it fails */
+  fallback?: React.ReactNode;
+  strings?: Catalog | null;
+};
 export const Image = React.forwardRef(function Image({ src, alt, ratio = 'auto', fit = 'cover', srcSet, sizes, sources, loading = 'lazy', priority = false,
-  placeholder = 'color', placeholderSrc, rounded = false, width, height, fallback, strings, onLoad, onError, className, ...rest }, ref) {
-  const s = useStrings('image', strings);
-  const own = React.useRef(null);
+  placeholder = 'color', placeholderSrc, rounded = false, width, height, fallback, strings, onLoad, onError, className, ...rest }: ImageProps, ref: React.ForwardedRef<HTMLImageElement>) {
+  const s = useStrings('image', strings) as { error: string };
+  const own = React.useRef<HTMLImageElement | null>(null);
   const [status, setStatus] = React.useState('loading');
-  const setRef = (el) => { own.current = el; if (typeof ref === 'function') ref(el); else if (ref) ref.current = el; };
+  const setRef = (el: HTMLImageElement | null) => { own.current = el; if (typeof ref === 'function') ref(el); else if (ref) ref.current = el; };
   // a new source starts over; a picture already in the cache is complete before React listens
   React.useEffect(() => {
     const el = own.current;
