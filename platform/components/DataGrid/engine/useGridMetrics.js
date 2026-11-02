@@ -11,7 +11,9 @@
      The engine's refs, state and setters the effects read and write (frame, header, holder, metrics, columns, keys, the options that
        change sizes) and the grid's props (height, narrow, narrowAt, mode). Returns nothing: the hook is its effects.
    Notes:
-     Moved out of DataGridEngine.jsx without any change to the code (issue 714, metrics and layout): the effects were in the engine function, in the
+     The columns fit their room before the cards (issue 929): over the room, they shrink in proportion, none under its minimum
+     readable width, and the narrow switch weighs those minimums.
+     Moved out of DataGridEngine.jsx (issue 714, metrics and layout): the effects were in the engine function, in the
      same order between the same neighbors. The engine is documented in DataGridEngine.jsx.
 */
 import React from 'react';
@@ -161,14 +163,43 @@ export function useGridMetrics({
       free.push(c.field);
     });
     const available =
-        metrics.room -
-        (selectable ? metrics.lead : 0) -
-        (rowMenu && rowMenuButton ? metrics.menu : 0) -
-        (props.viewMenu ? metrics.lead : 0),
-      used = Object.values(widths).reduce((sum, width) => sum + width, 0);
+      metrics.room -
+      (selectable ? metrics.lead : 0) -
+      (rowMenu && rowMenuButton ? metrics.menu : 0) -
+      (props.viewMenu ? metrics.lead : 0);
+    // the shown columns (a hidden column takes no room)
+    const shownColumns = columns.filter((c) => !columnVisibility || columnVisibility[c.field] !== false);
+    // the table fits its room (owner, issue 929): when the shown columns' widths add up to more than the room, they shrink
+    // in proportion to their widths, none under its minimum readable width (its minWidth, else its floor: the header and
+    // the cell space, never under --plx-ref-size-80px); a column the person sized keeps its width. The grid draws cards
+    // only when even those minimums do not fit (the narrow switch below)
+    const least = (c) => Math.max(floor[c.field] || 0, tokenPx(c.minWidth) || metrics.min);
+    const shrinking = shownColumns.filter((c) => !kinds(c).includes('icon') && !(sizing && sizing[c.field]));
+    let over = shownColumns.reduce((sum, c) => sum + (sizing && sizing[c.field] ? sizing[c.field] : widths[c.field] || 0), 0) - available;
+    const held = new Set();
+    while (over > 0.5 && held.size < shrinking.length) {
+      const open = shrinking.filter((c) => !held.has(c.field)),
+        total = open.reduce((sum, c) => sum + widths[c.field], 0);
+      if (total <= 0) break;
+      const factor = Math.max(0, (total - over) / total);
+      const under = open.filter((c) => widths[c.field] * factor < least(c));
+      if (!under.length) {
+        open.forEach((c) => { widths[c.field] *= factor; });
+        over = 0;
+      } else
+        under.forEach((c) => {
+          over -= widths[c.field] - least(c);
+          widths[c.field] = least(c);
+          held.add(c.field);
+        });
+    }
+    // whole grid steps, rounded down (a shrunk column never rounds back over the room) and never under its minimum
+    shrinking.forEach((c) => { widths[c.field] = Math.max(least(c), snapToGrid(widths[c.field], { round: 'down', step })); });
+    const used = shownColumns.reduce((sum, c) => sum + (sizing && sizing[c.field] ? sizing[c.field] : widths[c.field] || 0), 0);
     // the room that is left goes to the last column that sizes itself: it fills the grid (owner, 2026-10-22)
     const units = Math.max(0, Math.floor((available - used) / step));
-    if (free.length) widths[free[free.length - 1]] += units * step;
+    const lastFree = free.filter((field) => shownColumns.some((c) => c.field === field)).pop();
+    if (lastFree) widths[lastFree] += units * step;
     setAutoSizing((old) => (JSON.stringify(old) === JSON.stringify(widths) ? old : widths));
     setFloors((old) => (JSON.stringify(old) === JSON.stringify(floor) ? old : floor));
   }, [
@@ -184,6 +215,8 @@ export function useGridMetrics({
     headerMenu,
     cells,
     effectiveWrap,
+    JSON.stringify(columnVisibility || {}),
+    JSON.stringify(sizing || {}),
   ]);
   // the room under the table that the page keeps (#451): the grid's own part below it (its border, a footer) and the end
   // margin, padding and border of each container up to the page, so a table that fills the window ends at the page's
@@ -221,9 +254,11 @@ export function useGridMetrics({
       setMetrics((old) => (Object.keys(next).every((k) => next[k] === old[k]) ? old : next));
       // auto (#679): the table needs every visible column at its width, plus the selection, row menu and view columns; when
       // the grid's own width is smaller, it draws the row cards instead of scrolling sideways
+      // (issue 929) the switch weighs each shown column at its minimum readable width (minSize: its minWidth or floor), so a
+      // table that fits by shrinking its columns stays a table; cards only below that
       const visible = live.current.table?.getVisibleLeafColumns() || [];
       const required =
-        visible.reduce((sum, column) => sum + (column.getSize() || next.min), 0) +
+        visible.reduce((sum, column) => sum + (column.columnDef.minSize || next.min), 0) +
         (selectable ? next.lead : 0) +
         (rowMenu && rowMenuButton ? next.menu : 0) +
         (props.viewMenu ? next.lead : 0);

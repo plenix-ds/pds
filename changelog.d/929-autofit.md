@@ -1,0 +1,2 @@
+### Changed (visual)
+- A DataGrid fits its columns to its width before it shows cards (#929, the owner): when the columns' set widths add up to more than the room, they shrink in proportion, none under its minimum readable width (its minWidth, else its header and cell space, at least 80px), and the grid shows cards only when even those minimums don't fit. A column the person sized keeps its width; narrow="table" and narrow="list" are unchanged.

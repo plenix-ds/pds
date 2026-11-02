@@ -111,6 +111,7 @@ Each line links to the test's page. A test that a group test starts is listed un
 - [tree-virtual-815](tree-virtual-815.md): This test makes sure a folder tree with thousands of items stays fast, drawing only the rows on screen, while the keys, the screen reader positions and right to left still work.
 - [data-grid-card-chunks-809](data-grid-card-chunks-809.md): This test makes sure a data table with thousands of rows stays fast on a phone: its card form draws the first 100 cards, and more as the person scrolls.
 - [data-grid-card-count-679](data-grid-card-count-679.md): A data table's card list can name its records ("6 members" instead of "6 records"), with the right plural in English and Arabic.
+- [data-grid-autofit-929](data-grid-autofit-929.md): A data table fits its columns to the window and turns into cards only when even its narrowest columns cannot fit.
 - [narrow-fit-880](narrow-fit-880.md): This test makes sure a data toolbar's summary ends in "…" inside its row and the bottom navigation bar keeps all five destinations on a phone's width.
 - [date-only](date-only.md): This test makes sure a date with no time, such as a due date of October 18, shows as October 18 for everyone, wherever they are in the world.
 - [time-hook-order-885](time-hook-order-885.md): A date or time on the page does not crash when its value is empty at first and filled in later, or the other way around.

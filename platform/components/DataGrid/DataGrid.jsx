@@ -113,8 +113,10 @@
        Wrap all columns in the header's right-click menu. A row with a wrapping column starts every cell at the top, at the
        reading line height; rows without one stay centered. wrapColumns ({ field: true|false }) and onWrapColumnsChange(next)
        control it from outside; the saved view keeps it (owner, 2026-10-24)
-     narrow: "auto" (default, a SplitView's grid too; issue 679): a table while its visible columns fit the grid's measured width (their widths
-       plus the selection, row menu and view columns), else the row cards | "table" (a fixed table that may scroll sideways: the
+     narrow: "auto" (default, a SplitView's grid too; issue 679): a table while its visible columns fit the grid's measured width at their
+       minimum readable widths (each column's minWidth, else its header and cell space, at least 80px; plus the selection, row
+       menu and view columns; issue 929): the columns shrink in proportion to fit and grow to fill, a column the person sized
+       keeping its width; else the row cards | "table" (a fixed table that may scroll sideways: the
        escape hatch for a dense specialized grid) | "list" (the row cards under narrowAt, 600px). Row cards (issue 679, owner 2026-11-01: every
        grid, by default): the row template, layout "A" unless the grid names another (see layout): a bar over the cards with the select-all checkbox and the
        count of records, then each record as three aligned lines (the title and the date, the subtitle and the primary value, the secondary and the tertiary)
