@@ -55,7 +55,8 @@
        | "ranges" (ordered ranges in their order, each with a bar)
      compare: [{ label, value, amount, color }, { … }] (type comparison): the two sides; amount is the number for the bar
      items: [{ id, label, value, amount, icon, color, person: { name, src }, status, href }] (type list); list: "ranked"
-       (default) | "bars" | "records"
+       (default) | "bars" | "records"; a ranked row's rank ("#1", strings.rank) is a left-to-right island, so right to left it
+       still reads "#1", never "1#" (issue 897)
      metrics: [{ value, unit, label }] (type summary): 2–4 figures
      person: { name, role, src, gender } (type person): the picture inside the card; the name is the title, the role the context
      days: seven values, Monday first (type week): numbers for bars, true / false for marks, null for days to come; week:
@@ -223,7 +224,7 @@ function ListVisual({ items = [], variant, t }) {
         const label = i.href ? <a className="plx-metric-card__row-link" href={i.href}>{i.label}</a> : i.label;
         return (
           <li key={i.id} className="plx-metric-card__list-row">
-            {variant === 'records' ? null : <span className="plx-metric-card__rank">{dataPhrase(t.rank, { n: n + 1 })}</span>}
+            {variant === 'records' ? null : <span className="plx-metric-card__rank" dir="ltr">{dataPhrase(t.rank, { n: n + 1 })}</span>}
             {variant === 'records' ? null : (i.person ? <Avatar name={i.person.name} src={i.person.src} gender={i.person.gender} size="sm" />
               : i.icon ? <Icon name={i.icon} size="sm" className="plx-metric-card__row-icon" data-plx-color={iconHue(i.color)} /> : <span />)}
             <span className="plx-metric-card__row-label">{label}</span>

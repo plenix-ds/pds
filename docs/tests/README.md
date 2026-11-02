@@ -121,6 +121,7 @@ Each line links to the test's page. A test that a group test starts is listed un
 - [rtl-ctm-question](rtl-ctm-question.md): This test makes sure an Arabic question block inside an English page (and an English block inside an Arabic page) lays out in its own direction, as CTM's bilingual report questions need, using Plenix alone.
 - [rtl-editing-time](rtl-editing-time.md): This test makes sure the text editor, date picker, week grid, carousel and document viewer work the right way round on Arabic (right-to-left) pages.
 - [rtl-whole-page](rtl-whole-page.md): This test makes sure every Plenix app page still looks right when switched to Arabic (right to left): no sideways scrolling, titles starting at the right, and arrows pointing the right way.
+- [metric-card-rank-rtl-897](metric-card-rank-rtl-897.md): A metric card's ranked list reads "#1" on Arabic (right-to-left) pages too, never "1#".
 
 ### Pages and layout
 
