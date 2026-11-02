@@ -148,6 +148,8 @@ child({ units: ['components/Tag', 'components/DataPill', 'components/ColorSwatch
 child({ units: ['components/Carousel', 'components/Tabs'] }, 'effect-deps-882.test.js');
 // MetricCard's rank reads "#1" right to left too (issue 897)
 child({ units: ['components/MetricCard'] }, 'metric-card-rank-rtl-897.test.js');
+// a DataGrid's card count names the app's records: strings.cardCount (issue 679, the owner's card review)
+child({ units: ['components/DataGrid'] }, 'data-grid-card-count-679.test.js');
 child({ units: ['patterns/AppShell'], apps: ['dashboard', 'projects', 'messages', 'contacts', 'calendar', 'tasks', 'notes', 'bookmarks', 'files', 'settings', 'dam'] }, 'rtl-whole-page.test.js');
 if (!changed.wants({ units: ['patterns/AppShell', 'patterns/SettingsLayout', 'patterns/SplitView', 'components/Toolbar', 'patterns/ActionBar', 'components/VisuallyHidden', 'providers/DirectionProvider', 'components/Checkbox', 'components/Fieldset', 'components/Icon'] })) {
   if (failedChildren.length) { console.log(childSummary() + ' (Layout\'s own checks: nothing in scope)'); process.exit(1); }
