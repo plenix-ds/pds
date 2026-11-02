@@ -56,6 +56,9 @@ jobs:
           node-version: 22
           cache: npm
 
+      - name: Lane design-system files (lanes/<task>/design-system into the submodule) before npm ci, whose build reads the design system
+        run: node tools/agent/lane-overlay.js
+
       - run: npm ci
 
       # npm ci builds (package.json's prepare: build-app.js, which runs build-exports.js): a committed library block of
@@ -75,9 +78,6 @@ jobs:
         # the PR's own commits: from where its head left the base branch (as it is now) to its head. Not base.sha to the
         # PR's merge commit, which counts the base's newer commits (its "Generated files rebuilt") as the branch's (#623)
         run: node tools/agent/generated.js --check origin/${{ github.base_ref }} ${{ github.event.pull_request.head.sha }}
-
-      - name: Lane design-system files (lanes/<task>/design-system into the submodule)
-        run: node tools/agent/lane-overlay.js
 
       - name: Build
         run: |
@@ -167,6 +167,9 @@ jobs:
         with:
           node-version: 22
           cache: npm
+
+      - name: Lane design-system files before npm ci (its build reads the design system)
+        run: node tools/agent/lane-overlay.js
 
       - run: npm ci
 

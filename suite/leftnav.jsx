@@ -1,6 +1,6 @@
 /* Plenix suite · leftnav (suite/leftnav.jsx). Split out of app/plenix.jsx in batch 113; edit here. */
-import { Button, NavList, NavPane } from 'plenix-platform';
-import { ALL_BOOKMARKS, ALL_FILES, ALL_NOTES, ALL_TASKS, Av, CALENDARS, CONTACTS, Ico, PROJECTS, ProjStatus, THREADS } from './shared.jsx';
+import { Button, Icon, NavList, NavPane } from 'plenix-platform';
+import { ALL_BOOKMARKS, ALL_FILES, ALL_NOTES, ALL_TASKS, Av, CALENDARS, CONTACTS, PROJECTS, ProjStatus, THREADS } from './shared.jsx';
 
 /* ─── Left Nav (contextual) ─────────────────────────────────────── */
 export function LeftNav({section,sub,setSub,onSettings}){
@@ -16,7 +16,7 @@ export function LeftNav({section,sub,setSub,onSettings}){
       {heading:"Threads",items:THREADS.map(t=>({id:`t-${t.id}`,label:t.name,count:t.unread>0?t.unread:undefined,icon:<Av name={t.name} avColor={t.avColor} size={22}/>}))}]},
     contacts:{label:"Contacts",groups:[{heading:null,items:[{id:"all",label:"All contacts",count:CONTACTS.length}]},{heading:"Groups",items:[{id:"clients",label:"Clients",count:2},{id:"contractors",label:"Contractors",count:2},{id:"professional",label:"Professional"},{id:"personal",label:"Personal"}]}]},
     calendar:{label:"Calendars",groups:[{heading:"My calendars",items:[{id:"all",label:"All calendars",icon:<Mark square color="gray"/>}].concat(CALENDARS.map(c=>({id:c.id,label:c.label,icon:<Mark square color={c.color}/>})))}],
-      after:<div className="plx-u-border-t-border-divider plx-u-border-t-solid-2 plx-u-border-t-1px plx-u-mt-12px plx-u-pt-8px"><Button size="sm" variant="ghost" icon={<Ico n="up"/>}>Import calendar</Button></div>},
+      after:<div className="plx-u-border-t-border-divider plx-u-border-t-solid-2 plx-u-border-t-1px plx-u-mt-12px plx-u-pt-8px"><Button size="sm" variant="ghost" icon={<Icon name="upload"/>}>Import calendar</Button></div>},
     tasks:{label:"Tasks",groups:[{heading:null,items:[{id:"all",label:"All tasks",count:ALL_TASKS.filter(t=>!t.done).length},{id:"due",label:"Due soon",count:ALL_TASKS.filter(t=>!t.done&&["Mar 8","Mar 10"].includes(t.due)).length}]},
       {heading:"By project",items:by(ALL_TASKS,"proj",p=>ALL_TASKS.filter(t=>t.proj===p&&!t.done).length)}]},
     notes:{label:"Notes",groups:[{heading:null,items:[{id:"all",label:"All notes",count:ALL_NOTES.length}]},{heading:"Folders",items:by(ALL_NOTES,"folder",f=>ALL_NOTES.filter(n=>n.folder===f).length)}]},

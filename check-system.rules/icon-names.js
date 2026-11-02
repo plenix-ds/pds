@@ -4,8 +4,8 @@
 //   <Icon name="folder" />   icon="add"   { icon: 'pin' }   h(P.Icon, { name: 'close' })   "plx-icon--trash"   ok
 //   <Icon name="star" />     icon="collection"   { icon: 'image' }                                            finding
 // Only names written as whole literals are read (icon={'density-' + d.value} is computed at run time and not read).
-// The suite's capability records (suite/plenix-app-data.js and suite/settings-data.js, icon: "msg") name the projects page's own drawings
-// (window.PROJ_ICONS, ProjIco), not the set, and are not read. Documentation that shows a wrong name on purpose carries
+// The suite's capability records (suite/plenix-app-data.js and suite/settings-data.js, icon: "mail") name Material symbols, which the
+// pages list in a plx-icons comment (projects.jsx, settings.jsx); those records are not read here. Documentation that shows a wrong name on purpose carries
 // plx-allow-icon on its line.
 // The rule is a module check-system.js runs (it loads every file in check-system.rules/):
 //   require('./check-system.rules/icon-names.js').check({ files, add })   files: [{ file }], add(rule, file, line, text)
@@ -16,7 +16,7 @@ const path = require('path');
 const NAME = 'icon-names';
 const ROOT = path.join(__dirname, '..');
 // generated bundles and copies are checked through their sources; the capability records name other drawings
-const SKIP_FILE = /[\\/](dist|release|node_modules|vendor|Archived|archive|backups|audit|docs|spec-chunks)[\\/]|(^|[\\/])(app|assets|spec-index|spec-parts|native-guidance|plenix-app-data|settings-data)\.js$|\.min\.js$/;
+const SKIP_FILE = /[\\/](dist|release|node_modules|vendor|Archived|archive|backups|audit|docs|spec-chunks)[\\/]|(^|[\\/])(app|assets|spec-index|spec-parts|native-guidance)\.js$|\.min\.js$/;
 const PATTERNS = [
   /<Icon\b[^>]*?\bname=["'{]{1,2}([a-z0-9-]+)["'](?!\s*\+)/g,                                   // <Icon name="x"> <Icon name={'x'}>
   /\bIcon\s*,\s*\{[^}]*?\bname:\s*["']([a-z0-9-]+)["'](?!\s*\+)/g,                                // h(P.Icon, { name: 'x' })

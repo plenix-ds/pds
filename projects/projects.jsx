@@ -5,17 +5,11 @@
    Screens (Platforms Standard 4.3): a project and its capability (#/project/<id>/<capability>, e.g. #/project/3/tasks), a
    history entry each, on the projects page and on the dashboard. The new-project dialog asks before closing with
    unsaved entries (useUnsavedGuard). */
-import { CommandBar, CommandBarButton, CommandBarSearch, Menu, MenuItem, MenuRadioGroup, useCollectionView, Avatar, Button, Card, Checkbox, Columns, ContentGrid, Dialog, EmptyState, EntityHeader, Field, Fieldset, Inline, Input, Metric, NavList, NavPane, PageContent, Panel, ProgressBar, RowButton, SecondaryPane, SegmentedControl, Select, SideNavPortal, Stack, DataGrid, Tag, TagList, Text, ToolRail, useUnsavedGuard, useViewState, VisuallyHidden } from 'plenix-platform';
+import { Icon, CommandBar, CommandBarButton, CommandBarSearch, Menu, MenuItem, MenuRadioGroup, useCollectionView, Avatar, Button, Card, Checkbox, Columns, ContentGrid, Dialog, EmptyState, EntityHeader, Field, Fieldset, Inline, Input, Metric, NavList, NavPane, PageContent, Panel, ProgressBar, RowButton, SecondaryPane, SegmentedControl, Select, SideNavPortal, Stack, DataGrid, Tag, TagList, Text, ToolRail, useUnsavedGuard, useViewState, VisuallyHidden } from 'plenix-platform';
 import { ALL_FILES, ALL_NOTES, ALL_TASKS, CONTACTS, PROJECTS } from '../suite/shared.jsx';
 const { useState } = React;
 
 /* ─── Projects ──────────────────────────────────────────────────── */
-/* Project icons: data in plain script (window.PROJ_ICONS), drawn in the text color around them */
-const ProjIco = ({ n, size = 15 }) => {
-  const html = window.PROJ_ICONS && window.PROJ_ICONS[n] ? window.PROJ_ICONS[n] : (window.PROJ_ICONS && window.PROJ_ICONS.notes) || '';
-  return <svg width={size} height={size} viewBox="0 0 20 20" fill="none" aria-hidden="true" className="plx-u-block plx-u-shrink-0" dangerouslySetInnerHTML={{ __html: html }} />;
-};
-
 /* ── Status badge ── */
 const STATUS = { active: ['active', 'Active'], paused: ['waiting', 'Paused'], completed: ['success', 'Completed'], archived: ['neutral', 'Archived'] };   // status pill variants (owner, 2026-10-14)
 const statusOf = (s) => { const v = STATUS[s] || STATUS.active; return { tone: v[0], label: v[1] }; };
@@ -74,8 +68,8 @@ function ProjectsSidebar({ projects, selected, onSelect, onSettings }) {
 function ProjectNav({ proj, active, onNav, caps }) {
   const [view, updateView] = useViewState('projects');
   const pCaps = caps || window.DEFAULT_CAPS;
-  const navGroups = [{ heading: null, items: [{ id: 'home', label: 'Project home', icon: <ProjIco n="home" size={14} /> }] }]
-    .concat(window.CAPABILITY_GROUPS.map((grp) => ({ heading: grp.group, items: grp.items.filter((it) => pCaps.has(it.id)).map((it) => ({ id: it.id, label: it.label, icon: <ProjIco n={it.icon} size={13} /> })) })).filter((g) => g.items.length));
+  const navGroups = [{ heading: null, items: [{ id: 'home', label: 'Project home', icon: <Icon name="home" /> }] }]
+    .concat(window.CAPABILITY_GROUPS.map((grp) => ({ heading: grp.group, items: grp.items.filter((it) => pCaps.has(it.id)).map((it) => ({ id: it.id, label: it.label, icon: <Icon name={it.icon} /> })) })).filter((g) => g.items.length));
   return (
     <SecondaryPane title={proj.name} width="md" collapsible resizable size={view.paneWidth} onSizeChange={(w) => updateView({ paneWidth: w })}
       actions={<Button size="xs" variant="ghost" iconOnly icon="gear" label="Project settings" onClick={() => onNav('settings')} />}
@@ -186,20 +180,20 @@ function ProjectContent({ proj, panel }) {
 
   /* ── CAPABILITIES TO COME ── */
   const placeholders = {
-    roadmap: ['Roadmap', 'Gantt-style timeline planning with drag-and-drop tasks and milestones. Coming soon.', 'roadmap'],
+    roadmap: ['Roadmap', 'Gantt-style timeline planning with drag-and-drop tasks and milestones. Coming soon.', 'signpost'],
     contacts: ['Contacts', 'People linked to this project with roles — Owner, Client, Consultant, Reviewer. Coming soon.', 'contacts'],
     bookmarks: ['Bookmarks', 'Save, organize, and retrieve links with folder hierarchy, smart rules, and sharing. Coming soon.', 'link'],
-    images: ['Images', 'Image gallery — upload, paste URL, or search Unsplash. Source for mood boards. Coming soon.', 'images'],
-    mood_boards: ['Mood boards', 'Named visual collections in Grid or Masonry layout. Shareable read-only link. Coming soon.', 'mood'],
-    time_tracking: ['Time tracking', 'Log hours, mark billable time, and view weekly/monthly breakdowns. Coming soon.', 'time'],
-    activity: ['Activity feed', 'Every event logged — task changes, files, comments, status updates. Coming soon.', 'activity'],
-    bookkeeping: ['Financials', 'Budget tracking, milestone payments, invoices, and payment history. Coming soon.', 'finance'],
-    risks: ['Risks', 'RIAC log — Risks, Issues, Assumptions, Constraints with owner and priority. Coming soon.', 'risks'],
-    changes: ['Changes', 'Formal change request workflow with timeline and cost impact. Coming soon.', 'changes'],
+    images: ['Images', 'Image gallery — upload, paste URL, or search Unsplash. Source for mood boards. Coming soon.', 'image-a-2'],
+    mood_boards: ['Mood boards', 'Named visual collections in Grid or Masonry layout. Shareable read-only link. Coming soon.', 'palette'],
+    time_tracking: ['Time tracking', 'Log hours, mark billable time, and view weekly/monthly breakdowns. Coming soon.', 'clock'],
+    activity: ['Activity feed', 'Every event logged — task changes, files, comments, status updates. Coming soon.', 'timeline'],
+    bookkeeping: ['Financials', 'Budget tracking, milestone payments, invoices, and payment history. Coming soon.', 'payments'],
+    risks: ['Risks', 'RIAC log — Risks, Issues, Assumptions, Constraints with owner and priority. Coming soon.', 'warning'],
+    changes: ['Changes', 'Formal change request workflow with timeline and cost impact. Coming soon.', 'change-circle'],
   };
   if (placeholders[panel]) {
     const [title, desc, icon] = placeholders[panel];
-    return <PageContent><VisuallyHidden as="h1">{title}</VisuallyHidden><EmptyState size="page" icon={<ProjIco n={icon} size={40} />} title={title}>{desc}</EmptyState></PageContent>;
+    return <PageContent><VisuallyHidden as="h1">{title}</VisuallyHidden><EmptyState size="page" icon={<Icon name={icon} size="xl" />} title={title}>{desc}</EmptyState></PageContent>;
   }
   return null;
 }
