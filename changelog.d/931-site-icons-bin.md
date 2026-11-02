@@ -1,2 +1,0 @@
-### Added
-- `@plenix-ds/icons` ships the site-icon tool: `npx plenix-site-icons <site> <folder or file> … [--out <folder>] [--allow-unknown]` writes `plenix-icons-<site>.js` from an app's source, without a Plenix checkout (RedSave P-64, #931). It knows every Plenix icon and the Material symbols the package ships in `svg/`; another Material Symbols name is reported as unknown. The package's one dependency is `@babel/parser`.
