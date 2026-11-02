@@ -43,7 +43,7 @@
     "test:navigation": "node tests/navigation.test.js",
     "test:types": "node tests/types.test.js",
     "lint:css": "stylelint \"platform/**/*.css\" \"services/**/*.css\"",
-    "lint:js": "eslint platform suite dam/app dashboard projects messages contacts calendar tasks notes bookmarks files settings",
+    "lint:js": "eslint --no-error-on-unmatched-pattern platform suite dam/app dashboard projects messages contacts calendar tasks notes bookmarks files settings lanes",
     "lint:unused": "knip --no-exit-code",
     "lint:bundle": "node check-bundle.js",
     "typecheck": "tsc --noEmit"
