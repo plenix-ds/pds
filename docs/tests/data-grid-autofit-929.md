@@ -9,7 +9,8 @@ This test makes sure a data table fits its columns to the window and turns into 
   - AITEAM's Issues shape (seven columns of set widths) in a 760-pixel pane, and full width at 1024 and 768: a table, nothing scrolls sideways, no header is cut, and the table fills its width;
   - a St. John directory of six columns at 600: a table; at 390: cards;
   - a plain six-column grid at 600: a table; at 390: cards;
-  - narrow="list" stays cards at 1440, and narrow="table" stays a table at 390.
+  - the columns size to their content first: at 1024 and 1280 every title reads in full, and Number, Priority and Labels are no wider than their content or header needs;
+  - narrow="list" stays cards at 1440; narrow="table" stays a table at 390 and keeps its set widths (in a 760-pixel pane it scrolls sideways).
 - No script errors.
 
 ## Why it exists

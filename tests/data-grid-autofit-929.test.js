@@ -5,6 +5,9 @@
    Summary (the browser, left to right and right to left):
      AITEAM's Issues shape in a 760px pane, and full width at 1024 and 768: a table, nothing scrolls sideways, no header is cut,
        and the table fills its width (its end within one grid step of the grid's end)
+     the columns size to their content first: at 1024 and 1280 every title reads in full (the spare room goes to the title), and
+       Number and Priority are no wider than their headers need (their floor), not their set widths stretched
+     narrow="table" keeps the set widths: AITEAM's Issues in a 760px pane scrolls sideways
      a St. John directory (6 columns) at 600: a table; at 390: cards
      a plain 6-column grid at 600: a table; at 390: cards
      narrow="list" at 1440 stays cards; narrow="table" at 390 stays a table
@@ -46,8 +49,12 @@ const SHAPES = {
         const cells = [...document.querySelectorAll('.plx-data-grid__grid-header [role="columnheader"]')];
         const g = grid.getBoundingClientRect(), edges = cells.map((c) => c.getBoundingClientRect());
         const end = edges.length ? (ar ? g.right - Math.min(...edges.map((e) => e.left)) : Math.max(...edges.map((e) => e.right)) - g.left) : 0;
+        const titleCells = [...document.querySelectorAll('[role="gridcell"][data-plx-field="title"]')].slice(0, 5);
+        const width = (field) => { const c = document.querySelector('[role="columnheader"][data-plx-field="' + field + '"]'); return c ? Math.round(c.getBoundingClientRect().width) : 0; };
         return { cards: !!document.querySelector('.plx-data-grid--narrow'), sideways: hh.scrollWidth > hh.clientWidth + 1,
-          cut: heads.filter((t) => t.scrollWidth > t.clientWidth + 1).map((t) => t.textContent), gap: Math.round(g.width - end) };
+          cut: heads.filter((t) => t.scrollWidth > t.clientWidth + 1).map((t) => t.textContent), gap: Math.round(g.width - end),
+          titleFull: titleCells.length > 0 && titleCells.every((c) => { const t = c.querySelector('*') || c; return t.scrollWidth <= t.clientWidth + 1; }),
+          num: width('num'), pri: width('pri'), labels: width('labels') };
       }, SHAPES[name], dir, box, extra);
     };
 
@@ -61,6 +68,15 @@ const SHAPES = {
         assert.deepEqual(r.cut, [], d + 'AITEAM\'s Issues in ' + at + ': no header is cut');
         assert.ok(r.gap <= 8, d + 'AITEAM\'s Issues in ' + at + ': the table fills its width (gap ' + r.gap + 'px)');
       }
+      for (const windowWidth of [1024, 1280]) {
+        const r = await draw('aiteam', dir, windowWidth);
+        assert.ok(r.titleFull, d + 'AITEAM\'s Issues at ' + windowWidth + ': every title reads in full');
+        assert.ok(r.pri <= r.num && r.num <= 120, d + 'AITEAM\'s Issues at ' + windowWidth + ': Number and Priority stay at their headers\' need (' + r.num + ', ' + r.pri + ')');
+        assert.ok(r.labels < 150, d + 'AITEAM\'s Issues at ' + windowWidth + ': Labels sizes to its content, under its set 150 (' + r.labels + ')');
+      }
+      const fixed = await draw('aiteam', dir, 1440, 760, { narrow: 'table' });
+      assert.equal(fixed.cards, false, d + 'narrow="table": a table in a 760px pane');
+      assert.equal(fixed.sideways, true, d + 'narrow="table" keeps the set widths: it scrolls sideways in a 760px pane');
       assert.equal((await draw('stjohn', dir, 600)).cards, false, d + 'the directory at 600 is a table');
       assert.equal((await draw('stjohn', dir, 390)).cards, true, d + 'the directory at 390 is cards');
       assert.equal((await draw('plain', dir, 600)).cards, false, d + 'the plain grid at 600 is a table');
