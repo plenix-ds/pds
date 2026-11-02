@@ -26,7 +26,7 @@ import { usePressable } from '../../hooks/usePressable.ts';
 
 export type RowButtonProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> & {
   selected?: boolean;
-  /** aria-current ("page", "true", …) */
+  /** aria-current ("page", "true", ...) */
   current?: React.AriaAttributes['aria-current'];
   pressed?: boolean;
   expanded?: boolean;
