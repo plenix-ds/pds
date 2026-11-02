@@ -62,9 +62,11 @@ function need(file) {
 
 // ---- plenix.js: the source file of a position, through the source map of the same build
 function sourceMapOf(file) {
-  const built = path.join(ROOT, 'platform', 'dist', 'platform.js'), mapFile = path.join(ROOT, 'build', 'vite', 'platform.js.map');
+  // the CDN's plenix.js is the browser global without the built-in Arabic words (issue 882): build-packages.js builds it
+  // into build/vite/cdn/plenix.js, with its hidden source map beside it
+  const built = path.join(ROOT, 'build', 'vite', 'cdn', 'plenix.js'), mapFile = path.join(ROOT, 'build', 'vite', 'cdn', 'plenix.js.map');
   if (!fs.existsSync(mapFile) || !fs.existsSync(built) || !fs.readFileSync(file).equals(fs.readFileSync(built))) {
-    console.log('BUNDLE_FAIL: ' + path.relative(ROOT, file) + ' has no source map of its own build (build/vite/platform.js.map, for the same platform/dist/platform.js): run node build-app.js, then node build-packages.js'); process.exit(1);
+    console.log('BUNDLE_FAIL: ' + path.relative(ROOT, file) + ' has no source map of its own build (build/vite/cdn/plenix.js.map, for the same build/vite/cdn/plenix.js): run node build-app.js, then node build-packages.js'); process.exit(1);
   }
   const map = new (require('module').SourceMap)(JSON.parse(fs.readFileSync(mapFile, 'utf8')));
   const dir = path.dirname(mapFile);

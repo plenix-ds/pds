@@ -21,10 +21,14 @@
    A release holds every file the page needs: <cdn><version>/plenix.css, plenix.js, … and apps/<app>/ (app.js and
    plenix-icons-<app>.js; apps/suite/plenix-app-data.js; apps/dam/assets.js), written by build-packages.js. So a pinned
    application runs its own script of that release, never a newer one.
+   Arabic (issue 882): on the CDN, plenix.js leaves Plenix's built-in Arabic words out; on an Arabic page (<html lang="ar…">,
+   or data-plenix-languages="ar" on the loader tag for a page that may switch to Arabic) the loader adds plenix-ar.js right
+   after plenix.js. This checkout's platform.js keeps them built in.
    Until plenix.css has loaded, the page is hidden (data-plx-page-loading on <html>, loader.css), at most 3 seconds; then
    it shows anyway, with a warning. Every script is added with async = false, so they run in the order above.
    After plenix.js runs, Plenix.version must be the release picked; a difference is one console warning (plenix.js itself
-   compares its stylesheet's --plx-version). window.PlenixLoader: { mode: 'cdn' | 'local', version, base, app, ready, done }.
+   compares its stylesheet's --plx-version). window.PlenixLoader: { mode: 'cdn' | 'local', version, base, app, ready, done,
+   loadLanguage(code) }: loadLanguage('ar') adds plenix-ar.js later, once (LocaleProvider asks when a page turns Arabic).
    The ready signal: window.PlenixLoader.ready is a promise, there as soon as the loader has run, that resolves once the
      application's own script has run (and the page is shown), with window.PlenixLoader; then PlenixLoader.done is true and
      document fires the event plenix:ready. It rejects when the application's script cannot load, or when no release can
@@ -43,6 +47,9 @@
   var cdn = me.getAttribute('data-plenix-cdn') || '';
   var pinned = me.getAttribute('data-plenix-version') || '';
   var fallback = me.getAttribute('data-plenix-fallback') || '';
+  // an Arabic page: <html lang="ar…">, or a page that may switch to Arabic and says so (data-plenix-languages="ar")
+  var html = document.documentElement, lang = (html && typeof html.getAttribute === 'function' ? html.getAttribute('lang') : html && html.lang) || '';
+  var arabic = /^ar(-|$)/i.test(lang) || /(^|\s)ar(\s|$)/.test(me.getAttribute('data-plenix-languages') || '');
   var pick = (/[?&]plenix=([\w.-]+)/.exec(location.search) || [])[1] || '';
   var RELEASE = /^\d+\.\d+\.\d+$/;
   var checkout = new URL('../', me.src).href;   // this checkout's platform/ folder
@@ -87,7 +94,9 @@
       favicon: r + 'source/platform/brand/favicon.svg',
       font: r + 'fonts/dm-sans-variable-latin.woff2',
       css: [r + 'fonts.css', r + 'plenix.min.css'],   // the same rules as plenix.css, minified (issue 882)
-      scripts: [r + 'vendor/react.production.min.js', r + 'vendor/react-dom.production.min.js', r + 'plenix.js', a + 'plenix-icons-' + app + '.js', r + 'plenix-engines.js'],
+      // an Arabic page also gets plenix-ar.js right after plenix.js: the CDN's plenix.js leaves Plenix's built-in Arabic
+      // words out (issue 882); this checkout's platform.js keeps them, so local mode needs nothing
+      scripts: [r + 'vendor/react.production.min.js', r + 'vendor/react-dom.production.min.js', r + 'plenix.js'].concat(arabic ? [r + 'plenix-ar.js'] : [], [a + 'plenix-icons-' + app + '.js', r + 'plenix-engines.js']),
       themeBoot: r + 'theme-boot.js',
       late: (dam ? [] : [r + 'apps/suite/plenix-app-data.js']).concat(app === 'settings' ? [r + 'apps/suite/settings-data.js'] : []).concat([a + (dam ? 'assets.js' : 'app.js')]),
       audits: []
@@ -103,12 +112,25 @@
   function script(src, onload) {
     var el = add('script', { src: src, async: false });
     if (onload) el.addEventListener('load', onload);
+    if (/plenix-[a-z]{2}\.js$/.test(src)) languageFailed(el, src);
     return el;
+  }
+  // a language's words that cannot load (issue 882): the page still works, in English, and the console says why, once
+  function languageFailed(el, src) {
+    el.addEventListener('error', function () { warn('language-' + src, 'could not load ' + src + ': Plenix\'s own words show in English on this page'); });
   }
 
   function load(mode, version) {
     var f = filesOf(mode, version);
     state.mode = mode; state.version = mode === 'local' ? 'local' : version; state.base = f.base;
+    // a language's built-in words asked for after the start (LocaleProvider, issue 882: a switch to Arabic without a
+    // reload): on the CDN, plenix-<code>.js of the same release, once; in local mode they are built in
+    var languages = { ar: arabic };
+    state.loadLanguage = function (code) {
+      if (mode === 'local' || code !== 'ar' || languages[code]) return;
+      languages[code] = true;
+      languageFailed(add('script', { src: f.base + 'plenix-' + code + '.js' }), f.base + 'plenix-' + code + '.js');
+    };
     root.setAttribute('data-plenix-source', mode === 'local' ? 'local' : version);
     add('link', { rel: 'icon', type: 'image/svg+xml', href: f.favicon });
     // the theme first, so the page never shows the other mode
