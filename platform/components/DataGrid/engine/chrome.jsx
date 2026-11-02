@@ -18,7 +18,7 @@ import React from 'react';
 import { EmptyState } from '../../EmptyState/EmptyState.tsx';
 import { Button } from '../../Button/Button.tsx';
 import SettingsCustomizeIcon from 'plenix-platform/icons/plenix/settings-customize';
-import { Menu, MenuItem, MenuDivider } from '../../Menu/Menu.jsx';
+import { Menu, MenuItem, MenuDivider } from '../../Menu/Menu.tsx';
 import { cx } from '../../../utils/cx.ts';
 import { Inline } from '../../Stack/Stack.tsx';
 import { words } from './helpers.jsx';

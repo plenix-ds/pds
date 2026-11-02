@@ -48,7 +48,7 @@ import { cx } from '../../utils/cx.ts';
 import { Button } from '../../components/Button/Button.tsx';
 import { SearchField } from '../../components/SearchField/SearchField.tsx';
 import { CommandBar, CommandBarButton } from '../CommandBar/CommandBar.jsx';
-import { Menu, MenuItem } from '../../components/Menu/Menu.jsx';
+import { Menu, MenuItem } from '../../components/Menu/Menu.tsx';
 import { Chip } from '../../components/Tag/Tag.tsx';
 import { EmptyState } from '../../components/EmptyState/EmptyState.tsx';
 import { FilterBar } from '../FilterBar/FilterBar.jsx';

@@ -42,7 +42,7 @@ import { cx } from '../../utils/cx.ts';
 import { useBarFit } from '../../utils/barFit.ts';
 import { isRtl } from '../../utils/direction.ts';
 import { Button } from '../Button/Button.tsx';
-import { Menu, MenuGroup } from '../Menu/Menu.jsx';
+import { Menu, MenuGroup } from '../Menu/Menu.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import MoreIcon from 'plenix-platform/icons/plenix/more';
 

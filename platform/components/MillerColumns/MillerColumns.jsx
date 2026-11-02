@@ -51,7 +51,7 @@
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { Icon } from '../Icon/Icon.tsx';
-import { tokenPx } from '../../patterns/AppShell/AppShell.jsx';
+import { tokenPx } from '../../patterns/AppShell/AppShell.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import ChevronRightIcon from 'plenix-platform/icons/plenix/chevron-right';
 import { fill } from '../../utils/fill.ts';

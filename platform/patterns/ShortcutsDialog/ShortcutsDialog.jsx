@@ -11,7 +11,7 @@
      This dialog only documents shortcuts; it never registers or changes them.
 */
 import React from 'react';
-import { Dialog } from '../../components/Dialog/Dialog.jsx';
+import { Dialog } from '../../components/Dialog/Dialog.tsx';
 import { Stack, Inline } from '../../components/Stack/Stack.tsx';
 import { SearchField } from '../../components/SearchField/SearchField.tsx';
 import { Text } from '../../components/Text/Text.tsx';

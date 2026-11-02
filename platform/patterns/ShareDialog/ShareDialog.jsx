@@ -15,13 +15,13 @@
      The server must authorize every grant and validate roles. A copied URL never enables public access itself.
 */
 import React from 'react';
-import { Dialog } from '../../components/Dialog/Dialog.jsx';
+import { Dialog } from '../../components/Dialog/Dialog.tsx';
 import { Stack, Inline } from '../../components/Stack/Stack.tsx';
 import { Field } from '../../components/Field/Field.tsx';
 import { Select } from '../../components/Input/Input.tsx';
 import { EntityPicker } from '../../components/EntityPicker/EntityPicker.jsx';
 import { RoleLabel } from '../../components/RoleLabel/RoleLabel.jsx';
-import { CopyButton } from '../../components/CopyButton/CopyButton.jsx';
+import { CopyButton } from '../../components/CopyButton/CopyButton.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Tabs } from '../../components/Tabs/Tabs.jsx';
 import { Notice } from '../../components/Notice/Notice.tsx';

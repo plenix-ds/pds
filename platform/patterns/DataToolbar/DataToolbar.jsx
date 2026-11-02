@@ -15,7 +15,7 @@
 */
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
-import { Toolbar } from '../../components/Toolbar/Toolbar.jsx';
+import { Toolbar } from '../../components/Toolbar/Toolbar.tsx';
 
 export function DataToolbar({ label, start, end, className, children }) {
   return (

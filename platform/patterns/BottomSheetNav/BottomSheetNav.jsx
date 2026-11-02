@@ -34,9 +34,9 @@
 */
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
-import { Sheet } from '../../components/Sheet/Sheet.jsx';
-import { NavList } from '../../components/NavList/NavList.jsx';
-import { RowButton } from '../../components/RowButton/RowButton.jsx';
+import { Sheet } from '../../components/Sheet/Sheet.tsx';
+import { NavList } from '../../components/NavList/NavList.tsx';
+import { RowButton } from '../../components/RowButton/RowButton.tsx';
 import { Icon } from '../../components/Icon/Icon.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 

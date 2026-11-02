@@ -27,9 +27,9 @@ import { formatNumber } from '../../../utils/format.ts';
 import { Button } from '../../Button/Button.tsx';
 import AddIcon from 'plenix-platform/icons/plenix/add';
 import { valueAt } from '../state.js';
-import { Menu, MenuItem, ContextMenu } from '../../Menu/Menu.jsx';
-import { DragHandle } from '../../DragHandle/DragHandle.jsx';
-import { Popover } from '../../Popover/Popover.jsx';
+import { Menu, MenuItem, ContextMenu } from '../../Menu/Menu.tsx';
+import { DragHandle } from '../../DragHandle/DragHandle.tsx';
+import { Popover } from '../../Popover/Popover.tsx';
 import ExpandIcon from 'plenix-platform/icons/plenix/expand';
 import MoreIcon from 'plenix-platform/icons/plenix/more';
 

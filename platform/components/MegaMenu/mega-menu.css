@@ -1,7 +1,7 @@
 /* Plenix · MegaMenu (platform/components/MegaMenu). The button is a ghost Button with its caret; the panel is a Popover
    (size auto) whose columns wrap when the window is narrower than the row: each group a muted heading over its links
    (standalone Links) and their descriptions, then the featured area on the sunken surface. The accordion is the button
-   over a NavList with folding groups. Anatomy and API: MegaMenu.jsx. */
+   over a NavList with folding groups. Anatomy and API: MegaMenu.tsx. */
 .plx-mega-menu{display:inline-flex;vertical-align:middle;}
 .plx-mega-menu--accordion{align-items:stretch;display:flex;flex-direction:column;}
 .plx-mega-menu__sections{margin-block-start:var(--plx-comp-mega-menu-sections-margin-block-start);}

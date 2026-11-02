@@ -5,7 +5,7 @@
    Behavior: Required choices omit All; radio changes preserve the collection's array shape.
    Notes: The CommandBar folding task 132 consumes this shared group. */
 import React from 'react';
-import { MenuRadioGroup, MenuItem } from '../../components/Menu/Menu.jsx';
+import { MenuRadioGroup, MenuItem } from '../../components/Menu/Menu.tsx';
 import { singleChoice } from './single-choice.js';
 import { Text } from '../../components/Text/Text.tsx';
 import { Inline } from '../../components/Stack/Stack.tsx';
