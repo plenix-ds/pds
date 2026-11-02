@@ -443,6 +443,7 @@
     },
     "feedback-neutral-solid-label": {
       "$value": "{plx-ref.color-gray-600}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-feedback-neutral-solid instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color",
       "$extensions": {
         "plenix": {
@@ -515,6 +516,7 @@
     },
     "feedback-info-solid-label": {
       "$value": "{plx-ref.color-blue-300}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-feedback-info-solid instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color",
       "$description": "The info badge and count-pill fill: blue-300, the solid, with dark text (dark theme; owner, 2026-10-12).",
       "$extensions": {
@@ -589,6 +591,7 @@
     },
     "feedback-success-solid-label": {
       "$value": "{plx-ref.color-green-300}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-feedback-success-solid instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color",
       "$description": "The success badge and count-pill fill: green-300, the solid, with dark text (dark theme; owner, 2026-10-12).",
       "$extensions": {
@@ -653,6 +656,7 @@
     },
     "feedback-warning-on-solid": {
       "$value": "{plx-ref.color-gray-950}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-feedback-info-on-solid instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color",
       "$description": "Text on the warning solid: gray-950, at least 5.9:1 on every dark solid (dark theme; owner, 2026-10-12).",
       "$extensions": {
@@ -664,6 +668,7 @@
     },
     "feedback-warning-solid-label": {
       "$value": "{plx-ref.color-orange-300}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-feedback-warning-solid instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color",
       "$description": "The warning badge and count-pill fill: orange-300, the solid, with dark text (dark theme; owner, 2026-10-14, docs/pills-and-colors.md).",
       "$extensions": {
@@ -675,6 +680,7 @@
     },
     "feedback-warning-solid-border": {
       "$value": "{plx-ref.color-brown-500}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): no role or component token has its values in every theme and density; the nearest is --plx-sys-feedback-warning-solid (the warning fill it edges, lighter). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color",
       "$description": "The warning solid edge: orange-700, darker than its orange-300 fill (dark theme; owner, 2026-10-14, docs/pills-and-colors.md).",
       "$extensions": {
@@ -739,6 +745,7 @@
     },
     "feedback-danger-solid-label": {
       "$value": "{plx-ref.color-red-200}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-feedback-danger-solid instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color",
       "$description": "The danger badge and count-pill fill: red-200, the solid, with dark text (dark theme; owner, 2026-10-12).",
       "$extensions": {
@@ -863,6 +870,7 @@
     },
     "status-done": {
       "$value": "{plx-ref.color-green-300}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-feedback-success-solid instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color",
       "$description": "Done: green-300, the success solid (dark theme).",
       "$extensions": {
@@ -874,6 +882,7 @@
     },
     "status-in-progress": {
       "$value": "{plx-ref.color-blue-300}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-feedback-info-solid instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color",
       "$description": "In progress: blue-300, the information solid (dark theme).",
       "$extensions": {
@@ -885,6 +894,7 @@
     },
     "status-blocked": {
       "$value": "{plx-ref.color-red-200}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-feedback-danger-solid instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color",
       "$description": "Blocked: red-200, the danger solid (dark theme).",
       "$extensions": {
@@ -896,6 +906,7 @@
     },
     "status-not-started": {
       "$value": "{plx-ref.color-gray-400}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-status-offline instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color",
       "$description": "Not started: gray-400, the control edge, 4.0:1 on surface-default (dark theme).",
       "$extensions": {
@@ -1947,6 +1958,7 @@
     },
     "table-header-line": {
       "$value": "{plx-ref.color-gray-700}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-comp-data-grid-header-column-line instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color",
       "$extensions": {
         "plenix": {
@@ -2017,6 +2029,7 @@
     },
     "table-border": {
       "$value": "{plx-ref.color-gray-800}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-data-grid-border instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color",
       "$extensions": {
         "plenix": {
@@ -2127,6 +2140,7 @@
     },
     "data-grid-danger": {
       "$value": "{plx-ref.color-red-500}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): no role or component token has its values in every theme and density; the nearest is --plx-sys-feedback-danger-solid (lighter in dark mode). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color",
       "$extensions": {
         "plenix": {
@@ -2137,6 +2151,7 @@
     },
     "data-grid-menu-shadow": {
       "$value": "0 {plx-ref.space-8px} {plx-ref.space-24px} {plx-ref.color-black-alpha-50}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): no role or component token has its values in every theme and density; the nearest is --plx-sys-shadow-menu (a larger shadow on every side). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "shadow"
     },
     "data-color-blue": {
@@ -3387,8 +3402,63 @@
         }
       }
     },
-    "category-grey": {
+    "category-gray": {
       "$value": "{plx-ref.color-gray-400}",
+      "$type": "color",
+      "$description": "A category color (batch 290): gray. The same in every theme, so a category is always recognized. [data-plx-category=\"gray\"] applies it.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category color, gray: the same in every theme, so a category is always recognized."
+        }
+      }
+    },
+    "category-gray-on": {
+      "$value": "{plx-ref.color-black}",
+      "$type": "color",
+      "$description": "Text on the gray category color (black: the stronger contrast).",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Text on the gray category color."
+        }
+      }
+    },
+    "category-gray-soft": {
+      "$value": "{plx-ref.color-gray-100}",
+      "$type": "color",
+      "$description": "The gray category pill background: gray-100 of the canonical palette. The same in every theme, so a category is always recognized (owner, 2026-10-15, the palette consolidation; docs/pills-and-colors.md).",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category pill, gray: its soft background."
+        }
+      }
+    },
+    "category-gray-soft-border": {
+      "$value": "{plx-ref.color-gray-300}",
+      "$type": "color",
+      "$description": "The gray category pill border, 1px: gray-300 of the canonical palette. The same in every theme, so a category is always recognized (owner, 2026-10-15, the palette consolidation; docs/pills-and-colors.md).",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category pill, gray: its 1px border."
+        }
+      }
+    },
+    "category-gray-on-soft": {
+      "$value": "{plx-ref.color-gray-700}",
+      "$type": "color",
+      "$description": "The gray category pill text, AA on its background: gray-700 of the canonical palette. The same in every theme, so a category is always recognized (owner, 2026-10-15, the palette consolidation; docs/pills-and-colors.md).",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category pill, gray: its text."
+        }
+      }
+    },
+    "category-grey": {
+      "$value": "{plx-sys.category-gray}",
       "$type": "color",
       "$description": "A category color (batch 290): grey. The same in every theme, so a category is always recognized. [data-plx-category=\"grey\"] applies it.",
       "$extensions": {
@@ -3396,10 +3466,11 @@
           "group": "dataviz",
           "purpose": "A category color, grey: the same in every theme, so a category is always recognized."
         }
-      }
+      },
+      "$deprecated": "Use --plx-sys-category-gray; \"grey\" is the British spelling, and Plenix writes American English (#882). Kept until the next minor release."
     },
     "category-grey-on": {
-      "$value": "{plx-ref.color-black}",
+      "$value": "{plx-sys.category-gray-on}",
       "$type": "color",
       "$description": "Text on the grey category color (black: the stronger contrast).",
       "$extensions": {
@@ -3407,10 +3478,11 @@
           "group": "dataviz",
           "purpose": "Text on the grey category color."
         }
-      }
+      },
+      "$deprecated": "Use --plx-sys-category-gray-on; \"grey\" is the British spelling, and Plenix writes American English (#882). Kept until the next minor release."
     },
     "category-grey-soft": {
-      "$value": "{plx-ref.color-gray-100}",
+      "$value": "{plx-sys.category-gray-soft}",
       "$type": "color",
       "$description": "The grey category pill background: gray-100 of the canonical palette. The same in every theme, so a category is always recognized (owner, 2026-10-15, the palette consolidation; docs/pills-and-colors.md).",
       "$extensions": {
@@ -3418,10 +3490,11 @@
           "group": "dataviz",
           "purpose": "A category pill, grey: its soft background."
         }
-      }
+      },
+      "$deprecated": "Use --plx-sys-category-gray-soft; \"grey\" is the British spelling, and Plenix writes American English (#882). Kept until the next minor release."
     },
     "category-grey-soft-border": {
-      "$value": "{plx-ref.color-gray-300}",
+      "$value": "{plx-sys.category-gray-soft-border}",
       "$type": "color",
       "$description": "The grey category pill border, 1px: gray-300 of the canonical palette. The same in every theme, so a category is always recognized (owner, 2026-10-15, the palette consolidation; docs/pills-and-colors.md).",
       "$extensions": {
@@ -3429,10 +3502,11 @@
           "group": "dataviz",
           "purpose": "A category pill, grey: its 1px border."
         }
-      }
+      },
+      "$deprecated": "Use --plx-sys-category-gray-soft-border; \"grey\" is the British spelling, and Plenix writes American English (#882). Kept until the next minor release."
     },
     "category-grey-on-soft": {
-      "$value": "{plx-ref.color-gray-700}",
+      "$value": "{plx-sys.category-gray-on-soft}",
       "$type": "color",
       "$description": "The grey category pill text, AA on its background: gray-700 of the canonical palette. The same in every theme, so a category is always recognized (owner, 2026-10-15, the palette consolidation; docs/pills-and-colors.md).",
       "$extensions": {
@@ -3440,7 +3514,8 @@
           "group": "dataviz",
           "purpose": "A category pill, grey: its text."
         }
-      }
+      },
+      "$deprecated": "Use --plx-sys-category-gray-on-soft; \"grey\" is the British spelling, and Plenix writes American English (#882). Kept until the next minor release."
     },
     "list-bullet": {
       "$value": "{plx-ref.color-gray-400}",

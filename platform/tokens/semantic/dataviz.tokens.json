@@ -300,6 +300,7 @@
     },
     "dataviz-grid-line": {
       "$value": "{plx-sys.border-subtle}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-border-subtle (its value) instead. It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color",
       "$description": "The chart grid and axis lines.",
       "$extensions": {
@@ -311,6 +312,7 @@
     },
     "dataviz-label": {
       "$value": "{plx-sys.content-muted}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-content-muted (its value) instead. It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color",
       "$description": "Axis labels, tick values and the legend.",
       "$extensions": {

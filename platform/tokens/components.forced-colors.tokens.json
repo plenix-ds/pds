@@ -83,6 +83,7 @@
     },
     "tabs-tab-selected-text": {
       "$value": "HighlightText",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use its value (HighlightText) instead. It keeps working, and is removed no earlier than the next minor release.",
       "$type": "color"
     },
     "tabs-segmented-tab-selected-background": {

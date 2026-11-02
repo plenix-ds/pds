@@ -1,2 +1,0 @@
-### Changed (visual)
-- Buttons have a subtler shadow and glow (#910, owner 2026-11-02): the raised button's drop shadow is the lightest card shadow (`card-elevation-halo-shadow`) at rest and on hover (hover used the heavier lifted shadow before), and the glow on secondary, tertiary, primary and danger buttons keeps its colors but starts fading later (the plain fill runs to 75%, was 55%). The focus ring, pressed and disabled buttons are unchanged.

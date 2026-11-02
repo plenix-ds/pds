@@ -41,6 +41,7 @@ would conflict with the next. The list is `tools/agent/generated.js`.
 
 - Build as often as you like to look at your change, but before every commit run `node tools/agent/generated.js --restore`.
 - CI fails a pull request that changes one (`GENERATED_FAIL`). The integrator rebuilds them when it merges.
+- One exception: the library block of `platform/index.js` and `platform/platform.css`. When your branch changes `platform/exports/` (a part renamed or added), commit the block `node build-exports.js` writes from it; CI checks it (the block as committed must equal the one `npm ci`'s build makes). `--restore` puts the block back, so run `node build-exports.js` after it.
 - `CHANGELOG.md` and `package.json` are written by the release: describe your change in the pull request instead.
 
 ## Design-system files go under `lanes/`

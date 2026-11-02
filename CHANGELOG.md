@@ -6,6 +6,31 @@ The batch numbers point to the work log (Plenix - DAM/audit/batches/).
 
 ## [Unreleased]
 
+## [0.84.0] - 2026-11-02
+
+**In short.** Pages that are not in Arabic download about 190 KB less: the CDN's `plenix.js` no longer carries the Arabic words, and the page loader adds `plenix-ar.js` on Arabic pages (also when a person switches to Arabic without a reload). Side drawers slide in with their own motion. Buttons have a subtler shadow (the lightest card shadow, at rest and on hover) and a fainter glow. 32 tokens are marked "going away", each naming its replacement, and duplicated style rules are merged, with no visible change.
+
+### Upgrading from 0.83.0
+1. **Sites that load `plenix.js` from the CDN without the Plenix page loader and show Arabic:** add `<script src="https://design-system.lighthouseway.org/cdn/0.84.0/plenix-ar.js"></script>` after `plenix.js` on Arabic pages. Without it, Plenix's own words (Close, Search…) show in English. The npm package and `plenix.esm.js` keep Arabic built in.
+2. **Going away:** 32 more tokens (see Deprecated) keep working in this release; move to the named replacement.
+3. **Nothing else to change.** Apps on the CDN loader follow this release by themselves.
+
+### Added
+- `Plenix.addLanguage(code, catalog)`: turns on a language's built-in words (`plenix-ar.js` calls it). #882
+
+### Changed
+- Component stylesheets carry no duplicate selector blocks (#882): 78 of 80 merged, with no change in any computed style. Three declarations that a later one in the same block always overrode are gone. Two stay on purpose: Dialog's motion block (its order is fixed in #912) and PropertyList's grid fallback for browsers without subgrid.
+- The CDN's `plenix.js` no longer carries Plenix's built-in Arabic words (about 190 KB less for every other page). A new file beside it, `plenix-ar.js`, adds them, and the page loader loads it by itself on an Arabic page (`<html lang="ar">`, or `data-plenix-languages="ar"` on the loader tag). #882
+
+### Changed (visual)
+- Buttons have a subtler shadow and glow (#910, owner 2026-11-02): the raised button's drop shadow is the lightest card shadow (`card-elevation-halo-shadow`) at rest and on hover (hover used the heavier lifted shadow before), and the glow on secondary, tertiary, primary and danger buttons keeps its colors but starts fading later (the plain fill runs to 75%, was 55%). The focus ring, pressed and disabled buttons are unchanged.
+
+### Fixed
+- A Drawer slides in from its own edge again, left to right as well as right to left, instead of popping in like a dialog (#912). It uses the Drawer's own timing; reduced motion still keeps it still.
+
+### Deprecated
+- 32 tokens nothing reads, each with its replacement in its token file and on its design-spec page: the feedback "solid label" roles (`--plx-sys-feedback-{neutral,info,success,danger}-solid-label`, `--plx-sys-feedback-warning-{on-solid,solid-label,solid-border}`), the status colors (`--plx-sys-status-{done,in-progress,blocked,not-started}`), the Table tokens (`--plx-sys-table-{row-height,font-size,header-line,border}`, `--plx-comp-table-radius`), `--plx-comp-tabs-tab-{text,font-weight,selected-text,selected-font-weight}`, `--plx-sys-control-icon-dialog` and `-dialog-destructive`, `--plx-sys-dataviz-{grid-line,label}`, `--plx-sys-data-grid-{danger,menu-shadow}`, and `--plx-comp-{toolbar-padding-inline,card-padding,card-title-content-gap,card-content-actions-gap,dialog-padding,drawer-padding}`. Each keeps working until it is removed, no earlier than the next minor release. #882
+
 ## [0.83.0] - 2026-11-02
 
 **In short.** A clean-up release from the code health check (#882). Pages download less: the nine apps other than Settings no longer load settings data, CDN pages get the minified stylesheet, and small npm imports of icons are about 10 KB lighter. Six library parts show a plain icon instead of an icon in a box. Two bugs are fixed: "Insert image" in the rich-text editor works again, and a Time whose value comes and goes no longer crashes. On a narrow phone, a carousel shows fewer, wider items so each one is readable. 252 unused utility classes and 14 unused tokens are marked "going away", and 98 color names retired since 0.48.0 are removed.

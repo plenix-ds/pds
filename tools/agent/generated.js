@@ -41,7 +41,16 @@ if (require.main === module) {
     const from = sh('git merge-base ' + base + ' ' + head).trim();
     const version = (ref) => { try { return versionOf(sh('git show ' + ref + ':package.json')); } catch (e) { return undefined; } };
     const changed = sh('git diff --name-only ' + from + ' ' + head).split('\n').filter(Boolean).filter((file) => isGenerated(file) && !(file === 'package.json' && version(from) === version(head)) && !(file === 'platform/components/DataGrid/data-grid-steps.css' && sh('git diff --diff-filter=D --name-only ' + from + ' ' + head + ' -- platform/components/DataGrid/DataGrid.jsx').trim() && sh('git diff --diff-filter=D --name-only ' + from + ' ' + head + ' -- platform/components/DataGrid/data-grid-steps.css').trim()));
-    for (const file of PARTIAL) if (generatedBlock(sh('git show ' + from + ':' + file)) !== generatedBlock(sh('git show ' + head + ':' + file))) changed.push(file);
+    // index.js and platform.css: a branch may change their library block only to what build-exports.js makes from the branch's
+    // own platform/exports (a renamed part file, a new part), so main is never left with a stale block until a rebuild commit.
+    // Read on the checkout of head (CI checks out the PR's head commit): the file as committed there, and build-exports' check
+    const fs = require('fs');
+    const fromExports = (file) => {
+      const full = path.join(ROOT, file);
+      if (!fs.existsSync(full) || fs.readFileSync(full, 'utf8') !== sh('git show ' + head + ':' + file)) return false;
+      return !require(path.join(ROOT, 'build-exports.js'))(ROOT, { check: true }).stale.includes(file);
+    };
+    for (const file of PARTIAL) if (generatedBlock(sh('git show ' + from + ':' + file)) !== generatedBlock(sh('git show ' + head + ':' + file)) && !fromExports(file)) changed.push(file);
     if (changed.length) {
       console.log('GENERATED_FAIL: this branch commits generated files (the integrator rebuilds them at merge):\n  ' + changed.join('\n  ') +
         '\nPut them back: node tools/agent/generated.js --restore, then commit (see AGENTS.md).');

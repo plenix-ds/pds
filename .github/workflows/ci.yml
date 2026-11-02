@@ -58,6 +58,12 @@ jobs:
 
       - run: npm ci
 
+      # npm ci builds (package.json's prepare: build-app.js, which runs build-exports.js): a committed library block of
+      # platform/index.js or platform.css that is not what build-exports.js makes from platform/exports shows as a change here
+      - name: "Exports block (the committed library block of platform/index.js and platform.css equals the one the build makes)"
+        run: |
+          git diff --exit-code HEAD -- platform/index.js platform/platform.css || { echo "The library block is stale: run node build-exports.js and commit platform/index.js and platform/platform.css"; exit 1; }
+
       # known advisories of the production dependencies (issue 696): it informs and never blocks (the run stays green, the log and the
       # job summary show what it found); the dev dependencies and the vendored libraries are not read
       - name: Dependency advisories (npm audit, production dependencies, informs only)

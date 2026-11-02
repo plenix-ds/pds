@@ -321,6 +321,12 @@ async function lazyCheck() {
   const w0 = page(), I = w0.DSIndex, ids = I.records.map((r) => r.id);
   if (w0.DSInventory.length !== recs.length) add('lazy', 'the lazy page lists ' + w0.DSInventory.length + ' records, the bundle ' + recs.length);
   w0.DSInventory.forEach((r, i) => { if (r.id !== recs[i].id) add('lazy', 'record ' + i + ' is ' + r.id + ' lazy, ' + recs[i].id + ' in the bundle (the order differs)'); });
+  // before any part loads, the records the parts change read in the lists as the bundle leaves them (the home's counts and lists)
+  for (const id of Object.keys(I.base || {})) {
+    const r = w0.DSInventory.find((x) => x.id === id), e = eager[id];
+    const bad = Object.keys(I.base[id]).filter((k) => k !== 'variantPages' && k !== 'lab' && !same(e[k], r[k]));
+    if (bad.length) add('lazy', id + ' (before its parts load) differs from the bundle in: ' + bad.join(', '));
+  }
   const done = {};
   for (const id of ids) {
     const part = I.records.find((r) => r.id === id).part, key = [part].concat((w0.DSLazy.partsFor(id))).join('|');
@@ -341,6 +347,26 @@ async function lazyCheck() {
     const r = w.DSInventory.find((x) => x.id === id), e = eager[id];
     const bad = Object.keys(e).filter((k) => !same(e[k], r[k]));
     if (bad.length) add('lazy', id + ' (loaded with ' + I.touch[id].join(', ') + ') differs from the bundle in: ' + bad.slice(0, 6).join(', '));
+  }
+  // the labs: a page draws the lab its record names (labId, a variant page's, an extra lab); the lab it gets after its own parts
+  // load must be the one the bundle ends with (the last part to register it wins)
+  const labRun = (code) => {
+    // a stand-in for the spec's helpers: any property is another stand-in (a lab part may build on another lab's spec)
+    const any = () => new Proxy(function () {}, { get: (t, k) => (k === Symbol.toPrimitive ? () => '' : k === 'then' ? undefined : any()), apply: () => any(), construct: () => any() });
+    const reg = {}, DSS = new Proxy({ registerLab: (id, spec) => { reg[id] = JSON.stringify(spec, (k, v) => (typeof v === 'function' ? 'fn:' + String(v) : v)); } }, { get: (t, k) => (k in t ? t[k] : any()) });
+    const c = { window: { DS: DSS, DSLabs: {} }, console: { log() {}, warn() {}, error() {} } };
+    c.window.window = c.window; c.DS = c.window.DS; vm.createContext(c);
+    for (const t of [].concat(code)) { try { vm.runInContext(t, c); } catch (e) { /* a part that reads helpers the stand-in lacks */ } }
+    return reg;
+  };
+  const labsEager = labRun(read(path.join(SPEC, 'spec-parts.js')));
+  const labIdsOf = (r) => [r.labId || r.id].concat((r.variantPages || []).map((v) => v.labId), (r.extraLabs || []).map((x) => x.id)).filter(Boolean);
+  for (const r of recs) {
+    const mine = labIdsOf(r).filter((l) => labsEager[l]);
+    if (!mine.length) continue;
+    const parts = w0.DSLazy.partsFor(r.id);
+    const lazy = labRun(parts.map((n) => read(path.join(SPEC, 'spec-chunks', n + '.js'))));
+    for (const l of mine) if (lazy[l] !== labsEager[l]) add('lazy', r.id + ': the lab ' + l + ' its page draws is not the bundle\'s after its parts (' + parts.join(', ') + ') load');
   }
   // all chunks in one page: every record equals the bundle's
   const wa = page(); for (const id of ids.concat(Object.keys(I.touch))) await wa.DSLazy.load(id);
