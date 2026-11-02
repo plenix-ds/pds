@@ -3,37 +3,30 @@
   "plx-comp": {
     "preview-ratio-1-1": {
       "$value": "{plx-ref.ratio-1-1}",
-      "$type": "string",
       "$description": "Preview ratio 1:1, a square: its shape, from the aspect-ratio scale."
     },
     "preview-ratio-4-3": {
       "$value": "{plx-ref.ratio-4-3}",
-      "$type": "string",
       "$description": "Preview ratio 4:3 (the default): its shape, from the aspect-ratio scale."
     },
     "preview-ratio-3-2": {
       "$value": "{plx-ref.ratio-3-2}",
-      "$type": "string",
       "$description": "Preview ratio 3:2: its shape, from the aspect-ratio scale."
     },
     "preview-ratio-16-9": {
       "$value": "{plx-ref.ratio-16-9}",
-      "$type": "string",
       "$description": "Preview ratio 16:9: its shape, from the aspect-ratio scale."
     },
     "preview-ratio-21-9": {
       "$value": "{plx-ref.ratio-21-9}",
-      "$type": "string",
       "$description": "Preview ratio 21:9: its shape, from the aspect-ratio scale."
     },
     "preview-ratio-3-4": {
       "$value": "{plx-ref.ratio-3-4}",
-      "$type": "string",
       "$description": "Preview ratio 3:4, portrait: its shape, from the aspect-ratio scale."
     },
     "preview-ratio-9-16": {
       "$value": "{plx-ref.ratio-9-16}",
-      "$type": "string",
       "$description": "Preview ratio 9:16, portrait: its shape, from the aspect-ratio scale."
     }
   }

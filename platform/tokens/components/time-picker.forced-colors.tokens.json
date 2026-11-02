@@ -3,11 +3,13 @@
   "plx-comp": {
     "time-picker-disabled-field-text": {
       "$value": "GrayText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "time-picker-option-selected-text": {
       "$value": "HighlightText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     }
   }
 }

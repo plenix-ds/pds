@@ -10,16 +10,19 @@
   "plx-comp": {
     "button-target-inset-block": {
       "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-target-inset-inline": {
       "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "breadcrumbs-list-row-gap": {
       "$value": "calc({plx-sys.control-target-min} - 1lh)",
       "$type": "dimension",
-      "$description": "With a phone a wrapped trail's rows part by the minimum target less one line, so the links' 44px targets of one row do not cover the next (Platforms Standard 3.2)"
+      "$description": "With a phone a wrapped trail's rows part by the minimum target less one line, so the links' 44px targets of one row do not cover the next (Platforms Standard 3.2)",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "toolbar-control-gap": {
       "$value": "{plx-ref.space-8px}",

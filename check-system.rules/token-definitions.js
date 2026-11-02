@@ -101,6 +101,14 @@ function measure() {
   // a radius with no unit-length value (the pill, 9999px) is a length too: px() read it above
   return { colors, grid, corners, hex };
 }
+// one color, any spelling (#872: a typed color is written as #rrggbb, or rgba() with its alpha): its four bytes, or the text
+const colorBytes = (v) => {
+  let m = /^#([0-9a-f]{6})([0-9a-f]{2})?$/i.exec(v);
+  if (m) return [0, 2, 4].map((i) => parseInt(m[1].slice(i, i + 2), 16)).concat(m[2] ? parseInt(m[2], 16) : 255).join(',');
+  m = /^rgba\((\d+), (\d+), (\d+), ([\d.]+)\)$/.exec(v);
+  return m ? [+m[1], +m[2], +m[3], Math.round(+m[4] * 255)].join(',') : v;
+};
+const sameColor = (a, b) => a === b || colorBytes(a) === colorBytes(b);
 const readFrozen = () => (fs.existsSync(FROZEN) ? JSON.parse(fs.readFileSync(FROZEN, 'utf8')) : { colors: {}, grid: {}, corners: {} });
 
 function check({ add }) {
@@ -108,7 +116,7 @@ function check({ add }) {
   for (const t of m.hex) add(NAME, path.join(ROOT, t.file), 0, '--plx-' + t.key + ' is a hex color outside the reference palette: colors need the owner');
   for (const k of Object.keys(m.colors)) {
     if (!(k in fz.colors)) add(NAME, path.join(ROOT, 'platform/tokens/reference.tokens.json'), 0, '--plx-ref-' + k + ' is a new color: the palette is frozen, and a color needs the owner');
-    else if (fz.colors[k] !== m.colors[k]) add(NAME, path.join(ROOT, 'platform/tokens/reference.tokens.json'), 0, '--plx-ref-' + k + ' changed from ' + fz.colors[k] + ' to ' + m.colors[k] + ': a color needs the owner');
+    else if (!sameColor(fz.colors[k], m.colors[k])) add(NAME, path.join(ROOT, 'platform/tokens/reference.tokens.json'), 0, '--plx-ref-' + k + ' changed from ' + fz.colors[k] + ' to ' + m.colors[k] + ': a color needs the owner');
   }
   for (const k of Object.keys(fz.colors)) if (!(k in m.colors)) add(NAME, at, 0, 'repaired, still listed: color ' + k + ' (run node check-system.rules/token-definitions.js --shrink)');
   for (const [kind, what, hint] of [['grid', 'is off the 4px grid', 'a multiple of 4, or named in GRID_EXEMPT with its reason'], ['corners', 'is a corner off the scale 0, 2, 4, 6px', '0, 2, 4 or 6px (D-0005)']]) {

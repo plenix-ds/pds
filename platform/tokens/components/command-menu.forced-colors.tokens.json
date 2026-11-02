@@ -3,7 +3,8 @@
   "plx-comp": {
     "command-menu-item-disabled-text": {
       "$value": "GrayText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     }
   }
 }

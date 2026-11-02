@@ -3,11 +3,13 @@
   "plx-comp": {
     "tabs-vertical-tab-selected-background": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tabs-vertical-tab-selected-text": {
       "$value": "HighlightText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     }
   }
 }

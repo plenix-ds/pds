@@ -13,8 +13,8 @@
     },
     "entity-header-columns": {
       "$value": "minmax(63%, max-content) minmax({plx-comp.entity-header-aside-min-width}, 1fr)",
-      "$type": "string",
-      "$description": "EntityHeader: the main column and the aside. The divider starts at 63% (1.7 to 1) and moves toward the end when the title needs the room; the aside keeps at least its minimum width, and past that the title wraps (owner, 2026-10-24, #297 option B)."
+      "$description": "EntityHeader: the main column and the aside. The divider starts at 63% (1.7 to 1) and moves toward the end when the title needs the room; the aside keeps at least its minimum width, and past that the title wraps (owner, 2026-10-24, #297 option B).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "entity-header-column-gap": {
       "$value": "{plx-ref.space-20px}",
@@ -63,8 +63,9 @@
     },
     "entity-header-rule-extent": {
       "$value": "110%",
-      "$type": "string",
-      "$description": "EntityHeader: the accent rule runs 10% past the wider of the heading and the details."
+      "$type": "dimension",
+      "$description": "EntityHeader: the accent rule runs 10% past the wider of the heading and the details.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "entity-header-details-gap": {
       "$value": "{plx-sys.space-cluster-md}",

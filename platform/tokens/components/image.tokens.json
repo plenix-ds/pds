@@ -12,7 +12,7 @@
       "$description": "placeholder=\"blur\": how much the tiny copy is blurred."
     },
     "image-placeholder-scale": {
-      "$value": "1.1",
+      "$value": 1.1,
       "$type": "number",
       "$description": "placeholder=\"blur\": the tiny copy is drawn a little larger, so the blur never shows a pale edge inside the frame."
     },

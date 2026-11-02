@@ -3,35 +3,43 @@
   "plx-sys": {
     "content-strong": {
       "$value": "var(--plx-ref-color-gray-100)",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "content-muted": {
       "$value": "var(--plx-sys-content-default)",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "content-subtle": {
       "$value": "var(--plx-sys-content-default)",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "border-default": {
       "$value": "var(--plx-sys-border-strong)",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "border-subtle": {
       "$value": "var(--plx-sys-border-strong)",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "border-divider": {
       "$value": "var(--plx-sys-border-strong)",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "border-separator": {
       "$value": "var(--plx-sys-border-strong)",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "control-border": {
       "$value": "var(--plx-sys-border-strong)",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     }
   }
 }

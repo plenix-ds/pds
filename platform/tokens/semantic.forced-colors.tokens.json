@@ -3,17 +3,21 @@
   "plx-sys": {
     "boundary-outline-width": {
       "$value": "var(--plx-sys-border-width-thin)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "boundary-outline-color": {
       "$value": "CanvasText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "forced-indicator": {
-      "$value": "Highlight"
+      "$value": "Highlight",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "forced-gap": {
-      "$value": "Canvas"
+      "$value": "Canvas",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     }
   }
 }

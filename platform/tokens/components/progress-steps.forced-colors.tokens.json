@@ -3,15 +3,18 @@
   "plx-comp": {
     "progress-steps-current-marker-background": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "progress-steps-current-marker-border-color": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "progress-steps-current-marker-text": {
       "$value": "HighlightText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     }
   }
 }

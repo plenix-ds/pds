@@ -22,7 +22,7 @@
       "$description": "On the inverse surface (a toast, a tooltip): an action's content at rest. There is no lighter fill step on the inverse surface, so hover, pressed and selected bring the content to full strength."
     },
     "state-inverse-active-opacity": {
-      "$value": "1",
+      "$value": 1,
       "$type": "number",
       "$description": "On the inverse surface: an action's content while hovered, pressed or selected (full strength)."
     }

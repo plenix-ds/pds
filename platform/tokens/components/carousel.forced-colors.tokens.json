@@ -3,7 +3,8 @@
   "plx-comp": {
     "carousel-dot-current-background": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     }
   }
 }

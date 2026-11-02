@@ -2,7 +2,7 @@
   "$description": "Hotkey (utils/hotkey.ts): the timing of keyboard shortcut sequences.",
   "plx-sys": {
     "hotkey-sequence-timeout": {
-      "$value": "1s",
+      "$value": { "value": 1, "unit": "s" },
       "$type": "duration",
       "$description": "How long a key that starts a sequence (G of G then I) waits for the next key"
     }

@@ -2,8 +2,8 @@
   "$description": "InlineEdit (platform/components/InlineEdit), library wave 6, lane C: its component tokens. The read view takes the text field's size, padding and type (the input tokens) so the value does not move when it turns into the field; its states are the system's hover tint and focus border color.",
   "plx-comp": {
     "inline-edit-max-width": { "$value": "{plx-comp.input-max-width}", "$type": "dimension", "$description": "InlineEdit: its widest (the text field's)." },
-    "inline-edit-read-background": { "$value": "transparent", "$type": "color", "$description": "InlineEdit read view: no fill at rest; the value reads as text." },
-    "inline-edit-read-border-color": { "$value": "transparent", "$type": "color", "$description": "InlineEdit read view: the border, kept and transparent at rest so the read view has the field's size." },
+    "inline-edit-read-background": { "$value": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 0, "hex": "#000000" }, "$type": "color", "$description": "InlineEdit read view: no fill at rest; the value reads as text." },
+    "inline-edit-read-border-color": { "$value": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 0, "hex": "#000000" }, "$type": "color", "$description": "InlineEdit read view: the border, kept and transparent at rest so the read view has the field's size." },
     "inline-edit-read-border-width": { "$value": "{plx-comp.input-border-width}", "$type": "dimension", "$description": "InlineEdit read view: the text field's border width." },
     "inline-edit-read-radius": { "$value": "{plx-comp.input-radius}", "$type": "dimension", "$description": "InlineEdit read view: the text field's corners." },
     "inline-edit-read-text": { "$value": "{plx-comp.input-text}", "$type": "color", "$description": "InlineEdit read view: the value's color (the field's text)." },

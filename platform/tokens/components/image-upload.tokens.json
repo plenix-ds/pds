@@ -114,7 +114,8 @@
     "image-upload-multiple-list-grid-template-columns": {
       "$value": "repeat(auto-fill, minmax({plx-ref.size-120px}, 1fr))",
       "$type": "dimension",
-      "$description": "ImageUpload multiple list grid template columns: multiple list grid template columns (repeat(auto-fill, minmax(size-120px, 1fr)))."
+      "$description": "ImageUpload multiple list grid template columns: multiple list grid template columns (repeat(auto-fill, minmax(size-120px, 1fr))).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "image-upload-multiple-item-row-gap": {
       "$value": "{plx-ref.space-4px}",

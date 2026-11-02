@@ -3,7 +3,8 @@
   "plx-comp": {
     "drag-handle-disabled-text": {
       "$value": "GrayText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     }
   }
 }

@@ -27,7 +27,7 @@ const EXT = 'com.plenix';
 const TIERS = ['plx-ref', 'plx-sys', 'plx-comp'];
 
 // "{plx-ref.color-gray-800}" <-> "var(--plx-ref-color-gray-800)"
-const { css: cssText } = require('./tools/token-value.js');   // a $value as CSS text: the W3C typed values too (#872)
+const { css: cssText, transparent } = require('./tools/token-value.js');   // a $value as CSS text: the W3C typed values too (#872)
 const toCss = (v) => cssText(v).replace(/\{(plx-(?:ref|sys|comp))\.([a-z0-9-]+)\}/g, 'var(--$1-$2)');
 const toJson = (v) => String(v).replace(/var\(--(plx-(?:ref|sys|comp))-([a-z0-9-]+)\)/g, '{$1.$2}');
 
@@ -119,7 +119,7 @@ function themeOutputs(root) {
       const data = withConditions(th.foundations, JSON.parse(fs.readFileSync(path.join(SRC, th.foundations), 'utf8')));
       data.$extensions = data.$extensions || {}; data.$extensions[EXT] = Object.assign({}, data.$extensions[EXT], { output: 'platform/system/themes/' + name + '.css', selector: fsel, opener: fcss + '{' });
       const toks = tokensOf(data), list = toks.map((x) => x.name).sort().join(',');
-      toks.forEach((x) => { if (COLOR_LITERAL.test(cssText(x.token.$value))) errors.push(th.foundations + ': ' + x.name + ' writes a color (' + cssText(x.token.$value) + ')'); });
+      toks.forEach((x) => { if (COLOR_LITERAL.test(cssText(x.token.$value)) && !transparent(x.token.$value)) errors.push(th.foundations + ': ' + x.name + ' writes a color (' + cssText(x.token.$value) + ')'); });
       if (scales === null) scales = list; else if (list !== scales) errors.push(th.foundations + ': does not define the same foundations as the default theme');
       sets.push({ tokens: th.foundations, before: '', data });
     }
@@ -128,7 +128,7 @@ function themeOutputs(root) {
       const data = withConditions(th[mode], JSON.parse(fs.readFileSync(path.join(SRC, th[mode]), 'utf8')));
       data.$extensions = data.$extensions || {}; data.$extensions[EXT] = Object.assign({}, data.$extensions[EXT], { output: 'platform/system/themes/' + name + '.css', selector: sel[mode], opener: sel[mode === 'light' ? 'cssLight' : 'cssDark'] + '{' });
       const toks = tokensOf(data);
-      toks.forEach((x) => { if (COLOR_LITERAL.test(cssText(x.token.$value))) errors.push(th[mode] + ': ' + x.name + ' writes a color (' + cssText(x.token.$value) + '): point to a palette color, e.g. {plx-ref.color-blue-400}'); });
+      toks.forEach((x) => { if (COLOR_LITERAL.test(cssText(x.token.$value)) && !transparent(x.token.$value)) errors.push(th[mode] + ': ' + x.name + ' writes a color (' + cssText(x.token.$value) + '): point to a palette color, e.g. {plx-ref.color-blue-400}'); });
       const names2 = toks.map((x) => x.name).sort().join(',');
       if (roles === null && mode === 'light') roles = names2;
       else if (names2 !== roles) errors.push(th[mode] + ': does not define the same roles as the default theme');

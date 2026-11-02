@@ -3,7 +3,7 @@
   "plx-comp": {
     "date-picker-width": { "$value": "{plx-ref.size-160px}", "$type": "dimension", "$description": "DatePicker: the date field's width, its calendar button inside it (a numeric date in the data font)." },
     "date-picker-box-padding-inline-end": { "$value": "{plx-sys.space-inset-xs}", "$type": "dimension", "$description": "DatePicker: the space after the calendar button inside the date box (its start padding is the text field's)." },
-    "date-picker-control-margin-block": { "$value": "calc({plx-comp.input-border-width} * -1)", "$type": "dimension", "$description": "DatePicker: the input and the calendar button reach over the box's border, so the box is as tall as the text field." },
+    "date-picker-control-margin-block": { "$value": "calc({plx-comp.input-border-width} * -1)", "$type": "dimension", "$description": "DatePicker: the input and the calendar button reach over the box's border, so the box is as tall as the text field.", "$extensions": { "com.plenix": { "webOnly": true } } },
     "date-picker-range-width": { "$value": "{plx-ref.size-280px}", "$type": "dimension", "$description": "DatePicker range: the field's width (two dates and the dash)." },
     "date-picker-time-width": { "$value": "{plx-ref.size-160px}", "$type": "dimension", "$description": "DatePicker date-time: the time field's width (a time and its zone)." },
     "date-picker-field-gap": { "$value": "{plx-sys.space-inline-sm}", "$type": "dimension", "$description": "DatePicker date-time: the space between the date field and the time field." },

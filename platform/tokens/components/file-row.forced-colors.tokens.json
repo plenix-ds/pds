@@ -3,7 +3,8 @@
   "plx-comp": {
     "file-row-selected-background": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     }
   }
 }

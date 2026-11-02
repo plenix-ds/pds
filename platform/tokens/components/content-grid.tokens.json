@@ -7,16 +7,16 @@
       "$description": "Masonry: the space under each item in its column (the same density-aware gap as between the columns)."
     },
     "content-grid-justified-last-row-grow": {
-      "$value": "1000",
+      "$value": 1000,
       "$type": "number",
       "$description": "Justified rows: how strongly the spacer after the last item takes the rest of the last row, so its items keep their own width instead of stretching."
     },
-    "content-grid-ratio-1-1": { "$value": "1", "$type": "number", "$description": "Justified rows: the width of a 1:1 item, in row heights." },
-    "content-grid-ratio-4-3": { "$value": "1.3333", "$type": "number", "$description": "Justified rows: the width of a 4:3 item, in row heights (the default)." },
-    "content-grid-ratio-3-2": { "$value": "1.5", "$type": "number", "$description": "Justified rows: the width of a 3:2 item, in row heights." },
-    "content-grid-ratio-16-9": { "$value": "1.7778", "$type": "number", "$description": "Justified rows: the width of a 16:9 item, in row heights." },
-    "content-grid-ratio-21-9": { "$value": "2.3333", "$type": "number", "$description": "Justified rows: the width of a 21:9 item, in row heights." },
-    "content-grid-ratio-3-4": { "$value": "0.75", "$type": "number", "$description": "Justified rows: the width of a 3:4 (portrait) item, in row heights." },
-    "content-grid-ratio-9-16": { "$value": "0.5625", "$type": "number", "$description": "Justified rows: the width of a 9:16 (tall portrait) item, in row heights." }
+    "content-grid-ratio-1-1": { "$value": 1, "$type": "number", "$description": "Justified rows: the width of a 1:1 item, in row heights." },
+    "content-grid-ratio-4-3": { "$value": 1.3333, "$type": "number", "$description": "Justified rows: the width of a 4:3 item, in row heights (the default)." },
+    "content-grid-ratio-3-2": { "$value": 1.5, "$type": "number", "$description": "Justified rows: the width of a 3:2 item, in row heights." },
+    "content-grid-ratio-16-9": { "$value": 1.7778, "$type": "number", "$description": "Justified rows: the width of a 16:9 item, in row heights." },
+    "content-grid-ratio-21-9": { "$value": 2.3333, "$type": "number", "$description": "Justified rows: the width of a 21:9 item, in row heights." },
+    "content-grid-ratio-3-4": { "$value": 0.75, "$type": "number", "$description": "Justified rows: the width of a 3:4 (portrait) item, in row heights." },
+    "content-grid-ratio-9-16": { "$value": 0.5625, "$type": "number", "$description": "Justified rows: the width of a 9:16 (tall portrait) item, in row heights." }
   }
 }

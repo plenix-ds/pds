@@ -12,12 +12,12 @@
       "$description": "Retry: the space between the message and the status line under it."
     },
     "retry-delay": {
-      "$value": "2s",
+      "$value": { "value": 2, "unit": "s" },
       "$type": "duration",
       "$description": "Retry: the first wait before useRetry tries again by itself (auto); each later wait doubles (behavior, read by tokenMs like toast-duration)."
     },
     "retry-delay-max": {
-      "$value": "30s",
+      "$value": { "value": 30, "unit": "s" },
       "$type": "duration",
       "$description": "Retry: the longest wait between two automatic attempts, however many have failed."
     }

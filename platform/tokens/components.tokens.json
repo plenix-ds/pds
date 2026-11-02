@@ -85,7 +85,8 @@
     },
     "button-size-md-primary-ring": {
       "$value": "none",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-size-sm-font-size": {
       "$value": "{plx-ref.font-size-12}",
@@ -137,7 +138,8 @@
     },
     "button-size-sm-primary-ring": {
       "$value": "none",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-size-xs-font-size": {
       "$value": "{plx-ref.font-size-12}",
@@ -189,7 +191,8 @@
     },
     "button-size-xs-primary-ring": {
       "$value": "none",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-size-2xs-font-size": {
       "$value": "{plx-sys.text-caption-font-size}",
@@ -241,7 +244,8 @@
     },
     "button-size-2xs-primary-ring": {
       "$value": "none",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-size-lg-font-size": {
       "$value": "{plx-ref.font-size-14}",
@@ -293,7 +297,8 @@
     },
     "button-size-lg-primary-ring": {
       "$value": "none",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-secondary-background": {
       "$value": "{plx-sys.control-background}",
@@ -389,11 +394,11 @@
       "$type": "color"
     },
     "button-ghost-background": {
-      "$value": "transparent",
+      "$value": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 0, "hex": "#000000" },
       "$type": "color"
     },
     "button-ghost-border": {
-      "$value": "transparent",
+      "$value": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 0, "hex": "#000000" },
       "$type": "color"
     },
     "button-ghost-text": {
@@ -401,7 +406,7 @@
       "$type": "color"
     },
     "button-ghost-hover-border": {
-      "$value": "transparent",
+      "$value": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 0, "hex": "#000000" },
       "$type": "color"
     },
     "button-ghost-hover-text": {
@@ -464,13 +469,15 @@
     },
     "button-secondary-glow-image": {
       "$value": "radial-gradient(ellipse at center, {plx-sys.control-background} 75%, {plx-sys.card-surface-rim} 100%)",
-      "$type": "string",
-      "$description": "Secondary and tertiary at rest: a very subtle glow, the control fill to 75% fading to the card rim (#610; 75% since #910)."
+      "$type": "gradient",
+      "$description": "Secondary and tertiary at rest: a very subtle glow, the control fill to 75% fading to the card rim (#610; 75% since #910).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-secondary-hover-glow-image": {
       "$value": "radial-gradient(ellipse at center, {plx-sys.fill-neutral-hover} 75%, {plx-sys.control-raised-hover-rim} 100%)",
-      "$type": "string",
-      "$description": "Secondary and tertiary hovered: the subtle glow on the hover fill, from 75% (#610; #910)."
+      "$type": "gradient",
+      "$description": "Secondary and tertiary hovered: the subtle glow on the hover fill, from 75% (#610; #910).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-secondary-raised-hover-background": {
       "$value": "{plx-sys.fill-neutral-hover}",
@@ -484,23 +491,27 @@
     },
     "button-primary-glow-image": {
       "$value": "radial-gradient(ellipse at center, {plx-sys.action-primary-background} 75%, {plx-sys.action-primary-background-hover} 100%)",
-      "$type": "string",
-      "$description": "Primary at rest: the subtle glow, from 75% fading to its own next shade (#610; #910)."
+      "$type": "gradient",
+      "$description": "Primary at rest: the subtle glow, from 75% fading to its own next shade (#610; #910).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-primary-hover-glow-image": {
       "$value": "radial-gradient(ellipse at center, {plx-sys.action-primary-background-hover} 75%, {plx-sys.action-primary-background-pressed} 100%)",
-      "$type": "string",
-      "$description": "Primary hovered: the subtle glow on the hover fill, from 75% (#610; #910)."
+      "$type": "gradient",
+      "$description": "Primary hovered: the subtle glow on the hover fill, from 75% (#610; #910).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-danger-glow-image": {
       "$value": "radial-gradient(ellipse at center, {plx-sys.action-danger-background} 75%, {plx-sys.action-danger-background-hover} 100%)",
-      "$type": "string",
-      "$description": "Danger at rest: the subtle glow, from 75% fading to its own next shade (#610; #910)."
+      "$type": "gradient",
+      "$description": "Danger at rest: the subtle glow, from 75% fading to its own next shade (#610; #910).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-danger-hover-glow-image": {
       "$value": "radial-gradient(ellipse at center, {plx-sys.action-danger-background-hover} 75%, {plx-sys.action-danger-background-pressed} 100%)",
-      "$type": "string",
-      "$description": "Danger hovered: the subtle glow on the hover fill, from 75% (red-800 to red-900) (#610; #910)."
+      "$type": "gradient",
+      "$description": "Danger hovered: the subtle glow on the hover fill, from 75% (red-800 to red-900) (#610; #910).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-danger-secondary-border": {
       "$value": "{plx-sys.feedback-danger-solid}",
@@ -599,11 +610,11 @@
       "$type": "color"
     },
     "button-disabled-quiet-background": {
-      "$value": "transparent",
+      "$value": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 0, "hex": "#000000" },
       "$type": "color"
     },
     "button-disabled-quiet-border": {
-      "$value": "transparent",
+      "$value": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 0, "hex": "#000000" },
       "$type": "color"
     },
     "button-focus-ring-color": {
@@ -639,12 +650,12 @@
       "$description": "Button label: how far past its trimmed box the label may draw before it is clipped, so a descender (g, y) is not cut (the label box is trimmed to the letters: text-box trim-both cap alphabetic; owner, 2026-10-29, #610)."
     },
     "button-target-inset-block": {
-      "$value": "0px",
+      "$value": { "value": 0, "unit": "px" },
       "$type": "dimension",
       "$description": "Button: how far its hit area reaches past its top and bottom (0: the button itself; on touch, up to the target size)."
     },
     "button-target-inset-inline": {
-      "$value": "0px",
+      "$value": { "value": 0, "unit": "px" },
       "$type": "dimension",
       "$description": "Button: how far its hit area reaches past its sides (0: the button itself; on touch, up to the target size)."
     },
@@ -682,9 +693,11 @@
           "before": [
             "  /* the footer row pinned to the bottom of the navigation pane and the inspector: a toolbar control (size=\"sm\") with 8px",
             "     above and below, so the control and its icon sit on the 4px grid in every density (44px compact, 44 standard, 48 comfortable) */"
-          ]
+          ],
+          "webOnly": true
         }
-      }
+      },
+      "$type": "dimension"
     },
     "nav-bar-height": {
       "$value": "{plx-ref.size-56px}",
@@ -1087,22 +1100,26 @@
     "switch-target-inset": {
       "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))",
       "$type": "dimension",
-      "$description": "The invisible target layer around a switch without a visible label: it grows the target to the minimum target (Platforms Standard 3.1) without changing the track"
+      "$description": "The invisible target layer around a switch without a visible label: it grows the target to the minimum target (Platforms Standard 3.1) without changing the track",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "segmented-item-target-inset-block": {
       "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))",
       "$type": "dimension",
-      "$description": "How far a segmented option's invisible target reaches above and below it: up to the minimum target (24px with a mouse, 44px with touch), centered (Platforms Standard 3.1)"
+      "$description": "How far a segmented option's invisible target reaches above and below it: up to the minimum target (24px with a mouse, 44px with touch), centered (Platforms Standard 3.1)",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "segmented-item-target-inset-outer": {
       "$value": "min(0px, calc(100% - {plx-sys.control-target-min}))",
       "$type": "dimension",
-      "$description": "How far the first option's target reaches before the group and the last option's after it, up to the minimum target width; the options between keep their own width, so no target covers a neighbor's"
+      "$description": "How far the first option's target reaches before the group and the last option's after it, up to the minimum target width; the options between keep their own width, so no target covers a neighbor's",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "check-target-inset": {
       "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))",
       "$type": "dimension",
-      "$description": "The invisible target layer around a checkbox without a visible label: it grows the target to the minimum target (Platforms Standard 3.1) without changing the box"
+      "$description": "The invisible target layer around a checkbox without a visible label: it grows the target to the minimum target (Platforms Standard 3.1) without changing the box",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "check-input-width": {
       "$value": "{plx-ref.size-16px}",
@@ -1110,7 +1127,8 @@
     },
     "check-input-margin-block-start": {
       "$value": "calc((1lh - {plx-ref.size-16px}) / 2)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "check-input-focus-outline-color": {
       "$value": "{plx-sys.focus-ring-color}",
@@ -1246,7 +1264,8 @@
     },
     "choice-input-margin-block-start": {
       "$value": "calc((1lh - {plx-ref.size-16px}) / 2)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "choice-text-row-gap": {
       "$value": "{plx-sys.space-stack-xs}",
@@ -1335,11 +1354,13 @@
     },
     "switch-track-after-inset-block-start": {
       "$value": "calc(({plx-ref.size-20px} - {plx-ref.size-16px}) / 2)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "switch-track-after-inset-inline-start": {
       "$value": "calc(({plx-ref.size-20px} - {plx-ref.size-16px}) / 2)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "switch-track-after-duration": {
       "$value": "{plx-sys.motion-duration-base}",
@@ -1355,11 +1376,13 @@
     },
     "switch-input-checked-track-after-transform": {
       "$value": "translateX(calc({plx-ref.size-36px} - {plx-ref.size-20px}))",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "switch-input-checked-track-rtl-after-transform": {
       "$value": "translateX(calc({plx-ref.size-20px} - {plx-ref.size-36px}))",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "switch-input-focus-track-outline-color": {
       "$value": "{plx-sys.focus-ring-color}",
@@ -1387,7 +1410,8 @@
     },
     "field-inline-grid-template-columns": {
       "$value": "{plx-ref.size-160px} minmax(0,1fr)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "field-row-gap": {
       "$value": "{plx-sys.space-inline-lg}",
@@ -1489,19 +1513,23 @@
     },
     "field-info-before-inset-block-end": {
       "$value": "calc({plx-sys.space-inset-xs} * -1)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "field-info-before-inset-block-start": {
       "$value": "calc({plx-sys.space-inset-xs} * -1)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "field-info-before-inset-inline-end": {
       "$value": "calc({plx-sys.space-inset-xs} * -1)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "field-info-before-inset-inline-start": {
       "$value": "calc({plx-sys.space-inset-xs} * -1)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "field-info-hover-background": {
       "$value": "{plx-sys.action-primary-background}",
@@ -1545,7 +1573,8 @@
     },
     "field-inline-label-sm-grid-template-columns": {
       "$value": "{plx-sys.label-width-sm} minmax(0,1fr)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "data-grid-radius": {
       "$value": "{plx-sys.radius-table-2px}",
@@ -1610,12 +1639,14 @@
     "data-grid-header-line-inset": {
       "$value": "0",
       "$type": "dimension",
-      "$description": "0: the column lines run the full height of each cell (owner, 2026-10-09: full inside borders; was a short line inset from the top and bottom)."
+      "$description": "0: the column lines run the full height of each cell (owner, 2026-10-09: full inside borders; was a short line inset from the top and bottom).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "data-grid-column-line-inset": {
       "$value": "0",
       "$type": "dimension",
-      "$description": "0: the column lines run the full height of each cell (owner, 2026-10-09: full inside borders; was a short line inset from the top and bottom)."
+      "$description": "0: the column lines run the full height of each cell (owner, 2026-10-09: full inside borders; was a short line inset from the top and bottom).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "data-grid-line-width": {
       "$value": "{plx-sys.border-width-thin}",
@@ -1649,7 +1680,8 @@
     "data-grid-title-reserve": {
       "$value": "calc({plx-comp.data-grid-popup-button-inset} + {plx-comp.data-grid-cell-padding-inline} + {plx-comp.data-grid-header-icon-size} + {plx-ref.space-4px})",
       "$description": "DataGrid header: the room the title leaves at its end for the menu button (the button's inset and width, less the cell padding the title area already stops short by, plus a 4px gap).",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "data-grid-duration": {
       "$value": "{plx-sys.motion-duration-quick}",
@@ -1722,12 +1754,14 @@
     "action-bar-stick": {
       "$value": "0",
       "$type": "dimension",
-      "$description": "How far below the scrolling area's padding edge the bar sticks: a scrolling area sets it to minus its own bottom padding, so the bar sits flush with the bottom (batch 231)"
+      "$description": "How far below the scrolling area's padding edge the bar sticks: a scrolling area sets it to minus its own bottom padding, so the bar sits flush with the bottom (batch 231)",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "action-bar-block-size": {
       "$value": "calc({plx-sys.control-height-standard} + {plx-sys.space-inset-sm} * 2 + {plx-sys.border-width-thin})",
       "$type": "dimension",
-      "$description": "The height of a one-row ActionBar (its padding, its line and a standard button): the scroll padding at the bottom of a scrolling area with a stuck bar, so a focused element is never hidden behind it (WCAG 2.2 SC 2.4.11; Platforms Standard 8.1)"
+      "$description": "The height of a one-row ActionBar (its padding, its line and a standard button): the scroll padding at the bottom of a scrolling area with a stuck bar, so a focused element is never hidden behind it (WCAG 2.2 SC 2.4.11; Platforms Standard 8.1)",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "badge-radius": {
       "$value": "{plx-sys.radius-pill-4px}",
@@ -2108,7 +2142,8 @@
     },
     "skeleton-background-image": {
       "$value": "linear-gradient(90deg,{plx-sys.skeleton-base} 25%,{plx-sys.skeleton-highlight} 50%,{plx-sys.skeleton-base} 75%)",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "skeleton-radius": {
       "$value": "{plx-sys.radius-compact-4px}",
@@ -2129,7 +2164,8 @@
     "spinner-radius": {
       "$value": "50%",
       "$type": "dimension",
-      "$description": "Spinner (all sizes): a circle. 50% of its own box, not the 6px shape role: the owner ruled a spinner is a circle, not a corner (spinner-round-29, 2026-10-27)."
+      "$description": "Spinner (all sizes): a circle. 50% of its own box, not the 6px shape role: the owner ruled a spinner is a circle, not a corner (spinner-round-29, 2026-10-27).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "spinner-border-left-color": {
       "$value": "{plx-sys.action-primary-background}",
@@ -2346,19 +2382,23 @@
     },
     "tag-remove-before-inset-block-end": {
       "$value": "calc({plx-sys.space-inset-xs} * -1)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tag-remove-before-inset-block-start": {
       "$value": "calc({plx-sys.space-inset-xs} * -1)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tag-remove-before-inset-inline-end": {
       "$value": "calc({plx-sys.space-inset-xs} * -1)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tag-remove-before-inset-inline-start": {
       "$value": "calc({plx-sys.space-inset-xs} * -1)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tag-remove-hover-text": {
       "$value": "{plx-sys.feedback-danger-solid}",
@@ -2372,7 +2412,8 @@
     "chip-target-inset": {
       "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))",
       "$type": "dimension",
-      "$description": "The invisible target layer around a chip and its toggle: it grows the target to the minimum target (Platforms Standard 3.1) without changing the 20px look; 0 where the chip already meets it"
+      "$description": "The invisible target layer around a chip and its toggle: it grows the target to the minimum target (Platforms Standard 3.1) without changing the 20px look; 0 where the chip already meets it",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tag-list-gap": {
       "$value": "{plx-sys.space-cluster-xs}",
@@ -2385,7 +2426,8 @@
     "tag-list-padding-block": {
       "$value": "0",
       "$type": "dimension",
-      "$description": "The space above and below a tag list: none with a mouse (the touch value parts it from its neighbors)"
+      "$description": "The space above and below a tag list: none with a mouse (the touch value parts it from its neighbors)",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tag-input-flex-basis": {
       "$value": "{plx-sys.field-width-lg}",
@@ -2437,19 +2479,23 @@
     },
     "tag-input-add-before-inset-block-end": {
       "$value": "calc({plx-sys.space-inset-xs} * -1)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tag-input-add-before-inset-block-start": {
       "$value": "calc({plx-sys.space-inset-xs} * -1)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tag-input-add-before-inset-inline-end": {
       "$value": "calc({plx-sys.space-inset-xs} * -1)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tag-input-add-before-inset-inline-start": {
       "$value": "calc({plx-sys.space-inset-xs} * -1)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "entity-header-tint": {
       "$value": "{plx-sys.surface-default}",
@@ -2566,12 +2612,14 @@
     "sheet-medium-height": {
       "$value": "50dvh",
       "$type": "dimension",
-      "$description": "The medium height of the bottom sheet: about half the window (Platforms Standard 5.3; HIG › Sheets, medium detent)"
+      "$description": "The medium height of the bottom sheet: about half the window (Platforms Standard 5.3; HIG › Sheets, medium detent)",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "sheet-large-height": {
       "$value": "calc(100dvh - {plx-sys.space-layout-xl})",
       "$type": "dimension",
-      "$description": "The large height of the bottom sheet: the window, less a strip of the screen behind it at the top (HIG › Sheets, large detent)"
+      "$description": "The large height of the bottom sheet: the window, less a strip of the screen behind it at the top (HIG › Sheets, large detent)",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "sheet-padding-block-end": {
       "$value": "{plx-sys.safe-area-bottom}",
@@ -2619,7 +2667,8 @@
     },
     "sheet-grabber-target-width": {
       "$value": "calc({plx-sys.control-target-min} * 2)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "sheet-grabber-focus-outline-color": {
       "$value": "{plx-sys.focus-ring-color}",
@@ -2814,7 +2863,7 @@
       "$type": "duration"
     },
     "toast-duration": {
-      "$value": "4s",
+      "$value": { "value": 4, "unit": "s" },
       "$type": "duration",
       "$description": "How long a toast stays before it leaves by itself (ToastProvider default)"
     },
@@ -3042,11 +3091,13 @@
     },
     "tabs-folder-list-background-image": {
       "$value": "linear-gradient({plx-sys.border-default},{plx-sys.border-default})",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tabs-folder-list-background-size": {
       "$value": "100% {plx-sys.border-width-thin}",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tabs-folder-tab-border-left-width": {
       "$value": "{plx-sys.border-width-thin}",
@@ -3138,7 +3189,8 @@
     },
     "tabs-contained-panel-margin-block-start": {
       "$value": "calc({plx-sys.border-width-thin} * -1)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tabs-contained-panel-padding-block": {
       "$value": "{plx-sys.space-inset-lg}",
@@ -3150,7 +3202,8 @@
     },
     "tabs-folder-list-margin-block-end": {
       "$value": "calc({plx-sys.border-width-thin} * -1)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tabs-folder-list-padding-block-end": {
       "$value": "{plx-sys.border-width-thin}",
@@ -3162,11 +3215,13 @@
     },
     "tabs-folder-tab-selected-after-height": {
       "$value": "calc({plx-sys.border-width-thin} * 2)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tabs-folder-tab-selected-after-inset-block-end": {
       "$value": "calc({plx-sys.border-width-thin} * -1)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "app-header-height": {
       "$value": "{plx-sys.shell-header-height}",
@@ -3183,12 +3238,14 @@
     "app-header-utilities-gap": {
       "$value": "0",
       "$type": "dimension",
-      "$description": "The space between the utilities: none with a fine pointer; 4px with touch, so their 44px targets do not overlap"
+      "$description": "The space between the utilities: none with a fine pointer; 4px with touch, so their 44px targets do not overlap",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "app-header-item-target-inset": {
       "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))",
       "$type": "dimension",
-      "$description": "The invisible target layer around a header item and the header name: it grows the target to the minimum target (Platforms Standard 3.1); 0 when the item already meets it"
+      "$description": "The invisible target layer around a header item and the header name: it grows the target to the minimum target (Platforms Standard 3.1); 0 when the item already meets it",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "app-header-search-view-background": {
       "$value": "{plx-sys.surface-default}",
@@ -3298,7 +3355,8 @@
     },
     "app-header-divider-background-size": {
       "$value": "{plx-sys.border-width-thin} 100%",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "app-header-divider-height": {
       "$value": "{plx-ref.size-20px}",
@@ -3342,11 +3400,13 @@
     },
     "app-header-count-inset-block-start": {
       "$value": "calc({plx-ref.space-4px} * -1)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "app-header-count-inset-inline-end": {
       "$value": "calc({plx-ref.space-4px} * -1)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "app-header-name-line-height": {
       "$value": "{plx-ref.line-height-tight}",
@@ -3418,7 +3478,8 @@
     },
     "app-switcher-panel-inset-block-start": {
       "$value": "calc(100% + {plx-ref.space-8px})",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "app-switcher-panel-padding-block": {
       "$value": "{plx-sys.space-inset-md}",
@@ -3518,7 +3579,8 @@
     },
     "app-switcher-open-focus-outline-offset": {
       "$value": "calc({plx-sys.border-width-medium} * -1)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "app-switcher-open-focus-outline-width": {
       "$value": "{plx-sys.border-width-medium}",
@@ -3566,7 +3628,8 @@
     },
     "app-header-switch-focus-outline-offset": {
       "$value": "calc({plx-sys.border-width-medium} * -1)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "app-header-switch-focus-outline-width": {
       "$value": "{plx-sys.border-width-medium}",
@@ -3598,7 +3661,8 @@
     },
     "tool-rail-shadow": {
       "$value": "inset calc({plx-sys.border-width-thin} * -1) 0 0 {plx-sys.border-default}",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tool-rail-padding-block": {
       "$value": "{plx-sys.space-inset-sm}",
@@ -3662,11 +3726,13 @@
     },
     "tool-rail-divider-background-image": {
       "$value": "linear-gradient({plx-sys.border-divider},{plx-sys.border-divider})",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tool-rail-divider-background-size": {
       "$value": "100% {plx-sys.border-width-thin}",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tool-rail-divider-height": {
       "$value": "{plx-ref.size-4px}",
@@ -3739,19 +3805,23 @@
     },
     "menu-fallback-bottom-start-inset-block-start": {
       "$value": "calc(100% + {plx-sys.space-inset-xs})",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "menu-fallback-bottom-end-inset-block-start": {
       "$value": "calc(100% + {plx-sys.space-inset-xs})",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "menu-fallback-top-start-inset-block-end": {
       "$value": "calc(100% + {plx-sys.space-inset-xs})",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "menu-fallback-top-end-inset-block-end": {
       "$value": "calc(100% + {plx-sys.space-inset-xs})",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "menu-item-text": {
       "$value": "{plx-sys.content-strong}",
@@ -3810,7 +3880,8 @@
     },
     "menu-item-focus-outline-offset": {
       "$value": "calc({plx-sys.border-width-medium} * -1)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "menu-item-focus-outline-width": {
       "$value": "{plx-sys.border-width-medium}",
@@ -3855,7 +3926,8 @@
     "menu-divider-margin-inline": {
       "$value": "calc({plx-comp.menu-padding-inline} * -1)",
       "$type": "dimension",
-      "$description": "Menu divider: it runs the menu's full width, edge to edge through the menu's padding, as Blueprint (#805)."
+      "$description": "Menu divider: it runs the menu's full width, edge to edge through the menu's padding, as Blueprint (#805).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "menu-group-label-text": {
       "$value": "{plx-sys.content-strong}",
@@ -4156,12 +4228,14 @@
     "breadcrumbs-link-target-inset-block": {
       "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))",
       "$type": "dimension",
-      "$description": "How far a breadcrumb link's invisible target reaches above and below its text: up to the minimum target (--plx-sys-control-target-min: 24px with a mouse, 44px with touch), centered on the link; 0 when the link is already that tall (Platforms Standard 3.1)."
+      "$description": "How far a breadcrumb link's invisible target reaches above and below its text: up to the minimum target (--plx-sys-control-target-min: 24px with a mouse, 44px with touch), centered on the link; 0 when the link is already that tall (Platforms Standard 3.1).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "breadcrumbs-link-target-inset-inline": {
       "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))",
       "$type": "dimension",
-      "$description": "How far a breadcrumb link's invisible target reaches before and after its text: up to the minimum target width, centered on the link; 0 when the link is already that wide."
+      "$description": "How far a breadcrumb link's invisible target reaches before and after its text: up to the minimum target width, centered on the link; 0 when the link is already that wide.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "breadcrumbs-list-gap": {
       "$value": "{plx-sys.space-inline-sm}",
@@ -4330,12 +4404,14 @@
     "card-opener-target-padding-block": {
       "$value": "max(0px, calc(({plx-sys.control-target-min} - 1lh) / 2))",
       "$type": "dimension",
-      "$description": "A selectable media card's title grows to the minimum target (Platforms Standard 3.1): (target - its line) / 2 above and below, 0 when the line already meets it"
+      "$description": "A selectable media card's title grows to the minimum target (Platforms Standard 3.1): (target - its line) / 2 above and below, 0 when the line already meets it",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "card-opener-target-margin-block": {
       "$value": "min(0px, calc((1lh - {plx-sys.control-target-min}) / 2))",
       "$type": "dimension",
-      "$description": "The negative margin that takes the title's target padding back, so the card's layout does not move"
+      "$description": "The negative margin that takes the title's target padding back, so the card's layout does not move",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "card-padding-inline": {
       "$value": "{plx-sys.space-inset-lg}",
@@ -4433,11 +4509,13 @@
     },
     "media-card-media-border-top-left-radius": {
       "$value": "calc({plx-sys.radius-card-6px} - {plx-sys.border-width-thin})",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "media-card-media-border-top-right-radius": {
       "$value": "calc({plx-sys.radius-card-6px} - {plx-sys.border-width-thin})",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "media-card-media-background": {
       "$value": "{plx-sys.surface-sunken}",
@@ -4609,7 +4687,8 @@
     },
     "chat-typing-third-dot-delay": {
       "$value": "calc({plx-sys.motion-delay-stagger} * 2)",
-      "$type": "duration"
+      "$type": "duration",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "chat-header-border-block-end-color": {
       "$value": "{plx-sys.border-divider}",
@@ -5191,7 +5270,8 @@
     },
     "chat-thread-focus-outline-offset": {
       "$value": "calc({plx-sys.focus-ring-offset} * -1)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "chat-thread-focus-outline-width": {
       "$value": "{plx-sys.border-width-medium}",
@@ -5215,7 +5295,8 @@
     },
     "code-block-head-shadow": {
       "$value": "inset 0 calc({plx-sys.border-width-thin} * -1) 0 {plx-sys.border-divider}",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "code-block-head-gap": {
       "$value": "{plx-sys.space-inline-sm}",
@@ -5287,7 +5368,8 @@
     },
     "code-block-pre-focus-outline-offset": {
       "$value": "calc({plx-sys.border-width-medium} * -1)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "code-block-pre-focus-outline-width": {
       "$value": "{plx-sys.border-width-medium}",
@@ -5331,7 +5413,8 @@
     },
     "collapsible-section-heading-shadow": {
       "$value": "inset 0 calc({plx-sys.border-width-thin} * -1) 0 {plx-sys.border-default}",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "collapsible-section-heading-gap": {
       "$value": "{plx-sys.space-inline-sm}",
@@ -5390,7 +5473,8 @@
     },
     "collapsible-section-toggle-focus-outline-offset": {
       "$value": "calc({plx-sys.border-width-medium} * -1)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "collapsible-section-toggle-focus-outline-width": {
       "$value": "{plx-sys.border-width-medium}",
@@ -5450,7 +5534,8 @@
     },
     "color-swatch-pressed-shadow": {
       "$value": "0 0 0 {plx-sys.border-width-medium} {plx-sys.content-default}",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "color-swatch-focus-outline-color": {
       "$value": "{plx-sys.focus-ring-color}",
@@ -5483,12 +5568,14 @@
     "color-swatch-target-inset": {
       "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))",
       "$type": "dimension",
-      "$description": "The invisible target layer around a swatch button: it grows the target to the minimum target (Platforms Standard 3.1) without changing the swatch"
+      "$description": "The invisible target layer around a swatch button: it grows the target to the minimum target (Platforms Standard 3.1) without changing the swatch",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "color-picker-slot-min-width": {
       "$value": "0",
       "$type": "dimension",
-      "$description": "The least width of a swatch's slot in the picker: none with a fine pointer; the minimum target with touch, so the swatch targets do not overlap"
+      "$description": "The least width of a swatch's slot in the picker: none with a fine pointer; the minimum target with touch, so the swatch targets do not overlap",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "columns-gap-md-gap": {
       "$value": "{plx-sys.space-layout-sm}",
@@ -5549,7 +5636,8 @@
     "combobox-input-margin-block": {
       "$value": "0",
       "$type": "dimension",
-      "$description": "The input's block margins: none; with touch it reaches over the field's border (components.interaction-touch), so the whole 44px field is its target (Platforms Standard 3.1)"
+      "$description": "The input's block margins: none; with touch it reaches over the field's border (components.interaction-touch), so the whole 44px field is its target (Platforms Standard 3.1)",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "combobox-input-placeholder-text": {
       "$value": "{plx-sys.field-placeholder}",
@@ -5778,7 +5866,8 @@
     "data-grid-row-selected-color": {
       "$value": "currentcolor",
       "$type": "color",
-      "$description": "A selected row's text: the text around it; HighlightText in forced colors, on the Highlight fill."
+      "$description": "A selected row's text: the text around it; HighlightText in forced colors, on the Highlight fill.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "data-grid-line-height": {
       "$value": "{plx-sys.data-grid-row-height}",
@@ -5806,11 +5895,13 @@
     },
     "data-grid-cell-wrap-padding-bottom": {
       "$value": "calc(({plx-sys.data-grid-row-height} - 1lh) / 2)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "data-grid-cell-wrap-padding-top": {
       "$value": "calc(({plx-sys.data-grid-row-height} - 1lh) / 2)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "data-grid-row-label-background": {
       "$value": "{plx-sys.data-grid-header-background}",
@@ -6140,7 +6231,8 @@
     },
     "stack-field-inline-grid-template-columns": {
       "$value": "minmax(0,max-content) minmax({plx-sys.field-width-md},{plx-sys.field-width-lg})",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "stack-field-inline-label-tip-max-width": {
       "$value": "{plx-ref.size-160px}",
@@ -6626,7 +6718,8 @@
     },
     "nav-list-item-hover-shadow": {
       "$value": "inset 0 0 0 {plx-sys.border-width-thin} {plx-sys.state-hover-border}",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "nav-list-entry-radius": {
       "$value": "{plx-sys.radius-control}",
@@ -6638,7 +6731,8 @@
     },
     "nav-list-entry-actions-hover-shadow": {
       "$value": "inset 0 0 0 {plx-sys.border-width-thin} {plx-sys.state-hover-border}",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "nav-list-entry-actions-item-current-background": {
       "$value": "{plx-sys.state-selected}",
@@ -6646,7 +6740,8 @@
     },
     "nav-list-entry-actions-item-current-shadow": {
       "$value": "inset 0 0 0 {plx-sys.border-width-thin} {plx-sys.state-selected-border}",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "nav-list-item-focus-outline-color": {
       "$value": "{plx-sys.focus-ring-color}",
@@ -6654,7 +6749,8 @@
     },
     "nav-list-item-focus-outline-offset": {
       "$value": "calc({plx-sys.border-width-medium} * -1)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "nav-list-item-focus-outline-width": {
       "$value": "{plx-sys.border-width-medium}",
@@ -6666,7 +6762,8 @@
     },
     "nav-list-item-current-shadow": {
       "$value": "inset 0 0 0 {plx-sys.border-width-thin} {plx-sys.state-selected-border}",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "nav-list-item-current-text": {
       "$value": "{plx-sys.selected-content}",
@@ -6729,7 +6826,7 @@
       "$type": "color"
     },
     "nav-list-pin-pinned-background": {
-      "$value": "transparent",
+      "$value": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 0, "hex": "#000000" },
       "$type": "color",
       "$description": "A pinned row's pin: no fill; Highlight in forced colors (a toggle that is on)."
     },
@@ -6747,7 +6844,8 @@
     },
     "nav-list-pin-focus-outline-offset": {
       "$value": "calc({plx-sys.border-width-medium} * -1)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "nav-list-pin-focus-outline-width": {
       "$value": "{plx-sys.border-width-medium}",
@@ -6776,7 +6874,8 @@
     },
     "nav-list-items-nested-padding-inline-start": {
       "$value": "calc({plx-sys.control-icon-standard} + {plx-sys.space-inline-sm})",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "pagination-text": {
       "$value": "{plx-sys.content-muted}",
@@ -7177,12 +7276,14 @@
     "row-button-selected-text": {
       "$value": "currentcolor",
       "$type": "color",
-      "$description": "A selected row's text: its own color (the text around it); HighlightText in forced colors."
+      "$description": "A selected row's text: its own color (the text around it); HighlightText in forced colors.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "row-button-selected-shadow": {
       "$value": "inset 0 0 0 {plx-sys.border-width-thin} {plx-sys.state-selected-border}",
       "$type": "shadow",
-      "$description": "RowButton: the selected row's 1px inset ring, as the navigation pane's current item (owner, 2026-10-19)."
+      "$description": "RowButton: the selected row's 1px inset ring, as the navigation pane's current item (owner, 2026-10-19).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "row-button-radius": {
       "$value": "{plx-sys.radius-control}",
@@ -7195,7 +7296,8 @@
     },
     "row-button-focus-outline-offset": {
       "$value": "calc({plx-sys.border-width-medium} * -1)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "row-button-focus-outline-width": {
       "$value": "{plx-sys.border-width-medium}",
@@ -7937,11 +8039,13 @@
     },
     "tooltip-bubble-bottom-inset-block-start": {
       "$value": "calc(100% + {plx-sys.space-stack-sm})",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tooltip-bubble-top-inset-block-end": {
       "$value": "calc(100% + {plx-sys.space-stack-sm})",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tooltip-bubble-before-border-width": {
       "$value": "{plx-sys.border-width-heavy}",
@@ -7957,7 +8061,8 @@
     },
     "tooltip-bubble-end-inset-inline-start": {
       "$value": "calc(100% + {plx-sys.space-stack-sm})",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tooltip-bubble-end-arrow-color": {
       "$value": "{plx-sys.tooltip-background}",
@@ -7993,7 +8098,8 @@
     },
     "tree-row-hover-shadow": {
       "$value": "inset 0 0 0 {plx-sys.border-width-thin} {plx-sys.state-hover-border}",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tree-item-selected-row-background": {
       "$value": "{plx-sys.state-selected}",
@@ -8001,7 +8107,8 @@
     },
     "tree-item-selected-row-shadow": {
       "$value": "inset 0 0 0 {plx-sys.border-width-thin} {plx-sys.state-selected-border}",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tree-item-selected-row-text": {
       "$value": "{plx-sys.selected-content}",
@@ -8017,7 +8124,8 @@
     },
     "tree-item-focus-row-outline-offset": {
       "$value": "calc({plx-sys.border-width-medium} * -1)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tree-item-focus-row-outline-width": {
       "$value": "{plx-sys.border-width-medium}",
@@ -8081,7 +8189,8 @@
     },
     "activity-list-item-interactive-opener-focus-outline-offset": {
       "$value": "calc({plx-sys.border-width-medium} * -1)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "activity-list-item-interactive-opener-focus-outline-width": {
       "$value": "{plx-sys.border-width-medium}",
@@ -8157,7 +8266,8 @@
     },
     "activity-list-item-interactive-margin-inline": {
       "$value": "calc({plx-sys.space-inset-sm} * -1)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "activity-list-item-interactive-padding-inline": {
       "$value": "{plx-sys.space-inset-sm}",
@@ -8189,7 +8299,8 @@
     },
     "app-shell-skip-inset-block-start": {
       "$value": "calc({plx-ref.size-100px} * -1)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "app-shell-skip-inset-inline-start": {
       "$value": "{plx-sys.space-inset-sm}",
@@ -8233,11 +8344,13 @@
     },
     "panel-splitter-end-inset-inline-end": {
       "$value": "calc({plx-ref.size-8px} / -2)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "panel-splitter-start-inset-inline-start": {
       "$value": "calc({plx-ref.size-8px} / -2)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "panel-splitter-after-width": {
       "$value": "{plx-sys.border-width-medium}",
@@ -8245,7 +8358,8 @@
     },
     "panel-splitter-after-inset-inline-start": {
       "$value": "calc(50% - {plx-sys.border-width-thin})",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "panel-splitter-after-duration": {
       "$value": "{plx-sys.motion-duration-fast}",
@@ -8620,15 +8734,18 @@
     },
     "image-editor-canvas-background-image": {
       "$value": "repeating-conic-gradient({plx-sys.surface-raised} 0% 25%, transparent 0% 50%)",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "image-editor-canvas-background-size": {
       "$value": "{plx-ref.size-24px} {plx-ref.size-24px}",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "image-editor-frame-transition": {
       "$value": "transform {plx-sys.motion-duration-base} {plx-sys.motion-ease-standard}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "image-editor-text-font-size": {
       "$value": "{plx-ref.font-size-20}",
@@ -8724,7 +8841,8 @@
     },
     "nav-pane-shadow": {
       "$value": "inset calc({plx-sys.border-width-thin} * -1) 0 0 {plx-sys.border-default}",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "nav-pane-header-gap": {
       "$value": "{plx-sys.space-inline-xs}",
@@ -8760,7 +8878,8 @@
     },
     "nav-pane-overlay-max-width": {
       "$value": "calc(100% - {plx-sys.space-layout-xl})",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "nav-pane-overlay-z-index": {
       "$value": "{plx-sys.layer-popover}",
@@ -8768,7 +8887,8 @@
     },
     "nav-pane-footer-shadow": {
       "$value": "inset 0 {plx-sys.border-width-thin} 0 {plx-sys.border-divider}",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "nav-pane-footer-gap": {
       "$value": "{plx-sys.space-inline-xs}",
@@ -8820,7 +8940,8 @@
     },
     "nav-pane-parent-shadow": {
       "$value": "inset 0 calc({plx-sys.border-width-thin} * -1) 0 {plx-sys.border-divider}",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "nav-pane-parent-padding-block": {
       "$value": "{plx-sys.space-inset-xs}",
@@ -8832,7 +8953,8 @@
     },
     "nav-bar-shadow": {
       "$value": "inset 0 {plx-sys.border-width-thin} 0 {plx-sys.border-divider}",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "nav-bar-item-text": {
       "$value": "{plx-sys.content-muted}",
@@ -8860,7 +8982,8 @@
     },
     "nav-bar-item-focus-outline-offset": {
       "$value": "calc({plx-sys.border-width-medium} * -1)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "nav-bar-item-focus-outline-width": {
       "$value": "{plx-sys.border-width-medium}",
@@ -8880,7 +9003,8 @@
     },
     "notification-list-footer-shadow": {
       "$value": "inset 0 {plx-sys.border-width-thin} 0 {plx-sys.border-divider}",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "notification-list-footer-gap": {
       "$value": "{plx-sys.space-inline-xs}",
@@ -8904,7 +9028,8 @@
     },
     "property-list-columns-item-grid-template-columns": {
       "$value": "minmax(0, {plx-ref.size-160px}) minmax(0, 1fr)",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "property-list-stacked-item-row-gap": {
       "$value": "{plx-sys.space-stack-xs}",
@@ -9026,7 +9151,8 @@
     },
     "record-page-header-card-background-image": {
       "$value": "linear-gradient(to bottom,{plx-sys.header-card-tint} 0%,{plx-sys.surface-default} 100%)",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "record-page-header-card-border-color": {
       "$value": "{plx-sys.border-default}",
@@ -9194,11 +9320,13 @@
     },
     "secondary-pane-rail-start-shadow": {
       "$value": "inset calc({plx-sys.border-width-thin} * -1) 0 0 {plx-sys.border-default}",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "secondary-pane-rail-end-shadow": {
       "$value": "inset {plx-sys.border-width-thin} 0 0 {plx-sys.border-default}",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "secondary-pane-back-background": {
       "$value": "{plx-sys.surface-default}",
@@ -9457,7 +9585,8 @@
     },
     "side-panel-shadow": {
       "$value": "inset {plx-sys.border-width-thin} 0 0 {plx-sys.border-default}",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "side-panel-header-gap": {
       "$value": "{plx-sys.space-inline-xs}",
@@ -9509,7 +9638,8 @@
     },
     "side-panel-overlay-width": {
       "$value": "min({plx-comp.side-panel-width-default}, calc(100% - {plx-sys.space-layout-xl}))",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "side-panel-overlay-z-index": {
       "$value": "{plx-sys.layer-popover}",
@@ -9517,11 +9647,13 @@
     },
     "side-panel-rail-shadow": {
       "$value": "inset {plx-sys.border-width-thin} 0 0 {plx-sys.border-default}",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "side-panel-footer-shadow": {
       "$value": "inset 0 {plx-sys.border-width-thin} 0 {plx-sys.border-divider}",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "side-panel-footer-gap": {
       "$value": "{plx-sys.space-inline-xs}",
@@ -9661,7 +9793,8 @@
     },
     "widget-grid-grid-template-columns": {
       "$value": "repeat(auto-fill, minmax({plx-ref.size-280px}, 1fr))",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "widget-grid-row-gap": {
       "$value": "{plx-sys.space-inline-md}",

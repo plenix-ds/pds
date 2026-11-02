@@ -3,15 +3,18 @@
   "plx-comp": {
     "entity-picker-disabled-field-text": {
       "$value": "GrayText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "entity-picker-option-selected-text": {
       "$value": "HighlightText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "entity-picker-option-disabled-text": {
       "$value": "GrayText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     }
   }
 }

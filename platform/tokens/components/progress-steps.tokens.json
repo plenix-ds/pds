@@ -144,7 +144,8 @@
     "progress-steps-description-indent": {
       "$value": "calc({plx-comp.progress-steps-marker-size} + {plx-comp.progress-steps-head-gap})",
       "$type": "dimension",
-      "$description": "ProgressSteps: the second line starts under the name (past the marker and its gap)."
+      "$description": "ProgressSteps: the second line starts under the name (past the marker and its gap).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "progress-steps-connector-color": {
       "$value": "{plx-sys.border-default}",
@@ -174,7 +175,8 @@
     "progress-steps-vertical-connector-indent": {
       "$value": "calc(({plx-comp.progress-steps-marker-size} - {plx-comp.progress-steps-connector-thickness}) / 2)",
       "$type": "dimension",
-      "$description": "ProgressSteps vertical: the connector runs down the middle of the marker column."
+      "$description": "ProgressSteps vertical: the connector runs down the middle of the marker column.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "progress-steps-vertical-connector-min-length": {
       "$value": "{plx-ref.size-20px}",

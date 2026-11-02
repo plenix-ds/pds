@@ -2,7 +2,7 @@
   "$description": "Fit and overflow (platform/standards/fit-and-overflow.md; owner, 2026-10-29): the values every adaptation shares. A heading or label wraps to evenly balanced lines, at most --plx-sys-fit-lines, in the line height --plx-sys-fit-line-height, with --plx-sys-fit-wrap-padding-block above and below, so one line keeps its control height and two lines are 40px, all on the 4px grid. The container widths are the breakpoints a container query uses (CSS cannot read a token there: each query writes the same value beside its comment).",
   "plx-sys": {
     "fit-lines": {
-      "$value": "2",
+      "$value": 2,
       "$type": "number",
       "$description": "The most lines a wrapping heading or label shows; past them the last line ends in an ellipsis and the full text is in a tooltip."
     },

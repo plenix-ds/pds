@@ -4,8 +4,8 @@
     "menu-sub-open-background": { "$value": "{plx-sys.state-hover}", "$type": "color", "$description": "MenuSub: the item whose submenu is open keeps the hover fill." },
     "menu-sub-arrow-size": { "$value": "{plx-sys.icon-size-lg}", "$type": "dimension", "$description": "MenuSub: the end-pointing caret's box (triangle-right), 24px so its triangle draws 4.5 by 8px, as Blueprint's 5 by 8px caret-right (#805, owner 2026-11-01); it fits the item's 24px line." },
     "menu-sub-arrow-color": { "$value": "{plx-sys.content-muted}", "$type": "color", "$description": "MenuSub: the caret's color, quieter than the label." },
-    "menu-sub-offset": { "$value": "calc({plx-sys.space-inset-xs} + {plx-sys.border-width-thin})", "$type": "dimension", "$description": "MenuSub: the submenu starts past the parent menu's edge (its padding and border), level with the item." },
-    "menu-sub-fallback-inset-block-start": { "$value": "0", "$type": "dimension", "$description": "MenuSub without the top layer: level with the item." },
-    "menu-sub-fallback-inset-inline-start": { "$value": "100%", "$type": "dimension", "$description": "MenuSub without the top layer: at the item's end edge." }
+    "menu-sub-offset": { "$value": "calc({plx-sys.space-inset-xs} + {plx-sys.border-width-thin})", "$type": "dimension", "$description": "MenuSub: the submenu starts past the parent menu's edge (its padding and border), level with the item.", "$extensions": { "com.plenix": { "webOnly": true } } },
+    "menu-sub-fallback-inset-block-start": { "$value": "0", "$type": "dimension", "$description": "MenuSub without the top layer: level with the item.", "$extensions": { "com.plenix": { "webOnly": true } } },
+    "menu-sub-fallback-inset-inline-start": { "$value": "100%", "$type": "dimension", "$description": "MenuSub without the top layer: at the item's end edge.", "$extensions": { "com.plenix": { "webOnly": true } } }
   }
 }

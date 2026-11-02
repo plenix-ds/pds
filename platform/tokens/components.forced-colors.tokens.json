@@ -3,272 +3,339 @@
   "plx-comp": {
     "button-size-md-selected-border": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-size-md-selected-text": {
       "$value": "HighlightText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-size-sm-selected-border": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-size-sm-selected-text": {
       "$value": "HighlightText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-size-xs-selected-border": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-size-xs-selected-text": {
       "$value": "HighlightText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-size-lg-selected-border": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-size-lg-selected-text": {
       "$value": "HighlightText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-selected-background": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-disabled-border": {
       "$value": "GrayText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-disabled-text": {
       "$value": "GrayText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-disabled-quiet-border": {
       "$value": "GrayText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "input-disabled-text": {
       "$value": "GrayText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "choice-selected-background": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "choice-selected-border-color": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "switch-input-checked-track-background": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "chip-selected-background": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "chip-selected-text": {
       "$value": "HighlightText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "chip-selected-border-color": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tabs-tab-disabled-text": {
       "$value": "GrayText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tabs-tab-selected-text": {
       "$value": "HighlightText",
       "$deprecated": "Not used by any page, application or the design spec (issue 882): use its value (HighlightText) instead. It keeps working, and is removed no earlier than the next minor release.",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tabs-segmented-tab-selected-background": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tabs-segmented-tab-selected-text": {
       "$value": "HighlightText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tabs-folder-tab-selected-background": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tabs-folder-tab-selected-border-left-color": {
       "$value": "HighlightText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tabs-folder-tab-selected-border-right-color": {
       "$value": "HighlightText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tabs-folder-tab-selected-border-top-color": {
       "$value": "HighlightText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tabs-folder-tab-selected-text": {
       "$value": "HighlightText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tabs-folder-tab-selected-after-background": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "app-switcher-pinned-background": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "app-switcher-tile-current-open-background": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "app-switcher-tile-pinned-pin-text": {
       "$value": "HighlightText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tool-rail-item-disabled-text": {
       "$value": "GrayText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "menu-item-disabled-text": {
       "$value": "GrayText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "app-header-accent-selected": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "app-header-accent-selected-content": {
       "$value": "HighlightText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "app-header-frost-selected": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "app-header-frost-selected-content": {
       "$value": "HighlightText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "app-header-plain-selected": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "app-header-plain-selected-content": {
       "$value": "HighlightText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "breadcrumbs-current-text": {
       "$value": "HighlightText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "card-selected-border-color": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "combobox-option-selected-text": {
       "$value": "HighlightText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "data-grid-row-selected-background": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "data-grid-row-selected-color": {
       "$value": "HighlightText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "nav-list-entry-actions-item-current-background": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "nav-list-item-current-background": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "nav-list-item-current-text": {
       "$value": "HighlightText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "nav-list-item-disabled-text": {
       "$value": "GrayText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "nav-list-pin-pinned-background": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "nav-list-entry-pinned-pin-text": {
       "$value": "HighlightText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "nav-list-item-group-current-parent-text": {
       "$value": "HighlightText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "pagination-page-current-background": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "pagination-page-current-border-color": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "pagination-page-current-text": {
       "$value": "HighlightText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "radio-tile-selected-background": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "radio-tile-selected-border-color": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "row-button-selected-background": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "row-button-selected-text": {
       "$value": "HighlightText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "row-button-disabled-text": {
       "$value": "GrayText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "segmented-item-selected-background": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "segmented-item-selected-text": {
       "$value": "HighlightText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tree-item-selected-row-background": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tree-item-selected-row-text": {
       "$value": "HighlightText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "activity-list-item-selected-background": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "nav-bar-item-current-text": {
       "$value": "HighlightText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "nav-bar-item-disabled-text": {
       "$value": "GrayText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     }
   }
 }

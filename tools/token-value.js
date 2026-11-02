@@ -4,22 +4,24 @@
 // keywords, mixed strings) or one of the format's typed values:
 //   dimension   { "value": 4, "unit": "px" }               (px or rem)                   written  4px
 //   duration    { "value": 0.2, "unit": "s" }              (ms or s)                     written  0.2s
-//   color       { "colorSpace": "srgb", "components": [r, g, b], "alpha"?: a, "hex": "#rrggbb" }   written  its hex (+ alpha)
+//   color       { "colorSpace": "srgb", "components": [r, g, b], "hex": "#rrggbb" }    written  #rrggbb
+//               with "alpha": a (below 1)                                              written  rgba(r, g, b, a)
 //   number      1.5, and fontWeight 600                                               written  1.5, 600
-//   fontFamily  [ "DM Sans", "system-ui", "sans-serif" ]                                written  "DM Sans", system-ui, sans-serif
+//   fontFamily  [ "DM Sans", "system-ui", "sans-serif" ]                                written  'DM Sans', system-ui, sans-serif
 //   cubicBezier [ x1, y1, x2, y2 ]                                                      written  cubic-bezier(x1, y1, x2, y2)
+// The CSS text is exactly what plain Style Dictionary's built-in transforms write (color/css, fontFamily/css, size/rem,
+// time/seconds, cubicBezier/css; npm run tokens:sd:check compares the two), so the stylesheets do not change when Style
+// Dictionary writes them (#372 step 10).
 // Every script and check that reads a token's value as CSS text calls css(); nothing else needs to know the two forms.
-// typed(text, type) is the way back: the typed value of a CSS text, or the text itself when the format has no exact
-// typed form for it (css(typed(text, type)) === text, always). The token save service writes an edit through it, so an
-// edited typed value stays typed.
+// typed(text, type) is the way back: the typed value of a CSS text, or the text itself when the format has no typed form
+// for it. css(typed(text, type)) is the same CSS value: the same text, except a color's and a font list's spelling
+// (#00000080 is rgba(0, 0, 0, 0.502), transparent is rgba(0, 0, 0, 0), "DM Sans" is 'DM Sans'). The token save service
+// writes an edit through it, so an edited typed value stays typed.
 
-// a family name written bare: a CSS generic family or system keyword, or a single word of letters (Arial, Menlo);
-// every other name is quoted ("DM Sans", "SFMono-Regular")
-const BARE_FAMILIES = new Set(['serif', 'sans-serif', 'monospace', 'cursive', 'fantasy', 'math', 'emoji', 'fangsong',
-  'system-ui', 'ui-serif', 'ui-sans-serif', 'ui-monospace', 'ui-rounded', '-apple-system']);
-const family = (name) => (BARE_FAMILIES.has(name) || /^[A-Za-z]+$/.test(name) ? name : '"' + name + '"');
+// a family name with a space is quoted, in single quotes ('DM Sans'); every other name is bare (as fontFamily/css)
+const family = (name) => (/\s/.test(name) ? "'" + name.replace(/'/g, "\\'") + "'" : name);
 
-const hex2 = (n) => Math.round(n * 255).toString(16).padStart(2, '0');
+const byte = (n) => Math.round(Math.max(0, Math.min(1, n)) * 255);
 
 function css(v) {
   if (typeof v === 'string') return v;
@@ -30,8 +32,12 @@ function css(v) {
   } else if (v && typeof v === 'object') {
     if (typeof v.value === 'number' && typeof v.unit === 'string') return v.value + v.unit;
     if (typeof v.colorSpace === 'string') {
-      const base = typeof v.hex === 'string' ? v.hex : v.colorSpace === 'srgb' && Array.isArray(v.components) ? '#' + v.components.map(hex2).join('') : null;
-      if (base) return typeof v.alpha === 'number' && v.alpha < 1 ? base + hex2(v.alpha) : base;
+      // as color/css: the components to bytes; opaque as #rrggbb, with alpha as rgba() with the alpha as written
+      if (v.colorSpace === 'srgb' && Array.isArray(v.components) && v.components.length === 3) {
+        const [r, g, b] = v.components.map(byte);
+        if (typeof v.alpha === 'number' && v.alpha < 1) return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + v.alpha + ')';
+        return '#' + [r, g, b].map((n) => n.toString(16).padStart(2, '0')).join('');
+      }
     }
   }
   throw new Error('a token value the build cannot write as CSS: ' + JSON.stringify(v));
@@ -45,6 +51,7 @@ function typed(text, type) {
   let out = text, m;
   if (type === 'dimension' && (m = new RegExp('^' + NUM + '(px|rem)$').exec(text)) && exactNumber(m[1]) !== null) out = { value: exactNumber(m[1]), unit: m[2] };
   else if (type === 'duration' && (m = new RegExp('^' + NUM + '(ms|s)$').exec(text)) && exactNumber(m[1]) !== null) out = { value: exactNumber(m[1]), unit: m[2] };
+  else if (type === 'color' && text === 'transparent') out = { colorSpace: 'srgb', components: [0, 0, 0], alpha: 0, hex: '#000000' };
   else if (type === 'color' && (m = /^#([0-9a-f]{6})([0-9a-f]{2})?$/.exec(text))) {
     const unit = (h) => Number((parseInt(h, 16) / 255).toFixed(4));
     const components = [0, 2, 4].map((i) => unit(m[1].slice(i, i + 2)));
@@ -52,7 +59,13 @@ function typed(text, type) {
   } else if ((type === 'number' || type === 'fontWeight') && exactNumber(text) !== null) out = exactNumber(text);
   else if (type === 'cubicBezier' && (m = new RegExp('^cubic-bezier\\(' + [NUM, NUM, NUM, NUM].join(', ') + '\\)$').exec(text))) out = m.slice(1, 5).map(Number);
   else if (type === 'fontFamily' && !/[{}()]/.test(text)) out = text.split(',').map((s) => s.trim().replace(/^"(.*)"$/, '$1'));
-  return out !== text && css(out) === text ? out : text;
+  if (out === text) return text;
+  // a color or a font list is the same value in its new spelling (by construction above); every other value is exact
+  return type === 'color' || type === 'fontFamily' || css(out) === text ? out : text;
 }
 
-module.exports = { css, typed };
+// a fully transparent color (CSS transparent, typed as alpha 0): no color, so a theme may write it where it may not write a
+// color of its own
+const transparent = (v) => !!v && typeof v === 'object' && !Array.isArray(v) && v.alpha === 0;
+
+module.exports = { css, typed, transparent };

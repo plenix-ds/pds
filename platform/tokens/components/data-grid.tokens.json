@@ -49,7 +49,8 @@
     "data-grid-fit-max-height": {
       "$value": "100dvh",
       "$type": "dimension",
-      "$description": "DataGrid (fill, load-more): the body is at most one screen tall until the grid has measured the room left under where it starts (then that room, written on the body)."
+      "$description": "DataGrid (fill, load-more): the body is at most one screen tall until the grid has measured the room left under where it starts (then that room, written on the body).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "data-grid-record-height": {
       "$value": "{plx-sys.data-grid-row-height}",
@@ -74,12 +75,14 @@
     "data-grid-cell-padding-block": {
       "$value": "calc(({plx-sys.data-grid-row-height} - {plx-comp.data-grid-text-line-height}) / 2)",
       "$type": "dimension",
-      "$description": "DataGrid: P, the minimum room above and below a cell's content: a Short row's own vertical padding, (the density row height − the text line height) / 2 (6px at Standard). Taller rows start their content P from the top and keep at least P at the bottom."
+      "$description": "DataGrid: P, the minimum room above and below a cell's content: a Short row's own vertical padding, (the density row height − the text line height) / 2 (6px at Standard). Taller rows start their content P from the top and keep at least P at the bottom.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "data-grid-group-header-height": {
       "$value": "calc({plx-sys.data-grid-row-height} + {plx-ref.size-16px})",
       "$type": "dimension",
-      "$description": "DataGrid group header row: the density row height + 16px (44 / 48 / 56), the same at every row height step: the eyebrow line and the value line with P above and below."
+      "$description": "DataGrid group header row: the density row height + 16px (44 / 48 / 56), the same at every row height step: the eyebrow line and the value line with P above and below.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "data-grid-group-eyebrow-line-height": {
       "$value": "{plx-ref.size-16px}",
@@ -139,7 +142,8 @@
     "data-grid-header-wrap-height": {
       "$value": "calc({plx-sys.data-grid-row-height} + {plx-ref.size-16px})",
       "$type": "dimension",
-      "$description": "DataGrid with Wrap headers: the column header row, two lines tall (a fixed height, never measured)."
+      "$description": "DataGrid with Wrap headers: the column header row, two lines tall (a fixed height, never measured).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "data-grid-header-title-line-height": {
       "$value": "{plx-ref.size-16px}",
@@ -174,12 +178,14 @@
     "data-grid-header-background-image": {
       "$value": "linear-gradient(to bottom,{plx-sys.data-grid-header-top},{plx-sys.data-grid-header-bottom})",
       "$type": "color",
-      "$description": "DataGrid header: the silver band, gray 50 at the top to gray 200 at the bottom (owner, 2026-10-23, C)."
+      "$description": "DataGrid header: the silver band, gray 50 at the top to gray 200 at the bottom (owner, 2026-10-23, C).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "data-grid-header-hover-background-image": {
       "$value": "linear-gradient(to bottom,{plx-sys.data-grid-header-hover-top},{plx-sys.data-grid-header-hover-bottom})",
       "$type": "color",
-      "$description": "DataGrid header: a column under the pointer, one shade deeper, gray 100 to gray 300 (owner, 2026-10-23, H3)."
+      "$description": "DataGrid header: a column under the pointer, one shade deeper, gray 100 to gray 300 (owner, 2026-10-23, H3).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "data-grid-header-edge": {
       "$value": "{plx-sys.data-grid-header-edge}",

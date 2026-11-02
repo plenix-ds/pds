@@ -2,27 +2,27 @@
   "$description": "Keylines (library plan wave 1, foundation keylines): the icon keyline shapes on the icon set’s 24-unit grid, as units, and the specimen size. system/keylines.css draws them; platform/dev/keylines.js shows them over a page (?keylines).",
   "plx-sys": {
     "keyline-icon-grid": {
-      "$value": "24",
+      "$value": 24,
       "$type": "number",
       "$description": "Icon keylines: the icon files’ grid, in units (Material Symbols at optical size 20, drawn on a 24-unit square)."
     },
     "keyline-icon-padding": {
-      "$value": "2",
+      "$value": 2,
       "$type": "number",
       "$description": "Icon keylines: the padding inside the grid, in units; the live area is the grid minus this on every side (20 of 24)."
     },
     "keyline-icon-circle": {
-      "$value": "20",
+      "$value": 20,
       "$type": "number",
       "$description": "Icon keylines: the circle’s diameter, in units (round shapes fill the live area)."
     },
     "keyline-icon-square": {
-      "$value": "18",
+      "$value": 18,
       "$type": "number",
       "$description": "Icon keylines: the square’s side, in units (square shapes look as large as the circle at 18)."
     },
     "keyline-icon-short": {
-      "$value": "16",
+      "$value": 16,
       "$type": "number",
       "$description": "Icon keylines: the short side of the portrait and landscape rectangles, in units (the long side is the circle’s 20)."
     },

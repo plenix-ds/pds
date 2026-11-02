@@ -14,7 +14,8 @@
     "avatar-presence-offset": {
       "$value": "calc(-1 * {plx-sys.border-width-medium})",
       "$type": "dimension",
-      "$description": "Avatar presence: how far the ringed dot sits past the avatar's bottom and end edges (the ring's width, negated)."
+      "$description": "Avatar presence: how far the ringed dot sits past the avatar's bottom and end edges (the ring's width, negated).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "avatar-border-width": {
       "$value": "{plx-sys.border-width-thin}",

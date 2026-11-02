@@ -234,7 +234,7 @@
       }
     },
     "focus-ring-offset": {
-      "$value": "2px",
+      "$value": { "value": 2, "unit": "px" },
       "$type": "dimension"
     }
   }

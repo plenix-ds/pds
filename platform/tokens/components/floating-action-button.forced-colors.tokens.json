@@ -3,7 +3,8 @@
   "plx-comp": {
     "floating-action-button-disabled-text": {
       "$value": "GrayText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     }
   }
 }

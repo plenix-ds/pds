@@ -4,7 +4,8 @@
     "tooltip-bubble-start-inset-inline-end": {
       "$value": "calc(100% + {plx-sys.space-stack-sm})",
       "$type": "dimension",
-      "$description": "Tooltip placement start (drawn inside the wrapper, where anchor positioning is missing): the gap to the trigger, as the other sides."
+      "$description": "Tooltip placement start (drawn inside the wrapper, where anchor positioning is missing): the gap to the trigger, as the other sides.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tooltip-bubble-start-arrow-color": {
       "$value": "{plx-sys.tooltip-background}",

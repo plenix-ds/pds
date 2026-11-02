@@ -1,7 +1,7 @@
 {
   "$description": "BackToTop (platform/components/BackToTop, library wave 5, lane C): its component tokens. The button is Button's (secondary, icon only, or ghost inline); these place the floating one and set when it shows.",
   "plx-comp": {
-    "back-to-top-reveal-distance": { "$value": "100vh", "$type": "dimension", "$description": "BackToTop: how far the page scrolls before the floating button shows (one window height: the sentinel's height)." },
+    "back-to-top-reveal-distance": { "$value": "100vh", "$type": "dimension", "$description": "BackToTop: how far the page scrolls before the floating button shows (one window height: the sentinel's height).", "$extensions": { "com.plenix": { "webOnly": true } } },
     "back-to-top-sentinel-width": { "$value": "{plx-sys.border-width-thin}", "$type": "dimension", "$description": "BackToTop: the sentinel's width (a hairline: it only has to intersect)." },
     "back-to-top-inset-block-end": { "$value": "{plx-sys.space-inset-lg}", "$type": "dimension", "$description": "BackToTop floating: the space from the window's bottom edge." },
     "back-to-top-inset-inline-end": { "$value": "{plx-sys.space-inset-lg}", "$type": "dimension", "$description": "BackToTop floating: the space from the window's end edge." },

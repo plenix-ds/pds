@@ -3,7 +3,8 @@
   "plx-comp": {
     "resizable-divider-line-color": {
       "$value": "CanvasText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     }
   }
 }

@@ -8,7 +8,9 @@
     },
     "motion-loading-spin-easing": {
       "$value": "linear",
-      "$description": "Spinner: an even speed all the way round (no ease in or out, which reads as a stutter)."
+      "$description": "Spinner: an even speed all the way round (no ease in or out, which reads as a stutter).",
+      "$extensions": { "com.plenix": { "webOnly": true } },
+      "$type": "cubicBezier"
     },
     "motion-loading-shimmer-duration": {
       "$value": "{plx-sys.motion-duration-loop-slow}",
@@ -17,7 +19,8 @@
     },
     "motion-loading-shimmer-easing": {
       "$value": "{plx-sys.motion-ease-standard}",
-      "$description": "Skeleton: the shimmer's easing."
+      "$description": "Skeleton: the shimmer's easing.",
+      "$type": "cubicBezier"
     },
     "motion-loading-progress-duration": {
       "$value": "{plx-sys.motion-duration-loop-slow}",
@@ -26,7 +29,8 @@
     },
     "motion-loading-progress-easing": {
       "$value": "{plx-sys.motion-ease-standard}",
-      "$description": "Indeterminate progress: the run's easing."
+      "$description": "Indeterminate progress: the run's easing.",
+      "$type": "cubicBezier"
     },
     "motion-loading-delay": {
       "$value": "{plx-ref.motion-delay-long-press}",

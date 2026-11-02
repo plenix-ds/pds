@@ -42,8 +42,9 @@ module.exports = function buildMobile(root) {
   const comp = index.filter((t) => named.has(t.name)).map((t) => { const v = at(t, 'light'); const d = px(v), n = parseFloat(v), sec = secs(v);
     return t.type === 'dimension' && d !== null ? { id: camel(t.name), kind: 'size', v: d } : t.type === 'duration' && sec !== null ? { id: camel(t.name), kind: 'sec', v: sec } : t.type === 'number' && !isNaN(n) ? { id: camel(t.name), kind: 'num', v: n } : null; }).filter(Boolean)
     .sort((a, b) => a.id.localeCompare(b.id));
-  // the typefaces: the first family of --plx-sys-typeface-sans and -mono (the web's font stacks)
-  const face = (name) => { const t = index.find((x) => x.name === name); const v = t && at(t, 'light'); const m = v && /^\s*"?([^",]+)"?/.exec(v); if (!m) throw new Error(name + ' has no typeface'); return m[1].trim(); };
+  // the typefaces: the first family of --plx-sys-typeface-sans and -mono (the web's font stacks; a name in single or double
+  // quotes, #872)
+  const face = (name) => { const t = index.find((x) => x.name === name); const v = t && at(t, 'light'); const m = v && /^\s*["']?([^"',]+)["']?/.exec(v); if (!m) throw new Error(name + ' has no typeface'); return m[1].trim(); };
   const SANS = face('--plx-sys-typeface-sans'), MONO = face('--plx-sys-typeface-mono');
   // the platform sets, flattened (plx-sys.control-target-min -> controlTargetMin, text.title.size -> textTitleSize): their
   // names are the web token names for the same role (Platforms Standard 7.1), so each constant keeps the web token it maps

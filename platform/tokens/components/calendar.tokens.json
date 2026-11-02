@@ -109,7 +109,8 @@
     "calendar-day-focus-outline-offset": {
       "$value": "calc({plx-sys.border-width-medium} * -1)",
       "$type": "dimension",
-      "$description": "Calendar day with keyboard focus: the outline sits inside the day."
+      "$description": "Calendar day with keyboard focus: the outline sits inside the day.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "calendar-day-today-background": {
       "$value": "{plx-comp.date-badge-today-day-background}",
@@ -169,7 +170,8 @@
     "calendar-range-half": {
       "$value": "50%",
       "$type": "dimension",
-      "$description": "Calendar range: at the start and the end the fill covers the cell's inner half only."
+      "$description": "Calendar range: at the start and the end the fill covers the cell's inner half only.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "calendar-week-number-text": {
       "$value": "{plx-sys.content-subtle}",

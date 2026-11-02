@@ -3,27 +3,22 @@
   "plx-comp": {
     "media-card-aspect-4-3": {
       "$value": "{plx-ref.ratio-4-3}",
-      "$type": "string",
       "$description": "MediaCard 4/3 media shape."
     },
     "media-card-aspect-1-1": {
       "$value": "{plx-ref.ratio-1-1}",
-      "$type": "string",
       "$description": "MediaCard 1/1 media shape."
     },
     "media-card-aspect-16-9": {
       "$value": "{plx-ref.ratio-16-9}",
-      "$type": "string",
       "$description": "MediaCard 16/9 media shape."
     },
     "media-card-aspect-9-16": {
       "$value": "{plx-ref.ratio-9-16}",
-      "$type": "string",
       "$description": "MediaCard 9/16 media shape."
     },
     "media-card-aspect-3-4": {
       "$value": "{plx-ref.ratio-3-4}",
-      "$type": "string",
       "$description": "MediaCard 3/4 media shape."
     }
   }

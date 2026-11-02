@@ -111,7 +111,8 @@
     "shell-pane-window-share": {
       "$value": "90%",
       "$type": "dimension",
-      "$description": "The most of the window a pane or a table column may take when dragged (owner, issue 463, option C): 90% of the window for a pane of the shell, of the table for a column, then down to the 4px grid. A smaller limit the app or the component sets still applies."
+      "$description": "The most of the window a pane or a table column may take when dragged (owner, issue 463, option C): 90% of the window for a pane of the shell, of the table for a column, then down to the 4px grid. A smaller limit the app or the component sets still applies.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "shell-splitter-step": {
       "$value": "{plx-ref.size-16px}",

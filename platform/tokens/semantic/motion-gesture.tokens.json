@@ -12,12 +12,12 @@
       "$description": "The distance along the swipe's axis that commits a swipe when the pointer is released slowly; a release faster than the fling velocity commits it sooner."
     },
     "gesture-fling-velocity": {
-      "$value": "0.5",
+      "$value": 0.5,
       "$type": "number",
       "$description": "The release speed, in CSS pixels per millisecond, at and above which a pan ends as a fling (and commits a swipe whatever its distance)."
     },
     "gesture-fling-decay": {
-      "$value": "0.998",
+      "$value": 0.998,
       "$type": "number",
       "$description": "How much of its speed a flung element keeps each millisecond (the deceleration rate of a scroll view): the distance it travels is velocity × decay ÷ (1 − decay)."
     },
@@ -32,12 +32,12 @@
       "$description": "Pull to refresh: the pull (after resistance) at which releasing refreshes; under it the pull springs back."
     },
     "gesture-pull-resistance": {
-      "$value": "0.5",
+      "$value": 0.5,
       "$type": "number",
       "$description": "Pull to refresh: the share of the finger's movement the pulled content follows, so the pull feels heavier than a scroll."
     },
     "gesture-pinch-max-scale": {
-      "$value": "4",
+      "$value": 4,
       "$type": "number",
       "$description": "Pinch to zoom: the largest scale a pinch reaches (four times); the smallest is the element's fitted size, 1."
     },

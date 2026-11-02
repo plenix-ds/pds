@@ -3,7 +3,8 @@
   "plx-comp": {
     "search-result-selected-background": {
       "$value": "Highlight",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     }
   }
 }
