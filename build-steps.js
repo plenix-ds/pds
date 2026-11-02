@@ -31,7 +31,9 @@ const LEVELS = 12;
 // the widest grid line a pane and a Resizable box get a rule for: the one place they are set; utils/sizeSteps.js (written
 // below) exports them, and the panes and Resizable clamp to them, so a size is never drawn without a rule. One rule per
 // grid line (owner, 2026-10-26: a dragged edge stays on the grid) grew steps.css to about 245 KB (17.6 KB gzipped).
-const GRID_MIN = 4, GRID_PANE_MAX = 1600, GRID_BOX_MAX = 1600;   // a pane of the shell goes as wide as a Resizable box (owner, #463)
+// A dragged edge stops on every 8px grid line (DRAG_STEP; owner, 2026-11-02, issue 882: 8px, not 4px, halving these rules,
+// about 99 KB): still on the grid, and every size token keeps its own rule.
+const DRAG_STEP = 8, GRID_MIN = 8, GRID_PANE_MAX = 1600, GRID_BOX_MAX = 1600;   // a pane of the shell goes as wide as a Resizable box (owner, #463)
 const ASPECTS = [['4/3', '4 / 3'], ['3/2', '3 / 2'], ['1/1', '1 / 1'], ['16/9', '16 / 9']];
 
 module.exports = function buildSteps(root) {
@@ -61,18 +63,18 @@ module.exports = function buildSteps(root) {
     out.push('.plx-side-panel[data-plx-width="' + s + '"]{--plx-comp-side-panel-width:var(--plx-ref-size-' + s + ');}');
     ['inspector', 'filter'].forEach((p) => out.push(':root[data-plx-panel-' + p + '-width="' + s + '"]{--plx-sys-panel-' + p + '-width:var(--plx-ref-size-' + s + ');}'));
   });
-  // grid lines (owner, 2026-10-26): a dragged pane or box moves one 4px grid line at a time, so each line has a rule;
+  // grid lines (owner, 2026-10-26; 8px since issue 882): a dragged pane or box moves one DRAG_STEP line at a time, so each line has a rule;
   // a size token keeps its own rule (above, and resizable.css), so no step is defined twice
   const tokenPx = new Set(sizes.map((x) => parseInt(x, 10)));
   const onGrid = (n) => 'calc(var(--plx-ref-size-4px) * ' + n / 4 + ')';
-  for (let v = GRID_MIN; v <= GRID_PANE_MAX; v += 4) {
+  for (let v = GRID_MIN; v <= GRID_PANE_MAX; v += DRAG_STEP) {
     if (tokenPx.has(v)) continue;
     ['nav-pane', 'secondary-pane', 'side-panel'].forEach((c) => out.push('.plx-' + c + '[data-plx-width="' + v + 'px"]{--plx-comp-' + c + '-width:' + onGrid(v) + ';}'));
   }
   const resizableCss = fs.readFileSync(path.join(P, 'components', 'Resizable', 'resizable.css'), 'utf8');
   const has = (axis) => new Set([...resizableCss.matchAll(new RegExp('\\.plx-resizable\\[data-plx-' + axis + '="(\\d+)px"\\]', 'g'))].map((m) => +m[1]));
   [['width', has('width')], ['height', has('height')]].forEach(([axis, set]) => {
-    const values = new Set([...tokenPx]); for (let v = GRID_MIN; v <= GRID_BOX_MAX; v += 4) values.add(v);
+    const values = new Set([...tokenPx]); for (let v = GRID_MIN; v <= GRID_BOX_MAX; v += DRAG_STEP) values.add(v);
     [...values].sort((x, y) => x - y).filter((v) => !set.has(v)).forEach((v) => out.push('.plx-resizable[data-plx-' + axis + '="' + v + 'px"]{--plx-comp-resizable-' + axis + ':'
       + (tokenPx.has(v) ? 'var(--plx-ref-size-' + v + 'px)' : onGrid(v)) + ';}'));
   });
@@ -90,8 +92,9 @@ module.exports = function buildSteps(root) {
     '     none: SIZE_STEPS lists the sizes in pixels, smallest first; snapSize(px, min, max) and stepSize(px, dir, min, max)',
     '*/',
     'export const SIZE_STEPS = ' + JSON.stringify(sizes.map((s) => parseInt(s, 10)).sort((a, b) => a - b)) + ';',
-    '// the grid lines system/steps.css has a rule for (build-steps.js): a pane is drawn from GRID_MIN to GRID_PANE_MAX, a Resizable box to GRID_BOX_MAX',
-    'export const GRID_MIN = ' + GRID_MIN + ', GRID_PANE_MAX = ' + GRID_PANE_MAX + ', GRID_BOX_MAX = ' + GRID_BOX_MAX + ';',
+    '// the grid lines system/steps.css has a rule for (build-steps.js): every DRAG_STEP px (8px, issue 882) from GRID_MIN to GRID_PANE_MAX for a pane',
+    '// and to GRID_BOX_MAX for a Resizable box, plus every size token; a dragged edge and a remembered width land on one of them',
+    'export const DRAG_STEP = ' + DRAG_STEP + ', GRID_MIN = ' + GRID_MIN + ', GRID_PANE_MAX = ' + GRID_PANE_MAX + ', GRID_BOX_MAX = ' + GRID_BOX_MAX + ';',
     'const within = (min, max) => SIZE_STEPS.filter((s) => s >= min && s <= max);',
     '// the size token nearest to px within [min, max] (the limit itself when no token lies between them)',
     'export function snapSize(px, min, max) { const c = within(min, max); if (!c.length) return Math.max(min, Math.min(max, px)); return c.reduce((a, b) => (Math.abs(b - px) < Math.abs(a - px) ? b : a)); }',

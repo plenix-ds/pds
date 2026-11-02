@@ -41,8 +41,9 @@ const assert = require('assert/strict'), { serve, launch } = require('./lib');
     assert.equal(got.w1604, 1600, 'a width of 1604 is drawn at 1600, not the default');
     assert.equal(got.w1700, 1600, 'a width of 1700 is drawn at 1600, not the default');
     assert.equal(got.h1700, 1600, 'a height of 1700 is drawn at 1600, not the default');
-    assert.deepEqual(got.boxAria, [4, 1600], 'a box with minWidth 2 and maxWidth 2000 reports aria-valuemin 4 and aria-valuemax 1600, the sizes it can reach');
-    assert.deepEqual(got.paneAria, [140, 1600], 'a pane splitter whose limit is 2000 reports aria-valuemax 1600');
+    // the 8px drag grid (issue 882): the smallest size a box reaches is 8, and a pane's 140px minimum is reached at 144
+    assert.deepEqual(got.boxAria, [8, 1600], 'a box with minWidth 2 and maxWidth 2000 reports aria-valuemin 8 and aria-valuemax 1600, the sizes it can reach');
+    assert.deepEqual(got.paneAria, [144, 1600], 'a pane splitter whose limit is 2000 reports aria-valuemax 1600 (and its 140 minimum as 144, the first 8px line)');
     assert.equal(got.end, 1600, 'a pane splitter whose limit is 2000 goes no further than 1600 with End');
     assert.deepEqual(errors, [], 'no page error');
     console.log('RESIZE_CAPS_OK widths and heights past 1600 drawn at 1600, a pane at most 1600, the separators report the reachable limits, the stylesheet up to the caps');

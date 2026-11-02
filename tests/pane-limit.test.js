@@ -1,5 +1,5 @@
 /* Plenix tests · pane limits follow the window (issue 463, option C, step 1): a pane of the shell or a table column is never dragged wider than
-   --plx-sys-shell-pane-window-share (90%) of the window, of the table for a column, down to the 4px grid. A smaller limit still applies.
+   --plx-sys-shell-pane-window-share (90%) of the window (a pane down to the 8px drag grid, issue 882), of the table for a column (down to the 4px grid). A smaller limit still applies.
    Summary: a PanelSplitter whose limit is 2000 goes no further than 90% of the window (900 at 1000px, 1152 at 1280px) and reports it as
      aria-valuemax; at 2000px the pane cap (1600) is the smaller; a DataGrid column in a table about 600px wide ends at 90% of the table
      (not 1600); a column with a maxWidth of 120 stays at 120.
@@ -32,7 +32,8 @@ const assert = require('assert/strict'), { serve, launch } = require('./lib');
       await page.close(); return got;
     };
     const share = (w) => Math.floor(w * 0.9 / 4) * 4;
-    for (const [width, expectPane] of [[1000, 900], [1280, 1152], [2000, 1600]]) {
+    // a pane on the 8px drag grid (issue 882): 90% of 1000 is 900, the 8px line below it 896
+    for (const [width, expectPane] of [[1000, 896], [1280, 1152], [2000, 1600]]) {
       const got = await run(width);
       assert.equal(got.paneMax, expectPane, 'the pane limit at ' + width + 'px is the smaller of 90% of the window and 1600');
       assert.equal(got.end, expectPane, 'End goes to that limit at ' + width + 'px');

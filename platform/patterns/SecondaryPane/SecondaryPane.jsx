@@ -61,6 +61,7 @@ import { ToolRail } from '../ToolRail/ToolRail.jsx';
 import { PanelSplitter, tokenPx, below, useMedia, useAppLayout } from '../AppShell/AppShell.jsx';
 import { focusables } from '../../utils/layer.ts';
 import { gridWithin } from '../../utils/grid.ts';
+import { DRAG_STEP } from '../../utils/sizeSteps.js';
 import { paneMax } from '../../utils/paneLimit.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import ArrowLeftIcon from 'plenix-platform/icons/plenix/arrow-left';
@@ -140,7 +141,7 @@ export function SecondaryPane({ title, label, icon, actions, side = 'start', wid
   const pane = (
     <aside aria-label={name} className={cx('plx-secondary-pane', 'plx-secondary-pane--' + side, 'plx-secondary-pane--' + width, sized && 'plx-secondary-pane--resized',
       narrow && listDetail && (stepAside ? 'plx-secondary-pane--aside' : 'plx-secondary-pane--list'), className)}
-      data-plx-width={sized ? gridWithin(size, min(), paneMax(max(), min())) + 'px' : undefined} {...rest}>
+      data-plx-width={sized ? gridWithin(size, min(), paneMax(max(), min()), { step: DRAG_STEP }) + 'px' : undefined} {...rest}>
       <div className="plx-secondary-pane__header">
         {icon ? iconElement(icon) : null}
         <span className="plx-secondary-pane__title">{title}</span>

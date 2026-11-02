@@ -22,8 +22,8 @@
      className: more classes on the pane
      children: the body: NavList groups (whose headings are collapsible section headers), a filter field, buttons
    Behavior:
-     Its size follows the Layout grid's shell: --plx-sys-shell-nav-width (240px; 272px from a window 1440px wide, 320px from 1920px: the -from-1440 and -from-1920 tokens, set in system/grid.css; its dragged width is remembered per monitor, utils/monitorWidths.ts), resizable 140–320px with the splitter on its
-       edge: dragged, it moves one grid line (4px) at a time and stays on the grid; the arrow keys move it by
+     Its size follows the Layout grid's shell: --plx-sys-shell-nav-width (240px; 272px from a window 1440px wide, 320px from 1920px: the -from-1440 and -from-1920 tokens, set in system/grid.css; its dragged width is remembered per monitor, utils/monitorWidths.ts), resizable 140–320px (dragged, 144–320px: the 8px drag grid inside those limits, issue 882) with the splitter on its
+       edge: dragged, it moves one drag-grid line (8px, issue 882) at a time and stays on the grid; the arrow keys move it by
        --plx-sys-shell-splitter-step; Enter or a double-click on the edge folds the pane to its rail.
      The first row is the same on every pane: the title, the actions, then the Collapse button at the row's end, on the side
        that faces the main region.
@@ -54,6 +54,7 @@ import { Button } from '../../components/Button/Button.tsx';
 import { ToolRail, BarContext } from '../ToolRail/ToolRail.jsx';
 import { useAppLayout, PanelSplitter, tokenPx } from '../AppShell/AppShell.jsx';
 import { gridWithin } from '../../utils/grid.ts';
+import { DRAG_STEP } from '../../utils/sizeSteps.js';
 import { paneMax } from '../../utils/paneLimit.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import ArrowLeftIcon from 'plenix-platform/icons/plenix/arrow-left';
@@ -120,7 +121,7 @@ export function NavPane({ label, title, actions, as = 'nav', header, footer, rai
 
   // a width only the page or the person knows (the width prop, or the splitter's) reaches the stylesheet as the pane's width, on the grid
   const w = mode === 'static' ? width : narrow ? null : layout.width;
-  const paneWidth = w ? gridWithin(parseInt(w, 10), tokenPx('--plx-sys-shell-nav-min-width'), paneMax(tokenPx('--plx-sys-shell-nav-max-width'), tokenPx('--plx-sys-shell-nav-min-width'))) + 'px' : undefined;
+  const paneWidth = w ? gridWithin(parseInt(w, 10), tokenPx('--plx-sys-shell-nav-min-width'), paneMax(tokenPx('--plx-sys-shell-nav-max-width'), tokenPx('--plx-sys-shell-nav-min-width')), { step: DRAG_STEP }) + 'px' : undefined;
   const collapse = mode === 'static' || narrow ? null : (
     <span className={cx('plx-nav-pane__collapse', 'plx-nav-pane__collapse--' + collapseAt)}>
       <Button size="sm" variant="ghost" iconOnly icon={PanelLeftCloseIcon} label={t.collapse} onClick={layout.toggle} />
