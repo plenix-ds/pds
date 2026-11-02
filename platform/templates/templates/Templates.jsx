@@ -27,7 +27,7 @@
    Notes: No colors or new layout values; existing components own responsive presentation and keyboard behavior.
 */
 import React from 'react';
-import { AppShell, PageContent } from '../../patterns/AppShell/AppShell.jsx';
+import { AppShell, PageContent } from '../../patterns/AppShell/AppShell.tsx';
 import { SidePanel } from '../../patterns/SidePanel/SidePanel.jsx';
 import { RecordPage } from '../../patterns/RecordPage/RecordPage.jsx';
 import { SecondaryPane } from '../../patterns/SecondaryPane/SecondaryPane.jsx';

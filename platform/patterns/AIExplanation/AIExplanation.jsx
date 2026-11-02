@@ -10,7 +10,7 @@ import { cx } from '../../utils/cx.ts';
 import { Stack } from '../../components/Stack/Stack.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { Button } from '../../components/Button/Button.tsx';
-import { Popover } from '../../components/Popover/Popover.jsx';
+import { Popover } from '../../components/Popover/Popover.tsx';
 import { ConfidenceIndicator } from '../../components/ConfidenceIndicator/ConfidenceIndicator.jsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import SparkleIcon from 'plenix-platform/icons/plenix/sparkle';

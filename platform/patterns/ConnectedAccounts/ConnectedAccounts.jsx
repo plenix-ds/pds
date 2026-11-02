@@ -57,7 +57,7 @@ import { announce } from '../../utils/announce.tsx';
 import { formatDate, dateTimeAttr } from '../../utils/format.ts';
 import { Badge } from '../../components/Badge/Badge.tsx';
 import { Button } from '../../components/Button/Button.tsx';
-import { ConfirmDialog } from '../../components/Dialog/Dialog.jsx';
+import { ConfirmDialog } from '../../components/Dialog/Dialog.tsx';
 import { Icon } from '../../components/Icon/Icon.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';

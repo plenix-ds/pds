@@ -63,15 +63,20 @@
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { formatBytes, formatNumber } from '../../utils/format.ts';
-import { Breadcrumbs } from '../../components/Breadcrumbs/Breadcrumbs.jsx';
+import { Breadcrumbs } from '../../components/Breadcrumbs/Breadcrumbs.tsx';
 import { Tree } from '../../components/Tree/Tree.jsx';
 import { MediaCard } from '../../components/Card/Card.jsx';
 import { fileIcon, fileExtension } from '../../components/File/File.jsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { EmptyState } from '../../components/EmptyState/EmptyState.tsx';
 import { DropZone } from '../../components/DropZone/DropZone.tsx';
+<<<<<<< HEAD
 import { Resizable } from '../../components/Resizable/Resizable.tsx';
 import { PromptDialog } from '../../components/Dialog/Dialog.jsx';
+=======
+import { Resizable } from '../../components/Resizable/Resizable.tsx';
+import { PromptDialog } from '../../components/Dialog/Dialog.tsx';
+>>>>>>> origin/styling/phase-2
 import { CommandBar, CommandBarSearch } from '../CommandBar/CommandBar.jsx';
 import { SortPanel } from '../SortPanel/SortPanel.jsx';
 import { ViewMenu } from '../ViewMenu/ViewMenu.jsx';

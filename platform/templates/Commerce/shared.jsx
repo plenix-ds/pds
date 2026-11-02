@@ -37,7 +37,7 @@
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { formatCurrency, formatNumber } from '../../utils/format.ts';
-import { useAppLayout } from '../../patterns/AppShell/AppShell.jsx';
+import { useAppLayout } from '../../patterns/AppShell/AppShell.tsx';
 import { Panel } from '../../components/Card/Card.jsx';
 import { Image } from '../../components/Image/Image.jsx';
 import { Link } from '../../components/Link/Link.tsx';

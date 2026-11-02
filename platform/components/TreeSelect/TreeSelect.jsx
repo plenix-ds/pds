@@ -60,7 +60,7 @@ import { cx } from '../../utils/cx.ts';
 import { highlightMatch, matchesText } from '../../utils/highlight.tsx';
 import { isRtl } from '../../utils/direction.ts';
 import { Icon, asIcon, iconKey } from '../Icon/Icon.tsx';
-import { Popover } from '../Popover/Popover.jsx';
+import { Popover } from '../Popover/Popover.tsx';
 import { Tooltip } from '../Tooltip/Tooltip.tsx';
 import { useTruncated } from '../../utils/overflow.ts';
 import { SearchField } from '../SearchField/SearchField.tsx';

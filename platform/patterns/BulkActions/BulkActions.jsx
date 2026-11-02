@@ -51,7 +51,7 @@ import { useBarFit } from '../../utils/barFit.ts';
 import { formatNumber } from '../../utils/format.ts';
 import { Button } from '../../components/Button/Button.tsx';
 import { Text } from '../../components/Text/Text.tsx';
-import { Toolbar } from '../../components/Toolbar/Toolbar.jsx';
+import { Toolbar } from '../../components/Toolbar/Toolbar.tsx';
 import { Tooltip } from '../../components/Tooltip/Tooltip.tsx';
 import { BarActions, foldOrder } from '../CommandBar/BarActions.jsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';

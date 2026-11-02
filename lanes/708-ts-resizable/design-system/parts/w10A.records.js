@@ -172,7 +172,7 @@ DSParts.records.push(function (H) {
 
     /* ── 13 Interaction › Interaction foundations › Drag handle: DragHandle ── */
     { id: 'drag-handle', lab: true, icon: 'drag', sec: 'interaction', sub: 'Interaction foundations', leaf: 'Drag handle', title: 'Drag handle',
-      plenix: 'DragHandle', src: 'components/DragHandle/DragHandle.jsx', level: 'Component', interaction: 'Drag and drop',
+      plenix: 'DragHandle', src: 'components/DragHandle/DragHandle.tsx', level: 'Component', interaction: 'Drag and drop',
       aliases: ['Grip', 'Drag grip', 'Reorder handle', 'Grabber', 'Drag indicator'],
       text: 'The grip that moves an item: a small button with the drag icon (six dots). The drag-and-drop engine turns it into a drag for the pointer and a pick-up for the keyboard. Vertical (the dots stand) for rows that move up and down; horizontal (the dots lie) for columns and tabs that move sideways. A click without moving does what the handle’s other props say: as a Menu’s trigger, it opens the menu of moves.',
       use: ['Rows, cards and panels people reorder or move, when the item holds other controls', 'A name with a verb and the item ("Move Hero banner")', 'The menu of moves on it (Move up, Move down, Move to the start and end), so people can move the item without dragging'],

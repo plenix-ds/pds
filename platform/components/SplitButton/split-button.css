@@ -2,7 +2,7 @@
    the main button's end corners and the menu button's start corners are square; on secondary the menu button drops its
    start border, so the main button's end border is the divider; on primary the menu button's start border is the
    divider, in the pressed step of the action color. The focused part rises so its ring is whole. Anatomy and API:
-   SplitButton.jsx. */
+   SplitButton.tsx. */
 .plx-split-button{display:inline-flex;vertical-align:middle;}
 .plx-split-button>.plx-split-button__main{border-end-end-radius:var(--plx-comp-split-button-joined-radius);border-start-end-radius:var(--plx-comp-split-button-joined-radius);}
 .plx-split-button .plx-split-button__toggle{border-end-start-radius:var(--plx-comp-split-button-joined-radius);border-start-start-radius:var(--plx-comp-split-button-joined-radius);}

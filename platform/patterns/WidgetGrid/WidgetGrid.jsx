@@ -33,7 +33,7 @@ import { cx } from '../../utils/cx.ts';
 import { Icon } from '../../components/Icon/Icon.tsx';
 import { LiveRegion } from '../../utils/announce.tsx';
 import { arrowStep } from '../../utils/direction.ts';
-import { Menu, MenuItem } from '../../components/Menu/Menu.jsx';
+import { Menu, MenuItem } from '../../components/Menu/Menu.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import DragIcon from 'plenix-platform/icons/plenix/drag';
 import { fill } from '../../utils/fill.ts';

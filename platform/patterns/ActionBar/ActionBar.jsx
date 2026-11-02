@@ -31,9 +31,9 @@ import { cx } from '../../utils/cx.ts';
 import { useBarFit } from '../../utils/barFit.ts';
 import { foldOrder, menuOrder } from '../../utils/foldOrder.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
-import { useMedia, below } from '../AppShell/AppShell.jsx';
+import { useMedia, below } from '../AppShell/AppShell.tsx';
 import { Button } from '../../components/Button/Button.tsx';
-import { Menu, MenuItem, MenuDivider } from '../../components/Menu/Menu.jsx';
+import { Menu, MenuItem, MenuDivider } from '../../components/Menu/Menu.tsx';
 import MoreIcon from 'plenix-platform/icons/plenix/more';
 
 // a Button that can fold: a text label, not a link; the primary one never does

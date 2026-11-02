@@ -1,6 +1,6 @@
 /* Plenix · TeachingBubble (platform/components/TeachingBubble). A Popover with its arrow (md, or lg when wide): the
    picture, the header (title, Close), the text, then the footer: the step count at the start, the actions at the end.
-   Anatomy and API: TeachingBubble.jsx. */
+   Anatomy and API: TeachingBubble.tsx. */
 .plx-teaching-bubble__media{margin-block-end:var(--plx-comp-teaching-bubble-media-margin-block-end);}
 .plx-teaching-bubble__header{align-items:flex-start;column-gap:var(--plx-comp-teaching-bubble-header-gap);display:flex;min-block-size:var(--plx-comp-teaching-bubble-header-min-height);}
 .plx-teaching-bubble__title{color:var(--plx-comp-teaching-bubble-title-text);flex-basis:0%;flex-grow:1;flex-shrink:1;font-family:var(--plx-comp-teaching-bubble-title-font-family);font-size:var(--plx-comp-teaching-bubble-title-font-size);font-weight:var(--plx-comp-teaching-bubble-title-font-weight);letter-spacing:var(--plx-sys-text-title-letter-spacing);line-height:var(--plx-comp-teaching-bubble-title-line-height);margin-block-end:0;margin-block-start:0;margin-inline-end:0;margin-inline-start:0;min-inline-size:0;word-spacing:normal;}

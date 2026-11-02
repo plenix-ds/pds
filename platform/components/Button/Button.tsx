@@ -104,7 +104,11 @@ export type ButtonProps = Omit<React.HTMLAttributes<HTMLElement>, 'onClick'> & {
   loading?: boolean;
   disabled?: boolean;
   href?: string;
+  /** with href: the name to save the linked file as (the link's download attribute, passed on) */
+  download?: string;
   type?: 'button' | 'submit' | 'reset';
+  /** the id of the form a submit button belongs to (the button's form attribute, passed on) */
+  form?: string;
   joined?: ButtonJoined;
   truncate?: boolean;
   stackedLabel?: boolean;

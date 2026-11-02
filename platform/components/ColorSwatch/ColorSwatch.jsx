@@ -48,7 +48,7 @@ import { cx } from '../../utils/cx.ts';
 import { DATA_COLORS } from './dataColors.js';
 import { CATEGORY_COLORS } from './categoryColors.js';
 import { Button } from '../Button/Button.tsx';
-import { Menu, MenuItem } from '../Menu/Menu.jsx';
+import { Menu, MenuItem } from '../Menu/Menu.tsx';
 import { useOverflow, splitAt } from '../../utils/overflow.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import { useReadOnly } from '../../providers/ReadOnly.tsx';

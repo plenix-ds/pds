@@ -13,7 +13,7 @@
      Job creation, progress and download authorization belong to the caller. This component never fabricates a file.
 */
 import React from 'react';
-import { Dialog } from '../../components/Dialog/Dialog.jsx';
+import { Dialog } from '../../components/Dialog/Dialog.tsx';
 import { Stack } from '../../components/Stack/Stack.tsx';
 import { Field } from '../../components/Field/Field.tsx';
 import { Select } from '../../components/Input/Input.tsx';

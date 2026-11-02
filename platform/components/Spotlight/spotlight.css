@@ -2,8 +2,8 @@
    around the target (top and bottom the full width; start and end level with the target), --plx-comp-spotlight-padding
    clear of its edges. The beacon: a dot in the brand color with a ring, centered on the target's top end corner, pulsing.
    The target names the anchor (data-plx-spotlight-target); a contained spotlight's parent scopes it
-   (data-plx-spotlight-scope). Without anchor positioning, Spotlight.jsx writes the measured insets. Anatomy and API:
-   Spotlight.jsx. */
+   (data-plx-spotlight-scope). Without anchor positioning, Spotlight.tsx writes the measured insets. Anatomy and API:
+   Spotlight.tsx. */
 .plx-spotlight{display:var(--plx-sys-print-hidden,contents);}
 .plx-spotlight__dim{animation-duration:var(--plx-comp-spotlight-animation-duration);animation-name:motion-fade-in;animation-timing-function:var(--plx-comp-spotlight-animation-timing-function);background-color:var(--plx-comp-spotlight-dim-background);opacity:var(--plx-comp-spotlight-dim-opacity);position:fixed;z-index:var(--plx-comp-spotlight-z-index);}
 .plx-spotlight--contained .plx-spotlight__dim{position:absolute;z-index:var(--plx-comp-spotlight-contained-z-index);}

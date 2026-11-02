@@ -1,6 +1,6 @@
 /* Plenix · CopyButton (platform/components/CopyButton). The button is a Button (its variant and size); the field form
    joins a read-only field in the data font and the button into one control: the field's end corners and the button's
-   start corners are square, and they share the field's end border. Anatomy and API: CopyButton.jsx. */
+   start corners are square, and they share the field's end border. Anatomy and API: CopyButton.tsx. */
 .plx-copy-button-field{display:flex;max-inline-size:var(--plx-comp-copy-button-field-max-width);min-inline-size:0;}
 .plx-copy-button-field>.plx-copy-button-field__value{border-end-end-radius:var(--plx-comp-copy-button-field-joined-radius);border-start-end-radius:var(--plx-comp-copy-button-field-joined-radius);flex-basis:0%;flex-grow:1;flex-shrink:1;min-inline-size:0;}
 .plx-copy-button-field>.plx-copy-button-field__button{flex-shrink:0;}
