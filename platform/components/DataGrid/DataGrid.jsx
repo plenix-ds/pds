@@ -113,9 +113,13 @@
        Wrap all columns in the header's right-click menu. A row with a wrapping column starts every cell at the top, at the
        reading line height; rows without one stay centered. wrapColumns ({ field: true|false }) and onWrapColumnsChange(next)
        control it from outside; the saved view keeps it (owner, 2026-10-24)
-     narrow: "auto" (default, a SplitView's grid too; issue 679): a table while its visible columns fit the grid's measured width (their widths
-       plus the selection, row menu and view columns), else the row cards | "table" (a fixed table that may scroll sideways: the
-       escape hatch for a dense specialized grid) | "list" (the row cards under narrowAt, 600px). Row cards (issue 679, owner 2026-11-01: every
+     narrow: "auto" (default, a SplitView's grid too; issue 679): a table while its visible columns fit the grid's measured width at their
+       minimum readable widths (each column's minWidth, else its header and cell space, at least 80px; plus the selection, row
+       menu and view columns; issue 929). Each column starts at its content (its header and widest value, capped at its set
+       width); spare room goes to the title (the first key column), else the widest text column; over the room, the columns
+       with the most room above their minimum give it up first and the title last; a column the person sized keeps its
+       width; else the row cards | "table" (a fixed table at its set widths that may scroll sideways:
+       the escape hatch for a dense specialized grid) | "list" (the row cards under narrowAt, 600px). Row cards (issue 679, owner 2026-11-01: every
        grid, by default): the row template, layout "A" unless the grid names another (see layout): a bar over the cards with the select-all checkbox and the
        count of records, then each record as three aligned lines (the title and the date, the subtitle and the primary value, the secondary and the tertiary)
        with the values the columns' own cells show (their render or formatter), the fields no slot takes as "Label: value" lines under the third, the selection

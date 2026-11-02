@@ -1,4 +1,6 @@
 // Task 149: real typing in a 600-row, eleven-column sorted grid; light mode only.
+// narrow:'table' (issue 929): the grid-step check below reads a column at its set width, which a fixed table keeps; the
+// default grid now sizes its columns to their content and fits them to its width.
 const assert=require('assert/strict');
 const {serve,launch}=require('./lib');
 (async()=>{const server=await serve(9721);let browser;try{
@@ -11,7 +13,7 @@ const {serve,launch}=require('./lib');
   window.__search149={localeCalls:0,tokenReads:0,filterCalls:0,selectionChanges:0};const locale=String.prototype.localeCompare,computed=window.getComputedStyle;
   String.prototype.localeCompare=function(...args){window.__search149.localeCalls++;return locale.apply(this,args);};
   window.getComputedStyle=function(...args){window.__search149.tokenReads++;return computed.apply(this,args);};
-  function Fixture(){const[q,setQ]=React.useState('');return h(React.Fragment,null,h('input',{'aria-label':'Search records',value:q,onChange:e=>setQ(e.target.value)}),h(Plenix.DataGrid,{label:'Search performance',data,columns,selectable:true,onReady:api=>window.__searchApi149=api,onSelectionChange:()=>window.__search149.selectionChanges++,sort:[{field:'name',dir:'asc'}],filter:q?r=>{window.__search149.filterCalls++;return r.name.toLowerCase().includes(q.toLowerCase());}:undefined,mode:'pages',pageSize:50,narrow:'table'}));}
+  function Fixture(){const[q,setQ]=React.useState('');return h(React.Fragment,null,h('input',{'aria-label':'Search records',value:q,onChange:e=>setQ(e.target.value)}),h(Plenix.DataGrid,{label:'Search performance',data,columns,selectable:true,narrow:'table',onReady:api=>window.__searchApi149=api,onSelectionChange:()=>window.__search149.selectionChanges++,sort:[{field:'name',dir:'asc'}],filter:q?r=>{window.__search149.filterCalls++;return r.name.toLowerCase().includes(q.toLowerCase());}:undefined,mode:'pages',pageSize:50,narrow:'table'}));}
   ReactDOM.createRoot(host).render(h(Fixture));
  });
  await page.waitForFunction(()=>document.querySelector('.plx-data-grid__grid-row [data-plx-field="name"]')?.textContent.includes('Record 001'));
