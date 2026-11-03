@@ -409,6 +409,10 @@
 .plx-data-grid__gap--add{--plx-sys-virtual-item-size:var(--plx-sys-data-grid-row-height);}
 .plx-data-grid__gap--band{--plx-sys-virtual-item-gap:0px;--plx-sys-virtual-item-size:var(--plx-comp-data-grid-group-gap);}
 .plx-data-grid__gap--separated{--plx-sys-virtual-item-size:calc(var(--plx-comp-data-grid-group-header-height) + var(--plx-comp-data-grid-line-width));}
+/* the card list draws only the cards near the view (issue 809): a spacer before and after them, a whole number of pixels
+   (the spacer unit), as tall as the cards it stands for; the list is no scroll anchor (the virtualizer keeps the view still) */
+.plx-data-grid__gap--px{--plx-sys-virtual-item-gap:0px;--plx-sys-virtual-item-size:var(--plx-comp-data-grid-card-spacer-unit);}
+.plx-data-grid__grid-table--cards{overflow-anchor:none;}
 /* ---- the rest (zero overlap, batch 6): the empty message, the footer, a link alone in a custom cell, the row menu, the
    header's type icon, flat. A link the engine places directly in a cell is a.plx-data-grid__cell-content (the engine adds
    the class to custom content); the row-menu cell sizes its button through Button's context hooks. */

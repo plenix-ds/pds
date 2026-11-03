@@ -39,7 +39,7 @@ import { formatNumber } from '../../utils/format.ts';
 import { EMPTY_ROWS, GRID, kinds } from './engine/helpers.jsx';
 
 import { useVirtualizer } from './engine/useVirtualizer.js';
-import { useIntersection } from '../../hooks/useIntersection.ts';
+import { observeElementRect, observeElementOffset, elementScroll, observeWindowRect, observeWindowOffset, windowScroll, defaultRangeExtractor } from '@tanstack/react-virtual';
 import { useSelection, selectionActions } from './engine/useSelection.js';
 import { useColumns } from './engine/useColumns.js';
 import { useEditedRows, editActions, useEditEffect } from './engine/useEditing.js';
@@ -61,9 +61,11 @@ import { bodyRows } from './engine/bodyRows.jsx';
 import { headerRows } from './engine/headerRows.jsx';
 
 import { makeFocusCell } from './engine/keys.js';
-import { MemoGridRow } from './engine/parts.jsx';
-// the cards the narrow card list draws at a time (issue 809, first step)
-const CARD_CHUNK = 100;
+import { MemoGridRow, PixelGap } from './engine/parts.jsx';
+// a card list of more cards than this draws only the cards near the view (issue 809)
+const CARD_ALL = 100;
+// the cards drawn beyond each edge of the view in the long card list (issue 809)
+const CARD_OVERSCAN = 6;
 
 function NextEngine(props) {
   const inPane = React.useContext(GridPane);
@@ -382,35 +384,113 @@ function NextEngine(props) {
     last = virtualized
       ? (virtualItems[virtualItems.length - 1]?.index ?? Math.min(model.length, 1) - 1) + 1
       : model.length;
-  // the card list (narrow, not virtualized) draws in chunks (issue 809, first step): the first CARD_CHUNK cards, the next
-  // CARD_CHUNK when the end nears the view (a sentinel after the last card), every card on End or a key past the end. A list
-  // of CARD_CHUNK or fewer draws as before; remote rows keep their own loading; the counts come from the data, not the cards.
-  const chunked = isNarrow && !virtualized && !isStatic && !printing && mode !== 'pages' && !remoteMode;
-  const [cardLimit, setCardLimit] = React.useState(CARD_CHUNK);
-  React.useEffect(() => { if (!chunked) setCardLimit(CARD_CHUNK); }, [chunked]);
-  // only ever grows (a memoized row may hold an older cardLimit in its closure)
-  const drawTo = (index) => { if (chunked) setCardLimit((n) => Math.max(n, Math.ceil((index + 1) / CARD_CHUNK) * CARD_CHUNK)); };
-  const moreCards = chunked && model.length > cardLimit;
-  const cardEnd = React.useRef(null);
-  // the area to watch the end in: the grid's own scroll area when it scrolls, else the window (a grid that grows with the
-  // page); read after each layout, so it follows the grid's height
-  const [cardRoot, setCardRoot] = React.useState(null);
-  const cardRootNow = React.useRef(null);
-  React.useLayoutEffect(() => {
-    if (!moreCards) return;
-    const h = holder.current, next = h && h.scrollHeight > h.clientHeight + 1 ? holder : null;
-    // set only on a change, compared outside the state updater (the pattern that looped in useVirtualizer, #825; #882)
-    if (cardRootNow.current !== next) { cardRootNow.current = next; setCardRoot(next); }
+  // the card list (narrow, issue 809): a list of more than CARD_ALL cards draws only the cards near the view, each measured
+  // (its own height: lines that wrap, an open row), with a spacer of whole pixels before and after them as tall as the
+  // cards they stand for. The list scrolls in the grid's own scroll area when that scrolls, else with the page. A list of
+  // CARD_ALL or fewer draws every card, as before; printing and the pages mode draw every card; remote rows keep their own
+  // loading. The counts and selection come from the data, not the drawn cards.
+  const cardList = isNarrow && !virtualized && !isStatic && !printing && mode !== 'pages' && !remoteMode;
+  const cardsVirtual = cardList && model.length > CARD_ALL;
+  // where the list scrolls: the grid's own scroll area when it scrolls, else the window; and where the list starts in it
+  const [cardScroller, setCardScroller] = React.useState('holder');
+  const [cardTop, setCardTop] = React.useState(0);
+  // the estimate for a card not measured yet: the most common measured height (most cards of a list share one)
+  const cardSizes = React.useRef(new Map());
+  const cardEstimate = () => {
+    let best = 0, seen = 0;
+    cardSizes.current.forEach((count, size) => { if (count > seen) { seen = count; best = size; } });
+    // before any card is measured: two rows, and never 0, so the first layout already holds the whole list's height (the
+    // grid measures the room under its body against it)
+    return best || Math.max(1, metrics.row * 2 + metrics.line);
+  };
+  const windowed = cardScroller === 'window';
+  // the card that has focus stays drawn wherever the list scrolls (Home, a scroll by the wheel), so focus is never lost
+  const cardFocus = React.useRef(null);   // the focused card's key
+  // and the headers of the group the view is in (each level) stay drawn, so they stay stuck at the top as their rows scroll,
+  // exactly as when every card was drawn
+  const cardHeads = React.useMemo(() => (cardsVirtual ? model.map((row, i) => (row.__group ? [i, row.__group.depth] : null)).filter(Boolean) : []), [cardsVirtual, model]);
+  const cardRange = (range) => {
+    const out = defaultRangeExtractor(range), at = cardFocus.current == null ? undefined : cardIndex.current.get(cardFocus.current);
+    const add = (i) => { if (i !== undefined && i >= 0 && i < model.length && !out.includes(i)) out.push(i); };
+    add(at);
+    // the nearest header before the view at each level, going up the levels
+    let depth = Infinity;
+    for (let k = cardHeads.length - 1; k >= 0 && depth > 0; k -= 1) {
+      const [i, d] = cardHeads[k];
+      if (i <= range.startIndex && d < depth) { add(i); depth = d; }
+    }
+    out.sort((a, b) => a - b);
+    return out;
+  };
+  const cardVirtual = useVirtualizer({
+    count: cardsVirtual ? model.length : 0,
+    getScrollElement: () => (windowed ? window : holder.current),
+    observeElementRect: windowed ? observeWindowRect : observeElementRect,
+    observeElementOffset: windowed ? observeWindowOffset : observeElementOffset,
+    scrollToFn: windowed ? windowScroll : elementScroll,
+    estimateSize: cardEstimate,
+    getItemKey: (i) => model[i]?.displayKey || model[i]?.id,
+    scrollMargin: cardTop,
+    rangeExtractor: cardRange,
+    overscan: CARD_OVERSCAN,
+    enabled: cardsVirtual,
+    redrawOnSize: true,
+    initialRect: { width: 0, height: 0 }
   });
-  // a fresh observer for each chunk (the root object is new per cardLimit), so its first report says whether the end is still
-  // near after the cards just drawn: one chunk per report, never a run of chunks on a stale answer
-  const cardWatch = React.useMemo(() => ({ current: cardRoot ? cardRoot.current : null }), [cardRoot, cardLimit]);   // eslint-disable-line react-hooks/exhaustive-deps
-  const askedAt = React.useRef(0);
-  useIntersection(cardEnd, { root: cardWatch, rootMargin: '--plx-ref-size-400px', disabled: !moreCards,
-    onChange: (entry) => { if (entry.isIntersecting && askedAt.current !== cardLimit) { askedAt.current = cardLimit; setCardLimit((n) => n + CARD_CHUNK); } } });
-  const shown = virtualized ? model.slice(first, last) : moreCards ? model.slice(0, cardLimit) : model;
-  // after the drawn cards: the sentinel the end is watched by
-  const cardMore = moreCards ? <div ref={cardEnd} className={B + '__card-more'} aria-hidden="true" /> : null;
+  React.useLayoutEffect(() => {
+    if (!cardsVirtual) return;
+    const h = holder.current, table = h && h.querySelector(':scope .' + B + '__grid-table');
+    if (!h || !table) return;
+    const scrolls = h.scrollHeight > h.clientHeight + 1 && /(auto|scroll)/.test(getComputedStyle(h).overflowY);
+    const next = scrolls ? 'holder' : 'window';
+    if (next !== cardScroller) { setCardScroller(next); return; }
+    const top = Math.round(table.getBoundingClientRect().top + (scrolls ? h.scrollTop - h.getBoundingClientRect().top : window.scrollY));
+    if (top !== cardTop) setCardTop(top);
+  });
+  // each drawn card is measured as it is drawn and whenever its size changes (an open row, a wrap): whole pixels
+  const cardIndex = React.useRef(new Map());
+  if (cardsVirtual) cardIndex.current = new Map(model.map((row, i) => [row.displayKey || row.id, i]));
+  const cardObserver = React.useRef(null);
+  const cardKeyOf = React.useRef(new WeakMap());
+  const cardMeasured = React.useRef(new Map());   // a card's key -> its last measured height
+  const measureCard = (node) => {
+    const key = cardKeyOf.current.get(node), index = cardIndex.current.get(key);
+    if (index === undefined) return;
+    const size = Math.round(node.getBoundingClientRect().height), last = cardMeasured.current.get(key);
+    if (!size || size === last) return;
+    if (last) cardSizes.current.set(last, cardSizes.current.get(last) - 1);
+    cardSizes.current.set(size, (cardSizes.current.get(size) || 0) + 1);
+    cardMeasured.current.set(key, size);
+    cardVirtual.resizeItem(index, size);
+  };
+  const watchCard = (row, node, previous) => {
+    if (!cardsVirtual || typeof ResizeObserver === 'undefined') return;
+    if (!cardObserver.current) cardObserver.current = new ResizeObserver((entries) => entries.forEach((e) => measureCard(e.target)));
+    if (previous && previous !== node) cardObserver.current.unobserve(previous);
+    if (node) { cardKeyOf.current.set(node, row.displayKey || row.id); cardObserver.current.observe(node); measureCard(node); }
+  };
+  React.useEffect(() => () => cardObserver.current?.disconnect(), []);
+  React.useEffect(() => {
+    const h = holder.current;
+    if (!cardsVirtual || !h) return undefined;
+    const onFocus = (e) => {
+      const card = e.target.closest && e.target.closest('.' + B + '__grid-row');
+      const key = card ? cardKeyOf.current.get(card) : undefined;
+      if (key !== undefined) cardFocus.current = key;
+    };
+    const onBlur = (e) => { if (!h.contains(e.relatedTarget)) cardFocus.current = null; };
+    h.addEventListener('focusin', onFocus);
+    h.addEventListener('focusout', onBlur);
+    return () => { h.removeEventListener('focusin', onFocus); h.removeEventListener('focusout', onBlur); };
+  }, [cardsVirtual, B]);
+  // the drawn cards (the window and the focused card), each preceded by the space for the cards before it not drawn
+  const cardItems = cardsVirtual ? cardVirtual.getVirtualItems() : [];
+  const shown = virtualized ? model.slice(first, last) : cardsVirtual ? cardItems.map((item) => model[item.index]).filter(Boolean) : model;
+  const cardGaps = new Map();   // a drawn card's key -> the pixels of space before it
+  let cardEnd = cardTop;
+  cardItems.forEach((item) => { const row = model[item.index]; if (row) cardGaps.set(row.displayKey || row.id, item.start - cardEnd); cardEnd = item.end; });
+  // the space after the last drawn card; before the first cards are known (no view size yet), the whole list's height
+  const cardAfter = cardsVirtual ? <PixelGap px={cardVirtual.getTotalSize() + cardTop - cardEnd} /> : null;
   const frozen = new Set(columnPinning.left),
     ordered = table.getLeftVisibleLeafColumns().concat(table.getCenterVisibleLeafColumns());
   const pinStart = (column) => (selectable ? metrics.lead : 0) + column.getStart('left');
@@ -708,12 +788,13 @@ function NextEngine(props) {
     scroller: holder,
   });
   live.current.cellRange = cellRange;
-  const focusCell = makeFocusCell({ model, ordered, virtualized, virtual, displayElements, drawTo });
+  const focusCell = makeFocusCell({ model, ordered, virtualized, virtual, displayElements, cards: cardsVirtual ? cardVirtual : null });
 
   const rememberRow = (row, node) => {
     const displayKey = row.displayKey || row.id,
       previous = displayElements.current.get(displayKey),
       active = document.activeElement;
+    watchCard(row, node, previous);
     if (node) {
       displayElements.current.set(displayKey, node);
       rowElements.current.set(row.id, node);
@@ -792,7 +873,7 @@ function NextEngine(props) {
     emit,
     setOwnOpen,
     focusCell,
-    chunked,
+    cardList,
     cellRange,
     pickCheckbox,
     kindsOf,
@@ -949,7 +1030,9 @@ function NextEngine(props) {
     groupNode,
     model,
     shown,
-    cardMore,
+    cardGaps,
+    cardAfter,
+    cardsVirtual,
     renderRow,
     last,
     empty,

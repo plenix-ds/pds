@@ -19,7 +19,7 @@ import { cx } from '../../../utils/cx.ts';
 import { lengthName } from './helpers.jsx';
 import { tableKeys } from './keys.js';
 import { tokenPixels } from '../environment.js';
-import { WidthPixels, Check, Width, RowGap } from './parts.jsx';
+import { WidthPixels, Check, Width, RowGap, PixelGap } from './parts.jsx';
 import { Scrollbars } from '../scrollbars.jsx';
 import { Rare } from './rare.jsx';
 
@@ -90,7 +90,9 @@ export function gridFrame({
   groupNode,
   model,
   shown,
-  cardMore,
+  cardGaps,
+  cardAfter,
+  cardsVirtual,
   renderRow,
   last,
   empty,
@@ -239,6 +241,7 @@ export function gridFrame({
                 `${B}__grid-table`,
                 virtualized && B + '__grid-table--virtual',
                 isNarrow && B + '__grid-table--narrow',
+                cardsVirtual && B + '__grid-table--cards',
                 isStatic && B + '__grid-table--static'
               )}
               role="presentation"
@@ -260,8 +263,15 @@ export function gridFrame({
                 </div>
               ) : null}
               <RowGap rows={model.slice(0, first)} />
-              {shown.map(renderRow)}
-              {cardMore}
+              {cardsVirtual
+                ? shown.map((row) => (
+                    <React.Fragment key={row.displayKey || row.id}>
+                      <PixelGap px={cardGaps.get(row.displayKey || row.id)} />
+                      {renderRow(row)}
+                    </React.Fragment>
+                  ))
+                : shown.map(renderRow)}
+              {cardAfter}
               <RowGap rows={model.slice(last)} />
             </div>
             {emptyRow({ model, B, isStatic, ordered, remoteMode, remoteBusy, S, empty })}
