@@ -1,2 +1,0 @@
-### Changed
-- A long DataGrid card list draws only the cards near the view (#809, step 2): more than 100 cards are each measured and drawn about a screen at a time, with a space as tall as the cards not drawn. End on a card goes to the last one at once (about 30 ms for 10,000 cards, was about 2 to 4 s), and memory no longer grows as the list scrolls. The focused card and the headers of the group in view stay drawn. It looks the same as before; browser find sees only the drawn cards, as in the table.

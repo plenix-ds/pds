@@ -6,6 +6,16 @@ The batch numbers point to the work log (Plenix - DAM/audit/batches/).
 
 ## [Unreleased]
 
+## [0.86.0] - 2026-11-03
+
+**In short.** A DataGrid's narrow card list draws only the cards near the view, as its table already does: a list of 10,000 cards opens and jumps to its end at once (End took about 2 seconds before), memory stays flat, and the cards look exactly as before. Selection, the open row, the keyboard and printing work on every row.
+
+### Upgrading from 0.85.0
+Nothing to change. Apps on the CDN loader follow this release by themselves; npm apps update the version as usual. The browser's own find (Ctrl+F) sees only the cards near the view, as in the table.
+
+### Changed
+- A long DataGrid card list draws only the cards near the view (#809, step 2): more than 100 cards are each measured and drawn about a screen at a time, with a space as tall as the cards not drawn. End on a card goes to the last one at once (about 30 ms for 10,000 cards, was about 2 to 4 s), and memory no longer grows as the list scrolls. The focused card and the headers of the group in view stay drawn. It looks the same as before; browser find sees only the drawn cards, as in the table.
+
 ## [0.85.0] - 2026-11-02
 
 **In short.** A DataGrid is a table first: its columns size to their content and fit the window, and it shows the row cards only when the table cannot fit even at every column's smallest readable width (#929). Apps can name their records in the card header ("6 members"). The projects page draws its icons from the Plenix icon bank, and a check now fails on any hand-drawn icon. Panes drag in 8px steps, and Table shares the grid's styles: about 185 KB less CSS. The design spec opens about twice as fast. "gray" replaces "grey" as the category name, the metric card's rank reads right in Arabic, `openKey={null}` is accepted, and `npx plenix-site-icons` ships for apps that build their own icon file.
