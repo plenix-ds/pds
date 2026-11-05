@@ -28,6 +28,7 @@ const GRID_EXEMPT = [
   ['border-width-', 'hairline widths (1, 2 and 3px): a line is thinner than the grid'],
   ['focus-ring-offset', 'an outline offset (2px): a gap between a control and its focus ring, not a space in the layout'],
   ['font-size-', 'type sizes come from the type scale, not the grid'],
+  ['control-raised-shadow', 'an optical blur (1px, 2px), the same kind as the box shadows in the backlog that wait for the owner\'s decision on optical blur; added with the S1 button fix (#269, docs/adr/0014)'],
 ];
 // a corner token (a key with "radius") may hold 0, a reference, or a length of 2, 4 or 6px; anything else (50%, 0.5em, 9999em, 100vh, any calc(), a keyword)
 // fails, unless it is named here with its value and the reason
