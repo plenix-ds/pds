@@ -63,7 +63,7 @@ DSParts.records.push(function (H) {
     use: ['Lists too large to load at once, or that change: people, projects, assets', 'Checkbox marks for several values from about six to fifty options, such as filters', 'Radio marks for one choice from about six to fifteen options, when the current choice must stay marked in the list'],
     avoid: ['A short fixed list: use a select', 'Browsing everything: use a list with search', 'Checkbox marks on a single choice, radio marks on several'],
     related: ['combobox', 'multi-select', 'searchable-select', 'checkbox', 'radio'],
-    map: [[ATL, 'Select (async, checkbox, radio)', 'Direct'], [SPE, 'Combo box (async loading)', 'Variant'], [CAR, 'Multiselect', 'Partial'], [FLU, 'Combobox (multiselect)', 'Partial'], [POL, 'Autocomplete (loading)', 'Partial'], [ANT, 'Select (remote search)', 'Partial']],
+    map: [[ATL, 'Select (async, checkbox, radio)', 'Direct'], [SPE, 'Combo box (async loading)', 'Variant'], [CAR, 'Multiselect', 'Partial'], [FLU, 'Combobox (multiselect)', 'Partial'], [POL, 'Autocomplete (loading)', 'Partial'], [ANT, 'Select (remote search)', 'Partial'], ['Django', 'autocomplete_fields (admin)', 'Partial'], ['Frappe', 'Link control', 'Direct']],
     variantPages: [
       vp('Async select loading', 'Options', 'Loaded as you type (async)', { variant: 'async' }, 'The options come from loadOptions; while they load, a spinner and “Loading…”.', 'People, projects and other large or live lists', 'A short fixed list: use a select'),
       vp('Checkbox select', 'Options', 'Checkbox marks (several)', { variant: 'checkbox' }, 'Each option with a checkbox; choosing toggles it and the list stays open.', 'Several values from a list, such as filters', 'Fewer than six options: use a checkbox group'),
@@ -110,7 +110,7 @@ DSParts.records.push(function (H) {
     use: ['One value that people change often, in its context: a title, a status, a description on a record page or in a panel', 'Low-risk changes that are easy to change back', 'Confirm buttons where people may not know that leaving the field saves'],
     avoid: ['Several fields that change together: use a form', 'Changes that need review or approval', 'Values in a data grid: edit the table’s cells'],
     related: ['text-field', 'text-area', 'native-select', 'property-list', 'inline-editing'],
-    map: [[ATL, 'Inline edit', 'Direct'], [CAR, 'Edit in place (IBM Products)', 'Partial'], [ANT, 'Typography (editable)', 'Partial']],
+    map: [[ATL, 'Inline edit', 'Direct'], [CAR, 'Edit in place (IBM Products)', 'Partial'], [ANT, 'Typography (editable)', 'Partial'], ['Django', 'list_editable (admin)', 'Partial']],
     states: [['Read', 'The value as text, the field’s size and padding, no border', 'The default'], ['Hover', 'The read view tinted, the pencil shown', ':hover'],
       ['Focused', 'The read view’s border in the focus color, the pencil shown; no ring outside it', ':focus-visible'], ['Empty', 'The prompt (“Add a description”) in the placeholder color', 'value=""'],
       ['Editing', 'The text field, text area or select with the value, the text selected', 'after a click, Enter or Space'], ['Invalid', 'The field’s border in the danger color, the message under it', 'validate returns a message'],
@@ -132,7 +132,7 @@ DSParts.records.push(function (H) {
     aliases: ['Edit in place'], related: ['inline-edit', 'edit-flow'],
     text: 'Inline editing is InlineEdit on each value people change in place: the value turns into its field; Enter or leaving saves, Escape puts it back, and an error stays with the field.',
     use: ['Quick, frequent, low-risk changes to single values in a record page or a panel'], avoid: ['Several values that must change together: use an edit form'],
-    map: [[ATL, 'Inline edit', 'Direct']],
+    map: [[ATL, 'Inline edit', 'Direct'], ['Django', 'list_editable (admin)', 'Partial']],
     examples: [['Values on a record', function () {
       return box(360, h(P.Stack, { gap: 'sm' }, h(Edit, { start: 'Cross 014' }), h(Edit, { start: 'review', edit: { label: 'Status', type: 'select', options: STATUS } }),
         h(Edit, { start: '', edit: { label: 'Description', type: 'textarea', placeholder: 'Add a description' } })));
@@ -152,7 +152,7 @@ DSParts.records.push(function (H) {
     use: ['Long-form content shown with its formatting: descriptions, notes, articles, comments', 'Documents people format themselves: headings, colors, fonts, alignment, task lists, tables and pictures', 'The basic toolbar for comments and short notes; the full toolbar for documents'],
     avoid: ['Plain notes: use a text area', 'Code: use a code editor', 'Tables of data people sort and filter: use the DataGrid', 'Editing together or embeds: RichTextEditor does not offer them yet, though its engine (Tiptap) carries them'],
     related: ['rich-text', 'text-area', 'toolbar', 'code-editor'],
-    map: [[ATL, 'Editor (Atlassian Editor)', 'Partial'], [CAR, 'Rich text editor (IBM Products)', 'Partial'], [POL, 'Rich text editor (Shopify admin)', 'Partial'], ['Tiptap', 'Tiptap 3.31.3 (StarterKit, TaskList, Table, TextStyle, Color, FontFamily, FontSize, Highlight, TextAlign, Subscript, Superscript, Image, Typography, Mention)', 'Direct']],
+    map: [[ATL, 'Editor (Atlassian Editor)', 'Partial'], [CAR, 'Rich text editor (IBM Products)', 'Partial'], [POL, 'Rich text editor (Shopify admin)', 'Partial'], ['Tiptap', 'Tiptap 3.31.3 (StarterKit, TaskList, Table, TextStyle, Color, FontFamily, FontSize, Highlight, TextAlign, Subscript, Superscript, Image, Typography, Mention)', 'Direct'], ['Frappe', 'Text Editor control', 'Direct']],
     states: [['Enabled', 'The field’s border and surface; the toolbar over the area, a divider between them', 'The default'], ['Hover', 'The frame’s border in the strong border color', ':hover'],
       ['Focused', 'The frame’s border in the focus color while the area or the toolbar has focus; no ring outside it', ':focus-within'], ['Format on', 'The button of each format at the caret pressed (the selected state)', 'aria-pressed'], ['Overflow', 'The groups that do not fit in a More formatting menu at the end of the row', 'a narrow frame'],
       ['Invalid', 'The frame’s border in the danger color, the message under it', 'invalid, or error on its Field'], ['Read-only', 'No toolbar, the sunken fill; the text can be selected and copied', 'readOnly'],

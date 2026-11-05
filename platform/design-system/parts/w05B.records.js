@@ -146,7 +146,7 @@ DSParts.records.push(function (H) {
     use: ['A Print button (“Print”, “Print invoice”) that calls usePrint().print, with a title for the paper', 'Show print for the date and source address a printed page needs', 'plx-print-urls around content whose links must be read on paper'],
     avoid: ['A print-only copy of the page: print the page itself', 'Dark pages on paper: usePrint prints the light theme', 'Opening the print dialog without a person’s action'],
     related: ['responsive-visibility', 'button'],
-    map: [[CAR, 'Print styles', 'Partial'], [ATL, 'Print', 'Partial']],
+    map: [[CAR, 'Print styles', 'Partial'], [ATL, 'Print', 'Partial'], ['Frappe', 'Print format', 'Direct']],
     variantPages: [
       vp('Print stylesheet', 'Print', 'Print stylesheet', null, 'system/print.css: the chrome off the paper, the full page length, cards kept whole, link addresses inside plx-print-urls.', 'Every page: it applies by itself', 'Styling the paper per page: mark what differs with Show and Hide print'),
       vp('Print only and screen only', 'Print', 'Print only / screen only', null, 'Show print draws content only on paper; Hide print leaves it off the paper.', 'The print date, the source address; actions and navigation off the paper', 'Content the person needs on the screen'),

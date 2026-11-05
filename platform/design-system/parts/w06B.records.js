@@ -28,7 +28,7 @@ DSParts.records.push(function (H) {
     use: ['A form of more than about six fields that fall into clear topics: one section per topic, in the order people think about the task', 'Two columns for many short fields people scan (settings, properties); one column for everything else and every narrow window', 'One FormActions at the end of the form, the primary action last'],
     avoid: ['Sections for two or three fields: a plain form reads faster', 'Sections that are separate tasks: use steps or separate pages', 'Mixing one- and two-column sections in one form', 'Actions in every section'],
     related: ['field', 'fieldset', 'form-actions', 'page-actions', 'settings-page'],
-    map: [[CAR, 'Form', 'Partial'], [ATL, 'Form (form section)', 'Direct'], [POL, 'Form layout', 'Partial'], [SPE, 'Form', 'Partial'], [ANT, 'Form', 'Partial']],
+    map: [[CAR, 'Form', 'Partial'], [ATL, 'Form (form section)', 'Direct'], [POL, 'Form layout', 'Partial'], [SPE, 'Form', 'Partial'], [ANT, 'Form', 'Partial'], ['Django', 'fieldsets (ModelAdmin)', 'Direct'], ['Frappe', 'Section Break', 'Direct']],
     variantPages: [
       vp('One-column form', 'Layout', 'One column (default)', { variant: 'one-column' }, 'Every label above its control, the sections stacked in one column.', 'Most forms, and every form on a narrow window', 'Long settings lists people scan: use two columns'),
       vp('Two-column form', 'Layout', 'Two columns (labels beside)', { variant: 'two-column' }, 'The labels beside their controls in one shared label column, as wide as the longest label.', 'Settings-like forms with many short fields', 'Fields that need room to type, such as descriptions'),
@@ -50,7 +50,7 @@ DSParts.records.push(function (H) {
     use: ['Every form that changes data: one primary action named by its verb (Save changes, Create asset), Cancel beside it', 'Sticky in long forms on a page or in a panel', 'In place in a short form or a form inside a card'],
     avoid: ['Disabling the primary action until the form is valid: check on submit and show the errors', 'Repeating the actions at the top and the bottom', 'A Reset button people rarely need'],
     related: ['form-section', 'page-actions', 'button'],
-    map: [[ATL, 'Form footer', 'Direct'], [CAR, 'Form (buttons)', 'Partial'], [POL, 'Page actions', 'Partial'], [ANT, 'Form.Item (submit)', 'Partial']],
+    map: [[ATL, 'Form footer', 'Direct'], [CAR, 'Form (buttons)', 'Partial'], [POL, 'Page actions', 'Partial'], [ANT, 'Form.Item (submit)', 'Partial'], ['Django', 'Admin submit row', 'Direct'], ['Frappe', 'Form page actions', 'Partial']],
     examples: [['Placement', [['Sticky (default)', function () { return actions(true); }, 'plx-form-actions', 'sticky'],
       ['In place', function () { return actions(false); }, 'plx-form-actions--static', 'sticky={false}']], { prop: 'sticky' }]] };
 
@@ -82,7 +82,7 @@ DSParts.records.push(function (H) {
     use: ['A value the person may see but not change (permissions), or one the system sets (an ID, a created date) inside an editable form', 'Say why it is locked in the description'],
     avoid: ['A value that does not apply now: use disabled', 'A whole page of read-only fields: show the values as a property list', 'A native select as read-only (browsers still open it): show the value in a read-only Input'],
     related: ['text-field', 'text-area', 'field', 'property-list'],
-    map: [[CAR, 'Read-only states', 'Direct'], [SPE, 'Text field (read-only)', 'Variant'], [ATL, 'Text field (read-only)', 'Variant'], [POL, 'Text field (read-only)', 'Variant']],
+    map: [[CAR, 'Read-only states', 'Direct'], [SPE, 'Text field (read-only)', 'Variant'], [ATL, 'Text field (read-only)', 'Variant'], [POL, 'Text field (read-only)', 'Variant'], ['Django', 'readonly_fields (admin)', 'Direct'], ['Frappe', 'Read Only (DocField)', 'Direct']],
     examples: [
       ['Read-only', [['Text field', function () { return box(320, h(P.Field, { label: 'Asset ID', description: 'Set when the asset is created.' }, h(P.Input, { data: true, readOnly: true, defaultValue: 'AST-1042' }))); }, null, 'readOnly'],
         ['Text area', function () { return box(320, h(P.Field, { label: 'Notes', description: 'Set by your administrator.' }, h(P.Textarea, { readOnly: true, defaultValue: 'Imported from the parish archive, 2019.' }))); }, null, 'readOnly'],

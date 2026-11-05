@@ -136,7 +136,7 @@ DSParts.records.push(function (H) {
     use: ['Projects, people, customers, folders: records with a name, a picture and a few details', 'selectable when the collection has actions for several records at once (move, share, delete)', 'The CommandBar as bar for the collection’s commands, search, filters and sort', 'Groups when people think of the records in a few groups (Personal, Work)'],
     avoid: ['Records people compare by column or sort by a column: use the DataGrid', 'More than three actions on a row: put them in a menu', 'A list without names: every row needs the record’s name'],
     related: ['data-grid', 'activity-stream', 'command-bar', 'checkbox', 'thumbnail', 'avatar'],
-    map: [[POL, 'Resource list', 'Direct'], [CAR, 'Structured list (selectable)', 'Partial'], [MAT, 'Lists (with leading and trailing elements)', 'Partial'], [FLU, 'List (multiple selection)', 'Partial'], [SPE, 'ListView', 'Partial'], [ATL, 'Dynamic table', 'Partial']],
+    map: [[POL, 'Resource list', 'Direct'], [CAR, 'Structured list (selectable)', 'Partial'], [MAT, 'Lists (with leading and trailing elements)', 'Partial'], [FLU, 'List (multiple selection)', 'Partial'], [SPE, 'ListView', 'Partial'], [ATL, 'Dynamic table', 'Partial'], ['Frappe', 'ListView (Frappe UI)', 'Partial']],
     variantPages: [
       vp('Resource list with media', 'Variant', 'Media (thumbnails)', { variant: 'media' }, 'Each row starts with the record’s picture or its kind’s icon in a thumbnail.', 'Projects, files, products: records with a picture or a type', 'People: use their avatar'),
       vp('Resource list with avatars', 'Variant', 'Avatar', { variant: 'avatar' }, 'Each row starts with a person’s or a team’s avatar.', 'Members, contacts, owners', 'Records that are not people'),
@@ -179,7 +179,7 @@ DSParts.records.push(function (H) {
     use: ['A record’s history: created, changed, approved, shared', 'A plan’s milestones across the page (horizontal)', 'Icons that say what kind of event it was (upload, approval, share)', 'A Badge after the title for an event’s state'],
     avoid: ['Colored markers for states: use a Badge', 'Dozens of events: show the latest and a way to see earlier ones, or use the activity stream', 'Dates on a scale (a schedule): use a Gantt chart or a calendar'],
     related: ['activity-stream', 'badge', 'progress-steps'],
-    map: [[ANT, 'Timeline', 'Direct'], [PRI, 'Timeline', 'Direct'], [CAR, 'Progress indicator (vertical)', 'Partial'], [MAT, 'Lists (with dividers)', 'Partial'], [ATL, 'Activity feed', 'Partial']],
+    map: [[ANT, 'Timeline', 'Direct'], [PRI, 'Timeline', 'Direct'], [CAR, 'Progress indicator (vertical)', 'Partial'], [MAT, 'Lists (with dividers)', 'Partial'], [ATL, 'Activity feed', 'Partial'], ['Frappe', 'Form timeline', 'Partial']],
     variantPages: [
       vp('Vertical timeline', 'Variant', 'Vertical (default)', { variant: 'vertical' }, 'Events down the page, the markers on a line at the start, the content after them.', 'A record’s history in a page or a side panel', 'A few milestones across a wide page: horizontal'),
       vp('Horizontal timeline', 'Variant', 'Horizontal', { variant: 'horizontal' }, 'Events in a row, each a marker over its content, the line across the markers; the row scrolls sideways.', 'Three to six milestones of a plan', 'Long descriptions or many events'),

@@ -131,7 +131,7 @@ DSParts.records.push(function (H) {
       avoid: ['Items people do not own: leave the action out, or disable it and give the reason', 'Editing other fields with it: use an edit form', 'Retyping the whole name: the current name is always in the field'],
       related: ['inline-edit', 'dialog', 'action-menu'],
       statesFrom: ['inline-edit', 'dialog'],
-      map: [[FLU, 'Rename (File explorer pattern)', 'Partial'], [SPE, 'Inline edit (rename)', 'Partial'], [ATL, 'Inline edit', 'Partial'], [HIG, 'Text fields (rename)', 'Partial']],
+      map: [[FLU, 'Rename (File explorer pattern)', 'Partial'], [SPE, 'Inline edit (rename)', 'Partial'], [ATL, 'Inline edit', 'Partial'], [HIG, 'Text fields (rename)', 'Partial'], ['Frappe', 'Rename Document', 'Direct']],
       variantPages: [
         vp('Inline rename', 'Variant', 'Inline (default)', { variant: 'inline' }, 'The name is a button; activating it (or F2 on it) turns it into a field with the name selected; Enter saves, Escape puts it back.', 'Names shown where people work: a board’s title, a folder in a tree', 'Lists of many names at once: the dialog keeps the list still'),
         vp('Rename dialog', 'Variant', 'Dialog', { variant: 'dialog' }, 'A small dialog with the name selected and its rules under the field; Rename saves, Cancel puts it back.', 'Rename from an actions menu or a toolbar', 'Names already shown as editable text: rename them in place')

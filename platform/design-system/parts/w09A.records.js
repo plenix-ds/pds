@@ -99,7 +99,7 @@ DSParts.records.push(function (H) {
     use: ['Change over time or another continuous measure', 'Comparing the trends of two to five series', 'zero={false} when the trend matters more than the size, said in the description', 'An overlay for a target or a threshold (ReferenceLine), a note on an outlier (ChartAnnotation)'],
     avoid: ['Unordered categories: a bar or column chart', 'More than about five series: small multiples', 'Lines drawn across missing values', 'Values that hold between changes: the step chart'],
     related: ['area-chart', 'step-chart', 'chart-interaction', 'chart-legend', 'chart-tooltip'],
-    map: [[CAR, 'Line', 'Direct'], [FLU, 'Line chart', 'Direct'], [SPE, 'Line chart', 'Direct'], [POL, 'Line chart', 'Direct'], [HIG, 'Charts (LineMark)', 'Direct']],
+    map: [[CAR, 'Line', 'Direct'], [FLU, 'Line chart', 'Direct'], [SPE, 'Line chart', 'Direct'], [POL, 'Line chart', 'Direct'], [HIG, 'Charts (LineMark)', 'Direct'], ['Frappe', 'Frappe Charts line chart', 'Direct']],
     variantPages: [
       vp('Single line', 'Variant', 'Line', { variant: 'line' }, 'One series: no legend (the title names it), the crosshair with a single value.', 'One measure over time', 'Several series: the multi-series chart'),
       vp('Multi-series line chart', 'Variant', 'Multiple series', { variant: 'multi' }, 'Two to five lines in the categorical colors, an interactive legend, the shared tooltip listing every series at that x.', 'Comparing trends', 'More than five lines'),
@@ -143,7 +143,7 @@ DSParts.records.push(function (H) {
     use: ['A volume or a total over time', 'stack="stacked" for parts that add up to a total, the most stable part first (at the bottom)', 'stack="percent" for how the shares change, not the total'],
     avoid: ['More than two overlapping areas without a stack: a line chart', 'Comparing the inner series of a stack exactly: lines', 'A value axis that does not start at zero'],
     related: ['line-chart', 'chart-interaction', 'chart-legend'],
-    map: [[CAR, 'Area (simple, stacked)', 'Direct'], [FLU, 'Area chart', 'Direct'], [SPE, 'Area chart', 'Direct'], [POL, 'Stacked area chart', 'Variant'], [HIG, 'Charts (AreaMark)', 'Direct']],
+    map: [[CAR, 'Area (simple, stacked)', 'Direct'], [FLU, 'Area chart', 'Direct'], [SPE, 'Area chart', 'Direct'], [POL, 'Stacked area chart', 'Variant'], [HIG, 'Charts (AreaMark)', 'Direct'], ['Frappe', 'Frappe Charts line chart (region fill)', 'Partial']],
     variantPages: [
       vp('Area chart', 'Stack', 'Area', { variant: 'area' }, 'Each area from zero, see-through where they overlap.', 'One or two series', 'Three or more overlapping areas'),
       vp('Stacked area chart', 'Stack', 'Stacked', { variant: 'stacked' }, 'Series on top of each other; the top edge is their total.', 'Parts of a total over time', 'Parts that must be compared exactly'),
@@ -190,7 +190,7 @@ DSParts.records.push(function (H) {
     use: ['Patterns across two dimensions: hour by weekday, team by month', 'The calendar for activity over days and weeks', 'The diverging scale around a meaningful midpoint (change, difference from a target)'],
     avoid: ['Exact values: a table', 'A categorical palette: the sequential or diverging scale', 'Missing values in the lowest color'],
     related: ['dataviz-colors', 'chart-interaction', 'calendar-view'],
-    map: [[CAR, 'Heatmap', 'Direct'], [FLU, 'Heat map chart', 'Direct'], [SPE, 'Heat map', 'Partial'], [HIG, 'Charts (RectangleMark)', 'Partial']],
+    map: [[CAR, 'Heatmap', 'Direct'], [FLU, 'Heat map chart', 'Direct'], [SPE, 'Heat map', 'Partial'], [HIG, 'Charts (RectangleMark)', 'Partial'], ['Frappe', 'Frappe Charts heatmap', 'Direct']],
     variantPages: [
       vp('Matrix heat map', 'Variant', 'Matrix', { variant: 'matrix' }, 'Rows by columns with their names on the axes.', 'Two categorical or time dimensions', 'One dimension: a bar chart'),
       vp('Calendar heat map', 'Variant', 'Calendar', { variant: 'calendar' }, 'A column per week, a row per weekday, month names on top, weekday names on the start side.', 'Daily activity over months', 'Hourly data: the matrix')

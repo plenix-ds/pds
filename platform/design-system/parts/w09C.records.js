@@ -161,7 +161,7 @@ DSParts.records.push(function (H) {
       'goodWhen for which way is good; the change carries good or bad with its arrow and color', 'href to the detailed view: the whole card is the target', 'state for loading, empty, error and stale data: the header stays so people know which card it is'],
     avoid: ['A colored value: the value is never colored; the change and the status carry the meaning', 'Zero for missing data: leave the value out and the card shows a dash', 'filled or gradient on a type that draws a colored visual (only value and summary)', 'More than about six cards in a row: group them or use a table', 'The old <Metric card>: deprecated, use MetricCard'],
     related: ['metric', 'card', 'sparkline', 'gauge', 'progress-bar', 'avatar'],
-    map: [[CAR, 'Tile (dashboard)', 'Partial'], [SPE, 'Big number', 'Partial'], [POL, 'Metric card (Polaris Viz)', 'Partial'], [FLU, 'Card (metric)', 'Partial'], [ATL, 'Card', 'Partial']],
+    map: [[CAR, 'Tile (dashboard)', 'Partial'], [SPE, 'Big number', 'Partial'], [POL, 'Metric card (Polaris Viz)', 'Partial'], [FLU, 'Card (metric)', 'Partial'], [ATL, 'Card', 'Partial'], ['Frappe', 'Number Card', 'Direct']],
     examples: [
       ['Type', [
         ['Value (default): one number', function () { return MC({ icon: 'checklist', title: 'Open tasks', context: 'All projects', info: 'Tasks not marked done.', menu: mcMore(), value: '128', change: mcUp('12', 'since last week'), goodWhen: 'down' }); }, null, 'type="value"'],
