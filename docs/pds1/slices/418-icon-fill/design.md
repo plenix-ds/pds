@@ -7,7 +7,7 @@
   - The icon inside is drawn at **120% of the area** (24/20: the Material Symbols live area is 20 of 24, so the glyph's edges reach the area's edges), centred, with overflow visible. Nothing clips, because the glyph stays inside its live area.
   - The 120% is a comp token the DS Architect names (G3): `plx-comp.entity-header-media-icon-fill-scale` → `plx-sys.icon-fill-scale` → `plx-ref.icon-optical-scale` (1.2, #423), not a literal in CSS.
   - `box: true` is unchanged: today's tile with the smaller icon inside.
-  - **Edge layout (page and section): scale 1, not 120%.** The edge area runs flush to the card's start, top and bottom edges, so a 120% icon passes the card's edge and the card cuts it (the left stroke and the top of the calendar were cut at f472b21). There the icon is exactly the area (the fill scale isn't applied), so the glyph spans about 83% of it, centred, with an even margin inside the card. Every other layout keeps 120%.
+  - **Edge layout:** the same 120%. Its area runs edge to edge, so the glyph meets the card's top, bottom and start edges, uncut (the main column's clip keeps a margin for the pulled-out media, #422). The Product Lead accepted it on the 18e3ec0 pictures.
 
 ## The sizes (icon = area)
 
