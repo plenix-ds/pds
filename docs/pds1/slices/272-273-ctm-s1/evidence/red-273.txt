@@ -1,0 +1,9 @@
+AssertionError [ERR_ASSERTION]: md: the second row is one column gap (16px) below the first, got 0
+    at /home/cc/pds1/work/component-engineer-1/tests/field-columns-gap-273.test.js:26:14 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}

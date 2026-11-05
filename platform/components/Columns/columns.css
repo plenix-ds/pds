@@ -1,10 +1,12 @@
 /* Plenix · Columns (platform/components/Columns). */
+/* Rows are spaced like columns: the md and lg gaps set both (issue 273: a second row of Fields touched the first); a divided set keeps no row gap. */
 .plx-columns{display:grid;}
 .plx-columns--2{grid-template-columns:repeat(2,minmax(0,1fr));}
 .plx-columns--3{grid-template-columns:repeat(3,minmax(0,1fr));}
 .plx-columns--gap-none{column-gap:0;}
-.plx-columns--gap-md{column-gap:var(--plx-comp-columns-gap-md-gap);}
-.plx-columns--gap-lg{column-gap:var(--plx-comp-columns-gap-lg-gap);}
+.plx-columns--gap-md{column-gap:var(--plx-comp-columns-gap-md-gap);row-gap:var(--plx-comp-columns-gap-md-gap);}
+.plx-columns--gap-lg{column-gap:var(--plx-comp-columns-gap-lg-gap);row-gap:var(--plx-comp-columns-gap-lg-gap);}
+.plx-columns--divided{row-gap:0;}
 .plx-columns--divided>*{min-inline-size:0;padding-block-end:var(--plx-comp-columns-divided-padding-block);padding-block-start:var(--plx-comp-columns-divided-padding-block);padding-inline-end:var(--plx-comp-columns-divided-padding-inline);padding-inline-start:var(--plx-comp-columns-divided-padding-inline);}
 .plx-columns--divided>*+*{border-inline-start-color:var(--plx-comp-columns-divided-border-inline-start-color);border-inline-start-style:solid;border-inline-start-width:var(--plx-comp-columns-divided-border-inline-start-width);}
 /* a sidebar beside the main column (two columns): the narrow column at the start or at the end */
