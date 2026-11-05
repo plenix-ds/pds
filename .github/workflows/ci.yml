@@ -92,7 +92,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        tool: [tsc, eslint, stylelint, knip, system, style]
+        tool: [tsc, eslint, stylelint, knip, system, style, opengrep]
     env:
       TOOL: ${{ matrix.tool }}
       BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
@@ -108,7 +108,21 @@ jobs:
           cache: npm
 
       - name: Head, install and build
+        if: matrix.tool != 'opengrep'
         run: npm ci --no-audit --no-fund
+
+      - name: Opengrep 1.33.0, pinned by sha256 (signed by opengrep's release workflow; verified 2026-11-05, #197)
+        if: matrix.tool == 'opengrep'
+        env:
+          OPENGREP_SHA256: 2545812755572e1355ea60f96288f82a26eebed7fc8b512430d49d5667214c24
+        run: |
+          mkdir -p "$RUNNER_TEMP/bin"
+          curl -fsSL -o "$RUNNER_TEMP/bin/opengrep" https://github.com/opengrep/opengrep/releases/download/v1.33.0/opengrep_manylinux_x86
+          echo "$OPENGREP_SHA256  $RUNNER_TEMP/bin/opengrep" | sha256sum -c -
+          chmod +x "$RUNNER_TEMP/bin/opengrep"
+          echo "OPENGREP_BIN=$RUNNER_TEMP/bin/opengrep" >> "$GITHUB_ENV"
+          echo "OPENGREP_RULES=$GITHUB_WORKSPACE/.opengrep/rules/pds.yml" >> "$GITHUB_ENV"
+          "$RUNNER_TEMP/bin/opengrep" test .opengrep/rules
 
       - name: Head, findings
         run: node tools/ci/new-problems.mjs run "$TOOL" "$RUNNER_TEMP/head.json"
@@ -121,7 +135,7 @@ jobs:
           echo "Base: $merge_base"
           git worktree add --detach "$RUNNER_TEMP/base" "$merge_base"
           cd "$RUNNER_TEMP/base"
-          npm ci --no-audit --no-fund
+          if [ "$TOOL" != opengrep ]; then npm ci --no-audit --no-fund; fi
 
       - name: Base, findings (the head's runner, the base's code and config)
         working-directory: ${{ runner.temp }}/base
