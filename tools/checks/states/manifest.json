@@ -48,5 +48,15 @@
     "loading": "n/a(stories arrive with Storybook, P0-11)",
     "selected": "n/a(stories arrive with Storybook, P0-11)",
     "error": "n/a(a static marker: no interaction, no value)"
+  },
+  "CodeEditor": {
+    "default": "n/a(stories arrive with Storybook, P0-11; this PR only repoints the CodeBlock import to .tsx, no behavior or style change)",
+    "hover": "n/a(stories arrive with Storybook, P0-11; this PR only repoints the CodeBlock import to .tsx, no behavior or style change)",
+    "focus": "n/a(stories arrive with Storybook, P0-11; this PR only repoints the CodeBlock import to .tsx, no behavior or style change)",
+    "active": "n/a(stories arrive with Storybook, P0-11; this PR only repoints the CodeBlock import to .tsx, no behavior or style change)",
+    "disabled": "n/a(stories arrive with Storybook, P0-11; this PR only repoints the CodeBlock import to .tsx, no behavior or style change)",
+    "loading": "n/a(stories arrive with Storybook, P0-11; this PR only repoints the CodeBlock import to .tsx, no behavior or style change)",
+    "selected": "n/a(stories arrive with Storybook, P0-11; this PR only repoints the CodeBlock import to .tsx, no behavior or style change)",
+    "error": "n/a(stories arrive with Storybook, P0-11; this PR only repoints the CodeBlock import to .tsx, no behavior or style change)"
   }
 }
