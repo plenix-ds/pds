@@ -586,6 +586,28 @@
       "$description": "On paper the chrome is left out (the app header, the navigation pane, the skip link, the scrim, the floating action button, toasts, the spotlight): their display reads it. Not set on screen (initial: the element keeps its own).",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
+    "print-sheet-inline-size": {
+      "$value": "{plx-ref.paper-a4-inline-size}",
+      "$description": "PrintDocument: the sheet's width, on screen and paper (docs/adr/0014)."
+    },
+    "print-sheet-block-size": {
+      "$value": "{plx-ref.paper-a4-block-size}",
+      "$description": "PrintDocument: the sheet's minimum height on screen; it grows with its content (docs/adr/0014)."
+    },
+    "print-document-margin": {
+      "$value": "{plx-ref.paper-margin-md}",
+      "$description": "PrintDocument: the page margin on paper (@page plx-document) and the sheet's padding on screen (docs/adr/0014)."
+    },
+    "print-writing-line": {
+      "$value": "{plx-ref.size-8u}",
+      "$type": "dimension",
+      "$description": "AnswerLines: one handwriting line, 32px (about 8.5mm) (docs/adr/0014)."
+    },
+    "print-break": {
+      "$value": "auto",
+      "$extensions": { "com.plenix": { "webOnly": true } },
+      "$description": "PageBreak: break-before; auto on screen, page on paper (the print set) (docs/adr/0014)."
+    },
     "print-block-size": {
       "$value": "initial",
       "$description": "On paper the shell is as tall as its content: the shell's fixed heights read it. Not set on screen.",
