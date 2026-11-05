@@ -355,7 +355,7 @@ window.DSDocs = {
    "Dimmed element — the control, veil or icon that takes the opacity (required)"
   ],
   "behavior": {
-   "pointer": "Disabled checkboxes, switches, sliders, pagination pages and radio tiles use --plx-ref-opacity-50 and a not-allowed or default cursor.",
+   "pointer": "Disabled checkboxes, switches, sliders, pagination pages and radio tiles use --plx-ref-opacity-500 and a not-allowed or default cursor.",
    "keyboard": "Not applicable: opacity changes appearance only; a disabled native control is skipped by Tab.",
    "focus": "Not applicable: opacity changes appearance only.",
    "responsive": "Not applicable: opacity does not change with width or density.",

@@ -23,3 +23,4 @@ Owner: `pds1-ds-architect`. Gate G3 (plan §5) reads these files.
 | [0009](0009-vote-tally-options.md) | VoteTally custom choice sets (`options`) | accepted |
 | [0010](0010-app-shell-min-size.md) | AppShell minimum screen size notice (`minSize`) | accepted |
 | [0011](0011-typescript-source.md) | Plenix's source is TypeScript; declarations come from `tsc` | accepted |
+| [0012](0012-token-rename-mechanics.md) | Token rename mechanics and the names of the palette scales | accepted |

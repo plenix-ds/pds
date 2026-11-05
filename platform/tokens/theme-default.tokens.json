@@ -69,7 +69,7 @@
       "$type": "dimension"
     },
     "shape-none": {
-      "$value": "{plx-ref.radius-0px}",
+      "$value": "{plx-ref.radius-none}",
       "$type": "dimension",
       "$extensions": {
         "com.plenix": {
@@ -80,31 +80,31 @@
       }
     },
     "shape-2xs": {
-      "$value": "{plx-ref.radius-2px}",
+      "$value": "{plx-ref.radius-xs}",
       "$type": "dimension"
     },
     "shape-xs": {
-      "$value": "{plx-ref.radius-4px}",
+      "$value": "{plx-ref.radius-sm}",
       "$type": "dimension"
     },
     "shape-sm": {
-      "$value": "{plx-ref.radius-6px}",
+      "$value": "{plx-ref.radius-md}",
       "$type": "dimension"
     },
     "shape-md": {
-      "$value": "{plx-ref.radius-6px}",
+      "$value": "{plx-ref.radius-md}",
       "$type": "dimension"
     },
     "shape-lg": {
-      "$value": "{plx-ref.radius-6px}",
+      "$value": "{plx-ref.radius-md}",
       "$type": "dimension"
     },
     "shape-xl": {
-      "$value": "{plx-ref.radius-6px}",
+      "$value": "{plx-ref.radius-md}",
       "$type": "dimension"
     },
     "shape-mark": {
-      "$value": "{plx-ref.radius-6px}",
+      "$value": "{plx-ref.radius-md}",
       "$type": "dimension",
       "$description": "Round marks: dots, tracks, markers, grabbers (6px since the owner's 2026-10-27 choice). Not pills: pills are 4px (radius-pill-4px). docs/adr/0008."
     },
@@ -114,7 +114,7 @@
       "$deprecated": "Renamed: use --plx-sys-shape-mark (no pill reads it; it shapes round marks; #240, docs/adr/0008). It keeps working and is removed in 2.0.0."
     },
     "border-width-thin": {
-      "$value": "{plx-ref.border-width-1px}",
+      "$value": "{plx-ref.border-width-100}",
       "$type": "dimension",
       "$extensions": {
         "com.plenix": {
@@ -125,15 +125,15 @@
       }
     },
     "border-width-medium": {
-      "$value": "{plx-ref.border-width-2px}",
+      "$value": "{plx-ref.border-width-200}",
       "$type": "dimension"
     },
     "border-width-thick": {
-      "$value": "{plx-ref.border-width-3px}",
+      "$value": "{plx-ref.border-width-300}",
       "$type": "dimension"
     },
     "border-width-heavy": {
-      "$value": "{plx-ref.border-width-4px}",
+      "$value": "{plx-ref.border-width-400}",
       "$type": "dimension"
     },
     "border-style-solid": {
@@ -204,7 +204,7 @@
       "$type": "duration"
     },
     "opacity-low": {
-      "$value": "{plx-ref.opacity-30}",
+      "$value": "{plx-ref.opacity-300}",
       "$type": "number",
       "$extensions": {
         "com.plenix": {
@@ -215,15 +215,15 @@
       }
     },
     "opacity-mid": {
-      "$value": "{plx-ref.opacity-50}",
+      "$value": "{plx-ref.opacity-500}",
       "$type": "number"
     },
     "opacity-high": {
-      "$value": "{plx-ref.opacity-70}",
+      "$value": "{plx-ref.opacity-700}",
       "$type": "number"
     },
     "focus-ring-width": {
-      "$value": "{plx-ref.border-width-2px}",
+      "$value": "{plx-ref.border-width-200}",
       "$type": "dimension",
       "$extensions": {
         "com.plenix": {

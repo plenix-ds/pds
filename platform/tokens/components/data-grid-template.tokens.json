@@ -107,7 +107,7 @@
       "$description": "A card: the space above the checkbox inside its target, the Checkbox's padding at the regular density (the sample's)."
     },
     "data-grid-card-spacer-unit": {
-      "$value": "{plx-ref.border-width-1px}",
+      "$value": "{plx-ref.border-width-100}",
       "$type": "dimension",
       "$description": "The unit of the space that stands for the cards a long card list does not draw (issue 809): a spacer is a whole number of these, so it is exactly as tall as the cards it replaces."
     }

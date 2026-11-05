@@ -1,0 +1,50 @@
+# ADR 0012: Token rename mechanics and the names of the palette scales
+
+- **Status:** accepted
+- **Date:** 2026-11-05
+- **Deciders:** pds1-ds-architect (#184)
+- **Supersedes:** ADR 0002's "Rename mechanics" (the `renames.json` file). Its tiers, naming rules and deprecation period stand.
+
+## Context
+
+- ADR 0002 planned a `packages/tokens/renames.json` (old -> new), from which the token build would write each old name as an alias.
+- Since then, Style Dictionary is the token build (#287). A token that points to another is already written as `--old: var(--new)`, and `$deprecated` already shows on the token page and in the index (#214, #243, #244 used it).
+- Check 7 (`token-names`) baselined 200 names that contain values. 62 are `plx-ref.size-*`, 13 `space-*`, 12 `font-size-*`, and the rest are smaller families.
+
+## Options
+
+| Option | For | Against |
+|---|---|---|
+| **A. The alias lives in the token JSON: the token gets its new name, and the old name stays beside it as `{"$value": "{new}", "$deprecated": "…"}`** | No new file or build step; Style Dictionary writes it like any token; one place to read | Old and new sit side by side in the source until 2.0.0 |
+| B. `renames.json` and a build step that writes the aliases (ADR 0002) | Sources stay clean | A second source of truth, and custom build code (#712) |
+
+## Decision
+
+**Option A.**
+
+- **Every rename:**
+  - The token's key changes. The old key stays right after it, as `{plx-ref|sys|comp.<new>}` with `$deprecated: "Renamed: use --<new> … removed in 2.0.0."`.
+  - Every reader moves to the new name: tokens, CSS, JS, the spec, the published study pages and the tests.
+  - The `token-tiers` baseline keys are renamed too: the same debt under its new name.
+- **Check 7** skips `$deprecated` tokens, since they are on their way out. A renamed entry leaves the `token-names` baseline (shrink-only).
+- **Names for the palette scales** (`plx-ref`): a T-shirt step when a scale has a few named sizes, an ordinal step when it is long.
+
+| Scale | Old | New |
+|---|---|---|
+| Corner radius | `radius-0px`, `-2px`, `-4px`, `-6px` | `radius-none`, `-xs`, `-sm`, `-md` |
+| Border width | `border-width-1px` … `-4px` | `border-width-100` … `-400` |
+| Opacity | `opacity-30`, `-45`, `-50`, `-70` | `opacity-300`, `-450`, `-500`, `-700` |
+| Size, space, font size, control and glyph sizes, breakpoints … (next PRs) | `size-4px` … | an ordinal step per scale, chosen in each PR and listed here |
+
+- An ordinal step is never the value. `opacity-300` is 0.3, and check 7 reads 0.3 as 0.3 or 30, never 300.
+
+## Consequences
+
+- **Semver: MINOR per rename PR.** New names are added and old names deprecated; none is removed before 2.0.0.
+- `--plx-ref-*` readers outside Plenix (CTM) keep working through the aliases. The changelog lists each old -> new pair under *Deprecated*.
+- 2.0.0 removes every `$deprecated` alias in one change.
+
+## Enforced by
+
+- Check 7 `token-names` (shrink-only baseline; deprecated names skipped) and check 6 `token-tiers`.
+- `npm run tokens:sd:check` (`--sets`, `--bytes`): every alias resolves to the same value.
