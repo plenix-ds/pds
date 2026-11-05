@@ -1,5 +1,6 @@
 # #108: no icon inside a box, the inventory (G2)
 
+- **Decision:** D-0036 (applies D-0024).
 - **Rule:** D-0024 (owner, 2026-10-24 and 2026-11-01). By default no icon sits on a decorative tile; a box stays only where a specific usage needs it. Icon buttons are controls, not covered.
 - **Done already:** #882 (commits a19691f5, a1683336, PR #901) removed the box in six parts: EntityPicker, FeatureCard, MetricCard, RoleManager, PeopleGroup, ConnectedAccounts.
 - **Method:** every `platform/**/*.css` rule on an icon, tile, thumb, placeholder or media selector that has a filled background and a border or radius (origin/main, 2026-11-05). App screens use only Platform parts, so the list covers them.

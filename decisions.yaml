@@ -304,3 +304,11 @@
   options: [answer is final, one pass, plain words (chosen), card for every unclear answer]
   status: active
   check: review-only (agent behaviour; pds1-delivery-lead checks it on decision issues)
+
+- id: D-0036
+  date: 2026-11-05
+  area: design
+  decided_by: agent (pds1-design-director), owner may switch
+  decision: Applying D-0024 to what #882 left (#108) - EntityHeader's { icon, hue } media and its fact icons lose their box (the icon fills the square); the MediaCard picture frame and the Timeline icon markers keep theirs (structural, not decoration); IconTile stays one release as deprecated. Reply with a case number on #108 to switch it. Built only after the owner sees the before and after pictures.
+  status: active
+  check: review-only (pds1-design-critic on each UI PR; D-0024 has no reliable static check)
