@@ -17,7 +17,7 @@ import { Stack } from '../../components/Stack/Stack.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { cx } from '../../utils/cx.ts';
-import { SuggestedAction } from '../../components/SuggestedAction/SuggestedAction.jsx';
+import { SuggestedAction } from '../../components/SuggestedAction/SuggestedAction.tsx';
 import { Carousel } from '../../components/Carousel/Carousel.tsx';
 import { Link } from '../../components/Link/Link.tsx';
 import { Popover } from '../../components/Popover/Popover.tsx';

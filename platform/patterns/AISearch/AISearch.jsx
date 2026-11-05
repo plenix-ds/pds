@@ -23,7 +23,7 @@ import { SearchField } from '../../components/SearchField/SearchField.tsx';
 import { Switch } from '../../components/Checkbox/Checkbox.tsx';
 import { Link } from '../../components/Link/Link.tsx';
 import { GeneratedContent } from '../../components/GeneratedContent/GeneratedContent.jsx';
-import { Citation } from '../../components/Citation/Citation.jsx';
+import { Citation } from '../../components/Citation/Citation.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import SparkleIcon from 'plenix-platform/icons/plenix/sparkle';
 export function AISearch({onSearch,defaultQuery='',defaultSemantic=false,semanticToggle=true,strings,className}){

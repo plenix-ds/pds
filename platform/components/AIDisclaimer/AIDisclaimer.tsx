@@ -13,7 +13,18 @@ import { Text } from '../Text/Text.tsx';
 import { Icon } from '../Icon/Icon.tsx';
 import { Link } from '../Link/Link.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import SparkleIcon from 'plenix-platform/icons/plenix/sparkle';
-export function AIDisclaimer({variant='footer',children,href,strings,className,...rest}){
+export type AIDisclaimerProps = Omit<React.HTMLAttributes<HTMLElement>, 'children'> & {
+  /** "footer" (default) or "inline" */
+  variant?: 'footer' | 'inline';
+  /** the caller's disclaimer text; default strings.message */
+  children?: React.ReactNode;
+  /** a policy URL */
+  href?: string;
+  /** { message, learn } */
+  strings?: Catalog | null;
+};
+export function AIDisclaimer({variant='footer',children,href,strings,className,...rest}: AIDisclaimerProps){
   devWarn('AIDisclaimer', { variant }, { variant: ['footer','inline'] });
-  const t=useStrings('aiDisclaimer', strings);return <Inline as={variant==='inline'?'span':'footer'} wrap className={cx('plx-ai-disclaimer',className)} {...rest}><Icon name={SparkleIcon}/><Text variant="secondary">{children||t.message}</Text>{href?<Link href={href}>{t.learn}</Link>:null}</Inline>;}
+  const t=useStrings('aiDisclaimer', strings) as { message: string; learn: string };return <Inline as={variant==='inline'?'span':'footer'} wrap className={cx('plx-ai-disclaimer',className)} {...rest}><Icon name={SparkleIcon}/><Text variant="secondary">{children||t.message}</Text>{href?<Link href={href}>{t.learn}</Link>:null}</Inline>;}

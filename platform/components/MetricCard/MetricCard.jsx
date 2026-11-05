@@ -91,7 +91,7 @@ import { ContextualHelp } from '../ContextualHelp/ContextualHelp.tsx';
 import { ProgressBar } from '../ProgressBar/ProgressBar.tsx';
 import { Notice } from '../Notice/Notice.tsx';
 import { Skeleton } from '../Loading/Loading.tsx';
-import { Table } from '../Table/Table.jsx';
+import { Table } from '../Table/Table.tsx';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden.tsx';
 import { Sparkline } from '../../charts/Sparkline.jsx';
 import { Gauge } from '../../charts/Gauge.jsx';

@@ -20,14 +20,14 @@ import { Chat } from '../../components/Chat/Chat.jsx';
 import { Stack } from '../../components/Stack/Stack.tsx';
 import { VisuallyHidden } from '../../components/VisuallyHidden/VisuallyHidden.tsx';
 import { Text } from '../../components/Text/Text.tsx';
-import { AILabel } from '../../components/AILabel/AILabel.jsx';
+import { AILabel } from '../../components/AILabel/AILabel.tsx';
 import { GeneratedContent } from '../../components/GeneratedContent/GeneratedContent.jsx';
-import { Citation } from '../../components/Citation/Citation.jsx';
+import { Citation } from '../../components/Citation/Citation.tsx';
 import { PromptSuggestions } from '../../components/PromptSuggestions/PromptSuggestions.jsx';
-import { AIDisclaimer } from '../../components/AIDisclaimer/AIDisclaimer.jsx';
+import { AIDisclaimer } from '../../components/AIDisclaimer/AIDisclaimer.tsx';
 import { RefineMenu } from '../../components/RefineMenu/RefineMenu.jsx';
 import { PromptInput } from '../../components/PromptInput/PromptInput.jsx';
-import { StreamingText } from '../../components/StreamingText/StreamingText.jsx';
+import { StreamingText } from '../../components/StreamingText/StreamingText.tsx';
 export function AIChat({messages=[],onSend,streaming=false,onStop,variant='panel',title,suggestions=[],prompt,onPromptChange,composer={},strings,className}){
  const t={title:'AI assistant',thread:'AI conversation',you:'You',assistant:'AI assistant',empty:'Ask a question to start the conversation.',...strings},[own,setOwn]=React.useState(''),field=React.useRef(null),draft=prompt===undefined?own:prompt;
  const threadId='plx-ai-thread-'+React.useId().replace(/[^a-zA-Z0-9]/g,''),atEnd=React.useRef(true);

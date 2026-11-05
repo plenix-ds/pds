@@ -20,11 +20,25 @@ import { Text } from '../../components/Text/Text.tsx';
 import { cx } from '../../utils/cx.ts';
 import { Link } from '../Link/Link.tsx';
 import { Popover } from '../Popover/Popover.tsx';
-function hrefOf(value){if(typeof value!=='string'||!value.trim())return null;try{const u=new URL(value,'https://plenix.invalid/');return ['http:','https:'].includes(u.protocol)?value:null;}catch(e){return null;}}
-export const Citation=React.forwardRef(function Citation({source,sources=[],variant='inline',index=1,strings,className},ref){
+export type CitationSource = { id?: string | number; title?: string; href?: string; excerpt?: string; author?: string };
+export type CitationProps = {
+  /** one reference */
+  source?: CitationSource;
+  /** the references of the list variant */
+  sources?: CitationSource[];
+  /** "inline" (default) | "card" | "list" */
+  variant?: 'inline' | 'card' | 'list';
+  /** a 1-based marker number; default 1 */
+  index?: number;
+  /** { source, open, unavailable, newTab } */
+  strings?: { source?: string; open?: string; unavailable?: string; newTab?: string } | null;
+  className?: string;
+};
+function hrefOf(value: unknown): string | null {if(typeof value!=='string'||!value.trim())return null;try{const u=new URL(value,'https://plenix.invalid/');return ['http:','https:'].includes(u.protocol)?value as string:null;}catch(e){return null;}}
+export const Citation=React.forwardRef(function Citation({source,sources=[],variant='inline',index=1,strings,className}: CitationProps,ref: React.ForwardedRef<HTMLButtonElement>){
   devWarn('Citation', { variant }, { variant: ['inline','card','list'] });
  const t={source:'Source',open:'Open source',unavailable:'Source unavailable',...strings};
- const card=(s,key)=>{const title=s?.title||t.unavailable,href=hrefOf(s?.href);return <Stack key={key} className="plx-citation__source" gap="xs">{href?<Link href={href} variant="external" target="_blank" rel="noopener noreferrer" strings={strings}>{title}</Link>:<Text>{title}</Text>}{s?.author?<Text>{s.author}</Text>:null}{s?.excerpt?<Text>{s.excerpt}</Text>:null}</Stack>;};
+ const card=(s: CitationSource | undefined,key: React.Key)=>{const title=s?.title||t.unavailable,href=hrefOf(s?.href);return <Stack key={key} className="plx-citation__source" gap="xs">{href?<Link href={href} variant={'external' as 'inline'} target="_blank" rel="noopener noreferrer" strings={strings}>{title}</Link>:<Text>{title}</Text>}{s?.author?<Text>{s.author}</Text>:null}{s?.excerpt?<Text>{s.excerpt}</Text>:null}</Stack>;};
  if(variant==='list')return <Stack className={cx('plx-citation',className)} role="list" aria-label={t.source}>{sources.map((s,i)=><Stack key={s.id||i} role="listitem">{card(s,s.id||i)}</Stack>)}</Stack>;
  if(variant==='card')return <Stack className={cx('plx-citation',className)}>{card(source,0)}</Stack>;
  return <Popover label={t.source+' '+index} title={source?.title||t.source} trigger={<Button ref={ref} className={cx('plx-citation',className)} variant="ghost" size="xs" label={t.source+' '+index}><Text as="span" variant="data">{'['+index+']'}</Text></Button>}>{card(source,0)}</Popover>;
