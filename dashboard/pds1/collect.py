@@ -104,6 +104,8 @@ def main():
     out_dir = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).parent
     now = dt.datetime.now(dt.timezone.utc)
     since = (now - dt.timedelta(days=3)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    # brief AC-5 (docs/pds1/slices/195-dashboard): issues closed in the last 30 days, each with the PR that closed it
+    done_since = (now - dt.timedelta(days=30)).strftime("%Y-%m-%dT%H:%M:%SZ")
     issues = gh("issue", "list", "-R", REPO, "--state", "open", "-L", "500",
                 "--json", "number,title,url,labels,updatedAt,createdAt", default=[]) or []
     tasks = []
@@ -133,8 +135,11 @@ def main():
         "openPrs": gh("pr", "list", "-R", REPO, "--json", "number,title,url,headRefName,isDraft", default=[]) or [],
         "mergedPrs": gh("pr", "list", "-R", REPO, "--state", "merged", "--search", f"merged:>={since[:10]}", "-L", "100",
                         "--json", "number,title,url,mergedAt", default=[]) or [],
-        "closedIssues": gh("issue", "list", "-R", REPO, "--state", "closed", "--search", f"closed:>={since[:10]}", "-L", "100",
-                           "--json", "number,title,url,closedAt", default=[]) or [],
+        "closedIssues": [
+            {"number": i["number"], "title": i["title"], "url": i["url"], "closedAt": i["closedAt"],
+             "prs": [{"number": p.get("number"), "url": p.get("url")} for p in (i.get("closedByPullRequestsReferences") or []) if p.get("url")]}
+            for i in (gh("issue", "list", "-R", REPO, "--state", "closed", "--search", f"closed:>={done_since[:10]}", "-L", "500",
+                         "--json", "number,title,url,closedAt,closedByPullRequestsReferences", default=[]) or [])],
         "decisions": decisions(runs),
         "workflows": list(runs.values()),
         "shots": [],

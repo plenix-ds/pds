@@ -162,10 +162,10 @@
   var siteRows = [
     { id: 'cdn', site: 'Plenix CDN (latest.json)', url: s.cdn.url, code: s.cdn.code, info: 'What CTM and the other apps read every 30 minutes to upgrade.' },
     { id: 'docs', site: 'Design system site', url: s.docs.url, code: s.docs.code, info: 'design-system.lighthouseway.org' },
-    { id: 'pages', site: 'Dashboard web page', url: s.pages.url, code: s.pages.code, info: 'This page, on GitHub Pages. A snapshot; automatic refresh is in #195.', issue: 195 },
+    { id: 'pages', site: 'Dashboard web page', url: s.pages.url, code: s.pages.code, info: 'This page, on GitHub Pages. Rebuilt on every push to main, on decision comments and hourly (#231).', issue: 195 },
   ];
   var doneRows = D.mergedPrs.map(function (p) { return { id: 'pr' + p.number, kind: 'Pull request', number: p.number, title: p.title, url: p.url, at: p.mergedAt }; })
-    .concat(D.closedIssues.map(function (i) { return { id: 'is' + i.number, kind: 'Issue closed', number: i.number, title: i.title, url: i.url, at: i.closedAt }; }))
+    .concat(D.closedIssues.map(function (i) { return { id: 'is' + i.number, kind: 'Issue closed', number: i.number, title: i.title, url: i.url, at: i.closedAt, prs: i.prs || [] }; }))
     .sort(function (a, b) { return a.at < b.at ? 1 : -1; });
   var byRole = {};
   tasks.forEach(function (t) { t.owners.forEach(function (o) { (byRole[o] = byRole[o] || []).push(t); }); });
@@ -266,7 +266,7 @@
       },
     },
     {
-      id: 'done', label: 'Done', icon: 'task_alt', title: 'Done in the last 3 days', rows: doneRows,
+      id: 'done', label: 'Done', icon: 'task_alt', title: 'Done: issues closed in the last 30 days, pull requests merged in the last 3', rows: doneRows,
       columns: [
         { title: 'What', field: 'title', kind: 'name', render: function (x) { return '#' + x.number + ' ' + x.title; } },
         { title: 'Kind', field: 'kind', width: 128 },
@@ -276,7 +276,10 @@
         return h(Detail, null,
           h(P.Heading, { level: 2, size: 4 }, link(x.url, '#' + x.number + ' ' + x.title)),
           h(Field, { label: 'Kind' }, h(P.Text, null, x.kind)),
-          h(Field, { label: 'When' }, h(P.Text, null, fmt(x.at))));
+          h(Field, { label: 'When' }, h(P.Text, null, fmt(x.at))),
+          x.prs ? h(Field, { label: 'Closed by' }, x.prs.length
+            ? h(P.Stack, { gap: 'xs' }, x.prs.map(function (p) { return h('span', { key: p.number }, link(p.url, 'Pull request #' + p.number)); }))
+            : h(P.Text, { variant: 'secondary' }, 'No pull request (closed by hand)')) : null);
       },
     },
     {
