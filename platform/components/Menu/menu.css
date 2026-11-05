@@ -6,8 +6,10 @@
 .plx-menu:not([popover]).plx-menu--top-start{inset-block-end:var(--plx-comp-menu-fallback-top-start-inset-block-end);inset-inline-start:0;}
 .plx-menu:not([popover]).plx-menu--top-end{inset-block-end:var(--plx-comp-menu-fallback-top-end-inset-block-end);inset-inline-end:0;}
 .plx-menu__item{align-items:center;background-color:transparent;border-bottom-left-radius:var(--plx-comp-menu-item-radius);border-bottom-right-radius:var(--plx-comp-menu-item-radius);border-bottom-style:none;border-bottom-width:0;border-left-style:none;border-left-width:0;border-right-style:none;border-right-width:0;border-top-left-radius:var(--plx-comp-menu-item-radius);border-top-right-radius:var(--plx-comp-menu-item-radius);border-top-style:none;border-top-width:0;color:var(--plx-comp-menu-item-text);column-gap:var(--plx-comp-menu-item-gap);cursor:pointer;display:flex;font-family:inherit;font-size:var(--plx-comp-menu-item-font-size);font-weight:var(--plx-comp-menu-item-font-weight);inline-size:100%;line-height:var(--plx-comp-menu-item-line-height);margin-block-end:0;margin-block-start:0;margin-inline-end:0;margin-inline-start:0;min-block-size:var(--plx-comp-menu-item-min-height);padding-block-end:var(--plx-comp-menu-item-padding-block);padding-block-start:var(--plx-comp-menu-item-padding-block);padding-inline-end:var(--plx-comp-menu-item-padding-inline);padding-inline-start:var(--plx-comp-menu-item-padding-inline);text-align:start;text-decoration-line:none;transition-duration:var(--plx-sys-motion-duration-instant);transition-property:background-color, border-color, box-shadow, color, transform;transition-timing-function:var(--plx-sys-motion-ease-standard);}
-.plx-menu__item:hover,.plx-menu__item:focus,
-.plx-menu__item.is-hover,.plx-menu__item.is-focused{background-color:var(--plx-comp-menu-item-hover-background);outline-style:none;}
+/* state layers (#109, D-0037, ADR 0004): hover, keyboard focus and press draw one see-through layer over the row (8%, 10%, 10%), not a solid fill; a disabled item draws none */
+.plx-menu__item:is(:hover,:focus,.is-hover,.is-focused):where(:not([aria-disabled="true"])){background-image:linear-gradient(color-mix(in srgb,var(--plx-comp-menu-item-state-layer-color) var(--plx-comp-menu-item-state-layer-hover-opacity),transparent) 0 0);}
+.plx-menu__item:is(:focus,.is-focused):where(:not([aria-disabled="true"])){background-image:linear-gradient(color-mix(in srgb,var(--plx-comp-menu-item-state-layer-color) var(--plx-comp-menu-item-state-layer-pressed-opacity),transparent) 0 0);}
+.plx-menu__item:is(:hover,:focus,.is-hover,.is-focused){outline-style:none;}
 /* hovered or focused, the item hands its icon the action color (Fluent MenuItem) through --plx-comp-menu-item-icon-color, the
    icon's input; a danger or disabled item keeps its own. A submenu's list sits beside its item, so nothing inherits it */
 .plx-menu__item:is(:hover, :focus, .is-hover, .is-focused):where(:not(.plx-menu__item--danger, [aria-disabled="true"])){--plx-comp-menu-item-icon-color:var(--plx-comp-menu-item-hover-icon);}
@@ -38,7 +40,7 @@
 /* its motion (moved from motion.css, Styling Standard 3.6: each component owns its own; reduced motion sets the durations to 0s) */
 /* pressed (batch 238; moved from motion.css): a step darker than its hover while held. The rollout joins it to this
    component's state order (tools/agent/zero-overlap.md) */
-.plx-menu__item:active:not([aria-disabled="true"]){background-color:var(--plx-sys-state-pressed);}
+.plx-menu__item:is(:active,.is-pointer-down):not([aria-disabled="true"]){background-image:linear-gradient(color-mix(in srgb,var(--plx-comp-menu-item-state-layer-color) var(--plx-comp-menu-item-state-layer-pressed-opacity),transparent) 0 0);}
 /* it opens from the corner nearest its trigger (moved from motion.css) */
 :where(.plx-menu--bottom-start:dir(ltr)){transform-origin:top left;}
 :where(.plx-menu--bottom-end:dir(ltr)){transform-origin:top right;}

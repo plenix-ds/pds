@@ -512,6 +512,7 @@ export function bodyRows({
                     select={turnedOn && c.editor === 'select'}
                     combobox={turnedOn && c.editor === 'combobox'}
                     person={turnedOn && c.editor === 'person'}
+                    tags={turnedOn && c.editor === 'tags'}
                     date={turnedOn && c.editor === 'date'}
                     custom={!!c.editor && typeof c.editor === 'object' && typeof c.editor.component === 'function'}
                     value={editing.value}

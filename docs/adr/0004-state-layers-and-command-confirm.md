@@ -46,6 +46,26 @@
 - Focus starts on Cancel, Esc cancels, and focus returns to the command. A command folded into More confirms the same way.
 - All three strings come from the catalog (EN and AR). The Technical Writer owns the wording.
 
+## Addendum (2026-11-05, #424): the words built from the command (D-0060)
+
+- `confirm` gains optional fields so the catalog builds the words (the Technical Writer's #414 wording), as DeleteFlow already does:
+
+```ts
+actions[].confirm?: {
+  title?: string; body?: string; confirmLabel?: string;   // the application's own words win
+  name?: string;                                          // title "{verb} {name}?"
+  count?: number; plural?: string;                        // title "{verb} {count} {plural}?"
+  consequence?: string;                                   // the body
+  permanent?: boolean;                                    // adds "This cannot be undone."
+}
+```
+
+- `title` and `confirmLabel` become optional: a missing one comes from the catalog's `confirmAction` strings, with the command's label as `{verb}`.
+- `name`, `plural` and `consequence` are the application's words, already in the page's language (Arabic plural forms included). The bar supplies no nouns.
+- `confirm: {}` is valid: the title is "{verb}?" and the confirm button repeats the verb.
+- **Semver: MINOR** (optional fields on a new optional prop).
+- Enforced by: G3 review of #424 (the API diff matches this shape); the #424 behavior tests; locale checks (`confirmAction` in `en.js`, no unapproved Arabic).
+
 ## Consequences
 
 - **Semver: MINOR.** 7 new tokens and 1 new optional prop. Nothing is removed or renamed.
