@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-// Gate G2 (plan §3; D-0056; #396): a PR labeled `g2-changes-requested` can't merge. The Design Director adds the label
-// with the G2 review and removes it on the re-check; nobody else removes it.
+// Gates G2 and G3 (plan §3; D-0056; #396, #449): a PR labeled `g2-changes-requested` (Design Director) or
+// `g3-changes-requested` (DS Architect) can't merge. Only the role that adds its label removes it.
 //
 //   PR_LABELS='["…"]' node tools/ci/check-g2.mjs                         (a pull_request run: the PR's labels)
 //   MERGE_BRANCH=gh-readonly-queue/main/pr-<n>-<sha> node tools/ci/check-g2.mjs   (a merge_group run: no PR payload, so
@@ -8,7 +8,11 @@
 // A label lookup that fails is a FAIL, never a pass.
 import { execFileSync } from 'node:child_process';
 
-const LABEL = 'g2-changes-requested';
+// one list (#449): each label blocks the merge until the role that adds it removes it
+const GATES = {
+  'g2-changes-requested': "The Design Director's G2 review asks for changes. Make them; the Director re-checks and removes the label (D-0056).",
+  'g3-changes-requested': "The DS Architect's G3 review asks for API changes. Make them; the DS Architect re-checks and removes the label (#449).",
+};
 let labels;
 if (process.env.PR_LABELS) {
   try { labels = JSON.parse(process.env.PR_LABELS); } catch { console.log('G2_FAIL: PR_LABELS is not JSON'); process.exit(1); }
@@ -21,9 +25,7 @@ if (process.env.PR_LABELS) {
   console.log(`merge queue: PR #${m[1]}`);
 } else { console.log('G2_FAIL: neither PR_LABELS nor MERGE_BRANCH is set'); process.exit(1); }
 
-if (labels.includes(LABEL)) {
-  console.log(`::error title=G2::The Design Director's G2 review asks for changes (label ${LABEL}). Make the changes; the Director re-checks and removes the label (D-0056).`);
-  console.log('G2_FAIL');
-  process.exit(1);
-}
-console.log(`G2_OK (no ${LABEL} label)`);
+const open = Object.keys(GATES).filter((l) => labels.includes(l));
+for (const l of open) console.log(`::error title=${l}::${GATES[l]} (label ${l})`);
+if (open.length) { console.log(`G2_FAIL (${open.join(', ')})`); process.exit(1); }
+console.log(`G2_OK (no ${Object.keys(GATES).join(' or ')} label)`);
