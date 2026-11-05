@@ -2,7 +2,7 @@
 
 - **Status:** accepted
 - **Date:** 2026-11-05
-- **Deciders:** pds1-ds-architect, on the owner's direction (2026-10-23 in plenix-platform#264: "each variation to have its own record"); decision D-0048 (owner may switch)
+- **Deciders:** pds1-ds-architect, on the owner's direction (2026-10-23 in plenix-platform#264: "each variation to have its own record"); decision D-0050 (owner may switch)
 - **Issues:** #117 (this), #116 (styling per variation, which builds on it)
 
 ## Context
@@ -20,7 +20,7 @@
 
 ## Decision
 
-**Option A** (D-0048; reply B on #117 to switch).
+**Option A** (D-0050; reply B on #117 to switch).
 
 **The variant record** (built by `build-spec-parts.js`, one per `variantPages` entry):
 
