@@ -43,7 +43,7 @@ type CellEditorProps<V = unknown> = {
 // on a column (columns[])
 editor?: EditorType | { component: React.ComponentType<CellEditorProps>; props?: object };
 editorProps?: {
-  options?: { value: string; label: string }[];                       // select, combobox, tags
+  options?: { value: string; label: string }[];                       // select, combobox, tags, person
   loadOptions?(query: string): Promise<{ value: string; label: string }[]>;   // combobox, person
   min?: string; max?: string;                                         // date (calendar days, YYYY-MM-DD)
   rows?: number;                                                      // textarea
@@ -87,6 +87,13 @@ onCellEdit?(record, change: { field, value, previous, row }): void | Promise<voi
 - `CellEditorProps` gains `'aria-describedby'?: string`. Additive: **MINOR**, within this ADR's release.
 - Before its first `onChange`, `value` is the cell's value, or `''` when the cell is empty (as for the built-in editors).
 - Enforced by: G3 review of #411; the #411 behavior tests.
+
+## Addendum (2026-11-05, #431): the person editor's records
+
+- `person` takes `editorProps.options` as well as `loadOptions`, like `combobox`.
+- Its records are EntityPicker's people records: `{ value: string; label: string; description?: string; src?: string; color?: string; presence?: string }`. The extra fields are optional. A `{ value, label }` record works as for the other editors.
+- `loadOptions` runs from EntityPicker's `minChars` (1): an empty field shows no list until the person types.
+- **Semver: MINOR**, within this ADR's release. Enforced by: G3 review of #431; `tests/data-grid-editor-person-84.test.js`.
 
 ## Enforced by
 
