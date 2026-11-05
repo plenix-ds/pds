@@ -42,7 +42,7 @@ import { Rating } from '../../components/Rating/Rating.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Link } from '../../components/Link/Link.tsx';
 import { Notice } from '../../components/Notice/Notice.tsx';
-import { Tabs } from '../../components/Tabs/Tabs.jsx';
+import { Tabs } from '../../components/Tabs/Tabs.tsx';
 import { Table } from '../../components/Table/Table.tsx';
 import { useUid } from '../../utils/layer.ts';
 import { useCommercePage } from './shared.jsx';

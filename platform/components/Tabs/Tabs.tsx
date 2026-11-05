@@ -51,17 +51,19 @@ import { cx } from '../../utils/cx.ts';
 import { useUid } from '../../utils/layer.ts';
 import { Count } from '../Count/Count.tsx';
 import { Icon, stateIcon } from '../Icon/Icon.tsx';
+import type { IconValue } from '../Icon/Icon.tsx';
 import { Menu, MenuItem } from '../Menu/Menu.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import CaretIcon from 'plenix-platform/icons/plenix/caret';
 
 // the selected tab fills its icon (the tab owns its state)
-export const tabsPanelId = (base, value) => base + '-panel-' + String(value).replace(/[^a-zA-Z0-9_-]/g, '');
+export const tabsPanelId = (base: string, value: unknown) => base + '-panel-' + String(value).replace(/[^a-zA-Z0-9_-]/g, '');
 /* how many tabs fit on the row: it starts from all of them whenever the width, the tabs or the selected tab change, and
    lowers the number, before the browser paints, until every shown tab ends inside the tab list (the More control, once
    shown, takes its own room, so the list narrows and the count is checked again). The width is the Tabs' own, which
    does not follow the count, so the two never chase each other. */
-function useTabsFit(rootRef, listRef, count, key) {
+function useTabsFit(rootRef: React.RefObject<HTMLElement | null>, listRef: React.RefObject<HTMLElement | null>, count: number, key: string) {
   const [fit, setFit] = React.useState(count);
   const [width, setWidth] = React.useState(0);
   React.useLayoutEffect(() => { setFit(count); }, [count, key, width]);
@@ -76,7 +78,7 @@ function useTabsFit(rootRef, listRef, count, key) {
     const list = listRef.current;
     if (!list || fit <= 1) return;
     const box = list.getBoundingClientRect();
-    const out = Array.prototype.some.call(list.children, (el) => {
+    const out = Array.prototype.some.call(list.children, (el: HTMLElement) => {
       if (el.hidden) return false;
       const r = el.getBoundingClientRect();
       return r.right > box.right + 0.5 || r.left < box.left - 0.5;
@@ -86,38 +88,60 @@ function useTabsFit(rootRef, listRef, count, key) {
   return Math.max(1, Math.min(fit, count));
 }
 
-export function Tabs({ variant = 'contained', orientation = 'horizontal', items, value, defaultValue, onChange, label, idBase, className, panelClassName, strings }) {
+type TabValue = string | number;
+type TabItem = { value: TabValue; label: React.ReactNode; icon?: IconValue | React.ReactNode; count?: number; disabled?: boolean; content?: React.ReactNode };
+/** @public the prop type (ADR 0011) */
+export type TabsProps = {
+  /** "contained" (default) | "folder" | "segmented" */
+  variant?: 'contained' | 'folder' | 'segmented';
+  /** "horizontal" (default) | "vertical" */
+  orientation?: 'horizontal' | 'vertical';
+  /** the tabs: { value, label, icon, count, disabled, content } */
+  items: TabItem[];
+  value?: TabValue;
+  defaultValue?: TabValue;
+  onChange?: (value: TabValue) => void;
+  /** the tab list's accessible name */
+  label?: string;
+  /** a base for the tabs' and panels' ids */
+  idBase?: string;
+  className?: string;
+  panelClassName?: string;
+  strings?: Catalog | null;
+};
+
+export function Tabs({ variant = 'contained', orientation = 'horizontal', items, value, defaultValue, onChange, label, idBase, className, panelClassName, strings }: TabsProps) {
   devWarn('Tabs', { variant }, { variant: ['contained','folder','segmented'] });
-  const words = useStrings('tabs', strings);
+  const words = useStrings('tabs', strings) as Record<string, string>;
   const uid = useUid('plx-tabs');
   const base = idBase || uid;
   const [own, setOwn] = React.useState(defaultValue !== undefined ? defaultValue : (items[0] ? items[0].value : undefined));
   const current = value !== undefined ? value : own;
-  const refs = React.useRef({});
-  const root = React.useRef(null), list = React.useRef(null);
+  const refs = React.useRef<Record<string, HTMLButtonElement | null>>({});
+  const root = React.useRef<HTMLDivElement | null>(null), list = React.useRef<HTMLDivElement | null>(null);
   const vertical = orientation === 'vertical';
   // what changes a tab's width: its label, its count and whether it has an icon, and the selected tab
   const measured = useTabsFit(root, list, items.length, items.map((t) => t.label + (t.count !== undefined ? '#' + t.count : '') + (t.icon ? '*' : '')).join('|') + '|' + String(current));
   const fit = vertical ? items.length : measured;
   // the shown tabs: the first `fit`; the selected tab takes the last place when it is not among them
   const at = items.findIndex((t) => t.value === current);
-  const shown = (i) => (at < fit ? i < fit : (i < fit - 1 || i === at));
+  const shown = (i: number) => (at < fit ? i < fit : (i < fit - 1 || i === at));
   const moved = items.filter((t, i) => !shown(i));
   // every part carries its variant (tabs.css: no part is styled through the root); a segmented strip marks its first and
   // last shown tabs (the rounded ends) and the shown tabs after the first (joined: no start edge)
   const kind = vertical ? 'vertical' : variant, seg = kind === 'segmented';
   const shownAt = items.map((t, i) => i).filter(shown), firstShown = shownAt[0], lastShown = shownAt[shownAt.length - 1];
   // focus goes to a tab once it is shown (a moved tab chosen by key or from the menu)
-  const focusNext = React.useRef(null);
+  const focusNext = React.useRef<TabValue | null>(null);
   React.useLayoutEffect(() => {
-    const el = focusNext.current !== null ? refs.current[focusNext.current] : null;
+    const el = focusNext.current !== null ? refs.current[String(focusNext.current)] : null;
     if (el && !el.hidden) { focusNext.current = null; el.focus(); }
   });
-  const select = (v) => { if (value === undefined) setOwn(v); if (onChange) onChange(v); };
+  const select = (v: TabValue) => { if (value === undefined) setOwn(v); if (onChange) onChange(v); };
   const enabled = items.filter((t) => !t.disabled);
-  const onKeyDown = (e) => {
+  const onKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
     const at = enabled.findIndex((t) => t.value === current);
-    let next = null;
+    let next: number;
     const step = arrowStep(e, e.currentTarget);   // in reading order: right to left reverses Left and Right (batch 213)
     if (step > 0) next = (at + 1) % enabled.length;
     else if (step < 0) next = (at - 1 + enabled.length) % enabled.length;
@@ -127,7 +151,8 @@ export function Tabs({ variant = 'contained', orientation = 'horizontal', items,
     e.preventDefault();
     const t = enabled[next];
     select(t.value);
-    if (refs.current[t.value] && !refs.current[t.value].hidden) refs.current[t.value].focus();
+    const target = refs.current[String(t.value)];
+    if (target && !target.hidden) target.focus();
     else focusNext.current = t.value;
   };
   const hasPanels = items.some((t) => t.content !== undefined);
@@ -138,7 +163,7 @@ export function Tabs({ variant = 'contained', orientation = 'horizontal', items,
           {items.map((t, i) => {
             const on = t.value === current;
             return (
-              <button key={t.value} ref={(el) => { refs.current[t.value] = el; }} type="button" role="tab" id={base + '-tab-' + String(t.value).replace(/[^a-zA-Z0-9_-]/g, '')}
+              <button key={t.value} ref={(el) => { refs.current[String(t.value)] = el; }} type="button" role="tab" id={base + '-tab-' + String(t.value).replace(/[^a-zA-Z0-9_-]/g, '')}
                 aria-selected={on} aria-controls={tabsPanelId(base, t.value)} aria-posinset={i + 1} aria-setsize={items.length}
                 tabIndex={on ? 0 : -1} disabled={t.disabled || undefined} hidden={!shown(i) || undefined}
                 className={cx('plx-tabs__tab', 'plx-tabs__tab--' + kind, on && 'is-selected', seg && shown(i) && i !== firstShown && 'plx-tabs__tab--joined',

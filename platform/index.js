@@ -58,7 +58,7 @@ export { Menu, MenuItem, MenuDivider, MenuGroup } from './components/Menu/Menu.t
 export { Dialog, ConfirmDialog, Drawer } from './components/Dialog/Dialog.tsx';
 export { Sheet } from './components/Sheet/Sheet.tsx';
 export { ToastProvider, useToast } from './components/Toast/Toast.tsx';
-export { Tabs, tabsPanelId } from './components/Tabs/Tabs.jsx';
+export { Tabs, tabsPanelId } from './components/Tabs/Tabs.tsx';
 export { Panel, Card, MediaCard } from './components/Card/Card.tsx';
 export { DataGrid } from './components/DataGrid/DataGrid.jsx';
 // DataTable: the grid's former name (owner, 2026-10-19: Table is static, DataGrid is the grid); kept one release, then removed

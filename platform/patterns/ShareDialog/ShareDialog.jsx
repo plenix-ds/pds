@@ -23,7 +23,7 @@ import { EntityPicker } from '../../components/EntityPicker/EntityPicker.jsx';
 import { RoleLabel } from '../../components/RoleLabel/RoleLabel.tsx';
 import { CopyButton } from '../../components/CopyButton/CopyButton.tsx';
 import { Button } from '../../components/Button/Button.tsx';
-import { Tabs } from '../../components/Tabs/Tabs.jsx';
+import { Tabs } from '../../components/Tabs/Tabs.tsx';
 import { Notice } from '../../components/Notice/Notice.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { useUnsavedGuard } from '../../providers/UnsavedGuard.tsx';

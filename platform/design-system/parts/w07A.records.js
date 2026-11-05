@@ -171,7 +171,7 @@ DSParts.records.push(function (H) {
         content: h(P.Text, { as: 'p' }, 'The ' + t[1].toLowerCase() + ' settings.') }; }) }));
   };
   var verticalTabs = { id: 'vertical-tabs', lab: true, icon: 'panel-left-open', sec: 'navigation', sub: 'Content navigation', leaf: 'Vertical tabs', title: 'Vertical tabs',
-    plenix: 'Tabs orientation="vertical"', src: 'components/Tabs/Tabs.jsx', blocks: ['plx-tabs'], variantClasses: ['plx-tabs--vertical'], level: 'Component', interaction: 'Navigation',
+    plenix: 'Tabs orientation="vertical"', src: 'components/Tabs/Tabs.tsx', blocks: ['plx-tabs'], variantClasses: ['plx-tabs--vertical'], level: 'Component', interaction: 'Navigation',
     aliases: ['Side tabs', 'Tab list (vertical)', 'Section tabs'],
     text: 'Tabs with orientation="vertical": the tabs in a column at the start, the panel beside them taking the rest of the width. Each tab is a navigation list row with the hover fill; the open tab is in the selected state (the navigation pane’s current row), and long names wrap. The tab list says it is vertical (aria-orientation); arrow keys move and select, and only the open tab is in the Tab order. Tabs never move into More. Tabs show no focus ring: focus is always on the open tab, which its look marks.',
     use: ['More than about six sections of one thing, or long section names: settings, a record’s many views', 'Short nouns in sentence case, one line where possible'],
