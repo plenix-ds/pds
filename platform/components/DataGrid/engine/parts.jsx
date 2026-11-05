@@ -129,6 +129,7 @@ function AreaEditor({ draft, setDraft, invalid, setInvalid, messageId, finish, c
     const el = box.current;
     if (el?.showPopover && !el.matches(':popover-open')) el.showPopover();
     input.current?.focus();
+    input.current?.setSelectionRange(input.current.value.length, input.current.value.length);   // the caret after the text
   }, []);
   useFloating(cell, box, { open: true, placement: 'bottom-start', matchWidth: true });
   return (
@@ -139,7 +140,7 @@ function AreaEditor({ draft, setDraft, invalid, setInvalid, messageId, finish, c
       <span ref={box} popover="manual" className="plx-data-grid__editor-box">
         <textarea
           ref={input}
-          className="plx-data-grid__editor"
+          className="plx-data-grid__editor plx-data-grid__editor--area"
           aria-label={label}
           aria-invalid={invalid ? 'true' : undefined}
           aria-describedby={invalid ? messageId : undefined}
