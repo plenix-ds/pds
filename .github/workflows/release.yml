@@ -1,0 +1,143 @@
+# PDS release (P0-12, #194; plan §7c; D-0003). Phase 0 ships the DRY RUN only: it does every step of a release except
+# the writes (npm publish, the CDN/API upload to the web host, latest.json), and proves the safety checks.
+# The owner's publishing hold (2026-10-29) stands, so no job here can publish: there is no tag trigger, no write
+# permission and no deploy key. The real publish (tag vX.Y.Z -> npm + CDN + API, live smoke test, automatic rollback)
+# is added in a later PR on #194 when the hold is lifted.
+#
+# What the dry run does, on a throwaway version <package.json version>-dryrun.<run number> so nothing collides:
+#   build (npm ci builds; release:build steps) -> one version everywhere + CDN immutability (tools/publish/preflight.mjs)
+#   -> bundle budgets (check-bundle.js) -> SHA256SUMS + version.json (tools/publish/manifest.mjs, verified with sha256sum -c)
+#   -> next latest.json with every field and the pins kept (tools/publish/latest.mjs, against the live file)
+#   -> npm publish --dry-run of the four packages -> negative proof: the current version is refused as already published
+#   -> the live CDN check (tools/check-live-cdn.js, sampled) still works against the live release.
+name: Release (dry run)
+
+on:
+  pull_request:
+    paths:
+      - 'tools/publish/**'
+      - '.github/workflows/release.yml'
+      - 'build-packages.js'
+      - 'build-packages.d/**'
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: release-dry-run-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  dry-run:
+    name: Release dry run (npm + CDN + API)
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+      packages: read
+    env:
+      CDN: https://design-system.lighthouseway.org/cdn/
+      RUN_NUMBER: ${{ github.run_number }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          cache: npm
+          registry-url: https://npm.pkg.github.com
+          scope: '@plenix-ds'
+
+      - name: Versions (the real one, the throwaway dry-run one, the planned next one)
+        id: v
+        run: |
+          base=$(node -p "require('./package.json').version")
+          next=$(node -p "const [a,b,c]=process.argv[1].split('.').map(Number); [a,b,c+1].join('.')" "$base")
+          dry="${next}-dryrun.${RUN_NUMBER}"
+          echo "base=$base" >> "$GITHUB_OUTPUT"; echo "next=$next" >> "$GITHUB_OUTPUT"; echo "dry=$dry" >> "$GITHUB_OUTPUT"
+          echo "Released: $base · planned next: $next · this dry run builds: $dry"
+
+      - name: Set the dry-run version everywhere (root and workspaces; scripts off)
+        env:
+          DRY: ${{ steps.v.outputs.dry }}
+        run: npm version "$DRY" --no-git-tag-version --workspaces --include-workspace-root --ignore-scripts --allow-same-version
+
+      - name: Install and build (npm ci runs build-app.js)
+        run: npm ci --no-audit --no-fund
+
+      - name: Release build (build-usage, system and style checks, packages, CDN, API)
+        run: |
+          node build-usage.js
+          node check-system.js
+          node check-style.js
+          node build-packages.js
+
+      - name: Preflight, one version everywhere and CDN immutability
+        env:
+          DRY: ${{ steps.v.outputs.dry }}
+        run: node tools/publish/preflight.mjs "$DRY" --cdn "$CDN"
+
+      - name: Bundle-size budgets
+        run: node check-bundle.js
+
+      - name: SHA256SUMS and version.json, verified
+        env:
+          DRY: ${{ steps.v.outputs.dry }}
+        run: |
+          node tools/publish/manifest.mjs "$DRY" --commit "$GITHUB_SHA"
+          (cd "release/cdn/$DRY" && sha256sum --quiet -c SHA256SUMS)
+          echo "sha256sum -c: every listed file verified"
+
+      - name: Next latest.json (every field and the pins kept), against the live file
+        env:
+          NEXT: ${{ steps.v.outputs.next }}
+        run: node tools/publish/latest.mjs "$NEXT" --current "${CDN}latest.json" --out "$RUNNER_TEMP/latest.next.json"
+
+      - name: npm publish --dry-run (the four @plenix-ds packages)
+        env:
+          NODE_AUTH_TOKEN: ${{ github.token }}
+        run: |
+          for p in tokens icons styles react; do
+            echo "::group::@plenix-ds/$p"
+            (cd "release/packages/$p" && npm publish --dry-run)
+            echo "::endgroup::"
+          done
+
+      - name: Negative proof, the released version is refused as already published
+        env:
+          BASE: ${{ steps.v.outputs.base }}
+        run: node tools/publish/preflight.mjs "$BASE" --cdn "$CDN" --expect-published
+
+      - name: The live CDN check still works (released version, sampled)
+        env:
+          BASE: ${{ steps.v.outputs.base }}
+        run: node tools/check-live-cdn.js "$BASE" --live-only --sample 20 --deadline 8
+
+      - name: Summary
+        env:
+          DRY: ${{ steps.v.outputs.dry }}
+          NEXT: ${{ steps.v.outputs.next }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/records"
+          cp "release/cdn/$DRY/version.json" "release/cdn/$DRY/SHA256SUMS" "$RUNNER_TEMP/latest.next.json" "$RUNNER_TEMP/records/"
+          {
+            echo "### Release dry run: $DRY"
+            echo
+            echo "Nothing was published (owner hold, 2026-10-29). Planned next release: **$NEXT**."
+            echo
+            echo '```json'; cat "release/cdn/$DRY/version.json"; echo '```'
+            echo
+            echo "Next \`latest.json\`:"; echo '```json'; cat "$RUNNER_TEMP/latest.next.json"; echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: release-dry-run-records
+          path: ${{ runner.temp }}/records
+          retention-days: 30
