@@ -24,3 +24,23 @@
 ## Evidence
 
 - **Planned:** a CI visual of the DataGrid tree example, light and dark at standard density.
+
+## Addendum: `plx-ref.space-6px` and `space-10px` (the DS Architect, 2026-11-05)
+
+These are the last two off-grid palette steps. They're defects inside the definitions (DESIGN.md §5), fixed without an owner question. Each reader moves to a system space role.
+
+| Reader | Today | Pick | Why |
+|---|---|---|---|
+| `plx-comp.data-grid-sorter-inset` | 6px | **`plx-sys.space-inset-xs` (4px)** | A small control's inset; 8px would crowd the header name. |
+| `plx-comp.data-grid-tree-control-gap` | 6px | **`plx-sys.space-inline-xs` (4px)** | The indent stays 20px (above). The child's toggle now sits 2px past its parent's label start, which can't be seen; 8px would put it 2px before. |
+| `plx-comp.data-grid-header-type-icon-gap`, standard | 6px | **`plx-sys.space-inline-xs` (4px)** | Icon-to-name gap, standard density. |
+| the same, comfortable, touch and mobile | 6px | **`plx-sys.space-inline-sm` (8px)** | The roomier densities and the touch targets take the next step; compact stays 0. |
+| `plx-comp.entity-header-rule-height` | 6px | **`plx-ref.size-1u` (4px)** | The accent rule's thickness (a size, not a space). The nearest grid step down keeps it an accent, not a bar. |
+| `plx-comp.entity-header-streamlined-item-gap` | 6px | **`plx-sys.space-inline-xs` (4px)** | Icon-to-text in a detail item, like other icon-text pairs at this size. |
+| `plx-comp.entity-header-streamlined-progress-row-gap` | 6px | **`plx-sys.space-stack-xs` (4px)** | Label row to bar. |
+| `plx-ref.space-10px` | — | **delete** | No reader. |
+
+- **Visible change:** 2px less space in each of these places (2px more in the roomier header icon gaps), and an accent rule 2px thinner. Light and dark, every density. RTL: all are logical gaps or block sizes, so nothing to mirror.
+- **State matrix:** n/a. Only spacing values change; the parts keep their existing matrices.
+- **DESIGN.md §5:** the line "6px and 10px exist only as `plx-ref` steps inside components" is replaced. There are no off-grid steps once #301 lands (this PR).
+- **Planned evidence:** CI visuals of DataGrid (header, tree) and EntityHeader (Structured with the rule, Streamlined), light and dark at standard density, plus compact for the density tokens.

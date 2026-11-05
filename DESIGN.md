@@ -123,7 +123,7 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 
 ## 5. Space and density (D-0007)
 
-- Everything sits on the 4px grid. Spacing comes from `plx-sys.space-*` roles (inline, stack, inset, cluster, layout, component-gap, container-inset, region-space). 6px and 10px exist only as `plx-ref` steps inside components.
+- Everything sits on the 4px grid. Spacing comes from `plx-sys.space-*` roles (inline, stack, inset, cluster, layout, component-gap, container-inset, region-space). There are no off-grid steps: 6px and 10px are retired (#301) and their readers moved to grid roles.
 - There are three densities: **compact, standard (default), comfortable**. A density is set on a region with `data-plx-density` and changes only heights, row heights, icon sizes and paddings, never colours or radii.
 - Heights for each density are in the front matter. Every height a component uses comes from `plx-sys.control-height-*` or `plx-sys.*-row-height`, never a fixed number.
 - `semantic.density-standard-comfortable.tokens.json` is retired. Removing it is a DS Architect task (section 12).
