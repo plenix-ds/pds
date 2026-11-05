@@ -251,6 +251,11 @@
       "$value": "{plx-sys.overlay-editor-min-inline-size}",
       "$type": "dimension",
       "$description": "DataGrid textarea cell editor (ADR 0016, #84): the box under the cell is at least this wide, so a narrow column still gives room to write."
+    },
+    "data-grid-textarea-max-inline-size": {
+      "$value": "calc(100vw - {plx-sys.floating-viewport-margin} * 2)",
+      "$type": "dimension",
+      "$description": "DataGrid textarea cell editor: never wider than the window less its margins, as a Popover (a 320px screen)."
     }
   }
 }

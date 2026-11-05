@@ -188,7 +188,8 @@ function SelectEditor({ draft, setDraft, invalid, messageId, finish, cancel, inp
   }, []);
   return (
     <>
-      <span ref={wrap} className="plx-data-grid__editor-field">
+      <span ref={wrap} className="plx-data-grid__editor-field"
+        dir="auto">
         <Select
           ref={input}
           aria-label={label}
@@ -240,6 +241,7 @@ function DateEditor({ draft, setDraft, invalid, messageId, finish, cancel, input
       <span
         ref={wrap}
         className="plx-data-grid__editor-field"
+        dir="auto"
         onBlur={(e) => {
           // focus leaving the field and its calendar (a click elsewhere) saves what it holds
           if (!wrap.current?.contains(e.relatedTarget)) setTimeout(() => finish(move.current, latest.current), 0);

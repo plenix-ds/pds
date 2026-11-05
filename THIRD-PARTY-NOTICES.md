@@ -16,7 +16,7 @@ Plenix ships the third-party software below, either copied into `platform/vendor
 | Apache ECharts | 6.1.0 | Apache-2.0 | `platform/vendor/echarts/echarts.min.js` | `platform/vendor/echarts/LICENSE`, `NOTICE` below |
 | ZRender (inside ECharts) | 6.1.0 | BSD-3-Clause | `platform/vendor/echarts/echarts.min.js` | below, and `platform/vendor/echarts/LICENSE-zrender` |
 | tslib (inside ECharts) | 2.3.0 | 0BSD | `platform/vendor/echarts/echarts.min.js` | below, and `platform/vendor/echarts/LICENSE-tslib` |
-| PDF.js | 4.10.38 | Apache-2.0 | `platform/vendor/pdfjs/` | `platform/vendor/pdfjs/LICENSE` |
+| PDF.js | 6.5.438 | Apache-2.0 | `platform/vendor/pdfjs/` | `platform/vendor/pdfjs/LICENSE` |
 | Tiptap, ProseMirror and their dependencies (46 packages) | Tiptap 3.31.3 | MIT | `platform/vendor/tiptap/tiptap.min.js` | `platform/vendor/tiptap/LICENSES.txt` (each package's own text) |
 | DM Sans | variable | SIL Open Font License 1.1 | `platform/fonts/dm-sans-*.woff2` | `platform/fonts/OFL-DMSans.txt` |
 | Reddit Mono | variable | SIL Open Font License 1.1 | `platform/fonts/reddit-mono-*.woff2` | `platform/fonts/OFL-RedditMono.txt` |
