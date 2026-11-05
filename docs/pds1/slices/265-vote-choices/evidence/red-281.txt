@@ -1,0 +1,9 @@
+AssertionError [ERR_ASSERTION]: a warning names the member and the key: 
+    at /home/cc/pds1/work/component-engineer-1/tests/vote-tally-options-265.test.js:70:12 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
