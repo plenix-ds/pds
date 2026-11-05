@@ -25,7 +25,7 @@ const check = async (name, fn) => { if (!shared.wanted(name)) return; try { awai
         window.__root && window.__root.unmount(); document.documentElement.setAttribute('dir', dir); document.documentElement.setAttribute('lang', dir === 'rtl' ? 'ar' : 'en'); window.__edits = [];
         document.querySelector('main').innerHTML = '<div id="c"></div><button id="away">away</button>'; const h = React.createElement;
         const data = [{ id: 'r1', name: 'A', note: 'one\ntwo' }, { id: 'r2', name: 'B', note: 'three' }];
-        const columns = [{ title: 'Name', field: 'name', editor: 'input' }, { title: 'Note', field: 'note', editor: 'textarea', validate: (v) => (v === 'bad' ? 'Not allowed' : null) }];
+        const columns = [{ title: 'Name', field: 'name', editor: 'input' }, { title: 'Note', field: 'note', width: 120, editor: 'textarea', validate: (v) => (v === 'bad' ? 'Not allowed' : null) }];
         window.__root = ReactDOM.createRoot(document.getElementById('c'));
         window.__root.render(h('div', { style: { height: 400 } }, h(Plenix.DataGrid, { label: 'People', data, columns, editing, onCellEdit: (r, e) => window.__edits.push(r.id + '.' + e.field + '=' + JSON.stringify(e.value)) })));
         await new Promise((r) => setTimeout(r, 1000));
@@ -54,6 +54,11 @@ const check = async (name, fn) => { if (!shared.wanted(name)) return; try { awai
       await check(T + 'a value validate refuses keeps the area open with the message', async () => {
         await mount(ON); await focus(1); await key('Enter'); await page.keyboard.down('Control'); await page.keyboard.press('a'); await page.keyboard.up('Control'); await page.keyboard.type('bad'); await key('Enter', ['Control']);
         assert.deepEqual(await edits(), []); assert.notEqual(await area(), null); assert.equal(await page.evaluate(() => (document.querySelector('.plx-data-grid__editor-message') || {}).textContent), 'Not allowed');
+      });
+      await check(T + 'in a narrow column the box is still 320px wide and stays on screen', async () => {
+        await mount(ON); await focus(0); await key('Enter');
+        const m = await page.evaluate(() => { const b = document.querySelector('.plx-data-grid__editor-box'), c = b.closest('[role=gridcell]').getBoundingClientRect(), r = b.getBoundingClientRect(); return { cell: Math.round(c.width), box: Math.round(r.width), onScreen: r.left >= -1 && r.right <= document.documentElement.clientWidth + 1 }; });
+        assert.ok(m.cell < 320, 'the cell is narrow: ' + m.cell); assert.equal(m.box, 320); assert.equal(m.onScreen, true);
       });
       await check(T + 'with the type not turned on Enter opens the one-line editor', async () => {
         await mount(undefined); await focus(0); await key('Enter'); assert.equal(await oneLine(), true); assert.equal(await area(), null);

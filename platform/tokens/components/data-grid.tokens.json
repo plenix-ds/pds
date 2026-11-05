@@ -246,6 +246,11 @@
       "$value": "{plx-ref.size-6u}",
       "$type": "dimension",
       "$description": "DataGrid header: the options part is one target the header’s height and at least 24px wide, the chevron in its middle (owner, 2026-10-24: as Windows Explorer; WCAG 2.5.8)."
+    },
+    "data-grid-textarea-min-inline-size": {
+      "$value": "{plx-sys.overlay-editor-min-inline-size}",
+      "$type": "dimension",
+      "$description": "DataGrid textarea cell editor (ADR 0016, #84): the box under the cell is at least this wide, so a narrow column still gives room to write."
     }
   }
 }
