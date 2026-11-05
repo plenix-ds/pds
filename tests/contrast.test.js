@@ -6,6 +6,7 @@
 const shared = require('./check.js');   // the shared check helper: parts (TEST_ONLY) and the results file (TEST_RESULTS)
 const fs = require('fs');
 const path = require('path');
+const { css: tokenCss } = require('../tools/token-value.js');   // a $value as CSS text: the W3C typed values too (#872)
 const vm = require('vm');
 require('./limit.js');   // the hard time limit (TEST_TIMEOUT_MS)
 
@@ -30,12 +31,12 @@ check('an unknown rule is refused', threw, '');
 
 // the palette: reference tokens, name -> hex
 const ref = JSON.parse(fs.readFileSync(path.join(TOK, 'reference.tokens.json'), 'utf8'))['plx-ref'];
-const refValue = (name) => { const t = ref[name]; return t ? t.$value : undefined; };
+const refValue = (name) => { const t = ref[name]; return t ? tokenCss(t.$value) : undefined; };
 const resolveIn = (set, v, depth = 0) => {
   if (depth > 10 || typeof v !== 'string') return v;
   const m = /^\{plx-(ref|sys)\.([a-z0-9-]+)\}$/.exec(v);
   if (!m) return v;
-  return resolveIn(set, m[1] === 'ref' ? refValue(m[2]) : (set[m[2]] || {}).$value, depth + 1);
+  return resolveIn(set, m[1] === 'ref' ? refValue(m[2]) : ((set[m[2]] || {}).$value === undefined ? undefined : tokenCss(set[m[2]].$value)), depth + 1);
 };
 
 // pairs the themes do not meet yet: reported, not failed, until the owner remaps the role in that theme and mode. Empty
@@ -50,7 +51,8 @@ for (const [name, t] of Object.entries(themes)) {
   for (const mode of ['light', 'dark']) {
     const set = JSON.parse(fs.readFileSync(path.join(TOK, t[mode]), 'utf8'))['plx-sys'];
     for (const p of CONTRAST_PAIRS) {
-      const fg = resolveIn(set, (set[p.fg] || {}).$value), bg = resolveIn(set, (set[p.bg] || {}).$value);
+      const val = (k) => (set[k] && set[k].$value !== undefined ? tokenCss(set[k].$value) : undefined);
+      const fg = resolveIn(set, val(p.fg)), bg = resolveIn(set, val(p.bg));
       const where = name + ' ' + mode + ': ' + p.fg + ' on ' + p.bg;
       if (!parseColor(fg) || !parseColor(bg)) { check(where + ' resolves to colors', false, fg + ' / ' + bg); continue; }
       const r = contrastRatio(fg, bg);

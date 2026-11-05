@@ -18,6 +18,7 @@
 // Alone: node check-system.rules/contrast-matrix.js [--all] [--write-baseline]  -> CONTRAST_MATRIX_OK, or the findings and exit 1
 const fs = require('fs');
 const path = require('path');
+const { css } = require('../tools/token-value.js');
 
 const NAME = 'contrast-matrix';
 const ROOT = path.join(__dirname, '..');
@@ -82,6 +83,7 @@ function raw() {
       if (!th[mode]) continue;
       const roles = Object.assign({}, base, flat(read(path.basename(th[mode])), 'plx-sys'));
       const resolve = (v, depth = 0) => {
+        v = css(v);
         const m = String(v).trim().match(/^\{plx-(ref|sys)\.([^}]+)\}$/);
         if (!m || depth > 20) return v;
         const t = m[1] === 'ref' ? ref[m[2]] : roles[m[2]];

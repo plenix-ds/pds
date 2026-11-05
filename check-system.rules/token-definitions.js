@@ -17,6 +17,7 @@
 // Alone: node check-system.rules/token-definitions.js [--shrink | --baseline]   -> TOKEN_DEFINITIONS_OK, or the findings and exit 1
 const fs = require('fs');
 const path = require('path');
+const { css } = require('../tools/token-value.js');   // a $value as CSS text: the W3C typed values too (#872)
 
 const NAME = 'token-definitions';
 const ROOT = path.join(__dirname, '..');
@@ -59,7 +60,7 @@ function tokens() {
     const walk = (o, tier) => { for (const k of Object.keys(o)) {
       if (k.charAt(0) === '$') continue;
       const v = o[k]; if (!v || typeof v !== 'object') continue;
-      if (v.$value !== undefined) { if (typeof v.$value === 'string') out.push({ key: k, value: v.$value, file, ref, name: tier + '.' + k }); } else walk(v, tier || k);
+      if (v.$value !== undefined) { if (typeof v.$value !== 'number') out.push({ key: k, value: css(v.$value), file, ref, name: tier + '.' + k }); } else walk(v, tier || k);
     } };
     walk(j, '');
   };

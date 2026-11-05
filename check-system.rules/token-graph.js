@@ -1,9 +1,11 @@
 // Plenix · shared reader for the token rules token-tiers (check 6) and token-names (check 7), docs/adr/0002.
 // Not a rule itself (no check export). Reads every platform/tokens/**/*.tokens.json and returns each definition of a
-// plx-ref, plx-sys or plx-comp token: { tier, name, value, file, refs: [{ tier, name }], deprecated }. A reference is
+// plx-ref, plx-sys or plx-comp token: { tier, name, value (as CSS text, through tools/token-value.js css(), so a W3C typed
+// value reads like its text), raw, file, refs: [{ tier, name }], deprecated }. A reference is
 // {plx-<tier>.<name>} or, in a condition set, var(--plx-<tier>-<name>).
 const fs = require('fs');
 const path = require('path');
+const { css } = require('../tools/token-value.js');
 
 const ROOT = path.join(__dirname, '..');
 const TIERS = ['plx-ref', 'plx-sys', 'plx-comp'];
@@ -33,7 +35,7 @@ function definitions(docs) {
     for (const tier of TIERS) {
       const walk = (o, at) => {
         if (!o || typeof o !== 'object') return;
-        if ('$value' in o) { out.push({ tier, name: at.join('-'), value: o.$value, file, refs: refsOf(o.$value), deprecated: '$deprecated' in o }); return; }
+        if ('$value' in o) { out.push({ tier, name: at.join('-'), value: css(o.$value), raw: o.$value, file, refs: refsOf(o.$value), deprecated: '$deprecated' in o }); return; }
         for (const k of Object.keys(o)) if (k[0] !== '$') walk(o[k], at.concat(k));
       };
       if (data && data[tier]) walk(data[tier], []);
