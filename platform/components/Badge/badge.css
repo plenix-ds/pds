@@ -1,6 +1,6 @@
 /* Plenix · Badge (platform/components/Badge/badge.css). Anatomy and API: Badge.tsx.
    The pill rule (owner, 2026-10-14, docs/pills-and-colors.md): every pill is soft. Background shade 100, a 1px border in
-   shade 300, text in a dark shade of the same family (700, or 800 for red), 4px corners (--plx-sys-radius-pill).
+   shade 300, text in a dark shade of the same family (700, or 800 for red), 4px corners (--plx-sys-radius-pill-4px).
    .plx-badge                       a 20px label: bold 10px text, 8px inline padding, centered
    .plx-badge--sm                   a 16px label for counts: 9px text, 4px inline padding
    .plx-badge--{variant}            the six status variants, on the status-pill roles (--plx-sys-status-pill-{variant}-*):
