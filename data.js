@@ -1,6 +1,6 @@
 window.PDS_DATA = {
- "generatedAt": "2026-11-05T09:23+00:00",
- "mainSha": "5c2b82a",
+ "generatedAt": "2026-11-05T10:47+00:00",
+ "mainSha": "b4086b8",
  "tasks": [
   {
    "number": 220,
@@ -17,7 +17,7 @@ window.PDS_DATA = {
    "decision": false,
    "next": "",
    "waiting": "",
-   "updated": "2026-11-05T09:15:27Z",
+   "updated": "2026-11-05T09:23:52Z",
    "rank": 1
   },
   {
@@ -327,24 +327,6 @@ window.PDS_DATA = {
    "rank": 18
   },
   {
-   "number": 6,
-   "title": "Owner request: Button glow and drop shadow more subtle, using a light card shadow",
-   "url": "https://github.com/plenix-ds/pds/issues/6",
-   "sev": "S3",
-   "type": "ui",
-   "areas": [
-    "styles"
-   ],
-   "owners": [
-    "design-director"
-   ],
-   "decision": false,
-   "next": "",
-   "waiting": "",
-   "updated": "2026-11-05T06:43:11Z",
-   "rank": 19
-  },
-  {
    "number": 7,
    "title": "MetricCard: list rank reads \"1#\" in right-to-left",
    "url": "https://github.com/plenix-ds/pds/issues/7",
@@ -360,7 +342,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:43:15Z",
-   "rank": 20
+   "rank": 19
   },
   {
    "number": 11,
@@ -377,8 +359,8 @@ window.PDS_DATA = {
    "decision": false,
    "next": "",
    "waiting": "",
-   "updated": "2026-11-05T06:43:26Z",
-   "rank": 21
+   "updated": "2026-11-05T10:16:26Z",
+   "rank": 20
   },
   {
    "number": 13,
@@ -395,8 +377,8 @@ window.PDS_DATA = {
    "decision": false,
    "next": "",
    "waiting": "",
-   "updated": "2026-11-05T06:43:31Z",
-   "rank": 22
+   "updated": "2026-11-05T10:16:28Z",
+   "rank": 21
   },
   {
    "number": 17,
@@ -414,7 +396,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:43:34Z",
-   "rank": 23
+   "rank": 22
   },
   {
    "number": 21,
@@ -432,25 +414,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:43:44Z",
-   "rank": 24
-  },
-  {
-   "number": 23,
-   "title": "DataGrid row template: narrow A, narrow B, wide and RTL layouts as options, documented by scenario",
-   "url": "https://github.com/plenix-ds/pds/issues/23",
-   "sev": "S3",
-   "type": "ui",
-   "areas": [
-    "components"
-   ],
-   "owners": [
-    "design-director"
-   ],
-   "decision": false,
-   "next": "",
-   "waiting": "",
-   "updated": "2026-11-05T06:43:48Z",
-   "rank": 25
+   "rank": 23
   },
   {
    "number": 24,
@@ -468,7 +432,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:43:51Z",
-   "rank": 26
+   "rank": 24
   },
   {
    "number": 25,
@@ -486,7 +450,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:43:54Z",
-   "rank": 27
+   "rank": 25
   },
   {
    "number": 26,
@@ -504,7 +468,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:43:57Z",
-   "rank": 28
+   "rank": 26
   },
   {
    "number": 27,
@@ -522,7 +486,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:00Z",
-   "rank": 29
+   "rank": 27
   },
   {
    "number": 28,
@@ -540,7 +504,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:04Z",
-   "rank": 30
+   "rank": 28
   },
   {
    "number": 29,
@@ -558,7 +522,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:07Z",
-   "rank": 31
+   "rank": 29
   },
   {
    "number": 30,
@@ -576,7 +540,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:11Z",
-   "rank": 32
+   "rank": 30
   },
   {
    "number": 31,
@@ -594,7 +558,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:14Z",
-   "rank": 33
+   "rank": 31
   },
   {
    "number": 32,
@@ -612,7 +576,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:17Z",
-   "rank": 34
+   "rank": 32
   },
   {
    "number": 33,
@@ -630,7 +594,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:21Z",
-   "rank": 35
+   "rank": 33
   },
   {
    "number": 34,
@@ -648,7 +612,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:24Z",
-   "rank": 36
+   "rank": 34
   },
   {
    "number": 36,
@@ -666,7 +630,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:28Z",
-   "rank": 37
+   "rank": 35
   },
   {
    "number": 37,
@@ -684,7 +648,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:31Z",
-   "rank": 38
+   "rank": 36
   },
   {
    "number": 42,
@@ -702,7 +666,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:38Z",
-   "rank": 39
+   "rank": 37
   },
   {
    "number": 46,
@@ -720,7 +684,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:41Z",
-   "rank": 40
+   "rank": 38
   },
   {
    "number": 47,
@@ -738,7 +702,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:45Z",
-   "rank": 41
+   "rank": 39
   },
   {
    "number": 52,
@@ -756,7 +720,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:54Z",
-   "rank": 42
+   "rank": 40
   },
   {
    "number": 57,
@@ -774,7 +738,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:58Z",
-   "rank": 43
+   "rank": 41
   },
   {
    "number": 60,
@@ -792,7 +756,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:45:05Z",
-   "rank": 44
+   "rank": 42
   },
   {
    "number": 61,
@@ -810,7 +774,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:45:08Z",
-   "rank": 45
+   "rank": 43
   },
   {
    "number": 63,
@@ -828,7 +792,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:45:12Z",
-   "rank": 46
+   "rank": 44
   },
   {
    "number": 64,
@@ -846,25 +810,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:45:15Z",
-   "rank": 47
-  },
-  {
-   "number": 65,
-   "title": "Owner decision: Chat slice 4, what to change in the actions and reactions (#637)",
-   "url": "https://github.com/plenix-ds/pds/issues/65",
-   "sev": "S3",
-   "type": "ui",
-   "areas": [
-    "components"
-   ],
-   "owners": [
-    "design-director"
-   ],
-   "decision": false,
-   "next": "",
-   "waiting": "",
-   "updated": "2026-11-05T06:45:18Z",
-   "rank": 48
+   "rank": 45
   },
   {
    "number": 70,
@@ -882,7 +828,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T07:07:23Z",
-   "rank": 49
+   "rank": 46
   },
   {
    "number": 71,
@@ -900,7 +846,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:45:32Z",
-   "rank": 50
+   "rank": 47
   },
   {
    "number": 73,
@@ -918,7 +864,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:45:39Z",
-   "rank": 51
+   "rank": 48
   },
   {
    "number": 76,
@@ -936,7 +882,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:45:46Z",
-   "rank": 52
+   "rank": 49
   },
   {
    "number": 79,
@@ -954,7 +900,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:45:50Z",
-   "rank": 53
+   "rank": 50
   },
   {
    "number": 81,
@@ -972,7 +918,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:45:54Z",
-   "rank": 54
+   "rank": 51
   },
   {
    "number": 86,
@@ -990,7 +936,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:46:08Z",
-   "rank": 55
+   "rank": 52
   },
   {
    "number": 100,
@@ -1008,7 +954,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:46:58Z",
-   "rank": 56
+   "rank": 53
   },
   {
    "number": 107,
@@ -1026,7 +972,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:47:21Z",
-   "rank": 57
+   "rank": 54
   },
   {
    "number": 111,
@@ -1044,7 +990,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:47:37Z",
-   "rank": 58
+   "rank": 55
   },
   {
    "number": 112,
@@ -1062,7 +1008,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:47:40Z",
-   "rank": 59
+   "rank": 56
   },
   {
    "number": 113,
@@ -1080,7 +1026,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:47:44Z",
-   "rank": 60
+   "rank": 57
   },
   {
    "number": 114,
@@ -1098,7 +1044,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:47:47Z",
-   "rank": 61
+   "rank": 58
   },
   {
    "number": 121,
@@ -1116,7 +1062,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:48:09Z",
-   "rank": 62
+   "rank": 59
   },
   {
    "number": 122,
@@ -1134,7 +1080,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:48:13Z",
-   "rank": 63
+   "rank": 60
   },
   {
    "number": 125,
@@ -1152,7 +1098,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:48:21Z",
-   "rank": 64
+   "rank": 61
   },
   {
    "number": 126,
@@ -1170,7 +1116,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:48:25Z",
-   "rank": 65
+   "rank": 62
   },
   {
    "number": 138,
@@ -1188,7 +1134,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:48:42Z",
-   "rank": 66
+   "rank": 63
   },
   {
    "number": 140,
@@ -1206,7 +1152,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:48:45Z",
-   "rank": 67
+   "rank": 64
   },
   {
    "number": 141,
@@ -1224,7 +1170,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:48:49Z",
-   "rank": 68
+   "rank": 65
   },
   {
    "number": 142,
@@ -1242,7 +1188,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:48:52Z",
-   "rank": 69
+   "rank": 66
   },
   {
    "number": 143,
@@ -1260,7 +1206,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:48:57Z",
-   "rank": 70
+   "rank": 67
   },
   {
    "number": 144,
@@ -1278,7 +1224,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:49:01Z",
-   "rank": 71
+   "rank": 68
   },
   {
    "number": 145,
@@ -1296,7 +1242,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:49:04Z",
-   "rank": 72
+   "rank": 69
   },
   {
    "number": 146,
@@ -1314,7 +1260,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:49:07Z",
-   "rank": 73
+   "rank": 70
   },
   {
    "number": 161,
@@ -1332,7 +1278,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:49:56Z",
-   "rank": 74
+   "rank": 71
   },
   {
    "number": 180,
@@ -1350,7 +1296,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:53:09Z",
-   "rank": 75
+   "rank": 72
   },
   {
    "number": 181,
@@ -1368,7 +1314,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:53:12Z",
-   "rank": 76
+   "rank": 73
   },
   {
    "number": 209,
@@ -1386,7 +1332,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:53:05Z",
-   "rank": 77
+   "rank": 74
   },
   {
    "number": 217,
@@ -1404,7 +1350,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T07:53:14Z",
-   "rank": 78
+   "rank": 75
   },
   {
    "number": 18,
@@ -1422,7 +1368,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:43:37Z",
-   "rank": 79
+   "rank": 76
   },
   {
    "number": 59,
@@ -1440,25 +1386,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:45:01Z",
-   "rank": 80
-  },
-  {
-   "number": 75,
-   "title": "How did an external app set its own style on a CDN card (AITEAM blue accent)?",
-   "url": "https://github.com/plenix-ds/pds/issues/75",
-   "sev": "S4",
-   "type": "question",
-   "areas": [
-    "styles"
-   ],
-   "owners": [
-    "design-director"
-   ],
-   "decision": false,
-   "next": "",
-   "waiting": "",
-   "updated": "2026-11-05T06:45:42Z",
-   "rank": 81
+   "rank": 77
   },
   {
    "number": 115,
@@ -1476,7 +1404,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:47:50Z",
-   "rank": 82
+   "rank": 78
   },
   {
    "number": 116,
@@ -1494,7 +1422,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:47:54Z",
-   "rank": 83
+   "rank": 79
   },
   {
    "number": 117,
@@ -1512,7 +1440,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:47:58Z",
-   "rank": 84
+   "rank": 80
   },
   {
    "number": 120,
@@ -1530,7 +1458,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:48:06Z",
-   "rank": 85
+   "rank": 81
   },
   {
    "number": 129,
@@ -1548,7 +1476,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:48:35Z",
-   "rank": 86
+   "rank": 82
   },
   {
    "number": 166,
@@ -1566,7 +1494,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:50:10Z",
-   "rank": 87
+   "rank": 83
   },
   {
    "number": 178,
@@ -1582,7 +1510,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T09:15:29Z",
-   "rank": 88
+   "rank": 84
   },
   {
    "number": 183,
@@ -1597,8 +1525,8 @@ window.PDS_DATA = {
    "decision": false,
    "next": "",
    "waiting": "",
-   "updated": "2026-11-05T09:16:30Z",
-   "rank": 89
+   "updated": "2026-11-05T10:26:33Z",
+   "rank": 85
   },
   {
    "number": 184,
@@ -1614,55 +1542,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:38:10Z",
-   "rank": 90
-  },
-  {
-   "number": 186,
-   "title": "Phase 0 P0-4: diff-aware CI, re-enable Actions",
-   "url": "https://github.com/plenix-ds/pds/issues/186",
-   "sev": "S4",
-   "type": "",
-   "areas": [],
-   "owners": [
-    "release-architect"
-   ],
-   "decision": false,
-   "next": "",
-   "waiting": "",
-   "updated": "2026-11-05T06:38:13Z",
-   "rank": 91
-  },
-  {
-   "number": 187,
-   "title": "Phase 0 P0-5: branch protection and auto-merge",
-   "url": "https://github.com/plenix-ds/pds/issues/187",
-   "sev": "S4",
-   "type": "",
-   "areas": [],
-   "owners": [
-    "release-architect"
-   ],
-   "decision": false,
-   "next": "",
-   "waiting": "",
-   "updated": "2026-11-05T06:38:14Z",
-   "rank": 92
-  },
-  {
-   "number": 188,
-   "title": "Phase 0 P0-6: Rulesync and lefthook",
-   "url": "https://github.com/plenix-ds/pds/issues/188",
-   "sev": "S4",
-   "type": "",
-   "areas": [],
-   "owners": [
-    "release-architect"
-   ],
-   "decision": false,
-   "next": "",
-   "waiting": "",
-   "updated": "2026-11-05T06:38:16Z",
-   "rank": 93
+   "rank": 86
   },
   {
    "number": 189,
@@ -1677,8 +1557,8 @@ window.PDS_DATA = {
    "decision": false,
    "next": "",
    "waiting": "",
-   "updated": "2026-11-05T09:16:06Z",
-   "rank": 94
+   "updated": "2026-11-05T10:31:20Z",
+   "rank": 87
   },
   {
    "number": 190,
@@ -1694,7 +1574,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:38:18Z",
-   "rank": 95
+   "rank": 88
   },
   {
    "number": 191,
@@ -1710,7 +1590,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:38:20Z",
-   "rank": 96
+   "rank": 89
   },
   {
    "number": 192,
@@ -1726,7 +1606,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:38:21Z",
-   "rank": 97
+   "rank": 90
   },
   {
    "number": 193,
@@ -1742,7 +1622,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:38:22Z",
-   "rank": 98
+   "rank": 91
   },
   {
    "number": 194,
@@ -1758,7 +1638,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:38:24Z",
-   "rank": 99
+   "rank": 92
   },
   {
    "number": 197,
@@ -1773,8 +1653,8 @@ window.PDS_DATA = {
    "decision": false,
    "next": "",
    "waiting": "",
-   "updated": "2026-11-05T07:15:27Z",
-   "rank": 100
+   "updated": "2026-11-05T09:42:45Z",
+   "rank": 93
   },
   {
    "number": 206,
@@ -1790,23 +1670,40 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T07:29:55Z",
-   "rank": 101
+   "rank": 94
   },
   {
-   "number": 207,
-   "title": "DataGrid tabular-nums and equal pill height (DESIGN.md §12 items 5-6)",
-   "url": "https://github.com/plenix-ds/pds/issues/207",
+   "number": 235,
+   "title": "Tokens: data-color-purple is blue (blue-650, blue-900) in both modes",
+   "url": "https://github.com/plenix-ds/pds/issues/235",
    "sev": "S4",
    "type": "",
    "areas": [],
    "owners": [
-    "component-engineer"
+    "ds-architect"
    ],
    "decision": false,
    "next": "",
    "waiting": "",
-   "updated": "2026-11-05T07:29:56Z",
-   "rank": 102
+   "updated": "2026-11-05T10:37:51Z",
+   "rank": 95
+  },
+  {
+   "number": 240,
+   "title": "Tokens: plx-sys.shape-pill is 6px, but pills are 4px (D-0005)",
+   "url": "https://github.com/plenix-ds/pds/issues/240",
+   "sev": "S4",
+   "type": "",
+   "areas": [],
+   "owners": [
+    "design-director",
+    "ds-architect"
+   ],
+   "decision": false,
+   "next": "",
+   "waiting": "",
+   "updated": "2026-11-05T10:38:24Z",
+   "rank": 96
   }
  ],
  "ownerDecisions": [
@@ -1844,16 +1741,110 @@ window.PDS_DATA = {
    }
   }
  ],
- "openPrs": [
-  {
-   "headRefName": "fix/206-207-type-floor-pills",
-   "isDraft": false,
-   "number": 214,
-   "title": "12px type floor, retired density file, tabular number cells (#206, #207)",
-   "url": "https://github.com/plenix-ds/pds/pull/214"
-  }
- ],
+ "openPrs": [],
  "mergedPrs": [
+  {
+   "mergedAt": "2026-11-05T10:47:11Z",
+   "number": 241,
+   "title": "Release dry run: one version, immutable CDN, SHA256SUMS, latest.json with pins (P0-12, #194)",
+   "url": "https://github.com/plenix-ds/pds/pull/241"
+  },
+  {
+   "mergedAt": "2026-11-05T10:45:08Z",
+   "number": 239,
+   "title": "Check 2: corners only 0, 2, 4 or 6px (D-0005, #189)",
+   "url": "https://github.com/plenix-ds/pds/pull/239"
+  },
+  {
+   "mergedAt": "2026-11-05T10:43:03Z",
+   "number": 238,
+   "title": "#235: \"purple\" data colour keeps its slate look; D-0039 (docs)",
+   "url": "https://github.com/plenix-ds/pds/pull/238"
+  },
+  {
+   "mergedAt": "2026-11-05T10:42:47Z",
+   "number": 237,
+   "title": "Style checks 1, 4, 5 + logical utilities (ADR 0006, #189)",
+   "url": "https://github.com/plenix-ds/pds/pull/237"
+  },
+  {
+   "mergedAt": "2026-11-05T10:33:43Z",
+   "number": 236,
+   "title": "#108 design: tokens as in ADR 0005 (docs)",
+   "url": "https://github.com/plenix-ds/pds/pull/236"
+  },
+  {
+   "mergedAt": "2026-11-05T10:30:26Z",
+   "number": 234,
+   "title": "ADR 0005 + data-color on-surface roles (#108)",
+   "url": "https://github.com/plenix-ds/pds/pull/234"
+  },
+  {
+   "mergedAt": "2026-11-05T10:16:29Z",
+   "number": 233,
+   "title": "#108: before and after pictures, dark icon colours (docs)",
+   "url": "https://github.com/plenix-ds/pds/pull/233"
+  },
+  {
+   "mergedAt": "2026-11-05T10:12:39Z",
+   "number": 232,
+   "title": "Fold plenix-design-system into platform/design-system (#183)",
+   "url": "https://github.com/plenix-ds/pds/pull/232"
+  },
+  {
+   "mergedAt": "2026-11-05T10:01:34Z",
+   "number": 231,
+   "title": "Dashboard: auto-publish on push, decision comments and hourly (P0-13, #195)",
+   "url": "https://github.com/plenix-ds/pds/pull/231"
+  },
+  {
+   "mergedAt": "2026-11-05T10:00:00Z",
+   "number": 230,
+   "title": "#109 design: token names as in ADR 0004 (docs)",
+   "url": "https://github.com/plenix-ds/pds/pull/230"
+  },
+  {
+   "mergedAt": "2026-11-05T09:57:45Z",
+   "number": 229,
+   "title": "ADR 0004 + state layer tokens (#109)",
+   "url": "https://github.com/plenix-ds/pds/pull/229"
+  },
+  {
+   "mergedAt": "2026-11-05T09:44:52Z",
+   "number": 228,
+   "title": "npm workspaces + Changesets + package-boundaries check (#183 step 2)",
+   "url": "https://github.com/plenix-ds/pds/pull/228"
+  },
+  {
+   "mergedAt": "2026-11-05T09:49:58Z",
+   "number": 227,
+   "title": "#109: Fluent 2 state layers and destructive confirm, design and D-0037 (docs)",
+   "url": "https://github.com/plenix-ds/pds/pull/227"
+  },
+  {
+   "mergedAt": "2026-11-05T09:41:51Z",
+   "number": 226,
+   "title": "Rulesync for CLAUDE.md + AGENTS.md, lefthook pre-push (P0-6, #188)",
+   "url": "https://github.com/plenix-ds/pds/pull/226"
+  },
+  {
+   "mergedAt": "2026-11-05T09:41:51Z",
+   "number": 225,
+   "title": "#108: icon-in-a-box inventory and recommendation (docs)",
+   "url": "https://github.com/plenix-ds/pds/pull/225"
+  },
+  {
+   "mergedAt": "2026-11-05T09:39:53Z",
+   "number": 224,
+   "title": "docs: branch-protection.md (P0-5, #187)",
+   "url": "https://github.com/plenix-ds/pds/pull/224"
+  },
+  {
+   "mergedAt": "2026-11-05T09:34:31Z",
+   "number": 223,
+   "title": "Build output: packages/ -> release/packages/ (#183 step 1)",
+   "url": "https://github.com/plenix-ds/pds/pull/223"
+  },
   {
    "mergedAt": "2026-11-05T09:22:48Z",
    "number": 222,
@@ -1883,6 +1874,12 @@ window.PDS_DATA = {
    "number": 215,
    "title": "DESIGN.md §8/§12 corrections after #214 (#199)",
    "url": "https://github.com/plenix-ds/pds/pull/215"
+  },
+  {
+   "mergedAt": "2026-11-05T09:25:17Z",
+   "number": 214,
+   "title": "12px type floor, retired density file, tabular number cells (#206, #207)",
+   "url": "https://github.com/plenix-ds/pds/pull/214"
   },
   {
    "mergedAt": "2026-11-05T09:10:59Z",
@@ -1941,6 +1938,12 @@ window.PDS_DATA = {
    "url": "https://github.com/plenix-ds/pds/issues/208"
   },
   {
+   "closedAt": "2026-11-05T09:25:19Z",
+   "number": 207,
+   "title": "DataGrid tabular-nums and equal pill height (DESIGN.md §12 items 5-6)",
+   "url": "https://github.com/plenix-ds/pds/issues/207"
+  },
+  {
    "closedAt": "2026-11-05T09:16:04Z",
    "number": 202,
    "title": "Phase 0: finish Style Dictionary (#372 steps 9-10, reuse plenix-platform#928) with the token rename",
@@ -1971,10 +1974,34 @@ window.PDS_DATA = {
    "url": "https://github.com/plenix-ds/pds/issues/196"
   },
   {
+   "closedAt": "2026-11-05T09:42:43Z",
+   "number": 188,
+   "title": "Phase 0 P0-6: Rulesync and lefthook",
+   "url": "https://github.com/plenix-ds/pds/issues/188"
+  },
+  {
+   "closedAt": "2026-11-05T09:23:54Z",
+   "number": 187,
+   "title": "Phase 0 P0-5: branch protection and auto-merge",
+   "url": "https://github.com/plenix-ds/pds/issues/187"
+  },
+  {
+   "closedAt": "2026-11-05T09:23:57Z",
+   "number": 186,
+   "title": "Phase 0 P0-4: diff-aware CI, re-enable Actions",
+   "url": "https://github.com/plenix-ds/pds/issues/186"
+  },
+  {
    "closedAt": "2026-11-05T09:16:02Z",
    "number": 185,
    "title": "Phase 0 P0-3: DESIGN.md v0",
    "url": "https://github.com/plenix-ds/pds/issues/185"
+  },
+  {
+   "closedAt": "2026-11-05T09:24:29Z",
+   "number": 6,
+   "title": "Owner request: Button glow and drop shadow more subtle, using a light card shadow",
+   "url": "https://github.com/plenix-ds/pds/issues/6"
   },
   {
    "closedAt": "2026-11-05T06:50:12Z",
@@ -2017,6 +2044,12 @@ window.PDS_DATA = {
    "number": 22,
    "title": "Owner request: a better way of testing for the future (research only)",
    "url": "https://github.com/plenix-ds/pds/issues/22"
+  },
+  {
+   "closedAt": "2026-11-05T09:55:48Z",
+   "number": 23,
+   "title": "DataGrid row template: narrow A, narrow B, wide and RTL layouts as options, documented by scenario",
+   "url": "https://github.com/plenix-ds/pds/issues/23"
   },
   {
    "closedAt": "2026-11-05T06:50:29Z",
@@ -2109,6 +2142,12 @@ window.PDS_DATA = {
    "url": "https://github.com/plenix-ds/pds/issues/62"
   },
   {
+   "closedAt": "2026-11-05T09:34:12Z",
+   "number": 65,
+   "title": "Owner decision: Chat slice 4, what to change in the actions and reactions (#637)",
+   "url": "https://github.com/plenix-ds/pds/issues/65"
+  },
+  {
    "closedAt": "2026-11-05T06:51:04Z",
    "number": 66,
    "title": "Status page: say why Send is grey in a decision",
@@ -2125,6 +2164,12 @@ window.PDS_DATA = {
    "number": 74,
    "title": "Status page: show issue text as readable markdown (headings, bold, bullets, check boxes)",
    "url": "https://github.com/plenix-ds/pds/issues/74"
+  },
+  {
+   "closedAt": "2026-11-05T09:24:47Z",
+   "number": 75,
+   "title": "How did an external app set its own style on a CDN card (AITEAM blue accent)?",
+   "url": "https://github.com/plenix-ds/pds/issues/75"
   },
   {
    "closedAt": "2026-11-05T06:51:11Z",
@@ -2756,9 +2801,68 @@ window.PDS_DATA = {
    "kind": "review only",
    "state": "review",
    "url": null
+  },
+  {
+   "id": "D-0036",
+   "date": "2026-11-05",
+   "area": "design",
+   "decision": "Applying D-0024 to what",
+   "by": "agent (pds1-design-director), owner may switch",
+   "status": "active",
+   "superseded_by": "",
+   "check": "pds1-design-critic on each UI PR; D-0024 has no reliable static check",
+   "kind": "review only",
+   "state": "review",
+   "url": null
+  },
+  {
+   "id": "D-0037",
+   "date": "2026-11-05",
+   "area": "design",
+   "decision": "Fluent 2 state layers (#109, owner decision 3 of 2026-10-24) are an existing colour at opacity - color-mix of content-default (white on primary and danger) at 8% hover, 10% pressed and 10% focus over any fill, with new opacity steps only, no new colours. Destructive command-bar actions confirm through the existing destructive Dialog. Option B, new see-through palette colours, is not recommended (no new colours). Reply B on",
+   "by": "agent (pds1-design-director), owner may switch",
+   "status": "active",
+   "superseded_by": "",
+   "check": "planned:lint-colour-tokens",
+   "kind": "planned",
+   "state": "planned",
+   "url": null
+  },
+  {
+   "id": "D-0038",
+   "date": "2026-11-05",
+   "area": "design",
+   "decision": "For",
+   "by": "agent (pds1-design-director), owner may switch",
+   "status": "active",
+   "superseded_by": "",
+   "check": "planned:contrast-matrix",
+   "kind": "planned",
+   "state": "planned",
+   "url": null
+  },
+  {
+   "id": "D-0039",
+   "date": "2026-11-05",
+   "area": "design",
+   "decision": "The data colour called \"purple\" is a slate blue today (blue-650, on-soft blue-900, soft blue-100) and keeps that look (D-0004, as-is) - chart series 3, purple tiles and FeatureCard/MetricCard hues are unchanged. The DS Architect renames the roles to slate with the purple names as deprecated aliases (#235 option B, ADR 0002). Its dark on-surface shade is slate-375 (4.81:1 on surface-default, 3.51:1 on state-hover), replacing purple-300 from D-0038 so the hue matches across modes. Making it a true purple (option A) changes the look and needs the owner; reply A on",
+   "by": "agent (pds1-design-director), owner may switch",
+   "status": "active",
+   "superseded_by": "",
+   "check": "planned:lint-token-names (check 7)",
+   "kind": "planned",
+   "state": "planned",
+   "url": null
   }
  ],
  "workflows": [
+  {
+   "name": "Dashboard",
+   "file": "dashboard.yml",
+   "conclusion": "success",
+   "url": "https://github.com/plenix-ds/pds/actions/runs/42013303359",
+   "at": "2026-11-05T10:46:17Z"
+  },
   {
    "name": "phase-guard",
    "file": "phase-guard.yml",
