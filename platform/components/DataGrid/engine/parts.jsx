@@ -16,6 +16,7 @@ import { useFloating } from '../../../utils/floating.ts';
 import { announce } from '../../../utils/announce.tsx';
 import { Spinner } from '../../Loading/Loading.tsx';
 import { Select } from '../../Input/Input.tsx';
+import { useDirection } from '../../../providers/DirectionProvider.tsx';
 import { DatePicker } from '../../DatePicker/DatePicker.jsx';
 import { dataWhenText } from '../../../utils/dataText.tsx';
 import { cx } from '../../../utils/cx.ts';
@@ -286,7 +287,62 @@ function DateEditor({ draft, setDraft, invalid, messageId, finish, cancel, input
   );
 }
 
-export function CellEditor({ column, record, value, area, select, date, onCommit, onCancel }) {
+// an application's own editor (ADR 0016, editor: { component, props }): it gets CellEditorProps inside the same frame and calls
+// onChange(draft), onCommit(value?) (the draft when no value is given) or onCancel(); Tab saves the draft and moves, Escape the
+// component did not handle cancels, and the focus leaving the editor saves the draft.
+function ComponentEditor({ editor, column, record, draft, setDraft, invalid, messageId, finish, cancel, done }) {
+  const wrap = React.useRef(null),
+    latest = React.useRef(draft),
+    { dir } = useDirection(),
+    Editor = editor.component;
+  return (
+    <>
+      <span
+        ref={wrap}
+        className="plx-data-grid__editor-field"
+        dir="auto"
+        onBlur={(e) => {
+          if (!wrap.current?.contains(e.relatedTarget)) setTimeout(() => finish(0, latest.current), 0);
+        }}
+        onKeyDown={(e) => {
+          if (e.defaultPrevented) return;
+          if (e.key === 'Escape') {
+            e.stopPropagation();
+            done.current = true;
+            cancel();
+          } else if (e.key === 'Tab' && !e.altKey && !e.ctrlKey && !e.metaKey) {
+            e.preventDefault();
+            e.stopPropagation();
+            finish(e.shiftKey ? -1 : 1, latest.current);
+          } else e.stopPropagation();
+        }}
+      >
+        <Editor
+          {...(editor.props || {})}
+          value={draft}
+          record={record}
+          field={column.field}
+          dir={dir}
+          autoFocus
+          invalid={invalid || undefined}
+          aria-describedby={invalid ? messageId : undefined}
+          onChange={(v) => {
+            latest.current = v;
+            setDraft(v);
+          }}
+          onCommit={(v) => finish(0, v === undefined ? latest.current : v)}
+          onCancel={() => {
+            done.current = true;
+            cancel();
+          }}
+        />
+      </span>
+      {invalid ? <EditorMessage id={messageId} anchor={wrap} message={invalid} /> : null}
+    </>
+  );
+}
+
+export function CellEditor({ column, record, value, area, select, date, custom, onCommit, onCancel }) {
   const S = useStrings('dataGrid'),
     [draft, setDraft] = React.useState(value ?? ''),
     [invalid, setInvalid] = React.useState(null),
@@ -312,6 +368,14 @@ export function CellEditor({ column, record, value, area, select, date, onCommit
     }
     onCommit(next, move);
   };
+  if (custom)
+    return (
+      <ComponentEditor
+        {...{ column, record, draft, setDraft, invalid, messageId, finish, done }}
+        editor={column.editor}
+        cancel={onCancel}
+      />
+    );
   if (date)
     return (
       <DateEditor

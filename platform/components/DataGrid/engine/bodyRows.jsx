@@ -511,6 +511,7 @@ export function bodyRows({
                     area={turnedOn && c.editor === 'textarea'}
                     select={turnedOn && c.editor === 'select'}
                     date={turnedOn && c.editor === 'date'}
+                    custom={!!c.editor && typeof c.editor === 'object' && typeof c.editor.component === 'function'}
                     value={editing.value}
                     onCommit={(next, move) => {
                       commitEdit(row.id, c.field, next);
