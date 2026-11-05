@@ -5,9 +5,6 @@
  "test-site/index.html#/members": {
   "scroller": 1
  },
- "test-site/index.html#/members/new": {
-  "scroller": 1
- },
  "test-site/index.html#/ministries": {
   "scroller": 2
  },
@@ -16,12 +13,6 @@
  },
  "test-site/index.html#/servants": {
   "scroller": 1
- },
- "test-site/index.html#/event/e10": {
-  "scroller": 1
- },
- "test-site/index.html#/bookstore": {
-  "cut-off": 9
  },
  "test-site/index.html#/announcements": {
   "scroller": 1
@@ -37,9 +28,6 @@
  },
  "test-site/index.html#/document/d1": {
   "scroller": 1
- },
- "test-site/index.html#/media": {
-  "scroller": 2
  },
  "test-site/index.html#/photo/v5": {
   "scroller": 1

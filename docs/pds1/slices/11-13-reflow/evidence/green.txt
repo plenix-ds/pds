@@ -1,0 +1,6 @@
+  test-site/index.html#/document/d1 · scroller: 1 · e.g. section.plx-page-content 289/270px
+  test-site/index.html#/photo/v5 · scroller: 1 · e.g. section.plx-page-content 575/320px
+  test-site/index.html#/reports · scroller: 1 · e.g. section.plx-page-content 385/320px
+REFLOW_BASELINE written: 15 findings on 12 of 56 pages (7 exempt two-dimensional scrollers)
+SCOPE reflow: full · 21 app pages, 35 of 35 test-site pages
+REFLOW_OK 15 known findings on 56 pages at 320px (7 exempt two-dimensional scrollers)
