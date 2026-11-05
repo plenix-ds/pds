@@ -42,3 +42,15 @@
 | No slice touched | Ran (local) | `check-trace.mjs origin/main` → TRACE_OK (0 checked; 3 with a brief) |
 | Slices touched (temporary commit on 265 and 195 evidence) | Ran (local) | TRACE_FAIL: 195-dashboard AC-1..6 in no test; 265 AC-1, AC-3, AC-4, AC-5 not in its evidence (the test names all five) |
 | CI job "Traceability" | Planned | This PR's run (no slice touched → OK) |
+
+## Ownership (2026-11-05)
+
+| Item | Status | Path / output |
+|---|---|---|
+| Rule source | Ran (read) | ADR 0001 `planned:ownership`: "only pds1-ds-architect changes packages/*/package.json exports and packages/tokens/** tier files"; tier files still live in `platform/tokens/**/*.tokens.json` |
+| No owned change | Ran (local) | OWNERSHIP_OK |
+| Tier file changed, version bump only, no label | Ran (local, temporary commits) | the tier file fails; the version bump alone is not an API change |
+| `exports` changed, no label | Ran (local) | OWNERSHIP_FAIL (2 owned changes) |
+| With `agent:pds1-ds-architect` | Ran (local) | OWNERSHIP_OK |
+| Merge queue (no labels) | Ran (local) | OWNERSHIP_SKIPPED (the PR's own run enforces it) |
+| Required on main | Planned | After merge: ruleset 26593194 gets the second required check |
