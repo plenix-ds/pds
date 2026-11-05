@@ -4,9 +4,9 @@
     "field-foot-gap": { "$value": "{plx-sys.space-inline-sm}", "$type": "dimension", "$description": "Field counter: the gap between the description and the count on the help line." },
     "field-counter-text": { "$value": "{plx-sys.content-subtle}", "$type": "color", "$description": "Field counter: the count's color (the description's)." },
     "field-counter-font-family": { "$value": "{plx-sys.font-data}", "$type": "fontFamily", "$description": "Field counter: the count is a technical value, in the data font." },
-    "field-counter-font-size": { "$value": "{plx-ref.font-size-12}", "$type": "dimension", "$description": "Field counter: the count's size (the description's, so the two share a baseline)." },
+    "field-counter-font-size": { "$value": "{plx-sys.text-secondary-font-size}", "$type": "dimension", "$description": "Field counter: the count's size (the description's, so the two share a baseline)." },
     "field-counter-over-text": { "$value": "{plx-sys.feedback-danger-solid}", "$type": "color", "$description": "Field counter: the count's color past the limit (the error's)." },
     "field-warning-text": { "$value": "{plx-sys.feedback-warning-content}", "$type": "color", "$description": "Field warning: the message's and its icon's color (the warning content role; the message also has an icon and the word, so the color is never the only cue)." },
-    "field-warning-font-size": { "$value": "{plx-ref.font-size-12}", "$type": "dimension", "$description": "Field warning: the message's size (the error's)." }
+    "field-warning-font-size": { "$value": "{plx-sys.text-secondary-font-size}", "$type": "dimension", "$description": "Field warning: the message's size (the error's)." }
   }
 }

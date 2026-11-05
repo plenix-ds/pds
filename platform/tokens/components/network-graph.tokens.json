@@ -14,7 +14,7 @@
     "network-graph-edge-width": { "$value": "{plx-sys.border-width-thin}", "$type": "dimension", "$description": "Network graph: an edge's width." },
     "network-graph-edge-dash": { "$value": "{plx-ref.size-4px}", "$type": "dimension", "$description": "Network graph: the dash and gap of a dashed edge (a second kind of link)." },
     "network-graph-edge-label-text": { "$value": "{plx-sys.content-subtle}", "$type": "color", "$description": "Network graph: an edge's label (the relationship), secondary text." },
-    "network-graph-edge-label-font-size": { "$value": "{plx-ref.font-size-12}", "$type": "dimension", "$description": "Network graph: an edge label's size." },
+    "network-graph-edge-label-font-size": { "$value": "{plx-sys.text-label-font-size}", "$type": "dimension", "$description": "Network graph: an edge label's size." },
     "network-graph-active-edge-color": { "$value": "{plx-sys.content-default}", "$type": "color", "$description": "Network graph: the edges of the node in focus." },
     "network-graph-active-edge-width": { "$value": "{plx-sys.border-width-medium}", "$type": "dimension", "$description": "Network graph: the width of the active node's edges." },
     "network-graph-active-outline": { "$value": "{plx-sys.content-default}", "$type": "color", "$description": "Network graph: the ring of the node in focus." },

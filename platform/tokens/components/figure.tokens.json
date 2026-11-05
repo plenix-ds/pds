@@ -42,7 +42,7 @@
       "$description": "The credit or data source line."
     },
     "figure-credit-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-sys.text-caption-font-size}",
       "$type": "dimension",
       "$description": "The credit line: the caption size of the type scale."
     },

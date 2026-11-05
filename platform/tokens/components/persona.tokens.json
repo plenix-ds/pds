@@ -37,7 +37,7 @@
       "$description": "Persona size xs: the name (12px)."
     },
     "persona-xs-secondary-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-sys.text-secondary-font-size}",
       "$type": "dimension",
       "$description": "Persona size xs: the detail (12px)."
     },
