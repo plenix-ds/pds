@@ -58,5 +58,35 @@
     "loading": "n/a(stories arrive with Storybook, P0-11; this PR only repoints the CodeBlock import to .tsx, no behavior or style change)",
     "selected": "n/a(stories arrive with Storybook, P0-11; this PR only repoints the CodeBlock import to .tsx, no behavior or style change)",
     "error": "n/a(stories arrive with Storybook, P0-11; this PR only repoints the CodeBlock import to .tsx, no behavior or style change)"
+  },
+  "CodeBlock": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(stories arrive with Storybook, P0-11)",
+    "loading": "n/a(stories arrive with Storybook, P0-11)",
+    "selected": "n/a(stories arrive with Storybook, P0-11)",
+    "error": "n/a(a type-only change: the prop type is exported)"
+  },
+  "RefineMenu": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(stories arrive with Storybook, P0-11)",
+    "loading": "n/a(stories arrive with Storybook, P0-11)",
+    "selected": "n/a(stories arrive with Storybook, P0-11)",
+    "error": "n/a(a type-only change: the prop type is exported)"
+  },
+  "SuggestedEdit": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(stories arrive with Storybook, P0-11)",
+    "loading": "n/a(stories arrive with Storybook, P0-11)",
+    "selected": "n/a(stories arrive with Storybook, P0-11)",
+    "error": "n/a(a type-only change: the prop type is exported)"
   }
 }
