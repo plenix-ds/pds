@@ -126,7 +126,7 @@ export function CellEditor({ column, record, value, onCommit, onCancel }) {
   React.useEffect(() => {
     announce(S.editing.replace('{column}', column.title));
   }, []);
-  const finish = async () => {
+  const finish = async (move = 0) => {
     if (done.current) return;
     done.current = true;
     const next = column.editor === 'number' ? (draft === '' ? null : Number(draft)) : draft;
@@ -140,7 +140,7 @@ export function CellEditor({ column, record, value, onCommit, onCancel }) {
         return;
       }
     }
-    onCommit(next);
+    onCommit(next, move);
   };
   return (
     <>
@@ -157,7 +157,7 @@ export function CellEditor({ column, record, value, onCommit, onCancel }) {
           setDraft(e.target.value);
           if (invalid) setInvalid(null);
         }}
-        onBlur={finish}
+        onBlur={() => finish()}
         onKeyDown={(e) => {
           e.stopPropagation();
           if (e.key === 'Escape') {
@@ -166,6 +166,10 @@ export function CellEditor({ column, record, value, onCommit, onCancel }) {
           } else if (e.key === 'Enter') {
             e.preventDefault();
             finish();
+          } else if (e.key === 'Tab' && !e.altKey && !e.ctrlKey && !e.metaKey) {
+            // Tab saves and moves to the next editable cell, Shift+Tab to the previous one (the columns are in reading order, either direction)
+            e.preventDefault();
+            finish(e.shiftKey ? -1 : 1);
           }
         }}
       />
