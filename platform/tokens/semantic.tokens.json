@@ -671,6 +671,11 @@
       "$description": "The gap in a ring in forced colors (the spinner's): Canvas there; otherwise not set (initial), so the component keeps its own.",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
+    "overlay-editor-min-inline-size": {
+      "$value": "{plx-ref.size-80u}",
+      "$type": "dimension",
+      "$description": "The smallest inline size of an editor that opens over its field, such as a DataGrid cell's long-text box: the field's width or this, whichever is larger (#84, docs/adr/0016)."
+    },
     "print-hidden": {
       "$value": "initial",
       "$description": "On paper the chrome is left out (the app header, the navigation pane, the skip link, the scrim, the floating action button, toasts, the spotlight): their display reads it. Not set on screen (initial: the element keeps its own).",
