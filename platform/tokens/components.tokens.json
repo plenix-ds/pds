@@ -2907,6 +2907,11 @@
       "$type": "duration",
       "$description": "How long a toast stays before it leaves by itself (ToastProvider default)"
     },
+    "delete-flow-undo-duration": {
+      "$value": "{plx-sys.undo-duration}",
+      "$type": "duration",
+      "$description": "DeleteFlow: how long the undo and trash toast stays before the delete is final (it pauses while hovered or focused; D-0057, ADR 0017, #144)"
+    },
     "toast-animation-timing-function": {
       "$value": "{plx-sys.motion-ease-standard}",
       "$type": "dimension"
