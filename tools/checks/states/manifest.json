@@ -58,5 +58,35 @@
     "loading": "n/a(stories arrive with Storybook, P0-11; this PR only repoints the CodeBlock import to .tsx, no behavior or style change)",
     "selected": "n/a(stories arrive with Storybook, P0-11; this PR only repoints the CodeBlock import to .tsx, no behavior or style change)",
     "error": "n/a(stories arrive with Storybook, P0-11; this PR only repoints the CodeBlock import to .tsx, no behavior or style change)"
+  },
+  "CodeBlock": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(a read-only block; only its Copy button can be used)",
+    "loading": "n/a(the code is given as text, nothing loads)",
+    "selected": "n/a(nothing in a code block is selected by the component)",
+    "error": "n/a(a failed copy announces \"Could not copy\"; there is no value to validate)"
+  },
+  "RefineMenu": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(stories arrive with Storybook, P0-11)",
+    "loading": "n/a(stories arrive with Storybook, P0-11)",
+    "selected": "n/a(a menu choice runs at once; no choice stays selected)",
+    "error": "n/a(a failed refinement shows its Notice and keeps the text; stories arrive with Storybook, P0-11)"
+  },
+  "SuggestedEdit": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(stories arrive with Storybook, P0-11)",
+    "loading": "n/a(stories arrive with Storybook, P0-11)",
+    "selected": "n/a(an edit is pending, accepted or rejected; that is its status, not a selection)",
+    "error": "n/a(a failed decision keeps the edit pending and shows a Notice; stories arrive with Storybook, P0-11)"
   }
 }

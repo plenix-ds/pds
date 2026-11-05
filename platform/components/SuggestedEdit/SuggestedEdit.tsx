@@ -22,6 +22,7 @@ import SparkleIcon from 'plenix-platform/icons/plenix/sparkle';
 type Edit = { id: string; before?: React.ReactNode; after?: React.ReactNode; status?: 'pending' | 'accepted' | 'rejected' };
 type Decision = 'accepted' | 'rejected';
 const version = (e: Edit) => JSON.stringify([e.id, e.before, e.after]);
+/** @public the prop type (ADR 0011) */
 export type SuggestedEditProps = {
   /** the edits: { id, before, after, status? } */
   edits?: Edit[];
