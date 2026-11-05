@@ -42,9 +42,9 @@ function reporterFindings(tool, script, okWord, failWord) {
   for (const line of out.split('\n')) {
     const h = line.match(/^(\S[^:]*): \d+$/);
     if (h) { rule = h[1]; continue; }
-    const f = line.match(/^ {2}(\S+?)(?::\d+)? {2}(.*)$/);
+    const f = line.match(/^ {2}(\S+?)(?::(\d+))? {2}(.*)$/);
     // check-common.js prints paths from the checkout's parent ("pds/x.css", "base/x.css"): drop the checkout's folder
-    if (f && rule) list.push([tool, f[1].startsWith(prefix) ? f[1].slice(prefix.length) : f[1], rule, noNumbers(f[2])]);
+    if (f && rule) list.push([tool, f[1].startsWith(prefix) ? f[1].slice(prefix.length) : f[1], rule, noNumbers(f[3]), Number(f[2]) || 0]);
   }
   return list;
 }
@@ -54,22 +54,22 @@ const TOOLS = {
     const r = npx('eslint', '--no-error-on-unmatched-pattern', '-f', 'json', 'platform', 'suite', 'dam/app', 'dashboard', 'projects',
       'messages', 'contacts', 'calendar', 'tasks', 'notes', 'bookmarks', 'files', 'settings', 'lanes');
     if (r.status !== 0 && r.status !== 1) throw new Error(`eslint crashed (exit ${r.status}):\n${r.stderr}`);
-    return parseJson(r.stdout, 'eslint').flatMap((f) => f.messages.map((m) => ['eslint', rel(f.filePath), m.ruleId || 'parse', noNumbers(m.message)]));
+    return parseJson(r.stdout, 'eslint').flatMap((f) => f.messages.map((m) => ['eslint', rel(f.filePath), m.ruleId || 'parse', noNumbers(m.message), m.line || 0]));
   },
   stylelint() {
     const r = npx('stylelint', '--formatter', 'json', 'platform/**/*.css', 'services/**/*.css');
     if (r.status !== 0 && r.status !== 2) throw new Error(`stylelint crashed (exit ${r.status}):\n${r.stderr}`);
     // stylelint 16 prints the JSON report on stderr when there are problems, on stdout otherwise
     const text = (r.stdout || '').trim() ? r.stdout : r.stderr;
-    return parseJson(text, 'stylelint').flatMap((f) => f.warnings.map((w) => ['stylelint', rel(f.source), w.rule, noNumbers(w.text)]));
+    return parseJson(text, 'stylelint').flatMap((f) => f.warnings.map((w) => ['stylelint', rel(f.source), w.rule, noNumbers(w.text), w.line || 0]));
   },
   tsc() {
     const r = npx('tsc', '--noEmit', '--pretty', 'false');
     const out = (r.stdout || '') + (r.stderr || '');
     const list = [];
     for (const line of out.split('\n')) {
-      const m = line.match(/^(.+?)\(\d+,\d+\): error (TS\d+): (.*)$/) || line.match(/^()error (TS\d+): (.*)$/);
-      if (m) list.push(['tsc', m[1] ? rel(m[1]) : '(project)', m[2], noNumbers(m[3])]);
+      const m = line.match(/^(.+?)\((\d+),\d+\): error (TS\d+): (.*)$/) || line.match(/^()()error (TS\d+): (.*)$/);
+      if (m) list.push(['tsc', m[1] ? rel(m[1]) : '(project)', m[3], noNumbers(m[4]), Number(m[2]) || 0]);
     }
     if (r.status !== 0 && !list.length) throw new Error(`tsc failed with no diagnostics (exit ${r.status}):\n${out.slice(-2000)}`);
     return list;
@@ -83,7 +83,7 @@ const TOOLS = {
       for (const [kind, value] of Object.entries(issue)) {
         if (kind === 'file' || kind === 'owners') continue;
         const items = Array.isArray(value) ? value : value && typeof value === 'object' ? Object.values(value) : [];
-        for (const it of items.flat()) if (it && typeof it === 'object' && it.name) list.push(['knip', rel(issue.file), kind, clean(it.name)]);
+        for (const it of items.flat()) if (it && typeof it === 'object' && it.name) list.push(['knip', rel(issue.file), kind, clean(it.name), it.line || 0]);
       }
     }
     return list;
@@ -98,13 +98,17 @@ const TOOLS = {
     if (r.status !== 0 && r.status !== 1) throw new Error(`opengrep crashed (exit ${r.status}):\n${r.stderr.slice(-2000)}`);
     const data = parseJson(r.stdout, 'opengrep');
     if ((data.errors || []).some((e) => e.level === 'error')) throw new Error(`opengrep reported errors: ${JSON.stringify(data.errors).slice(0, 1500)}`);
-    return data.results.map((x) => ['opengrep', rel(x.path), x.check_id.split('.').pop(), noNumbers(x.extra.lines || x.extra.message)]);
+    return data.results.map((x) => ['opengrep', rel(x.path), x.check_id.split('.').pop(), noNumbers(x.extra.lines || x.extra.message), (x.start || {}).line || 0]);
   },
   system: () => reporterFindings('system', 'check-system.js', 'SYSTEM_OK', 'SYSTEM_FAIL'),
   style: () => reporterFindings('style', 'check-style.js', 'STYLE_OK', 'STYLE_FAIL'),
 };
 
-const key = (f) => f.join(' | ');
+// a finding is [tool, file, rule, message, line?]: the line is only for the annotation, never part of the identity
+const key = (f) => f.slice(0, 4).join(' | ');
+// GitHub workflow commands: property values escape % \r \n : , and the message escapes % \r \n
+const prop = (v) => String(v).replace(/%/g, '%25').replace(/\r/g, '%0D').replace(/\n/g, '%0A').replace(/:/g, '%3A').replace(/,/g, '%2C');
+const msg = (v) => String(v).replace(/%/g, '%25').replace(/\r/g, '%0D').replace(/\n/g, '%0A');
 function count(list) {
   const m = new Map();
   for (const f of list) m.set(key(f), (m.get(key(f)) || 0) + 1);
@@ -125,14 +129,20 @@ if (cmd === 'run') {
   const base = count(JSON.parse(fs.readFileSync(a, 'utf8')));
   const head = JSON.parse(fs.readFileSync(b, 'utf8'));
   const added = [];
-  for (const [k, n] of count(head)) for (let i = base.get(k) || 0; i < n; i++) added.push(k);
+  const byKey = new Map();
+  for (const f of head) (byKey.get(key(f)) || byKey.set(key(f), []).get(key(f))).push(f);
+  // the surplus of a key over the base is new; its last occurrences carry the lines to annotate
+  for (const [k, n] of count(head)) for (let i = base.get(k) || 0; i < n; i++) added.push(byKey.get(k)[i]);
   const total = head.length;
   const fixed = [...base].reduce((s, [k, n]) => s + Math.max(0, n - (count(head).get(k) || 0)), 0);
   console.log(`${tool}: ${total} findings on head, ${added.length} new, ${fixed} fixed, ${total - added.length} old (reported, not blocking)`);
   summary(`### ${tool}\n\n${added.length ? '❌' : '✅'} ${added.length} new · ${fixed} fixed · ${total - added.length} old (not blocking)\n`);
   if (added.length) {
-    for (const k of added.slice(0, 200)) console.log(`::error title=${tool}: new problem::${k}`);
-    summary(['```', ...added.slice(0, 200), added.length > 200 ? `… and ${added.length - 200} more` : '', '```'].join('\n'));
+    for (const f of added.slice(0, 200)) {
+      const where = f[1] && !f[1].startsWith('(') ? `file=${prop(f[1])}${f[4] ? `,line=${f[4]}` : ''},` : '';
+      console.log(`::error ${where}title=${prop(`${tool}: new problem (${f[2]})`)}::${msg(f[3])}`);
+    }
+    summary(['```', ...added.slice(0, 200).map(key), added.length > 200 ? `… and ${added.length - 200} more` : '', '```'].join('\n'));
     process.exit(1);
   }
 } else {

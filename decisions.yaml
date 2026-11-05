@@ -394,3 +394,11 @@
   options: [conversion waves now (chosen), convert only during each rebuild, JSDoc types with checkJs]
   status: active
   check: CI tsc new problems + planned:no-js-source + planned:no-build-types
+
+- id: D-0046
+  date: 2026-11-05
+  area: process
+  decided_by: agent (pds1-release-architect), owner may switch
+  decision: reviewdog is not adopted. The diff-aware CI already shows each new finding on the changed line as a GitHub annotation (file and line), which is reviewdog's only role in plan §7 (presentation), without adding an action that needs write access to pull requests (its setup action was compromised in March 2025). Reply to switch - B) add reviewdog as well.
+  status: active
+  check: tools/ci/new-problems.mjs annotations (ci.yml "New problems")
