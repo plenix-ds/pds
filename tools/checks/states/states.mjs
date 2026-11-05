@@ -42,7 +42,7 @@ export function checkStates(manifest, stories = {}) {
 }
 
 // stories: platform/components/<Name>/*.stories.* ; a story exports/names a state as `<State>` (e.g. `export const Hover`)
-export function readStories(dir) {
+function readStories(dir) {
   const out = {};
   const base = path.join(dir, 'platform/components');
   if (!fs.existsSync(base)) return out;
@@ -60,7 +60,7 @@ export function readStories(dir) {
   return out;
 }
 
-export function changedComponents(base) {
+function changedComponents(base) {
   const files = execFileSync('git', ['diff', '--name-only', `${base}...HEAD`], { cwd: root, encoding: 'utf8' }).split('\n');
   return [...new Set(files.map((f) => f.match(/^platform\/components\/([^/]+)\//)?.[1]).filter(Boolean))];
 }

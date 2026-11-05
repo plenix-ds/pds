@@ -12,6 +12,9 @@
     "tokenize-component.js",
     "tests/**/*.js",
     "tools/**/*.js",
+    // checks run by node and tests run by vitest or Playwright (P0-8)
+    "tools/checks/**/*.mjs",
+    "tests/pills/*.mjs",
     "services/**/*.js",
     // run by hand from a runbook: services/login/README.md ("with services/auth/npm-advanced-config.mjs, dry run first")
     "services/auth/*.mjs",
