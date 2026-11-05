@@ -490,3 +490,13 @@
   options: [no countdown, 10 s with pause (chosen), a countdown bar in the toast]
   status: active
   check: review-only (pds1-design-critic on the #144 PR)
+
+- id: D-0060
+  date: 2026-11-05
+  area: design
+  decided_by: owner (2026-11-05, B on plenix-ds/pds#418 via the PDS1 Product Lead: "the icon takes the full former box area"), first applied as A by pds1-design-director
+  decision: For #418, with no box the drawn glyph spans the whole former box area. The media square keeps its area size (44px default; every layout's area as in docs/pds1/slices/418-icon-fill/design.md); the icon inside is drawn at 120% of the area (24/20, so the Material Symbols 20-in-24 live area equals the area), centred, overflow visible. Nothing clips: the glyph stays inside its live area. box true keeps the smaller icon. The 120% is a comp token named by the DS Architect (G3), not a literal.
+  why: 'Owner: "make the icon take full space of that area (the formerly box area)"; at A (icon square = area) the default header glyph still drew about 37 of 44px.'
+  options: [icon square = area (A), glyph live area = area, 120% (B, chosen by the owner)]
+  status: active
+  check: tests/entity-header-media-icon-418.test.js (the drawn glyph's box equals the area within 2px, every layout)
