@@ -35,6 +35,11 @@
     "font-weight"
    ]
   },
+  "plx-answer-lines__label": {
+   "contract": "establishes",
+   "role": "label",
+   "font": "sans"
+  },
   "plx-app-header__app": {
    "contract": "adjusts",
    "props": [
@@ -933,6 +938,12 @@
    "contract": "adjusts",
    "props": [
     "font-weight"
+   ]
+  },
+  "plx-data-grid__editor-message": {
+   "contract": "adjusts",
+   "props": [
+    "font-size"
    ]
   },
   "plx-data-grid__empty": {
@@ -2287,6 +2298,11 @@
     "font-weight",
     "line-height"
    ]
+  },
+  "plx-print-document__footer": {
+   "contract": "establishes",
+   "role": "caption",
+   "font": "sans"
   },
   "plx-product-card__compare": {
    "contract": "establishes",

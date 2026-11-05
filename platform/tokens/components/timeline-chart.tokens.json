@@ -1,11 +1,11 @@
 {
   "$description": "TimelineChart (platform/charts/TimelineChart.jsx, library wave 9, lane B): its component tokens. Periods and events are the frame's marks and points (chart-*); these size the events and set the items' names. No new color: existing roles.",
   "plx-comp": {
-    "timeline-chart-event-radius": { "$value": "{plx-ref.size-4px}", "$type": "dimension", "$description": "Timeline chart: the radius of an event's point (an 8px point with the frame's ring, as the line charts' points)." },
+    "timeline-chart-event-radius": { "$value": "{plx-ref.size-1u}", "$type": "dimension", "$description": "Timeline chart: the radius of an event's point (an 8px point with the frame's ring, as the line charts' points)." },
     "timeline-chart-label-text": { "$value": "{plx-sys.content-default}", "$type": "color", "$description": "Timeline chart: an item's name above its mark." },
     "timeline-chart-label-font-family": { "$value": "{plx-sys.font-label}", "$type": "fontFamily", "$description": "Timeline chart: item names are UI text: the label font." },
-    "timeline-chart-label-font-size": { "$value": "{plx-ref.font-size-12}", "$type": "dimension", "$description": "Timeline chart: an item's name's size." },
-    "timeline-chart-label-offset": { "$value": "{plx-ref.size-4px}", "$type": "dimension", "$description": "Timeline chart: the distance between an item's name and its mark." },
+    "timeline-chart-label-font-size": { "$value": "{plx-ref.font-size-100}", "$type": "dimension", "$description": "Timeline chart: an item's name's size." },
+    "timeline-chart-label-offset": { "$value": "{plx-ref.size-1u}", "$type": "dimension", "$description": "Timeline chart: the distance between an item's name and its mark." },
     "timeline-chart-label-halo-color": { "$value": "{plx-sys.surface-default}", "$type": "color", "$description": "Timeline chart: the halo under a name, in the surface color, so it reads over grid lines." },
     "timeline-chart-label-halo-width": { "$value": "{plx-sys.border-width-thick}", "$type": "dimension", "$description": "Timeline chart: the halo's width." }
   }

@@ -60,9 +60,32 @@ function readStories(dir) {
   return out;
 }
 
+// A stylesheet edit that only renames tokens (`var(--plx-…)` names) is not a component change (#315, token renames, ADR 0012).
+const normTokens = (t) => t.replace(/var\(--plx-[\w-]+/g, 'var(--T');
+export function isTokenOnlyCss(before, after) {
+  return before !== after && normTokens(before) === normTokens(after);
+}
+
+const git = (args) => execFileSync('git', args, { cwd: root, encoding: 'utf8', maxBuffer: 1 << 28 });
+// A TypeScript conversion (.jsx to .tsx, .js to .ts, same folder and name) changes no behavior (#329, ADR 0011).
+export function isConversionRename(status, from, to) {
+  if (!/^R/.test(status)) return false;
+  const m = from.match(/^(.*)\.(jsx|js)$/);
+  return !!m && to === m[1] + (m[2] === 'jsx' ? '.tsx' : '.ts');
+}
+
 function changedComponents(base) {
-  const files = execFileSync('git', ['diff', '--name-only', `${base}...HEAD`], { cwd: root, encoding: 'utf8' }).split('\n');
-  return [...new Set(files.map((f) => f.match(/^platform\/components\/([^/]+)\//)?.[1]).filter(Boolean))];
+  const lines = git(['diff', '--name-status', '-M25%', `${base}...HEAD`]).split('\n').filter(Boolean).map((l) => l.split('\t'));
+  const real = [];
+  for (const [status, a, b] of lines) {
+    const f = b || a;
+    if (isConversionRename(status, a, b || '')) continue;
+    if (/^platform\/components\/[^/]+\/.+\.css$/.test(f)) {
+      try { if (isTokenOnlyCss(git(['show', `${base}:${f}`]), git(['show', `HEAD:${f}`]))) continue; } catch { /* a new or removed file counts */ }
+    }
+    real.push(f);
+  }
+  return [...new Set(real.map((f) => f.match(/^platform\/components\/([^/]+)\//)?.[1]).filter(Boolean))];
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {

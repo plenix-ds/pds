@@ -111,7 +111,7 @@ if (window.DS && DS.registerLab) {
       parts: { g: 'A', is: 'B', ic: 'B', tg: 'C', nc: 'C', nf: 'C', ns: 'C', nw: 'C', nl: 'C', nr: 'C', hb: 'C', oc: 'C', ow: 'C', oo: 'C', mc: 'D', mf: 'D', ms: 'D', ml: 'D', cb: 'A', cc: 'A', cw: 'A', cr: 'A', ch: 'A', cp: 'A' },
       anchors: { A: { part: null, side: 'top' }, B: { part: '.plx-file__icon', side: 'left' }, C: { part: '.plx-file__name', side: 'bottom' }, D: { part: '.plx-file__meta', side: 'right' } },
       sections: [['File', ['g', 'is', 'ic', 'tg']], ['Name', ['nc', 'nf', 'ns', 'nw', 'nl', 'nr', 'hb', 'oc', 'ow', 'oo']], ['Facts', ['mc', 'mf', 'ms', 'ml']], ['Chip', ['cb', 'cc', 'cw', 'cr', 'ch', 'cp']]],
-      matrixLabel: 'File by variant and state', matrixColumnWidth: '--plx-ref-size-360px', statesHead: 'Variants and states · ' + HEAD
+      matrixLabel: 'File by variant and state', matrixColumnWidth: '--plx-ref-size-90u', statesHead: 'Variants and states · ' + HEAD
     });
 
     // ---- File row (<FileRow>): the checkbox, the file, the cells, a transfer, the actions
@@ -195,7 +195,7 @@ if (window.DS && DS.registerLab) {
       parts: { bg: 'A', lc: 'A', lw: 'A', g: 'A', mh: 'A', py: 'A', px: 'A', pe: 'A', ct: 'B', cs: 'B', cl: 'B', df: 'B', sw: 'B', dw: 'B', ow: 'B', pg: 'C', pw: 'C', qw: 'C', et: 'C', ei: 'C', ag: 'D' },
       anchors: { A: { part: null, side: 'left' }, B: { part: '.plx-file-row__size', side: 'top' }, C: { part: '.plx-file-row__progress', side: 'bottom' }, D: { part: '.plx-file-row__actions', side: 'right' } },
       sections: [['Row', ['bg', 'lc', 'lw', 'g', 'mh', 'py', 'px', 'pe']], ['Cells', ['ct', 'cs', 'cl', 'df', 'sw', 'dw', 'ow']], ['Transfer', ['pg', 'pw', 'qw', 'et', 'ei']], ['Actions', ['ag']]],
-      matrixLabel: 'File row by variant and state', matrixColumnWidth: '--plx-ref-size-560px', statesHead: 'Variants and states · ' + HEAD
+      matrixLabel: 'File row by variant and state', matrixColumnWidth: '--plx-ref-size-140u', statesHead: 'Variants and states · ' + HEAD
     });
 
     // ---- Sign in (<Auth> with <SignInForm>): the card, its title, the form, single sign-on and "or", the links
@@ -264,7 +264,7 @@ if (window.DS && DS.registerLab) {
       parts: { pp: 'A', pi: 'A', cb: 'B', cc: 'B', cw: 'B', cr: 'B', cm: 'B', cp: 'B', cg: 'B', hg: 'C', tc: 'C', tf: 'C', ts: 'C', tw: 'C', tl: 'C', mt: 'C', xs: 'C', xl: 'C', fg: 'D', og: 'D', lg: 'E', rg: 'F', rc: 'F', rs: 'F', rl: 'F' },
       anchors: { A: { part: null, side: 'top' }, B: { part: '.plx-auth__card', side: 'left' }, C: { part: '.plx-auth__header', side: 'right' }, D: { part: '.plx-auth__form', side: 'left' }, E: { part: '.plx-auth__links', side: 'bottom' }, F: { part: '.plx-auth__or', side: 'right' } },
       sections: [['Page', ['pp', 'pi']], ['Card', ['cb', 'cc', 'cw', 'cr', 'cm', 'cp', 'cg']], ['Title', ['hg', 'tc', 'tf', 'ts', 'tw', 'tl', 'mt', 'xs', 'xl']], ['Form', ['fg', 'og', 'lg']], ['Or', ['rg', 'rc', 'rs', 'rl']]],
-      matrixLabel: 'Sign in by variant', matrixColumnWidth: '--plx-ref-size-560px', statesHead: 'Variants · ' + HEAD
+      matrixLabel: 'Sign in by variant', matrixColumnWidth: '--plx-ref-size-140u', statesHead: 'Variants · ' + HEAD
     });
 
     // ---- Session timeout (<SessionTimeout>): the warning, the signed-out message, drawn in a dialog or in the page
@@ -334,7 +334,7 @@ if (window.DS && DS.registerLab) {
       parts: { tx: 'A', ts: 'A', tl: 'A', tf: 'B', tc: 'B', tw: 'B', mw: 'C', ig: 'C', hc: 'D', hf: 'D', hs: 'D', hw: 'D', hl: 'D', bg: 'E', ag: 'F' },
       anchors: { A: { part: '.plx-session-timeout__text', side: 'right' }, B: { part: '.plx-session-timeout__time, .plx-session-timeout__inline-time', side: 'top' }, C: { part: null, side: 'left' }, D: { part: '.plx-session-timeout__title', side: 'top' }, E: { part: '.plx-session-timeout__body', side: 'left' }, F: { part: '.plx-session-timeout__actions', side: 'bottom' } },
       sections: [['Message', ['tx', 'ts', 'tl', 'tf', 'tc', 'tw']], ['On the page', ['mw', 'ig', 'hc', 'hf', 'hs', 'hw', 'hl', 'bg', 'ag']]],
-      matrixLabel: 'Session timeout by variant', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Variants · ' + HEAD
+      matrixLabel: 'Session timeout by variant', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Variants · ' + HEAD
     });
 
     // ---- Roles (<RoleManager>): the roles list and a role's detail
@@ -409,7 +409,7 @@ if (window.DS && DS.registerLab) {
       parts: { lg: 'A', mg: 'B', mt: 'B', sg: 'A', hg: 'C', hr: 'C', tc: 'C', tf: 'C', ts: 'C', tw: 'C', tl: 'C', ag: 'C', dc: 'C', ds: 'C', dl: 'C', ig: 'D', sf: 'D', ss: 'D', sl: 'D', cw: 'D', gg: 'E', am: 'F' },
       anchors: { A: { part: null, side: 'left' }, B: { part: '.plx-role-manager__meta', side: 'right' }, C: { part: '.plx-role-manager__header', side: 'top' }, D: { part: '.plx-role-manager__section-title', side: 'right' }, E: { part: '.plx-role-manager__groups', side: 'bottom' }, F: { part: '.plx-role-manager__add', side: 'right' } },
       sections: [['List', ['lg', 'mg', 'mt']], ['Detail', ['sg', 'hg', 'hr', 'tc', 'tf', 'ts', 'tw', 'tl', 'ag', 'dc', 'ds', 'dl']], ['Sections', ['ig', 'sf', 'ss', 'sl', 'cw', 'gg', 'am']]],
-      matrixLabel: 'Roles by view', matrixColumnWidth: '--plx-ref-size-560px', statesHead: 'Views · ' + HEAD
+      matrixLabel: 'Roles by view', matrixColumnWidth: '--plx-ref-size-140u', statesHead: 'Views · ' + HEAD
     });
 
     // ---- Account connection (<ConnectedAccounts>): a row per service in each status
@@ -470,7 +470,7 @@ if (window.DS && DS.registerLab) {
       parts: { lc: 'A', lw: 'A', py: 'A', g: 'A', rg: 'A', bm: 'B', bg: 'B', hg: 'C', sc: 'C', sf: 'C', ss: 'C', sw: 'C', sl: 'C', dc: 'D', ds: 'D', dl: 'D', ac: 'D', df: 'D', ec: 'D', ag: 'E' },
       anchors: { A: { part: '.plx-connected-accounts__item', side: 'left' }, B: { part: '.plx-connected-accounts__body', side: 'bottom' }, C: { part: '.plx-connected-accounts__head', side: 'top' }, D: { part: '.plx-connected-accounts__description', side: 'left' }, E: { part: '.plx-connected-accounts__actions', side: 'right' } },
       sections: [['Row', ['lc', 'lw', 'py', 'g', 'rg']], ['Text', ['bm', 'bg', 'hg', 'sc', 'sf', 'ss', 'sw', 'sl', 'dc', 'ds', 'dl', 'ac', 'df', 'ec']], ['Actions', ['ag']]],
-      matrixLabel: 'Account connection by status', matrixColumnWidth: '--plx-ref-size-560px', statesHead: 'Statuses · ' + HEAD
+      matrixLabel: 'Account connection by status', matrixColumnWidth: '--plx-ref-size-140u', statesHead: 'Statuses · ' + HEAD
     });
   })();
 }

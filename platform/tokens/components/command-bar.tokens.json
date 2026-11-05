@@ -8,13 +8,13 @@
     "command-bar-background": { "$value": "{plx-sys.surface-default}", "$type": "color", "$description": "Command bar: the bar is white (3A), never tinted while rows are selected." },
     "command-bar-border-color": { "$value": "{plx-sys.border-default}", "$type": "color", "$description": "Command bar: the frame of the bar (3A)." },
     "command-bar-border-width": { "$value": "{plx-sys.border-width-thin}", "$type": "dimension", "$description": "Command bar: the frame’s width." },
-    "command-bar-radius": { "$value": "{plx-sys.radius-surface-4px}", "$type": "dimension", "$description": "Command bar: the frame’s corners." },
+    "command-bar-radius": { "$value": "{plx-sys.radius-surface-sm}", "$type": "dimension", "$description": "Command bar: the frame’s corners." },
     "command-bar-padding-block": { "$value": "{plx-sys.space-inset-sm}", "$type": "dimension", "$description": "Command bar: the space above and below the controls in the bar." },
     "command-bar-padding-inline": { "$value": "{plx-sys.space-inset-sm}", "$type": "dimension", "$description": "Command bar: the space before and after the controls in the bar." },
     "command-bar-count-text": { "$value": "{plx-sys.content-muted}", "$type": "color", "$description": "Command bar: the count at the end (\"24 assets\"), in the data font." },
     "command-bar-danger-text": { "$value": "{plx-sys.feedback-danger-content}", "$type": "color", "$description": "Command bar and selection bar: a danger command (Delete), a ghost button in the danger color." },
     "command-bar-danger-hover-text": { "$value": "{plx-sys.feedback-danger-content}", "$type": "color", "$description": "Command bar and selection bar: a danger command while hovered (the ghost hover fill, the danger color kept)." },
-    "command-bar-divider-height": { "$value": "{plx-ref.size-20px}", "$type": "dimension", "$description": "Command bar and selection bar: the divider before the danger commands (and before Select all and Clear), as tall as a toolbar icon’s room." },
+    "command-bar-divider-height": { "$value": "{plx-ref.size-5u}", "$type": "dimension", "$description": "Command bar and selection bar: the divider before the danger commands (and before Select all and Clear), as tall as a toolbar icon’s room." },
     "command-bar-divider-color": { "$value": "{plx-sys.border-default}", "$type": "color", "$description": "Command bar and selection bar: the divider’s color." },
     "command-bar-divider-width": { "$value": "{plx-sys.border-width-thin}", "$type": "dimension", "$description": "Command bar and selection bar: the divider’s width." }
   }

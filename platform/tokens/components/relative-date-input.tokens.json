@@ -2,7 +2,7 @@
   "$description": "RelativeDateInput (platform/components/RelativeDateInput), library wave 7, lane B: its component tokens. The row of fields and the resolved dates in the data font.",
   "plx-comp": {
     "relative-date-input-row-gap": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension",
       "$description": "RelativeDateInput: gap between rows (space-4px)."
     },
@@ -17,22 +17,22 @@
       "$description": "RelativeDateInput row: gap between rows (space-inline-sm)."
     },
     "relative-date-input-preset-width": {
-      "$value": "{plx-ref.size-180px}",
+      "$value": "{plx-ref.size-45u}",
       "$type": "dimension",
       "$description": "RelativeDateInput preset: width (size-180px)."
     },
     "relative-date-input-custom-preset-width": {
-      "$value": "{plx-ref.size-140px}",
+      "$value": "{plx-ref.size-35u}",
       "$type": "dimension",
       "$description": "RelativeDateInput custom preset: width (size-140px)."
     },
     "relative-date-input-direction-width": {
-      "$value": "{plx-ref.size-100px}",
+      "$value": "{plx-ref.size-25u}",
       "$type": "dimension",
       "$description": "RelativeDateInput direction: width (size-100px)."
     },
     "relative-date-input-unit-width": {
-      "$value": "{plx-ref.size-120px}",
+      "$value": "{plx-ref.size-30u}",
       "$type": "dimension",
       "$description": "RelativeDateInput unit: width (size-120px)."
     },
@@ -47,7 +47,7 @@
       "$description": "RelativeDateInput range: font (font-data)."
     },
     "relative-date-input-range-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "RelativeDateInput range: font size (font-size-12)."
     }

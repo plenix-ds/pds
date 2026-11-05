@@ -226,7 +226,7 @@ export function gridFrame({
               if (
                 mode === 'load-more' &&
                 e.currentTarget.scrollHeight - e.currentTarget.scrollTop - e.currentTarget.clientHeight <
-                  tokenPixels('--plx-ref-size-200px', frame.current)
+                  tokenPixels('--plx-ref-size-50u', frame.current)
               ) {
                 if (remoteMode && !fetching.current && source.length < (remote?.total || 0)) {
                   fetching.current = true;

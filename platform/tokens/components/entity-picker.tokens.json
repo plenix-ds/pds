@@ -2,7 +2,7 @@
   "$description": "EntityPicker (platform/components/EntityPicker), library wave 7, lane B: its component tokens. The field in the input roles, the list a menu surface of two-line options; the technical detail in the data font.",
   "plx-comp": {
     "entity-picker-max-width": {
-      "$value": "{plx-ref.size-400px}",
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension",
       "$description": "EntityPicker: maximum width (size-400px)."
     },
@@ -17,7 +17,7 @@
       "$description": "EntityPicker field: gap between rows (space-inline-xs)."
     },
     "entity-picker-multiple-field-padding-block": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension",
       "$description": "EntityPicker multiple field: padding top and bottom (space-4px)."
     },
@@ -32,7 +32,7 @@
       "$description": "EntityPicker field invalid: border color (feedback-danger-solid)."
     },
     "entity-picker-input-flex-basis": {
-      "$value": "{plx-ref.size-80px}",
+      "$value": "{plx-ref.size-20u}",
       "$type": "dimension",
       "$description": "EntityPicker input flex basis: input flex basis (size-80px)."
     },
@@ -72,7 +72,7 @@
       "$description": "EntityPicker list: border color (border-default)."
     },
     "entity-picker-list-radius": {
-      "$value": "{plx-sys.radius-menu-6px}",
+      "$value": "{plx-sys.radius-menu}",
       "$type": "dimension",
       "$description": "EntityPicker list: corners (radius-menu-6px)."
     },
@@ -92,7 +92,7 @@
       "$description": "EntityPicker list margin block start: list margin block start (space-stack-xs)."
     },
     "entity-picker-list-max-height": {
-      "$value": "{plx-ref.size-320px}",
+      "$value": "{plx-ref.size-80u}",
       "$type": "dimension",
       "$description": "EntityPicker list: maximum height (size-320px)."
     },
@@ -132,7 +132,7 @@
       "$description": "EntityPicker option: minimum height (control-height-prominent)."
     },
     "entity-picker-option-padding-block": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension",
       "$description": "EntityPicker option: padding top and bottom (space-4px)."
     },
@@ -167,7 +167,7 @@
       "$description": "EntityPicker description: text color (content-muted)."
     },
     "entity-picker-description-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "EntityPicker description: font size (font-size-12)."
     },
@@ -182,7 +182,7 @@
       "$description": "EntityPicker meta: font (font-data)."
     },
     "entity-picker-meta-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "EntityPicker meta: font size (font-size-12)."
     },

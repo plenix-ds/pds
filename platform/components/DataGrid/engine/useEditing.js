@@ -22,14 +22,19 @@
 import React from 'react';
 import { recordKey, valueAt } from '../state.js';
 import { setField, changeRecord } from '../records.js';
+import { announce } from '../../../utils/announce.tsx';
+
+let refusals = 0;   // the refusal message's id, so the cell can name it (aria-describedby)
 
 export function useEditedRows(incoming) {
   const pendingEdit = React.useRef(null),
     mutations = React.useRef([]);
   const [edited, setEdited] = React.useState(null),
-    [editing, setEditing] = React.useState(null);
+    [editing, setEditing] = React.useState(null),
+    // a cell whose save is waiting for the caller ({ key, field, kind: 'saving' }) or was refused ({ …, kind: 'refused', message })
+    [cellStatus, setCellStatus] = React.useState(null);
   const source = edited?.input === incoming ? edited.rows : incoming;
-  return { setEdited, editing, setEditing, mutations, pendingEdit, source };
+  return { setEdited, editing, setEditing, cellStatus, setCellStatus, mutations, pendingEdit, source };
 }
 
 export function editActions({
@@ -41,6 +46,8 @@ export function editActions({
   props,
   setEdited,
   setEditing,
+  setCellStatus,
+  S,
   mutations,
   pendingEdit
 }) {
@@ -63,7 +70,23 @@ export function editActions({
     updateRecord(key, (record) => setField(record, field, value));
     setEditing(null);
     pendingEdit.current = { key, field };
-    props.onCellEdit?.(setField(old, field, value), { field, value, previous, row: old });
+    const answer = props.onCellEdit?.(setField(old, field, value), { field, value, previous, row: old });
+    // an answer that comes later (a promise): the new value shows, the cell is busy; a refusal brings the old value back with its message
+    if (answer && typeof answer.then === 'function') {
+      setCellStatus({ key, field, kind: 'saving' });
+      answer.then(
+        () => {
+          setCellStatus((now) => (now?.key === key && now.field === field ? null : now));
+          announce(S.saved);
+        },
+        (error) => {
+          updateRecord(key, (record) => setField(record, field, previous));
+          const message = (error && error.message) || S.saveRefused;
+          setCellStatus({ key, field, kind: 'refused', message, id: 'plx-data-grid-refusal-' + ++refusals });
+          announce(message, { politeness: 'assertive' });
+        }
+      );
+    }
   };
   return { replaceData, updateRecord, commitEdit };
 }

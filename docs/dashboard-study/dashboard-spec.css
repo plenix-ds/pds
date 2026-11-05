@@ -5,59 +5,59 @@
 
 /* ── the page ── */
 .dss-body { background-color: var(--plx-sys-surface-canvas); color: var(--plx-sys-content-default); margin: 0; }
-.dss-page { display: grid; gap: var(--plx-ref-space-48px); grid-template-columns: var(--plx-ref-size-220px) minmax(0, 1fr); margin-inline: auto; max-inline-size: var(--plx-ref-size-1400px); padding-block: 0 var(--plx-ref-space-64px); padding-inline: var(--plx-ref-space-28px); }
-.dss-nav { align-self: start; display: grid; gap: var(--plx-ref-space-16px); inset-block-start: 0; padding-block: var(--plx-ref-space-28px); position: sticky; }
-.dss-main { display: grid; gap: var(--plx-ref-space-48px); min-inline-size: 0; padding-block-start: var(--plx-ref-space-40px); }
-.dss-top { display: grid; gap: var(--plx-ref-space-12px); max-inline-size: var(--plx-ref-size-900px); }
-.dss-section { border-block-start: var(--plx-sys-border-width-thin) solid var(--plx-sys-border-default); display: grid; gap: var(--plx-ref-space-16px); min-inline-size: 0; padding-block-start: var(--plx-ref-space-40px); scroll-margin-block-start: var(--plx-ref-space-16px); }
+.dss-page { display: grid; gap: var(--plx-ref-space-12u); grid-template-columns: var(--plx-ref-size-55u) minmax(0, 1fr); margin-inline: auto; max-inline-size: var(--plx-ref-size-350u); padding-block: 0 var(--plx-ref-space-16u); padding-inline: var(--plx-ref-space-7u); }
+.dss-nav { align-self: start; display: grid; gap: var(--plx-ref-space-4u); inset-block-start: 0; padding-block: var(--plx-ref-space-7u); position: sticky; }
+.dss-main { display: grid; gap: var(--plx-ref-space-12u); min-inline-size: 0; padding-block-start: var(--plx-ref-space-10u); }
+.dss-top { display: grid; gap: var(--plx-ref-space-3u); max-inline-size: var(--plx-ref-size-225u); }
+.dss-section { border-block-start: var(--plx-sys-border-width-thin) solid var(--plx-sys-border-default); display: grid; gap: var(--plx-ref-space-4u); min-inline-size: 0; padding-block-start: var(--plx-ref-space-10u); scroll-margin-block-start: var(--plx-ref-space-4u); }
 .dss-section > * { min-inline-size: 0; }
-.dss-prose { max-inline-size: var(--plx-ref-size-800px); }
-.dss-group-title { padding-block-start: var(--plx-ref-space-24px); }
-.dss-anchor-target { scroll-margin-block-start: var(--plx-ref-space-16px); }
+.dss-prose { max-inline-size: var(--plx-ref-size-200u); }
+.dss-group-title { padding-block-start: var(--plx-ref-space-6u); }
+.dss-anchor-target { scroll-margin-block-start: var(--plx-ref-space-4u); }
 
 /* columns of panels: three, two, the mock beside its text */
-.dss-cols { display: grid; gap: var(--plx-ref-space-16px); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.dss-cols { display: grid; gap: var(--plx-ref-space-4u); grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .dss-cols--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .dss-cols > * { min-inline-size: 0; }
-.dss-key { align-items: center; display: flex; flex-wrap: wrap; gap: var(--plx-ref-space-8px) var(--plx-ref-space-16px); }
+.dss-key { align-items: center; display: flex; flex-wrap: wrap; gap: var(--plx-ref-space-2u) var(--plx-ref-space-4u); }
 
 /* ── a widget (a dossier): its header, the decision chips, the mock beside the text ── */
-.dss-dossier { border-block-start: var(--plx-sys-border-width-thin) solid var(--plx-sys-border-subtle); display: grid; gap: var(--plx-ref-space-12px); padding-block-start: var(--plx-ref-space-24px); scroll-margin-block-start: var(--plx-ref-space-16px); }
-.dss-dossier__grid { align-items: start; display: grid; gap: var(--plx-ref-space-24px); grid-template-columns: minmax(0, var(--plx-ref-size-480px)) minmax(0, 1fr); }
+.dss-dossier { border-block-start: var(--plx-sys-border-width-thin) solid var(--plx-sys-border-subtle); display: grid; gap: var(--plx-ref-space-3u); padding-block-start: var(--plx-ref-space-6u); scroll-margin-block-start: var(--plx-ref-space-4u); }
+.dss-dossier__grid { align-items: start; display: grid; gap: var(--plx-ref-space-6u); grid-template-columns: minmax(0, var(--plx-ref-size-120u)) minmax(0, 1fr); }
 .dss-dossier__grid > * { min-inline-size: 0; }
 .dss-dossier--wide .dss-dossier__grid { grid-template-columns: minmax(0, 1fr); }
-.dss-dossier__text { display: grid; gap: var(--plx-ref-space-20px); min-inline-size: 0; }
+.dss-dossier__text { display: grid; gap: var(--plx-ref-space-5u); min-inline-size: 0; }
 .dss-dossier--wide .dss-dossier__text { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .dss-dossier__text > * { min-inline-size: 0; }
 
 /* the stage a mock sits on: the canvas, framed */
-.dss-stage { background-color: var(--plx-sys-surface-sunken); border: var(--plx-sys-border-width-thin) solid var(--plx-sys-border-default); border-radius: var(--plx-sys-radius-card-6px); display: grid; gap: var(--plx-ref-space-12px); min-inline-size: 0; padding: var(--plx-ref-space-16px); }
+.dss-stage { background-color: var(--plx-sys-surface-sunken); border: var(--plx-sys-border-width-thin) solid var(--plx-sys-border-default); border-radius: var(--plx-sys-radius-card-md); display: grid; gap: var(--plx-ref-space-3u); min-inline-size: 0; padding: var(--plx-ref-space-4u); }
 .dss-stage > *, .dss-stage .plx-stack > * { min-inline-size: 0; }
-.dss-mock-narrow { max-inline-size: var(--plx-ref-size-560px); }
+.dss-mock-narrow { max-inline-size: var(--plx-ref-size-140u); }
 
 /* a row whose actions show on hover or focus (the pointer mode) and replace its time */
-.dss-row { align-items: center; display: flex; gap: var(--plx-ref-space-12px); min-block-size: var(--plx-ref-size-44px); min-inline-size: 0; }
+.dss-row { align-items: center; display: flex; gap: var(--plx-ref-space-3u); min-block-size: var(--plx-ref-size-11u); min-inline-size: 0; }
 .dss-row__main { display: grid; flex: 1; min-inline-size: 0; }
-.dss-row__end { align-items: center; display: flex; flex: none; gap: var(--plx-ref-space-4px); }
+.dss-row__end { align-items: center; display: flex; flex: none; gap: var(--plx-ref-space-1u); }
 .dss-reveal .dss-row__actions { display: none; }
 .dss-reveal:hover .dss-row__actions, .dss-reveal:focus-within .dss-row__actions { display: flex; }
 .dss-reveal:hover .dss-row__time, .dss-reveal:focus-within .dss-row__time { display: none; }
-.dss-row__actions { align-items: center; gap: var(--plx-ref-space-4px); }
-.dss-list { display: grid; gap: var(--plx-ref-space-4px); }
+.dss-row__actions { align-items: center; gap: var(--plx-ref-space-1u); }
+.dss-list { display: grid; gap: var(--plx-ref-space-1u); }
 .dss-done { color: var(--plx-sys-content-subtle); text-decoration: line-through; }
 .dss-past { opacity: var(--plx-sys-opacity-mid); }
 
 /* the calendar agenda: a time column, then the event */
-.dss-agenda { display: grid; gap: var(--plx-ref-space-8px); }
-.dss-agenda__row { align-items: center; display: grid; gap: var(--plx-ref-space-12px); grid-template-columns: var(--plx-ref-size-64px) minmax(0, 1fr); }
+.dss-agenda { display: grid; gap: var(--plx-ref-space-2u); }
+.dss-agenda__row { align-items: center; display: grid; gap: var(--plx-ref-space-3u); grid-template-columns: var(--plx-ref-size-16u) minmax(0, 1fr); }
 .dss-agenda__time { text-align: end; }
-.dss-now { align-items: center; color: var(--plx-sys-feedback-danger-content); display: grid; gap: var(--plx-ref-space-8px); grid-template-columns: auto minmax(0, 1fr); }
+.dss-now { align-items: center; color: var(--plx-sys-feedback-danger-content); display: grid; gap: var(--plx-ref-space-2u); grid-template-columns: auto minmax(0, 1fr); }
 .dss-now::after { border-block-start: var(--plx-sys-border-width-medium) solid var(--plx-sys-feedback-danger-content); content: ""; }
 
 /* the week timeline (calendar variant C): nine hours, one row each; an event sits on its hour */
-.dss-timeline { display: grid; grid-template-columns: var(--plx-ref-size-48px) minmax(0, 1fr); grid-template-rows: repeat(9, var(--plx-ref-size-32px)); }
+.dss-timeline { display: grid; grid-template-columns: var(--plx-ref-size-12u) minmax(0, 1fr); grid-template-rows: repeat(9, var(--plx-ref-size-8u)); }
 .dss-timeline__hour { border-block-start: var(--plx-sys-border-width-thin) solid var(--plx-sys-border-subtle); grid-column: 1 / -1; }
-.dss-timeline__event { align-self: start; grid-column: 2; padding-block-start: var(--plx-ref-space-4px); }
+.dss-timeline__event { align-self: start; grid-column: 2; padding-block-start: var(--plx-ref-space-1u); }
 .dss-timeline [data-row="1"] { grid-row: 1; }
 .dss-timeline [data-row="2"] { grid-row: 2; }
 .dss-timeline [data-row="3"] { grid-row: 3; }
@@ -69,9 +69,9 @@
 .dss-timeline [data-row="9"] { grid-row: 9; }
 
 /* ── diagrams: the column strips, the boxes of the row modes, the wireframes ── */
-.dss-vz { background-color: var(--plx-sys-surface-sunken); border: var(--plx-sys-border-width-thin) solid var(--plx-sys-border-default); border-radius: var(--plx-sys-radius-card-4px); display: grid; gap: var(--plx-ref-space-8px); min-inline-size: 0; padding: var(--plx-ref-space-8px); }
-.dss-strip { display: grid; gap: var(--plx-ref-space-4px); block-size: var(--plx-ref-size-16px); }
-.dss-strip > i { background-color: var(--plx-sys-feedback-info-soft); border: var(--plx-sys-border-width-thin) solid var(--plx-sys-feedback-info-soft-border); border-radius: var(--plx-sys-radius-table-2px); }
+.dss-vz { background-color: var(--plx-sys-surface-sunken); border: var(--plx-sys-border-width-thin) solid var(--plx-sys-border-default); border-radius: var(--plx-sys-radius-card-sm); display: grid; gap: var(--plx-ref-space-2u); min-inline-size: 0; padding: var(--plx-ref-space-2u); }
+.dss-strip { display: grid; gap: var(--plx-ref-space-1u); block-size: var(--plx-ref-size-4u); }
+.dss-strip > i { background-color: var(--plx-sys-feedback-info-soft); border: var(--plx-sys-border-width-thin) solid var(--plx-sys-feedback-info-soft-border); border-radius: var(--plx-sys-radius-table); }
 .dss-strip[data-cols="4"] { grid-template-columns: repeat(4, 1fr); }
 .dss-strip[data-cols="8"] { grid-template-columns: repeat(8, 1fr); }
 .dss-strip[data-cols="12"] { grid-template-columns: repeat(12, 1fr); }
@@ -80,43 +80,43 @@
 .dss-strip[data-w="80"] { inline-size: 80%; }
 .dss-strip[data-w="50"] { inline-size: 50%; }
 .dss-strip[data-w="30"] { inline-size: 30%; }
-.dss-boxes { align-items: start; display: grid; gap: var(--plx-ref-space-8px); grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.dss-boxes { align-items: start; display: grid; gap: var(--plx-ref-space-2u); grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .dss-boxes--main-side { grid-template-columns: 2fr 1fr; }
 .dss-boxes--two { grid-template-columns: 1fr 1fr; }
-.dss-boxes__col { display: grid; gap: var(--plx-ref-space-8px); }
-.dss-box { align-content: start; background-color: var(--plx-sys-surface-default); border: var(--plx-sys-border-width-thin) dashed var(--plx-sys-border-strong); border-radius: var(--plx-sys-radius-card-4px); display: grid; gap: var(--plx-ref-space-4px); min-block-size: var(--plx-ref-size-36px); min-inline-size: 0; padding: var(--plx-ref-space-4px) var(--plx-ref-space-8px); }
+.dss-boxes__col { display: grid; gap: var(--plx-ref-space-2u); }
+.dss-box { align-content: start; background-color: var(--plx-sys-surface-default); border: var(--plx-sys-border-width-thin) dashed var(--plx-sys-border-strong); border-radius: var(--plx-sys-radius-card-sm); display: grid; gap: var(--plx-ref-space-1u); min-block-size: var(--plx-ref-size-9u); min-inline-size: 0; padding: var(--plx-ref-space-1u) var(--plx-ref-space-2u); }
 .dss-box--kpi { background-color: var(--plx-sys-feedback-info-soft); border-color: var(--plx-sys-feedback-info-soft-border); }
-.dss-box[data-h="sm"] { min-block-size: var(--plx-ref-size-44px); }
-.dss-box[data-h="md"] { min-block-size: var(--plx-ref-size-60px); }
-.dss-box[data-h="lg"] { min-block-size: var(--plx-ref-size-72px); }
-.dss-box[data-h="xl"] { min-block-size: var(--plx-ref-size-92px); }
-.dss-line { background-color: var(--plx-sys-border-default); block-size: var(--plx-ref-size-4px); border-radius: var(--plx-sys-radius-table-2px); display: block; }
+.dss-box[data-h="sm"] { min-block-size: var(--plx-ref-size-11u); }
+.dss-box[data-h="md"] { min-block-size: var(--plx-ref-size-15u); }
+.dss-box[data-h="lg"] { min-block-size: var(--plx-ref-size-18u); }
+.dss-box[data-h="xl"] { min-block-size: var(--plx-ref-size-23u); }
+.dss-line { background-color: var(--plx-sys-border-default); block-size: var(--plx-ref-size-1u); border-radius: var(--plx-sys-radius-table); display: block; }
 .dss-line[data-w="80"] { inline-size: 80%; }
 .dss-line[data-w="70"] { inline-size: 70%; }
 .dss-line[data-w="60"] { inline-size: 60%; }
-.dss-hatch { background-image: repeating-linear-gradient(45deg, var(--plx-sys-border-default) 0 var(--plx-ref-size-4px), transparent var(--plx-ref-size-4px) var(--plx-ref-size-8px)); border-radius: var(--plx-sys-radius-table-2px); }
-.dss-hatch[data-h="sm"] { block-size: var(--plx-ref-size-28px); }
-.dss-hatch[data-h="md"] { block-size: var(--plx-ref-size-44px); }
+.dss-hatch { background-image: repeating-linear-gradient(45deg, var(--plx-sys-border-default) 0 var(--plx-ref-size-1u), transparent var(--plx-ref-size-1u) var(--plx-ref-size-2u)); border-radius: var(--plx-sys-radius-table); }
+.dss-hatch[data-h="sm"] { block-size: var(--plx-ref-size-7u); }
+.dss-hatch[data-h="md"] { block-size: var(--plx-ref-size-11u); }
 
 /* the page wireframes (page structure, the three templates): 12 columns */
-.dss-wf { display: grid; gap: var(--plx-ref-space-8px); grid-template-columns: repeat(12, minmax(0, 1fr)); }
-.dss-wf__cell { align-content: center; background-color: var(--plx-sys-feedback-info-soft); border: var(--plx-sys-border-width-thin) dashed var(--plx-sys-feedback-info-soft-border); border-radius: var(--plx-sys-radius-card-4px); color: var(--plx-sys-feedback-info-content); display: grid; gap: var(--plx-ref-space-4px); min-block-size: var(--plx-ref-size-36px); min-inline-size: 0; padding: var(--plx-ref-space-4px) var(--plx-ref-space-8px); }
+.dss-wf { display: grid; gap: var(--plx-ref-space-2u); grid-template-columns: repeat(12, minmax(0, 1fr)); }
+.dss-wf__cell { align-content: center; background-color: var(--plx-sys-feedback-info-soft); border: var(--plx-sys-border-width-thin) dashed var(--plx-sys-feedback-info-soft-border); border-radius: var(--plx-sys-radius-card-sm); color: var(--plx-sys-feedback-info-content); display: grid; gap: var(--plx-ref-space-1u); min-block-size: var(--plx-ref-size-9u); min-inline-size: 0; padding: var(--plx-ref-space-1u) var(--plx-ref-space-2u); }
 .dss-wf__cell--header { background-color: var(--plx-sys-surface-sunken); border-color: var(--plx-sys-border-strong); color: var(--plx-sys-content-default); }
 .dss-wf__cell--alert { background-color: var(--plx-sys-feedback-warning-soft); border-color: var(--plx-sys-feedback-warning-soft-border); color: var(--plx-sys-feedback-warning-content); }
 .dss-wf__cell--kpi { background-color: var(--plx-sys-feedback-success-soft); border-color: var(--plx-sys-feedback-success-soft-border); color: var(--plx-sys-feedback-success-content); }
-.dss-wf__col { align-content: start; display: grid; gap: var(--plx-ref-space-8px); min-inline-size: 0; }
+.dss-wf__col { align-content: start; display: grid; gap: var(--plx-ref-space-2u); min-inline-size: 0; }
 .dss-wf [data-span="4"] { grid-column: span 4; }
 .dss-wf [data-span="8"] { grid-column: span 8; }
 .dss-wf [data-span="12"] { grid-column: span 12; }
-.dss-wf [data-h="sm"] { min-block-size: var(--plx-ref-size-52px); }
-.dss-wf [data-h="md"] { min-block-size: var(--plx-ref-size-72px); }
-.dss-wf [data-h="lg"] { min-block-size: var(--plx-ref-size-88px); }
-.dss-wf [data-h="xl"] { min-block-size: var(--plx-ref-size-112px); }
-.dss-wf [data-h="2xl"] { min-block-size: var(--plx-ref-size-132px); }
+.dss-wf [data-h="sm"] { min-block-size: var(--plx-ref-size-13u); }
+.dss-wf [data-h="md"] { min-block-size: var(--plx-ref-size-18u); }
+.dss-wf [data-h="lg"] { min-block-size: var(--plx-ref-size-22u); }
+.dss-wf [data-h="xl"] { min-block-size: var(--plx-ref-size-28u); }
+.dss-wf [data-h="2xl"] { min-block-size: var(--plx-ref-size-33u); }
 
 /* the grid explorer: the content width on a 1700px track (17 steps of 100px), its columns and its boxes */
-.dss-gx { background-color: var(--plx-sys-surface-sunken); border: var(--plx-sys-border-width-thin) solid var(--plx-sys-border-default); border-radius: var(--plx-sys-radius-card-4px); display: grid; grid-template-columns: repeat(17, minmax(0, 1fr)); overflow-x: auto; padding: var(--plx-ref-space-12px); }
-.dss-gx__frame { background-color: var(--plx-sys-surface-default); border: var(--plx-sys-border-width-thin) solid var(--plx-sys-border-strong); border-radius: var(--plx-sys-radius-card-4px); display: grid; gap: var(--plx-ref-space-8px); grid-column-start: 1; min-inline-size: var(--plx-ref-size-92px); padding: var(--plx-ref-space-8px); }
+.dss-gx { background-color: var(--plx-sys-surface-sunken); border: var(--plx-sys-border-width-thin) solid var(--plx-sys-border-default); border-radius: var(--plx-sys-radius-card-sm); display: grid; grid-template-columns: repeat(17, minmax(0, 1fr)); overflow-x: auto; padding: var(--plx-ref-space-3u); }
+.dss-gx__frame { background-color: var(--plx-sys-surface-default); border: var(--plx-sys-border-width-thin) solid var(--plx-sys-border-strong); border-radius: var(--plx-sys-radius-card-sm); display: grid; gap: var(--plx-ref-space-2u); grid-column-start: 1; min-inline-size: var(--plx-ref-size-23u); padding: var(--plx-ref-space-2u); }
 .dss-gx__frame[data-span="3"] { grid-column-end: span 3; }
 .dss-gx__frame[data-span="4"] { grid-column-end: span 4; }
 .dss-gx__frame[data-span="5"] { grid-column-end: span 5; }
@@ -132,15 +132,15 @@
 .dss-gx__frame[data-span="15"] { grid-column-end: span 15; }
 .dss-gx__frame[data-span="16"] { grid-column-end: span 16; }
 .dss-gx__frame[data-span="17"] { grid-column-end: span 17; }
-.dss-gx__grid { display: grid; gap: var(--plx-ref-space-4px); }
+.dss-gx__grid { display: grid; gap: var(--plx-ref-space-1u); }
 .dss-gx__grid[data-cols="4"] { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .dss-gx__grid[data-cols="8"] { grid-template-columns: repeat(8, minmax(0, 1fr)); }
 .dss-gx__grid[data-cols="12"] { grid-template-columns: repeat(12, minmax(0, 1fr)); }
 .dss-gx__grid[data-cols="16"] { grid-template-columns: repeat(16, minmax(0, 1fr)); }
-.dss-gx__col { background-color: var(--plx-sys-feedback-info-soft); block-size: var(--plx-ref-size-12px); border: var(--plx-sys-border-width-thin) solid var(--plx-sys-feedback-info-soft-border); border-radius: var(--plx-sys-radius-table-2px); }
-.dss-gx__box { background-color: var(--plx-sys-surface-canvas); border: var(--plx-sys-border-width-thin) dashed var(--plx-sys-border-strong); border-radius: var(--plx-sys-radius-card-4px); min-block-size: var(--plx-ref-size-36px); min-inline-size: 0; overflow: hidden; padding: var(--plx-ref-space-4px) var(--plx-ref-space-8px); }
-.dss-gx__box[data-h="lg"] { min-block-size: var(--plx-ref-size-72px); }
-.dss-gx__box[data-h="xl"] { min-block-size: var(--plx-ref-size-88px); }
+.dss-gx__col { background-color: var(--plx-sys-feedback-info-soft); block-size: var(--plx-ref-size-3u); border: var(--plx-sys-border-width-thin) solid var(--plx-sys-feedback-info-soft-border); border-radius: var(--plx-sys-radius-table); }
+.dss-gx__box { background-color: var(--plx-sys-surface-canvas); border: var(--plx-sys-border-width-thin) dashed var(--plx-sys-border-strong); border-radius: var(--plx-sys-radius-card-sm); min-block-size: var(--plx-ref-size-9u); min-inline-size: 0; overflow: hidden; padding: var(--plx-ref-space-1u) var(--plx-ref-space-2u); }
+.dss-gx__box[data-h="lg"] { min-block-size: var(--plx-ref-size-18u); }
+.dss-gx__box[data-h="xl"] { min-block-size: var(--plx-ref-size-22u); }
 .dss-gx__box[data-span="2"] { grid-column: span 2; }
 .dss-gx__box[data-span="3"] { grid-column: span 3; }
 .dss-gx__box[data-span="4"] { grid-column: span 4; }
@@ -149,43 +149,43 @@
 .dss-gx__box[data-span="16"] { grid-column: span 16; }
 
 /* ── giving: the paired bars and the year's monthly columns ── */
-.dss-pairs { align-items: end; block-size: var(--plx-ref-size-100px); border-block-end: var(--plx-sys-border-width-thin) solid var(--plx-sys-border-strong); display: flex; gap: var(--plx-ref-space-24px); padding-inline: var(--plx-ref-space-8px); }
-.dss-pairs__item { align-items: center; display: grid; gap: var(--plx-ref-space-4px); justify-items: center; text-align: center; }
-.dss-pairs__bar { border-start-end-radius: var(--plx-sys-radius-table-2px); border-start-start-radius: var(--plx-sys-radius-table-2px); display: block; inline-size: var(--plx-ref-size-48px); }
-.dss-pairs__target { align-items: start; block-size: var(--plx-ref-size-72px); border-block-start: var(--plx-sys-border-width-medium) dashed var(--plx-sys-content-muted); display: flex; inline-size: var(--plx-ref-size-56px); justify-content: center; }
-.dss-months { align-items: end; block-size: var(--plx-ref-size-88px); border-block-end: var(--plx-sys-border-width-thin) solid var(--plx-sys-border-strong); display: grid; gap: var(--plx-ref-space-4px); grid-template-columns: repeat(10, minmax(0, 1fr)); grid-template-rows: minmax(0, 1fr); }
+.dss-pairs { align-items: end; block-size: var(--plx-ref-size-25u); border-block-end: var(--plx-sys-border-width-thin) solid var(--plx-sys-border-strong); display: flex; gap: var(--plx-ref-space-6u); padding-inline: var(--plx-ref-space-2u); }
+.dss-pairs__item { align-items: center; display: grid; gap: var(--plx-ref-space-1u); justify-items: center; text-align: center; }
+.dss-pairs__bar { border-start-end-radius: var(--plx-sys-radius-table); border-start-start-radius: var(--plx-sys-radius-table); display: block; inline-size: var(--plx-ref-size-12u); }
+.dss-pairs__target { align-items: start; block-size: var(--plx-ref-size-18u); border-block-start: var(--plx-sys-border-width-medium) dashed var(--plx-sys-content-muted); display: flex; inline-size: var(--plx-ref-size-14u); justify-content: center; }
+.dss-months { align-items: end; block-size: var(--plx-ref-size-22u); border-block-end: var(--plx-sys-border-width-thin) solid var(--plx-sys-border-strong); display: grid; gap: var(--plx-ref-space-1u); grid-template-columns: repeat(10, minmax(0, 1fr)); grid-template-rows: minmax(0, 1fr); }
 .dss-months > * { align-items: end; block-size: 100%; display: flex; }
-.dss-months__labels { display: grid; gap: var(--plx-ref-space-4px); grid-template-columns: repeat(10, minmax(0, 1fr)); text-align: center; }
-.dss-bar { border-start-end-radius: var(--plx-sys-radius-table-2px); border-start-start-radius: var(--plx-sys-radius-table-2px); display: block; inline-size: 100%; }
+.dss-months__labels { display: grid; gap: var(--plx-ref-space-1u); grid-template-columns: repeat(10, minmax(0, 1fr)); text-align: center; }
+.dss-bar { border-start-end-radius: var(--plx-sys-radius-table); border-start-start-radius: var(--plx-sys-radius-table); display: block; inline-size: 100%; }
 .dss-bar--now { background-color: var(--plx-sys-dataviz-categorical-1); }
 .dss-bar--before { background-color: var(--plx-sys-dataviz-status-neutral); }
-.dss-bar--none { background-image: repeating-linear-gradient(45deg, var(--plx-sys-border-strong) 0 var(--plx-ref-size-4px), transparent var(--plx-ref-size-4px) var(--plx-ref-size-8px)); border: var(--plx-sys-border-width-thin) dashed var(--plx-sys-border-strong); border-block-end: 0; }
+.dss-bar--none { background-image: repeating-linear-gradient(45deg, var(--plx-sys-border-strong) 0 var(--plx-ref-size-1u), transparent var(--plx-ref-size-1u) var(--plx-ref-size-2u)); border: var(--plx-sys-border-width-thin) dashed var(--plx-sys-border-strong); border-block-end: 0; }
 .dss-bar[data-h="35"] { block-size: 35%; }
 .dss-bar[data-h="55"] { block-size: 55%; }
 .dss-bar[data-h="56"] { block-size: 56%; }
 .dss-bar[data-h="85"] { block-size: 85%; }
 .dss-bar[data-h="87"] { block-size: 87%; }
-.dss-pairs__bar[data-h="56"] { block-size: var(--plx-ref-size-56px); }
-.dss-pairs__bar[data-h="60"] { block-size: var(--plx-ref-size-60px); }
-.dss-divided { border-block-start: var(--plx-sys-border-width-thin) solid var(--plx-sys-border-default); padding-block-start: var(--plx-ref-space-12px); }
+.dss-pairs__bar[data-h="56"] { block-size: var(--plx-ref-size-14u); }
+.dss-pairs__bar[data-h="60"] { block-size: var(--plx-ref-size-15u); }
+.dss-divided { border-block-start: var(--plx-sys-border-width-thin) solid var(--plx-sys-border-default); padding-block-start: var(--plx-ref-space-3u); }
 
 /* the phone frame (the KPI reflow) */
-.dss-phone { background-color: var(--plx-sys-surface-canvas); border: var(--plx-sys-border-width-medium) solid var(--plx-sys-border-strong); border-radius: var(--plx-sys-radius-dialog-6px); display: grid; gap: var(--plx-ref-space-8px); margin-inline: auto; max-inline-size: var(--plx-ref-size-240px); padding: var(--plx-ref-space-12px); }
-.dss-kpis { display: grid; gap: var(--plx-ref-space-12px); grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.dss-phone { background-color: var(--plx-sys-surface-canvas); border: var(--plx-sys-border-width-medium) solid var(--plx-sys-border-strong); border-radius: var(--plx-sys-radius-dialog); display: grid; gap: var(--plx-ref-space-2u); margin-inline: auto; max-inline-size: var(--plx-ref-size-60u); padding: var(--plx-ref-space-3u); }
+.dss-kpis { display: grid; gap: var(--plx-ref-space-3u); grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .dss-kpis--four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.dss-kpis--phone { gap: var(--plx-ref-space-8px); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.dss-kpis--phone { gap: var(--plx-ref-space-2u); grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .dss-kpis--phone > :last-child { grid-column: 1 / -1; }
 .dss-kpis > * { min-inline-size: 0; }
 
 /* the customize demo: the bar above the grid */
-.dss-dnd { display: grid; gap: var(--plx-ref-space-12px); }
-.dss-dnd__bar { align-items: center; display: flex; flex-wrap: wrap; gap: var(--plx-ref-space-8px); min-block-size: var(--plx-ref-size-36px); }
+.dss-dnd { display: grid; gap: var(--plx-ref-space-3u); }
+.dss-dnd__bar { align-items: center; display: flex; flex-wrap: wrap; gap: var(--plx-ref-space-2u); min-block-size: var(--plx-ref-size-9u); }
 
 /* the sources in two columns */
-.dss-sources { column-gap: var(--plx-ref-space-32px); columns: 2; }
+.dss-sources { column-gap: var(--plx-ref-space-8u); columns: 2; }
 
 @media (max-width: 1060px) {
-  .dss-page { grid-template-columns: minmax(0, 1fr); padding-inline: var(--plx-ref-space-16px); }
+  .dss-page { grid-template-columns: minmax(0, 1fr); padding-inline: var(--plx-ref-space-4u); }
   .dss-nav { position: static; }
   .dss-cols, .dss-cols--3, .dss-dossier__grid, .dss-dossier--wide .dss-dossier__text { grid-template-columns: minmax(0, 1fr); }
   .dss-kpis, .dss-kpis--four { grid-template-columns: repeat(2, minmax(0, 1fr)); }

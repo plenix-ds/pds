@@ -17,7 +17,7 @@
       "$description": "Search list: its border width."
     },
     "search-popup-radius": {
-      "$value": "{plx-sys.radius-surface-4px}",
+      "$value": "{plx-sys.radius-surface-sm}",
       "$type": "dimension",
       "$description": "Search list: its corners."
     },
@@ -87,7 +87,7 @@
       "$description": "Recent searches heading: its weight."
     },
     "search-list-max-height": {
-      "$value": "{plx-ref.size-220px}",
+      "$value": "{plx-ref.size-55u}",
       "$type": "dimension",
       "$description": "Search list: the tallest the options grow before they scroll (the combobox list's)."
     },
@@ -107,7 +107,7 @@
       "$description": "Search option: the space between its icon and its text."
     },
     "search-option-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "Search option: its text size (the combobox option's)."
     },
@@ -142,7 +142,7 @@
       "$description": "Search option: its description's size."
     },
     "search-bar-width": {
-      "$value": "{plx-ref.size-240px}",
+      "$value": "{plx-ref.size-60u}",
       "$type": "dimension",
       "$description": "SearchField width=\"bar\": the command bar search, one fixed width in every bar (owner, 2026-10-14: 240px, never squeezed)."
     },
@@ -152,7 +152,7 @@
       "$description": "SearchField collapsed, opened: the band across the bar that holds the field, the bar's own white surface."
     },
     "search-over-radius": {
-      "$value": "{plx-sys.radius-control-6px}",
+      "$value": "{plx-sys.radius-control-md}",
       "$type": "dimension",
       "$description": "SearchField collapsed, opened: the band's corners (the command bar's)."
     },

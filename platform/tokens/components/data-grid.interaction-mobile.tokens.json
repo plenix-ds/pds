@@ -2,17 +2,17 @@
   "$description": "DataGrid: its tokens with mobile interaction (44px rows): the column header type icon shows at every density.",
   "plx-comp": {
     "data-grid-header-type-icon-size": {
-      "$value": "{plx-ref.glyph-size-14px}",
+      "$value": "{plx-ref.glyph-size-md}",
       "$type": "dimension",
       "$description": "DataGrid column header type icon: shown, the header row being 44px."
     },
     "data-grid-header-type-icon-gap": {
-      "$value": "{plx-ref.space-6px}",
+      "$value": "{plx-sys.space-inline-sm}",
       "$type": "dimension",
       "$description": "DataGrid column header: the space between the type icon and the name."
     },
     "data-grid-view-column-width": {
-      "$value": "{plx-ref.size-48px}",
+      "$value": "{plx-ref.size-12u}",
       "$type": "dimension",
       "$description": "DataGrid: the view column with mobile interaction: wide enough for a 44px target and its line."
     }

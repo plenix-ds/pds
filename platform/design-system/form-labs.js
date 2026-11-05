@@ -470,7 +470,7 @@
     anchors: { A: { part: LBL, side: 'top' }, B: { part: INFO, side: 'top' }, C: { part: INFO, side: 'right' }, D: { part: DESC, side: 'right' }, E: { part: ERR, side: 'right' }, F: { part: TIP, side: 'bottom' }, G: { part: null, side: 'left' } },
     sections: [['Label', ['lbc', 'lbff', 'lbfs', 'lbfw', 'lblh', 'rqc']], ['Help and error', ['dc', 'dfs', 'ec', 'efs']], ['Info button', ['ib', 'iw', 'ih', 'ir', 'it', 'iff', 'ifs', 'ifw', 'ihb', 'ihe', 'ihs', 'ihn']],
       ['Info focus', ['ifo', 'ifof', 'ifow']], ['Info text', ['itb', 'itr', 'itc', 'itfs', 'itpy', 'itpx']], ['Layout', ['lcg', 'ig', 'gtc', 'hg', 'rhg', 'chg']]],
-    matrixLabel: 'Field layouts by state', matrixColumnWidth: '--plx-ref-size-320px',
+    matrixLabel: 'Field layouts by state', matrixColumnWidth: '--plx-ref-size-80u',
     statesHead: 'States · every layout (click one to inspect it; the dashed outline marks the one shown below)'
   });
   // ---- SegmentedControl (<SegmentedControl>, div.plx-segmented): look A (owner, 2026-10-14): a bordered group of joined

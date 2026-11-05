@@ -40,7 +40,7 @@ check('Type floor: no token points at a size below 12px', below.length === 0, be
 const typo = values(JSON.parse(fs.readFileSync(path.join(TOKENS, 'semantic', 'typography.tokens.json'), 'utf8')), '', []);
 for (const role of ['caption', 'eyebrow']) {
   const v = (typo.find(([n]) => n === 'plx-sys.text-' + role + '-font-size') || [])[1];
-  check('Type floor: the ' + role + ' role is 12px', v === '{plx-ref.font-size-12}', String(v));
+  check('Type floor: the ' + role + ' role is 12px', v === '{plx-ref.font-size-100}', String(v));
 }
 
 const utilities = fs.readFileSync(path.join(ROOT, 'platform', 'system', 'utilities.css'), 'utf8');
@@ -51,7 +51,7 @@ const build = fs.readFileSync(path.join(TOKENS, 'build.json'), 'utf8');
 check('Density: build.json has no standard-comfortable entry', !build.includes('standard-comfortable'));
 check('Density: no Style Dictionary config for standard-comfortable', !fs.existsSync(path.join(ROOT, 'style-dictionary', 'index', 'density-standard-comfortable.config.json')));
 const semantic = values(JSON.parse(fs.readFileSync(path.join(TOKENS, 'semantic.tokens.json'), 'utf8')), '', []);
-check('Density: plx-sys.radius-control is still defined (4px)', semantic.some(([n, v]) => n === 'plx-sys.radius-control' && v === '{plx-sys.radius-control-4px}'));
+check('Density: plx-sys.radius-control is still defined (4px)', semantic.some(([n, v]) => n === 'plx-sys.radius-control' && v === '{plx-sys.radius-control-sm}'));
 
 console.log(failed ? 'TYPE_FLOOR_FAIL ' + failed : 'TYPE_FLOOR_OK');
 process.exit(failed ? 1 : 0);

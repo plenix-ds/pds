@@ -182,8 +182,8 @@ DSParts.records.push(function (H) {
     var cs = getComputedStyle(document.documentElement);
     var rows = TOKENS.map(function (t, i) { return { id: i + 1, name: t[1], token: '--plx-sys-gesture-' + t[0], value: cs.getPropertyValue('--plx-sys-gesture-' + t[0]).trim() || '—', use: t[2] }; });
     return h(P.Table, { label: 'Gesture motion tokens', data: rows, columns: [
-      { title: 'Role', field: 'name', kind: 'name', rowLabel: true, width: '--plx-ref-size-160px' }, { title: 'Token', field: 'token', kind: 'data' },
-      { title: 'Value', field: 'value', kind: 'data', width: '--plx-ref-size-200px' }, { title: 'Use', field: 'use', kind: 'wrap' }] });
+      { title: 'Role', field: 'name', kind: 'name', rowLabel: true, width: '--plx-ref-size-40u' }, { title: 'Token', field: 'token', kind: 'data' },
+      { title: 'Value', field: 'value', kind: 'data', width: '--plx-ref-size-50u' }, { title: 'Use', field: 'use', kind: 'wrap' }] });
   }
   function SettleDemo() {
     var on = H.use(false);

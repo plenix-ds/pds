@@ -7,7 +7,7 @@
       "$description": "DocumentViewer: space between composed regions."
     },
     "document-viewer-height": {
-      "$value": "{plx-ref.size-560px}",
+      "$value": "{plx-ref.size-140u}",
       "$type": "dimension",
       "$description": "DocumentViewer height using existing type and size roles."
     },
@@ -22,7 +22,7 @@
       "$description": "DocumentViewer text-size using existing type and size roles."
     },
     "document-viewer-line-height": {
-      "$value": "{plx-sys.label-height-20px}",
+      "$value": "{plx-sys.label-height-md}",
       "$type": "dimension",
       "$description": "DocumentViewer line-height using existing type and size roles."
     },

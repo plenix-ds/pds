@@ -6,7 +6,7 @@
    field width, ColorPicker, RadioTiles, ChoiceList); categories, tags and project types are cards of rows and renamable
    Tags; the documentation pages are cards of Text, Tables, Cards, Notices, Badges, Metrics and ProgressBars. The style
    guide points at the design system (../platform/design-system/), the point of truth. */
-import { dataPhrase, Icon, CommandBar, CommandBarSearch, useCollectionView, Avatar, Badge, Button, choosePicture, Card, ChoiceList, CollapsibleSection, ColorPicker, ColorSwatch, DATA_COLORS, ContentGrid, Count, EmptyState, Inline, Input, Kbd, leavePage, List, Metric, NavList, NavPane, Notice, PageContent, ProgressBar, PropertyList, RadioTiles, RecordPage, SegmentedControl, Select, SettingsRow, SettingsSection, SideNavPortal, Stack, Switch, Table, Tag, TagList, Text, useDensity, useSession, useTheme, useUnsavedGuard } from 'plenix-platform';
+import { dataPhrase, Icon, CommandBar, CommandBarSearch, useCollectionView, Avatar, Badge, Button, choosePicture, Card, ChoiceList, CollapsibleSection, ColorPicker, ColorSwatch, DATA_COLORS, ContentGrid, Count, EmptyState, Inline, Input, Kbd, leavePage, List, Metric, NavList, NavPane, Notice, PageContent, ProgressBar, PropertyList, RadioTiles, EntityHeader, SegmentedControl, Select, SettingsRow, SettingsSection, SideNavPortal, Stack, Switch, Table, Tag, TagList, Text, useDensity, useSession, useTheme, useUnsavedGuard } from 'plenix-platform';
 import { CatEditModal } from '../suite/classification.jsx';
 const {useState}=React;
 // the sign-in proxy's sign-out (Authentik's forward-auth outpost on every Plenix host): ends the session; an action, so a Button
@@ -16,7 +16,7 @@ const SIGN_OUT="/outpost.goauthentik.io/sign_out";
 // name/value facts as the defined data grid, with a header row (owner, 2026-10-09: all name/value lists in the DataGrid's look)
 const facts=(label,rows)=>{const list=rows.filter(Boolean);return <Table label={label} headerMenu={false}
   data={list.map((r,i)=>({id:i,name:r[0],value:typeof r[1]==="string"||typeof r[1]==="number"?String(r[1]):""}))}
-  columns={[{title:"Name",field:"name",kind:"wrap",rowLabel:true,width:"--plx-ref-size-240px",sortable:false},
+  columns={[{title:"Name",field:"name",kind:"wrap",rowLabel:true,width:"--plx-ref-size-60u",sortable:false},
     {title:"Value",field:"value",kind:"wrap",sortable:false,render:d=>{const r=list[d.id];return r?(r[2]?<Text variant="data">{r[1]}</Text>:r[1]):null;}}]}/>;};
 
 /* A feature's status as a Badge: [tone, label] */
@@ -34,12 +34,33 @@ const FeatureRow=({item})=>{
 /* ── the screen and its cards ── */
 // the screen a card belongs to: its open state is remembered under "<screen>:<title>"
 const ScreenKey=React.createContext("");
-// a settings screen: a way back (lead), its title (the h1) and actions, then its cards
-const Screen=({id,lead,title,desc,actions,children})=>(
+// a settings screen: a way back (lead), its header (the h1: the screen's nav icon in the gray box, "Settings · what it is",
+// its actions) and then its cards. The header is the EntityHeader, Structured, top-small (#127, D-0049); actions are
+// elements here, so they go in the header's control slot, not its actions list.
+const SETTINGS_CATS=[
+    {id:"account",    label:"Account",      icon:"settings-profile"},
+    {id:"appearance", label:"Appearance",   icon:"settings-customize"},
+    {id:"calendar",   label:"Calendar",     icon:"calendar"},
+    {id:"categories", label:"Categories",   icon:"settings-categories"},
+    {id:"contacts",   label:"Contacts",     icon:"person"},
+    {id:"dashboard",  label:"Dashboard",    icon:"home"},
+    {id:"email",      label:"Email",        icon:"settings-email"},
+    {id:"files",      label:"Files",        icon:"document"},
+    {id:"general",    label:"General",      icon:"settings-general"},
+    {id:"notes",      label:"Notes",        icon:"text-card"},
+    {id:"projects",   label:"Projects",     icon:"briefcase"},
+    {id:"projtypes",  label:"Project types",icon:"briefcase-plus"},
+    {id:"tags",       label:"Tags",         icon:"tags"},
+    {id:"tasks",      label:"Tasks",        icon:"circle-check"},
+];
+const Screen=({id,lead,title,desc,actions,children})=>{
+  const icon=(SETTINGS_CATS.find(c=>c.id===id)||{}).icon||"settings";
+  return (
   <ScreenKey.Provider value={id||title}>
-    <Stack gap="lg">{lead||null}<RecordPage.Header title={title} description={desc} actions={actions}/><div>{children}</div></Stack>
+    <Stack gap="lg">{lead||null}<EntityHeader layout="top-small" media={{icon,hue:"gray"} /* plx-icons: settings */} title={title} subtitle={"Settings"+(desc?" · "+desc:"")} control={actions}/><div>{children}</div></Stack>
   </ScreenKey.Provider>
-);
+  );
+};
 // a card of the screen: SettingsSection, static or collapsible, remembered per screen
 const Section=({stateKey,...p})=>{const screen=React.useContext(ScreenKey);return <SettingsSection stateKey={screen+":"+(stateKey||p.title)} {...p}/>;};
 // a row and its control, named by the row's label
@@ -105,14 +126,14 @@ function CapDoc({cap,backLabel,onBack,crumb}){
     )},
     {title:"Scenarios",long:true,content:(
       <Table label="Scenarios" data={(cap.scenarios||[]).map((r,i)=>({...r,id:i}))} columns={[
-        {title:"If",field:"condition",kind:"wrap",rowLabel:true,width:"--plx-ref-size-240px"},
+        {title:"If",field:"condition",kind:"wrap",rowLabel:true,width:"--plx-ref-size-60u"},
         {title:"Then",field:"expected",kind:"wrap"},
       ]}/>
     )},
     {title:"Specification",long:true,content:(
       <Stack gap="sm">
         <Table label="Fields" data={(spec.ownFields||[]).map((f,i)=>({id:i,field:f.field+(f.required?" *":""),type:f.type,required:f.required?"Yes":"No",notes:f.notes||(f.default!==undefined?"Default: "+f.default:"")}))} columns={[
-          {title:"Field",field:"field",kind:"name",rowLabel:true,width:"--plx-ref-size-240px"},
+          {title:"Field",field:"field",kind:"name",rowLabel:true,width:"--plx-ref-size-60u"},
           {title:"Type",field:"type",kind:"data"},
           {title:"Required",field:"required"},
           {title:"Notes",field:"notes",kind:"wrap"},
@@ -204,7 +225,7 @@ function DocsPanel({docSection,setDocSection}){
       </Section>
       <Section title="What the platform unifies">
         <Table label="What the platform unifies" data={(window.PV_UNIFIES||[]).map((r,i)=>({id:i,silo:r[0],unified:r[1]}))} columns={[
-          {title:"Traditional silo",field:"silo",kind:"wrap",rowLabel:true,width:"--plx-ref-size-240px"},
+          {title:"Traditional silo",field:"silo",kind:"wrap",rowLabel:true,width:"--plx-ref-size-60u"},
           {title:"Unified in Plenix",field:"unified",kind:"wrap"},
         ]}/>
       </Section>
@@ -242,7 +263,7 @@ function DocsPanel({docSection,setDocSection}){
 
   if(docSection==="terminology"){
     // a layer's table: its headers as DataGrid columns (c0, c1…), its rows as grid rows; the first column names the row
-    const tableColumns=t=>t.headers.map((h,j)=>({title:h,field:"c"+j,kind:"wrap",rowLabel:j===0,width:j===0?"--plx-ref-size-240px":undefined}));
+    const tableColumns=t=>t.headers.map((h,j)=>({title:h,field:"c"+j,kind:"wrap",rowLabel:j===0,width:j===0?"--plx-ref-size-60u":undefined}));
     const tableRows=t=>t.rows.map((r,i)=>Object.assign({id:i},...r.map((v,j)=>({["c"+j]:v}))));
     return(
       <Screen id="docs-terminology" title="Terminology" desc="Plenix mapped to standard software development structure. Use these definitions consistently across design, development, and documentation.">
@@ -347,7 +368,7 @@ function DocsPanel({docSection,setDocSection}){
               ["categories[]","string[]","Grouped search-to-select with create — shows hierarchy"],
               ["tags[]","string[]","Grouped search-to-select with create — auto-lowercase-hyphen"],
             ].map((r,i)=>({id:i,field:r[0],type:r[1],ui:r[2]}))} columns={[
-              {title:"Field",field:"field",kind:"name",rowLabel:true,width:"--plx-ref-size-240px"},
+              {title:"Field",field:"field",kind:"name",rowLabel:true,width:"--plx-ref-size-60u"},
               {title:"Type",field:"type",kind:"data"},
               {title:"UI",field:"ui",kind:"wrap"},
             ]}/>
@@ -368,7 +389,7 @@ function DocsPanel({docSection,setDocSection}){
             <Section key={key} title={type.label} stateKey={"type-"+key} collapsible defaultExpanded={false}
               description={<Inline as="span" gap="sm" wrap><Icon name={type.icon||"doc-text"}/>{}<Text>{type.desc}</Text><Text variant="data">{fieldCount} own field{fieldCount!==1?"s":""}</Text><Tag>{type.capability}</Tag></Inline>}>
               <Table label={type.label+" fields"} empty="No own fields" data={fields.map(([n,d])=>({id:n,name:n+(d.required?" *":""),type:d.type,detail:d.enum?"enum: "+d.enum.join(", "):d.desc||d.unit?"unit: "+d.unit:""}))} columns={[
-                {title:"Field",field:"name",kind:"name",rowLabel:true,width:"--plx-ref-size-240px"},
+                {title:"Field",field:"name",kind:"name",rowLabel:true,width:"--plx-ref-size-60u"},
                 {title:"Type",field:"type",kind:"data"},
                 {title:"Detail",field:"detail",kind:"wrap"},
               ]}/>
@@ -545,22 +566,6 @@ export function Settings({prefs,setPrefs,screen,onBack}){
   const deletePT=id=>setProjTypes(prev=>prev.filter(t=>t.id!==id));
   const cancelPT=()=>{setPtAdding(false);setPtEditVal("");};
 
-  const SETTINGS_CATS=[
-    {id:"account",    label:"Account",      icon:"settings-profile"},
-    {id:"appearance", label:"Appearance",   icon:"settings-customize"},
-    {id:"calendar",   label:"Calendar",     icon:"calendar"},
-    {id:"categories", label:"Categories",   icon:"settings-categories"},
-    {id:"contacts",   label:"Contacts",     icon:"person"},
-    {id:"dashboard",  label:"Dashboard",    icon:"home"},
-    {id:"email",      label:"Email",        icon:"settings-email"},
-    {id:"files",      label:"Files",        icon:"document"},
-    {id:"general",    label:"General",      icon:"settings-general"},
-    {id:"notes",      label:"Notes",        icon:"text-card"},
-    {id:"projects",   label:"Projects",     icon:"briefcase"},
-    {id:"projtypes",  label:"Project types",icon:"briefcase-plus"},
-    {id:"tags",       label:"Tags",         icon:"tags"},
-    {id:"tasks",      label:"Tasks",        icon:"circle-check"},
-  ];
 
  // the accent colors to choose from: data handed to ColorSwatch (prefs.accent keeps the chosen value)
   const accent=DATA_COLORS.indexOf(prefs.accent)>=0?prefs.accent:DATA_COLORS[0];

@@ -25,11 +25,11 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "toolbar-control-gap": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension"
     },
     "button-cluster-gap": {
-      "$value": "{plx-ref.space-12px}",
+      "$value": "{plx-ref.space-3u}",
       "$type": "dimension",
       "$extensions": {
         "plenix": {
@@ -48,7 +48,7 @@
       }
     },
     "dialog-action-gap": {
-      "$value": "{plx-ref.space-12px}",
+      "$value": "{plx-ref.space-3u}",
       "$type": "dimension",
       "$extensions": {
         "plenix": {
@@ -67,12 +67,12 @@
       }
     },
     "card-padding": {
-      "$value": "{plx-ref.space-16px}",
+      "$value": "{plx-ref.space-4u}",
       "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-space-component-gap-lg instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
     "dialog-padding": {
-      "$value": "{plx-ref.space-16px}",
+      "$value": "{plx-ref.space-4u}",
       "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-space-container-inset-lg instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     }

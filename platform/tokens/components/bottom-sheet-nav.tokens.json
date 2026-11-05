@@ -7,12 +7,12 @@
       "$description": "BottomSheetNav: the space between tiles."
     },
     "bottom-sheet-nav-tile-min-width": {
-      "$value": "{plx-ref.size-80px}",
+      "$value": "{plx-ref.size-20u}",
       "$type": "dimension",
       "$description": "BottomSheetNav: a tile's narrowest width (three or four to a row on a phone)."
     },
     "bottom-sheet-nav-tile-min-height": {
-      "$value": "{plx-ref.size-72px}",
+      "$value": "{plx-ref.size-18u}",
       "$type": "dimension",
       "$description": "BottomSheetNav: a tile's least height (well over the touch target)."
     },
@@ -32,7 +32,7 @@
       "$description": "BottomSheetNav: the space beside the label."
     },
     "bottom-sheet-nav-tile-gap": {
-      "$value": "{plx-ref.size-4px}",
+      "$value": "{plx-ref.size-1u}",
       "$type": "dimension",
       "$description": "BottomSheetNav: the space between a tile's icon and its label."
     },
@@ -62,12 +62,12 @@
       "$description": "BottomSheetNav: a tile label's typeface (UI text)."
     },
     "bottom-sheet-nav-tile-label-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "BottomSheetNav: a tile label's size (as the bottom navigation bar's labels)."
     },
     "bottom-sheet-nav-tile-label-line-height": {
-      "$value": "{plx-sys.label-height-16px}",
+      "$value": "{plx-sys.label-height-sm}",
       "$type": "dimension",
       "$description": "BottomSheetNav: a tile label's line height."
     }

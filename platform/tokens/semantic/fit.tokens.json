@@ -7,12 +7,12 @@
       "$description": "The most lines a wrapping heading or label shows; past them the last line ends in an ellipsis and the full text is in a tooltip."
     },
     "fit-line-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$description": "The line height of a wrapping heading or label: two lines are 32px; with the padding below, 40px."
     },
     "fit-footer-stack-width": {
-      "$value": "{plx-ref.size-400px}",
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension",
       "$description": "A footer or an action bar stacks its main button and Cancel full width, the main one first, in a window narrower than this (the window, not the bar). The media query writes the same 400px (CSS cannot read a token there); a component reads this token."
     },
@@ -27,7 +27,7 @@
       "$description": "The narrowest a field in a bar or header gets (a Select, Combobox, TreeSelect, DatePicker, TimePicker, SearchField or Input without a width of its own, and one with the large width when its bar is out of room): a short field is widened to it, and a bar shrinks its fields to it before it overflows (#558, #554)."
     },
     "fit-field-max-width": {
-      "$value": "{plx-ref.size-320px}",
+      "$value": "{plx-ref.size-80u}",
       "$type": "dimension",
       "$description": "The widest a field in a bar or header grows to fit its longest choice (#558): a longer choice is cut with an ellipsis and shows its full text in a tooltip."
     }

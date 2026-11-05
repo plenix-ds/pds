@@ -4,6 +4,8 @@
 export { Badge } from './components/Badge/Badge.tsx';
 export { VisuallyHidden } from './components/VisuallyHidden/VisuallyHidden.tsx';
 export { Isolate } from './components/Isolate/Isolate.tsx';
+export { AnswerLines } from './components/AnswerLines/AnswerLines.tsx';
+export { PageBreak } from './components/PageBreak/PageBreak.tsx';
 export { VoteTally } from './components/VoteTally/VoteTally.jsx';
 export { Count } from './components/Count/Count.tsx';
 export { Metric } from './components/Metric/Metric.tsx';
@@ -73,6 +75,7 @@ export { DataToolbar } from './patterns/DataToolbar/DataToolbar.jsx';
 export { BulkActions, SelectionSummary } from './patterns/BulkActions/BulkActions.jsx';
 export { ContentGrid } from './patterns/ContentGrid/ContentGrid.jsx';
 export { PropertyList } from './patterns/PropertyList/PropertyList.jsx';
+export { PrintDocument } from './patterns/PrintDocument/PrintDocument.tsx';
 export { RecordPage } from './patterns/RecordPage/RecordPage.jsx';
 export { EntityHeader } from './patterns/EntityHeader/EntityHeader.jsx';
 export { ActivityList } from './patterns/ActivityList/ActivityList.jsx';
@@ -237,7 +240,7 @@ export { PermissionSummary } from './patterns/PermissionSummary/PermissionSummar
 export { QueryBuilder } from './patterns/QueryBuilder/QueryBuilder.jsx';
 export { formatQuery } from './patterns/QueryBuilder/QueryBuilder.jsx';
 export { RoleLabel } from './components/RoleLabel/RoleLabel.tsx';
-export { SearchResult, SearchResultGroup, highlightMatches } from './components/SearchResult/SearchResult.jsx';
+export { SearchResult, SearchResultGroup, highlightMatches } from './components/SearchResult/SearchResult.tsx';
 export { Timeline } from './components/Timeline/Timeline.tsx';
 export { ResourceList } from './patterns/ResourceList/ResourceList.jsx';
 export { useChartInteraction, ChartFocusMark, ChartBrush, chartAnnounce, CHART_INTERACTION_STRINGS } from './charts/interaction.js';
@@ -356,6 +359,6 @@ export { Heading } from './components/Heading/Heading.tsx';
 export { TreeChart } from './charts/TreeChart.jsx';
 export { Anchor } from './components/Anchor/Anchor.tsx';
 export { OverflowList } from './components/OverflowList/OverflowList.tsx';
-export { MenuBar, MenuBarMenu } from './components/MenuBar/MenuBar.jsx';
+export { MenuBar, MenuBarMenu } from './components/MenuBar/MenuBar.tsx';
 export { DataGridEngine } from './components/DataGrid/DataGridEngine.jsx';
 /* END library parts */

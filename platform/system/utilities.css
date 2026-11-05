@@ -11,9 +11,9 @@
 .plx-u-absolute{position:absolute;}
 .plx-u-auto-rows-auto{grid-auto-rows:auto;}
 .plx-u-auto-rows-max-content{grid-auto-rows:max-content;}
-.plx-u-basis-160px{flex-basis:var(--plx-ref-size-160px);}
-.plx-u-basis-220px{flex-basis:var(--plx-ref-size-220px);}
-.plx-u-basis-240px{flex-basis:var(--plx-ref-size-240px);}
+.plx-u-basis-160px{flex-basis:var(--plx-ref-size-40u);}
+.plx-u-basis-220px{flex-basis:var(--plx-ref-size-55u);}
+.plx-u-basis-240px{flex-basis:var(--plx-ref-size-60u);}
 .plx-u-bg-nav-pane-background{background-color:var(--plx-comp-nav-pane-background);}
 .plx-u-bg-surface-raised{background-color:var(--plx-sys-surface-raised);}
 .plx-u-bg-transparent{background-color:transparent;}
@@ -46,7 +46,7 @@
 .plx-u-border-r-none{border-right-style:none;}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
 .plx-u-border-r-solid{border-right-style:var(--plx-sys-border-style-solid);}
-.plx-u-border-radius-detail-4px{border-radius:var(--plx-sys-radius-detail-4px);}
+.plx-u-border-radius-detail-4px{border-radius:var(--plx-sys-radius-detail);}
 .plx-u-border-radius-pill{border-radius:var(--plx-sys-shape-mark);}
 .plx-u-border-solid{border-style:var(--plx-sys-border-style-solid);}
 .plx-u-border-t-1px{border-top-width:var(--plx-sys-border-width-thin);}
@@ -81,43 +81,43 @@
 .plx-u-flex-wrap{flex-wrap:wrap;}
 .plx-u-flex{display:flex;}
 /* stylelint-disable-next-line declaration-property-value-allowed-list -- a font-size utility on the raw scale (public class); it moves to type roles with the token rename (docs/adr/0002) */
-.plx-u-fs-09{font-size:var(--plx-ref-font-size-12);}
+.plx-u-fs-09{font-size:var(--plx-ref-font-size-100);}
 /* stylelint-disable-next-line declaration-property-value-allowed-list -- a font-size utility on the raw scale (public class); it moves to type roles with the token rename (docs/adr/0002) */
-.plx-u-fs-10{font-size:var(--plx-ref-font-size-12);}
+.plx-u-fs-10{font-size:var(--plx-ref-font-size-100);}
 /* stylelint-disable-next-line declaration-property-value-allowed-list -- a font-size utility on the raw scale (public class); it moves to type roles with the token rename (docs/adr/0002) */
-.plx-u-fs-11{font-size:var(--plx-ref-font-size-12);}
+.plx-u-fs-11{font-size:var(--plx-ref-font-size-100);}
 /* stylelint-disable-next-line declaration-property-value-allowed-list -- a font-size utility on the raw scale (public class); it moves to type roles with the token rename (docs/adr/0002) */
-.plx-u-fs-12{font-size:var(--plx-ref-font-size-12);}
+.plx-u-fs-12{font-size:var(--plx-ref-font-size-100);}
 /* stylelint-disable-next-line declaration-property-value-allowed-list -- a font-size utility on the raw scale (public class); it moves to type roles with the token rename (docs/adr/0002) */
-.plx-u-fs-13{font-size:var(--plx-ref-font-size-13);}
+.plx-u-fs-13{font-size:var(--plx-ref-font-size-200);}
 /* stylelint-disable-next-line declaration-property-value-allowed-list -- a font-size utility on the raw scale (public class); it moves to type roles with the token rename (docs/adr/0002) */
-.plx-u-fs-14{font-size:var(--plx-ref-font-size-14);}
+.plx-u-fs-14{font-size:var(--plx-ref-font-size-300);}
 /* stylelint-disable-next-line declaration-property-value-allowed-list -- a font-size utility on the raw scale (public class); it moves to type roles with the token rename (docs/adr/0002) */
-.plx-u-fs-15{font-size:var(--plx-ref-font-size-15);}
+.plx-u-fs-15{font-size:var(--plx-ref-font-size-400);}
 /* stylelint-disable-next-line declaration-property-value-allowed-list -- a font-size utility on the raw scale (public class); it moves to type roles with the token rename (docs/adr/0002) */
-.plx-u-fs-18{font-size:var(--plx-ref-font-size-18);}
+.plx-u-fs-18{font-size:var(--plx-ref-font-size-500);}
 /* stylelint-disable-next-line declaration-property-value-allowed-list -- a font-size utility on the raw scale (public class); it moves to type roles with the token rename (docs/adr/0002) */
-.plx-u-fs-20{font-size:var(--plx-ref-font-size-20);}
+.plx-u-fs-20{font-size:var(--plx-ref-font-size-600);}
 .plx-u-fw-bold-700{font-weight:var(--plx-sys-font-weight-bold);}
 .plx-u-fw-medium-500{font-weight:var(--plx-sys-font-weight-medium);}
 .plx-u-fw-regular-400{font-weight:var(--plx-sys-font-weight-regular);}
 .plx-u-fw-semibold-600{font-weight:var(--plx-sys-font-weight-semibold);}
 .plx-u-gap-cluster-sm{column-gap:var(--plx-sys-space-cluster-sm);row-gap:var(--plx-sys-space-cluster-sm);}
 .plx-u-gap-x-0{column-gap:0;}
-.plx-u-gap-x-12px{column-gap:var(--plx-ref-space-12px);}
-.plx-u-gap-x-16px{column-gap:var(--plx-ref-space-16px);}
-.plx-u-gap-x-24px{column-gap:var(--plx-ref-space-24px);}
-.plx-u-gap-x-4px{column-gap:var(--plx-ref-space-4px);}
-.plx-u-gap-x-8px{column-gap:var(--plx-ref-space-8px);}
+.plx-u-gap-x-12px{column-gap:var(--plx-ref-space-3u);}
+.plx-u-gap-x-16px{column-gap:var(--plx-ref-space-4u);}
+.plx-u-gap-x-24px{column-gap:var(--plx-ref-space-6u);}
+.plx-u-gap-x-4px{column-gap:var(--plx-ref-space-1u);}
+.plx-u-gap-x-8px{column-gap:var(--plx-ref-space-2u);}
 .plx-u-gap-x-cluster-xs{column-gap:var(--plx-sys-space-cluster-xs);}
 .plx-u-gap-x-inline-sm{column-gap:var(--plx-sys-space-inline-sm);}
 .plx-u-gap-x-stack-xs{column-gap:var(--plx-sys-space-stack-xs);}
 .plx-u-gap-y-0{row-gap:0;}
-.plx-u-gap-y-12px{row-gap:var(--plx-ref-space-12px);}
-.plx-u-gap-y-16px{row-gap:var(--plx-ref-space-16px);}
-.plx-u-gap-y-24px{row-gap:var(--plx-ref-space-24px);}
-.plx-u-gap-y-4px{row-gap:var(--plx-ref-space-4px);}
-.plx-u-gap-y-8px{row-gap:var(--plx-ref-space-8px);}
+.plx-u-gap-y-12px{row-gap:var(--plx-ref-space-3u);}
+.plx-u-gap-y-16px{row-gap:var(--plx-ref-space-4u);}
+.plx-u-gap-y-24px{row-gap:var(--plx-ref-space-6u);}
+.plx-u-gap-y-4px{row-gap:var(--plx-ref-space-1u);}
+.plx-u-gap-y-8px{row-gap:var(--plx-ref-space-2u);}
 .plx-u-gap-y-cluster-xs{row-gap:var(--plx-sys-space-cluster-xs);}
 .plx-u-gap-y-component-gap-sm{row-gap:var(--plx-sys-space-component-gap-sm);}
 .plx-u-gap-y-inline-sm{row-gap:var(--plx-sys-space-inline-sm);}
@@ -127,22 +127,22 @@
 .plx-u-grid{display:grid;}
 .plx-u-grow-0{flex-grow:0;}
 .plx-u-h-100p{height:100%;}
-.plx-u-h-10px{height:var(--plx-ref-glyph-size-10px);}
-.plx-u-h-12px{height:var(--plx-ref-size-12px);}
-.plx-u-h-14px{height:var(--plx-ref-glyph-size-14px);}
-.plx-u-h-16px{height:var(--plx-ref-size-16px);}
-.plx-u-h-20px{height:var(--plx-ref-size-20px);}
-.plx-u-h-24px{height:var(--plx-ref-size-24px);}
-.plx-u-h-28px{height:var(--plx-ref-size-28px);}
-.plx-u-h-32px{height:var(--plx-ref-size-32px);}
-.plx-u-h-40px{height:var(--plx-ref-size-40px);}
-.plx-u-h-48px{height:var(--plx-ref-size-48px);}
-.plx-u-h-4px{height:var(--plx-ref-size-4px);}
-.plx-u-h-60px{height:var(--plx-ref-size-60px);}
+.plx-u-h-10px{height:var(--plx-ref-glyph-size-sm);}
+.plx-u-h-12px{height:var(--plx-ref-size-3u);}
+.plx-u-h-14px{height:var(--plx-ref-glyph-size-md);}
+.plx-u-h-16px{height:var(--plx-ref-size-4u);}
+.plx-u-h-20px{height:var(--plx-ref-size-5u);}
+.plx-u-h-24px{height:var(--plx-ref-size-6u);}
+.plx-u-h-28px{height:var(--plx-ref-size-7u);}
+.plx-u-h-32px{height:var(--plx-ref-size-8u);}
+.plx-u-h-40px{height:var(--plx-ref-size-10u);}
+.plx-u-h-48px{height:var(--plx-ref-size-12u);}
+.plx-u-h-4px{height:var(--plx-ref-size-1u);}
+.plx-u-h-60px{height:var(--plx-ref-size-15u);}
 .plx-u-h-60p{height:60%;}
-.plx-u-h-6px{height:var(--plx-ref-glyph-size-6px);}
-.plx-u-h-72px{height:var(--plx-ref-size-72px);}
-.plx-u-h-8px{height:var(--plx-ref-size-8px);}
+.plx-u-h-6px{height:var(--plx-ref-glyph-size-xs);}
+.plx-u-h-72px{height:var(--plx-ref-size-18u);}
+.plx-u-h-8px{height:var(--plx-ref-size-2u);}
 .plx-u-inline-block{display:inline-block;}
 .plx-u-inline-flex{display:inline-flex;}
 .plx-u-italic{font-style:italic;}
@@ -155,7 +155,7 @@
 .plx-u-justify-flex-end{justify-content:flex-end;}
 .plx-u-justify-flex-start{justify-content:flex-start;}
 .plx-u-justify-space-between{justify-content:space-between;}
-.plx-u-leading-16px{line-height:var(--plx-ref-size-16px);}
+.plx-u-leading-16px{line-height:var(--plx-ref-size-4u);}
 .plx-u-leading-none{line-height:var(--plx-ref-line-height-none);}
 .plx-u-leading-normal{line-height:var(--plx-ref-line-height-normal);}
 .plx-u-leading-relaxed{line-height:var(--plx-ref-line-height-relaxed);}
@@ -164,69 +164,69 @@
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
 .plx-u-left-0{left:0;}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
-.plx-u-left-4px{left:var(--plx-ref-space-4px);}
+.plx-u-left-4px{left:var(--plx-ref-space-1u);}
 .plx-u-line-through{text-decoration-line:line-through;}
-.plx-u-max-height-160px{max-height:var(--plx-ref-size-160px);}
-.plx-u-max-w-200px{max-width:var(--plx-ref-size-200px);}
-.plx-u-max-w-300px{max-width:var(--plx-ref-size-300px);}
-.plx-u-max-w-320px{max-width:var(--plx-ref-size-320px);}
-.plx-u-max-w-560px{max-width:var(--plx-ref-size-560px);}
-.plx-u-max-w-600px{max-width:var(--plx-ref-size-600px);}
+.plx-u-max-height-160px{max-height:var(--plx-ref-size-40u);}
+.plx-u-max-w-200px{max-width:var(--plx-ref-size-50u);}
+.plx-u-max-w-300px{max-width:var(--plx-ref-size-75u);}
+.plx-u-max-w-320px{max-width:var(--plx-ref-size-80u);}
+.plx-u-max-w-560px{max-width:var(--plx-ref-size-140u);}
+.plx-u-max-w-600px{max-width:var(--plx-ref-size-150u);}
 .plx-u-max-w-68p{max-width:68%;}
-.plx-u-max-w-720px{max-width:var(--plx-ref-size-720px);}
-.plx-u-max-w-72px{max-width:var(--plx-ref-size-72px);}
+.plx-u-max-w-720px{max-width:var(--plx-ref-size-180u);}
+.plx-u-max-w-72px{max-width:var(--plx-ref-size-18u);}
 .plx-u-mb-0{margin-bottom:0;}
-.plx-u-mb-12px{margin-bottom:var(--plx-ref-space-12px);}
-.plx-u-mb-16px{margin-bottom:var(--plx-ref-space-16px);}
-.plx-u-mb-20px{margin-bottom:var(--plx-ref-space-20px);}
-.plx-u-mb-24px{margin-bottom:var(--plx-ref-space-24px);}
-.plx-u-mb-28px{margin-bottom:var(--plx-ref-space-28px);}
-.plx-u-mb-4px{margin-bottom:var(--plx-ref-space-4px);}
-.plx-u-mb-8px{margin-bottom:var(--plx-ref-space-8px);}
+.plx-u-mb-12px{margin-bottom:var(--plx-ref-space-3u);}
+.plx-u-mb-16px{margin-bottom:var(--plx-ref-space-4u);}
+.plx-u-mb-20px{margin-bottom:var(--plx-ref-space-5u);}
+.plx-u-mb-24px{margin-bottom:var(--plx-ref-space-6u);}
+.plx-u-mb-28px{margin-bottom:var(--plx-ref-space-7u);}
+.plx-u-mb-4px{margin-bottom:var(--plx-ref-space-1u);}
+.plx-u-mb-8px{margin-bottom:var(--plx-ref-space-2u);}
 .plx-u-mb-stack-md{margin-bottom:var(--plx-sys-space-stack-md);}
 .plx-u-mb-stack-sm{margin-bottom:var(--plx-sys-space-stack-sm);}
 .plx-u-mb-stack-xs{margin-bottom:var(--plx-sys-space-stack-xs);}
 .plx-u-min-h-0{min-height:0;}
 .plx-u-min-h-100p{min-height:100%;}
-.plx-u-min-h-180px{min-height:var(--plx-ref-size-180px);}
-.plx-u-min-h-80px{min-height:var(--plx-ref-size-80px);}
-.plx-u-min-h-label-height-16px{min-height:var(--plx-sys-label-height-16px);}
-.plx-u-min-h-label-height-20px{min-height:var(--plx-sys-label-height-20px);}
+.plx-u-min-h-180px{min-height:var(--plx-ref-size-45u);}
+.plx-u-min-h-80px{min-height:var(--plx-ref-size-20u);}
+.plx-u-min-h-label-height-16px{min-height:var(--plx-sys-label-height-sm);}
+.plx-u-min-h-label-height-20px{min-height:var(--plx-sys-label-height-md);}
 .plx-u-min-w-0{min-width:0;}
-.plx-u-min-w-100px{min-width:var(--plx-ref-size-100px);}
-.plx-u-min-w-16px{min-width:var(--plx-ref-size-16px);}
-.plx-u-min-w-60px{min-width:var(--plx-ref-size-60px);}
-.plx-u-min-w-80px{min-width:var(--plx-ref-size-80px);}
+.plx-u-min-w-100px{min-width:var(--plx-ref-size-25u);}
+.plx-u-min-w-16px{min-width:var(--plx-ref-size-4u);}
+.plx-u-min-w-60px{min-width:var(--plx-ref-size-15u);}
+.plx-u-min-w-80px{min-width:var(--plx-ref-size-20u);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
-.plx-u-ml-4px{margin-left:var(--plx-ref-space-4px);}
+.plx-u-ml-4px{margin-left:var(--plx-ref-space-1u);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
-.plx-u-ml-8px{margin-left:var(--plx-ref-space-8px);}
+.plx-u-ml-8px{margin-left:var(--plx-ref-space-2u);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
 .plx-u-ml-auto{margin-left:auto;}
 .plx-u-ms-auto{margin-inline-start:auto;}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
-.plx-u-mr-4px{margin-right:var(--plx-ref-space-4px);}
+.plx-u-mr-4px{margin-right:var(--plx-ref-space-1u);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
-.plx-u-mr-8px{margin-right:var(--plx-ref-space-8px);}
+.plx-u-mr-8px{margin-right:var(--plx-ref-space-2u);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
 .plx-u-mr-inline-xs{margin-right:var(--plx-sys-space-inline-xs);}
 .plx-u-mt-0{margin-top:0;}
-.plx-u-mt-12px{margin-top:var(--plx-ref-space-12px);}
-.plx-u-mt-16px{margin-top:var(--plx-ref-space-16px);}
-.plx-u-mt-20px{margin-top:var(--plx-ref-space-20px);}
-.plx-u-mt-24px{margin-top:var(--plx-ref-space-24px);}
-.plx-u-mt-4px{margin-top:var(--plx-ref-space-4px);}
-.plx-u-mt-8px{margin-top:var(--plx-ref-space-8px);}
+.plx-u-mt-12px{margin-top:var(--plx-ref-space-3u);}
+.plx-u-mt-16px{margin-top:var(--plx-ref-space-4u);}
+.plx-u-mt-20px{margin-top:var(--plx-ref-space-5u);}
+.plx-u-mt-24px{margin-top:var(--plx-ref-space-6u);}
+.plx-u-mt-4px{margin-top:var(--plx-ref-space-1u);}
+.plx-u-mt-8px{margin-top:var(--plx-ref-space-2u);}
 .plx-u-mt-auto{margin-top:auto;}
 .plx-u-mt-stack-lg{margin-top:var(--plx-sys-space-stack-lg);}
 .plx-u-mt-stack-md{margin-top:var(--plx-sys-space-stack-md);}
 .plx-u-mt-stack-sm{margin-top:var(--plx-sys-space-stack-sm);}
 .plx-u-mt-stack-xs{margin-top:var(--plx-sys-space-stack-xs);}
 .plx-u-mx-0{margin-inline-end:0;margin-inline-start:0;}
-.plx-u-mx-4px{margin-inline-end:var(--plx-ref-space-4px);margin-inline-start:var(--plx-ref-space-4px);}
+.plx-u-mx-4px{margin-inline-end:var(--plx-ref-space-1u);margin-inline-start:var(--plx-ref-space-1u);}
 .plx-u-mx-auto{margin-inline-end:auto;margin-inline-start:auto;}
 .plx-u-my-0{margin-bottom:0;margin-top:0;}
-.plx-u-my-4px{margin-bottom:var(--plx-ref-space-4px);margin-top:var(--plx-ref-space-4px);}
+.plx-u-my-4px{margin-bottom:var(--plx-ref-space-1u);margin-top:var(--plx-ref-space-1u);}
 .plx-u-none-2{display:none;}
 .plx-u-none-3{text-decoration-line:none;}
 .plx-u-none{text-transform:none;}
@@ -243,100 +243,100 @@
 .plx-u-overflow-hidden{overflow-x:hidden;overflow-y:hidden;}
 .plx-u-overflow-y-auto{overflow-y:auto;}
 .plx-u-p-0{padding-block-end:0;padding-block-start:0;padding-inline-end:0;padding-inline-start:0;}
-.plx-u-p-12px{padding-block-end:var(--plx-ref-space-12px);padding-block-start:var(--plx-ref-space-12px);padding-inline-end:var(--plx-ref-space-12px);padding-inline-start:var(--plx-ref-space-12px);}
-.plx-u-p-16px{padding-block-end:var(--plx-ref-space-16px);padding-block-start:var(--plx-ref-space-16px);padding-inline-end:var(--plx-ref-space-16px);padding-inline-start:var(--plx-ref-space-16px);}
-.plx-u-p-32px{padding-block-end:var(--plx-ref-space-32px);padding-block-start:var(--plx-ref-space-32px);padding-inline-end:var(--plx-ref-space-32px);padding-inline-start:var(--plx-ref-space-32px);}
-.plx-u-p-4px{padding-block-end:var(--plx-ref-space-4px);padding-block-start:var(--plx-ref-space-4px);padding-inline-end:var(--plx-ref-space-4px);padding-inline-start:var(--plx-ref-space-4px);}
-.plx-u-p-8px{padding-block-end:var(--plx-ref-space-8px);padding-block-start:var(--plx-ref-space-8px);padding-inline-end:var(--plx-ref-space-8px);padding-inline-start:var(--plx-ref-space-8px);}
+.plx-u-p-12px{padding-block-end:var(--plx-ref-space-3u);padding-block-start:var(--plx-ref-space-3u);padding-inline-end:var(--plx-ref-space-3u);padding-inline-start:var(--plx-ref-space-3u);}
+.plx-u-p-16px{padding-block-end:var(--plx-ref-space-4u);padding-block-start:var(--plx-ref-space-4u);padding-inline-end:var(--plx-ref-space-4u);padding-inline-start:var(--plx-ref-space-4u);}
+.plx-u-p-32px{padding-block-end:var(--plx-ref-space-8u);padding-block-start:var(--plx-ref-space-8u);padding-inline-end:var(--plx-ref-space-8u);padding-inline-start:var(--plx-ref-space-8u);}
+.plx-u-p-4px{padding-block-end:var(--plx-ref-space-1u);padding-block-start:var(--plx-ref-space-1u);padding-inline-end:var(--plx-ref-space-1u);padding-inline-start:var(--plx-ref-space-1u);}
+.plx-u-p-8px{padding-block-end:var(--plx-ref-space-2u);padding-block-start:var(--plx-ref-space-2u);padding-inline-end:var(--plx-ref-space-2u);padding-inline-start:var(--plx-ref-space-2u);}
 .plx-u-pb-0{padding-bottom:0;}
-.plx-u-pb-12px{padding-bottom:var(--plx-ref-space-12px);}
-.plx-u-pb-16px{padding-bottom:var(--plx-ref-space-16px);}
-.plx-u-pb-20px{padding-bottom:var(--plx-ref-space-20px);}
-.plx-u-pb-4px{padding-bottom:var(--plx-ref-space-4px);}
-.plx-u-pb-8px{padding-bottom:var(--plx-ref-space-8px);}
+.plx-u-pb-12px{padding-bottom:var(--plx-ref-space-3u);}
+.plx-u-pb-16px{padding-bottom:var(--plx-ref-space-4u);}
+.plx-u-pb-20px{padding-bottom:var(--plx-ref-space-5u);}
+.plx-u-pb-4px{padding-bottom:var(--plx-ref-space-1u);}
+.plx-u-pb-8px{padding-bottom:var(--plx-ref-space-2u);}
 .plx-u-pb-inset-xs{padding-bottom:var(--plx-sys-space-inset-xs);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
-.plx-u-pl-12px{padding-left:var(--plx-ref-space-12px);}
-.plx-u-ps-12px{padding-inline-start:var(--plx-ref-space-12px);}
+.plx-u-pl-12px{padding-left:var(--plx-ref-space-3u);}
+.plx-u-ps-12px{padding-inline-start:var(--plx-ref-space-3u);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
-.plx-u-pl-16px{padding-left:var(--plx-ref-space-16px);}
-.plx-u-ps-16px{padding-inline-start:var(--plx-ref-space-16px);}
+.plx-u-pl-16px{padding-left:var(--plx-ref-space-4u);}
+.plx-u-ps-16px{padding-inline-start:var(--plx-ref-space-4u);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
-.plx-u-pl-20px{padding-left:var(--plx-ref-space-20px);}
+.plx-u-pl-20px{padding-left:var(--plx-ref-space-5u);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
-.plx-u-pl-24px{padding-left:var(--plx-ref-space-24px);}
+.plx-u-pl-24px{padding-left:var(--plx-ref-space-6u);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
-.plx-u-pl-32px{padding-left:var(--plx-ref-space-32px);}
+.plx-u-pl-32px{padding-left:var(--plx-ref-space-8u);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
-.plx-u-pl-40px{padding-left:var(--plx-ref-space-40px);}
+.plx-u-pl-40px{padding-left:var(--plx-ref-space-10u);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
 .plx-u-pl-inset-xs{padding-left:var(--plx-sys-space-inset-xs);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
-.plx-u-pr-12px{padding-right:var(--plx-ref-space-12px);}
+.plx-u-pr-12px{padding-right:var(--plx-ref-space-3u);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
-.plx-u-pr-16px{padding-right:var(--plx-ref-space-16px);}
+.plx-u-pr-16px{padding-right:var(--plx-ref-space-4u);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
 .plx-u-pr-inset-xs{padding-right:var(--plx-sys-space-inset-xs);}
 .plx-u-pt-0{padding-top:0;}
-.plx-u-pt-12px{padding-top:var(--plx-ref-space-12px);}
-.plx-u-pt-16px{padding-top:var(--plx-ref-space-16px);}
-.plx-u-pt-4px{padding-top:var(--plx-ref-space-4px);}
-.plx-u-pt-8px{padding-top:var(--plx-ref-space-8px);}
+.plx-u-pt-12px{padding-top:var(--plx-ref-space-3u);}
+.plx-u-pt-16px{padding-top:var(--plx-ref-space-4u);}
+.plx-u-pt-4px{padding-top:var(--plx-ref-space-1u);}
+.plx-u-pt-8px{padding-top:var(--plx-ref-space-2u);}
 .plx-u-pt-component-gap-sm{padding-top:var(--plx-sys-space-component-gap-sm);}
 .plx-u-pt-stack-xs{padding-top:var(--plx-sys-space-stack-xs);}
 .plx-u-px-0{padding-inline-end:0;padding-inline-start:0;}
-.plx-u-px-12px{padding-inline-end:var(--plx-ref-space-12px);padding-inline-start:var(--plx-ref-space-12px);}
-.plx-u-px-16px{padding-inline-end:var(--plx-ref-space-16px);padding-inline-start:var(--plx-ref-space-16px);}
-.plx-u-px-20px{padding-inline-end:var(--plx-ref-space-20px);padding-inline-start:var(--plx-ref-space-20px);}
-.plx-u-px-24px{padding-inline-end:var(--plx-ref-space-24px);padding-inline-start:var(--plx-ref-space-24px);}
-.plx-u-px-28px{padding-inline-end:var(--plx-ref-space-28px);padding-inline-start:var(--plx-ref-space-28px);}
-.plx-u-px-32px{padding-inline-end:var(--plx-ref-space-32px);padding-inline-start:var(--plx-ref-space-32px);}
-.plx-u-px-40px{padding-inline-end:var(--plx-ref-space-40px);padding-inline-start:var(--plx-ref-space-40px);}
-.plx-u-px-4px{padding-inline-end:var(--plx-ref-space-4px);padding-inline-start:var(--plx-ref-space-4px);}
-.plx-u-px-8px{padding-inline-end:var(--plx-ref-space-8px);padding-inline-start:var(--plx-ref-space-8px);}
+.plx-u-px-12px{padding-inline-end:var(--plx-ref-space-3u);padding-inline-start:var(--plx-ref-space-3u);}
+.plx-u-px-16px{padding-inline-end:var(--plx-ref-space-4u);padding-inline-start:var(--plx-ref-space-4u);}
+.plx-u-px-20px{padding-inline-end:var(--plx-ref-space-5u);padding-inline-start:var(--plx-ref-space-5u);}
+.plx-u-px-24px{padding-inline-end:var(--plx-ref-space-6u);padding-inline-start:var(--plx-ref-space-6u);}
+.plx-u-px-28px{padding-inline-end:var(--plx-ref-space-7u);padding-inline-start:var(--plx-ref-space-7u);}
+.plx-u-px-32px{padding-inline-end:var(--plx-ref-space-8u);padding-inline-start:var(--plx-ref-space-8u);}
+.plx-u-px-40px{padding-inline-end:var(--plx-ref-space-10u);padding-inline-start:var(--plx-ref-space-10u);}
+.plx-u-px-4px{padding-inline-end:var(--plx-ref-space-1u);padding-inline-start:var(--plx-ref-space-1u);}
+.plx-u-px-8px{padding-inline-end:var(--plx-ref-space-2u);padding-inline-start:var(--plx-ref-space-2u);}
 .plx-u-py-0{padding-bottom:0;padding-top:0;}
-.plx-u-py-12px{padding-bottom:var(--plx-ref-space-12px);padding-top:var(--plx-ref-space-12px);}
-.plx-u-py-16px{padding-bottom:var(--plx-ref-space-16px);padding-top:var(--plx-ref-space-16px);}
-.plx-u-py-20px{padding-bottom:var(--plx-ref-space-20px);padding-top:var(--plx-ref-space-20px);}
-.plx-u-py-24px{padding-bottom:var(--plx-ref-space-24px);padding-top:var(--plx-ref-space-24px);}
-.plx-u-py-28px{padding-bottom:var(--plx-ref-space-28px);padding-top:var(--plx-ref-space-28px);}
-.plx-u-py-4px{padding-bottom:var(--plx-ref-space-4px);padding-top:var(--plx-ref-space-4px);}
-.plx-u-py-8px{padding-bottom:var(--plx-ref-space-8px);padding-top:var(--plx-ref-space-8px);}
+.plx-u-py-12px{padding-bottom:var(--plx-ref-space-3u);padding-top:var(--plx-ref-space-3u);}
+.plx-u-py-16px{padding-bottom:var(--plx-ref-space-4u);padding-top:var(--plx-ref-space-4u);}
+.plx-u-py-20px{padding-bottom:var(--plx-ref-space-5u);padding-top:var(--plx-ref-space-5u);}
+.plx-u-py-24px{padding-bottom:var(--plx-ref-space-6u);padding-top:var(--plx-ref-space-6u);}
+.plx-u-py-28px{padding-bottom:var(--plx-ref-space-7u);padding-top:var(--plx-ref-space-7u);}
+.plx-u-py-4px{padding-bottom:var(--plx-ref-space-1u);padding-top:var(--plx-ref-space-1u);}
+.plx-u-py-8px{padding-bottom:var(--plx-ref-space-2u);padding-top:var(--plx-ref-space-2u);}
 .plx-u-py-inset-xs{padding-bottom:var(--plx-sys-space-inset-xs);padding-top:var(--plx-sys-space-inset-xs);}
 .plx-u-radius-0px{border-end-end-radius:var(--plx-sys-shape-none);border-end-start-radius:var(--plx-sys-shape-none);border-start-end-radius:var(--plx-sys-shape-none);border-start-start-radius:var(--plx-sys-shape-none);}
-.plx-u-radius-avatar-4px{border-end-end-radius:var(--plx-sys-radius-avatar-4px);border-end-start-radius:var(--plx-sys-radius-avatar-4px);border-start-end-radius:var(--plx-sys-radius-avatar-4px);border-start-start-radius:var(--plx-sys-radius-avatar-4px);}
-.plx-u-radius-avatar-6px{border-end-end-radius:var(--plx-sys-radius-avatar-6px);border-end-start-radius:var(--plx-sys-radius-avatar-6px);border-start-end-radius:var(--plx-sys-radius-avatar-6px);border-start-start-radius:var(--plx-sys-radius-avatar-6px);}
+.plx-u-radius-avatar-4px{border-end-end-radius:var(--plx-sys-radius-avatar-sm);border-end-start-radius:var(--plx-sys-radius-avatar-sm);border-start-end-radius:var(--plx-sys-radius-avatar-sm);border-start-start-radius:var(--plx-sys-radius-avatar-sm);}
+.plx-u-radius-avatar-6px{border-end-end-radius:var(--plx-sys-radius-avatar-md);border-end-start-radius:var(--plx-sys-radius-avatar-md);border-start-end-radius:var(--plx-sys-radius-avatar-md);border-start-start-radius:var(--plx-sys-radius-avatar-md);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
 .plx-u-radius-bl-0px{border-bottom-left-radius:var(--plx-sys-shape-none);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
-.plx-u-radius-bl-card-4px{border-bottom-left-radius:var(--plx-sys-radius-card-4px);}
+.plx-u-radius-bl-card-4px{border-bottom-left-radius:var(--plx-sys-radius-card-sm);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
-.plx-u-radius-bl-card-6px{border-bottom-left-radius:var(--plx-sys-radius-card-6px);}
+.plx-u-radius-bl-card-6px{border-bottom-left-radius:var(--plx-sys-radius-card-md);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
-.plx-u-radius-br-card-4px{border-bottom-right-radius:var(--plx-sys-radius-card-4px);}
+.plx-u-radius-br-card-4px{border-bottom-right-radius:var(--plx-sys-radius-card-sm);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
-.plx-u-radius-br-card-6px{border-bottom-right-radius:var(--plx-sys-radius-card-6px);}
-.plx-u-radius-card-4px{border-end-end-radius:var(--plx-sys-radius-card-4px);border-end-start-radius:var(--plx-sys-radius-card-4px);border-start-end-radius:var(--plx-sys-radius-card-4px);border-start-start-radius:var(--plx-sys-radius-card-4px);}
-.plx-u-radius-card-6px{border-end-end-radius:var(--plx-sys-radius-card-6px);border-end-start-radius:var(--plx-sys-radius-card-6px);border-start-end-radius:var(--plx-sys-radius-card-6px);border-start-start-radius:var(--plx-sys-radius-card-6px);}
-.plx-u-radius-detail-4px{border-end-end-radius:var(--plx-sys-radius-detail-4px);border-end-start-radius:var(--plx-sys-radius-detail-4px);border-start-end-radius:var(--plx-sys-radius-detail-4px);border-start-start-radius:var(--plx-sys-radius-detail-4px);}
+.plx-u-radius-br-card-6px{border-bottom-right-radius:var(--plx-sys-radius-card-md);}
+.plx-u-radius-card-4px{border-end-end-radius:var(--plx-sys-radius-card-sm);border-end-start-radius:var(--plx-sys-radius-card-sm);border-start-end-radius:var(--plx-sys-radius-card-sm);border-start-start-radius:var(--plx-sys-radius-card-sm);}
+.plx-u-radius-card-6px{border-end-end-radius:var(--plx-sys-radius-card-md);border-end-start-radius:var(--plx-sys-radius-card-md);border-start-end-radius:var(--plx-sys-radius-card-md);border-start-start-radius:var(--plx-sys-radius-card-md);}
+.plx-u-radius-detail-4px{border-end-end-radius:var(--plx-sys-radius-detail);border-end-start-radius:var(--plx-sys-radius-detail);border-start-end-radius:var(--plx-sys-radius-detail);border-start-start-radius:var(--plx-sys-radius-detail);}
 .plx-u-radius-pill{border-end-end-radius:var(--plx-sys-shape-mark);border-end-start-radius:var(--plx-sys-shape-mark);border-start-end-radius:var(--plx-sys-shape-mark);border-start-start-radius:var(--plx-sys-shape-mark);}
-.plx-u-radius-surface-6px{border-end-end-radius:var(--plx-sys-radius-surface-6px);border-end-start-radius:var(--plx-sys-radius-surface-6px);border-start-end-radius:var(--plx-sys-radius-surface-6px);border-start-start-radius:var(--plx-sys-radius-surface-6px);}
+.plx-u-radius-surface-6px{border-end-end-radius:var(--plx-sys-radius-surface-md);border-end-start-radius:var(--plx-sys-radius-surface-md);border-start-end-radius:var(--plx-sys-radius-surface-md);border-start-start-radius:var(--plx-sys-radius-surface-md);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
 .plx-u-radius-tl-0px{border-top-left-radius:var(--plx-sys-shape-none);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
-.plx-u-radius-tl-card-6px{border-top-left-radius:var(--plx-sys-radius-card-6px);}
+.plx-u-radius-tl-card-6px{border-top-left-radius:var(--plx-sys-radius-card-md);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
 .plx-u-radius-tr-0px{border-top-right-radius:var(--plx-sys-shape-none);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
-.plx-u-radius-tr-card-4px{border-top-right-radius:var(--plx-sys-radius-card-4px);}
+.plx-u-radius-tr-card-4px{border-top-right-radius:var(--plx-sys-radius-card-sm);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
-.plx-u-radius-tr-card-6px{border-top-right-radius:var(--plx-sys-radius-card-6px);}
+.plx-u-radius-tr-card-6px{border-top-right-radius:var(--plx-sys-radius-card-md);}
 .plx-u-relative{position:relative;}
 .plx-u-resize-vertical{resize:vertical;}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
 .plx-u-right-0{right:0;}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
-.plx-u-right-4px{right:var(--plx-ref-space-4px);}
+.plx-u-right-4px{right:var(--plx-ref-space-1u);}
 .plx-u-self-center{align-self:center;}
 .plx-u-self-start{align-self:start;}
 .plx-u-self-stretch{align-self:stretch;}
@@ -350,7 +350,7 @@
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
 .plx-u-text-right{text-align:right;}
 .plx-u-top-0{top:0;}
-.plx-u-top-4px{top:var(--plx-ref-space-4px);}
+.plx-u-top-4px{top:var(--plx-ref-space-1u);}
 .plx-u-tracking-caps{letter-spacing:var(--plx-sys-letter-spacing-caps);}
 .plx-u-tracking-normal{letter-spacing:normal;}
 .plx-u-tracking-snug{letter-spacing:var(--plx-sys-letter-spacing-snug);}
@@ -372,31 +372,31 @@
 .plx-u-transition-transform{transition-property:transform;}
 .plx-u-transition-width{transition-property:width;}
 .plx-u-uppercase{text-transform:uppercase;}
-.plx-u-w-100px{width:var(--plx-ref-size-100px);}
+.plx-u-w-100px{width:var(--plx-ref-size-25u);}
 .plx-u-w-100p{width:100%;}
-.plx-u-w-10px{width:var(--plx-ref-glyph-size-10px);}
-.plx-u-w-120px{width:var(--plx-ref-size-120px);}
-.plx-u-w-16px{width:var(--plx-ref-size-16px);}
-.plx-u-w-180px{width:var(--plx-ref-size-180px);}
-.plx-u-w-200px{width:var(--plx-ref-size-200px);}
-.plx-u-w-20px{width:var(--plx-ref-size-20px);}
-.plx-u-w-220px{width:var(--plx-ref-size-220px);}
-.plx-u-w-240px{width:var(--plx-ref-size-240px);}
-.plx-u-w-24px{width:var(--plx-ref-size-24px);}
-.plx-u-w-280px{width:var(--plx-ref-size-280px);}
-.plx-u-w-28px{width:var(--plx-ref-size-28px);}
-.plx-u-w-32px{width:var(--plx-ref-size-32px);}
-.plx-u-w-36px{width:var(--plx-ref-size-36px);}
-.plx-u-w-40px{width:var(--plx-ref-size-40px);}
-.plx-u-w-48px{width:var(--plx-ref-size-48px);}
-.plx-u-w-4px{width:var(--plx-ref-size-4px);}
-.plx-u-w-52px{width:var(--plx-ref-size-52px);}
-.plx-u-w-68px{width:var(--plx-ref-size-68px);}
-.plx-u-w-6px{width:var(--plx-ref-glyph-size-6px);}
-.plx-u-w-72px{width:var(--plx-ref-size-72px);}
-.plx-u-w-80px{width:var(--plx-ref-size-80px);}
-.plx-u-w-8px{width:var(--plx-ref-size-8px);}
-.plx-u-w-92px{width:var(--plx-ref-size-92px);}
+.plx-u-w-10px{width:var(--plx-ref-glyph-size-sm);}
+.plx-u-w-120px{width:var(--plx-ref-size-30u);}
+.plx-u-w-16px{width:var(--plx-ref-size-4u);}
+.plx-u-w-180px{width:var(--plx-ref-size-45u);}
+.plx-u-w-200px{width:var(--plx-ref-size-50u);}
+.plx-u-w-20px{width:var(--plx-ref-size-5u);}
+.plx-u-w-220px{width:var(--plx-ref-size-55u);}
+.plx-u-w-240px{width:var(--plx-ref-size-60u);}
+.plx-u-w-24px{width:var(--plx-ref-size-6u);}
+.plx-u-w-280px{width:var(--plx-ref-size-70u);}
+.plx-u-w-28px{width:var(--plx-ref-size-7u);}
+.plx-u-w-32px{width:var(--plx-ref-size-8u);}
+.plx-u-w-36px{width:var(--plx-ref-size-9u);}
+.plx-u-w-40px{width:var(--plx-ref-size-10u);}
+.plx-u-w-48px{width:var(--plx-ref-size-12u);}
+.plx-u-w-4px{width:var(--plx-ref-size-1u);}
+.plx-u-w-52px{width:var(--plx-ref-size-13u);}
+.plx-u-w-68px{width:var(--plx-ref-size-17u);}
+.plx-u-w-6px{width:var(--plx-ref-glyph-size-xs);}
+.plx-u-w-72px{width:var(--plx-ref-size-18u);}
+.plx-u-w-80px{width:var(--plx-ref-size-20u);}
+.plx-u-w-8px{width:var(--plx-ref-size-2u);}
+.plx-u-w-92px{width:var(--plx-ref-size-23u);}
 .plx-u-w-auto{width:auto;}
 .plx-u-w-fit-content{width:fit-content;}
 .plx-u-ws-normal{white-space:normal;}

@@ -9,7 +9,7 @@
   },
   "plx-sys": {
     "control-target-min": {
-      "$value": "{plx-ref.control-size-44px}",
+      "$value": "{plx-ref.control-size-11u}",
       "$type": "dimension",
       "$extensions": {
         "plenix": {
@@ -28,61 +28,61 @@
       }
     },
     "control-height-inline": {
-      "$value": "{plx-ref.control-size-44px}",
+      "$value": "{plx-ref.control-size-11u}",
       "$type": "dimension"
     },
     "control-icon-inline": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension"
     },
     "control-height-toolbar": {
-      "$value": "{plx-ref.control-size-44px}",
+      "$value": "{plx-ref.control-size-11u}",
       "$type": "dimension"
     },
     "control-icon-toolbar": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension"
     },
     "control-height-standard": {
-      "$value": "{plx-ref.control-size-44px}",
+      "$value": "{plx-ref.control-size-11u}",
       "$type": "dimension"
     },
     "control-icon-standard": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension"
     },
     "control-height-prominent": {
-      "$value": "{plx-ref.control-size-44px}",
+      "$value": "{plx-ref.control-size-11u}",
       "$type": "dimension"
     },
     "control-icon-prominent": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension"
     },
     "control-height-dialog": {
-      "$value": "{plx-ref.control-size-44px}",
+      "$value": "{plx-ref.control-size-11u}",
       "$type": "dimension"
     },
     "control-icon-dialog": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$deprecated": "Not used by any page, application or the design spec (issue 882): no role or component token has its values in every theme and density; the nearest is --plx-sys-control-icon-inline (16px instead of 20px when compact). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
     "control-height-dialog-destructive": {
-      "$value": "{plx-ref.control-size-44px}",
+      "$value": "{plx-ref.control-size-11u}",
       "$type": "dimension"
     },
     "control-icon-dialog-destructive": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$deprecated": "Not used by any page, application or the design spec (issue 882): no role or component token has its values in every theme and density; the nearest is --plx-sys-control-icon-inline (16px instead of 20px when compact). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
     "data-grid-row-height": {
-      "$value": "{plx-ref.size-44px}",
+      "$value": "{plx-ref.size-11u}",
       "$type": "dimension"
     },
     "table-row-height": {
-      "$value": "{plx-ref.size-44px}",
+      "$value": "{plx-ref.size-11u}",
       "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-data-grid-row-height instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     }

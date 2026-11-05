@@ -99,6 +99,42 @@ jobs:
       - name: Each AC-n of a slice this PR implements is in its tests and its evidence (plan §7)
         run: node tools/ci/check-trace.mjs "$(git merge-base "$BASE_SHA" HEAD)"
 
+  design-checks:
+    name: Checks 9-11 (state manifest, numeric columns, pill height)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install and build
+        run: npm ci --no-audit --no-fund
+      - name: Check 9, state manifest (diff-aware)
+        run: node tools/checks/states/states.mjs "$(git merge-base "$BASE_SHA" HEAD)"
+      - name: Check 10, numeric columns
+        run: node tools/checks/numeric/numeric.mjs
+      - name: The checks' own unit tests (Vitest)
+        run: npx --no-install vitest run tools/checks
+      - name: Check 11, pill height (Playwright, the runner's Chrome; a missing browser fails)
+        run: |
+          command -v google-chrome >/dev/null || { echo "::error::Chrome is missing on the runner: check 11 cannot run, and a missing browser is a FAIL"; exit 1; }
+          google-chrome --version
+          npx --no-install playwright test -c tests/pills/playwright.config.mjs
+      - name: Dashboard acceptance tests (#195 AC-1 to AC-6), when the dashboard or its tests change
+        run: |
+          if git diff --quiet "$(git merge-base "$BASE_SHA" HEAD)" HEAD -- dashboard/pds1 tests/dashboard; then
+            echo "dashboard/pds1 and tests/dashboard unchanged: not run for this PR"
+          else
+            npx --no-install playwright test -c tests/dashboard/playwright.config.mjs
+          fi
+
   checks:
     name: New problems (${{ matrix.tool }})
     runs-on: ubuntu-latest
@@ -161,7 +197,7 @@ jobs:
   result:
     name: CI result
     if: always()
-    needs: [zizmor, decisions, rulesync, generated, trace, checks]
+    needs: [zizmor, decisions, rulesync, generated, trace, design-checks, checks]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:

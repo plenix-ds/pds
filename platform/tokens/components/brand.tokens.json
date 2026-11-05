@@ -72,12 +72,12 @@
       "$description": "Brand: the application name’s weight in a product mark."
     },
     "brand-sm-mark-size": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$description": "Brand: the mark’s square at SM (the minimum size)."
     },
     "brand-sm-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "Brand: the wordmark and the application name at SM: a step of the type scale."
     },
@@ -87,12 +87,12 @@
       "$description": "Brand: the space between the mark (or the tile) and the name at SM."
     },
     "brand-sm-tile-size": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$description": "Brand: the product tile’s square at SM (as large as the mark)."
     },
     "brand-sm-icon-size": {
-      "$value": "{plx-ref.size-12px}",
+      "$value": "{plx-ref.size-3u}",
       "$type": "dimension",
       "$description": "Brand: the application icon in the product tile at SM."
     },
@@ -107,12 +107,12 @@
       "$description": "Brand: the clear space around a lockup at SM (clearSpace): on the 4px grid, at least the kit’s 10% of the mark."
     },
     "brand-md-mark-size": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension",
       "$description": "Brand: the mark’s square at MD (the default lockup size)."
     },
     "brand-md-font-size": {
-      "$value": "{plx-ref.font-size-15}",
+      "$value": "{plx-ref.font-size-400}",
       "$type": "dimension",
       "$description": "Brand: the wordmark and the application name at MD: a step of the type scale."
     },
@@ -122,12 +122,12 @@
       "$description": "Brand: the space between the mark (or the tile) and the name at MD."
     },
     "brand-md-tile-size": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension",
       "$description": "Brand: the product tile’s square at MD (as large as the mark)."
     },
     "brand-md-icon-size": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$description": "Brand: the application icon in the product tile at MD."
     },
@@ -142,12 +142,12 @@
       "$description": "Brand: the clear space around a lockup at MD (clearSpace): on the 4px grid, at least the kit’s 10% of the mark."
     },
     "brand-lg-mark-size": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension",
       "$description": "Brand: the mark’s square at LG (a sign-in page or a dialog)."
     },
     "brand-lg-font-size": {
-      "$value": "{plx-ref.font-size-18}",
+      "$value": "{plx-ref.font-size-500}",
       "$type": "dimension",
       "$description": "Brand: the wordmark and the application name at LG: a step of the type scale."
     },
@@ -157,12 +157,12 @@
       "$description": "Brand: the space between the mark (or the tile) and the name at LG."
     },
     "brand-lg-tile-size": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension",
       "$description": "Brand: the product tile’s square at LG (as large as the mark)."
     },
     "brand-lg-icon-size": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$description": "Brand: the application icon in the product tile at LG."
     },
@@ -177,12 +177,12 @@
       "$description": "Brand: the clear space around a lockup at LG (clearSpace): on the 4px grid, at least the kit’s 10% of the mark."
     },
     "brand-xl-mark-size": {
-      "$value": "{plx-ref.size-32px}",
+      "$value": "{plx-ref.size-8u}",
       "$type": "dimension",
       "$description": "Brand: the mark’s square at XL (a welcome page or an about box)."
     },
     "brand-xl-font-size": {
-      "$value": "{plx-ref.font-size-20}",
+      "$value": "{plx-ref.font-size-600}",
       "$type": "dimension",
       "$description": "Brand: the wordmark and the application name at XL: a step of the type scale."
     },
@@ -192,12 +192,12 @@
       "$description": "Brand: the space between the mark (or the tile) and the name at XL."
     },
     "brand-xl-tile-size": {
-      "$value": "{plx-ref.size-32px}",
+      "$value": "{plx-ref.size-8u}",
       "$type": "dimension",
       "$description": "Brand: the product tile’s square at XL (as large as the mark)."
     },
     "brand-xl-icon-size": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension",
       "$description": "Brand: the application icon in the product tile at XL."
     },

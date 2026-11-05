@@ -4,7 +4,7 @@
     "banner-gap": { "$value": "{plx-sys.space-inline-sm}", "$type": "dimension", "$description": "The space between the icon, the message, the actions and the Dismiss button." },
     "banner-body-gap": { "$value": "{plx-sys.space-inline-xs}", "$type": "dimension", "$description": "The space between the bold title and the message on one line." },
     "banner-actions-gap": { "$value": "{plx-sys.space-inline-sm}", "$type": "dimension", "$description": "The space between two actions." },
-    "banner-font-size": { "$value": "{plx-ref.font-size-13}", "$type": "dimension", "$description": "The message: the body size." },
+    "banner-font-size": { "$value": "{plx-ref.font-size-200}", "$type": "dimension", "$description": "The message: the body size." },
     "banner-line-height": { "$value": "{plx-ref.line-height-normal}", "$type": "number", "$description": "The message's line height, for a message that wraps." },
     "banner-title-font-weight": { "$value": "{plx-sys.font-weight-semibold}", "$type": "fontWeight", "$description": "The title's weight: semibold." },
     "banner-border-width": { "$value": "{plx-sys.border-width-thin}", "$type": "dimension", "$description": "The edge under the banner." },

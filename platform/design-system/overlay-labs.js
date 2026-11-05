@@ -99,7 +99,7 @@
         BTN('secondary', 'Cancel') + BTN(d ? 'danger' : 'primary', d ? 'Delete' : 'Publish'), extraCls);
     },
     labelSelector: '.plx-dialog__title', parts: shellParts, anchors: shellAnchors, sections: shellSections,
-    matrixLabel: 'Confirmation dialog values by intent', matrixColumnWidth: '--plx-ref-size-400px',
+    matrixLabel: 'Confirmation dialog values by intent', matrixColumnWidth: '--plx-ref-size-100u',
     statesHead: 'Intents · every value (click one to inspect it; the dashed outline marks the one shown below)'
   });
 
@@ -121,7 +121,7 @@
         + shellHtml('plx-drawer plx-drawer--' + size, 'Filters', 'Choose what the list shows.', BTN('secondary', 'Reset') + BTN('primary', 'Apply'), extraCls) + '</div>';
     },
     labelSelector: '.plx-dialog__title', parts: shellParts, anchors: shellAnchors, sections: shellSections,
-    matrixLabel: 'Side drawer values by size and side', matrixColumnWidth: '--plx-ref-size-400px',
+    matrixLabel: 'Side drawer values by size and side', matrixColumnWidth: '--plx-ref-size-100u',
     statesHead: 'Sizes and sides · every value (click one to inspect it; the dashed outline marks the one shown below)'
   });
 
@@ -186,7 +186,7 @@
       var task = variant === 'task';
       var head = (task ? BTN('ghost plx-sheet__cancel', 'Cancel') : '') + '<h2 class="plx-sheet__title">Rename collection</h2>'
         + (task ? BTN('primary plx-sheet__done', 'Done') : '<button type="button" tabindex="-1" class="plx-button plx-button--ghost plx-button--icon-only plx-sheet__close" aria-label="Close">' + DS.icon('close') + '</button>');
-      return '<div class="ds-demo-frame ' + DS.sampleClass('block-size', 'var(--plx-ref-size-600px)') + '">'
+      return '<div class="ds-demo-frame ' + DS.sampleClass('block-size', 'var(--plx-ref-size-150u)') + '">'
         + '<div role="dialog" aria-label="Rename collection" class="plx-sheet plx-sheet--' + size + (task ? ' plx-sheet--task' : '') + (extraCls ? ' ' + extraCls : '') + '">'
         + '<button type="button" tabindex="-1" class="plx-sheet__grabber" aria-label="' + (size === 'medium' ? 'Expand sheet' : 'Shrink sheet') + '"></button>'
         + '<div class="plx-sheet__header">' + head + '</div>'
@@ -197,7 +197,7 @@
     parts: { bg: 'A', fg: 'A', rad: 'A', sh: 'A', h: 'A', band: 'B', gth: 'B', gtw: 'B', hh: 'C', hgap: 'C', hpx: 'C', hbc: 'C', tfs: 'C', tfw: 'C', bpy: 'D', bpx: 'D', fgap: 'E', fpx: 'E', fbc: 'E' },
     anchors: { A: { part: null, side: 'left' }, B: { part: '.plx-sheet__grabber', side: 'top' }, C: { part: '.plx-sheet__header', side: 'right' }, D: { part: '.plx-sheet__body', side: 'right' }, E: { part: '.plx-sheet__footer', side: 'bottom' } },
     sections: [['Surface', ['bg', 'fg', 'rad', 'sh', 'h']], ['Grabber', ['band', 'gth', 'gtw']], ['Header', ['hh', 'hgap', 'hpx', 'hbc', 'tfs', 'tfw']], ['Body', ['bpy', 'bpx']], ['Footer', ['fgap', 'fpx', 'fbc']]],
-    matrixLabel: 'Sheet values by height and header', matrixColumnWidth: '--plx-ref-size-400px',
+    matrixLabel: 'Sheet values by height and header', matrixColumnWidth: '--plx-ref-size-100u',
     statesHead: 'Heights and headers · every value (click one to inspect it; the dashed outline marks the one shown below)'
   });
 
@@ -256,7 +256,7 @@
     parts: { bg: 'A', rad: 'A', sh: 'A', minw: 'A', maxw: 'A', edge: 'B', ew: 'B', py: 'C', gap: 'C', fg: 'D', fs: 'D', lh: 'D', cw: 'E', co: 'E' },
     anchors: { A: { part: null, side: 'top' }, B: { part: null, side: 'left' }, C: { part: '.plx-toast__icon', side: 'bottom' }, D: { part: '.plx-toast__message', side: 'bottom' }, E: { part: '.plx-toast__close', side: 'right' } },
     sections: [['Surface', ['bg', 'rad', 'sh', 'minw', 'maxw']], ['Tone edge', ['edge', 'ew']], ['Spacing', ['py', 'gap']], ['Message', ['fg', 'fs', 'lh']], ['Close button', ['cw', 'co']]],
-    matrixLabel: 'Toast values by tone', matrixColumnWidth: '--plx-ref-size-320px',
+    matrixLabel: 'Toast values by tone', matrixColumnWidth: '--plx-ref-size-80u',
     statesHead: 'Tones · every value (click one to inspect it; the dashed outline marks the one shown below)'
   });
 })();

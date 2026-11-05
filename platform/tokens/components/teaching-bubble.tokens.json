@@ -27,7 +27,7 @@
       "$description": "TeachingBubble: the title's face."
     },
     "teaching-bubble-title-font-size": {
-      "$value": "{plx-ref.font-size-14}",
+      "$value": "{plx-ref.font-size-300}",
       "$type": "dimension",
       "$description": "TeachingBubble: the title's size (Popover's title size)."
     },
@@ -62,7 +62,7 @@
       "$description": "TeachingBubble: the step count, in the color on the brand (no muted step on the blue: it keeps the text contrast)."
     },
     "teaching-bubble-step-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "TeachingBubble: the step count's size."
     },

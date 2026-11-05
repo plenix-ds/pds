@@ -22,7 +22,7 @@
       "$description": "EntityTitle: the title."
     },
     "entity-title-title-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "EntityTitle: the title (13px, the list row text)."
     },
@@ -37,17 +37,17 @@
       "$description": "EntityTitle: the subtitle under the title."
     },
     "entity-title-subtitle-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "EntityTitle: the subtitle (12px)."
     },
     "entity-title-title-line-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension",
       "$description": "EntityTitle: the title’s line (20px, a list row’s text line and a badge’s height), on the 4px grid."
     },
     "entity-title-subtitle-line-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$description": "EntityTitle: the subtitle’s line (16px): with the title, 36px on the 4px grid."
     }

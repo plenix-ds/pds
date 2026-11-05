@@ -27,7 +27,7 @@
       "$description": "Black at 12% (owner, 2026-10-15): the widest layer of the Lifted shadow (Material elevation)."
     },
     "font-size-09": {
-      "$deprecated": "Below the 12px type floor (DESIGN.md §3, #206): no Plenix token or class uses it any more; use --plx-ref-font-size-12 or a type role. It keeps working, and is removed no earlier than the next minor release.",
+      "$deprecated": "Below the 12px type floor (DESIGN.md §3, #206): no Plenix token or class uses it any more; use --plx-ref-font-size-100 or a type role. It keeps working, and is removed no earlier than the next minor release.",
       "$value": { "value": 0.5625, "unit": "rem" },
       "$type": "dimension",
       "$extensions": {
@@ -39,53 +39,98 @@
       }
     },
     "font-size-10": {
-      "$deprecated": "Below the 12px type floor (DESIGN.md §3, #206): no Plenix token or class uses it any more; use --plx-ref-font-size-12 or a type role. It keeps working, and is removed no earlier than the next minor release.",
+      "$deprecated": "Below the 12px type floor (DESIGN.md §3, #206): no Plenix token or class uses it any more; use --plx-ref-font-size-100 or a type role. It keeps working, and is removed no earlier than the next minor release.",
       "$value": { "value": 0.625, "unit": "rem" },
       "$type": "dimension"
     },
     "font-size-11": {
-      "$deprecated": "Below the 12px type floor (DESIGN.md §3, #206): no Plenix token or class uses it any more; use --plx-ref-font-size-12 or a type role. It keeps working, and is removed no earlier than the next minor release.",
+      "$deprecated": "Below the 12px type floor (DESIGN.md §3, #206): no Plenix token or class uses it any more; use --plx-ref-font-size-100 or a type role. It keeps working, and is removed no earlier than the next minor release.",
       "$value": { "value": 0.6875, "unit": "rem" },
       "$type": "dimension"
     },
-    "font-size-12": {
+    "font-size-100": {
       "$value": { "value": 0.75, "unit": "rem" },
       "$type": "dimension"
     },
-    "font-size-13": {
+    "font-size-12": {
+      "$value": "{plx-ref.font-size-100}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-font-size-100 (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "font-size-200": {
       "$value": { "value": 0.8125, "unit": "rem" },
       "$type": "dimension"
     },
-    "font-size-14": {
+    "font-size-13": {
+      "$value": "{plx-ref.font-size-200}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-font-size-200 (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "font-size-300": {
       "$value": { "value": 0.875, "unit": "rem" },
       "$type": "dimension"
     },
-    "font-size-15": {
+    "font-size-14": {
+      "$value": "{plx-ref.font-size-300}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-font-size-300 (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "font-size-400": {
       "$value": { "value": 0.9375, "unit": "rem" },
       "$type": "dimension"
     },
-    "font-size-18": {
+    "font-size-15": {
+      "$value": "{plx-ref.font-size-400}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-font-size-400 (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "font-size-500": {
       "$value": { "value": 1.125, "unit": "rem" },
       "$type": "dimension"
     },
-    "font-size-20": {
+    "font-size-18": {
+      "$value": "{plx-ref.font-size-500}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-font-size-500 (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "font-size-600": {
       "$value": { "value": 1.25, "unit": "rem" },
       "$type": "dimension"
     },
-    "font-size-24": {
+    "font-size-20": {
+      "$value": "{plx-ref.font-size-600}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-font-size-600 (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "font-size-700": {
       "$value": { "value": 1.5, "unit": "rem" },
       "$type": "dimension",
       "$description": "Display size: a metric card's small value (owner, 2026-10-19)."
     },
-    "font-size-28": {
+    "font-size-24": {
+      "$value": "{plx-ref.font-size-700}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-font-size-700 (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "font-size-800": {
       "$value": { "value": 1.75, "unit": "rem" },
       "$type": "dimension",
       "$description": "Display size: a metric card's value (owner, 2026-10-19)."
     },
-    "font-size-36": {
+    "font-size-28": {
+      "$value": "{plx-ref.font-size-800}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-font-size-800 (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "font-size-900": {
       "$value": { "value": 2.25, "unit": "rem" },
       "$type": "dimension",
       "$description": "Display size: a metric card's large value, a dashboard's first row (owner, 2026-10-19)."
+    },
+    "font-size-36": {
+      "$value": "{plx-ref.font-size-900}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-font-size-900 (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
     },
     "font-sans": {
       "$value": ["DM Sans", "IBM Plex Sans Arabic", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Arial", "sans-serif"],
@@ -109,7 +154,7 @@
       "$type": "fontFamily",
       "$description": "The code and data stack: Reddit Mono, then IBM Plex Sans Arabic for Arabic letters only (owner, arabic-font-35), so Arabic in data text and chart axes is drawn joined, not by a system monospace font."
     },
-    "font-weight-regular-400": {
+    "font-weight-regular": {
       "$value": 400,
       "$type": "fontWeight",
       "$extensions": {
@@ -120,17 +165,37 @@
         }
       }
     },
-    "font-weight-medium-500": {
+    "font-weight-regular-400": {
+      "$value": "{plx-ref.font-weight-regular}",
+      "$type": "fontWeight",
+      "$deprecated": "Renamed: use --plx-ref-font-weight-regular (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "font-weight-medium": {
       "$value": 500,
       "$type": "fontWeight"
     },
-    "font-weight-semibold-600": {
+    "font-weight-medium-500": {
+      "$value": "{plx-ref.font-weight-medium}",
+      "$type": "fontWeight",
+      "$deprecated": "Renamed: use --plx-ref-font-weight-medium (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "font-weight-semibold": {
       "$value": 600,
       "$type": "fontWeight"
     },
-    "font-weight-bold-700": {
+    "font-weight-semibold-600": {
+      "$value": "{plx-ref.font-weight-semibold}",
+      "$type": "fontWeight",
+      "$deprecated": "Renamed: use --plx-ref-font-weight-semibold (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "font-weight-bold": {
       "$value": 700,
       "$type": "fontWeight"
+    },
+    "font-weight-bold-700": {
+      "$value": "{plx-ref.font-weight-bold}",
+      "$type": "fontWeight",
+      "$deprecated": "Renamed: use --plx-ref-font-weight-bold (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
     },
     "line-height-none": {
       "$value": 1,
@@ -213,7 +278,7 @@
         }
       }
     },
-    "space-4px": {
+    "space-1u": {
       "$value": { "value": 0.25, "unit": "rem" },
       "$type": "dimension",
       "$extensions": {
@@ -224,303 +289,681 @@
         }
       }
     },
+    "space-4px": {
+      "$value": "{plx-ref.space-1u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-space-1u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
     "space-6px": {
       "$value": { "value": 0.375, "unit": "rem" },
-      "$type": "dimension"
+      "$type": "dimension",
+      "$deprecated": "Off the 4px grid (#301): use a grid space: space-1u (4px) or space-2u (8px), or a system space role. It keeps working and is removed in 2.0.0."
     },
-    "space-8px": {
+    "space-2u": {
       "$value": { "value": 0.5, "unit": "rem" },
       "$type": "dimension"
     },
+    "space-8px": {
+      "$value": "{plx-ref.space-2u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-space-2u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
     "space-10px": {
       "$value": { "value": 0.625, "unit": "rem" },
-      "$type": "dimension"
+      "$type": "dimension",
+      "$deprecated": "Off the 4px grid (#301): use a grid space: space-2u (8px) or space-3u (12px). It keeps working and is removed in 2.0.0."
     },
-    "space-12px": {
+    "space-3u": {
       "$value": { "value": 0.75, "unit": "rem" },
       "$type": "dimension"
     },
-    "space-16px": {
+    "space-12px": {
+      "$value": "{plx-ref.space-3u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-space-3u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "space-4u": {
       "$value": { "value": 1, "unit": "rem" },
       "$type": "dimension"
     },
-    "space-20px": {
+    "space-16px": {
+      "$value": "{plx-ref.space-4u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-space-4u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "space-5u": {
       "$value": { "value": 1.25, "unit": "rem" },
       "$type": "dimension"
     },
-    "space-24px": {
+    "space-20px": {
+      "$value": "{plx-ref.space-5u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-space-5u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "space-6u": {
       "$value": { "value": 1.5, "unit": "rem" },
       "$type": "dimension"
     },
-    "space-28px": {
+    "space-24px": {
+      "$value": "{plx-ref.space-6u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-space-6u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "space-7u": {
       "$value": { "value": 1.75, "unit": "rem" },
       "$type": "dimension"
     },
-    "space-32px": {
+    "space-28px": {
+      "$value": "{plx-ref.space-7u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-space-7u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "space-8u": {
       "$value": { "value": 2, "unit": "rem" },
       "$type": "dimension"
     },
-    "space-40px": {
+    "space-32px": {
+      "$value": "{plx-ref.space-8u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-space-8u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "space-10u": {
       "$value": { "value": 2.5, "unit": "rem" },
       "$type": "dimension"
     },
-    "space-48px": {
+    "space-40px": {
+      "$value": "{plx-ref.space-10u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-space-10u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "space-12u": {
       "$value": { "value": 3, "unit": "rem" },
       "$type": "dimension"
     },
-    "space-64px": {
+    "space-48px": {
+      "$value": "{plx-ref.space-12u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-space-12u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "space-16u": {
       "$value": { "value": 4, "unit": "rem" },
       "$type": "dimension"
     },
-    "size-4px": {
+    "space-64px": {
+      "$value": "{plx-ref.space-16u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-space-16u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-1u": {
       "$value": { "value": 4, "unit": "px" },
       "$type": "dimension"
     },
-    "size-8px": {
+    "size-4px": {
+      "$value": "{plx-ref.size-1u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-1u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-2u": {
       "$value": { "value": 8, "unit": "px" },
       "$type": "dimension"
     },
-    "size-12px": {
+    "size-8px": {
+      "$value": "{plx-ref.size-2u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-2u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-3u": {
       "$value": { "value": 12, "unit": "px" },
       "$type": "dimension"
     },
-    "size-16px": {
+    "size-12px": {
+      "$value": "{plx-ref.size-3u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-3u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-4u": {
       "$value": { "value": 16, "unit": "px" },
       "$type": "dimension"
     },
+    "size-16px": {
+      "$value": "{plx-ref.size-4u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-4u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
     "size-18px": {
       "$value": { "value": 18, "unit": "px" },
-      "$type": "dimension"
+      "$type": "dimension",
+      "$deprecated": "Off the 4px grid (#301): use a grid size: size-4u (16px) or size-5u (20px). It keeps working and is removed in 2.0.0."
     },
-    "size-20px": {
+    "size-5u": {
       "$value": { "value": 20, "unit": "px" },
       "$type": "dimension"
     },
-    "size-24px": {
+    "size-20px": {
+      "$value": "{plx-ref.size-5u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-5u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-6u": {
       "$value": { "value": 24, "unit": "px" },
       "$type": "dimension"
     },
-    "size-28px": {
+    "size-24px": {
+      "$value": "{plx-ref.size-6u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-6u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-7u": {
       "$value": { "value": 28, "unit": "px" },
       "$type": "dimension"
     },
-    "size-32px": {
+    "size-28px": {
+      "$value": "{plx-ref.size-7u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-7u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-8u": {
       "$value": { "value": 32, "unit": "px" },
       "$type": "dimension"
     },
-    "size-36px": {
+    "size-32px": {
+      "$value": "{plx-ref.size-8u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-8u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-9u": {
       "$value": { "value": 36, "unit": "px" },
       "$type": "dimension"
     },
-    "size-40px": {
+    "size-36px": {
+      "$value": "{plx-ref.size-9u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-9u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-10u": {
       "$value": { "value": 40, "unit": "px" },
       "$type": "dimension"
     },
-    "size-44px": {
+    "size-40px": {
+      "$value": "{plx-ref.size-10u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-10u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-11u": {
       "$value": { "value": 44, "unit": "px" },
       "$type": "dimension"
     },
-    "size-48px": {
+    "size-44px": {
+      "$value": "{plx-ref.size-11u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-11u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-12u": {
       "$value": { "value": 48, "unit": "px" },
       "$type": "dimension"
     },
-    "size-52px": {
+    "size-48px": {
+      "$value": "{plx-ref.size-12u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-12u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-13u": {
       "$value": { "value": 52, "unit": "px" },
       "$type": "dimension"
     },
-    "size-56px": {
+    "size-52px": {
+      "$value": "{plx-ref.size-13u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-13u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-14u": {
       "$value": { "value": 56, "unit": "px" },
       "$type": "dimension"
     },
-    "size-60px": {
+    "size-56px": {
+      "$value": "{plx-ref.size-14u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-14u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-15u": {
       "$value": { "value": 60, "unit": "px" },
       "$type": "dimension"
     },
-    "size-64px": {
+    "size-60px": {
+      "$value": "{plx-ref.size-15u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-15u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-16u": {
       "$value": { "value": 64, "unit": "px" },
       "$type": "dimension"
     },
-    "size-68px": {
+    "size-64px": {
+      "$value": "{plx-ref.size-16u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-16u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-17u": {
       "$value": { "value": 68, "unit": "px" },
       "$type": "dimension"
     },
-    "size-72px": {
+    "size-68px": {
+      "$value": "{plx-ref.size-17u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-17u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-18u": {
       "$value": { "value": 72, "unit": "px" },
       "$type": "dimension"
     },
-    "size-80px": {
+    "size-72px": {
+      "$value": "{plx-ref.size-18u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-18u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-20u": {
       "$value": { "value": 80, "unit": "px" },
       "$type": "dimension"
     },
-    "size-88px": {
+    "size-80px": {
+      "$value": "{plx-ref.size-20u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-20u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-22u": {
       "$value": { "value": 88, "unit": "px" },
       "$type": "dimension"
     },
-    "size-92px": {
+    "size-88px": {
+      "$value": "{plx-ref.size-22u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-22u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-23u": {
       "$value": { "value": 92, "unit": "px" },
       "$type": "dimension"
     },
-    "size-96px": {
+    "size-92px": {
+      "$value": "{plx-ref.size-23u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-23u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-24u": {
       "$value": { "value": 96, "unit": "px" },
       "$type": "dimension"
     },
-    "size-100px": {
+    "size-96px": {
+      "$value": "{plx-ref.size-24u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-24u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-25u": {
       "$value": { "value": 100, "unit": "px" },
       "$type": "dimension"
     },
-    "size-112px": {
+    "size-100px": {
+      "$value": "{plx-ref.size-25u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-25u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-28u": {
       "$value": { "value": 112, "unit": "px" },
       "$type": "dimension"
     },
-    "size-120px": {
+    "size-112px": {
+      "$value": "{plx-ref.size-28u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-28u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-30u": {
       "$value": { "value": 120, "unit": "px" },
       "$type": "dimension"
     },
-    "size-128px": {
+    "size-120px": {
+      "$value": "{plx-ref.size-30u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-30u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-32u": {
       "$value": { "value": 128, "unit": "px" },
       "$type": "dimension"
     },
-    "size-132px": {
+    "size-128px": {
+      "$value": "{plx-ref.size-32u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-32u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-33u": {
       "$value": { "value": 132, "unit": "px" },
       "$type": "dimension"
     },
-    "size-140px": {
+    "size-132px": {
+      "$value": "{plx-ref.size-33u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-33u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-35u": {
       "$value": { "value": 140, "unit": "px" },
       "$type": "dimension"
     },
-    "size-152px": {
+    "size-140px": {
+      "$value": "{plx-ref.size-35u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-35u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-38u": {
       "$value": { "value": 152, "unit": "px" },
       "$type": "dimension"
     },
-    "size-160px": {
+    "size-152px": {
+      "$value": "{plx-ref.size-38u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-38u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-40u": {
       "$value": { "value": 160, "unit": "px" },
       "$type": "dimension"
     },
-    "size-180px": {
+    "size-160px": {
+      "$value": "{plx-ref.size-40u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-40u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-45u": {
       "$value": { "value": 180, "unit": "px" },
       "$type": "dimension"
     },
-    "size-200px": {
+    "size-180px": {
+      "$value": "{plx-ref.size-45u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-45u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-50u": {
       "$value": { "value": 200, "unit": "px" },
       "$type": "dimension"
     },
-    "size-220px": {
+    "size-200px": {
+      "$value": "{plx-ref.size-50u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-50u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-55u": {
       "$value": { "value": 220, "unit": "px" },
       "$type": "dimension"
     },
-    "size-240px": {
+    "size-220px": {
+      "$value": "{plx-ref.size-55u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-55u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-60u": {
       "$value": { "value": 240, "unit": "px" },
       "$type": "dimension"
     },
-    "size-260px": {
+    "size-240px": {
+      "$value": "{plx-ref.size-60u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-60u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-65u": {
       "$value": { "value": 260, "unit": "px" },
       "$type": "dimension"
     },
-    "size-272px": {
+    "size-260px": {
+      "$value": "{plx-ref.size-65u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-65u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-68u": {
       "$value": { "value": 272, "unit": "px" },
       "$type": "dimension"
     },
-    "size-280px": {
+    "size-272px": {
+      "$value": "{plx-ref.size-68u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-68u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-70u": {
       "$value": { "value": 280, "unit": "px" },
       "$type": "dimension"
     },
-    "size-300px": {
+    "size-280px": {
+      "$value": "{plx-ref.size-70u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-70u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-75u": {
       "$value": { "value": 300, "unit": "px" },
       "$type": "dimension"
     },
-    "size-320px": {
+    "size-300px": {
+      "$value": "{plx-ref.size-75u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-75u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-80u": {
       "$value": { "value": 320, "unit": "px" },
       "$type": "dimension"
     },
-    "size-360px": {
+    "size-320px": {
+      "$value": "{plx-ref.size-80u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-80u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-90u": {
       "$value": { "value": 360, "unit": "px" },
       "$type": "dimension"
     },
-    "size-380px": {
+    "size-360px": {
+      "$value": "{plx-ref.size-90u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-90u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-95u": {
       "$value": { "value": 380, "unit": "px" },
       "$type": "dimension"
     },
-    "size-400px": {
+    "size-380px": {
+      "$value": "{plx-ref.size-95u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-95u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-100u": {
       "$value": { "value": 400, "unit": "px" },
       "$type": "dimension"
     },
-    "size-420px": {
+    "size-400px": {
+      "$value": "{plx-ref.size-100u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-100u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-105u": {
       "$value": { "value": 420, "unit": "px" },
       "$type": "dimension"
     },
-    "size-440px": {
+    "size-420px": {
+      "$value": "{plx-ref.size-105u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-105u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-110u": {
       "$value": { "value": 440, "unit": "px" },
       "$type": "dimension"
     },
-    "size-460px": {
+    "size-440px": {
+      "$value": "{plx-ref.size-110u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-110u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-115u": {
       "$value": { "value": 460, "unit": "px" },
       "$type": "dimension"
     },
-    "size-480px": {
+    "size-460px": {
+      "$value": "{plx-ref.size-115u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-115u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-120u": {
       "$value": { "value": 480, "unit": "px" },
       "$type": "dimension"
     },
-    "size-500px": {
+    "size-480px": {
+      "$value": "{plx-ref.size-120u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-120u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-125u": {
       "$value": { "value": 500, "unit": "px" },
       "$type": "dimension"
     },
-    "size-520px": {
+    "size-500px": {
+      "$value": "{plx-ref.size-125u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-125u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-130u": {
       "$value": { "value": 520, "unit": "px" },
       "$type": "dimension"
     },
-    "size-560px": {
+    "size-520px": {
+      "$value": "{plx-ref.size-130u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-130u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-140u": {
       "$value": { "value": 560, "unit": "px" },
       "$type": "dimension"
     },
-    "size-600px": {
+    "size-560px": {
+      "$value": "{plx-ref.size-140u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-140u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-150u": {
       "$value": { "value": 600, "unit": "px" },
       "$type": "dimension"
     },
-    "size-640px": {
+    "size-600px": {
+      "$value": "{plx-ref.size-150u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-150u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-160u": {
       "$value": { "value": 640, "unit": "px" },
       "$type": "dimension"
     },
-    "size-720px": {
+    "size-640px": {
+      "$value": "{plx-ref.size-160u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-160u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-180u": {
       "$value": { "value": 720, "unit": "px" },
       "$type": "dimension"
     },
-    "size-760px": {
+    "size-720px": {
+      "$value": "{plx-ref.size-180u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-180u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-190u": {
       "$value": { "value": 760, "unit": "px" },
       "$type": "dimension"
     },
-    "size-800px": {
+    "size-760px": {
+      "$value": "{plx-ref.size-190u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-190u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-200u": {
       "$value": { "value": 800, "unit": "px" },
       "$type": "dimension"
     },
-    "size-860px": {
+    "size-800px": {
+      "$value": "{plx-ref.size-200u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-200u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-215u": {
       "$value": { "value": 860, "unit": "px" },
       "$type": "dimension"
     },
-    "size-900px": {
+    "size-860px": {
+      "$value": "{plx-ref.size-215u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-215u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-225u": {
       "$value": { "value": 900, "unit": "px" },
       "$type": "dimension"
     },
-    "size-960px": {
+    "size-900px": {
+      "$value": "{plx-ref.size-225u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-225u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-240u": {
       "$value": { "value": 960, "unit": "px" },
       "$type": "dimension"
     },
-    "size-1000px": {
+    "size-960px": {
+      "$value": "{plx-ref.size-240u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-240u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-250u": {
       "$value": { "value": 1000, "unit": "px" },
       "$type": "dimension"
     },
-    "size-1200px": {
+    "size-1000px": {
+      "$value": "{plx-ref.size-250u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-250u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-300u": {
       "$value": { "value": 1200, "unit": "px" },
       "$type": "dimension"
     },
-    "size-1400px": {
+    "size-1200px": {
+      "$value": "{plx-ref.size-300u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-300u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-350u": {
       "$value": { "value": 1400, "unit": "px" },
       "$type": "dimension"
     },
-    "size-1600px": {
+    "size-1400px": {
+      "$value": "{plx-ref.size-350u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-350u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "size-400u": {
       "$value": { "value": 1600, "unit": "px" },
       "$type": "dimension"
     },
-    "glyph-size-6px": {
+    "paper-a4-inline-size": {
+      "$value": "210mm",
+      "$extensions": { "com.plenix": { "webOnly": true } },
+      "$description": "Paper: the A4 sheet's width (D-0052, docs/adr/0014). mm only for print parts."
+    },
+    "paper-a4-block-size": {
+      "$value": "297mm",
+      "$extensions": { "com.plenix": { "webOnly": true } },
+      "$description": "Paper: the A4 sheet's height (D-0052, docs/adr/0014)."
+    },
+    "paper-margin-md": {
+      "$value": "20mm",
+      "$extensions": { "com.plenix": { "webOnly": true } },
+      "$description": "Paper: a document's page margin (D-0052, docs/adr/0014)."
+    },
+    "size-1600px": {
+      "$value": "{plx-ref.size-400u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-size-400u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "glyph-size-xs": {
       "$value": { "value": 6, "unit": "px" },
       "$type": "dimension",
       "$extensions": {
@@ -531,17 +974,37 @@
         }
       }
     },
-    "glyph-size-10px": {
+    "glyph-size-6px": {
+      "$value": "{plx-ref.glyph-size-xs}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-glyph-size-xs (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "glyph-size-sm": {
       "$value": { "value": 10, "unit": "px" },
       "$type": "dimension"
     },
-    "glyph-size-14px": {
+    "glyph-size-10px": {
+      "$value": "{plx-ref.glyph-size-sm}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-glyph-size-sm (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "glyph-size-md": {
       "$value": { "value": 14, "unit": "px" },
       "$type": "dimension"
     },
-    "glyph-size-18px": {
+    "glyph-size-14px": {
+      "$value": "{plx-ref.glyph-size-md}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-glyph-size-md (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "glyph-size-lg": {
       "$value": { "value": 18, "unit": "px" },
       "$type": "dimension"
+    },
+    "glyph-size-18px": {
+      "$value": "{plx-ref.glyph-size-lg}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-glyph-size-lg (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
     },
     "border-width-100": {
       "$value": { "value": 1, "unit": "px" },
@@ -691,13 +1154,23 @@
       "$value": [0.2, 0, 0, 1],
       "$type": "cubicBezier"
     },
-    "motion-scale-98": {
+    "motion-scale-sm": {
       "$value": 0.98,
       "$type": "number"
     },
-    "motion-scale-96": {
+    "motion-scale-98": {
+      "$value": "{plx-ref.motion-scale-sm}",
+      "$type": "number",
+      "$deprecated": "Renamed: use --plx-ref-motion-scale-sm (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "motion-scale-md": {
       "$value": 0.96,
       "$type": "number"
+    },
+    "motion-scale-96": {
+      "$value": "{plx-ref.motion-scale-md}",
+      "$type": "number",
+      "$deprecated": "Renamed: use --plx-ref-motion-scale-md (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
     },
     "motion-duration-loop-fast": {
       "$value": { "value": 0.7, "unit": "s" },
@@ -766,7 +1239,7 @@
       "$type": "dimension",
       "$deprecated": "Renamed: use --plx-ref-radius-md (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
     },
-    "breakpoint-600px": {
+    "breakpoint-sm": {
       "$value": { "value": 600, "unit": "px" },
       "$type": "dimension",
       "$extensions": {
@@ -778,59 +1251,119 @@
         }
       }
     },
+    "breakpoint-600px": {
+      "$value": "{plx-ref.breakpoint-sm}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-breakpoint-sm (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
     "breakpoint-768px": {
       "$value": { "value": 768, "unit": "px" },
       "$deprecated": "Not used by any page, application or the design spec (issue 882): it keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
-    "breakpoint-840px": {
+    "breakpoint-md": {
       "$value": { "value": 840, "unit": "px" },
       "$type": "dimension"
     },
-    "breakpoint-1024px": {
+    "breakpoint-840px": {
+      "$value": "{plx-ref.breakpoint-md}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-breakpoint-md (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "breakpoint-lg": {
       "$value": { "value": 1024, "unit": "px" },
       "$type": "dimension"
     },
-    "breakpoint-1440px": {
+    "breakpoint-1024px": {
+      "$value": "{plx-ref.breakpoint-lg}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-breakpoint-lg (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "breakpoint-xl": {
       "$value": { "value": 1440, "unit": "px" },
       "$type": "dimension"
+    },
+    "breakpoint-1440px": {
+      "$value": "{plx-ref.breakpoint-xl}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-breakpoint-xl (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
     },
     "breakpoint-1920px": {
       "$value": { "value": 1920, "unit": "px" },
       "$deprecated": "Not used by any page, application or the design spec (issue 882): it keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
-    "control-size-24px": {
+    "control-size-6u": {
       "$value": { "value": 1.5, "unit": "rem" },
       "$type": "dimension"
     },
-    "control-size-28px": {
+    "control-size-24px": {
+      "$value": "{plx-ref.control-size-6u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-control-size-6u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "control-size-7u": {
       "$value": { "value": 1.75, "unit": "rem" },
       "$type": "dimension"
     },
-    "control-size-32px": {
+    "control-size-28px": {
+      "$value": "{plx-ref.control-size-7u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-control-size-7u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "control-size-8u": {
       "$value": { "value": 2, "unit": "rem" },
       "$type": "dimension"
     },
-    "control-size-36px": {
+    "control-size-32px": {
+      "$value": "{plx-ref.control-size-8u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-control-size-8u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "control-size-9u": {
       "$value": { "value": 2.25, "unit": "rem" },
       "$type": "dimension"
     },
-    "control-size-40px": {
+    "control-size-36px": {
+      "$value": "{plx-ref.control-size-9u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-control-size-9u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "control-size-10u": {
       "$value": { "value": 2.5, "unit": "rem" },
       "$type": "dimension"
     },
-    "control-size-44px": {
+    "control-size-40px": {
+      "$value": "{plx-ref.control-size-10u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-control-size-10u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "control-size-11u": {
       "$value": { "value": 2.75, "unit": "rem" },
       "$type": "dimension"
     },
-    "control-size-48px": {
+    "control-size-44px": {
+      "$value": "{plx-ref.control-size-11u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-control-size-11u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "control-size-12u": {
       "$value": { "value": 3, "unit": "rem" },
       "$type": "dimension"
     },
-    "control-size-52px": {
+    "control-size-48px": {
+      "$value": "{plx-ref.control-size-12u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-control-size-12u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "control-size-13u": {
       "$value": { "value": 3.25, "unit": "rem" },
       "$type": "dimension"
+    },
+    "control-size-52px": {
+      "$value": "{plx-ref.control-size-13u}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-control-size-13u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
     },
     "control-visual-size-16px": {
       "$value": { "value": 16, "unit": "px" },
@@ -874,7 +1407,7 @@
       "$deprecated": "Not used by any page, application or the design spec (issue 882): it keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
-    "grid-columns-4": {
+    "grid-columns-sm": {
       "$value": 4,
       "$type": "number",
       "$extensions": {
@@ -885,19 +1418,39 @@
         }
       }
     },
-    "grid-columns-8": {
+    "grid-columns-4": {
+      "$value": "{plx-ref.grid-columns-sm}",
+      "$type": "number",
+      "$deprecated": "Renamed: use --plx-ref-grid-columns-sm (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "grid-columns-md": {
       "$value": 8,
       "$type": "number"
     },
-    "grid-columns-12": {
+    "grid-columns-8": {
+      "$value": "{plx-ref.grid-columns-md}",
+      "$type": "number",
+      "$deprecated": "Renamed: use --plx-ref-grid-columns-md (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "grid-columns-lg": {
       "$value": 12,
       "$type": "number"
     },
-    "grid-columns-16": {
+    "grid-columns-12": {
+      "$value": "{plx-ref.grid-columns-lg}",
+      "$type": "number",
+      "$deprecated": "Renamed: use --plx-ref-grid-columns-lg (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "grid-columns-xl": {
       "$value": 16,
       "$type": "number"
     },
-    "grid-gutter-12px": {
+    "grid-columns-16": {
+      "$value": "{plx-ref.grid-columns-xl}",
+      "$type": "number",
+      "$deprecated": "Renamed: use --plx-ref-grid-columns-xl (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "grid-gutter-sm": {
       "$value": { "value": 12, "unit": "px" },
       "$type": "dimension",
       "$extensions": {
@@ -908,31 +1461,66 @@
         }
       }
     },
-    "grid-gutter-16px": {
+    "grid-gutter-12px": {
+      "$value": "{plx-ref.grid-gutter-sm}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-grid-gutter-sm (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "grid-gutter-md": {
       "$value": { "value": 16, "unit": "px" },
+      "$type": "dimension"
+    },
+    "grid-gutter-16px": {
+      "$value": "{plx-ref.grid-gutter-md}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-grid-gutter-md (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "grid-gutter-lg": {
+      "$value": { "value": 24, "unit": "px" },
       "$type": "dimension"
     },
     "grid-gutter-24px": {
-      "$value": { "value": 24, "unit": "px" },
-      "$type": "dimension"
+      "$value": "{plx-ref.grid-gutter-lg}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-grid-gutter-lg (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
     },
-    "grid-margin-16px": {
+    "grid-margin-sm": {
       "$value": { "value": 16, "unit": "px" },
       "$type": "dimension"
     },
-    "grid-margin-24px": {
+    "grid-margin-16px": {
+      "$value": "{plx-ref.grid-margin-sm}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-grid-margin-sm (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "grid-margin-md": {
       "$value": { "value": 24, "unit": "px" },
       "$type": "dimension"
     },
-    "grid-margin-32px": {
+    "grid-margin-24px": {
+      "$value": "{plx-ref.grid-margin-md}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-grid-margin-md (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "grid-margin-lg": {
       "$value": { "value": 32, "unit": "px" },
       "$type": "dimension"
     },
-    "grid-margin-48px": {
+    "grid-margin-32px": {
+      "$value": "{plx-ref.grid-margin-lg}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-grid-margin-lg (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "grid-margin-xl": {
       "$value": { "value": 48, "unit": "px" },
       "$type": "dimension"
     },
-    "content-max-760px": {
+    "grid-margin-48px": {
+      "$value": "{plx-ref.grid-margin-xl}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-grid-margin-xl (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "content-max-sm": {
       "$value": { "value": 760, "unit": "px" },
       "$type": "dimension",
       "$extensions": {
@@ -943,17 +1531,37 @@
         }
       }
     },
-    "content-max-960px": {
+    "content-max-760px": {
+      "$value": "{plx-ref.content-max-sm}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-content-max-sm (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "content-max-md": {
       "$value": { "value": 960, "unit": "px" },
       "$type": "dimension"
     },
-    "content-max-1200px": {
+    "content-max-960px": {
+      "$value": "{plx-ref.content-max-md}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-content-max-md (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "content-max-lg": {
       "$value": { "value": 1200, "unit": "px" },
       "$type": "dimension"
     },
-    "content-max-1600px": {
+    "content-max-1200px": {
+      "$value": "{plx-ref.content-max-lg}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-content-max-lg (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "content-max-xl": {
       "$value": { "value": 1600, "unit": "px" },
       "$type": "dimension"
+    },
+    "content-max-1600px": {
+      "$value": "{plx-ref.content-max-xl}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-ref-content-max-xl (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
     },
     "content-max-2600px": {
       "$value": { "value": 2600, "unit": "px" },

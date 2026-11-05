@@ -61,3 +61,11 @@
 | With `agent:pds1-ds-architect` | Ran (local) | OWNERSHIP_OK |
 | Merge queue (no labels) | Ran (local) | OWNERSHIP_SKIPPED (the PR's own run enforces it) |
 | Required on main | Planned | After merge: ruleset 26593194 gets the second required check |
+
+## Checks 9-11 in CI (2026-11-05)
+
+| Item | Status | Path / output |
+|---|---|---|
+| Check 9 on main | Ran (local) | `node tools/checks/states/states.mjs origin/main`: "0 manifests, 0 findings" |
+| Check 10 on main | Ran (local) | `node tools/checks/numeric/numeric.mjs`: "416 stylesheets, 0 findings" |
+| Vitest unit tests of the checks, Playwright check 11 | Planned (CI) | This PR's "Checks 9-11" job; no test run locally (owner rule) |

@@ -1,6 +1,6 @@
 /* Library part w06C (wave 6, lane C): the frames the labs and examples of wave 6, lane C need. Tokens only. */
 /* a combobox with its list open under it (examples): room below for the list */
-.ds-w06c-open{min-block-size:var(--plx-ref-size-280px);}
+.ds-w06c-open{min-block-size:var(--plx-ref-size-70u);}
 /* a lab specimen with a list drawn in place under its field or caret (combobox, mentions) */
-.ds-w06c-lab{inline-size:var(--plx-ref-size-320px);max-inline-size:100%;}
-.ds-w06c-lab--wide{inline-size:var(--plx-ref-size-500px);}
+.ds-w06c-lab{inline-size:var(--plx-ref-size-80u);max-inline-size:100%;}
+.ds-w06c-lab--wide{inline-size:var(--plx-ref-size-125u);}

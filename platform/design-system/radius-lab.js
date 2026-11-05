@@ -22,12 +22,12 @@ window.DSRadiusLab = function (section, data) {
   var ul = DS.el('ul', 'ds-radius-rules');
   [['Controls own their radius.', 'Buttons, inputs, selects, navigation items, menu items and toolbar actions use --plx-sys-radius-control wherever they sit, and never take a radius from their container.'],
    ['Control radius follows density.', '--plx-sys-radius-control is 6px in standard and comfortable density and 4px in compact: a compact control takes the smaller corner. Checks, swatches, tabs and list rows keep their own roles.'],
-   ['Menus are containment surfaces.', 'Menus and dropdowns use --plx-sys-radius-menu-6px. A menu item is a control, not a nested surface; only an item whose outer corners meet the menu\'s rounded edge is checked corner by corner: it follows the menu, or the menu clips it.'],
+   ['Menus are containment surfaces.', 'Menus and dropdowns use --plx-sys-radius-menu. A menu item is a control, not a nested surface; only an item whose outer corners meet the menu\'s rounded edge is checked corner by corner: it follows the menu, or the menu clips it.'],
    ['Focus rings follow the corner.', 'An outline (or ring shadow) offset by --plx-sys-focus-ring-offset follows the element\'s corner, so the ring is the element\'s radius + 2px without a separate token.'],
    ['Round marks use --plx-sys-shape-mark.', 'Dots, toggles, counters and reactions. Avatars are the documented exception: rounded squares, never circles. The corner grows with the avatar (24px: 4px, larger: 6px).'],
    ['Related surfaces derive their radius.', 'A surface inset inside another rounded surface follows it: inner = max(0, outer − gap), where the gap is the real distance between the curves (border + padding). Use .plx-radius-concentric; a derived value is not snapped to the scale.'],
    ['Tiles are reserved.', 'A tile radius (a calculated 25%) belongs to a tile component only. There is no tile component yet, so there is no token.'],
-   ['Names carry the value.', 'Values name their size (--plx-sys-shape-sm); roles name the use and the size (--plx-sys-radius-card-6px); a role that changes with density carries no value (--plx-sys-radius-control). Components use roles.']]
+   ['Names carry the value.', 'Values name their size (--plx-sys-shape-sm); roles name the use and the size (--plx-sys-radius-card-md); a role that changes with density carries no value (--plx-sys-radius-control). Components use roles.']]
     .forEach(function (r) { var li = DS.el('li'); li.appendChild(DS.el('strong', '', r[0] + ' ')); li.appendChild(document.createTextNode(r[1])); ul.appendChild(li); });
   rules.appendChild(ul);
 
@@ -70,11 +70,11 @@ window.DSRadiusLab = function (section, data) {
   var row = DS.el('div', 'ds-radius-avatars');
   [24, 28, 32, 40, 64, 96].forEach(function (s) {
     var r = s <= 24 ? 4 : s <= 40 ? 6 : s <= 64 ? 8 : 12, box = DS.el('div', 'ds-radius-av-item');
-    var av = DS.el('span', 'ds-radius-av', 'RM'); DS.sample(av, 'width', 'var(--plx-ref-size-' + s + 'px)'); DS.sample(av, 'height', 'var(--plx-ref-size-' + s + 'px)'); DS.setVar(av, '--ds-sample-border-radius', 'var(--plx-sys-radius-avatar-' + r + 'px)');
-    DS.sample(av, 'font-size', s >= 64 ? 'var(--plx-ref-font-size-18)' : s >= 40 ? 'var(--plx-ref-font-size-14)' : 'var(--plx-ref-font-size-11)');
+    var av = DS.el('span', 'ds-radius-av', 'RM'); DS.sample(av, 'width', 'var(--plx-ref-size-' + (s % 4 === 0 ? s / 4 + 'u' : s + 'px') + ')'); DS.sample(av, 'height', 'var(--plx-ref-size-' + s + 'px)'); DS.setVar(av, '--ds-sample-border-radius', 'var(--plx-sys-radius-avatar-' + r + 'px)');
+    DS.sample(av, 'font-size', s >= 64 ? 'var(--plx-ref-font-size-500)' : s >= 40 ? 'var(--plx-ref-font-size-300)' : 'var(--plx-ref-font-size-11)');
     box.appendChild(av); box.appendChild(DS.el('div', 'ds-radius-av-label', s + 'px · --plx-sys-radius-avatar-' + r + 'px')); row.appendChild(box);
   });
-  var no = DS.el('div', 'ds-radius-av-item ds-radius-av-no'), nav = DS.el('span', 'ds-radius-av', 'RM'); DS.sample(nav, 'width', 'var(--plx-ref-size-40px)'); DS.sample(nav, 'height', 'var(--plx-ref-size-40px)'); DS.setVar(nav, '--ds-sample-border-radius', 'var(--plx-sys-shape-mark)'); DS.sample(nav, 'font-size', 'var(--plx-ref-font-size-14)');
+  var no = DS.el('div', 'ds-radius-av-item ds-radius-av-no'), nav = DS.el('span', 'ds-radius-av', 'RM'); DS.sample(nav, 'width', 'var(--plx-ref-size-10u)'); DS.sample(nav, 'height', 'var(--plx-ref-size-10u)'); DS.setVar(nav, '--ds-sample-border-radius', 'var(--plx-sys-shape-mark)'); DS.sample(nav, 'font-size', 'var(--plx-ref-font-size-300)');
   no.appendChild(nav); no.appendChild(DS.el('div', 'ds-radius-av-label', 'Not this: a circle')); row.appendChild(no);
   ac.appendChild(row);
 

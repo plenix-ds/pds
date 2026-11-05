@@ -2,27 +2,27 @@
   "$description": "DataGrid: its tokens at the comfortable density.",
   "plx-comp": {
     "data-grid-text-line-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension",
       "$description": "DataGrid: a line of cell text in taller rows (and the line P is measured against): 20px at Comfortable."
     },
     "data-grid-header-type-icon-size": {
-      "$value": "{plx-ref.glyph-size-14px}",
+      "$value": "{plx-ref.glyph-size-md}",
       "$type": "dimension",
       "$description": "DataGrid column header: the type icon before the column name."
     },
     "data-grid-header-type-icon-gap": {
-      "$value": "{plx-ref.space-6px}",
+      "$value": "{plx-sys.space-inline-sm}",
       "$type": "dimension",
       "$description": "DataGrid column header: the space between the type icon and the name."
     },
     "data-grid-view-column-width": {
-      "$value": "{plx-ref.size-36px}",
+      "$value": "{plx-ref.size-9u}",
       "$type": "dimension",
       "$description": "DataGrid: the view column at the end of the header (the view menu's button): as wide as the checkbox column."
     },
     "data-grid-header-height": {
-      "$value": "{plx-ref.size-40px}",
+      "$value": "{plx-ref.size-10u}",
       "$type": "dimension",
       "$description": "DataGrid column header: 40px at Comfortable, the titles unchanged (owner, 2026-10-23: Windows Explorer’s header)."
     }

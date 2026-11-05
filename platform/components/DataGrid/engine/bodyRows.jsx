@@ -19,7 +19,7 @@ import { cx } from '../../../utils/cx.ts';
 import { words, kinds, interactive, typeOf, typeIcons, cellDirection } from './helpers.jsx';
 import { valueText, CellValue } from '../cells.jsx';
 import { groupKeys, rowKeys, cellKeys } from './keys.js';
-import { Width, RowTarget, Check, CellEditor, CustomCell, RowMenuContent } from './parts.jsx';
+import { Width, RowTarget, Check, CellEditor, CellStatus, CustomCell, RowMenuContent } from './parts.jsx';
 import { Icon } from '../../Icon/Icon.tsx';
 import ChevronRightIcon from 'plenix-platform/icons/plenix/chevron-right';
 import ChevronDownIcon from 'plenix-platform/icons/plenix/chevron-down';
@@ -82,6 +82,8 @@ export function bodyRows({
   pinStart,
   leadFrozen,
   editing,
+  cellStatus,
+  setCellStatus,
   cells,
   showTypes,
   setEditing,
@@ -317,12 +319,35 @@ export function bodyRows({
           </div>
         ) : null}
         {cellList.map((column) => {
+          const focusAfterEdit = (from, fromColumn, move) => {
+            // the cell keeps the focus after an edit; Tab / Shift+Tab (move = 1 / -1) go on to the next / previous editable cell, row by row
+            let r = model.indexOf(from),
+              col = ordered.indexOf(fromColumn),
+              target = null;
+            while (move && !target) {
+              col += move;
+              if (col >= ordered.length || col < 0) {
+                r += move;
+                col = move > 0 ? 0 : ordered.length - 1;
+              }
+              const next = model[r];
+              if (!next) break;
+              if (!next.original) continue;
+              const nc = ordered[col].columnDef.meta;
+              if (nc?.editor && (typeof nc.editable === 'function' ? nc.editable(api.cell(next.id, nc.field)) : nc.editable !== false)) target = { r, col };
+            }
+            focusCell(target ? target.r : model.indexOf(from), target ? target.col : ordered.indexOf(fromColumn), move || 1);
+          };
           const c = column.columnDef.meta,
             k = kindsOf(c),
             pinned = column.getIsPinned() === 'left',
             sticky = pinned ? pinStart(column) : 0;
           const cell = api.cell(row.id, c.field),
-            canEdit = !!c.editor && (typeof c.editable === 'function' ? c.editable(cell) : c.editable !== false);
+            status = cellStatus?.key === row.id && cellStatus.field === c.field ? cellStatus : null,
+            canEdit =
+              !!c.editor &&
+              status?.kind !== 'saving' &&
+              (typeof c.editable === 'function' ? c.editable(cell) : c.editable !== false);
           const value = valueAt(record, c.field),
             isTree = !!childField && c.field === (props.treeColumn || columns[0]?.field),
             isEditing = editing?.key === row.id && editing.field === c.field,
@@ -410,6 +435,9 @@ export function bodyRows({
               })}
               data-plx-sticky={pinned && sticky ? sticky + 'px' : undefined}
               data-plx-label={detail ? c.title || c.field : undefined}
+              aria-busy={status?.kind === 'saving' ? 'true' : undefined}
+              aria-describedby={status?.kind === 'refused' ? status.id : undefined}
+              aria-invalid={status?.kind === 'refused' ? 'true' : undefined}
               aria-label={detail ? (c.title || c.field) + ': ' + valueText(value) : undefined}
               data-plx-text-follow={c.rowLabel || columns.indexOf(c) <= pinnedAt ? 'size family weight' : 'size family'}
               className={cx(
@@ -468,14 +496,22 @@ export function bodyRows({
                   ) : null}
                 </span>
               ) : null}
+              {status ? <CellStatus status={status} onClear={() => setCellStatus(null)} /> : null}
               {editing?.key === row.id && editing.field === c.field ? (
                 cellDirection(
                   pinned && !isStatic,
                   <CellEditor
                     column={c}
+                    record={record}
                     value={editing.value}
-                    onCommit={(next) => commitEdit(row.id, c.field, next)}
-                    onCancel={() => setEditing(null)}
+                    onCommit={(next, move) => {
+                      commitEdit(row.id, c.field, next);
+                      focusAfterEdit(row, column, move);
+                    }}
+                    onCancel={() => {
+                      setEditing(null);
+                      focusAfterEdit(row, column, 0);
+                    }}
                   />
                 )
               ) : c.rowHandle && (recordPositions.get(record) ?? -1) >= 0 ? (

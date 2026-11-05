@@ -22,7 +22,7 @@
       "$description": "Extended: the label's face."
     },
     "floating-action-button-font-size": {
-      "$value": "{plx-ref.font-size-14}",
+      "$value": "{plx-ref.font-size-300}",
       "$type": "dimension",
       "$description": "Extended: the label's size."
     },
@@ -52,12 +52,12 @@
       "$description": "FloatingActionButton: the focus ring's offset."
     },
     "floating-action-button-sm-size": {
-      "$value": "{plx-ref.size-40px}",
+      "$value": "{plx-ref.size-10u}",
       "$type": "dimension",
       "$description": "Small: the 40px square (and the extended height)."
     },
     "floating-action-button-sm-radius": {
-      "$value": "{plx-sys.radius-control-6px}",
+      "$value": "{plx-sys.radius-control-md}",
       "$type": "dimension",
       "$description": "Small: its corner."
     },
@@ -67,12 +67,12 @@
       "$description": "Small: the 24px icon."
     },
     "floating-action-button-md-size": {
-      "$value": "{plx-ref.size-56px}",
+      "$value": "{plx-ref.size-14u}",
       "$type": "dimension",
       "$description": "Standard: the 56px square (and the extended height)."
     },
     "floating-action-button-md-radius": {
-      "$value": "{plx-sys.radius-control-6px}",
+      "$value": "{plx-sys.radius-control-md}",
       "$type": "dimension",
       "$description": "Standard: its corner."
     },
@@ -82,7 +82,7 @@
       "$description": "Standard: the 24px icon."
     },
     "floating-action-button-lg-size": {
-      "$value": "{plx-ref.size-96px}",
+      "$value": "{plx-ref.size-24u}",
       "$type": "dimension",
       "$description": "Large: the 96px square (and the extended height)."
     },
@@ -172,7 +172,7 @@
       "$description": "In the corner: over the content and sticky regions, under menus and dialogs."
     },
     "floating-action-button-clearance": {
-      "$value": "calc({plx-ref.size-56px} + {plx-sys.space-layout-md} * 2)",
+      "$value": "calc({plx-ref.size-14u} + {plx-sys.space-layout-md} * 2)",
       "$type": "dimension",
       "$description": "The bottom space a scrolling region gives its last line so the standard button in the corner does not cover it (for the page to use).",
       "$extensions": { "com.plenix": { "webOnly": true } }

@@ -27,7 +27,7 @@
       "$description": "Popover: the border while the popover itself has keyboard focus (no controls inside); only the border color changes."
     },
     "popover-radius": {
-      "$value": "{plx-sys.radius-menu-6px}",
+      "$value": "{plx-sys.radius-menu}",
       "$type": "dimension",
       "$description": "Popover: the corners (the menu radius)."
     },
@@ -42,7 +42,7 @@
       "$description": "Popover: the content's face."
     },
     "popover-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "Popover: the content's size."
     },
@@ -57,17 +57,17 @@
       "$description": "Popover: the padding inside the border, on every side."
     },
     "popover-sm-width": {
-      "$value": "{plx-ref.size-240px}",
+      "$value": "{plx-ref.size-60u}",
       "$type": "dimension",
       "$description": "Popover size sm: 240px wide (a hover card, a short explanation)."
     },
     "popover-md-width": {
-      "$value": "{plx-ref.size-320px}",
+      "$value": "{plx-ref.size-80u}",
       "$type": "dimension",
       "$description": "Popover size md (default): 320px wide."
     },
     "popover-lg-width": {
-      "$value": "{plx-ref.size-400px}",
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension",
       "$description": "Popover size lg: 400px wide (a short form, a teaching bubble with a picture)."
     },
@@ -103,7 +103,7 @@
       "$description": "Popover: the title's face."
     },
     "popover-title-font-size": {
-      "$value": "{plx-ref.font-size-14}",
+      "$value": "{plx-ref.font-size-300}",
       "$type": "dimension",
       "$description": "Popover: the title's size."
     },
@@ -128,7 +128,7 @@
       "$description": "Popover: the space above the footer."
     },
     "popover-arrow-size": {
-      "$value": "{plx-ref.size-8px}",
+      "$value": "{plx-ref.size-2u}",
       "$type": "dimension",
       "$description": "Popover arrow: its height (half its base)."
     },
@@ -154,7 +154,7 @@
       "$description": "Popover arrow: the fill one border width in, so the border runs round the arrow."
     },
     "popover-arrow-fill-center": {
-      "$value": "calc({plx-ref.size-8px} * -1)",
+      "$value": "calc({plx-ref.size-2u} * -1)",
       "$type": "dimension",
       "$description": "Popover arrow: the fill centered on the outline (minus the arrow size).",
       "$extensions": { "com.plenix": { "webOnly": true } }
@@ -165,7 +165,7 @@
       "$description": "Popover arrow: its distance from the corner in an aligned placement (start, end, top, bottom)."
     },
     "popover-arrow-middle": {
-      "$value": "calc(50% - {plx-ref.size-8px})",
+      "$value": "calc(50% - {plx-ref.size-2u})",
       "$type": "dimension",
       "$description": "Popover arrow: centered on the edge in a centered placement.",
       "$extensions": { "com.plenix": { "webOnly": true } }

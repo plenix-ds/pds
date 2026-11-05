@@ -2,7 +2,7 @@
   "$description": "The chart parts (platform/charts/parts: Axis, GridLines, ChartLegend, ChartTooltip, DataLabel, ReferenceLine, ChartAnnotation; library wave 8, lane A): their component tokens. Series and thresholds take their colors from the data-viz scales (data-plx-dataviz); everything else is an existing role. Grid lines use the frame's chart-grid-line tokens.",
   "plx-comp": {
     "chart-axis-tick-offset": {
-      "$value": "{plx-ref.size-8px}",
+      "$value": "{plx-ref.size-2u}",
       "$type": "dimension",
       "$description": "Axis: the distance from the plot's edge to a tick label."
     },
@@ -32,7 +32,7 @@
       "$description": "Chart frame with a legend beside the plot (legendPosition end): the space between the plot and the legend."
     },
     "chart-legend-end-max-width": {
-      "$value": "{plx-ref.size-200px}",
+      "$value": "{plx-ref.size-50u}",
       "$type": "dimension",
       "$description": "Chart legend beside the plot: its widest; longer names wrap."
     },
@@ -62,12 +62,12 @@
       "$description": "Chart legend: the names' typeface (UI text)."
     },
     "chart-legend-label-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "Chart legend: the names' size."
     },
     "chart-legend-label-line-height": {
-      "$value": "{plx-sys.label-height-16px}",
+      "$value": "{plx-sys.label-height-sm}",
       "$type": "dimension",
       "$description": "Chart legend: the names' line height."
     },
@@ -82,7 +82,7 @@
       "$description": "Chart legend: values are technical: the data font (Reddit Mono)."
     },
     "chart-legend-swatch-size": {
-      "$value": "{plx-ref.size-12px}",
+      "$value": "{plx-ref.size-3u}",
       "$type": "dimension",
       "$description": "Chart legend: the square swatch's side."
     },
@@ -97,7 +97,7 @@
       "$description": "Chart legend: the swatch's outline in the series color (what stays of a hidden series' swatch)."
     },
     "chart-legend-line-swatch-width": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$description": "Chart legend: the line swatch's length (line series)."
     },
@@ -117,7 +117,7 @@
       "$description": "Interactive chart legend: the space inside a toggle at its start and end."
     },
     "chart-legend-toggle-radius": {
-      "$value": "{plx-sys.radius-control-4px}",
+      "$value": "{plx-sys.radius-control-sm}",
       "$type": "dimension",
       "$description": "Interactive chart legend: a toggle's corners."
     },
@@ -147,7 +147,7 @@
       "$description": "Interactive chart legend: the line swatch of a hidden line series (a line has no outline to keep, so it turns to the disabled color)."
     },
     "chart-tooltip-offset": {
-      "$value": "{plx-ref.size-8px}",
+      "$value": "{plx-ref.size-2u}",
       "$type": "dimension",
       "$description": "Chart tooltip: the distance from the point (or the crosshair) to the tooltip."
     },
@@ -172,7 +172,7 @@
       "$description": "Chart tooltip: the border width."
     },
     "chart-tooltip-radius": {
-      "$value": "{plx-sys.radius-menu-6px}",
+      "$value": "{plx-sys.radius-menu}",
       "$type": "dimension",
       "$description": "Chart tooltip: the corners (the menu radius)."
     },
@@ -217,7 +217,7 @@
       "$description": "Chart tooltip: the text size."
     },
     "chart-tooltip-line-height": {
-      "$value": "{plx-sys.label-height-16px}",
+      "$value": "{plx-sys.label-height-sm}",
       "$type": "dimension",
       "$description": "Chart tooltip: the line height."
     },
@@ -252,7 +252,7 @@
       "$description": "Chart tooltip: the least space between a name and its value."
     },
     "chart-tooltip-swatch-size": {
-      "$value": "{plx-ref.size-12px}",
+      "$value": "{plx-ref.size-3u}",
       "$type": "dimension",
       "$description": "Chart tooltip: the swatch's side (the legend's swatch)."
     },
@@ -287,7 +287,7 @@
       "$description": "Data label: the size (the tick labels' size)."
     },
     "chart-data-label-offset": {
-      "$value": "{plx-ref.size-4px}",
+      "$value": "{plx-ref.size-1u}",
       "$type": "dimension",
       "$description": "Data label: the distance from its mark (top, end)."
     },
@@ -312,12 +312,12 @@
       "$description": "Reference line: the line's width."
     },
     "chart-reference-line-dash": {
-      "$value": "{plx-ref.size-4px}",
+      "$value": "{plx-ref.size-1u}",
       "$type": "dimension",
       "$description": "Reference line and threshold: the dash, which tells them from a series (solid)."
     },
     "chart-reference-line-gap": {
-      "$value": "{plx-ref.size-4px}",
+      "$value": "{plx-ref.size-1u}",
       "$type": "dimension",
       "$description": "Reference line and threshold: the gap between dashes."
     },
@@ -347,7 +347,7 @@
       "$description": "Reference line: its name's weight."
     },
     "chart-reference-label-offset": {
-      "$value": "{plx-ref.size-4px}",
+      "$value": "{plx-ref.size-1u}",
       "$type": "dimension",
       "$description": "Reference line: the distance from the line to its label."
     },
@@ -432,7 +432,7 @@
       "$description": "Annotation: the note halo's width."
     },
     "chart-annotation-label-offset": {
-      "$value": "{plx-ref.size-4px}",
+      "$value": "{plx-ref.size-1u}",
       "$type": "dimension",
       "$description": "Annotation: the distance from the leader's end (or the range's corner) to the note."
     }

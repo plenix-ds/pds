@@ -36,11 +36,11 @@
 .ds-drawer-row{display:flex;inline-size:100%;justify-content:flex-end;}
 .ds-drawer-row.ds-drawer-row--start{justify-content:flex-start;}
 /* the action menu lab (batch 318): the menu is drawn open in place (absolute, under or above its trigger): room for it
-.ds-menu-row{display:flex;min-block-size:var(--plx-ref-size-160px);}
+.ds-menu-row{display:flex;min-block-size:var(--plx-ref-size-40u);}
 .ds-menu-row--bottom-start,.ds-menu-row--bottom-end{align-items:flex-start;}
 .ds-menu-row--top-start,.ds-menu-row--top-end{align-items:flex-end;}
 .ds-menu-row--bottom-end,.ds-menu-row--top-end{justify-content:flex-end;}
 /* every area that shows a component sample sits on a checkered background (owner, batch 323): the sample's own edges,
    fills and transparency read against it. Light squares of the hover state on the default surface, 8px each; the
    variant previews, the sample stages of examples and variant cards, the lab's anatomy stage and its matrix cells */
-.ds-variant-preview,.ds-sample-stage,.lab-stage,.lab-matrix .plx-data-grid__grid-row .plx-data-grid__grid-cell:has(.lab-pick){background-color:var(--plx-sys-surface-default);background-image:linear-gradient(45deg,var(--plx-sys-state-hover) 25%,transparent 25%,transparent 75%,var(--plx-sys-state-hover) 75%),linear-gradient(45deg,var(--plx-sys-state-hover) 25%,transparent 25%,transparent 75%,var(--plx-sys-state-hover) 75%);background-position:0 0,var(--plx-ref-size-8px) var(--plx-ref-size-8px);background-size:var(--plx-ref-size-16px) var(--plx-ref-size-16px);}
+.ds-variant-preview,.ds-sample-stage,.lab-stage,.lab-matrix .plx-data-grid__grid-row .plx-data-grid__grid-cell:has(.lab-pick){background-color:var(--plx-sys-surface-default);background-image:linear-gradient(45deg,var(--plx-sys-state-hover) 25%,transparent 25%,transparent 75%,var(--plx-sys-state-hover) 75%),linear-gradient(45deg,var(--plx-sys-state-hover) 25%,transparent 25%,transparent 75%,var(--plx-sys-state-hover) 75%);background-position:0 0,var(--plx-ref-size-2u) var(--plx-ref-size-2u);background-size:var(--plx-ref-size-4u) var(--plx-ref-size-4u);}

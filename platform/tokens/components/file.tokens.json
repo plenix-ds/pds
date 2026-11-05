@@ -27,12 +27,12 @@
       "$description": "File: folder icon color (content-muted; a folder is told by its icon and its word, never by a color)."
     },
     "file-picture-size": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension",
       "$description": "File: the picture’s width and height (size-20px)."
     },
     "file-picture-radius": {
-      "$value": "{plx-sys.radius-media-4px}",
+      "$value": "{plx-sys.radius-media-sm}",
       "$type": "dimension",
       "$description": "File: the picture’s corners (radius-media-4px)."
     },
@@ -62,12 +62,12 @@
       "$description": "File: name weight (font-weight-regular)."
     },
     "file-name-line-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension",
       "$description": "File: name line height (size-20px)."
     },
     "file-name-radius": {
-      "$value": "{plx-sys.radius-control-4px}",
+      "$value": "{plx-sys.radius-control-sm}",
       "$type": "dimension",
       "$description": "File: the corners of the name’s hover fill and focus ring (radius-control-4px)."
     },
@@ -102,12 +102,12 @@
       "$description": "File: facts font: the data font (font-data)."
     },
     "file-meta-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "File: facts size (font-size-12)."
     },
     "file-meta-line-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$description": "File: facts line height (size-16px)."
     },
@@ -127,7 +127,7 @@
       "$description": "File: chip border width (border-width-thin)."
     },
     "file-chip-radius": {
-      "$value": "{plx-sys.radius-control-4px}",
+      "$value": "{plx-sys.radius-control-sm}",
       "$type": "dimension",
       "$description": "File: chip corners (radius-control-4px)."
     },

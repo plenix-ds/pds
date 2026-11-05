@@ -1,3 +1,3 @@
 /* Library part w04B (wave 4, lane B): the frame the QR code lab draws its on-accent specimen in. Tokens only. */
 /* the accent surface behind a specimen on the accent (the blue header's colors) */
-.ds-w04b-accent{background-color:var(--plx-sys-accent-surface);border-radius:var(--plx-sys-radius-card-6px);box-sizing:border-box;color:var(--plx-sys-accent-content);display:inline-flex;padding-block-end:var(--plx-sys-space-inset-md);padding-block-start:var(--plx-sys-space-inset-md);padding-inline-end:var(--plx-sys-space-inset-md);padding-inline-start:var(--plx-sys-space-inset-md);}
+.ds-w04b-accent{background-color:var(--plx-sys-accent-surface);border-radius:var(--plx-sys-radius-card-md);box-sizing:border-box;color:var(--plx-sys-accent-content);display:inline-flex;padding-block-end:var(--plx-sys-space-inset-md);padding-block-start:var(--plx-sys-space-inset-md);padding-inline-end:var(--plx-sys-space-inset-md);padding-inline-start:var(--plx-sys-space-inset-md);}

@@ -1,7 +1,7 @@
 {
   "$description": "RenameAction (platform/patterns/RenameAction), library wave 10, lane A: its component tokens. The field, the dialog and the buttons are InlineEdit's, Dialog's, Field's and Button's own.",
   "plx-comp": {
-    "rename-action-inline-width": { "$value": "{plx-ref.size-320px}", "$type": "dimension", "$description": "RenameAction inline: its width (a name field's width; it shrinks with a narrow container)." },
+    "rename-action-inline-width": { "$value": "{plx-ref.size-80u}", "$type": "dimension", "$description": "RenameAction inline: its width (a name field's width; it shrinks with a narrow container)." },
     "rename-action-form-gap": { "$value": "{plx-sys.space-stack-md}", "$type": "dimension", "$description": "RenameAction dialog: the space between the form's parts." }
   }
 }

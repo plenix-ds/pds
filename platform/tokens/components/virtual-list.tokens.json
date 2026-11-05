@@ -17,7 +17,7 @@
       "$description": "VirtualList: count font (the data font) (font-data)."
     },
     "virtual-list-count-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "VirtualList: count text size (font-size-12)."
     },
@@ -37,7 +37,7 @@
       "$description": "VirtualList: scroll area border width (border-width-thin)."
     },
     "virtual-list-radius": {
-      "$value": "{plx-sys.radius-surface-6px}",
+      "$value": "{plx-sys.radius-surface-md}",
       "$type": "dimension",
       "$description": "VirtualList: scroll area corner radius (radius-surface-6px)."
     },
@@ -52,22 +52,22 @@
       "$description": "VirtualList: row text color (content-default)."
     },
     "virtual-list-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "VirtualList: row text size (font-size-13)."
     },
     "virtual-list-height-sm": {
-      "$value": "{plx-ref.size-240px}",
+      "$value": "{plx-ref.size-60u}",
       "$type": "dimension",
       "$description": "VirtualList: scroll area height, height=\"sm\" (size-240px)."
     },
     "virtual-list-height-md": {
-      "$value": "{plx-ref.size-320px}",
+      "$value": "{plx-ref.size-80u}",
       "$type": "dimension",
       "$description": "VirtualList: scroll area height (default) (size-320px)."
     },
     "virtual-list-height-lg": {
-      "$value": "{plx-ref.size-500px}",
+      "$value": "{plx-ref.size-125u}",
       "$type": "dimension",
       "$description": "VirtualList: scroll area height, height=\"lg\" (size-500px)."
     },
@@ -107,7 +107,7 @@
       "$description": "VirtualList: description text color (content-muted)."
     },
     "virtual-list-description-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "VirtualList: description text size (font-size-12)."
     },
@@ -122,7 +122,7 @@
       "$description": "VirtualList: technical value font (the data font) (font-data)."
     },
     "virtual-list-meta-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "VirtualList: technical value text size (font-size-12)."
     },
@@ -142,7 +142,7 @@
       "$description": "VirtualList: group header text color (content-default)."
     },
     "virtual-list-header-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "VirtualList: group header text size (font-size-12)."
     },

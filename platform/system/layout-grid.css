@@ -5,7 +5,7 @@
      Wide (840px and wider)  12 columns, 24px gutters, 32px margins
    .plx-layout-grid is fluid (the full width); --contained stops it at --plx-sys-layout-grid-contained-max and centers it.
    Children place themselves with the span classes (.plx-span-N, system/grid.css). The window class follows the window
-   (media queries: they cannot read tokens, so the conditions repeat the breakpoints --plx-ref-breakpoint-600px and -840px);
+   (media queries: they cannot read tokens, so the conditions repeat the breakpoints --plx-ref-breakpoint-sm and -840px);
    --narrow, --medium and --wide fix one class, for previews and documentation (the window ranges leave them alone). Inside an application's main region the
    content grid (.plx-page-grid, system/grid.css) follows the region's width instead.
    .plx-layout-grid__overlay is the dev overlay (platform/dev/grid-overlay.js, ?grid): the columns drawn over the page. */

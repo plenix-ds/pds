@@ -18,7 +18,7 @@
   --plenix-on-primary: #ffffff /* --plx-sys-action-primary-content */;
   --plenix-focus: #2a6fdb /* --plx-sys-focus-ring-color */;
   --plenix-radius: 4px /* --plx-sys-radius-control */;
-  --plenix-card-radius: 6px /* --plx-sys-radius-card-6px */;
+  --plenix-card-radius: 6px /* --plx-sys-radius-card-md */;
   --plenix-height: 2.25rem /* --plx-sys-control-height-dialog */;
   --plenix-border-width: 1px /* --plx-comp-input-border-width */;
   --plenix-semibold: 600 /* --plx-sys-font-weight-semibold */;
@@ -26,9 +26,9 @@
   --plenix-bold: 700 /* --plx-sys-font-weight-bold */;
   --plenix-header-height: 56px /* --plx-sys-shell-header-height */;
   --plenix-header-inset: 0.75rem /* --plx-sys-space-inset-md */;
-  --plenix-brand-size: 1.25rem /* --plx-ref-font-size-20 */;
+  --plenix-brand-size: 1.25rem /* --plx-ref-font-size-600 */;
   --plenix-gap: 3rem /* --plx-sys-space-layout-xl */;
-  --plenix-mark-size: calc(20px /* --plx-sys-label-height-20px */ + 16px /* --plx-sys-label-height-16px */);
+  --plenix-mark-size: calc(20px /* --plx-sys-label-height-md */ + 16px /* --plx-sys-label-height-sm */);
   --plenix-mark-gap: 0.75rem /* --plx-sys-space-inline-md */;
   --pf-global--FontFamily--sans-serif: var(--plenix-font);
   --pf-global--FontFamily--heading--sans-serif: var(--plenix-font);

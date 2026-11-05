@@ -5,7 +5,7 @@ button.plx-rating__star{cursor:pointer;min-block-size:var(--plx-comp-rating-star
 .plx-rating__star--on{color:var(--plx-comp-rating-star-on-text);}
 /* each star is a radio: the focus ring, as every control (batch 213) */
 .plx-rating__star:focus-visible{outline-color:var(--plx-comp-rating-star-focus-outline-color);outline-offset:var(--plx-comp-rating-star-focus-outline-offset);outline-style:solid;outline-width:var(--plx-comp-rating-star-focus-outline-width);}
-/* in a narrow group (below 320px, the value of --plx-ref-size-320px; batch 269) the stars close their gap; each keeps its
+/* in a narrow group (below 320px, the value of --plx-ref-size-80u; batch 269) the stars close their gap; each keeps its
    full target (--plx-sys-control-height-inline) */
 @container (max-width: 320px){
 .plx-rating{column-gap:0;}

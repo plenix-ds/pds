@@ -46,7 +46,7 @@ if (window.DS && DS.registerLab) {
       parts: { w: 'A', g: 'B' },
       anchors: { A: { part: null, side: 'top' }, B: { part: '.plx-rename-action__form', side: 'left' } },
       sections: [['Layout', ['w', 'g']]],
-      matrixLabel: 'Rename by variant', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Variants · ' + HEAD
+      matrixLabel: 'Rename by variant', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Variants · ' + HEAD
     });
 
     // ---- Sortable list (<SortableList>): items with handles (and move buttons); a lifted or picked-up item
@@ -105,7 +105,7 @@ if (window.DS && DS.registerLab) {
       parts: { g: 'A', bg: 'B', bc: 'B', bw: 'B', rad: 'B', mh: 'B', fg: 'C', ig: 'C', py: 'C', px: 'C', btg: 'D', dbg: 'E', dsh: 'E', dop: 'E' },
       anchors: { A: { part: null, side: 'left' }, B: { part: '.plx-sortable-list__item', side: 'top' }, C: { part: '.plx-sortable-list__content', side: 'right' }, D: { part: '.plx-sortable-list__buttons', side: 'right' }, E: { part: MOVING, side: 'bottom' } },
       sections: [['List', ['g']], ['Item', ['bg', 'bc', 'bw', 'rad', 'fg', 'ig', 'mh', 'py', 'px', 'btg']], ['Moving', ['dbg', 'dsh', 'dop']]],
-      matrixLabel: 'Sortable list by variant and state', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Variants and states · ' + HEAD
+      matrixLabel: 'Sortable list by variant and state', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Variants and states · ' + HEAD
     });
 
     // ---- Drag handle (<DragHandle>): vertical or horizontal; at rest, hovered, pressed, focused, picked up, disabled
@@ -148,7 +148,7 @@ if (window.DS && DS.registerLab) {
       parts: { w: 'A', h: 'A', rad: 'A', bg: 'B', fg: 'C', is: 'C', oc: 'D', ow: 'D', oo: 'D' },
       anchors: { A: { part: null, side: 'top' }, B: { part: null, side: 'left' }, C: { part: '.plx-drag-handle__icon', side: 'right' }, D: { part: null, side: 'bottom' } },
       sections: [['Size', ['w', 'h', 'is', 'rad']], ['Colors', ['bg', 'fg']], ['Focus', ['oc', 'ow', 'oo']]],
-      matrixLabel: 'Drag handle by orientation and state', matrixColumnWidth: '--plx-ref-size-200px', statesHead: 'Orientations and states · ' + HEAD
+      matrixLabel: 'Drag handle by orientation and state', matrixColumnWidth: '--plx-ref-size-50u', statesHead: 'Orientations and states · ' + HEAD
     });
 
     // ---- Resize (<Resizable>): the edges (and the corner), their line on hover and focus
@@ -204,7 +204,7 @@ if (window.DS && DS.registerLab) {
       parts: { w: 'A', h: 'A', ei: 'B', li: 'B', lc: 'B', eb: 'C', lb: 'C', cs: 'D', mi: 'E' },
       anchors: { A: { part: null, side: 'top' }, B: { part: EDGE_I, side: 'right' }, C: { part: EDGE_B, side: 'bottom' }, D: { part: '.plx-resizable__corner', side: 'bottom' } },
       sections: [['Size', ['w', 'h']], ['Edges', ['ei', 'eb', 'li', 'lb', 'lc', 'cs']]],
-      matrixLabel: 'Resizable box by axis and state', matrixColumnWidth: '--plx-ref-size-600px', statesHead: 'Axes and states · ' + HEAD
+      matrixLabel: 'Resizable box by axis and state', matrixColumnWidth: '--plx-ref-size-150u', statesHead: 'Axes and states · ' + HEAD
     });
 
     // ---- Drop target: DropZone's lab (more-labs.js) gains the data drop target and the refusing state; the Drop target

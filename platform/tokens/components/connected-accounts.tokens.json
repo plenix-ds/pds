@@ -27,7 +27,7 @@
       "$description": "ConnectedAccounts: gap when the actions wrap under the text (space-stack-sm)."
     },
     "connected-accounts-body-min-width": {
-      "$value": "{plx-ref.size-240px}",
+      "$value": "{plx-ref.size-60u}",
       "$type": "dimension",
       "$description": "ConnectedAccounts: the text’s least width before the actions wrap under it (size-240px)."
     },
@@ -52,7 +52,7 @@
       "$description": "ConnectedAccounts: service name font (font-heading)."
     },
     "connected-accounts-service-font-size": {
-      "$value": "{plx-ref.font-size-14}",
+      "$value": "{plx-ref.font-size-300}",
       "$type": "dimension",
       "$description": "ConnectedAccounts: service name size (font-size-14)."
     },
@@ -62,17 +62,17 @@
       "$description": "ConnectedAccounts: service name weight (font-weight-semibold)."
     },
     "connected-accounts-service-line-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension",
       "$description": "ConnectedAccounts: service name line height (size-20px)."
     },
     "connected-accounts-detail-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "ConnectedAccounts: size of the lines under the name (font-size-12)."
     },
     "connected-accounts-detail-line-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$description": "ConnectedAccounts: line height of the lines under the name (size-16px)."
     },

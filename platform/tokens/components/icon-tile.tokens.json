@@ -12,32 +12,32 @@
       "$description": "IconTile: the border of a tile in a hue (the data colors and the surface)."
     },
     "icon-tile-sm-size": {
-      "$value": "{plx-ref.size-32px}",
+      "$value": "{plx-ref.size-8u}",
       "$type": "dimension",
       "$description": "IconTile size sm: the tile’s width and height (32px)."
     },
     "icon-tile-sm-radius": {
-      "$value": "{plx-sys.radius-avatar-6px}",
+      "$value": "{plx-sys.radius-avatar-md}",
       "$type": "dimension",
       "$description": "IconTile size sm: the tile’s corners."
     },
     "icon-tile-md-size": {
-      "$value": "{plx-ref.size-40px}",
+      "$value": "{plx-ref.size-10u}",
       "$type": "dimension",
       "$description": "IconTile size md: the tile’s width and height (40px)."
     },
     "icon-tile-md-radius": {
-      "$value": "{plx-sys.radius-avatar-6px}",
+      "$value": "{plx-sys.radius-avatar-md}",
       "$type": "dimension",
       "$description": "IconTile size md: the tile’s corners."
     },
     "icon-tile-lg-size": {
-      "$value": "{plx-ref.size-48px}",
+      "$value": "{plx-ref.size-12u}",
       "$type": "dimension",
       "$description": "IconTile size lg: the tile’s width and height (48px)."
     },
     "icon-tile-lg-radius": {
-      "$value": "{plx-sys.radius-avatar-6px}",
+      "$value": "{plx-sys.radius-avatar-md}",
       "$type": "dimension",
       "$description": "IconTile size lg: the tile’s corners."
     },

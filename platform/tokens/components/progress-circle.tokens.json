@@ -1,9 +1,9 @@
 {
   "$description": "ProgressCircle (platform/components/ProgressCircle, library wave 4, lane B): its component tokens. The tones are ProgressBar's roles.",
   "plx-comp": {
-    "progress-circle-sm-size": { "$value": "{plx-ref.size-16px}", "$type": "dimension", "$description": "ProgressCircle size sm: the ring's box (16px)." },
-    "progress-circle-md-size": { "$value": "{plx-ref.size-24px}", "$type": "dimension", "$description": "ProgressCircle size md: the ring's box (24px, the default)." },
-    "progress-circle-lg-size": { "$value": "{plx-ref.size-48px}", "$type": "dimension", "$description": "ProgressCircle size lg: the ring's box (48px)." },
+    "progress-circle-sm-size": { "$value": "{plx-ref.size-4u}", "$type": "dimension", "$description": "ProgressCircle size sm: the ring's box (16px)." },
+    "progress-circle-md-size": { "$value": "{plx-ref.size-6u}", "$type": "dimension", "$description": "ProgressCircle size md: the ring's box (24px, the default)." },
+    "progress-circle-lg-size": { "$value": "{plx-ref.size-12u}", "$type": "dimension", "$description": "ProgressCircle size lg: the ring's box (48px)." },
     "progress-circle-sm-stroke-width": { "$value": "{plx-sys.border-width-medium}", "$type": "dimension", "$description": "ProgressCircle size sm: the track's and the arc's width." },
     "progress-circle-md-stroke-width": { "$value": "{plx-sys.border-width-medium}", "$type": "dimension", "$description": "ProgressCircle size md: the track's and the arc's width." },
     "progress-circle-lg-stroke-width": { "$value": "{plx-sys.border-width-heavy}", "$type": "dimension", "$description": "ProgressCircle size lg: the track's and the arc's width." },

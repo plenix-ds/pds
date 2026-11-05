@@ -2,7 +2,7 @@
   "$description": "Cascader (platform/components/Cascader), library wave 7, lane B: its component tokens. The field in the input roles, the list a menu surface (8px corners, the menu elevation), the search matches in the option roles.",
   "plx-comp": {
     "cascader-max-width": {
-      "$value": "{plx-ref.size-400px}",
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension",
       "$description": "Cascader: maximum width (size-400px)."
     },
@@ -17,7 +17,7 @@
       "$description": "Cascader field: gap between rows (space-inline-xs)."
     },
     "cascader-multiple-field-padding-block": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension",
       "$description": "Cascader multiple field: padding top and bottom (space-4px)."
     },
@@ -37,7 +37,7 @@
       "$description": "Cascader trigger: gap (space-inline-sm)."
     },
     "cascader-trigger-flex-basis": {
-      "$value": "{plx-ref.size-80px}",
+      "$value": "{plx-ref.size-20u}",
       "$type": "dimension",
       "$description": "Cascader trigger flex basis: trigger flex basis (size-80px)."
     },
@@ -62,12 +62,12 @@
       "$description": "Cascader chevron: background (content-muted)."
     },
     "cascader-chevron-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$description": "Cascader chevron: height (size-16px)."
     },
     "cascader-chevron-width": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$description": "Cascader chevron: width (size-16px)."
     },
@@ -92,7 +92,7 @@
       "$description": "Cascader popup: border color (border-default)."
     },
     "cascader-popup-radius": {
-      "$value": "{plx-sys.radius-menu-6px}",
+      "$value": "{plx-sys.radius-menu}",
       "$type": "dimension",
       "$description": "Cascader popup: corners (radius-menu-6px)."
     },
@@ -117,7 +117,7 @@
       "$description": "Cascader popup z index: popup z index (layer-menu)."
     },
     "cascader-columns-height": {
-      "$value": "{plx-ref.size-240px}",
+      "$value": "{plx-ref.size-60u}",
       "$type": "dimension",
       "$description": "Cascader columns: height (size-240px)."
     },
@@ -142,12 +142,12 @@
       "$description": "Cascader search: padding left and right (space-inset-xs)."
     },
     "cascader-matches-max-height": {
-      "$value": "{plx-ref.size-240px}",
+      "$value": "{plx-ref.size-60u}",
       "$type": "dimension",
       "$description": "Cascader matches: maximum height (size-240px)."
     },
     "cascader-matches-min-width": {
-      "$value": "{plx-ref.size-320px}",
+      "$value": "{plx-ref.size-80u}",
       "$type": "dimension",
       "$description": "Cascader matches: minimum width (size-320px)."
     },
@@ -172,7 +172,7 @@
       "$description": "Cascader match: minimum height (control-height-standard)."
     },
     "cascader-match-padding-block": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension",
       "$description": "Cascader match: padding top and bottom (space-4px)."
     },
@@ -242,7 +242,7 @@
       "$description": "Cascader past its limit of choices: the message under the list (the warning content color; it is also announced, so color is never the only cue)."
     },
     "cascader-limit-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "Cascader limit message: its size."
     },

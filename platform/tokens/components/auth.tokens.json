@@ -27,12 +27,12 @@
       "$description": "Auth: card border width, and the footer’s and the “or” lines (border-width-thin)."
     },
     "auth-card-radius": {
-      "$value": "{plx-sys.radius-surface-6px}",
+      "$value": "{plx-sys.radius-surface-md}",
       "$type": "dimension",
       "$description": "Auth: card corners (radius-surface-6px)."
     },
     "auth-card-max-width": {
-      "$value": "{plx-ref.size-400px}",
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension",
       "$description": "Auth: card width: a small dialog’s (size-400px, as dialog-sm-max-width)."
     },
@@ -72,7 +72,7 @@
       "$description": "Auth: title weight (font-weight-semibold)."
     },
     "auth-title-line-height": {
-      "$value": "{plx-ref.size-28px}",
+      "$value": "{plx-ref.size-7u}",
       "$type": "dimension",
       "$description": "Auth: title line height (size-28px)."
     },
@@ -82,22 +82,22 @@
       "$description": "Auth: the title’s line, the notes, the footer and “or” (content-muted)."
     },
     "auth-text-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "Auth: the lines’ and notes’ size (font-size-13)."
     },
     "auth-text-line-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension",
       "$description": "Auth: the lines’ and notes’ line height (size-20px)."
     },
     "auth-small-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "Auth: “or” and the consent’s error size (font-size-12)."
     },
     "auth-small-line-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$description": "Auth: “or” and the consent’s error line height (size-16px)."
     },

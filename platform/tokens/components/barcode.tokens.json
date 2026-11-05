@@ -42,17 +42,17 @@
       "$description": "Barcode: the surface above the bars and below the line (the quiet zone at the sides is part of the drawing)."
     },
     "barcode-sm-height": {
-      "$value": "{plx-ref.size-48px}",
+      "$value": "{plx-ref.size-12u}",
       "$type": "dimension",
       "$description": "Barcode: the height of the bars at size sm (a dense label)."
     },
     "barcode-md-height": {
-      "$value": "{plx-ref.size-64px}",
+      "$value": "{plx-ref.size-16u}",
       "$type": "dimension",
       "$description": "Barcode: the height of the bars at size md, the default (a narrow bar of 2px)."
     },
     "barcode-lg-height": {
-      "$value": "{plx-ref.size-96px}",
+      "$value": "{plx-ref.size-24u}",
       "$type": "dimension",
       "$description": "Barcode: the height of the bars at size lg (a code scanned from the screen)."
     },

@@ -12,3 +12,6 @@
    and puts the mode back after, so the tokens are the light theme's (black text on white). */
 @page{margin:var(--plx-sys-print-page-margin);}
 .plx-print-urls{--plx-comp-link-context-url-after:var(--plx-sys-print-url-after);--plx-comp-link-context-url-before:var(--plx-sys-print-url-before);}
+/* PrintDocument (docs/adr/0014): its own named page, A4 with the document margin; the sheet's frame, padding and size come off
+   through its print tokens (platform/tokens/semantic.print.tokens.json) */
+@page plx-document{margin:var(--plx-sys-print-document-margin);size:A4;}

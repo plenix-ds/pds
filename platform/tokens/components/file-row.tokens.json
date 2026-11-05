@@ -62,7 +62,7 @@
       "$description": "FileRow: cell size (font-size-12)."
     },
     "file-row-cell-line-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$description": "FileRow: cell line height (size-16px)."
     },
@@ -72,17 +72,17 @@
       "$description": "FileRow: sizes, dates and the percent: the data font (font-data)."
     },
     "file-row-size-width": {
-      "$value": "{plx-ref.size-100px}",
+      "$value": "{plx-ref.size-25u}",
       "$type": "dimension",
       "$description": "FileRow: size cell width, room for a folder’s count (size-100px)."
     },
     "file-row-date-width": {
-      "$value": "{plx-ref.size-100px}",
+      "$value": "{plx-ref.size-25u}",
       "$type": "dimension",
       "$description": "FileRow: date cell width (size-100px)."
     },
     "file-row-owner-width": {
-      "$value": "{plx-ref.size-120px}",
+      "$value": "{plx-ref.size-30u}",
       "$type": "dimension",
       "$description": "FileRow: owner cell width (size-120px)."
     },
@@ -92,12 +92,12 @@
       "$description": "FileRow: gap between the bar and its percent, and the error icon and its reason (space-inline-sm)."
     },
     "file-row-progress-width": {
-      "$value": "{plx-ref.size-120px}",
+      "$value": "{plx-ref.size-30u}",
       "$type": "dimension",
       "$description": "FileRow: transfer bar width (size-120px)."
     },
     "file-row-percent-width": {
-      "$value": "{plx-ref.size-40px}",
+      "$value": "{plx-ref.size-10u}",
       "$type": "dimension",
       "$description": "FileRow: percent width (size-40px)."
     },

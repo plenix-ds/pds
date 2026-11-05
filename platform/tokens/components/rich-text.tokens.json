@@ -12,17 +12,17 @@
       "$description": "RichText: the font of prose."
     },
     "rich-text-article-font-size": {
-      "$value": "{plx-ref.font-size-14}",
+      "$value": "{plx-ref.font-size-300}",
       "$type": "dimension",
       "$description": "RichText: the size of article text (a page of reading)."
     },
     "rich-text-article-line-height": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension",
       "$description": "RichText: the line height of article text."
     },
     "rich-text-article-measure": {
-      "$value": "{plx-ref.size-600px}",
+      "$value": "{plx-ref.size-150u}",
       "$type": "dimension",
       "$description": "RichText: the reading width of an article (about 80 characters)."
     },
@@ -37,12 +37,12 @@
       "$description": "RichText: the space above a heading in an article."
     },
     "rich-text-compact-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "RichText: the size of compact text (notes, comments, help in a panel)."
     },
     "rich-text-compact-line-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension",
       "$description": "RichText: the line height of compact text."
     },
@@ -72,32 +72,32 @@
       "$description": "RichText: the weight of headings."
     },
     "rich-text-h1-font-size": {
-      "$value": "{plx-ref.font-size-20}",
+      "$value": "{plx-ref.font-size-600}",
       "$type": "dimension",
       "$description": "RichText: the size of a first-level heading."
     },
     "rich-text-h1-line-height": {
-      "$value": "{plx-ref.size-28px}",
+      "$value": "{plx-ref.size-7u}",
       "$type": "dimension",
       "$description": "RichText: the line height of a first-level heading."
     },
     "rich-text-h2-font-size": {
-      "$value": "{plx-ref.font-size-18}",
+      "$value": "{plx-ref.font-size-500}",
       "$type": "dimension",
       "$description": "RichText: the size of a second-level heading."
     },
     "rich-text-h2-line-height": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension",
       "$description": "RichText: the line height of a second-level heading."
     },
     "rich-text-h3-font-size": {
-      "$value": "{plx-ref.font-size-15}",
+      "$value": "{plx-ref.font-size-400}",
       "$type": "dimension",
       "$description": "RichText: the size of a third-level heading."
     },
     "rich-text-h3-line-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension",
       "$description": "RichText: the line height of a third-level heading (a fourth level takes the text’s size)."
     },
@@ -137,12 +137,12 @@
       "$description": "RichText: the code font of a code block."
     },
     "rich-text-pre-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "RichText: the size of a code block’s code."
     },
     "rich-text-pre-line-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension",
       "$description": "RichText: the line height of a code block."
     },
@@ -152,7 +152,7 @@
       "$description": "RichText: the space inside a code block."
     },
     "rich-text-pre-radius": {
-      "$value": "{plx-sys.radius-card-6px}",
+      "$value": "{plx-sys.radius-card-md}",
       "$type": "dimension",
       "$description": "RichText: the corners of a code block."
     },
@@ -177,7 +177,7 @@
       "$description": "RichText: the color of a figure’s caption."
     },
     "rich-text-caption-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "RichText: the size of a figure’s caption."
     },
@@ -243,7 +243,7 @@
       "$description": "RichText table: the space above and below a cell's text."
     },
     "rich-text-table-cell-min-width": {
-      "$value": "{plx-ref.size-48px}",
+      "$value": "{plx-ref.size-12u}",
       "$type": "dimension",
       "$description": "RichText table: the narrowest a column gets (room to click into an empty cell)."
     }

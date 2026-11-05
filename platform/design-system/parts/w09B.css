@@ -1,7 +1,7 @@
 /* Library part w09B (wave 9, lane B): the frames the labs of wave 9, lane B need. Tokens only. */
 /* a lab specimen: a chart's figure at the fixed plot's width (360px); the comparison view at a pane-pair width */
-.ds-w09b-lab{inline-size:var(--plx-ref-size-360px);max-inline-size:100%;}
-.ds-w09b-lab--wide{inline-size:var(--plx-ref-size-560px);}
+.ds-w09b-lab{inline-size:var(--plx-ref-size-90u);max-inline-size:100%;}
+.ds-w09b-lab--wide{inline-size:var(--plx-ref-size-140u);}
 /* the feature matrix's cells in the lab (the view draws them in a Table): one row per attribute, three columns */
-.ds-w09b-cells{display:flex;flex-direction:column;row-gap:var(--plx-ref-space-8px);}
-.ds-w09b-cell-row{align-items:center;column-gap:var(--plx-ref-space-16px);display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));}
+.ds-w09b-cells{display:flex;flex-direction:column;row-gap:var(--plx-ref-space-2u);}
+.ds-w09b-cell-row{align-items:center;column-gap:var(--plx-ref-space-4u);display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));}

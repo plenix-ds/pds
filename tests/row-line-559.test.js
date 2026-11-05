@@ -87,7 +87,7 @@ function first(part, what, m) {
       const h = React.createElement, P = window.Plenix;
       const data = ['r1', 'r2', 'r3', 'r4', 'r5'].map((id, i) => ({ id, name: 'Record ' + (i + 1), city: 'City ' + (i + 1) }));
       const columns = [{ title: 'Name', field: 'name' }, { title: 'City', field: 'city' }];
-      const grid = (selected) => h(P.DataGrid, { label: 'Rows', data, columns, index: 'id', selectable: true, selected, onSelectionChange: () => {}, narrow: 'table', height: '--plx-ref-size-320px' });
+      const grid = (selected) => h(P.DataGrid, { label: 'Rows', data, columns, index: 'id', selectable: true, selected, onSelectionChange: () => {}, narrow: 'table', height: '--plx-ref-size-80u' });
       // g1: the third row selected; g2: the first row selected
       ReactDOM.createRoot(document.getElementById('g1')).render(grid(['r3']));
       ReactDOM.createRoot(document.getElementById('g2')).render(grid(['r1']));

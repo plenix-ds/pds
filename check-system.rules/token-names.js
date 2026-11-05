@@ -4,7 +4,8 @@
 //   value      is a bare number equal to the token's own value, resolved through its references, read as px (1rem =
 //              16px), as a percent (0.3 -> 30) or as ms (0.2s -> 200): font-size-13 (0.8125rem), opacity-30 (0.3),
 //              font-weight-regular-400 (400)
-//   breakpoint is a bare number equal to a breakpoint's px value (a plx-ref breakpoint-*): from-1440
+//   breakpoint is a bare number equal to a breakpoint's px value (a plx-ref breakpoint-*): from-1440 (a number after from, below, above,
+//              until, min or max; an ordinal step such as color-gray-600 or font-size-600 is not a breakpoint)
 // Ordinal steps (color-blue-500, 2xs … 4xl) are fine: their number is not their value. A $deprecated token (the old name a
 // rename keeps as an alias until 2.0.0, docs/adr/0002) is skipped.
 // Known findings (the 0.x debt, measured 2026-11-05) are in token-names.baseline.json; it only shrinks: a known finding
@@ -15,6 +16,14 @@ const G = require('./token-graph.js');
 
 const NAME = 'token-names';
 const BASELINE = path.join(__dirname, 'token-names.baseline.json');
+// names that mirror a public prop's value: the component picks the token by that value at run time, so the number is the
+// prop's, not the token's (docs/adr/0012)
+const MIRRORS = [
+  [/^pictogram-(48|64|96)-/, "Pictogram's size prop is '48' | '64' | '96'"],
+  [/^text-lines-[2-4]$/, "Text's lines prop is 2, 3 or 4"],
+  [/^document-viewer-zoom-(50|75)$/, "DocumentViewer's zoom steps are named by their percent"],
+  [/^content-grid-ratio-1-1$/, "ContentGrid's ratio prop is '1:1'"],
+];
 const UNIT = /^\d*\.?\d+(px|rem|em|ms|s|pt|deg|vh|vw|pct|percent)$/;
 
 // the numbers a literal value can be read as: 0.8125rem -> 13; 0.3 -> 0.3, 30; 200ms -> 200; 0.2s -> 200
@@ -48,16 +57,18 @@ function raw(docs) {
   for (const d of defs) {
     const self = d.tier + '.' + d.name;
     if (seen.has(self)) continue;
-    if (d.deprecated) continue;   // a deprecated name (a renamed token's alias, docs/adr/0002) is on its way out
+    if (d.deprecated) continue;
+    if (d.tier === 'plx-comp' && MIRRORS.some(([re]) => re.test(d.name))) continue;   // a deprecated name (a renamed token's alias, docs/adr/0002) is on its way out
     const parts = d.name.split('-');
     const value = resolve(d), read = value == null ? new Set() : readings(value);
     let why = null;
-    for (const p of parts) {
+    for (let i = 0; i < parts.length; i++) {
+      const p = parts[i];
       if (UNIT.test(p)) { why = 'has a unit in its name (' + p + ')'; break; }
       if (/^\d+$/.test(p)) {
         const n = parseInt(p, 10);
         if (read.has(n)) { why = 'has its value in its name (' + p + ' = ' + value + ')'; break; }
-        if (breakpoints.has(n)) { why = 'has a breakpoint value in its name (' + p + '): name the breakpoint by role'; break; }
+        if (breakpoints.has(n) && /^(from|below|above|until|min|max)$/.test(parts[i - 1] || '')) { why = 'has a breakpoint value in its name (' + p + '): name the breakpoint by role'; break; }
       }
     }
     if (why) { seen.add(self); out.push({ key: self, file: d.file, text: self + ' ' + why }); }

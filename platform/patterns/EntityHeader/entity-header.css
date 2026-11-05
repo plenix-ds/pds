@@ -233,6 +233,7 @@
   --plx-state-entity-header-media-self: flex-start;
 }
 .plx-entity-header__media--stretch {
+  --plx-comp-entity-header-context-tile-icon-fill: var(--plx-state-entity-header-media-icon);
   --plx-state-entity-header-media-block: 100%;
   --plx-state-entity-header-media-self: stretch;
 }
@@ -264,78 +265,127 @@
   justify-content: center;
   min-inline-size: 0;
 }
+/* the { icon, hue } media (D-0024, D-0036; pds#275, #108): by default no box - no fill, no border - and the icon fills
+   the square (44px; 32px in a section; 72px top large), in its hue's on-surface colour. A stretched media (column large,
+   edge) keeps the icon at its layout's icon size (--plx-comp-entity-header-context-tile-icon-fill). With box (media.box,
+   __tile--box) it is the tinted tile with its 1px border, the icon at the tile's icon size, as before 275: a box stays
+   only where a usage needs it (D-0024) */
+@property --plx-state-entity-header-tile-background {
+  syntax: "*";
+  inherits: false;
+}
+@property --plx-state-entity-header-tile-border-width {
+  syntax: "*";
+  inherits: false;
+}
+@property --plx-state-entity-header-tile-icon {
+  syntax: "*";
+  inherits: false;
+}
+@property --plx-state-entity-header-tile-icon-size {
+  syntax: "*";
+  inherits: false;
+}
+@property --plx-state-entity-header-tile-text {
+  syntax: "*";
+  inherits: false;
+}
+@property --plx-state-entity-header-tile-box-background {
+  syntax: "*";
+  inherits: false;
+}
+@property --plx-state-entity-header-tile-box-text {
+  syntax: "*";
+  inherits: false;
+}
 .plx-entity-header__tile {
-  --plx-comp-icon-size: var(--plx-comp-entity-header-context-media-icon, var(--plx-comp-entity-header-media-icon-size));
+  --plx-comp-icon-size: var(--plx-state-entity-header-tile-icon-size);
   align-items: center;
+  background-color: var(--plx-state-entity-header-tile-background, transparent);
   block-size: var(
     --plx-comp-entity-header-context-media-block,
     var(--plx-comp-entity-header-context-media-size, var(--plx-comp-entity-header-tile-height))
   );
   border-bottom-color: var(--plx-comp-entity-header-tile-border-color);
-  border-bottom-left-radius: var(
+  border-end-start-radius: var(
     --plx-comp-entity-header-context-tile-radius,
     var(--plx-comp-entity-header-tile-radius)
   );
-  border-bottom-right-radius: var(
+  border-end-end-radius: var(
     --plx-comp-entity-header-context-tile-radius,
     var(--plx-comp-entity-header-tile-radius)
   );
   border-bottom-style: solid;
-  border-bottom-width: var(
-    --plx-comp-entity-header-context-tile-border-width,
-    var(--plx-comp-entity-header-tile-border-width)
-  );
-  border-left-color: var(--plx-comp-entity-header-tile-border-color);
-  border-left-style: solid;
-  border-left-width: var(
-    --plx-comp-entity-header-context-tile-border-width,
-    var(--plx-comp-entity-header-tile-border-width)
-  );
-  border-right-color: var(--plx-comp-entity-header-tile-border-color);
-  border-right-style: solid;
-  border-right-width: var(
-    --plx-comp-entity-header-context-tile-border-width,
-    var(--plx-comp-entity-header-tile-border-width)
-  );
+  border-bottom-width: var(--plx-state-entity-header-tile-border-width, 0px);
+  border-inline-end-color: var(--plx-comp-entity-header-tile-border-color);
+  border-inline-end-style: solid;
+  border-inline-end-width: var(--plx-state-entity-header-tile-border-width, 0px);
+  border-inline-start-color: var(--plx-comp-entity-header-tile-border-color);
+  border-inline-start-style: solid;
+  border-inline-start-width: var(--plx-state-entity-header-tile-border-width, 0px);
   border-top-color: var(--plx-comp-entity-header-tile-border-color);
-  border-top-left-radius: var(--plx-comp-entity-header-context-tile-radius, var(--plx-comp-entity-header-tile-radius));
-  border-top-right-radius: var(--plx-comp-entity-header-context-tile-radius, var(--plx-comp-entity-header-tile-radius));
+  border-start-start-radius: var(--plx-comp-entity-header-context-tile-radius, var(--plx-comp-entity-header-tile-radius));
+  border-start-end-radius: var(--plx-comp-entity-header-context-tile-radius, var(--plx-comp-entity-header-tile-radius));
   border-top-style: solid;
-  border-top-width: var(
-    --plx-comp-entity-header-context-tile-border-width,
-    var(--plx-comp-entity-header-tile-border-width)
-  );
+  border-top-width: var(--plx-state-entity-header-tile-border-width, 0px);
+  color: var(--plx-state-entity-header-tile-text);
   display: inline-flex;
   inline-size: var(--plx-comp-entity-header-context-media-size, var(--plx-comp-entity-header-tile-width));
   justify-content: center;
 }
 .plx-entity-header__tile[data-plx-media-hue="surface"] {
-  background-color: var(--plx-comp-entity-header-tile-surface-background);
-  color: var(--plx-comp-entity-header-tile-surface-text);
+  --plx-state-entity-header-tile-box-background: var(--plx-comp-entity-header-tile-surface-background);
+  --plx-state-entity-header-tile-box-text: var(--plx-comp-entity-header-tile-surface-text);
+  --plx-state-entity-header-tile-icon: var(--plx-comp-entity-header-media-surface-icon);
 }
 .plx-entity-header__tile[data-plx-media-hue="blue"] {
-  background-color: var(--plx-comp-entity-header-tile-blue-background);
-  color: var(--plx-comp-entity-header-tile-blue-text);
+  --plx-state-entity-header-tile-box-background: var(--plx-comp-entity-header-tile-blue-background);
+  --plx-state-entity-header-tile-box-text: var(--plx-comp-entity-header-tile-blue-text);
+  --plx-state-entity-header-tile-icon: var(--plx-comp-entity-header-media-blue-icon);
 }
 .plx-entity-header__tile[data-plx-media-hue="green"] {
-  background-color: var(--plx-comp-entity-header-tile-green-background);
-  color: var(--plx-comp-entity-header-tile-green-text);
+  --plx-state-entity-header-tile-box-background: var(--plx-comp-entity-header-tile-green-background);
+  --plx-state-entity-header-tile-box-text: var(--plx-comp-entity-header-tile-green-text);
+  --plx-state-entity-header-tile-icon: var(--plx-comp-entity-header-media-green-icon);
 }
 .plx-entity-header__tile[data-plx-media-hue="purple"] {
-  background-color: var(--plx-comp-entity-header-tile-purple-background);
-  color: var(--plx-comp-entity-header-tile-purple-text);
+  --plx-state-entity-header-tile-box-background: var(--plx-comp-entity-header-tile-purple-background);
+  --plx-state-entity-header-tile-box-text: var(--plx-comp-entity-header-tile-purple-text);
+  --plx-state-entity-header-tile-icon: var(--plx-comp-entity-header-media-purple-icon);
 }
 .plx-entity-header__tile[data-plx-media-hue="red"] {
-  background-color: var(--plx-comp-entity-header-tile-red-background);
-  color: var(--plx-comp-entity-header-tile-red-text);
+  --plx-state-entity-header-tile-box-background: var(--plx-comp-entity-header-tile-red-background);
+  --plx-state-entity-header-tile-box-text: var(--plx-comp-entity-header-tile-red-text);
+  --plx-state-entity-header-tile-icon: var(--plx-comp-entity-header-media-red-icon);
 }
 .plx-entity-header__tile[data-plx-media-hue="brown"] {
-  background-color: var(--plx-comp-entity-header-tile-brown-background);
-  color: var(--plx-comp-entity-header-tile-brown-text);
+  --plx-state-entity-header-tile-box-background: var(--plx-comp-entity-header-tile-brown-background);
+  --plx-state-entity-header-tile-box-text: var(--plx-comp-entity-header-tile-brown-text);
+  --plx-state-entity-header-tile-icon: var(--plx-comp-entity-header-media-brown-icon);
 }
 .plx-entity-header__tile[data-plx-media-hue="gray"] {
-  background-color: var(--plx-comp-entity-header-tile-gray-background);
-  color: var(--plx-comp-entity-header-tile-gray-text);
+  --plx-state-entity-header-tile-box-background: var(--plx-comp-entity-header-tile-gray-background);
+  --plx-state-entity-header-tile-box-text: var(--plx-comp-entity-header-tile-gray-text);
+  --plx-state-entity-header-tile-icon: var(--plx-comp-entity-header-media-gray-icon);
+}
+.plx-entity-header__tile:where(:not(.plx-entity-header__tile--box)) {
+  --plx-state-entity-header-tile-icon-size: var(
+    --plx-comp-entity-header-context-tile-icon-fill,
+    var(--plx-comp-entity-header-context-media-size, var(--plx-comp-entity-header-tile-width))
+  );
+  --plx-state-entity-header-tile-text: var(--plx-state-entity-header-tile-icon);
+}
+.plx-entity-header__tile--box {
+  --plx-state-entity-header-tile-background: var(--plx-state-entity-header-tile-box-background);
+  --plx-state-entity-header-tile-border-width: var(
+    --plx-comp-entity-header-context-tile-border-width,
+    var(--plx-comp-entity-header-tile-border-width)
+  );
+  --plx-state-entity-header-tile-icon-size: var(
+    --plx-comp-entity-header-context-media-icon,
+    var(--plx-comp-entity-header-media-icon-size)
+  );
+  --plx-state-entity-header-tile-text: var(--plx-state-entity-header-tile-box-text);
 }
 .plx-entity-header__text {
   display: flex;

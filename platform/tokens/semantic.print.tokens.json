@@ -5,6 +5,34 @@
       "$value": "none",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
+    "print-break": {
+      "$value": "page",
+      "$extensions": { "com.plenix": { "webOnly": true } }
+    },
+    "print-sheet-padding": {
+      "$value": "0",
+      "$extensions": { "com.plenix": { "webOnly": true } }
+    },
+    "print-sheet-border-width": {
+      "$value": "0",
+      "$extensions": { "com.plenix": { "webOnly": true } }
+    },
+    "print-sheet-radius": {
+      "$value": "0",
+      "$extensions": { "com.plenix": { "webOnly": true } }
+    },
+    "print-sheet-shadow": {
+      "$value": "none",
+      "$extensions": { "com.plenix": { "webOnly": true } }
+    },
+    "print-sheet-inline-size": {
+      "$value": "auto",
+      "$extensions": { "com.plenix": { "webOnly": true } }
+    },
+    "print-sheet-block-size": {
+      "$value": "0",
+      "$extensions": { "com.plenix": { "webOnly": true } }
+    },
     "print-block-size": {
       "$value": "auto",
       "$extensions": { "com.plenix": { "webOnly": true } }

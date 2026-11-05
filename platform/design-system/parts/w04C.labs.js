@@ -114,7 +114,7 @@ if (window.DS && DS.registerLab) {
       parts: { bg: 'A', edge: 'A', ew: 'A', fg: 'B', fs: 'B', lh: 'B', py: 'C', px: 'C', gap: 'C', bgap: 'D', tw: 'D', agap: 'E' },
       anchors: { A: { part: null, side: 'bottom' }, B: { part: '.plx-banner__text', side: 'bottom' }, C: { part: '.plx-banner__icon', side: 'left' }, D: { part: '.plx-banner__body', side: 'top' }, E: { part: '.plx-banner__actions', side: 'right' } },
       sections: [['Tone', ['bg', 'fg', 'edge', 'ew']], ['Spacing', ['py', 'px', 'gap']], ['Message', ['fs', 'lh', 'bgap', 'tw']], ['Actions', ['agap']]],
-      matrixLabel: 'Banner values by tone', matrixColumnWidth: '--plx-ref-size-560px',
+      matrixLabel: 'Banner values by tone', matrixColumnWidth: '--plx-ref-size-140u',
       statesHead: 'Tones · ' + HEAD
     });
 

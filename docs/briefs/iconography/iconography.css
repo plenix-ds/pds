@@ -1,10 +1,10 @@
 /* The icon inventory's review page (first-batch.html): Material today beside each candidate as found and restyled.
    Every value is a token. */
-.ig-table{border-collapse:collapse;font-size:var(--plx-ref-font-size-13);inline-size:100%;}
+.ig-table{border-collapse:collapse;font-size:var(--plx-ref-font-size-200);inline-size:100%;}
 .ig-table th{background:var(--plx-sys-surface-sunken);border:var(--plx-sys-border-width-thin) solid var(--plx-sys-border-default);font-weight:var(--plx-sys-font-weight-semibold);padding:var(--plx-sys-space-inset-sm);text-align:start;vertical-align:bottom;}
 .ig-table td{background:var(--plx-sys-surface-raised);border:var(--plx-sys-border-width-thin) solid var(--plx-sys-border-default);padding:var(--plx-sys-space-inset-sm);vertical-align:top;}
 .ig-name{font-family:var(--plx-sys-font-data);font-weight:var(--plx-sys-font-weight-semibold);word-spacing:var(--plx-sys-font-data-word-spacing);}
-.ig-meta{color:var(--plx-sys-content-muted);font-size:var(--plx-ref-font-size-12);}
+.ig-meta{color:var(--plx-sys-content-muted);font-size:var(--plx-ref-font-size-100);}
 .ig-cell{align-items:end;display:flex;flex-wrap:wrap;gap:var(--plx-sys-space-inline-md);}
 .ig-sample{align-items:center;display:grid;justify-items:center;row-gap:var(--plx-sys-space-stack-xs);}
 .ig-sample span{color:var(--plx-sys-content-muted);font-family:var(--plx-sys-font-data);font-size:var(--plx-ref-font-size-11);word-spacing:var(--plx-sys-font-data-word-spacing);}
@@ -12,10 +12,10 @@
 .ig-s16{block-size:var(--plx-sys-icon-size-sm);inline-size:var(--plx-sys-icon-size-sm);}
 .ig-s20{block-size:var(--plx-sys-icon-size-md);inline-size:var(--plx-sys-icon-size-md);}
 .ig-s24{block-size:var(--plx-sys-icon-size-lg);inline-size:var(--plx-sys-icon-size-lg);}
-.ig-s96{background:var(--plx-sys-surface-default);block-size:var(--plx-ref-size-96px);inline-size:var(--plx-ref-size-96px);outline:var(--plx-sys-border-width-thin) solid var(--plx-sys-border-subtle);}
+.ig-s96{background:var(--plx-sys-surface-default);block-size:var(--plx-ref-size-24u);inline-size:var(--plx-ref-size-24u);outline:var(--plx-sys-border-width-thin) solid var(--plx-sys-border-subtle);}
 .ig-found{color:var(--plx-sys-content-default);}
 .ig-grid{fill:none;stroke:var(--plx-sys-border-subtle);stroke-width:var(--plx-sys-border-width-thin);}
-.ig-keyline{fill:none;stroke:var(--plx-sys-feedback-danger-solid);stroke-dasharray:var(--plx-ref-size-4px);stroke-width:var(--plx-sys-border-width-thin);}
+.ig-keyline{fill:none;stroke:var(--plx-sys-feedback-danger-solid);stroke-dasharray:var(--plx-ref-size-1u);stroke-width:var(--plx-sys-border-width-thin);}
 .ig-pass{color:var(--plx-sys-feedback-success-content);font-weight:var(--plx-sys-font-weight-semibold);}
 .ig-fail{color:var(--plx-sys-feedback-danger-content);font-weight:var(--plx-sys-font-weight-semibold);}
 .ig-none{color:var(--plx-sys-content-muted);}

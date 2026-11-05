@@ -125,7 +125,7 @@ if (window.DS && DS.registerLab) {
         E: { part: '.plx-miller-columns__icon', side: 'left' }, F: { part: '.plx-miller-columns__chevron', side: 'right' }, G: { part: '.plx-miller-columns__description', side: 'bottom' },
         H: { part: '.plx-miller-columns__preview', side: 'right' }, I: { part: '.plx-miller-columns__resizer', side: 'top' } },
       sections: [['Frame', ['bg', 'bc', 'bw', 'rad', 'h', 'fs']], ['Columns', ['cw', 'cb', 'lp', 'lg']], ['Rows', ['ih', 'ipx', 'ig', 'irad', 'hb', 'sb', 'st', 'sw', 'fo', 'fw', 'ic', 'chb', 'chw', 'dc', 'dfs']], ['Preview and edges', ['pp', 'rw', 'rb']]],
-      matrixLabel: 'Miller columns by layout and state', matrixColumnWidth: '--plx-ref-size-900px', statesHead: 'Layouts and states · ' + HEAD
+      matrixLabel: 'Miller columns by layout and state', matrixColumnWidth: '--plx-ref-size-225u', statesHead: 'Layouts and states · ' + HEAD
     });
 
     // ---- Cascader (<Cascader>): the field, the list (a menu surface) with its columns or its search matches
@@ -231,7 +231,7 @@ if (window.DS && DS.registerLab) {
       anchors: { A: { part: '.plx-cascader__field', side: 'left' }, B: { part: '.plx-cascader__chevron', side: 'right' }, C: { part: POP, side: 'right' }, D: { part: '.plx-cascader__columns', side: 'bottom' },
         E: { part: '.plx-cascader__search', side: 'right' }, F: { part: MATCH, side: 'left' }, G: { part: '.plx-cascader__match-path', side: 'bottom' }, H: { part: '.plx-cascader__limit', side: 'right' }, I: { part: '.plx-cascader__loading', side: 'right' }, J: { part: '.plx-cascader__error', side: 'right' } },
       sections: [['Field', ['mw', 'fg', 'ffc', 'fic', 'fdb', 'tg', 'th', 'chb', 'chw']], ['List', ['pb', 'pc', 'pw', 'pr', 'ps', 'pm', 'ch']], ['Search', ['sp', 'sl', 'mh', 'mpx', 'mab', 'mpc', 'mpf']], ['Limit and server search', ['lt', 'lf', 'lp', 'lg', 'er']]],
-      matrixLabel: 'Cascader by trigger and state', matrixColumnWidth: '--plx-ref-size-600px', statesHead: 'Triggers and states · ' + HEAD
+      matrixLabel: 'Cascader by trigger and state', matrixColumnWidth: '--plx-ref-size-150u', statesHead: 'Triggers and states · ' + HEAD
     });
 
     // ---- EntityPicker (<EntityPicker>): the field and its list of two-line options
@@ -332,7 +332,7 @@ if (window.DS && DS.registerLab) {
       anchors: { A: { part: '.plx-entity-picker__field', side: 'left' }, B: { part: ELIST, side: 'right' }, C: { part: EOPT, side: 'left' }, D: { part: '.plx-entity-picker__name', side: 'top' },
         E: { part: '.plx-entity-picker__description', side: 'bottom' }, F: { part: '.plx-entity-picker__meta', side: 'right' }, G: { part: '.plx-entity-picker__check', side: 'right' } },
       sections: [['Field', ['mw', 'fg', 'ffc', 'fic', 'fdb', 'sc']], ['List', ['lb', 'lc', 'lr', 'ls', 'lmh']], ['Options', ['oh', 'opx', 'og', 'orad', 'oab', 'ost', 'nw', 'dc', 'dfs', 'mc', 'mf', 'mfs', 'ck']]],
-      matrixLabel: 'Entity picker by kind and state', matrixColumnWidth: '--plx-ref-size-560px', statesHead: 'Kinds and states · ' + HEAD
+      matrixLabel: 'Entity picker by kind and state', matrixColumnWidth: '--plx-ref-size-140u', statesHead: 'Kinds and states · ' + HEAD
     });
 
     // ---- TimePicker (<TimePicker>): the field with the time in the data font, its list or its segments
@@ -418,7 +418,7 @@ if (window.DS && DS.registerLab) {
       anchors: { A: { part: '.plx-time-picker__field', side: 'left' }, B: { part: '.plx-time-picker__icon', side: 'right' }, C: { part: '.plx-time-picker__list', side: 'right' }, D: { part: TOPT, side: 'left' },
         E: { part: SEG, side: 'top' }, F: { part: '.plx-time-picker__separator', side: 'bottom' } },
       sections: [['Field', ['w', 'ff', 'fg', 'ffc', 'fic', 'fdb', 'icb', 'icw']], ['List', ['lb', 'lc', 'lr', 'lmh', 'oh', 'ofs', 'oab', 'ost']], ['Segments', ['smw', 'spx', 'sfb', 'sft', 'sep']]],
-      matrixLabel: 'Time picker by form and state', matrixColumnWidth: '--plx-ref-size-320px', statesHead: 'Forms and states · ' + HEAD
+      matrixLabel: 'Time picker by form and state', matrixColumnWidth: '--plx-ref-size-80u', statesHead: 'Forms and states · ' + HEAD
     });
 
     // ---- RelativeDateInput (<RelativeDateInput>): the row of fields and the resolved dates
@@ -469,7 +469,7 @@ if (window.DS && DS.registerLab) {
       parts: { g: 'A', rg: 'B', pw: 'C', uw: 'D', dc: 'E', df: 'E', dfs: 'E' },
       anchors: { A: { part: null, side: 'left' }, B: { part: '.plx-relative-date-input__row', side: 'top' }, C: { part: '.plx-relative-date-input__preset', side: 'bottom' }, D: { part: '.plx-relative-date-input__unit', side: 'top' }, E: { part: '.plx-relative-date-input__range', side: 'right' } },
       sections: [['Fields', ['g', 'rg', 'pw', 'uw']], ['Resolved dates', ['dc', 'df', 'dfs']]],
-      matrixLabel: 'Relative date input by direction', matrixColumnWidth: '--plx-ref-size-560px', statesHead: 'Directions · ' + HEAD
+      matrixLabel: 'Relative date input by direction', matrixColumnWidth: '--plx-ref-size-140u', statesHead: 'Directions · ' + HEAD
     });
 
     // ---- LoadMore (<LoadMore>): the row at the end of a list
@@ -526,7 +526,7 @@ if (window.DS && DS.registerLab) {
       parts: { g: 'A', mh: 'A', py: 'A', cc: 'B', cf: 'B', cfs: 'B', lc: 'C', lg: 'C', ec: 'D', efs: 'D', bw: 'E' },
       anchors: { A: { part: null, side: 'left' }, B: { part: '.plx-load-more__count', side: 'right' }, C: { part: '.plx-load-more__loading', side: 'top' }, D: { part: '.plx-load-more__end', side: 'bottom' }, E: { part: '.plx-load-more__button', side: 'top' } },
       sections: [['Row', ['g', 'mh', 'py', 'bw']], ['Count', ['cc', 'cf', 'cfs']], ['Loading and end', ['lc', 'lg', 'ec', 'efs']]],
-      matrixLabel: 'Load more by mode and state', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Modes · ' + HEAD
+      matrixLabel: 'Load more by mode and state', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Modes · ' + HEAD
     });
 
     // ---- ImageUpload (<ImageUpload>, <ImageCrop>): the drop zone, the previews, the crop step
@@ -614,7 +614,7 @@ if (window.DS && DS.registerLab) {
       anchors: { A: { part: null, side: 'left' }, B: { part: '.plx-image-upload__zone', side: 'right' }, C: { part: '.plx-image-upload__preview', side: 'right' }, D: { part: '.plx-image-upload__name', side: 'bottom' },
         E: { part: '.plx-image-upload__actions', side: 'right' }, F: { part: '.plx-image-upload__list', side: 'top' }, G: { part: '.plx-image-crop__frame', side: 'right' }, H: { part: '.plx-image-crop__actions', side: 'bottom' } },
       sections: [['Area', ['mw', 'g']], ['Drop zone', ['zg', 'zic', 'ztf', 'lmc']], ['Previews', ['pbc', 'prad', 'pbg', 'nf', 'nfs', 'sc', 'ag', 'gc', 'gg']], ['Crop', ['cmw', 'cbc', 'crad', 'cag']]],
-      matrixLabel: 'Image upload by images and shape', matrixColumnWidth: '--plx-ref-size-560px', statesHead: 'Images and shapes · ' + HEAD
+      matrixLabel: 'Image upload by images and shape', matrixColumnWidth: '--plx-ref-size-140u', statesHead: 'Images and shapes · ' + HEAD
     });
 
     // ---- AvatarUpload (<AvatarUpload>): the Avatar, its actions and the hint
@@ -652,7 +652,7 @@ if (window.DS && DS.registerLab) {
       parts: { mw: 'A', g: 'A', rg: 'B', bg: 'C', ag: 'D', hc: 'E', hfs: 'E' },
       anchors: { A: { part: null, side: 'left' }, B: { part: '.plx-avatar-upload__row', side: 'top' }, C: { part: '.plx-avatar-upload__body', side: 'right' }, D: { part: '.plx-avatar-upload__actions', side: 'top' }, E: { part: '.plx-avatar-upload__hint', side: 'bottom' } },
       sections: [['Layout', ['mw', 'g', 'rg', 'bg', 'ag']], ['Hint', ['hc', 'hfs']]],
-      matrixLabel: 'Avatar upload by picture', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Pictures · ' + HEAD
+      matrixLabel: 'Avatar upload by picture', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Pictures · ' + HEAD
     });
   })();
 }

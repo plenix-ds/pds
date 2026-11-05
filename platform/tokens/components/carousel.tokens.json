@@ -7,12 +7,12 @@
       "$description": "Carousel: gap between slides (space-inline-md)."
     },
     "carousel-peek": {
-      "$value": "{plx-ref.size-40px}",
+      "$value": "{plx-ref.size-10u}",
       "$type": "dimension",
       "$description": "Carousel: how much of the next slide shows with several per view (size-40px)."
     },
     "carousel-slide-min": {
-      "$value": "{plx-ref.size-152px}",
+      "$value": "{plx-ref.size-38u}",
       "$type": "dimension",
       "$description": "Carousel: the least width of a slide with several per view; a narrower strip shows fewer at once (size-152px)."
     },
@@ -42,7 +42,7 @@
       "$description": "Carousel: strip focus outline offset (focus-ring-offset)."
     },
     "carousel-dot-target": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension",
       "$description": "Carousel: a page dot’s target size (WCAG 2.5.8) (size-24px)."
     },
@@ -52,12 +52,12 @@
       "$description": "Carousel: a page dot target’s corner radius (its focus outline) (radius-control)."
     },
     "carousel-dot-size": {
-      "$value": "{plx-ref.size-8px}",
+      "$value": "{plx-ref.size-2u}",
       "$type": "dimension",
       "$description": "Carousel: a page dot’s size (size-8px)."
     },
     "carousel-dot-radius": {
-      "$value": "{plx-sys.radius-pill-4px}",
+      "$value": "{plx-sys.radius-pill}",
       "$type": "dimension",
       "$description": "Carousel: a page dot’s corner radius (round at its size) (radius-pill-4px)."
     },

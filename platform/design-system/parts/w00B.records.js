@@ -45,10 +45,10 @@ DSParts.records.push(function (H) {
   // a reference table: cols [[title, field, kind]], rows of objects (each gets an id)
   var table = function (label, cols, rows) {
     return h(P.Table, { label: label, data: rows.map(function (x, i) { return Object.assign({ id: i + 1 }, x); }),
-      columns: cols.map(function (c, i) { return Object.assign({ title: c[0], field: c[1], kind: c[2] || 'wrap' }, i === 0 ? { rowLabel: true, width: c[3] || '--plx-ref-size-240px' } : {}); }) });
+      columns: cols.map(function (c, i) { return Object.assign({ title: c[0], field: c[1], kind: c[2] || 'wrap' }, i === 0 ? { rowLabel: true, width: c[3] || '--plx-ref-size-60u' } : {}); }) });
   };
   // the tokens of a topic: [token, its use]
-  var tokens = function (label, list) { return table(label, [['Token', 't', 'data', '--plx-ref-size-280px'], ['What it is for', 'u']], list.map(function (x) { return { t: x[0], u: x[1] }; })); };
+  var tokens = function (label, list) { return table(label, [['Token', 't', 'data', '--plx-ref-size-70u'], ['What it is for', 'u']], list.map(function (x) { return { t: x[0], u: x[1] }; })); };
   var TOK = function (label, list) { return [label, function () { return box(null, tokens(label, list)); }]; };
   var ASSETS = [
     { id: 1, name: 'Cross 014.png', type: 'PNG', size: '1.2 MB', bytes: 1229, status: 'Active', owner: 'Maya Chen', modified: '2026-10-02' },
@@ -58,7 +58,7 @@ DSParts.records.push(function (H) {
     { id: 5, name: 'Icon St Mark.jpg', type: 'JPG', size: '2.8 MB', bytes: 2867, status: 'Archived', owner: 'Alex Kim', modified: '2026-06-03' }];
   var TONE = { Active: 'success', Review: 'info', Draft: 'neutral', Archived: 'neutral' };
   var COLS = function (extra) {
-    return [{ title: 'Name', field: 'name', kind: ['name', 'data'], width: '--plx-ref-size-240px' }, { title: 'Type', field: 'type', kind: 'data' },
+    return [{ title: 'Name', field: 'name', kind: ['name', 'data'], width: '--plx-ref-size-60u' }, { title: 'Type', field: 'type', kind: 'data' },
       { title: 'Status', field: 'status', kind: 'center', render: function (r) { return h(P.Badge, { tone: TONE[r.status], size: 'sm' }, r.status); } },
       { title: 'Size', field: 'size', kind: 'data', align: 'right', sorter: function (a, b, ra, rb) { return ra.bytes - rb.bytes; } }]
       .map(function (c) { return Object.assign(c, (extra || {})[c.field] || {}); });
@@ -176,8 +176,8 @@ DSParts.records.push(function (H) {
         TOK('Section roles', [['--plx-sys-space-layout-md', 'The padding of a page’s main region (24px)'], ['--plx-sys-space-pattern-stack-md', 'Between patterns on a page, by density'], ['--plx-sys-space-region-space-md', 'Between large regions, by density']])] }),
     T('spacing', { sec: 'foundations', sub: 'Spacing and sizing', leaf: 'Sizing scale', purpose: 'One size scale on the 4px grid gives every width and height a named step, so things line up across the product.',
       text: 'Every dimension is a step of the size scale (--plx-ref-size-*px), a multiple of 4px: icon boxes, widths of columns and panes, avatar and thumbnail sizes. Components name a size token; a number in a stylesheet or a prop snaps to the nearest one.',
-      use: ['Widths and heights from the size tokens (a DataGrid column width="--plx-ref-size-240px")', 'Named sizes in props (Avatar size="md", Skeleton width="200px")'],
-      avoid: ['A dimension off the 4px grid', 'A raw number in a component: a size prop names a size token, such as width="200px" for --plx-ref-size-200px'],
+      use: ['Widths and heights from the size tokens (a DataGrid column width="--plx-ref-size-60u")', 'Named sizes in props (Avatar size="md", Skeleton width="200px")'],
+      avoid: ['A dimension off the 4px grid', 'A raw number in a component: a size prop names a size token, such as width="200px" for --plx-ref-size-50u'],
       examples: [['Avatar and icon sizes, all on the 4px grid', function () { return row(h(P.Avatar, { name: 'Maya Chen', size: 'xs' }), h(P.Avatar, { name: 'Maya Chen', size: 'md' }), h(P.Avatar, { name: 'Maya Chen', size: 'xl' }), h(P.Icon, { name: 'folder', size: 'sm' }), h(P.Icon, { name: 'folder', size: 'lg' })); }]] }),
     T('spacing', { sec: 'foundations', sub: 'Spacing and sizing', leaf: 'Content widths', purpose: 'Content widths cap how wide text and page content can grow, so lines stay easy to read on wide screens.',
       text: 'Content widths keep lines readable and forms compact. The reference maxima are 760px (reading), 960px (forms), 1200, 1600 and 2600px. Center limits a column to sm (400px), md (600px), lg (900px) or the contained page width. The page’s layout mode decides which applies.',
@@ -666,7 +666,7 @@ DSParts.records.push(function (H) {
     T('data-grid', { sec: 'data-display', sub: 'Tables', leaf: 'Tree table',
       text: 'A tree table shows a hierarchy several levels deep: tree, with each level indented one step (--plx-comp-data-grid-tree-indent), the + / − boxes in the name column, and the columns aligned across levels.',
       use: ['Folders inside folders with their columns (size, modified)'], avoid: ['A hierarchy without columns: use Tree'],
-      examples: [['Folders inside folders', function () { return box(600, h(P.DataGrid, { label: 'Folders', tree: true, treeColumn: 'name', treeExpanded: true, columns: [{ title: 'Name', field: 'name', kind: ['name', 'data'], width: '--plx-ref-size-280px' }, { title: 'Items', field: 'n', kind: 'data', align: 'right' }],
+      examples: [['Folders inside folders', function () { return box(600, h(P.DataGrid, { label: 'Folders', tree: true, treeColumn: 'name', treeExpanded: true, columns: [{ title: 'Name', field: 'name', kind: ['name', 'data'], width: '--plx-ref-size-70u' }, { title: 'Items', field: 'n', kind: 'data', align: 'right' }],
         data: [{ id: 1, name: 'Liturgical', n: '120', children: [{ id: 11, name: 'Crosses', n: '40' }, { id: 12, name: 'Borders', n: '80', children: [{ id: 121, name: 'Gold', n: '12' }] }] }, { id: 2, name: 'Bookshelf', n: '7' }] })); }]] }),
 
     /* ── 08 Feedback & System State ── */

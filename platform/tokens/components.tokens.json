@@ -9,7 +9,7 @@
   },
   "plx-comp": {
     "button-height-xs": {
-      "$value": "{plx-ref.control-size-24px}",
+      "$value": "{plx-ref.control-size-6u}",
       "$type": "dimension",
       "$extensions": {
         "com.plenix": {
@@ -20,15 +20,15 @@
       }
     },
     "button-height-3xl": {
-      "$value": "{plx-ref.control-size-48px}",
+      "$value": "{plx-ref.control-size-12u}",
       "$type": "dimension"
     },
     "button-height-4xl": {
-      "$value": "{plx-ref.control-size-52px}",
+      "$value": "{plx-ref.control-size-13u}",
       "$type": "dimension"
     },
     "button-size-md-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$extensions": {
         "com.plenix": {
@@ -89,7 +89,7 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-size-sm-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "button-size-sm-font-weight": {
@@ -142,7 +142,7 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-size-xs-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "button-size-xs-font-weight": {
@@ -248,7 +248,7 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-size-lg-font-size": {
-      "$value": "{plx-ref.font-size-14}",
+      "$value": "{plx-ref.font-size-300}",
       "$type": "dimension"
     },
     "button-size-lg-font-weight": {
@@ -458,9 +458,9 @@
       "$type": "color"
     },
     "button-raised-rest-shadow": {
-      "$value": "{plx-comp.card-elevation-halo-shadow}",
+      "$value": "none",
       "$type": "shadow",
-      "$description": "An action button at rest (secondary, tertiary, primary, danger): the card's Halo, the lightest card shadow (#610; #910). Pressed and disabled are flat; ghost and bar buttons stay flat."
+      "$description": "An action button at rest (secondary, tertiary, danger-secondary, primary, danger): no shadow; the Halo shows on hover only (D-0054, #269). Pressed and disabled are flat; ghost and bar buttons stay flat."
     },
     "button-raised-hover-shadow": {
       "$value": "{plx-comp.card-elevation-halo-shadow}",
@@ -468,13 +468,13 @@
       "$description": "An action button hovered: the card's Halo, as at rest, so hover does not deepen the shadow (owner, 2026-11-02, #910)."
     },
     "button-secondary-glow-image": {
-      "$value": "radial-gradient(ellipse at center, {plx-sys.control-background} 75%, {plx-sys.card-surface-rim} 100%)",
+      "$value": "radial-gradient(ellipse at center, {plx-sys.control-background} 90%, {plx-sys.card-surface-rim} 100%)",
       "$type": "gradient",
       "$description": "Secondary and tertiary at rest: a very subtle glow, the control fill to 75% fading to the card rim (#610; 75% since #910).",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-secondary-hover-glow-image": {
-      "$value": "radial-gradient(ellipse at center, {plx-sys.fill-neutral-hover} 75%, {plx-sys.control-raised-hover-rim} 100%)",
+      "$value": "radial-gradient(ellipse at center, {plx-sys.fill-neutral-hover} 90%, {plx-sys.control-raised-hover-rim} 100%)",
       "$type": "gradient",
       "$description": "Secondary and tertiary hovered: the subtle glow on the hover fill, from 75% (#610; #910).",
       "$extensions": { "com.plenix": { "webOnly": true } }
@@ -490,25 +490,25 @@
       "$description": "Secondary pressed: flat, one step past hover (gray-250; dark gray-900) (#610)."
     },
     "button-primary-glow-image": {
-      "$value": "radial-gradient(ellipse at center, {plx-sys.action-primary-background} 75%, {plx-sys.action-primary-background-hover} 100%)",
+      "$value": "radial-gradient(ellipse at center, {plx-sys.action-primary-background} 90%, {plx-sys.action-primary-background-hover} 100%)",
       "$type": "gradient",
       "$description": "Primary at rest: the subtle glow, from 75% fading to its own next shade (#610; #910).",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-primary-hover-glow-image": {
-      "$value": "radial-gradient(ellipse at center, {plx-sys.action-primary-background-hover} 75%, {plx-sys.action-primary-background-pressed} 100%)",
+      "$value": "radial-gradient(ellipse at center, {plx-sys.action-primary-background-hover} 90%, {plx-sys.action-primary-background-pressed} 100%)",
       "$type": "gradient",
       "$description": "Primary hovered: the subtle glow on the hover fill, from 75% (#610; #910).",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-danger-glow-image": {
-      "$value": "radial-gradient(ellipse at center, {plx-sys.action-danger-background} 75%, {plx-sys.action-danger-background-hover} 100%)",
+      "$value": "radial-gradient(ellipse at center, {plx-sys.action-danger-background} 90%, {plx-sys.action-danger-background-hover} 100%)",
       "$type": "gradient",
       "$description": "Danger at rest: the subtle glow, from 75% fading to its own next shade (#610; #910).",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-danger-hover-glow-image": {
-      "$value": "radial-gradient(ellipse at center, {plx-sys.action-danger-background-hover} 75%, {plx-sys.action-danger-background-pressed} 100%)",
+      "$value": "radial-gradient(ellipse at center, {plx-sys.action-danger-background-hover} 90%, {plx-sys.action-danger-background-pressed} 100%)",
       "$type": "gradient",
       "$description": "Danger hovered: the subtle glow on the hover fill, from 75% (red-800 to red-900) (#610; #910).",
       "$extensions": { "com.plenix": { "webOnly": true } }
@@ -645,7 +645,7 @@
       "$type": "dimension"
     },
     "button-label-clip-margin": {
-      "$value": "{plx-ref.size-4px}",
+      "$value": "{plx-ref.size-1u}",
       "$type": "dimension",
       "$description": "Button label: how far past its trimmed box the label may draw before it is clipped, so a descender (g, y) is not cut (the label box is trimmed to the letters: text-box trim-both cap alphabetic; owner, 2026-10-29, #610)."
     },
@@ -700,7 +700,7 @@
       "$type": "dimension"
     },
     "nav-bar-height": {
-      "$value": "{plx-ref.size-56px}",
+      "$value": "{plx-ref.size-14u}",
       "$type": "dimension",
       "$description": "The bottom navigation bar at Narrow (Platforms Standard 4.1, 6.4): a 44px target per destination with its label under the icon",
       "$extensions": {
@@ -730,11 +730,11 @@
       "$type": "dimension"
     },
     "nav-bar-label-gap": {
-      "$value": "{plx-ref.size-4px}",
+      "$value": "{plx-ref.size-1u}",
       "$type": "dimension"
     },
     "secondary-pane-width-sm": {
-      "$value": "{plx-ref.size-180px}",
+      "$value": "{plx-ref.size-45u}",
       "$type": "dimension",
       "$extensions": {
         "com.plenix": {
@@ -745,50 +745,80 @@
       }
     },
     "secondary-pane-width-md": {
-      "$value": "{plx-ref.size-220px}",
+      "$value": "{plx-ref.size-55u}",
       "$type": "dimension"
     },
     "secondary-pane-width-min": {
-      "$value": "{plx-ref.size-180px}",
+      "$value": "{plx-ref.size-45u}",
       "$type": "dimension",
       "$description": "The narrowest a resizable secondary pane can be dragged: 180px on every window. The small width (secondary-pane-width-sm) rises on larger windows, so it is no longer the minimum."
     },
     "secondary-pane-width-lg": {
-      "$value": "{plx-ref.size-280px}",
+      "$value": "{plx-ref.size-70u}",
       "$type": "dimension"
     },
-    "secondary-pane-width-sm-from-1440": {
-      "$value": "{plx-ref.size-220px}",
+    "secondary-pane-width-sm-from-wide": {
+      "$value": "{plx-ref.size-55u}",
       "$type": "dimension",
       "$description": "The secondary pane widths in a window 1440px wide up to 1919px (owner, issue 463 option C, step 2): each steps up one size; grid.css sets secondary-pane-width-sm, -md and -lg to them there."
     },
+    "secondary-pane-width-sm-from-1440": {
+      "$value": "{plx-comp.secondary-pane-width-sm-from-wide}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-secondary-pane-width-sm-from-wide (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "secondary-pane-width-md-from-wide": {
+      "$value": "{plx-ref.size-65u}",
+      "$type": "dimension"
+    },
     "secondary-pane-width-md-from-1440": {
-      "$value": "{plx-ref.size-260px}",
+      "$value": "{plx-comp.secondary-pane-width-md-from-wide}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-secondary-pane-width-md-from-wide (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "secondary-pane-width-lg-from-wide": {
+      "$value": "{plx-ref.size-80u}",
       "$type": "dimension"
     },
     "secondary-pane-width-lg-from-1440": {
-      "$value": "{plx-ref.size-320px}",
-      "$type": "dimension"
+      "$value": "{plx-comp.secondary-pane-width-lg-from-wide}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-secondary-pane-width-lg-from-wide (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
     },
-    "secondary-pane-width-sm-from-1920": {
-      "$value": "{plx-ref.size-260px}",
+    "secondary-pane-width-sm-from-ultrawide": {
+      "$value": "{plx-ref.size-65u}",
       "$type": "dimension",
       "$description": "The secondary pane widths in a window 1920px wide and wider."
     },
+    "secondary-pane-width-sm-from-1920": {
+      "$value": "{plx-comp.secondary-pane-width-sm-from-ultrawide}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-secondary-pane-width-sm-from-ultrawide (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "secondary-pane-width-md-from-ultrawide": {
+      "$value": "{plx-ref.size-80u}",
+      "$type": "dimension"
+    },
     "secondary-pane-width-md-from-1920": {
-      "$value": "{plx-ref.size-320px}",
+      "$value": "{plx-comp.secondary-pane-width-md-from-ultrawide}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-secondary-pane-width-md-from-ultrawide (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "secondary-pane-width-lg-from-ultrawide": {
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension"
     },
     "secondary-pane-width-lg-from-1920": {
-      "$value": "{plx-ref.size-400px}",
-      "$type": "dimension"
+      "$value": "{plx-comp.secondary-pane-width-lg-from-ultrawide}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-secondary-pane-width-lg-from-ultrawide (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
     },
     "secondary-pane-width-max": {
-      "$value": "{plx-ref.size-400px}",
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension"
     },
     "side-panel-width-default": {
-      "$value": "{plx-ref.size-240px}",
+      "$value": "{plx-ref.size-60u}",
       "$type": "dimension",
       "$extensions": {
         "com.plenix": {
@@ -799,21 +829,31 @@
       }
     },
     "side-panel-width-min": {
-      "$value": "{plx-ref.size-240px}",
+      "$value": "{plx-ref.size-60u}",
       "$type": "dimension"
     },
-    "side-panel-width-default-from-1440": {
-      "$value": "{plx-ref.size-320px}",
+    "side-panel-width-default-from-wide": {
+      "$value": "{plx-ref.size-80u}",
       "$type": "dimension",
       "$description": "The side panel's starting width in a window 1440px wide up to 1919px (owner, issue 463 option C, step 2); grid.css sets side-panel-width-default to it there."
     },
-    "side-panel-width-default-from-1920": {
-      "$value": "{plx-ref.size-400px}",
+    "side-panel-width-default-from-1440": {
+      "$value": "{plx-comp.side-panel-width-default-from-wide}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-side-panel-width-default-from-wide (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "side-panel-width-default-from-ultrawide": {
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension",
       "$description": "The side panel's starting width in a window 1920px wide and wider."
     },
+    "side-panel-width-default-from-1920": {
+      "$value": "{plx-comp.side-panel-width-default-from-ultrawide}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-side-panel-width-default-from-ultrawide (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
     "side-panel-width-max": {
-      "$value": "{plx-ref.size-560px}",
+      "$value": "{plx-ref.size-140u}",
       "$type": "dimension"
     },
     "input-background": {
@@ -849,7 +889,7 @@
       "$type": "number"
     },
     "input-max-width": {
-      "$value": "{plx-ref.size-600px}",
+      "$value": "{plx-ref.size-150u}",
       "$type": "dimension"
     },
     "input-min-height": {
@@ -898,7 +938,7 @@
       "$type": "number"
     },
     "textarea-min-height": {
-      "$value": "{plx-ref.size-60px}",
+      "$value": "{plx-ref.size-15u}",
       "$type": "dimension"
     },
     "textarea-padding-block": {
@@ -906,7 +946,7 @@
       "$type": "dimension"
     },
     "select-max-width": {
-      "$value": "{plx-ref.size-600px}",
+      "$value": "{plx-ref.size-150u}",
       "$type": "dimension"
     },
     "select-after-background": {
@@ -926,7 +966,7 @@
       "$type": "dimension"
     },
     "select-control-padding-inline-end": {
-      "$value": "{plx-ref.space-32px}",
+      "$value": "{plx-ref.space-8u}",
       "$type": "dimension"
     },
     "select-list-background": {
@@ -960,7 +1000,7 @@
       "$description": "Select: the space between the field and its list."
     },
     "select-list-max-height": {
-      "$value": "{plx-ref.size-320px}",
+      "$value": "{plx-ref.size-80u}",
       "$type": "dimension",
       "$description": "Select: the list scrolls past this height."
     },
@@ -1078,7 +1118,7 @@
       "$type": "dimension"
     },
     "check-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "check-min-height": {
@@ -1094,7 +1134,7 @@
       "$type": "color"
     },
     "check-input-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "switch-target-inset": {
@@ -1122,11 +1162,11 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "check-input-width": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "check-input-margin-block-start": {
-      "$value": "calc((1lh - {plx-ref.size-16px}) / 2)",
+      "$value": "calc((1lh - {plx-ref.size-4u}) / 2)",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
@@ -1179,7 +1219,7 @@
       "$type": "fontWeight"
     },
     "choice-list-max-width": {
-      "$value": "{plx-ref.size-560px}",
+      "$value": "{plx-ref.size-140u}",
       "$type": "dimension"
     },
     "choice-list-row-gap": {
@@ -1191,7 +1231,7 @@
       "$type": "color"
     },
     "choice-list-legend-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "choice-list-legend-font-weight": {
@@ -1255,15 +1295,15 @@
       "$type": "color"
     },
     "choice-input-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "choice-input-width": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "choice-input-margin-block-start": {
-      "$value": "calc((1lh - {plx-ref.size-16px}) / 2)",
+      "$value": "calc((1lh - {plx-ref.size-4u}) / 2)",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
@@ -1276,7 +1316,7 @@
       "$type": "color"
     },
     "choice-label-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "choice-label-font-weight": {
@@ -1288,7 +1328,7 @@
       "$type": "color"
     },
     "choice-description-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "choice-disabled-opacity": {
@@ -1301,7 +1341,7 @@
       "$type": "dimension"
     },
     "switch-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "switch-min-height": {
@@ -1313,7 +1353,7 @@
       "$type": "color"
     },
     "switch-track-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension"
     },
     "switch-track-radius": {
@@ -1321,7 +1361,7 @@
       "$type": "dimension"
     },
     "switch-track-width": {
-      "$value": "{plx-ref.size-36px}",
+      "$value": "{plx-ref.size-9u}",
       "$type": "dimension"
     },
     "switch-track-duration": {
@@ -1337,7 +1377,7 @@
       "$type": "color"
     },
     "switch-track-after-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "switch-track-after-radius": {
@@ -1349,16 +1389,16 @@
       "$type": "shadow"
     },
     "switch-track-after-width": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "switch-track-after-inset-block-start": {
-      "$value": "calc(({plx-ref.size-20px} - {plx-ref.size-16px}) / 2)",
+      "$value": "calc(({plx-ref.size-5u} - {plx-ref.size-4u}) / 2)",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "switch-track-after-inset-inline-start": {
-      "$value": "calc(({plx-ref.size-20px} - {plx-ref.size-16px}) / 2)",
+      "$value": "calc(({plx-ref.size-5u} - {plx-ref.size-4u}) / 2)",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
@@ -1375,12 +1415,12 @@
       "$type": "color"
     },
     "switch-input-checked-track-after-transform": {
-      "$value": "translateX(calc({plx-ref.size-36px} - {plx-ref.size-20px}))",
+      "$value": "translateX(calc({plx-ref.size-9u} - {plx-ref.size-5u}))",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "switch-input-checked-track-rtl-after-transform": {
-      "$value": "translateX(calc({plx-ref.size-20px} - {plx-ref.size-36px}))",
+      "$value": "translateX(calc({plx-ref.size-5u} - {plx-ref.size-9u}))",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
@@ -1409,7 +1449,7 @@
       "$type": "dimension"
     },
     "field-inline-grid-template-columns": {
-      "$value": "{plx-ref.size-160px} minmax(0,1fr)",
+      "$value": "{plx-ref.size-40u} minmax(0,1fr)",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
@@ -1442,15 +1482,15 @@
       "$type": "fontWeight"
     },
     "field-label-line-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "number"
     },
     "field-row-label-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "field-row-label-line-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "number"
     },
     "field-required-text": {
@@ -1467,7 +1507,7 @@
       "$type": "dimension"
     },
     "field-row-description-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "field-error-text": {
@@ -1484,7 +1524,7 @@
       "$type": "color"
     },
     "field-info-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "field-info-radius": {
@@ -1508,7 +1548,7 @@
       "$type": "fontWeight"
     },
     "field-info-width": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "field-info-before-inset-block-end": {
@@ -1552,7 +1592,7 @@
       "$type": "color"
     },
     "field-info-text-radius": {
-      "$value": "{plx-sys.radius-surface-4px}",
+      "$value": "{plx-sys.radius-surface-sm}",
       "$type": "dimension"
     },
     "field-info-text-text": {
@@ -1577,13 +1617,13 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "data-grid-radius": {
-      "$value": "{plx-sys.radius-table-2px}",
+      "$value": "{plx-sys.radius-table}",
       "$type": "dimension",
       "$description": "DataGrid: the frame corner, 2px (owner, 2026-10-19)."
     },
     "table-radius": {
-      "$value": "{plx-sys.radius-table-2px}",
-      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-radius-table-2px (its value) instead. It keeps working, and is removed no earlier than the next minor release.",
+      "$value": "{plx-sys.radius-table}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-radius-table (its value) instead. It keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension",
       "$description": "Table: the frame corner, 2px (owner, 2026-10-19)."
     },
@@ -1605,7 +1645,7 @@
       "$type": "dimension"
     },
     "data-grid-header-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "data-grid-header-font-weight": {
@@ -1629,11 +1669,11 @@
       "$type": "number"
     },
     "data-grid-cell-padding-inline": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension"
     },
     "table-cell-padding-inline": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension"
     },
     "data-grid-header-line-inset": {
@@ -1657,19 +1697,19 @@
       "$type": "dimension"
     },
     "data-grid-lead-column-width": {
-      "$value": "{plx-ref.size-36px}",
+      "$value": "{plx-ref.size-9u}",
       "$type": "dimension"
     },
     "data-grid-mark-size": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "data-grid-header-icon-size": {
-      "$value": "{plx-ref.glyph-size-14px}",
+      "$value": "{plx-ref.glyph-size-md}",
       "$type": "dimension"
     },
     "data-grid-sorter-inset": {
-      "$value": "{plx-ref.space-6px}",
+      "$value": "{plx-sys.space-inset-xs}",
       "$type": "dimension"
     },
     "data-grid-popup-button-inset": {
@@ -1678,7 +1718,7 @@
       "$type": "dimension"
     },
     "data-grid-title-reserve": {
-      "$value": "calc({plx-comp.data-grid-popup-button-inset} + {plx-comp.data-grid-cell-padding-inline} + {plx-comp.data-grid-header-icon-size} + {plx-ref.space-4px})",
+      "$value": "calc({plx-comp.data-grid-popup-button-inset} + {plx-comp.data-grid-cell-padding-inline} + {plx-comp.data-grid-header-icon-size} + {plx-ref.space-1u})",
       "$description": "DataGrid header: the room the title leaves at its end for the menu button (the button's inset and width, less the cell padding the title area already stops short by, plus a 4px gap).",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
@@ -1692,11 +1732,11 @@
       "$type": "dimension"
     },
     "data-grid-tree-indent": {
-      "$value": "{plx-ref.size-18px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension"
     },
     "data-grid-tree-control-size": {
-      "$value": "{plx-ref.glyph-size-14px}",
+      "$value": "{plx-ref.glyph-size-md}",
       "$type": "dimension"
     },
     "data-grid-tree-control-radius": {
@@ -1704,7 +1744,7 @@
       "$type": "dimension"
     },
     "data-grid-tree-control-gap": {
-      "$value": "{plx-ref.space-6px}",
+      "$value": "{plx-sys.space-inline-xs}",
       "$type": "dimension"
     },
     "data-grid-group-font-weight": {
@@ -1712,7 +1752,7 @@
       "$type": "fontWeight"
     },
     "data-grid-placeholder-font-size": {
-      "$value": "{plx-ref.font-size-14}",
+      "$value": "{plx-ref.font-size-300}",
       "$type": "dimension"
     },
     "data-grid-placeholder-font-weight": {
@@ -1764,7 +1804,7 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "badge-radius": {
-      "$value": "{plx-sys.radius-pill-4px}",
+      "$value": "{plx-sys.radius-pill}",
       "$type": "dimension",
       "$description": "Badge: 4px corners, as every pill (owner, 2026-10-14, docs/pills-and-colors.md)."
     },
@@ -1781,7 +1821,7 @@
       "$type": "number"
     },
     "badge-min-height": {
-      "$value": "{plx-sys.label-height-20px}",
+      "$value": "{plx-sys.label-height-md}",
       "$type": "dimension"
     },
     "badge-padding-inline": {
@@ -1797,7 +1837,7 @@
       "$type": "dimension"
     },
     "badge-sm-min-height": {
-      "$value": "{plx-sys.label-height-16px}",
+      "$value": "{plx-sys.label-height-sm}",
       "$type": "dimension"
     },
     "badge-sm-padding-inline": {
@@ -1913,7 +1953,7 @@
       "$type": "dimension"
     },
     "count-pill-radius": {
-      "$value": "{plx-sys.radius-pill-4px}",
+      "$value": "{plx-sys.radius-pill}",
       "$type": "dimension",
       "$description": "Counter pill: 4px corners, as every pill (owner, 2026-10-14, docs/pills-and-colors.md)."
     },
@@ -1930,11 +1970,11 @@
       "$type": "number"
     },
     "count-pill-min-height": {
-      "$value": "{plx-sys.label-height-16px}",
+      "$value": "{plx-sys.label-height-sm}",
       "$type": "dimension"
     },
     "count-pill-min-width": {
-      "$value": "{plx-sys.label-height-16px}",
+      "$value": "{plx-sys.label-height-sm}",
       "$type": "dimension"
     },
     "count-pill-padding-inline": {
@@ -2021,7 +2061,7 @@
       "$description": "Count pill, danger: the negative status pill border, shade 300."
     },
     "status-dot-height": {
-      "$value": "{plx-ref.glyph-size-6px}",
+      "$value": "{plx-ref.glyph-size-xs}",
       "$type": "dimension"
     },
     "status-dot-radius": {
@@ -2029,7 +2069,7 @@
       "$type": "dimension"
     },
     "status-dot-width": {
-      "$value": "{plx-ref.glyph-size-6px}",
+      "$value": "{plx-ref.glyph-size-xs}",
       "$type": "dimension"
     },
     "status-dot-neutral-background": {
@@ -2053,7 +2093,7 @@
       "$type": "color"
     },
     "notice-radius": {
-      "$value": "{plx-sys.radius-surface-4px}",
+      "$value": "{plx-sys.radius-surface-sm}",
       "$type": "dimension"
     },
     "notice-gap": {
@@ -2061,7 +2101,7 @@
       "$type": "dimension"
     },
     "notice-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "notice-padding-block": {
@@ -2146,7 +2186,7 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "skeleton-radius": {
-      "$value": "{plx-sys.radius-compact-4px}",
+      "$value": "{plx-sys.radius-compact}",
       "$type": "dimension"
     },
     "spinner-animation-duration": {
@@ -2176,7 +2216,7 @@
       "$type": "color"
     },
     "spinner-sm-height": {
-      "$value": "{plx-ref.size-12px}",
+      "$value": "{plx-ref.size-3u}",
       "$type": "dimension"
     },
     "spinner-sm-border-width": {
@@ -2184,11 +2224,11 @@
       "$type": "dimension"
     },
     "spinner-sm-width": {
-      "$value": "{plx-ref.size-12px}",
+      "$value": "{plx-ref.size-3u}",
       "$type": "dimension"
     },
     "spinner-md-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "spinner-md-border-width": {
@@ -2196,11 +2236,11 @@
       "$type": "dimension"
     },
     "spinner-md-width": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "spinner-lg-height": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension"
     },
     "spinner-lg-border-width": {
@@ -2208,7 +2248,7 @@
       "$type": "dimension"
     },
     "spinner-lg-width": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension"
     },
     "progress-bar-row-gap": {
@@ -2224,7 +2264,7 @@
       "$type": "color"
     },
     "progress-bar-label-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "progress-bar-value-text": {
@@ -2244,7 +2284,7 @@
       "$type": "color"
     },
     "progress-bar-track-height": {
-      "$value": "{plx-ref.size-8px}",
+      "$value": "{plx-ref.size-2u}",
       "$type": "dimension"
     },
     "progress-bar-track-radius": {
@@ -2252,7 +2292,7 @@
       "$type": "dimension"
     },
     "progress-bar-sm-track-height": {
-      "$value": "{plx-ref.size-4px}",
+      "$value": "{plx-ref.size-1u}",
       "$type": "dimension"
     },
     "progress-bar-fill-radius": {
@@ -2300,7 +2340,7 @@
       "$type": "color"
     },
     "tag-radius": {
-      "$value": "{plx-sys.radius-pill-4px}",
+      "$value": "{plx-sys.radius-pill}",
       "$type": "dimension",
       "$description": "Tag and chip: 4px corners, as every pill (owner, 2026-10-14, docs/pills-and-colors.md)."
     },
@@ -2329,7 +2369,7 @@
       "$type": "number"
     },
     "tag-min-height": {
-      "$value": "{plx-sys.label-height-20px}",
+      "$value": "{plx-sys.label-height-md}",
       "$type": "dimension"
     },
     "tag-padding-inline": {
@@ -2361,7 +2401,7 @@
       "$type": "color"
     },
     "tag-remove-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "tag-remove-text": {
@@ -2369,11 +2409,11 @@
       "$type": "color"
     },
     "tag-remove-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "tag-remove-width": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "tag-remove-line-height": {
@@ -2454,7 +2494,7 @@
       "$type": "color"
     },
     "tag-input-radius": {
-      "$value": "{plx-sys.radius-compact-4px}",
+      "$value": "{plx-sys.radius-compact}",
       "$type": "dimension"
     },
     "tag-border-color": {
@@ -2474,7 +2514,7 @@
       "$type": "dimension"
     },
     "tag-tag-input-add-width": {
-      "$value": "{plx-sys.label-height-20px}",
+      "$value": "{plx-sys.label-height-md}",
       "$type": "dimension"
     },
     "tag-input-add-before-inset-block-end": {
@@ -2541,7 +2581,7 @@
       "$description": "The height of the buttons in a destructive confirmation dialog footer"
     },
     "dialog-radius": {
-      "$value": "{plx-sys.radius-dialog-6px}",
+      "$value": "{plx-sys.radius-dialog}",
       "$type": "dimension"
     },
     "dialog-shadow": {
@@ -2553,19 +2593,19 @@
       "$type": "color"
     },
     "dialog-sm-max-width": {
-      "$value": "{plx-ref.size-400px}",
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension"
     },
     "dialog-md-max-width": {
-      "$value": "{plx-ref.size-560px}",
+      "$value": "{plx-ref.size-140u}",
       "$type": "dimension"
     },
     "dialog-lg-max-width": {
-      "$value": "{plx-ref.size-720px}",
+      "$value": "{plx-ref.size-180u}",
       "$type": "dimension"
     },
     "dialog-xl-max-width": {
-      "$value": "{plx-ref.size-900px}",
+      "$value": "{plx-ref.size-225u}",
       "$type": "dimension"
     },
     "drawer-animation-duration": {
@@ -2581,15 +2621,15 @@
       "$type": "dimension"
     },
     "drawer-sm-max-width": {
-      "$value": "{plx-ref.size-320px}",
+      "$value": "{plx-ref.size-80u}",
       "$type": "dimension"
     },
     "drawer-md-max-width": {
-      "$value": "{plx-ref.size-400px}",
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension"
     },
     "drawer-lg-max-width": {
-      "$value": "{plx-ref.size-560px}",
+      "$value": "{plx-ref.size-140u}",
       "$type": "dimension"
     },
     "sheet-background": {
@@ -2601,7 +2641,7 @@
       "$type": "color"
     },
     "sheet-radius": {
-      "$value": "{plx-sys.radius-dialog-6px}",
+      "$value": "{plx-sys.radius-dialog}",
       "$type": "dimension",
       "$description": "The top corners of the bottom sheet (the dialog radius)"
     },
@@ -2635,20 +2675,20 @@
       "$type": "dimension"
     },
     "sheet-band-height": {
-      "$value": "{plx-ref.size-12px}",
+      "$value": "{plx-ref.size-3u}",
       "$type": "dimension",
       "$description": "The band at the top of the bottom sheet that holds the grabber's bar"
     },
     "sheet-grabber-width": {
-      "$value": "{plx-ref.size-36px}",
+      "$value": "{plx-ref.size-9u}",
       "$type": "dimension"
     },
     "sheet-grabber-height": {
-      "$value": "{plx-ref.size-4px}",
+      "$value": "{plx-ref.size-1u}",
       "$type": "dimension"
     },
     "sheet-grabber-inset-block-start": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension",
       "$description": "The bar's place in the band: (band - bar) / 2"
     },
@@ -2683,7 +2723,7 @@
       "$type": "dimension"
     },
     "sheet-header-min-height": {
-      "$value": "{plx-ref.size-48px}",
+      "$value": "{plx-ref.size-12u}",
       "$type": "dimension"
     },
     "sheet-header-gap": {
@@ -2707,7 +2747,7 @@
       "$type": "fontFamily"
     },
     "sheet-title-font-size": {
-      "$value": "{plx-ref.font-size-15}",
+      "$value": "{plx-ref.font-size-400}",
       "$type": "dimension"
     },
     "sheet-title-font-weight": {
@@ -2767,7 +2807,7 @@
       "$type": "dimension"
     },
     "dialog-header-min-height": {
-      "$value": "{plx-ref.size-48px}",
+      "$value": "{plx-ref.size-12u}",
       "$type": "dimension"
     },
     "dialog-header-padding-block": {
@@ -2787,7 +2827,7 @@
       "$type": "fontFamily"
     },
     "dialog-title-font-size": {
-      "$value": "{plx-ref.font-size-15}",
+      "$value": "{plx-ref.font-size-400}",
       "$type": "dimension"
     },
     "dialog-title-font-weight": {
@@ -2811,7 +2851,7 @@
       "$type": "color"
     },
     "dialog-description-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "dialog-description-line-height": {
@@ -2876,7 +2916,7 @@
       "$type": "color"
     },
     "toast-radius": {
-      "$value": "{plx-sys.radius-surface-4px}",
+      "$value": "{plx-sys.radius-surface-sm}",
       "$type": "dimension"
     },
     "toast-border-inline-start-color": {
@@ -2900,15 +2940,15 @@
       "$type": "dimension"
     },
     "toast-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "toast-max-width": {
-      "$value": "{plx-ref.size-400px}",
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension"
     },
     "toast-min-width": {
-      "$value": "{plx-ref.size-280px}",
+      "$value": "{plx-ref.size-70u}",
       "$type": "dimension"
     },
     "toast-padding-block": {
@@ -2968,7 +3008,7 @@
       "$type": "dimension"
     },
     "tabs-more-caret-size": {
-      "$value": "{plx-ref.size-12px}",
+      "$value": "{plx-ref.size-3u}",
       "$type": "dimension",
       "$description": "The chevron on the Tabs' More menu button (the tabs that do not fit): the arrow_drop_down glyph in its whole square, 12px like the Button caret."
     },
@@ -3176,7 +3216,7 @@
       "$type": "color"
     },
     "tabs-contained-panel-radius": {
-      "$value": "{plx-sys.radius-surface-4px}",
+      "$value": "{plx-sys.radius-surface-sm}",
       "$type": "dimension"
     },
     "tabs-contained-panel-border-color": {
@@ -3318,7 +3358,7 @@
       "$type": "dimension"
     },
     "app-header-brand-font-size": {
-      "$value": "{plx-ref.font-size-15}",
+      "$value": "{plx-ref.font-size-400}",
       "$type": "dimension"
     },
     "app-header-brand-font-weight": {
@@ -3359,11 +3399,11 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "app-header-divider-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension"
     },
     "app-header-divider-width": {
-      "$value": "{plx-ref.size-4px}",
+      "$value": "{plx-ref.size-1u}",
       "$type": "dimension"
     },
     "app-header-divider-margin-inline": {
@@ -3399,12 +3439,12 @@
       "$type": "color"
     },
     "app-header-count-inset-block-start": {
-      "$value": "calc({plx-ref.space-4px} * -1)",
+      "$value": "calc({plx-ref.space-1u} * -1)",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "app-header-count-inset-inline-end": {
-      "$value": "calc({plx-ref.space-4px} * -1)",
+      "$value": "calc({plx-ref.space-1u} * -1)",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
@@ -3433,7 +3473,7 @@
       "$type": "dimension"
     },
     "app-header-search-width": {
-      "$value": "{plx-ref.size-400px}",
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension"
     },
     "app-header-search-z-index": {
@@ -3453,7 +3493,7 @@
       "$type": "color"
     },
     "app-switcher-panel-radius": {
-      "$value": "{plx-sys.radius-surface-4px}",
+      "$value": "{plx-sys.radius-surface-sm}",
       "$type": "dimension"
     },
     "app-switcher-panel-border-color": {
@@ -3473,11 +3513,11 @@
       "$type": "color"
     },
     "app-switcher-panel-width": {
-      "$value": "{plx-ref.size-600px}",
+      "$value": "{plx-ref.size-150u}",
       "$type": "dimension"
     },
     "app-switcher-panel-inset-block-start": {
-      "$value": "calc(100% + {plx-ref.space-8px})",
+      "$value": "calc(100% + {plx-ref.space-2u})",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
@@ -3502,7 +3542,7 @@
       "$type": "color"
     },
     "app-switcher-pinned-radius": {
-      "$value": "{plx-sys.radius-surface-6px}",
+      "$value": "{plx-sys.radius-surface-md}",
       "$type": "dimension"
     },
     "app-switcher-pinned-padding-block": {
@@ -3510,7 +3550,7 @@
       "$type": "dimension"
     },
     "app-switcher-heading-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension"
     },
     "app-switcher-heading-text": {
@@ -3518,7 +3558,7 @@
       "$type": "color"
     },
     "app-switcher-heading-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "app-switcher-heading-font-weight": {
@@ -3538,7 +3578,7 @@
       "$type": "dimension"
     },
     "app-switcher-open-height": {
-      "$value": "{plx-ref.size-80px}",
+      "$value": "{plx-ref.size-20u}",
       "$type": "dimension"
     },
     "app-switcher-open-radius": {
@@ -3550,7 +3590,7 @@
       "$type": "color"
     },
     "app-switcher-open-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "app-switcher-open-padding-block": {
@@ -3591,7 +3631,7 @@
       "$type": "color"
     },
     "app-switcher-label-line-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "number"
     },
     "app-switcher-pin-height": {
@@ -3640,7 +3680,7 @@
       "$type": "dimension"
     },
     "app-switcher-panel-width-narrow": {
-      "$value": "{plx-ref.size-320px}",
+      "$value": "{plx-ref.size-80u}",
       "$type": "dimension"
     },
     "app-header-brand-gap": {
@@ -3648,11 +3688,11 @@
       "$type": "dimension"
     },
     "app-header-product-line-height": {
-      "$value": "{plx-sys.label-height-20px}",
+      "$value": "{plx-sys.label-height-md}",
       "$type": "number"
     },
     "app-header-app-line-height": {
-      "$value": "{plx-sys.label-height-16px}",
+      "$value": "{plx-sys.label-height-sm}",
       "$type": "number"
     },
     "tool-rail-background": {
@@ -3735,15 +3775,15 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tool-rail-divider-height": {
-      "$value": "{plx-ref.size-4px}",
+      "$value": "{plx-ref.size-1u}",
       "$type": "dimension"
     },
     "tool-rail-divider-width": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension"
     },
     "tool-rail-labels-item-width": {
-      "$value": "{plx-ref.size-52px}",
+      "$value": "{plx-ref.size-13u}",
       "$type": "dimension"
     },
     "tool-rail-labels-item-padding-block": {
@@ -3767,7 +3807,7 @@
       "$type": "color"
     },
     "menu-radius": {
-      "$value": "{plx-sys.radius-surface-4px}",
+      "$value": "{plx-sys.radius-surface-sm}",
       "$type": "dimension"
     },
     "menu-border-width": {
@@ -3779,11 +3819,11 @@
       "$type": "shadow"
     },
     "menu-max-width": {
-      "$value": "{plx-ref.size-320px}",
+      "$value": "{plx-ref.size-80u}",
       "$type": "dimension"
     },
     "menu-min-width": {
-      "$value": "{plx-ref.size-220px}",
+      "$value": "{plx-ref.size-55u}",
       "$type": "dimension"
     },
     "menu-padding-block": {
@@ -3833,7 +3873,7 @@
       "$type": "dimension"
     },
     "menu-item-font-size": {
-      "$value": "{plx-ref.font-size-15}",
+      "$value": "{plx-ref.font-size-400}",
       "$type": "dimension",
       "$description": "Menu item: 15px, so DM Sans draws as large as Blueprint's 14px system text (#805, owner 2026-11-01): DM Sans's x-height is 0.50 em against Blueprint's 0.53 (7.5px against 7.4px)."
     },
@@ -3843,7 +3883,7 @@
       "$description": "Menu item: regular (400), as Blueprint (#805, owner 2026-11-01); the darker color (menu-item-text) gives Blueprint's darkness, so the weight no longer makes up for it."
     },
     "menu-item-line-height": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension",
       "$description": "Menu item: a 24px line, Blueprint's line ratio (22px for 14px) at 15px, on the 4px grid (#805); with the 4px padding a one-line item is 32px, and a wrapped label grows by whole lines."
     },
@@ -3897,11 +3937,11 @@
       "$type": "color"
     },
     "menu-check-height": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension"
     },
     "menu-check-width": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$description": "Menu check: the slot's width, Blueprint's 16px, so labels line up as Blueprint's; the larger check (menu-check-icon-size) is centered on it."
     },
@@ -3935,12 +3975,12 @@
       "$description": "Menu group heading: the strongest text, the same color as the items, as Blueprint (#805)."
     },
     "menu-group-label-font-size": {
-      "$value": "{plx-ref.font-size-15}",
+      "$value": "{plx-ref.font-size-400}",
       "$type": "dimension",
       "$description": "Menu group heading: 15px, as the items, the size of Blueprint's 14px heading in DM Sans (#805)."
     },
     "menu-group-label-line-height": {
-      "$value": "{plx-sys.label-height-16px}",
+      "$value": "{plx-sys.label-height-sm}",
       "$type": "dimension",
       "$description": "Menu group heading: a 16px line, on the 4px grid, the nearest to Blueprint's 17px (#805, owner 2026-11-01); with its 4px padding the heading is 24px, and its text sits within 1px of Blueprint's under the divider (cap top 10px below the line against 11px, the next item 1px higher)."
     },
@@ -4078,31 +4118,31 @@
       "$description": "The plain app header's surface"
     },
     "app-header-action-width": {
-      "$value": "{plx-ref.size-112px}",
+      "$value": "{plx-ref.size-28u}",
       "$type": "dimension"
     },
     "app-header-action-height": {
-      "$value": "{plx-ref.control-size-32px}",
+      "$value": "{plx-ref.control-size-8u}",
       "$type": "dimension"
     },
     "app-header-action-icon-size": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "app-header-chevron-size": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "app-header-icon-size": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension"
     },
     "app-header-item-size": {
-      "$value": "{plx-ref.size-40px}",
+      "$value": "{plx-ref.size-10u}",
       "$type": "dimension"
     },
     "app-header-name-width": {
-      "$value": "{plx-ref.size-200px}",
+      "$value": "{plx-ref.size-50u}",
       "$type": "dimension"
     },
     "avatar-font-weight": {
@@ -4113,117 +4153,187 @@
       "$value": "{plx-ref.line-height-none}",
       "$type": "number"
     },
-    "avatar-20-height": {
-      "$value": "{plx-ref.size-20px}",
+    "avatar-2xs-height": {
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension"
     },
+    "avatar-20-height": {
+      "$value": "{plx-comp.avatar-2xs-height}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-avatar-2xs-height (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
     "avatar-20-radius": {
-      "$value": "{plx-sys.radius-avatar-4px}",
+      "$value": "{plx-sys.radius-avatar-sm}",
       "$type": "dimension"
     },
     "avatar-20-font-size": {
       "$value": "{plx-sys.text-caption-font-size}",
       "$type": "dimension"
     },
+    "avatar-2xs-width": {
+      "$value": "{plx-ref.size-5u}",
+      "$type": "dimension"
+    },
     "avatar-20-width": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-comp.avatar-2xs-width}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-avatar-2xs-width (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "avatar-xs-height": {
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension"
     },
     "avatar-24-height": {
-      "$value": "{plx-ref.size-24px}",
-      "$type": "dimension"
+      "$value": "{plx-comp.avatar-xs-height}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-avatar-xs-height (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
     },
     "avatar-24-radius": {
-      "$value": "{plx-sys.radius-avatar-4px}",
+      "$value": "{plx-sys.radius-avatar-sm}",
       "$type": "dimension"
     },
     "avatar-24-font-size": {
       "$value": "{plx-sys.text-caption-font-size}",
       "$type": "dimension"
     },
+    "avatar-xs-width": {
+      "$value": "{plx-ref.size-6u}",
+      "$type": "dimension"
+    },
     "avatar-24-width": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-comp.avatar-xs-width}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-avatar-xs-width (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "avatar-sm-height": {
+      "$value": "{plx-ref.size-7u}",
       "$type": "dimension"
     },
     "avatar-28-height": {
-      "$value": "{plx-ref.size-28px}",
-      "$type": "dimension"
+      "$value": "{plx-comp.avatar-sm-height}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-avatar-sm-height (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
     },
     "avatar-28-radius": {
-      "$value": "{plx-sys.radius-avatar-6px}",
+      "$value": "{plx-sys.radius-avatar-md}",
       "$type": "dimension"
     },
     "avatar-28-font-size": {
       "$value": "{plx-sys.text-caption-font-size}",
       "$type": "dimension"
     },
+    "avatar-sm-width": {
+      "$value": "{plx-ref.size-7u}",
+      "$type": "dimension"
+    },
     "avatar-28-width": {
-      "$value": "{plx-ref.size-28px}",
+      "$value": "{plx-comp.avatar-sm-width}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-avatar-sm-width (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "avatar-md-height": {
+      "$value": "{plx-ref.size-8u}",
       "$type": "dimension"
     },
     "avatar-32-height": {
-      "$value": "{plx-ref.size-32px}",
-      "$type": "dimension"
+      "$value": "{plx-comp.avatar-md-height}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-avatar-md-height (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
     },
     "avatar-32-radius": {
-      "$value": "{plx-sys.radius-avatar-6px}",
+      "$value": "{plx-sys.radius-avatar-md}",
       "$type": "dimension"
     },
     "avatar-32-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
+      "$type": "dimension"
+    },
+    "avatar-md-width": {
+      "$value": "{plx-ref.size-8u}",
       "$type": "dimension"
     },
     "avatar-32-width": {
-      "$value": "{plx-ref.size-32px}",
+      "$value": "{plx-comp.avatar-md-width}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-avatar-md-width (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "avatar-lg-height": {
+      "$value": "{plx-ref.size-10u}",
       "$type": "dimension"
     },
     "avatar-40-height": {
-      "$value": "{plx-ref.size-40px}",
-      "$type": "dimension"
+      "$value": "{plx-comp.avatar-lg-height}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-avatar-lg-height (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
     },
     "avatar-40-radius": {
-      "$value": "{plx-sys.radius-avatar-6px}",
+      "$value": "{plx-sys.radius-avatar-md}",
       "$type": "dimension"
     },
     "avatar-40-font-size": {
-      "$value": "{plx-ref.font-size-15}",
+      "$value": "{plx-ref.font-size-400}",
+      "$type": "dimension"
+    },
+    "avatar-lg-width": {
+      "$value": "{plx-ref.size-10u}",
       "$type": "dimension"
     },
     "avatar-40-width": {
-      "$value": "{plx-ref.size-40px}",
+      "$value": "{plx-comp.avatar-lg-width}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-avatar-lg-width (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "avatar-xl-height": {
+      "$value": "{plx-ref.size-12u}",
       "$type": "dimension"
     },
     "avatar-48-height": {
-      "$value": "{plx-ref.size-48px}",
-      "$type": "dimension"
+      "$value": "{plx-comp.avatar-xl-height}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-avatar-xl-height (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
     },
     "avatar-48-radius": {
-      "$value": "{plx-sys.radius-avatar-6px}",
+      "$value": "{plx-sys.radius-avatar-md}",
       "$type": "dimension"
     },
     "avatar-48-font-size": {
-      "$value": "{plx-ref.font-size-18}",
+      "$value": "{plx-ref.font-size-500}",
+      "$type": "dimension"
+    },
+    "avatar-xl-width": {
+      "$value": "{plx-ref.size-12u}",
       "$type": "dimension"
     },
     "avatar-48-width": {
-      "$value": "{plx-ref.size-48px}",
+      "$value": "{plx-comp.avatar-xl-width}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-avatar-xl-width (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "avatar-2xl-height": {
+      "$value": "{plx-ref.size-16u}",
       "$type": "dimension"
     },
     "avatar-64-height": {
-      "$value": "{plx-ref.size-64px}",
-      "$type": "dimension"
+      "$value": "{plx-comp.avatar-2xl-height}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-avatar-2xl-height (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
     },
     "avatar-64-radius": {
-      "$value": "{plx-sys.radius-avatar-6px}",
+      "$value": "{plx-sys.radius-avatar-md}",
       "$type": "dimension"
     },
     "avatar-64-font-size": {
-      "$value": "{plx-ref.font-size-20}",
+      "$value": "{plx-ref.font-size-600}",
+      "$type": "dimension"
+    },
+    "avatar-2xl-width": {
+      "$value": "{plx-ref.size-16u}",
       "$type": "dimension"
     },
     "avatar-64-width": {
-      "$value": "{plx-ref.size-64px}",
-      "$type": "dimension"
+      "$value": "{plx-comp.avatar-2xl-width}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-avatar-2xl-width (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
     },
     "breadcrumbs-link-target-inset-block": {
       "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))",
@@ -4242,7 +4352,7 @@
       "$type": "dimension"
     },
     "breadcrumbs-list-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "breadcrumbs-list-row-gap": {
@@ -4290,7 +4400,7 @@
       "$type": "color"
     },
     "panel-radius": {
-      "$value": "{plx-sys.radius-surface-6px}",
+      "$value": "{plx-sys.radius-surface-md}",
       "$type": "dimension"
     },
     "panel-border-width": {
@@ -4330,7 +4440,7 @@
       "$type": "fontFamily"
     },
     "panel-title-font-size": {
-      "$value": "{plx-ref.font-size-14}",
+      "$value": "{plx-ref.font-size-300}",
       "$type": "dimension"
     },
     "panel-title-font-weight": {
@@ -4342,7 +4452,7 @@
       "$type": "color"
     },
     "panel-description-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "panel-actions-gap": {
@@ -4390,7 +4500,7 @@
       "$type": "color"
     },
     "card-radius": {
-      "$value": "{plx-sys.radius-card-6px}",
+      "$value": "{plx-sys.radius-card-md}",
       "$type": "dimension"
     },
     "card-border-width": {
@@ -4456,7 +4566,7 @@
       "$type": "color"
     },
     "card-title-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "card-title-font-weight": {
@@ -4480,7 +4590,7 @@
       "$type": "color"
     },
     "card-meta-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "card-body-text": {
@@ -4488,7 +4598,7 @@
       "$type": "color"
     },
     "card-body-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "media-card-background": {
@@ -4500,7 +4610,7 @@
       "$type": "color"
     },
     "media-card-radius": {
-      "$value": "{plx-sys.radius-card-6px}",
+      "$value": "{plx-sys.radius-card-md}",
       "$type": "dimension"
     },
     "media-card-border-width": {
@@ -4508,12 +4618,12 @@
       "$type": "dimension"
     },
     "media-card-media-border-top-left-radius": {
-      "$value": "calc({plx-sys.radius-card-6px} - {plx-sys.border-width-thin})",
+      "$value": "calc({plx-sys.radius-card-md} - {plx-sys.border-width-thin})",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "media-card-media-border-top-right-radius": {
-      "$value": "calc({plx-sys.radius-card-6px} - {plx-sys.border-width-thin})",
+      "$value": "calc({plx-sys.radius-card-md} - {plx-sys.border-width-thin})",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
@@ -4538,11 +4648,11 @@
       "$type": "color"
     },
     "media-card-select-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "media-card-select-width": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "media-card-select-inset-block-start": {
@@ -4578,7 +4688,7 @@
       "$type": "color"
     },
     "media-card-title-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "media-card-title-font-weight": {
@@ -4670,7 +4780,7 @@
       "$type": "color"
     },
     "chat-typing-dot-height": {
-      "$value": "{plx-ref.size-4px}",
+      "$value": "{plx-ref.size-1u}",
       "$type": "dimension"
     },
     "chat-typing-dot-radius": {
@@ -4678,7 +4788,7 @@
       "$type": "dimension"
     },
     "chat-typing-dot-width": {
-      "$value": "{plx-ref.size-4px}",
+      "$value": "{plx-ref.size-1u}",
       "$type": "dimension"
     },
     "chat-typing-second-dot-delay": {
@@ -4719,7 +4829,7 @@
       "$type": "fontFamily"
     },
     "chat-header-title-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "chat-header-title-font-weight": {
@@ -4763,7 +4873,7 @@
       "$type": "color"
     },
     "chat-bubble-radius": {
-      "$value": "{plx-sys.radius-card-6px}",
+      "$value": "{plx-sys.radius-card-md}",
       "$type": "dimension"
     },
     "chat-bubble-border-width": {
@@ -4775,7 +4885,7 @@
       "$type": "color"
     },
     "chat-bubble-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "chat-bubble-padding-block": {
@@ -4844,7 +4954,7 @@
       "$type": "fontWeight"
     },
     "chat-divider-gap": {
-      "$value": "{plx-ref.space-12px}",
+      "$value": "{plx-ref.space-3u}",
       "$type": "dimension"
     },
     "chat-divider-line-color": {
@@ -4856,21 +4966,21 @@
       "$type": "dimension"
     },
     "chat-divider-margin-block": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension"
     },
     "chat-avatar-above": {
-      "$value": "{plx-ref.space-12px}",
+      "$value": "{plx-ref.space-3u}",
       "$type": "dimension",
       "$description": "How much of the sender's 28px photo sits above the bubble's top edge (the owner's mockup, #637): 12px above, 16px inside, covering the border. The message keeps this room above it."
     },
     "chat-avatar-inset": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension",
       "$description": "How far the photo sits in from the bubble's start edge (yours: the end edge), about a third of its width (#637)."
     },
     "chat-bubble-avatar-padding-block-start": {
-      "$value": "{plx-ref.space-24px}",
+      "$value": "{plx-ref.space-6u}",
       "$type": "dimension",
       "$description": "A bubble's top padding under a photo: the photo's 16px inside plus 8px, so the name, time and text clear it (#637)."
     },
@@ -4964,7 +5074,7 @@
       "$type": "color"
     },
     "chat-attachment-radius": {
-      "$value": "{plx-sys.radius-card-6px}",
+      "$value": "{plx-sys.radius-card-md}",
       "$type": "dimension"
     },
     "chat-attachment-background": {
@@ -4972,11 +5082,11 @@
       "$type": "color"
     },
     "chat-attachment-thumb-size": {
-      "$value": "{plx-ref.size-40px}",
+      "$value": "{plx-ref.size-10u}",
       "$type": "dimension"
     },
     "chat-attachment-thumb-radius": {
-      "$value": "{plx-sys.radius-avatar-6px}",
+      "$value": "{plx-sys.radius-avatar-md}",
       "$type": "dimension"
     },
     "chat-attachment-thumb-background": {
@@ -4988,11 +5098,11 @@
       "$type": "dimension"
     },
     "chat-attachment-progress-width": {
-      "$value": "{plx-ref.size-160px}",
+      "$value": "{plx-ref.size-40u}",
       "$type": "dimension"
     },
     "chat-voice-dot-size": {
-      "$value": "{plx-ref.size-8px}",
+      "$value": "{plx-ref.size-2u}",
       "$type": "dimension",
       "$description": "Chat composer: while dictating, the red dot beside \"Listening…\" and the ring around the microphone."
     },
@@ -5027,7 +5137,7 @@
       "$description": "Chat.Attachment: the space between attachments in a bubble, and between a picture and the text."
     },
     "chat-media-radius": {
-      "$value": "{plx-sys.radius-media-6px}",
+      "$value": "{plx-sys.radius-media-md}",
       "$type": "dimension"
     },
     "chat-media-border-width": {
@@ -5039,16 +5149,16 @@
       "$type": "color"
     },
     "chat-media-image-height": {
-      "$value": "{plx-ref.size-160px}",
+      "$value": "{plx-ref.size-40u}",
       "$type": "dimension",
       "$description": "Chat.Attachment: a single picture's height; the width follows it (up to the bubble)."
     },
     "chat-media-image-width": {
-      "$value": "{plx-ref.size-240px}",
+      "$value": "{plx-ref.size-60u}",
       "$type": "dimension"
     },
     "chat-media-row-image-height": {
-      "$value": "{plx-ref.size-96px}",
+      "$value": "{plx-ref.size-24u}",
       "$type": "dimension",
       "$description": "Chat.Attachment: a picture in a row of two or more."
     },
@@ -5062,12 +5172,12 @@
       "$type": "color"
     },
     "chat-file-min-width": {
-      "$value": "{plx-ref.size-240px}",
+      "$value": "{plx-ref.size-60u}",
       "$type": "dimension",
       "$description": "Chat.Attachment: the narrowest a file card is drawn."
     },
     "chat-voice-min-width": {
-      "$value": "{plx-ref.size-280px}",
+      "$value": "{plx-ref.size-70u}",
       "$type": "dimension",
       "$description": "Chat.Voice: the narrowest the player is drawn."
     },
@@ -5076,24 +5186,24 @@
       "$type": "dimension"
     },
     "chat-voice-bar-width": {
-      "$value": "{plx-ref.size-4px}",
+      "$value": "{plx-ref.size-1u}",
       "$type": "dimension",
       "$description": "Chat.Voice: one bar of the waveform; the waveform is drawn left to right in every language."
     },
     "chat-voice-bar-height-1": {
-      "$value": "{plx-ref.size-8px}",
+      "$value": "{plx-ref.size-2u}",
       "$type": "dimension"
     },
     "chat-voice-bar-height-2": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "chat-voice-bar-height-3": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension"
     },
     "chat-voice-bar-height-4": {
-      "$value": "{plx-ref.size-32px}",
+      "$value": "{plx-ref.size-8u}",
       "$type": "dimension"
     },
     "chat-voice-bar-color": {
@@ -5105,7 +5215,7 @@
       "$type": "color"
     },
     "chat-voice-bar-radius": {
-      "$value": "{plx-sys.radius-compact-4px}",
+      "$value": "{plx-sys.radius-compact}",
       "$type": "dimension"
     },
     "chat-voice-time-font-size": {
@@ -5118,7 +5228,7 @@
       "$description": "Chat composer: the placeholder panel the emoji button opens."
     },
     "chat-actions-offset": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension",
       "$description": "The message action bar (React, Reply, More; issue 637 slice 4): how far beside the bubble it sits, in the free space, so it never covers text."
     },
@@ -5127,7 +5237,7 @@
       "$type": "dimension"
     },
     "chat-picker-gap": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension",
       "$description": "The quick reactions panel: between its row of reactions and the More reactions note."
     },
@@ -5140,20 +5250,20 @@
       "$type": "dimension"
     },
     "chat-reaction-height": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension",
       "$description": "A reaction pill under a message's text: the emoji and its count."
     },
     "chat-reaction-gap": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension"
     },
     "chat-reaction-padding-inline": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension"
     },
     "chat-reaction-radius": {
-      "$value": "{plx-sys.radius-pill-4px}",
+      "$value": "{plx-sys.radius-pill}",
       "$type": "dimension"
     },
     "chat-reaction-border-width": {
@@ -5177,7 +5287,7 @@
       "$type": "color"
     },
     "chat-reaction-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "chat-reaction-mine-border-color": {
@@ -5211,7 +5321,7 @@
       "$type": "color"
     },
     "chat-quote-padding-inline": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension"
     },
     "chat-quote-gap": {
@@ -5219,7 +5329,7 @@
       "$type": "dimension"
     },
     "chat-quote-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "chat-quote-author-font-weight": {
@@ -5231,15 +5341,15 @@
       "$type": "color"
     },
     "chat-replying-gap": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension"
     },
     "chat-replying-padding-block": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension"
     },
     "chat-replying-padding-inline": {
-      "$value": "{plx-ref.space-12px}",
+      "$value": "{plx-ref.space-3u}",
       "$type": "dimension"
     },
     "chat-replying-border-color": {
@@ -5260,7 +5370,7 @@
       "$description": "A deleted message's \"This message was deleted\": muted and slanted."
     },
     "chat-field-min-height-narrow": {
-      "$value": "{plx-ref.size-40px}",
+      "$value": "{plx-ref.size-10u}",
       "$type": "dimension",
       "$description": "Chat composer: the text area's height at a phone width (one line); at larger widths it starts at two."
     },
@@ -5278,7 +5388,7 @@
       "$type": "dimension"
     },
     "code-block-radius": {
-      "$value": "{plx-sys.radius-surface-6px}",
+      "$value": "{plx-sys.radius-surface-md}",
       "$type": "dimension"
     },
     "code-block-border-color": {
@@ -5327,7 +5437,7 @@
       "$type": "fontFamily"
     },
     "code-block-title-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "code-block-pre-background": {
@@ -5343,11 +5453,11 @@
       "$type": "fontFamily"
     },
     "code-block-pre-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "code-block-pre-line-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "number"
     },
     "code-block-pre-padding-block": {
@@ -5359,7 +5469,7 @@
       "$type": "dimension"
     },
     "code-block-tall-pre-max-height": {
-      "$value": "{plx-ref.size-500px}",
+      "$value": "{plx-ref.size-125u}",
       "$type": "dimension"
     },
     "code-block-pre-focus-outline-color": {
@@ -5517,19 +5627,19 @@
       "$type": "dimension"
     },
     "color-swatch-sm-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "color-swatch-sm-width": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "color-swatch-md-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension"
     },
     "color-swatch-md-width": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension"
     },
     "color-swatch-pressed-shadow": {
@@ -5558,11 +5668,11 @@
       "$type": "dimension"
     },
     "color-picker-overflow-clip-margin": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension"
     },
     "color-picker-row-gap": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension"
     },
     "color-swatch-target-inset": {
@@ -5602,7 +5712,7 @@
       "$type": "dimension"
     },
     "combobox-max-width": {
-      "$value": "{plx-ref.size-600px}",
+      "$value": "{plx-ref.size-150u}",
       "$type": "dimension"
     },
     "combobox-field-gap": {
@@ -5610,7 +5720,7 @@
       "$type": "dimension"
     },
     "combobox-field-padding-inline-end": {
-      "$value": "{plx-ref.space-32px}",
+      "$value": "{plx-ref.space-8u}",
       "$type": "dimension"
     },
     "combobox-field-row-gap": {
@@ -5626,11 +5736,11 @@
       "$type": "dimension"
     },
     "combobox-input-flex-basis": {
-      "$value": "{plx-ref.size-60px}",
+      "$value": "{plx-ref.size-15u}",
       "$type": "dimension"
     },
     "combobox-input-min-height": {
-      "$value": "{plx-sys.label-height-20px}",
+      "$value": "{plx-sys.label-height-md}",
       "$type": "dimension"
     },
     "combobox-input-margin-block": {
@@ -5668,7 +5778,7 @@
       "$type": "color"
     },
     "combobox-list-radius": {
-      "$value": "{plx-sys.radius-surface-4px}",
+      "$value": "{plx-sys.radius-surface-sm}",
       "$type": "dimension"
     },
     "combobox-list-border-width": {
@@ -5684,7 +5794,7 @@
       "$type": "dimension"
     },
     "combobox-list-max-height": {
-      "$value": "{plx-ref.size-220px}",
+      "$value": "{plx-ref.size-55u}",
       "$type": "dimension"
     },
     "combobox-list-padding-block": {
@@ -5708,7 +5818,7 @@
       "$type": "color"
     },
     "combobox-option-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "combobox-option-min-height": {
@@ -5744,7 +5854,7 @@
       "$type": "color"
     },
     "combobox-empty-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "combobox-empty-padding-block": {
@@ -5924,7 +6034,7 @@
       "$type": "fontWeight"
     },
     "data-grid-resize-width": {
-      "$value": "{plx-ref.size-12px}",
+      "$value": "{plx-ref.size-3u}",
       "$type": "dimension"
     },
     "data-grid-resize-z-index": {
@@ -5932,7 +6042,7 @@
       "$type": "number"
     },
     "data-grid-list-intrinsic-width": {
-      "$value": "{plx-ref.size-720px}",
+      "$value": "{plx-ref.size-180u}",
       "$type": "dimension",
       "$description": "The width a grid that can become a Narrow list asks for where its container takes the width of its content (a size container has no content width of its own): wide enough to stay a table."
     },
@@ -5977,7 +6087,7 @@
       "$type": "fontWeight"
     },
     "date-badge-day-height": {
-      "$value": "{plx-ref.size-28px}",
+      "$value": "{plx-ref.size-7u}",
       "$type": "dimension"
     },
     "date-badge-day-radius": {
@@ -5989,11 +6099,11 @@
       "$type": "color"
     },
     "date-badge-day-font-size": {
-      "$value": "{plx-ref.font-size-14}",
+      "$value": "{plx-ref.font-size-300}",
       "$type": "dimension"
     },
     "date-badge-day-min-width": {
-      "$value": "{plx-ref.size-28px}",
+      "$value": "{plx-ref.size-7u}",
       "$type": "dimension"
     },
     "date-badge-today-day-background": {
@@ -6037,7 +6147,7 @@
       "$type": "color"
     },
     "drop-zone-radius": {
-      "$value": "{plx-sys.radius-surface-6px}",
+      "$value": "{plx-sys.radius-surface-md}",
       "$type": "dimension"
     },
     "drop-zone-border-width": {
@@ -6121,7 +6231,7 @@
       "$type": "dimension"
     },
     "empty-state-page-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "empty-state-page-padding-block": {
@@ -6149,7 +6259,7 @@
       "$type": "color"
     },
     "empty-state-title-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "empty-state-title-font-weight": {
@@ -6157,7 +6267,7 @@
       "$type": "fontWeight"
     },
     "empty-state-text-max-width": {
-      "$value": "{plx-ref.size-400px}",
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension"
     },
     "empty-state-action-margin-block-start": {
@@ -6174,7 +6284,7 @@
       "$type": "color"
     },
     "event-chip-radius": {
-      "$value": "{plx-sys.radius-compact-4px}",
+      "$value": "{plx-sys.radius-compact}",
       "$type": "dimension"
     },
     "event-chip-border-inline-start-width": {
@@ -6235,7 +6345,7 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "stack-field-inline-label-tip-max-width": {
-      "$value": "{plx-ref.size-160px}",
+      "$value": "{plx-ref.size-40u}",
       "$type": "dimension"
     },
     "stack-field-inline-row-gap": {
@@ -6247,7 +6357,7 @@
       "$type": "color"
     },
     "fieldset-legend-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "fieldset-legend-margin-block-end": {
@@ -6259,7 +6369,7 @@
       "$type": "dimension"
     },
     "input-color-radius": {
-      "$value": "{plx-sys.radius-compact-4px}",
+      "$value": "{plx-sys.radius-compact}",
       "$type": "dimension"
     },
     "input-color-width": {
@@ -6287,7 +6397,7 @@
       "$type": "color"
     },
     "kbd-radius": {
-      "$value": "{plx-sys.radius-compact-4px}",
+      "$value": "{plx-sys.radius-compact}",
       "$type": "dimension"
     },
     "kbd-border-width": {
@@ -6311,7 +6421,7 @@
       "$type": "number"
     },
     "kbd-min-height": {
-      "$value": "{plx-sys.label-height-16px}",
+      "$value": "{plx-sys.label-height-sm}",
       "$type": "dimension"
     },
     "kbd-padding-inline": {
@@ -6343,15 +6453,15 @@
       "$type": "dimension"
     },
     "list-item-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "list-item-line-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "number"
     },
     "list-icon-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension"
     },
     "list-item-neutral-icon-text": {
@@ -6388,7 +6498,7 @@
       "$type": "dimension"
     },
     "media-viewer-padding-inline": {
-      "$value": "{plx-ref.size-80px}",
+      "$value": "{plx-ref.size-20u}",
       "$type": "dimension"
     },
     "media-viewer-z-index": {
@@ -6404,15 +6514,15 @@
       "$type": "fontFamily"
     },
     "media-viewer-counter-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "media-viewer-counter-inset-block-start": {
-      "$value": "{plx-ref.space-20px}",
+      "$value": "{plx-ref.space-5u}",
       "$type": "dimension"
     },
     "media-viewer-counter-inset-inline-start": {
-      "$value": "{plx-ref.space-20px}",
+      "$value": "{plx-ref.space-5u}",
       "$type": "dimension"
     },
     "media-viewer-control-background": {
@@ -6440,7 +6550,7 @@
       "$type": "dimension"
     },
     "media-viewer-control-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "media-viewer-control-min-height": {
@@ -6480,23 +6590,23 @@
       "$type": "dimension"
     },
     "media-viewer-nav-radius": {
-      "$value": "{plx-sys.radius-control-6px}",
+      "$value": "{plx-sys.radius-control-md}",
       "$type": "dimension"
     },
     "media-viewer-nav-min-height": {
-      "$value": "{plx-ref.size-44px}",
+      "$value": "{plx-ref.size-11u}",
       "$type": "dimension"
     },
     "media-viewer-nav-min-width": {
-      "$value": "{plx-ref.size-44px}",
+      "$value": "{plx-ref.size-11u}",
       "$type": "dimension"
     },
     "media-viewer-nav-previous-inset-inline-start": {
-      "$value": "{plx-ref.space-20px}",
+      "$value": "{plx-ref.space-5u}",
       "$type": "dimension"
     },
     "media-viewer-nav-next-inset-inline-end": {
-      "$value": "{plx-ref.space-20px}",
+      "$value": "{plx-ref.space-5u}",
       "$type": "dimension"
     },
     "media-viewer-figure-row-gap": {
@@ -6508,7 +6618,7 @@
       "$type": "color"
     },
     "media-viewer-stage-radius": {
-      "$value": "{plx-sys.radius-dialog-6px}",
+      "$value": "{plx-sys.radius-dialog}",
       "$type": "dimension"
     },
     "media-viewer-info-row-gap": {
@@ -6516,7 +6626,7 @@
       "$type": "dimension"
     },
     "media-viewer-title-font-size": {
-      "$value": "{plx-ref.font-size-15}",
+      "$value": "{plx-ref.font-size-400}",
       "$type": "dimension"
     },
     "media-viewer-title-font-weight": {
@@ -6536,7 +6646,7 @@
       "$type": "fontFamily"
     },
     "media-viewer-meta-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "media-viewer-actions-gap": {
@@ -6560,7 +6670,7 @@
       "$type": "fontFamily"
     },
     "metric-value-font-size": {
-      "$value": "{plx-ref.font-size-18}",
+      "$value": "{plx-ref.font-size-500}",
       "$type": "dimension"
     },
     "metric-value-font-weight": {
@@ -6572,7 +6682,7 @@
       "$type": "number"
     },
     "metric-lg-value-font-size": {
-      "$value": "{plx-ref.font-size-20}",
+      "$value": "{plx-ref.font-size-600}",
       "$type": "dimension"
     },
     "metric-unit-text": {
@@ -6580,7 +6690,7 @@
       "$type": "color"
     },
     "metric-unit-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "metric-change-font-family": {
@@ -6609,7 +6719,7 @@
       "$type": "color"
     },
     "metric-label-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "metric-description-text": {
@@ -6685,7 +6795,7 @@
       "$description": "Room under a static group heading: the collapsible group's room above its rows (#49)."
     },
     "nav-list-items-row-gap": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension"
     },
     "nav-list-item-radius": {
@@ -6701,7 +6811,7 @@
       "$type": "dimension"
     },
     "nav-list-item-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "nav-list-item-min-height": {
@@ -6886,7 +6996,7 @@
       "$type": "dimension"
     },
     "pagination-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "pagination-row-gap": {
@@ -6926,7 +7036,7 @@
       "$type": "color"
     },
     "pagination-page-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "pagination-page-min-height": {
@@ -6942,7 +7052,7 @@
       "$type": "dimension"
     },
     "pagination-step-font-size": {
-      "$value": "{plx-ref.font-size-15}",
+      "$value": "{plx-ref.font-size-400}",
       "$type": "dimension"
     },
     "pagination-step-line-height": {
@@ -7018,7 +7128,7 @@
       "$type": "color"
     },
     "pagination-select-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "pagination-select-min-height": {
@@ -7046,7 +7156,7 @@
       "$type": "color"
     },
     "preview-radius": {
-      "$value": "{plx-sys.radius-surface-6px}",
+      "$value": "{plx-sys.radius-surface-md}",
       "$type": "dimension"
     },
     "preview-text": {
@@ -7086,11 +7196,11 @@
       "$type": "dimension"
     },
     "preview-media-height": {
-      "$value": "{plx-ref.size-48px}",
+      "$value": "{plx-ref.size-12u}",
       "$type": "dimension"
     },
     "preview-media-width": {
-      "$value": "{plx-ref.size-48px}",
+      "$value": "{plx-ref.size-12u}",
       "$type": "dimension"
     },
     "preview-button-hover-background": {
@@ -7106,7 +7216,7 @@
       "$type": "fontFamily"
     },
     "radio-tiles-legend-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "radio-tiles-legend-font-weight": {
@@ -7134,7 +7244,7 @@
       "$type": "color"
     },
     "radio-tile-radius": {
-      "$value": "{plx-sys.radius-surface-6px}",
+      "$value": "{plx-sys.radius-surface-md}",
       "$type": "dimension"
     },
     "radio-tile-border-width": {
@@ -7190,7 +7300,7 @@
       "$type": "color"
     },
     "radio-tile-label-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "radio-tile-label-font-weight": {
@@ -7206,7 +7316,7 @@
       "$type": "dimension"
     },
     "radio-tile-check-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "radio-tile-check-text": {
@@ -7214,7 +7324,7 @@
       "$type": "color"
     },
     "radio-tile-check-width": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "rating-gap": {
@@ -7226,7 +7336,7 @@
       "$type": "color"
     },
     "rating-star-font-size": {
-      "$value": "{plx-ref.font-size-15}",
+      "$value": "{plx-ref.font-size-400}",
       "$type": "dimension"
     },
     "rating-star-line-height": {
@@ -7332,7 +7442,7 @@
       "$type": "fontFamily"
     },
     "search-input-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "search-input-min-height": {
@@ -7340,11 +7450,11 @@
       "$type": "dimension"
     },
     "search-input-padding-inline-end": {
-      "$value": "{plx-ref.space-40px}",
+      "$value": "{plx-ref.space-10u}",
       "$type": "dimension"
     },
     "search-input-padding-inline-start": {
-      "$value": "{plx-ref.space-32px}",
+      "$value": "{plx-ref.space-8u}",
       "$type": "dimension"
     },
     "search-input-placeholder-text": {
@@ -7445,7 +7555,7 @@
       "$description": "Section heading: the size of a plain label (level null) and of levels 5 and 6: 12px, the smallest step of the type scale a heading takes."
     },
     "section-heading-level-2-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "Section heading: the size of a level 2 heading (h2: a page's sections, Settings' section titles): 13px from the type scale, larger than level 3 (owner, 2026-10-12)."
     },
@@ -7484,7 +7594,7 @@
       "$type": "color"
     },
     "section-heading-chevron-height": {
-      "$value": "{plx-ref.glyph-size-6px}",
+      "$value": "{plx-ref.glyph-size-xs}",
       "$type": "dimension"
     },
     "section-heading-chevron-border-block-end-width": {
@@ -7496,7 +7606,7 @@
       "$type": "dimension"
     },
     "section-heading-chevron-width": {
-      "$value": "{plx-ref.glyph-size-6px}",
+      "$value": "{plx-ref.glyph-size-xs}",
       "$type": "dimension"
     },
     "section-heading-chevron-duration": {
@@ -7558,7 +7668,7 @@
       "$type": "fontFamily"
     },
     "segmented-item-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "segmented-item-font-weight": {
@@ -7636,7 +7746,7 @@
       "$type": "color"
     },
     "slider-label-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "slider-value-text": {
@@ -7968,15 +8078,15 @@
       "$type": "color"
     },
     "thumbnail-height": {
-      "$value": "{plx-ref.size-28px}",
+      "$value": "{plx-ref.size-7u}",
       "$type": "dimension"
     },
     "thumbnail-radius": {
-      "$value": "{plx-sys.radius-compact-4px}",
+      "$value": "{plx-sys.radius-compact}",
       "$type": "dimension"
     },
     "thumbnail-width": {
-      "$value": "{plx-ref.size-28px}",
+      "$value": "{plx-ref.size-7u}",
       "$type": "dimension"
     },
     "thumbnail-icon-text": {
@@ -7992,7 +8102,7 @@
       "$type": "color"
     },
     "tooltip-bubble-radius": {
-      "$value": "{plx-sys.radius-compact-4px}",
+      "$value": "{plx-sys.radius-compact}",
       "$type": "dimension"
     },
     "tooltip-bubble-text": {
@@ -8073,7 +8183,7 @@
       "$type": "color"
     },
     "tree-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "tree-row-radius": {
@@ -8136,15 +8246,15 @@
       "$type": "color"
     },
     "tree-toggle-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "tree-toggle-width": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "tree-toggle-mask-size": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "tree-meta-text": {
@@ -8201,7 +8311,7 @@
       "$type": "color"
     },
     "activity-list-unread-height": {
-      "$value": "{plx-ref.size-8px}",
+      "$value": "{plx-ref.size-2u}",
       "$type": "dimension"
     },
     "activity-list-unread-radius": {
@@ -8209,7 +8319,7 @@
       "$type": "dimension"
     },
     "activity-list-unread-width": {
-      "$value": "{plx-ref.size-8px}",
+      "$value": "{plx-ref.size-2u}",
       "$type": "dimension"
     },
     "activity-list-text-gap": {
@@ -8221,7 +8331,7 @@
       "$type": "color"
     },
     "activity-list-title-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "activity-list-item-unread-title-font-weight": {
@@ -8233,7 +8343,7 @@
       "$type": "color"
     },
     "activity-list-meta-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "activity-list-time-text": {
@@ -8294,11 +8404,11 @@
       "$type": "color"
     },
     "app-shell-skip-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "app-shell-skip-inset-block-start": {
-      "$value": "calc({plx-ref.size-100px} * -1)",
+      "$value": "calc({plx-ref.size-25u} * -1)",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
@@ -8335,7 +8445,7 @@
       "$type": "number"
     },
     "panel-splitter-width": {
-      "$value": "{plx-ref.size-8px}",
+      "$value": "{plx-ref.size-2u}",
       "$type": "dimension"
     },
     "panel-splitter-z-index": {
@@ -8343,12 +8453,12 @@
       "$type": "number"
     },
     "panel-splitter-end-inset-inline-end": {
-      "$value": "calc({plx-ref.size-8px} / -2)",
+      "$value": "calc({plx-ref.size-2u} / -2)",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "panel-splitter-start-inset-inline-start": {
-      "$value": "calc({plx-ref.size-8px} / -2)",
+      "$value": "calc({plx-ref.size-2u} / -2)",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
@@ -8411,7 +8521,7 @@
       "$type": "color"
     },
     "selection-summary-count-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "selection-summary-count-font-weight": {
@@ -8430,7 +8540,7 @@
       "$description": "The selection bar's frame, the command bar's."
     },
     "bulk-actions-radius": {
-      "$value": "{plx-sys.radius-control-6px}",
+      "$value": "{plx-sys.radius-control-md}",
       "$type": "dimension",
       "$description": "The selection bar's corners, the command bar's."
     },
@@ -8454,7 +8564,7 @@
       "$description": "The space before and after the controls, the command bar's."
     },
     "bulk-actions-divider-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension"
     },
     "bulk-actions-divider-border-inline-start-color": {
@@ -8514,7 +8624,7 @@
       "$type": "color"
     },
     "entity-header-radius": {
-      "$value": "{plx-sys.radius-card-6px}",
+      "$value": "{plx-sys.radius-card-md}",
       "$type": "dimension"
     },
     "entity-header-border-width": {
@@ -8526,15 +8636,15 @@
       "$type": "dimension"
     },
     "entity-header-padding-inline-end": {
-      "$value": "{plx-ref.space-20px}",
+      "$value": "{plx-ref.space-5u}",
       "$type": "dimension"
     },
     "entity-header-padding-inline-start": {
-      "$value": "{plx-ref.space-20px}",
+      "$value": "{plx-ref.space-5u}",
       "$type": "dimension"
     },
     "entity-header-tile-height": {
-      "$value": "{plx-ref.size-44px}",
+      "$value": "{plx-ref.size-11u}",
       "$type": "dimension"
     },
     "entity-header-tile-border-color": {
@@ -8542,7 +8652,7 @@
       "$type": "color"
     },
     "entity-header-tile-radius": {
-      "$value": "{plx-sys.radius-avatar-4px}",
+      "$value": "{plx-sys.radius-avatar-sm}",
       "$type": "dimension"
     },
     "entity-header-tile-border-width": {
@@ -8550,7 +8660,7 @@
       "$type": "dimension"
     },
     "entity-header-tile-width": {
-      "$value": "{plx-ref.size-44px}",
+      "$value": "{plx-ref.size-11u}",
       "$type": "dimension"
     },
     "entity-header-tile-blue-background": {
@@ -8601,6 +8711,41 @@
       "$value": "{plx-sys.data-color-gray-on-soft}",
       "$type": "color"
     },
+    "entity-header-media-blue-icon": {
+      "$value": "{plx-sys.data-color-blue-on-surface}",
+      "$type": "color",
+      "$description": "EntityHeader: the { icon, hue: 'blue' } media's icon, drawn on the card without a box (D-0024, D-0036; pds#275, docs/adr/0005)."
+    },
+    "entity-header-media-green-icon": {
+      "$value": "{plx-sys.data-color-green-on-surface}",
+      "$type": "color",
+      "$description": "EntityHeader: the { icon, hue: 'green' } media's icon, drawn on the card without a box (D-0024, D-0036; pds#275, docs/adr/0005)."
+    },
+    "entity-header-media-purple-icon": {
+      "$value": "{plx-sys.data-color-slate-on-surface}",
+      "$type": "color",
+      "$description": "EntityHeader: the { icon, hue: 'purple' } media's icon, drawn on the card without a box (D-0024, D-0036; pds#275, docs/adr/0005, the slate role: ADR 0007)."
+    },
+    "entity-header-media-red-icon": {
+      "$value": "{plx-sys.data-color-red-on-surface}",
+      "$type": "color",
+      "$description": "EntityHeader: the { icon, hue: 'red' } media's icon, drawn on the card without a box (D-0024, D-0036; pds#275, docs/adr/0005)."
+    },
+    "entity-header-media-brown-icon": {
+      "$value": "{plx-sys.data-color-brown-on-surface}",
+      "$type": "color",
+      "$description": "EntityHeader: the { icon, hue: 'brown' } media's icon, drawn on the card without a box (D-0024, D-0036; pds#275, docs/adr/0005)."
+    },
+    "entity-header-media-gray-icon": {
+      "$value": "{plx-sys.data-color-gray-on-surface}",
+      "$type": "color",
+      "$description": "EntityHeader: the { icon, hue: 'gray' } media's icon, drawn on the card without a box (D-0024, D-0036; pds#275, docs/adr/0005)."
+    },
+    "entity-header-media-surface-icon": {
+      "$value": "{plx-sys.content-link}",
+      "$type": "color",
+      "$description": "EntityHeader: the { icon, hue: 'surface' } media's icon, drawn on the card without a box: the link blue (D-0036; pds#275, docs/adr/0005)."
+    },
     "entity-header-title-text": {
       "$value": "{plx-sys.content-default}",
       "$type": "color"
@@ -8632,7 +8777,7 @@
       "$description": "EntityHeader, section: the actions row, one sm button high."
     },
     "entity-header-actions-clip-margin": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension",
       "$description": "EntityHeader: how far past the clipped actions row a focus ring still shows (as FilterBar's)."
     },
@@ -8653,11 +8798,11 @@
       "$type": "dimension"
     },
     "filter-bar-filters-overflow-clip-margin": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension"
     },
     "filter-bar-filters-row-gap": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension"
     },
     "filter-bar-count-text": {
@@ -8713,7 +8858,7 @@
       "$type": "dimension"
     },
     "image-editor-panel-width": {
-      "$value": "{plx-ref.size-220px}",
+      "$value": "{plx-ref.size-55u}",
       "$type": "dimension"
     },
     "image-editor-panel-padding-block": {
@@ -8738,7 +8883,7 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "image-editor-canvas-background-size": {
-      "$value": "{plx-ref.size-24px} {plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u} {plx-ref.size-6u}",
       "$type": "color",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
@@ -8748,7 +8893,7 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "image-editor-text-font-size": {
-      "$value": "{plx-ref.font-size-20}",
+      "$value": "{plx-ref.font-size-600}",
       "$type": "dimension"
     },
     "image-editor-text-font-weight": {
@@ -8772,7 +8917,7 @@
       "$type": "color"
     },
     "image-editor-status-radius": {
-      "$value": "{plx-sys.radius-surface-4px}",
+      "$value": "{plx-sys.radius-surface-sm}",
       "$type": "dimension"
     },
     "image-editor-status-text": {
@@ -8780,7 +8925,7 @@
       "$type": "color"
     },
     "image-editor-status-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "image-editor-status-inset-block-end": {
@@ -8911,7 +9056,7 @@
       "$type": "fontFamily"
     },
     "nav-pane-title-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "nav-pane-title-font-weight": {
@@ -8994,11 +9139,11 @@
       "$type": "color"
     },
     "nav-bar-label-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "nav-bar-label-line-height": {
-      "$value": "{plx-sys.label-height-16px}",
+      "$value": "{plx-sys.label-height-sm}",
       "$type": "number"
     },
     "notification-list-footer-shadow": {
@@ -9027,7 +9172,7 @@
       "$type": "dimension"
     },
     "property-list-columns-item-grid-template-columns": {
-      "$value": "minmax(0, {plx-ref.size-160px}) minmax(0, 1fr)",
+      "$value": "minmax(0, {plx-ref.size-40u}) minmax(0, 1fr)",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
@@ -9040,7 +9185,7 @@
       "$type": "color"
     },
     "property-list-label-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "property-list-label-row-gap": {
@@ -9060,7 +9205,7 @@
       "$type": "color"
     },
     "property-list-value-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "property-list-value-data-font-family": {
@@ -9069,7 +9214,7 @@
       "$description": "A technical value (a size, a date, an ID): the data font, Reddit Mono (owner, 2026-10-11)"
     },
     "property-list-value-data-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "A technical value at the value size (--plx-comp-property-list-value-font-size), so Reddit Mono and DM Sans values share one baseline"
     },
@@ -9078,7 +9223,7 @@
       "$type": "dimension"
     },
     "property-list-columns-label-tip-max-width": {
-      "$value": "{plx-ref.size-160px}",
+      "$value": "{plx-ref.size-40u}",
       "$type": "dimension"
     },
     "property-list-columns-item-row-gap": {
@@ -9110,7 +9255,7 @@
       "$type": "fontFamily"
     },
     "record-page-title-font-size": {
-      "$value": "{plx-ref.font-size-20}",
+      "$value": "{plx-ref.font-size-600}",
       "$type": "dimension"
     },
     "record-page-title-font-weight": {
@@ -9118,7 +9263,7 @@
       "$type": "fontWeight"
     },
     "record-page-header-md-title-font-size": {
-      "$value": "{plx-ref.font-size-15}",
+      "$value": "{plx-ref.font-size-400}",
       "$type": "dimension"
     },
     "record-page-description-text": {
@@ -9126,7 +9271,7 @@
       "$type": "color"
     },
     "record-page-description-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "record-page-description-line-height": {
@@ -9159,7 +9304,7 @@
       "$type": "color"
     },
     "record-page-header-card-radius": {
-      "$value": "{plx-sys.radius-surface-6px}",
+      "$value": "{plx-sys.radius-surface-md}",
       "$type": "dimension"
     },
     "record-page-header-card-border-width": {
@@ -9223,7 +9368,7 @@
       "$type": "fontFamily"
     },
     "search-ws-title-font-size": {
-      "$value": "{plx-ref.font-size-20}",
+      "$value": "{plx-ref.font-size-600}",
       "$type": "dimension"
     },
     "search-ws-title-font-weight": {
@@ -9235,11 +9380,11 @@
       "$type": "color"
     },
     "search-ws-count-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "search-ws-query-max-width": {
-      "$value": "{plx-ref.size-720px}",
+      "$value": "{plx-ref.size-180u}",
       "$type": "dimension"
     },
     "search-ws-active-gap": {
@@ -9279,7 +9424,7 @@
       "$type": "dimension"
     },
     "secondary-pane-header-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "secondary-pane-header-font-weight": {
@@ -9379,7 +9524,7 @@
       "$type": "color"
     },
     "settings-section-card-radius": {
-      "$value": "{plx-sys.radius-surface-6px}",
+      "$value": "{plx-sys.radius-surface-md}",
       "$type": "dimension"
     },
     "settings-section-card-border-width": {
@@ -9429,7 +9574,7 @@
       "$type": "color"
     },
     "settings-section-description-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "settings-row-border-bottom-color": {
@@ -9457,7 +9602,7 @@
       "$type": "color"
     },
     "settings-row-label-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "settings-row-label-font-weight": {
@@ -9469,7 +9614,7 @@
       "$type": "color"
     },
     "settings-row-description-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "settings-rows-field-border-bottom-color": {
@@ -9617,7 +9762,7 @@
       "$type": "color"
     },
     "side-panel-title-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "side-panel-title-font-weight": {
@@ -9692,7 +9837,7 @@
       "$type": "dimension"
     },
     "status-bar-min-height": {
-      "$value": "{plx-ref.size-40px}",
+      "$value": "{plx-ref.size-10u}",
       "$type": "dimension"
     },
     "status-bar-padding-inline": {
@@ -9792,7 +9937,7 @@
       "$type": "dimension"
     },
     "widget-grid-grid-template-columns": {
-      "$value": "repeat(auto-fill, minmax({plx-ref.size-280px}, 1fr))",
+      "$value": "repeat(auto-fill, minmax({plx-ref.size-70u}, 1fr))",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
@@ -9801,7 +9946,7 @@
       "$type": "dimension"
     },
     "widget-grid-item-radius": {
-      "$value": "{plx-sys.radius-card-6px}",
+      "$value": "{plx-sys.radius-card-md}",
       "$type": "dimension"
     },
     "widget-grid-item-dragging-opacity": {
@@ -9825,7 +9970,7 @@
       "$type": "dimension"
     },
     "widget-grid-handle-radius": {
-      "$value": "{plx-sys.radius-compact-4px}",
+      "$value": "{plx-sys.radius-compact}",
       "$type": "dimension"
     },
     "widget-grid-handle-text": {

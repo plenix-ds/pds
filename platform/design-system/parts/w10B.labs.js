@@ -79,7 +79,7 @@ if (window.DS && DS.registerLab) {
       parts: { g: 'A', ng: 'B', nt: 'C', nfs: 'C', nfw: 'C', nlh: 'C', mt: 'D', mfs: 'D' },
       anchors: { A: { part: null, side: 'left' }, B: { part: '.plx-delete-flow__names', side: 'left' }, C: { part: '.plx-delete-flow__name', side: 'right' }, D: { part: '.plx-delete-flow__more', side: 'right' } },
       sections: [['Content', ['g']], ['Names', ['ng', 'nt', 'nfs', 'nfw', 'nlh', 'mt', 'mfs']]],
-      matrixLabel: 'Delete flow by form', matrixColumnWidth: '--plx-ref-size-360px', statesHead: 'Forms · ' + HEAD
+      matrixLabel: 'Delete flow by form', matrixColumnWidth: '--plx-ref-size-90u', statesHead: 'Forms · ' + HEAD
     });
 
     // ---- DuplicateAction (<DuplicateAction>): the rename dialog's content; Copy of the name: its toast
@@ -127,7 +127,7 @@ if (window.DS && DS.registerLab) {
       parts: { g: 'A', sg: 'B', st: 'B', sfs: 'B', slh: 'B', ib: 'C', ic: 'C' },
       anchors: { A: { part: null, side: 'left' }, B: { part: '.plx-duplicate-action__source', side: 'right' }, C: { part: '.plx-duplicate-action__icon', side: 'left' } },
       sections: [['Content', ['g']], ['Source line', ['sg', 'st', 'sfs', 'slh', 'ib', 'ic']]],
-      matrixLabel: 'Duplicate by form', matrixColumnWidth: '--plx-ref-size-360px', statesHead: 'Forms · ' + HEAD
+      matrixLabel: 'Duplicate by form', matrixColumnWidth: '--plx-ref-size-90u', statesHead: 'Forms · ' + HEAD
     });
 
     // ---- Publish (<Publish>): the status (badge and line) and the actions
@@ -179,7 +179,7 @@ if (window.DS && DS.registerLab) {
       parts: { g: 'A', rg: 'A', sg: 'B', dt: 'C', dfs: 'C', dlh: 'C', ag: 'D' },
       anchors: { A: { part: null, side: 'top' }, B: { part: '.plx-publish__status', side: 'left' }, C: { part: '.plx-publish__detail', side: 'bottom' }, D: { part: '.plx-publish__actions', side: 'right' } },
       sections: [['Row', ['g', 'rg']], ['Status', ['sg', 'dt', 'dfs', 'dlh']], ['Actions', ['ag']]],
-      matrixLabel: 'Publish by state', matrixColumnWidth: '--plx-ref-size-560px', statesHead: 'States · ' + HEAD
+      matrixLabel: 'Publish by state', matrixColumnWidth: '--plx-ref-size-140u', statesHead: 'States · ' + HEAD
     });
 
     // ---- ReviewFlow (<ReviewFlow>): the head, the reviewers, the comment and decisions, the history label
@@ -250,7 +250,7 @@ if (window.DS && DS.registerLab) {
       anchors: { A: { part: null, side: 'left' }, B: { part: '.plx-review-flow__head', side: 'top' }, C: { part: '.plx-review-flow__title', side: 'left' }, D: { part: '.plx-review-flow__detail', side: 'left' },
         E: { part: '.plx-review-flow__label', side: 'left' }, F: { part: '.plx-review-flow__reviewers', side: 'right' }, G: { part: '.plx-review-flow__decide', side: 'left' }, H: { part: '.plx-review-flow__actions', side: 'bottom' } },
       sections: [['Head', ['g', 'hg', 'tt', 'tfs', 'tfw', 'tlh', 'dt', 'dfs']], ['Reviewers', ['sg', 'lt', 'lfs', 'lfw', 'rg', 'rh', 'wt']], ['Decisions', ['cg', 'ag']]],
-      matrixLabel: 'Review flow by form', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Forms · ' + HEAD
+      matrixLabel: 'Review flow by form', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Forms · ' + HEAD
     });
 
     // ---- AssignControl (<AssignControl>): the row (picker or assignee or delegate) and its actions
@@ -310,7 +310,7 @@ if (window.DS && DS.registerLab) {
       parts: { g: 'A', rg: 'A', h: 'A', pw: 'B', et: 'C', efs: 'C', dt: 'C', ag: 'D' },
       anchors: { A: { part: null, side: 'left' }, B: { part: '.plx-assign-control__picker', side: 'bottom' }, C: { part: '.plx-assign-control__who', side: 'bottom' }, D: { part: '.plx-assign-control__actions', side: 'right' } },
       sections: [['Row', ['g', 'rg', 'h']], ['Who', ['pw', 'et', 'efs', 'dt']], ['Actions', ['ag']]],
-      matrixLabel: 'Assign by form', matrixColumnWidth: '--plx-ref-size-560px', statesHead: 'Forms · ' + HEAD
+      matrixLabel: 'Assign by form', matrixColumnWidth: '--plx-ref-size-140u', statesHead: 'Forms · ' + HEAD
     });
   })();
 }

@@ -402,3 +402,71 @@
   decision: reviewdog is not adopted. The diff-aware CI already shows each new finding on the changed line as a GitHub annotation (file and line), which is reviewdog's only role in plan §7 (presentation), without adding an action that needs write access to pull requests (its setup action was compromised in March 2025). Reply to switch - B) add reviewdog as well.
   status: active
   check: tools/ci/new-problems.mjs annotations (ci.yml "New problems")
+
+- id: D-0054
+  date: 2026-11-05
+  area: design
+  decided_by: owner (2026-11-05, CTM review deck via CTM#115; earlier 2026-11-02, plenix-ds/pds#6), applied by pds1-design-director
+  decision: All raised buttons (secondary, tertiary, danger-secondary, primary, danger) share one lighter elevation - no shadow at rest, the Halo card shadow on hover, and the glow's rim narrowed (stop 75% to 90%). danger-secondary joins the raised family (rest glow, Halo on hover, no hover glow over its red fill). Ghost, 2xs and bars stay flat. No new token (plenix-ds/pds#269).
+  why: '"Buttons are not consistent. Delete has no glow or shadow. Reduce glow and shadow and make buttons look consistent." (owner, 2026-11-05); "Make the drop shadow also more subtle. Using one of the shadows from the card shadows. The light shadows." (owner, 2026-11-02). Halo is already the lightest card shadow, so lighter means none at rest.'
+  options: [none at rest + Halo on hover (chosen), Halo at rest and on hover as today]
+  status: active
+  check: planned:visual-regression (Button page, secondary/tertiary/danger-secondary side by side)
+
+- id: D-0055
+  date: 2026-11-05
+  area: design
+  decided_by: owner (2026-11-05, CTM review deck via LighthouseCollection/CTM#109; plenix-ds/pds#275), reading applied by pds1-design-director (D-0035)
+  decision: The EntityHeader { icon, hue } media has no box by default - the icon fills the square in its hue's on-surface colour (D-0036 row 1, D-0038 dark shades); media.box true keeps the bordered tile where a usage needs it (D-0024). Fact icons stay without a box.
+  why: 'Owner: "the icon does not have the box around it as we decided." His own screenshot (0.86.0, case 20261020-04) already shows the box, so the sentence reads as "does not have [to have] the box, as we decided" - D-0024 ("do not put an icon inside a box") and D-0036 row 1, shown to him on #108.'
+  options: [no box, box opt-in (chosen), box by default]
+  status: active
+  check: planned:visual-regression (record-page example) + behaviour test (tile has no border or fill unless media.box)
+
+- id: D-0052
+  date: 2026-11-05
+  area: design
+  decided_by: agent (pds1-design-director), owner may switch
+  decision: Printed documents (#87) size the paper in millimetres - A4 210 x 297mm and 20mm margins - through print-only system tokens (print-sheet-*, print-document-margin) on a named page (@page plx-document), so other pages keep their 24px print margin. These tokens are exempt from the 4px-grid check by their print- name; mm appears nowhere else.
+  why: 'Paper is physical (the brief, AC-1: A4, 20mm); 20mm is not a whole number of 4px steps. A named page keeps the change to PrintDocument only.'
+  options: [mm print tokens on a named page (chosen), change print-page-margin for every page, px values rounded to the grid]
+  status: active
+  check: planned:design-lint (grid check exempts print-* tokens; mm outside them fails)
+
+- id: D-0053
+  date: 2026-11-05
+  area: design
+  decided_by: agent (pds1-design-director), owner may switch
+  decision: PrintDocument's footer prints once, at the end of the document in normal flow; no repeated running footer and no page numbers in P0 (#87).
+  why: 'Repeating footers and page counters on paper behave differently across browsers (fixed position, @page margin boxes); the brief needs a footer slot, not a repeated one.'
+  options: [footer once at the end (chosen), running footer on every sheet]
+  status: active
+  check: review-only (pds1-design-critic on the PrintDocument PR)
+
+- id: D-0047
+  date: 2026-11-05
+  area: tokens
+  decided_by: agent (pds1-ds-architect), owner may switch
+  decision: The size palette is named in grid units (1u = 4px), size-1u to size-400u (size-92px becomes size-23u); the old px names stay as deprecated aliases until 2.0.0 (docs/adr/0012).
+  why: 'Names never contain values (ADR 0002); 62 sizes from 4 to 1600px are too many for T-shirt sizes, and hundreds (size-2300) read badly. Grid units match the 4px grid rule.'
+  options: [grid units size-23u (chosen), ordinal hundreds size-2300, keep px names and exempt the palette from check 7]
+  status: active
+  check: check-system token-names (check 7) + token-tiers
+
+- id: D-0048
+  date: 2026-11-05
+  area: release
+  decided_by: agent (pds1-release-architect), owner may switch
+  decision: The owner's "publish now" (#312) ships main as 0.87.0, not 0.86.1. Main holds the three CTM fixes (#272, #273, #274) plus 20 other merged changes, among them new tokens, utilities and AppShell minSize (the #274 fix itself), which VERSIONING.md makes a minor release. A true 0.86.1 would need a branch cut from v0.86.0 with cherry-picks and none of the new release checks. Reply to switch - B) cut 0.86.1 from v0.86.0 with only the fixes.
+  status: active
+  check: tools/publish/preflight.mjs (one version) + release.yml publish job (tag = package.json version)
+
+- id: D-0050
+  date: 2026-11-05
+  area: architecture
+  decided_by: agent (pds1-ds-architect), owner may switch
+  decision: Each of the spec's 1,186 variations becomes its own record by derivation at build time (stable id item--group-name, checked), not by moving the entries; new per-variation data (styling, Figma, platforms, mappings) goes in side tables keyed by the id; the API gains variants.json and components[].variants (docs/adr/0013).
+  why: 'The owner asked for a record per variation (#117); moving 1,186 entries across about 200 files adds churn and no reader value, while ids and side tables give linking, mapping and per-variation styling (#116).'
+  options: [derived records + side tables (chosen), move every entry into separate variant files]
+  status: active
+  check: build-spec-parts.js duplicate-id and side-table key checks (check-system generated)

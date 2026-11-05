@@ -15,7 +15,7 @@ const assert = require('assert/strict'), { serve, launch } = require('./lib');
     await page.evaluate(async () => {
       document.body.innerHTML = '<div id="g"></div><div id="t"></div>';
       const h = React.createElement, P = window.Plenix, columns = [{ title: 'Name', field: 'name' }, { title: 'City', field: 'city' }];
-      ReactDOM.createRoot(document.getElementById('g')).render(h(P.DataGrid, { label: 'Empty grid', data: [], columns, height: '--plx-ref-size-240px' }));
+      ReactDOM.createRoot(document.getElementById('g')).render(h(P.DataGrid, { label: 'Empty grid', data: [], columns, height: '--plx-ref-size-60u' }));
       ReactDOM.createRoot(document.getElementById('t')).render(h(P.Table, { label: 'Empty table', data: [], columns }));
       await new Promise((r) => setTimeout(r, 800));
     });

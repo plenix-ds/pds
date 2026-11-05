@@ -32,7 +32,7 @@
       "$description": "Persona size xs (24px avatar): the gap after the avatar."
     },
     "persona-xs-name-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "Persona size xs: the name (12px)."
     },
@@ -47,12 +47,12 @@
       "$description": "Persona size sm (28px avatar): the gap after the avatar."
     },
     "persona-sm-name-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "Persona size sm: the name (13px)."
     },
     "persona-sm-secondary-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "Persona size sm: the detail (12px)."
     },
@@ -62,12 +62,12 @@
       "$description": "Persona size md (32px avatar): the gap after the avatar."
     },
     "persona-md-name-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "Persona size md: the name (13px)."
     },
     "persona-md-secondary-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "Persona size md: the detail (12px)."
     },
@@ -77,12 +77,12 @@
       "$description": "Persona size lg (40px avatar): the gap after the avatar."
     },
     "persona-lg-name-font-size": {
-      "$value": "{plx-ref.font-size-14}",
+      "$value": "{plx-ref.font-size-300}",
       "$type": "dimension",
       "$description": "Persona size lg: the name (14px)."
     },
     "persona-lg-secondary-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "Persona size lg: the detail (13px)."
     },
@@ -92,12 +92,12 @@
       "$description": "Persona size xl (48px avatar): the gap after the avatar."
     },
     "persona-xl-name-font-size": {
-      "$value": "{plx-ref.font-size-15}",
+      "$value": "{plx-ref.font-size-400}",
       "$type": "dimension",
       "$description": "Persona size xl: the name (15px)."
     },
     "persona-xl-secondary-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "Persona size xl: the detail (13px)."
     }

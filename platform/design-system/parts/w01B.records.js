@@ -165,7 +165,7 @@ DSParts.records.push(function (H) {
       avoid: ['Hiding content people need until it scrolls into view', 'Infinite scroll where people must reach the footer: use pagination or Load more', 'A scroll handler that measures positions'],
       related: ['skeleton', 'pagination', 'overlay-manager'], map: [],
       examples: [['Use', [['Visible once', function () { return h(LazyList, {}); }, null, 'once'],
-          ['Root margin', function () { return h(LazyList, { margin: '--plx-ref-size-64px' }); }, null, 'rootMargin="--plx-ref-size-64px"'],
+          ['Root margin', function () { return h(LazyList, { margin: '--plx-ref-size-16u' }); }, null, 'rootMargin="--plx-ref-size-16u"'],
           ['Ratio', function () { return h(RatioDemo); }, null, 'threshold={[0, 0.25, 0.5, 0.75, 1]}']], { prop: 'once' }]] }
   ];
 });

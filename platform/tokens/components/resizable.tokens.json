@@ -2,32 +2,32 @@
   "$description": "Resizable (platform/components/Resizable), library wave 10, lane A: its component tokens. The edges follow the shell's pane splitter (a wide hit area, a line in the focus ring's color on hover and focus); the size is a size token set per step from data-plx-width and data-plx-height.",
   "plx-comp": {
     "resizable-width": {
-      "$value": "{plx-ref.size-320px}",
+      "$value": "{plx-ref.size-80u}",
       "$type": "dimension",
       "$description": "Resizable: its width; each size step (data-plx-width) sets it to that size token."
     },
     "resizable-height": {
-      "$value": "{plx-ref.size-200px}",
+      "$value": "{plx-ref.size-50u}",
       "$type": "dimension",
       "$description": "Resizable: its height; each size step (data-plx-height) sets it to that size token."
     },
     "resizable-min-width": {
-      "$value": "{plx-ref.size-120px}",
+      "$value": "{plx-ref.size-30u}",
       "$type": "dimension",
       "$description": "Resizable: the narrowest it goes unless the page sets minWidth."
     },
     "resizable-max-width": {
-      "$value": "{plx-ref.size-560px}",
+      "$value": "{plx-ref.size-140u}",
       "$type": "dimension",
       "$description": "Resizable: the widest it goes unless the page sets maxWidth."
     },
     "resizable-min-height": {
-      "$value": "{plx-ref.size-80px}",
+      "$value": "{plx-ref.size-20u}",
       "$type": "dimension",
       "$description": "Resizable: the shortest it goes unless the page sets minHeight."
     },
     "resizable-max-height": {
-      "$value": "{plx-ref.size-400px}",
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension",
       "$description": "Resizable: the tallest it goes unless the page sets maxHeight."
     },
@@ -62,12 +62,12 @@
       "$description": "Resizable edge: above the box's content."
     },
     "resizable-corner-size": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$description": "Resizable (both): the corner the pointer drags in both directions."
     },
     "resizable-divider-size": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension",
       "$description": "Resizable divider: the width of the gap the edge fills; a container sets it on its own element (SplitView: its gap)."
     },
@@ -92,7 +92,7 @@
       "$description": "Resizable divider: the gutter while hovered, focused or dragged (the data grid's selected-row tint)."
     },
     "resizable-divider-grip-gap": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension",
       "$description": "Resizable divider: the distance between the grip's three short lines in the middle of the gutter (one grid step)."
     },

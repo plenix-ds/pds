@@ -46,7 +46,7 @@ if (window.DS && DS.registerLab) {
       parts: { lc: 'A', lfs: 'A', lm: 'A', cg: 'B', rg: 'B' },
       anchors: { A: { part: '.plx-fieldset__legend', side: 'top' }, B: { part: '.plx-input', side: 'bottom' } },
       sections: [['Legend', ['lc', 'lfs', 'lm']], ['Layout', ['cg', 'rg']]],
-      matrixLabel: 'Field group values by layout', matrixColumnWidth: '--plx-ref-size-320px',
+      matrixLabel: 'Field group values by layout', matrixColumnWidth: '--plx-ref-size-80u',
       statesHead: 'Layouts · ' + HEAD
     });
     DS.registerLab('legend', {
@@ -60,7 +60,7 @@ if (window.DS && DS.registerLab) {
       html: function (variant, size, state, extraCls) { return fieldset(false, variant === 'hidden', extraCls); },
       labelSelector: '.plx-fieldset__legend', parts: { lc: 'A', lfs: 'A', lm: 'A' },
       anchors: { A: { part: '.plx-fieldset__legend', side: 'top' } }, sections: [['Legend', ['lc', 'lfs', 'lm']]],
-      matrixLabel: 'Legend values', matrixColumnWidth: '--plx-ref-size-320px', statesHead: 'Legends · ' + HEAD
+      matrixLabel: 'Legend values', matrixColumnWidth: '--plx-ref-size-80u', statesHead: 'Legends · ' + HEAD
     });
 
     // ---- Error summary (<ErrorSummary>): a danger notice with its heading and the links to the fields
@@ -86,7 +86,7 @@ if (window.DS && DS.registerLab) {
       labelSelector: '.plx-error-summary__title', parts: { gap: 'A', fc: 'B' },
       anchors: { A: { part: '.plx-error-summary__list', side: 'left' }, B: { part: '.plx-notice', side: 'right' } },
       sections: [['List', ['gap']], ['Focus', ['fc']]],
-      matrixLabel: 'Error summary values by variant', matrixColumnWidth: '--plx-ref-size-320px', statesHead: 'Variants · ' + HEAD
+      matrixLabel: 'Error summary values by variant', matrixColumnWidth: '--plx-ref-size-80u', statesHead: 'Variants · ' + HEAD
     });
 
     // ---- Input group (<InputGroup>): the box around the field and its affixes, attached buttons and selects
@@ -191,7 +191,7 @@ if (window.DS && DS.registerLab) {
       labelSelector: '.plx-input-group__input', parts: IG_PARTS,
       anchors: { A: { part: null, side: 'top' }, B: { part: '.plx-input-group__box', side: 'bottom' }, C: { part: '.plx-input-group__affix', side: 'top' }, D: { part: '.plx-input-group__input', side: 'bottom' }, E: { part: '.plx-input-group__icon', side: 'left' }, F: { part: '.plx-input-group__attached', side: 'top' } },
       sections: [['Size', ['w', 'mw', 'h']], ['Field', ['bg', 'bc', 'bw', 'rs', 're']], ['Affixes', ['af', 'aff', 'afs', 'pp', 'sp', 'ga', 'gb']], ['Icon', ['ic', 'is', 'ip']], ['Attached', ['js', 'je']]],
-      matrixLabel: 'Input group values by variant and state', matrixColumnWidth: '--plx-ref-size-320px', statesHead: 'Variants and states · ' + HEAD
+      matrixLabel: 'Input group values by variant and state', matrixColumnWidth: '--plx-ref-size-80u', statesHead: 'Variants and states · ' + HEAD
     });
 
     // ---- Number input (<NumberInput>): the group with its formats and stepper forms
@@ -242,7 +242,7 @@ if (window.DS && DS.registerLab) {
       labelSelector: '.plx-input-group__input', parts: Object.assign({ ff: 'D', qw: 'B', qp: 'D' }, IG_PARTS),
       anchors: { A: { part: null, side: 'top' }, B: { part: '.plx-input-group__box', side: 'bottom' }, C: { part: '.plx-input-group__affix', side: 'top' }, D: { part: '.plx-input-group__input', side: 'bottom' }, F: { part: '.plx-input-group__attached', side: 'top' } },
       sections: [['Value', ['ff', 'qw', 'qp', 'w']], ['Field', ['bg', 'bc', 'rs', 're']], ['Affixes', ['af', 'aff', 'pp', 'sp']], ['Stepper buttons', ['js', 'je']]],
-      matrixLabel: 'Number input values by variant and state', matrixColumnWidth: '--plx-ref-size-320px', statesHead: 'Variants and states · ' + HEAD
+      matrixLabel: 'Number input values by variant and state', matrixColumnWidth: '--plx-ref-size-80u', statesHead: 'Variants and states · ' + HEAD
     });
 
     // ---- File input (<FileInput>): the button over the native input, the summary line and the file list
@@ -308,7 +308,7 @@ if (window.DS && DS.registerLab) {
       labelSelector: '.plx-file-input__summary', parts: { rg: 'A', gap: 'B', sc: 'B', sf: 'B', ss: 'B', lg: 'C', ig: 'C', ih: 'C', icz: 'C', icc: 'C', nc: 'D', nf: 'D', ns: 'D', zc: 'D' },
       anchors: { A: { part: null, side: 'left' }, B: { part: '.plx-file-input__summary', side: 'top' }, C: { part: '.plx-file-input__item', side: 'left' }, D: { part: '.plx-file-input__name', side: 'bottom' } },
       sections: [['Layout', ['rg', 'gap']], ['Summary', ['sc', 'sf', 'ss']], ['File list', ['lg', 'ig', 'ih', 'icz', 'icc', 'nc', 'nf', 'ns', 'zc']]],
-      matrixLabel: 'File input values by variant and state', matrixColumnWidth: '--plx-ref-size-320px', statesHead: 'Variants and states · ' + HEAD
+      matrixLabel: 'File input values by variant and state', matrixColumnWidth: '--plx-ref-size-80u', statesHead: 'Variants and states · ' + HEAD
     });
 
     // ---- Code editor (<CodeEditor>): the field, the gutter, and the textarea under its colored copy
@@ -383,7 +383,7 @@ if (window.DS && DS.registerLab) {
       labelSelector: '.plx-code-editor__pre', parts: { bg: 'A', bc: 'A', bw: 'A', rad: 'A', h: 'B', mh: 'B', fg: 'C', cc: 'C', ff: 'C', fs: 'C', lh: 'C', px: 'C', py: 'C', gc: 'D', gb: 'D', gp: 'D' },
       anchors: { A: { part: null, side: 'right' }, B: { part: '.plx-code-editor__scroller', side: 'bottom' }, C: { part: '.plx-code-editor__pre', side: 'top' }, D: { part: '.plx-code-editor__gutter', side: 'left' } },
       sections: [['Field', ['bg', 'bc', 'bw', 'rad']], ['Size', ['h', 'mh']], ['Code', ['fg', 'cc', 'ff', 'fs', 'lh', 'px', 'py']], ['Line numbers', ['gc', 'gb', 'gp']]],
-      matrixLabel: 'Code editor values by variant and state', matrixColumnWidth: '--plx-ref-size-320px', statesHead: 'Variants and states · ' + HEAD
+      matrixLabel: 'Code editor values by variant and state', matrixColumnWidth: '--plx-ref-size-80u', statesHead: 'Variants and states · ' + HEAD
     });
   })();
 }

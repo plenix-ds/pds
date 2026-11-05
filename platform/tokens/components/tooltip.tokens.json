@@ -33,7 +33,7 @@
       "$description": "Rich tooltip: the border width."
     },
     "tooltip-rich-radius": {
-      "$value": "{plx-sys.radius-menu-6px}",
+      "$value": "{plx-sys.radius-menu}",
       "$type": "dimension",
       "$description": "Rich tooltip: the corners (the menu radius, as Popover)."
     },
@@ -48,12 +48,12 @@
       "$description": "Rich tooltip: the padding inside the border, on every side."
     },
     "tooltip-rich-max-width": {
-      "$value": "{plx-ref.size-320px}",
+      "$value": "{plx-ref.size-80u}",
       "$type": "dimension",
       "$description": "Rich tooltip: it wraps at 320px (the popover's md width)."
     },
     "tooltip-rich-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "Rich tooltip: the size of the title and the body."
     },

@@ -17,7 +17,7 @@
       "$description": "PermissionSummary: gap between the icon, the access and Manage access (space-inline-sm)."
     },
     "permission-summary-icon-box": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension",
       "$description": "PermissionSummary: the icon’s box (the access line’s line height) (size-20px)."
     },
@@ -32,7 +32,7 @@
       "$description": "PermissionSummary: access text color (content-default)."
     },
     "permission-summary-level-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "PermissionSummary: access text size (font-size-13)."
     },
@@ -42,7 +42,7 @@
       "$description": "PermissionSummary: access text weight (font-weight-semibold)."
     },
     "permission-summary-level-line-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension",
       "$description": "PermissionSummary: access line height (size-20px)."
     },
@@ -52,7 +52,7 @@
       "$description": "PermissionSummary: detail color (content-muted)."
     },
     "permission-summary-detail-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "PermissionSummary: detail text size (font-size-12)."
     },
@@ -62,7 +62,7 @@
       "$description": "PermissionSummary: gap between Can and Cannot side by side (space-inline-lg)."
     },
     "permission-summary-section-min-width": {
-      "$value": "{plx-ref.size-180px}",
+      "$value": "{plx-ref.size-45u}",
       "$type": "dimension",
       "$description": "PermissionSummary: the narrowest a section gets before Can and Cannot stack (size-180px)."
     },
@@ -77,7 +77,7 @@
       "$description": "PermissionSummary: Can and Cannot heading color (content-muted)."
     },
     "permission-summary-heading-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "PermissionSummary: Can and Cannot heading size (font-size-12)."
     },

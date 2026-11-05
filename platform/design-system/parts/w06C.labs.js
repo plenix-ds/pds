@@ -110,7 +110,7 @@ if (window.DS && DS.registerLab) {
       parts: { mg: 'A', lfg: 'B', lgap: 'B', lfs: 'B', lpy: 'B', lpx: 'B', efg: 'C', ig: 'D', ic: 'D', dc: 'E', dfs: 'E' },
       anchors: { A: { part: OPTION, side: 'right' }, B: { part: LOADING, side: 'right' }, C: { part: ERROR, side: 'right' }, D: { part: '.plx-combobox__option-icon', side: 'right' }, E: { part: '.plx-combobox__option-description', side: 'right' } },
       sections: [['Marks', ['mg']], ['Loading', ['lfg', 'lgap', 'lfs', 'lpy', 'lpx']], ['Failed load', ['efg']], ['Icon and description', ['ig', 'ic', 'dc', 'dfs']]],
-      matrixLabel: 'Async select by list', matrixColumnWidth: '--plx-ref-size-320px', statesHead: 'Options and lists · ' + HEAD
+      matrixLabel: 'Async select by list', matrixColumnWidth: '--plx-ref-size-80u', statesHead: 'Options and lists · ' + HEAD
     });
 
     // ---- Range slider (<Slider range | marks>): the track it draws, the filled part, the round thumbs, the marks
@@ -161,7 +161,7 @@ if (window.DS && DS.registerLab) {
       parts: { th: 'A', tbg: 'A', trad: 'A', fbg: 'B', ts: 'C', tbgc: 'C', mfg: 'D', mff: 'D', mfs: 'D', mlh: 'D' },
       anchors: { A: { part: RAIL, side: 'left' }, B: { part: FILL, side: 'top' }, C: { part: THUMB, side: 'right' }, D: { part: MARK, side: 'bottom' } },
       sections: [['Track', ['th', 'tbg', 'trad', 'fbg']], ['Thumbs', ['ts', 'tbgc']], ['Marks', ['mfg', 'mff', 'mfs', 'mlh']]],
-      matrixLabel: 'Range and marked sliders', matrixColumnWidth: '--plx-ref-size-320px', statesHead: 'Kinds and states · ' + HEAD
+      matrixLabel: 'Range and marked sliders', matrixColumnWidth: '--plx-ref-size-80u', statesHead: 'Kinds and states · ' + HEAD
     });
 
     // ---- InlineEdit (<InlineEdit>): the read view (the field's size, its hover tint and focus border, the pencil), the
@@ -245,7 +245,7 @@ if (window.DS && DS.registerLab) {
       parts: { mw: 'A', bg: 'B', bc: 'B', bw: 'B', rad: 'B', h: 'B', fg: 'C', ff: 'C', fs: 'C', px: 'C', py: 'C', gap: 'D', hc: 'D', ag: 'E', bg2: 'E', efg: 'F', efs: 'F', emt: 'F' },
       anchors: { A: { part: null, side: 'top' }, B: { part: READ, side: 'left' }, C: { part: '.plx-inline-edit__value', side: 'bottom' }, D: { part: HINT, side: 'right' }, E: { part: ACTIONS, side: 'right' }, F: { part: ERR, side: 'bottom' } },
       sections: [['Read view', ['mw', 'bg', 'bc', 'bw', 'rad', 'h']], ['Text', ['fg', 'ff', 'fs', 'px', 'py']], ['Pencil', ['gap', 'hc']], ['Edit view', ['ag', 'bg2']], ['Message', ['efg', 'efs', 'emt']]],
-      matrixLabel: 'Inline edit by field and state', matrixColumnWidth: '--plx-ref-size-320px', statesHead: 'Fields and states · ' + HEAD
+      matrixLabel: 'Inline edit by field and state', matrixColumnWidth: '--plx-ref-size-80u', statesHead: 'Fields and states · ' + HEAD
     });
 
     // ---- RichTextEditor (<RichTextEditor>): the field frame, the toolbar's divider and padding, the editing area, the
@@ -341,7 +341,7 @@ if (window.DS && DS.registerLab) {
       parts: { mw: 'A', bg: 'A', bc: 'B', bw: 'B', rad: 'B', tdc: 'C', tpy: 'C', tpx: 'C', amin: 'D', amax: 'D', apy: 'D', apx: 'D', ph: 'D', mfg: 'E', mfw: 'E', lbg: 'F', lbc: 'F', lrad: 'F', lmin: 'F', oh: 'G', ofs: 'G', abg: 'G' },
       anchors: { A: { part: null, side: 'left' }, B: { part: null, side: 'top' }, C: { part: TOOLBAR, side: 'right' }, D: { part: AREA, side: 'right' }, E: { part: MEN, side: 'bottom' }, F: { part: LIST, side: 'right' }, G: { part: MOPT, side: 'left' } },
       sections: [['Frame', ['mw', 'bg', 'bc', 'bw', 'rad']], ['Toolbar', ['tdc', 'tpy', 'tpx']], ['Editing area', ['amin', 'amax', 'apy', 'apx', 'ph']], ['Mentions', ['mfg', 'mfw', 'lbg', 'lbc', 'lrad', 'lmin', 'oh', 'ofs', 'abg']]],
-      matrixLabel: 'Rich-text editor by toolbar and state', matrixColumnWidth: '--plx-ref-size-500px', statesHead: 'Toolbars and states · ' + HEAD
+      matrixLabel: 'Rich-text editor by toolbar and state', matrixColumnWidth: '--plx-ref-size-125u', statesHead: 'Toolbars and states · ' + HEAD
     });
   })();
 }

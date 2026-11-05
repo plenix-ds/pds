@@ -1,6 +1,6 @@
 /* The font playground's page (docs/font-study/playground; owner, 2026-10-17). The specimens' fonts and sizes are set
    by the page (a constructed stylesheet); this sheet places them. Tokens only. */
-.pg-pair{align-items:baseline;column-gap:var(--plx-ref-space-24px);display:grid;grid-template-columns:repeat(2,minmax(0,max-content));row-gap:var(--plx-ref-space-4px);white-space:pre;}
+.pg-pair{align-items:baseline;column-gap:var(--plx-ref-space-6u);display:grid;grid-template-columns:repeat(2,minmax(0,max-content));row-gap:var(--plx-ref-space-1u);white-space:pre;}
 .pg-line{margin-block-end:0;margin-block-start:0;}
 /* the overlay: DM Sans in the text color, the candidate on top in blue, see-through; one baseline; the page sets the sizes */
 .pg-overlay{align-items:baseline;display:grid;line-height:var(--plx-ref-line-height-tight);overflow-x:auto;}

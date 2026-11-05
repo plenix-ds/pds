@@ -166,7 +166,7 @@ if (window.DS && DS.registerLab) {
       parts: { gap: 'A', mgap: 'B', jgap: 'A' },
       anchors: { A: { part: null, side: 'bottom' }, B: { part: ':scope > :first-child', side: 'left' } },
       sections: [['Spacing', ['gap', 'mgap', 'jgap']]],
-      matrixLabel: 'Masonry values by layout', matrixColumnWidth: '--plx-ref-size-600px',
+      matrixLabel: 'Masonry values by layout', matrixColumnWidth: '--plx-ref-size-150u',
       statesHead: 'Layouts · ' + HEAD
     });
 

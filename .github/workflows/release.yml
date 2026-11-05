@@ -1,8 +1,9 @@
-# PDS release (P0-12, #194; plan §7c; D-0003). Phase 0 ships the DRY RUN only: it does every step of a release except
-# the writes (npm publish, the CDN/API upload to the web host, latest.json), and proves the safety checks.
-# The owner's publishing hold (2026-10-29) stands, so no job here can publish: there is no tag trigger, no write
-# permission and no deploy key. The real publish (tag vX.Y.Z -> npm + CDN + API, live smoke test, automatic rollback)
-# is added in a later PR on #194 when the hold is lifted.
+# PDS release (P0-12, #194; plan §7c; D-0003). Two jobs:
+# - dry-run (pull requests, by hand): every step of a release except the writes, and proves the safety checks.
+# - publish (a pushed tag vX.Y.Z, after the CDN and API went live from the host-side deploy; #312): checks the tag is
+#   package.json's version on main, builds, checks the live CDN serves this build with SHA256SUMS, version.json and
+#   latest.json -> this version, then publishes the four @plenix-ds packages and the GitHub release. It is the only job
+#   with write permissions (packages, contents), and holds no deploy key: the web host is reached by the deploy step.
 #
 # What the dry run does, on a throwaway version <package.json version>-dryrun.<run number> so nothing collides:
 #   build (npm ci builds; release:build steps) -> one version everywhere + CDN immutability (tools/publish/preflight.mjs)
@@ -14,6 +15,8 @@
 name: Release (dry run)
 
 on:
+  push:
+    tags: ['v*.*.*']
   pull_request:
     paths:
       - 'tools/publish/**'
@@ -36,6 +39,7 @@ defaults:
 jobs:
   dry-run:
     name: Release dry run (npm + CDN + API)
+    if: github.event_name != 'push'
     runs-on: ubuntu-latest
     timeout-minutes: 45
     permissions:
@@ -52,7 +56,8 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
-          cache: npm
+          # no dependency cache in a publishing workflow: a poisoned cache could reach a published package (zizmor)
+          package-manager-cache: false
           registry-url: https://npm.pkg.github.com
           scope: '@plenix-ds'
 
@@ -135,15 +140,14 @@ jobs:
       - name: Connected apps against this build (read-only drift report; never fails the release; #114)
         run: node tools/baseline/drift.mjs --out "$RUNNER_TEMP/drift"
 
-      - name: Negative proof, the released version is refused as already published
-        env:
-          BASE: ${{ steps.v.outputs.base }}
-        run: node tools/publish/preflight.mjs "$BASE" --cdn "$CDN" --expect-published
+      - name: Negative proof, the live latest version is refused as already published
+        run: |
+          live=$(curl -fsS "${CDN}latest.json" | node -e 'console.log(JSON.parse(require("fs").readFileSync(0)).latest)')
+          echo "LIVE=$live" >> "$GITHUB_ENV"
+          node tools/publish/preflight.mjs "$live" --cdn "$CDN" --expect-published
 
-      - name: The live CDN check still works (released version, sampled)
-        env:
-          BASE: ${{ steps.v.outputs.base }}
-        run: node tools/check-live-cdn.js "$BASE" --live-only --sample 20 --deadline 8
+      - name: The live CDN check still works (live latest version, sampled)
+        run: node tools/check-live-cdn.js "$LIVE" --live-only --sample 20 --deadline 8
 
       - name: Summary
         env:
@@ -169,3 +173,73 @@ jobs:
           name: release-dry-run-records
           path: ${{ runner.temp }}/records
           retention-days: 30
+
+  publish:
+    name: Publish npm + GitHub release (tag)
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write
+      packages: write
+    env:
+      TAG: ${{ github.ref_name }}
+      CDN: https://design-system.lighthouseway.org/cdn/
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: The tag is package.json's version, on main, not released yet
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          v=$(node -p "require('./package.json').version")
+          [ "v$v" = "$TAG" ] || { echo "Tag $TAG does not match package.json $v"; exit 1; }
+          git merge-base --is-ancestor HEAD origin/main || { echo "$TAG is not on main"; exit 1; }
+          if gh release view "$TAG" -R "$GITHUB_REPOSITORY" >/dev/null 2>&1; then echo "$TAG already has a GitHub release"; exit 1; fi
+          echo "VERSION=$v" >> "$GITHUB_ENV"
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          package-manager-cache: false
+          registry-url: https://npm.pkg.github.com
+          scope: '@plenix-ds'
+
+      - name: Install and build
+        run: |
+          npm ci --no-audit --no-fund
+          node build-usage.js
+          node check-system.js
+          node check-style.js
+          node build-packages.js
+
+      - name: One version everywhere (the CDN is expected to have it already)
+        run: node tools/publish/preflight.mjs "$VERSION" --cdn "$CDN" --expect-published
+
+      - name: The live CDN serves this build, with SHA256SUMS, version.json and latest.json
+        run: |
+          node tools/check-live-cdn.js "$VERSION" --dir "release/cdn/$VERSION" --sample 60 --deadline 15
+          curl -fsS "${CDN}${VERSION}/version.json" | node -e 'const j=JSON.parse(require("fs").readFileSync(0));if(j.version!==process.argv[1])throw new Error("version.json says "+j.version);console.log("version.json:",j.version,j.files,"files")' "$VERSION"
+          curl -fsS -o /dev/null "${CDN}${VERSION}/SHA256SUMS"
+          curl -fsS "${CDN}latest.json" | node -e 'const j=JSON.parse(require("fs").readFileSync(0));if(!j.pins||typeof j.pins!=="object")throw new Error("latest.json lost pins");console.log("latest.json:",JSON.stringify(j))'
+
+      - name: Publish the four packages to GitHub Packages
+        env:
+          # GitHub Packages has no trusted (OIDC) publishing; the run's own token, packages: write, this job only
+          NODE_AUTH_TOKEN: ${{ github.token }} # zizmor: ignore[use-trusted-publishing]
+        run: |
+          for p in tokens icons styles react; do
+            (cd "release/packages/$p" && npm publish)
+          done
+
+      - name: GitHub release, notes from CHANGELOG.md
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          awk -v h="## [$VERSION]" 'index($0, h) == 1 {on=1; next} on && index($0, "## [") == 1 {exit} on {print}' CHANGELOG.md > "$RUNNER_TEMP/notes.md"
+          [ -s "$RUNNER_TEMP/notes.md" ] || { echo "CHANGELOG.md has no section for $VERSION"; exit 1; }
+          printf '\n---\nPackages: @plenix-ds/tokens, icons, styles, react %s · CDN: %s%s/ (SHA256SUMS, version.json) · API: https://design-system.lighthouseway.org/api/v1/ · Design spec (each component page): https://design-system.lighthouseway.org/ (#114)\n' "$VERSION" "$CDN" "$VERSION" >> "$RUNNER_TEMP/notes.md"
+          gh release create "$TAG" -R "$GITHUB_REPOSITORY" --verify-tag --title "Plenix $TAG" --notes-file "$RUNNER_TEMP/notes.md"

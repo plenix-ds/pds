@@ -32,7 +32,7 @@
       "$description": "The space between the caption and the credit line."
     },
     "figure-caption-max-width": {
-      "$value": "{plx-ref.size-560px}",
+      "$value": "{plx-ref.size-140u}",
       "$type": "dimension",
       "$description": "A caption under wide media keeps a readable line length."
     },

@@ -1,5 +1,5 @@
 /* Fixture for check-spec.js, rule color-samples: the samples have shrunk again (a 24px bar, a swatch with no width of its own and free to shrink, a 2px sample in a
    token table). The rule must fail on it, with a finding for each. */
-.ds-swatch{block-size:var(--plx-ref-size-44px);}
-.ds-vis--color{block-size:var(--plx-ref-size-16px);flex-shrink:0;inline-size:var(--plx-ref-size-24px);}
-.ds-token-render .ds-swatch{block-size:var(--plx-ref-size-24px);inline-size:var(--plx-ref-size-2px);}
+.ds-swatch{block-size:var(--plx-ref-size-11u);}
+.ds-vis--color{block-size:var(--plx-ref-size-4u);flex-shrink:0;inline-size:var(--plx-ref-size-6u);}
+.ds-token-render .ds-swatch{block-size:var(--plx-ref-size-6u);inline-size:var(--plx-ref-size-2px);}

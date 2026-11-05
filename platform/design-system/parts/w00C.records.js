@@ -63,8 +63,8 @@ DSParts.records.push(function (H) {
     });
     return h(P.Table, { label: p.label, data: rows, columns: [
       { title: 'Role (--plx-sys-) and purpose', field: 'role', kind: 'wrap', rowLabel: true, render: roleCell },
-      { title: 'Light and dark (palette color)', field: 'light', kind: 'wrap', width: '--plx-ref-size-320px', render: modeCell },
-      { title: 'Contrast pairs (light / dark)', field: 'pairs', kind: 'wrap', width: '--plx-ref-size-280px', render: pairsCell }] });
+      { title: 'Light and dark (palette color)', field: 'light', kind: 'wrap', width: '--plx-ref-size-80u', render: modeCell },
+      { title: 'Contrast pairs (light / dark)', field: 'pairs', kind: 'wrap', width: '--plx-ref-size-70u', render: pairsCell }] });
   }
 
   // the gray ramp (the palette's Gray family, black and white included) and the roles each shade serves in light and dark
@@ -80,10 +80,10 @@ DSParts.records.push(function (H) {
       return { id: i + 1, shade: shade, hex: hex, light: users(shade, 'light'), dark: users(shade, 'dark') };
     });
     return h(P.Table, { label: 'The gray ramp', data: rows, columns: [
-      { title: 'Shade (--plx-ref-color-)', field: 'shade', kind: ['name', 'data'], rowLabel: true, width: '--plx-ref-size-240px', render: function (r) { return h(P.Inline, { gap: 'xs' }, swatch(r.hex), data(r.shade)); } },
-      { title: 'Value', field: 'hex', kind: 'data', width: '--plx-ref-size-140px' },
-      { title: 'Roles in light', field: 'light', kind: 'data', width: '--plx-ref-size-140px' },
-      { title: 'Roles in dark', field: 'dark', kind: 'data', width: '--plx-ref-size-140px' }] });
+      { title: 'Shade (--plx-ref-color-)', field: 'shade', kind: ['name', 'data'], rowLabel: true, width: '--plx-ref-size-60u', render: function (r) { return h(P.Inline, { gap: 'xs' }, swatch(r.hex), data(r.shade)); } },
+      { title: 'Value', field: 'hex', kind: 'data', width: '--plx-ref-size-35u' },
+      { title: 'Roles in light', field: 'light', kind: 'data', width: '--plx-ref-size-35u' },
+      { title: 'Roles in dark', field: 'dark', kind: 'data', width: '--plx-ref-size-35u' }] });
   }
 
   var roles = function (group, title) { return [title || 'Every role, light and dark', function () { return box(null, h(RolesTable, { group: group, label: (title || 'Roles') })); }]; };

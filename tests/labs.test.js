@@ -79,11 +79,11 @@ if (!ONLY && !changed.anyDS()) changed.none('LABS_OK 0/0 labs');
     r.tokens = seen.size; r.bad = r.bad.slice(0, 5);
     results.push([id, r]);
   }
-  // #263 (owner, option A): every color sample in a token table is a 120px bar (--plx-ref-size-120px), never a sliver
+  // #263 (owner, option A): every color sample in a token table is a 120px bar (--plx-ref-size-30u), never a sliver
   at('color samples');
   await page.evaluate(() => { location.hash = '#/foundations/color'; }); await sleep(2500);
   const samples = await page.evaluate(() => {
-    const want = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--plx-ref-size-120px')) * (/rem/.test(getComputedStyle(document.documentElement).getPropertyValue('--plx-ref-size-120px')) ? parseFloat(getComputedStyle(document.documentElement).fontSize) : 1);
+    const want = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--plx-ref-size-30u')) * (/rem/.test(getComputedStyle(document.documentElement).getPropertyValue('--plx-ref-size-30u')) ? parseFloat(getComputedStyle(document.documentElement).fontSize) : 1);
     const list = [...document.querySelectorAll('.ds-token-render .ds-swatch')], narrow = list.filter((e) => e.getBoundingClientRect().width < want - 1);
     return { n: list.length, want, narrow: narrow.length, first: narrow[0] ? Math.round(narrow[0].getBoundingClientRect().width) : null };
   });

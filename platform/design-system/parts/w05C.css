@@ -1,13 +1,13 @@
 /* Library part w05C (wave 5, lane C): the frames the labs and examples of the command menu, back to top, the rich
    tooltip and the non-modal dialog need. Tokens only. */
 /* a command menu at a palette's width */
-.ds-w05c-menu{inline-size:var(--plx-ref-size-400px);max-inline-size:100%;}
+.ds-w05c-menu{inline-size:var(--plx-ref-size-100u);max-inline-size:100%;}
 /* a tooltip drawn in the flow (not over its trigger), with room around it for the arrow */
 .ds-w05c-tip{display:flex;padding-block-end:var(--plx-sys-space-inset-md);padding-block-start:var(--plx-sys-space-inset-md);padding-inline-end:var(--plx-sys-space-inset-md);padding-inline-start:var(--plx-sys-space-inset-md);}
 .ds-w05c-tip .plx-tooltip__bubble{inset-block-end:auto;inset-block-start:auto;inset-inline-end:auto;inset-inline-start:auto;position:relative;transform:none;}
 /* a contained window: a fixed back-to-top button (and a scrolling region) stay inside the frame (contain: layout makes
    the frame the containing block of fixed elements) */
-.ds-w05c-window{block-size:var(--plx-ref-size-200px);border-block-end-color:var(--plx-sys-border-default);border-block-end-style:solid;border-block-end-width:var(--plx-sys-border-width-thin);border-block-start-color:var(--plx-sys-border-default);border-block-start-style:solid;border-block-start-width:var(--plx-sys-border-width-thin);border-inline-end-color:var(--plx-sys-border-default);border-inline-end-style:solid;border-inline-end-width:var(--plx-sys-border-width-thin);border-inline-start-color:var(--plx-sys-border-default);border-inline-start-style:solid;border-inline-start-width:var(--plx-sys-border-width-thin);box-sizing:border-box;contain:layout;inline-size:var(--plx-ref-size-400px);max-inline-size:100%;position:relative;}
+.ds-w05c-window{block-size:var(--plx-ref-size-50u);border-block-end-color:var(--plx-sys-border-default);border-block-end-style:solid;border-block-end-width:var(--plx-sys-border-width-thin);border-block-start-color:var(--plx-sys-border-default);border-block-start-style:solid;border-block-start-width:var(--plx-sys-border-width-thin);border-inline-end-color:var(--plx-sys-border-default);border-inline-end-style:solid;border-inline-end-width:var(--plx-sys-border-width-thin);border-inline-start-color:var(--plx-sys-border-default);border-inline-start-style:solid;border-inline-start-width:var(--plx-sys-border-width-thin);box-sizing:border-box;contain:layout;inline-size:var(--plx-ref-size-100u);max-inline-size:100%;position:relative;}
 .ds-w05c-scroll{block-size:100%;box-sizing:border-box;overflow-y:auto;padding-block-end:var(--plx-sys-space-inset-md);padding-block-start:var(--plx-sys-space-inset-md);padding-inline-end:var(--plx-sys-space-inset-md);padding-inline-start:var(--plx-sys-space-inset-md);}
 /* the non-modal dialog drawn in place: its layer class without the layer */
 .ds-w05c-layer{display:flex;}

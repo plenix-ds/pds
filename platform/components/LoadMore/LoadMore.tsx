@@ -74,7 +74,7 @@ export const LoadMore = React.forwardRef(function LoadMore({ onLoadMore, hasMore
   const sentinel = React.useRef<HTMLDivElement>(null);
   const before = React.useRef(shown), fromButton = React.useRef(false);
   const infinite = mode === 'infinite';
-  const { visible } = useIntersection(sentinel, { root, rootMargin: '--plx-ref-size-200px', disabled: !infinite || !hasMore });
+  const { visible } = useIntersection(sentinel, { root, rootMargin: '--plx-ref-size-50u', disabled: !infinite || !hasMore });
   React.useEffect(() => { if (infinite && visible && hasMore && !loading && onLoadMore) onLoadMore(); }, [infinite, visible, hasMore, loading, shown]);
   React.useEffect(() => {
     const was = before.current;

@@ -32,7 +32,7 @@
       "$description": "TransferList: a list's frame width."
     },
     "transfer-list-panel-radius": {
-      "$value": "{plx-sys.radius-surface-6px}",
+      "$value": "{plx-sys.radius-surface-md}",
       "$type": "dimension",
       "$description": "TransferList: a list's corners (an 8px frame)."
     },
@@ -48,7 +48,7 @@
       "$description": "TransferList: the space between the header's checkbox, title, count and buttons."
     },
     "transfer-list-header-min-height": {
-      "$value": "{plx-ref.size-40px}",
+      "$value": "{plx-ref.size-10u}",
       "$type": "dimension",
       "$description": "TransferList: a list header's height (room for the xs order buttons)."
     },
@@ -103,17 +103,17 @@
       "$description": "TransferList: the inset around a list's search field."
     },
     "transfer-list-list-height-sm": {
-      "$value": "{plx-ref.size-200px}",
+      "$value": "{plx-ref.size-50u}",
       "$type": "dimension",
       "$description": "TransferList: a list's height at size sm."
     },
     "transfer-list-list-height-md": {
-      "$value": "{plx-ref.size-280px}",
+      "$value": "{plx-ref.size-70u}",
       "$type": "dimension",
       "$description": "TransferList: a list's height at size md (the default)."
     },
     "transfer-list-list-height-lg": {
-      "$value": "{plx-ref.size-400px}",
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension",
       "$description": "TransferList: a list's height at size lg."
     },
@@ -143,7 +143,7 @@
       "$description": "TransferList: a row's label."
     },
     "transfer-list-option-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "TransferList: a row's label size."
     },

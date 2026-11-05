@@ -7,7 +7,7 @@
     "sankey-diagram-label-font-family": { "$value": "{plx-sys.font-label}", "$type": "fontFamily", "$description": "Sankey diagram: node names are UI text: the label font." },
     "sankey-diagram-label-font-size": { "$value": "{plx-sys.text-label-font-size}", "$type": "dimension", "$description": "Sankey diagram: a node's name's size." },
     "sankey-diagram-label-font-weight": { "$value": "{plx-sys.font-weight-medium}", "$type": "fontWeight", "$description": "Sankey diagram: a node's name's weight." },
-    "sankey-diagram-label-offset": { "$value": "{plx-ref.size-8px}", "$type": "dimension", "$description": "Sankey diagram: the distance between a node and its name (after it; before it in the last column)." },
+    "sankey-diagram-label-offset": { "$value": "{plx-ref.size-2u}", "$type": "dimension", "$description": "Sankey diagram: the distance between a node and its name (after it; before it in the last column)." },
     "sankey-diagram-label-halo-color": { "$value": "{plx-sys.surface-default}", "$type": "color", "$description": "Sankey diagram: the halo under a name and total, in the surface color, so they read over the bands." },
     "sankey-diagram-label-halo-width": { "$value": "{plx-sys.border-width-thick}", "$type": "dimension", "$description": "Sankey diagram: the halo's width." },
     "sankey-diagram-value-text": { "$value": "{plx-sys.content-subtle}", "$type": "color", "$description": "Sankey diagram: a node's total after its name." },

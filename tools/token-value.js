@@ -1,6 +1,6 @@
 // Plenix · token values in the W3C Design Tokens format (2025.10), #372 step 9 (#872, owner's choice A, 2026-11-02).
 //
-// A token's $value is a string (a reference, {plx-ref.size-4px}, or a value only the web has: calc(), var(), env(),
+// A token's $value is a string (a reference, {plx-ref.size-1u}, or a value only the web has: calc(), var(), env(),
 // keywords, mixed strings) or one of the format's typed values:
 //   dimension   { "value": 4, "unit": "px" }               (px or rem)                   written  4px
 //   duration    { "value": 0.2, "unit": "s" }              (ms or s)                     written  0.2s

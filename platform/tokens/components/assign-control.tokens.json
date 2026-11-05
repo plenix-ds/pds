@@ -17,12 +17,12 @@
       "$description": "AssignControl: the row’s least height (a field’s height) (control-height-standard)."
     },
     "assign-control-assigned-min-height": {
-      "$value": "{plx-ref.size-32px}",
+      "$value": "{plx-ref.size-8u}",
       "$type": "dimension",
       "$description": "AssignControl: the row’s least height with an assignee (the Persona’s) (size-32px)."
     },
     "assign-control-picker-min-width": {
-      "$value": "{plx-ref.size-240px}",
+      "$value": "{plx-ref.size-60u}",
       "$type": "dimension",
       "$description": "AssignControl: the people picker’s least width (size-240px)."
     },
@@ -32,7 +32,7 @@
       "$description": "AssignControl: Not delegated color (content-muted)."
     },
     "assign-control-empty-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "AssignControl: Not delegated size (font-size-13)."
     },

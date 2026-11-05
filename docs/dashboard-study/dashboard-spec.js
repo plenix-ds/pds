@@ -537,8 +537,8 @@
     ['Shadow (--shadow)', 'The components’ own elevation: --plx-sys-shadow-menu for menus, the WidgetGrid’s drag state'],
     ['Manrope, Public Sans, JetBrains Mono', 'DM Sans for UI text, Reddit Mono for data (Text variants title, display, body, secondary, data)'],
     ['Type: page title 24, card title 14 semibold, KPI value 32/40, row 14, metadata 12', 'Text title (20), Panel title, MetricCard value (size md 28, lg 36), Text body, Text secondary and data (12)'],
-    ['Corners 8 to 14px; pills 999px', 'Corners 2 to 6px: --plx-sys-radius-card-4px and -6px, --plx-sys-radius-table-2px; Badge and Count pills at 4px'],
-    ['Spacing 6, 10, 14, 18, 22px', 'The 4px grid: --plx-sys-space-* and --plx-ref-space-4px to -64px'],
+    ['Corners 8 to 14px; pills 999px', 'Corners 2 to 6px: --plx-sys-radius-card-sm and -6px, --plx-sys-radius-table; Badge and Count pills at 4px'],
+    ['Spacing 6, 10, 14, 18, 22px', 'The 4px grid: --plx-sys-space-* and --plx-ref-space-1u to -64px'],
     ['Row heights 48 / 40 and 44 / 36 (Standard and Dense profiles)', 'Plenix display density: Compact, Standard, Comfortable (data-plx-density); the list rows follow it'],
     ['Stroke icons, 16 and 20px, one SVG family', 'Icon from the Plenix set (Material Symbols Sharp, weight 300), sizes sm 16 and md 20'],
     ['Card (.mk) with header, body, footer', 'Panel (icon, title, description, actions, footer)'],
@@ -893,7 +893,7 @@
             ['Keyboard and touch users move Calendar ahead of Notes.', 'Successful non-drag rearrangement, focus continuity, understanding of saved state.']])),
 
         h(Section, { id: 'open', eyebrow: '10 / Items to confirm', title: 'Items to confirm before implementation', lead: 'These depend on data, roles or platform decisions that the specification cannot settle. Every item stays open until the owner confirms it.' },
-          table('Items to confirm', ['Item', 'What is needed', 'Affects', 'Status', 'Today in Plenix'], CONFIRM.map(function (c) { return [c[0], c[1], c[2], badge('action-required', 'flag', 'To confirm', 'sm'), c[3] || '—']; }), [null, null, null, '--plx-ref-size-120px'])),
+          table('Items to confirm', ['Item', 'What is needed', 'Affects', 'Status', 'Today in Plenix'], CONFIRM.map(function (c) { return [c[0], c[1], c[2], badge('action-required', 'flag', 'To confirm', 'sm'), c[3] || '—']; }), [null, null, null, '--plx-ref-size-30u'])),
 
         h(Section, { id: 'sources', eyebrow: '11 / Sources', title: 'Sources' },
           h3('Internal design studies'),

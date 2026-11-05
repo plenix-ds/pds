@@ -5,11 +5,11 @@
     "pie-chart-slice-outline-width": { "$value": "{plx-sys.border-width-medium}", "$type": "dimension", "$description": "Pie chart: the width of the line between two slices." },
     "pie-chart-center-value-text": { "$value": "{plx-sys.content-default}", "$type": "color", "$description": "Pie chart (donut, half): the center value." },
     "pie-chart-center-value-font-family": { "$value": "{plx-sys.font-data}", "$type": "fontFamily", "$description": "Pie chart (donut, half): the center value is a technical value: the data font (Reddit Mono)." },
-    "pie-chart-center-value-font-size": { "$value": "{plx-ref.font-size-20}", "$type": "dimension", "$description": "Pie chart (donut, half): the center value's size." },
+    "pie-chart-center-value-font-size": { "$value": "{plx-ref.font-size-600}", "$type": "dimension", "$description": "Pie chart (donut, half): the center value's size." },
     "pie-chart-center-value-font-weight": { "$value": "{plx-sys.text-label-font-weight}", "$type": "fontWeight", "$description": "Pie chart (donut, half): the center value's weight." },
     "pie-chart-center-label-text": { "$value": "{plx-sys.content-subtle}", "$type": "color", "$description": "Pie chart (donut, half): the words under the center value." },
     "pie-chart-center-label-font-family": { "$value": "{plx-sys.font-label}", "$type": "fontFamily", "$description": "Pie chart (donut, half): the center label is UI text: the label font." },
-    "pie-chart-center-label-font-size": { "$value": "{plx-ref.font-size-12}", "$type": "dimension", "$description": "Pie chart (donut, half): the center label's size." },
-    "pie-chart-center-label-line-height": { "$value": "{plx-sys.label-height-16px}", "$type": "dimension", "$description": "Pie chart (half): the center label's line, the distance the value sits above it." }
+    "pie-chart-center-label-font-size": { "$value": "{plx-ref.font-size-100}", "$type": "dimension", "$description": "Pie chart (donut, half): the center label's size." },
+    "pie-chart-center-label-line-height": { "$value": "{plx-sys.label-height-sm}", "$type": "dimension", "$description": "Pie chart (half): the center label's line, the distance the value sits above it." }
   }
 }

@@ -5,6 +5,6 @@
     "box-plot-whisker-width": { "$value": "{plx-sys.border-width-thin}", "$type": "dimension", "$description": "Box plot: the whiskers' width." },
     "box-plot-median-color": { "$value": "{plx-sys.surface-default}", "$type": "color", "$description": "Box plot: the median line across the box, in the surface color so it shows on the box's data color." },
     "box-plot-median-width": { "$value": "{plx-sys.border-width-medium}", "$type": "dimension", "$description": "Box plot: the median line's width." },
-    "box-plot-outlier-radius": { "$value": "{plx-ref.size-4px}", "$type": "dimension", "$description": "Box plot: the radius of an outlier point (the frame's point, with its ring)." }
+    "box-plot-outlier-radius": { "$value": "{plx-ref.size-1u}", "$type": "dimension", "$description": "Box plot: the radius of an outlier point (the frame's point, with its ring)." }
   }
 }

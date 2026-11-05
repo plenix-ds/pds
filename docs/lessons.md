@@ -20,3 +20,8 @@ What the 0.x project taught us (plan §2), plus confirmed lessons added after ea
 
 - **CTM 3.0 re-asked the owner after each answer (new cards D-0032, D-0033) and ran each answer as its own long chain.** → The owner's answer is final: act on the sensible reading, say it in one line, handle all answers in one pass, and refresh the dashboard once (D-0035).
 - **PDS had no dashboard page when the owner asked for "the html page like CTM".** → When the owner points at a working example, ship that example first, then improve it (D-0034).
+
+## From PDS 1.0 (2026-11-05)
+
+- **Twice, changelog fragments merged in the same merge-queue group as the version PR shipped without CHANGELOG lines** (0.87.0: #311; 0.88.0: #334, #292). → At a release, check `changelog.d` at the exact release commit; put any late fragment in the GitHub release notes and fold it on `main` right after.
+- **A required check was blocked by its own cancelled run** (#345): opening a PR with a label fires two events, and `cancel-in-progress` cancelled one. → Required checks never use `cancel-in-progress`; a run that takes seconds just finishes.

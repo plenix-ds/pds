@@ -2,7 +2,7 @@
   "$description": "DataGrid: its floating scrollbars (owner, 2026-10-15: the table body's scrollbars float over the rows and take no room).",
   "plx-comp": {
     "data-grid-scroll-size": {
-      "$value": "{plx-ref.size-8px}",
+      "$value": "{plx-ref.size-2u}",
       "$type": "dimension",
       "$description": "The thickness of a floating track and its thumb."
     },

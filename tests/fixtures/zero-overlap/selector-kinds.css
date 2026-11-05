@@ -17,9 +17,9 @@
 /* expect: behavior */ [data-plx-dnd-handle]:disabled{cursor:default;}
 /* expect: behavior */ [data-plx-icon-optical="24"]{--plx-comp-icon-auto-star:var(--plx-comp-icon-glyph-star-24);}
 /* expect: foundation */ [data-plx-density]:where(:not([data-plx-density="comfortable"], [data-plx-icon-optical="24"])){--plx-comp-icon-auto-star:var(--plx-comp-icon-glyph-star);}
-/* expect: foundation */ :root{--plx-ref-space-4px:0.25rem;color-scheme:light;}
+/* expect: foundation */ :root{--plx-ref-space-1u:0.25rem;color-scheme:light;}
 /* expect: foundation */ :root[data-plx-mode="dark"]{--plx-sys-surface-default:var(--plx-ref-color-gray-900);}
-/* expect: foundation */ [data-plx-density="compact"]{--plx-sys-control-height-standard:var(--plx-ref-space-28px);}
+/* expect: foundation */ [data-plx-density="compact"]{--plx-sys-control-height-standard:var(--plx-ref-space-7u);}
 /* expect: foundation */ [data-plx-theme="default"][data-plx-mode="light"]{--plx-sys-surface-default:var(--plx-ref-color-white);}
 /* expect: base */ :where(button:not([class*="plx-"]), input:not([class*="plx-"])){font-family:inherit;}
 /* expect: base */ h1:not([class*="plx-"]){margin-block-start:0;}

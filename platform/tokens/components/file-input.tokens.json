@@ -17,7 +17,7 @@
       "$description": "FileInput: the line beside the button (No file chosen, 3 files) and each file size: secondary text."
     },
     "file-input-summary-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "FileInput: the size of the line beside the button."
     },
@@ -27,7 +27,7 @@
       "$description": "FileInput: a chosen file name."
     },
     "file-input-name-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "FileInput: the size of a file name and its size in the list."
     },

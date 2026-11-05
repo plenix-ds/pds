@@ -60,6 +60,7 @@ async function route(ev) {
   const kind = p.pull_request || item.pull_request ? 'PR' : 'issue';
   let roles = agentRoles(item.labels);
   let what;
+  let mention = false;
   switch (ev.type) {
     case 'IssuesEvent':
       if (!['opened', 'reopened', 'labeled', 'assigned'].includes(p.action)) return null;
@@ -73,16 +74,17 @@ async function route(ev) {
       const body = (p.comment || p.review || {}).body || '';
       if (ev.type === 'IssueCommentEvent' && p.action !== 'created') return null;
       // mentions come from the text without its signature lines; a role is never woken by its own comment
-      roles = [...new Set([...roles, ...named(body.replace(/—\s*PDS1-[A-Za-z0-9-]+/g, ''))])].filter((r) => r.replace(/-\d+$/, '') !== signer(body));
+      const mentioned = named(body.replace(/—\s*PDS1-[A-Za-z0-9-]+/g, ''));
+      roles = [...new Set([...roles, ...mentioned])].filter((r) => r.replace(/-\d+$/, '') !== signer(body));
+      if (mentioned.length) mention = true;
       if (!roles.length && !signer(body)) roles = ['product-lead'];
-      what = ev.type === 'IssueCommentEvent' ? `new comment on ${kind}` : `review on PR`;
+      what = (mention ? 'you are named in a ' : '') + (ev.type === 'IssueCommentEvent' ? `${mention ? 'comment' : 'new comment'} on ${kind}` : `review on PR`);
       break;
     }
     case 'PullRequestEvent':
-      if (!['opened', 'reopened', 'labeled', 'ready_for_review'].includes(p.action)) return null;
-      if (p.action === 'labeled') roles = agentRoles([p.label]);
-      what = `PR ${p.action}`;
-      break;
+      // a PR's opening and labels concern its author, who already knows (one shared GitHub identity: the author can't
+      // be told apart, so these events woke the author about its own PRs). Reviews, comments and failed runs still route.
+      return null;
     default:
       return null;
   }
@@ -101,6 +103,7 @@ function windows() {
 }
 function deliver() {
   for (const [win, lines] of pending) {
+    lines.sort((a, b) => (b.startsWith('you are named') ? 1 : 0) - (a.startsWith('you are named') ? 1 : 0)); // asks first
     const text = `GitHub events for you (#220 pickup): ${lines.slice(0, 6).join(' | ')}${lines.length > 6 ? ` | and ${lines.length - 6} more` : ''}. Check them and act if they are yours; queue green PRs with gh pr merge --auto.`;
     let code = 0;
     try { execFileSync('bash', [TEAM, 'wake', win, text, IDLE_S], { stdio: DRY ? 'inherit' : 'ignore', env: { ...process.env, ...(DRY ? { NUDGE_DRY: '1' } : {}) } }); } catch (e) { code = e.status; }

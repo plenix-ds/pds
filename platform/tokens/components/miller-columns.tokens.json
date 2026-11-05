@@ -12,7 +12,7 @@
       "$description": "MillerColumns: border color (border-default)."
     },
     "miller-columns-radius": {
-      "$value": "{plx-sys.radius-surface-6px}",
+      "$value": "{plx-sys.radius-surface-md}",
       "$type": "dimension",
       "$description": "MillerColumns: corners (radius-surface-6px)."
     },
@@ -27,12 +27,12 @@
       "$description": "MillerColumns: text color (content-default)."
     },
     "miller-columns-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "MillerColumns: font size (font-size-13)."
     },
     "miller-columns-height": {
-      "$value": "{plx-ref.size-320px}",
+      "$value": "{plx-ref.size-80u}",
       "$type": "dimension",
       "$description": "MillerColumns: height (size-320px)."
     },
@@ -47,37 +47,37 @@
       "$description": "MillerColumns column border inline end: width (border-width-thin)."
     },
     "miller-columns-column-width": {
-      "$value": "{plx-ref.size-240px}",
+      "$value": "{plx-ref.size-60u}",
       "$type": "dimension",
       "$description": "MillerColumns column: width (size-240px)."
     },
     "miller-columns-column-width-step-1": {
-      "$value": "{plx-ref.size-160px}",
+      "$value": "{plx-ref.size-40u}",
       "$type": "dimension",
       "$description": "MillerColumns column width step 1: column width step 1 (size-160px)."
     },
     "miller-columns-column-width-step-2": {
-      "$value": "{plx-ref.size-200px}",
+      "$value": "{plx-ref.size-50u}",
       "$type": "dimension",
       "$description": "MillerColumns column width step 2: column width step 2 (size-200px)."
     },
     "miller-columns-column-width-step-3": {
-      "$value": "{plx-ref.size-240px}",
+      "$value": "{plx-ref.size-60u}",
       "$type": "dimension",
       "$description": "MillerColumns column width step 3: column width step 3 (size-240px)."
     },
     "miller-columns-column-width-step-4": {
-      "$value": "{plx-ref.size-280px}",
+      "$value": "{plx-ref.size-70u}",
       "$type": "dimension",
       "$description": "MillerColumns column width step 4: column width step 4 (size-280px)."
     },
     "miller-columns-column-width-step-5": {
-      "$value": "{plx-ref.size-320px}",
+      "$value": "{plx-ref.size-80u}",
       "$type": "dimension",
       "$description": "MillerColumns column width step 5: column width step 5 (size-320px)."
     },
     "miller-columns-column-width-step-6": {
-      "$value": "{plx-ref.size-360px}",
+      "$value": "{plx-ref.size-90u}",
       "$type": "dimension",
       "$description": "MillerColumns column width step 6: column width step 6 (size-360px)."
     },
@@ -92,7 +92,7 @@
       "$description": "MillerColumns list: padding left and right (space-inset-xs)."
     },
     "miller-columns-list-row-gap": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension",
       "$description": "MillerColumns list: gap between rows (space-4px)."
     },
@@ -205,12 +205,12 @@
       "$description": "MillerColumns chevron: background (content-muted)."
     },
     "miller-columns-chevron-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$description": "MillerColumns chevron: height (size-16px)."
     },
     "miller-columns-chevron-width": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$description": "MillerColumns chevron: width (size-16px)."
     },
@@ -230,12 +230,12 @@
       "$description": "MillerColumns empty: padding left and right (space-inset-sm)."
     },
     "miller-columns-preview-width": {
-      "$value": "{plx-ref.size-280px}",
+      "$value": "{plx-ref.size-70u}",
       "$type": "dimension",
       "$description": "MillerColumns preview: width (size-280px)."
     },
     "miller-columns-preview-min-width": {
-      "$value": "{plx-ref.size-280px}",
+      "$value": "{plx-ref.size-70u}",
       "$type": "dimension",
       "$description": "MillerColumns preview: minimum width (size-280px)."
     },
@@ -261,7 +261,7 @@
       "$description": "MillerColumns resizer: background (border-subtle)."
     },
     "miller-columns-resizer-width": {
-      "$value": "{plx-ref.size-4px}",
+      "$value": "{plx-ref.size-1u}",
       "$type": "dimension",
       "$description": "MillerColumns resizer: width (size-4px)."
     },
@@ -276,7 +276,7 @@
       "$description": "MillerColumns resizer focus: background (focus-ring-color)."
     },
     "miller-columns-resize-step": {
-      "$value": "{plx-ref.size-40px}",
+      "$value": "{plx-ref.size-10u}",
       "$type": "dimension",
       "$description": "MillerColumns: how far a drag of a column edge moves before the column takes the next width step."
     }

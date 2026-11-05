@@ -9,150 +9,150 @@
   },
   "plx-sys": {
     "radius-control": {
-      "$value": "{plx-sys.radius-control-4px}",
+      "$value": "{plx-sys.radius-control-sm}",
       "$type": "dimension"
     },
     "control-height-inline": {
-      "$value": "{plx-ref.control-size-32px}",
+      "$value": "{plx-ref.control-size-8u}",
       "$type": "dimension"
     },
     "control-icon-inline": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension"
     },
     "control-height-toolbar": {
-      "$value": "{plx-ref.control-size-32px}",
+      "$value": "{plx-ref.control-size-8u}",
       "$type": "dimension"
     },
     "control-icon-toolbar": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension"
     },
     "control-height-standard": {
-      "$value": "{plx-ref.control-size-36px}",
+      "$value": "{plx-ref.control-size-9u}",
       "$type": "dimension"
     },
     "control-icon-standard": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension"
     },
     "control-height-prominent": {
-      "$value": "{plx-ref.control-size-36px}",
+      "$value": "{plx-ref.control-size-9u}",
       "$type": "dimension"
     },
     "control-icon-prominent": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension"
     },
     "control-height-dialog": {
-      "$value": "{plx-ref.control-size-40px}",
+      "$value": "{plx-ref.control-size-10u}",
       "$type": "dimension"
     },
     "control-icon-dialog": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$deprecated": "Not used by any page, application or the design spec (issue 882): no role or component token has its values in every theme and density; the nearest is --plx-sys-control-icon-inline (16px instead of 20px when compact). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
     "control-height-dialog-destructive": {
-      "$value": "{plx-ref.control-size-40px}",
+      "$value": "{plx-ref.control-size-10u}",
       "$type": "dimension"
     },
     "control-icon-dialog-destructive": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$deprecated": "Not used by any page, application or the design spec (issue 882): no role or component token has its values in every theme and density; the nearest is --plx-sys-control-icon-inline (16px instead of 20px when compact). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
     "card-grid-gap": {
-      "$value": "{plx-ref.space-24px}",
+      "$value": "{plx-ref.space-6u}",
       "$type": "dimension"
     },
     "grid-gutter": {
-      "$value": "{plx-ref.grid-gutter-24px}",
+      "$value": "{plx-ref.grid-gutter-lg}",
       "$type": "dimension"
     },
     "page-margin-desktop": {
-      "$value": "{plx-ref.grid-margin-32px}",
+      "$value": "{plx-ref.grid-margin-lg}",
       "$type": "dimension"
     },
     "page-margin-wide": {
-      "$value": "{plx-ref.grid-margin-48px}",
+      "$value": "{plx-ref.grid-margin-xl}",
       "$type": "dimension"
     },
     "panel-filter-width": {
-      "$value": "{plx-ref.size-360px}",
+      "$value": "{plx-ref.size-90u}",
       "$type": "dimension"
     },
     "panel-inspector-width": {
-      "$value": "{plx-ref.size-400px}",
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension"
     },
     "space-component-gap-xs": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension"
     },
     "space-component-gap-sm": {
-      "$value": "{plx-ref.space-12px}",
+      "$value": "{plx-ref.space-3u}",
       "$type": "dimension"
     },
     "space-component-gap-md": {
-      "$value": "{plx-ref.space-16px}",
+      "$value": "{plx-ref.space-4u}",
       "$type": "dimension"
     },
     "space-component-gap-lg": {
-      "$value": "{plx-ref.space-24px}",
+      "$value": "{plx-ref.space-6u}",
       "$type": "dimension"
     },
     "space-container-inset-sm": {
-      "$value": "{plx-ref.space-16px}",
+      "$value": "{plx-ref.space-4u}",
       "$type": "dimension"
     },
     "space-container-inset-md": {
-      "$value": "{plx-ref.space-24px}",
+      "$value": "{plx-ref.space-6u}",
       "$type": "dimension"
     },
     "space-container-inset-lg": {
-      "$value": "{plx-ref.space-32px}",
+      "$value": "{plx-ref.space-8u}",
       "$type": "dimension"
     },
     "space-pattern-stack-sm": {
-      "$value": "{plx-ref.space-12px}",
+      "$value": "{plx-ref.space-3u}",
       "$type": "dimension"
     },
     "space-pattern-stack-md": {
-      "$value": "{plx-ref.space-24px}",
+      "$value": "{plx-ref.space-6u}",
       "$type": "dimension"
     },
     "space-pattern-stack-lg": {
-      "$value": "{plx-ref.space-32px}",
+      "$value": "{plx-ref.space-8u}",
       "$type": "dimension"
     },
     "space-region-space-sm": {
-      "$value": "{plx-ref.space-32px}",
+      "$value": "{plx-ref.space-8u}",
       "$type": "dimension"
     },
     "space-region-space-md": {
-      "$value": "{plx-ref.space-48px}",
+      "$value": "{plx-ref.space-12u}",
       "$type": "dimension"
     },
     "space-region-space-lg": {
-      "$value": "{plx-ref.space-64px}",
+      "$value": "{plx-ref.space-16u}",
       "$type": "dimension"
     },
     "data-grid-row-height": {
-      "$value": "{plx-ref.size-48px}",
+      "$value": "{plx-ref.size-12u}",
       "$type": "dimension"
     },
     "table-row-height": {
-      "$value": "{plx-ref.size-48px}",
+      "$value": "{plx-ref.size-12u}",
       "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-data-grid-row-height instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
     "data-grid-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "table-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-data-grid-font-size instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     }

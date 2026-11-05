@@ -5,7 +5,7 @@
     "heat-map-cell-border-width": { "$value": "{plx-sys.border-width-thin}", "$type": "dimension", "$description": "Heat map: the width of a cell's edge (an empty cell's dashed edge)." },
     "heat-map-empty-background": { "$value": "{plx-sys.surface-default}", "$type": "color", "$description": "Heat map: the inside of a cell with no value." },
     "heat-map-empty-border-color": { "$value": "{plx-sys.border-default}", "$type": "color", "$description": "Heat map: the dashed edge of a cell with no value." },
-    "heat-map-empty-dash": { "$value": "{plx-ref.size-4px}", "$type": "dimension", "$description": "Heat map: the dash and gap of an empty cell's edge." },
+    "heat-map-empty-dash": { "$value": "{plx-ref.size-1u}", "$type": "dimension", "$description": "Heat map: the dash and gap of an empty cell's edge." },
     "heat-map-active-border-color": { "$value": "{plx-sys.content-default}", "$type": "color", "$description": "Heat map: the edge of the cell in focus or under the pointer." },
     "heat-map-active-border-width": { "$value": "{plx-sys.border-width-medium}", "$type": "dimension", "$description": "Heat map: the width of the active cell's edge." },
     "heat-map-scale-gap": { "$value": "{plx-sys.space-inline-sm}", "$type": "dimension", "$description": "Heat map: the space between the scale's ends, its steps and the missing value's key." },
@@ -14,8 +14,8 @@
     "heat-map-scale-value-font-family": { "$value": "{plx-sys.font-data}", "$type": "fontFamily", "$description": "Heat map: the scale's lowest and highest values: the data font." },
     "heat-map-scale-label-font-family": { "$value": "{plx-sys.font-label}", "$type": "fontFamily", "$description": "Heat map: the missing value's name in the scale (UI text)." },
     "heat-map-scale-font-size": { "$value": "{plx-sys.text-caption-font-size}", "$type": "dimension", "$description": "Heat map: the scale's size (the tick labels' size)." },
-    "heat-map-scale-line-height": { "$value": "{plx-sys.label-height-16px}", "$type": "dimension", "$description": "Heat map: the scale's line height." },
-    "heat-map-scale-swatch-width": { "$value": "{plx-ref.size-16px}", "$type": "dimension", "$description": "Heat map: the width of one step of the scale." },
-    "heat-map-scale-swatch-height": { "$value": "{plx-ref.size-12px}", "$type": "dimension", "$description": "Heat map: the height of the scale's steps (and the side of the missing value's key)." }
+    "heat-map-scale-line-height": { "$value": "{plx-sys.label-height-sm}", "$type": "dimension", "$description": "Heat map: the scale's line height." },
+    "heat-map-scale-swatch-width": { "$value": "{plx-ref.size-4u}", "$type": "dimension", "$description": "Heat map: the width of one step of the scale." },
+    "heat-map-scale-swatch-height": { "$value": "{plx-ref.size-3u}", "$type": "dimension", "$description": "Heat map: the height of the scale's steps (and the side of the missing value's key)." }
   }
 }

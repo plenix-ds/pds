@@ -2,7 +2,7 @@
   "$description": "ImageUpload and ImageCrop (platform/patterns/ImageUpload), library wave 7, lane B: the pattern’s own tokens (the placement of its Platform components, the preview frames, the file name and size in the data font).",
   "plx-comp": {
     "image-upload-max-width": {
-      "$value": "{plx-ref.size-560px}",
+      "$value": "{plx-ref.size-140u}",
       "$type": "dimension",
       "$description": "ImageUpload: maximum width (size-560px)."
     },
@@ -27,7 +27,7 @@
       "$description": "ImageUpload zone text: text color (content-default)."
     },
     "image-upload-zone-text-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "ImageUpload zone text: font size (font-size-13)."
     },
@@ -37,7 +37,7 @@
       "$description": "ImageUpload limits: text color (content-muted)."
     },
     "image-upload-limits-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "ImageUpload limits: font size (font-size-12)."
     },
@@ -57,7 +57,7 @@
       "$description": "ImageUpload preview: border color (border-default)."
     },
     "image-upload-preview-radius": {
-      "$value": "{plx-sys.radius-media-4px}",
+      "$value": "{plx-sys.radius-media-sm}",
       "$type": "dimension",
       "$description": "ImageUpload preview: corners (radius-media-4px)."
     },
@@ -82,7 +82,7 @@
       "$description": "ImageUpload name: font (font-data)."
     },
     "image-upload-name-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "ImageUpload name: font size (font-size-12)."
     },
@@ -97,7 +97,7 @@
       "$description": "ImageUpload size: font (font-data)."
     },
     "image-upload-size-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "ImageUpload size: font size (font-size-12)."
     },
@@ -112,13 +112,13 @@
       "$description": "ImageUpload multiple list: gap (space-inline-md)."
     },
     "image-upload-multiple-list-grid-template-columns": {
-      "$value": "repeat(auto-fill, minmax({plx-ref.size-120px}, 1fr))",
+      "$value": "repeat(auto-fill, minmax({plx-ref.size-30u}, 1fr))",
       "$type": "dimension",
       "$description": "ImageUpload multiple list grid template columns: multiple list grid template columns (repeat(auto-fill, minmax(size-120px, 1fr))).",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "image-upload-multiple-item-row-gap": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension",
       "$description": "ImageUpload multiple item: gap between rows (space-4px)."
     },
@@ -128,7 +128,7 @@
       "$description": "ImageUpload locked preview: background (fill-neutral)."
     },
     "image-crop-max-width": {
-      "$value": "{plx-ref.size-400px}",
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension",
       "$description": "ImageUpload x: width (size-400px)."
     },
@@ -143,7 +143,7 @@
       "$description": "ImageUpload ame: border color (border-default)."
     },
     "image-crop-frame-radius": {
-      "$value": "{plx-sys.radius-media-4px}",
+      "$value": "{plx-sys.radius-media-sm}",
       "$type": "dimension",
       "$description": "ImageUpload ame: corners (radius-media-4px)."
     },

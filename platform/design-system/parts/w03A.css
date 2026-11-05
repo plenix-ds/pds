@@ -1,21 +1,21 @@
 /* Library part w03A (wave 3, lane A): the frames the live examples and the labs of IconTile, Pictogram, Preview's ratios,
    the one-column and full-screen arrangements and responsive visibility need. Tokens only. */
 /* a row of specimens; a list of rows with a tile and two lines of text; an empty state with a pictogram */
-.ds-w03a-row{align-items:center;column-gap:var(--plx-ref-space-12px);display:flex;flex-wrap:wrap;row-gap:var(--plx-ref-space-12px);}
-.ds-w03a-list{display:flex;flex-direction:column;row-gap:var(--plx-ref-space-12px);}
-.ds-w03a-list-row{align-items:center;column-gap:var(--plx-ref-space-12px);display:flex;}
+.ds-w03a-row{align-items:center;column-gap:var(--plx-ref-space-3u);display:flex;flex-wrap:wrap;row-gap:var(--plx-ref-space-3u);}
+.ds-w03a-list{display:flex;flex-direction:column;row-gap:var(--plx-ref-space-3u);}
+.ds-w03a-list-row{align-items:center;column-gap:var(--plx-ref-space-3u);display:flex;}
 .ds-w03a-list-row__text{display:flex;flex-direction:column;min-inline-size:0;}
-.ds-w03a-empty{align-items:center;display:flex;flex-direction:column;row-gap:var(--plx-ref-space-8px);text-align:center;}
+.ds-w03a-empty{align-items:center;display:flex;flex-direction:column;row-gap:var(--plx-ref-space-2u);text-align:center;}
 /* one ratio per grid: four previews in a row */
-.ds-w03a-ratio-grid{column-gap:var(--plx-ref-space-8px);display:grid;grid-template-columns:repeat(4,var(--plx-ref-size-120px));row-gap:var(--plx-ref-space-8px);}
+.ds-w03a-ratio-grid{column-gap:var(--plx-ref-space-2u);display:grid;grid-template-columns:repeat(4,var(--plx-ref-size-30u));row-gap:var(--plx-ref-space-2u);}
 /* a small page: header, a body with the navigation and the main region, footer (the shell's arrangements) */
-.ds-w03a-page{background-color:var(--plx-sys-surface-sunken);border-bottom-color:var(--plx-sys-border-default);border-bottom-style:solid;border-bottom-width:var(--plx-sys-border-width-thin);border-left-color:var(--plx-sys-border-default);border-left-style:solid;border-left-width:var(--plx-sys-border-width-thin);border-radius:var(--plx-sys-radius-card-6px);border-right-color:var(--plx-sys-border-default);border-right-style:solid;border-right-width:var(--plx-sys-border-width-thin);border-top-color:var(--plx-sys-border-default);border-top-style:solid;border-top-width:var(--plx-sys-border-width-thin);box-sizing:border-box;display:flex;flex-direction:column;overflow-x:hidden;overflow-y:hidden;}
-.ds-w03a-page__header,.ds-w03a-page__footer{align-items:center;background-color:var(--plx-sys-surface-default);box-sizing:border-box;display:flex;min-block-size:var(--plx-ref-size-32px);padding-inline-end:var(--plx-sys-space-inset-md);padding-inline-start:var(--plx-sys-space-inset-md);}
-.ds-w03a-page__body{display:flex;min-block-size:var(--plx-ref-size-200px);}
-.ds-w03a-page__nav{align-items:center;background-color:var(--plx-sys-surface-default);box-sizing:border-box;display:flex;flex-direction:column;inline-size:var(--plx-ref-size-40px);padding-block-start:var(--plx-sys-space-inset-md);row-gap:var(--plx-ref-space-12px);}
+.ds-w03a-page{background-color:var(--plx-sys-surface-sunken);border-bottom-color:var(--plx-sys-border-default);border-bottom-style:solid;border-bottom-width:var(--plx-sys-border-width-thin);border-left-color:var(--plx-sys-border-default);border-left-style:solid;border-left-width:var(--plx-sys-border-width-thin);border-radius:var(--plx-sys-radius-card-md);border-right-color:var(--plx-sys-border-default);border-right-style:solid;border-right-width:var(--plx-sys-border-width-thin);border-top-color:var(--plx-sys-border-default);border-top-style:solid;border-top-width:var(--plx-sys-border-width-thin);box-sizing:border-box;display:flex;flex-direction:column;overflow-x:hidden;overflow-y:hidden;}
+.ds-w03a-page__header,.ds-w03a-page__footer{align-items:center;background-color:var(--plx-sys-surface-default);box-sizing:border-box;display:flex;min-block-size:var(--plx-ref-size-8u);padding-inline-end:var(--plx-sys-space-inset-md);padding-inline-start:var(--plx-sys-space-inset-md);}
+.ds-w03a-page__body{display:flex;min-block-size:var(--plx-ref-size-50u);}
+.ds-w03a-page__nav{align-items:center;background-color:var(--plx-sys-surface-default);box-sizing:border-box;display:flex;flex-direction:column;inline-size:var(--plx-ref-size-10u);padding-block-start:var(--plx-sys-space-inset-md);row-gap:var(--plx-ref-space-3u);}
 .ds-w03a-page__main{box-sizing:border-box;display:flex;flex-grow:1;justify-content:center;padding-block-end:var(--plx-sys-space-inset-md);padding-block-start:var(--plx-sys-space-inset-md);}
 .ds-w03a-page__main--canvas{align-items:center;color:var(--plx-sys-content-muted);}
-.ds-w03a-page__column{background-color:var(--plx-sys-surface-default);border-radius:var(--plx-sys-radius-card-6px);box-sizing:border-box;display:flex;flex-direction:column;inline-size:var(--plx-ref-size-240px);padding-block-end:var(--plx-sys-space-inset-md);padding-block-start:var(--plx-sys-space-inset-md);padding-inline-end:var(--plx-sys-space-inset-md);padding-inline-start:var(--plx-sys-space-inset-md);row-gap:var(--plx-ref-space-8px);}
+.ds-w03a-page__column{background-color:var(--plx-sys-surface-default);border-radius:var(--plx-sys-radius-card-md);box-sizing:border-box;display:flex;flex-direction:column;inline-size:var(--plx-ref-size-60u);padding-block-end:var(--plx-sys-space-inset-md);padding-block-start:var(--plx-sys-space-inset-md);padding-inline-end:var(--plx-sys-space-inset-md);padding-inline-start:var(--plx-sys-space-inset-md);row-gap:var(--plx-ref-space-2u);}
 /* lab frames: a preview frame wide enough for every ratio */
-.ds-w03a-frame{inline-size:var(--plx-ref-size-240px);}
-.ds-w03a-frame--portrait{inline-size:var(--plx-ref-size-120px);}
+.ds-w03a-frame{inline-size:var(--plx-ref-size-60u);}
+.ds-w03a-frame--portrait{inline-size:var(--plx-ref-size-30u);}

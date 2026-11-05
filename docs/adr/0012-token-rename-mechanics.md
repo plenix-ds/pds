@@ -34,9 +34,20 @@
 | Corner radius | `radius-0px`, `-2px`, `-4px`, `-6px` | `radius-none`, `-xs`, `-sm`, `-md` |
 | Border width | `border-width-1px` … `-4px` | `border-width-100` … `-400` |
 | Opacity | `opacity-30`, `-45`, `-50`, `-70` | `opacity-300`, `-450`, `-500`, `-700` |
-| Size, space, font size, control and glyph sizes, breakpoints … (next PRs) | `size-4px` … | an ordinal step per scale, chosen in each PR and listed here |
+| Size (D-0047) | `size-4px` … `size-1600px` | **grid units, 1u = 4px**: `size-1u` … `size-400u` (`size-92px` -> `size-23u`). `size-18px` (off the 4px grid) is not renamed: it's a grid defect, filed on its own |
+| Space, control size (part 3) | `space-4px` … `-64px`, `control-size-24px` … `-52px` | grid units: `space-1u` … `space-16u`, `control-size-6u` … `-13u`. `space-6px` and `space-10px` (off the grid) are not renamed (#301) |
+| Font size (part 3) | `font-size-12` … `-36` (09/10/11 already deprecated) | ordinal by size: `font-size-100` (12px) … `font-size-900` (36px) |
+| Font weight (part 3) | `font-weight-regular-400` … `-bold-700` | `font-weight-regular`, `-medium`, `-semibold`, `-bold` |
+| Breakpoint, content max, grid columns / margin / gutter (part 3) | `breakpoint-600px` …, `content-max-760px` …, `grid-columns-4` … | T-shirt by size: `sm`, `md`, `lg`, `xl` |
+| Glyph size, motion scale (part 3) | `glyph-size-6px` … `-18px`, `motion-scale-98` / `-96` | `glyph-size-xs` … `-lg`; `motion-scale-sm` (0.98), `-md` (0.96) |
+| System radius roles (part 4) | `radius-card-4px` / `-6px` (also avatar, control, media, surface); `radius-dialog-6px`, `radius-pill-4px` … (one size) | `radius-<role>-sm` / `-md`; `radius-<role>` when the role has one size |
+| Label height (part 4) | `label-height-16px` / `-20px` | `label-height-sm` / `-md` |
+| Pane widths by window (part 4) | `shell-nav-width-from-1440`, `side-panel-width-default-from-1440`, `secondary-pane-width-<s>-from-1920` … | `-from-wide` (1440px) and `-from-ultrawide` (1920px) |
+| Avatar sizes (part 4) | `avatar-20-height` … `avatar-64-width` | the Avatar `size` prop's names: `avatar-2xs-height` … `avatar-2xl-width` |
 
+- **Recorded exceptions** (check 7 `MIRRORS`): a component token whose name mirrors a public prop's value, which the component picks it by. These are `pictogram-48/64/96-*` (Pictogram `size: '48' | '64' | '96'`), `text-lines-2/3/4` (Text `lines`), `document-viewer-zoom-50/75`, and `content-grid-ratio-1-1` (ContentGrid `ratio: '1:1'`). Renaming them would break that link.
 - An ordinal step is never the value. `opacity-300` is 0.3, and check 7 reads 0.3 as 0.3 or 30, never 300.
+- A grid unit counts 4px steps, so `size-23u` is 92px. The number is the step on the grid, not the value, and nothing reads the value from the name: code that needs the px (`build-steps.js`, `size-scale`, `pane-defaults`) resolves the token's value.
 
 ## Consequences
 

@@ -5,7 +5,7 @@
      <Skeleton width="160px" height="16px" />
      <Spinner size="sm" label="Saving" />
    Props:
-     Skeleton.width: the block width, a size token's name ("200px" for --plx-ref-size-200px); none: as wide as its place
+     Skeleton.width: the block width, a size token's name ("200px" for --plx-ref-size-50u); none: as wide as its place
      Skeleton.height: the block height, a size token's name ("16px")
      Skeleton.className: more classes on the block
      Spinner.size: "sm" | "md" (default) | "lg"
@@ -25,7 +25,7 @@ import { cx } from '../../utils/cx.ts';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 
-// a size token's name from "200px" (or the older "var(--plx-ref-size-200px)"); the rule per size is in system/steps.css
+// a size token's name from "200px" (or the older "var(--plx-ref-size-50u)"); the rule per size is in system/steps.css
 const sizeName = (v: string | number | undefined) => (v ? String(v).replace(/^var\(--plx-ref-size-|\)$/g, '') : undefined);
 export type SkeletonProps = Omit<React.HTMLAttributes<HTMLSpanElement>, 'children'> & { width?: string | number; height?: string | number };
 export function Skeleton({ width, height, className, ...rest }: SkeletonProps) {

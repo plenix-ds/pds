@@ -2,6 +2,6 @@
 // result groups), ResourceList (Resource list, Object list) and Timeline. The expandable Card is the existing Card (already
 // public); FilterPanel and SortPanel were built in w07K.
 export { RoleLabel } from '../components/RoleLabel/RoleLabel.tsx';
-export { SearchResult, SearchResultGroup, highlightMatches } from '../components/SearchResult/SearchResult.jsx';
+export { SearchResult, SearchResultGroup, highlightMatches } from '../components/SearchResult/SearchResult.tsx';
 export { Timeline } from '../components/Timeline/Timeline.tsx';
 export { ResourceList } from '../patterns/ResourceList/ResourceList.jsx';

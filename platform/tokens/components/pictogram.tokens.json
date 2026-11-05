@@ -27,32 +27,32 @@
       "$description": "Pictogram two-tone: the filled symbol."
     },
     "pictogram-48-size": {
-      "$value": "{plx-ref.size-48px}",
+      "$value": "{plx-ref.size-12u}",
       "$type": "dimension",
       "$description": "Pictogram size 48: the frame’s width and height (48px)."
     },
     "pictogram-48-icon-size": {
-      "$value": "{plx-ref.size-32px}",
+      "$value": "{plx-ref.size-8u}",
       "$type": "dimension",
       "$description": "Pictogram size 48: the symbol (32px, two thirds of the frame on the 4px grid)."
     },
     "pictogram-64-size": {
-      "$value": "{plx-ref.size-64px}",
+      "$value": "{plx-ref.size-16u}",
       "$type": "dimension",
       "$description": "Pictogram size 64: the frame’s width and height (64px)."
     },
     "pictogram-64-icon-size": {
-      "$value": "{plx-ref.size-40px}",
+      "$value": "{plx-ref.size-10u}",
       "$type": "dimension",
       "$description": "Pictogram size 64: the symbol (40px, two thirds of the frame on the 4px grid)."
     },
     "pictogram-96-size": {
-      "$value": "{plx-ref.size-96px}",
+      "$value": "{plx-ref.size-24u}",
       "$type": "dimension",
       "$description": "Pictogram size 96: the frame’s width and height (96px)."
     },
     "pictogram-96-icon-size": {
-      "$value": "{plx-ref.size-64px}",
+      "$value": "{plx-ref.size-16u}",
       "$type": "dimension",
       "$description": "Pictogram size 96: the symbol (64px, two thirds of the frame on the 4px grid)."
     }

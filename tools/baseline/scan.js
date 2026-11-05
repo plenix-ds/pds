@@ -111,7 +111,7 @@ function termsOf(text) {
     else if (/^plx-[a-z0-9_-]+(--<name>)?$/.test(t)) out.push({ term: t, re: new RegExp('\\b' + t.replace('<name>', '').replace(/[-]/g, '\\-') + (/<name>/.test(t) ? '[a-z0-9-]+' : '\\b'), 'g') });
     else if (/^[\w.-]+\.(css|js|mjs)$/.test(t)) out.push({ term: t, re: new RegExp(t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g') });
     else if (/^[A-Z][A-Za-z0-9]+(\.[A-Z][A-Za-z0-9]+)?$/.test(t)) out.push({ term: t, re: new RegExp('(<|\\bP\\.|\\{\\s*|,\\s*|import\\s*\\{[^}]*)\\b' + t.replace('.', '\\.') + '\\b', 'g') });   // a part, used as JSX, P.X, or imported
-    else if (/^[a-z][A-Za-z0-9]+$/.test(t)) out.push({ term: t, prop: true, re: new RegExp('(?<![\\w-])' + t + '\\s*(=\\s*[{"\']|:\\s*[^:])', 'g') });   // a prop, written as a prop (not text-align: …)
+    else if (/^[a-z][A-Za-z0-9]+$/.test(t)) out.push({ term: t, prop: true, owner: (/([A-Z][A-Za-z0-9]+)\s*$/.exec(text.slice(0, m.index)) || [])[1], re: new RegExp('(?<![\\w-])' + t + '\\s*(=\\s*[{"\']|:\\s*[^:])', 'g') });   // a prop, written as a prop (not text-align: …)
   }
   return out;
 }
@@ -156,7 +156,8 @@ function scan(o) {
   const items = changelogItems(pin), named = new Set();   // one finding per name and place, however many notes name it
   const checklist = items.map((it) => {
     const hits = [];
-    for (const { term, re } of it.terms) for (const [f, t] of texts) { if (PIN_ONLY.test(f)) continue; re.lastIndex = 0; for (const m of t.matchAll(re)) hits.push({ term, file: rel(f), line: lineOf(t, m.index) }); }
+    // a note that names a prop with its part ("SplitView `maxSize`") counts it only in a file that uses that part
+    for (const { term, re, owner } of it.terms) for (const [f, t] of texts) { if (PIN_ONLY.test(f)) continue; if (owner && !new RegExp('\\b' + owner + '\\b').test(t)) continue; re.lastIndex = 0; for (const m of t.matchAll(re)) hits.push({ term, file: rel(f), line: lineOf(t, m.index) }); }
     for (const h of hits.filter((x) => !named.has(x.term + '@' + x.file + ':' + x.line) && named.add(x.term + '@' + x.file + ':' + x.line)).slice(0, 20)) findings.push({ kind: 'changelog', file: h.file, line: h.line, what: 'names `' + h.term + '`, changed in ' + it.version + ' (' + it.section + ')', fix: it.text.slice(0, 300) });
     return { version: it.version, section: it.section, text: it.text, hits: hits.length };
   });

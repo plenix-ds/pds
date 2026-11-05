@@ -21,9 +21,9 @@ const assert = require('assert/strict'), { serve, launch } = require('./lib');
       function WithBar() {
         const v = P.useCollectionView(fields, { data: rows, text: (r) => r.name });
         return h('div', null, h(P.CommandBar, { label: 'People', find: h(P.FilterPanel, v.filterProps) }),
-          h(P.DataGrid, Object.assign({ label: 'People', data: rows, columns, height: '--plx-ref-size-320px' }, v.tableProps)));
+          h(P.DataGrid, Object.assign({ label: 'People', data: rows, columns, height: '--plx-ref-size-80u' }, v.tableProps)));
       }
-      function Alone() { return h(P.DataGrid, { label: 'People', data: rows, columns, height: '--plx-ref-size-320px' }); }
+      function Alone() { return h(P.DataGrid, { label: 'People', data: rows, columns, height: '--plx-ref-size-80u' }); }
       ReactDOM.createRoot(document.getElementById('t')).render(h(withBar ? WithBar : Alone));
       await new Promise((r) => setTimeout(r, 900));
     }, withBar);

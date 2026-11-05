@@ -11,9 +11,9 @@
    Reddit Mono and DM Sans values share one baseline; Text inside a value or a description takes its size */
 .plx-property-list__value--data{font-family:var(--plx-comp-property-list-value-data-font-family);font-size:var(--plx-comp-property-list-value-data-font-size);font-weight:var(--plx-sys-text-body-font-weight);letter-spacing:var(--plx-sys-text-body-letter-spacing);line-height:var(--plx-sys-text-body-line-height);word-spacing:var(--plx-sys-font-data-word-spacing);}
 /* columns (batches 269-270): every item shares one label column as wide as the longest label (a label is at most
-   --plx-ref-size-160px), the values take the rest and wrap between words only. When the list is narrow the label column
+   --plx-ref-size-40u), the values take the rest and wrap between words only. When the list is narrow the label column
    gives way: a label cut short ends in an ellipsis and shows in full in a Tooltip. Only below 180px (the value of
-   --plx-ref-size-180px) does each label move above its value. */
+   --plx-ref-size-45u) does each label move above its value. */
 .plx-property-list--columns{column-gap:var(--plx-comp-property-list-columns-gap);container-type:inline-size;display:grid;grid-template-columns:minmax(0,max-content) minmax(0,1fr);}
 .plx-property-list--columns .plx-property-list__item{grid-column:1 / -1;grid-template-columns:subgrid;}
 .plx-property-list__label-tip{max-inline-size:100%;min-inline-size:0;}

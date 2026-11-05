@@ -37,7 +37,7 @@
       "$description": "Blockquote: the quote’s font."
     },
     "blockquote-quote-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "Blockquote: the quote’s size (the body size)."
     },
@@ -47,7 +47,7 @@
       "$description": "Blockquote: the quote’s weight."
     },
     "blockquote-quote-line-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension",
       "$description": "Blockquote: the quote’s line height."
     },
@@ -67,7 +67,7 @@
       "$description": "Blockquote: the citation’s size (the secondary size)."
     },
     "blockquote-citation-line-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$description": "Blockquote: the citation’s line height."
     },
@@ -87,7 +87,7 @@
       "$description": "Blockquote: the pull quote’s font."
     },
     "blockquote-pull-quote-font-size": {
-      "$value": "{plx-ref.font-size-18}",
+      "$value": "{plx-ref.font-size-500}",
       "$type": "dimension",
       "$description": "Blockquote: the pull quote’s size."
     },
@@ -97,7 +97,7 @@
       "$description": "Blockquote: the pull quote’s weight."
     },
     "blockquote-pull-quote-line-height": {
-      "$value": "{plx-ref.size-28px}",
+      "$value": "{plx-ref.size-7u}",
       "$type": "dimension",
       "$description": "Blockquote: the pull quote’s line height."
     }

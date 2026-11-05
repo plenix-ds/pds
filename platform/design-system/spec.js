@@ -418,7 +418,7 @@ function sheetText(url) {
     var listy = list.some(function (r) { return !r[2] && (isList(r[1]) || (typeof r[1] === 'string' && sentencesOf(r[1]).length > 1)); });
     return h(P.Table, { label: label || (list[0] ? String(list[0][0]) + ' and more' : 'Details'), headerMenu: false,
       data: list.map(function (r, i) { return { id: i, name: String(r[0]), value: typeof r[1] === 'string' || typeof r[1] === 'number' ? String(r[1]) : '' }; }),
-      columns: [{ title: hd[0], field: 'name', kind: 'wrap', rowLabel: true, width: '--plx-ref-size-240px', sortable: false },
+      columns: [{ title: hd[0], field: 'name', kind: 'wrap', rowLabel: true, width: '--plx-ref-size-60u', sortable: false },
         { title: hd[1], field: 'value', kind: 'wrap', sortable: false, render: function (d) { var r = list[d.id]; return r ? (r[2] ? h(P.Text, { variant: 'data' }, r[1]) : listy ? asPoints(r[1]) : points(r[1])) : null; } }] });
   }
   // a text of several sentences reads as points (owner, 2026-10-15: "split it into bullet points … everywhere in the
@@ -448,7 +448,7 @@ function sheetText(url) {
   function table(caption, heads, rows, list) {
     // a DataGrid: the first column names each row (the row header), unless the table is a plain list of records (list
     // true); cells may be React content (render) and wrap
-    var cols = heads.map(function (x, i) { return { title: x, field: 'c' + i, kind: 'wrap', rowLabel: !list && i === 0, width: !list && i === 0 ? '--plx-ref-size-240px' : undefined, render: function (row) { return row['c' + i]; } }; });
+    var cols = heads.map(function (x, i) { return { title: x, field: 'c' + i, kind: 'wrap', rowLabel: !list && i === 0, width: !list && i === 0 ? '--plx-ref-size-60u' : undefined, render: function (row) { return row['c' + i]; } }; });
     return h(P.Table, { label: caption, columns: cols, data: rows.map(function (r, i) { var o = { id: i }; r.forEach(function (v, j) { o['c' + j] = v; }); return o; }) });
   }
   /* the Platforms Standard (platform/standards/platforms.md, read by build-platforms.js into window.DSStandard; where each
@@ -826,7 +826,7 @@ function sheetText(url) {
       view,
       h(P.Table, { label: 'States', className: 'plx-u-mt-stack-md', data: list.map(function (st, i) { return { id: i, name: st.def.name, look: sample ? 'Drawn above' : '—', set: st.def.set, st: st }; }),
         // the columns of §7's States table: State · Looks · Set by · Changes
-        columns: [{ title: 'State', field: 'name', kind: 'name', rowLabel: true, width: '--plx-ref-size-240px' },
+        columns: [{ title: 'State', field: 'name', kind: 'name', rowLabel: true, width: '--plx-ref-size-60u' },
           { title: 'Looks', field: 'look', kind: 'wrap' },
           { title: 'Set by', field: 'set', kind: 'wrap' },
           { title: 'Changes', field: 'looks', kind: 'wrap', sortable: false, render: function (x) { return h('div', null, collapseSides(x.st.rows).map(function (row, j) { return h('div', { key: j }, h(P.Text, { variant: 'data' }, (row[0] ? row[0] + ' ' : '') + row[1] + ': '), h(ValueCell, { value: row[2], name: row[1] })); })); } }] }));
@@ -845,8 +845,8 @@ function sheetText(url) {
     if (!p.rows.length) return h(P.Text, { variant: 'secondary' }, p.empty || 'None of its own.');
     var rows = collapseSides(p.rows);   // where it applies (":hover", a part) reads before the property, so the value keeps the room
     return h(P.Table, { label: p.caption, data: rows.map(function (x, i) { return { id: i, prop: (x[0] ? x[0] + ' ' : '') + x[1], name: x[1], value: x[2] }; }),
-      columns: [{ title: 'Property', field: 'prop', kind: 'data', rowLabel: true, width: '--plx-ref-size-240px' }, { title: 'Value', field: 'value', kind: 'wrap', render: function (x) { return dataValue(x.value); } },
-        { title: 'Visual', field: 'visual', kind: 'center', sortable: false, width: '--plx-ref-size-80px', render: function (x) { return h(ValueVisual, { value: x.value, name: x.name }); } }] });
+      columns: [{ title: 'Property', field: 'prop', kind: 'data', rowLabel: true, width: '--plx-ref-size-60u' }, { title: 'Value', field: 'value', kind: 'wrap', render: function (x) { return dataValue(x.value); } },
+        { title: 'Visual', field: 'visual', kind: 'center', sortable: false, width: '--plx-ref-size-20u', render: function (x) { return h(ValueVisual, { value: x.value, name: x.name }); } }] });
   }
   /* a variant's own page (batch 177): what this variant is and when to use it, its sample, the prop and class that make it,
      only the attributes and states its class sets, and its anatomy; everything every variant shares is on the base page */
@@ -995,7 +995,7 @@ function sheetText(url) {
       c.css ? h(AttrTable, { caption: 'Base attributes', rows: attributesOf(c.css, block).filter(function (x) { return !x[0]; }) }) : h(P.Text, { variant: 'secondary' }, 'Reading its stylesheet…'),
       shared.length ? [h(P.Text, { key: 'h', as: 'h4', variant: 'label', className: 'plx-u-mt-stack-md' }, 'Shared props'),
         h(P.Table, { key: 't', label: 'Shared props', index: 'name', data: shared.map(function (x) { return { name: x[0], text: x[1] }; }),
-          columns: [{ title: 'Prop', field: 'name', kind: 'data', rowLabel: true, width: '--plx-ref-size-240px' }, { title: 'Description', field: 'text', kind: 'wrap' }] })] : null);
+          columns: [{ title: 'Prop', field: 'name', kind: 'data', rowLabel: true, width: '--plx-ref-size-60u' }, { title: 'Description', field: 'text', kind: 'wrap' }] })] : null);
   }
   // a group of variants of one kind: each variant in its own card with its live sample, the prop that selects it and only
   // the attributes that variant changes
@@ -1205,16 +1205,16 @@ function sheetText(url) {
             { title: 'Keywords', field: 'keywords', kind: 'wrap', render: function (i) { return lines(i.keywords || [], '—', null, 'Keywords'); } },
             { title: 'Category', field: 'category', kind: 'wrap' },
             { title: 'Library and license', field: 'library', kind: 'wrap', render: function (i) { return h(P.Stack, { gap: 'xs' }, h('span', null, (libs[i.library] || {}).name || i.library), h(Mono, null, i.license || '—')); } },
-            { title: 'State', field: 'state', kind: 'center', width: '--plx-ref-size-120px', render: function (i) { return statusBadge(INVENTORY_STATE, i.state); } },
+            { title: 'State', field: 'state', kind: 'center', width: '--plx-ref-size-30u', render: function (i) { return statusBadge(INVENTORY_STATE, i.state); } },
             { title: 'Sizes', field: 'sizes', kind: 'data', render: function (i) { return (i.sizes || []).length ? h(Mono, null, i.sizes.join(', ')) : '—'; } },
-            { title: 'Check', field: 'check', kind: 'wrap', width: '--plx-ref-size-160px', render: inventoryCheck },
+            { title: 'Check', field: 'check', kind: 'wrap', width: '--plx-ref-size-40u', render: inventoryCheck },
             { title: 'Replaces', field: 'replaces', kind: 'data', render: function (i) { return i.replaces ? h(Mono, null, i.replaces) : '—'; } },
             { title: 'Why and needs', field: 'why', kind: 'wrap', render: function (i) { return asPoints([i.why, i.needs ? 'Needs: ' + i.needs : null].filter(Boolean)); } }] }))),
       h(SSub, { title: 'Libraries (' + (data.libraries || []).length + ')', headingLevel: 2 },
         h(P.Table, { label: 'Icon libraries', data: data.libraries || [],
           columns: [
             { title: 'Library', field: 'name', kind: 'name', rowLabel: true },
-            { title: 'Status', field: 'status', kind: 'center', width: '--plx-ref-size-160px', render: function (l) { return statusBadge(LIBRARY_STATUS, l.status); } },
+            { title: 'Status', field: 'status', kind: 'center', width: '--plx-ref-size-40u', render: function (l) { return statusBadge(LIBRARY_STATUS, l.status); } },
             { title: 'License', field: 'license', kind: 'wrap' },
             { title: 'Icons', field: 'icons', kind: 'data', render: function (l) { return l.icons != null ? String(l.icons) : '—'; } },
             { title: 'Version', field: 'version', kind: 'data', render: function (l) { return l.version || '—'; } },
@@ -1263,7 +1263,7 @@ function sheetText(url) {
       'Say what each column holds with kind: "name" for the row\'s name, "data" for codes, sizes and dates, "wrap" for long text, "center" for badges and buttons, "icon" for a mark column, "actions" for row actions; and its type ("number", "currency", "date", "select", "checkbox", "file", "image", "link", "person", "long-text"; text by default) for the icon before its name and its sort words.',
       'Two settings, never one: the app\'s density (Compact, Standard, Comfortable) sets the text size and the Short row; the table\'s row height (rowHeight: "short", "medium" 56px, "tall" 88px, "extra-tall" 128px; also in its view menu, kept in its view) sets its record rows only. Short rows put content in the middle; taller rows start it P from the top (a Short row\'s own padding) and keep at least P at the bottom: text ends in an ellipsis on the last line that fits, pictures fill the row less P above and below. "wrap" columns never grow a row.',
       'Grouping, Airtable style: groupBy (a field, or a list for nested groups), or Group by this field in the column menu. Each group header is the density row height + 16px: chevron, the field as an eyebrow, the value as its column draws it, the count; a 24px band between groups; headers stick to the top; open and closed groups are kept in the view. Optional: columns[].summary (sum, count, average, min, max) in the headers and onAddToGroup(value) for an add row at the end of each group. Grouped tables virtualize.',
-      'Widths: the grid fits each column to its content (again when the density changes; never the rows); give a width only where a column must be fixed (a size token: width: \'--plx-ref-size-240px\'). The columns without one share the room left, and people resize them.',
+      'Widths: the grid fits each column to its content (again when the density changes; never the rows); give a width only where a column must be fixed (a size token: width: \'--plx-ref-size-60u\'). The columns without one share the room left, and people resize them.',
       'Sort by value: sorter "number", or a function for sizes and dates (sorter: (a, b) => …). Filter with filter: true (contains) or "list" (one of the values).',
       'Cells that are more than text use render: (row) => <Badge …/> (any Platform component). Never style a cell yourself.',
       'Selection: selectable adds the checkbox column; keep the selection in the page with selected and onSelectionChange (bulk actions). A plain click on a row selects only that row; Ctrl or ⌘ + click toggles it, Shift + click extends the range, the checkbox toggles.',
@@ -1315,7 +1315,7 @@ function sheetText(url) {
         ['Kept true by', 'tests/data-grid-reference.js (every part against the reference, light and dark, each density) and tests/data-grid.test.js (every grid in the apps: built, axe, no inline styles, row height)']]),
       head('How to apply it'),
       h(P.List, { label: 'How to apply it', items: STEPS.map(function (x, i) { return { children: (i + 1) + '. ' + x }; }) }),
-      h(P.CodeBlock, { language: 'jsx' }, "import { DataGrid, Badge } from 'plenix-platform';\n\n<DataGrid label=\"Assets\" data={assets} selectable selected={keys} onSelectionChange={setKeys}\n  columns={[\n    { title: 'Name', field: 'name', kind: 'name', filter: true, width: '--plx-ref-size-240px' },\n    { title: 'Type', field: 'type', kind: 'data', filter: 'list' },\n    { title: 'Status', field: 'status', kind: 'center', render: (a) => <Badge tone=\"success\">{a.status}</Badge> },\n    { title: 'Size', field: 'size', kind: 'data', align: 'right', sorter: bySize },\n  ]}\n  rowMenu={[{ label: 'Open', icon: 'open', onSelect: open }, { label: 'Delete', icon: 'trash', danger: true, onSelect: remove }]}\n  onRowClick={open} />"),
+      h(P.CodeBlock, { language: 'jsx' }, "import { DataGrid, Badge } from 'plenix-platform';\n\n<DataGrid label=\"Assets\" data={assets} selectable selected={keys} onSelectionChange={setKeys}\n  columns={[\n    { title: 'Name', field: 'name', kind: 'name', filter: true, width: '--plx-ref-size-60u' },\n    { title: 'Type', field: 'type', kind: 'data', filter: 'list' },\n    { title: 'Status', field: 'status', kind: 'center', render: (a) => <Badge tone=\"success\">{a.status}</Badge> },\n    { title: 'Size', field: 'size', kind: 'data', align: 'right', sorter: bySize },\n  ]}\n  rowMenu={[{ label: 'Open', icon: 'open', onSelect: open }, { label: 'Delete', icon: 'trash', danger: true, onSelect: remove }]}\n  onRowClick={open} />"),
       head('The style, part by part'),
       table('The style, part by part', ['Part', 'Looks', 'Tokens'], PARTS),
       head('Density'),
@@ -1354,7 +1354,7 @@ function sheetText(url) {
         h('div', { className: 'ds-inline-row' },
           pick('Level', 'level', LEVELS.filter(function (l) { return REC.some(function (r) { return r.level === l; }); })), pick('Interaction', 'inter', REC.reduce(function (a, r) { return a.concat(interOf(r)); }, []).filter(function (v, i, a) { return a.indexOf(v) === i; }).sort()), pick('Status', 'status', uniq('status')),
           pick('Section', 'sec', TAX.map(function (x) { return { value: x.id, label: x.n + ' ' + x.title }; }))),
-        h(P.DataGrid, { label: rows.length + ' items', height: '--plx-ref-size-600px', columns: [
+        h(P.DataGrid, { label: rows.length + ' items', height: '--plx-ref-size-150u', columns: [
           { title: 'Item', field: 'title', kind: 'name', filter: true, frozen: true, render: function (r) { return h(Link, { href: href(r) }, r.title); } },
           { title: 'Plenix', field: 'plenixName', kind: 'data', filter: true },
           { title: 'Path', field: 'path', kind: 'wrap', filter: true },
@@ -1621,7 +1621,7 @@ function sheetText(url) {
         h(P.Text, { as: 'p' }, hp.summary),
         hp.usage ? [sub('Code usage'), h(P.CodeBlock, { key: 'u', language: 'jsx' }, hp.usage)] : null,
         hp.props.length ? [sub('Props'), h(P.Table, { key: 'p', label: 'Props', index: 'name', data: hp.props.map(function (x) { var n = x[0].replace(/\(.*$/, ''); return { name: x[0], type: typeOf(defs[n]), def: defs[n] || '—', text: x[1] }; }),
-          columns: [{ title: 'Prop', field: 'name', kind: 'data', rowLabel: true, width: '--plx-ref-size-240px' }, { title: 'Type', field: 'type' }, { title: 'Default', field: 'def', kind: 'data' }, { title: 'Description', field: 'text', kind: 'wrap' }] })] : null,
+          columns: [{ title: 'Prop', field: 'name', kind: 'data', rowLabel: true, width: '--plx-ref-size-60u' }, { title: 'Type', field: 'type' }, { title: 'Default', field: 'def', kind: 'data' }, { title: 'Description', field: 'text', kind: 'wrap' }] })] : null,
         hp.behavior.length ? [sub('Code behavior'), h(P.List, { key: 'b', label: 'Behavior', items: hp.behavior.map(function (x) { return { children: x }; }) })] : null,
         hp.notes.length ? [sub('Notes'), h(P.List, { key: 'n', label: 'Notes', items: hp.notes.map(function (x) { return { children: x }; }) })] : null));
     } else if (head[1]) body.push(h(SPanel, { key: 'api', title: 'Development and API', description: 'The source file\'s header comment (not yet in the structured form).' }, h(P.CodeBlock, { maxHeight: 'tall', language: 'text' }, head[1])));
@@ -1630,7 +1630,7 @@ function sheetText(url) {
     css.files.forEach(function (f, i) { tabs.push({ value: 'css' + i, label: f.split('/').pop(), content: h(P.CodeBlock, { title: 'platform/' + f, maxHeight: 'tall' }, css.texts[i]) }); });
     if (css.files.length) {
       tabs.push({ value: 'classes', label: 'Classes', count: Object.keys(cl.all).length, content: h(P.Table, { label: 'Classes', index: 'cls', data: Object.keys(cl.all).sort().map(function (c) { return { cls: c, name: '.' + c, kind: /^is-/.test(c) ? 'state' : /--/.test(c) ? 'modifier (variant)' : /__/.test(c) ? 'element (anatomy)' : 'block', rules: String(cl.all[c]) }; }),
-        columns: [{ title: 'Class', field: 'name', kind: 'data', rowLabel: true, width: '--plx-ref-size-240px' }, { title: 'Kind', field: 'kind', filter: 'list' }, { title: 'Rules', field: 'rules', kind: 'data', align: 'right', sorter: 'number' }] }) });
+        columns: [{ title: 'Class', field: 'name', kind: 'data', rowLabel: true, width: '--plx-ref-size-60u' }, { title: 'Kind', field: 'kind', filter: 'list' }, { title: 'Rules', field: 'rules', kind: 'data', align: 'right', sorter: 'number' }] }) });
       tabs.push({ value: 'tokens', label: 'Tokens', count: tk.used.length, content: props([['Declares', lines(tk.declared, '—', 'token', 'Declares')], ['Uses', lines(tk.used, '—', 'token', 'Uses')]]) });
     }
     tabs.unshift({ value: 'use', label: 'Use in code', content: props([

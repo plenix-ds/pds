@@ -47,9 +47,10 @@
      title: the entity's name, in the Title role (20px bold; 15px in a section); a long name wraps, never cut off
      subtitle: the line under the title: the entity's description, where it belongs or who it involves; wraps
      media: the entity's picture, always shown: { person, src, color, gender } an Avatar (gender: its icon when there is no
-       picture); { icon, hue } a generic icon for the
-       entity's kind, tinted in a data color (hue: blue, green, purple, red, brown, gray; default gray) or on the surface
-       (hue: surface, a white tile); or an element. 44px square (32px in a section)
+       picture); { icon, hue, box } a generic icon for the entity's kind in a data color (hue: blue, green, purple, red,
+       brown, gray; default gray) or the link blue (hue: surface). By default it has no box: no fill, no border, the icon
+       fills the square (owner, D-0024; D-0036, pds#275). box: true puts it on its tinted tile with a 1px border (a white
+       tile for surface), for a usage that needs the box; or an element. 44px square (32px in a section)
      status: the Status tile, first in the details, in its tone as a whole: { tone, label, icon } (tone: a Badge tone:
        neutral, success, active, waiting, action-required, negative; info, warning and danger still work)
      facts: up to four fact tiles after the Status tile, each as wide as its content: [{ label, value, data, icon, action }];
@@ -164,7 +165,7 @@ function Media({ media, section, layout }) {
   else {
     const hue = HUES.indexOf(media.hue) >= 0 ? media.hue : 'gray';
     const optical = !(section && (layout === 'top-small' || layout === 'column-small'));
-    inner = <span className="plx-entity-header__tile" data-plx-media-hue={hue} data-plx-icon-optical={optical ? '24' : undefined} aria-hidden="true"><Icon name={media.icon} /></span>;
+    inner = <span className={cx('plx-entity-header__tile', media.box && 'plx-entity-header__tile--box')} data-plx-media-hue={hue} data-plx-icon-optical={optical ? '24' : undefined} aria-hidden="true"><Icon name={media.icon} /></span>;
   }
   return (
     <span ref={ref} data-plx-size={size ? size + 'px' : undefined}

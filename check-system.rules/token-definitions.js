@@ -8,7 +8,7 @@
 //   corners  Corners are 0, 2, 4 or 6px (D-0005, plan §7 check 2). A radius token (a key with "radius") must be a reference, 0, or a px/rem length of 2, 4 or 6px;
 //            anything else (50%, 0.5em, 9999em, 100vh, a keyword) fails, unless RADIUS_EXEMPT names the token and its exact value with the reason (the spinner, and four card inner corners).
 //            A reference is followed to the value it ends at, in every file that sets it (each theme, density and interaction), and
-//            that value must pass too: {plx-ref.size-12px} is a 12px corner. A reference that ends nowhere (missing, or a loop) fails.
+//            that value must pass too: {plx-ref.size-3u} is a 12px corner. A reference that ends nowhere (missing, or a loop) fails.
 // (The box shadows, 13 tokens with 1, 2, 3 and 5px blur or ring widths, are in the backlog with the reason "optical blur/ring width; owner to decide", not exempt.)
 // What already breaks a rule when the rule began is the frozen backlog in the same JSON (grid, corners): by token, with its value.
 // It only shrinks: a token that is not listed fails; a listed token that now passes (or is gone) fails until it is removed
@@ -28,6 +28,9 @@ const GRID_EXEMPT = [
   ['border-width-', 'hairline widths (1, 2 and 3px): a line is thinner than the grid'],
   ['focus-ring-offset', 'an outline offset (2px): a gap between a control and its focus ring, not a space in the layout'],
   ['font-size-', 'type sizes come from the type scale, not the grid'],
+  ['paper-', 'paper sizes and margins in mm (D-0052): the A4 sheet and its margin, for print parts only (docs/adr/0014)'],
+  ['print-sheet-', 'the A4 sheet in mm (D-0052, docs/adr/0014)'],
+  ['print-document-margin', 'the document page margin in mm (D-0052, docs/adr/0014)'],
 ];
 // a corner token (a key with "radius") may hold 0, a reference, or a length of 2, 4 or 6px; anything else (50%, 0.5em, 9999em, 100vh, any calc(), a keyword)
 // fails, unless it is named here with its value and the reason
@@ -36,8 +39,8 @@ const RADIUS_EXEMPT = [
   // a card's media or cover sits inside the card's border, so its outer corner is the card's corner minus the border (an inner corner; never above the card's)
   ['feature-card-media-radius', 'calc({plx-comp.card-radius} - {plx-comp.card-border-width})', 'inner corner: card radius minus border width'],
   ['user-card-cover-radius', 'calc({plx-comp.card-radius} - {plx-comp.card-border-width})', 'inner corner: card radius minus border width'],
-  ['media-card-media-border-top-left-radius', 'calc({plx-sys.radius-card-6px} - {plx-sys.border-width-thin})', 'inner corner: card radius minus border width'],
-  ['media-card-media-border-top-right-radius', 'calc({plx-sys.radius-card-6px} - {plx-sys.border-width-thin})', 'inner corner: card radius minus border width'],
+  ['media-card-media-border-top-left-radius', 'calc({plx-sys.radius-card-md} - {plx-sys.border-width-thin})', 'inner corner: card radius minus border width'],
+  ['media-card-media-border-top-right-radius', 'calc({plx-sys.radius-card-md} - {plx-sys.border-width-thin})', 'inner corner: card radius minus border width'],
 ];
 const radiusExempt = (key, value) => RADIUS_EXEMPT.some(([n, v]) => n === key && v === String(value).trim());
 const CORNERS = [0, 2, 4, 6];   // px: the corner scale (D-0005); no 1px, 3px or 5px corner

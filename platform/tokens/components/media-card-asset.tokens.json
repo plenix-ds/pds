@@ -4,12 +4,12 @@
     "media-card-type-inset-block-start": { "$value": "{plx-sys.space-inset-xs}", "$type": "dimension", "$description": "MediaCard asset: the format Badge's distance from the media's top (space-inset-xs, 4px)." },
     "media-card-type-inset-inline-end": { "$value": "{plx-sys.space-inset-xs}", "$type": "dimension", "$description": "MediaCard asset: the format Badge's distance from the media's end edge (space-inset-xs, 4px)." },
     "media-card-status-padding-block-start": { "$value": "{plx-sys.space-stack-xs}", "$type": "dimension", "$description": "MediaCard asset: the space above the status Badge, under the meta (space-stack-xs, 4px)." },
-    "media-card-stack-sheet-height": { "$value": "{plx-ref.size-4px}", "$type": "dimension", "$description": "MediaCard collection: how much of each sheet shows above the card in front of it (4px)." },
+    "media-card-stack-sheet-height": { "$value": "{plx-ref.size-1u}", "$type": "dimension", "$description": "MediaCard collection: how much of each sheet shows above the card in front of it (4px)." },
     "media-card-stack-sheet-background": { "$value": "{plx-comp.media-card-background}", "$type": "color", "$description": "MediaCard collection: a sheet's fill, the card's own surface." },
     "media-card-stack-sheet-border-color": { "$value": "{plx-comp.media-card-border-color}", "$type": "color", "$description": "MediaCard collection: a sheet's border, the card's own border color." },
     "media-card-stack-sheet-border-width": { "$value": "{plx-comp.media-card-border-width}", "$type": "dimension", "$description": "MediaCard collection: a sheet's border width, the card's own." },
-    "media-card-stack-sheet-radius": { "$value": "{plx-sys.radius-card-4px}", "$type": "dimension", "$description": "MediaCard collection: a sheet's top corners (radius-card-4px: a 4px sheet cannot show the card's 12px corner)." },
-    "media-card-stack-back-inset": { "$value": "{plx-ref.size-16px}", "$type": "dimension", "$description": "MediaCard collection: how much narrower the back sheet is at each side (16px)." },
-    "media-card-stack-middle-inset": { "$value": "{plx-ref.size-8px}", "$type": "dimension", "$description": "MediaCard collection: how much narrower the middle sheet is at each side (8px)." }
+    "media-card-stack-sheet-radius": { "$value": "{plx-sys.radius-card-sm}", "$type": "dimension", "$description": "MediaCard collection: a sheet's top corners (radius-card-4px: a 4px sheet cannot show the card's 12px corner)." },
+    "media-card-stack-back-inset": { "$value": "{plx-ref.size-4u}", "$type": "dimension", "$description": "MediaCard collection: how much narrower the back sheet is at each side (16px)." },
+    "media-card-stack-middle-inset": { "$value": "{plx-ref.size-2u}", "$type": "dimension", "$description": "MediaCard collection: how much narrower the middle sheet is at each side (8px)." }
   }
 }
