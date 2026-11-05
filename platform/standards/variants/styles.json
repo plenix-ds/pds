@@ -1095,5 +1095,82 @@
       }
     ],
     "why": ".plx-combobox__loading, the loading row shown in place of the options while loadOptions runs"
+  },
+  "carousel--per-view-several-per-view": {
+    "sets": [
+      {
+        "property": "flex-basis",
+        "part": "slide",
+        "token": "--plx-comp-carousel-peek"
+      },
+      {
+        "property": "flex-basis",
+        "part": "slide",
+        "token": "--plx-comp-carousel-gap"
+      }
+    ],
+    "why": ".plx-carousel[data-plx-per-view] in carousel.css: each slide takes its share of the track less the peek and the gaps"
+  },
+  "carousel--per-view-one-per-view-default": {
+    "sets": [
+      {
+        "property": "column-gap",
+        "part": "track",
+        "token": "--plx-comp-carousel-gap"
+      }
+    ],
+    "why": "each slide fills the track (flex-basis 100%, no token); the track's gap is the only token"
+  },
+  "carousel--controls-dots": {
+    "sets": [
+      {
+        "property": "block-size",
+        "part": "dot",
+        "token": "--plx-comp-carousel-dot-target"
+      },
+      {
+        "property": "block-size",
+        "part": "dot-mark",
+        "token": "--plx-comp-carousel-dot-size"
+      },
+      {
+        "property": "background-color",
+        "part": "dot-mark",
+        "token": "--plx-comp-carousel-dot-background"
+      }
+    ],
+    "why": ".plx-carousel__dot and its ::before in carousel.css"
+  },
+  "carousel--controls-arrows": {
+    "sets": [],
+    "why": "markup only: previous and next buttons; no rule is specific to them"
+  },
+  "carousel--motion-autoplay-with-pause": {
+    "sets": [],
+    "why": "markup only: the slides advance on a timer that pauses on hover and focus"
+  },
+  "card--interaction-opens-interactive": {
+    "sets": [
+      {
+        "property": "box-shadow",
+        "part": "block",
+        "token": "--plx-comp-card-interactive-hover-shadow"
+      },
+      {
+        "property": "transition-duration",
+        "part": "block",
+        "token": "--plx-comp-card-interactive-duration"
+      },
+      {
+        "property": "transition-timing-function",
+        "part": "block",
+        "token": "--plx-comp-card-interactive-easing"
+      }
+    ],
+    "why": ".plx-card--interactive and .is-hover in card.css: a pointer cursor and a shadow on hover"
+  },
+  "card--interaction-static": {
+    "sets": [],
+    "why": "markup only: a card with no opener; none of the interactive rules apply"
   }
 }
