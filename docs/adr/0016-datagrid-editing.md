@@ -53,7 +53,7 @@ validate?(value: unknown, record: unknown): string | null | Promise<string | nul
 // on DataGrid
 editing?: {
   types?: EditorType[];          // the editor types this application turns on; 'input' and 'number' always work (owner)
-  typeToReplace?: boolean;       // Q2: typing replaces the value (default false: today's behavior)
+  typeToReplace?: boolean;       // Q2: typing replaces the value (default true: today's behavior since #737; false turns it off; addendum #456)
   enterEdits?: boolean;          // Q6: Enter edits an editable cell (default true, as today)
   rangeSelect?: boolean;         // Q5: dragging across cells selects a range (default false)
 };
@@ -94,6 +94,15 @@ onCellEdit?(record, change: { field, value, previous, row }): void | Promise<voi
 - Its records are EntityPicker's people records: `{ value: string; label: string; description?: string; src?: string; color?: string; presence?: string }`. The extra fields are optional. A `{ value, label }` record works as for the other editors.
 - `loadOptions` runs from EntityPicker's `minChars` (1): an empty field shows no list until the person types.
 - **Semver: MINOR**, within this ADR's release. Enforced by: G3 review of #431; `tests/data-grid-editor-person-84.test.js`.
+
+## Addendum (2026-11-05, #456): the `typeToReplace` default (D-0061)
+
+- **Correction:** the ADR said `typeToReplace` defaults to `false` and called that today's behavior. Since #737, a typed character already starts an edit with that character in place of the value. Today's behavior is `true`.
+- **The default is `true` (unset = today's behavior).** `typeToReplace: false` turns it off, and Enter, F2 or a double-click still start an edit.
+- `rangeSelect: true` turns on the block selection that `cellSelection` turns on. A table's own `cellSelection` wins.
+- `editing` also comes from a `TableSettings` above; the table's own options win (the ADR's precedence).
+- **Semver: MINOR**, no break: every table that works today works the same.
+- Enforced by: G3 review of #456; `tests/data-grid-editing-options-84.test.js` (the defaults cases).
 
 ## Enforced by
 
