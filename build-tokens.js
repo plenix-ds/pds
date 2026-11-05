@@ -287,6 +287,9 @@ module.exports.toCss = toCss; module.exports.toJson = toJson;
 // TEMPORARY until issue 372 step 10 (Style Dictionary writes the stylesheets, and tools/token-index.js reads where each token
 // is written from them): where this build writes each token, [{ name, file, line, selector }], for the token index
 module.exports.writtenForIndex = (root = ROOT) => generate(load(root)).written;
+// TEMPORARY until issue 372 step 10 (slice 101, task 6): every set's tokens with the value this build writes, for
+// style-dictionary/build.mjs --check (steps 5 to 7: Style Dictionary writes the same value for each token of each set)
+module.exports.sets = (root = ROOT) => load(root).outputs.flatMap((o) => o.sets.map((s) => ({ output: o.file, set: s.tokens, tokens: tokensOf(s.data).map(({ name, token }) => ({ name, value: toCss(token.$value) })) })));
 // the token index, then the native files from it (build-app.js, after every stylesheet step)
 module.exports.indexAndMobile = (root = ROOT) => { require('./tools/token-index.js').writeIndex(root, module.exports.writtenForIndex(root)); return require('./build-mobile.js')(root); };
 if (require.main === module) {
