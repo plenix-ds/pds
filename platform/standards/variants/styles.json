@@ -682,5 +682,49 @@
   "audit-log--variant-with-diff": {
     "sets": [],
     "why": "markup only: adds a changes column to the same table"
+  },
+  "ai-search--variant-answer-above-results": {
+    "sets": [],
+    "why": "markup only: shows the generated answer and its sources above the results list"
+  },
+  "ai-search--variant-semantic-toggle": {
+    "sets": [],
+    "why": "markup only: shows the semantic-matching Switch beside the query"
+  },
+  "approval-workflow--variant-sequential": {
+    "sets": [],
+    "why": "markup only: only the next step in order takes a decision"
+  },
+  "approval-workflow--variant-parallel": {
+    "sets": [],
+    "why": "markup only: every step in review takes a decision at the same time"
+  },
+  "approval-workflow--variant-status": {
+    "sets": [],
+    "why": "markup only: a read-only view; no step takes a decision"
+  },
+  "archive-restore--variant-archive": {
+    "sets": [],
+    "why": "markup only: shows the Archive action on a record that is not archived"
+  },
+  "archive-restore--variant-archived-banner": {
+    "sets": [],
+    "why": "markup only: shows the archived Banner and Badge on an archived record"
+  },
+  "archive-restore--variant-restore": {
+    "sets": [],
+    "why": "markup only: shows the Restore action on an archived record"
+  },
+  "asset-gallery--variant-with-lightbox": {
+    "sets": [],
+    "why": "markup only: opens an image in the MediaViewer lightbox instead of calling onOpen"
+  },
+  "ai-explanation--variant-factors": {
+    "sets": [],
+    "why": "markup only: lists the supplied factors under the summary"
+  },
+  "ai-explanation--variant-why-this": {
+    "sets": [],
+    "why": "markup only: shows the summary alone, with no factor list"
   }
 }
