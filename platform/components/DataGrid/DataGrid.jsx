@@ -41,7 +41,8 @@
        align: "left" | "center" | "right" (the cells); every header label starts at the start edge, whatever the column's
          align (owner rule), and headerAlign is ignored; sortable: false turns sorting off; resizable: false
        editor: "input" | "number" (a Plenix input; double-click or Enter edits, Escape cancels); editable(record): which
-         rows may edit; rowHandle: true makes the column the drag handle for moving rows
+         rows may edit; validate(value, record): a message (or a promise of one) keeps the cell open with the message under it
+         and nothing saved, null saves (ADR 0016); rowHandle: true makes the column the drag handle for moving rows
      selectable: the checkbox column (select all in its header); selected (keys) with onSelectionChange(keys,
        { count, hidden }); keepHiddenSelection (default true) keeps rows a filter hides selected
      cellSelection: true: cells can be selected as a block (off by default; a grid without it behaves exactly as before). Shift with an arrow,
