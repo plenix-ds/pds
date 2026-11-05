@@ -63,10 +63,10 @@ jobs:
           echo "base=$base" >> "$GITHUB_OUTPUT"; echo "next=$next" >> "$GITHUB_OUTPUT"; echo "dry=$dry" >> "$GITHUB_OUTPUT"
           echo "Released: $base · planned next: $next · this dry run builds: $dry"
 
-      - name: Set the dry-run version everywhere (root and workspaces; scripts off)
+      - name: Set the dry-run version everywhere (root, workspaces, their references, lockfile; offline)
         env:
           DRY: ${{ steps.v.outputs.dry }}
-        run: npm version "$DRY" --no-git-tag-version --workspaces --include-workspace-root --ignore-scripts --allow-same-version
+        run: node tools/publish/set-version.mjs "$DRY"
 
       - name: Install and build (npm ci runs build-app.js)
         run: npm ci --no-audit --no-fund
