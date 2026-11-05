@@ -15,9 +15,20 @@ import { Dialog } from '../Dialog/Dialog.tsx';
 import { Field } from '../Field/Field.tsx';
 import { Textarea } from '../Input/Input.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import SparkleIcon from 'plenix-platform/icons/plenix/sparkle';
-export function RefineMenu({ onRefine, disabled = false, label, strings, className }) {
-  const t = useStrings('refineMenu', strings),
+type Refinement = { action: 'shorter' | 'longer' } | { action: 'tone'; tone: string } | { action: 'custom'; prompt?: string };
+type RefineMenuProps = {
+  /** a choice: ({ action: "shorter" | "longer" | "tone" | "custom", tone?, prompt? }); async */
+  onRefine?(value: Refinement): unknown;
+  disabled?: boolean;
+  /** the button's text; default strings.label */
+  label?: string;
+  strings?: Catalog | null;
+  className?: string;
+};
+export function RefineMenu({ onRefine, disabled = false, label, strings, className }: RefineMenuProps) {
+  const t = useStrings('refineMenu', strings) as Record<string, string>,
     [custom, setCustom] = React.useState(false),
     [prompt, setPrompt] = React.useState(''),
     [busy, setBusy] = React.useState(false),
@@ -30,7 +41,7 @@ export function RefineMenu({ onRefine, disabled = false, label, strings, classNa
       alive.current = false;
     };
   }, []);
-  async function run(value) {
+  async function run(value: Refinement) {
     if (disabled || lock.current || !onRefine) return;
     if (value.action === 'custom' && !prompt.trim()) {
       setError(t.empty);

@@ -43,7 +43,7 @@
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { useDescribedBy } from '../../utils/describedBy.ts';
-import { highlight } from '../CodeBlock/CodeBlock.jsx';
+import { highlight } from '../CodeBlock/CodeBlock.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import { useReadOnly } from '../../providers/ReadOnly.tsx';
 

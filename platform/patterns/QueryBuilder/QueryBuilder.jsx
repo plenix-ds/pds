@@ -49,7 +49,7 @@ import { NumberInput } from '../../components/NumberInput/NumberInput.tsx';
 import { DatePicker } from '../../components/DatePicker/DatePicker.jsx';
 import { Combobox } from '../../components/Combobox/Combobox.tsx';
 import { SegmentedControl } from '../../components/SegmentedControl/SegmentedControl.tsx';
-import { CodeBlock } from '../../components/CodeBlock/CodeBlock.jsx';
+import { CodeBlock } from '../../components/CodeBlock/CodeBlock.tsx';
 import { VisuallyHidden } from '../../components/VisuallyHidden/VisuallyHidden.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import { createTranslator } from '../../providers/LocaleProvider.tsx';
