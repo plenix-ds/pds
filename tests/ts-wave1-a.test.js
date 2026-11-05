@@ -1,6 +1,6 @@
 /* Plenix tests · TypeScript wave 1, batch A (issue 292, ADR 0011): the ten components converted to TSX still draw and behave the same.
    AIDisclaimer, ConfidenceIndicator, AIButton, StreamingText, Table, AILabel, Citation, SuggestedAction, Comment, DateBadge: each renders
-   its documented output (Citation's card passes variant="external" to Link, a known warning, kept: no behavior change in a conversion), the actions fire once, and nothing throws or warns. Run on the code before and after the rename: same result.
+   its documented output the actions fire once, and nothing throws or warns. Run on the code before and after the rename: same result.
    Usage: node tests/ts-wave1-a.test.js */
 const assert = require('assert/strict'), { serve, launch } = require('./lib');
 (async () => {
@@ -39,6 +39,8 @@ const assert = require('assert/strict'), { serve, launch } = require('./lib');
     assert.match(await text('#tbl'), /Alpha[\s\S]*Beta/);
     assert.match(await text('#lab'), /Made by AI/);
     assert.match(await text('#cit'), /\[3\]/); assert.match(await text('#cit'), /Card title/); assert.match(await text('#cit'), /Ann/);
+    assert.equal(await page.$eval('#cit .plx-citation__source a', (a) => a.getAttribute('target') + ' ' + a.getAttribute('rel')), '_blank noopener noreferrer', 'the source link opens in a new tab');
+    assert.ok(await page.$('#cit .plx-citation__source a .plx-link__icon'), 'the source link shows the open icon');
     await page.click('#sug button'); await sleep(100);
     assert.deepEqual(await page.evaluate(() => window.calls.filter((c) => c === 'sug')), ['sug'], 'SuggestedAction fires once');
     assert.match(await text('#com'), /Maya Chen/); assert.match(await text('#com'), /Ready for review/);
@@ -46,7 +48,7 @@ const assert = require('assert/strict'), { serve, launch } = require('./lib');
     await page.evaluate(() => [...document.querySelectorAll('#com button')].find((b) => /reopen/i.test(b.textContent)).click()); await sleep(100);
     assert.deepEqual(await page.evaluate(() => window.calls.filter((c) => /^resolve/.test(c))), ['resolve:false'], 'Comment reopen calls onResolve(false)');
     assert.equal(await page.$eval('#date time', (t) => t.getAttribute('datetime')), '2026-10-06'); assert.match(await text('#date'), /Tue.*6.*Today/i);
-    assert.deepEqual(problems.filter((p) => !/Failed to load resource|net::/.test(p) && !/Link: unknown variant "external"/.test(p)), [], 'no errors or warnings');
+    assert.deepEqual(problems.filter((p) => !/Failed to load resource|net::/.test(p)), [], 'no errors or warnings');
     console.log('ts-wave1-a: OK');
   } finally { if (browser) await browser.close(); server.close(); }
 })().catch((e) => { console.error(e); process.exit(1); });
