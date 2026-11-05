@@ -72,7 +72,7 @@ Tools, AI agents and other systems read the rules from here.
 
 ### Checks
 
-Never run a test: tests run only when the owner starts them himself (HANDOFF.md, "No tests"). For the owner, `npm test` runs the checks for what changed (`tests/changed.js` maps the diff since the previous commit, and the working tree, to the pages, design-system records and labs each test loads; `npm run test:scope` prints it): the visual snapshot (Button), the pages, the accessibility scan (axe-core; known issues in `tests/baselines/a11y.json` may only go down) and the rest. GitHub runs them in changed mode, with the build and the system and spec checks, on every push (`.github/workflows/ci.yml`). `npm run test:full` runs every test on every page: the final gate when everything is marked complete, also run by hand on GitHub (`.github/workflows/full.yml`), never per push or per release. Every test has a time limit (`TEST_TIMEOUT_MS`).
+Never run a test: tests run only when the owner starts them himself (HANDOFF.md, "No tests"). For the owner, `npm test` runs the checks for what changed (`tests/changed.js` maps the diff since the previous commit, and the working tree, to the pages, design-system records and labs each test loads; `npm run test:scope` prints it): the visual snapshot (Button), the pages, the accessibility scan (axe-core; known issues in `tests/baselines/a11y.json` may only go down) and the rest. GitHub CI (`.github/workflows/ci.yml`, PDS 1.0) runs the static checks on every pull request and blocks only the problems a pull request adds; the behavior tests move to Vitest and Playwright in Phase 0. `npm run test:full` runs every test on every page, only when the owner starts it. Every test has a time limit (`TEST_TIMEOUT_MS`).
 
 ### Releasing a version
 

@@ -2,7 +2,7 @@
 
 - **Status:** accepted
 - **Date:** 2026-11-05
-- **Deciders:** pds1-ds-architect (decision D-0024; carries forward owner decision plenix-platform#872)
+- **Deciders:** pds1-ds-architect (decision D-0032; carries forward owner decision plenix-platform#872)
 - **Issue:** plenix-ds/pds#178 (Phase 0, Style Dictionary)
 
 ## Context
