@@ -344,10 +344,11 @@ export function bodyRows({
             sticky = pinned ? pinStart(column) : 0;
           const cell = api.cell(row.id, c.field),
             status = cellStatus?.key === row.id && cellStatus.field === c.field ? cellStatus : null,
-            canEdit =
-              !!c.editor &&
-              status?.kind !== 'saving' &&
-              (typeof c.editable === 'function' ? c.editable(cell) : c.editable !== false);
+            // the checkbox editor (ADR 0016) is an option the application turns on: the cell shows a box and Space or a click toggles and saves, no editor opens
+            checkboxEditor = c.editor === 'checkbox' && (props.editing?.types || []).includes('checkbox'),
+            editable = !!c.editor && (typeof c.editable === 'function' ? c.editable(cell) : c.editable !== false),
+            canToggle = checkboxEditor && editable && status?.kind !== 'saving',
+            canEdit = !checkboxEditor && editable && status?.kind !== 'saving';
           const value = valueAt(record, c.field),
             isTree = !!childField && c.field === (props.treeColumn || columns[0]?.field),
             isEditing = editing?.key === row.id && editing.field === c.field,
@@ -421,6 +422,7 @@ export function bodyRows({
                 isStatic,
                 value,
                 canEdit,
+                toggle: canToggle ? () => commitEdit(row.id, c.field, !value) : null,
                 setEditing,
                 row,
                 c,
@@ -540,6 +542,17 @@ export function bodyRows({
                     {S.moveBottom}
                   </MenuItem>
                 </Menu>
+              ) : checkboxEditor ? (
+                <input
+                  type="checkbox"
+                  className={B + '__check-input'}
+                  checked={!!value}
+                  disabled={!editable || status?.kind === 'saving'}
+                  tabIndex={-1}
+                  aria-label={c.title || c.field}
+                  onChange={(e) => commitEdit(row.id, c.field, e.target.checked)}
+                  onClick={(e) => e.stopPropagation()}
+                />
               ) : c.render ? (
                 <span
                   className={cx(B + '__portal', actions && B + '__portal--actions')}
