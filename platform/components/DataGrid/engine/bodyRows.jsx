@@ -511,6 +511,7 @@ export function bodyRows({
                     area={turnedOn && c.editor === 'textarea'}
                     select={turnedOn && c.editor === 'select'}
                     combobox={turnedOn && c.editor === 'combobox'}
+                    person={turnedOn && c.editor === 'person'}
                     date={turnedOn && c.editor === 'date'}
                     custom={!!c.editor && typeof c.editor === 'object' && typeof c.editor.component === 'function'}
                     value={editing.value}
