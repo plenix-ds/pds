@@ -328,3 +328,11 @@
   decision: For #108 (D-0036), EntityHeader fact icons without their box are drawn at the full tile size, as the owner's rule says (A); in dark mode the media icons use one lighter existing shade per hue (blue-300, green-200, purple-300, red-200, orange-200, gray-300, blue-200 for surface) so they keep 3:1 or more without the tile. Option B, fact icons at the text's icon size (20px), is offered on #108. Reply B there to switch.
   status: active
   check: planned:contrast-matrix
+
+- id: D-0039
+  date: 2026-11-05
+  area: design
+  decided_by: agent (pds1-design-director), owner may switch
+  decision: The data colour called "purple" is a slate blue today (blue-650, on-soft blue-900, soft blue-100) and keeps that look (D-0004, as-is) - chart series 3, purple tiles and FeatureCard/MetricCard hues are unchanged. The DS Architect renames the roles to slate with the purple names as deprecated aliases (#235 option B, ADR 0002). Its dark on-surface shade is slate-375 (4.81:1 on surface-default, 3.51:1 on state-hover), replacing purple-300 from D-0038 so the hue matches across modes. Making it a true purple (option A) changes the look and needs the owner; reply A on #235.
+  status: active
+  check: planned:lint-token-names (check 7)
