@@ -538,7 +538,7 @@
   display: contents;
 }
 .plx-entity-header__fact-icon {
-  --plx-comp-icon-size: var(--plx-comp-entity-header-fact-icon-tile-size);
+  --plx-comp-icon-size: var(--plx-comp-entity-header-fact-icon-size);
   align-items: center;
   block-size: var(--plx-comp-entity-header-fact-icon-tile-size);
   color: var(--plx-comp-entity-header-fact-icon-tile-text);
