@@ -1709,7 +1709,7 @@
       "$type": "dimension"
     },
     "data-grid-sorter-inset": {
-      "$value": "{plx-ref.space-6px}",
+      "$value": "{plx-sys.space-inset-xs}",
       "$type": "dimension"
     },
     "data-grid-popup-button-inset": {
@@ -1732,7 +1732,7 @@
       "$type": "dimension"
     },
     "data-grid-tree-indent": {
-      "$value": "{plx-ref.size-18px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension"
     },
     "data-grid-tree-control-size": {
@@ -1744,7 +1744,7 @@
       "$type": "dimension"
     },
     "data-grid-tree-control-gap": {
-      "$value": "{plx-ref.space-6px}",
+      "$value": "{plx-sys.space-inline-xs}",
       "$type": "dimension"
     },
     "data-grid-group-font-weight": {

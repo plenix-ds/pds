@@ -1,8 +1,4 @@
 {
  "$description": "token-names (check 7) known findings from 0.x, measured 2026-11-05. Shrink-only: remove an entry when it is renamed; never add one (docs/adr/0002).",
- "known": [
-  "plx-ref.size-18px",
-  "plx-ref.space-10px",
-  "plx-ref.space-6px"
- ]
+ "known": []
 }
