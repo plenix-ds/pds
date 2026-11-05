@@ -233,7 +233,6 @@
   --plx-state-entity-header-media-self: flex-start;
 }
 .plx-entity-header__media--stretch {
-  --plx-comp-entity-header-context-tile-icon-fill: var(--plx-state-entity-header-media-icon);
   --plx-state-entity-header-media-block: 100%;
   --plx-state-entity-header-media-self: stretch;
 }
@@ -267,7 +266,7 @@
 }
 /* the { icon, hue } media (D-0024, D-0036; pds#275, #108): by default no box - no fill, no border - and the icon fills
    the square (44px; 32px in a section; 72px top large), in its hue's on-surface colour. A stretched media (column large,
-   edge) keeps the icon at its layout's icon size (--plx-comp-entity-header-context-tile-icon-fill). With box (media.box,
+   edge) fills its measured square (the media size), not the small icon size of the tile (D-0059, #418). With box (media.box,
    __tile--box) it is the tinted tile with its 1px border, the icon at the tile's icon size, as before 275: a box stays
    only where a usage needs it (D-0024) */
 @property --plx-state-entity-header-tile-background {
