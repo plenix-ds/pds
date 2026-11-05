@@ -133,7 +133,7 @@ DSParts.records.push(function (H) {
     use: ['Linking a record to another: a task to its project, an asset to its campaign', 'Collections too large to list: search by name or ID', 'kind="people" for people (the people picker), kind="teams" for teams'],
     avoid: ['A few fixed choices: use a select', 'Values that are not records: use a combobox', 'Showing only names when several records share one'],
     related: ['people-picker', 'combobox', 'async-select', 'profile-summary', 'field'],
-    map: [[FLU, 'Tag picker', 'Partial'], [ATL, 'Select', 'Partial'], [CAR, 'Combo box', 'Partial'], [POL, 'Autocomplete', 'Partial']],
+    map: [[FLU, 'Tag picker', 'Partial'], [ATL, 'Select', 'Partial'], [CAR, 'Combo box', 'Partial'], [POL, 'Autocomplete', 'Partial'], ['Django', 'raw_id_fields (admin)', 'Direct'], ['Frappe', 'Link control', 'Direct']],
     variantPages: [
       vp('People entity picker', 'Kind', 'People', { variant: 'people' }, 'The person’s avatar with presence, their name and email: the people picker.', 'Assigning, sharing, mentioning, inviting', 'Teams or records: their own kinds'),
       vp('Team entity picker', 'Kind', 'Teams', { variant: 'teams' }, 'A team icon tile, the team’s name, what it does and its size.', 'Sharing with or assigning to a group', 'Single people: use people'),
@@ -172,7 +172,7 @@ DSParts.records.push(function (H) {
     use: ['Meeting times, schedules and deadlines', 'A step that matches the task: 15 or 30 minutes for meetings, 1 minute where exact times matter', 'The time zone in the description when people in several zones use the data'],
     avoid: ['Durations: use a number input with a unit', 'A list of every minute: use a step, or the segments', 'A clock dial alone: people must be able to type'],
     related: ['number-input', 'text-field', 'field'],
-    map: [[CAR, 'Time picker', 'Direct'], [ATL, 'Date time picker (time)', 'Direct'], [MAT, 'Time pickers', 'Direct'], [FLU, 'Time picker', 'Direct'], [SPE, 'Time field', 'Direct'], [ANT, 'TimePicker', 'Direct']],
+    map: [[CAR, 'Time picker', 'Direct'], [ATL, 'Date time picker (time)', 'Direct'], [MAT, 'Time pickers', 'Direct'], [FLU, 'Time picker', 'Direct'], [SPE, 'Time field', 'Direct'], [ANT, 'TimePicker', 'Direct'], ['Django', 'TimeInput widget', 'Direct'], ['Frappe', 'Time control', 'Direct']],
     variantPages: [
       vp('Time picker with a list', 'Form', 'List (default)', { variant: 'list' }, 'A field people type in, with the times at each step in a list under it.', 'Most times in forms: people type or pick', 'Times to the minute in a long day: the list gets long; use the segments'),
       vp('Time picker in segments', 'Form', 'Segments', { variant: 'segments' }, 'Spin buttons for the hour, the minute and the period: arrows step them, digits type them.', 'Exact times, and keyboards without pointer use', 'Choosing among a few set times: use the list'),
@@ -242,7 +242,7 @@ DSParts.records.push(function (H) {
     use: ['Covers, product photos and attachments where the look matters', 'A ratio (and crop) wherever the picture is shown in a fixed shape', 'The formats and the size people should use in the description', 'Alt text for images other people will see'],
     avoid: ['Files that are not images: use a file input', 'Profile pictures: use the avatar upload', 'Drag and drop as the only way in: the Choose button is always there'],
     related: ['file-input', 'drop-zone', 'image', 'avatar-upload'],
-    map: [[POL, 'Drop zone (image)', 'Variant'], [CAR, 'File uploader', 'Partial'], [SPE, 'Drop zone', 'Partial'], [ANT, 'Upload (picture card)', 'Direct']],
+    map: [[POL, 'Drop zone (image)', 'Variant'], [CAR, 'File uploader', 'Partial'], [SPE, 'Drop zone', 'Partial'], [ANT, 'Upload (picture card)', 'Direct'], ['Django', 'ClearableFileInput widget (ImageField)', 'Direct'], ['Frappe', 'Attach Image control', 'Direct']],
     variantPages: [
       vp('Single image upload', 'Images', 'Single (default)', { variant: 'single' }, 'One image: the drop zone until it is chosen, then its preview with Replace and Remove.', 'A cover, a header image, one photo', 'Several photos of one thing: use multiple'),
       vp('Multiple image upload', 'Images', 'Multiple', { variant: 'multiple' }, 'A grid of square previews, each with its remove button, and the drop zone after them until the maximum.', 'Product photos, galleries', 'One image people replace'),
@@ -268,7 +268,7 @@ DSParts.records.push(function (H) {
     use: ['Profile and account settings', 'Team, workspace and app pictures', 'The smallest useful size in the hint (“At least 200 × 200 pixels”)'],
     avoid: ['General images: use the image upload', 'Pictures that come from an identity provider and cannot change here: show the Avatar and say where to change it'],
     related: ['avatar', 'image-upload', 'file-input'],
-    map: [[ATL, 'Avatar (editable)', 'Partial'], [ANT, 'Upload (avatar)', 'Direct']],
+    map: [[ATL, 'Avatar (editable)', 'Partial'], [ANT, 'Upload (avatar)', 'Direct'], ['Frappe', 'Attach Image control (user image)', 'Partial']],
     variantPages: [
       vp('Avatar upload', 'Picture', 'Square (default)', { variant: 'square' }, 'The current picture in the Avatar’s rounded square, with Change photo beside it.', 'Every profile picture', 'A circle: Plenix avatars are rounded squares'),
       vp('Avatar upload with remove', 'Picture', 'With remove', { variant: 'remove' }, 'Remove photo beside Change photo while there is a picture; it goes back to the initials.', 'Pictures people may want to take away', 'A required picture'),

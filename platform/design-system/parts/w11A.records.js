@@ -215,7 +215,7 @@ DSParts.records.push(function (H) {
       use: ['The entry to every signed-in area: a page of its own (page) under the application header', 'forgot and signUp as links to their pages, or as buttons to the next step of the same card', 'sso above the form, then “or”', 'One general error after a failure: Email or password is incorrect.'],
       avoid: ['Blocking paste or the password manager', 'More than the identifier and the password on one screen', '“Log in” in some places and “Sign in” in others', 'A cognitive test (remembering, transcribing) without another way'],
       related: ['sign-up', 'password-reset', 'multi-factor-authentication', 'single-sign-on', 'account-recovery', 'session-timeout'],
-      map: [[CAR, 'Login pattern', 'Direct'], [ATL, 'Login (product pattern)', 'Partial'], [MAT, 'Sign-in (account)', 'Partial'], [HIG, 'Managing accounts', 'Partial'], [POL, 'Account connection', 'Partial']],
+      map: [[CAR, 'Login pattern', 'Direct'], [ATL, 'Login (product pattern)', 'Partial'], [MAT, 'Sign-in (account)', 'Partial'], [HIG, 'Managing accounts', 'Partial'], [POL, 'Account connection', 'Partial'], ['Django', 'LoginView and AuthenticationForm', 'Direct'], ['Frappe', 'Login page', 'Direct']],
       variantPages: [
         vp('Sign-in card', 'Layout', 'Card (default)', { variant: 'card' }, 'The form in its card where the page puts it: a panel, a demo, a dialog-like place.', 'A sign-in inside a page that has other content', 'A page of its own: page'),
         vp('Sign-in page', 'Layout', 'Page', { variant: 'page' }, 'The card centered on the canvas under the header, filling the window; one column without a frame on narrow windows.', 'The sign-in service’s own page', 'Sign-in inside another page’s content'),
@@ -239,7 +239,7 @@ DSParts.records.push(function (H) {
       use: ['Self-service products and invited people setting up their access', 'The password rule in the field’s description, before typing', 'terms with a link to the text; it must be checked', 'Single sign-on above the form where the organization manages identity'],
       avoid: ['Asking for what can be collected later', 'Confirm password or confirm email fields', 'Rules said only after an error'],
       related: ['sign-in', 'single-sign-on', 'form-section'],
-      map: [[CAR, 'Login pattern (create account)', 'Partial'], [ATL, 'Sign up', 'Partial'], [HIG, 'Managing accounts', 'Partial']],
+      map: [[CAR, 'Login pattern (create account)', 'Partial'], [ATL, 'Sign up', 'Partial'], [HIG, 'Managing accounts', 'Partial'], ['Frappe', 'Login page (sign up)', 'Direct']],
       examples: [
         ['Create account: the rule shown first, the terms; press it empty to see each problem', function () { return h(SignUp, null); }],
         ['With single sign-on first', function () { return h(SignUp, { props: { sso: h(P.SsoButtons, { providers: [{ id: 'google', label: 'Google' }], organization: true, onProvider: noop }) } }); }],
@@ -253,7 +253,7 @@ DSParts.records.push(function (H) {
       use: ['From Forgot your password? on the sign-in card', 'When an administrator makes someone change their password (start at new)', 'The link’s lifetime in the sent message (expires)'],
       avoid: ['Saying whether an email has an account', 'Sending a password by email', 'Asking for the new password twice'],
       related: ['sign-in', 'account-recovery'],
-      map: [[CAR, 'Login pattern (forgot password)', 'Partial'], [ATL, 'Reset password', 'Partial'], [HIG, 'Managing accounts', 'Partial']],
+      map: [[CAR, 'Login pattern (forgot password)', 'Partial'], [ATL, 'Reset password', 'Partial'], [HIG, 'Managing accounts', 'Partial'], ['Django', 'PasswordResetView', 'Direct'], ['Frappe', 'Login page (forgot password)', 'Direct']],
       examples: [
         ['Request: the email, then the neutral message', function () { return h(Reset, { step: 'request' }); }],
         ['From the link: the new password with its rule', function () { return h(Reset, { step: 'new' }); }],
@@ -267,7 +267,7 @@ DSParts.records.push(function (H) {
       use: ['Accounts that reach sensitive data or administration', 'Passkeys and security keys first where people have them', 'Saying where the code went: “to the phone ending 42”', 'A recovery code as the way out'],
       avoid: ['Text messages as the only method for high-risk access', 'Asking at every action: at sign-in and for risky changes', 'Codes that expire before people can type them'],
       related: ['sign-in', 'account-recovery', 'otp-input'],
-      map: [[ATL, 'Two-step verification', 'Partial'], [MAT, 'Verification code', 'Partial'], [HIG, 'Managing accounts', 'Partial']],
+      map: [[ATL, 'Two-step verification', 'Partial'], [MAT, 'Verification code', 'Partial'], [HIG, 'Managing accounts', 'Partial'], ['Frappe', 'Two Factor Authentication', 'Direct']],
       examples: [
         ['An authenticator app (try 123456; any other code shows the error)', function () { return h(Mfa, null); }],
         ['A text message: the new code after 30 seconds', function () { return h(Mfa, { props: { defaultMethod: 'sms' } }); }],
@@ -281,7 +281,7 @@ DSParts.records.push(function (H) {
       use: ['Above the sign-in or sign-up form, then “or”', 'Provider buttons named in words', 'The work-email step for organizations with their own provider', 'redirecting while handing over; error when the provider refuses'],
       avoid: ['A password field for people whose organization requires SSO', 'Hiding where people will be sent', 'Logos alone without the provider’s name'],
       related: ['sign-in', 'sign-up'],
-      map: [[CAR, 'Login pattern (SSO)', 'Partial'], [ATL, 'Single sign-on', 'Partial'], [HIG, 'Sign in with Apple', 'Partial']],
+      map: [[CAR, 'Login pattern (SSO)', 'Partial'], [ATL, 'Single sign-on', 'Partial'], [HIG, 'Sign in with Apple', 'Partial'], ['Frappe', 'Social Login Key', 'Direct']],
       examples: [
         ['Providers and the work-email step (each hands over for a moment)', function () { return h(Sso, null); }],
         ['Handing over', function () { return h(Card, { title: 'Sign in to Plenix' }, h(P.SsoButtons, { redirecting: 'Microsoft' })); }],
@@ -334,7 +334,7 @@ DSParts.records.push(function (H) {
       use: ['A few roles that match real jobs: Viewer, Editor, Owner', 'Custom roles only when an organization needs them, started from a built-in one', 'One sentence per role of what it can do', 'onChange’s change for the audit log'],
       avoid: ['Many overlapping roles', 'Making people guess what a role allows', 'Removing the last owner'],
       related: ['role-label', 'permission-summary', 'assign-control', 'resource-list'],
-      map: [[ATL, 'Admin roles', 'Partial'], [POL, 'Staff permissions', 'Partial'], [FLU, 'People picker and roles', 'Partial'], [CAR, 'Data table (roles)', 'Partial']],
+      map: [[ATL, 'Admin roles', 'Partial'], [POL, 'Staff permissions', 'Partial'], [FLU, 'People picker and roles', 'Partial'], [CAR, 'Data table (roles)', 'Partial'], ['Django', 'Groups and permissions (admin)', 'Direct'], ['Frappe', 'Role Permission Manager', 'Direct']],
       variantPages: [
         vp('Roles list', 'View', 'Roles list', { variant: 'list' }, 'Each role with its sentence, its member count in the data font and Built-in or Custom; Create role above.', 'The roles page of a workspace’s settings', 'Choosing a role for one person: a radio group with descriptions'),
         vp('Role detail', 'View', 'Role detail', { variant: 'detail' }, 'The role, its permissions and its members, with the actions that fit it.', 'Seeing and changing what one role allows and who holds it', 'Changing one person’s role: the people list’s own control')
@@ -355,7 +355,7 @@ DSParts.records.push(function (H) {
       use: ['Storage, publishing and mailing services, one row each', 'scopes in plain words before the hand-over', 'loses: what stops working, in the Disconnect question', 'Reconnect without a question: the person already agreed'],
       avoid: ['Asking for more access than the connection needs', 'Connecting without the question', 'Services named by a logo alone'],
       related: ['permission-summary', 'confirmation-dialog', 'badge'],
-      map: [[POL, 'Account connection', 'Direct'], [ATL, 'Connected apps', 'Partial'], [HIG, 'Managing accounts', 'Partial']],
+      map: [[POL, 'Account connection', 'Direct'], [ATL, 'Connected apps', 'Partial'], [HIG, 'Managing accounts', 'Partial'], ['Frappe', 'Connected App', 'Direct']],
       variantPages: [
         vp('Connect an account', 'Status', 'Connect', { variant: 'connect' }, 'Not connected: the neutral badge and Connect, which lists the scopes before the hand-over.', 'Services people may link', 'Services the workspace links for everyone: an admin setting'),
         vp('Connected account', 'Status', 'Connected', { variant: 'connected' }, 'The success badge with its check, the account and date in the data font, and Disconnect.', 'A linked service', 'A service that failed: Connection error'),

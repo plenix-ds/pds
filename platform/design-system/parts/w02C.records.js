@@ -238,7 +238,7 @@ DSParts.records.push(function (H) {
     use: ['A value set by the system or by someone with more permission (an ID, a field an administrator controls)', 'A record or a form people may view but not edit, or that is locked after a step (approved, submitted)', 'A short reason when it helps (“Set by your administrator”)', 'useReadOnly(props.readOnly) in a component that draws its own read-only state'],
     avoid: ['Read-only for a control that will be available after another step: that is disabled', 'Dimming the value: read-only keeps full contrast (4.5:1) and stays in the Tab order', 'Disabled Save and Delete buttons in a read-only region: hide the actions that would change it', 'A border that makes the field look editable'],
     related: ['text-field', 'field', 'feedback-disabled-state', 'interaction-states'],
-    map: [m(C, 'Read-only states'), m(SP, 'Read-only (field)', 'Partial'), m(F, 'Read-only (input)', 'Partial'), m(A, 'Read-only (inline edit)', 'Partial')],
+    map: [m(C, 'Read-only states'), m(SP, 'Read-only (field)', 'Partial'), m(F, 'Read-only (input)', 'Partial'), m(A, 'Read-only (inline edit)', 'Partial'), ['Django', 'readonly_fields (admin)', 'Direct'], ['Frappe', 'Read Only (DocField)', 'Direct']],
     examples: [['Scope', Object.keys(RO).map(function (k) { return [k.replace(' read-only', ''), function () { return box(360, RO[k]()); }]; })]] };
 
   /* ── semantic html ── */
