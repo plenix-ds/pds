@@ -25,7 +25,7 @@ const PLAIN = 'div|span|p|li|td|section|article|img|i';
 // keyboard reaches each one): file (from platform/) and the element's class, with the reason
 const DELEGATES = {
   'components/Combobox/Combobox.tsx|plx-combobox__field': 'a click on the field’s padding focuses its input; the input is the keyboard path',
-  'components/Tree/Tree.jsx|plx-tree__row': 'the row is inside its treeitem, which takes focus and the keys (Enter, Space, the arrows)',
+  'components/Tree/Tree.tsx|plx-tree__row': 'the row is inside its treeitem, which takes focus and the keys (Enter, Space, the arrows)',
   'patterns/NavPane/NavPane.jsx|plx-nav-pane__body': 'closes the overlay pane after a link or button inside it is chosen',
   'patterns/SecondaryPane/SecondaryPane.jsx|plx-secondary-pane__body': 'opens the detail after a row button inside the list is chosen (list-detail)',
   'components/Card/Card.tsx|plx-media-card': 'a click on a selectable card toggles its selection checkbox, which is the keyboard path; its title link opens it',

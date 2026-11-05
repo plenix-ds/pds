@@ -68,7 +68,7 @@ import { useStrings } from '../../providers/LocaleProvider.tsx';
 import { useReadOnly } from '../../providers/ReadOnly.tsx';
 import { useBranchLoader, BranchStatus } from '../../hooks/useBranchLoader.ts';
 import { useVirtualizer, VirtualGap, VirtualProbe } from '../../hooks/useVirtualizer.ts';
-import { TREE_AUTO_VIRTUAL } from '../Tree/Tree.jsx';
+import { TREE_AUTO_VIRTUAL } from '../Tree/Tree.tsx';
 import FolderOpenIcon from 'plenix-platform/icons/plenix/folder-open';
 import SelectChevronIcon from 'plenix-platform/icons/plenix/select-chevron';
 import SquarePlusIcon from 'plenix-platform/icons/plenix/square-plus';

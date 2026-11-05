@@ -138,5 +138,15 @@
     "loading": "n/a(the product's options are given)",
     "selected": "n/a(a chosen value is the option's value; the parts show it)",
     "error": "n/a(an option's error shows as its message under it; stories arrive with Storybook, P0-11)"
+  },
+  "Tree": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(a tree item has no disabled state)",
+    "loading": "n/a(a branch loading its children shows a status row from useBranchLoader; stories arrive with Storybook, P0-11)",
+    "selected": "n/a(stories arrive with Storybook, P0-11)",
+    "error": "n/a(a branch that failed to load shows a status row and retries; stories arrive with Storybook, P0-11)"
   }
 }
