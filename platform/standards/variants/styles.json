@@ -1095,5 +1095,174 @@
       }
     ],
     "why": ".plx-combobox__loading, the loading row shown in place of the options while loadOptions runs"
+  },
+  "carousel--per-view-several-per-view": {
+    "sets": [
+      {
+        "property": "flex-basis",
+        "part": "slide",
+        "token": "--plx-comp-carousel-peek"
+      },
+      {
+        "property": "flex-basis",
+        "part": "slide",
+        "token": "--plx-comp-carousel-gap"
+      }
+    ],
+    "why": ".plx-carousel[data-plx-per-view] in carousel.css: each slide takes its share of the track less the peek and the gaps"
+  },
+  "carousel--per-view-one-per-view-default": {
+    "sets": [
+      {
+        "property": "column-gap",
+        "part": "track",
+        "token": "--plx-comp-carousel-gap"
+      }
+    ],
+    "why": "each slide fills the track (flex-basis 100%, no token); the track's gap is the only token"
+  },
+  "carousel--controls-dots": {
+    "sets": [
+      {
+        "property": "block-size",
+        "part": "dot",
+        "token": "--plx-comp-carousel-dot-target"
+      },
+      {
+        "property": "block-size",
+        "part": "dot-mark",
+        "token": "--plx-comp-carousel-dot-size"
+      },
+      {
+        "property": "background-color",
+        "part": "dot-mark",
+        "token": "--plx-comp-carousel-dot-background"
+      }
+    ],
+    "why": ".plx-carousel__dot and its ::before in carousel.css"
+  },
+  "carousel--controls-arrows": {
+    "sets": [],
+    "why": "markup only: previous and next buttons; no rule is specific to them"
+  },
+  "carousel--motion-autoplay-with-pause": {
+    "sets": [],
+    "why": "markup only: the slides advance on a timer that pauses on hover and focus"
+  },
+  "card--interaction-opens-interactive": {
+    "sets": [
+      {
+        "property": "box-shadow",
+        "part": "block",
+        "token": "--plx-comp-card-interactive-hover-shadow"
+      },
+      {
+        "property": "transition-duration",
+        "part": "block",
+        "token": "--plx-comp-card-interactive-duration"
+      },
+      {
+        "property": "transition-timing-function",
+        "part": "block",
+        "token": "--plx-comp-card-interactive-easing"
+      }
+    ],
+    "why": ".plx-card--interactive and .is-hover in card.css: a pointer cursor and a shadow on hover"
+  },
+  "card--interaction-static": {
+    "sets": [],
+    "why": "markup only: a card with no opener; none of the interactive rules apply"
+  },
+  "center--maximum-width-lg-900px": {
+    "sets": [
+      {
+        "property": "max-inline-size",
+        "part": "block",
+        "token": "--plx-comp-center-lg-max-width"
+      }
+    ],
+    "why": ".plx-center--max-lg in stack.css; the Center prop is maxWidth"
+  },
+  "center--maximum-width-sm-400px": {
+    "sets": [
+      {
+        "property": "max-inline-size",
+        "part": "block",
+        "token": "--plx-comp-center-sm-max-width"
+      }
+    ],
+    "why": ".plx-center--max-sm in stack.css; the Center prop is maxWidth"
+  },
+  "center--children-intrinsic": {
+    "sets": [],
+    "why": ".plx-center--intrinsic sets display: flex, a column direction and align-items: center, none of them tokens"
+  },
+  "center--children-vertical": {
+    "sets": [],
+    "why": ".plx-center--vertical sets display: flex and a column direction, neither a token"
+  },
+  "calendar--variant-week-numbers": {
+    "sets": [
+      {
+        "property": "block-size",
+        "part": "week-number",
+        "token": "--plx-comp-calendar-cell-size"
+      },
+      {
+        "property": "color",
+        "part": "week-number",
+        "token": "--plx-comp-calendar-week-number-text"
+      },
+      {
+        "property": "font-family",
+        "part": "week-number",
+        "token": "--plx-comp-calendar-week-number-font-family"
+      }
+    ],
+    "why": ".plx-calendar__week-number, the column of week numbers"
+  },
+  "calendar--variant-range-highlight": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "cell",
+        "token": "--plx-comp-calendar-range-background"
+      },
+      {
+        "property": "color",
+        "part": "day",
+        "token": "--plx-comp-calendar-range-text"
+      }
+    ],
+    "why": ".plx-calendar__cell.is-in-range, is-range-start and is-range-end"
+  },
+  "calendar--variant-disabled-dates": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "day",
+        "token": "--plx-comp-calendar-day-disabled-text"
+      }
+    ],
+    "why": ".plx-calendar__day.is-disabled: muted text and a default cursor"
+  },
+  "calendar--variant-two-months": {
+    "sets": [
+      {
+        "property": "column-gap",
+        "part": "months",
+        "token": "--plx-comp-calendar-months-gap"
+      },
+      {
+        "property": "row-gap",
+        "part": "months",
+        "token": "--plx-comp-calendar-months-gap"
+      }
+    ],
+    "why": ".plx-calendar__months, the row of months that wraps when narrow"
+  },
+  "calendar--variant-min-and-max": {
+    "sets": [],
+    "why": "markup only: dates outside the minimum and maximum are disabled, which draws as the disabled dates"
   }
 }

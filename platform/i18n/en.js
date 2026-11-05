@@ -860,6 +860,9 @@ export default {
     "unreadRow": "{label}, unread",
     "editCell": "Edit {title}",
     "editing": "Editing {column}",
+    "editMode": "Editing",
+    "editModeInline": "Inline Edit",
+    "editModeForm": "Form Edit",
     "saved": "Saved",
     "saveRefused": "Couldn’t save. The previous value is back."
   },

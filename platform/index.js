@@ -75,6 +75,7 @@ export { DataToolbar } from './patterns/DataToolbar/DataToolbar.jsx';
 export { BulkActions, SelectionSummary } from './patterns/BulkActions/BulkActions.jsx';
 export { ContentGrid } from './patterns/ContentGrid/ContentGrid.jsx';
 export { PropertyList } from './patterns/PropertyList/PropertyList.jsx';
+export { TableSettings } from './providers/TableSettings.tsx';
 export { PrintDocument } from './patterns/PrintDocument/PrintDocument.tsx';
 export { RecordPage } from './patterns/RecordPage/RecordPage.jsx';
 export { EntityHeader } from './patterns/EntityHeader/EntityHeader.jsx';
@@ -212,7 +213,7 @@ export { niceTicks, scaleLinear, scaleLog, scaleBand, scaleTime, seriesColor } f
 export { ChartFrame } from './charts/ChartFrame.jsx';
 export { TimeZoneSelect, timeZoneOptions } from './components/TimeZoneSelect/TimeZoneSelect.tsx';
 export { TreeSelect } from './components/TreeSelect/TreeSelect.jsx';
-export { TransferList } from './components/TransferList/TransferList.jsx';
+export { TransferList } from './components/TransferList/TransferList.tsx';
 export { BottomSheetNav } from './patterns/BottomSheetNav/BottomSheetNav.jsx';
 export { CommandBar, CommandBarButton, CommandBarSearch, useCommandBar } from './patterns/CommandBar/CommandBar.jsx';
 export { FilterPanel } from './patterns/FilterPanel/FilterPanel.jsx';

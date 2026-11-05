@@ -47,6 +47,7 @@ export function gridFrame({
   virtualized,
   effectiveStep,
   effectiveWrap,
+  editMenu,
   failed,
   S,
   onRetry,
@@ -195,7 +196,7 @@ export function gridFrame({
                 ) : null}
                 {cardBar != null ? <span className={B + '__card-count'}>{cardBar}</span> : null}
                 {cardBar != null ? null : ordered.map(headerCell)}
-                {cardBar != null ? null : viewMenu({ props, B, S, effectiveStep, setRowHeight, effectiveWrap, setWrapHeaders })}
+                {cardBar != null ? null : viewMenu({ props, B, S, effectiveStep, setRowHeight, effectiveWrap, setWrapHeaders, editMenu })}
                 {cardBar == null && rowMenu && rowMenuButton ? (
                   <Width
                     width={metrics.menu}

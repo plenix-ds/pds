@@ -1,4 +1,6 @@
-# Gate G2 (plan §3; D-0056; #396): a PR labeled `g2-changes-requested` can't merge, in the PR and in the merge queue.
+# Gates G2 and G3 (plan §3; D-0056; #396, #449): a PR labeled `g2-changes-requested` (Design Director) or
+# `g3-changes-requested` (DS Architect) can't merge, in the PR and in the merge queue. The job keeps its name
+# "G2 (design review)": the ruleset requires that exact name, and renaming it would strand queued PRs.
 # Its own small workflow, not a job in ci.yml: it re-runs on every label change in seconds, while ci.yml (about 14 jobs)
 # is not re-run on labels. Required on main (ruleset), beside "CI result" and "Ownership". Runs are never cancelled: a
 # cancelled run counts against a required check (#351).
@@ -34,5 +36,5 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - name: No g2-changes-requested label on the PR (D-0056)
+      - name: No g2-changes-requested or g3-changes-requested label on the PR (D-0056, #449)
         run: node tools/ci/check-g2.mjs

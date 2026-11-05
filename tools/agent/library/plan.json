@@ -1605,7 +1605,7 @@
       "platform/charts/scales.js",
       "platform/charts/ChartFrame.jsx",
       "platform/charts/charts.css",
-      "platform/components/TransferList/TransferList.jsx",
+      "platform/components/TransferList/TransferList.tsx",
       "platform/components/TransferList/transfer-list.css",
       "platform/tokens/components/transfer-list.tokens.json"
      ],
@@ -5593,7 +5593,7 @@
    "wave": 7,
    "lane": "C",
    "files": [
-    "platform/components/TransferList/TransferList.jsx",
+    "platform/components/TransferList/TransferList.tsx",
     "platform/components/TransferList/transfer-list.css",
     "platform/tokens/components/transfer-list.tokens.json"
    ],
@@ -17571,7 +17571,7 @@
    "target": "TransferList",
    "targetKind": "component",
    "files": [
-    "platform/components/TransferList/TransferList.jsx",
+    "platform/components/TransferList/TransferList.tsx",
     "platform/components/TransferList/transfer-list.css",
     "platform/tokens/components/transfer-list.tokens.json"
    ],
@@ -17604,7 +17604,7 @@
    "targetKind": "component",
    "duplicateOf": "patterns/Transfer list",
    "files": [
-    "platform/components/TransferList/TransferList.jsx",
+    "platform/components/TransferList/TransferList.tsx",
     "platform/components/TransferList/transfer-list.css",
     "platform/tokens/components/transfer-list.tokens.json"
    ],
