@@ -100,7 +100,7 @@ jobs:
         run: node tools/ci/check-trace.mjs "$(git merge-base "$BASE_SHA" HEAD)"
 
   design-checks:
-    name: Checks 9-11 (state manifest, numeric columns, pill height)
+    name: Checks 9-12 (state manifest, numeric columns, pill height, visual regression)
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
@@ -127,6 +127,20 @@ jobs:
           command -v google-chrome >/dev/null || { echo "::error::Chrome is missing on the runner: check 11 cannot run, and a missing browser is a FAIL"; exit 1; }
           google-chrome --version
           npx --no-install playwright test -c tests/pills/playwright.config.mjs
+      - name: Check 12, visual regression (light and dark per specimen; RTL and compact for changed components; #191)
+        run: |
+          VISUAL_EXTRA=$(node tools/ci/visual-extra.mjs "$(git merge-base "$BASE_SHA" HEAD)")
+          export VISUAL_EXTRA
+          echo "RTL and compact for: ${VISUAL_EXTRA:-none}"
+          npx --no-install playwright test -c tests/visual/playwright.config.mjs
+      - name: Check 12 report and differences (for the PR and the dashboard; D-0016)
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: visual-regression
+          path: test-results/
+          if-no-files-found: ignore
+          retention-days: 90
       - name: Dashboard acceptance tests (#195 AC-1 to AC-6), when the dashboard or its tests change
         run: |
           if git diff --quiet "$(git merge-base "$BASE_SHA" HEAD)" HEAD -- dashboard/pds1 tests/dashboard; then
