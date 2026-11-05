@@ -1,0 +1,75 @@
+# PDS dashboard publish (P0-13, #195; plan §6a; D-0034, built like CTM 3.0).
+# dashboard/pds1/collect.py reads GitHub and decisions.yaml (read-only) and writes data.js; the page is published to
+# GitHub Pages (https://plenix-ds.github.io/pds/) by GitHub's own Pages actions, so no job can push to the repo.
+# Runs on every push to main, on a comment on an issue labeled "decision" (an owner answer), hourly and by hand.
+name: Dashboard
+
+on:
+  push:
+    branches: [main]
+  # safe here: an issue_comment run always uses main's workflow and checks out main; the comment text is never read,
+  # the build job's token is read-only and the publish job only uploads the artifact (zizmor dangerous-triggers)
+  issue_comment: # zizmor: ignore[dangerous-triggers]
+    types: [created, edited]
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: dashboard-pages
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    name: Collect and build the page
+    # a comment counts only on a decision issue (an owner answer); everything else is not a dashboard change
+    if: github.event_name != 'issue_comment' || contains(github.event.issue.labels.*.name, 'decision')
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      issues: read
+      pull-requests: read
+      actions: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.12'
+      - name: PyYAML (pinned)
+        run: python -m pip install --disable-pip-version-check -q 'PyYAML==6.0.2'
+      - name: Collect (read-only; GitHub's own token for this run)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/site"
+          cp dashboard/pds1/index.html dashboard/pds1/app.js "$RUNNER_TEMP/site/"
+          touch "$RUNNER_TEMP/site/.nojekyll"
+          python dashboard/pds1/collect.py "$RUNNER_TEMP/site"
+          test -s "$RUNNER_TEMP/site/data.js"
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: ${{ runner.temp }}/site
+
+  publish:
+    name: Publish to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.pages.outputs.page_url }}
+    steps:
+      - id: pages
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
