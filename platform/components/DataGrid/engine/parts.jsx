@@ -18,6 +18,7 @@ import { Spinner } from '../../Loading/Loading.tsx';
 import { Select } from '../../Input/Input.tsx';
 import { useDirection } from '../../../providers/DirectionProvider.tsx';
 import { DatePicker } from '../../DatePicker/DatePicker.jsx';
+import { Combobox } from '../../Combobox/Combobox.tsx';
 import { dataWhenText } from '../../../utils/dataText.tsx';
 import { cx } from '../../../utils/cx.ts';
 import { usePressable } from '../../../hooks/usePressable.ts';
@@ -287,6 +288,58 @@ function DateEditor({ draft, setDraft, invalid, messageId, finish, cancel, input
   );
 }
 
+// the combobox editor (ADR 0016): Plenix's Combobox inside the cell, bare, its list open as it takes the focus. Typing filters (or loads
+// the options), choosing one saves it at once; with the list closed Enter saves the current value; Escape closes the list, then cancels.
+function ComboboxEditor({ draft, setDraft, invalid, messageId, finish, cancel, input, done, options, load, label }) {
+  const wrap = React.useRef(null);
+  React.useEffect(() => {
+    wrap.current?.querySelector('input')?.focus();
+  }, []);
+  return (
+    <>
+      <span
+        ref={wrap}
+        className="plx-data-grid__editor-field"
+        dir="auto"
+        onKeyDownCapture={(e) => {
+          // before the combobox's own keys: Tab and the closed-list Enter and Escape are the cell's; the rest (arrows, typing, Enter on an open list) are the combobox's
+          const open = e.target.getAttribute?.('aria-expanded') === 'true';
+          if (e.key === 'Tab' && !e.altKey && !e.ctrlKey && !e.metaKey) {
+            e.preventDefault();
+            e.stopPropagation();
+            finish(e.shiftKey ? -1 : 1);
+          } else if (!open && e.key === 'Escape') {
+            e.preventDefault();
+            e.stopPropagation();
+            done.current = true;
+            cancel();
+          } else if (!open && e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+            finish();
+          }
+        }}
+      >
+        <Combobox
+          ref={input}
+          label={label}
+          aria-describedby={invalid ? messageId : undefined}
+          invalid={!!invalid}
+          width="fill"
+          {...(load ? { loadOptions: load } : { options })}
+          value={draft ?? ''}
+          onChange={(v) => {
+            setDraft(v);
+            finish(0, v);
+          }}
+          onBlur={() => finish()}
+        />
+      </span>
+      {invalid ? <EditorMessage id={messageId} anchor={wrap} message={invalid} /> : null}
+    </>
+  );
+}
+
 // an application's own editor (ADR 0016, editor: { component, props }): it gets CellEditorProps inside the same frame and calls
 // onChange(draft), onCommit(value?) (the draft when no value is given) or onCancel(); Tab saves the draft and moves, Escape the
 // component did not handle cancels, and the focus leaving the editor saves the draft.
@@ -342,7 +395,7 @@ function ComponentEditor({ editor, column, record, draft, setDraft, invalid, mes
   );
 }
 
-export function CellEditor({ column, record, value, area, select, date, custom, onCommit, onCancel }) {
+export function CellEditor({ column, record, value, area, select, date, combobox, custom, onCommit, onCancel }) {
   const S = useStrings('dataGrid'),
     [draft, setDraft] = React.useState(value ?? ''),
     [invalid, setInvalid] = React.useState(null),
@@ -374,6 +427,16 @@ export function CellEditor({ column, record, value, area, select, date, custom, 
         {...{ column, record, draft, setDraft, invalid, messageId, finish, done }}
         editor={column.editor}
         cancel={onCancel}
+      />
+    );
+  if (combobox)
+    return (
+      <ComboboxEditor
+        {...{ draft, setDraft, invalid, messageId, finish, input, done }}
+        cancel={onCancel}
+        options={column.editorProps?.options ?? []}
+        load={column.editorProps?.loadOptions}
+        label={S.editCell.replace('{title}', column.title)}
       />
     );
   if (date)
