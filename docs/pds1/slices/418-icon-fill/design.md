@@ -2,13 +2,15 @@
 
 - **Owner, 2026-11-05 about 21:25 UTC:** "no box around the icon.. make the icon take full space of that area (the formerly box area)".
 - **Decisions:** D-0055, D-0058 (no box, confirmed by the owner); D-0038 A (the fact icons at the full tile size).
-- **Rule:** with no box, the icon's size (`--plx-comp-icon-size`, the Icon's square) equals the media area in every kind and layout.
-  - The glyph's own optical margin inside that square (Material Symbols' live area) is part of the glyph, not a box. It isn't scaled away, so the glyph is never clipped.
+- **Rule (D-0060, B, the owner):** with no box, the drawn glyph spans the whole former box area.
+  - The media square keeps the area's size (the table below).
+  - The icon inside is drawn at **120% of the area** (24/20: the Material Symbols live area is 20 of 24, so the glyph's edges reach the area's edges), centred, with overflow visible. Nothing clips, because the glyph stays inside its live area.
+  - The 120% is a comp token the DS Architect names (G3), for example `entity-header-media-icon-fill-scale`, not a literal in CSS.
   - `box: true` is unchanged: today's tile with the smaller icon inside.
 
 ## The sizes (icon = area)
 
-| Kind | Layout | Area token | Icon size, no box |
+| Kind | Layout | Area token | Area (the glyph spans it; the icon square is 120%) |
 |---|---|---|---|
 | page | top, small (default) | `entity-header-media-size` (`size-11u`) | **44px** |
 | page | top, large | `entity-header-media-size-large` (`size-18u`) | **72px** |
@@ -39,11 +41,11 @@
 
 ## The engineer must not invent
 
-- No new colour or value. The icon equals the area; don't scale past it, and don't add padding.
+- No new colour; the 120% only through its token. The glyph's drawn box equals the area (within 2px); don't add padding.
 - `box: true` and Avatar media are unchanged.
 
 ## Evidence
 
 - **Planned:**
-  - the red test: the rendered icon square equals the area, per kind and layout above, LTR and RTL, light and dark; it fails today at least for column-large and edge;
+  - the red test: the drawn glyph box equals the area (within 2px), per kind and layout above, LTR and RTL, light and dark; it fails today at least for column-large and edge;
   - then CI visuals light, dark and RTL on #418.
