@@ -5,7 +5,7 @@
 //            color fails: a color needs the owner. A hex color written in any other token file fails too.
 //   grid     Everything on the 4px grid. A token whose value is a literal length (px or rem, as 16px) is a multiple of 4. Exempt only
 //            what GRID_EXEMPT names, with the reason for each; the corner radii have their own rule.
-//   corners  Corners are 2 to 6px (and 0). A radius token (a key with "radius") must be a reference, 0, or a px/rem length of 2 to 6px;
+//   corners  Corners are 0, 2, 4 or 6px (D-0005, plan §7 check 2). A radius token (a key with "radius") must be a reference, 0, or a px/rem length of 2, 4 or 6px;
 //            anything else (50%, 0.5em, 9999em, 100vh, a keyword) fails, unless RADIUS_EXEMPT names the token and its exact value with the reason (the spinner, and four card inner corners).
 //            A reference is followed to the value it ends at, in every file that sets it (each theme, density and interaction), and
 //            that value must pass too: {plx-ref.size-12px} is a 12px corner. A reference that ends nowhere (missing, or a loop) fails.
@@ -28,7 +28,7 @@ const GRID_EXEMPT = [
   ['focus-ring-offset', 'an outline offset (2px): a gap between a control and its focus ring, not a space in the layout'],
   ['font-size-', 'type sizes come from the type scale, not the grid'],
 ];
-// a corner token (a key with "radius") may hold 0, a reference, or a length of 2 to 6px; anything else (50%, 0.5em, 9999em, 100vh, any calc(), a keyword)
+// a corner token (a key with "radius") may hold 0, a reference, or a length of 2, 4 or 6px; anything else (50%, 0.5em, 9999em, 100vh, any calc(), a keyword)
 // fails, unless it is named here with its value and the reason
 const RADIUS_EXEMPT = [
   ['spinner-radius', '50%', 'owner, spinner-round-29 (2026-10-27): a spinner is a circle, not a corner'],
@@ -39,7 +39,7 @@ const RADIUS_EXEMPT = [
   ['media-card-media-border-top-right-radius', 'calc({plx-sys.radius-card-6px} - {plx-sys.border-width-thin})', 'inner corner: card radius minus border width'],
 ];
 const radiusExempt = (key, value) => RADIUS_EXEMPT.some(([n, v]) => n === key && v === String(value).trim());
-const CORNERS = [0, 6];   // px: 0, and 2 to 6 (the scale has no 1px and no 5px corner)
+const CORNERS = [0, 2, 4, 6];   // px: the corner scale (D-0005); no 1px, 3px or 5px corner
 const LEN = /^(-?[\d.]+)(px|rem)$/;
 const one = (w) => { const m = String(w).match(LEN); return m ? (m[2] === 'rem' ? Number(m[1]) * 16 : Number(m[1])) : null; };
 // every length in a value, each part of a compound ("4px 7px"): [] when the value has none (a reference, a keyword, a number)
@@ -66,8 +66,8 @@ function tokens() {
   walkDir(TOKENS);
   return out;
 }
-// a corner length passes when it is 0, or a px or rem length of 2 to 6px
-const cornerOk = (p) => /^0(px|rem)?$/.test(p) || (one(p) !== null && one(p) >= 2 && one(p) <= CORNERS[1]);
+// a corner length passes when it is 0, or a px or rem length on the corner scale (2, 4 or 6px)
+const cornerOk = (p) => /^0(px|rem)?$/.test(p) || (one(p) !== null && CORNERS.includes(one(p)));
 const REF = /^\{([^}]+)\}$/;
 // the values a reference ends at: every file that sets the token, followed to a value that is not a reference ('?' for a missing token or a loop)
 function ends(values, name, seen) {
@@ -76,7 +76,7 @@ function ends(values, name, seen) {
   for (const v of values[name]) { const m = REF.exec(String(v).trim()); if (m) out.push(...ends(values, m[1], next)); else out.push(String(v).trim()); }
   return out;
 }
-// a radius value passes when every part is 0, a px or rem length of 2 to 6px, or a reference that ends at such a value in every file;
+// a radius value passes when every part is 0, a px or rem length of 2, 4 or 6px, or a reference that ends at such a value in every file;
 // returns null when it passes, or what it ends at
 function radiusFails(v, values) {
   const bad = [];
@@ -110,7 +110,7 @@ function check({ add }) {
     else if (fz.colors[k] !== m.colors[k]) add(NAME, path.join(ROOT, 'platform/tokens/reference.tokens.json'), 0, '--plx-ref-' + k + ' changed from ' + fz.colors[k] + ' to ' + m.colors[k] + ': a color needs the owner');
   }
   for (const k of Object.keys(fz.colors)) if (!(k in m.colors)) add(NAME, at, 0, 'repaired, still listed: color ' + k + ' (run node check-system.rules/token-definitions.js --shrink)');
-  for (const [kind, what, hint] of [['grid', 'is off the 4px grid', 'a multiple of 4, or named in GRID_EXEMPT with its reason'], ['corners', 'is a corner outside 2 to 6px (or 0)', 'between 2 and 6px']]) {
+  for (const [kind, what, hint] of [['grid', 'is off the 4px grid', 'a multiple of 4, or named in GRID_EXEMPT with its reason'], ['corners', 'is a corner off the scale 0, 2, 4, 6px', '0, 2, 4 or 6px (D-0005)']]) {
     for (const k of Object.keys(m[kind])) if (!(k in fz[kind])) add(NAME, path.join(ROOT, 'platform/tokens'), 0, '--plx-*-' + k + ' = ' + m[kind][k] + ' ' + what + ' (needs ' + hint + ')');
     for (const k of Object.keys(fz[kind])) if (!(k in m[kind])) add(NAME, at, 0, 'repaired, still listed: ' + kind + ' ' + k + ' (run node check-system.rules/token-definitions.js --shrink)');
   }
