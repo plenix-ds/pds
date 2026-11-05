@@ -1,0 +1,3 @@
+RED (before the fix, main @ 3f4b3d9b):
+  NEW test-site/index.html#/directory: scroller 0 -> 1 · e.g. section.plx-page-content 326/320px
+  REFLOW_FAIL 1 new findings; 16 known findings on 56 pages at 320px
