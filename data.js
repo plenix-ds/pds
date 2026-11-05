@@ -1,6 +1,6 @@
 window.PDS_DATA = {
- "generatedAt": "2026-11-05T13:17+00:00",
- "mainSha": "21e1544",
+ "generatedAt": "2026-11-05T16:57+00:00",
+ "mainSha": "ce9cb92",
  "tasks": [
   {
    "number": 220,
@@ -21,42 +21,6 @@ window.PDS_DATA = {
    "rank": 1
   },
   {
-   "number": 269,
-   "title": "Buttons: secondary and danger-secondary have different elevation; reduce glow/shadow so all outline buttons match (CTM owner)",
-   "url": "https://github.com/plenix-ds/pds/issues/269",
-   "sev": "S1",
-   "type": "ui",
-   "areas": [
-    "styles"
-   ],
-   "owners": [
-    "design-director"
-   ],
-   "decision": false,
-   "next": "",
-   "waiting": "",
-   "updated": "2026-11-05T12:30:27Z",
-   "rank": 2
-  },
-  {
-   "number": 275,
-   "title": "EntityHeader: the media icon should sit in its box (owner decision) — the case header icon shows without the decided box",
-   "url": "https://github.com/plenix-ds/pds/issues/275",
-   "sev": "S1",
-   "type": "ui",
-   "areas": [
-    "components"
-   ],
-   "owners": [
-    "design-director"
-   ],
-   "decision": false,
-   "next": "",
-   "waiting": "",
-   "updated": "2026-11-05T12:30:22Z",
-   "rank": 3
-  },
-  {
    "number": 72,
    "title": "Chat Dialogue Interface for the CDN and the design spec (owner spec, needed now)",
    "url": "https://github.com/plenix-ds/pds/issues/72",
@@ -72,7 +36,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:45:36Z",
-   "rank": 4
+   "rank": 2
   },
   {
    "number": 84,
@@ -90,25 +54,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:46:01Z",
-   "rank": 5
-  },
-  {
-   "number": 110,
-   "title": "DT-44: \"fill\" sizes the grid to the window's bottom edge, not the page's room, so the page scrolls too",
-   "url": "https://github.com/plenix-ds/pds/issues/110",
-   "sev": "S2",
-   "type": "bug",
-   "areas": [
-    "components"
-   ],
-   "owners": [
-    "component-engineer"
-   ],
-   "decision": false,
-   "next": "",
-   "waiting": "",
-   "updated": "2026-11-05T06:47:33Z",
-   "rank": 6
+   "rank": 3
   },
   {
    "number": 147,
@@ -126,25 +72,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:49:11Z",
-   "rank": 7
-  },
-  {
-   "number": 148,
-   "title": "P-46: Importing Plenix prerenders or prefetches every link on the page",
-   "url": "https://github.com/plenix-ds/pds/issues/148",
-   "sev": "S2",
-   "type": "bug",
-   "areas": [
-    "components"
-   ],
-   "owners": [
-    "component-engineer"
-   ],
-   "decision": false,
-   "next": "",
-   "waiting": "",
-   "updated": "2026-11-05T06:49:15Z",
-   "rank": 8
+   "rank": 4
   },
   {
    "number": 149,
@@ -162,7 +90,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:49:18Z",
-   "rank": 9
+   "rank": 5
   },
   {
    "number": 3,
@@ -180,7 +108,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:42:59Z",
-   "rank": 10
+   "rank": 6
   },
   {
    "number": 5,
@@ -198,7 +126,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T12:27:03Z",
-   "rank": 11
+   "rank": 7
   },
   {
    "number": 7,
@@ -216,7 +144,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:43:15Z",
-   "rank": 12
+   "rank": 8
   },
   {
    "number": 11,
@@ -234,7 +162,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T10:16:26Z",
-   "rank": 13
+   "rank": 9
   },
   {
    "number": 13,
@@ -252,25 +180,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T10:16:28Z",
-   "rank": 14
-  },
-  {
-   "number": 21,
-   "title": "Owner request: every app linked directly to the CDN so it updates when the CDN updates",
-   "url": "https://github.com/plenix-ds/pds/issues/21",
-   "sev": "S3",
-   "type": "feature",
-   "areas": [
-    "release"
-   ],
-   "owners": [
-    "release-architect"
-   ],
-   "decision": false,
-   "next": "",
-   "waiting": "",
-   "updated": "2026-11-05T06:43:44Z",
-   "rank": 15
+   "rank": 10
   },
   {
    "number": 24,
@@ -288,7 +198,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:43:51Z",
-   "rank": 16
+   "rank": 11
   },
   {
    "number": 25,
@@ -306,7 +216,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:43:54Z",
-   "rank": 17
+   "rank": 12
   },
   {
    "number": 32,
@@ -324,7 +234,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:17Z",
-   "rank": 18
+   "rank": 13
   },
   {
    "number": 34,
@@ -342,7 +252,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:24Z",
-   "rank": 19
+   "rank": 14
   },
   {
    "number": 42,
@@ -360,7 +270,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:38Z",
-   "rank": 20
+   "rank": 15
   },
   {
    "number": 46,
@@ -378,7 +288,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:41Z",
-   "rank": 21
+   "rank": 16
   },
   {
    "number": 47,
@@ -396,7 +306,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:45Z",
-   "rank": 22
+   "rank": 17
   },
   {
    "number": 57,
@@ -413,26 +323,8 @@ window.PDS_DATA = {
    "decision": false,
    "next": "",
    "waiting": "",
-   "updated": "2026-11-05T06:44:58Z",
-   "rank": 23
-  },
-  {
-   "number": 60,
-   "title": "Audit (Medium): thirty kinds of generated files are committed, so pull requests conflict on them",
-   "url": "https://github.com/plenix-ds/pds/issues/60",
-   "sev": "S3",
-   "type": "feature",
-   "areas": [
-    "release"
-   ],
-   "owners": [
-    "release-architect"
-   ],
-   "decision": false,
-   "next": "",
-   "waiting": "",
-   "updated": "2026-11-05T06:45:05Z",
-   "rank": 24
+   "updated": "2026-11-05T13:21:13Z",
+   "rank": 18
   },
   {
    "number": 61,
@@ -449,8 +341,8 @@ window.PDS_DATA = {
    "decision": false,
    "next": "",
    "waiting": "",
-   "updated": "2026-11-05T12:33:21Z",
-   "rank": 25
+   "updated": "2026-11-05T13:19:51Z",
+   "rank": 19
   },
   {
    "number": 64,
@@ -468,7 +360,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:45:15Z",
-   "rank": 26
+   "rank": 20
   },
   {
    "number": 70,
@@ -486,25 +378,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T07:07:23Z",
-   "rank": 27
-  },
-  {
-   "number": 79,
-   "title": "ColumnsMenu: a grid-style keyboard pattern (one Tab stop, arrows across rows and controls)",
-   "url": "https://github.com/plenix-ds/pds/issues/79",
-   "sev": "S3",
-   "type": "feature",
-   "areas": [
-    "components"
-   ],
-   "owners": [
-    "component-engineer"
-   ],
-   "decision": false,
-   "next": "",
-   "waiting": "",
-   "updated": "2026-11-05T06:45:50Z",
-   "rank": 28
+   "rank": 21
   },
   {
    "number": 86,
@@ -522,7 +396,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:46:08Z",
-   "rank": 29
+   "rank": 22
   },
   {
    "number": 107,
@@ -540,79 +414,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:47:21Z",
-   "rank": 30
-  },
-  {
-   "number": 112,
-   "title": "Icons (#277): move Plenix's own icons out of the stylesheet (staged, no visual change)",
-   "url": "https://github.com/plenix-ds/pds/issues/112",
-   "sev": "S3",
-   "type": "feature",
-   "areas": [
-    "icons"
-   ],
-   "owners": [
-    "component-engineer"
-   ],
-   "decision": false,
-   "next": "",
-   "waiting": "",
-   "updated": "2026-11-05T06:47:40Z",
-   "rank": 31
-  },
-  {
-   "number": 113,
-   "title": "Icons: one icon architecture (assets apart from CSS, one resolver, CDN and self-hosted) — epic",
-   "url": "https://github.com/plenix-ds/pds/issues/113",
-   "sev": "S3",
-   "type": "feature",
-   "areas": [
-    "icons"
-   ],
-   "owners": [
-    "ds-architect"
-   ],
-   "decision": false,
-   "next": "",
-   "waiting": "",
-   "updated": "2026-11-05T06:47:44Z",
-   "rank": 32
-  },
-  {
-   "number": 114,
-   "title": "Connect the internal applications to the CDN and the spec, both ways: apps file issues and send fixes; releases reach every app at once",
-   "url": "https://github.com/plenix-ds/pds/issues/114",
-   "sev": "S3",
-   "type": "feature",
-   "areas": [
-    "release"
-   ],
-   "owners": [
-    "release-architect"
-   ],
-   "decision": false,
-   "next": "",
-   "waiting": "",
-   "updated": "2026-11-05T13:07:19Z",
-   "rank": 33
-  },
-  {
-   "number": 121,
-   "title": "Unused component tokens: 119 --plx-comp-* tokens nothing reads, and a check",
-   "url": "https://github.com/plenix-ds/pds/issues/121",
-   "sev": "S3",
-   "type": "feature",
-   "areas": [
-    "tokens"
-   ],
-   "owners": [
-    "ds-architect"
-   ],
-   "decision": false,
-   "next": "",
-   "waiting": "",
-   "updated": "2026-11-05T06:48:09Z",
-   "rank": 34
+   "rank": 23
   },
   {
    "number": 122,
@@ -630,7 +432,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:48:13Z",
-   "rank": 35
+   "rank": 24
   },
   {
    "number": 125,
@@ -648,25 +450,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:48:21Z",
-   "rank": 36
-  },
-  {
-   "number": 126,
-   "title": "Styling Phase 5: cascade layers, and no !important",
-   "url": "https://github.com/plenix-ds/pds/issues/126",
-   "sev": "S3",
-   "type": "feature",
-   "areas": [
-    "styles"
-   ],
-   "owners": [
-    "ds-architect"
-   ],
-   "decision": false,
-   "next": "",
-   "waiting": "",
-   "updated": "2026-11-05T06:48:25Z",
-   "rank": 37
+   "rank": 25
   },
   {
    "number": 138,
@@ -684,7 +468,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:48:42Z",
-   "rank": 38
+   "rank": 26
   },
   {
    "number": 140,
@@ -702,7 +486,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:48:45Z",
-   "rank": 39
+   "rank": 27
   },
   {
    "number": 141,
@@ -720,7 +504,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:48:49Z",
-   "rank": 40
+   "rank": 28
   },
   {
    "number": 142,
@@ -738,7 +522,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:48:52Z",
-   "rank": 41
+   "rank": 29
   },
   {
    "number": 143,
@@ -756,7 +540,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:48:57Z",
-   "rank": 42
+   "rank": 30
   },
   {
    "number": 144,
@@ -774,7 +558,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:49:01Z",
-   "rank": 43
+   "rank": 31
   },
   {
    "number": 145,
@@ -792,7 +576,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:49:04Z",
-   "rank": 44
+   "rank": 32
   },
   {
    "number": 146,
@@ -810,7 +594,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:49:07Z",
-   "rank": 45
+   "rank": 33
   },
   {
    "number": 161,
@@ -828,7 +612,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:49:56Z",
-   "rank": 46
+   "rank": 34
   },
   {
    "number": 180,
@@ -846,7 +630,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:53:09Z",
-   "rank": 47
+   "rank": 35
   },
   {
    "number": 181,
@@ -864,7 +648,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T11:27:59Z",
-   "rank": 48
+   "rank": 36
   },
   {
    "number": 209,
@@ -882,7 +666,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:53:05Z",
-   "rank": 49
+   "rank": 37
   },
   {
    "number": 217,
@@ -900,7 +684,25 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T07:53:14Z",
-   "rank": 50
+   "rank": 38
+  },
+  {
+   "number": 292,
+   "title": "TypeScript wave 1: components still in JS (slice 57, ADR 0011)",
+   "url": "https://github.com/plenix-ds/pds/issues/292",
+   "sev": "S3",
+   "type": "feature",
+   "areas": [
+    "components"
+   ],
+   "owners": [
+    "component-engineer"
+   ],
+   "decision": false,
+   "next": "",
+   "waiting": "",
+   "updated": "2026-11-05T15:38:13Z",
+   "rank": 39
   },
   {
    "number": 18,
@@ -918,7 +720,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:43:37Z",
-   "rank": 51
+   "rank": 40
   },
   {
    "number": 115,
@@ -936,7 +738,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:47:50Z",
-   "rank": 52
+   "rank": 41
   },
   {
    "number": 116,
@@ -953,26 +755,8 @@ window.PDS_DATA = {
    "decision": false,
    "next": "",
    "waiting": "",
-   "updated": "2026-11-05T06:47:54Z",
-   "rank": 53
-  },
-  {
-   "number": 117,
-   "title": "Every variation as its own record (1,186 variants now nested in their items)",
-   "url": "https://github.com/plenix-ds/pds/issues/117",
-   "sev": "S4",
-   "type": "feature",
-   "areas": [
-    "docs"
-   ],
-   "owners": [
-    "ds-architect"
-   ],
-   "decision": false,
-   "next": "",
-   "waiting": "",
-   "updated": "2026-11-05T06:47:58Z",
-   "rank": 54
+   "updated": "2026-11-05T16:29:43Z",
+   "rank": 42
   },
   {
    "number": 120,
@@ -990,7 +774,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:48:06Z",
-   "rank": 55
+   "rank": 43
   },
   {
    "number": 129,
@@ -1008,7 +792,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:48:35Z",
-   "rank": 56
+   "rank": 44
   },
   {
    "number": 166,
@@ -1026,7 +810,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:50:10Z",
-   "rank": 57
+   "rank": 45
   },
   {
    "number": 178,
@@ -1042,23 +826,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T10:55:07Z",
-   "rank": 58
-  },
-  {
-   "number": 184,
-   "title": "Phase 0 P0-2: Style Dictionary (reuse plenix-platform#928)",
-   "url": "https://github.com/plenix-ds/pds/issues/184",
-   "sev": "S4",
-   "type": "",
-   "areas": [],
-   "owners": [
-    "ds-architect"
-   ],
-   "decision": false,
-   "next": "",
-   "waiting": "",
-   "updated": "2026-11-05T13:07:50Z",
-   "rank": 59
+   "rank": 46
   },
   {
    "number": 191,
@@ -1074,7 +842,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:38:20Z",
-   "rank": 60
+   "rank": 47
   },
   {
    "number": 192,
@@ -1090,7 +858,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:38:21Z",
-   "rank": 61
+   "rank": 48
   },
   {
    "number": 193,
@@ -1106,7 +874,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:38:22Z",
-   "rank": 62
+   "rank": 49
   },
   {
    "number": 194,
@@ -1122,7 +890,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T10:47:26Z",
-   "rank": 63
+   "rank": 50
   },
   {
    "number": 197,
@@ -1137,8 +905,8 @@ window.PDS_DATA = {
    "decision": false,
    "next": "",
    "waiting": "",
-   "updated": "2026-11-05T09:42:45Z",
-   "rank": 64
+   "updated": "2026-11-05T16:45:38Z",
+   "rank": 51
   },
   {
    "number": 206,
@@ -1154,7 +922,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T07:29:55Z",
-   "rank": 65
+   "rank": 52
   },
   {
    "number": 235,
@@ -1170,7 +938,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T10:50:07Z",
-   "rank": 66
+   "rank": 53
   },
   {
    "number": 251,
@@ -1186,7 +954,23 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T11:30:00Z",
-   "rank": 67
+   "rank": 54
+  },
+  {
+   "number": 343,
+   "title": "Design spec: lab helpers build deprecated token names (box/W/S, avatar and pictogram)",
+   "url": "https://github.com/plenix-ds/pds/issues/343",
+   "sev": "S4",
+   "type": "",
+   "areas": [],
+   "owners": [
+    "ds-architect"
+   ],
+   "decision": false,
+   "next": "",
+   "waiting": "",
+   "updated": "2026-11-05T16:52:02Z",
+   "rank": 55
   }
  ],
  "ownerDecisions": [
@@ -1249,28 +1033,299 @@ window.PDS_DATA = {
  ],
  "openPrs": [
   {
-   "headRefName": "agent/ce1-columns-kb-79",
+   "headRefName": "spec/343-helpers",
    "isDraft": false,
+   "number": 344,
+   "title": "Spec lab helpers build current token names, not deprecated aliases (#343)",
+   "url": "https://github.com/plenix-ds/pds/pull/344"
+  },
+  {
+   "headRefName": "spec/116-variant-styles",
+   "isDraft": false,
+   "number": 342,
+   "title": "Each variation documents what it sets: derived tables, API sets, coverage check (#116, ADR 0015)",
+   "url": "https://github.com/plenix-ds/pds/pull/342"
+  },
+  {
+   "headRefName": "agent/ce1-print-87",
+   "isDraft": false,
+   "number": 340,
+   "title": "PrintDocument, AnswerLines and PageBreak (#87, ADR 0014)",
+   "url": "https://github.com/plenix-ds/pds/pull/340"
+  },
+  {
+   "headRefName": "agent/ce1-ts-wave1-d",
+   "isDraft": false,
+   "number": 306,
+   "title": "TypeScript wave 1, batch D: CodeBlock, SuggestedEdit, RefineMenu (#292)",
+   "url": "https://github.com/plenix-ds/pds/pull/306"
+  }
+ ],
+ "mergedPrs": [
+  {
+   "mergedAt": "2026-11-05T16:53:30Z",
+   "number": 341,
+   "title": "CHANGELOG 0.88.0: fold #334 and #292 batch E (#312)",
+   "url": "https://github.com/plenix-ds/pds/pull/341"
+  },
+  {
+   "mergedAt": "2026-11-05T16:51:08Z",
+   "number": 339,
+   "title": "ADR 0015: each variation documents the styling it sets (#116, G3)",
+   "url": "https://github.com/plenix-ds/pds/pull/339"
+  },
+  {
+   "mergedAt": "2026-11-05T16:38:50Z",
+   "number": 338,
+   "title": "Release 0.88.0: version, CHANGELOG (#312: S1 fixes #269, #275)",
+   "url": "https://github.com/plenix-ds/pds/pull/338"
+  },
+  {
+   "mergedAt": "2026-11-05T16:30:15Z",
+   "number": 337,
+   "title": "Connected apps: design spec linked from releases and App reports (#114 item 4)",
+   "url": "https://github.com/plenix-ds/pds/pull/337"
+  },
+  {
+   "mergedAt": "2026-11-05T16:36:26Z",
+   "number": 336,
+   "title": "DataGrid, Resizable: remove the hand-written 18px steps (#301)",
+   "url": "https://github.com/plenix-ds/pds/pull/336"
+  },
+  {
+   "mergedAt": "2026-11-05T16:42:18Z",
+   "number": 335,
+   "title": "Retire the off-grid palette steps: size-18px, space-6px, space-10px (#301)",
+   "url": "https://github.com/plenix-ds/pds/pull/335"
+  },
+  {
+   "mergedAt": "2026-11-05T16:30:15Z",
+   "number": 334,
+   "title": "ADR 0014 + print tokens: PrintDocument, AnswerLines, PageBreak (#87, G3)",
+   "url": "https://github.com/plenix-ds/pds/pull/334"
+  },
+  {
+   "mergedAt": "2026-11-05T16:27:19Z",
+   "number": 333,
+   "title": "Design: #301 addendum, space-6px and space-10px to grid roles; DESIGN.md §5",
+   "url": "https://github.com/plenix-ds/pds/pull/333"
+  },
+  {
+   "mergedAt": "2026-11-05T16:19:21Z",
+   "number": 332,
+   "title": "Token rename part 4: sys radius, label height, pane widths, Avatar sizes; check-7 exceptions (ADR 0012, #184)",
+   "url": "https://github.com/plenix-ds/pds/pull/332"
+  },
+  {
+   "mergedAt": "2026-11-05T16:15:57Z",
+   "number": 331,
+   "title": "CHANGELOG 0.87.0: fold #311 (#312)",
+   "url": "https://github.com/plenix-ds/pds/pull/331"
+  },
+  {
+   "mergedAt": "2026-11-05T16:15:57Z",
+   "number": 330,
+   "title": "Check 9: TypeScript conversion renames are not component changes (#329)",
+   "url": "https://github.com/plenix-ds/pds/pull/330"
+  },
+  {
+   "mergedAt": "2026-11-05T16:15:57Z",
+   "number": 328,
+   "title": "ledger: ruling #320 over #324 (#269)",
+   "url": "https://github.com/plenix-ds/pds/pull/328"
+  },
+  {
+   "mergedAt": "2026-11-05T16:53:30Z",
+   "number": 327,
+   "title": "Every variation as its own record: ids, /api/v1/variants.json, a check (#117, ADR 0013)",
+   "url": "https://github.com/plenix-ds/pds/pull/327"
+  },
+  {
+   "mergedAt": "2026-11-05T16:30:15Z",
+   "number": 326,
+   "title": "Settings: screen headers use EntityHeader (#127)",
+   "url": "https://github.com/plenix-ds/pds/pull/326"
+  },
+  {
+   "mergedAt": "2026-11-05T16:20:34Z",
+   "number": 325,
+   "title": "EntityHeader: the { icon, hue } media without a box, as decided (#275)",
+   "url": "https://github.com/plenix-ds/pds/pull/325"
+  },
+  {
+   "mergedAt": "2026-11-05T15:42:55Z",
+   "number": 323,
+   "title": "EntityHeader media tile: logical properties; box confirmed in RecordPage (#275)",
+   "url": "https://github.com/plenix-ds/pds/pull/323"
+  },
+  {
+   "mergedAt": "2026-11-05T16:51:08Z",
+   "number": 322,
+   "title": "ADR 0013: every variation as its own record (#117)",
+   "url": "https://github.com/plenix-ds/pds/pull/322"
+  },
+  {
+   "mergedAt": "2026-11-05T15:47:02Z",
+   "number": 321,
+   "title": "Design: #301 retire size-18px, per-reader pick",
+   "url": "https://github.com/plenix-ds/pds/pull/321"
+  },
+  {
+   "mergedAt": "2026-11-05T16:15:57Z",
+   "number": 320,
+   "title": "Buttons: one lighter elevation for every raised button (#269, #6)",
+   "url": "https://github.com/plenix-ds/pds/pull/320"
+  },
+  {
+   "mergedAt": "2026-11-05T16:40:43Z",
+   "number": 319,
+   "title": "Design: #87 printable A4 documents (G2; D-0052, D-0053)",
+   "url": "https://github.com/plenix-ds/pds/pull/319"
+  },
+  {
+   "mergedAt": "2026-11-05T16:15:57Z",
+   "number": 318,
+   "title": "Design: #269 one lighter button elevation, #275 EntityHeader media without a box (D-0054, D-0055)",
+   "url": "https://github.com/plenix-ds/pds/pull/318"
+  },
+  {
+   "mergedAt": "2026-11-05T15:42:24Z",
+   "number": 317,
+   "title": "Release 0.87.0: version, CHANGELOG, publish job (#312, D-0048)",
+   "url": "https://github.com/plenix-ds/pds/pull/317"
+  },
+  {
+   "mergedAt": "2026-11-05T15:31:36Z",
+   "number": 316,
+   "title": "Check 9: token-only stylesheet edits no longer need a state manifest (#315)",
+   "url": "https://github.com/plenix-ds/pds/pull/316"
+  },
+  {
+   "mergedAt": "2026-11-05T15:33:07Z",
+   "number": 314,
+   "title": "agents.config: per-session memory 1.5 -> 2.5 GB (OOM kills at 14:40)",
+   "url": "https://github.com/plenix-ds/pds/pull/314"
+  },
+  {
+   "mergedAt": "2026-11-05T14:49:28Z",
+   "number": 313,
+   "title": "Baseline scan: a prop named with its part counts only where the part is used (#307)",
+   "url": "https://github.com/plenix-ds/pds/pull/313"
+  },
+  {
+   "mergedAt": "2026-11-05T15:23:07Z",
+   "number": 311,
+   "title": "Token rename part 3: space, control size, type, breakpoints, grid, glyph, motion (ADR 0012, #184)",
+   "url": "https://github.com/plenix-ds/pds/pull/311"
+  },
+  {
+   "mergedAt": "2026-11-05T14:43:53Z",
+   "number": 310,
+   "title": "pickup: no wake for PR open/label events; mentions first (#220)",
+   "url": "https://github.com/plenix-ds/pds/pull/310"
+  },
+  {
+   "mergedAt": "2026-11-05T16:30:15Z",
+   "number": 309,
+   "title": "TypeScript wave 1, batch E: MenuBar, SearchResult (#292)",
+   "url": "https://github.com/plenix-ds/pds/pull/309"
+  },
+  {
+   "mergedAt": "2026-11-05T14:30:21Z",
+   "number": 308,
+   "title": "CI: checks 9-11 join CI result (#197, P0-8)",
+   "url": "https://github.com/plenix-ds/pds/pull/308"
+  },
+  {
+   "mergedAt": "2026-11-05T14:22:55Z",
+   "number": 305,
+   "title": "TypeScript wave 1, batch C: OverflowList, EntityTitle, PromptSuggestions, PromptInput (#292)",
+   "url": "https://github.com/plenix-ds/pds/pull/305"
+  },
+  {
+   "mergedAt": "2026-11-05T14:18:24Z",
+   "number": 304,
+   "title": "CI: Ownership — token tiers and public API need the DS Architect (#197)",
+   "url": "https://github.com/plenix-ds/pds/pull/304"
+  },
+  {
+   "mergedAt": "2026-11-05T14:06:54Z",
+   "number": 303,
+   "title": "CI: new findings shown on the changed line; reviewdog not adopted (D-0046, #197)",
+   "url": "https://github.com/plenix-ds/pds/pull/303"
+  },
+  {
+   "mergedAt": "2026-11-05T14:28:58Z",
+   "number": 302,
+   "title": "Token rename part 2: size palette in grid units, size-1u…size-400u (ADR 0012, D-0046, #184)",
+   "url": "https://github.com/plenix-ds/pds/pull/302"
+  },
+  {
+   "mergedAt": "2026-11-05T14:02:27Z",
+   "number": 300,
+   "title": "Citation: source links use Link external (#295)",
+   "url": "https://github.com/plenix-ds/pds/pull/300"
+  },
+  {
+   "mergedAt": "2026-11-05T14:07:46Z",
+   "number": 299,
+   "title": "TypeScript wave 1, batch B: Time, Metric, Anchor, RichText, GeneratedContent (#292)",
+   "url": "https://github.com/plenix-ds/pds/pull/299"
+  },
+  {
+   "mergedAt": "2026-11-05T13:54:20Z",
+   "number": 298,
+   "title": "CI: Traceability — acceptance IDs in tests and evidence (#197)",
+   "url": "https://github.com/plenix-ds/pds/pull/298"
+  },
+  {
+   "mergedAt": "2026-11-05T13:44:07Z",
+   "number": 297,
+   "title": "Dashboard: Done lists 30 days of closed issues with their PR (#195 AC-5)",
+   "url": "https://github.com/plenix-ds/pds/pull/297"
+  },
+  {
+   "mergedAt": "2026-11-05T13:47:06Z",
+   "number": 296,
+   "title": "Token rename part 1: radius, border width, opacity (ADR 0012, #184)",
+   "url": "https://github.com/plenix-ds/pds/pull/296"
+  },
+  {
+   "mergedAt": "2026-11-05T13:47:06Z",
+   "number": 294,
+   "title": "TypeScript wave 1, batch A: 10 small components (#292)",
+   "url": "https://github.com/plenix-ds/pds/pull/294"
+  },
+  {
+   "mergedAt": "2026-11-05T13:33:01Z",
+   "number": 293,
+   "title": "CI: Opengrep with PDS rules, diff-aware (#197)",
+   "url": "https://github.com/plenix-ds/pds/pull/293"
+  },
+  {
+   "mergedAt": "2026-11-05T13:30:05Z",
+   "number": 291,
+   "title": "ADR 0011: TypeScript source in four waves; tsc writes the declarations (#57)",
+   "url": "https://github.com/plenix-ds/pds/pull/291"
+  },
+  {
+   "mergedAt": "2026-11-05T13:25:47Z",
    "number": 290,
    "title": "ColumnsMenu: grid-style keyboard pattern (#79)",
    "url": "https://github.com/plenix-ds/pds/pull/290"
   },
   {
-   "headRefName": "ra/60-generated",
-   "isDraft": false,
+   "mergedAt": "2026-11-05T13:19:12Z",
    "number": 289,
    "title": "CI: Generated files job — no build output committed, library block current (#60)",
    "url": "https://github.com/plenix-ds/pds/pull/289"
   },
   {
-   "headRefName": "agent/ce1-fill-110",
-   "isDraft": false,
+   "mergedAt": "2026-11-05T13:17:51Z",
    "number": 288,
    "title": "DataGrid fill in a page: regression test (#110)",
    "url": "https://github.com/plenix-ds/pds/pull/288"
-  }
- ],
- "mergedPrs": [
+  },
   {
    "mergedAt": "2026-11-05T13:16:58Z",
    "number": 287,
@@ -1606,680 +1661,1039 @@ window.PDS_DATA = {
    "number": 221,
    "title": "CI fixes: diff paths for system/style checks; decision ids in any order (#197)",
    "url": "https://github.com/plenix-ds/pds/pull/221"
-  },
-  {
-   "mergedAt": "2026-11-05T08:26:58Z",
-   "number": 218,
-   "title": "dashboard: PDS 1.0 dashboard page like CTM 3.0 (D-0034); D-0035 owner answers are final",
-   "url": "https://github.com/plenix-ds/pds/pull/218"
-  },
-  {
-   "mergedAt": "2026-11-05T07:38:53Z",
-   "number": 216,
-   "title": "spec: PDS dashboard built like the CTM 3.0 dashboard (#195), D-0034",
-   "url": "https://github.com/plenix-ds/pds/pull/216"
-  },
-  {
-   "mergedAt": "2026-11-05T09:13:13Z",
-   "number": 215,
-   "title": "DESIGN.md §8/§12 corrections after #214 (#199)",
-   "url": "https://github.com/plenix-ds/pds/pull/215"
-  },
-  {
-   "mergedAt": "2026-11-05T09:25:17Z",
-   "number": 214,
-   "title": "12px type floor, retired density file, tabular number cells (#206, #207)",
-   "url": "https://github.com/plenix-ds/pds/pull/214"
-  },
-  {
-   "mergedAt": "2026-11-05T09:10:59Z",
-   "number": 213,
-   "title": "check-system: token tiers (check 6) and token names (check 7) (#201)",
-   "url": "https://github.com/plenix-ds/pds/pull/213"
-  },
-  {
-   "mergedAt": "2026-11-05T07:15:14Z",
-   "number": 212,
-   "title": "CI: decisions.yaml check — unique ids, coverage, no rewrites (#197)",
-   "url": "https://github.com/plenix-ds/pds/pull/212"
-  },
-  {
-   "mergedAt": "2026-11-05T07:09:41Z",
-   "number": 210,
-   "title": "deploy/agents: PDS1 guard exception (#208)",
-   "url": "https://github.com/plenix-ds/pds/pull/210"
-  },
-  {
-   "mergedAt": "2026-11-05T07:28:14Z",
-   "number": 205,
-   "title": "DESIGN.md v0 and design.rules.json (as-is) — #199",
-   "url": "https://github.com/plenix-ds/pds/pull/205"
-  },
-  {
-   "mergedAt": "2026-11-05T07:13:47Z",
-   "number": 204,
-   "title": "decisions: carry seven 0.x owner rulings (D-0023 to D-0029)",
-   "url": "https://github.com/plenix-ds/pds/pull/204"
-  },
-  {
-   "mergedAt": "2026-11-05T07:03:32Z",
-   "number": 203,
-   "title": "CI v1: diff-aware checks, zizmor, Actions back on (#197)",
-   "url": "https://github.com/plenix-ds/pds/pull/203"
-  },
-  {
-   "mergedAt": "2026-11-05T09:22:48Z",
-   "number": 198,
-   "title": "ADR 0001-0003: packages, token tiers and naming, Style Dictionary (#178)",
-   "url": "https://github.com/plenix-ds/pds/pull/198"
-  },
-  {
-   "mergedAt": "2026-11-05T07:09:41Z",
-   "number": 182,
-   "title": "Phase 0 slice plan (G4)",
-   "url": "https://github.com/plenix-ds/pds/pull/182"
   }
  ],
  "closedIssues": [
   {
-   "closedAt": "2026-11-05T13:04:25Z",
+   "number": 329,
+   "title": "Check 9 blocks every TypeScript conversion PR in the merge queue (#306, #309)",
+   "url": "https://github.com/plenix-ds/pds/issues/329",
+   "closedAt": "2026-11-05T16:15:59Z",
+   "prs": [
+    {
+     "number": 330,
+     "url": "https://github.com/plenix-ds/pds/pull/330"
+    }
+   ]
+  },
+  {
+   "number": 315,
+   "title": "Check 9 (state manifest) blocks token-only edits to a component's stylesheet",
+   "url": "https://github.com/plenix-ds/pds/issues/315",
+   "closedAt": "2026-11-05T15:31:38Z",
+   "prs": [
+    {
+     "number": 316,
+     "url": "https://github.com/plenix-ds/pds/pull/316"
+    }
+   ]
+  },
+  {
+   "number": 307,
+   "title": "St. John site: 5 baseline items to fix before it follows the newest Plenix (#114)",
+   "url": "https://github.com/plenix-ds/pds/issues/307",
+   "closedAt": "2026-11-05T16:30:19Z",
+   "prs": [
+    {
+     "number": 337,
+     "url": "https://github.com/plenix-ds/pds/pull/337"
+    }
+   ]
+  },
+  {
+   "number": 301,
+   "title": "Tokens: plx-ref.size-18px is off the 4px grid",
+   "url": "https://github.com/plenix-ds/pds/issues/301",
+   "closedAt": "2026-11-05T16:52:03Z",
+   "prs": []
+  },
+  {
+   "number": 295,
+   "title": "Citation: the card variant passes variant=\"external\" to Link, which warns in development",
+   "url": "https://github.com/plenix-ds/pds/issues/295",
+   "closedAt": "2026-11-05T14:02:29Z",
+   "prs": [
+    {
+     "number": 300,
+     "url": "https://github.com/plenix-ds/pds/pull/300"
+    }
+   ]
+  },
+  {
    "number": 281,
    "title": "VoteTally: warn when members[].vote is not a key of options (ADR 0009 gap after #276)",
-   "url": "https://github.com/plenix-ds/pds/issues/281"
+   "url": "https://github.com/plenix-ds/pds/issues/281",
+   "closedAt": "2026-11-05T13:04:25Z",
+   "prs": [
+    {
+     "number": 285,
+     "url": "https://github.com/plenix-ds/pds/pull/285"
+    }
+   ]
   },
   {
-   "closedAt": "2026-11-05T13:00:18Z",
+   "number": 275,
+   "title": "EntityHeader: the media icon should sit in its box (owner decision) — the case header icon shows without the decided box",
+   "url": "https://github.com/plenix-ds/pds/issues/275",
+   "closedAt": "2026-11-05T16:20:35Z",
+   "prs": [
+    {
+     "number": 325,
+     "url": "https://github.com/plenix-ds/pds/pull/325"
+    }
+   ]
+  },
+  {
    "number": 274,
    "title": "AppShell: a global \"Screen size not supported\" notice below 1024 × 640",
-   "url": "https://github.com/plenix-ds/pds/issues/274"
+   "url": "https://github.com/plenix-ds/pds/issues/274",
+   "closedAt": "2026-11-05T13:00:18Z",
+   "prs": [
+    {
+     "number": 284,
+     "url": "https://github.com/plenix-ds/pds/pull/284"
+    }
+   ]
   },
   {
-   "closedAt": "2026-11-05T12:43:34Z",
    "number": 273,
    "title": "Field: no space between the label and the control in stacked forms, and stacked fields touch each other",
-   "url": "https://github.com/plenix-ds/pds/issues/273"
+   "url": "https://github.com/plenix-ds/pds/issues/273",
+   "closedAt": "2026-11-05T12:43:34Z",
+   "prs": [
+    {
+     "number": 277,
+     "url": "https://github.com/plenix-ds/pds/pull/277"
+    }
+   ]
   },
   {
-   "closedAt": "2026-11-05T12:51:44Z",
    "number": 272,
    "title": "DataGrid: columns are not fitted to content — the first column takes all the spare room, the last is cut off, and a horizontal scrollbar appears (and covers the last row) when nothing needs scrolling",
-   "url": "https://github.com/plenix-ds/pds/issues/272"
+   "url": "https://github.com/plenix-ds/pds/issues/272",
+   "closedAt": "2026-11-05T12:51:44Z",
+   "prs": [
+    {
+     "number": 280,
+     "url": "https://github.com/plenix-ds/pds/pull/280"
+    },
+    {
+     "number": 317,
+     "url": "https://github.com/plenix-ds/pds/pull/317"
+    }
+   ]
   },
   {
-   "closedAt": "2026-11-05T12:41:06Z",
+   "number": 269,
+   "title": "Buttons: secondary and danger-secondary have different elevation; reduce glow/shadow so all outline buttons match (CTM owner)",
+   "url": "https://github.com/plenix-ds/pds/issues/269",
+   "closedAt": "2026-11-05T16:15:59Z",
+   "prs": [
+    {
+     "number": 320,
+     "url": "https://github.com/plenix-ds/pds/pull/320"
+    }
+   ]
+  },
+  {
    "number": 265,
    "title": "VoteTally: custom choice sets (e.g. Present / Absent for hearing attendance) (CTM need, split from #88)",
-   "url": "https://github.com/plenix-ds/pds/issues/265"
+   "url": "https://github.com/plenix-ds/pds/issues/265",
+   "closedAt": "2026-11-05T12:41:06Z",
+   "prs": [
+    {
+     "number": 276,
+     "url": "https://github.com/plenix-ds/pds/pull/276"
+    }
+   ]
   },
   {
-   "closedAt": "2026-11-05T11:22:21Z",
    "number": 246,
    "title": "Nudge timer: start the role for waiting tasks automatically (owner keeps having to ask)",
-   "url": "https://github.com/plenix-ds/pds/issues/246"
+   "url": "https://github.com/plenix-ds/pds/issues/246",
+   "closedAt": "2026-11-05T11:22:21Z",
+   "prs": [
+    {
+     "number": 248,
+     "url": "https://github.com/plenix-ds/pds/pull/248"
+    }
+   ]
   },
   {
-   "closedAt": "2026-11-05T11:11:13Z",
    "number": 240,
    "title": "Tokens: plx-sys.shape-pill is 6px, but pills are 4px (D-0005)",
-   "url": "https://github.com/plenix-ds/pds/issues/240"
+   "url": "https://github.com/plenix-ds/pds/issues/240",
+   "closedAt": "2026-11-05T11:11:13Z",
+   "prs": [
+    {
+     "number": 244,
+     "url": "https://github.com/plenix-ds/pds/pull/244"
+    }
+   ]
   },
   {
-   "closedAt": "2026-11-05T06:57:19Z",
    "number": 208,
    "title": "PDS1 sessions can't merge: the 0.x team guard blocks merges (D-0014)",
-   "url": "https://github.com/plenix-ds/pds/issues/208"
+   "url": "https://github.com/plenix-ds/pds/issues/208",
+   "closedAt": "2026-11-05T06:57:19Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T09:25:19Z",
    "number": 207,
    "title": "DataGrid tabular-nums and equal pill height (DESIGN.md §12 items 5-6)",
-   "url": "https://github.com/plenix-ds/pds/issues/207"
+   "url": "https://github.com/plenix-ds/pds/issues/207",
+   "closedAt": "2026-11-05T09:25:19Z",
+   "prs": [
+    {
+     "number": 214,
+     "url": "https://github.com/plenix-ds/pds/pull/214"
+    }
+   ]
   },
   {
-   "closedAt": "2026-11-05T09:16:04Z",
    "number": 202,
    "title": "Phase 0: finish Style Dictionary (#372 steps 9-10, reuse plenix-platform#928) with the token rename",
-   "url": "https://github.com/plenix-ds/pds/issues/202"
+   "url": "https://github.com/plenix-ds/pds/issues/202",
+   "closedAt": "2026-11-05T09:16:04Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T09:11:01Z",
    "number": 201,
    "title": "Phase 0: lint checks 6 (token tiers) and 7 (token names), diff-aware",
-   "url": "https://github.com/plenix-ds/pds/issues/201"
+   "url": "https://github.com/plenix-ds/pds/issues/201",
+   "closedAt": "2026-11-05T09:11:01Z",
+   "prs": [
+    {
+     "number": 213,
+     "url": "https://github.com/plenix-ds/pds/pull/213"
+    }
+   ]
   },
   {
-   "closedAt": "2026-11-05T09:16:02Z",
    "number": 200,
    "title": "Phase 0: monorepo scaffold (npm workspaces, packages/*, fold in plenix-design-system)",
-   "url": "https://github.com/plenix-ds/pds/issues/200"
+   "url": "https://github.com/plenix-ds/pds/issues/200",
+   "closedAt": "2026-11-05T09:16:02Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T07:28:16Z",
    "number": 199,
    "title": "Phase 0: DESIGN.md v0 and design.rules.json (as-is, D-0004 to D-0011)",
-   "url": "https://github.com/plenix-ds/pds/issues/199"
+   "url": "https://github.com/plenix-ds/pds/issues/199",
+   "closedAt": "2026-11-05T07:28:16Z",
+   "prs": [
+    {
+     "number": 205,
+     "url": "https://github.com/plenix-ds/pds/pull/205"
+    }
+   ]
   },
   {
-   "closedAt": "2026-11-05T09:23:41Z",
    "number": 196,
    "title": "Phase 0 P0-14: daily summary and triage of 177 issues",
-   "url": "https://github.com/plenix-ds/pds/issues/196"
+   "url": "https://github.com/plenix-ds/pds/issues/196",
+   "closedAt": "2026-11-05T09:23:41Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T11:16:11Z",
    "number": 190,
    "title": "Phase 0 P0-8: lint checks 9-11 (CE1)",
-   "url": "https://github.com/plenix-ds/pds/issues/190"
+   "url": "https://github.com/plenix-ds/pds/issues/190",
+   "closedAt": "2026-11-05T11:16:11Z",
+   "prs": [
+    {
+     "number": 245,
+     "url": "https://github.com/plenix-ds/pds/pull/245"
+    }
+   ]
   },
   {
-   "closedAt": "2026-11-05T11:28:28Z",
    "number": 189,
    "title": "Phase 0 P0-7: lint checks 1-8",
-   "url": "https://github.com/plenix-ds/pds/issues/189"
+   "url": "https://github.com/plenix-ds/pds/issues/189",
+   "closedAt": "2026-11-05T11:28:28Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T09:42:43Z",
    "number": 188,
    "title": "Phase 0 P0-6: Rulesync and lefthook",
-   "url": "https://github.com/plenix-ds/pds/issues/188"
+   "url": "https://github.com/plenix-ds/pds/issues/188",
+   "closedAt": "2026-11-05T09:42:43Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T09:23:54Z",
    "number": 187,
    "title": "Phase 0 P0-5: branch protection and auto-merge",
-   "url": "https://github.com/plenix-ds/pds/issues/187"
+   "url": "https://github.com/plenix-ds/pds/issues/187",
+   "closedAt": "2026-11-05T09:23:54Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T09:23:57Z",
    "number": 186,
    "title": "Phase 0 P0-4: diff-aware CI, re-enable Actions",
-   "url": "https://github.com/plenix-ds/pds/issues/186"
+   "url": "https://github.com/plenix-ds/pds/issues/186",
+   "closedAt": "2026-11-05T09:23:57Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T09:16:02Z",
    "number": 185,
    "title": "Phase 0 P0-3: DESIGN.md v0",
-   "url": "https://github.com/plenix-ds/pds/issues/185"
+   "url": "https://github.com/plenix-ds/pds/issues/185",
+   "closedAt": "2026-11-05T09:16:02Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T10:55:06Z",
+   "number": 184,
+   "title": "Phase 0 P0-2: Style Dictionary (reuse plenix-platform#928)",
+   "url": "https://github.com/plenix-ds/pds/issues/184",
+   "closedAt": "2026-11-05T16:47:03Z",
+   "prs": []
+  },
+  {
    "number": 183,
    "title": "Phase 0 P0-1: monorepo scaffold",
-   "url": "https://github.com/plenix-ds/pds/issues/183"
+   "url": "https://github.com/plenix-ds/pds/issues/183",
+   "closedAt": "2026-11-05T10:55:06Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T12:14:54Z",
    "number": 1,
    "title": "DocumentViewer: page counter and thumbnail numbers use Text kind=\"data\" (no such prop)",
-   "url": "https://github.com/plenix-ds/pds/issues/1"
+   "url": "https://github.com/plenix-ds/pds/issues/1",
+   "closedAt": "2026-11-05T12:14:54Z",
+   "prs": [
+    {
+     "number": 262,
+     "url": "https://github.com/plenix-ds/pds/pull/262"
+    }
+   ]
   },
   {
-   "closedAt": "2026-11-05T11:55:16Z",
    "number": 2,
    "title": "MediaPlayer: picture-in-picture events never fire (React 18 has no onEnterPictureInPicture)",
-   "url": "https://github.com/plenix-ds/pds/issues/2"
+   "url": "https://github.com/plenix-ds/pds/issues/2",
+   "closedAt": "2026-11-05T11:55:16Z",
+   "prs": [
+    {
+     "number": 257,
+     "url": "https://github.com/plenix-ds/pds/pull/257"
+    }
+   ]
   },
   {
-   "closedAt": "2026-11-05T12:09:37Z",
    "number": 4,
    "title": "RedSave report on 0.84.0: the openKey type rejects null (P-63) and the icon tool is not shipped (P-64)",
-   "url": "https://github.com/plenix-ds/pds/issues/4"
+   "url": "https://github.com/plenix-ds/pds/issues/4",
+   "closedAt": "2026-11-05T12:09:37Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T11:45:05Z",
    "number": 100,
    "title": "Drawer: a Drawer pops in like a dialog instead of sliding in (left to right)",
-   "url": "https://github.com/plenix-ds/pds/issues/100"
+   "url": "https://github.com/plenix-ds/pds/issues/100",
+   "closedAt": "2026-11-05T11:45:05Z",
+   "prs": [
+    {
+     "number": 255,
+     "url": "https://github.com/plenix-ds/pds/pull/255"
+    }
+   ]
   },
   {
-   "closedAt": "2026-11-05T09:24:29Z",
    "number": 6,
    "title": "Owner request: Button glow and drop shadow more subtle, using a light card shadow",
-   "url": "https://github.com/plenix-ds/pds/issues/6"
+   "url": "https://github.com/plenix-ds/pds/issues/6",
+   "closedAt": "2026-11-05T09:24:29Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:50:12Z",
    "number": 8,
    "title": "Decision: code health check, start the fixes and five questions (from #882)",
-   "url": "https://github.com/plenix-ds/pds/issues/8"
+   "url": "https://github.com/plenix-ds/pds/issues/8",
+   "closedAt": "2026-11-05T06:50:12Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T11:28:11Z",
    "number": 9,
    "title": "Time: hook called after an early return (crash when the value changes between empty and valid)",
-   "url": "https://github.com/plenix-ds/pds/issues/9"
+   "url": "https://github.com/plenix-ds/pds/issues/9",
+   "closedAt": "2026-11-05T11:28:11Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T11:28:05Z",
    "number": 10,
    "title": "RichTextEditor: Insert image throws ReferenceError (SAFE_SRC not exported since #178)",
-   "url": "https://github.com/plenix-ds/pds/issues/10"
+   "url": "https://github.com/plenix-ds/pds/issues/10",
+   "closedAt": "2026-11-05T11:28:05Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:50:13Z",
    "number": 12,
    "title": "Owner request: full site check for standards, efficiency and dead code (UI, CSS, tokens, HTML, scripts)",
-   "url": "https://github.com/plenix-ds/pds/issues/12"
+   "url": "https://github.com/plenix-ds/pds/issues/12",
+   "closedAt": "2026-11-05T06:50:13Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:50:16Z",
    "number": 14,
    "title": "Decision: how to make the iPhone and Android token files with the standard tool (from #372)",
-   "url": "https://github.com/plenix-ds/pds/issues/14"
+   "url": "https://github.com/plenix-ds/pds/issues/14",
+   "closedAt": "2026-11-05T06:50:16Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:50:20Z",
    "number": 15,
    "title": "Decision: projects, email and agent runs on the dashboard (from #861)",
-   "url": "https://github.com/plenix-ds/pds/issues/15"
+   "url": "https://github.com/plenix-ds/pds/issues/15",
+   "closedAt": "2026-11-05T06:50:20Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:50:23Z",
    "number": 16,
    "title": "Decision: six questions from the dashboard specification (#861)",
-   "url": "https://github.com/plenix-ds/pds/issues/16"
+   "url": "https://github.com/plenix-ds/pds/issues/16",
+   "closedAt": "2026-11-05T06:50:23Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T12:37:50Z",
    "number": 17,
    "title": "Owner request: add the Dashboard Design System Specification to the design spec, converted to Plenix tokens",
-   "url": "https://github.com/plenix-ds/pds/issues/17"
+   "url": "https://github.com/plenix-ds/pds/issues/17",
+   "closedAt": "2026-11-05T12:37:50Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:50:26Z",
    "number": 20,
    "title": "Decision: better testing, which steps do you want? (from #841)",
-   "url": "https://github.com/plenix-ds/pds/issues/20"
+   "url": "https://github.com/plenix-ds/pds/issues/20",
+   "closedAt": "2026-11-05T06:50:26Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:50:27Z",
+   "number": 21,
+   "title": "Owner request: every app linked directly to the CDN so it updates when the CDN updates",
+   "url": "https://github.com/plenix-ds/pds/issues/21",
+   "closedAt": "2026-11-05T13:20:15Z",
+   "prs": []
+  },
+  {
    "number": 22,
    "title": "Owner request: a better way of testing for the future (research only)",
-   "url": "https://github.com/plenix-ds/pds/issues/22"
+   "url": "https://github.com/plenix-ds/pds/issues/22",
+   "closedAt": "2026-11-05T06:50:27Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T09:55:48Z",
    "number": 23,
    "title": "DataGrid row template: narrow A, narrow B, wide and RTL layouts as options, documented by scenario",
-   "url": "https://github.com/plenix-ds/pds/issues/23"
+   "url": "https://github.com/plenix-ds/pds/issues/23",
+   "closedAt": "2026-11-05T09:55:48Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T13:12:26Z",
    "number": 26,
    "title": "Draw only the visible rows: Tree, TreeSelect, Cascader search and long Combobox lists (useVirtualizer)",
-   "url": "https://github.com/plenix-ds/pds/issues/26"
+   "url": "https://github.com/plenix-ds/pds/issues/26",
+   "closedAt": "2026-11-05T13:12:26Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T13:12:28Z",
    "number": 27,
    "title": "Load a branch only when it is opened: one shared mechanism for Cascader, Tree and TreeSelect",
-   "url": "https://github.com/plenix-ds/pds/issues/27"
+   "url": "https://github.com/plenix-ds/pds/issues/27",
+   "closedAt": "2026-11-05T13:12:28Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T13:12:31Z",
    "number": 28,
    "title": "DatePicker and TimePicker follow the app time zone (LocaleProvider timeZone)",
-   "url": "https://github.com/plenix-ds/pds/issues/28"
+   "url": "https://github.com/plenix-ds/pds/issues/28",
+   "closedAt": "2026-11-05T13:12:31Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T13:12:33Z",
    "number": 29,
    "title": "Cascader extras: choose a parent, \"+N\" tags, a limit on choices, server search",
-   "url": "https://github.com/plenix-ds/pds/issues/29"
+   "url": "https://github.com/plenix-ds/pds/issues/29",
+   "closedAt": "2026-11-05T13:12:33Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T13:12:35Z",
    "number": 30,
    "title": "Combobox extras, a warning field state, a page jump list and an overflow list",
-   "url": "https://github.com/plenix-ds/pds/issues/30"
+   "url": "https://github.com/plenix-ds/pds/issues/30",
+   "closedAt": "2026-11-05T13:12:35Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T13:12:37Z",
    "number": 31,
    "title": "Highlight the typed text in results: one shared helper (Combobox, SearchField, Cascader, TreeSelect)",
-   "url": "https://github.com/plenix-ds/pds/issues/31"
+   "url": "https://github.com/plenix-ds/pds/issues/31",
+   "closedAt": "2026-11-05T13:12:37Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T13:10:43Z",
    "number": 33,
    "title": "Small touches: Rating half stars, Divider with text, a \"Suggest\" example in the spec",
-   "url": "https://github.com/plenix-ds/pds/issues/33"
+   "url": "https://github.com/plenix-ds/pds/issues/33",
+   "closedAt": "2026-11-05T13:10:43Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:50:29Z",
    "number": 35,
    "title": "MenuBar: a File, Edit, View menu bar across the top of an app",
-   "url": "https://github.com/plenix-ds/pds/issues/35"
+   "url": "https://github.com/plenix-ds/pds/issues/35",
+   "closedAt": "2026-11-05T06:50:29Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T13:10:41Z",
    "number": 36,
    "title": "Control cards: a checkbox, radio or switch inside a clickable card",
-   "url": "https://github.com/plenix-ds/pds/issues/36"
+   "url": "https://github.com/plenix-ds/pds/issues/36",
+   "closedAt": "2026-11-05T13:10:41Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T13:10:38Z",
    "number": 37,
    "title": "EntityTitle: a short title line for list rows and cards",
-   "url": "https://github.com/plenix-ds/pds/issues/37"
+   "url": "https://github.com/plenix-ds/pds/issues/37",
+   "closedAt": "2026-11-05T13:10:38Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:50:31Z",
    "number": 39,
    "title": "Decision: which of the three #787 ideas do you want (coding standards, Semgrep, ESLint)?",
-   "url": "https://github.com/plenix-ds/pds/issues/39"
+   "url": "https://github.com/plenix-ds/pds/issues/39",
+   "closedAt": "2026-11-05T06:50:31Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:50:33Z",
    "number": 40,
    "title": "Owner request: study an open-source multi-agent standards and workflow ecosystem for Plenix (research only)",
-   "url": "https://github.com/plenix-ds/pds/issues/40"
+   "url": "https://github.com/plenix-ds/pds/issues/40",
+   "closedAt": "2026-11-05T06:50:33Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:50:36Z",
    "number": 41,
    "title": "Decision: which of the six Semi ideas do you want built? (from #767)",
-   "url": "https://github.com/plenix-ds/pds/issues/41"
+   "url": "https://github.com/plenix-ds/pds/issues/41",
+   "closedAt": "2026-11-05T06:50:36Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:50:38Z",
    "number": 43,
    "title": "Decision: which of the eight #767 ideas do you want built?",
-   "url": "https://github.com/plenix-ds/pds/issues/43"
+   "url": "https://github.com/plenix-ds/pds/issues/43",
+   "closedAt": "2026-11-05T06:50:38Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:50:40Z",
    "number": 44,
    "title": "Owner request: learn from Blueprint and Semi for new and better components, plus a properties panel in the design spec",
-   "url": "https://github.com/plenix-ds/pds/issues/44"
+   "url": "https://github.com/plenix-ds/pds/issues/44",
+   "closedAt": "2026-11-05T06:50:40Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:50:42Z",
    "number": 45,
    "title": "Decision: what to do with the 1,243 zero-overlap test findings (from #763)",
-   "url": "https://github.com/plenix-ds/pds/issues/45"
+   "url": "https://github.com/plenix-ds/pds/issues/45",
+   "closedAt": "2026-11-05T06:50:42Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:50:44Z",
    "number": 48,
    "title": "Owner decision: make the Button's style file smaller (#711, deferred)",
-   "url": "https://github.com/plenix-ds/pds/issues/48"
+   "url": "https://github.com/plenix-ds/pds/issues/48",
+   "closedAt": "2026-11-05T06:50:44Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:50:46Z",
    "number": 51,
    "title": "Owner decision: Release 0.79.0, go or wait",
-   "url": "https://github.com/plenix-ds/pds/issues/51"
+   "url": "https://github.com/plenix-ds/pds/issues/51",
+   "closedAt": "2026-11-05T06:50:46Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T13:09:28Z",
    "number": 52,
    "title": "DataGrid: F2 and typing on a cell should start editing",
-   "url": "https://github.com/plenix-ds/pds/issues/52"
+   "url": "https://github.com/plenix-ds/pds/issues/52",
+   "closedAt": "2026-11-05T13:09:28Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:50:48Z",
    "number": 53,
    "title": "Owner decision: dedicated agents for the big tooling tasks; the writer limit rises from 2 to 4",
-   "url": "https://github.com/plenix-ds/pds/issues/53"
+   "url": "https://github.com/plenix-ds/pds/issues/53",
+   "closedAt": "2026-11-05T06:50:48Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:50:50Z",
    "number": 54,
    "title": "Question: why are component style files so big (Button 36 KB)? Make them smaller and readable (owner)",
-   "url": "https://github.com/plenix-ds/pds/issues/54"
+   "url": "https://github.com/plenix-ds/pds/issues/54",
+   "closedAt": "2026-11-05T06:50:50Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:50:52Z",
    "number": 55,
    "title": "Direction: tree-shake the stylesheet and make the npm packages public (owner)",
-   "url": "https://github.com/plenix-ds/pds/issues/55"
+   "url": "https://github.com/plenix-ds/pds/issues/55",
+   "closedAt": "2026-11-05T06:50:52Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:50:54Z",
    "number": 56,
    "title": "Direction: build with Vite, the spec site in Storybook, no custom tooling unless necessary (owner)",
-   "url": "https://github.com/plenix-ds/pds/issues/56"
+   "url": "https://github.com/plenix-ds/pds/issues/56",
+   "closedAt": "2026-11-05T06:50:54Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:50:59Z",
    "number": 58,
    "title": "Direction: right-to-left, theming, accessibility and the language catalog are extras, not required (owner)",
-   "url": "https://github.com/plenix-ds/pds/issues/58"
+   "url": "https://github.com/plenix-ds/pds/issues/58",
+   "closedAt": "2026-11-05T06:50:59Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T12:19:33Z",
    "number": 59,
    "title": "Audit (Low): cleaning rich text starts every picture request, even when the result is never shown",
-   "url": "https://github.com/plenix-ds/pds/issues/59"
+   "url": "https://github.com/plenix-ds/pds/issues/59",
+   "closedAt": "2026-11-05T12:19:33Z",
+   "prs": [
+    {
+     "number": 264,
+     "url": "https://github.com/plenix-ds/pds/pull/264"
+    }
+   ]
   },
   {
-   "closedAt": "2026-11-05T06:51:01Z",
+   "number": 60,
+   "title": "Audit (Medium): thirty kinds of generated files are committed, so pull requests conflict on them",
+   "url": "https://github.com/plenix-ds/pds/issues/60",
+   "closedAt": "2026-11-05T13:19:14Z",
+   "prs": [
+    {
+     "number": 289,
+     "url": "https://github.com/plenix-ds/pds/pull/289"
+    }
+   ]
+  },
+  {
    "number": 62,
    "title": "Independent code audit of Plenix (owner request): structure, standards, quality",
-   "url": "https://github.com/plenix-ds/pds/issues/62"
+   "url": "https://github.com/plenix-ds/pds/issues/62",
+   "closedAt": "2026-11-05T06:51:01Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T12:09:50Z",
    "number": 63,
    "title": "site-icons.js finds no icons in TypeScript and TSX sources",
-   "url": "https://github.com/plenix-ds/pds/issues/63"
+   "url": "https://github.com/plenix-ds/pds/issues/63",
+   "closedAt": "2026-11-05T12:09:50Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T09:34:12Z",
    "number": 65,
    "title": "Owner decision: Chat slice 4, what to change in the actions and reactions (#637)",
-   "url": "https://github.com/plenix-ds/pds/issues/65"
+   "url": "https://github.com/plenix-ds/pds/issues/65",
+   "closedAt": "2026-11-05T09:34:12Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:51:04Z",
    "number": 66,
    "title": "Status page: say why Send is grey in a decision",
-   "url": "https://github.com/plenix-ds/pds/issues/66"
+   "url": "https://github.com/plenix-ds/pds/issues/66",
+   "closedAt": "2026-11-05T06:51:04Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:51:05Z",
    "number": 68,
    "title": "DataGrid and Table pills: side padding must equal top and bottom padding",
-   "url": "https://github.com/plenix-ds/pds/issues/68"
+   "url": "https://github.com/plenix-ds/pds/issues/68",
+   "closedAt": "2026-11-05T06:51:05Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T13:08:44Z",
    "number": 71,
    "title": "Icons: a page without an icon file asks the CDN for ~4 files per icon at once, and about half are refused",
-   "url": "https://github.com/plenix-ds/pds/issues/71"
+   "url": "https://github.com/plenix-ds/pds/issues/71",
+   "closedAt": "2026-11-05T13:08:44Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T12:18:00Z",
    "number": 73,
    "title": "Projects: the notes panel never shows (filter bug)",
-   "url": "https://github.com/plenix-ds/pds/issues/73"
+   "url": "https://github.com/plenix-ds/pds/issues/73",
+   "closedAt": "2026-11-05T12:18:00Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:51:07Z",
    "number": 74,
    "title": "Status page: show issue text as readable markdown (headings, bold, bullets, check boxes)",
-   "url": "https://github.com/plenix-ds/pds/issues/74"
+   "url": "https://github.com/plenix-ds/pds/issues/74",
+   "closedAt": "2026-11-05T06:51:07Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T09:24:47Z",
    "number": 75,
    "title": "How did an external app set its own style on a CDN card (AITEAM blue accent)?",
-   "url": "https://github.com/plenix-ds/pds/issues/75"
+   "url": "https://github.com/plenix-ds/pds/issues/75",
+   "closedAt": "2026-11-05T09:24:47Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T12:18:54Z",
    "number": 76,
    "title": "DataGrid remote fill: stop on an empty or short page; reset the page with search and filter (QA follow-ups on #612)",
-   "url": "https://github.com/plenix-ds/pds/issues/76"
+   "url": "https://github.com/plenix-ds/pds/issues/76",
+   "closedAt": "2026-11-05T12:18:54Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:51:11Z",
    "number": 77,
    "title": "Owner decision: Fluent 2 buttons, see-through hover layers and confirm before Delete (#298)",
-   "url": "https://github.com/plenix-ds/pds/issues/77"
+   "url": "https://github.com/plenix-ds/pds/issues/77",
+   "closedAt": "2026-11-05T06:51:11Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:51:13Z",
    "number": 78,
    "title": "Owner decision: no icon inside a box, how far to go (#314)",
-   "url": "https://github.com/plenix-ds/pds/issues/78"
+   "url": "https://github.com/plenix-ds/pds/issues/78",
+   "closedAt": "2026-11-05T06:51:13Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:51:15Z",
+   "number": 79,
+   "title": "ColumnsMenu: a grid-style keyboard pattern (one Tab stop, arrows across rows and controls)",
+   "url": "https://github.com/plenix-ds/pds/issues/79",
+   "closedAt": "2026-11-05T13:25:49Z",
+   "prs": [
+    {
+     "number": 290,
+     "url": "https://github.com/plenix-ds/pds/pull/290"
+    }
+   ]
+  },
+  {
    "number": 80,
    "title": "Owner decision: page headers in the apps: layout and list pages (#244)",
-   "url": "https://github.com/plenix-ds/pds/issues/80"
+   "url": "https://github.com/plenix-ds/pds/issues/80",
+   "closedAt": "2026-11-05T06:51:15Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T13:13:13Z",
    "number": 81,
    "title": "Make full-container virtual scrolling the canonical DataGrid integration default",
-   "url": "https://github.com/plenix-ds/pds/issues/81"
+   "url": "https://github.com/plenix-ds/pds/issues/81",
+   "closedAt": "2026-11-05T13:13:13Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:51:19Z",
    "number": 83,
    "title": "DT-42: Spreadsheet-style editing in the table",
-   "url": "https://github.com/plenix-ds/pds/issues/83"
+   "url": "https://github.com/plenix-ds/pds/issues/83",
+   "closedAt": "2026-11-05T06:51:19Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T12:19:24Z",
    "number": 88,
    "title": "Vote tally: one row per member with approve/deny/abstain and a live totals row (CTM 2.0 need)",
-   "url": "https://github.com/plenix-ds/pds/issues/88"
+   "url": "https://github.com/plenix-ds/pds/issues/88",
+   "closedAt": "2026-11-05T12:19:24Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:51:21Z",
    "number": 98,
    "title": "Codex outside review of the slimmed test set (#356): checked in",
-   "url": "https://github.com/plenix-ds/pds/issues/98"
+   "url": "https://github.com/plenix-ds/pds/issues/98",
+   "closedAt": "2026-11-05T06:51:21Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T13:17:00Z",
    "number": 101,
    "title": "Replace build-tokens.js with Style Dictionary, only after the output is proven identical",
-   "url": "https://github.com/plenix-ds/pds/issues/101"
+   "url": "https://github.com/plenix-ds/pds/issues/101",
+   "closedAt": "2026-11-05T13:17:00Z",
+   "prs": [
+    {
+     "number": 287,
+     "url": "https://github.com/plenix-ds/pds/pull/287"
+    }
+   ]
   },
   {
-   "closedAt": "2026-11-05T06:51:23Z",
    "number": 105,
    "title": "Outside review of the slimmed test set by Codex: package and brief",
-   "url": "https://github.com/plenix-ds/pds/issues/105"
+   "url": "https://github.com/plenix-ds/pds/issues/105",
+   "closedAt": "2026-11-05T06:51:23Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T13:08:14Z",
+   "number": 110,
+   "title": "DT-44: \"fill\" sizes the grid to the window's bottom edge, not the page's room, so the page scrolls too",
+   "url": "https://github.com/plenix-ds/pds/issues/110",
+   "closedAt": "2026-11-05T13:17:53Z",
+   "prs": [
+    {
+     "number": 288,
+     "url": "https://github.com/plenix-ds/pds/pull/288"
+    }
+   ]
+  },
+  {
    "number": 111,
    "title": "Icons (#277): before/after comparison of size, speed and pixels",
-   "url": "https://github.com/plenix-ds/pds/issues/111"
+   "url": "https://github.com/plenix-ds/pds/issues/111",
+   "closedAt": "2026-11-05T13:08:14Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:51:25Z",
+   "number": 112,
+   "title": "Icons (#277): move Plenix's own icons out of the stylesheet (staged, no visual change)",
+   "url": "https://github.com/plenix-ds/pds/issues/112",
+   "closedAt": "2026-11-05T13:21:00Z",
+   "prs": []
+  },
+  {
+   "number": 113,
+   "title": "Icons: one icon architecture (assets apart from CSS, one resolver, CDN and self-hosted) — epic",
+   "url": "https://github.com/plenix-ds/pds/issues/113",
+   "closedAt": "2026-11-05T13:22:13Z",
+   "prs": []
+  },
+  {
+   "number": 114,
+   "title": "Connect the internal applications to the CDN and the spec, both ways: apps file issues and send fixes; releases reach every app at once",
+   "url": "https://github.com/plenix-ds/pds/issues/114",
+   "closedAt": "2026-11-05T16:30:17Z",
+   "prs": [
+    {
+     "number": 337,
+     "url": "https://github.com/plenix-ds/pds/pull/337"
+    }
+   ]
+  },
+  {
+   "number": 117,
+   "title": "Every variation as its own record (1,186 variants now nested in their items)",
+   "url": "https://github.com/plenix-ds/pds/issues/117",
+   "closedAt": "2026-11-05T16:53:32Z",
+   "prs": [
+    {
+     "number": 327,
+     "url": "https://github.com/plenix-ds/pds/pull/327"
+    }
+   ]
+  },
+  {
    "number": 119,
    "title": "Owner decision: numbers in Mono inside phrases (\"7 files\", status bar counts)",
-   "url": "https://github.com/plenix-ds/pds/issues/119"
+   "url": "https://github.com/plenix-ds/pds/issues/119",
+   "closedAt": "2026-11-05T06:51:25Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:51:27Z",
+   "number": 121,
+   "title": "Unused component tokens: 119 --plx-comp-* tokens nothing reads, and a check",
+   "url": "https://github.com/plenix-ds/pds/issues/121",
+   "closedAt": "2026-11-05T13:18:14Z",
+   "prs": []
+  },
+  {
    "number": 123,
    "title": "Remaining work and governance board (tracking)",
-   "url": "https://github.com/plenix-ds/pds/issues/123"
+   "url": "https://github.com/plenix-ds/pds/issues/123",
+   "closedAt": "2026-11-05T06:51:27Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:51:29Z",
+   "number": 126,
+   "title": "Styling Phase 5: cascade layers, and no !important",
+   "url": "https://github.com/plenix-ds/pds/issues/126",
+   "closedAt": "2026-11-05T13:18:16Z",
+   "prs": []
+  },
+  {
    "number": 131,
    "title": "Zero overlap lane Z4: the design-system site's own stylesheets (Codex)",
-   "url": "https://github.com/plenix-ds/pds/issues/131"
+   "url": "https://github.com/plenix-ds/pds/issues/131",
+   "closedAt": "2026-11-05T06:51:29Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:51:32Z",
    "number": 132,
    "title": "Zero overlap lane Z3: components M–Z and the services (Codex)",
-   "url": "https://github.com/plenix-ds/pds/issues/132"
+   "url": "https://github.com/plenix-ds/pds/issues/132",
+   "closedAt": "2026-11-05T06:51:32Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:51:34Z",
    "number": 133,
    "title": "Zero overlap lane Z2: components A–L (Codex)",
-   "url": "https://github.com/plenix-ds/pds/issues/133"
+   "url": "https://github.com/plenix-ds/pds/issues/133",
+   "closedAt": "2026-11-05T06:51:34Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:51:36Z",
    "number": 134,
    "title": "Zero overlap lane Z1: charts and patterns (Codex)",
-   "url": "https://github.com/plenix-ds/pds/issues/134"
+   "url": "https://github.com/plenix-ds/pds/issues/134",
+   "closedAt": "2026-11-05T06:51:36Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:51:38Z",
    "number": 135,
    "title": "Dark mode: last priority (to do after everything else)",
-   "url": "https://github.com/plenix-ds/pds/issues/135"
+   "url": "https://github.com/plenix-ds/pds/issues/135",
+   "closedAt": "2026-11-05T06:51:38Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:51:40Z",
    "number": 136,
    "title": "RedSave lane F: ColumnsMenu, DeleteFlow, MediaViewer, virtual grid (Codex)",
-   "url": "https://github.com/plenix-ds/pds/issues/136"
+   "url": "https://github.com/plenix-ds/pds/issues/136",
+   "closedAt": "2026-11-05T06:51:40Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:51:44Z",
    "number": 137,
    "title": "RedSave lane E: TypeScript declarations (Codex)",
-   "url": "https://github.com/plenix-ds/pds/issues/137"
+   "url": "https://github.com/plenix-ds/pds/issues/137",
+   "closedAt": "2026-11-05T06:51:44Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:51:47Z",
    "number": 139,
    "title": "RedSave lane C: no remote code, no side effects, safe HTML (Codex)",
-   "url": "https://github.com/plenix-ds/pds/issues/139"
+   "url": "https://github.com/plenix-ds/pds/issues/139",
+   "closedAt": "2026-11-05T06:51:47Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T12:32:33Z",
+   "number": 148,
+   "title": "P-46: Importing Plenix prerenders or prefetches every link on the page",
+   "url": "https://github.com/plenix-ds/pds/issues/148",
+   "closedAt": "2026-11-05T16:28:33Z",
+   "prs": []
+  },
+  {
    "number": 150,
    "title": "P-38: The bundle builds a remote CDN address for runtime files",
-   "url": "https://github.com/plenix-ds/pds/issues/150"
+   "url": "https://github.com/plenix-ds/pds/issues/150",
+   "closedAt": "2026-11-05T12:32:33Z",
+   "prs": [
+    {
+     "number": 270,
+     "url": "https://github.com/plenix-ds/pds/pull/270"
+    }
+   ]
   },
   {
-   "closedAt": "2026-11-05T12:48:43Z",
    "number": 151,
    "title": "P-36: The whole 2 MB stylesheet ships to every page",
-   "url": "https://github.com/plenix-ds/pds/issues/151"
+   "url": "https://github.com/plenix-ds/pds/issues/151",
+   "closedAt": "2026-11-05T12:48:43Z",
+   "prs": [
+    {
+     "number": 279,
+     "url": "https://github.com/plenix-ds/pds/pull/279"
+    }
+   ]
   },
   {
-   "closedAt": "2026-11-05T06:51:48Z",
    "number": 152,
    "title": "P-34: Resizing (SplitView, NavPane, Resizable) jumps between sizes while dragging",
-   "url": "https://github.com/plenix-ds/pds/issues/152"
+   "url": "https://github.com/plenix-ds/pds/issues/152",
+   "closedAt": "2026-11-05T06:51:48Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:42:34Z",
    "number": 168,
    "title": "Plenix Web component library in Figma (Claude draws it; Web pages link to it)",
-   "url": "https://github.com/plenix-ds/pds/issues/168"
+   "url": "https://github.com/plenix-ds/pds/issues/168",
+   "closedAt": "2026-11-05T06:42:34Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:52:11Z",
    "number": 173,
    "title": "Plenix Web component library in Figma (Claude draws it; Web pages link to it)",
-   "url": "https://github.com/plenix-ds/pds/issues/173"
+   "url": "https://github.com/plenix-ds/pds/issues/173",
+   "closedAt": "2026-11-05T06:52:11Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:51:56Z",
    "number": 169,
    "title": "The new login page",
-   "url": "https://github.com/plenix-ds/pds/issues/169"
+   "url": "https://github.com/plenix-ds/pds/issues/169",
+   "closedAt": "2026-11-05T06:51:56Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:52:15Z",
    "number": 174,
    "title": "The new login page",
-   "url": "https://github.com/plenix-ds/pds/issues/174"
+   "url": "https://github.com/plenix-ds/pds/issues/174",
+   "closedAt": "2026-11-05T06:52:15Z",
+   "prs": []
   },
   {
-   "closedAt": "2026-11-05T06:52:18Z",
    "number": 175,
    "title": "Figma-authored themes",
-   "url": "https://github.com/plenix-ds/pds/issues/175"
+   "url": "https://github.com/plenix-ds/pds/issues/175",
+   "closedAt": "2026-11-05T06:52:18Z",
+   "prs": []
+  },
+  {
+   "number": 170,
+   "title": "Figma-authored themes",
+   "url": "https://github.com/plenix-ds/pds/issues/170",
+   "closedAt": "2026-11-05T06:51:59Z",
+   "prs": []
+  },
+  {
+   "number": 171,
+   "title": "Single sign-on plan through Authentik (Admins, Editors, Users)",
+   "url": "https://github.com/plenix-ds/pds/issues/171",
+   "closedAt": "2026-11-05T06:52:02Z",
+   "prs": []
+  },
+  {
+   "number": 176,
+   "title": "Single sign-on plan through Authentik (Admins, Editors, Users)",
+   "url": "https://github.com/plenix-ds/pds/issues/176",
+   "closedAt": "2026-11-05T06:52:21Z",
+   "prs": []
+  },
+  {
+   "number": 162,
+   "title": "Final full system-wide test run",
+   "url": "https://github.com/plenix-ds/pds/issues/162",
+   "closedAt": "2026-11-05T06:51:50Z",
+   "prs": []
+  },
+  {
+   "number": 167,
+   "title": "Plan of record: who does what",
+   "url": "https://github.com/plenix-ds/pds/issues/167",
+   "closedAt": "2026-11-05T06:51:52Z",
+   "prs": []
+  },
+  {
+   "number": 172,
+   "title": "Plan of record: who does what",
+   "url": "https://github.com/plenix-ds/pds/issues/172",
+   "closedAt": "2026-11-05T06:52:07Z",
+   "prs": []
+  },
+  {
+   "number": 177,
+   "title": "Plan of record: who does what",
+   "url": "https://github.com/plenix-ds/pds/issues/177",
+   "closedAt": "2026-11-05T06:52:25Z",
+   "prs": []
   }
  ],
  "decisions": [
@@ -2854,6 +3268,123 @@ window.PDS_DATA = {
    "kind": "ci-job",
    "state": null,
    "url": null
+  },
+  {
+   "id": "D-0045",
+   "date": "2026-11-05",
+   "area": "architecture",
+   "decision": "Plenix's remaining JavaScript (about 244 files) is converted to TypeScript in four waves now (components, charts, patterns, the rest), then tsc writes the declarations and build-types.js retires (docs/adr/0011).",
+   "by": "agent (pds1-ds-architect), on the owner's direction (2026-10-31,",
+   "status": "active",
+   "superseded_by": "",
+   "check": "CI tsc new problems + planned:no-js-source + planned:no-build-types",
+   "kind": "ci-job",
+   "state": null,
+   "url": null
+  },
+  {
+   "id": "D-0046",
+   "date": "2026-11-05",
+   "area": "process",
+   "decision": "reviewdog is not adopted. The diff-aware CI already shows each new finding on the changed line as a GitHub annotation (file and line), which is reviewdog's only role in plan §7 (presentation), without adding an action that needs write access to pull requests (its setup action was compromised in March 2025). Reply to switch - B) add reviewdog as well.",
+   "by": "agent (pds1-release-architect), owner may switch",
+   "status": "active",
+   "superseded_by": "",
+   "check": "tools/ci/new-problems.mjs annotations (ci.yml \"New problems\")",
+   "kind": "ci-job",
+   "state": null,
+   "url": null
+  },
+  {
+   "id": "D-0054",
+   "date": "2026-11-05",
+   "area": "design",
+   "decision": "All raised buttons (secondary, tertiary, danger-secondary, primary, danger) share one lighter elevation - no shadow at rest, the Halo card shadow on hover, and the glow's rim narrowed (stop 75% to 90%). danger-secondary joins the raised family (rest glow, Halo on hover, no hover glow over its red fill). Ghost, 2xs and bars stay flat. No new token (plenix-ds/pds#269).",
+   "by": "owner",
+   "status": "active",
+   "superseded_by": "",
+   "check": "planned:visual-regression (Button page, secondary/tertiary/danger-secondary side by side)",
+   "kind": "planned",
+   "state": "planned",
+   "url": null
+  },
+  {
+   "id": "D-0055",
+   "date": "2026-11-05",
+   "area": "design",
+   "decision": "The EntityHeader { icon, hue } media has no box by default - the icon fills the square in its hue's on-surface colour (D-0036 row 1, D-0038 dark shades); media.box true keeps the bordered tile where a usage needs it (D-0024). Fact icons stay without a box.",
+   "by": "owner",
+   "status": "active",
+   "superseded_by": "",
+   "check": "planned:visual-regression (record-page example) + behaviour test (tile has no border or fill unless media.box)",
+   "kind": "planned",
+   "state": "planned",
+   "url": null
+  },
+  {
+   "id": "D-0052",
+   "date": "2026-11-05",
+   "area": "design",
+   "decision": "Printed documents (#87) size the paper in millimetres - A4 210 x 297mm and 20mm margins - through print-only system tokens (print-sheet-*, print-document-margin) on a named page (@page plx-document), so other pages keep their 24px print margin. These tokens are exempt from the 4px-grid check by their print- name; mm appears nowhere else.",
+   "by": "agent (pds1-design-director), owner may switch",
+   "status": "active",
+   "superseded_by": "",
+   "check": "planned:design-lint (grid check exempts print-* tokens; mm outside them fails)",
+   "kind": "planned",
+   "state": "planned",
+   "url": null
+  },
+  {
+   "id": "D-0053",
+   "date": "2026-11-05",
+   "area": "design",
+   "decision": "PrintDocument's footer prints once, at the end of the document in normal flow; no repeated running footer and no page numbers in P0 (#87).",
+   "by": "agent (pds1-design-director), owner may switch",
+   "status": "active",
+   "superseded_by": "",
+   "check": "pds1-design-critic on the PrintDocument PR",
+   "kind": "review only",
+   "state": "review",
+   "url": null
+  },
+  {
+   "id": "D-0047",
+   "date": "2026-11-05",
+   "area": "tokens",
+   "decision": "The size palette is named in grid units (1u = 4px), size-1u to size-400u (size-92px becomes size-23u); the old px names stay as deprecated aliases until 2.0.0 (docs/adr/0012).",
+   "by": "agent (pds1-ds-architect), owner may switch",
+   "status": "active",
+   "superseded_by": "",
+   "check": "check-system token-names (check 7) + token-tiers",
+   "kind": "ci-job",
+   "state": null,
+   "url": null
+  },
+  {
+   "id": "D-0048",
+   "date": "2026-11-05",
+   "area": "release",
+   "decision": "The owner's \"publish now\" (#312) ships main as 0.87.0, not 0.86.1. Main holds the three CTM fixes (#272,",
+   "by": "agent (pds1-release-architect), owner may switch",
+   "status": "active",
+   "superseded_by": "",
+   "check": "tools/publish/preflight.mjs (one version) + release.yml publish job (tag = package.json version)",
+   "kind": "ci-job",
+   "state": null,
+   "url": null
+  },
+  {
+   "id": "D-0050",
+   "date": "2026-11-05",
+   "area": "architecture",
+   "decision": "Each of the spec's 1,186 variations becomes its own record by derivation at build time (stable id item--group-name, checked), not by moving the entries; new per-variation data (styling, Figma, platforms, mappings) goes in side tables keyed by the id; the API gains variants.json and components[].variants (docs/adr/0013).",
+   "by": "agent (pds1-ds-architect), owner may switch",
+   "status": "active",
+   "superseded_by": "",
+   "check": "build-spec-parts.js duplicate-id and side-table key checks (check-system generated)",
+   "kind": "ci-job",
+   "state": null,
+   "url": null
   }
  ],
  "workflows": [
@@ -2861,8 +3392,8 @@ window.PDS_DATA = {
    "name": "Dashboard",
    "file": "dashboard.yml",
    "conclusion": "skipped",
-   "url": "https://github.com/plenix-ds/pds/actions/runs/42033826568",
-   "at": "2026-11-05T13:13:16Z"
+   "url": "https://github.com/plenix-ds/pds/actions/runs/42069738957",
+   "at": "2026-11-05T16:57:17Z"
   }
  ],
  "shots": [],
