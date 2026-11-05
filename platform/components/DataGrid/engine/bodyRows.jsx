@@ -346,7 +346,8 @@ export function bodyRows({
           const cell = api.cell(row.id, c.field),
             status = cellStatus?.key === row.id && cellStatus.field === c.field ? cellStatus : null,
             // the checkbox editor (ADR 0016) is an option the application turns on: the cell shows a box and Space or a click toggles and saves, no editor opens
-            checkboxEditor = editorTurnedOn(c, props.editing?.types) && c.editor === 'checkbox',
+            turnedOn = editorTurnedOn(c, props.editing?.types),
+            checkboxEditor = turnedOn && c.editor === 'checkbox',
             editable = !!c.editor && (typeof c.editable === 'function' ? c.editable(cell) : c.editable !== false),
             canToggle = checkboxEditor && editable && status?.kind !== 'saving',
             canEdit = !checkboxEditor && editable && status?.kind !== 'saving';
@@ -507,6 +508,8 @@ export function bodyRows({
                   <CellEditor
                     column={c}
                     record={record}
+                    select={turnedOn && c.editor === 'select'}
+                    date={turnedOn && c.editor === 'date'}
                     value={editing.value}
                     onCommit={(next, move) => {
                       commitEdit(row.id, c.field, next);

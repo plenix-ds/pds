@@ -1,0 +1,227 @@
+{
+  "icon--size-xs-12px": {
+    "sets": [
+      {
+        "property": "--plx-comp-icon-size",
+        "part": "block",
+        "token": "--plx-sys-icon-size-xs"
+      }
+    ],
+    "why": ".plx-icon--size-xs in icon.css names the size with the prop in the modifier, which the derivation does not read"
+  },
+  "icon--size-sm-16px": {
+    "sets": [
+      {
+        "property": "--plx-comp-icon-size",
+        "part": "block",
+        "token": "--plx-sys-icon-size-sm"
+      }
+    ],
+    "why": ".plx-icon--size-sm in icon.css names the size with the prop in the modifier, which the derivation does not read"
+  },
+  "icon--size-md-20px": {
+    "sets": [
+      {
+        "property": "--plx-comp-icon-size",
+        "part": "block",
+        "token": "--plx-sys-icon-size-md"
+      }
+    ],
+    "why": ".plx-icon--size-md in icon.css names the size with the prop in the modifier, which the derivation does not read"
+  },
+  "icon--size-lg-24px": {
+    "sets": [
+      {
+        "property": "--plx-comp-icon-size",
+        "part": "block",
+        "token": "--plx-sys-icon-size-lg"
+      }
+    ],
+    "why": ".plx-icon--size-lg in icon.css names the size with the prop in the modifier, which the derivation does not read"
+  },
+  "icon--size-xl-48px": {
+    "sets": [
+      {
+        "property": "--plx-comp-icon-size",
+        "part": "block",
+        "token": "--plx-sys-icon-size-xl"
+      }
+    ],
+    "why": ".plx-icon--size-xl in icon.css names the size with the prop in the modifier, which the derivation does not read"
+  },
+  "logo--size-sm-minimum": {
+    "sets": [
+      {
+        "property": "--plx-comp-icon-size",
+        "part": "block",
+        "token": "--plx-comp-brand-sm-mark-size"
+      }
+    ],
+    "why": "the modifier names the prop and the value together (size-sm)"
+  },
+  "logo--size-xl": {
+    "sets": [
+      {
+        "property": "--plx-comp-icon-size",
+        "part": "block",
+        "token": "--plx-comp-brand-xl-mark-size"
+      }
+    ],
+    "why": "the modifier names the prop and the value together (size-xl)"
+  },
+  "brand-symbol--size-sm-minimum": {
+    "sets": [
+      {
+        "property": "--plx-comp-icon-size",
+        "part": "block",
+        "token": "--plx-comp-brand-sm-mark-size"
+      }
+    ],
+    "why": "the modifier names the prop and the value together (size-sm)"
+  },
+  "status-icon--size-sm": {
+    "sets": [
+      {
+        "property": "--plx-comp-icon-size",
+        "part": "block",
+        "token": "--plx-sys-icon-size-sm"
+      }
+    ],
+    "why": "the modifier names the prop and the value together (size-sm)"
+  },
+  "status-icon--size-md-default": {
+    "sets": [
+      {
+        "property": "--plx-comp-icon-size",
+        "part": "block",
+        "token": "--plx-sys-icon-size-md"
+      }
+    ],
+    "why": "the modifier names the prop and the value together (size-md)"
+  },
+  "status-icon--size-lg": {
+    "sets": [
+      {
+        "property": "--plx-comp-icon-size",
+        "part": "block",
+        "token": "--plx-sys-icon-size-lg"
+      }
+    ],
+    "why": "the modifier names the prop and the value together (size-lg)"
+  },
+  "access-request--variant-approved": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "badge",
+        "token": "--plx-comp-badge-success-background"
+      },
+      {
+        "property": "border-color",
+        "part": "badge",
+        "token": "--plx-comp-badge-success-border"
+      },
+      {
+        "property": "color",
+        "part": "badge",
+        "token": "--plx-comp-badge-success-text"
+      }
+    ],
+    "why": "the status is drawn by the Badge it renders (tone success), not by a rule of AccessRequest"
+  },
+  "access-request--variant-denied": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "badge",
+        "token": "--plx-comp-badge-negative-background"
+      },
+      {
+        "property": "border-color",
+        "part": "badge",
+        "token": "--plx-comp-badge-negative-border"
+      },
+      {
+        "property": "color",
+        "part": "badge",
+        "token": "--plx-comp-badge-negative-text"
+      }
+    ],
+    "why": "the status is drawn by the Badge it renders (tone negative), not by a rule of AccessRequest"
+  },
+  "access-request--variant-pending": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "badge",
+        "token": "--plx-comp-badge-waiting-background"
+      },
+      {
+        "property": "border-color",
+        "part": "badge",
+        "token": "--plx-comp-badge-waiting-border"
+      },
+      {
+        "property": "color",
+        "part": "badge",
+        "token": "--plx-comp-badge-waiting-text"
+      }
+    ],
+    "why": "the status is drawn by the Badge it renders (tone waiting), not by a rule of AccessRequest"
+  },
+  "access-request--variant-request": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "request-button",
+        "token": "--plx-comp-button-primary-background"
+      },
+      {
+        "property": "color",
+        "part": "request-button",
+        "token": "--plx-comp-button-primary-text"
+      }
+    ],
+    "why": "no status badge; the primary Button asks for access"
+  },
+  "action-menu--placement-bottom-end": {
+    "sets": [
+      {
+        "property": "inset-block-start",
+        "part": "menu",
+        "token": "--plx-comp-menu-fallback-bottom-end-inset-block-start"
+      }
+    ],
+    "why": "the placement is a modifier of the Menu it opens (.plx-menu--bottom-end), in menu.css"
+  },
+  "action-menu--placement-bottom-start-default": {
+    "sets": [
+      {
+        "property": "inset-block-start",
+        "part": "menu",
+        "token": "--plx-comp-menu-fallback-bottom-start-inset-block-start"
+      }
+    ],
+    "why": "the placement is a modifier of the Menu it opens (.plx-menu--bottom-start), in menu.css"
+  },
+  "action-menu--placement-top-end": {
+    "sets": [
+      {
+        "property": "inset-block-end",
+        "part": "menu",
+        "token": "--plx-comp-menu-fallback-top-end-inset-block-end"
+      }
+    ],
+    "why": "the placement is a modifier of the Menu it opens (.plx-menu--top-end), in menu.css"
+  },
+  "action-menu--placement-top-start": {
+    "sets": [
+      {
+        "property": "inset-block-end",
+        "part": "menu",
+        "token": "--plx-comp-menu-fallback-top-start-inset-block-end"
+      }
+    ],
+    "why": "the placement is a modifier of the Menu it opens (.plx-menu--top-start), in menu.css"
+  }
+}
