@@ -74,7 +74,7 @@ trust_dir() {  # pre-accept Claude's folder-trust prompt so unattended sessions 
 # A window is idle when its screen has no "esc to interrupt" (Claude is working), its input box is empty and it
 # has not changed for NUDGE_IDLE_S seconds. A round is skipped when the repo had no activity since the last round
 # and has no open PR, so a quiet night costs nothing.
-NUDGE_TEXT='Scheduled check (#220): check your open issues and PRs on plenix-ds/pds (gh issue list -R plenix-ds/pds --label agent:pds1-ROLE --state open; gh pr list -R plenix-ds/pds --author @me) and continue. Queue every green PR of yours with gh pr merge --auto. If there is nothing to do, reply "idle" and stop.'
+NUDGE_TEXT='Scheduled check (#220): keep working. 1) Queue every green PR of yours with gh pr merge --auto; fix any red or conflicting one. 2) If you are not in the middle of a task, take your next open issue (gh issue list -R plenix-ds/pds --label agent:pds1-ROLE --state open): highest severity first, then oldest; skip only issues labelled later and issues blocked by a named open issue or owner decision. Work it end to end to a merged PR, then take the next one. Reply "idle" only when every open issue of yours is later or blocked, and name each blocker.'
 NUDGE_IDLE_S=${NUDGE_IDLE_S:-120}
 NUDGE_STAMP=$ROOT/.nudge-last
 # Start waiting roles and stop finished ones (#246, D-0040): deploy/agents/scheduler.mjs makes the plan from GitHub,
