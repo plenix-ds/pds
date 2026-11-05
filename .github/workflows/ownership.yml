@@ -1,0 +1,36 @@
+# Ownership (plan §7; ADR 0001 `planned:ownership`; #197): only pds1-ds-architect changes token tier files and the packages'
+# public API. Its own workflow so a label change re-runs it (CI does not run on labels). Required on main (ruleset), with
+# "CI result". The labels reach the script through an environment variable, never through the shell text.
+name: Ownership
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+  merge_group:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ownership-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  ownership:
+    name: Ownership (token tiers and public API)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
+      PR_LABELS: ${{ github.event_name == 'pull_request' && toJSON(github.event.pull_request.labels.*.name) || '' }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Token tiers and public API changed only with the DS Architect's label
+        run: node tools/ci/check-ownership.mjs "$(git merge-base "$BASE_SHA" HEAD)"

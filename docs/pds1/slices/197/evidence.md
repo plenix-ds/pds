@@ -50,3 +50,14 @@
 | Line kept out of a finding's identity | Ran (local) | a base file without lines still matches: "1 findings on head, 0 new, 0 fixed, 1 old" |
 | Annotation with file and line | Ran (local) | `::error file=platform/components/RichText/RichText.jsx,line=46,title=opengrep%3A new problem (pds-no-dangerously-set-inner-html)::…` |
 | Escaping | Ran (local) | `file=a%2C b.js,line=7,title=eslint%3A new problem (no-x)::bad: thing, here%0Anext` |
+## Ownership (2026-11-05)
+
+| Item | Status | Path / output |
+|---|---|---|
+| Rule source | Ran (read) | ADR 0001 `planned:ownership`: "only pds1-ds-architect changes packages/*/package.json exports and packages/tokens/** tier files"; tier files still live in `platform/tokens/**/*.tokens.json` |
+| No owned change | Ran (local) | OWNERSHIP_OK |
+| Tier file changed, version bump only, no label | Ran (local, temporary commits) | the tier file fails; the version bump alone is not an API change |
+| `exports` changed, no label | Ran (local) | OWNERSHIP_FAIL (2 owned changes) |
+| With `agent:pds1-ds-architect` | Ran (local) | OWNERSHIP_OK |
+| Merge queue (no labels) | Ran (local) | OWNERSHIP_SKIPPED (the PR's own run enforces it) |
+| Required on main | Planned | After merge: ruleset 26593194 gets the second required check |

@@ -11,7 +11,9 @@ gh api repos/plenix-ds/pds/rules/branches/main -q '[.[].type]'
 
 ## Rules (ruleset 26593194, active)
 
-- **Required check:** `CI result` (from `.github/workflows/ci.yml`). It fails when any check fails, is skipped or is cancelled.
+- **Required checks:**
+  - `CI result` (from `.github/workflows/ci.yml`). It fails when any check fails, is skipped or is cancelled.
+  - `Ownership (token tiers and public API)` (from `.github/workflows/ownership.yml`): a PR that changes token tier files or a package's `exports` needs the `agent:pds1-ds-architect` label (ADR 0001). It re-runs when labels change.
 - **Merge queue:** squash only, all-green grouping, up to 5 entries per group. CI runs again on `merge_group`.
 - **Pull request required:** no approvals needed (D-0014: CI is the gate).
 - **No deletion and no force push** of `main`.
