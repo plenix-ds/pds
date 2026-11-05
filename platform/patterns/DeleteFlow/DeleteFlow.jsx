@@ -25,7 +25,7 @@
      onRestore(items): puts them back (Undo in the toast); without it the toast has no Undo
      onCommit(items): the undo form's final delete, when the toast leaves without Undo
      undoDuration: milliseconds the undo and trash toast stays before the delete is final; default 10 seconds (the
-       --plx-sys-undo-duration role); 0 keeps it until it is dismissed. The toast pauses while the pointer or focus is on it.
+       --plx-comp-delete-flow-undo-duration token); 0 keeps it until it is dismissed. The toast pauses while the pointer or focus is on it.
      trigger: the button that starts the flow (one element; its onClick is taken)
      open: starts the flow from elsewhere (a command bar's Delete): the dialog shows; with undo or trash the deletion runs
        at once and onClose follows
@@ -98,7 +98,7 @@ export function DeleteFlow({ items = [], noun, plural, variant = 'confirm', cons
     if (variant === 'trash' && retention) text += ' ' + fill(t.retention, { them: n === 1 ? t.it : t.them, days: formatNumber(retention) });
     if (toast) {
       toast.show(text, {
-        duration: undoDuration !== undefined ? undoDuration : tokenMs('--plx-sys-undo-duration'),
+        duration: undoDuration !== undefined ? undoDuration : tokenMs('--plx-comp-delete-flow-undo-duration'),
         action: onRestore ? { label: t.undo, onAction: () => onRestore(list) } : undefined,
         onClose: (reason) => { if (reason !== 'action' && variant === 'undo' && onCommit) onCommit(list); },
       });
