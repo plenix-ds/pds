@@ -1,0 +1,9 @@
+AssertionError [ERR_ASSERTION]: the page counter is in the data font: "DM Sans", "IBM Plex Sans Arabic", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif
+    at /home/cc/pds1/work/component-engineer-1/tests/document-viewer-data-1.test.js:22:12 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: '"DM Sans", "IBM Plex Sans Arabic", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif',
+  expected: /Reddit Mono/i,
+  operator: 'match',
+  diff: 'simple'
+}
