@@ -1,16 +1,16 @@
 // Builds a Plenix release from the Platform sources: the four packages, the versioned CDN files and the JSON API.
 //   node build-packages.js            (run node build-app.js first; npm run release:build does both)
 //
-//   packages/tokens   @plenix-ds/tokens   the token JSON (source), the token CSS, a JS module with every token
-//   packages/icons    @plenix-ds/icons    the SVG icons, their list (icons.json) and the icon stylesheet
-//   packages/styles   @plenix-ds/styles   plenix.css: the whole Platform stylesheet in one file, plus fonts.css and theme-boot.js
-//   packages/react    @plenix-ds/react    the components and patterns: ES module, CommonJS, and the browser global (window.Plenix)
+//   release/packages/tokens   @plenix-ds/tokens   the token JSON (source), the token CSS, a JS module with every token
+//   release/packages/icons    @plenix-ds/icons    the SVG icons, their list (icons.json) and the icon stylesheet
+//   release/packages/styles   @plenix-ds/styles   plenix.css: the whole Platform stylesheet in one file, plus fonts.css and theme-boot.js
+//   release/packages/react    @plenix-ds/react    the components and patterns: ES module, CommonJS, and the browser global (window.Plenix)
 //   release/cdn/<v>/  the same files at a fixed address per version (design-system.lighthouseway.org/cdn/<v>/)
 //   release/api/v1/   read-only JSON: tokens, components, taxonomy, guidance, icons (design-system.lighthouseway.org/api/v1/)
 //   build-packages.d/ one step per further package (<name>.js, run in name order; the library's package lanes add files here)
 //
 // The version is "version" in package.json; every package gets the same one. Everything here is generated: edit the
-// Platform (platform/), never packages/ or release/. The API needs the design system (platform/design-system, a
+// Platform (platform/), never release/. The API needs the design system (platform/design-system, a
 // submodule); without it the packages and the CDN still build and the API is skipped.
 const fs = require('fs');
 const path = require('path');
@@ -23,7 +23,7 @@ const VERSION = require('./package.json').version;
 const SCOPE = '@plenix-ds';
 const SITE = 'https://design-system.lighthouseway.org';
 const REPO = 'https://github.com/plenix-ds/plenix-platform';
-const PKG = path.join(ROOT, 'packages');
+const PKG = path.join(ROOT, 'release', 'packages');
 const REL = path.join(ROOT, 'release');
 const CDN = path.join(REL, 'cdn', VERSION);
 const API = path.join(REL, 'api', 'v1');
@@ -475,7 +475,7 @@ if (fs.existsSync(path.join(DS, 'inventory.js'))) {
 }
 
 // the library's further packages (library plan, wave 0): every build-packages.d/<name>.js is a step of its own, run in name
-// order with the release's context; it builds packages/<name>/ and may add its files to the CDN or the API
+// order with the release's context; it builds release/packages/<name>/ and may add its files to the CDN or the API
 const STEPS = path.join(ROOT, 'build-packages.d');
 const stepNotes = [];
 if (fs.existsSync(STEPS)) for (const f of fs.readdirSync(STEPS).filter((x) => x.endsWith('.js')).sort()) {

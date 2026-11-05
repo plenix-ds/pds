@@ -19,7 +19,7 @@
 // The size of plenix.css is not a rule (owner, #460): it is printed as a plain number, in KB (1024 bytes, rounded up), with
 // plenix.min.css, and the check never fails on it.
 // One import from the npm package is (#685): { Button }, { Badge }, { DataGrid } and * as P, bundled against
-// packages/react/dist/index.js the way the audit measured (tools/agent/one-part-sizes.js); one above its limit fails.
+// release/packages/react/dist/index.js the way the audit measured (tools/agent/one-part-sizes.js); one above its limit fails.
 // The scan reads the code, not the comments: plenix.js is parsed (@babel/standalone) and each finding is traced to the
 // source file it came from through the Platform bundle's hidden source map (build/vite/platform.js.map, written by
 // node build-app.js into an ignored folder; plenix.js is a copy of platform/dist/platform.js, #709); plenix.css is parsed with PostCSS. plenix.esm.js holds the same modules and is not counted twice.
@@ -172,17 +172,17 @@ for (const k of Object.keys(RULES)) {
 }
 console.log('  (information, never a failure) plenix.css: ' + kb(need('plenix.css')) + ' KB; plenix.min.css: ' + kb(need('plenix.min.css')) + ' KB; unsupported CSS inside @supports (has a fallback): ' + css.guarded + ' rules');
 // one import from the npm package (#685): what an app that imports one part bundles (tools/agent/one-part-sizes.js: the
-// Vite, minified, React external, with esbuild's number beside it as a cross-check, against packages/react); a size above its limit fails, so tree-shaking
+// Vite, minified, React external, with esbuild's number beside it as a cross-check, against release/packages/react); a size above its limit fails, so tree-shaking
 // cannot break again unseen
 const parts = require('./tools/agent/one-part-sizes.js');
 let over = 0;
 if (fs.existsSync(parts.entryOf())) {
   console.log('  one import from @plenix-ds/react (Vite, minified, React external; esbuild beside it, cross-check only):');
   for (const r of parts.measure()) { if (r.over) over++; console.log('        ' + parts.line(r)); }
-} else { console.log('BUNDLE_FAIL: packages/react is missing: run node build-packages.js'); process.exit(1); }
+} else { console.log('BUNDLE_FAIL: release/packages/react is missing: run node build-packages.js'); process.exit(1); }
 // the styles per part (#710): foundations.css and parts/*.css add up to plenix.css, in its order, and ties keep it
 // (tools/agent/style-parts-check.js)
-if (!fs.existsSync(path.join(ROOT, 'packages', 'styles', 'foundations.css'))) { console.log('BUNDLE_FAIL: packages/styles/foundations.css is missing: run node build-packages.js'); process.exit(1); }
+if (!fs.existsSync(path.join(ROOT, 'release', 'packages', 'styles', 'foundations.css'))) { console.log('BUNDLE_FAIL: release/packages/styles/foundations.css is missing: run node build-packages.js'); process.exit(1); }
 const styleParts = require('./tools/agent/style-parts-check.js').check(LIST).bad ? 1 : 0;
 // no non-ASCII character in the code of a shipped script (check-system.rules/ascii-bundles.js, the charset break of 2026-11-02): a page that loads
 // plenix.js or plenix.esm.js without a charset must still run (comments may hold any character); never a baseline, always zero

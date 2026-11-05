@@ -1,4 +1,4 @@
-// Builds the TypeScript definitions of @plenix-ds/react (packages/react/index.d.ts) from the source files' structured header
+// Builds the TypeScript definitions of @plenix-ds/react (release/packages/react/index.d.ts) from the source files' structured header
 // comments (Summary / Usage / Props) and the defaults in their code: the same reading the design system's API tables use.
 //   Prop types: a chain of quoted choices at the prop's own level ("md" (default) | "sm", "h1"–"h4") becomes a union (an
 //   open chain ending "| …" also takes any string); choices inside a shape ([{ kind: "a" | "b" }]) are a field's, so a
@@ -270,7 +270,7 @@ function checkCoverage(index, declarations) {
 module.exports.checkCoverage = checkCoverage;
 
 if (require.main === module) {
-  const out = path.join(ROOT, 'packages', 'react', 'index.d.ts');
+  const out = path.join(ROOT, 'release', 'packages', 'react', 'index.d.ts');
   fs.mkdirSync(path.dirname(out), { recursive: true });
   const r = module.exports(out, require('./package.json').version);
   console.log('Built ' + path.relative(ROOT, r.file) + ' (' + r.exports + ' exports)');

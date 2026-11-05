@@ -1,7 +1,7 @@
 // node tools/agent/one-part-sizes.js [--check] [--entry <file>]
 // What one import from @plenix-ds/react costs an application (#685): tiny applications that import one part, bundled the
 // way the audit measured (#684, #685): minified, React external, against the built package
-// (packages/react, from node build-packages.js). Prints the minified and gzipped size of each; --check fails when an import
+// (release/packages/react, from node build-packages.js). Prints the minified and gzipped size of each; --check fails when an import
 // goes above its limit, so tree-shaking cannot break again unseen. Not a test: it builds and measures, it runs no page.
 // Two bundlers, one case list (#807, owner): Vite (Rollup with esbuild's minifier, tools/agent/one-part-vite.mjs) is the measure: it is what most
 // consumers of the package use, and the limits are checked against it. esbuild (the audit's bundler, #684, #685) stays as a cross-check: it reports its
@@ -13,7 +13,7 @@ const fs = require('fs'), path = require('path'), zlib = require('zlib'), cp = r
 const esbuild = require('esbuild');
 
 const ROOT = path.resolve(__dirname, '../..');
-const PKG = path.join(ROOT, 'packages', 'react');
+const PKG = path.join(ROOT, 'release', 'packages', 'react');
 // the imports measured, with their limits in KB, minified (#685). Before #685 every one-part import cost the whole library,
 // 913 KB; the whole library was 1,608.0 KB. A limit holds the size measured when it was set, with a little room. #702
 // (Arabic opt-in, the icon names loaded when needed): Button 317.5 -> 101.4, Badge 79.0 -> 25.0, DataGrid 645.0 -> 428.9,

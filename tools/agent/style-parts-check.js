@@ -1,6 +1,6 @@
 // node tools/agent/style-parts-check.js [--list]   (issue 710; check-bundle.js runs it after node build-packages.js)
-// Proves the styles package's per-part files (packages/styles/foundations.css and parts/*.css, cut by tools/style-parts.js)
-// against packages/styles/plenix.css. Read-only; it runs no page.
+// Proves the styles package's per-part files (release/packages/styles/foundations.css and parts/*.css, cut by tools/style-parts.js)
+// against release/packages/styles/plenix.css. Read-only; it runs no page.
 //   1. The union: every declaration of plenix.css (with its layer, its conditions and its selector) is in exactly one file,
 //      and the files hold nothing else (beside their @import lines): no lost and no doubled rule.
 //   2. The order inside each file is plenix.css's order.
@@ -15,7 +15,7 @@ const postcss = require('postcss');
 const parser = require('postcss-selector-parser');
 
 const ROOT = path.resolve(__dirname, '../..');
-const S = path.join(ROOT, 'packages', 'styles');
+const S = path.join(ROOT, 'release', 'packages', 'styles');
 const SAMPLES = ['badge', 'button', 'data-grid'];   // the parts whose page size is printed (issue 710's measures)
 
 // every declaration (and every bodiless at-rule) of a stylesheet, in order: { key, layer, prop, selector }

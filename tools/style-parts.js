@@ -1,5 +1,5 @@
 // require('./tools/style-parts.js').split(plenixCss) -> { foundations, parts, report }   (issue 710, option S1)
-// The styles package's per-part files, cut from the built plenix.css (packages/styles/plenix.css, esbuild's bundle of
+// The styles package's per-part files, cut from the built plenix.css (release/packages/styles/plenix.css, esbuild's bundle of
 // platform/platform.css), so every rule keeps its layer, its conditions and its text, and the CDN files stay exactly as they are.
 //   foundations.css     the layer-order line and every foundation file (tokens, theme, reset, layout, utilities), loaded once
 //   parts/<part>.css    one part's rules: its own stylesheets (platform/<group>/<Part>/*.css, platform/charts/<name>.css),

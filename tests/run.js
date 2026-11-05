@@ -26,7 +26,7 @@ const AUTOMATIC = ['site-coverage', 'visual', 'layout', 'pages', 'keyboard', 'da
   // tests without a browser that were started by hand only (issue 756): the Arabic catalog, the baseline scanner, the site icon files
   'arabic-catalog-427', 'baseline-scan-273', 'site-icons'];
 const ON_DEMAND = ['a11y', 'high-contrast', 'contrast', 'theme', 'density'];
-// the tests of the release build (packages/ and release/cdn/, written by node build-packages.js), by name or with --release:
+// the tests of the release build (release/packages/ and release/cdn/, written by node build-packages.js), by name or with --release:
 // the CI build job runs them after its release build (issue 756). They are not in the default run, which needs no release build
 const RELEASE = ['perf', 'w15c-packages', 'icons-package-282', 'cdn-devx'];
 // the design spec's own checks, by name only: the spec's component labs (its Edit dialog's tokens) belong to the spec
