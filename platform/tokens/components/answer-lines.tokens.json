@@ -1,0 +1,15 @@
+{
+  "$description": "AnswerLines (platform/components/AnswerLines, issue 87, docs/adr/0014): its component tokens.",
+  "plx-comp": {
+    "answer-lines-row-height": {
+      "$value": "{plx-sys.print-writing-line}",
+      "$type": "dimension",
+      "$description": "AnswerLines: one writing line, 32px (about 8.5mm)."
+    },
+    "answer-lines-border-color": {
+      "$value": "{plx-sys.border-strong}",
+      "$type": "color",
+      "$description": "AnswerLines: the line, dark enough to show on paper (border-default prints too faint)."
+    }
+  }
+}

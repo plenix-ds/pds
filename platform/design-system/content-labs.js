@@ -313,6 +313,8 @@
   // ---- Avatar (<Avatar>, span.plx-avatar: initials or a picture in a rounded square) in seven sizes; the theme's colors
   // or a person's own data color (data-plx-color sets the avatar's own colors from that hue's soft roles)
   var AV = function (n) { return 'plx-comp-avatar-' + n; };
+  // Avatar's sizes by px -> its size names (the width and height tokens are named by size, docs/adr/0012)
+  var AVN = { 20: '2xs', 24: 'xs', 28: 'sm', 32: 'md', 40: 'lg', 48: 'xl', 64: '2xl' };
   var AV_PX = { '2xs': 20, xs: 24, sm: 28, md: 32, lg: 40, xl: 48, '2xl': 64 };
   var OWN_HUE = 'purple';
   DS.registerLab('avatar', {
@@ -340,8 +342,8 @@
         // the avatar reads its own colors first, then the theme's avatar roles; a data color sets its own from the hue's soft roles
         case 'bg': return own ? null : 'plx-comp-avatar-background';   // a person's own color comes from the data palette
         case 'fg': return own ? null : 'plx-comp-avatar-content';
-        case 'w': return AV(px + '-width');
-        case 'h': return AV(px + '-height');
+        case 'w': return AV((AVN[px] || px) + '-width');
+        case 'h': return AV((AVN[px] || px) + '-height');
         case 'rad': return AV(px + '-radius');
         case 'fs': return AV(px + '-font-size');
         case 'fw': return AV('font-weight');

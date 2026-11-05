@@ -1,0 +1,3 @@
+/* Plenix · PageBreak (platform/components/PageBreak): break-before reads the print token (auto on screen, page on paper). */
+.plx-page-break{break-before:var(--plx-sys-print-break);}
+.plx-page-break--preview{border-block-start-color:var(--plx-sys-border-default);border-block-start-style:dashed;border-block-start-width:var(--plx-sys-border-width-thin);margin-block-end:var(--plx-sys-space-layout-md);margin-block-start:var(--plx-sys-space-layout-md);}

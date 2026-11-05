@@ -13,8 +13,9 @@
    Numbers in examples are content (counts, values), never sizes: sizes are named (Avatar size="sm"). */
 (function () {
   var h = React.createElement, P = window.Plenix;
-  var S = function (n) { return 'var(--plx-ref-space-' + n + 'px)'; };
-  var W = function (n) { return 'var(--plx-ref-size-' + n + 'px)'; };
+  // the palette in grid units (docs/adr/0012: 1u = 4px; a px value off the grid can only be a deprecated step)
+  var S = function (n) { return 'var(--plx-ref-space-' + (n % 4 === 0 ? n / 4 + 'u' : n + 'px') + ')'; };
+  var W = function (n) { return 'var(--plx-ref-size-' + (n % 4 === 0 ? n / 4 + 'u' : n + 'px') + ')'; };
   var noop = function () {};
   var use = function (v) { return React.useState(v); };
   var row = function () { return h.apply(null, ['div', { 'data-ds-wrap': true, className: 'ds-demo-row' }].concat([].slice.call(arguments))); };

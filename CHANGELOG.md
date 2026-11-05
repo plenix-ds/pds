@@ -15,6 +15,10 @@ Nothing to change. Deprecated names keep working (each says what replaces it). A
 - `--plx-comp-entity-header-media-{blue,green,purple,red,brown,gray,surface}-icon`: the colour of an EntityHeader icon media drawn without a box (#275, docs/adr/0005).
 - EntityHeader `media={{ icon, hue, box: true }}` and the class `plx-entity-header__tile--box`: the tinted, bordered tile, for a usage that needs the box (D-0024).
 - Role names (docs/adr/0012): `--plx-sys-radius-<role>-sm` / `-md` (avatar, card, control, media, surface), `--plx-sys-radius-compact`, `-detail`, `-dialog`, `-menu`, `-pill`, `-table`; `--plx-sys-label-height-sm` / `-md`; `--plx-sys-shell-nav-width-from-wide` / `-ultrawide` and the side and secondary pane widths `-from-wide` / `-from-ultrawide`; `--plx-comp-avatar-<2xs…2xl>-height` / `-width`.
+- Print tokens for A4 documents (#87, docs/adr/0014): `--plx-ref-paper-a4-inline-size` (210mm), `--plx-ref-paper-a4-block-size` (297mm), `--plx-ref-paper-margin-md` (20mm), `--plx-sys-print-sheet-inline-size`, `--plx-sys-print-sheet-block-size`, `--plx-sys-print-document-margin`, `--plx-sys-print-writing-line`, `--plx-sys-print-break`.
+
+### Changed
+- TypeScript, wave 1 batch E: MenuBar and SearchResult (with SearchResultGroup and highlightMatches) are written in TypeScript with prop types. No behavior change (#292).
 
 ### Changed (visual)
 - EntityHeader's `media={{ icon, hue }}` has no box by default, as the owner decided (D-0024, D-0036): no fill and no border, and the icon fills its square (44px; 32px in a section) in its hue's on-surface colour (#275, CTM#109).

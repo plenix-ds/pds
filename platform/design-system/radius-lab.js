@@ -70,7 +70,7 @@ window.DSRadiusLab = function (section, data) {
   var row = DS.el('div', 'ds-radius-avatars');
   [24, 28, 32, 40, 64, 96].forEach(function (s) {
     var r = s <= 24 ? 4 : s <= 40 ? 6 : s <= 64 ? 8 : 12, box = DS.el('div', 'ds-radius-av-item');
-    var av = DS.el('span', 'ds-radius-av', 'RM'); DS.sample(av, 'width', 'var(--plx-ref-size-' + s + 'px)'); DS.sample(av, 'height', 'var(--plx-ref-size-' + s + 'px)'); DS.setVar(av, '--ds-sample-border-radius', 'var(--plx-sys-radius-avatar-' + r + 'px)');
+    var av = DS.el('span', 'ds-radius-av', 'RM'); DS.sample(av, 'width', 'var(--plx-ref-size-' + (s % 4 === 0 ? s / 4 + 'u' : s + 'px') + ')'); DS.sample(av, 'height', 'var(--plx-ref-size-' + s + 'px)'); DS.setVar(av, '--ds-sample-border-radius', 'var(--plx-sys-radius-avatar-' + r + 'px)');
     DS.sample(av, 'font-size', s >= 64 ? 'var(--plx-ref-font-size-500)' : s >= 40 ? 'var(--plx-ref-font-size-300)' : 'var(--plx-ref-font-size-11)');
     box.appendChild(av); box.appendChild(DS.el('div', 'ds-radius-av-label', s + 'px · --plx-sys-radius-avatar-' + r + 'px')); row.appendChild(box);
   });
