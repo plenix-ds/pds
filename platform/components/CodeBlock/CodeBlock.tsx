@@ -30,11 +30,12 @@ import { cx } from '../../utils/cx.ts';
 import { Button } from '../Button/Button.tsx';
 import { LiveRegion } from '../../utils/announce.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import CheckIcon from 'plenix-platform/icons/plenix/check';
 
 const KEYWORDS = 'import|from|export|default|const|let|var|function|return|if|else|for|while|do|switch|case|break|continue|new|delete|typeof|instanceof|in|of|null|undefined|true|false|this|async|await|class|extends|try|catch|finally|throw';
 // each rule: [kind, pattern]; the first that matches at a position wins
-const RULES = {
+const RULES: Record<string, [string, RegExp][]> = {
   js: [
     ['comment', /\/\*[\s\S]*?\*\/|\/\/[^\n]*/],
     ['string', /'(?:\\.|[^'\\\n])*'|"(?:\\.|[^"\\\n])*"|`(?:\\.|[^`\\])*`/],
@@ -57,20 +58,20 @@ const RULES = {
 };
 RULES.jsx = RULES.js; RULES.html = RULES.js;
 
-function detect(title, text) {
+function detect(title: unknown, text: string): string {
   const ext = title ? (String(title).match(/\.(\w+)$/) || [])[1] : null;
   if (ext) return ext === 'css' ? 'css' : /^(jsx?|mjs|tsx?)$/.test(ext) ? 'jsx' : ext === 'html' ? 'html' : 'text';
   return /^\s*(?:[.#:@\w[\]*-][^{\n]*)\{[^}]*:[^}]*;/m.test(text) && !/=>|import |<[A-Z]/.test(text) ? 'css' : 'jsx';
 }
 
 // the code as a list of plain strings and colored spans (CodeEditor colors its text with it too)
-export function highlight(text, language) {
+export function highlight(text: string, language: string): React.ReactNode {
   const rules = RULES[language];
   if (!rules) return text;
   const all = new RegExp(rules.map(([, re]) => '(' + re.source + ')').join('|'), 'g');
-  const out = [];
-  let at = 0, depth = 0, m, n = 0;
-  const plain = (s) => { if (!s) return; out.push(language === 'css' && depth === 0 ? <span key={n++} className="plx-code-block__tok--selector">{s}</span> : s); };
+  const out: React.ReactNode[] = [];
+  let at = 0, depth = 0, m: RegExpExecArray | null, n = 0;
+  const plain = (s: string) => { if (!s) return; out.push(language === 'css' && depth === 0 ? <span key={n++} className="plx-code-block__tok--selector">{s}</span> : s); };
   while ((m = all.exec(text))) {
     if (m[0] === '') { all.lastIndex++; continue; }
     plain(text.slice(at, m.index));
@@ -86,8 +87,25 @@ export function highlight(text, language) {
 }
 
 
-export function CodeBlock({ title, maxHeight = 'none', copy = true, label, language = 'auto', strings, className, children }) {
-  const t = useStrings('codeBlock', strings);
+type CodeBlockProps = {
+  /** a title above the code; its file extension picks the language */
+  title?: string;
+  /** "none" (default) or a height name the stylesheet defines */
+  maxHeight?: string;
+  /** the Copy button; default true */
+  copy?: boolean;
+  /** the code's accessible name; default the title */
+  label?: string;
+  /** "auto" (default) | "js" | "jsx" | "html" | "css" | "text" */
+  language?: string;
+  /** { copy, copied, failed, code } */
+  strings?: Catalog | null;
+  className?: string;
+  /** the code, as text */
+  children?: React.ReactNode;
+};
+export function CodeBlock({ title, maxHeight = 'none', copy = true, label, language = 'auto', strings, className, children }: CodeBlockProps) {
+  const t = useStrings('codeBlock', strings) as Record<string, string>;
   const [copied, setCopied] = React.useState(false);
   const [said, setSaid] = React.useState('');   // what screen readers hear after Copy (batch 213)
   const text = typeof children === 'string' ? children : String(children == null ? '' : children);

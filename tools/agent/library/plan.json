@@ -2581,10 +2581,10 @@
       "platform/tokens/components/prompt-suggestions.tokens.json",
       "platform/components/Chat/Chat.jsx",
       "platform/components/Chat/chat.css",
-      "platform/components/SuggestedEdit/SuggestedEdit.jsx",
+      "platform/components/SuggestedEdit/SuggestedEdit.tsx",
       "platform/components/SuggestedEdit/suggested-edit.css",
       "platform/tokens/components/suggested-edit.tokens.json",
-      "platform/components/RefineMenu/RefineMenu.jsx",
+      "platform/components/RefineMenu/RefineMenu.tsx",
       "platform/components/RefineMenu/refine-menu.css",
       "platform/tokens/components/refine-menu.tokens.json",
       "platform/components/ConfidenceIndicator/ConfidenceIndicator.tsx",
@@ -8653,7 +8653,7 @@
    "wave": 14,
    "lane": "C",
    "files": [
-    "platform/components/SuggestedEdit/SuggestedEdit.jsx",
+    "platform/components/SuggestedEdit/SuggestedEdit.tsx",
     "platform/components/SuggestedEdit/suggested-edit.css",
     "platform/tokens/components/suggested-edit.tokens.json"
    ],
@@ -8677,7 +8677,7 @@
    "wave": 14,
    "lane": "C",
    "files": [
-    "platform/components/RefineMenu/RefineMenu.jsx",
+    "platform/components/RefineMenu/RefineMenu.tsx",
     "platform/components/RefineMenu/refine-menu.css",
     "platform/tokens/components/refine-menu.tokens.json"
    ],
@@ -21561,7 +21561,7 @@
    "target": "SuggestedEdit",
    "targetKind": "component",
    "files": [
-    "platform/components/SuggestedEdit/SuggestedEdit.jsx",
+    "platform/components/SuggestedEdit/SuggestedEdit.tsx",
     "platform/components/SuggestedEdit/suggested-edit.css",
     "platform/tokens/components/suggested-edit.tokens.json"
    ],
@@ -21621,7 +21621,7 @@
    "target": "SuggestedEdit",
    "targetKind": "component",
    "files": [
-    "platform/components/SuggestedEdit/SuggestedEdit.jsx",
+    "platform/components/SuggestedEdit/SuggestedEdit.tsx",
     "platform/components/SuggestedEdit/suggested-edit.css",
     "platform/tokens/components/suggested-edit.tokens.json"
    ],
@@ -21676,7 +21676,7 @@
    "target": "RefineMenu",
    "targetKind": "component",
    "files": [
-    "platform/components/RefineMenu/RefineMenu.jsx",
+    "platform/components/RefineMenu/RefineMenu.tsx",
     "platform/components/RefineMenu/refine-menu.css",
     "platform/tokens/components/refine-menu.tokens.json"
    ],

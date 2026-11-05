@@ -426,7 +426,7 @@
       variantPages: [
         { leaf: 'Full-height code block', group: 'Height', name: 'None (default): as tall as its code', lab: { variant: 'none' }, text: 'The block grows with its code and scrolls only sideways.', use: ['Short examples and snippets in a page'], avoid: ['Whole files, which push the rest of the page away: use Tall'] },
         { leaf: 'Tall code block', group: 'Height', name: 'Tall: scrolls inside a box', lab: { variant: 'tall' }, text: 'The code stops at 500px high and scrolls inside its box.', use: ['Whole source files and long generated output'], avoid: ['Snippets of a few lines, which should show in full'] }
-      ], sec: 'content', sub: 'Text and reading', leaf: 'Code block', plenix: 'CodeBlock', src: 'components/CodeBlock/CodeBlock.jsx', level: 'Component', interaction: 'Display',
+      ], sec: 'content', sub: 'Text and reading', leaf: 'Code block', plenix: 'CodeBlock', src: 'components/CodeBlock/CodeBlock.tsx', level: 'Component', interaction: 'Display',
       text: 'Code or a file’s source in the code font on the page surface, with a title and a Copy button.',
       aliases: ['Code sample', 'Snippet', 'Source view'], use: ['Showing code to copy, or a whole file (maxHeight="tall" scrolls)'], avoid: ['A short value inside a sentence: use inline code'],
       related: ['keyboard-hint'], map: [m(A, 'Code block'), m(C, 'Code snippet'), m(F, 'CodeBlock', 'Partial'), ['Primer', 'CodeBlock', 'Partial']],

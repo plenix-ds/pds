@@ -31,7 +31,7 @@
     "platform/patterns/AvatarUpload/AvatarUpload.jsx"
   ],
   "LiveRegion": [
-    "platform/components/CodeBlock/CodeBlock.jsx",
+    "platform/components/CodeBlock/CodeBlock.tsx",
     "platform/components/Resizable/Resizable.tsx",
     "platform/patterns/WidgetGrid/WidgetGrid.jsx",
     "platform/patterns/ColumnsMenu/ColumnsMenu.jsx",
