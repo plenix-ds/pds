@@ -1,256 +1,94 @@
-# Plenix checks: on every push and pull request, only the checks for what changed (owner, 2026-10-13: the full suite runs
-# only as the manual final gate, full.yml; a per-push run of everything took almost two hours). The build job: build, the
-# system and spec checks, the release build and the tests without a browser. The browser tests run in changed mode
-# (tests/changed.js: the push's before-SHA, or the pull request's base, to this commit) in parallel jobs, each its own
-# checkout and build (the build takes seconds, faster than passing it on as an artifact), each with a time limit.
-# The browser tests open the St. John the Beloved test site (LighthouseCollection/st-john-test-site) and the suite applications, never the design
-# spec (owner, 2026-10-25), so their jobs do not check the spec out. The design system (platform/design-system) is a
-# private submodule: with the DS_TOKEN secret the build job checks it out for the spec check.
-name: Checks
+# PDS 1.0 CI (plan §7 "Final CI stack"; issue #197). Required on main through branch protection and the merge queue.
+# Only new problems block: each check runs on the PR's head and on its base (the merge base with main) and fails only on
+# findings the head adds (tools/ci/new-problems.mjs). Old debt is counted in the job summary but does not block.
+# Rules: every action pinned to a commit SHA, zizmor clean, every run step in bash with pipefail, no stored secrets.
+# A skipped or cancelled check counts as a failure in the "CI result" job, the one stable required check.
+name: CI
 
 on:
-  # a task branch runs once, through its pull request; a push runs the checks only on the shared branches (#623: both
-  # triggers ran every PR push twice, under two refs that the concurrency group does not join)
-  push:
-    branches: [styling/phase-2, main]
   pull_request:
+  merge_group:
 
 permissions:
   contents: read
 
 concurrency:
-  group: checks-${{ github.ref }}
+  group: ci-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
-env:
-  CHROME_PATH: /usr/bin/google-chrome
-  TEST_SCOPE: changed
-  # what to compare with: the pull request's base, or the commit before the push (zeros for a new branch: tests/changed.js
-  # then compares with where the branch left main)
-  CHANGED_BASE: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
+defaults:
+  run:
+    shell: bash
 
 jobs:
-  build:
-    name: Build and checks
+  zizmor:
+    name: Workflows (zizmor)
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          fetch-depth: 0
+          persist-credentials: false
+      - name: zizmor, pinned, offline (no findings allowed)
+        run: pipx run zizmor==1.32.0 --offline --format=github .github/workflows
 
-      - name: Design system (submodule)
-        env:
-          DS_TOKEN: ${{ secrets.DS_TOKEN }}
-        run: |
-          if [ -n "$DS_TOKEN" ]; then
-            git config --global url."https://x-access-token:${DS_TOKEN}@github.com/".insteadOf "https://github.com/"
-            git submodule update --init --depth 1
-            echo "Design system checked out"
-          else
-            echo "::notice::DS_TOKEN is not set: the design system's pages and spec check are skipped"
-          fi
-
-      - uses: actions/setup-node@v5
-        with:
-          node-version: 22
-          cache: npm
-
-      - name: Lane design-system files (lanes/<task>/design-system into the submodule) before npm ci, whose build reads the design system
-        run: node tools/agent/lane-overlay.js
-
-      - run: npm ci
-
-      # npm ci builds (package.json's prepare: build-app.js, which runs build-exports.js): a committed library block of
-      # platform/index.js or platform.css that is not what build-exports.js makes from platform/exports shows as a change here
-      - name: "Exports block (the committed library block of platform/index.js and platform.css equals the one the build makes)"
-        run: |
-          git diff --exit-code HEAD -- platform/index.js platform/platform.css || { echo "The library block is stale: run node build-exports.js and commit platform/index.js and platform/platform.css"; exit 1; }
-
-      # known advisories of the production dependencies (issue 696): it informs and never blocks (the run stays green, the log and the
-      # job summary show what it found); the dev dependencies and the vendored libraries are not read
-      - name: Dependency advisories (npm audit, production dependencies, informs only)
-        continue-on-error: true
-        run: npm audit --omit=dev
-
-      - name: Generated files (a task branch never commits them; AGENTS.md)
-        if: github.event_name == 'pull_request'
-        # the PR's own commits: from where its head left the base branch (as it is now) to its head. Not base.sha to the
-        # PR's merge commit, which counts the base's newer commits (its "Generated files rebuilt") as the branch's (#623)
-        run: node tools/agent/generated.js --check origin/${{ github.base_ref }} ${{ github.event.pull_request.head.sha }}
-
-      - name: Build
-        run: |
-          node build-app.js
-          node build-usage.js
-
-      - name: System check
-        run: node check-system.js
-
-      - name: Style check (Stylelint, the main style checker)
-        run: npx stylelint "platform/**/*.css" "services/**/*.css"
-
-      - name: Plenix style check (the style rules Stylelint cannot check; style-plan-30)
-        run: node check-style.js
-
-      - name: "Import check (ESLint import/no-unresolved: every relative import names a file that exists as written; #708)"
-        run: npm run lint:js
-
-      - name: Spec check
-        run: |
-          if [ -f platform/design-system/inventory.js ]; then node check-spec.js; else echo "skipped: no design system"; fi
-
-      - name: Release build
-        run: node build-packages.js
-
-      - name: Bundle rules (the built CDN files against check-bundle.baseline.json; bundle-check-27)
-        run: node check-bundle.js
-
-      - name: Vendored libraries (information only; "Wanted" is the version copied into platform/vendor/; issue 724)
-        continue-on-error: true
-        run: npm outdated --prefix platform/vendor --long || true
-
-      - name: Typed props (the `any` props of packages/react/index.d.ts never go up from types-any.baseline.json; issue 687)
-        run: node tools/agent/types-any.js --check
-
-      - name: What changed (the scope of the browser tests)
-        run: node tests/changed.js
-
-      - name: "Tests without a browser (formats, brand rules, login, types, fill, icon safety, selector kinds, Arabic catalog, baseline scan, site icons)"
-        run: node tests/run.js formats brand-rules login types fill-693 icon-safety selector-kinds arabic-catalog-427 baseline-scan-273 site-icons
-
-      - name: "Tests of the release build (package sizes, add-on packages, icons package, CDN files; issue 756)"
-        run: node tests/run.js --release
-
-  browser:
-    name: Browser tests (${{ matrix.name }})
+  checks:
+    name: New problems (${{ matrix.tool }})
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - name: pages
-            tests: pages
-          - name: typography
-            tests: typography
-          - name: reflow
-            tests: reflow
-          # the component tokens on the site's real components (it replaces the design spec's labs)
-          - name: component tokens
-            tests: component-tokens
-          - name: fixtures
-            tests: site-coverage visual layout charts-echarts-353 sparkline-echarts-353 treechart-echarts
-          - name: behavior
-            tests: data-grid keyboard focus-order semantic-html utilities navigation one-primary
-    services:
-      postgres:
-        image: postgres:16-alpine
-        env:
-          POSTGRES_DB: stjohn
-          POSTGRES_USER: stjohn
-          POSTGRES_PASSWORD: stjohn
-        ports: ['5432:5432']
-        options: >-
-          --health-cmd "pg_isready -U stjohn -d stjohn" --health-interval 5s --health-timeout 3s --health-retries 20
+        tool: [tsc, eslint, stylelint, knip, system, style]
     env:
-      SITE_DIR: ${{ github.workspace }}/st-john-test-site
-      SITE_DATABASE_URL: postgres://stjohn:stjohn@localhost:5432/stjohn
-      TEST_TIMEOUT_MS: '2400000'
-      TEST_SHARD: ${{ matrix.shard }}
+      TOOL: ${{ matrix.tool }}
+      BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
+          persist-credentials: false
 
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
           cache: npm
 
-      - name: Lane design-system files before npm ci (its build reads the design system)
-        run: node tools/agent/lane-overlay.js
+      - name: Head, install and build
+        run: npm ci --no-audit --no-fund
 
-      - run: npm ci
+      - name: Head, findings
+        run: node tools/ci/new-problems.mjs run "$TOOL" "$RUNNER_TEMP/head.json"
 
-      - name: The St. John test site (its own public repository, on the owner's account; no token needed)
-        uses: actions/checkout@v5
-        with:
-          repository: LighthouseCollection/st-john-test-site
-          # the site's revision, pinned (#382 F8): the same Platform commit always meets the same site. Bump it here and
-          # in the other workflow (ci.yml, full.yml) when the site changes, in the pull request that needs the change
-          ref: c12c3e0af26985ab19d14065b16e340a94138a72
-          path: st-john-test-site
-
-      - name: The site's packages and build
-        working-directory: st-john-test-site
+      - name: Base, install and build (merge base with the target branch)
         run: |
+          set -euo pipefail
+          [ -n "$BASE_SHA" ] || { echo "No base commit for this event"; exit 1; }
+          merge_base=$(git merge-base "$BASE_SHA" HEAD)
+          echo "Base: $merge_base"
+          git worktree add --detach "$RUNNER_TEMP/base" "$merge_base"
+          cd "$RUNNER_TEMP/base"
           npm ci --no-audit --no-fund
-          node build.js
 
-      - name: Build
-        run: |
-          node build-app.js
-          node build-usage.js
-          node build-packages.js
+      - name: Base, findings (the head's runner, the base's code and config)
+        working-directory: ${{ runner.temp }}/base
+        run: node "$GITHUB_WORKSPACE/tools/ci/new-problems.mjs" run "$TOOL" "$RUNNER_TEMP/base.json"
 
-      - name: Tests (${{ matrix.tests }}), changed mode
-        run: node tests/run.js ${{ matrix.tests }}
+      - name: Compare (fail on new problems only)
+        run: node tools/ci/new-problems.mjs compare "$TOOL" "$RUNNER_TEMP/base.json" "$RUNNER_TEMP/head.json"
 
-  # The red-main report (issue 690): a push to styling/phase-2 that ends red opens, or updates, ONE issue labeled red-main that
-  # names the failing jobs and the commit; the next green push comments and closes it. A cancelled run (a newer push took its place:
-  # the concurrency group above) changes nothing. It uses only the token GitHub gives this run (GITHUB_TOKEN, with issues: write
-  # and actions: read for this job alone); no stored key. It runs in this workflow so it works from the branch itself (a workflow_run
-  # workflow would run only from the default branch's copy).
-  red-main:
-    name: Report red or green on styling/phase-2
-    if: always() && github.event_name == 'push' && github.ref == 'refs/heads/styling/phase-2'
-    needs: [build, browser]
+  result:
+    name: CI result
+    if: always()
+    needs: [zizmor, checks]
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    permissions:
-      contents: read
-      issues: write
-      actions: read
-    env:
-      GH_TOKEN: ${{ github.token }}
-      REPO: ${{ github.repository }}
-      SHA: ${{ github.sha }}
-      RUN_ID: ${{ github.run_id }}
-      RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-      BUILD_RESULT: ${{ needs.build.result }}
-      BROWSER_RESULT: ${{ needs.browser.result }}
     steps:
-      - name: Open, update or close the red-main issue
+      - name: Every check passed (skipped or cancelled is a failure)
+        env:
+          RESULTS: ${{ toJSON(needs) }}
         run: |
-          set -eu
-          short="${SHA:0:8}"
-          if [ "$BUILD_RESULT" = cancelled ] || [ "$BROWSER_RESULT" = cancelled ]; then echo "cancelled: a newer run took over, nothing to report"; exit 0; fi
-          gh label create red-main --color B60205 --description "styling/phase-2 is red: CI failed on the shared branch (issue 690)" 2>/dev/null || true
-          open=$(gh issue list --repo "$REPO" --label red-main --state open --json number --jq '.[0].number // empty')
-          if [ "$BUILD_RESULT" = success ] && { [ "$BROWSER_RESULT" = success ] || [ "$BROWSER_RESULT" = skipped ]; }; then
-            if [ -n "$open" ]; then
-              gh issue comment "$open" --repo "$REPO" --body "Green again at \`$short\` ($RUN_URL). Closing."
-              gh issue close "$open" --repo "$REPO" --reason completed
-            fi
-            exit 0
-          fi
-          failing=$(gh api "repos/$REPO/actions/runs/$RUN_ID/jobs" --paginate --jq '.jobs[] | select(.conclusion == "failure" or .conclusion == "timed_out") | "- " + .name' | sort -u)
-          [ -n "$failing" ] || failing="- (no failing job was named: see the run)"
-          subject=$(gh api "repos/$REPO/commits/$SHA" --jq '.commit.message | split("\n")[0]')
-          body="styling/phase-2 is red at \`$short\`: $subject
-
-          Failing jobs:
-          $failing
-
-          Run: $RUN_URL
-          Commit: https://github.com/$REPO/commit/$SHA
-
-          This issue is opened and updated by CI (the red-main job in ci.yml) and closes itself when a push to styling/phase-2 is green again. Fix the failing checks first: a merge waits for a green branch (HANDOFF.md, \"Green before a merge\")."
-          if [ -n "$open" ]; then
-            gh issue edit "$open" --repo "$REPO" --title "styling/phase-2 is red: $short" --body "$body"
-            gh issue comment "$open" --repo "$REPO" --body "Still red at \`$short\` ($RUN_URL):
-          $failing" 
-          else
-            gh issue create --repo "$REPO" --label red-main --title "styling/phase-2 is red: $short" --body "$body"
-          fi
+          set -euo pipefail
+          echo "$RESULTS" | jq -r 'to_entries[] | "\(.key): \(.value.result)"'
+          bad=$(echo "$RESULTS" | jq -r '[to_entries[] | select(.value.result != "success")] | length')
+          [ "$bad" = 0 ] || { echo "::error::$bad check(s) did not succeed"; exit 1; }
