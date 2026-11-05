@@ -19,10 +19,7 @@
   "plx-activity-list__time": {
    "contract": "establishes",
    "role": "caption",
-   "font": "mono",
-   "adjusts": [
-    "font-size"
-   ]
+   "font": "mono"
   },
   "plx-activity-list__title": {
    "contract": "adjusts",
@@ -346,11 +343,11 @@
   },
   "plx-button": {
    "contract": "establishes",
-   "role": "body",
+   "role": "caption",
    "font": "sans",
    "adjusts": [
-    "font-size",
     "font-weight",
+    "letter-spacing",
     "line-height"
    ]
   },
@@ -769,10 +766,7 @@
   "plx-command-menu__group-label": {
    "contract": "establishes",
    "role": "label",
-   "font": "sans",
-   "adjusts": [
-    "font-size"
-   ]
+   "font": "sans"
   },
   "plx-command-menu__item": {
    "contract": "adjusts",
@@ -1119,7 +1113,6 @@
    "role": "caption",
    "font": "sans",
    "adjusts": [
-    "font-size",
     "font-weight"
    ]
   },
@@ -1772,7 +1765,6 @@
    "role": "caption",
    "font": "mono",
    "adjusts": [
-    "font-size",
     "line-height"
    ]
   },
@@ -2013,10 +2005,7 @@
   "plx-metric__change": {
    "contract": "establishes",
    "role": "caption",
-   "font": "mono",
-   "adjusts": [
-    "font-size"
-   ]
+   "font": "mono"
   },
   "plx-metric__description": {
    "contract": "adjusts",
@@ -2840,7 +2829,7 @@
   },
   "plx-segmented__item--sm": {
    "contract": "establishes",
-   "role": "body",
+   "role": "caption",
    "font": "sans",
    "adjusts": [
     "font-size",
@@ -2968,7 +2957,6 @@
    "role": "caption",
    "font": "mono",
    "adjusts": [
-    "font-size",
     "line-height"
    ]
   },
@@ -3022,11 +3010,11 @@
   },
   "plx-tag": {
    "contract": "establishes",
-   "role": "body",
+   "role": "caption",
    "font": "sans",
    "adjusts": [
-    "font-size",
     "font-weight",
+    "letter-spacing",
     "line-height"
    ]
   },
@@ -3128,10 +3116,7 @@
   "plx-time-grid__hour": {
    "contract": "establishes",
    "role": "caption",
-   "font": "mono",
-   "adjusts": [
-    "font-size"
-   ]
+   "font": "mono"
   },
   "plx-time-picker__field": {
    "contract": "follows",
@@ -3210,7 +3195,6 @@
    "role": "caption",
    "font": "sans",
    "adjusts": [
-    "font-size",
     "line-height"
    ]
   },
@@ -3219,7 +3203,6 @@
    "role": "caption",
    "font": "sans",
    "adjusts": [
-    "font-size",
     "line-height"
    ]
   },

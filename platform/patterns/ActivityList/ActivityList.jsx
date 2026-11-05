@@ -7,7 +7,7 @@
      </ActivityList>
    Props:
      label: the list's accessible name
-     stacked: the meta on its own line under the title, in the smallest type (--plx-ref-font-size-09): for narrow panes
+     stacked: the meta on its own line under the title, in the smallest type (12px, the type floor): for narrow panes
        such as an inspector (batch 260); default false: title and meta on one line
      titleLines: 1 (default; the title on one line, cut with an ellipsis) | 2 (the title wraps onto two lines and takes
        the room it needs, in regular weight; unread titles stay semibold): for notifications

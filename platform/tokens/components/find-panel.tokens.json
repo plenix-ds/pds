@@ -27,7 +27,7 @@
     "find-panel-pills-gap": { "$value": "{plx-sys.space-inline-xs}", "$type": "dimension", "$description": "A multi-select: the space between its pills." },
     "find-panel-pill-radius": { "$value": "{plx-sys.radius-compact-4px}", "$type": "dimension", "$description": "A value pill: the badge’s corners." },
     "find-panel-pill-border-width": { "$value": "{plx-sys.border-width-thin}", "$type": "dimension", "$description": "A value pill: its 1px border, in the category color (the pill border rule for category colors is still open with the owner)." },
-    "find-panel-pill-font-size": { "$value": "{plx-ref.font-size-11}", "$type": "dimension", "$description": "A value pill: its text size." },
+    "find-panel-pill-font-size": { "$value": "{plx-sys.text-caption-font-size}", "$type": "dimension", "$description": "A value pill: its text size." },
     "find-panel-pill-font-weight": { "$value": "{plx-sys.font-weight-medium}", "$type": "fontWeight", "$description": "A value pill: its text weight." },
     "find-panel-pill-padding-inline": { "$value": "{plx-sys.space-inset-xs}", "$type": "dimension", "$description": "A value pill: the space beside its text." },
     "find-panel-checklist-gap": { "$value": "{plx-sys.space-stack-xs}", "$type": "dimension", "$description": "A quick filter’s checklist: the space between its values." },

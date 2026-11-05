@@ -27,6 +27,7 @@
       "$description": "Black at 12% (owner, 2026-10-15): the widest layer of the Lifted shadow (Material elevation)."
     },
     "font-size-09": {
+      "$deprecated": "Below the 12px type floor (DESIGN.md §3, #206): no Plenix token or class uses it any more; use --plx-ref-font-size-12 or a type role. It keeps working, and is removed no earlier than the next minor release.",
       "$value": "0.5625rem",
       "$type": "dimension",
       "$extensions": {
@@ -38,10 +39,12 @@
       }
     },
     "font-size-10": {
+      "$deprecated": "Below the 12px type floor (DESIGN.md §3, #206): no Plenix token or class uses it any more; use --plx-ref-font-size-12 or a type role. It keeps working, and is removed no earlier than the next minor release.",
       "$value": "0.625rem",
       "$type": "dimension"
     },
     "font-size-11": {
+      "$deprecated": "Below the 12px type floor (DESIGN.md §3, #206): no Plenix token or class uses it any more; use --plx-ref-font-size-12 or a type role. It keeps working, and is removed no earlier than the next minor release.",
       "$value": "0.6875rem",
       "$type": "dimension"
     },

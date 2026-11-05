@@ -186,7 +186,7 @@
 .plx-data-grid__grid-cell.plx-data-grid__cell--align-center:where(:not(.plx-data-grid__cell--icon, .plx-data-grid__grid-row-header, .plx-data-grid__cell--row-menu)){justify-content:center;}
 .plx-data-grid__grid-cell.plx-data-grid__cell--actions:where(:not(.plx-data-grid__cell--icon, .plx-data-grid__grid-row-header, .plx-data-grid__cell--row-menu, .plx-data-grid__cell--align-right, .plx-data-grid__cell--align-center)){justify-content:flex-end;}
 .plx-data-grid__grid-cell.plx-data-grid__grid-row-header{text-align:center;}
-.plx-data-grid__grid-cell.plx-data-grid__cell--align-right:where(:not(.plx-data-grid__grid-cell--narrow.plx-data-grid__cell--key)){text-align:end;}
+.plx-data-grid__grid-cell.plx-data-grid__cell--align-right:where(:not(.plx-data-grid__grid-cell--narrow.plx-data-grid__cell--key)){font-variant-numeric:tabular-nums;text-align:end;}
 .plx-data-grid__grid-cell.plx-data-grid__cell--align-center:where(:not(.plx-data-grid__grid-cell--narrow.plx-data-grid__cell--key)){text-align:center;}
 /* the list layout (narrow): where each kept cell sits */
 .plx-data-grid__grid-cell.plx-data-grid__grid-cell--narrow.plx-data-grid__grid-row-header{grid-column:1;grid-row:1;}

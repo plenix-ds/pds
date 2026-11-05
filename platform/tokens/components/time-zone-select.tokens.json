@@ -4,7 +4,7 @@
     "time-zone-select-option-gap": { "$value": "{plx-sys.space-inline-sm}", "$type": "dimension", "$description": "TimeZoneSelect: the space between a zone's city and its offset." },
     "time-zone-select-offset-text": { "$value": "{plx-sys.content-subtle}", "$type": "color", "$description": "TimeZoneSelect: a zone's offset from UTC (UTC−08:00), secondary text." },
     "time-zone-select-offset-font-family": { "$value": "{plx-sys.font-data}", "$type": "fontFamily", "$description": "TimeZoneSelect: offsets are technical values: the data font (Reddit Mono)." },
-    "time-zone-select-offset-font-size": { "$value": "{plx-ref.font-size-11}", "$type": "dimension", "$description": "TimeZoneSelect: the size of an offset (the data font one step under the option's text)." },
+    "time-zone-select-offset-font-size": { "$value": "{plx-sys.text-secondary-font-size}", "$type": "dimension", "$description": "TimeZoneSelect: the size of an offset (the data font one step under the option's text)." },
     "time-zone-select-offset-font-weight": { "$value": "{plx-sys.font-weight-regular}", "$type": "fontWeight", "$description": "TimeZoneSelect: the offset stays regular in the chosen option." },
     "time-zone-select-field-offset-margin-inline-end": { "$value": "{plx-sys.space-inline-lg}", "$type": "dimension", "$description": "TimeZoneSelect: the room between the field's offset and the chevron." }
   }

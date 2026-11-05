@@ -15,7 +15,7 @@
     "product-options-swatch-gap": { "$value": "{plx-sys.space-inline-sm}", "$type": "dimension", "$description": "ProductOptions: the gap between two color swatches (space-inline-sm)." },
     "product-options-unavailable-opacity": { "$value": "{plx-sys.opacity-mid}", "$type": "number", "$description": "ProductOptions: an out of stock swatch, dimmed (opacity-mid, as a disabled radio tile)." },
     "product-options-error-text": { "$value": "{plx-sys.feedback-danger-solid}", "$type": "color", "$description": "ProductOptions: an option's error (feedback-danger-solid, as Field's error)." },
-    "product-options-error-font-size": { "$value": "{plx-ref.font-size-11}", "$type": "dimension", "$description": "ProductOptions: the error's size (11px, as Field's error)." },
+    "product-options-error-font-size": { "$value": "{plx-sys.text-secondary-font-size}", "$type": "dimension", "$description": "ProductOptions: the error's size (12px, as Field's error)." },
     "product-options-error-gap": { "$value": "{plx-sys.space-inline-xs}", "$type": "dimension", "$description": "ProductOptions: the gap between the error's icon and its words (space-inline-xs)." }
   }
 }
