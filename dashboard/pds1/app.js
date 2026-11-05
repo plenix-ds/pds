@@ -312,7 +312,7 @@
       },
     },
     {
-      id: 'screenshots', label: 'Screenshots', icon: 'image', title: 'Latest CI screenshots', rows: D.shots, index: 'file',
+      id: 'screenshots', label: 'Screenshots', icon: 'image', title: 'Screenshots CI checks on every merge', rows: D.shots, index: 'file',
       columns: [
         { title: 'Screenshot', field: 'name', kind: 'name' },
         { title: 'Run', field: 'run', kind: 'data' },
@@ -320,7 +320,7 @@
       detail: function (x) {
         return h(Detail, null,
           h(P.Heading, { level: 2, size: 4 }, link(x.url, x.name)),
-          h(P.Text, { variant: 'secondary' }, 'From the ci-screenshots branch (' + x.run + '). Synthetic data only.'),
+          h(P.Text, { variant: 'secondary' }, 'Checked by CI on main (visual regression, check 12; ', x.runUrl ? link(x.runUrl, x.run) : x.run, '): every merge matches this screenshot. Synthetic data only.'),
           h('img', { src: x.file, alt: x.name, className: 'shot' }));
       },
     },

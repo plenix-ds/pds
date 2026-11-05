@@ -804,5 +804,149 @@
   "banner--options-with-actions": {
     "sets": [],
     "why": "markup only: adds one or two small Buttons after the message"
+  },
+  "autosave--variant-saving": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "status",
+        "token": "--plx-comp-badge-active-background"
+      },
+      {
+        "property": "border-color",
+        "part": "status",
+        "token": "--plx-comp-badge-active-border"
+      },
+      {
+        "property": "color",
+        "part": "status",
+        "token": "--plx-comp-badge-active-text"
+      }
+    ],
+    "why": "the state is drawn by the Badge SaveStatus renders (tone active), not by a rule of Autosave"
+  },
+  "autosave--variant-saved": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "status",
+        "token": "--plx-comp-badge-success-background"
+      },
+      {
+        "property": "border-color",
+        "part": "status",
+        "token": "--plx-comp-badge-success-border"
+      },
+      {
+        "property": "color",
+        "part": "status",
+        "token": "--plx-comp-badge-success-text"
+      }
+    ],
+    "why": "the state is drawn by the Badge SaveStatus renders (tone success), not by a rule of Autosave"
+  },
+  "autosave--variant-offline": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "status",
+        "token": "--plx-comp-badge-waiting-background"
+      },
+      {
+        "property": "border-color",
+        "part": "status",
+        "token": "--plx-comp-badge-waiting-border"
+      },
+      {
+        "property": "color",
+        "part": "status",
+        "token": "--plx-comp-badge-waiting-text"
+      }
+    ],
+    "why": "the state is drawn by the Badge SaveStatus renders (tone waiting), not by a rule of Autosave"
+  },
+  "autosave--variant-failed": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "status",
+        "token": "--plx-comp-badge-negative-background"
+      },
+      {
+        "property": "border-color",
+        "part": "status",
+        "token": "--plx-comp-badge-negative-border"
+      },
+      {
+        "property": "color",
+        "part": "status",
+        "token": "--plx-comp-badge-negative-text"
+      }
+    ],
+    "why": "the state is drawn by the Badge SaveStatus renders (tone negative), not by a rule of Autosave"
+  },
+  "back-to-top--variant-floating-default": {
+    "sets": [
+      {
+        "property": "box-shadow",
+        "part": "block",
+        "token": "--plx-comp-back-to-top-shadow"
+      },
+      {
+        "property": "inset-block-end",
+        "part": "block",
+        "token": "--plx-comp-back-to-top-inset-block-end"
+      },
+      {
+        "property": "inset-inline-end",
+        "part": "block",
+        "token": "--plx-comp-back-to-top-inset-inline-end"
+      }
+    ],
+    "why": ".plx-back-to-top--floating (the tool does not read a block name that contains a double hyphen); it is also fixed-position and starts hidden"
+  },
+  "back-to-top--variant-inline": {
+    "sets": [],
+    "why": "markup only: a labeled ghost button in the flow; .plx-back-to-top--inline sets only align-self: flex-start, which has no token"
+  },
+  "blockquote--variant-default": {
+    "sets": [
+      {
+        "property": "border-inline-start-color",
+        "part": "block",
+        "token": "--plx-comp-blockquote-rule-color"
+      },
+      {
+        "property": "border-inline-start-width",
+        "part": "block",
+        "token": "--plx-comp-blockquote-rule-width"
+      },
+      {
+        "property": "color",
+        "part": "quote",
+        "token": "--plx-comp-blockquote-quote-text"
+      },
+      {
+        "property": "font-size",
+        "part": "quote",
+        "token": "--plx-comp-blockquote-quote-font-size"
+      }
+    ],
+    "why": "the base .plx-blockquote rules; no modifier is added"
+  },
+  "blockquote--variant-with-citation": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "citation",
+        "token": "--plx-comp-blockquote-citation-text"
+      },
+      {
+        "property": "font-size",
+        "part": "citation",
+        "token": "--plx-comp-blockquote-citation-font-size"
+      }
+    ],
+    "why": ".plx-blockquote__citation, the source line shown under the quote"
   }
 }
