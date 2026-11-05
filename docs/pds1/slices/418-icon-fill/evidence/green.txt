@@ -1,1 +1,1 @@
-ENTITY_HEADER_MEDIA_ICON_418_OK 20 cases
+ENTITY_HEADER_MEDIA_ICON_418_OK 20 cases (D-0060 B: icon drawn 1.2x the area)

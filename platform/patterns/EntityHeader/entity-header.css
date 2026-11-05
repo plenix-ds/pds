@@ -369,9 +369,14 @@
   --plx-state-entity-header-tile-icon: var(--plx-comp-entity-header-media-gray-icon);
 }
 .plx-entity-header__tile:where(:not(.plx-entity-header__tile--box)) {
-  --plx-state-entity-header-tile-icon-size: var(
-    --plx-comp-entity-header-context-tile-icon-fill,
-    var(--plx-comp-entity-header-context-media-size, var(--plx-comp-entity-header-tile-width))
+  /* D-0060 (B): Material icons keep a built-in margin (the shape spans about 83% of its square), so the icon is drawn a fifth
+     larger than the area and its shape reaches the edges of the former box */
+  --plx-state-entity-header-tile-icon-size: calc(
+    1.2 *
+      var(
+        --plx-comp-entity-header-context-tile-icon-fill,
+        var(--plx-comp-entity-header-context-media-size, var(--plx-comp-entity-header-tile-width))
+      )
   );
   --plx-state-entity-header-tile-text: var(--plx-state-entity-header-tile-icon);
 }
