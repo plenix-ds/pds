@@ -86,7 +86,16 @@ function countOf(members) {
 function countOptions(members, choices) {
   const counts = {}; choices.forEach(([key]) => { counts[key] = 0; });
   let notRecorded = 0, turnedOff = 0;
-  members.forEach((m) => { if (m.disabledReason) turnedOff += 1; else if (m.vote && counts[m.vote] !== undefined) counts[m.vote] += 1; else if (!m.voteHidden) notRecorded += 1; });
+  members.forEach((m) => {
+    if (m.disabledReason) turnedOff += 1;
+    else if (m.vote && counts[m.vote] !== undefined) counts[m.vote] += 1;
+    else if (!m.voteHidden) {
+      notRecorded += 1;
+      // a vote that is not a key of options counts as not recorded, and development says so once per member and key (ADR 0009)
+      const note = m.memberId + '|' + m.vote;
+      if (m.vote && development() && !warned.has(note) && typeof console !== 'undefined') { warned.add(note); console.warn('[Plenix] VoteTally: member ' + m.memberId + ' has vote "' + m.vote + '", which is not a key of options; it counts as not recorded'); }
+    }
+  });
   return { counts, notRecorded, turnedOff };
 }
 

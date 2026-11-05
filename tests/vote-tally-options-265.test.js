@@ -62,6 +62,12 @@ const assert = require('assert/strict'), { serve, launch } = require('./lib');
       assert.deepEqual(r.buttons, ['Approve', 'Deny', 'Abstain'], 'AC-5 the default set is used for ' + bad.length + ' options');
       assert.ok(warns.some((w) => /2 to 5/.test(w)), 'AC-5 a warning names the 2-to-5 limit for ' + bad.length + ' options: ' + warns.join(' | '));
     }
+    // ADR 0009: a vote that is not a key of options counts as not recorded, with a warning (issue 281)
+    warns.length = 0;
+    await draw({ options: [present, absent], votes: ['present', 'maybe'] }); await sleep(300);
+    r = await read();
+    assert.deepEqual(r.totals, ['Present 1', 'Absent 0', 'Not recorded 4'], 'an unknown vote counts as not recorded');
+    assert.ok(warns.some((w) => /member m2/.test(w) && /"maybe"/.test(w) && /not a key of options/.test(w)), 'a warning names the member and the key: ' + warns.join(' | '));
     assert.deepEqual(errors, [], 'no script errors');
     console.log('vote-tally-options-265: OK');
   } finally { if (browser) await browser.close(); server.close(); }
