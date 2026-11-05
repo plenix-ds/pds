@@ -1,6 +1,6 @@
 // node tools/agent/types-any.js [--check] [--update] [--top N] [file]
 // How many props of @plenix-ds/react's TypeScript declarations are still `any` (#687, from the audit #684). Reads the built
-// declarations (packages/react/index.d.ts, written by build-types.js through node build-packages.js, or node build-types.js
+// declarations (release/packages/react/index.d.ts, written by build-types.js through node build-packages.js, or node build-types.js
 // alone) and counts the prop lines typed `?: any;`. The index signature every Props interface keeps ([prop: string]: any)
 // is not a prop and is not counted.
 //   --check   fails (TYPES_ANY_FAIL) when the count is above the recorded one (types-any.baseline.json): it only goes down
@@ -11,7 +11,7 @@ const fs = require('fs'), path = require('path');
 const ROOT = path.resolve(__dirname, '../..');
 const BASELINE = path.join(ROOT, 'types-any.baseline.json');
 const args = process.argv.slice(2);
-const file = path.resolve(args.find((a) => /\.d\.ts$/.test(a)) || path.join(ROOT, 'packages', 'react', 'index.d.ts'));
+const file = path.resolve(args.find((a) => /\.d\.ts$/.test(a)) || path.join(ROOT, 'release', 'packages', 'react', 'index.d.ts'));
 
 function count(text) {
   const props = text.match(/^\s+[\w$]+\?: .+;$/gm) || [];

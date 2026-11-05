@@ -1,4 +1,4 @@
-import { useCollectionView, CollectionField } from '../../packages/react';
+import { useCollectionView, CollectionField } from '../../release/packages/react';
 const fields: CollectionField<{ name: string; size: number }>[] = [{ value: 'name', label: 'Name', get: row => row.name }];
 const view = useCollectionView(fields, { data: [{ name: 'A', size: 1 }], text: row => row.name, quick: { name: 'list' }, view: { height: 'short' } });
 view.test({ name: 'B', size: 2 });

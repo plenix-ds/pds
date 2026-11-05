@@ -1,4 +1,4 @@
-// Plenix · generated package source. Edit this build step; build-packages.js clears packages/ before invoking it.
+// Plenix · generated package source. Edit this build step; build-packages.js clears release/packages/ before invoking it.
 const SOURCE = String.raw`
 // @plenix-ds/web-components: React-backed custom elements, with explicitly injected peers and shadow styles.
 export const elementNames = __ELEMENTS__;

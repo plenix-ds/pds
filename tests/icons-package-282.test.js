@@ -1,7 +1,7 @@
 /* Plenix tests · the @plenix-ds/icons package carries the Plenix icon modules (issue 282).
-   Summary: after node build-app.js and node build-packages.js, packages/icons:
+   Summary: after node build-app.js and node build-packages.js, release/packages/icons:
      package.json exports "./plenix/*" and is "type": "module" (the modules are ES modules)
-     packages/icons/plenix/ holds every module of platform/dist/icons/plenix (the same names: the icons and their aliases)
+     release/packages/icons/plenix/ holds every module of platform/dist/icons/plenix (the same names: the icons and their aliases)
        and plenix/index.json
      each icon in index.json "icons" has its four SVG files beside its module (<name>.svg, -fill.svg, -24.svg, -24-fill.svg)
      each alias in index.json "aliases" (for example arrow_back) has a module that imports its icon's module, and no SVG files
@@ -10,7 +10,7 @@
    Proof first: before #282 the package held only svg/, icons.json and icon.css, so the export, folder and list lines fail.
    Usage: node build-app.js && node build-packages.js && node tests/icons-package-282.test.js   → ICONS_PACKAGE_282_OK */
 const assert = require('assert/strict'), fs = require('fs'), path = require('path');
-const ROOT = path.join(__dirname, '..'), PKG = path.join(ROOT, 'packages', 'icons'), SRC = path.join(ROOT, 'platform', 'dist', 'icons', 'plenix');
+const ROOT = path.join(__dirname, '..'), PKG = path.join(ROOT, 'release', 'packages', 'icons'), SRC = path.join(ROOT, 'platform', 'dist', 'icons', 'plenix');
 (async () => {
   const manifest = JSON.parse(fs.readFileSync(path.join(PKG, 'package.json'), 'utf8'));
   assert.equal(manifest.exports['./plenix/*'], './plenix/*', 'the package exports ./plenix/*');

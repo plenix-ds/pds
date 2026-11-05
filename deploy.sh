@@ -47,7 +47,7 @@ tar -czf "$PKG" --exclude='*.bak' --exclude='node_modules' --transform='s,^,Plen
   docs/font-study docs/composition docs/reading-pane-study docs/page-headers \
   docs/grid-header-study docs/grid-row-hover-study docs/grid-row-selection-study \
   docs/dashboard-study \
-  release packages/styles/plenix.min.css
+  release
 
 gzip -t "$PKG" || { echo "package is damaged; nothing published"; rm -f "$PKG"; exit 1; }
 SUM=$(sha256sum "$PKG" | cut -d' ' -f1)
@@ -90,8 +90,8 @@ ssh "${SSH_OPTS[@]}" "$HOST" "set -e
   done
   # the study pages load one stylesheet (the source platform.css with its imports inlined and minified, plenix.min.css, built by build-packages.js; #882)
   # instead of platform.css and its hundred imports (batch 237); the design system loads the CDN release (plenix-source.js)
-  sudo mv /srv/plenix/www.new/Plenix/packages/styles/plenix.min.css /srv/plenix/www.new/Plenix/platform/dist/platform.bundle.css
-  sudo rm -rf /srv/plenix/www.new/Plenix/packages
+  sudo mv /srv/plenix/www.new/Plenix/release/packages/styles/plenix.min.css /srv/plenix/www.new/Plenix/platform/dist/platform.bundle.css
+  sudo rm -rf /srv/plenix/www.new/Plenix/release/packages
   B=\$(sha256sum /srv/plenix/www.new/Plenix/platform/dist/platform.bundle.css | cut -c1-8)
   # the study pages too: platform.css's two hundred imports trip the server's request limit (429) and the page shows unstyled.
   # Only a study's own pages (docs/<study>/*.html, 9 of them) are rewritten; a file one folder deeper, such as the dashboard

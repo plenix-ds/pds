@@ -1,4 +1,4 @@
-// Plenix · generated package source. Edit this build step; build-packages.js clears packages/ before invoking it.
+// Plenix · generated package source. Edit this build step; build-packages.js clears release/packages/ before invoking it.
 const SOURCE = String.raw`
 'use strict';
 // @plenix-ds/mcp: read-only JSON-RPC tools over the versioned Plenix /api/v1 snapshots.

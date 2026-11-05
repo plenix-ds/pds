@@ -1,15 +1,15 @@
 // The npm package's JavaScript (#709, Vite step 5): @plenix-ds/react's three builds of platform/index.js, in Vite library
 // mode. node build-packages.js runs Vite once per build (PLENIX_PACKAGE=<build>) and keeps everything else of the release:
 // the package folders, package.json and the exports map, the copies, the styles, the CDN and the JSON API.
-//   esm   packages/react/dist/: the ES modules, one per part (#685). An entry for each module platform/index.js exports from,
+//   esm   release/packages/react/dist/: the ES modules, one per part (#685). An entry for each module platform/index.js exports from,
 //         at its own path (dist/components/Button/Button.js), plus the barrel (dist/index.js) and the Arabic opt-in
 //         (dist/i18n/ar.js, #702). The code two parts share sits once in dist/chunks/, so an application that imports one
 //         part bundles that part and what it uses.
-//   cjs   packages/react/dist/index.cjs: the CommonJS build, one file
+//   cjs   release/packages/react/dist/index.cjs: the CommonJS build, one file
 //   cdn   release/cdn/<version>/plenix.esm.js: the ES module as one file. Its banner gives it its own address
 //         (const __plenixModuleUrl = import.meta.url, #284), so Icon finds the icon files beside it, whatever it is called.
 // Run alone: PLENIX_PACKAGE=esm npx vite build --config vite.packages.config.mjs (cjs, cdn): it writes into the same
-// ignored folders (packages/, release/), which node build-packages.js clears first.
+// ignored folders (release/), which node build-packages.js clears first.
 //
 // What it keeps from the old esbuild builds:
 //   - react, react-dom, react-dom/client and react/jsx-runtime stay imports (peer dependencies); everything else is bundled
@@ -86,8 +86,8 @@ const iconNames = {
 };
 
 const BUILDS = {
-  esm: { entry: partEntries, outDir: path.join(ROOT, 'packages', 'react', 'dist'), optional: true },
-  cjs: { entry: () => path.join(P, 'index.js'), outDir: path.join(ROOT, 'packages', 'react', 'dist'), format: 'cjs', file: 'index.cjs' },
+  esm: { entry: partEntries, outDir: path.join(ROOT, 'release', 'packages', 'react', 'dist'), optional: true },
+  cjs: { entry: () => path.join(P, 'index.js'), outDir: path.join(ROOT, 'release', 'packages', 'react', 'dist'), format: 'cjs', file: 'index.cjs' },
   cdn: { entry: () => path.join(P, 'index.js'), outDir: path.join(ROOT, 'release', 'cdn', VERSION), format: 'es', file: 'plenix.esm.js', banner: BANNER + '\nconst __plenixModuleUrl = import.meta.url;' },
   // the CDN's plenix-ar.js (issue 882): the built-in Arabic words, for an Arabic page that loads the CDN's plenix.js
   ar: { entry: () => path.join(P, 'i18n', 'ar.global.js'), outDir: path.join(ROOT, 'release', 'cdn', VERSION), format: 'iife', file: 'plenix-ar.js', banner: '/* ' + SCOPE + ' ' + VERSION + ' · plenix-ar.js: Plenix\'s built-in Arabic words, after plenix.js (generated) */' },

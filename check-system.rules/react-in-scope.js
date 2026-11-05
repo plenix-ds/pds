@@ -2,7 +2,7 @@
 // without binding it. The classic JSX runtime turns <div/> into React.createElement(...), so a source file that uses JSX must import React; where
 // React is a global (the CDN script, the applications) a missing import goes unseen, but in the npm package and in plenix.esm.js the first render
 // throws "React is not defined" (engine/chrome.jsx and engine/headerRows.jsx, 0.79.0).
-//   what it reads   the built ES modules: every file of packages/react/dist (not the iife plenix.global.js or the CommonJS index.cjs) and
+//   what it reads   the built ES modules: every file of release/packages/react/dist (not the iife plenix.global.js or the CommonJS index.cjs) and
 //                   release/cdn/<version>/plenix.esm.js
 //   what it refuses a reference to `React` that no scope of the module declares (an import, a const, a parameter): the real binding, found by
 //                   the parser, not a text match
@@ -32,7 +32,7 @@ function unboundReact(text) {
 
 // the shipped ES modules: [{ file, text }]
 function esModules() {
-  const out = [], dist = path.join(ROOT, 'packages', 'react', 'dist');
+  const out = [], dist = path.join(ROOT, 'release', 'packages', 'react', 'dist');
   const walk = (d) => { for (const e of fs.readdirSync(d, { withFileTypes: true })) { const p = path.join(d, e.name); if (e.isDirectory()) walk(p); else if (/\.js$/.test(e.name) && e.name !== 'plenix.global.js') out.push(p); } };
   if (fs.existsSync(dist)) walk(dist);
   const cdn = path.join(ROOT, 'release', 'cdn');
