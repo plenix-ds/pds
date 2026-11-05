@@ -17,7 +17,7 @@
       "$description": "EntityPicker field: gap between rows (space-inline-xs)."
     },
     "entity-picker-multiple-field-padding-block": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension",
       "$description": "EntityPicker multiple field: padding top and bottom (space-4px)."
     },
@@ -132,7 +132,7 @@
       "$description": "EntityPicker option: minimum height (control-height-prominent)."
     },
     "entity-picker-option-padding-block": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension",
       "$description": "EntityPicker option: padding top and bottom (space-4px)."
     },
@@ -167,7 +167,7 @@
       "$description": "EntityPicker description: text color (content-muted)."
     },
     "entity-picker-description-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "EntityPicker description: font size (font-size-12)."
     },
@@ -182,7 +182,7 @@
       "$description": "EntityPicker meta: font (font-data)."
     },
     "entity-picker-meta-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "EntityPicker meta: font size (font-size-12)."
     },

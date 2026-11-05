@@ -4,13 +4,13 @@
     "combobox-option-mark-gap": { "$value": "{plx-sys.space-inline-sm}", "$type": "dimension", "$description": "Combobox option with a mark: the space between the checkbox or radio and the label." },
     "combobox-loading-text": { "$value": "{plx-sys.content-subtle}", "$type": "color", "$description": "Combobox loading row: the text color (the no-matches row's)." },
     "combobox-loading-gap": { "$value": "{plx-sys.space-inline-sm}", "$type": "dimension", "$description": "Combobox loading row: the space between the spinner and its text." },
-    "combobox-loading-font-size": { "$value": "{plx-ref.font-size-12}", "$type": "dimension", "$description": "Combobox loading row: the text size (the no-matches row's)." },
+    "combobox-loading-font-size": { "$value": "{plx-ref.font-size-100}", "$type": "dimension", "$description": "Combobox loading row: the text size (the no-matches row's)." },
     "combobox-loading-padding-block": { "$value": "{plx-sys.space-inset-sm}", "$type": "dimension", "$description": "Combobox loading row: the space above and below (the no-matches row's)." },
     "combobox-loading-padding-inline": { "$value": "{plx-sys.space-inset-md}", "$type": "dimension", "$description": "Combobox loading row: the space at its sides (the no-matches row's)." },
     "combobox-error-text": { "$value": "{plx-sys.feedback-danger-content}", "$type": "color", "$description": "Combobox failed-load row: the text color (the danger content role)." },
     "combobox-option-icon-gap": { "$value": "{plx-comp.combobox-option-mark-gap}", "$type": "dimension", "$description": "Combobox option with an icon: the space between the icon and the label (the mark gap's)." },
     "combobox-option-icon-text": { "$value": "{plx-sys.content-muted}", "$type": "color", "$description": "Combobox option: the icon's color (muted, like EntityPicker's description)." },
     "combobox-option-description-text": { "$value": "{plx-sys.content-muted}", "$type": "color", "$description": "Combobox option: the second line's color (EntityPicker's description color)." },
-    "combobox-option-description-font-size": { "$value": "{plx-ref.font-size-12}", "$type": "dimension", "$description": "Combobox option: the second line's size (EntityPicker's description size)." }
+    "combobox-option-description-font-size": { "$value": "{plx-ref.font-size-100}", "$type": "dimension", "$description": "Combobox option: the second line's size (EntityPicker's description size)." }
   }
 }

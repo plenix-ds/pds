@@ -7,9 +7,9 @@
     "word-cloud-large-font-weight": { "$value": "{plx-sys.text-label-font-weight}", "$type": "fontWeight", "$description": "Word cloud: the weight of the largest words (step 5)." },
     "word-cloud-size-1": { "$value": "{plx-sys.text-secondary-font-size}", "$type": "dimension", "$description": "Word cloud: the smallest words (size step 1 of 5)." },
     "word-cloud-size-2": { "$value": "{plx-sys.text-body-font-size}", "$type": "dimension", "$description": "Word cloud: size step 2 of 5." },
-    "word-cloud-size-3": { "$value": "{plx-ref.font-size-15}", "$type": "dimension", "$description": "Word cloud: size step 3 of 5." },
-    "word-cloud-size-4": { "$value": "{plx-ref.font-size-18}", "$type": "dimension", "$description": "Word cloud: size step 4 of 5." },
-    "word-cloud-size-5": { "$value": "{plx-ref.font-size-20}", "$type": "dimension", "$description": "Word cloud: the largest words (size step 5 of 5; the type scale's largest size)." },
+    "word-cloud-size-3": { "$value": "{plx-ref.font-size-400}", "$type": "dimension", "$description": "Word cloud: size step 3 of 5." },
+    "word-cloud-size-4": { "$value": "{plx-ref.font-size-500}", "$type": "dimension", "$description": "Word cloud: size step 4 of 5." },
+    "word-cloud-size-5": { "$value": "{plx-ref.font-size-600}", "$type": "dimension", "$description": "Word cloud: the largest words (size step 5 of 5; the type scale's largest size)." },
     "word-cloud-active-underline-width": { "$value": "{plx-sys.border-width-medium}", "$type": "dimension", "$description": "Word cloud: the underline of the word in focus, under the pointer or selected." }
   }
 }

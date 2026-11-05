@@ -17,7 +17,7 @@
       "$description": "AvatarUpload row column: gap (space-inline-md)."
     },
     "avatar-upload-body-row-gap": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension",
       "$description": "AvatarUpload body: gap between rows (space-4px)."
     },
@@ -37,7 +37,7 @@
       "$description": "AvatarUpload hint: text color (content-muted)."
     },
     "avatar-upload-hint-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "AvatarUpload hint: font size (font-size-12)."
     }

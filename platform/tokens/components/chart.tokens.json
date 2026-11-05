@@ -9,7 +9,7 @@
     "chart-title-font-weight": { "$value": "{plx-sys.text-heading-font-weight}", "$type": "fontWeight", "$description": "Chart: the title's weight." },
     "chart-title-line-height": { "$value": "{plx-sys.label-height-20px}", "$type": "dimension", "$description": "Chart: the title's line height." },
     "chart-description-text": { "$value": "{plx-sys.content-subtle}", "$type": "color", "$description": "Chart: the description (the chart's takeaway), secondary text." },
-    "chart-description-font-size": { "$value": "{plx-ref.font-size-12}", "$type": "dimension", "$description": "Chart: the description's size." },
+    "chart-description-font-size": { "$value": "{plx-ref.font-size-100}", "$type": "dimension", "$description": "Chart: the description's size." },
     "chart-description-line-height": { "$value": "{plx-sys.label-height-16px}", "$type": "dimension", "$description": "Chart: the description's line height." },
     "chart-plot-height-sm": { "$value": "{plx-ref.size-40u}", "$type": "dimension", "$description": "Chart: the plot's height at size sm (a sparkline-sized chart in a card)." },
     "chart-plot-height-md": { "$value": "{plx-ref.size-60u}", "$type": "dimension", "$description": "Chart: the plot's height at size md (the default)." },

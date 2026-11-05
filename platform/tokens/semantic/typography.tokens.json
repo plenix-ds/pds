@@ -7,7 +7,7 @@
       "$description": "Running text: the page's body text. The text-body role's font family."
     },
     "text-body-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "The text-body role's font size."
     },
@@ -39,7 +39,7 @@
       "$description": "Supporting text one step below the body: descriptions, metadata in words. The text-secondary role's font family."
     },
     "text-secondary-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "The text-secondary role's font size."
     },
@@ -71,7 +71,7 @@
       "$description": "The smallest running text: captions, hints, help under a field. The text-caption role's font family."
     },
     "text-caption-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "The text-caption role's font size."
     },
@@ -103,7 +103,7 @@
       "$description": "A label: names a field, a group or a value. The text-label role's font family."
     },
     "text-label-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "The text-label role's font size."
     },
@@ -135,7 +135,7 @@
       "$description": "A section heading inside a page or a card. The text-heading role's font family."
     },
     "text-heading-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "The text-heading role's font size."
     },
@@ -167,7 +167,7 @@
       "$description": "A page's title. The text-title role's font family."
     },
     "text-title-font-size": {
-      "$value": "{plx-ref.font-size-20}",
+      "$value": "{plx-ref.font-size-600}",
       "$type": "dimension",
       "$description": "The text-title role's font size."
     },
@@ -199,7 +199,7 @@
       "$description": "A small spaced label above a heading. The text-eyebrow role's font family."
     },
     "text-eyebrow-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "The text-eyebrow role's font size."
     },
@@ -230,7 +230,7 @@
       "$description": "The largest style: one key figure or a sign-in heading. The text-display role's font family."
     },
     "text-display-font-size": {
-      "$value": "{plx-ref.font-size-20}",
+      "$value": "{plx-ref.font-size-600}",
       "$type": "dimension",
       "$description": "The text-display role's font size."
     },
@@ -261,7 +261,7 @@
       "$description": "Body text one step up: the opening paragraph of a page. The text-lead role's font family."
     },
     "text-lead-font-size": {
-      "$value": "{plx-ref.font-size-15}",
+      "$value": "{plx-ref.font-size-400}",
       "$type": "dimension",
       "$description": "The text-lead role's font size."
     },

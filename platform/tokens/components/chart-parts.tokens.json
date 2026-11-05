@@ -62,7 +62,7 @@
       "$description": "Chart legend: the names' typeface (UI text)."
     },
     "chart-legend-label-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "Chart legend: the names' size."
     },

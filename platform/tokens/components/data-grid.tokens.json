@@ -17,7 +17,7 @@
       "$description": "DataGrid footer: its text (the range or the count, the rows-per-page label), as Pagination's."
     },
     "data-grid-footer-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "DataGrid footer: its text size (Pagination's)."
     },
@@ -120,12 +120,12 @@
       "$description": "DataGrid group header: the chevron's color."
     },
     "data-grid-group-gap-inline": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension",
       "$description": "DataGrid group header: the space between the chevron, the eyebrow and value, and the count."
     },
     "data-grid-group-summary-gap": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension",
       "$description": "DataGrid group header: the space between a summary's name and its value."
     },
@@ -238,7 +238,7 @@
       "$description": "DataGrid header: the options part under the pointer, bottom of its shade (owner, 2026-10-24)."
     },
     "data-grid-menu-button-padding-inline": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension",
       "$description": "DataGrid header: the options button’s sides (Windows Explorer: a narrow button the header’s height)."
     },

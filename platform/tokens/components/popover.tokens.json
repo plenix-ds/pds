@@ -42,7 +42,7 @@
       "$description": "Popover: the content's face."
     },
     "popover-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "Popover: the content's size."
     },
@@ -103,7 +103,7 @@
       "$description": "Popover: the title's face."
     },
     "popover-title-font-size": {
-      "$value": "{plx-ref.font-size-14}",
+      "$value": "{plx-ref.font-size-300}",
       "$type": "dimension",
       "$description": "Popover: the title's size."
     },

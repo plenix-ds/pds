@@ -29,7 +29,7 @@ window.DSDocs = {
    "motion": "Durations come from tokens, and system/motion.css sets every duration to zero when the person asks for reduced motion."
   },
   "content": {
-   "labels": "Name a reference token by its value (--plx-ref-space-16px) and a semantic token by its intent (--plx-sys-space-inset-md). Use American English in names (color, gray).",
+   "labels": "Name a reference token by its value (--plx-ref-space-4u) and a semantic token by its intent (--plx-sys-space-inset-md). Use American English in names (color, gray).",
    "actions": "Not applicable: tokens have no actions.",
    "errors": "Not applicable: tokens show no error text.",
    "localization": "Use logical properties with spacing tokens (padding-inline-start) so right-to-left works. Sizes in rem follow the person's root font size."
@@ -125,7 +125,7 @@ window.DSDocs = {
  "spacing": {
   "purpose": "Spacing shows how things relate: related items sit closer than unrelated ones. A 4px base keeps every gap, inset and position on one grid.",
   "anatomy": [
-   "Space scale — --plx-ref-space-4px to -64px in rem; no 1px or 2px step (required)",
+   "Space scale — --plx-ref-space-1u to -64px in rem; no 1px or 2px step (required)",
    "Fixed roles — inline, stack, inset, cluster and layout, xs to 2xl (required)",
    "Density roles — component-gap, container-inset, pattern-stack, region-space, which change with density (required)",
    "Size scale — --plx-ref-size-* for dimensions, all multiples of 4px (required)",

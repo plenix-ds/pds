@@ -22,7 +22,7 @@
       "$description": "DeleteFlow: a name’s color (content-default)."
     },
     "delete-flow-name-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "DeleteFlow: a name’s size (font-size-13)."
     },
@@ -42,7 +42,7 @@
       "$description": "DeleteFlow: “and N more” color (content-muted)."
     },
     "delete-flow-more-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "DeleteFlow: “and N more” size (font-size-12)."
     }

@@ -47,7 +47,7 @@
       "$description": "RoleManager: the role’s title font (font-heading)."
     },
     "role-manager-title-font-size": {
-      "$value": "{plx-ref.font-size-18}",
+      "$value": "{plx-ref.font-size-500}",
       "$type": "dimension",
       "$description": "RoleManager: the role’s title size (font-size-18)."
     },
@@ -82,7 +82,7 @@
       "$description": "RoleManager: gap between Duplicate and Delete (space-inline-sm)."
     },
     "role-manager-text-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "RoleManager: the description’s and notes’ size (font-size-13)."
     },
@@ -97,7 +97,7 @@
       "$description": "RoleManager: a section title’s font (font-heading)."
     },
     "role-manager-section-title-font-size": {
-      "$value": "{plx-ref.font-size-14}",
+      "$value": "{plx-ref.font-size-300}",
       "$type": "dimension",
       "$description": "RoleManager: a section title’s size (font-size-14)."
     },

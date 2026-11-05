@@ -48,7 +48,7 @@ const fixedOf = (mode) => ({
   bold: v('--plx-sys-font-weight-bold', mode),
   headerHeight: v('--plx-sys-shell-header-height', mode),
   headerInset: v('--plx-sys-space-inset-md', mode),
-  brandSize: v('--plx-ref-font-size-20', mode),   // the largest type size in the tokens (owner: "Plenix in the blue header")
+  brandSize: v('--plx-ref-font-size-600', mode),   // the largest type size in the tokens (owner: "Plenix in the blue header")
   gap: v('--plx-sys-space-layout-xl', mode),
 });
 const fixed = fixedOf('light');

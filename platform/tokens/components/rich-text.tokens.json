@@ -12,7 +12,7 @@
       "$description": "RichText: the font of prose."
     },
     "rich-text-article-font-size": {
-      "$value": "{plx-ref.font-size-14}",
+      "$value": "{plx-ref.font-size-300}",
       "$type": "dimension",
       "$description": "RichText: the size of article text (a page of reading)."
     },
@@ -37,7 +37,7 @@
       "$description": "RichText: the space above a heading in an article."
     },
     "rich-text-compact-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "RichText: the size of compact text (notes, comments, help in a panel)."
     },
@@ -72,7 +72,7 @@
       "$description": "RichText: the weight of headings."
     },
     "rich-text-h1-font-size": {
-      "$value": "{plx-ref.font-size-20}",
+      "$value": "{plx-ref.font-size-600}",
       "$type": "dimension",
       "$description": "RichText: the size of a first-level heading."
     },
@@ -82,7 +82,7 @@
       "$description": "RichText: the line height of a first-level heading."
     },
     "rich-text-h2-font-size": {
-      "$value": "{plx-ref.font-size-18}",
+      "$value": "{plx-ref.font-size-500}",
       "$type": "dimension",
       "$description": "RichText: the size of a second-level heading."
     },
@@ -92,7 +92,7 @@
       "$description": "RichText: the line height of a second-level heading."
     },
     "rich-text-h3-font-size": {
-      "$value": "{plx-ref.font-size-15}",
+      "$value": "{plx-ref.font-size-400}",
       "$type": "dimension",
       "$description": "RichText: the size of a third-level heading."
     },
@@ -137,7 +137,7 @@
       "$description": "RichText: the code font of a code block."
     },
     "rich-text-pre-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "RichText: the size of a code block’s code."
     },
@@ -177,7 +177,7 @@
       "$description": "RichText: the color of a figure’s caption."
     },
     "rich-text-caption-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "RichText: the size of a figure’s caption."
     },

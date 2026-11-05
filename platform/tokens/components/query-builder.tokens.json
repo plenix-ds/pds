@@ -17,7 +17,7 @@
       "$description": "QueryBuilder: match count color (content-muted)."
     },
     "query-builder-matches-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "QueryBuilder: match count text size (font-size-12)."
     },
@@ -57,7 +57,7 @@
       "$description": "QueryBuilder: the words of the join (\"All rules\") color (content-muted)."
     },
     "query-builder-hint-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "QueryBuilder: the words of the join text size (font-size-12)."
     },
@@ -77,7 +77,7 @@
       "$description": "QueryBuilder: join word (\"Where\", \"and\") color (content-muted)."
     },
     "query-builder-join-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "QueryBuilder: join word text size (font-size-13)."
     },
@@ -117,7 +117,7 @@
       "$description": "QueryBuilder: empty group text color (content-muted)."
     },
     "query-builder-empty-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "QueryBuilder: empty group text size (font-size-13)."
     },

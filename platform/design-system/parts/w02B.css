@@ -1,7 +1,7 @@
 /* Library part w02B (wave 2, lane B): the frames the live examples of the type styles and the loading motion need.
    Tokens only. */
 /* tabular figures: a column of numbers, aligned at the end, so equal-width digits line up */
-.ds-type-figures{align-items:flex-end;display:inline-flex;flex-direction:column;row-gap:var(--plx-ref-space-4px);}
+.ds-type-figures{align-items:flex-end;display:inline-flex;flex-direction:column;row-gap:var(--plx-ref-space-1u);}
 /* the loading motion: a ring (the spinner's shape), a skeleton block, a track with its indeterminate fill */
 .ds-motion-ring{block-size:var(--plx-comp-spinner-md-height);border-bottom-color:var(--plx-comp-spinner-border-bottom-color);border-bottom-style:solid;border-bottom-width:var(--plx-comp-spinner-md-border-width);border-left-color:var(--plx-comp-spinner-border-left-color);border-left-style:solid;border-left-width:var(--plx-comp-spinner-md-border-width);border-radius:var(--plx-comp-spinner-radius);border-right-color:var(--plx-comp-spinner-border-right-color);border-right-style:solid;border-right-width:var(--plx-comp-spinner-md-border-width);border-top-color:transparent;border-top-style:solid;border-top-width:var(--plx-comp-spinner-md-border-width);box-sizing:border-box;display:inline-block;inline-size:var(--plx-comp-spinner-md-width);}
 .ds-motion-block{background-color:var(--plx-comp-skeleton-background);background-image:var(--plx-comp-skeleton-background-image);background-size:200% 100%;block-size:var(--plx-ref-size-4u);border-radius:var(--plx-comp-skeleton-radius);display:block;inline-size:var(--plx-ref-size-60u);}

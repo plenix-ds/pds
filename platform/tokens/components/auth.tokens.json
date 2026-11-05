@@ -82,7 +82,7 @@
       "$description": "Auth: the title’s line, the notes, the footer and “or” (content-muted)."
     },
     "auth-text-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "Auth: the lines’ and notes’ size (font-size-13)."
     },
@@ -92,7 +92,7 @@
       "$description": "Auth: the lines’ and notes’ line height (size-20px)."
     },
     "auth-small-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "Auth: “or” and the consent’s error size (font-size-12)."
     },

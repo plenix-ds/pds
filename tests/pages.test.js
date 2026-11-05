@@ -72,7 +72,7 @@ let current = '';   // the page being checked
     const out = { other: [] };
     const SPEC = /\/platform\/design-system\//.test(location.pathname);
     const DENSITY = /^(height|min-height|max-height|line-height|padding(-(top|right|bottom|left|block|inline)(-(start|end))?)?)$/;
-    const step = (el) => { const v = getComputedStyle(el.ownerDocument.documentElement).getPropertyValue('--plx-ref-space-4px').trim(); const px = /rem$/.test(v) ? parseFloat(v) * parseFloat(getComputedStyle(el.ownerDocument.documentElement).fontSize) : parseFloat(v); return px > 0 ? px : 4; };
+    const step = (el) => { const v = getComputedStyle(el.ownerDocument.documentElement).getPropertyValue('--plx-ref-space-1u').trim(); const px = /rem$/.test(v) ? parseFloat(v) * parseFloat(getComputedStyle(el.ownerDocument.documentElement).fontSize) : parseFloat(v); return px > 0 ? px : 4; };
     const offGrid = (el, v) => { const s = step(el); return Array.from(String(v).replace(/var\([^()]*(\([^()]*\)[^()]*)*\)/g, ' ').matchAll(/(-?\d*\.?\d+)(px|rem|em|pt|vh|vw|vmin|vmax|ch|ex)(?![\w-])/gi))
       .some((m) => parseFloat(m[1]) && (m[2].toLowerCase() !== 'px' || Math.abs(Math.abs(parseFloat(m[1])) / s - Math.round(Math.abs(parseFloat(m[1])) / s)) * s > 0.5)); };
     // user content (.plx-user-content: the rich-text editor's area, RichText showing saved HTML) keeps the person's own

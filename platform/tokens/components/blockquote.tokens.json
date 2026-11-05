@@ -37,7 +37,7 @@
       "$description": "Blockquote: the quote’s font."
     },
     "blockquote-quote-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "Blockquote: the quote’s size (the body size)."
     },
@@ -87,7 +87,7 @@
       "$description": "Blockquote: the pull quote’s font."
     },
     "blockquote-pull-quote-font-size": {
-      "$value": "{plx-ref.font-size-18}",
+      "$value": "{plx-ref.font-size-500}",
       "$type": "dimension",
       "$description": "Blockquote: the pull quote’s size."
     },

@@ -62,7 +62,7 @@
       "$description": "BottomSheetNav: a tile label's typeface (UI text)."
     },
     "bottom-sheet-nav-tile-label-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "BottomSheetNav: a tile label's size (as the bottom navigation bar's labels)."
     },

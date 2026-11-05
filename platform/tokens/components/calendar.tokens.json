@@ -32,7 +32,7 @@
       "$description": "Calendar header: the month's name."
     },
     "calendar-title-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "Calendar header: the month's name size."
     },
@@ -77,7 +77,7 @@
       "$description": "Calendar day: the number."
     },
     "calendar-day-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "Calendar day: the number's size."
     },

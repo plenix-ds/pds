@@ -62,7 +62,7 @@
       "$description": "QRCode: the caption (what scanning does)."
     },
     "qr-code-caption-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "QRCode: the caption’s size (12px)."
     },

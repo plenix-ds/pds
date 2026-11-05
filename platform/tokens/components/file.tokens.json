@@ -102,7 +102,7 @@
       "$description": "File: facts font: the data font (font-data)."
     },
     "file-meta-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "File: facts size (font-size-12)."
     },
