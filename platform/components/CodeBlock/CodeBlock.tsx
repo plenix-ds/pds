@@ -87,7 +87,7 @@ export function highlight(text: string, language: string): React.ReactNode {
 }
 
 
-type CodeBlockProps = {
+export type CodeBlockProps = {
   /** a title above the code; its file extension picks the language */
   title?: string;
   /** "none" (default) or a height name the stylesheet defines */
