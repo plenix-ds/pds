@@ -1,0 +1,38 @@
+# Gate G2 (plan §3; D-0056; #396): a PR labeled `g2-changes-requested` can't merge, in the PR and in the merge queue.
+# Its own small workflow, not a job in ci.yml: it re-runs on every label change in seconds, while ci.yml (about 14 jobs)
+# is not re-run on labels. Required on main (ruleset), beside "CI result" and "Ownership". Runs are never cancelled: a
+# cancelled run counts against a required check (#351).
+name: G2
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+  merge_group:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: g2-${{ github.event.pull_request.number || github.ref }}-${{ github.run_id }}
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  g2:
+    name: G2 (design review)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      PR_LABELS: ${{ github.event_name == 'pull_request' && toJSON(github.event.pull_request.labels.*.name) || '' }}
+      MERGE_BRANCH: ${{ github.event_name == 'merge_group' && github.event.merge_group.head_ref || '' }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: No g2-changes-requested label on the PR (D-0056)
+        run: node tools/ci/check-g2.mjs
