@@ -7,6 +7,13 @@
      PageBreak: nothing drawn on screen (zero height, aria-hidden); preview draws a dashed line
      on paper (print media): the sheet has no border, shadow, corners or padding, the break starts a new sheet, @page plx-document is A4
    Proof first: before 87 the three parts do not exist: every line fails.
+   Acceptance (docs/pds1/slices/87-print-document/brief.md):
+     AC-1  the named page and the sheet's paper reset (the PDF itself is QA's print-to-PDF check)
+     AC-2  AnswerLines: the count and the equal 32px rows, the block kept together by print-keep
+     AC-3  PageBreak: break-before is page on paper
+     AC-4  dir and lang on the sheet (a child sets its own dir)
+     AC-5  the header slot comes first, in flow (the seal itself is QA's PDF check)
+     AC-6  no <style> and no inline style in the parts (the CTM form rebuild is CTM's, checked by the style job)
    Usage: node tests/print-document-87.test.js   → PRINT_DOCUMENT_87_OK */
 const assert = require('assert/strict'), { serve, launch } = require('./lib');
 require('./limit.js');

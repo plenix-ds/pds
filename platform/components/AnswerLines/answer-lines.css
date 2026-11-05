@@ -1,5 +1,5 @@
 /* Plenix · AnswerLines (platform/components/AnswerLines): rows one writing line tall with only a block-end border, the
    whole block kept on one sheet on paper. */
 .plx-answer-lines{break-inside:var(--plx-sys-print-keep,auto);display:flex;flex-direction:column;}
-.plx-answer-lines__label{break-after:var(--plx-sys-print-keep,auto);color:var(--plx-sys-content-default);font-family:var(--plx-sys-text-label-font-family);font-size:var(--plx-sys-text-label-font-size);font-weight:var(--plx-sys-text-label-font-weight);letter-spacing:var(--plx-sys-text-label-letter-spacing);margin-block-end:var(--plx-sys-space-stack-xs);}
+.plx-answer-lines__label{break-after:var(--plx-sys-print-keep,auto);color:var(--plx-sys-content-default);font-family:var(--plx-sys-text-label-font-family);font-size:var(--plx-sys-text-label-font-size);font-weight:var(--plx-sys-text-label-font-weight);letter-spacing:var(--plx-sys-text-label-letter-spacing);line-height:var(--plx-sys-text-label-line-height);word-spacing:var(--plx-sys-text-label-word-spacing);margin-block-end:var(--plx-sys-space-stack-xs);}
 .plx-answer-lines__row{block-size:var(--plx-comp-answer-lines-row-height);border-block-end-color:var(--plx-comp-answer-lines-border-color);border-block-end-style:solid;border-block-end-width:var(--plx-sys-border-width-thin);box-sizing:border-box;display:block;}

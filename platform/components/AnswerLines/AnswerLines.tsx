@@ -9,7 +9,7 @@
 */
 import React from 'react';
 
-export type AnswerLinesProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & { lines?: number; label?: React.ReactNode };
+type AnswerLinesProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & { lines?: number; label?: React.ReactNode };
 const DEFAULT = 3, MAX = 40;
 function count(lines: unknown): number {
   if (lines === undefined) return DEFAULT;

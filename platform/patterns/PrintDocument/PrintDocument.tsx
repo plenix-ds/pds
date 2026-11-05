@@ -14,7 +14,7 @@
 */
 import React from 'react';
 
-export type PrintDocumentProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & {
+type PrintDocumentProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & {
   header?: React.ReactNode;
   footer?: React.ReactNode;
   children?: React.ReactNode;
