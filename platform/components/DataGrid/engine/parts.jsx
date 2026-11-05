@@ -395,7 +395,71 @@ function ComponentEditor({ editor, column, record, draft, setDraft, invalid, mes
   );
 }
 
-export function CellEditor({ column, record, value, area, select, date, combobox, custom, onCommit, onCancel }) {
+// the tags editor (ADR 0016): Plenix's Combobox with several values inside the cell, bare, the current tags as chips and its list of suggestions
+// open. Choosing a suggestion adds a tag and the list stays open; a new text and Enter adds it (the Combobox is creatable); Backspace in the empty
+// field removes the last tag. With the list closed Enter saves the array of tags; the first Escape closes the list, the second cancels; Tab saves and
+// moves; the focus leaving the editor (and its chips) saves.
+function TagsEditor({ draft, setDraft, invalid, messageId, finish, cancel, input, done, options, load, label }) {
+  const wrap = React.useRef(null),
+    latest = React.useRef(draft),
+    values = Array.isArray(draft) ? draft : draft == null || draft === '' ? [] : [draft];
+  React.useEffect(() => {
+    wrap.current?.querySelector('input')?.focus();
+  }, []);
+  return (
+    <>
+      <span
+        ref={wrap}
+        className="plx-data-grid__editor-field"
+        dir="auto"
+        onBlur={(e) => {
+          if (!wrap.current?.contains(e.relatedTarget)) setTimeout(() => finish(0, latest.current), 0);
+        }}
+        onKeyDownCapture={(e) => {
+          const open = e.target.getAttribute?.('aria-expanded') === 'true';
+          if (e.key === 'Tab' && !e.altKey && !e.ctrlKey && !e.metaKey) {
+            e.preventDefault();
+            e.stopPropagation();
+            finish(e.shiftKey ? -1 : 1, latest.current);
+          } else if (!open && e.key === 'Escape') {
+            e.preventDefault();
+            e.stopPropagation();
+            done.current = true;
+            cancel();
+          } else if (!open && e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+            finish(0, latest.current);
+          }
+        }}
+      >
+        <Combobox
+          ref={input}
+          label={label}
+          aria-describedby={invalid ? messageId : undefined}
+          invalid={!!invalid}
+          width="fill"
+          multiple
+          creatable
+          {...(load ? { loadOptions: load } : { options })}
+          values={values}
+          onChange={(next) => {
+            latest.current = next;
+            setDraft(next);
+          }}
+          onCreate={(text) => {
+            const next = [...(Array.isArray(latest.current) ? latest.current : []), text];
+            latest.current = next;
+            setDraft(next);
+          }}
+        />
+      </span>
+      {invalid ? <EditorMessage id={messageId} anchor={wrap} message={invalid} /> : null}
+    </>
+  );
+}
+
+export function CellEditor({ column, record, value, area, select, date, combobox, tags, custom, onCommit, onCancel }) {
   const S = useStrings('dataGrid'),
     [draft, setDraft] = React.useState(value ?? ''),
     [invalid, setInvalid] = React.useState(null),
@@ -427,6 +491,16 @@ export function CellEditor({ column, record, value, area, select, date, combobox
         {...{ column, record, draft, setDraft, invalid, messageId, finish, done }}
         editor={column.editor}
         cancel={onCancel}
+      />
+    );
+  if (tags)
+    return (
+      <TagsEditor
+        {...{ draft, setDraft, invalid, messageId, finish, input, done }}
+        cancel={onCancel}
+        options={column.editorProps?.options ?? []}
+        load={column.editorProps?.loadOptions}
+        label={S.editCell.replace('{title}', column.title)}
       />
     );
   if (combobox)
