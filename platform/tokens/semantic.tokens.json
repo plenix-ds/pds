@@ -20,6 +20,21 @@
         }
       }
     },
+    "state-layer-hover-opacity": {
+      "$value": "{plx-ref.mix-amount-xs}",
+      "$type": "number",
+      "$description": "Fluent 2 state layer: its amount on hover (docs/adr/0004)."
+    },
+    "state-layer-pressed-opacity": {
+      "$value": "{plx-ref.mix-amount-sm}",
+      "$type": "number",
+      "$description": "Fluent 2 state layer: its amount while pressed (docs/adr/0004)."
+    },
+    "state-layer-focus-opacity": {
+      "$value": "{plx-ref.mix-amount-sm}",
+      "$type": "number",
+      "$description": "Fluent 2 state layer: its amount on keyboard focus (docs/adr/0004)."
+    },
     "icon-size-xs": {
       "$value": "{plx-ref.size-12px}",
       "$type": "dimension",

@@ -390,6 +390,26 @@
         }
       }
     },
+    "state-layer-color": {
+      "$value": "{plx-sys.content-default}",
+      "$type": "color",
+      "$extensions": {
+        "plenix": {
+          "group": "interactive",
+          "purpose": "The state layer on neutral, subtle and outline fills (docs/adr/0004)."
+        }
+      }
+    },
+    "state-layer-on-accent-color": {
+      "$value": "{plx-sys.action-primary-content}",
+      "$type": "color",
+      "$extensions": {
+        "plenix": {
+          "group": "interactive",
+          "purpose": "The state layer on primary and danger fills (docs/adr/0004)."
+        }
+      }
+    },
     "action-danger-background": {
       "$value": "{plx-ref.color-red-700}",
       "$type": "color",
