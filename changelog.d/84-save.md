@@ -1,3 +1,0 @@
-### Added
-
-- DataGrid: `onCellEdit` may answer later (a promise; ADR 0016, #84 phase 1). While it waits, the new value shows and the cell is `aria-busy` with a small spinner and takes no new edit; "Saved" is announced when it resolves. If it rejects, the old value comes back and the error's message (else "Couldn’t save. The previous value is back.") shows under the cell until the next key or click. Opening an editor announces "Editing <column>". New catalog strings `dataGrid.editing`, `dataGrid.saved`, `dataGrid.saveRefused` (English; the Arabic is with the i18n Engineer). A plain `onCellEdit` behaves as before.

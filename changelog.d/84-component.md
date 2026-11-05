@@ -1,3 +1,0 @@
-### Added
-
-- DataGrid: an application's own cell editor (ADR 0016, #84 phase 2): `editor: { component, props }` on a column. The component opens inside the cell's editing frame and gets `CellEditorProps` (`value`, `record`, `field`, `dir`, `autoFocus`, `invalid`, `onChange`, `onCommit`, `onCancel`, plus its own `props`). `onCommit(value?)` saves the value (the last `onChange` draft when none is given), `onCancel()` cancels; Tab saves the draft and moves, an Escape the component does not handle cancels, and the focus leaving the editor saves the draft. A message from `validate` reaches it as `invalid`. It always works: it is not gated by `editing.types`.
