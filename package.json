@@ -3,6 +3,9 @@
   "version": "0.86.0",
   "private": true,
   "description": "Plenix Platform: the design system, component library and apps",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "prepare": "node build-app.js",
     "build:app": "node build-app.js && node build-usage.js",
@@ -46,11 +49,14 @@
     "lint:js": "eslint --no-error-on-unmatched-pattern platform suite dam/app dashboard projects messages contacts calendar tasks notes bookmarks files settings lanes",
     "lint:unused": "knip --no-exit-code",
     "lint:bundle": "node check-bundle.js",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build:workspaces": "npm run build --workspaces",
+    "changeset": "changeset"
   },
   "devDependencies": {
     "@babel/parser": "7.29.9",
     "@babel/standalone": "^7.29.9",
+    "@changesets/cli": "3.0.3",
     "@types/react": "18.3.12",
     "@types/react-dom": "18.3.1",
     "@typescript-eslint/parser": "8.71.2",

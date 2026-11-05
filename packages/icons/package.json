@@ -1,0 +1,15 @@
+{
+  "name": "@plenix-ds/icons",
+  "version": "0.86.0",
+  "description": "Plenix icons (SVG, icons.json, icon stylesheet)",
+  "private": true,
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/plenix-ds/pds.git",
+    "directory": "packages/icons"
+  },
+  "scripts": {
+    "build": "node ../../tools/workspace-build.js"
+  }
+}

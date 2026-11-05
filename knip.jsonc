@@ -39,6 +39,8 @@
   // the build resolves this name to the script already on the page
   // paper and paperjs-offset are installed for the icon tools only: npm install --prefix tools/icons (tools/icons/package.json)
   // @plenix-ds/lint is loaded by tools/baseline/scan.js only when it is installed beside the app or here; the scan has its own copy of the rules otherwise
+  // the packages/* workspaces are manifests only until their source moves in (#183, docs/adr/0001): nothing to analyse yet
+  "ignoreWorkspaces": ["packages/*"],
   "ignoreDependencies": ["plenix-platform", "paper", "paperjs-offset", "@plenix-ds/lint"],
   // written by build-packages.js into the package it builds; ./icon-names.js is the npm package's lazy icon-name chunk, which
   // vite.packages.config.mjs (plenix-icon-names) writes for tools/npm-esm/library.js
