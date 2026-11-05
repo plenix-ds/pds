@@ -7,7 +7,8 @@ owner: pds1-design-director
 tokens: platform/tokens          # moves to tokens/ with the monorepo scaffold (#178)
 radius:                          # D-0005
   scale_px: [0, 2, 4, 6]
-  circle: true                   # 50% only for dots, toggles, avatars and round marks
+  circle: true                   # allowed by D-0005; no Platform part uses it today
+  round_mark_px: 6               # dots, tracks, markers, grabbers: plx-sys.shape-pill (owner, 2026-10-27)
   pill_px: 4
   table_px: 2
 type:                            # D-0006
@@ -112,12 +113,13 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 | Tables and grid cells | 2px | `plx-sys.radius-table-2px` |
 | Controls, inputs, compact parts, pills, badges, tags, count pills | 4px | `plx-sys.shape-xs` |
 | Cards, surfaces, menus, dialogs, large media | 6px | `plx-sys.shape-sm` |
-| Dots, toggle thumbs, round avatars, beacons | circle (50%) | `border-radius: 50%` |
+| Round marks: status dots, progress tracks, timeline markers, step circles, grabbers, beacons, typing dots | 6px (owner, 2026-10-27: "no longer round") | `plx-sys.shape-pill` |
+| A true circle | 50% | allowed by D-0005, but no Platform part uses it; avatars are rounded squares |
 | Flush edges | 0 | `plx-sys.shape-none` |
 
 - No other radius value (check 2).
 - Pills are 4px, never round. This replaces the old written "pills at 6".
-- `plx-sys.shape-pill` resolves to 6px today. Despite its name, it isn't used for pills. See D-0030.
+- `plx-sys.shape-pill` is 6px and is the round-mark radius. Despite its name, no pill reads it (D-0030, #240). Its rename to a name that says what it's for comes under check 7.
 
 ## 5. Space and density (D-0007)
 
