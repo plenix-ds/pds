@@ -67,7 +67,7 @@
   --plx-comp-entity-header-tint: var(--plx-sys-data-color-green-soft);
 }
 :root[data-plx-header-tint="purple"] .plx-entity-header {
-  --plx-comp-entity-header-tint: var(--plx-sys-data-color-purple-soft);
+  --plx-comp-entity-header-tint: var(--plx-sys-data-color-slate-soft);
 }
 :root[data-plx-header-tint="red"] .plx-entity-header {
   --plx-comp-entity-header-tint: var(--plx-sys-data-color-red-soft);

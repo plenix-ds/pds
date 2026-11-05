@@ -62,12 +62,12 @@
       "$description": "IconTile hue green: the icon (the data color’s on-soft content)."
     },
     "icon-tile-purple-background": {
-      "$value": "{plx-sys.data-color-purple-soft}",
+      "$value": "{plx-sys.data-color-slate-soft}",
       "$type": "color",
       "$description": "IconTile hue purple: the tile’s fill (the soft data color)."
     },
     "icon-tile-purple-text": {
-      "$value": "{plx-sys.data-color-purple-on-soft}",
+      "$value": "{plx-sys.data-color-slate-on-soft}",
       "$type": "color",
       "$description": "IconTile hue purple: the icon (the data color’s on-soft content)."
     },

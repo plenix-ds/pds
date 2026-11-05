@@ -2262,9 +2262,21 @@
         }
       }
     },
-    "data-color-purple": {
+    "data-color-slate": {
       "$value": "{plx-ref.color-blue-650}",
       "$type": "color",
+      "$description": "A data color (batch 280): slate, solid (an edge, a dot, a bar). The data names the hue; [data-plx-color=\"slate\"] applies it.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A data hue, slate: solid (an edge, a dot, a bar); the data names the hue."
+        }
+      }
+    },
+    "data-color-purple": {
+      "$value": "{plx-sys.data-color-slate}",
+      "$type": "color",
+      "$deprecated": "Renamed: use --plx-sys-data-color-slate (it is a slate blue, not a purple; D-0039, docs/adr/0002). It keeps working and is removed in 2.0.0.",
       "$description": "A data color (batch 280): purple, solid (an edge, a dot, a bar). The data names the hue; [data-plx-color=\"purple\"] applies it.",
       "$extensions": {
         "plenix": {
@@ -2273,9 +2285,21 @@
         }
       }
     },
-    "data-color-purple-soft": {
+    "data-color-slate-soft": {
       "$value": "{plx-ref.color-blue-100}",
       "$type": "color",
+      "$description": "A data color (batch 280): slate, a soft fill (an avatar).",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A data hue, slate: a soft fill (an avatar)."
+        }
+      }
+    },
+    "data-color-purple-soft": {
+      "$value": "{plx-sys.data-color-slate-soft}",
+      "$type": "color",
+      "$deprecated": "Renamed: use --plx-sys-data-color-slate-soft (it is a slate blue, not a purple; D-0039, docs/adr/0002). It keeps working and is removed in 2.0.0.",
       "$description": "A data color (batch 280): purple, a soft fill (an avatar).",
       "$extensions": {
         "plenix": {
@@ -2284,9 +2308,21 @@
         }
       }
     },
-    "data-color-purple-on-soft": {
+    "data-color-slate-on-soft": {
       "$value": "{plx-ref.color-blue-900}",
       "$type": "color",
+      "$description": "A data color (batch 280): slate, text on its soft fill.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A data hue, slate: text on its soft fill."
+        }
+      }
+    },
+    "data-color-purple-on-soft": {
+      "$value": "{plx-sys.data-color-slate-on-soft}",
+      "$type": "color",
+      "$deprecated": "Renamed: use --plx-sys-data-color-slate-on-soft (it is a slate blue, not a purple; D-0039, docs/adr/0002). It keeps working and is removed in 2.0.0.",
       "$description": "A data color (batch 280): purple, text on its soft fill.",
       "$extensions": {
         "plenix": {
@@ -2295,9 +2331,21 @@
         }
       }
     },
-    "data-color-purple-on-surface": {
-      "$value": "{plx-ref.color-purple-300}",
+    "data-color-slate-on-surface": {
+      "$value": "{plx-ref.color-slate-375}",
       "$type": "color",
+      "$description": "A data color: slate, an icon or text drawn straight on the surface, without its soft fill (docs/adr/0005).",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A data hue, slate: an icon or text on the surface (no tile)."
+        }
+      }
+    },
+    "data-color-purple-on-surface": {
+      "$value": "{plx-sys.data-color-slate-on-surface}",
+      "$type": "color",
+      "$deprecated": "Renamed: use --plx-sys-data-color-slate-on-surface (it is a slate blue, not a purple; D-0039, docs/adr/0002). It keeps working and is removed in 2.0.0.",
       "$description": "A data color: purple, an icon or text drawn straight on the surface, without its soft fill (docs/adr/0005).",
       "$extensions": {
         "plenix": {

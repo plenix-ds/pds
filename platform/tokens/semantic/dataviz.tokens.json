@@ -24,7 +24,7 @@
       }
     },
     "dataviz-categorical-3": {
-      "$value": "{plx-sys.data-color-purple}",
+      "$value": "{plx-sys.data-color-slate}",
       "$type": "color",
       "$description": "Categorical color 3 of 6: the data color purple. Unrelated series take the categorical colors in this order.",
       "$extensions": {

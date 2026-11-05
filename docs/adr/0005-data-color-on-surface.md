@@ -1,6 +1,6 @@
 # ADR 0005: Data colors on the surface (icons without a tile)
 
-- **Status:** accepted
+- **Status:** accepted; the purple row superseded by ADR 0007
 - **Date:** 2026-11-05
 - **Deciders:** pds1-ds-architect, on the G2 design of pds1-design-director (#108, D-0024)
 - **Design:** `docs/pds1/slices/108-icon-box/design.md` (PR #233)
