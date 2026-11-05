@@ -29,6 +29,8 @@
     // every application page loads it first, by a script tag (issue 842)
     "platform/loader/loader.js",
     "platform/icons/uses.js",
+    // the PDS 1.0 dashboard page loads it by a script tag (dashboard/pds1/index.html, D-0034)
+    "dashboard/pds1/app.js",
     // run by node build-packages.js through the Vite command line (#709 step 5); the Arabic opt-in is one of its entries
     "vite.packages.config.mjs",
     "platform/i18n/ar.optin.js"

@@ -36,6 +36,10 @@
 //   token-sets  (check-system.rules/token-sets.js) the checks the token build made (#372 step 2): themes write no color literal
 //               and define the same roles and foundations, a token is defined in one file only, glob sets and their file
 //               names, print values without contrast values, no typography composite
+//   token-tiers (check-system.rules/token-tiers.js, plan §7 check 6, docs/adr/0002) ref -> sys -> comp with no skipping: comp
+//               refers to sys or its own component, sys to ref or sys, only ref holds literals; shrink-only baseline
+//   token-names (check-system.rules/token-names.js, plan §7 check 7, docs/adr/0002) no unit, value or breakpoint number in a
+//               token name; shrink-only baseline
 //   style-dictionary (#372 step 4) plain Style Dictionary writes the same token values as build-tokens.js, the conditional
 //               ones included (forced colors, more contrast, print, reduced motion): npm run tokens:sd:check builds it into
 //               the ignored build/sd/ and compares (tools/agent/sd-reference-compare.js; both go when step 10 retires build-tokens.js)
