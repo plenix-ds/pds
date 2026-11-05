@@ -10,4 +10,5 @@ The page is live at https://plenix-ds.github.io/pds/ (built in #218, published a
 | AC-4 Every `decisions.yaml` entry with its check and latest result, or review-only | Ran (collector) | "45 decisions"; each row shows "Check (<kind>)" with its state badge, or "No check yet" for review-only |
 | AC-5 An issue closed in the last 30 days shows with its PR link | Ran (collector), fixed in this PR | Was 3 days and no PR link. Now: 115 issues closed in 30 days, 21 with their closing PR (e.g. #281 → PR #285); the Done detail shows "Closed by: Pull request #…", or "No pull request (closed by hand)" |
 | AC-6 No own colours, inline styles or `!important` | Ran (grep) | `app.js`: 0 `style=`, 0 hex colours, 0 `!important`; everything from Plenix components (`P.*`) and `plenix.css` 0.86.0 from the CDN |
+| Acceptance tests AC-1 to AC-6 | Planned (CI) | `tests/dashboard/dashboard-195.spec.mjs`, Playwright on the runner's Chrome with a fixture `data.js` and the GitHub API intercepted; run in CI when the dashboard or its tests change (no local run: owner rule) |
 | Screenshots tab (P1) | Planned | Waits on visual regression (#191) |

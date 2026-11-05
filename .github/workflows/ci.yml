@@ -127,6 +127,13 @@ jobs:
           command -v google-chrome >/dev/null || { echo "::error::Chrome is missing on the runner: check 11 cannot run, and a missing browser is a FAIL"; exit 1; }
           google-chrome --version
           npx --no-install playwright test -c tests/pills/playwright.config.mjs
+      - name: Dashboard acceptance tests (#195 AC-1 to AC-6), when the dashboard or its tests change
+        run: |
+          if git diff --quiet "$(git merge-base "$BASE_SHA" HEAD)" HEAD -- dashboard/pds1 tests/dashboard; then
+            echo "dashboard/pds1 and tests/dashboard unchanged: not run for this PR"
+          else
+            npx --no-install playwright test -c tests/dashboard/playwright.config.mjs
+          fi
 
   checks:
     name: New problems (${{ matrix.tool }})
