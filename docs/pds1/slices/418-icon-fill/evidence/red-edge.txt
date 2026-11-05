@@ -1,0 +1,1 @@
+ENTITY_HEADER_MEDIA_ICON_418_FAIL page edge: the glyph is not cut off at its start edge (the left stroke is drawn)

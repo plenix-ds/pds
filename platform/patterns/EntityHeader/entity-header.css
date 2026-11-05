@@ -92,7 +92,9 @@
   flex-direction: column;
   justify-content: center;
   min-inline-size: 0;
+  overflow-clip-margin: var(--plx-comp-entity-header-padding-inline-start);
   overflow-x: clip;
+  overflow-y: clip;
 }
 .plx-entity-header__lead {
   display: inline-flex;

@@ -20,8 +20,10 @@ require('./limit.js');
       setTimeout(() => resolve(cases.map((c, i) => {
         const root = document.getElementById('c' + i), tile = root.querySelector('.plx-entity-header__tile'), svg = tile && tile.querySelector('svg, .plx-icon'), path = svg && svg.querySelector('path');
         const t = tile && tile.getBoundingClientRect(), s = svg && svg.getBoundingClientRect(), g = path && path.getBoundingClientRect();
+        if (tile) tile.scrollIntoView({ block: 'center' });
+        const gp = path && path.getBoundingClientRect(), hit = gp && document.elementFromPoint(gp.left + gp.width * 0.04, gp.top + gp.height * 0.55), shown = !!(hit && tile.contains(hit));
         const hdr = root.firstElementChild && root.firstElementChild.getBoundingClientRect();
-        return Object.assign({}, c, { header: hdr && Math.round(hdr.height), headerW: hdr && Math.round(hdr.width), tile: t && Math.round(t.width), tileH: t && Math.round(t.height), icon: s && Math.round(s.width), glyph: g && Math.round(Math.max(g.width, g.height)) });
+        return Object.assign({}, c, { shown, header: hdr && Math.round(hdr.height), headerW: hdr && Math.round(hdr.width), tile: t && Math.round(t.width), tileH: t && Math.round(t.height), icon: s && Math.round(s.width), glyph: g && Math.round(Math.max(g.width, g.height)) });
       })), 1500);
     }));
     // the same layout with a box is the reference: the square and the header must be the size they are with a box
@@ -34,6 +36,7 @@ require('./limit.js');
       if (!r.box) {
         const area = Math.min(r.tile, r.tileH);
         assert.ok(r.icon >= area - 1, name + ': the icon (' + r.icon + 'px) fills the square (' + r.tile + 'x' + r.tileH + ')');
+        assert.ok(r.shown, name + ': the glyph is not cut off at its start edge (the left stroke is drawn)');
         assert.ok(r.glyph && Math.abs(r.glyph - area) <= Math.max(3, area * 0.1), name + ': the drawn glyph (' + r.glyph + 'px) spans the area (' + area + 'px) within 3px or 10% (D-0059)');
       }
       else assert.ok(r.icon < r.tile, name + ': the boxed icon (' + r.icon + 'px) is smaller than its tile (' + r.tile + 'px)');
