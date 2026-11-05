@@ -8456,11 +8456,11 @@
       "$type": "color"
     },
     "entity-header-tile-purple-background": {
-      "$value": "{plx-sys.data-color-purple-soft}",
+      "$value": "{plx-sys.data-color-slate-soft}",
       "$type": "color"
     },
     "entity-header-tile-purple-text": {
-      "$value": "{plx-sys.data-color-purple-on-soft}",
+      "$value": "{plx-sys.data-color-slate-on-soft}",
       "$type": "color"
     },
     "entity-header-tile-red-background": {
