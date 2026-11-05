@@ -1,0 +1,3 @@
+  test-site/index.html#/reports · scroller: 1 · e.g. section.plx-page-content 385/320px
+REFLOW_BASELINE written: 14 findings on 11 of 56 pages (7 exempt two-dimensional scrollers)
+REFLOW_OK 14 known findings on 56 pages at 320px (7 exempt two-dimensional scrollers)
