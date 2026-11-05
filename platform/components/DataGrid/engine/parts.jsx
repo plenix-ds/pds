@@ -16,6 +16,7 @@ import { useFloating } from '../../../utils/floating.ts';
 import { announce } from '../../../utils/announce.tsx';
 import { Spinner } from '../../Loading/Loading.tsx';
 import { Select } from '../../Input/Input.tsx';
+import { DatePicker } from '../../DatePicker/DatePicker.jsx';
 import { dataWhenText } from '../../../utils/dataText.tsx';
 import { cx } from '../../../utils/cx.ts';
 import { usePressable } from '../../../hooks/usePressable.ts';
@@ -225,7 +226,65 @@ function SelectEditor({ draft, setDraft, invalid, messageId, finish, cancel, inp
   );
 }
 
-export function CellEditor({ column, record, value, area, select, onCommit, onCancel }) {
+// the date editor (ADR 0016): Plenix's DatePicker field inside the cell, drawn bare like the select. A date typed (read when Enter
+// is pressed or the field is left) or chosen in the calendar saves at once; Escape cancels; Tab reads what was typed, saves and moves.
+function DateEditor({ draft, setDraft, invalid, messageId, finish, cancel, input, done, label }) {
+  const wrap = React.useRef(null),
+    move = React.useRef(0),
+    latest = React.useRef(draft);
+  React.useEffect(() => {
+    wrap.current?.querySelector('input')?.focus();
+  }, []);
+  return (
+    <>
+      <span
+        ref={wrap}
+        className="plx-data-grid__editor-field"
+        onBlur={(e) => {
+          // focus leaving the field and its calendar (a click elsewhere) saves what it holds
+          if (!wrap.current?.contains(e.relatedTarget)) setTimeout(() => finish(move.current, latest.current), 0);
+        }}
+        onKeyDownCapture={(e) => {
+          if (e.key === 'Tab' && !e.altKey && !e.ctrlKey && !e.metaKey && e.target.tagName === 'INPUT') {
+            // leave the field so the picker reads the typed text, then save and move
+            e.preventDefault();
+            e.stopPropagation();
+            move.current = e.shiftKey ? -1 : 1;
+            e.target.blur();
+            setTimeout(() => finish(move.current, latest.current), 0);
+          } else if (e.key === 'Enter' && e.target.tagName === 'INPUT') {
+            // the picker reads the typed text on Enter; then the cell saves what it holds
+            setTimeout(() => finish(0, latest.current), 0);
+          } else if (e.key === 'Escape' && !wrap.current?.querySelector('[aria-expanded="true"]')) {
+            e.preventDefault();
+            e.stopPropagation();
+            done.current = true;
+            cancel();
+          }
+        }}
+      >
+        <DatePicker
+          ref={input}
+          aria-label={label}
+          aria-describedby={invalid ? messageId : undefined}
+          invalid={!!invalid}
+          width="fill"
+          value={draft || null}
+          onChange={(v) => {
+            // the picker also reports the text it read when the field is left (to press its calendar button): only a changed date saves
+            if (v === latest.current) return;
+            latest.current = v;
+            setDraft(v);
+            finish(move.current, v);
+          }}
+        />
+      </span>
+      {invalid ? <EditorMessage id={messageId} anchor={wrap} message={invalid} /> : null}
+    </>
+  );
+}
+
+export function CellEditor({ column, record, value, area, select, date, onCommit, onCancel }) {
   const S = useStrings('dataGrid'),
     [draft, setDraft] = React.useState(value ?? ''),
     [invalid, setInvalid] = React.useState(null),
@@ -251,6 +310,14 @@ export function CellEditor({ column, record, value, area, select, onCommit, onCa
     }
     onCommit(next, move);
   };
+  if (date)
+    return (
+      <DateEditor
+        {...{ draft, setDraft, invalid, messageId, finish, input, done }}
+        cancel={onCancel}
+        label={S.editCell.replace('{title}', column.title)}
+      />
+    );
   if (area)
     return (
       <AreaEditor
