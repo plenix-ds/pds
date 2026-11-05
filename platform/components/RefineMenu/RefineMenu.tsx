@@ -18,7 +18,7 @@ import { useStrings } from '../../providers/LocaleProvider.tsx';
 import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import SparkleIcon from 'plenix-platform/icons/plenix/sparkle';
 type Refinement = { action: 'shorter' | 'longer' } | { action: 'tone'; tone: string } | { action: 'custom'; prompt?: string };
-type RefineMenuProps = {
+export type RefineMenuProps = {
   /** a choice: ({ action: "shorter" | "longer" | "tone" | "custom", tone?, prompt? }); async */
   onRefine?(value: Refinement): unknown;
   disabled?: boolean;
