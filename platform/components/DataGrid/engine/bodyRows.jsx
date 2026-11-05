@@ -510,6 +510,7 @@ export function bodyRows({
                     record={record}
                     area={turnedOn && c.editor === 'textarea'}
                     select={turnedOn && c.editor === 'select'}
+                    combobox={turnedOn && c.editor === 'combobox'}
                     date={turnedOn && c.editor === 'date'}
                     value={editing.value}
                     onCommit={(next, move) => {
