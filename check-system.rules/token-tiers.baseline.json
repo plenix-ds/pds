@@ -114,7 +114,6 @@
   "plx-comp.button-padding-inline -> plx-ref.space-4u",
   "plx-comp.button-padding-inline -> plx-ref.space-2u",
   "plx-comp.button-raised-hover-shadow -> plx-comp.card-elevation-halo-shadow",
-  "plx-comp.button-raised-rest-shadow -> plx-comp.card-elevation-halo-shadow",
   "plx-comp.button-size-lg-font-size -> plx-ref.font-size-300",
   "plx-comp.button-size-lg-hover-border -> plx-ref.color-gray-350",
   "plx-comp.button-size-md-font-size -> plx-ref.font-size-200",

@@ -593,7 +593,19 @@
   );
   --plx-state-button-rest-image: var(--plx-comp-button-context-glow, var(--plx-comp-button-danger-glow-image));
 }
-/* danger-secondary: a red outline; selected looks as hovered */
+/* danger-secondary: a red outline; selected looks as hovered. Raised like secondary (D-0054, #269): the same glow at rest
+   and Halo on hover; no hover glow, so its red hover fill shows. */
+.plx-button--danger-secondary:where(:not(.plx-button--size-2xs)) {
+  --plx-state-button-hover-elevation: var(
+    --plx-comp-button-context-elevation,
+    var(--plx-comp-button-raised-hover-shadow)
+  );
+  --plx-state-button-rest-elevation: var(
+    --plx-comp-button-context-elevation,
+    var(--plx-comp-button-raised-rest-shadow)
+  );
+  --plx-state-button-rest-image: var(--plx-comp-button-context-glow, var(--plx-comp-button-secondary-glow-image));
+}
 .plx-button--danger-secondary {
   --plx-state-button-rest-background: var(--plx-comp-button-secondary-background);
   --plx-state-button-rest-border: var(--plx-comp-button-danger-secondary-border);
