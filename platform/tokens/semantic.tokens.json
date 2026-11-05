@@ -89,6 +89,16 @@
       },
       "$description": "Narrow window (Platforms Standard 3.3): below this width the navigation is a bottom bar and the pane a screen of its own"
     },
+    "shell-min-width": {
+      "$value": "{plx-ref.breakpoint-1024px}",
+      "$type": "dimension",
+      "$description": "AppShell minSize: below this width the shell shows the screen-size notice (docs/adr/0010)."
+    },
+    "shell-min-height": {
+      "$value": "{plx-ref.size-640px}",
+      "$type": "dimension",
+      "$description": "AppShell minSize: below this height the shell shows the screen-size notice (docs/adr/0010)."
+    },
     "safe-area-top": {
       "$value": "env(safe-area-inset-top, 0px)",
       "$type": "dimension",

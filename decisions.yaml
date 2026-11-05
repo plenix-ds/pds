@@ -374,3 +374,13 @@
   options: [PrintDocument + AnswerLines + PageBreak (chosen), print utility classes only]
   status: active
   check: 'planned:print-document (behaviour tests AC-1 to AC-6, docs/pds1/slices/87-print-document/brief.md)'
+
+- id: D-0044
+  date: 2026-11-05
+  area: components
+  decided_by: agent (pds1-ds-architect), owner may switch
+  decision: AppShell minSize is a boolean (sizes from the tokens shell-min-width 1024 and shell-min-height 640, no numbers in apps); below either the shell shows a "Screen size not supported" notice, keeps the app mounted, and offers "Continue anyway" for the session so zoomed users aren't locked out (docs/adr/0010).
+  why: 'WCAG 2.2 1.4.4 and 1.4.10: at 200% zoom a laptop viewport is 640 CSS px wide; a hard block would lock those users out. Check-style media: no breakpoint numbers in code.'
+  options: [boolean + tokens + Continue anyway (chosen), the same as a hard block with no way past (the CTM reference), minSize width/height in px per app]
+  status: active
+  check: G3 review (ADR 0010) + check-style media + behavior tests (plan §7e)

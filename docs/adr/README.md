@@ -21,3 +21,4 @@ Owner: `pds1-ds-architect`. Gate G3 (plan §5) reads these files.
 | [0007](0007-data-color-slate.md) | `data-color-purple` is renamed `data-color-slate` | accepted |
 | [0008](0008-shape-mark.md) | `shape-pill` is renamed `shape-mark` | accepted |
 | [0009](0009-vote-tally-options.md) | VoteTally custom choice sets (`options`) | accepted |
+| [0010](0010-app-shell-min-size.md) | AppShell minimum screen size notice (`minSize`) | accepted |
