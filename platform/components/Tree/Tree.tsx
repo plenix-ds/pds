@@ -47,21 +47,45 @@ import { useUid } from '../../utils/layer.ts';
 import { Icon, asIcon as iconElement, isIconModule, iconKey } from '../Icon/Icon.tsx';
 import { useFocusable } from '../../hooks/useFocusable.ts';
 import { useBranchLoader, BranchStatus } from '../../hooks/useBranchLoader.ts';
+import type { BranchNode, BranchLoader, LoadChildren } from '../../hooks/useBranchLoader.ts';
 import { useVirtualizer, VirtualGap, VirtualProbe } from '../../hooks/useVirtualizer.ts';
 import FolderOpenIcon from 'plenix-platform/icons/plenix/folder-open';
 import SquarePlusIcon from 'plenix-platform/icons/plenix/square-plus';
 import SquareMinusIcon from 'plenix-platform/icons/plenix/square-minus';
 
-const treeIcon = (i, filled) => (typeof i === 'string' || isIconModule(i) ? iconElement(i, { filled }) : React.isValidElement(i) && i.type === Icon ? React.cloneElement(i, { filled: filled || i.props.filled }) : i);
+type TreeId = string | number;
+type TreeNode = BranchNode & { icon?: unknown; openIcon?: unknown; meta?: React.ReactNode; children?: TreeNode[] | null };
+type Loader = BranchLoader<TreeNode>;
+type TreeRow = { node?: TreeNode; level: number; pos?: number; setsize?: number; status?: TreeNode };
+type TreeState = { base: string; selected?: TreeId; active?: TreeId | null; open: Set<TreeId>; refs: React.MutableRefObject<Record<string, HTMLLIElement | null>>; moveTo: (id: TreeId) => void; toggle: (id: TreeId) => void; onSelect?: (id: TreeId) => void; setFocusId: (id: TreeId) => void; loader: Loader };
+/** @public the prop type (ADR 0011) */
+export type TreeProps = {
+  label?: string;
+  /** the nodes: { id, label, icon, openIcon, meta, children } */
+  nodes: TreeNode[];
+  /** loads a branch's children when it opens */
+  loadChildren?: LoadChildren<TreeNode>;
+  /** draw only the rows in view (default: above TREE_AUTO_VIRTUAL rows) */
+  virtualized?: boolean;
+  selected?: TreeId;
+  onSelect?: (id: TreeId) => void;
+  /** the open branches' ids (controlled) */
+  expanded?: TreeId[];
+  defaultExpanded?: TreeId[];
+  onExpandedChange?: (ids: TreeId[]) => void;
+  className?: string;
+};
+
+const treeIcon = (i: unknown, filled: boolean): React.ReactNode => (typeof i === 'string' || isIconModule(i) ? iconElement(i, { filled }) : React.isValidElement<{ filled?: boolean }>(i) && i.type === Icon ? React.cloneElement(i, { filled: filled || i.props.filled }) : (i as React.ReactNode));
 // the icon an open item shows: its own openIcon, else an open folder for a folder
-const OPEN_ICONS = { folder: FolderOpenIcon };
-const iconOf = (n, isOpen) => (isOpen ? n.openIcon || OPEN_ICONS[iconKey(n.icon)] || n.icon : n.icon);
+const OPEN_ICONS: Record<string, unknown> = { folder: FolderOpenIcon };
+const iconOf = (n: TreeNode, isOpen: boolean): unknown => (isOpen ? n.openIcon || OPEN_ICONS[String(iconKey(n.icon))] || n.icon : n.icon);
 
 // one item: its focus (and whether the keyboard moved it there, :focus-visible) comes from useFocusable; the tree keeps
 // the one Tab stop (tabIndex) and the keys
 // flat (issue 815, a virtualized tree): the item alone, its children drawn as rows after it; its place among its siblings
 // (aria-posinset of aria-setsize) and the virtual index come with it
-function TreeItem({ n, level, tree, flat, pos, setsize, vprops }) {
+function TreeItem({ n, level, tree, flat, pos, setsize, vprops }: { n: TreeNode; level: number; tree: TreeState; flat?: boolean; pos?: number; setsize?: number; vprops?: Record<string, unknown> }) {
   const { base, selected, active, open, refs, moveTo, toggle, onSelect, setFocusId, loader } = tree;
   const { focusVisible, focusProps } = useFocusable({ tabStop: 'none', handlers: { onFocus: (e) => { if (e.target === e.currentTarget) setFocusId(n.id); } } });
   const pending = loader.needs(n);   // a branch whose children load when it opens (issue 814)
@@ -82,13 +106,13 @@ function TreeItem({ n, level, tree, flat, pos, setsize, vprops }) {
         <ul role="group" className="plx-tree__group">
           <li role="none" className="plx-tree__item"><StatusRow loader={loader} node={n} level={level + 1} /></li>
         </ul>
-      ) : isOpen ? <ul role="group" className="plx-tree__group">{n.children.map((c) => <TreeItem key={c.id} n={c} level={level + 1} tree={tree} />)}</ul> : null}
+      ) : isOpen ? <ul role="group" className="plx-tree__group">{(n.children || []).map((c) => <TreeItem key={c.id} n={c} level={level + 1} tree={tree} />)}</ul> : null}
     </li>
   );
 }
 
 // the row under a branch that is loading its children, or failed to (issue 814)
-function StatusRow({ loader, node, level, fixed }) {
+function StatusRow({ loader, node, level, fixed }: { loader: Loader; node: TreeNode; level: number; fixed?: boolean }) {
   return (
     <div className={cx('plx-tree__row', 'plx-tree__row--status', fixed && 'plx-tree__row--fixed')} data-plx-level={Math.min(level, 12)}>
       <span className="plx-tree__toggle is-leaf" aria-hidden="true" /><BranchStatus loader={loader} node={node} className="plx-tree__status" />
@@ -96,7 +120,7 @@ function StatusRow({ loader, node, level, fixed }) {
   );
 }
 
-function visible(nodes, open, parent, out) {
+function visible(nodes: TreeNode[], open: Set<TreeId>, parent: TreeId | null, out: Array<{ node: TreeNode; parent: TreeId | null }>) {
   nodes.forEach((n) => {
     out.push({ node: n, parent });
     if (n.children && n.children.length && open.has(n.id)) visible(n.children, open, n.id, out);
@@ -106,7 +130,7 @@ function visible(nodes, open, parent, out) {
 
 // every row a virtualized tree draws, in order: each visible item with its level and its place among its siblings, and the
 // status row under an open branch still loading (issue 815)
-function rowsOf(nodes, open, loader, level, out) {
+function rowsOf(nodes: TreeNode[], open: Set<TreeId>, loader: Loader, level: number, out: TreeRow[]): TreeRow[] {
   nodes.forEach((n, i) => {
     out.push({ node: n, level, pos: i + 1, setsize: nodes.length });
     if (!open.has(n.id)) return;
@@ -118,32 +142,32 @@ function rowsOf(nodes, open, loader, level, out) {
 // above this many visible rows a tree draws only the rows in view (issue 815)
 export const TREE_AUTO_VIRTUAL = 200;
 
-export function Tree({ label, nodes: given, loadChildren, virtualized, selected, onSelect, expanded, defaultExpanded = [], onExpandedChange, className }) {
+export function Tree({ label, nodes: given, loadChildren, virtualized, selected, onSelect, expanded, defaultExpanded = [], onExpandedChange, className }: TreeProps) {
   const base = useUid('plx-tree');
   const loader = useBranchLoader(loadChildren);
   const nodes = loader.merge(given);   // each loaded branch's children in place (issue 814)
   const [ownOpen, setOwnOpen] = React.useState(defaultExpanded);
   const open = new Set(expanded !== undefined ? expanded : ownOpen);
-  const setOpen = (next) => { const list = Array.from(next); if (expanded === undefined) setOwnOpen(list); if (onExpandedChange) onExpandedChange(list); };
+  const setOpen = (next: Set<TreeId>) => { const list = Array.from(next); if (expanded === undefined) setOwnOpen(list); if (onExpandedChange) onExpandedChange(list); };
   const flat = visible(nodes, open, null, []);
   // every open branch that has not loaded asks for its children once, however it was opened (a click, a key, expanded)
   React.useEffect(() => { loader.ensure(flat.filter((v) => open.has(v.node.id)).map((v) => v.node)); });
-  const [focusId, setFocusId] = React.useState(null);
+  const [focusId, setFocusId] = React.useState<TreeId | null>(null);
   const active = flat.some((v) => v.node.id === focusId) ? focusId : (flat.some((v) => v.node.id === selected) ? selected : (flat[0] && flat[0].node.id));
-  const refs = React.useRef({});
+  const refs = React.useRef<Record<string, HTMLLIElement | null>>({});
   // only the rows in view, above TREE_AUTO_VIRTUAL rows (or as virtualized says): the rows are flat, each with its level
   const rows = rowsOf(nodes, open, loader, 1, []);
   const virtual = virtualized !== undefined ? !!virtualized : rows.length > TREE_AUTO_VIRTUAL;
   const v = useVirtualizer({ count: virtual ? rows.length : 0 });
-  const focusNext = React.useRef(null);   // a row the keys moved to before it was drawn: focused once it is
+  const focusNext = React.useRef<TreeId | null>(null);   // a row the keys moved to before it was drawn: focused once it is
   React.useEffect(() => { const id = focusNext.current; if (id !== null && refs.current[id]) { focusNext.current = null; refs.current[id].focus(); } });
-  const moveTo = (id) => {
+  const moveTo = (id: TreeId) => {
     setFocusId(id);
     if (virtual) { const i = rows.findIndex((r) => r.node && r.node.id === id); if (i >= 0) v.scrollToIndex(i, { align: 'nearest' }); }
     if (refs.current[id] && refs.current[id].isConnected) refs.current[id].focus(); else focusNext.current = id;
   };
-  const toggle = (id) => { const next = new Set(open); if (next.has(id)) next.delete(id); else next.add(id); setOpen(next); };
-  const onKeyDown = (e) => {
+  const toggle = (id: TreeId) => { const next = new Set(open); if (next.has(id)) next.delete(id); else next.add(id); setOpen(next); };
+  const onKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
     const at = flat.findIndex((v) => v.node.id === active);
     const cur = flat[at];
     if (!cur) return;
@@ -158,7 +182,7 @@ export function Tree({ label, nodes: given, loadChildren, virtualized, selected,
     else if (e.key === (isRtl(e.currentTarget) ? 'ArrowLeft' : 'ArrowRight')) {
       if (kids && !open.has(cur.node.id)) toggle(cur.node.id);
       else if (pending) { if (loader.statusOf(cur.node) === 'failed') loader.retry(cur.node); }
-      else if (kids) moveTo(cur.node.children[0].id);
+      else if (kids) moveTo((cur.node.children as TreeNode[])[0].id);
     }
     else if (e.key === (isRtl(e.currentTarget) ? 'ArrowRight' : 'ArrowLeft')) { if (kids && open.has(cur.node.id)) toggle(cur.node.id); else if (cur.parent !== null) moveTo(cur.parent); }
     else if (e.key === 'Enter' || e.key === ' ') { if (onSelect) onSelect(cur.node.id); }
@@ -169,14 +193,14 @@ export function Tree({ label, nodes: given, loadChildren, virtualized, selected,
   if (virtual) {
     // flat rows (aria-level, aria-posinset of aria-setsize among the siblings); gaps stand for the rows out of view
     return (
-      <ul ref={v.viewportRef} role="tree" aria-label={label} className={cx('plx-tree', 'plx-tree--virtual', className)} onKeyDown={onKeyDown}>
+      <ul ref={v.viewportRef as React.RefObject<HTMLUListElement>} role="tree" aria-label={label} className={cx('plx-tree', 'plx-tree--virtual', className)} onKeyDown={onKeyDown}>
         <VirtualProbe />
         {v.segments.map((s) => {
           if (s.gap) return <VirtualGap key={s.key} count={s.count} />;
           const r = rows[s.index];
           return r.status
             ? <li key={'status-' + r.status.id} role="none" className="plx-tree__item" {...v.itemProps(s.index)} aria-posinset={undefined} aria-setsize={undefined}><StatusRow loader={loader} node={r.status} level={r.level} fixed /></li>
-            : <TreeItem key={r.node.id} n={r.node} level={r.level} tree={tree} flat pos={r.pos} setsize={r.setsize} vprops={v.itemProps(s.index)} />;
+            : <TreeItem key={(r.node as TreeNode).id} n={r.node as TreeNode} level={r.level} tree={tree} flat pos={r.pos} setsize={r.setsize} vprops={v.itemProps(s.index)} />;
         })}
       </ul>
     );

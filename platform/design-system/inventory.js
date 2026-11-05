@@ -859,7 +859,7 @@
         return box(null, h(P.ToolRail, { label: 'Tools' }, it('crop', 'ed-crop', 'Crop'), it('text', 'ed-text', 'Text'), it('filters', 'ed-filters', 'Filters'), h(P.ToolRail.Divider), it('zin', 'ed-zoom-in', 'Zoom in'), it('zout', 'ed-zoom-out', 'Zoom out')), { blockSize: W(280), display: 'flex' }); }, null, 'showLabels={false}'],
         ['With labels under the icons', function () { var s = use('crop'), it = function (id, icon, l) { return h(P.ToolRail.Item, { key: id, icon: icon, label: l, pressed: s[0] === id, onClick: function () { s[1](id); } }); };
         return box(null, h(P.ToolRail, { label: 'Tools', showLabels: true }, it('crop', 'ed-crop', 'Crop'), it('text', 'ed-text', 'Text'), it('filters', 'ed-filters', 'Filters')), { blockSize: W(280), display: 'flex' }); }, 'plx-tool-rail--labels', 'showLabels']], { prop: 'showLabels' }]], also: [], covers: ['layout/Rail'] },
-    { id: 'tree-view', sec: 'navigation', sub: 'Hierarchical navigation', leaf: 'Tree view', plenix: 'Tree', src: 'components/Tree/Tree.jsx', level: 'Component', interaction: 'Navigation',
+    { id: 'tree-view', sec: 'navigation', sub: 'Hierarchical navigation', leaf: 'Tree view', plenix: 'Tree', src: 'components/Tree/Tree.tsx', level: 'Component', interaction: 'Navigation',
       aliases: ['Tree', 'Folder tree', 'Outline'],
       use: ['Nested folders or categories; arrow keys expand, collapse and move'], avoid: ['One level: use Navigation menu'],
       related: ['navigation-menu'], map: [m(C, 'Tree view'), m(F, 'Tree'), m(D, 'Tree'), m(['Frappe'], 'Tree view')],

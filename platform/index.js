@@ -66,7 +66,7 @@ export { DataGrid as DataTable } from './components/DataGrid/DataGrid.jsx';
 export { Table } from './components/Table/Table.tsx';
 export { ActionBar } from './patterns/ActionBar/ActionBar.jsx';
 export { NavList } from './components/NavList/NavList.tsx';
-export { Tree } from './components/Tree/Tree.jsx';
+export { Tree } from './components/Tree/Tree.tsx';
 export { MediaViewer } from './components/MediaViewer/MediaViewer.tsx';
 export { AppHeader } from './patterns/AppHeader/AppHeader.jsx';
 export { FilterBar } from './patterns/FilterBar/FilterBar.jsx';
