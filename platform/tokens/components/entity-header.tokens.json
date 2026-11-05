@@ -47,7 +47,7 @@
       "$description": "EntityHeader: the subtitle's size."
     },
     "entity-header-rule-height": {
-      "$value": "{plx-ref.space-6px}",
+      "$value": "{plx-sys.border-width-heavy}",
       "$type": "dimension",
       "$description": "EntityHeader: the accent rule's thickness."
     },
@@ -733,7 +733,7 @@
       "$description": "EntityHeader, header style Streamlined: the details strip’s text."
     },
     "entity-header-streamlined-item-gap": {
-      "$value": "{plx-ref.space-6px}",
+      "$value": "{plx-sys.space-inline-xs}",
       "$type": "dimension",
       "$description": "EntityHeader, header style Streamlined: between a detail item’s icon and its text."
     },
@@ -753,7 +753,7 @@
       "$description": "EntityHeader, header style Streamlined: a detail item that needs attention."
     },
     "entity-header-streamlined-progress-row-gap": {
-      "$value": "{plx-ref.space-6px}",
+      "$value": "{plx-sys.space-stack-xs}",
       "$type": "dimension",
       "$description": "EntityHeader, header style Streamlined: between the progress label row and its bar."
     },

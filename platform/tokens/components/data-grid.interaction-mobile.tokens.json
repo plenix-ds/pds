@@ -7,7 +7,7 @@
       "$description": "DataGrid column header type icon: shown, the header row being 44px."
     },
     "data-grid-header-type-icon-gap": {
-      "$value": "{plx-ref.space-6px}",
+      "$value": "{plx-sys.space-inline-sm}",
       "$type": "dimension",
       "$description": "DataGrid column header: the space between the type icon and the name."
     },
