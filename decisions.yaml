@@ -320,3 +320,11 @@
   decision: Fluent 2 state layers (#109, owner decision 3 of 2026-10-24) are an existing colour at opacity - color-mix of content-default (white on primary and danger) at 8% hover, 10% pressed and 10% focus over any fill, with new opacity steps only, no new colours. Destructive command-bar actions confirm through the existing destructive Dialog. Option B, new see-through palette colours, is not recommended (no new colours). Reply B on #109 to switch.
   status: active
   check: planned:lint-colour-tokens
+
+- id: D-0038
+  date: 2026-11-05
+  area: design
+  decided_by: agent (pds1-design-director), owner may switch
+  decision: For #108 (D-0036), EntityHeader fact icons without their box are drawn at the full tile size, as the owner's rule says (A); in dark mode the media icons use one lighter existing shade per hue (blue-300, green-200, purple-300, red-200, orange-200, gray-300, blue-200 for surface) so they keep 3:1 or more without the tile. Option B, fact icons at the text's icon size (20px), is offered on #108. Reply B there to switch.
+  status: active
+  check: planned:contrast-matrix
