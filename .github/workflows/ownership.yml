@@ -11,9 +11,11 @@ on:
 permissions:
   contents: read
 
+# no cancel-in-progress: opening a PR with a label fires "opened" and "labeled" together, and a cancelled run counted
+# against the required check, so the PR never entered the merge queue (#345). The runs take seconds; each finishes.
 concurrency:
-  group: ownership-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+  group: ownership-${{ github.event.pull_request.number || github.ref }}-${{ github.run_id }}
+  cancel-in-progress: false
 
 defaults:
   run:
