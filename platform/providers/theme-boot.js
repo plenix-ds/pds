@@ -182,7 +182,7 @@
 
   var LIMITS = { inspector: [320, 480], filter: [280, 400] };
   // the size tokens a panel snaps to (written by build-steps.js between the markers; do not edit by hand)
-  var SIZES = /* plx-size-steps */[4,8,12,16,18,20,24,28,32,36,40,44,48,52,56,60,64,68,72,80,88,92,96,100,112,120,128,132,140,152,160,180,200,220,240,260,272,280,300,320,360,380,400,420,440,460,480,500,520,560,600,640,720,760,800,860,900,960,1000,1200,1400,1600]/* /plx-size-steps */;
+  var SIZES = /* plx-size-steps */[4,8,12,16,20,24,28,32,36,40,44,48,52,56,60,64,68,72,80,88,92,96,100,112,120,128,132,140,152,160,180,200,220,240,260,272,280,300,320,360,380,400,420,440,460,480,500,520,560,600,640,720,760,800,860,900,960,1000,1200,1400,1600]/* /plx-size-steps */;
   function setPanelWidth(panel, px) {
     var l = LIMITS[panel]; if (!l) return;
     // the nearest size token within the panel's limits (batch 281: no style is written; system/steps.css has a rule per size)
