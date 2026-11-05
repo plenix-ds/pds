@@ -71,6 +71,13 @@ export const MediaPlayer = React.forwardRef(function MediaPlayer({ src, audio, k
   const [rate, setRate] = React.useState(1), [visible, setVisible] = React.useState(showTranscript), [ready, setReady] = React.useState(false), [pip, setPip] = React.useState(false), [busy, setBusy] = React.useState(false), [error, setError] = React.useState('');
   const [volume, setVolume] = React.useState(1), [muted, setMuted] = React.useState(false);
   React.useEffect(() => { if (media.current) { setVolume(media.current.volume); setMuted(media.current.muted); } epoch.current++; lock.current = false; setReady(false); setRate(1); setError(''); setPip(false); setBusy(false); return () => { epoch.current++; }; }, [src, kind]);
+  // React 18 has no picture-in-picture events, so listen on the element: the button follows the browser's own control too (issue 2)
+  React.useEffect(() => {
+    const el = media.current; if (!el) return undefined;
+    const on = () => setPip(true), off = () => setPip(false);
+    el.addEventListener('enterpictureinpicture', on); el.addEventListener('leavepictureinpicture', off);
+    return () => { el.removeEventListener('enterpictureinpicture', on); el.removeEventListener('leavepictureinpicture', off); };
+  }, [src, kind]);
   const speeds = Array.from(new Set([1].concat(rates.filter((n) => Number.isFinite(n) && n > 0)))).sort((a, b) => a - b);
   const capable = kind !== 'audio' && typeof document !== 'undefined' && !!document.pictureInPictureEnabled;
   const togglePip = async () => {
@@ -86,8 +93,6 @@ export const MediaPlayer = React.forwardRef(function MediaPlayer({ src, audio, k
       onLoadedMetadata={() => { setReady(true); setError(''); }} onTimeUpdate={(e) => { if (onTimeChange) onTimeChange(e.currentTarget.currentTime); }}
       onVolumeChange={event => { setVolume(event.currentTarget.volume); setMuted(event.currentTarget.muted); }}
       onRateChange={event => setRate(event.currentTarget.playbackRate)}
-      // @ts-expect-error React 18 has no picture-in-picture events (no type, no dispatch); kept as it is in this slice (issue 937)
-      onEnterPictureInPicture={() => setPip(true)} onLeavePictureInPicture={() => setPip(false)}
       onError={(e) => { setReady(false); setError(t.failed); if (onError) onError(e); }}>
       {tracks.map((a, i) => <track key={a.src + i} src={a.src} kind={a.kind || 'captions'} srcLang={a.language} label={a.label} default={!!a.default} />)}
       {src ? <Link href={src}>{t.fallback}</Link> : null}
