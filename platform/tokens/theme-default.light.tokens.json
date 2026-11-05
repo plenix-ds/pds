@@ -2198,6 +2198,17 @@
         }
       }
     },
+    "data-color-blue-on-surface": {
+      "$value": "{plx-sys.data-color-blue-on-soft}",
+      "$type": "color",
+      "$description": "A data color: blue, an icon or text drawn straight on the surface, without its soft fill (docs/adr/0005).",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A data hue, blue: an icon or text on the surface (no tile)."
+        }
+      }
+    },
     "data-color-green": {
       "$value": "{plx-ref.color-green-500}",
       "$type": "color",
@@ -2228,6 +2239,17 @@
         "plenix": {
           "group": "dataviz",
           "purpose": "A data hue, green: text on its soft fill."
+        }
+      }
+    },
+    "data-color-green-on-surface": {
+      "$value": "{plx-sys.data-color-green-on-soft}",
+      "$type": "color",
+      "$description": "A data color: green, an icon or text drawn straight on the surface, without its soft fill (docs/adr/0005).",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A data hue, green: an icon or text on the surface (no tile)."
         }
       }
     },
@@ -2264,6 +2286,17 @@
         }
       }
     },
+    "data-color-purple-on-surface": {
+      "$value": "{plx-sys.data-color-purple-on-soft}",
+      "$type": "color",
+      "$description": "A data color: purple, an icon or text drawn straight on the surface, without its soft fill (docs/adr/0005).",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A data hue, purple: an icon or text on the surface (no tile)."
+        }
+      }
+    },
     "data-color-red": {
       "$value": "{plx-ref.color-red-500}",
       "$type": "color",
@@ -2294,6 +2327,17 @@
         "plenix": {
           "group": "dataviz",
           "purpose": "A data hue, red: text on its soft fill."
+        }
+      }
+    },
+    "data-color-red-on-surface": {
+      "$value": "{plx-sys.data-color-red-on-soft}",
+      "$type": "color",
+      "$description": "A data color: red, an icon or text drawn straight on the surface, without its soft fill (docs/adr/0005).",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A data hue, red: an icon or text on the surface (no tile)."
         }
       }
     },
@@ -2330,6 +2374,17 @@
         }
       }
     },
+    "data-color-brown-on-surface": {
+      "$value": "{plx-sys.data-color-brown-on-soft}",
+      "$type": "color",
+      "$description": "A data color: brown, an icon or text drawn straight on the surface, without its soft fill (docs/adr/0005).",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A data hue, brown: an icon or text on the surface (no tile)."
+        }
+      }
+    },
     "data-color-gray": {
       "$value": "{plx-ref.color-gray-700}",
       "$type": "color",
@@ -2360,6 +2415,17 @@
         "plenix": {
           "group": "dataviz",
           "purpose": "A data hue, gray: text on its soft fill."
+        }
+      }
+    },
+    "data-color-gray-on-surface": {
+      "$value": "{plx-sys.data-color-gray-on-soft}",
+      "$type": "color",
+      "$description": "A data color: gray, an icon or text drawn straight on the surface, without its soft fill (docs/adr/0005).",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A data hue, gray: an icon or text on the surface (no tile)."
         }
       }
     },
