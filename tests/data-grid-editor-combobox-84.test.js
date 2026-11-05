@@ -47,7 +47,7 @@ const check = async (name, fn) => { if (!shared.wanted(name)) return; try { awai
       }, mode, dir === 'rtl');
       const ON = { types: ['combobox'] };
 
-      await check(T + 'Enter opens the Select in the cell with its list open, drawn bare', async () => {
+      await check(T + 'Enter opens the Combobox in the cell with its list open, drawn bare', async () => {
         await mount(ON); await focus(0); await key('Enter'); const s = await sel();
         assert.deepEqual([s.expanded, s.listOpen, s.focused], ['true', true, true]); assert.equal(s.border, '0px/0px/0px'); assert.match(s.bg, /rgba\(0, 0, 0, 0\)|transparent/); assert.equal(await oneLine(), false);
       });
@@ -57,6 +57,16 @@ const check = async (name, fn) => { if (!shared.wanted(name)) return; try { awai
       await check(T + 'typing filters the list and Enter chooses and saves', async () => {
         await mount(ON); await focus(0); await key('Enter'); await page.keyboard.down('Control'); await page.keyboard.press('a'); await page.keyboard.up('Control'); await page.keyboard.type('hol'); await wait(300);
         assert.equal(await page.evaluate(() => document.querySelectorAll('[role=option]').length), 1); await key('ArrowDown'); await key('Enter'); assert.deepEqual(await edits(), ['r1.state=held']);
+      });
+      await check(T + 'a typed text that matches nothing shows the empty row and Enter saves nothing', async () => {
+        await mount(ON); await focus(0); await key('Enter'); await page.keyboard.down('Control'); await page.keyboard.press('a'); await page.keyboard.up('Control'); await page.keyboard.type('qqqq'); await wait(300);
+        const row = await page.evaluate(() => { const l = document.querySelector('[role=listbox]'); return { options: document.querySelectorAll('[role=option]').length, text: l ? l.textContent.trim() : null }; });
+        assert.equal(row.options, 0); assert.ok(row.text && row.text.length > 0, 'the list says there is nothing: ' + JSON.stringify(row));
+        await key('Enter'); assert.deepEqual(await edits(), []); assert.notEqual(await sel(), null, 'the editor stays open');
+      });
+      await check(T + 'loadOptions returning nothing shows the same empty row', async () => {
+        await mount({ types: ['combobox'] }, true); await focus(0); await key('Enter'); await page.keyboard.down('Control'); await page.keyboard.press('a'); await page.keyboard.up('Control'); await page.keyboard.press('Backspace'); await wait(900);
+        assert.equal(await page.evaluate(() => document.querySelectorAll('[role=option]').length), 0); await key('Enter'); assert.deepEqual(await edits(), []); assert.notEqual(await sel(), null);
       });
       await check(T + 'loadOptions loads for the typed text', async () => {
         await mount({ types: ['combobox'] }, true); await focus(0); await key('Enter'); await page.keyboard.down('Control'); await page.keyboard.press('a'); await page.keyboard.up('Control'); await page.keyboard.type('zz'); await wait(900);
