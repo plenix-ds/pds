@@ -10,3 +10,11 @@ Owner decisions on #114 (2026-10-29): option A, always the newest, once an app's
 | Drift tool, broken registry | Ran (scratch registry) | DRIFT_FAIL, exit 1 (the report is never skipped silently) |
 | Real scans of CTM and St. John | Planned (CI) | This PR's "Release (dry run)": drift.md in the job summary and the records |
 | `/cdn/latest/` alias, app switches | Planned | Web-server change; goes live with a release on the owner's go (publishing hold) |
+
+## Items 1 and 2: apps report problems and send fixes
+
+| Item | Status | Path / output |
+|---|---|---|
+| Labels `app:ctm`, `app:st-john`, `app:aiteam`, `app:redsave` | Ran | `gh label list --search app:` lists all four |
+| "App report" issue form | Ran (review) | `.github/ISSUE_TEMPLATE/app-report.yml`: app, version, component, page, steps, expected, fix made; goes to the Product Lead |
+| One documented step for app sessions | Ran (review) | `docs/integration/connected-apps.md`: duplicate search, then one `gh issue create` with the app label; fixes as a PR from a fork or a patch on the issue |
