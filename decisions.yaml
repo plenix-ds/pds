@@ -413,7 +413,7 @@
   status: active
   check: check-system token-names (check 7) + token-tiers
 
-- id: D-0048
+- id: D-0050
   date: 2026-11-05
   area: architecture
   decided_by: agent (pds1-ds-architect), owner may switch
