@@ -948,5 +948,46 @@
       }
     ],
     "why": ".plx-blockquote__citation, the source line shown under the quote"
+  },
+  "barcode--format-code-128-default": {
+    "sets": [],
+    "why": "markup only: encodes printable ASCII as Code 128 bars; the plate and the bar height are the same for every format"
+  },
+  "barcode--format-ean-13": {
+    "sets": [],
+    "why": "markup only: encodes 12 or 13 digits as EAN-13 bars; the plate and the bar height are the same for every format"
+  },
+  "barcode--format-upc-a": {
+    "sets": [],
+    "why": "markup only: encodes 11 or 12 digits as UPC-A bars; the plate and the bar height are the same for every format"
+  },
+  "barcode--text-bars-only": {
+    "sets": [],
+    "why": "markup only: leaves out the human-readable line under the bars"
+  },
+  "barcode--text-with-human-readable-text-default": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "text",
+        "token": "--plx-comp-barcode-text"
+      },
+      {
+        "property": "font-family",
+        "part": "text",
+        "token": "--plx-comp-barcode-font-family"
+      },
+      {
+        "property": "font-size",
+        "part": "text",
+        "token": "--plx-comp-barcode-font-size"
+      },
+      {
+        "property": "line-height",
+        "part": "text",
+        "token": "--plx-comp-barcode-line-height"
+      }
+    ],
+    "why": ".plx-barcode__text, the value printed under the bars in the data font"
   }
 }
