@@ -45,7 +45,7 @@ export function SearchScreen({ initialQuery = '' }) {
                   <Tag>{r.module}</Tag>
                   {r.project ? <Text variant="secondary">{r.project}</Text> : null}
                   {r.tags && r.tags.length ? <TagList label="Tags">{r.tags.map((t) => <Tag key={t}>{t}</Tag>)}</TagList> : null}
-                  <Text variant="data" className="plx-u-ml-auto">{r.date}</Text>
+                  <Text variant="data" className="plx-u-ms-auto">{r.date}</Text>
                 </Inline>
               </Card>
             ))}
