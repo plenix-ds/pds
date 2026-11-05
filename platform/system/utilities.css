@@ -47,7 +47,7 @@
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
 .plx-u-border-r-solid{border-right-style:var(--plx-sys-border-style-solid);}
 .plx-u-border-radius-detail-4px{border-radius:var(--plx-sys-radius-detail-4px);}
-.plx-u-border-radius-pill{border-radius:var(--plx-sys-shape-pill);}
+.plx-u-border-radius-pill{border-radius:var(--plx-sys-shape-mark);}
 .plx-u-border-solid{border-style:var(--plx-sys-border-style-solid);}
 .plx-u-border-t-1px{border-top-width:var(--plx-sys-border-width-thin);}
 .plx-u-border-t-border-divider{border-top-color:var(--plx-sys-border-divider);}
@@ -310,7 +310,7 @@
 .plx-u-radius-card-4px{border-end-end-radius:var(--plx-sys-radius-card-4px);border-end-start-radius:var(--plx-sys-radius-card-4px);border-start-end-radius:var(--plx-sys-radius-card-4px);border-start-start-radius:var(--plx-sys-radius-card-4px);}
 .plx-u-radius-card-6px{border-end-end-radius:var(--plx-sys-radius-card-6px);border-end-start-radius:var(--plx-sys-radius-card-6px);border-start-end-radius:var(--plx-sys-radius-card-6px);border-start-start-radius:var(--plx-sys-radius-card-6px);}
 .plx-u-radius-detail-4px{border-end-end-radius:var(--plx-sys-radius-detail-4px);border-end-start-radius:var(--plx-sys-radius-detail-4px);border-start-end-radius:var(--plx-sys-radius-detail-4px);border-start-start-radius:var(--plx-sys-radius-detail-4px);}
-.plx-u-radius-pill{border-end-end-radius:var(--plx-sys-shape-pill);border-end-start-radius:var(--plx-sys-shape-pill);border-start-end-radius:var(--plx-sys-shape-pill);border-start-start-radius:var(--plx-sys-shape-pill);}
+.plx-u-radius-pill{border-end-end-radius:var(--plx-sys-shape-mark);border-end-start-radius:var(--plx-sys-shape-mark);border-start-end-radius:var(--plx-sys-shape-mark);border-start-start-radius:var(--plx-sys-shape-mark);}
 .plx-u-radius-surface-6px{border-end-end-radius:var(--plx-sys-radius-surface-6px);border-end-start-radius:var(--plx-sys-radius-surface-6px);border-start-end-radius:var(--plx-sys-radius-surface-6px);border-start-start-radius:var(--plx-sys-radius-surface-6px);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
 .plx-u-radius-tl-0px{border-top-left-radius:var(--plx-sys-shape-none);}

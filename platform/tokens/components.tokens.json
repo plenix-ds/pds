@@ -1464,7 +1464,7 @@
       "$type": "dimension"
     },
     "field-info-radius": {
-      "$value": "{plx-sys.shape-pill}",
+      "$value": "{plx-sys.shape-mark}",
       "$type": "dimension"
     },
     "field-info-text": {
@@ -1991,7 +1991,7 @@
       "$type": "dimension"
     },
     "status-dot-radius": {
-      "$value": "{plx-sys.shape-pill}",
+      "$value": "{plx-sys.shape-mark}",
       "$type": "dimension"
     },
     "status-dot-width": {
@@ -2212,7 +2212,7 @@
       "$type": "dimension"
     },
     "progress-bar-track-radius": {
-      "$value": "{plx-sys.shape-pill}",
+      "$value": "{plx-sys.shape-mark}",
       "$type": "dimension"
     },
     "progress-bar-sm-track-height": {
@@ -2220,7 +2220,7 @@
       "$type": "dimension"
     },
     "progress-bar-fill-radius": {
-      "$value": "{plx-sys.shape-pill}",
+      "$value": "{plx-sys.shape-mark}",
       "$type": "dimension"
     },
     "progress-bar-fill-duration": {
@@ -2609,7 +2609,7 @@
       "$type": "color"
     },
     "sheet-grabber-radius": {
-      "$value": "{plx-sys.shape-pill}",
+      "$value": "{plx-sys.shape-mark}",
       "$type": "dimension"
     },
     "sheet-grabber-target-height": {
@@ -4596,7 +4596,7 @@
       "$type": "dimension"
     },
     "chat-typing-dot-radius": {
-      "$value": "{plx-sys.shape-pill}",
+      "$value": "{plx-sys.shape-mark}",
       "$type": "dimension"
     },
     "chat-typing-dot-width": {
@@ -5465,7 +5465,7 @@
       "$type": "dimension"
     },
     "color-swatch-round-radius": {
-      "$value": "{plx-sys.shape-pill}",
+      "$value": "{plx-sys.shape-mark}",
       "$type": "dimension"
     },
     "color-picker-gap": {
@@ -5890,7 +5890,7 @@
       "$type": "dimension"
     },
     "date-badge-day-radius": {
-      "$value": "{plx-sys.shape-pill}",
+      "$value": "{plx-sys.shape-mark}",
       "$type": "dimension"
     },
     "date-badge-day-text": {
@@ -8096,7 +8096,7 @@
       "$type": "dimension"
     },
     "activity-list-unread-radius": {
-      "$value": "{plx-sys.shape-pill}",
+      "$value": "{plx-sys.shape-mark}",
       "$type": "dimension"
     },
     "activity-list-unread-width": {

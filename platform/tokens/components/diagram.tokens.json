@@ -5,7 +5,7 @@
     "diagram-shape-border-color": { "$value": "{plx-sys.border-strong}", "$type": "color", "$description": "Diagram: a shape's outline." },
     "diagram-shape-border-width": { "$value": "{plx-sys.border-width-thin}", "$type": "dimension", "$description": "Diagram: the width of a shape's outline (and a group's)." },
     "diagram-shape-radius": { "$value": "{plx-sys.shape-sm}", "$type": "dimension", "$description": "Diagram: the corners of a step's box." },
-    "diagram-terminal-radius": { "$value": "{plx-sys.shape-pill}", "$type": "dimension", "$description": "Diagram: the round ends of a start or end shape (a pill)." },
+    "diagram-terminal-radius": { "$value": "{plx-sys.shape-mark}", "$type": "dimension", "$description": "Diagram: the round ends of a start or end shape (a pill)." },
     "diagram-label-text": { "$value": "{plx-sys.content-default}", "$type": "color", "$description": "Diagram: a shape's label." },
     "diagram-label-font-family": { "$value": "{plx-sys.font-label}", "$type": "fontFamily", "$description": "Diagram: labels are words: the UI font." },
     "diagram-label-font-size": { "$value": "{plx-sys.text-secondary-font-size}", "$type": "dimension", "$description": "Diagram: a shape label's size." },

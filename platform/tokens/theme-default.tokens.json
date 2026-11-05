@@ -103,9 +103,15 @@
       "$value": "{plx-ref.radius-6px}",
       "$type": "dimension"
     },
-    "shape-pill": {
+    "shape-mark": {
       "$value": "{plx-ref.radius-6px}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$description": "Round marks: dots, tracks, markers, grabbers (6px since the owner's 2026-10-27 choice). Not pills: pills are 4px (radius-pill-4px). docs/adr/0008."
+    },
+    "shape-pill": {
+      "$value": "{plx-sys.shape-mark}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-sys-shape-mark (no pill reads it; it shapes round marks; #240, docs/adr/0008). It keeps working and is removed in 2.0.0."
     },
     "border-width-thin": {
       "$value": "{plx-ref.border-width-1px}",

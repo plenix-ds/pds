@@ -282,7 +282,7 @@
     "radius-pill-4px": {
       "$value": "{plx-sys.shape-xs}",
       "$type": "dimension",
-      "$description": "Pills: every status, tag and category pill, and the count pill, has 4px corners (owner, 2026-10-14, docs/pills-and-colors.md). The fully round shape (--plx-sys-shape-pill) is for dots, toggles and round marks, never for pills."
+      "$description": "Pills: every status, tag and category pill, and the count pill, has 4px corners (owner, 2026-10-14, docs/pills-and-colors.md). The fully round shape (--plx-sys-shape-mark) is for dots, toggles and round marks, never for pills."
     },
     "radius-control-4px": {
       "$value": "{plx-sys.shape-xs}",

@@ -4,7 +4,7 @@
     "timeline-item-gap": { "$value": "{plx-sys.space-stack-md}", "$type": "dimension", "$description": "Timeline: the space between one event and the next (vertical)." },
     "timeline-column-gap": { "$value": "{plx-sys.space-inline-md}", "$type": "dimension", "$description": "Timeline: the space between the marker and the content (and between events, horizontal)." },
     "timeline-marker-size": { "$value": "{plx-ref.size-24px}", "$type": "dimension", "$description": "Timeline: the marker's box, and the height of the content's first line, so the two share a middle." },
-    "timeline-marker-radius": { "$value": "{plx-sys.shape-pill}", "$type": "dimension", "$description": "Timeline: the markers are circles." },
+    "timeline-marker-radius": { "$value": "{plx-sys.shape-mark}", "$type": "dimension", "$description": "Timeline: the markers are circles." },
     "timeline-dot-size": { "$value": "{plx-ref.size-12px}", "$type": "dimension", "$description": "Timeline: the small circle of an event without an icon." },
     "timeline-dot-background": { "$value": "{plx-sys.surface-raised}", "$type": "color", "$description": "Timeline: the small circle's fill." },
     "timeline-dot-border-color": { "$value": "{plx-sys.border-strong}", "$type": "color", "$description": "Timeline: the small circle's ring." },

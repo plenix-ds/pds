@@ -47,7 +47,7 @@
       "$description": "List: the weight of a step’s number."
     },
     "list-step-radius": {
-      "$value": "{plx-sys.shape-pill}",
+      "$value": "{plx-sys.shape-mark}",
       "$type": "dimension",
       "$description": "List: the corners of a step’s circle (round)."
     },
