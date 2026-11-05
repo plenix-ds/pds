@@ -1,0 +1,54 @@
+name: App report
+description: A connected app (CTM, St. John, AITEAM, RedSave) found a Plenix problem, or fixed one locally. Goes to the Product Lead.
+title: "<app>: Plenix <version>: "
+labels: ["type:bug", "agent:pds1-product-lead"]
+body:
+  - type: markdown
+    attributes:
+      value: "Guide for app sessions: docs/integration/connected-apps.md (#114). Search open issues first; add to an existing one instead of opening a duplicate."
+  - type: dropdown
+    id: app
+    attributes:
+      label: App
+      options: [CTM, St. John site, AITEAM, RedSave, Other]
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Plenix version the app loads
+      placeholder: "0.86.0"
+    validations:
+      required: true
+  - type: input
+    id: component
+    attributes:
+      label: Component or token
+      placeholder: "DataGrid, Button, --plx-sys-color-…"
+    validations:
+      required: true
+  - type: input
+    id: page
+    attributes:
+      label: Page or screen in the app
+    validations:
+      required: false
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected, and what happens instead
+    validations:
+      required: true
+  - type: textarea
+    id: fix
+    attributes:
+      label: Fix made in the app, if any
+      description: Link the pull request to plenix-ds/pds, or paste the patch. The app keeps no private copy of Plenix code.
+    validations:
+      required: false
