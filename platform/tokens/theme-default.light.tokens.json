@@ -1543,7 +1543,7 @@
       }
     },
     "accent-field-placeholder": {
-      "$value": "{plx-ref.color-blue-300}",
+      "$value": "{plx-ref.color-blue-200}",
       "$type": "color",
       "$extensions": {
         "plenix": {
@@ -3374,7 +3374,7 @@
       }
     },
     "category-olive-on": {
-      "$value": "{plx-ref.color-black}",
+      "$value": "{plx-ref.color-white}",
       "$type": "color",
       "$description": "Text on the olive category color (black: the stronger contrast).",
       "$extensions": {

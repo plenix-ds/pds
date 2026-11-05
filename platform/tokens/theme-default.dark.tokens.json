@@ -3383,7 +3383,7 @@
       }
     },
     "category-olive-on": {
-      "$value": "{plx-ref.color-black}",
+      "$value": "{plx-ref.color-white}",
       "$type": "color",
       "$description": "Text on the olive category color (black: the stronger contrast).",
       "$extensions": {
