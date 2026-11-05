@@ -107,7 +107,7 @@
       "$description": "Search option: the space between its icon and its text."
     },
     "search-option-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "Search option: its text size (the combobox option's)."
     },

@@ -35,7 +35,12 @@
 | Border width | `border-width-1px` … `-4px` | `border-width-100` … `-400` |
 | Opacity | `opacity-30`, `-45`, `-50`, `-70` | `opacity-300`, `-450`, `-500`, `-700` |
 | Size (D-0047) | `size-4px` … `size-1600px` | **grid units, 1u = 4px**: `size-1u` … `size-400u` (`size-92px` -> `size-23u`). `size-18px` (off the 4px grid) is not renamed: it's a grid defect, filed on its own |
-| Space, font size, control and glyph sizes, breakpoints … (next PRs) | `space-4px` … | chosen in each PR and listed here |
+| Space, control size (part 3) | `space-4px` … `-64px`, `control-size-24px` … `-52px` | grid units: `space-1u` … `space-16u`, `control-size-6u` … `-13u`. `space-6px` and `space-10px` (off the grid) are not renamed (#301) |
+| Font size (part 3) | `font-size-12` … `-36` (09/10/11 already deprecated) | ordinal by size: `font-size-100` (12px) … `font-size-900` (36px) |
+| Font weight (part 3) | `font-weight-regular-400` … `-bold-700` | `font-weight-regular`, `-medium`, `-semibold`, `-bold` |
+| Breakpoint, content max, grid columns / margin / gutter (part 3) | `breakpoint-600px` …, `content-max-760px` …, `grid-columns-4` … | T-shirt by size: `sm`, `md`, `lg`, `xl` |
+| Glyph size, motion scale (part 3) | `glyph-size-6px` … `-18px`, `motion-scale-98` / `-96` | `glyph-size-xs` … `-lg`; `motion-scale-sm` (0.98), `-md` (0.96) |
+| System and component names (part 4) | `radius-card-4px` …, `…-from-1440` | chosen in part 4 |
 
 - An ordinal step is never the value. `opacity-300` is 0.3, and check 7 reads 0.3 as 0.3 or 30, never 300.
 - A grid unit counts 4px steps, so `size-23u` is 92px. The number is the step on the grid, not the value, and nothing reads the value from the name: code that needs the px (`build-steps.js`, `size-scale`, `pane-defaults`) resolves the token's value.

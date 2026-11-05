@@ -58,7 +58,7 @@ const fails = (T) => { try { tokens(T); return false; } catch (e) { return Strin
     // its own foundations: a softer shape and a heavier semibold
     // (controls take shape-xs, 4px, since the buttons study: radius-control-4px; owner, 2026-10-24)
     f['plx-sys']['shape-xs'].$value = '{plx-ref.radius-xs}';
-    f['plx-sys']['font-weight-semibold'].$value = '{plx-ref.font-weight-bold-700}';
+    f['plx-sys']['font-weight-semibold'].$value = '{plx-ref.font-weight-bold}';
   }));
   build(good);
   const css = fs.readFileSync(path.join(good, 'platform', 'system', 'themes', 'sample.css'), 'utf8');

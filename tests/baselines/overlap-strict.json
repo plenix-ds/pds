@@ -2352,7 +2352,7 @@
    "n": 14,
    "fallback": false
   },
-  "--plx-ref-font-size-13": {
+  "--plx-ref-font-size-200": {
    "n": 14,
    "fallback": false
   },
@@ -2916,7 +2916,7 @@
    "n": 12,
    "fallback": false
   },
-  "--plx-ref-glyph-size-10px": {
+  "--plx-ref-glyph-size-sm": {
    "n": 12,
    "fallback": false
   },
@@ -4324,7 +4324,7 @@
    "n": 4,
    "fallback": false
   },
-  "--plx-ref-content-max-960px": {
+  "--plx-ref-content-max-md": {
    "n": 4,
    "fallback": false
   },
@@ -5528,11 +5528,11 @@
    "n": 1,
    "fallback": false
   },
-  "--plx-ref-space-12px": {
+  "--plx-ref-space-3u": {
    "n": 1,
    "fallback": false
   },
-  "--plx-ref-space-8px": {
+  "--plx-ref-space-2u": {
    "n": 1,
    "fallback": false
   },
@@ -6907,7 +6907,7 @@
    "p": "margin-top",
    "a": ".plx-u-mt-12px",
    "b": "*",
-   "va": "var(--plx-ref-space-12px) !important",
+   "va": "var(--plx-ref-space-3u) !important",
    "vb": "0px",
    "files": "system/utilities.css / system/base.css",
    "same": false
@@ -7075,7 +7075,7 @@
    "p": "padding-left",
    "a": ".plx-app-shell[data-plx-layout=\"contained\"] :is(.plx-page-content, .plx-settings__content)",
    "b": "*",
-   "va": "max(var(--plx-sys-space-layout-md), calc((100% - var(--plx-ref-content-max-960px)) / 2))",
+   "va": "max(var(--plx-sys-space-layout-md), calc((100% - var(--plx-ref-content-max-md)) / 2))",
    "vb": "0px",
    "files": "system/layout-modes.css / system/base.css",
    "same": false
@@ -7146,7 +7146,7 @@
    "a": ".plx-settings__content",
    "b": ".plx-app-shell[data-plx-layout=\"contained\"] :is(.plx-page-content, .plx-settings__content)",
    "va": "var(--plx-comp-settings-content-padding-inline)",
-   "vb": "max(var(--plx-sys-space-layout-md), calc((100% - var(--plx-ref-content-max-960px)) / 2))",
+   "vb": "max(var(--plx-sys-space-layout-md), calc((100% - var(--plx-ref-content-max-md)) / 2))",
    "files": "patterns/SettingsLayout/settings-layout.css / system/layout-modes.css",
    "same": false
   },
@@ -7201,7 +7201,7 @@
    "p": "padding-right",
    "a": ".plx-app-shell[data-plx-layout=\"contained\"] :is(.plx-page-content, .plx-settings__content)",
    "b": "*",
-   "va": "max(var(--plx-sys-space-layout-md), calc((100% - var(--plx-ref-content-max-960px)) / 2))",
+   "va": "max(var(--plx-sys-space-layout-md), calc((100% - var(--plx-ref-content-max-md)) / 2))",
    "vb": "0px",
    "files": "system/layout-modes.css / system/base.css",
    "same": false
@@ -7303,7 +7303,7 @@
    "a": ".plx-settings__content",
    "b": ".plx-app-shell[data-plx-layout=\"contained\"] :is(.plx-page-content, .plx-settings__content)",
    "va": "var(--plx-comp-settings-content-padding-inline)",
-   "vb": "max(var(--plx-sys-space-layout-md), calc((100% - var(--plx-ref-content-max-960px)) / 2))",
+   "vb": "max(var(--plx-sys-space-layout-md), calc((100% - var(--plx-ref-content-max-md)) / 2))",
    "files": "patterns/SettingsLayout/settings-layout.css / system/layout-modes.css",
    "same": false
   },
@@ -7388,7 +7388,7 @@
    "p": "padding-top",
    "a": ".plx-u-pt-8px",
    "b": "*",
-   "va": "var(--plx-ref-space-8px) !important",
+   "va": "var(--plx-ref-space-2u) !important",
    "vb": "0px",
    "files": "system/utilities.css / system/base.css",
    "same": false
@@ -17580,8 +17580,8 @@
    "p": "--plx-comp-button-cluster-gap",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-8px)",
-   "vb": "var(--plx-ref-space-4px)",
+   "va": "var(--plx-ref-space-2u)",
+   "vb": "var(--plx-ref-space-1u)",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": false
   },
@@ -17973,8 +17973,8 @@
    "p": "--plx-comp-button-padding-inline",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-12px)",
-   "vb": "var(--plx-ref-space-8px)",
+   "va": "var(--plx-ref-space-3u)",
+   "vb": "var(--plx-ref-space-2u)",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": false
   },
@@ -18312,8 +18312,8 @@
    "p": "--plx-comp-card-content-actions-gap",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-16px)",
-   "vb": "var(--plx-ref-space-12px)",
+   "va": "var(--plx-ref-space-4u)",
+   "vb": "var(--plx-ref-space-3u)",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": false
   },
@@ -18327,8 +18327,8 @@
    "p": "--plx-comp-card-padding",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-16px)",
-   "vb": "var(--plx-ref-space-12px)",
+   "va": "var(--plx-ref-space-4u)",
+   "vb": "var(--plx-ref-space-3u)",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": false
   },
@@ -18342,8 +18342,8 @@
    "p": "--plx-comp-card-stack-gap",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-16px)",
-   "vb": "var(--plx-ref-space-12px)",
+   "va": "var(--plx-ref-space-4u)",
+   "vb": "var(--plx-ref-space-3u)",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": false
   },
@@ -18357,8 +18357,8 @@
    "p": "--plx-comp-card-title-content-gap",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-12px)",
-   "vb": "var(--plx-ref-space-8px)",
+   "va": "var(--plx-ref-space-3u)",
+   "vb": "var(--plx-ref-space-2u)",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": false
   },
@@ -18402,7 +18402,7 @@
    "p": "--plx-comp-data-grid-header-type-icon-size",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-glyph-size-14px)",
+   "va": "var(--plx-ref-glyph-size-md)",
    "vb": "0",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": false
@@ -18432,8 +18432,8 @@
    "p": "--plx-comp-dialog-body-footer-gap",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-24px)",
-   "vb": "var(--plx-ref-space-16px)",
+   "va": "var(--plx-ref-space-6u)",
+   "vb": "var(--plx-ref-space-4u)",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": false
   },
@@ -18447,8 +18447,8 @@
    "p": "--plx-comp-dialog-padding",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-24px)",
-   "vb": "var(--plx-ref-space-16px)",
+   "va": "var(--plx-ref-space-6u)",
+   "vb": "var(--plx-ref-space-4u)",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": false
   },
@@ -18462,8 +18462,8 @@
    "p": "--plx-comp-dialog-title-body-gap",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-16px)",
-   "vb": "var(--plx-ref-space-12px)",
+   "va": "var(--plx-ref-space-4u)",
+   "vb": "var(--plx-ref-space-3u)",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": false
   },
@@ -18477,8 +18477,8 @@
    "p": "--plx-comp-drawer-padding",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-16px)",
-   "vb": "var(--plx-ref-space-12px)",
+   "va": "var(--plx-ref-space-4u)",
+   "vb": "var(--plx-ref-space-3u)",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": false
   },
@@ -18492,8 +18492,8 @@
    "p": "--plx-comp-field-label-control-gap",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-8px)",
-   "vb": "var(--plx-ref-space-4px)",
+   "va": "var(--plx-ref-space-2u)",
+   "vb": "var(--plx-ref-space-1u)",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": false
   },
@@ -18507,8 +18507,8 @@
    "p": "--plx-comp-form-field-gap",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-16px)",
-   "vb": "var(--plx-ref-space-12px)",
+   "va": "var(--plx-ref-space-4u)",
+   "vb": "var(--plx-ref-space-3u)",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": false
   },
@@ -18522,8 +18522,8 @@
    "p": "--plx-comp-form-group-gap",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-24px)",
-   "vb": "var(--plx-ref-space-16px)",
+   "va": "var(--plx-ref-space-6u)",
+   "vb": "var(--plx-ref-space-4u)",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": false
   },
@@ -18537,8 +18537,8 @@
    "p": "--plx-comp-form-section-gap",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-32px)",
-   "vb": "var(--plx-ref-space-24px)",
+   "va": "var(--plx-ref-space-8u)",
+   "vb": "var(--plx-ref-space-6u)",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": false
   },
@@ -18552,7 +18552,7 @@
    "p": "--plx-comp-form-section-gap",
    "a": ":root",
    "b": "[data-plx-interaction]",
-   "va": "var(--plx-ref-space-32px)",
+   "va": "var(--plx-ref-space-8u)",
    "vb": "var(--plx-sys-space-stack-md)",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": false
@@ -18567,7 +18567,7 @@
    "p": "--plx-comp-form-section-gap",
    "a": "[data-plx-density=\"compact\"]",
    "b": "[data-plx-interaction]",
-   "va": "var(--plx-ref-space-24px)",
+   "va": "var(--plx-ref-space-6u)",
    "vb": "var(--plx-sys-space-stack-md)",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": false
@@ -18590,7 +18590,7 @@
    "p": "--plx-comp-form-section-gap",
    "a": "[data-plx-density=\"standard\"]",
    "b": "[data-plx-interaction]",
-   "va": "var(--plx-ref-space-32px)",
+   "va": "var(--plx-ref-space-8u)",
    "vb": "var(--plx-sys-space-stack-md)",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": false
@@ -18851,8 +18851,8 @@
    "p": "--plx-comp-metadata-group-gap",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-16px)",
-   "vb": "var(--plx-ref-space-8px)",
+   "va": "var(--plx-ref-space-4u)",
+   "vb": "var(--plx-ref-space-2u)",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": false
   },
@@ -18866,8 +18866,8 @@
    "p": "--plx-comp-metadata-icon-gap",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-8px)",
-   "vb": "var(--plx-ref-space-4px)",
+   "va": "var(--plx-ref-space-2u)",
+   "vb": "var(--plx-ref-space-1u)",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": false
   },
@@ -18881,8 +18881,8 @@
    "p": "--plx-comp-metadata-item-gap",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-8px)",
-   "vb": "var(--plx-ref-space-4px)",
+   "va": "var(--plx-ref-space-2u)",
+   "vb": "var(--plx-ref-space-1u)",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": false
   },
@@ -18896,8 +18896,8 @@
    "p": "--plx-comp-metadata-title-gap",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-8px)",
-   "vb": "var(--plx-ref-space-4px)",
+   "va": "var(--plx-ref-space-2u)",
+   "vb": "var(--plx-ref-space-1u)",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": false
   },
@@ -18911,8 +18911,8 @@
    "p": "--plx-comp-panel-padding",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-16px)",
-   "vb": "var(--plx-ref-space-12px)",
+   "va": "var(--plx-ref-space-4u)",
+   "vb": "var(--plx-ref-space-3u)",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": false
   },
@@ -18926,8 +18926,8 @@
    "p": "--plx-comp-toolbar-content-gap",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-16px)",
-   "vb": "var(--plx-ref-space-8px)",
+   "va": "var(--plx-ref-space-4u)",
+   "vb": "var(--plx-ref-space-2u)",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": false
   },
@@ -18941,8 +18941,8 @@
    "p": "--plx-comp-toolbar-control-gap",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-8px)",
-   "vb": "var(--plx-ref-space-4px)",
+   "va": "var(--plx-ref-space-2u)",
+   "vb": "var(--plx-ref-space-1u)",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": false
   },
@@ -18956,8 +18956,8 @@
    "p": "--plx-comp-toolbar-group-gap",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-16px)",
-   "vb": "var(--plx-ref-space-12px)",
+   "va": "var(--plx-ref-space-4u)",
+   "vb": "var(--plx-ref-space-3u)",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": false
   },
@@ -18971,8 +18971,8 @@
    "p": "--plx-comp-toolbar-padding-block",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-12px)",
-   "vb": "var(--plx-ref-space-8px)",
+   "va": "var(--plx-ref-space-3u)",
+   "vb": "var(--plx-ref-space-2u)",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": false
   },
@@ -18986,8 +18986,8 @@
    "p": "--plx-comp-toolbar-padding-inline",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-16px)",
-   "vb": "var(--plx-ref-space-12px)",
+   "va": "var(--plx-ref-space-4u)",
+   "vb": "var(--plx-ref-space-3u)",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": false
   },
@@ -19235,8 +19235,8 @@
    "p": "--plx-sys-card-grid-gap",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-16px)",
-   "vb": "var(--plx-ref-space-12px)",
+   "va": "var(--plx-ref-space-4u)",
+   "vb": "var(--plx-ref-space-3u)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": false
   },
@@ -19497,8 +19497,8 @@
    "p": "--plx-sys-control-height-inline",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-control-size-28px)",
-   "vb": "var(--plx-ref-control-size-24px)",
+   "va": "var(--plx-ref-control-size-7u)",
+   "vb": "var(--plx-ref-control-size-6u)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": false
   },
@@ -19512,8 +19512,8 @@
    "p": "--plx-sys-control-height-standard",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-control-size-32px)",
-   "vb": "var(--plx-ref-control-size-24px)",
+   "va": "var(--plx-ref-control-size-8u)",
+   "vb": "var(--plx-ref-control-size-6u)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": false
   },
@@ -19527,8 +19527,8 @@
    "p": "--plx-sys-control-height-toolbar",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-control-size-28px)",
-   "vb": "var(--plx-ref-control-size-24px)",
+   "va": "var(--plx-ref-control-size-7u)",
+   "vb": "var(--plx-ref-control-size-6u)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": false
   },
@@ -19626,8 +19626,8 @@
    "p": "--plx-sys-data-grid-font-size",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-font-size-13)",
-   "vb": "var(--plx-ref-font-size-12)",
+   "va": "var(--plx-ref-font-size-200)",
+   "vb": "var(--plx-ref-font-size-100)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": false
   },
@@ -19678,8 +19678,8 @@
    "p": "--plx-sys-data-grid-menu-shadow",
    "a": ":root",
    "b": "[data-plx-theme=\"default\"][data-plx-mode=\"dark\"]",
-   "va": "0 var(--plx-ref-space-8px) var(--plx-ref-space-24px) var(--plx-ref-color-black-alpha-14)",
-   "vb": "0 var(--plx-ref-space-8px) var(--plx-ref-space-24px) var(--plx-ref-color-black-alpha-50)",
+   "va": "0 var(--plx-ref-space-2u) var(--plx-ref-space-6u) var(--plx-ref-color-black-alpha-14)",
+   "vb": "0 var(--plx-ref-space-2u) var(--plx-ref-space-6u) var(--plx-ref-color-black-alpha-50)",
    "files": "default.css / default.css",
    "same": false
   },
@@ -20345,8 +20345,8 @@
    "p": "--plx-sys-grid-gutter",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-grid-gutter-16px)",
-   "vb": "var(--plx-ref-grid-gutter-12px)",
+   "va": "var(--plx-ref-grid-gutter-md)",
+   "vb": "var(--plx-ref-grid-gutter-sm)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": false
   },
@@ -20386,8 +20386,8 @@
    "p": "--plx-sys-page-margin-wide",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-grid-margin-32px)",
-   "vb": "var(--plx-ref-grid-margin-24px)",
+   "va": "var(--plx-ref-grid-margin-lg)",
+   "vb": "var(--plx-ref-grid-margin-md)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": false
   },
@@ -20654,8 +20654,8 @@
    "p": "--plx-sys-space-component-gap-lg",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-16px)",
-   "vb": "var(--plx-ref-space-12px)",
+   "va": "var(--plx-ref-space-4u)",
+   "vb": "var(--plx-ref-space-3u)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": false
   },
@@ -20669,8 +20669,8 @@
    "p": "--plx-sys-space-component-gap-md",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-12px)",
-   "vb": "var(--plx-ref-space-8px)",
+   "va": "var(--plx-ref-space-3u)",
+   "vb": "var(--plx-ref-space-2u)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": false
   },
@@ -20684,8 +20684,8 @@
    "p": "--plx-sys-space-component-gap-sm",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-8px)",
-   "vb": "var(--plx-ref-space-4px)",
+   "va": "var(--plx-ref-space-2u)",
+   "vb": "var(--plx-ref-space-1u)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": false
   },
@@ -20699,8 +20699,8 @@
    "p": "--plx-sys-space-container-inset-lg",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-24px)",
-   "vb": "var(--plx-ref-space-16px)",
+   "va": "var(--plx-ref-space-6u)",
+   "vb": "var(--plx-ref-space-4u)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": false
   },
@@ -20714,8 +20714,8 @@
    "p": "--plx-sys-space-container-inset-md",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-16px)",
-   "vb": "var(--plx-ref-space-12px)",
+   "va": "var(--plx-ref-space-4u)",
+   "vb": "var(--plx-ref-space-3u)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": false
   },
@@ -20729,8 +20729,8 @@
    "p": "--plx-sys-space-container-inset-sm",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-12px)",
-   "vb": "var(--plx-ref-space-8px)",
+   "va": "var(--plx-ref-space-3u)",
+   "vb": "var(--plx-ref-space-2u)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": false
   },
@@ -20744,8 +20744,8 @@
    "p": "--plx-sys-space-pattern-stack-lg",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-24px)",
-   "vb": "var(--plx-ref-space-16px)",
+   "va": "var(--plx-ref-space-6u)",
+   "vb": "var(--plx-ref-space-4u)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": false
   },
@@ -20759,8 +20759,8 @@
    "p": "--plx-sys-space-pattern-stack-md",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-16px)",
-   "vb": "var(--plx-ref-space-12px)",
+   "va": "var(--plx-ref-space-4u)",
+   "vb": "var(--plx-ref-space-3u)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": false
   },
@@ -20774,8 +20774,8 @@
    "p": "--plx-sys-space-region-space-lg",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-48px)",
-   "vb": "var(--plx-ref-space-32px)",
+   "va": "var(--plx-ref-space-12u)",
+   "vb": "var(--plx-ref-space-8u)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": false
   },
@@ -20789,8 +20789,8 @@
    "p": "--plx-sys-space-region-space-md",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-32px)",
-   "vb": "var(--plx-ref-space-24px)",
+   "va": "var(--plx-ref-space-8u)",
+   "vb": "var(--plx-ref-space-6u)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": false
   },
@@ -20804,8 +20804,8 @@
    "p": "--plx-sys-space-region-space-sm",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-24px)",
-   "vb": "var(--plx-ref-space-16px)",
+   "va": "var(--plx-ref-space-6u)",
+   "vb": "var(--plx-ref-space-4u)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": false
   },
@@ -21352,8 +21352,8 @@
    "p": "--plx-sys-table-font-size",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-font-size-13)",
-   "vb": "var(--plx-ref-font-size-12)",
+   "va": "var(--plx-ref-font-size-200)",
+   "vb": "var(--plx-ref-font-size-100)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": false
   },
@@ -25755,8 +25755,8 @@
    "p": "--plx-comp-button-icon-label-gap",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-4px)",
-   "vb": "var(--plx-ref-space-4px)",
+   "va": "var(--plx-ref-space-1u)",
+   "vb": "var(--plx-ref-space-1u)",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": true
   },
@@ -25785,8 +25785,8 @@
    "p": "--plx-comp-dialog-action-gap",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-8px)",
-   "vb": "var(--plx-ref-space-8px)",
+   "va": "var(--plx-ref-space-2u)",
+   "vb": "var(--plx-ref-space-2u)",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": true
   },
@@ -25800,8 +25800,8 @@
    "p": "--plx-comp-field-control-helper-gap",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-4px)",
-   "vb": "var(--plx-ref-space-4px)",
+   "va": "var(--plx-ref-space-1u)",
+   "vb": "var(--plx-ref-space-1u)",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": true
   },
@@ -27426,8 +27426,8 @@
    "p": "--plx-sys-control-height-dialog-destructive",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-control-size-36px)",
-   "vb": "var(--plx-ref-control-size-36px)",
+   "va": "var(--plx-ref-control-size-9u)",
+   "vb": "var(--plx-ref-control-size-9u)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": true
   },
@@ -27441,8 +27441,8 @@
    "p": "--plx-sys-control-height-dialog",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-control-size-36px)",
-   "vb": "var(--plx-ref-control-size-36px)",
+   "va": "var(--plx-ref-control-size-9u)",
+   "vb": "var(--plx-ref-control-size-9u)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": true
   },
@@ -27456,8 +27456,8 @@
    "p": "--plx-sys-control-height-prominent",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-control-size-32px)",
-   "vb": "var(--plx-ref-control-size-32px)",
+   "va": "var(--plx-ref-control-size-8u)",
+   "vb": "var(--plx-ref-control-size-8u)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": true
   },
@@ -27919,8 +27919,8 @@
    "p": "--plx-sys-page-margin-desktop",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-grid-margin-24px)",
-   "vb": "var(--plx-ref-grid-margin-24px)",
+   "va": "var(--plx-ref-grid-margin-md)",
+   "vb": "var(--plx-ref-grid-margin-md)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": true
   },
@@ -27999,8 +27999,8 @@
    "p": "--plx-sys-space-component-gap-xs",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-4px)",
-   "vb": "var(--plx-ref-space-4px)",
+   "va": "var(--plx-ref-space-1u)",
+   "vb": "var(--plx-ref-space-1u)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": true
   },
@@ -28014,8 +28014,8 @@
    "p": "--plx-sys-space-pattern-stack-sm",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-space-8px)",
-   "vb": "var(--plx-ref-space-8px)",
+   "va": "var(--plx-ref-space-2u)",
+   "vb": "var(--plx-ref-space-2u)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": true
   },

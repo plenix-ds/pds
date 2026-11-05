@@ -22,7 +22,7 @@
       "$description": "DuplicateAction: source line color (content-muted)."
     },
     "duplicate-action-source-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "DuplicateAction: source line size (font-size-12)."
     },

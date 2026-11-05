@@ -32,7 +32,7 @@
       "$description": "AssignControl: Not delegated color (content-muted)."
     },
     "assign-control-empty-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "AssignControl: Not delegated size (font-size-13)."
     },

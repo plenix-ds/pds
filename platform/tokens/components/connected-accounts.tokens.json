@@ -52,7 +52,7 @@
       "$description": "ConnectedAccounts: service name font (font-heading)."
     },
     "connected-accounts-service-font-size": {
-      "$value": "{plx-ref.font-size-14}",
+      "$value": "{plx-ref.font-size-300}",
       "$type": "dimension",
       "$description": "ConnectedAccounts: service name size (font-size-14)."
     },
@@ -67,7 +67,7 @@
       "$description": "ConnectedAccounts: service name line height (size-20px)."
     },
     "connected-accounts-detail-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "ConnectedAccounts: size of the lines under the name (font-size-12)."
     },

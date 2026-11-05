@@ -7,7 +7,7 @@
       "$description": "DataGrid: a line of cell text in taller rows (and the line P is measured against): 20px at Comfortable."
     },
     "data-grid-header-type-icon-size": {
-      "$value": "{plx-ref.glyph-size-14px}",
+      "$value": "{plx-ref.glyph-size-md}",
       "$type": "dimension",
       "$description": "DataGrid column header: the type icon before the column name."
     },

@@ -32,7 +32,7 @@
       "$description": "PermissionSummary: access text color (content-default)."
     },
     "permission-summary-level-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "PermissionSummary: access text size (font-size-13)."
     },
@@ -52,7 +52,7 @@
       "$description": "PermissionSummary: detail color (content-muted)."
     },
     "permission-summary-detail-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "PermissionSummary: detail text size (font-size-12)."
     },
@@ -77,7 +77,7 @@
       "$description": "PermissionSummary: Can and Cannot heading color (content-muted)."
     },
     "permission-summary-heading-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "PermissionSummary: Can and Cannot heading size (font-size-12)."
     },

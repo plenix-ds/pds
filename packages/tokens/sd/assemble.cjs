@@ -7,7 +7,7 @@
 // The source is JSON in the W3C Design Tokens format (Design Tokens Community Group): one file per token set
 // (platform/tokens/*.tokens.json). A token is { "$value", "$type", "$description" }; a value that names another token is
 // a reference, "{plx-ref.color-gray-800}" (group = the tier, key = the rest of the name), also inside a longer value
-// ("calc({plx-ref.space-8px} * -1)"). Each set's "$extensions"."com.plenix" says which stylesheet and selector it is
+// ("calc({plx-ref.space-2u} * -1)"). Each set's "$extensions"."com.plenix" says which stylesheet and selector it is
 // written into (light or dark, a density, an interaction mode); platform/tokens/build.json lists the stylesheets, their
 // header comments and the order of their sets. A set may be a glob, "components/*.tokens.json" (also semantic/ and reference/): every file
 // of that folder in name order, so each library component owns its own token file (expandGlob below). A token's value under

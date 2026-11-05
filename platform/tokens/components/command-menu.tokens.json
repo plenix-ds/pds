@@ -27,7 +27,7 @@
       "$description": "CommandMenu: the page name, in the label face."
     },
     "command-menu-page-title-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "CommandMenu: the page name size."
     },
@@ -77,7 +77,7 @@
       "$description": "CommandMenu: a command label."
     },
     "command-menu-item-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "CommandMenu: a command label size (as the menu item)."
     },
@@ -127,7 +127,7 @@
       "$description": "CommandMenu: a command description line."
     },
     "command-menu-description-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "CommandMenu: a command description size."
     },
@@ -137,7 +137,7 @@
       "$description": "CommandMenu: the Loading and No results rows (as the Combobox empty row)."
     },
     "command-menu-status-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "CommandMenu: the Loading and No results size."
     },

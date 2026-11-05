@@ -7,7 +7,7 @@
 /* the drop zone overlay covers its container: the container, positioned, with a height */
 .ds-more-overlay{block-size:var(--plx-ref-size-35u);position:relative;}
 /* the search input on the accent header: the header's surface behind it */
-.ds-more-accent{background-color:var(--plx-sys-accent-surface);padding-block-end:var(--plx-ref-space-8px);padding-block-start:var(--plx-ref-space-8px);padding-inline-end:var(--plx-ref-space-8px);padding-inline-start:var(--plx-ref-space-8px);}
+.ds-more-accent{background-color:var(--plx-sys-accent-surface);padding-block-end:var(--plx-ref-space-2u);padding-block-start:var(--plx-ref-space-2u);padding-inline-end:var(--plx-ref-space-2u);padding-inline-start:var(--plx-ref-space-2u);}
 /* the combobox drawn open in place (its list is absolute under the field): a width, and room for the list */
 .ds-more-combobox{inline-size:var(--plx-ref-size-70u);}
 .ds-more-combobox.ds-more-combobox--open{min-block-size:var(--plx-ref-size-60u);}

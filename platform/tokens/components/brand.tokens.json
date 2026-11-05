@@ -77,7 +77,7 @@
       "$description": "Brand: the mark’s square at SM (the minimum size)."
     },
     "brand-sm-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "Brand: the wordmark and the application name at SM: a step of the type scale."
     },
@@ -112,7 +112,7 @@
       "$description": "Brand: the mark’s square at MD (the default lockup size)."
     },
     "brand-md-font-size": {
-      "$value": "{plx-ref.font-size-15}",
+      "$value": "{plx-ref.font-size-400}",
       "$type": "dimension",
       "$description": "Brand: the wordmark and the application name at MD: a step of the type scale."
     },
@@ -147,7 +147,7 @@
       "$description": "Brand: the mark’s square at LG (a sign-in page or a dialog)."
     },
     "brand-lg-font-size": {
-      "$value": "{plx-ref.font-size-18}",
+      "$value": "{plx-ref.font-size-500}",
       "$type": "dimension",
       "$description": "Brand: the wordmark and the application name at LG: a step of the type scale."
     },
@@ -182,7 +182,7 @@
       "$description": "Brand: the mark’s square at XL (a welcome page or an about box)."
     },
     "brand-xl-font-size": {
-      "$value": "{plx-ref.font-size-20}",
+      "$value": "{plx-ref.font-size-600}",
       "$type": "dimension",
       "$description": "Brand: the wordmark and the application name at XL: a step of the type scale."
     },

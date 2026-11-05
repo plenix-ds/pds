@@ -47,7 +47,7 @@
       "$description": "OtpInput box: a code is a technical value, in the data font."
     },
     "otp-input-cell-font-size": {
-      "$value": "{plx-ref.font-size-15}",
+      "$value": "{plx-ref.font-size-400}",
       "$type": "dimension",
       "$description": "OtpInput box: the character's size (the lead step, readable at a glance)."
     },

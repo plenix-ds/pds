@@ -17,7 +17,7 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "entity-header-column-gap": {
-      "$value": "{plx-ref.space-20px}",
+      "$value": "{plx-ref.space-5u}",
       "$type": "dimension",
       "$description": "EntityHeader: the gap between the main column and the aside."
     },
@@ -42,7 +42,7 @@
       "$description": "EntityHeader: the subtitle (the entity's description, where it belongs or who it involves)."
     },
     "entity-header-subtitle-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "EntityHeader: the subtitle's size."
     },
@@ -113,7 +113,7 @@
       "$description": "EntityHeader: a fact tile's label color."
     },
     "entity-header-fact-value-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "EntityHeader: a fact tile's value."
     },
@@ -233,7 +233,7 @@
       "$description": "EntityHeader: the divider before the aside."
     },
     "entity-header-aside-padding-inline": {
-      "$value": "{plx-ref.space-20px}",
+      "$value": "{plx-ref.space-5u}",
       "$type": "dimension",
       "$description": "EntityHeader: between the divider and the aside."
     },
@@ -243,7 +243,7 @@
       "$description": "EntityHeader: between the next step and the actions."
     },
     "entity-header-eyebrow-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "EntityHeader: the \"Next step\" eyebrow."
     },
@@ -253,7 +253,7 @@
       "$description": "EntityHeader: the \"Next step\" eyebrow's color."
     },
     "entity-header-next-font-size": {
-      "$value": "{plx-ref.font-size-15}",
+      "$value": "{plx-ref.font-size-400}",
       "$type": "dimension",
       "$description": "EntityHeader: the next step's title."
     },
@@ -288,12 +288,12 @@
       "$description": "EntityHeader: a section header's icon square."
     },
     "entity-header-section-title-font-size": {
-      "$value": "{plx-ref.font-size-15}",
+      "$value": "{plx-ref.font-size-400}",
       "$type": "dimension",
       "$description": "EntityHeader: a section header's title."
     },
     "entity-header-section-rule-height": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension",
       "$description": "EntityHeader: a section header's accent rule."
     },
@@ -303,7 +303,7 @@
       "$description": "EntityHeader: above and below a section header's rule."
     },
     "entity-header-section-summary-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "EntityHeader: a section header's summary."
     },
@@ -368,7 +368,7 @@
       "$description": "EntityHeader (header style 2, owner 2026-10-23): between a count box's label and its number line (and the status box's label and states)."
     },
     "entity-header-fact-count-font-size": {
-      "$value": "{plx-ref.font-size-24}",
+      "$value": "{plx-ref.font-size-700}",
       "$type": "dimension",
       "$description": "EntityHeader (header style 2, owner 2026-10-23): a count box's number."
     },
@@ -608,12 +608,12 @@
       "$description": "EntityHeader: the icon in a section header’s media tile (edge to edge)."
     },
     "entity-header-split-gap": {
-      "$value": "{plx-ref.space-16px}",
+      "$value": "{plx-ref.space-4u}",
       "$type": "dimension",
       "$description": "EntityHeader: between the media column and the text (column and edge layouts)."
     },
     "entity-header-section-split-gap": {
-      "$value": "{plx-ref.space-12px}",
+      "$value": "{plx-ref.space-3u}",
       "$type": "dimension",
       "$description": "EntityHeader: between the media column and the text in a section header."
     },
@@ -633,7 +633,7 @@
       "$description": "EntityHeader, header style Streamlined: the card’s start padding."
     },
     "entity-header-streamlined-padding-inline-end": {
-      "$value": "{plx-ref.space-24px}",
+      "$value": "{plx-ref.space-6u}",
       "$type": "dimension",
       "$description": "EntityHeader, header style Streamlined: the card’s end padding."
     },
@@ -648,32 +648,32 @@
       "$description": "EntityHeader, header style Streamlined: the icon in the media tile."
     },
     "entity-header-streamlined-top-gap": {
-      "$value": "{plx-ref.space-16px}",
+      "$value": "{plx-ref.space-4u}",
       "$type": "dimension",
       "$description": "EntityHeader, header style Streamlined: between the start (media and heading) and the end (people, progress, actions), and between their rows when they wrap."
     },
     "entity-header-streamlined-start-gap": {
-      "$value": "{plx-ref.space-12px}",
+      "$value": "{plx-ref.space-3u}",
       "$type": "dimension",
       "$description": "EntityHeader, header style Streamlined: between the media and the heading."
     },
     "entity-header-streamlined-title-gap": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension",
       "$description": "EntityHeader, header style Streamlined: between the title and its badges, and between the badges."
     },
     "entity-header-streamlined-subtitle-gap": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension",
       "$description": "EntityHeader, header style Streamlined: above the subtitle."
     },
     "entity-header-streamlined-end-gap": {
-      "$value": "{plx-ref.space-12px}",
+      "$value": "{plx-ref.space-3u}",
       "$type": "dimension",
       "$description": "EntityHeader, header style Streamlined: between the people, the inline progress and the actions."
     },
     "entity-header-streamlined-buttons-gap": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension",
       "$description": "EntityHeader, header style Streamlined: between the action buttons."
     },
@@ -683,17 +683,17 @@
       "$description": "EntityHeader, header style Streamlined: the inline progress bar’s width."
     },
     "entity-header-streamlined-mini-progress-gap": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension",
       "$description": "EntityHeader, header style Streamlined: between the inline progress label and its bar."
     },
     "entity-header-streamlined-mini-progress-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "EntityHeader, header style Streamlined: the inline progress label."
     },
     "entity-header-streamlined-mini-progress-font-weight": {
-      "$value": "{plx-ref.font-weight-semibold-600}",
+      "$value": "{plx-ref.font-weight-semibold}",
       "$type": "fontWeight",
       "$description": "EntityHeader, header style Streamlined: the inline progress label."
     },
@@ -703,17 +703,17 @@
       "$description": "EntityHeader, header style Streamlined: the inline progress label."
     },
     "entity-header-streamlined-strip-margin": {
-      "$value": "{plx-ref.space-16px}",
+      "$value": "{plx-ref.space-4u}",
       "$type": "dimension",
       "$description": "EntityHeader, header style Streamlined: above the details strip."
     },
     "entity-header-streamlined-strip-padding": {
-      "$value": "{plx-ref.space-12px}",
+      "$value": "{plx-ref.space-3u}",
       "$type": "dimension",
       "$description": "EntityHeader, header style Streamlined: between the divider and the details strip’s content."
     },
     "entity-header-streamlined-strip-gap": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension",
       "$description": "EntityHeader, header style Streamlined: between the details strip’s items."
     },
@@ -728,7 +728,7 @@
       "$description": "EntityHeader, header style Streamlined: the details strip’s text."
     },
     "entity-header-streamlined-strip-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "EntityHeader, header style Streamlined: the details strip’s text."
     },
@@ -763,7 +763,7 @@
       "$description": "EntityHeader, header style Streamlined: the progress label."
     },
     "entity-header-streamlined-progress-label-font-weight": {
-      "$value": "{plx-ref.font-weight-medium-500}",
+      "$value": "{plx-ref.font-weight-medium}",
       "$type": "fontWeight",
       "$description": "EntityHeader, header style Streamlined: the progress label."
     },
@@ -773,12 +773,12 @@
       "$description": "EntityHeader, header style Streamlined: the progress value."
     },
     "entity-header-streamlined-progress-value-font-weight": {
-      "$value": "{plx-ref.font-weight-bold-700}",
+      "$value": "{plx-ref.font-weight-bold}",
       "$type": "fontWeight",
       "$description": "EntityHeader, header style Streamlined: the progress value."
     },
     "entity-header-streamlined-tiles-margin": {
-      "$value": "{plx-ref.space-12px}",
+      "$value": "{plx-ref.space-3u}",
       "$type": "dimension",
       "$description": "EntityHeader, header style Streamlined: above the fact tiles under the progress bar."
     },

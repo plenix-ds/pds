@@ -2,7 +2,7 @@
   "$description": "DataGrid: its tokens with touch interaction (44px rows): the column header type icon shows at every density.",
   "plx-comp": {
     "data-grid-header-type-icon-size": {
-      "$value": "{plx-ref.glyph-size-14px}",
+      "$value": "{plx-ref.glyph-size-md}",
       "$type": "dimension",
       "$description": "DataGrid column header type icon: shown, the header row being 44px."
     },

@@ -678,7 +678,7 @@
             "plenix": {
               "web": {
                 "class": "plx-text--title",
-                "token": "--plx-ref-font-size-20"
+                "token": "--plx-ref-font-size-600"
               },
               "source": {
                 "verified": "2026-10-10",
@@ -760,7 +760,7 @@
             "plenix": {
               "web": {
                 "class": "plx-text--heading",
-                "token": "--plx-ref-font-size-13"
+                "token": "--plx-ref-font-size-200"
               },
               "source": {
                 "verified": "2026-10-10",
@@ -842,7 +842,7 @@
             "plenix": {
               "web": {
                 "class": "plx-text--body",
-                "token": "--plx-ref-font-size-13"
+                "token": "--plx-ref-font-size-200"
               },
               "source": {
                 "verified": "2026-10-10",
@@ -923,7 +923,7 @@
             "plenix": {
               "web": {
                 "class": "plx-text--strong",
-                "token": "--plx-ref-font-size-13"
+                "token": "--plx-ref-font-size-200"
               },
               "source": {
                 "verified": "2026-10-10",
@@ -1005,7 +1005,7 @@
             "plenix": {
               "web": {
                 "class": "plx-text--label",
-                "token": "--plx-ref-font-size-12"
+                "token": "--plx-ref-font-size-100"
               },
               "source": {
                 "verified": "2026-10-10",
@@ -1087,7 +1087,7 @@
             "plenix": {
               "web": {
                 "class": "plx-text--secondary",
-                "token": "--plx-ref-font-size-12"
+                "token": "--plx-ref-font-size-100"
               },
               "source": {
                 "verified": "2026-10-10",
@@ -1331,7 +1331,7 @@
             "plenix": {
               "web": {
                 "class": "plx-text--data",
-                "token": "--plx-ref-font-size-12"
+                "token": "--plx-ref-font-size-100"
               },
               "source": {
                 "verified": "2026-10-10",

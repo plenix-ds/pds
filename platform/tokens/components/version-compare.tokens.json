@@ -6,7 +6,7 @@
     "version-compare-picker-width": { "$value": "{plx-ref.size-60u}", "$type": "dimension", "$description": "VersionCompare: a picker's width (240px)." },
     "version-compare-diff-gap": { "$value": "{plx-sys.space-stack-xs}", "$type": "dimension", "$description": "VersionCompare text: the space between the bar and the lines (space-stack-xs)." },
     "version-compare-summary-text": { "$value": "{plx-sys.content-muted}", "$type": "color", "$description": "VersionCompare text: the summary's color (content-muted)." },
-    "version-compare-summary-font-size": { "$value": "{plx-ref.font-size-13}", "$type": "dimension", "$description": "VersionCompare text: the summary's size (13px)." },
+    "version-compare-summary-font-size": { "$value": "{plx-ref.font-size-200}", "$type": "dimension", "$description": "VersionCompare text: the summary's size (13px)." },
     "version-compare-summary-line-height": { "$value": "{plx-sys.label-height-20px}", "$type": "dimension", "$description": "VersionCompare text: the summary's line height (20px)." },
     "version-compare-steps-gap": { "$value": "{plx-sys.space-inline-xs}", "$type": "dimension", "$description": "VersionCompare text: the gap between Previous and Next change (space-inline-xs)." },
     "version-compare-lines-background": { "$value": "{plx-sys.surface-default}", "$type": "color", "$description": "VersionCompare text: the lines' surface (surface-default)." },
