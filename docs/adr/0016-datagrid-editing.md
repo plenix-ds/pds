@@ -71,6 +71,7 @@ onCellEdit?(record, change: { field, value, previous, row }): void | Promise<voi
 - **Dates:** a `date` editor's value is a calendar day string (`YYYY-MM-DD`), read through `parseDate`, so it keeps its day in every time zone.
 - **An editor type the application hasn't turned on** (`editing.types`) falls back to `input`, with a development warning. So a column never fails to edit.
 - **Messages:** every word ("Editing {column}", "Saved", the default refusal message, the menu's "Editing: Inline Edit / Form Edit") comes from the catalog. The Design Director gives the wording (G2), the i18n Engineer the Arabic for the owner (D-0012).
+- **Bare in the cell (G3, #84):** the editing cell sets Input's existing context hooks on itself: `--plx-comp-input-context-border-start-width`, `-border-end-width` and `-border-block-width` to `0`, `-radius-start` and `-radius-end` to `0`, `-background` to `transparent` (and `--plx-comp-textarea-context-*` for `textarea`). Every field-based editor draws through `.plx-input`, so it shows no box of its own inside the cell's editing outline. No new prop or token.
 - The nine editors are the existing Plenix controls at the cell's size (Input, NumberInput, Select, Combobox, TagInput, DatePicker, Checkbox, Textarea, EntityPicker). No new control.
 
 ## Consequences
