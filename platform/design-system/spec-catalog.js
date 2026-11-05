@@ -135,7 +135,7 @@
     example: function (container, ex) {
       var boxEl = DS.el('div', 'ds-example'), headEl = DS.el('div', 'ds-example-head', ex[0]), stage = DS.el('div', 'ds-live'), pre = DS.el('pre', 'ds-code', '');
       boxEl.appendChild(headEl); boxEl.appendChild(stage); boxEl.appendChild(pre); container.appendChild(boxEl);
-      ReactDOM.createRoot(stage).render(h(P.ThemeProvider, null, h(P.ToastProvider, null, h(Example, { render: ex[1], pre: pre }))));
+      DS.mount(stage, h(P.ThemeProvider, null, h(P.ToastProvider, null, h(Example, { render: ex[1], pre: pre }))));
     }
   };
 })();
