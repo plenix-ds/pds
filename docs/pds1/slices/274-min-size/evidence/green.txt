@@ -1,0 +1,1 @@
+app-shell-min-size-274: OK

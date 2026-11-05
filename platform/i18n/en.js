@@ -138,7 +138,12 @@ export default {
     "pinnedHeading": "Pinned to the header"
   },
   "appShell": {
-    "skip": "Skip to main content"
+    "skip": "Skip to main content",
+    "minSize": {
+      "title": "Screen size not supported",
+      "text": "This app shows a lot of detailed information and isn't designed for small screens yet. Use a desktop or laptop with a screen of at least {width} × {height}. A design for mobile is planned.",
+      "continue": "Continue anyway"
+    }
   },
   "approvalWorkflow": {
     "approve": "Approve",
