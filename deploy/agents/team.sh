@@ -55,10 +55,16 @@ start_one() {
   name="PDS1 - $name"; win=$role${n:+-$n}
   tmux has-session -t $S 2>/dev/null || tmux new-session -d -s $S -n shell -c "$ROOT"
   tmux list-windows -t $S -F '#W' | grep -qx "$win" && { echo "$name already running"; return; }
-  dir=$(worktree_for "$role" "$n"); mem=$(mem_limit)
+  dir=$(worktree_for "$role" "$n"); mem=$(mem_limit); trust_dir "$dir"
   tmux new-window -d -t $S -n "$win" -c "$dir" \
     "systemd-run --user --scope -q -p MemoryMax=${mem}G -- env PDS1_ROLE=pds1-$role claude --agent pds1-$role --name '$name' --remote-control '$name' --permission-mode bypassPermissions; echo; echo '$name stopped. Press Enter to close.'; read"
   log "start $win ($name) in $dir"; echo "started $name"
+}
+
+trust_dir() {  # pre-accept Claude's folder-trust prompt so unattended sessions don't hang
+  node -e 'const fs=require("fs"),f=process.env.HOME+"/.claude.json";let j={};try{j=JSON.parse(fs.readFileSync(f,"utf8"))}catch{}
+    j.projects=j.projects||{};const p=j.projects[process.argv[1]]=j.projects[process.argv[1]]||{};
+    if(!p.hasTrustDialogAccepted){p.hasTrustDialogAccepted=true;fs.writeFileSync(f,JSON.stringify(j,null,2))}' "$1"
 }
 
 stop_one() { local win=$1${2:+-$2}; tmux kill-window -t "$S:$win" 2>/dev/null && { log "stop $win"; echo "stopped $win"; }; }
