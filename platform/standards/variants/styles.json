@@ -1055,5 +1055,45 @@
       }
     ],
     "why": ".plx-assign-control--assigned: the row with an assignee is taller than the empty row"
+  },
+  "async-select--options-checkbox-marks-several": {
+    "sets": [
+      {
+        "property": "column-gap",
+        "part": "option",
+        "token": "--plx-comp-combobox-option-mark-gap"
+      }
+    ],
+    "why": ".plx-combobox--marks .plx-combobox__option in combobox.css: room for the Checkbox before the label"
+  },
+  "async-select--options-radio-marks-one-choice": {
+    "sets": [
+      {
+        "property": "column-gap",
+        "part": "option",
+        "token": "--plx-comp-combobox-option-mark-gap"
+      }
+    ],
+    "why": ".plx-combobox--marks .plx-combobox__option in combobox.css: room for the Radio before the label"
+  },
+  "async-select--options-loaded-as-you-type-async": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "loading",
+        "token": "--plx-comp-combobox-loading-text"
+      },
+      {
+        "property": "column-gap",
+        "part": "loading",
+        "token": "--plx-comp-combobox-loading-gap"
+      },
+      {
+        "property": "font-size",
+        "part": "loading",
+        "token": "--plx-comp-combobox-loading-font-size"
+      }
+    ],
+    "why": ".plx-combobox__loading, the loading row shown in place of the options while loadOptions runs"
   }
 }
