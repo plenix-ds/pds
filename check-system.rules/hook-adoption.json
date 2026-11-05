@@ -15,7 +15,7 @@
     "platform/components/TransferList/TransferList.jsx",
     "platform/components/InlineEdit/InlineEdit.tsx",
     "platform/components/RichTextEditor/RichTextEditor.jsx",
-    "platform/components/CodeEditor/CodeEditor.jsx",
+    "platform/components/CodeEditor/CodeEditor.tsx",
     "platform/components/MentionInput/MentionInput.jsx",
     "platform/components/TimePicker/TimePicker.jsx",
     "platform/components/Cascader/Cascader.jsx"
@@ -24,7 +24,7 @@
     "platform/components/Tooltip/Tooltip.tsx",
     "platform/components/Field/Field.tsx",
     "platform/components/Cascader/Cascader.jsx",
-    "platform/components/CodeEditor/CodeEditor.jsx",
+    "platform/components/CodeEditor/CodeEditor.tsx",
     "platform/components/FileInput/FileInput.tsx",
     "platform/components/InputGroup/InputGroup.tsx",
     "platform/components/RelativeDateInput/RelativeDateInput.tsx",
