@@ -50,6 +50,7 @@ import { announce } from '../../utils/announce.tsx';
 import { useFloating, TOP_LAYER } from '../../utils/floating.ts';
 
 import { useStrings, useLocale, createTranslator } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import { Icon } from '../Icon/Icon.tsx';
 import { useReadOnly } from '../../providers/ReadOnly.tsx';
 import SelectChevronIcon from 'plenix-platform/icons/plenix/select-chevron';
@@ -60,7 +61,9 @@ const FALLBACK = ['America/Los_Angeles', 'America/Denver', 'America/Chicago', 'A
 const MINUS = '−';
 
 // the zone's offset from UTC at the date: minutes and "UTC−08:00"
-function offsetOf(zone, date) {
+type Words = { other: string; utc: string; regions: Record<string, string>; results?: (n: number) => string; empty: string; placeholder: string };
+type ZoneOption = { value: string; label: string; region: string; offset: string; minutes: number; name: string; search?: string };
+function offsetOf(zone: string, date: Date) {
   try {
     const part = new Intl.DateTimeFormat('en-US', { timeZone: zone, timeZoneName: 'longOffset' }).formatToParts(date).find((p) => p.type === 'timeZoneName');
     const m = /GMT([+-])(\d{2}):(\d{2})/.exec(part ? part.value : '');
@@ -69,17 +72,18 @@ function offsetOf(zone, date) {
     return { minutes, text: 'UTC' + (m[1] === '-' ? MINUS : '+') + m[2] + ':' + m[3] };
   } catch (e) { return { minutes: 0, text: 'UTC±00:00' }; }
 }
-function longName(zone, date, locale) {
+function longName(zone: string, date: Date, locale: string) {
   try { const p = new Intl.DateTimeFormat(locale, { timeZone: zone, timeZoneName: 'long' }).formatToParts(date).find((x) => x.type === 'timeZoneName'); return p ? p.value : ''; } catch (e) { return ''; }
 }
 
 // Called directly (outside a component), it reads the page's language (formatLocale), not a LocaleProvider's catalogs; TimeZoneSelect passes its own words in strings.
-export function timeZoneOptions({ zones, date = new Date(), locale, strings } = {}) {
+type ZoneOptionsInput = { zones?: string[]; date?: Date; locale?: string; strings?: Record<string, unknown> | null };
+export function timeZoneOptions({ zones, date = new Date(), locale, strings }: ZoneOptionsInput = {}): ZoneOption[] {
   // not a hook (it is exported, and the component calls it inside useMemo): the words are the locale's catalog section with strings on top
   const lang = locale || formatLocale();
-  const t = Object.assign({}, createTranslator(lang).section('timeZoneSelect'), strings);
+  const t = Object.assign({}, createTranslator(lang).section('timeZoneSelect'), strings) as unknown as Words;
   const regions = t.regions;
-  const all = zones || (typeof Intl.supportedValuesOf === 'function' ? Intl.supportedValuesOf('timeZone') : FALLBACK);
+  const all: string[] = zones || (typeof Intl.supportedValuesOf === 'function' ? Intl.supportedValuesOf('timeZone') : FALLBACK);
   const list = all.indexOf('UTC') >= 0 || zones ? all : ['UTC'].concat(all);
   return list.map((zone) => {
     const parts = zone.split('/');
@@ -92,14 +96,39 @@ export function timeZoneOptions({ zones, date = new Date(), locale, strings } = 
 }
 
 // the search text: an offset typed as "+5", "-08", "5:30" or "utc+1" matches "UTC+05:00"
-const fold = (s) => toLatinDigits(String(s)).toLowerCase().replace(/[\u2212\u2013]/g, '-').replace(/_/g, ' ');
-const offsetKeys = (o) => { const sign = o.minutes < 0 ? '-' : '+', a = Math.abs(o.minutes), h = Math.floor(a / 60), m = a % 60;
+const fold = (s: unknown) => toLatinDigits(String(s)).toLowerCase().replace(/[\u2212\u2013]/g, '-').replace(/_/g, ' ');
+const offsetKeys = (o: ZoneOption) => { const sign = o.minutes < 0 ? '-' : '+', a = Math.abs(o.minutes), h = Math.floor(a / 60), m = a % 60;
   return [fold(o.offset), sign + h, sign + String(h).padStart(2, '0'), sign + h + ':' + String(m).padStart(2, '0'), 'utc' + sign + h, 'gmt' + sign + h].join(' '); };
 
-export const TimeZoneSelect = React.forwardRef(function TimeZoneSelect({ value, onChange, grouped = true, showOffset = true, zones, date, placeholder,
+/** @public the prop type (ADR 0011) */
+export type TimeZoneSelectProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange'> & {
+  /** the chosen zone, an IANA name ("Africa/Cairo") */
+  value?: string;
+  onChange?: (zone: string) => void;
+  /** group the list by region (default true); false sorts by offset */
+  grouped?: boolean;
+  /** show each zone's UTC offset (default true) */
+  showOffset?: boolean;
+  /** the zones to offer (default: the browser's list) */
+  zones?: string[];
+  /** the day the offsets are read for (default today) */
+  date?: Date | string | number;
+  placeholder?: string;
+  /** the accessible name */
+  label?: string;
+  invalid?: boolean;
+  warning?: string | boolean;
+  readOnly?: boolean;
+  /** the language of the names (default the page's) */
+  locale?: string;
+  strings?: Catalog | null;
+  className?: string;
+};
+
+export const TimeZoneSelect = React.forwardRef<HTMLInputElement | null, TimeZoneSelectProps>(function TimeZoneSelect({ value, onChange, grouped = true, showOffset = true, zones, date, placeholder,
   label, invalid, warning, disabled, readOnly, locale, strings, id, className, ...rest }, ref) {
   const locked = useReadOnly(readOnly);
-  const t = useStrings('timeZoneSelect', strings);
+  const t = useStrings('timeZoneSelect', strings) as unknown as Words;
   const loc = useLocale();
   const digits = useDigits();
   const auto = 'plx-tz' + React.useId().replace(/[^a-zA-Z0-9]/g, '');
@@ -107,11 +136,11 @@ export const TimeZoneSelect = React.forwardRef(function TimeZoneSelect({ value, 
   const [open, setOpen] = React.useState(false);
   const [text, setText] = React.useState('');
   const [active, setActive] = React.useState(0);
-  const wrap = React.useRef(null), input = React.useRef(null), list = React.useRef(null);
+  const wrap = React.useRef<HTMLDivElement | null>(null), input = React.useRef<HTMLInputElement | null>(null), list = React.useRef<HTMLUListElement | null>(null);
   // the list opens in the top layer, placed against the field by the floating layer (flips up near an edge, follows scroll and resize): no dialog, drawer or scroll area clips it
   useFloating(wrap, list, { open: open, placement: 'bottom-start', matchWidth: true });
   React.useLayoutEffect(() => { const el = list.current; if (open && TOP_LAYER && el && el.showPopover && !el.matches(':popover-open')) el.showPopover(); }, [open]);
-  React.useImperativeHandle(ref, () => input.current);
+  React.useImperativeHandle(ref, () => input.current as HTMLInputElement);
   const day = date ? new Date(date).toDateString() : new Date().toDateString();
   const zoneKey = zones ? zones.join('|') : '';
   // the options for the day (offsets change with daylight saving time), sorted: by region then city, or by offset
@@ -120,7 +149,7 @@ export const TimeZoneSelect = React.forwardRef(function TimeZoneSelect({ value, 
     const out = timeZoneOptions({ zones, date: at, locale, strings: t });
     // a value the browser lists under another name (Asia/Kolkata, listed as Asia/Calcutta) takes that zone's place
     if (value && !out.some((o) => o.value === value)) {
-      let canonical = null;
+      let canonical: string | null = null;
       try { canonical = new Intl.DateTimeFormat('en-US', { timeZone: value }).resolvedOptions().timeZone; } catch (e) { canonical = null; }
       if (canonical) {
         const own = timeZoneOptions({ zones: [value], date: at, locale, strings: t })[0];
@@ -129,31 +158,31 @@ export const TimeZoneSelect = React.forwardRef(function TimeZoneSelect({ value, 
       }
     }
     out.forEach((o) => { o.search = [fold(o.label), fold(o.region), fold(o.value), fold(o.name), offsetKeys(o)].join(' '); });
-    const byName = (a, b) => a.label.localeCompare(b.label, locale || formatLocale());
+    const byName = (a: ZoneOption, b: ZoneOption) => a.label.localeCompare(b.label, locale || formatLocale());
     return grouped
-      ? out.sort((a, b) => (a.region === t.other) - (b.region === t.other) || a.region.localeCompare(b.region) || byName(a, b))
+      ? out.sort((a, b) => Number(a.region === t.other) - Number(b.region === t.other) || a.region.localeCompare(b.region) || byName(a, b))
       : out.sort((a, b) => a.minutes - b.minutes || byName(a, b));
   }, [day, zoneKey, locale, loc.locale, grouped, value]);   // eslint-disable-line react-hooks/exhaustive-deps
   const current = options.find((o) => o.value === value) || null;
   const q = fold(text.trim());
-  const shown = q ? options.filter((o) => q.split(/\s+/).every((w) => o.search.indexOf(w) >= 0)) : options;
+  const shown = q ? options.filter((o) => q.split(/\s+/).every((w) => (o.search as string).indexOf(w) >= 0)) : options;
   React.useEffect(() => { if (open && q) announce(typeof t.results === 'function' ? t.results(shown.length) : loc.t('timeZoneSelect.results', { count: shown.length, n: formatNumber(shown.length) })); }, [q, open]);   // eslint-disable-line react-hooks/exhaustive-deps
   React.useEffect(() => {
     if (!open) return undefined;
-    const off = (e) => { if (wrap.current && !wrap.current.contains(e.target)) { setOpen(false); setText(''); } };
+    const off = (e: MouseEvent) => { if (wrap.current && !wrap.current.contains(e.target as Node)) { setOpen(false); setText(''); } };
     document.addEventListener('mousedown', off);
     return () => document.removeEventListener('mousedown', off);
   }, [open]);
   // opening starts on the chosen zone; typing starts on the first match
   React.useEffect(() => { if (open) setActive(q ? 0 : Math.max(0, shown.findIndex((o) => o.value === value))); }, [q, open]);   // eslint-disable-line react-hooks/exhaustive-deps
-  const optId = (i) => auto + '-o' + i;
+  const optId = (i: number) => auto + '-o' + i;
   React.useEffect(() => {
     if (!open || !list.current) return;
     const el = list.current.querySelector('#' + optId(active));
     if (el && el.scrollIntoView) el.scrollIntoView({ block: 'nearest' });
   }, [active, open]);   // eslint-disable-line react-hooks/exhaustive-deps
-  const choose = (o) => { if (!o || locked) return; if (onChange) onChange(o.value); setText(''); setOpen(false); };
-  const onKey = (e) => {
+  const choose = (o?: ZoneOption) => { if (!o || locked) return; if (onChange) onChange(o.value); setText(''); setOpen(false); };
+  const onKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (locked && e.key !== 'Tab' && e.key !== 'Escape') { if (!e.ctrlKey && !e.metaKey && !e.altKey) e.preventDefault(); return; }   // read-only: no keys open the list or choose
     if (e.key === 'ArrowDown') { e.preventDefault(); if (!open) setOpen(true); else setActive((a) => Math.min(shown.length - 1, a + 1)); }
     else if (e.key === 'ArrowUp') { e.preventDefault(); setActive((a) => Math.max(0, a - 1)); }
