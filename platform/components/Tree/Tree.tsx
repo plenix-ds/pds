@@ -45,6 +45,7 @@ import { isRtl } from '../../utils/direction.ts';
 import { cx } from '../../utils/cx.ts';
 import { useUid } from '../../utils/layer.ts';
 import { Icon, asIcon as iconElement, isIconModule, iconKey } from '../Icon/Icon.tsx';
+import type { IconValue } from '../Icon/Icon.tsx';
 import { useFocusable } from '../../hooks/useFocusable.ts';
 import { useBranchLoader, BranchStatus } from '../../hooks/useBranchLoader.ts';
 import type { BranchNode, BranchLoader, LoadChildren } from '../../hooks/useBranchLoader.ts';
@@ -53,8 +54,10 @@ import FolderOpenIcon from 'plenix-platform/icons/plenix/folder-open';
 import SquarePlusIcon from 'plenix-platform/icons/plenix/square-plus';
 import SquareMinusIcon from 'plenix-platform/icons/plenix/square-minus';
 
-type TreeId = string | number;
-type TreeNode = BranchNode & { icon?: unknown; openIcon?: unknown; meta?: React.ReactNode; children?: TreeNode[] | null };
+/** @public a tree item's id (ADR 0011) */
+export type TreeId = string | number;
+/** @public a tree item: { id, label, icon, openIcon, meta, children, hasChildren } (ADR 0011) */
+export type TreeNode = BranchNode & { icon?: IconValue | React.ReactNode; openIcon?: IconValue | React.ReactNode; meta?: React.ReactNode; children?: TreeNode[] | null };
 type Loader = BranchLoader<TreeNode>;
 type TreeRow = { node?: TreeNode; level: number; pos?: number; setsize?: number; status?: TreeNode };
 type TreeState = { base: string; selected?: TreeId; active?: TreeId | null; open: Set<TreeId>; refs: React.MutableRefObject<Record<string, HTMLLIElement | null>>; moveTo: (id: TreeId) => void; toggle: (id: TreeId) => void; onSelect?: (id: TreeId) => void; setFocusId: (id: TreeId) => void; loader: Loader };

@@ -12,8 +12,8 @@
      items[].count: a count after the label
      items[].content: the tab's panel; without content Tabs draws only the tab list
      items[].disabled: the tab cannot be chosen and keys skip it
-     value: a string: the selected tab's value (controlled)
-     defaultValue: a string: the first selected tab when uncontrolled; default the first item
+     value: a string or a number: the selected tab's value (controlled)
+     defaultValue: a string or a number: the first selected tab when uncontrolled; default the first item
      onChange(value): runs when another tab is selected
      label: the accessible name of the tab list
      idBase: a string: the base of the tab and panel ids, for a panel the application renders
@@ -88,8 +88,10 @@ function useTabsFit(rootRef: React.RefObject<HTMLElement | null>, listRef: React
   return Math.max(1, Math.min(fit, count));
 }
 
-type TabValue = string | number;
-type TabItem = { value: TabValue; label: React.ReactNode; icon?: IconValue | React.ReactNode; count?: number; disabled?: boolean; content?: React.ReactNode };
+/** @public a tab's value (ADR 0011) */
+export type TabValue = string | number;
+/** @public a tab: { value, label, icon, count, disabled, content } (ADR 0011) */
+export type TabItem = { value: TabValue; label: React.ReactNode; icon?: IconValue | React.ReactNode; count?: number; disabled?: boolean; content?: React.ReactNode };
 /** @public the prop type (ADR 0011) */
 export type TabsProps = {
   /** "contained" (default) | "folder" | "segmented" */
