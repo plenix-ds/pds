@@ -140,15 +140,14 @@ jobs:
       - name: Connected apps against this build (read-only drift report; never fails the release; #114)
         run: node tools/baseline/drift.mjs --out "$RUNNER_TEMP/drift"
 
-      - name: Negative proof, the released version is refused as already published
-        env:
-          BASE: ${{ steps.v.outputs.base }}
-        run: node tools/publish/preflight.mjs "$BASE" --cdn "$CDN" --expect-published
+      - name: Negative proof, the live latest version is refused as already published
+        run: |
+          live=$(curl -fsS "${CDN}latest.json" | node -e 'console.log(JSON.parse(require("fs").readFileSync(0)).latest)')
+          echo "LIVE=$live" >> "$GITHUB_ENV"
+          node tools/publish/preflight.mjs "$live" --cdn "$CDN" --expect-published
 
-      - name: The live CDN check still works (released version, sampled)
-        env:
-          BASE: ${{ steps.v.outputs.base }}
-        run: node tools/check-live-cdn.js "$BASE" --live-only --sample 20 --deadline 8
+      - name: The live CDN check still works (live latest version, sampled)
+        run: node tools/check-live-cdn.js "$LIVE" --live-only --sample 20 --deadline 8
 
       - name: Summary
         env:
