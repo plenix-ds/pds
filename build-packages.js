@@ -444,7 +444,7 @@ if (fs.existsSync(path.join(DS, 'inventory.js'))) {
   json(path.join(API, 'index.json'), Object.assign({}, meta, {
     description: 'The Plenix design system as read-only JSON. Every file is also published at ' + SITE + '/api/v1/<name>.',
     endpoints: {
-      tokens: SITE + '/api/v1/tokens', components: SITE + '/api/v1/components', exports: SITE + '/api/v1/exports',
+      tokens: SITE + '/api/v1/tokens', components: SITE + '/api/v1/components', variants: SITE + '/api/v1/variants', exports: SITE + '/api/v1/exports',
       taxonomy: SITE + '/api/v1/taxonomy', guidance: SITE + '/api/v1/guidance', platforms: SITE + '/api/v1/platforms', nativeGuidance: SITE + '/api/v1/native-guidance', figmaMap: SITE + '/api/v1/figma-map', nativeDesign: SITE + '/api/v1/native-design', icons: SITE + '/api/v1/icons', cdn: SITE + '/cdn/' + VERSION + '/',
     },
     packages: ['tokens', 'icons', 'styles', 'react'].map((n) => SCOPE + '/' + n + '@' + VERSION),
@@ -469,6 +469,11 @@ if (fs.existsSync(path.join(DS, 'inventory.js'))) {
     json(path.join(API, 'platforms.json'), Object.assign({}, meta, { title: S.title || '', source: 'platform/standards/platforms.md',
       platforms: ['web', 'ios', 'android'], count: (S.tokenMap || []).length, tokenMap: S.tokenMap || [], sections: S.sections || [] }));
   }
+  // every variation as its own record (docs/adr/0013, #117): stable ids, side tables; a duplicate id stops the release
+  const VR = require('./tools/variant-records.js').derive(recs, ROOT);
+  if (VR.problems.length) throw new Error('variant records (docs/adr/0013):\n  ' + VR.problems.join('\n  '));
+  components.forEach((c) => { if (VR.byItem[c.id]) c.variants = VR.byItem[c.id]; });
+  json(path.join(API, 'variants.json'), Object.assign({}, meta, { count: VR.variants.length, redirects: VR.redirects, variants: VR.variants }));
   json(path.join(API, 'components.json'), Object.assign({}, meta, { count: components.length, components }));
   json(path.join(API, 'exports.json'), Object.assign({}, meta, { package: SCOPE + '/react', count: exportsList.length, exports: exportsList }));
   json(path.join(API, 'taxonomy.json'), Object.assign({}, meta, { count: sections.length, sections, placementRules: win.DSPlacementRules || [] }));
@@ -476,7 +481,7 @@ if (fs.existsSync(path.join(DS, 'inventory.js'))) {
   json(path.join(API, 'guidance.json'), Object.assign({}, meta, { count: Object.keys(g).length,
     items: Object.keys(g).map((k) => Object.assign({ section: k.split('|')[0], item: k.split('|').slice(1).join('|') }, g[k])) }));
   json(path.join(API, 'icons.json'), Object.assign({}, meta, { count: icons.length, base: SITE + '/cdn/' + VERSION + '/icons/', icons }));
-  apiNote = components.length + ' components, ' + Object.keys(g).length + ' guidance items, ' + tokens.length + ' tokens';
+  apiNote = components.length + ' components, ' + VR.variants.length + ' variations, ' + Object.keys(g).length + ' guidance items, ' + tokens.length + ' tokens';
 }
 
 // the library's further packages (library plan, wave 0): every build-packages.d/<name>.js is a step of its own, run in name
