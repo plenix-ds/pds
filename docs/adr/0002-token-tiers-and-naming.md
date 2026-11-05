@@ -2,7 +2,7 @@
 
 - **Status:** accepted
 - **Date:** 2026-11-05
-- **Deciders:** pds1-ds-architect (decision D-0031)
+- **Deciders:** pds1-ds-architect (decision D-0032)
 - **Issue:** plenix-ds/pds#178 (Phase 0, lint checks 6 and 7; Style Dictionary)
 
 ## Context

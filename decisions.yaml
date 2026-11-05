@@ -255,13 +255,41 @@
 
 - id: D-0030
   date: 2026-11-05
+  area: design
+  decided_by: agent (pds1-design-director), owner may switch
+  decision: plx-sys.shape-pill keeps its current 6px value (no visual change); it is never used for pills (pills are 4px, D-0005), only for the round marks that use it today, and it is renamed by the DS Architect under check 7. Option B, making it a true circle (50%), would change the look of the Spotlight beacon, Pictogram and DataGrid scrollbar. Reply B to switch.
+  status: active
+  check: planned:lint-radius
+
+- id: D-0034
+  date: 2026-11-05
+  area: process
+  decided_by: agent (pds1-product-lead) from the owner's request, owner may switch
+  decision: The PDS dashboard is built like the CTM 3.0 dashboard - an interactive dashboard (Overview, To decide, To do, Decisions, Done, Checks, Team, Screenshots) where the owner answers decisions in place with his own fine-grained key (plenix-ds/pds, Issues read and write only). The generated read-only page of plan §6a follows as P2. Replaces the read-only-only part of plan §6a (change proposed on an issue, because the plan is protected).
+  why: 'The owner showed the CTM 3.0 dashboard (2026-11-05) after asking whether PDS has a dashboard like it.'
+  options: [like CTM plus the §6a page later (chosen), like CTM only, the §6a read-only page only]
+  status: active
+  check: review-only (until the dashboard exists; then the brief's AC-1 to AC-6 in docs/pds1/slices/195-dashboard/brief.md)
+
+- id: D-0035
+  date: 2026-11-05
+  area: process
+  decided_by: owner (2026-11-05, "yes" to the CTM 3.0 Product Lead's process change, pasted in the PDS1 Product Lead session)
+  decision: The owner's answer is final. Agents pick the sensible reading, act on it and say in one line on the thread how they read it; an answer never produces a new question card. All pending owner answers are handled in one pass, and the dashboard is refreshed once at the end. Threads use plain words, not decision-card jargon; the A/B options stay so the dashboard can show them.
+  why: 'In CTM, re-asking after answers (D-0032, D-0033) and one-by-one chains caused most of the delay; the owner approved the fix for PDS too.'
+  options: [answer is final, one pass, plain words (chosen), card for every unclear answer]
+  status: active
+  check: review-only (agent behaviour; pds1-delivery-lead checks it on decision issues)
+
+- id: D-0031
+  date: 2026-11-05
   area: architecture
   decided_by: agent (pds1-ds-architect), owner may switch
   decision: The monorepo uses npm workspaces with Changesets (not pnpm, Nx or Turborepo); packages react -> styles -> tokens, icons and locales stand alone; one version for npm, CDN and API (docs/adr/0001).
   status: active
   check: planned:package-boundaries
 
-- id: D-0031
+- id: D-0032
   date: 2026-11-05
   area: architecture
   decided_by: agent (pds1-ds-architect), owner may switch
@@ -269,7 +297,7 @@
   status: active
   check: planned:token-tiers (check 6), planned:token-names (check 7)
 
-- id: D-0032
+- id: D-0033
   date: 2026-11-05
   area: architecture
   decided_by: agent (pds1-ds-architect), carries forward owner decision plenix-platform#872
