@@ -337,6 +337,36 @@
       "$value": "{plx-sys.action-primary-content}",
       "$type": "color"
     },
+    "button-state-layer-color": {
+      "$value": "{plx-sys.state-layer-color}",
+      "$type": "color",
+      "$description": "Button: the colour of the state layer over neutral, subtle and outline fills (ADR 0004, #109)."
+    },
+    "button-primary-state-layer-color": {
+      "$value": "{plx-sys.state-layer-on-accent-color}",
+      "$type": "color",
+      "$description": "Button primary: the colour of the state layer (white over the accent fill; ADR 0004, #109)."
+    },
+    "button-danger-state-layer-color": {
+      "$value": "{plx-sys.state-layer-on-accent-color}",
+      "$type": "color",
+      "$description": "Button danger: the colour of the state layer (white over the danger fill; ADR 0004, #109)."
+    },
+    "button-state-layer-hover-opacity": {
+      "$value": "{plx-sys.state-layer-hover-opacity}",
+      "$type": "number",
+      "$description": "Button: the state layer amount on hover (8%; ADR 0004, #109)."
+    },
+    "button-state-layer-pressed-opacity": {
+      "$value": "{plx-sys.state-layer-pressed-opacity}",
+      "$type": "number",
+      "$description": "Button: the state layer amount while pressed (10%; ADR 0004, #109)."
+    },
+    "button-state-layer-focus-opacity": {
+      "$value": "{plx-sys.state-layer-focus-opacity}",
+      "$type": "number",
+      "$description": "Button: the state layer amount on keyboard focus (10%; ADR 0004, #109)."
+    },
     "button-primary-hover-background": {
       "$value": "{plx-sys.action-primary-background-hover}",
       "$type": "color"
