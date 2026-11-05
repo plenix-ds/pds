@@ -319,6 +319,25 @@ export function bodyRows({
           </div>
         ) : null}
         {cellList.map((column) => {
+          const focusAfterEdit = (from, fromColumn, move) => {
+            // the cell keeps the focus after an edit; Tab / Shift+Tab (move = 1 / -1) go on to the next / previous editable cell, row by row
+            let r = model.indexOf(from),
+              col = ordered.indexOf(fromColumn),
+              target = null;
+            while (move && !target) {
+              col += move;
+              if (col >= ordered.length || col < 0) {
+                r += move;
+                col = move > 0 ? 0 : ordered.length - 1;
+              }
+              const next = model[r];
+              if (!next) break;
+              if (!next.original) continue;
+              const nc = ordered[col].columnDef.meta;
+              if (nc?.editor && (typeof nc.editable === 'function' ? nc.editable(api.cell(next.id, nc.field)) : nc.editable !== false)) target = { r, col };
+            }
+            focusCell(target ? target.r : model.indexOf(from), target ? target.col : ordered.indexOf(fromColumn), move || 1);
+          };
           const c = column.columnDef.meta,
             k = kindsOf(c),
             pinned = column.getIsPinned() === 'left',
@@ -485,8 +504,14 @@ export function bodyRows({
                     column={c}
                     record={record}
                     value={editing.value}
-                    onCommit={(next) => commitEdit(row.id, c.field, next)}
-                    onCancel={() => setEditing(null)}
+                    onCommit={(next, move) => {
+                      commitEdit(row.id, c.field, next);
+                      focusAfterEdit(row, column, move);
+                    }}
+                    onCancel={() => {
+                      setEditing(null);
+                      focusAfterEdit(row, column, 0);
+                    }}
                   />
                 )
               ) : c.rowHandle && (recordPositions.get(record) ?? -1) >= 0 ? (
