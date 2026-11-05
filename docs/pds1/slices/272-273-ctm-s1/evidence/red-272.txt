@@ -1,0 +1,9 @@
+AssertionError [ERR_ASSERTION]: 1280: the # column stays narrow, got 748
+    at /home/cc/pds1/work/component-engineer-1/tests/data-grid-fit-272.test.js:31:14 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
