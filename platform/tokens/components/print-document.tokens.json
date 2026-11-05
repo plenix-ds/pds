@@ -1,0 +1,35 @@
+{
+  "$description": "PrintDocument (platform/patterns/PrintDocument, issue 87, #348): its component tokens. The frame, padding and size are the sheet's print roles, which change on paper.",
+  "plx-comp": {
+    "print-document-background": {
+      "$value": "{plx-sys.surface-default}",
+      "$type": "color",
+      "$description": "PrintDocument: the sheet's fill."
+    },
+    "print-document-border-color": {
+      "$value": "{plx-sys.border-default}",
+      "$type": "color",
+      "$description": "PrintDocument: the sheet's border."
+    },
+    "print-document-border-width": {
+      "$value": "{plx-sys.print-sheet-border-width}",
+      "$type": "dimension",
+      "$description": "PrintDocument: the sheet's border width; 0 on paper."
+    },
+    "print-document-radius": {
+      "$value": "{plx-sys.print-sheet-radius}",
+      "$type": "dimension",
+      "$description": "PrintDocument: the sheet's corners; square on paper."
+    },
+    "print-document-shadow": {
+      "$value": "{plx-sys.print-sheet-shadow}",
+      "$type": "shadow",
+      "$description": "PrintDocument: the sheet's shadow (shadow-card); none on paper."
+    },
+    "print-document-padding": {
+      "$value": "{plx-sys.print-sheet-padding}",
+      "$type": "dimension",
+      "$description": "PrintDocument: the sheet's padding (the document margin); 0 on paper, where the page carries it."
+    }
+  }
+}
