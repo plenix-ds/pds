@@ -80,14 +80,23 @@
 .plx-u-flex-column{flex-direction:column;}
 .plx-u-flex-wrap{flex-wrap:wrap;}
 .plx-u-flex{display:flex;}
+/* stylelint-disable-next-line declaration-property-value-allowed-list -- a font-size utility on the raw scale (public class); it moves to type roles with the token rename (docs/adr/0002) */
 .plx-u-fs-09{font-size:var(--plx-ref-font-size-12);}
+/* stylelint-disable-next-line declaration-property-value-allowed-list -- a font-size utility on the raw scale (public class); it moves to type roles with the token rename (docs/adr/0002) */
 .plx-u-fs-10{font-size:var(--plx-ref-font-size-12);}
+/* stylelint-disable-next-line declaration-property-value-allowed-list -- a font-size utility on the raw scale (public class); it moves to type roles with the token rename (docs/adr/0002) */
 .plx-u-fs-11{font-size:var(--plx-ref-font-size-12);}
+/* stylelint-disable-next-line declaration-property-value-allowed-list -- a font-size utility on the raw scale (public class); it moves to type roles with the token rename (docs/adr/0002) */
 .plx-u-fs-12{font-size:var(--plx-ref-font-size-12);}
+/* stylelint-disable-next-line declaration-property-value-allowed-list -- a font-size utility on the raw scale (public class); it moves to type roles with the token rename (docs/adr/0002) */
 .plx-u-fs-13{font-size:var(--plx-ref-font-size-13);}
+/* stylelint-disable-next-line declaration-property-value-allowed-list -- a font-size utility on the raw scale (public class); it moves to type roles with the token rename (docs/adr/0002) */
 .plx-u-fs-14{font-size:var(--plx-ref-font-size-14);}
+/* stylelint-disable-next-line declaration-property-value-allowed-list -- a font-size utility on the raw scale (public class); it moves to type roles with the token rename (docs/adr/0002) */
 .plx-u-fs-15{font-size:var(--plx-ref-font-size-15);}
+/* stylelint-disable-next-line declaration-property-value-allowed-list -- a font-size utility on the raw scale (public class); it moves to type roles with the token rename (docs/adr/0002) */
 .plx-u-fs-18{font-size:var(--plx-ref-font-size-18);}
+/* stylelint-disable-next-line declaration-property-value-allowed-list -- a font-size utility on the raw scale (public class); it moves to type roles with the token rename (docs/adr/0002) */
 .plx-u-fs-20{font-size:var(--plx-ref-font-size-20);}
 .plx-u-fw-bold-700{font-weight:var(--plx-sys-font-weight-bold);}
 .plx-u-fw-medium-500{font-weight:var(--plx-sys-font-weight-medium);}

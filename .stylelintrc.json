@@ -24,6 +24,7 @@
     { "files": ["platform/system/**/*.css", "platform/components/**/*.css", "platform/patterns/**/*.css"],
       "rules": { "selector-class-pattern": ["^(plx-|is-)", { "severity": "error", "message": "%s is not a plx- class: a Platform stylesheet defines plx- classes (state classes is-…)" }] } },
     { "files": ["platform/components/RichTextEditor/rich-text-editor.css"],
-      "rules": { "selector-class-pattern": ["^(plx-|is-|ProseMirror-(separator|hideselection|selectednode)$|selectedCell$)", { "severity": "error", "message": "%s is not a plx- class (only the editor engine's ProseMirror-separator, -hideselection, -selectednode and selectedCell are allowed here)" }] } }
+      "rules": { "selector-class-pattern": ["^(plx-|is-|ProseMirror-(separator|hideselection|selectednode)$|selectedCell$)", { "severity": "error", "message": "%s is not a plx- class (only the editor engine's ProseMirror-separator, -hideselection, -selectednode and selectedCell are allowed here)" }] } },
+    {"files": ["platform/{components,patterns,system,charts,exports,templates,brand,engines,loader,dev}/**/*.css", "platform/*.css", "services/**/*.css"], "rules": {"declaration-property-value-allowed-list": [{"font-size": ["/^var\\(\\s*--plx-(sys|comp|state|ctx)-/", "/^(inherit|initial|unset|revert|100%|1em|smaller|larger)$/", "/^calc\\(/", "/^var\\(--_/"]}, {"severity": "error", "message": "%s: %s: a font size comes from a type role (--plx-sys-text-*-font-size) or a component token, never the raw scale (--plx-ref-font-size-), plan \u00a77 check 3"}]}}
   ]
 }
