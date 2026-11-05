@@ -27,3 +27,4 @@ Owner: `pds1-ds-architect`. Gate G3 (plan §5) reads these files.
 | [0013](0013-variant-records.md) | Every variation as its own record (derived ids, side tables, API) | accepted |
 | [0014](0014-print-document-parts.md) | Print parts: PrintDocument, AnswerLines, PageBreak | accepted |
 | [0015](0015-variant-styles.md) | Each variation documents the styling properties it sets | accepted |
+| [0016](0016-datagrid-editing.md) | DataGrid editing: nine cell editors, Inline and Form Edit | accepted |
