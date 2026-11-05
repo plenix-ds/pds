@@ -19,4 +19,4 @@
 | Event feed shape | Ran | `IssueCommentEvent` carries issue labels and the comment body; `PullRequestEvent` is trimmed to {id, number, url, head, base}, so the PR is read; event ids are not ordered by time, so pickup keeps the ids it has seen |
 | Routing on the live feed | Ran (`PICKUP_DRY=1`) | the last 15 events: unlabeled PR openings, pushes and branch events are ignored; the comment on #4 signed "— PDS1-Component-Engineer-1" does not wake its own author |
 | Routing fixtures | Ran | "@pds1-release-architect …— PDS1-Product-Lead" → release-architect; "Fixed. — PDS1-Component-Engineer-1" → nobody; an unsigned comment → product-lead; a self-mention → nobody |
-| Service running and a real wake | Planned | After merge: `systemctl --user enable --now pds1-pickup`, then "pickup: woke …" in `~/pds1/team.log` |
+| Service running and a real wake | Ran | `pds1-pickup` active since 12:18 UTC; 12:24:35 "pickup: woke ds-architect: 2 event(s)" (Product Lead comments on #87 and #265, held while it was busy); the pane shows the message |
