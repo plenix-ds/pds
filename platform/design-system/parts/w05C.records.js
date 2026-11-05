@@ -37,7 +37,7 @@ DSParts.records.push(function (H) {
     use: ['Many commands of similar weight that people find faster by typing than by scanning', 'Groups of a word or two; the shortcut on every command that has one, so people learn it', 'A page (items) for a choice that has its own options: a theme, a density, a project'],
     avoid: ['Two or three actions: use buttons or an action menu', 'Choosing a value in a form: use a Combobox', 'Searching records: use the search field and its results'],
     related: ['command-palette', 'action-menu', 'combobox', 'search-input', 'keyboard-hint'],
-    map: [[ATL, 'Command palette (internal)', 'Partial'], [FLU, 'Menu with search', 'Partial'], [SPE, 'Search with a list', 'Partial']],
+    map: [[ATL, 'Command palette (internal)', 'Partial'], [FLU, 'Menu with search', 'Partial'], [SPE, 'Search with a list', 'Partial'], ['Frappe', 'Awesomebar', 'Partial']],
     variantPages: [
       vp('Grouped command menu', 'Variant', 'Grouped', { variant: 'grouped' }, 'The matching commands under their group headings, the best match first in each group.', 'Commands of several kinds: create, go to, settings', 'One group: leave out the heading'),
       vp('Command menu with shortcuts', 'Variant', 'With shortcuts', { variant: 'shortcuts' }, 'Each command with its keyboard shortcut at the end of the row, in the data font, as people read it on their system.', 'Commands that have shortcuts, so people learn them', 'Shortcuts the app does not bind: show only working keys'),
@@ -70,7 +70,7 @@ DSParts.records.push(function (H) {
     use: ['Apps with many commands and people who work from the keyboard', 'A faster way to commands that are also in the menus and toolbars, with the same names', 'scope for a region with its own commands (an editor), with a shortcut of its own'],
     avoid: ['The only way to reach a command', 'Searching records and content: use search', 'A second palette on the same shortcut'],
     related: ['command-menu', 'dialog', 'hotkey', 'search-input'],
-    map: [[ATL, 'Command palette (internal)', 'Partial'], [FLU, 'Command bar search', 'Partial']],
+    map: [[ATL, 'Command palette (internal)', 'Partial'], [FLU, 'Command bar search', 'Partial'], ['Frappe', 'Awesomebar', 'Partial']],
     variantPages: [
       vp('Global command palette', 'Scope', 'Global (Ctrl K)', { variant: 'global' }, 'Opens with Ctrl K anywhere in the app, even from a text field, or from its button.', 'One palette for the whole app', 'A page that already uses Ctrl K for its own search'),
       vp('Scoped command palette', 'Scope', 'Scoped', { variant: 'scoped' }, 'Opens only while focus is inside its region, with that region’s commands and shortcut.', 'An editor or a tool with commands of its own', 'Commands that belong to the whole app: use the global palette')
@@ -161,7 +161,7 @@ DSParts.records.push(function (H) {
     use: ['Naming, renaming or labeling something as part of an action', 'A confirm button that repeats the title’s verb (Rename asset · Rename)'],
     avoid: ['More than one or two fields: use a form Dialog, a panel or a page', 'A placeholder in place of the label', 'Disabling the confirm button until the field is valid: show the error on submit'],
     related: ['dialog', 'field', 'confirmation-dialog'],
-    map: [[CAR, 'Modal (input)', 'Variant'], [MAT, 'Dialog (with text field)', 'Partial'], [SPE, 'Dialog (form)', 'Partial']],
+    map: [[CAR, 'Modal (input)', 'Variant'], [MAT, 'Dialog (with text field)', 'Partial'], [SPE, 'Dialog (form)', 'Partial'], ['Frappe', 'frappe.prompt', 'Direct']],
     variantPages: [
       vp('One-field prompt', 'Content', 'Prompt (one field)', { variant: 'prompt' }, 'The title, a sentence, one labeled field and the verb with Cancel.', 'Rename, name a new item, add a label', 'Several fields: use a form dialog'),
       vp('Prompt with an error', 'Content', 'With an error', { variant: 'prompt-error' }, 'After a submit that failed validation: the message under the field, announced; the dialog stays open.', 'Every prompt that can be wrong (empty, taken, too long)', 'Errors before people have submitted')

@@ -15,14 +15,28 @@ import { Notice } from '../Notice/Notice.tsx';
 import { Badge } from '../Badge/Badge.tsx';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import CheckIcon from 'plenix-platform/icons/plenix/check';
 import CloseIcon from 'plenix-platform/icons/plenix/close';
 import SparkleIcon from 'plenix-platform/icons/plenix/sparkle';
-const version = (e) => JSON.stringify([e.id, e.before, e.after]);
-export function SuggestedEdit({ edits = [], variant = 'diff', onDecision, disabled = false, strings, className }) {
+type Edit = { id: string; before?: React.ReactNode; after?: React.ReactNode; status?: 'pending' | 'accepted' | 'rejected' };
+type Decision = 'accepted' | 'rejected';
+const version = (e: Edit) => JSON.stringify([e.id, e.before, e.after]);
+type SuggestedEditProps = {
+  /** the edits: { id, before, after, status? } */
+  edits?: Edit[];
+  /** "diff" (default) | "accept" | "reject" | "all" */
+  variant?: 'diff' | 'accept' | 'reject' | 'all';
+  /** a decision: ({ ids, decision }); async */
+  onDecision?(info: { ids: string[]; decision: Decision }): unknown;
+  disabled?: boolean;
+  strings?: Catalog | null;
+  className?: string;
+};
+export function SuggestedEdit({ edits = [], variant = 'diff', onDecision, disabled = false, strings, className }: SuggestedEditProps) {
   devWarn('SuggestedEdit', { variant }, { variant: ['diff', 'accept', 'reject', 'all'] });
-  const t = useStrings('suggestedEdit', strings),
-    [done, setDone] = React.useState({}),
+  const t = useStrings('suggestedEdit', strings) as Record<string, string>,
+    [done, setDone] = React.useState<Record<string, Decision>>({}),
     [busy, setBusy] = React.useState(false),
     [error, setError] = React.useState('');
   const lock = React.useRef(false),
@@ -33,9 +47,9 @@ export function SuggestedEdit({ edits = [], variant = 'diff', onDecision, disabl
       alive.current = false;
     };
   }, []);
-  const state = (e) => (e.status && e.status !== 'pending' ? e.status : done[version(e)]),
+  const state = (e: Edit) => (e.status && e.status !== 'pending' ? e.status : done[version(e)]),
     pending = edits.filter((e) => !state(e));
-  async function decide(list, decision) {
+  async function decide(list: Edit[], decision: Decision) {
     if (disabled || lock.current || !onDecision || !list.length) return;
     const keys = list.map(version);
     lock.current = true;

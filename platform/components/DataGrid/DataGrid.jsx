@@ -60,7 +60,9 @@
      unreadOnly with onUnreadOnlyChange controls the unread filter. Nothing is drawn above the headers (Fluent): the app
        puts DataGrid.unreadCommands(...).filter in its CommandBar's quickFilters and .selection among its selection commands. The controller exposes getUnreadCount(), markRead(keys), markUnread(keys).
      onRowClick(record, event), onRowDoubleClick(record, event): with them rows are focusable and Enter clicks;
-       onCellEdit(record, { field, value, previous })
+       onCellEdit(record, { field, value, previous, row }) -> void | Promise<void>: a promise shows the busy cell; a rejection brings the
+       old value back with its message (ADR 0016)
+       editing: { types: ["checkbox"] }: the cell editor types the application turns on ("input" and "number" always work)
      openKey: a string, a number or null: the key of the record whose details show (the open row); default the row last opened by a click or Enter
        (with onRowClick); null: none. The open row is aria-current="true"; in a grid without selection it takes the
        selected look (the fill and the start bar); with selection, opening a row selects only it, so it is marked too

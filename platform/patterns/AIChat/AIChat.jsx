@@ -25,7 +25,7 @@ import { GeneratedContent } from '../../components/GeneratedContent/GeneratedCon
 import { Citation } from '../../components/Citation/Citation.tsx';
 import { PromptSuggestions } from '../../components/PromptSuggestions/PromptSuggestions.tsx';
 import { AIDisclaimer } from '../../components/AIDisclaimer/AIDisclaimer.tsx';
-import { RefineMenu } from '../../components/RefineMenu/RefineMenu.jsx';
+import { RefineMenu } from '../../components/RefineMenu/RefineMenu.tsx';
 import { PromptInput } from '../../components/PromptInput/PromptInput.tsx';
 import { StreamingText } from '../../components/StreamingText/StreamingText.tsx';
 export function AIChat({messages=[],onSend,streaming=false,onStop,variant='panel',title,suggestions=[],prompt,onPromptChange,composer={},strings,className}){

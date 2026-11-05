@@ -325,16 +325,19 @@
     "entity-header-fact-icon-tile-background": {
       "$value": "{plx-sys.surface-default}",
       "$type": "color",
+      "$deprecated": "The fact icon has no tile any more (no icon in a box, D-0036, #108): nothing reads it. It keeps working and is removed in 2.0.0.",
       "$description": "EntityHeader (header style 2, owner 2026-10-23): the fact icon's square."
     },
     "entity-header-fact-icon-tile-border-color": {
       "$value": "{plx-sys.border-subtle}",
       "$type": "color",
+      "$deprecated": "The fact icon has no tile any more (no icon in a box, D-0036, #108): nothing reads it. It keeps working and is removed in 2.0.0.",
       "$description": "EntityHeader (header style 2, owner 2026-10-23): the fact icon square's edge."
     },
     "entity-header-fact-icon-tile-radius": {
       "$value": "{plx-sys.radius-detail}",
       "$type": "dimension",
+      "$deprecated": "The fact icon has no tile any more (no icon in a box, D-0036, #108): nothing reads it. It keeps working and is removed in 2.0.0.",
       "$description": "EntityHeader (header style 2, owner 2026-10-23): the fact icon square's corners."
     },
     "entity-header-fact-icon-tile-text": {

@@ -1,0 +1,25 @@
+      25 |       await page.goto(pathToFileURL(file).href);
+      26 |       await page.waitForLoadState('networkidle');
+    > 27 |       await expect(page).toHaveScreenshot(`${id}.png`);
+         |       ^
+      28 |     });
+      29 |   }
+      30 | }
+        at /home/cc/pds1/work/component-engineer-2/tests/visual/visual.spec.mjs:27:7
+
+    attachment #1: badge-status-dark (image/png) ───────────────────────────────────────────────────
+    Expected: tests/visual/baselines/badge-status-dark.png
+    Received: test-results/visual-badge-status-dark/badge-status-dark-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/visual-badge-status-dark/error-context.md
+
+  8 failed
+    tests/visual/visual.spec.mjs:22:5 › button-secondary-light ─────────────────────────────────────
+    tests/visual/visual.spec.mjs:22:5 › button-secondary-dark ──────────────────────────────────────
+    tests/visual/visual.spec.mjs:22:5 › button-primary-light ───────────────────────────────────────
+    tests/visual/visual.spec.mjs:22:5 › button-primary-dark ────────────────────────────────────────
+    tests/visual/visual.spec.mjs:22:5 › button-danger-light ────────────────────────────────────────
+    tests/visual/visual.spec.mjs:22:5 › button-danger-dark ─────────────────────────────────────────
+    tests/visual/visual.spec.mjs:22:5 › badge-status-light ─────────────────────────────────────────
+    tests/visual/visual.spec.mjs:22:5 › badge-status-dark ──────────────────────────────────────────
