@@ -68,7 +68,11 @@ const CARD_ALL = 100;
 // the cards drawn beyond each edge of the view in the long card list (issue 809)
 const CARD_OVERSCAN = 6;
 
-function NextEngine(props) {
+function NextEngine(rawProps) {
+  // the editing options (ADR 0016): a TableSettings above supplies defaults, the table's own win; rangeSelect is the cellSelection option by its other name
+  const tableDefaults = useTableSettings().editing,
+    editingOptions = tableDefaults ? { ...tableDefaults, ...rawProps.editing } : rawProps.editing,
+    props = editingOptions === rawProps.editing && !editingOptions?.rangeSelect ? rawProps : { ...rawProps, editing: editingOptions, cellSelection: rawProps.cellSelection ?? editingOptions?.rangeSelect };
   const inPane = React.useContext(GridPane);
   const {
     label,
