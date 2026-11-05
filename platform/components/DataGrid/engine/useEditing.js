@@ -23,6 +23,7 @@ import React from 'react';
 import { recordKey, valueAt } from '../state.js';
 import { setField, changeRecord } from '../records.js';
 import { announce } from '../../../utils/announce.tsx';
+import { development } from '../../../utils/devWarn.ts';
 
 let refusals = 0;   // the refusal message's id, so the cell can name it (aria-describedby)
 
@@ -100,4 +101,21 @@ export function useEditEffect({ source, mutations, pendingEdit, emit, api }) {
       emit('cellEdit', api.cell(key, field));
     }
   }, [source]);
+}
+
+// an editor type the application has not turned on (editing.types) edits as text; one development warning per column and type (ADR 0016)
+const TURN_ON = ['select', 'combobox', 'tags', 'date', 'checkbox', 'textarea', 'person'],
+  warned = new Set();
+export function editorTurnedOn(column, types) {
+  const type = column.editor;
+  if (typeof type !== 'string' || !TURN_ON.includes(type)) return false;
+  if ((types || []).includes(type)) return true;
+  const id = type + ':' + column.field;
+  if (development() && !warned.has(id)) {
+    warned.add(id);
+    console.warn(
+      '[Plenix] DataGrid: column "' + column.field + '" asks for the ' + type + " editor, but editing.types doesn't turn it on; it edits as text"
+    );
+  }
+  return false;
 }

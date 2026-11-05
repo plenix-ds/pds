@@ -134,9 +134,15 @@ export const rowKeys =
   };
 
 export const cellKeys =
-  ({ isStatic, value, canEdit, setEditing, row, c, model, ordered, column, frame, focusCell, cellRange, kept, cardList }) =>
+  ({ isStatic, value, canEdit, toggle, setEditing, row, c, model, ordered, column, frame, focusCell, cellRange, kept, cardList }) =>
   (event) => {
     if (isStatic || event.target !== event.currentTarget) return;
+    // a checkbox cell (the option editing.types): Space toggles it and saves at once (ADR 0016)
+    if (toggle && event.key === ' ' && !event.ctrlKey && !event.altKey && !event.metaKey) {
+      event.preventDefault();
+      toggle();
+      return;
+    }
     // the card list (issue 809): End (or Ctrl or Command with End) on a card's cell draws every card and focuses the last card's
     // cell in this column (a card is a row, so End goes to the last row, as in a list)
     if (cardList && event.key === 'End' && !event.shiftKey && !event.altKey) {
