@@ -19,3 +19,5 @@ export function useDensity(): [string, ((density: string) => void) | undefined] 
   const set = (d: string) => { if (window.PlenixWorkspace) window.PlenixWorkspace.setDensity(d); };
   return [document.documentElement.getAttribute('data-plx-density') || 'standard', set];
 }
+
+import './this-file-does-not-exist-197.js';
