@@ -1,0 +1,36 @@
+### light
+content-default    11.29 12.09 12.09 10.90 10.90 10.56 #34363b
+content-strong     15.39 16.48 16.48 14.85 14.85 14.39 #1e1f22
+content-muted       6.64  7.11  7.11  6.41  6.41  6.21 #56585e
+content-subtle      6.64  7.11  7.11  6.41  6.41  6.21 #56585e
+content-link        6.04  6.47  6.47  5.83  5.83  5.65 #1f5bb8
+selected-content    6.64  7.10  7.10  6.40  6.40  6.20 #005a9e
+bgs ['#f7f7f8', '#ffffff', '#ffffff', '#f3f3f3', '#f3f3f3', '#ebf0f7']
+border-default #d0d0d0 vs default 1.54
+border-subtle #e8e9ec vs default 1.21
+field-border #a3a6ad vs default 2.44
+control-border #8e9094 vs default 3.20
+border-strong #8e9094 vs default 3.20
+neutral on/solid 5.10 label/default 5.10 content/soft 6.41
+info on/solid 4.78 label/default 4.78 content/soft 6.20
+success on/solid 5.37 label/default 5.37 content/soft 6.92
+warning on/solid 6.98 label/default 6.98 content/soft 6.26
+danger on/solid 6.97 label/default 6.97 content/soft 5.89
+### dark
+content-default    17.30  8.02  8.02 17.30  5.86  5.86 #e8e9ec
+content-strong     18.93  8.78  8.78 18.93  6.41  6.41 #f3f3f3
+content-muted      13.62  6.31  6.31 13.62  4.61  4.61 #d0d0d0
+content-subtle      6.57  3.05  3.05  6.57  2.22  2.22 #8e9094
+content-link       15.35  7.12  7.12 15.35  5.20  5.20 #c8dff7
+selected-content   15.35  7.12  7.12 15.35  5.20  5.20 #c8dff7
+bgs ['#000000', '#444444', '#444444', '#000000', '#56585e', '#56585e']
+border-default #56585e vs default 1.37
+border-subtle #56585e vs default 1.37
+field-border #a3a6ad vs default 4.00
+control-border #a3a6ad vs default 4.00
+border-strong #8e9094 vs default 3.05
+neutral on/solid 5.10 label/default 1.91 content/soft 4.61
+info on/solid 8.78 label/default 5.19 content/soft 5.20
+success on/solid 5.91 label/default 3.49 content/soft 6.22
+warning on/solid 8.62 label/default 5.10 content/soft 4.95
+danger on/solid 8.96 label/default 5.29 content/soft 6.01

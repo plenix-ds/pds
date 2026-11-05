@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$comment": "PDS design rules v0, read by lint checks 1-12 (plan §7). Scales are in DESIGN.md front matter; this file says where and how each check applies. Owner: pds1-design-director. Change the look only with a new decisions.yaml entry.",
+  "version": 0,
+  "contract": "DESIGN.md",
+  "tokens": "platform/tokens",
+  "scope": {
+    "css": ["platform/**/*.css"],
+    "jsx": ["platform/**/*.{js,jsx,ts,tsx}"],
+    "exclude": ["platform/vendor/**", "**/*.generated.*", "docs/legacy/**"]
+  },
+  "checks": {
+    "1-colour-tokens": {
+      "decision": "D-0008",
+      "forbid": ["#hex", "rgb()", "rgba()", "hsl()", "hsla()", "named colours"],
+      "allowedIn": ["plx-ref tokens"],
+      "allowList": ["transparent", "currentColor", "inherit", "Canvas", "CanvasText", "Highlight", "HighlightText", "ButtonText", "ButtonFace", "GrayText", "LinkText"],
+      "exceptions": ["rich-text engine", "ECharts options built from token values"]
+    },
+    "2-radius": {
+      "decision": "D-0005",
+      "allowedPx": [0, 2, 4, 6],
+      "allowedPercent": [50],
+      "pillPx": 4,
+      "pillSelectors": [".plx-data-pill", ".plx-badge", ".plx-tag", "[class*='pill']"]
+    },
+    "3-type-roles": {
+      "decision": "D-0006",
+      "minPx": 12,
+      "fontSizeFrom": ["plx-sys.text-*-font-size", "plx-sys.table-font-size", "plx-comp.*-font-size resolving to an allowed size"],
+      "forbidNumericFontSize": true,
+      "retiredRefs": ["plx-ref.font-size-09", "plx-ref.font-size-10", "plx-ref.font-size-11"],
+      "monoOnlyIn": ["data cells", "metrics", "counts in data views", "codes and IDs", "code"]
+    },
+    "4-logical-properties": {
+      "forbidProperties": ["left", "right", "margin-left", "margin-right", "padding-left", "padding-right", "border-left", "border-right", "border-left-*", "border-right-*", "border-top-left-radius", "border-top-right-radius", "border-bottom-left-radius", "border-bottom-right-radius", "text-align: left", "text-align: right", "float: left", "float: right"],
+      "utilitiesIncluded": true
+    },
+    "5-motion": {
+      "forbid": ["transition: all", "transition-property: all"],
+      "durationsFrom": "plx-sys.motion-duration-*",
+      "easingFrom": "plx-sys.motion-ease-*",
+      "requireReducedMotionGuard": true
+    },
+    "6-token-tiers": {
+      "order": ["plx-ref", "plx-sys", "plx-comp"],
+      "forbid": ["plx-comp -> plx-ref (colour)", "component CSS -> plx-ref (colour)"]
+    },
+    "7-token-names": {
+      "forbidValueInName": "-[0-9]+(px|rem|ms|s)$",
+      "baseline": "existing names are reported, not blocking (diff-aware)"
+    },
+    "8-contrast-matrix": {
+      "decision": "D-0009",
+      "themes": ["light", "dark"],
+      "text": ["content-strong", "content-default", "content-muted", "content-subtle", "content-link", "selected-content", "feedback-*-content", "feedback-*-solid-label", "feedback-*-on-solid"],
+      "surfaces": ["surface-canvas", "surface-default", "surface-raised", "surface-sunken", "state-hover", "state-selected"],
+      "min": { "text": 4.5, "largeText": 3, "uiBoundary": 3 },
+      "uiBoundaries": ["field-border", "control-border"],
+      "exempt": ["content-disabled", "border-subtle", "border-divider", "border-default"]
+    },
+    "9-state-manifest": {
+      "states": ["default", "hover", "focus", "active", "disabled", "loading", "error", "selected"],
+      "extraCells": ["empty", "long-text"],
+      "cellValue": "token set or n/a(reason)",
+      "matchStories": true
+    },
+    "10-numeric-columns": {
+      "types": ["number", "currency", "percent", "duration"],
+      "require": ["font-variant-numeric: tabular-nums", "text-align: end"],
+      "headerAlign": "start"
+    },
+    "11-pill-height": {
+      "decision": "D-0010",
+      "measure": "Playwright bounding boxes of every pill in one row",
+      "equalHeight": true,
+      "noWrap": true
+    },
+    "12-visual-regression": {
+      "decision": "D-0017",
+      "always": [{ "theme": "light", "density": "standard" }, { "theme": "dark", "density": "standard" }],
+      "whenTouched": { "rtl": "text or direction code", "compact": "density code" },
+      "missingBrowser": "fail"
+    }
+  }
+}
