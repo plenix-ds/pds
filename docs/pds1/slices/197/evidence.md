@@ -33,3 +33,12 @@
 | Diff-aware compare | Ran (local) | empty base → "1 new" exit 1; same base → "0 new, 1 old" exit 0 |
 | CI leg `New problems (opengrep)` | Planned | This PR's run |
 | Banned imports rule | Skipped | No banned-import list exists; it needs the DS Architect's ADR first |
+
+## Traceability (2026-11-05)
+
+| Item | Status | Path / output |
+|---|---|---|
+| Convention found on main | Ran (read) | briefs list `**AC-n**` (265, 87, 195); tests carry the issue in the name (`tests/vote-tally-options-265.test.js`) and name the ACs; evidence under `docs/pds1/slices/<slice>/evidence*` |
+| No slice touched | Ran (local) | `check-trace.mjs origin/main` → TRACE_OK (0 checked; 3 with a brief) |
+| Slices touched (temporary commit on 265 and 195 evidence) | Ran (local) | TRACE_FAIL: 195-dashboard AC-1..6 in no test; 265 AC-1, AC-3, AC-4, AC-5 not in its evidence (the test names all five) |
+| CI job "Traceability" | Planned | This PR's run (no slice touched → OK) |
