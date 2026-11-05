@@ -318,9 +318,9 @@
       "$description": "EntityHeader (header style 2, owner 2026-10-23): the square holding a fact's identifying icon (Presiding)."
     },
     "entity-header-fact-icon-size": {
-      "$value": "{plx-ref.size-5u}",
+      "$value": "{plx-ref.size-10u}",
       "$type": "dimension",
-      "$description": "EntityHeader (header style 2, owner 2026-10-23): the icon in a fact's square."
+      "$description": "EntityHeader (header style 2, owner 2026-10-23): the icon in a fact's square; it fills the square, with no box around it (D-0036, #108)."
     },
     "entity-header-fact-icon-tile-background": {
       "$value": "{plx-sys.surface-default}",
