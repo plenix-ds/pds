@@ -8711,6 +8711,41 @@
       "$value": "{plx-sys.data-color-gray-on-soft}",
       "$type": "color"
     },
+    "entity-header-media-blue-icon": {
+      "$value": "{plx-sys.data-color-blue-on-surface}",
+      "$type": "color",
+      "$description": "EntityHeader: the { icon, hue: 'blue' } media's icon, drawn on the card without a box (D-0024, D-0036; pds#275, docs/adr/0005)."
+    },
+    "entity-header-media-green-icon": {
+      "$value": "{plx-sys.data-color-green-on-surface}",
+      "$type": "color",
+      "$description": "EntityHeader: the { icon, hue: 'green' } media's icon, drawn on the card without a box (D-0024, D-0036; pds#275, docs/adr/0005)."
+    },
+    "entity-header-media-purple-icon": {
+      "$value": "{plx-sys.data-color-slate-on-surface}",
+      "$type": "color",
+      "$description": "EntityHeader: the { icon, hue: 'purple' } media's icon, drawn on the card without a box (D-0024, D-0036; pds#275, docs/adr/0005, the slate role: ADR 0007)."
+    },
+    "entity-header-media-red-icon": {
+      "$value": "{plx-sys.data-color-red-on-surface}",
+      "$type": "color",
+      "$description": "EntityHeader: the { icon, hue: 'red' } media's icon, drawn on the card without a box (D-0024, D-0036; pds#275, docs/adr/0005)."
+    },
+    "entity-header-media-brown-icon": {
+      "$value": "{plx-sys.data-color-brown-on-surface}",
+      "$type": "color",
+      "$description": "EntityHeader: the { icon, hue: 'brown' } media's icon, drawn on the card without a box (D-0024, D-0036; pds#275, docs/adr/0005)."
+    },
+    "entity-header-media-gray-icon": {
+      "$value": "{plx-sys.data-color-gray-on-surface}",
+      "$type": "color",
+      "$description": "EntityHeader: the { icon, hue: 'gray' } media's icon, drawn on the card without a box (D-0024, D-0036; pds#275, docs/adr/0005)."
+    },
+    "entity-header-media-surface-icon": {
+      "$value": "{plx-sys.content-link}",
+      "$type": "color",
+      "$description": "EntityHeader: the { icon, hue: 'surface' } media's icon, drawn on the card without a box: the link blue (D-0036; pds#275, docs/adr/0005)."
+    },
     "entity-header-title-text": {
       "$value": "{plx-sys.content-default}",
       "$type": "color"
