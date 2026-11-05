@@ -16,3 +16,4 @@ Owner: `pds1-ds-architect`. Gate G3 (plan §5) reads these files.
 | [0002](0002-token-tiers-and-naming.md) | Token tiers and naming | accepted |
 | [0003](0003-style-dictionary-token-build.md) | Style Dictionary is the token build | accepted |
 | [0004](0004-state-layers-and-command-confirm.md) | State layer tokens and confirm on destructive commands | accepted |
+| [0005](0005-data-color-on-surface.md) | Data colors on the surface (icons without a tile) | accepted |
