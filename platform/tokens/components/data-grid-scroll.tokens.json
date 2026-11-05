@@ -12,7 +12,7 @@
       "$description": "The thumb: the color of every Plenix scrollbar."
     },
     "data-grid-scroll-thumb-radius": {
-      "$value": "{plx-sys.shape-pill}",
+      "$value": "{plx-sys.shape-mark}",
       "$type": "dimension",
       "$description": "The thumb's ends, fully round as the browsers' thin thumbs."
     },

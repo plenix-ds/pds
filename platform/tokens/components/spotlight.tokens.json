@@ -13,7 +13,7 @@
     "spotlight-beacon-color": { "$value": "{plx-sys.brand-primary}", "$type": "color", "$description": "Beacon: the dot, in the brand blue (as the teaching bubble)." },
     "spotlight-beacon-ring-color": { "$value": "{plx-sys.brand-on-primary}", "$type": "color", "$description": "Beacon: its ring, the color on the brand blue, so it shows on any target." },
     "spotlight-beacon-ring-width": { "$value": "{plx-sys.border-width-medium}", "$type": "dimension", "$description": "Beacon: the ring's width." },
-    "spotlight-beacon-radius": { "$value": "{plx-sys.shape-pill}", "$type": "dimension", "$description": "Beacon: a round dot." },
+    "spotlight-beacon-radius": { "$value": "{plx-sys.shape-mark}", "$type": "dimension", "$description": "Beacon: a round dot." },
     "spotlight-beacon-duration": { "$value": "{plx-sys.motion-duration-loop-slow}", "$type": "duration", "$description": "Beacon: one pulse (the slow loop)." }
   }
 }

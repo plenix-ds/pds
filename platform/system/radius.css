@@ -16,7 +16,7 @@
    - Avatars are rounded squares, never circles. The corner grows with the avatar (24px: 4px, larger: 6px, the owner's 2px-to-6px corner rule), always well under half the width.
    - Pills (status badges, tags, category pills, chips, counters) have 4px corners: --plx-sys-radius-pill-4px (owner, 2026-10-14,
      docs/pills-and-colors.md: "4px on every pill"). Round marks (dots, toggles, slider thumbs, step circles) use
-     --plx-sys-shape-pill (6px since the owner's 2026-10-27 choice: they are no longer round); no pill does. Avatars are the documented exception to "full": Plenix avatars are rounded squares (above).
+     --plx-sys-shape-mark (6px since the owner's 2026-10-27 choice: they are no longer round); no pill does. Avatars are the documented exception to "full": Plenix avatars are rounded squares (above).
    - A tile radius (a calculated 25%) is reserved for a tile component; there is none yet, so there is no token.
    - A surface inset inside another rounded surface (a well, a preview, an inner panel) derives its corner:
      inner = max(0, outer - gap), where gap is the real distance between the two curves (border + padding). Use

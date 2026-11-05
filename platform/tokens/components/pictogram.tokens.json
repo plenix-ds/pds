@@ -2,7 +2,7 @@
   "$description": "Pictogram (platform/components/Pictogram): its component tokens (library wave 3, lane A).",
   "plx-comp": {
     "pictogram-radius": {
-      "$value": "{plx-sys.shape-pill}",
+      "$value": "{plx-sys.shape-mark}",
       "$type": "dimension",
       "$description": "Pictogram: the frame is a circle."
     },
