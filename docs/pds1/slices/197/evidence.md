@@ -69,3 +69,12 @@
 | Check 9 on main | Ran (local) | `node tools/checks/states/states.mjs origin/main`: "0 manifests, 0 findings" |
 | Check 10 on main | Ran (local) | `node tools/checks/numeric/numeric.mjs`: "416 stylesheets, 0 findings" |
 | Vitest unit tests of the checks, Playwright check 11 | Planned (CI) | This PR's "Checks 9-11" job; no test run locally (owner rule) |
+
+## Ownership: the @plenix-ds/react export list (#370, 2026-11-05)
+
+| Item | Status | Path / output |
+|---|---|---|
+| No change | Ran (local) | OWNERSHIP_OK |
+| A path re-pointed (`Count.tsx` → `Count.jsx`), same names | Ran (local, temporary commit) | OWNERSHIP_OK (not an API change) |
+| A name added (`platform/exports/w01A.js`) and one removed (`Metric` from `platform/index.js`), no label | Ran (local, temporary commit) | OWNERSHIP_FAIL: "added Probe370; removed Metric" |
+| Same, with `agent:pds1-ds-architect` | Ran (local) | OWNERSHIP_OK |
