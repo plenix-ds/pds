@@ -1,7 +1,25 @@
 window.PDS_DATA = {
- "generatedAt": "2026-11-05T08:20+00:00",
- "mainSha": "8c24b12",
+ "generatedAt": "2026-11-05T09:23+00:00",
+ "mainSha": "5c2b82a",
  "tasks": [
+  {
+   "number": 220,
+   "title": "Agents go idle after one task: nothing wakes them on new GitHub events (plan §5a pickup)",
+   "url": "https://github.com/plenix-ds/pds/issues/220",
+   "sev": "S1",
+   "type": "bug",
+   "areas": [
+    "release"
+   ],
+   "owners": [
+    "release-architect"
+   ],
+   "decision": false,
+   "next": "",
+   "waiting": "",
+   "updated": "2026-11-05T09:15:27Z",
+   "rank": 1
+  },
   {
    "number": 9,
    "title": "Time: hook called after an early return (crash when the value changes between empty and valid)",
@@ -18,7 +36,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:43:19Z",
-   "rank": 1
+   "rank": 2
   },
   {
    "number": 10,
@@ -36,7 +54,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:43:23Z",
-   "rank": 2
+   "rank": 3
   },
   {
    "number": 72,
@@ -54,7 +72,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:45:36Z",
-   "rank": 3
+   "rank": 4
   },
   {
    "number": 84,
@@ -72,7 +90,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:46:01Z",
-   "rank": 4
+   "rank": 5
   },
   {
    "number": 87,
@@ -90,7 +108,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:46:11Z",
-   "rank": 5
+   "rank": 6
   },
   {
    "number": 88,
@@ -108,7 +126,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:46:15Z",
-   "rank": 6
+   "rank": 7
   },
   {
    "number": 110,
@@ -126,7 +144,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:47:33Z",
-   "rank": 7
+   "rank": 8
   },
   {
    "number": 147,
@@ -144,7 +162,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:49:11Z",
-   "rank": 8
+   "rank": 9
   },
   {
    "number": 148,
@@ -162,7 +180,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:49:15Z",
-   "rank": 9
+   "rank": 10
   },
   {
    "number": 149,
@@ -180,7 +198,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:49:18Z",
-   "rank": 10
+   "rank": 11
   },
   {
    "number": 150,
@@ -198,7 +216,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:49:22Z",
-   "rank": 11
+   "rank": 12
   },
   {
    "number": 151,
@@ -216,7 +234,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:49:25Z",
-   "rank": 12
+   "rank": 13
   },
   {
    "number": 1,
@@ -234,7 +252,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:42:31Z",
-   "rank": 13
+   "rank": 14
   },
   {
    "number": 2,
@@ -252,7 +270,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:42:55Z",
-   "rank": 14
+   "rank": 15
   },
   {
    "number": 3,
@@ -270,7 +288,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:42:59Z",
-   "rank": 15
+   "rank": 16
   },
   {
    "number": 4,
@@ -288,7 +306,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:43:04Z",
-   "rank": 16
+   "rank": 17
   },
   {
    "number": 5,
@@ -306,7 +324,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:43:08Z",
-   "rank": 17
+   "rank": 18
   },
   {
    "number": 6,
@@ -324,7 +342,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:43:11Z",
-   "rank": 18
+   "rank": 19
   },
   {
    "number": 7,
@@ -342,7 +360,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:43:15Z",
-   "rank": 19
+   "rank": 20
   },
   {
    "number": 11,
@@ -360,7 +378,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:43:26Z",
-   "rank": 20
+   "rank": 21
   },
   {
    "number": 13,
@@ -378,7 +396,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:43:31Z",
-   "rank": 21
+   "rank": 22
   },
   {
    "number": 17,
@@ -396,7 +414,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:43:34Z",
-   "rank": 22
+   "rank": 23
   },
   {
    "number": 21,
@@ -414,7 +432,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:43:44Z",
-   "rank": 23
+   "rank": 24
   },
   {
    "number": 23,
@@ -432,7 +450,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:43:48Z",
-   "rank": 24
+   "rank": 25
   },
   {
    "number": 24,
@@ -450,7 +468,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:43:51Z",
-   "rank": 25
+   "rank": 26
   },
   {
    "number": 25,
@@ -468,7 +486,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:43:54Z",
-   "rank": 26
+   "rank": 27
   },
   {
    "number": 26,
@@ -486,7 +504,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:43:57Z",
-   "rank": 27
+   "rank": 28
   },
   {
    "number": 27,
@@ -504,7 +522,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:00Z",
-   "rank": 28
+   "rank": 29
   },
   {
    "number": 28,
@@ -522,7 +540,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:04Z",
-   "rank": 29
+   "rank": 30
   },
   {
    "number": 29,
@@ -540,7 +558,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:07Z",
-   "rank": 30
+   "rank": 31
   },
   {
    "number": 30,
@@ -558,7 +576,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:11Z",
-   "rank": 31
+   "rank": 32
   },
   {
    "number": 31,
@@ -576,7 +594,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:14Z",
-   "rank": 32
+   "rank": 33
   },
   {
    "number": 32,
@@ -594,7 +612,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:17Z",
-   "rank": 33
+   "rank": 34
   },
   {
    "number": 33,
@@ -612,7 +630,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:21Z",
-   "rank": 34
+   "rank": 35
   },
   {
    "number": 34,
@@ -630,7 +648,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:24Z",
-   "rank": 35
+   "rank": 36
   },
   {
    "number": 36,
@@ -648,7 +666,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:28Z",
-   "rank": 36
+   "rank": 37
   },
   {
    "number": 37,
@@ -666,7 +684,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:31Z",
-   "rank": 37
+   "rank": 38
   },
   {
    "number": 42,
@@ -684,7 +702,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:38Z",
-   "rank": 38
+   "rank": 39
   },
   {
    "number": 46,
@@ -702,7 +720,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:41Z",
-   "rank": 39
+   "rank": 40
   },
   {
    "number": 47,
@@ -720,7 +738,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:45Z",
-   "rank": 40
+   "rank": 41
   },
   {
    "number": 52,
@@ -738,7 +756,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:54Z",
-   "rank": 41
+   "rank": 42
   },
   {
    "number": 57,
@@ -756,7 +774,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:44:58Z",
-   "rank": 42
+   "rank": 43
   },
   {
    "number": 60,
@@ -774,7 +792,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:45:05Z",
-   "rank": 43
+   "rank": 44
   },
   {
    "number": 61,
@@ -792,7 +810,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:45:08Z",
-   "rank": 44
+   "rank": 45
   },
   {
    "number": 63,
@@ -810,7 +828,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:45:12Z",
-   "rank": 45
+   "rank": 46
   },
   {
    "number": 64,
@@ -828,7 +846,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:45:15Z",
-   "rank": 46
+   "rank": 47
   },
   {
    "number": 65,
@@ -846,7 +864,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:45:18Z",
-   "rank": 47
+   "rank": 48
   },
   {
    "number": 70,
@@ -864,7 +882,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T07:07:23Z",
-   "rank": 48
+   "rank": 49
   },
   {
    "number": 71,
@@ -882,7 +900,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:45:32Z",
-   "rank": 49
+   "rank": 50
   },
   {
    "number": 73,
@@ -900,7 +918,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:45:39Z",
-   "rank": 50
+   "rank": 51
   },
   {
    "number": 76,
@@ -918,7 +936,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:45:46Z",
-   "rank": 51
+   "rank": 52
   },
   {
    "number": 79,
@@ -936,7 +954,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:45:50Z",
-   "rank": 52
+   "rank": 53
   },
   {
    "number": 81,
@@ -954,7 +972,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:45:54Z",
-   "rank": 53
+   "rank": 54
   },
   {
    "number": 86,
@@ -972,7 +990,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:46:08Z",
-   "rank": 54
+   "rank": 55
   },
   {
    "number": 100,
@@ -990,7 +1008,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:46:58Z",
-   "rank": 55
+   "rank": 56
   },
   {
    "number": 107,
@@ -1008,7 +1026,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:47:21Z",
-   "rank": 56
+   "rank": 57
   },
   {
    "number": 111,
@@ -1026,7 +1044,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:47:37Z",
-   "rank": 57
+   "rank": 58
   },
   {
    "number": 112,
@@ -1044,7 +1062,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:47:40Z",
-   "rank": 58
+   "rank": 59
   },
   {
    "number": 113,
@@ -1062,7 +1080,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:47:44Z",
-   "rank": 59
+   "rank": 60
   },
   {
    "number": 114,
@@ -1080,7 +1098,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:47:47Z",
-   "rank": 60
+   "rank": 61
   },
   {
    "number": 121,
@@ -1098,7 +1116,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:48:09Z",
-   "rank": 61
+   "rank": 62
   },
   {
    "number": 122,
@@ -1116,7 +1134,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:48:13Z",
-   "rank": 62
+   "rank": 63
   },
   {
    "number": 125,
@@ -1134,7 +1152,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:48:21Z",
-   "rank": 63
+   "rank": 64
   },
   {
    "number": 126,
@@ -1152,7 +1170,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:48:25Z",
-   "rank": 64
+   "rank": 65
   },
   {
    "number": 138,
@@ -1170,7 +1188,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:48:42Z",
-   "rank": 65
+   "rank": 66
   },
   {
    "number": 140,
@@ -1188,7 +1206,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:48:45Z",
-   "rank": 66
+   "rank": 67
   },
   {
    "number": 141,
@@ -1206,7 +1224,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:48:49Z",
-   "rank": 67
+   "rank": 68
   },
   {
    "number": 142,
@@ -1224,7 +1242,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:48:52Z",
-   "rank": 68
+   "rank": 69
   },
   {
    "number": 143,
@@ -1242,7 +1260,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:48:57Z",
-   "rank": 69
+   "rank": 70
   },
   {
    "number": 144,
@@ -1260,7 +1278,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:49:01Z",
-   "rank": 70
+   "rank": 71
   },
   {
    "number": 145,
@@ -1278,7 +1296,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:49:04Z",
-   "rank": 71
+   "rank": 72
   },
   {
    "number": 146,
@@ -1296,7 +1314,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:49:07Z",
-   "rank": 72
+   "rank": 73
   },
   {
    "number": 161,
@@ -1314,7 +1332,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:49:56Z",
-   "rank": 73
+   "rank": 74
   },
   {
    "number": 180,
@@ -1332,7 +1350,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:53:09Z",
-   "rank": 74
+   "rank": 75
   },
   {
    "number": 181,
@@ -1350,7 +1368,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:53:12Z",
-   "rank": 75
+   "rank": 76
   },
   {
    "number": 209,
@@ -1368,7 +1386,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:53:05Z",
-   "rank": 76
+   "rank": 77
   },
   {
    "number": 217,
@@ -1386,7 +1404,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T07:53:14Z",
-   "rank": 77
+   "rank": 78
   },
   {
    "number": 18,
@@ -1404,7 +1422,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:43:37Z",
-   "rank": 78
+   "rank": 79
   },
   {
    "number": 59,
@@ -1422,7 +1440,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:45:01Z",
-   "rank": 79
+   "rank": 80
   },
   {
    "number": 75,
@@ -1440,7 +1458,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:45:42Z",
-   "rank": 80
+   "rank": 81
   },
   {
    "number": 115,
@@ -1458,7 +1476,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:47:50Z",
-   "rank": 81
+   "rank": 82
   },
   {
    "number": 116,
@@ -1476,7 +1494,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:47:54Z",
-   "rank": 82
+   "rank": 83
   },
   {
    "number": 117,
@@ -1494,7 +1512,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:47:58Z",
-   "rank": 83
+   "rank": 84
   },
   {
    "number": 120,
@@ -1512,7 +1530,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:48:06Z",
-   "rank": 84
+   "rank": 85
   },
   {
    "number": 129,
@@ -1530,7 +1548,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:48:35Z",
-   "rank": 85
+   "rank": 86
   },
   {
    "number": 166,
@@ -1548,7 +1566,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:50:10Z",
-   "rank": 86
+   "rank": 87
   },
   {
    "number": 178,
@@ -1563,8 +1581,8 @@ window.PDS_DATA = {
    "decision": false,
    "next": "",
    "waiting": "",
-   "updated": "2026-11-05T07:22:31Z",
-   "rank": 87
+   "updated": "2026-11-05T09:15:29Z",
+   "rank": 88
   },
   {
    "number": 183,
@@ -1579,8 +1597,8 @@ window.PDS_DATA = {
    "decision": false,
    "next": "",
    "waiting": "",
-   "updated": "2026-11-05T06:38:09Z",
-   "rank": 88
+   "updated": "2026-11-05T09:16:30Z",
+   "rank": 89
   },
   {
    "number": 184,
@@ -1596,22 +1614,6 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T06:38:10Z",
-   "rank": 89
-  },
-  {
-   "number": 185,
-   "title": "Phase 0 P0-3: DESIGN.md v0",
-   "url": "https://github.com/plenix-ds/pds/issues/185",
-   "sev": "S4",
-   "type": "",
-   "areas": [],
-   "owners": [
-    "design-director"
-   ],
-   "decision": false,
-   "next": "",
-   "waiting": "",
-   "updated": "2026-11-05T06:38:12Z",
    "rank": 90
   },
   {
@@ -1675,7 +1677,7 @@ window.PDS_DATA = {
    "decision": false,
    "next": "",
    "waiting": "",
-   "updated": "2026-11-05T06:38:17Z",
+   "updated": "2026-11-05T09:16:06Z",
    "rank": 94
   },
   {
@@ -1759,22 +1761,6 @@ window.PDS_DATA = {
    "rank": 99
   },
   {
-   "number": 196,
-   "title": "Phase 0 P0-14: daily summary and triage of 177 issues",
-   "url": "https://github.com/plenix-ds/pds/issues/196",
-   "sev": "S4",
-   "type": "",
-   "areas": [],
-   "owners": [
-    "product-lead"
-   ],
-   "decision": false,
-   "next": "",
-   "waiting": "",
-   "updated": "2026-11-05T07:07:41Z",
-   "rank": 100
-  },
-  {
    "number": 197,
    "title": "Phase 0: new diff-aware CI, Actions back on",
    "url": "https://github.com/plenix-ds/pds/issues/197",
@@ -1788,55 +1774,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T07:15:27Z",
-   "rank": 101
-  },
-  {
-   "number": 200,
-   "title": "Phase 0: monorepo scaffold (npm workspaces, packages/*, fold in plenix-design-system)",
-   "url": "https://github.com/plenix-ds/pds/issues/200",
-   "sev": "S4",
-   "type": "",
-   "areas": [],
-   "owners": [
-    "ds-architect"
-   ],
-   "decision": false,
-   "next": "",
-   "waiting": "",
-   "updated": "2026-11-05T06:40:10Z",
-   "rank": 102
-  },
-  {
-   "number": 201,
-   "title": "Phase 0: lint checks 6 (token tiers) and 7 (token names), diff-aware",
-   "url": "https://github.com/plenix-ds/pds/issues/201",
-   "sev": "S4",
-   "type": "",
-   "areas": [],
-   "owners": [
-    "ds-architect"
-   ],
-   "decision": false,
-   "next": "",
-   "waiting": "",
-   "updated": "2026-11-05T06:40:11Z",
-   "rank": 103
-  },
-  {
-   "number": 202,
-   "title": "Phase 0: finish Style Dictionary (#372 steps 9-10, reuse plenix-platform#928) with the token rename",
-   "url": "https://github.com/plenix-ds/pds/issues/202",
-   "sev": "S4",
-   "type": "",
-   "areas": [],
-   "owners": [
-    "ds-architect"
-   ],
-   "decision": false,
-   "next": "",
-   "waiting": "",
-   "updated": "2026-11-05T06:40:12Z",
-   "rank": 104
+   "rank": 100
   },
   {
    "number": 206,
@@ -1852,7 +1790,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T07:29:55Z",
-   "rank": 105
+   "rank": 101
   },
   {
    "number": 207,
@@ -1868,7 +1806,7 @@ window.PDS_DATA = {
    "next": "",
    "waiting": "",
    "updated": "2026-11-05T07:29:56Z",
-   "rank": 106
+   "rank": 102
   }
  ],
  "ownerDecisions": [
@@ -1908,47 +1846,49 @@ window.PDS_DATA = {
  ],
  "openPrs": [
   {
-   "headRefName": "dashboard/pds1-pages",
-   "isDraft": false,
-   "number": 218,
-   "title": "dashboard: PDS 1.0 dashboard page like CTM 3.0 (D-0034); D-0035 owner answers are final",
-   "url": "https://github.com/plenix-ds/pds/pull/218"
-  },
-  {
-   "headRefName": "design/199-design-md-fixes",
-   "isDraft": false,
-   "number": 215,
-   "title": "DESIGN.md §8/§12 corrections after #214 (#199)",
-   "url": "https://github.com/plenix-ds/pds/pull/215"
-  },
-  {
    "headRefName": "fix/206-207-type-floor-pills",
    "isDraft": false,
    "number": 214,
    "title": "12px type floor, retired density file, tabular number cells (#206, #207)",
    "url": "https://github.com/plenix-ds/pds/pull/214"
-  },
-  {
-   "headRefName": "check/201-token-tiers-names",
-   "isDraft": false,
-   "number": 213,
-   "title": "check-system: token tiers (check 6) and token names (check 7) (#201)",
-   "url": "https://github.com/plenix-ds/pds/pull/213"
-  },
-  {
-   "headRefName": "adr/0001-0003-foundation",
-   "isDraft": false,
-   "number": 198,
-   "title": "ADR 0001-0003: packages, token tiers and naming, Style Dictionary (#178)",
-   "url": "https://github.com/plenix-ds/pds/pull/198"
   }
  ],
  "mergedPrs": [
+  {
+   "mergedAt": "2026-11-05T09:22:48Z",
+   "number": 222,
+   "title": "Wake idle sessions every 10 minutes: team.sh nudge + timer (#220)",
+   "url": "https://github.com/plenix-ds/pds/pull/222"
+  },
+  {
+   "mergedAt": "2026-11-05T09:21:34Z",
+   "number": 221,
+   "title": "CI fixes: diff paths for system/style checks; decision ids in any order (#197)",
+   "url": "https://github.com/plenix-ds/pds/pull/221"
+  },
+  {
+   "mergedAt": "2026-11-05T08:26:58Z",
+   "number": 218,
+   "title": "dashboard: PDS 1.0 dashboard page like CTM 3.0 (D-0034); D-0035 owner answers are final",
+   "url": "https://github.com/plenix-ds/pds/pull/218"
+  },
   {
    "mergedAt": "2026-11-05T07:38:53Z",
    "number": 216,
    "title": "spec: PDS dashboard built like the CTM 3.0 dashboard (#195), D-0034",
    "url": "https://github.com/plenix-ds/pds/pull/216"
+  },
+  {
+   "mergedAt": "2026-11-05T09:13:13Z",
+   "number": 215,
+   "title": "DESIGN.md §8/§12 corrections after #214 (#199)",
+   "url": "https://github.com/plenix-ds/pds/pull/215"
+  },
+  {
+   "mergedAt": "2026-11-05T09:10:59Z",
+   "number": 213,
+   "title": "check-system: token tiers (check 6) and token names (check 7) (#201)",
+   "url": "https://github.com/plenix-ds/pds/pull/213"
   },
   {
    "mergedAt": "2026-11-05T07:15:14Z",
@@ -1981,6 +1921,12 @@ window.PDS_DATA = {
    "url": "https://github.com/plenix-ds/pds/pull/203"
   },
   {
+   "mergedAt": "2026-11-05T09:22:48Z",
+   "number": 198,
+   "title": "ADR 0001-0003: packages, token tiers and naming, Style Dictionary (#178)",
+   "url": "https://github.com/plenix-ds/pds/pull/198"
+  },
+  {
    "mergedAt": "2026-11-05T07:09:41Z",
    "number": 182,
    "title": "Phase 0 slice plan (G4)",
@@ -1995,10 +1941,40 @@ window.PDS_DATA = {
    "url": "https://github.com/plenix-ds/pds/issues/208"
   },
   {
+   "closedAt": "2026-11-05T09:16:04Z",
+   "number": 202,
+   "title": "Phase 0: finish Style Dictionary (#372 steps 9-10, reuse plenix-platform#928) with the token rename",
+   "url": "https://github.com/plenix-ds/pds/issues/202"
+  },
+  {
+   "closedAt": "2026-11-05T09:11:01Z",
+   "number": 201,
+   "title": "Phase 0: lint checks 6 (token tiers) and 7 (token names), diff-aware",
+   "url": "https://github.com/plenix-ds/pds/issues/201"
+  },
+  {
+   "closedAt": "2026-11-05T09:16:02Z",
+   "number": 200,
+   "title": "Phase 0: monorepo scaffold (npm workspaces, packages/*, fold in plenix-design-system)",
+   "url": "https://github.com/plenix-ds/pds/issues/200"
+  },
+  {
    "closedAt": "2026-11-05T07:28:16Z",
    "number": 199,
    "title": "Phase 0: DESIGN.md v0 and design.rules.json (as-is, D-0004 to D-0011)",
    "url": "https://github.com/plenix-ds/pds/issues/199"
+  },
+  {
+   "closedAt": "2026-11-05T09:23:41Z",
+   "number": 196,
+   "title": "Phase 0 P0-14: daily summary and triage of 177 issues",
+   "url": "https://github.com/plenix-ds/pds/issues/196"
+  },
+  {
+   "closedAt": "2026-11-05T09:16:02Z",
+   "number": 185,
+   "title": "Phase 0 P0-3: DESIGN.md v0",
+   "url": "https://github.com/plenix-ds/pds/issues/185"
   },
   {
    "closedAt": "2026-11-05T06:50:12Z",
@@ -2714,6 +2690,45 @@ window.PDS_DATA = {
    "check": "planned:lint-radius",
    "kind": "planned",
    "state": "planned",
+   "url": null
+  },
+  {
+   "id": "D-0031",
+   "date": "2026-11-05",
+   "area": "architecture",
+   "decision": "The monorepo uses npm workspaces with Changesets (not pnpm, Nx or Turborepo); packages react -> styles -> tokens, icons and locales stand alone; one version for npm, CDN and API (docs/adr/0001).",
+   "by": "agent (pds1-ds-architect), owner may switch",
+   "status": "active",
+   "superseded_by": "",
+   "check": "planned:package-boundaries",
+   "kind": "planned",
+   "state": "planned",
+   "url": null
+  },
+  {
+   "id": "D-0032",
+   "date": "2026-11-05",
+   "area": "architecture",
+   "decision": "Token tiers are ref -> sys -> comp with no skipping, and names never contain values; tokens are renamed in 1.0.0 and every old name stays as a deprecated alias until 2.0.0 so CTM keeps working (docs/adr/0002).",
+   "by": "agent (pds1-ds-architect), owner may switch",
+   "status": "active",
+   "superseded_by": "",
+   "check": "planned:token-tiers (check 6), planned:token-names (check 7)",
+   "kind": "planned",
+   "state": "planned",
+   "url": null
+  },
+  {
+   "id": "D-0033",
+   "date": "2026-11-05",
+   "area": "architecture",
+   "decision": "Style Dictionary 5 is the only token build; finish plenix-platform#372 reusing",
+   "by": "agent (pds1-ds-architect), carries forward owner decision plenix-platform#872",
+   "status": "active",
+   "superseded_by": "",
+   "check": "check-system style-dictionary + planned:no-build-tokens",
+   "kind": "ci-job",
+   "state": null,
    "url": null
   },
   {
