@@ -1123,6 +1123,11 @@
       "$extensions": { "com.plenix": { "webOnly": true } },
       "$description": "A color-mix amount step: the state layer while pressed or focused (docs/adr/0004)."
     },
+    "icon-optical-scale": {
+      "$value": 1.2,
+      "$type": "number",
+      "$description": "The icon set draws its shapes inside 800 of its 960 units; at this scale (960 / 800) the drawn shape reaches the edges of the icon's area (#418, D-0059)."
+    },
     "motion-duration-quick": {
       "$value": { "value": 0.12, "unit": "s" },
       "$type": "duration"
