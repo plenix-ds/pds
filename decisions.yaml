@@ -460,3 +460,13 @@
   decision: The owner's "publish now" (#312) ships main as 0.87.0, not 0.86.1. Main holds the three CTM fixes (#272, #273, #274) plus 20 other merged changes, among them new tokens, utilities and AppShell minSize (the #274 fix itself), which VERSIONING.md makes a minor release. A true 0.86.1 would need a branch cut from v0.86.0 with cherry-picks and none of the new release checks. Reply to switch - B) cut 0.86.1 from v0.86.0 with only the fixes.
   status: active
   check: tools/publish/preflight.mjs (one version) + release.yml publish job (tag = package.json version)
+
+- id: D-0050
+  date: 2026-11-05
+  area: architecture
+  decided_by: agent (pds1-ds-architect), owner may switch
+  decision: Each of the spec's 1,186 variations becomes its own record by derivation at build time (stable id item--group-name, checked), not by moving the entries; new per-variation data (styling, Figma, platforms, mappings) goes in side tables keyed by the id; the API gains variants.json and components[].variants (docs/adr/0013).
+  why: 'The owner asked for a record per variation (#117); moving 1,186 entries across about 200 files adds churn and no reader value, while ids and side tables give linking, mapping and per-variation styling (#116).'
+  options: [derived records + side tables (chosen), move every entry into separate variant files]
+  status: active
+  check: build-spec-parts.js duplicate-id and side-table key checks (check-system generated)

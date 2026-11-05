@@ -24,5 +24,6 @@ Owner: `pds1-ds-architect`. Gate G3 (plan §5) reads these files.
 | [0010](0010-app-shell-min-size.md) | AppShell minimum screen size notice (`minSize`) | accepted |
 | [0011](0011-typescript-source.md) | Plenix's source is TypeScript; declarations come from `tsc` | accepted |
 | [0012](0012-token-rename-mechanics.md) | Token rename mechanics and the names of the palette scales | accepted |
+| [0013](0013-variant-records.md) | Every variation as its own record (derived ids, side tables, API) | accepted |
 | [0014](0014-print-document-parts.md) | Print parts: PrintDocument, AnswerLines, PageBreak | accepted |
 | [0015](0015-variant-styles.md) | Each variation documents the styling properties it sets | accepted |
