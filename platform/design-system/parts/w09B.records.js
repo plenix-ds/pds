@@ -34,7 +34,7 @@ DSParts.records.push(function (H) {
     avoid: ['A value axis that does not start at zero', 'More than about five stacked segments: group the rest as Other', 'Grouped bars with more than three series: use small charts or a table',
       'Continuous time with many points: the line chart', 'Parts of one whole with few parts and one message: the pie chart'],
     related: ['chart-foundations', 'chart-legend', 'chart-tooltip', 'chart-data-label', 'combo-chart', 'box-plot', 'pie-chart'],
-    map: [[CAR, 'Bar (simple, grouped, stacked), Histogram', 'Direct'], [FLU, 'Horizontal and vertical bar charts', 'Direct'], [SPE, 'Bar chart', 'Direct'], [POL, 'Bar chart', 'Direct'], [ATL, 'Data visualization', 'Partial'], [HIG, 'Charts (BarMark)', 'Direct']],
+    map: [[CAR, 'Bar (simple, grouped, stacked), Histogram', 'Direct'], [FLU, 'Horizontal and vertical bar charts', 'Direct'], [SPE, 'Bar chart', 'Direct'], [POL, 'Bar chart', 'Direct'], [ATL, 'Data visualization', 'Partial'], [HIG, 'Charts (BarMark)', 'Direct'], ['Frappe', 'Frappe Charts bar chart', 'Direct']],
     variantPages: [
       vp('Horizontal bar chart', 'Orientation', 'Bar (horizontal)', { size: 'horizontal' }, 'Bars from the start side, category names before them, the value axis along the bottom.', 'Long category names and rankings', 'Periods: columns read left to right in time'),
       vp('Column chart', 'Orientation', 'Column (vertical)', { size: 'vertical' }, 'Columns up from the baseline, the categories or periods along the bottom, the value axis on the start side.', 'Periods such as months, and short names', 'Long names: horizontal bars'),
@@ -66,7 +66,7 @@ DSParts.records.push(function (H) {
     use: ['An amount and a rate that move together: uploads and approval rate, sales and margin', 'Actual columns against a target line on one axis', 'axis="dual" only when the units differ, with both axes titled with their unit'],
     avoid: ['More than two chart types', 'Dual axes when one would do: two charts read more safely', 'Two lines on two axes: readers compare the crossing, which means nothing'],
     related: ['bar-chart', 'chart-foundations', 'chart-legend', 'chart-tooltip', 'chart-axis'],
-    map: [[CAR, 'Combo', 'Direct'], [POL, 'Combo chart', 'Direct'], [FLU, 'Charts', 'Partial'], [HIG, 'Charts (BarMark with LineMark)', 'Partial']],
+    map: [[CAR, 'Combo', 'Direct'], [POL, 'Combo chart', 'Direct'], [FLU, 'Charts', 'Partial'], [HIG, 'Charts (BarMark with LineMark)', 'Partial'], ['Frappe', 'Frappe Charts axis-mixed chart', 'Direct']],
     variantPages: [
       vp('Bar and line combo chart', 'Variant', 'Bar + line', { variant: 'shared' }, 'Columns and a line on one value axis: the same unit, such as actuals against a target.', 'Actuals and targets of one measure', 'Measures in different units: two axes'),
       vp('Dual-axis combo chart', 'Variant', 'Two axes', { variant: 'dual' }, 'The line on its own axis at the end side, fitted to its values, each axis titled with its unit.', 'An amount and a rate', 'When one axis would do')
@@ -90,7 +90,7 @@ DSParts.records.push(function (H) {
     use: ['Two to five parts of one whole that add up to 100%', 'One clearly dominant part or a simple message', 'The donut when a total or a key value in the center helps; the half ring for one value against its whole in a small card'],
     avoid: ['Parts of similar size or many parts: the bar chart', 'Comparing wholes over time or side by side: the stacked bar chart', 'Several donuts side by side to compare: a percent stacked bar chart'],
     related: ['bar-chart', 'chart-legend', 'chart-tooltip', 'dataviz-colors', 'progress-circle'],
-    map: [[CAR, 'Pie, Donut', 'Direct'], [FLU, 'Pie chart, Donut chart', 'Direct'], [SPE, 'Donut chart', 'Direct'], [POL, 'Donut chart', 'Direct'], [HIG, 'Charts (SectorMark)', 'Direct']],
+    map: [[CAR, 'Pie, Donut', 'Direct'], [FLU, 'Pie chart, Donut chart', 'Direct'], [SPE, 'Donut chart', 'Direct'], [POL, 'Donut chart', 'Direct'], [HIG, 'Charts (SectorMark)', 'Direct'], ['Frappe', 'Frappe Charts pie and donut chart', 'Direct']],
     variantPages: [
       vp('Pie (full circle)', 'Variant', 'Pie', { variant: 'pie' }, 'Slices from 12 o’clock, largest first, clockwise; the legend gives each share.', 'Two to five parts with one message', 'Parts of similar size'),
       vp('Donut chart', 'Variant', 'Donut', { variant: 'donut' }, 'A ring with the total and its label in the hollow center.', 'A total that matters with its make-up', 'Many thin slices'),
@@ -244,7 +244,7 @@ DSParts.records.push(function (H) {
     use: ['Reviewing versions of an asset, a document or a setting before approving or restoring one', 'Choosing between a few options across the same attributes', 'The slider for pictures: retouching, crops, color changes', 'Naming each pane by its version and date'],
     avoid: ['Many items compared on attributes: the comparison table', 'One item and a list of changes when that reads clearer: the version history', 'Marking differences with color alone: the badge says Changed', 'More than four panes: let people choose which to compare'],
     related: ['comparison-table', 'compare', 'badge', 'segmented-control', 'slider', 'table'],
-    map: [[ATL, 'Compare (patterns)', 'Partial'], [CAR, 'Data table (comparison)', 'Partial'], [SPE, 'Compare', 'Partial'], [MAT, 'Supporting pane layouts', 'Partial']],
+    map: [[ATL, 'Compare (patterns)', 'Partial'], [CAR, 'Data table (comparison)', 'Partial'], [SPE, 'Compare', 'Partial'], [MAT, 'Supporting pane layouts', 'Partial'], ['Frappe', 'Version diff', 'Partial']],
     variantPages: [
       vp('Side-by-side comparison', 'Variant', 'Side by side columns', { variant: 'columns' }, 'A pane per item with its preview and its attributes in aligned rows.', 'Versions with previews', 'More than four items'),
       vp('Feature matrix comparison', 'Variant', 'Feature matrix', { variant: 'matrix' }, 'A Table with a row per attribute and a column per item; differing values carry a badge.', 'Many attributes, few items', 'Pictures that need to be seen'),
@@ -267,7 +267,7 @@ DSParts.records.push(function (H) {
     text: 'Comparing is the comparison view (ComparisonView): two to four items or versions side by side, their attributes aligned. Differences are marked with a Changed badge and counted. It offers Show only differences for long lists, a table form, and a before-and-after slider for pictures.',
     use: ['Before approving or restoring a version: the versions side by side', 'Choosing between options on the same attributes'], avoid: ['More items than fit side by side: let people pick which to compare'],
     related: ['comparison-view', 'comparison-table'],
-    map: [[ATL, 'Compare (patterns)', 'Partial'], [SPE, 'Compare', 'Partial']],
+    map: [[ATL, 'Compare (patterns)', 'Partial'], [SPE, 'Compare', 'Partial'], ['Frappe', 'Version diff', 'Partial']],
     examples: [['Compare two versions before approving (ComparisonView)', function () { return box(720, compare({ modes: ['columns', 'matrix', 'slider'] })); }]] };
 
   return [barChart, comboChart, pieChart, bulletChart, boxPlotRec, radarChart, sankeyDiagram, timelineChart, comparisonView, comparePattern];

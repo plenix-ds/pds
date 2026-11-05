@@ -115,7 +115,7 @@ DSParts.records.push(function (H) {
     use: ['Settings and events where a time belongs to a place: a person’s time zone, a meeting’s, a schedule’s', 'Grouped by region (default) when people know the city; sorted by offset when they know the offset', 'A Field with a label; the browser’s own zone as the default value'],
     avoid: ['Asking for an offset alone (UTC+1): offsets change with daylight saving time, zones do not', 'Every zone where only a few apply: pass zones', 'Showing abbreviations (PST) as the choice: they are ambiguous'],
     related: ['combobox', 'numbers-and-units'],
-    map: [[ATL, 'Timezone select (community)', 'Partial'], [ANT, 'Select (time zones)', 'Partial'], [CAR, 'Combo box', 'Partial'], [MAT, 'Exposed dropdown menu', 'Partial']],
+    map: [[ATL, 'Timezone select (community)', 'Partial'], [ANT, 'Select (time zones)', 'Partial'], [CAR, 'Combo box', 'Partial'], [MAT, 'Exposed dropdown menu', 'Partial'], ['Frappe', 'Autocomplete control (Time Zone)', 'Partial']],
     variantPages: [
       vp('Time zones grouped by region', 'List', 'Grouped by region (default)', { variant: 'grouped' }, 'Each region a heading (Africa, Americas, Asia…), its cities in alphabetical order, the offset at the end of each.', 'People who look for their city', 'People who think in offsets: sort by offset'),
       vp('Time zones by offset', 'List', 'Sorted by offset', { variant: 'offset' }, 'One list from west to east, the zones of each offset together.', 'Scheduling across offsets, comparing zones', 'People who only know their city'),
@@ -184,7 +184,7 @@ DSParts.records.push(function (H) {
     use: ['Choosing a subset from about fifteen items or more where both what is chosen and what is not matter: columns to show, members of a group, fields to export', 'ordered when the order of the chosen items matters (columns, a sequence)', 'search on both sides from about thirty items; virtualized from a few hundred'],
     avoid: ['A handful of items: use a checkbox group', 'One value: use a select or Combobox', 'Reordering alone: use a sortable list', 'A transfer list on a phone for long lists: a multi-select with search fits better'],
     related: ['checkbox', 'combobox', 'interactive-list', 'patterns-dual-listbox'],
-    map: [[ANT, 'Transfer', 'Direct'], [CAR, 'Add/select (IBM Products)', 'Partial'], [ATL, 'Dual list box (community)', 'Partial'], ['Salesforce Lightning', 'Dueling picklist', 'Direct']],
+    map: [[ANT, 'Transfer', 'Direct'], [CAR, 'Add/select (IBM Products)', 'Partial'], [ATL, 'Dual list box (community)', 'Partial'], ['Salesforce Lightning', 'Dueling picklist', 'Direct'], ['Django', 'filter_horizontal (admin)', 'Direct']],
     states: [['Enabled', 'Both lists framed, the buttons that can act enabled', 'The default'], ['Hover', 'The row under the pointer tinted', ':hover'],
       ['Focused', 'The list’s frame in the focus color (no ring); the active row tinted', ':focus-visible on the listbox'], ['Checked', 'The row’s checkbox checked and the selected fill', 'aria-selected'],
       ['Mixed', 'The header’s checkbox mixed while some rows are checked', 'indeterminate'], ['Disabled', 'Rows in the disabled text color, every button disabled', 'disabled']],
@@ -207,7 +207,7 @@ DSParts.records.push(function (H) {
     aliases: ['Dual list box', 'Two listboxes'], related: ['transfer-list'],
     text: 'A dual listbox is the transfer list: two listboxes, the items not chosen and the chosen ones, with buttons that move the checked items between them (TransferList).',
     use: ['The same as the transfer list: a subset of many items, both sides visible'], avoid: ['A single listbox with checkboxes when the chosen items need not be seen together'],
-    map: [['Salesforce Lightning', 'Dueling picklist', 'Direct'], [ANT, 'Transfer', 'Direct']],
+    map: [['Salesforce Lightning', 'Dueling picklist', 'Direct'], [ANT, 'Transfer', 'Direct'], ['Django', 'filter_horizontal (admin)', 'Direct']],
     examples: [['Two listboxes', function () { return h(Transfer, { list: { search: true } }); }]] };
 
   /* ── 06 Navigation › Mobile navigation › Bottom-sheet navigation: BottomSheetNav ── */

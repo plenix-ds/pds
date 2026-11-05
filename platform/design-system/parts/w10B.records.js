@@ -55,7 +55,7 @@ DSParts.records.push(function (H) {
     use: ['Confirm for what cannot come back: a category, a member, a published page', 'Type to confirm for a project, a library or an account: deletes that take much with them', 'Undo or Move to trash whenever the items can come back: one press, no question', 'The count and the names in the question; the consequence in one sentence'],
     avoid: ['A question before every small, reversible delete: offer Undo', 'Delete for taking an item out of a list or a collection: that is Remove, not destructive', '“Are you sure?” or “these items”: name the action and the count', 'Disabling Delete until the name is typed: it is checked when Delete is pressed'],
     related: ['delete-action', 'confirmation-dialog', 'undo-pattern', 'popconfirm'],
-    map: [[CAR, 'Danger modal', 'Partial'], [ATL, 'Modal dialog (danger)', 'Partial'], [POL, 'Modal (destructive)', 'Partial'], [SPE, 'Alert dialog (destructive)', 'Partial'], [MAT, 'Dialogs; snackbar with undo', 'Partial']],
+    map: [[CAR, 'Danger modal', 'Partial'], [ATL, 'Modal dialog (danger)', 'Partial'], [POL, 'Modal (destructive)', 'Partial'], [SPE, 'Alert dialog (destructive)', 'Partial'], [MAT, 'Dialogs; snackbar with undo', 'Partial'], ['Django', 'Admin delete confirmation page', 'Direct'], ['Frappe', 'frappe.confirm', 'Direct']],
     variantPages: [
       vp('Delete with confirmation', 'Form', 'Confirm (default)', { variant: 'confirm' }, 'An alert dialog in the destructive look: the question with the count, the names, the consequence and “This cannot be undone.”; Cancel takes focus.', 'Deletes that cannot come back', 'Items that go to a trash: use Move to trash'),
       vp('Type-to-confirm delete', 'Form', 'Type to confirm', { variant: 'type' }, 'The confirmation with a field that asks for the item’s name, shown in the data font; a mismatch is said under the field when Delete is pressed.', 'A project, a library or an account: a delete with a wide reach', 'Everyday deletes: one more step for no reason'),
@@ -200,7 +200,7 @@ DSParts.records.push(function (H) {
     use: ['Work that needs sign-off before it takes effect: assets for print, pages, policies', 'The status everywhere the item appears, as the same badge', 'A reason with every Reject and Request changes, kept in the history'],
     avoid: ['Review steps for low-risk changes: edit with history instead', 'Hiding the status from the person who submitted it', 'Approve and Reject side by side in the same style'],
     related: ['review-approve', 'review-reject', 'data-review-workflow', 'human-review', 'publish', 'badge'],
-    map: [[ATL, 'Lozenge and approval actions (Jira workflow)', 'Partial'], [CAR, 'Tag status with actions', 'Partial'], [FLU, 'Approvals (Teams)', 'Partial']],
+    map: [[ATL, 'Lozenge and approval actions (Jira workflow)', 'Partial'], [CAR, 'Tag status with actions', 'Partial'], [FLU, 'Approvals (Teams)', 'Partial'], ['Frappe', 'Workflow', 'Direct']],
     variantPages: [
       vp('Review panel', 'Form', 'Review panel (default)', { variant: 'panel' }, 'The title, the In review badge, the reviewers and their decisions, the comment, the three decisions and the history.', 'A side panel or a section beside the item under review', 'A batch of items: use the review queue'),
       vp('Human review of generated content', 'Form', 'Human review', { variant: 'human' }, 'The panel with an info notice first: the content was generated and a person checks it before it is used.', 'Generated text, tags or summaries that take effect only after a person approves them', 'Content people wrote themselves'),
@@ -274,7 +274,7 @@ DSParts.records.push(function (H) {
     use: ['Tasks, reviews and requests that need one owner', 'Assign to me as the shortcut for the person using the page', 'The assignee’s full name with the avatar, never initials alone'],
     avoid: ['Several owners for one item: they are reviewers or members', 'Assigning people who cannot open the item', 'Hiding who is assigned behind a button'],
     related: ['delegate', 'entity-picker', 'profile-summary', 'review-flow'],
-    map: [[ATL, 'User picker (assignee)', 'Partial'], [FLU, 'People picker', 'Partial'], [POL, 'Autocomplete with avatars', 'Partial']],
+    map: [[ATL, 'User picker (assignee)', 'Partial'], [FLU, 'People picker', 'Partial'], [POL, 'Autocomplete with avatars', 'Partial'], ['Frappe', 'Assign To', 'Direct']],
     variantPages: [
       vp('Assign an owner', 'Form', 'Assign (default)', { variant: 'assign' }, 'Nobody assigned: the people picker with Assign to me beside it.', 'Items without an owner yet', 'Items that always have one: show the assignee'),
       vp('Reassign', 'Form', 'Reassign', { variant: 'reassign' }, 'The assignee as a Persona with Reassign and Unassign; Reassign swaps the row to the picker with focus in it.', 'Handing an item to someone else', 'Adding a second person: they are a reviewer'),
