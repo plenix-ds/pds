@@ -223,5 +223,105 @@
       }
     ],
     "why": "the placement is a modifier of the Menu it opens (.plx-menu--top-start), in menu.css"
+  },
+  "aspect-ratio--ratio-1-1": {
+    "sets": [
+      {
+        "property": "aspect-ratio",
+        "part": "block",
+        "token": "--plx-comp-preview-ratio-1-1"
+      }
+    ],
+    "why": ".plx-preview[data-plx-ratio=\"1-1\"] in preview.css, the part the ratio prop is drawn on"
+  },
+  "aspect-ratio--ratio-16-9": {
+    "sets": [
+      {
+        "property": "aspect-ratio",
+        "part": "block",
+        "token": "--plx-comp-preview-ratio-16-9"
+      }
+    ],
+    "why": ".plx-preview[data-plx-ratio=\"16-9\"] in preview.css, the part the ratio prop is drawn on"
+  },
+  "aspect-ratio--ratio-21-9": {
+    "sets": [
+      {
+        "property": "aspect-ratio",
+        "part": "block",
+        "token": "--plx-comp-preview-ratio-21-9"
+      }
+    ],
+    "why": ".plx-preview[data-plx-ratio=\"21-9\"] in preview.css, the part the ratio prop is drawn on"
+  },
+  "aspect-ratio--ratio-3-2": {
+    "sets": [
+      {
+        "property": "aspect-ratio",
+        "part": "block",
+        "token": "--plx-comp-preview-ratio-3-2"
+      }
+    ],
+    "why": ".plx-preview[data-plx-ratio=\"3-2\"] in preview.css, the part the ratio prop is drawn on"
+  },
+  "aspect-ratio--ratio-3-4-portrait": {
+    "sets": [
+      {
+        "property": "aspect-ratio",
+        "part": "block",
+        "token": "--plx-comp-preview-ratio-3-4"
+      }
+    ],
+    "why": ".plx-preview[data-plx-ratio=\"3-4\"] in preview.css, the part the ratio prop is drawn on"
+  },
+  "aspect-ratio--ratio-4-3-default": {
+    "sets": [
+      {
+        "property": "aspect-ratio",
+        "part": "block",
+        "token": "--plx-comp-preview-ratio-4-3"
+      }
+    ],
+    "why": ".plx-preview[data-plx-ratio=\"4-3\"] in preview.css, the part the ratio prop is drawn on"
+  },
+  "aspect-ratio--ratio-9-16-portrait": {
+    "sets": [
+      {
+        "property": "aspect-ratio",
+        "part": "block",
+        "token": "--plx-comp-preview-ratio-9-16"
+      }
+    ],
+    "why": ".plx-preview[data-plx-ratio=\"9-16\"] in preview.css, the part the ratio prop is drawn on"
+  },
+  "area-chart--stack-area": {
+    "sets": [
+      {
+        "property": "fill-opacity",
+        "part": "area",
+        "token": "--plx-comp-area-chart-fill-opacity"
+      }
+    ],
+    "why": "the base rule .plx-area-chart__area; no modifier is added"
+  },
+  "area-chart--stack-stacked": {
+    "sets": [
+      {
+        "property": "fill-opacity",
+        "part": "area",
+        "token": "--plx-comp-area-chart-stacked-fill-opacity"
+      }
+    ],
+    "why": "stack=\"stacked\" adds .plx-area-chart--stacked (LineChart.jsx), which sets the area's opacity"
+  },
+  "area-chart--stack-percent": {
+    "sets": [
+      {
+        "property": "fill-opacity",
+        "part": "area",
+        "token": "--plx-comp-area-chart-stacked-fill-opacity"
+      }
+    ],
+    "why": "stack=\"percent\" adds .plx-area-chart--stacked (LineChart.jsx), which sets the area's opacity"
   }
 }
