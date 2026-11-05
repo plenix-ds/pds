@@ -67,6 +67,20 @@ type PageBreakProps = {
 - None of the three shows its own words, so no catalog keys. The P1 example's strings go through the catalog (EN), and the Arabic through the owner (D-0012).
 - PrintDocument sets `data-plx-density="standard"` on the sheet. On paper it's light (`usePrint`).
 
+### Addendum (2026-11-05, #348, PR #350): the sheet's frame
+
+The design's G2 findings on the build (#340) added the sheet's own frame, so PrintDocument has no print-only rule:
+
+| Token | On screen | On paper (print set) |
+|---|---|---|
+| `plx-sys.print-sheet-padding` | `{plx-sys.print-document-margin}` | `0` (the page carries the margin) |
+| `plx-sys.print-sheet-border-width` | `{plx-sys.border-width-thin}` | `0` |
+| `plx-sys.print-sheet-radius` | `{plx-sys.shape-sm}` | `0` |
+| `plx-sys.print-sheet-shadow` | `{plx-sys.shadow-card}` | `none` |
+| `plx-sys.print-sheet-inline-size` / `-block-size` | A4 (above) | `auto` / `0` (`@page` sizes the paper) |
+
+`plx-comp.print-document-{background,border-color,border-width,radius,shadow,padding}` read these roles, plus `surface-default` and `border-default` (comp -> sys). All are additions, so this is still MINOR.
+
 ## Consequences
 
 - **Semver: MINOR.** 3 exports, 8 tokens (6 now, 2 with the build). Other pages print as before.
