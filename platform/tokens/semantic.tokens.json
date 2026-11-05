@@ -64,7 +64,7 @@
       "$type": "dimension"
     },
     "shell-phone-below": {
-      "$value": "{plx-ref.breakpoint-600px}",
+      "$value": "{plx-ref.breakpoint-sm}",
       "$type": "dimension",
       "$extensions": {
         "com.plenix": {
@@ -90,7 +90,7 @@
       "$description": "Narrow window (Platforms Standard 3.3): below this width the navigation is a bottom bar and the pane a screen of its own"
     },
     "shell-min-width": {
-      "$value": "{plx-ref.breakpoint-1024px}",
+      "$value": "{plx-ref.breakpoint-lg}",
       "$type": "dimension",
       "$description": "AppShell minSize: below this width the shell shows the screen-size notice (docs/adr/0010)."
     },
@@ -353,7 +353,7 @@
       "$type": "dimension"
     },
     "space-inline-xs": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension",
       "$extensions": {
         "com.plenix": {
@@ -364,98 +364,98 @@
       }
     },
     "space-inline-sm": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension"
     },
     "space-inline-md": {
-      "$value": "{plx-ref.space-12px}",
+      "$value": "{plx-ref.space-3u}",
       "$type": "dimension"
     },
     "space-inline-lg": {
-      "$value": "{plx-ref.space-16px}",
+      "$value": "{plx-ref.space-4u}",
       "$type": "dimension"
     },
     "space-stack-xs": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension"
     },
     "space-stack-sm": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension"
     },
     "space-stack-md": {
-      "$value": "{plx-ref.space-12px}",
+      "$value": "{plx-ref.space-3u}",
       "$type": "dimension"
     },
     "space-stack-lg": {
-      "$value": "{plx-ref.space-16px}",
+      "$value": "{plx-ref.space-4u}",
       "$type": "dimension"
     },
     "space-stack-xl": {
-      "$value": "{plx-ref.space-24px}",
+      "$value": "{plx-ref.space-6u}",
       "$type": "dimension"
     },
     "space-section": {
-      "$value": "{plx-ref.space-24px}",
+      "$value": "{plx-ref.space-6u}",
       "$type": "dimension",
       "$description": "The space between peer sections (a heading and its content, then the next) that are not framed: twice a heading's distance to its content, the same in a page or a split pane, at every density, in either reading direction and on phones (owner, 2026-10-22, issue #242)."
     },
     "space-stack-2xl": {
-      "$value": "{plx-ref.space-32px}",
+      "$value": "{plx-ref.space-8u}",
       "$deprecated": "Not used by any page, application or the design spec (issue 882): it keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
     "space-inset-xs": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension"
     },
     "space-inset-sm": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension"
     },
     "space-inset-md": {
-      "$value": "{plx-ref.space-12px}",
+      "$value": "{plx-ref.space-3u}",
       "$type": "dimension"
     },
     "space-inset-lg": {
-      "$value": "{plx-ref.space-16px}",
+      "$value": "{plx-ref.space-4u}",
       "$type": "dimension"
     },
     "space-inset-xl": {
-      "$value": "{plx-ref.space-24px}",
+      "$value": "{plx-ref.space-6u}",
       "$type": "dimension"
     },
     "space-cluster-xs": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension"
     },
     "space-cluster-sm": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension"
     },
     "space-cluster-md": {
-      "$value": "{plx-ref.space-12px}",
+      "$value": "{plx-ref.space-3u}",
       "$type": "dimension"
     },
     "space-cluster-lg": {
-      "$value": "{plx-ref.space-16px}",
+      "$value": "{plx-ref.space-4u}",
       "$deprecated": "Not used by any page, application or the design spec (issue 882): it keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
     "space-layout-sm": {
-      "$value": "{plx-ref.space-16px}",
+      "$value": "{plx-ref.space-4u}",
       "$type": "dimension"
     },
     "space-layout-md": {
-      "$value": "{plx-ref.space-24px}",
+      "$value": "{plx-ref.space-6u}",
       "$type": "dimension"
     },
     "space-layout-lg": {
-      "$value": "{plx-ref.space-32px}",
+      "$value": "{plx-ref.space-8u}",
       "$type": "dimension"
     },
     "space-layout-xl": {
-      "$value": "{plx-ref.space-48px}",
+      "$value": "{plx-ref.space-12u}",
       "$type": "dimension"
     },
     "label-height-16px": {

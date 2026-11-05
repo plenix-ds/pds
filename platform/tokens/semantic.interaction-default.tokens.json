@@ -9,7 +9,7 @@
   },
   "plx-sys": {
     "control-target-min": {
-      "$value": "{plx-ref.control-size-24px}",
+      "$value": "{plx-ref.control-size-6u}",
       "$type": "dimension",
       "$extensions": {
         "plenix": {

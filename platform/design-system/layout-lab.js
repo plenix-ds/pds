@@ -53,7 +53,7 @@ window.DSLayoutLab = function (api) {
   showLive(); addEventListener('resize', showLive);
 
   // ---- 1 spatial
-  var sp = section('l-spatial', 'Spatial', 'A 4px base unit: every standard spacing and dimensional step is a multiple of 4px. Token names carry their value (--plx-ref-space-16px is 16px). 1px and 2px remain for borders and fine alignment.', 'platform/system/tokens/reference.css');
+  var sp = section('l-spatial', 'Spatial', 'A 4px base unit: every standard spacing and dimensional step is a multiple of 4px. Token names carry their value (--plx-ref-space-4u is 16px). 1px and 2px remain for borders and fine alignment.', 'platform/system/tokens/reference.css');
   // a value in px (the tokens are written in rem, at the page's root size)
   var toPx = function (v) { var m = /^(-?[\d.]+)rem$/.exec(String(v).trim()); return m ? +m[1] * (parseFloat(getComputedStyle(document.documentElement).fontSize) || 16) + 'px' : v; };
   var off = function (prefix) { return Object.keys(tokenValue).filter(function (n) { return n.indexOf(prefix) === 0; }).map(function (n) { return [n, parseFloat(toPx(tokenValue[n]))]; }).filter(function (x) { return x[1] > 2 && x[1] % 4; }); };
@@ -75,10 +75,10 @@ window.DSLayoutLab = function (api) {
     ['--space-10', '10px', '474', 'Spacing: compact card and cell padding', '--space-12'],
     ['--space-14', '14px', '211', 'Spacing: standard component padding', '--space-16'],
     ['--space-50', '50px', '5', 'Spacing: major section separation', '--space-48'],
-    ['--size-6', '6px', '19', 'Optical: dots, pips, chevron height, checkmark', 'Kept as --plx-ref-glyph-size-6px (documented optical size)'],
-    ['--size-10', '10px', '15', 'Optical: small icons, version dots, chevron width', 'Kept as --plx-ref-glyph-size-10px'],
-    ['--size-14', '14px', '34', 'Optical: icons, spinner, file badge, info dot', 'Kept as --plx-ref-glyph-size-14px'],
-    ['--size-18', '18px', '8', 'Optical: icons, separators; two 18px buttons', 'Kept as --plx-ref-glyph-size-18px; the saved-search × and the card menu button became 24px inline actions'],
+    ['--size-6', '6px', '19', 'Optical: dots, pips, chevron height, checkmark', 'Kept as --plx-ref-glyph-size-xs (documented optical size)'],
+    ['--size-10', '10px', '15', 'Optical: small icons, version dots, chevron width', 'Kept as --plx-ref-glyph-size-sm'],
+    ['--size-14', '14px', '34', 'Optical: icons, spinner, file badge, info dot', 'Kept as --plx-ref-glyph-size-md'],
+    ['--size-18', '18px', '8', 'Optical: icons, separators; two 18px buttons', 'Kept as --plx-ref-glyph-size-lg; the saved-search × and the card menu button became 24px inline actions'],
     ['--size-70', '70px', '13', 'Layout: column widths, heights', '--plx-ref-size-18u'],
     ['--size-78', '78px', '1', 'Layout: a minimum height', '--plx-ref-size-20u'],
     ['--size-90', '90px', '2', 'Layout: widths', '--plx-ref-size-23u (new)'],
@@ -282,7 +282,7 @@ window.DSLayoutLab = function (api) {
     ['Row alignment', 'All controls of one standard row use the same role token, so they line up.'],
     ['Model', '24px inline and pane chrome · 28px compact toolbars and controls · 32px page and form actions · 36px dialogs and confirmations · 44px+ touch and mobile']]);
   var c10 = card(ct, 'Scale', 'Control-only sizes (value in the name) and the neutral scale for a size chosen on purpose (data-size).');
-  table(c10, ['Size', 'Token', 'Use'], [['24px', '--plx-ref-control-size-24px · xs', 'dense expert actions (pointer only)'], ['28px', '--plx-ref-control-size-28px · sm', 'compact toolbars, filters'], ['32px', '--plx-ref-control-size-32px · md', 'standard desktop controls'], ['36px', '--plx-ref-control-size-36px · lg', 'dialog actions, prominent forms'], ['40px', '--plx-ref-control-size-40px · xl', 'comfortable, lower-frequency'], ['44px', '--plx-ref-control-size-44px · 2xl', 'touch and mobile default'], ['48px', '--plx-ref-control-size-48px · 3xl', 'large mobile action'], ['52px', '--plx-ref-control-size-52px · 4xl', 'prominent mobile call to action']]);
+  table(c10, ['Size', 'Token', 'Use'], [['24px', '--plx-ref-control-size-6u · xs', 'dense expert actions (pointer only)'], ['28px', '--plx-ref-control-size-7u · sm', 'compact toolbars, filters'], ['32px', '--plx-ref-control-size-8u · md', 'standard desktop controls'], ['36px', '--plx-ref-control-size-9u · lg', 'dialog actions, prominent forms'], ['40px', '--plx-ref-control-size-10u · xl', 'comfortable, lower-frequency'], ['44px', '--plx-ref-control-size-11u · 2xl', 'touch and mobile default'], ['48px', '--plx-ref-control-size-12u · 3xl', 'large mobile action'], ['52px', '--plx-ref-control-size-13u · 4xl', 'prominent mobile call to action']]);
   var c11 = card(ct, 'Control audit', 'Every visible button, input and select on the live pages, measured as drawn. Anything off the scale or under 24px needs fixing or a documented exception.');
   var auditOut = DS.el('div', '', 'Waiting for this section to be shown…'); c11.appendChild(auditOut);
   var PAGES = [['Asset browser', '../../dam/index.html'], ['System settings', '../../dam/settings-system.html'], ['Dashboard', '../../dashboard/index.html']];

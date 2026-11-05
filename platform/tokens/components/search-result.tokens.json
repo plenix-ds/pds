@@ -89,7 +89,7 @@
       "$description": "SearchResult: the path above the title."
     },
     "search-result-path-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "SearchResult: the path's size."
     },
@@ -109,7 +109,7 @@
       "$description": "SearchResult: the title."
     },
     "search-result-title-font-size": {
-      "$value": "{plx-ref.font-size-14}",
+      "$value": "{plx-ref.font-size-300}",
       "$type": "dimension",
       "$description": "SearchResult: the title's size."
     },
@@ -129,7 +129,7 @@
       "$description": "SearchResult: the words around the match."
     },
     "search-result-snippet-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "SearchResult: the snippet's size."
     },
@@ -139,7 +139,7 @@
       "$description": "SearchResult: the details under the snippet."
     },
     "search-result-meta-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "SearchResult: the details' size."
     },

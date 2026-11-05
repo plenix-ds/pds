@@ -27,7 +27,7 @@
       "$description": "ProgressSteps marker: its edge."
     },
     "progress-steps-marker-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "ProgressSteps marker: the step number's size."
     },
@@ -107,7 +107,7 @@
       "$description": "ProgressSteps: a done or current step's name."
     },
     "progress-steps-label-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "ProgressSteps: the step names' size."
     },
@@ -137,7 +137,7 @@
       "$description": "ProgressSteps: a step's second line."
     },
     "progress-steps-description-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "ProgressSteps: the second line's size."
     },
@@ -224,7 +224,7 @@
       "$description": "ProgressSteps compact: the Step 2 of 5 text."
     },
     "progress-steps-count-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "ProgressSteps compact: the text's size."
     },

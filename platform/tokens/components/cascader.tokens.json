@@ -17,7 +17,7 @@
       "$description": "Cascader field: gap between rows (space-inline-xs)."
     },
     "cascader-multiple-field-padding-block": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension",
       "$description": "Cascader multiple field: padding top and bottom (space-4px)."
     },
@@ -172,7 +172,7 @@
       "$description": "Cascader match: minimum height (control-height-standard)."
     },
     "cascader-match-padding-block": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension",
       "$description": "Cascader match: padding top and bottom (space-4px)."
     },
@@ -242,7 +242,7 @@
       "$description": "Cascader past its limit of choices: the message under the list (the warning content color; it is also announced, so color is never the only cue)."
     },
     "cascader-limit-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "Cascader limit message: its size."
     },

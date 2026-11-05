@@ -17,7 +17,7 @@
       "$description": "ReviewFlow: title color (content-default)."
     },
     "review-flow-title-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "ReviewFlow: title size (font-size-13)."
     },
@@ -37,7 +37,7 @@
       "$description": "ReviewFlow: detail color (content-muted)."
     },
     "review-flow-detail-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "ReviewFlow: detail and Waiting size (font-size-12)."
     },
@@ -52,7 +52,7 @@
       "$description": "ReviewFlow: section label color (Reviewers, History) (content-muted)."
     },
     "review-flow-label-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "ReviewFlow: section label size (font-size-12)."
     },

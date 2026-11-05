@@ -40,7 +40,7 @@ check('Type floor: no token points at a size below 12px', below.length === 0, be
 const typo = values(JSON.parse(fs.readFileSync(path.join(TOKENS, 'semantic', 'typography.tokens.json'), 'utf8')), '', []);
 for (const role of ['caption', 'eyebrow']) {
   const v = (typo.find(([n]) => n === 'plx-sys.text-' + role + '-font-size') || [])[1];
-  check('Type floor: the ' + role + ' role is 12px', v === '{plx-ref.font-size-12}', String(v));
+  check('Type floor: the ' + role + ' role is 12px', v === '{plx-ref.font-size-100}', String(v));
 }
 
 const utilities = fs.readFileSync(path.join(ROOT, 'platform', 'system', 'utilities.css'), 'utf8');

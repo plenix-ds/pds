@@ -6,13 +6,13 @@
     },
     "contained": {
       "description": "One column at the form width; the scroll area keeps the full width.",
-      "maxWidth": "{plx-ref.content-max-960px}",
+      "maxWidth": "{plx-ref.content-max-md}",
       "align": "center"
     },
     "hybrid": {
       "description": "Full width, with readable text and forms.",
-      "proseMaxWidth": "{plx-ref.content-max-760px}",
-      "formMaxWidth": "{plx-ref.content-max-960px}"
+      "proseMaxWidth": "{plx-ref.content-max-sm}",
+      "formMaxWidth": "{plx-ref.content-max-md}"
     },
     "multi-pane": {
       "description": "A row of panes that each scroll on their own; the page never scrolls as a whole.",

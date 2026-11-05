@@ -29,19 +29,19 @@
       "$type": "fontFamily"
     },
     "font-weight-regular": {
-      "$value": "{plx-ref.font-weight-regular-400}",
+      "$value": "{plx-ref.font-weight-regular}",
       "$type": "fontWeight"
     },
     "font-weight-medium": {
-      "$value": "{plx-ref.font-weight-medium-500}",
+      "$value": "{plx-ref.font-weight-medium}",
       "$type": "fontWeight"
     },
     "font-weight-semibold": {
-      "$value": "{plx-ref.font-weight-semibold-600}",
+      "$value": "{plx-ref.font-weight-semibold}",
       "$type": "fontWeight"
     },
     "font-weight-bold": {
-      "$value": "{plx-ref.font-weight-bold-700}",
+      "$value": "{plx-ref.font-weight-bold}",
       "$type": "fontWeight"
     },
     "letter-spacing-tight": {
@@ -192,11 +192,11 @@
       "$type": "cubicBezier"
     },
     "motion-press-scale": {
-      "$value": "{plx-ref.motion-scale-98}",
+      "$value": "{plx-ref.motion-scale-sm}",
       "$type": "number"
     },
     "motion-enter-scale": {
-      "$value": "{plx-ref.motion-scale-96}",
+      "$value": "{plx-ref.motion-scale-md}",
       "$type": "number"
     },
     "motion-delay-stagger": {

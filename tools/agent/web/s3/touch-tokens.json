@@ -1,5 +1,5 @@
 {
-  "app-header-utilities-gap": { "$value": "{plx-ref.space-4px}", "$type": "dimension" },
+  "app-header-utilities-gap": { "$value": "{plx-ref.space-1u}", "$type": "dimension" },
   "tag-remove-before-inset-block-end": { "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))", "$type": "dimension" },
   "tag-remove-before-inset-block-start": { "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))", "$type": "dimension" },
   "tag-remove-before-inset-inline-end": { "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))", "$type": "dimension" },
@@ -8,7 +8,7 @@
   "tag-input-add-before-inset-block-start": { "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))", "$type": "dimension" },
   "tag-input-add-before-inset-inline-end": { "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))", "$type": "dimension" },
   "tag-input-add-before-inset-inline-start": { "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))", "$type": "dimension" },
-  "tag-list-gap": { "$value": "{plx-ref.space-12px}", "$type": "dimension" },
-  "tag-list-row-gap": { "$value": "{plx-ref.space-24px}", "$type": "dimension" },
+  "tag-list-gap": { "$value": "{plx-ref.space-3u}", "$type": "dimension" },
+  "tag-list-row-gap": { "$value": "{plx-ref.space-6u}", "$type": "dimension" },
   "color-picker-slot-min-width": { "$value": "{plx-sys.control-target-min}", "$type": "dimension" }
 }

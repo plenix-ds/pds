@@ -26,7 +26,7 @@
   --plenix-bold: 700 /* --plx-sys-font-weight-bold */;
   --plenix-header-height: 56px /* --plx-sys-shell-header-height */;
   --plenix-header-inset: 0.75rem /* --plx-sys-space-inset-md */;
-  --plenix-brand-size: 1.25rem /* --plx-ref-font-size-20 */;
+  --plenix-brand-size: 1.25rem /* --plx-ref-font-size-600 */;
   --plenix-gap: 3rem /* --plx-sys-space-layout-xl */;
   --plenix-mark-size: calc(20px /* --plx-sys-label-height-20px */ + 16px /* --plx-sys-label-height-16px */);
   --plenix-mark-gap: 0.75rem /* --plx-sys-space-inline-md */;

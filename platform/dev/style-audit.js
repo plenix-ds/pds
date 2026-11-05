@@ -20,7 +20,7 @@
      equals one of the font-weight tokens (--plx-sys-font-weight-*). Any other inline property inside the engine, and
      everything Plenix draws on top of it, is checked as everywhere else.
      5. off the grid: an inline length that is neither a Platform token reference (var) nor a whole number of grid steps (the base
-        spacing token, --plx-ref-space-4px; utils/grid.ts): "has to conform to fit into the grid system!!! important"
+        spacing token, --plx-ref-space-1u; utils/grid.ts): "has to conform to fit into the grid system!!! important"
         (owner, 2026-10-13). A length in another unit than px (rem, em, vw…) is reported too; a percentage is a
         proportion, not a length, and 0 is on every grid. Border widths and separator thickness may equal the thin-border token (owner, 2026-10-16).
    Inline styles written by JavaScript are otherwise allowed (owner, 2026-10-13): "sometimes we have situations in which
@@ -45,8 +45,8 @@
   function context(el) {
     var at = el.closest && el.closest('.plx-data-grid') || document.documentElement, cached = contexts.get(at);
     if (cached) return cached;
-    var cs = getComputedStyle(at), root = getComputedStyle(document.documentElement), step = parseFloat(cs.getPropertyValue('--plx-ref-space-4px')) || 4, lengths = new Set([0]);
-    if (/rem$/.test(cs.getPropertyValue('--plx-ref-space-4px').trim())) step *= parseFloat(root.fontSize) || 16;
+    var cs = getComputedStyle(at), root = getComputedStyle(document.documentElement), step = parseFloat(cs.getPropertyValue('--plx-ref-space-1u')) || 4, lengths = new Set([0]);
+    if (/rem$/.test(cs.getPropertyValue('--plx-ref-space-1u').trim())) step *= parseFloat(root.fontSize) || 16;
     for (var i = 0; i < cs.length; i++) {
       var name = cs[i]; if (!/^--plx-(?:ref-(?:size|space)-|(?:sys|comp)-data-grid-.*(?:height|padding|size|width))/.test(name)) continue;
       var value = cs.getPropertyValue(name).trim(), match = /^(-?\d*\.?\d+)(px|rem)$/.exec(value);

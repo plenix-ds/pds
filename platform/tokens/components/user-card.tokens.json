@@ -6,11 +6,11 @@
     "user-card-text-gap": { "$value": "{plx-sys.space-stack-xs}", "$type": "dimension", "$description": "User card: the space between the name, the line under it and the role." },
     "user-card-name-text": { "$value": "{plx-sys.content-default}", "$type": "color", "$description": "User card: the name (the card's heading)." },
     "user-card-name-font-family": { "$value": "{plx-sys.font-heading}", "$type": "fontFamily", "$description": "User card: the name's typeface (a heading)." },
-    "user-card-name-font-size": { "$value": "{plx-ref.font-size-15}", "$type": "dimension", "$description": "User card: the name's size (default variant)." },
+    "user-card-name-font-size": { "$value": "{plx-ref.font-size-400}", "$type": "dimension", "$description": "User card: the name's size (default variant)." },
     "user-card-name-font-weight": { "$value": "{plx-sys.text-label-font-weight}", "$type": "fontWeight", "$description": "User card: the name's weight." },
     "user-card-name-line-height": { "$value": "{plx-sys.label-height-20px}", "$type": "dimension", "$description": "User card: the name's line height." },
     "user-card-secondary-text": { "$value": "{plx-sys.content-subtle}", "$type": "color", "$description": "User card: the line under the name (title, team or email), secondary text." },
-    "user-card-secondary-font-size": { "$value": "{plx-ref.font-size-12}", "$type": "dimension", "$description": "User card: the line's size." },
+    "user-card-secondary-font-size": { "$value": "{plx-ref.font-size-100}", "$type": "dimension", "$description": "User card: the line's size." },
     "user-card-secondary-line-height": { "$value": "{plx-sys.label-height-16px}", "$type": "dimension", "$description": "User card: the line's line height." },
     "user-card-role-margin-block-start": { "$value": "{plx-sys.space-stack-xs}", "$type": "dimension", "$description": "User card: the extra space above the role badge (with the text gap, one sm step)." },
     "user-card-actions-gap": { "$value": "{plx-sys.space-inline-xs}", "$type": "dimension", "$description": "User card: the space between actions." },
@@ -21,6 +21,6 @@
     "user-card-cover-avatar-ring-color": { "$value": "{plx-comp.card-background}", "$type": "color", "$description": "User card with a cover: the ring around the avatar in the card's surface, so it stands apart from the cover." },
     "user-card-cover-avatar-ring-width": { "$value": "{plx-sys.border-width-medium}", "$type": "dimension", "$description": "User card with a cover: the ring's width." },
     "user-card-compact-gap": { "$value": "{plx-sys.space-inline-sm}", "$type": "dimension", "$description": "Compact user card: the space between the avatar, the text and the actions." },
-    "user-card-compact-name-font-size": { "$value": "{plx-ref.font-size-13}", "$type": "dimension", "$description": "Compact user card: the name's size (the card title's size)." }
+    "user-card-compact-name-font-size": { "$value": "{plx-ref.font-size-200}", "$type": "dimension", "$description": "Compact user card: the name's size (the card title's size)." }
   }
 }

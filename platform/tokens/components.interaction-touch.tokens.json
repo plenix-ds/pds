@@ -15,11 +15,11 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "toolbar-control-gap": {
-      "$value": "{plx-ref.space-12px}",
+      "$value": "{plx-ref.space-3u}",
       "$type": "dimension"
     },
     "button-cluster-gap": {
-      "$value": "{plx-ref.space-12px}",
+      "$value": "{plx-ref.space-3u}",
       "$type": "dimension",
       "$extensions": {
         "plenix": {
@@ -38,7 +38,7 @@
       }
     },
     "dialog-action-gap": {
-      "$value": "{plx-ref.space-12px}",
+      "$value": "{plx-ref.space-3u}",
       "$type": "dimension",
       "$extensions": {
         "plenix": {
@@ -57,12 +57,12 @@
       }
     },
     "card-padding": {
-      "$value": "{plx-ref.space-16px}",
+      "$value": "{plx-ref.space-4u}",
       "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-space-component-gap-lg instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
     "app-header-utilities-gap": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension"
     },
     "button-target-inset-block": {
@@ -153,7 +153,7 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tag-list-row-gap": {
-      "$value": "{plx-ref.space-24px}",
+      "$value": "{plx-ref.space-6u}",
       "$type": "dimension",
       "$description": "With touch the rows part by the minimum target less the 20px tag (24px), so the 44px targets of one row do not cover the next"
     },
