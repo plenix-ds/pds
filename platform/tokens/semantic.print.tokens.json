@@ -5,6 +5,10 @@
       "$value": "none",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
+    "print-break": {
+      "$value": "page",
+      "$extensions": { "com.plenix": { "webOnly": true } }
+    },
     "print-block-size": {
       "$value": "auto",
       "$extensions": { "com.plenix": { "webOnly": true } }

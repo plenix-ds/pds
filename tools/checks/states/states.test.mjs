@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { STATES, checkStates, isTokenOnlyCss } from './states.mjs';
+import { STATES, checkStates, isTokenOnlyCss, isConversionRename } from './states.mjs';
 
 const full = Object.fromEntries(STATES.map((s) => [s, ['plx-sys.state-' + s]]));
 const storiesFor = (names) => ({ Button: names });
@@ -37,5 +37,17 @@ describe('check 9: state manifest', () => {
     const a = '.x { gap: var(--plx-ref-space-8px); }';
     expect(isTokenOnlyCss(a, a.replace('8px', '2u').replace('gap', 'margin'))).toBe(false);
     expect(isTokenOnlyCss(a, '.x { gap: 8px; }')).toBe(false);
+  });
+
+  it('treats a .jsx to .tsx or .js to .ts rename as not a component change (#329)', () => {
+    expect(isConversionRename('R087', 'platform/components/CodeBlock/CodeBlock.jsx', 'platform/components/CodeBlock/CodeBlock.tsx')).toBe(true);
+    expect(isConversionRename('R100', 'platform/components/X/x.js', 'platform/components/X/x.ts')).toBe(true);
+  });
+  it('still counts other renames, edits and additions', () => {
+    expect(isConversionRename('M', 'a/X.jsx', 'a/X.jsx')).toBe(false);
+    expect(isConversionRename('R100', 'a/X.jsx', 'b/X.tsx')).toBe(false);       // moved folder
+    expect(isConversionRename('R090', 'a/X.jsx', 'a/Y.tsx')).toBe(false);       // renamed part
+    expect(isConversionRename('R090', 'a/x.css', 'a/x.scss')).toBe(false);
+    expect(isConversionRename('A', '', 'a/X.tsx')).toBe(false);
   });
 });

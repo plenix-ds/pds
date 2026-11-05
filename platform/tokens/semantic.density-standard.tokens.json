@@ -9,7 +9,7 @@
   },
   "plx-sys": {
     "radius-control": {
-      "$value": "{plx-sys.radius-control-4px}",
+      "$value": "{plx-sys.radius-control-sm}",
       "$type": "dimension"
     },
     "control-height-inline": {
@@ -90,15 +90,25 @@
       "$value": "{plx-ref.size-60u}",
       "$type": "dimension"
     },
-    "shell-nav-width-from-1440": {
+    "shell-nav-width-from-wide": {
       "$value": "{plx-ref.size-68u}",
       "$type": "dimension",
       "$description": "The navigation pane's starting width in a window 1440px wide up to 1919px (owner, issue 463 option C, step 2); grid.css sets --plx-sys-shell-nav-width to it there. Under 1440px the width is shell-nav-width."
     },
-    "shell-nav-width-from-1920": {
+    "shell-nav-width-from-1440": {
+      "$value": "{plx-sys.shell-nav-width-from-wide}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-sys-shell-nav-width-from-wide (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "shell-nav-width-from-ultrawide": {
       "$value": "{plx-ref.size-80u}",
       "$type": "dimension",
       "$description": "The navigation pane's starting width in a window 1920px wide and wider (owner, issue 463 option C, step 2)."
+    },
+    "shell-nav-width-from-1920": {
+      "$value": "{plx-sys.shell-nav-width-from-ultrawide}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-sys-shell-nav-width-from-ultrawide (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
     },
     "shell-nav-min-width": {
       "$value": "{plx-ref.size-35u}",

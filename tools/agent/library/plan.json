@@ -1730,7 +1730,7 @@
       "platform/components/RoleLabel/RoleLabel.jsx",
       "platform/components/RoleLabel/role-label.css",
       "platform/tokens/components/role-label.tokens.json",
-      "platform/components/SearchResult/SearchResult.jsx",
+      "platform/components/SearchResult/SearchResult.tsx",
       "platform/components/SearchResult/search-result.css",
       "platform/tokens/components/search-result.tokens.json",
       "platform/patterns/FilterPanel/FilterPanel.jsx",
@@ -5898,7 +5898,7 @@
    "wave": 8,
    "lane": "C",
    "files": [
-    "platform/components/SearchResult/SearchResult.jsx",
+    "platform/components/SearchResult/SearchResult.tsx",
     "platform/components/SearchResult/search-result.css",
     "platform/tokens/components/search-result.tokens.json"
    ],
@@ -14295,7 +14295,7 @@
    "target": "SearchResult",
    "targetKind": "component",
    "files": [
-    "platform/components/SearchResult/SearchResult.jsx",
+    "platform/components/SearchResult/SearchResult.tsx",
     "platform/components/SearchResult/search-result.css",
     "platform/tokens/components/search-result.tokens.json"
    ],
@@ -14328,7 +14328,7 @@
    "target": "SearchResult",
    "targetKind": "component",
    "files": [
-    "platform/components/SearchResult/SearchResult.jsx",
+    "platform/components/SearchResult/SearchResult.tsx",
     "platform/components/SearchResult/search-result.css",
     "platform/tokens/components/search-result.tokens.json"
    ],

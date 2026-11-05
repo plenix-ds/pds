@@ -8,6 +8,6 @@
     "contextual-help-inline-title-font-weight": { "$value": "{plx-sys.font-weight-semibold}", "$type": "fontWeight", "$description": "Inline tip: the title's weight." },
     "contextual-help-inline-gap": { "$value": "{plx-sys.space-inline-sm}", "$type": "dimension", "$description": "Inline tip: the gap between the icon and the text." },
     "contextual-help-inline-font-size": { "$value": "{plx-ref.font-size-100}", "$type": "dimension", "$description": "Inline tip: the text size (the helper text size)." },
-    "contextual-help-inline-line-height": { "$value": "{plx-sys.label-height-20px}", "$type": "dimension", "$description": "Inline tip: one text line, 20px; the icon's box is one line tall, so the icon centers on the first line." }
+    "contextual-help-inline-line-height": { "$value": "{plx-sys.label-height-md}", "$type": "dimension", "$description": "Inline tip: one text line, 20px; the icon's box is one line tall, so the icon centers on the first line." }
   }
 }

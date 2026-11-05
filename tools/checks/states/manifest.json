@@ -1,1 +1,32 @@
-{}
+{
+  "Button": {
+    "default": "n/a(stories arrive with Storybook, P0-11; the tokens are the Button state variables in button.css)",
+    "hover": "n/a(stories arrive with Storybook, P0-11; the tokens are the Button state variables in button.css)",
+    "focus": "n/a(stories arrive with Storybook, P0-11; the tokens are the Button state variables in button.css)",
+    "active": "n/a(stories arrive with Storybook, P0-11; the tokens are the Button state variables in button.css)",
+    "disabled": "n/a(stories arrive with Storybook, P0-11; the tokens are the Button state variables in button.css)",
+    "loading": "n/a(stories arrive with Storybook, P0-11; the tokens are the Button state variables in button.css)",
+    "selected": "n/a(stories arrive with Storybook, P0-11; the tokens are the Button state variables in button.css)",
+    "error": "n/a(a button has no value to validate; errors show in the form message area)"
+  },
+  "DataGrid": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(stories arrive with Storybook, P0-11)",
+    "loading": "n/a(stories arrive with Storybook, P0-11)",
+    "selected": "n/a(stories arrive with Storybook, P0-11)",
+    "error": "n/a(a stylesheet-only change here; error states live in the part's own rules)"
+  },
+  "Resizable": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(stories arrive with Storybook, P0-11)",
+    "loading": "n/a(stories arrive with Storybook, P0-11)",
+    "selected": "n/a(stories arrive with Storybook, P0-11)",
+    "error": "n/a(a stylesheet-only change here; error states live in the part's own rules)"
+  }
+}

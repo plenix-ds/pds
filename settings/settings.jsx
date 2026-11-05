@@ -6,7 +6,7 @@
    field width, ColorPicker, RadioTiles, ChoiceList); categories, tags and project types are cards of rows and renamable
    Tags; the documentation pages are cards of Text, Tables, Cards, Notices, Badges, Metrics and ProgressBars. The style
    guide points at the design system (../platform/design-system/), the point of truth. */
-import { dataPhrase, Icon, CommandBar, CommandBarSearch, useCollectionView, Avatar, Badge, Button, choosePicture, Card, ChoiceList, CollapsibleSection, ColorPicker, ColorSwatch, DATA_COLORS, ContentGrid, Count, EmptyState, Inline, Input, Kbd, leavePage, List, Metric, NavList, NavPane, Notice, PageContent, ProgressBar, PropertyList, RadioTiles, RecordPage, SegmentedControl, Select, SettingsRow, SettingsSection, SideNavPortal, Stack, Switch, Table, Tag, TagList, Text, useDensity, useSession, useTheme, useUnsavedGuard } from 'plenix-platform';
+import { dataPhrase, Icon, CommandBar, CommandBarSearch, useCollectionView, Avatar, Badge, Button, choosePicture, Card, ChoiceList, CollapsibleSection, ColorPicker, ColorSwatch, DATA_COLORS, ContentGrid, Count, EmptyState, Inline, Input, Kbd, leavePage, List, Metric, NavList, NavPane, Notice, PageContent, ProgressBar, PropertyList, RadioTiles, EntityHeader, SegmentedControl, Select, SettingsRow, SettingsSection, SideNavPortal, Stack, Switch, Table, Tag, TagList, Text, useDensity, useSession, useTheme, useUnsavedGuard } from 'plenix-platform';
 import { CatEditModal } from '../suite/classification.jsx';
 const {useState}=React;
 // the sign-in proxy's sign-out (Authentik's forward-auth outpost on every Plenix host): ends the session; an action, so a Button
@@ -34,12 +34,33 @@ const FeatureRow=({item})=>{
 /* ── the screen and its cards ── */
 // the screen a card belongs to: its open state is remembered under "<screen>:<title>"
 const ScreenKey=React.createContext("");
-// a settings screen: a way back (lead), its title (the h1) and actions, then its cards
-const Screen=({id,lead,title,desc,actions,children})=>(
+// a settings screen: a way back (lead), its header (the h1: the screen's nav icon in the gray box, "Settings · what it is",
+// its actions) and then its cards. The header is the EntityHeader, Structured, top-small (#127, D-0049); actions are
+// elements here, so they go in the header's control slot, not its actions list.
+const SETTINGS_CATS=[
+    {id:"account",    label:"Account",      icon:"settings-profile"},
+    {id:"appearance", label:"Appearance",   icon:"settings-customize"},
+    {id:"calendar",   label:"Calendar",     icon:"calendar"},
+    {id:"categories", label:"Categories",   icon:"settings-categories"},
+    {id:"contacts",   label:"Contacts",     icon:"person"},
+    {id:"dashboard",  label:"Dashboard",    icon:"home"},
+    {id:"email",      label:"Email",        icon:"settings-email"},
+    {id:"files",      label:"Files",        icon:"document"},
+    {id:"general",    label:"General",      icon:"settings-general"},
+    {id:"notes",      label:"Notes",        icon:"text-card"},
+    {id:"projects",   label:"Projects",     icon:"briefcase"},
+    {id:"projtypes",  label:"Project types",icon:"briefcase-plus"},
+    {id:"tags",       label:"Tags",         icon:"tags"},
+    {id:"tasks",      label:"Tasks",        icon:"circle-check"},
+];
+const Screen=({id,lead,title,desc,actions,children})=>{
+  const icon=(SETTINGS_CATS.find(c=>c.id===id)||{}).icon||"settings";
+  return (
   <ScreenKey.Provider value={id||title}>
-    <Stack gap="lg">{lead||null}<RecordPage.Header title={title} description={desc} actions={actions}/><div>{children}</div></Stack>
+    <Stack gap="lg">{lead||null}<EntityHeader layout="top-small" media={{icon,hue:"gray"} /* plx-icons: settings */} title={title} subtitle={"Settings"+(desc?" · "+desc:"")} control={actions}/><div>{children}</div></Stack>
   </ScreenKey.Provider>
-);
+  );
+};
 // a card of the screen: SettingsSection, static or collapsible, remembered per screen
 const Section=({stateKey,...p})=>{const screen=React.useContext(ScreenKey);return <SettingsSection stateKey={screen+":"+(stateKey||p.title)} {...p}/>;};
 // a row and its control, named by the row's label
@@ -545,22 +566,6 @@ export function Settings({prefs,setPrefs,screen,onBack}){
   const deletePT=id=>setProjTypes(prev=>prev.filter(t=>t.id!==id));
   const cancelPT=()=>{setPtAdding(false);setPtEditVal("");};
 
-  const SETTINGS_CATS=[
-    {id:"account",    label:"Account",      icon:"settings-profile"},
-    {id:"appearance", label:"Appearance",   icon:"settings-customize"},
-    {id:"calendar",   label:"Calendar",     icon:"calendar"},
-    {id:"categories", label:"Categories",   icon:"settings-categories"},
-    {id:"contacts",   label:"Contacts",     icon:"person"},
-    {id:"dashboard",  label:"Dashboard",    icon:"home"},
-    {id:"email",      label:"Email",        icon:"settings-email"},
-    {id:"files",      label:"Files",        icon:"document"},
-    {id:"general",    label:"General",      icon:"settings-general"},
-    {id:"notes",      label:"Notes",        icon:"text-card"},
-    {id:"projects",   label:"Projects",     icon:"briefcase"},
-    {id:"projtypes",  label:"Project types",icon:"briefcase-plus"},
-    {id:"tags",       label:"Tags",         icon:"tags"},
-    {id:"tasks",      label:"Tasks",        icon:"circle-check"},
-  ];
 
  // the accent colors to choose from: data handed to ColorSwatch (prefs.accent keeps the chosen value)
   const accent=DATA_COLORS.indexOf(prefs.accent)>=0?prefs.accent:DATA_COLORS[0];

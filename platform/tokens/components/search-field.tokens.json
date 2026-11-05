@@ -17,7 +17,7 @@
       "$description": "Search list: its border width."
     },
     "search-popup-radius": {
-      "$value": "{plx-sys.radius-surface-4px}",
+      "$value": "{plx-sys.radius-surface-sm}",
       "$type": "dimension",
       "$description": "Search list: its corners."
     },
@@ -152,7 +152,7 @@
       "$description": "SearchField collapsed, opened: the band across the bar that holds the field, the bar's own white surface."
     },
     "search-over-radius": {
-      "$value": "{plx-sys.radius-control-6px}",
+      "$value": "{plx-sys.radius-control-md}",
       "$type": "dimension",
       "$description": "SearchField collapsed, opened: the band's corners (the command bar's)."
     },

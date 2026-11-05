@@ -12,7 +12,7 @@
       "$description": "MillerColumns: border color (border-default)."
     },
     "miller-columns-radius": {
-      "$value": "{plx-sys.radius-surface-6px}",
+      "$value": "{plx-sys.radius-surface-md}",
       "$type": "dimension",
       "$description": "MillerColumns: corners (radius-surface-6px)."
     },

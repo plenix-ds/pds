@@ -152,7 +152,7 @@
       "$description": "RichText: the space inside a code block."
     },
     "rich-text-pre-radius": {
-      "$value": "{plx-sys.radius-card-6px}",
+      "$value": "{plx-sys.radius-card-md}",
       "$type": "dimension",
       "$description": "RichText: the corners of a code block."
     },

@@ -63,25 +63,55 @@ import { SectionHeading } from '../SectionHeading/SectionHeading.tsx';
 import { Count } from '../Count/Count.tsx';
 import { Link } from '../Link/Link.tsx';
 import { Button } from '../Button/Button.tsx';
+import type { IconValue } from '../Icon/Icon.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import ChevronRightIcon from 'plenix-platform/icons/plenix/chevron-right';
 import DocTextIcon from 'plenix-platform/icons/plenix/doc-text';
 import DocumentIcon from 'plenix-platform/icons/plenix/document';
 
-const escape = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 // the text with every match of the query's words in bold (case ignored; words of two letters or more, longest first)
-export function highlightMatches(text, query) {
-  if (typeof text !== 'string' || !query) return text;
+export function highlightMatches(text: unknown, query?: string): React.ReactNode {
+  if (typeof text !== 'string' || !query) return text as React.ReactNode;
   const words = String(query).trim().split(/\s+/).filter((w) => w.length > 1).sort((a, b) => b.length - a.length);
   if (!words.length) return text;
   const parts = text.split(new RegExp('(' + words.map(escape).join('|') + ')', 'gi'));
   return parts.map((p, i) => (i % 2 ? <strong key={i} className="plx-search-result__match">{p}</strong> : p));
 }
 
+type SearchResultProps = Omit<React.HTMLAttributes<HTMLLIElement>, 'title'> & {
+  /** the result's title (text, so the query can be highlighted) */
+  title?: React.ReactNode;
+  /** the link the title opens */
+  href?: string;
+  /** or a handler, when it is not a link */
+  onOpen?(event: React.MouseEvent): void;
+  /** "page" (default) | "file" | "person" */
+  kind?: 'page' | 'file' | 'person';
+  icon?: IconValue;
+  /** a file's picture: { src, alt } */
+  thumbnail?: { src?: string; alt?: string };
+  /** a person's picture: { name, src } */
+  avatar?: { name?: string; src?: string };
+  /** your own leading element */
+  leading?: React.ReactNode;
+  /** the words to highlight */
+  query?: string;
+  /** the breadcrumb of where it lives */
+  path?: React.ReactNode[];
+  snippet?: React.ReactNode;
+  meta?: React.ReactNode;
+  actions?: React.ReactNode;
+  selected?: boolean;
+  /** draws the title as a heading of this level (1 to 6) */
+  headingLevel?: number;
+  strings?: Catalog | null;
+};
 export function SearchResult({ title, href, onOpen, kind = 'page', icon, thumbnail, avatar, leading, query, path, snippet, meta, actions,
-  selected = false, headingLevel, strings, className, ...rest }) {
-  const t = useStrings('searchResult.result', strings);
+  selected = false, headingLevel, strings, className, ...rest }: SearchResultProps) {
+  const t = useStrings('searchResult.result', strings) as { path: string };
   const name = highlightMatches(title, query);
   const opener = href ? <a href={href} className="plx-search-result__opener" aria-current={selected ? 'true' : undefined}>{name}</a>
     : onOpen ? <button type="button" className="plx-search-result__opener" aria-current={selected ? 'true' : undefined} onClick={onOpen}>{name}</button>
@@ -89,7 +119,7 @@ export function SearchResult({ title, href, onOpen, kind = 'page', icon, thumbna
   const lead = leading !== undefined ? leading
     : kind === 'person' ? <Avatar name={(avatar && avatar.name) || (typeof title === 'string' ? title : '')} src={avatar && avatar.src} size="md" />
       : <Thumbnail src={kind === 'file' && thumbnail ? thumbnail.src : undefined} alt={thumbnail && thumbnail.alt} icon={icon || (kind === 'file' ? DocumentIcon : DocTextIcon)} />;
-  const Title = headingLevel ? 'h' + headingLevel : 'span';
+  const Title = (headingLevel ? 'h' + headingLevel : 'span') as React.ElementType;
   return (
     <li className={cx('plx-search-result', (href || onOpen) && 'is-interactive', selected && 'is-selected', className)} {...rest}>
       {lead ? <span className="plx-search-result__leading">{lead}</span> : null}
@@ -114,8 +144,22 @@ export function SearchResult({ title, href, onOpen, kind = 'page', icon, thumbna
   );
 }
 
-export function SearchResultGroup({ heading, count, label, headingLevel = 3, moreHref, onMore, moreLabel, strings, className, children, ...rest }) {
-  const t = useStrings('searchResult.group', strings);
+type SearchResultGroupProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & {
+  /** the group's heading */
+  heading?: React.ReactNode;
+  /** the number of results, shown beside the heading */
+  count?: number | null;
+  /** the list's name when there is no heading */
+  label?: string;
+  headingLevel?: number;
+  moreHref?: string;
+  onMore?(): void;
+  moreLabel?: string;
+  strings?: Catalog | null;
+  children?: React.ReactNode;
+};
+export function SearchResultGroup({ heading, count, label, headingLevel = 3, moreHref, onMore, moreLabel, strings, className, children, ...rest }: SearchResultGroupProps) {
+  const t = useStrings('searchResult.group', strings) as { more: string };
   const id = useUid('plx-search-result-group');
   const more = moreLabel || t.more;
   return (

@@ -51,7 +51,7 @@ const build = fs.readFileSync(path.join(TOKENS, 'build.json'), 'utf8');
 check('Density: build.json has no standard-comfortable entry', !build.includes('standard-comfortable'));
 check('Density: no Style Dictionary config for standard-comfortable', !fs.existsSync(path.join(ROOT, 'style-dictionary', 'index', 'density-standard-comfortable.config.json')));
 const semantic = values(JSON.parse(fs.readFileSync(path.join(TOKENS, 'semantic.tokens.json'), 'utf8')), '', []);
-check('Density: plx-sys.radius-control is still defined (4px)', semantic.some(([n, v]) => n === 'plx-sys.radius-control' && v === '{plx-sys.radius-control-4px}'));
+check('Density: plx-sys.radius-control is still defined (4px)', semantic.some(([n, v]) => n === 'plx-sys.radius-control' && v === '{plx-sys.radius-control-sm}'));
 
 console.log(failed ? 'TYPE_FLOOR_FAIL ' + failed : 'TYPE_FLOOR_OK');
 process.exit(failed ? 1 : 0);

@@ -31,12 +31,12 @@
    1919px and from 1920px the panes start wider. The values are size tokens (…-from-1440, …-from-1920); a width a person dragged to,
    or an app set, still wins. CSS media queries cannot read custom properties, so the two breakpoints are repeated here, as above ── */
 @media (1440px <= width < 1920px){
-  :root{--plx-sys-shell-nav-width:var(--plx-sys-shell-nav-width-from-1440);--plx-comp-side-panel-width-default:var(--plx-comp-side-panel-width-default-from-1440);
-    --plx-comp-secondary-pane-width-sm:var(--plx-comp-secondary-pane-width-sm-from-1440);--plx-comp-secondary-pane-width-md:var(--plx-comp-secondary-pane-width-md-from-1440);--plx-comp-secondary-pane-width-lg:var(--plx-comp-secondary-pane-width-lg-from-1440);}
+  :root{--plx-sys-shell-nav-width:var(--plx-sys-shell-nav-width-from-wide);--plx-comp-side-panel-width-default:var(--plx-comp-side-panel-width-default-from-wide);
+    --plx-comp-secondary-pane-width-sm:var(--plx-comp-secondary-pane-width-sm-from-wide);--plx-comp-secondary-pane-width-md:var(--plx-comp-secondary-pane-width-md-from-wide);--plx-comp-secondary-pane-width-lg:var(--plx-comp-secondary-pane-width-lg-from-wide);}
 }
 @media (width >= 1920px){
-  :root{--plx-sys-shell-nav-width:var(--plx-sys-shell-nav-width-from-1920);--plx-comp-side-panel-width-default:var(--plx-comp-side-panel-width-default-from-1920);
-    --plx-comp-secondary-pane-width-sm:var(--plx-comp-secondary-pane-width-sm-from-1920);--plx-comp-secondary-pane-width-md:var(--plx-comp-secondary-pane-width-md-from-1920);--plx-comp-secondary-pane-width-lg:var(--plx-comp-secondary-pane-width-lg-from-1920);}
+  :root{--plx-sys-shell-nav-width:var(--plx-sys-shell-nav-width-from-ultrawide);--plx-comp-side-panel-width-default:var(--plx-comp-side-panel-width-default-from-ultrawide);
+    --plx-comp-secondary-pane-width-sm:var(--plx-comp-secondary-pane-width-sm-from-ultrawide);--plx-comp-secondary-pane-width-md:var(--plx-comp-secondary-pane-width-md-from-ultrawide);--plx-comp-secondary-pane-width-lg:var(--plx-comp-secondary-pane-width-lg-from-ultrawide);}
 }
 .plx-shell-header{grid-area:header;}
 .plx-shell-nav{grid-area:nav;inline-size:var(--plx-sys-shell-nav-width);min-inline-size:0;}

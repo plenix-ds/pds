@@ -241,5 +241,5 @@ jobs:
         run: |
           awk -v h="## [$VERSION]" 'index($0, h) == 1 {on=1; next} on && index($0, "## [") == 1 {exit} on {print}' CHANGELOG.md > "$RUNNER_TEMP/notes.md"
           [ -s "$RUNNER_TEMP/notes.md" ] || { echo "CHANGELOG.md has no section for $VERSION"; exit 1; }
-          printf '\n---\nPackages: @plenix-ds/tokens, icons, styles, react %s · CDN: %s%s/ (SHA256SUMS, version.json) · API: https://design-system.lighthouseway.org/api/v1/\n' "$VERSION" "$CDN" "$VERSION" >> "$RUNNER_TEMP/notes.md"
+          printf '\n---\nPackages: @plenix-ds/tokens, icons, styles, react %s · CDN: %s%s/ (SHA256SUMS, version.json) · API: https://design-system.lighthouseway.org/api/v1/ · Design spec (each component page): https://design-system.lighthouseway.org/ (#114)\n' "$VERSION" "$CDN" "$VERSION" >> "$RUNNER_TEMP/notes.md"
           gh release create "$TAG" -R "$GITHUB_REPOSITORY" --verify-tag --title "Plenix $TAG" --notes-file "$RUNNER_TEMP/notes.md"

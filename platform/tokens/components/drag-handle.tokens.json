@@ -12,7 +12,7 @@
       "$description": "DragHandle: the drag icon in it (the inline control's icon)."
     },
     "drag-handle-radius": {
-      "$value": "{plx-sys.radius-compact-4px}",
+      "$value": "{plx-sys.radius-compact}",
       "$type": "dimension",
       "$description": "DragHandle: its corners (the compact radius of small controls)."
     },
