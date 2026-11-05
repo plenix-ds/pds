@@ -618,5 +618,69 @@
       }
     ],
     "why": ".plx-avatar[data-plx-color] in avatar.css: the person's own data color, soft"
+  },
+  "ai-chat--variant-full-page": {
+    "sets": [],
+    "why": "markup only: the page variant lets the conversation stack grow to its container; ai-chat.css has no rule for it"
+  },
+  "ai-chat--variant-panel": {
+    "sets": [],
+    "why": "markup only: the default; the conversation stack keeps its own height; ai-chat.css has no rule for it"
+  },
+  "ai-disclaimer--variant-footer": {
+    "sets": [],
+    "why": "markup only: renders the note as a footer element; ai-disclaimer.css sets the same gap for both"
+  },
+  "ai-disclaimer--variant-inline": {
+    "sets": [],
+    "why": "markup only: renders the note as an inline span; ai-disclaimer.css sets the same gap for both"
+  },
+  "ai-label--variant-badge": {
+    "sets": [],
+    "why": "markup only: renders a neutral Badge with the sparkle icon"
+  },
+  "ai-label--variant-inline": {
+    "sets": [],
+    "why": "markup only: renders the sparkle icon and the text in a plain inline row, with no badge"
+  },
+  "ai-label--variant-with-explanation": {
+    "sets": [],
+    "why": "markup only: renders a small ghost Button that opens a Popover with the explanation"
+  },
+  "assistant-panel--variant-inspector": {
+    "sets": [],
+    "why": "markup only: draws the chat in place, as an inspector region"
+  },
+  "assistant-panel--variant-overlay": {
+    "sets": [],
+    "why": "markup only: draws the same chat inside a Sheet"
+  },
+  "announcement--variant-banner": {
+    "sets": [],
+    "why": "markup only: renders the announcement as a banner message"
+  },
+  "announcement--variant-card": {
+    "sets": [],
+    "why": "markup only: renders the announcement inside a Card"
+  },
+  "announcement--variant-dialog": {
+    "sets": [],
+    "why": "markup only: renders the announcement in a Dialog with its actions in the footer"
+  },
+  "attachment-picker--variant-chips": {
+    "sets": [],
+    "why": "markup only: lists the files as removable Tags"
+  },
+  "attachment-picker--variant-inline": {
+    "sets": [],
+    "why": "markup only: lists the files as rows with a remove menu item"
+  },
+  "audit-log--variant-table": {
+    "sets": [],
+    "why": "markup only: the plain history table"
+  },
+  "audit-log--variant-with-diff": {
+    "sets": [],
+    "why": "markup only: adds a changes column to the same table"
   }
 }
