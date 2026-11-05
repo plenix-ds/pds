@@ -1,0 +1,14 @@
+AssertionError [ERR_ASSERTION]: after the browser enters PiP
++ actual - expected
+
++ 'Picture in picture'
+- 'Exit picture in picture'
+
+    at /home/cc/pds1/work/component-engineer-1/tests/media-player-pip-2.test.js:25:12 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'Picture in picture',
+  expected: 'Exit picture in picture',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
