@@ -116,7 +116,65 @@ export function CellStatus({ status, onClear }) {
   );
 }
 
-export function CellEditor({ column, record, value, onCommit, onCancel }) {
+// the long-text editor (ADR 0016): the cell shows the value's first line; a box over the cell (top layer, placed under the cell,
+// at least as wide as it) holds the text area, which grows to 8 lines and then scrolls. Enter adds a line, Ctrl or Command with
+// Enter saves, Escape cancels, a click outside saves, Tab saves and moves. A refusal's message sits under the text.
+const AREA_LINES = 8;
+function AreaEditor({ draft, setDraft, invalid, setInvalid, messageId, finish, cancel, input, label, done }) {
+  const first = React.useRef(null),
+    cell = React.useRef(null),
+    box = React.useRef(null);
+  React.useLayoutEffect(() => {
+    cell.current = first.current?.closest('[role="gridcell"]') ?? null;
+    const el = box.current;
+    if (el?.showPopover && !el.matches(':popover-open')) el.showPopover();
+    input.current?.focus();
+  }, []);
+  useFloating(cell, box, { open: true, placement: 'bottom-start', matchWidth: true });
+  return (
+    <>
+      <span ref={first} className="plx-data-grid__editor-first">
+        {draft.split('\n')[0]}
+      </span>
+      <span ref={box} popover="manual" className="plx-data-grid__editor-box">
+        <textarea
+          ref={input}
+          className="plx-data-grid__editor"
+          aria-label={label}
+          aria-invalid={invalid ? 'true' : undefined}
+          aria-describedby={invalid ? messageId : undefined}
+          rows={Math.min(AREA_LINES, Math.max(2, draft.split('\n').length))}
+          value={draft}
+          onChange={(e) => {
+            setDraft(e.target.value);
+            if (invalid) setInvalid(null);
+          }}
+          onBlur={() => finish()}
+          onKeyDown={(e) => {
+            e.stopPropagation();
+            if (e.key === 'Escape') {
+              done.current = true;
+              cancel();
+            } else if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+              e.preventDefault();
+              finish();
+            } else if (e.key === 'Tab' && !e.altKey && !e.ctrlKey && !e.metaKey) {
+              e.preventDefault();
+              finish(e.shiftKey ? -1 : 1);
+            }
+          }}
+        />
+        {invalid ? (
+          <span id={messageId} role="alert" className="plx-data-grid__editor-message">
+            {invalid}
+          </span>
+        ) : null}
+      </span>
+    </>
+  );
+}
+
+export function CellEditor({ column, record, value, area, onCommit, onCancel }) {
   const S = useStrings('dataGrid'),
     [draft, setDraft] = React.useState(value ?? ''),
     [invalid, setInvalid] = React.useState(null),
@@ -142,6 +200,14 @@ export function CellEditor({ column, record, value, onCommit, onCancel }) {
     }
     onCommit(next, move);
   };
+  if (area)
+    return (
+      <AreaEditor
+        {...{ draft, setDraft, invalid, setInvalid, messageId, finish, input, done }}
+        cancel={onCancel}
+        label={S.editCell.replace('{title}', column.title)}
+      />
+    );
   return (
     <>
       <input
