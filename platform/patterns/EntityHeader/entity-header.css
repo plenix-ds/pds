@@ -307,25 +307,25 @@
     var(--plx-comp-entity-header-context-media-size, var(--plx-comp-entity-header-tile-height))
   );
   border-bottom-color: var(--plx-comp-entity-header-tile-border-color);
-  border-bottom-left-radius: var(
+  border-end-start-radius: var(
     --plx-comp-entity-header-context-tile-radius,
     var(--plx-comp-entity-header-tile-radius)
   );
-  border-bottom-right-radius: var(
+  border-end-end-radius: var(
     --plx-comp-entity-header-context-tile-radius,
     var(--plx-comp-entity-header-tile-radius)
   );
   border-bottom-style: solid;
   border-bottom-width: var(--plx-state-entity-header-tile-border-width, 0px);
-  border-left-color: var(--plx-comp-entity-header-tile-border-color);
-  border-left-style: solid;
-  border-left-width: var(--plx-state-entity-header-tile-border-width, 0px);
-  border-right-color: var(--plx-comp-entity-header-tile-border-color);
-  border-right-style: solid;
-  border-right-width: var(--plx-state-entity-header-tile-border-width, 0px);
+  border-inline-end-color: var(--plx-comp-entity-header-tile-border-color);
+  border-inline-end-style: solid;
+  border-inline-end-width: var(--plx-state-entity-header-tile-border-width, 0px);
+  border-inline-start-color: var(--plx-comp-entity-header-tile-border-color);
+  border-inline-start-style: solid;
+  border-inline-start-width: var(--plx-state-entity-header-tile-border-width, 0px);
   border-top-color: var(--plx-comp-entity-header-tile-border-color);
-  border-top-left-radius: var(--plx-comp-entity-header-context-tile-radius, var(--plx-comp-entity-header-tile-radius));
-  border-top-right-radius: var(--plx-comp-entity-header-context-tile-radius, var(--plx-comp-entity-header-tile-radius));
+  border-start-start-radius: var(--plx-comp-entity-header-context-tile-radius, var(--plx-comp-entity-header-tile-radius));
+  border-start-end-radius: var(--plx-comp-entity-header-context-tile-radius, var(--plx-comp-entity-header-tile-radius));
   border-top-style: solid;
   border-top-width: var(--plx-state-entity-header-tile-border-width, 0px);
   color: var(--plx-state-entity-header-tile-text);

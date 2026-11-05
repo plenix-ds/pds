@@ -53,7 +53,7 @@
       "$description": "Rich tooltip: it wraps at 320px (the popover's md width)."
     },
     "tooltip-rich-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "Rich tooltip: the size of the title and the body."
     },

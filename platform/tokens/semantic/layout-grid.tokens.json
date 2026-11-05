@@ -2,52 +2,52 @@
   "$description": "The layout grid (library plan wave 1, foundation layout-grid): columns, gutters and margins per window class (Narrow, Medium, Wide), the contained width and the dev overlay. system/layout-grid.css draws .plx-layout-grid from them.",
   "plx-sys": {
     "layout-grid-columns-narrow": {
-      "$value": "{plx-ref.grid-columns-4}",
+      "$value": "{plx-ref.grid-columns-sm}",
       "$type": "number",
       "$description": "Layout grid: the columns on Narrow windows (under 600px)."
     },
     "layout-grid-gutter-narrow": {
-      "$value": "{plx-ref.grid-gutter-12px}",
+      "$value": "{plx-ref.grid-gutter-sm}",
       "$type": "dimension",
       "$description": "Layout grid: the space between columns on Narrow windows (under 600px)."
     },
     "layout-grid-margin-narrow": {
-      "$value": "{plx-ref.grid-margin-16px}",
+      "$value": "{plx-ref.grid-margin-sm}",
       "$type": "dimension",
       "$description": "Layout grid: the space at the start and end edges on Narrow windows (under 600px)."
     },
     "layout-grid-columns-medium": {
-      "$value": "{plx-ref.grid-columns-8}",
+      "$value": "{plx-ref.grid-columns-md}",
       "$type": "number",
       "$description": "Layout grid: the columns on Medium windows (600 to 839px)."
     },
     "layout-grid-gutter-medium": {
-      "$value": "{plx-ref.grid-gutter-16px}",
+      "$value": "{plx-ref.grid-gutter-md}",
       "$type": "dimension",
       "$description": "Layout grid: the space between columns on Medium windows (600 to 839px)."
     },
     "layout-grid-margin-medium": {
-      "$value": "{plx-ref.grid-margin-24px}",
+      "$value": "{plx-ref.grid-margin-md}",
       "$type": "dimension",
       "$description": "Layout grid: the space at the start and end edges on Medium windows (600 to 839px)."
     },
     "layout-grid-columns-wide": {
-      "$value": "{plx-ref.grid-columns-12}",
+      "$value": "{plx-ref.grid-columns-lg}",
       "$type": "number",
       "$description": "Layout grid: the columns on Wide windows (840px and wider)."
     },
     "layout-grid-gutter-wide": {
-      "$value": "{plx-ref.grid-gutter-24px}",
+      "$value": "{plx-ref.grid-gutter-lg}",
       "$type": "dimension",
       "$description": "Layout grid: the space between columns on Wide windows (840px and wider)."
     },
     "layout-grid-margin-wide": {
-      "$value": "{plx-ref.grid-margin-32px}",
+      "$value": "{plx-ref.grid-margin-lg}",
       "$type": "dimension",
       "$description": "Layout grid: the space at the start and end edges on Wide windows (840px and wider)."
     },
     "layout-grid-contained-max": {
-      "$value": "{plx-ref.content-max-1200px}",
+      "$value": "{plx-ref.content-max-lg}",
       "$type": "dimension",
       "$description": "Layout grid, contained: the widest the grid grows; it centers in wider windows."
     },

@@ -37,7 +37,7 @@
       "$description": "LoadMore loading: gap (space-inline-sm)."
     },
     "load-more-loading-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "LoadMore loading: font size (font-size-13)."
     },
@@ -57,7 +57,7 @@
       "$description": "LoadMore count: font (font-data)."
     },
     "load-more-count-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "LoadMore count: font size (font-size-12)."
     },
@@ -67,7 +67,7 @@
       "$description": "LoadMore end: text color (content-muted)."
     },
     "load-more-end-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "LoadMore end: font size (font-size-13)."
     }

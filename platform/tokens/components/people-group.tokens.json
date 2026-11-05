@@ -7,7 +7,7 @@
       "$description": "PeopleGroup: gap between the picture, the text and the members (space-inline-md)."
     },
     "people-group-body-gap": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension",
       "$description": "PeopleGroup: gap between the text lines (space-4px)."
     },
@@ -17,7 +17,7 @@
       "$description": "PeopleGroup: name color (content-default)."
     },
     "people-group-name-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "PeopleGroup: name text size (font-size-13)."
     },
@@ -32,7 +32,7 @@
       "$description": "PeopleGroup: kind, count and source color (content-muted)."
     },
     "people-group-meta-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "PeopleGroup: kind, count and source text size (font-size-12)."
     },
@@ -52,7 +52,7 @@
       "$description": "PeopleGroup: description color (content-muted)."
     },
     "people-group-description-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "PeopleGroup: description text size (font-size-12)."
     },

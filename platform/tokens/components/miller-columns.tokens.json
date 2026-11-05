@@ -27,7 +27,7 @@
       "$description": "MillerColumns: text color (content-default)."
     },
     "miller-columns-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "MillerColumns: font size (font-size-13)."
     },
@@ -92,7 +92,7 @@
       "$description": "MillerColumns list: padding left and right (space-inset-xs)."
     },
     "miller-columns-list-row-gap": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension",
       "$description": "MillerColumns list: gap between rows (space-4px)."
     },

@@ -4,13 +4,13 @@
     "heading-text": { "$value": "{plx-sys.content-default}", "$type": "color", "$description": "Every heading: the default content color." },
     "heading-font-family": { "$value": "{plx-sys.font-heading}", "$type": "fontFamily", "$description": "Every heading: the heading font (DM Sans)." },
     "heading-line-height": { "$value": "{plx-ref.line-height-tight}", "$type": "number", "$description": "Every heading: tight lines." },
-    "heading-size-1-font-size": { "$value": "{plx-ref.font-size-20}", "$type": "dimension", "$description": "Level 1, the page title: 20px (Text title's size)." },
+    "heading-size-1-font-size": { "$value": "{plx-ref.font-size-600}", "$type": "dimension", "$description": "Level 1, the page title: 20px (Text title's size)." },
     "heading-size-1-font-weight": { "$value": "{plx-sys.font-weight-bold}", "$type": "fontWeight", "$description": "Level 1: bold." },
-    "heading-size-2-font-size": { "$value": "{plx-ref.font-size-18}", "$type": "dimension", "$description": "Level 2, a section of the page: 18px (the record title's size)." },
+    "heading-size-2-font-size": { "$value": "{plx-ref.font-size-500}", "$type": "dimension", "$description": "Level 2, a section of the page: 18px (the record title's size)." },
     "heading-size-2-font-weight": { "$value": "{plx-sys.font-weight-semibold}", "$type": "fontWeight", "$description": "Level 2: semibold." },
-    "heading-size-3-font-size": { "$value": "{plx-ref.font-size-15}", "$type": "dimension", "$description": "Level 3: 15px." },
+    "heading-size-3-font-size": { "$value": "{plx-ref.font-size-400}", "$type": "dimension", "$description": "Level 3: 15px." },
     "heading-size-3-font-weight": { "$value": "{plx-sys.font-weight-semibold}", "$type": "fontWeight", "$description": "Level 3: semibold." },
-    "heading-size-4-font-size": { "$value": "{plx-ref.font-size-13}", "$type": "dimension", "$description": "Level 4 (and 5, 6): 13px (Text heading's size)." },
+    "heading-size-4-font-size": { "$value": "{plx-ref.font-size-200}", "$type": "dimension", "$description": "Level 4 (and 5, 6): 13px (Text heading's size)." },
     "heading-size-4-font-weight": { "$value": "{plx-sys.font-weight-semibold}", "$type": "fontWeight", "$description": "Level 4: semibold." }
   }
 }

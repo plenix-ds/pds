@@ -127,7 +127,7 @@
       "$description": "TimePicker option: font (font-data)."
     },
     "time-picker-option-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "TimePicker option: font size (font-size-13)."
     },
@@ -167,7 +167,7 @@
       "$description": "TimePicker segment: minimum width (size-24px)."
     },
     "time-picker-segment-padding-inline": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension",
       "$description": "TimePicker segment: padding left and right (space-4px)."
     },
@@ -187,7 +187,7 @@
       "$description": "TimePicker segment empty: text color (content-subtle)."
     },
     "time-picker-segment-period-margin-inline-start": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension",
       "$description": "TimePicker segment  period margin inline start: segment  period margin inline start (space-4px)."
     },

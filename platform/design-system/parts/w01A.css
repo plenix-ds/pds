@@ -6,7 +6,7 @@
 /* measured items: as tall as their text */
 .ds-virtual-demo--measured>.ds-virtual-demo__item{block-size:auto;padding-block-end:var(--plx-sys-space-inset-xs);padding-block-start:var(--plx-sys-space-inset-xs);}
 /* a grid of tiles: as many columns as fit, each tile one item square */
-.ds-virtual-demo--grid{--plx-sys-virtual-item-gap:var(--plx-ref-space-8px);--plx-sys-virtual-item-size:var(--plx-ref-size-20u);column-gap:var(--plx-sys-virtual-item-gap);display:grid;grid-template-columns:repeat(auto-fill,var(--plx-sys-virtual-item-size));inline-size:var(--plx-ref-size-100u);padding-inline-end:var(--plx-ref-space-8px);padding-inline-start:var(--plx-ref-space-8px);row-gap:var(--plx-sys-virtual-item-gap);}
+.ds-virtual-demo--grid{--plx-sys-virtual-item-gap:var(--plx-ref-space-2u);--plx-sys-virtual-item-size:var(--plx-ref-size-20u);column-gap:var(--plx-sys-virtual-item-gap);display:grid;grid-template-columns:repeat(auto-fill,var(--plx-sys-virtual-item-size));inline-size:var(--plx-ref-size-100u);padding-inline-end:var(--plx-ref-space-2u);padding-inline-start:var(--plx-ref-space-2u);row-gap:var(--plx-sys-virtual-item-gap);}
 .ds-virtual-demo__tile{align-items:center;background-color:var(--plx-sys-surface-sunken);block-size:var(--plx-sys-virtual-item-size);border-radius:var(--plx-sys-radius-card-6px);display:flex;justify-content:center;}
 /* a horizontal strip: one row of items, each one item wide */
 .ds-virtual-demo--x{--plx-sys-virtual-item-size:var(--plx-ref-size-30u);block-size:auto;display:flex;inline-size:var(--plx-ref-size-100u);overflow-x:auto;overflow-y:hidden;}

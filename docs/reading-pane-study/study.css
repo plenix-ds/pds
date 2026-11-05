@@ -1,3 +1,3 @@
 /* Reading pane demo (owner, 2026-10-16): the page around the Platform's SplitView (platform/patterns/SplitView), which
    draws the panels, the divider and the reading pane. Tokens only. */
-.study-page{block-size:100%;box-sizing:border-box;display:flex;flex:1 1 0%;flex-direction:column;gap:var(--plx-ref-space-12px);min-block-size:0;min-inline-size:0;padding-block:var(--plx-ref-space-16px);padding-inline:var(--plx-ref-space-24px);}
+.study-page{block-size:100%;box-sizing:border-box;display:flex;flex:1 1 0%;flex-direction:column;gap:var(--plx-ref-space-3u);min-block-size:0;min-inline-size:0;padding-block:var(--plx-ref-space-4u);padding-inline:var(--plx-ref-space-6u);}

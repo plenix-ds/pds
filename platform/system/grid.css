@@ -50,14 +50,14 @@
 @property --plx-state-page-grid-columns{syntax:"*";inherits:false;}
 @property --plx-state-page-grid-gutter{syntax:"*";inherits:false;}
 @property --plx-state-page-grid-page-margin{syntax:"*";inherits:false;}
-.plx-page-grid{--plx-comp-page-grid-columns:var(--plx-state-page-grid-columns,var(--plx-ref-grid-columns-4));--plx-comp-page-grid-gutter:var(--plx-state-page-grid-gutter,var(--plx-ref-grid-gutter-12px));--plx-comp-page-grid-page-margin:var(--plx-state-page-grid-page-margin,var(--plx-ref-grid-margin-16px));column-gap:var(--plx-comp-page-grid-gutter);display:grid;grid-auto-rows:min-content;grid-template-columns:repeat(var(--plx-comp-page-grid-columns),minmax(0,1fr));inline-size:100%;min-inline-size:0;padding-inline-end:var(--plx-comp-page-grid-page-margin);padding-inline-start:var(--plx-comp-page-grid-page-margin);row-gap:0;}
-@container main-region (600px <= width < 1024px){.plx-page-grid{--plx-state-page-grid-columns:var(--plx-ref-grid-columns-8);--plx-state-page-grid-gutter:var(--plx-sys-grid-gutter);--plx-state-page-grid-page-margin:var(--plx-ref-grid-margin-24px);}}
-@container main-region (1024px <= width < 1440px){.plx-page-grid{--plx-state-page-grid-columns:var(--plx-ref-grid-columns-12);--plx-state-page-grid-gutter:var(--plx-sys-grid-gutter);--plx-state-page-grid-page-margin:var(--plx-sys-page-margin-desktop);}}
-@container main-region (1440px <= width < 1920px){.plx-page-grid{--plx-state-page-grid-columns:var(--plx-ref-grid-columns-16);--plx-state-page-grid-gutter:var(--plx-sys-grid-gutter);--plx-state-page-grid-page-margin:var(--plx-sys-page-margin-wide);}}
+.plx-page-grid{--plx-comp-page-grid-columns:var(--plx-state-page-grid-columns,var(--plx-ref-grid-columns-sm));--plx-comp-page-grid-gutter:var(--plx-state-page-grid-gutter,var(--plx-ref-grid-gutter-sm));--plx-comp-page-grid-page-margin:var(--plx-state-page-grid-page-margin,var(--plx-ref-grid-margin-sm));column-gap:var(--plx-comp-page-grid-gutter);display:grid;grid-auto-rows:min-content;grid-template-columns:repeat(var(--plx-comp-page-grid-columns),minmax(0,1fr));inline-size:100%;min-inline-size:0;padding-inline-end:var(--plx-comp-page-grid-page-margin);padding-inline-start:var(--plx-comp-page-grid-page-margin);row-gap:0;}
+@container main-region (600px <= width < 1024px){.plx-page-grid{--plx-state-page-grid-columns:var(--plx-ref-grid-columns-md);--plx-state-page-grid-gutter:var(--plx-sys-grid-gutter);--plx-state-page-grid-page-margin:var(--plx-ref-grid-margin-md);}}
+@container main-region (1024px <= width < 1440px){.plx-page-grid{--plx-state-page-grid-columns:var(--plx-ref-grid-columns-lg);--plx-state-page-grid-gutter:var(--plx-sys-grid-gutter);--plx-state-page-grid-page-margin:var(--plx-sys-page-margin-desktop);}}
+@container main-region (1440px <= width < 1920px){.plx-page-grid{--plx-state-page-grid-columns:var(--plx-ref-grid-columns-xl);--plx-state-page-grid-gutter:var(--plx-sys-grid-gutter);--plx-state-page-grid-page-margin:var(--plx-sys-page-margin-wide);}}
 /* 1920px and wider: still 16 columns; data-plx-ultra-wide="comfortable" widens the gutter */
 @container main-region (width >= 1920px){
-  .plx-page-grid:where(:not([data-plx-ultra-wide="comfortable"])){--plx-state-page-grid-columns:var(--plx-ref-grid-columns-16);--plx-state-page-grid-gutter:var(--plx-sys-grid-gutter);--plx-state-page-grid-page-margin:var(--plx-sys-page-margin-wide);}
-  .plx-page-grid[data-plx-ultra-wide="comfortable"]{--plx-state-page-grid-columns:var(--plx-ref-grid-columns-16);--plx-state-page-grid-gutter:var(--plx-ref-grid-gutter-24px);--plx-state-page-grid-page-margin:var(--plx-sys-page-margin-wide);}
+  .plx-page-grid:where(:not([data-plx-ultra-wide="comfortable"])){--plx-state-page-grid-columns:var(--plx-ref-grid-columns-xl);--plx-state-page-grid-gutter:var(--plx-sys-grid-gutter);--plx-state-page-grid-page-margin:var(--plx-sys-page-margin-wide);}
+  .plx-page-grid[data-plx-ultra-wide="comfortable"]{--plx-state-page-grid-columns:var(--plx-ref-grid-columns-xl);--plx-state-page-grid-gutter:var(--plx-ref-grid-gutter-lg);--plx-state-page-grid-page-margin:var(--plx-sys-page-margin-wide);}
 }
 
 /* ── spans: a child of the grid takes the full width or N columns, never more than the grid has (a span of 13 in a
@@ -69,10 +69,10 @@
 .plx-span-13{grid-column:span min(13,var(--plx-comp-page-grid-columns,16));min-inline-size:0;}.plx-span-14{grid-column:span min(14,var(--plx-comp-page-grid-columns,16));min-inline-size:0;}.plx-span-15{grid-column:span min(15,var(--plx-comp-page-grid-columns,16));min-inline-size:0;}.plx-span-16{grid-column:span min(16,var(--plx-comp-page-grid-columns,16));min-inline-size:0;}
 
 /* ── bounded content: readable widths that do not stretch with the screen ── */
-.plx-content-prose{grid-column:1 / -1;inline-size:min(100%,var(--plx-ref-content-max-760px));}
-.plx-content-form{grid-column:1 / -1;inline-size:min(100%,var(--plx-ref-content-max-960px));}
-.plx-content-detail{grid-column:1 / -1;inline-size:min(100%,var(--plx-ref-content-max-1200px));}
-.plx-content-editor{grid-column:1 / -1;inline-size:min(100%,var(--plx-ref-content-max-1600px));}
+.plx-content-prose{grid-column:1 / -1;inline-size:min(100%,var(--plx-ref-content-max-sm));}
+.plx-content-form{grid-column:1 / -1;inline-size:min(100%,var(--plx-ref-content-max-md));}
+.plx-content-detail{grid-column:1 / -1;inline-size:min(100%,var(--plx-ref-content-max-lg));}
+.plx-content-editor{grid-column:1 / -1;inline-size:min(100%,var(--plx-ref-content-max-xl));}
 .plx-content-workspace{grid-column:1 / -1;inline-size:100%;min-inline-size:0;}
 
 /* ── compositions: 4+8+4 (tree/filter, work surface, context), 4+12, 12+4, 8+8. Below their usable width the side

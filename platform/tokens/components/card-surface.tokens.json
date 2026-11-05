@@ -8,7 +8,7 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "card-surface-inset-shadow": {
-      "$value": "inset 0 0 {plx-ref.space-12px} {plx-sys.card-surface-rim}",
+      "$value": "inset 0 0 {plx-ref.space-3u} {plx-sys.card-surface-rim}",
       "$type": "shadow",
       "$description": "Inset: a 12px soft inner edge in the rim color.",
       "$extensions": { "com.plenix": { "webOnly": true } }

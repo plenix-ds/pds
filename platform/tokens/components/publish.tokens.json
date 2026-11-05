@@ -22,7 +22,7 @@
       "$description": "Publish: status line color (content-muted)."
     },
     "publish-detail-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "Publish: status line size (font-size-12)."
     },

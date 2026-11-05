@@ -4,7 +4,8 @@
 //   value      is a bare number equal to the token's own value, resolved through its references, read as px (1rem =
 //              16px), as a percent (0.3 -> 30) or as ms (0.2s -> 200): font-size-13 (0.8125rem), opacity-30 (0.3),
 //              font-weight-regular-400 (400)
-//   breakpoint is a bare number equal to a breakpoint's px value (a plx-ref breakpoint-*): from-1440
+//   breakpoint is a bare number equal to a breakpoint's px value (a plx-ref breakpoint-*): from-1440 (a number after from, below, above,
+//              until, min or max; an ordinal step such as color-gray-600 or font-size-600 is not a breakpoint)
 // Ordinal steps (color-blue-500, 2xs … 4xl) are fine: their number is not their value. A $deprecated token (the old name a
 // rename keeps as an alias until 2.0.0, docs/adr/0002) is skipped.
 // Known findings (the 0.x debt, measured 2026-11-05) are in token-names.baseline.json; it only shrinks: a known finding
@@ -52,12 +53,13 @@ function raw(docs) {
     const parts = d.name.split('-');
     const value = resolve(d), read = value == null ? new Set() : readings(value);
     let why = null;
-    for (const p of parts) {
+    for (let i = 0; i < parts.length; i++) {
+      const p = parts[i];
       if (UNIT.test(p)) { why = 'has a unit in its name (' + p + ')'; break; }
       if (/^\d+$/.test(p)) {
         const n = parseInt(p, 10);
         if (read.has(n)) { why = 'has its value in its name (' + p + ' = ' + value + ')'; break; }
-        if (breakpoints.has(n)) { why = 'has a breakpoint value in its name (' + p + '): name the breakpoint by role'; break; }
+        if (breakpoints.has(n) && /^(from|below|above|until|min|max)$/.test(parts[i - 1] || '')) { why = 'has a breakpoint value in its name (' + p + '): name the breakpoint by role'; break; }
       }
     }
     if (why) { seen.add(self); out.push({ key: self, file: d.file, text: self + ' ' + why }); }

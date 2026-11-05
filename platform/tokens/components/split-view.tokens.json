@@ -1,8 +1,8 @@
 {
   "$description": "SplitView and ReadingPane (platform/patterns/SplitView; owner, 2026-10-16): two panels sharing their room, side by side or stacked, with a divider between (an 8px gutter with two thin lines and a three-line grip, the whole gap the target), and the reading pane's frame (the data grid's).",
   "plx-comp": {
-    "split-view-gap": { "$value": "{plx-ref.space-8px}", "$type": "dimension", "$description": "The gap between the panels: the divider's gutter, two thin lines and a grip, the whole gap its target (owner, 2026-10-26: the uiwjs look, 8px on the 4px grid)." },
-    "split-view-padding": { "$value": "{plx-ref.space-16px}", "$type": "dimension", "$description": "The room all around the split view, so its panels never touch the rest of the screen (owner, 2026-10-27, splitview-design-29: A, 16px on the 4px grid)." },
+    "split-view-gap": { "$value": "{plx-ref.space-2u}", "$type": "dimension", "$description": "The gap between the panels: the divider's gutter, two thin lines and a grip, the whole gap its target (owner, 2026-10-26: the uiwjs look, 8px on the 4px grid)." },
+    "split-view-padding": { "$value": "{plx-ref.space-4u}", "$type": "dimension", "$description": "The room all around the split view, so its panels never touch the rest of the screen (owner, 2026-10-27, splitview-design-29: A, 16px on the 4px grid)." },
     "split-view-radius": { "$value": "{plx-sys.shape-md}", "$type": "dimension", "$description": "The panels' outer corners, the same on both (owner, 2026-10-27, splitview-design-29: both 6px); the corners at the divider are square." },
     "split-view-second-min-width": { "$value": "{plx-ref.size-80u}", "$type": "dimension", "$description": "Side by side: the second panel never gets narrower than this (under the split view's 900px they stack)." },
     "split-view-second-min-height": { "$value": "{plx-ref.size-40u}", "$type": "dimension", "$description": "Stacked: the second panel never gets shorter than this; the divider stops where the second panel would (issue 560)." },
@@ -10,11 +10,11 @@
     "reading-pane-border-color": { "$value": "{plx-sys.data-grid-border}", "$type": "color", "$description": "The reading pane's frame (the data grid's)." },
     "reading-pane-border-width": { "$value": "{plx-sys.border-width-thin}", "$type": "dimension", "$description": "The reading pane's frame and the actions row's line." },
     "reading-pane-radius": { "$value": "{plx-sys.shape-md}", "$type": "dimension", "$description": "The reading pane's corners (the data grid's)." },
-    "reading-pane-actions-gap": { "$value": "{plx-ref.space-8px}", "$type": "dimension", "$description": "Between the actions in their row." },
-    "reading-pane-actions-padding-block": { "$value": "{plx-ref.space-12px}", "$type": "dimension", "$description": "The actions row's room above and below." },
-    "reading-pane-actions-padding-inline": { "$value": "{plx-ref.space-16px}", "$type": "dimension", "$description": "The actions row's room at its ends." },
+    "reading-pane-actions-gap": { "$value": "{plx-ref.space-2u}", "$type": "dimension", "$description": "Between the actions in their row." },
+    "reading-pane-actions-padding-block": { "$value": "{plx-ref.space-3u}", "$type": "dimension", "$description": "The actions row's room above and below." },
+    "reading-pane-actions-padding-inline": { "$value": "{plx-ref.space-4u}", "$type": "dimension", "$description": "The actions row's room at its ends." },
     "reading-pane-rule-color": { "$value": "{plx-sys.data-grid-border}", "$type": "color", "$description": "The thin line under the actions." },
-    "reading-pane-rule-inset": { "$value": "{plx-ref.space-16px}", "$type": "dimension", "$description": "The line under the actions stops this far from each edge (owner: it does not touch the edges)." },
-    "reading-pane-body-padding": { "$value": "{plx-ref.space-24px}", "$type": "dimension", "$description": "Room around the item." }
+    "reading-pane-rule-inset": { "$value": "{plx-ref.space-4u}", "$type": "dimension", "$description": "The line under the actions stops this far from each edge (owner: it does not touch the edges)." },
+    "reading-pane-body-padding": { "$value": "{plx-ref.space-6u}", "$type": "dimension", "$description": "Room around the item." }
   }
 }

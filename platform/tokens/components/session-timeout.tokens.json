@@ -7,7 +7,7 @@
       "$description": "SessionTimeout: the message’s text (content-default)."
     },
     "session-timeout-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "SessionTimeout: the message’s size (font-size-13)."
     },
@@ -52,7 +52,7 @@
       "$description": "SessionTimeout: in the page: the title’s font (font-heading)."
     },
     "session-timeout-title-font-size": {
-      "$value": "{plx-ref.font-size-15}",
+      "$value": "{plx-ref.font-size-400}",
       "$type": "dimension",
       "$description": "SessionTimeout: in the page: the title’s size (font-size-15, a dialog title’s)."
     },

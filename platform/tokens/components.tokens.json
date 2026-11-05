@@ -9,7 +9,7 @@
   },
   "plx-comp": {
     "button-height-xs": {
-      "$value": "{plx-ref.control-size-24px}",
+      "$value": "{plx-ref.control-size-6u}",
       "$type": "dimension",
       "$extensions": {
         "com.plenix": {
@@ -20,15 +20,15 @@
       }
     },
     "button-height-3xl": {
-      "$value": "{plx-ref.control-size-48px}",
+      "$value": "{plx-ref.control-size-12u}",
       "$type": "dimension"
     },
     "button-height-4xl": {
-      "$value": "{plx-ref.control-size-52px}",
+      "$value": "{plx-ref.control-size-13u}",
       "$type": "dimension"
     },
     "button-size-md-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$extensions": {
         "com.plenix": {
@@ -89,7 +89,7 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-size-sm-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "button-size-sm-font-weight": {
@@ -142,7 +142,7 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-size-xs-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "button-size-xs-font-weight": {
@@ -248,7 +248,7 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-size-lg-font-size": {
-      "$value": "{plx-ref.font-size-14}",
+      "$value": "{plx-ref.font-size-300}",
       "$type": "dimension"
     },
     "button-size-lg-font-weight": {
@@ -926,7 +926,7 @@
       "$type": "dimension"
     },
     "select-control-padding-inline-end": {
-      "$value": "{plx-ref.space-32px}",
+      "$value": "{plx-ref.space-8u}",
       "$type": "dimension"
     },
     "select-list-background": {
@@ -1078,7 +1078,7 @@
       "$type": "dimension"
     },
     "check-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "check-min-height": {
@@ -1191,7 +1191,7 @@
       "$type": "color"
     },
     "choice-list-legend-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "choice-list-legend-font-weight": {
@@ -1276,7 +1276,7 @@
       "$type": "color"
     },
     "choice-label-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "choice-label-font-weight": {
@@ -1288,7 +1288,7 @@
       "$type": "color"
     },
     "choice-description-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "choice-disabled-opacity": {
@@ -1301,7 +1301,7 @@
       "$type": "dimension"
     },
     "switch-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "switch-min-height": {
@@ -1446,7 +1446,7 @@
       "$type": "number"
     },
     "field-row-label-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "field-row-label-line-height": {
@@ -1467,7 +1467,7 @@
       "$type": "dimension"
     },
     "field-row-description-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "field-error-text": {
@@ -1605,7 +1605,7 @@
       "$type": "dimension"
     },
     "data-grid-header-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "data-grid-header-font-weight": {
@@ -1629,11 +1629,11 @@
       "$type": "number"
     },
     "data-grid-cell-padding-inline": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension"
     },
     "table-cell-padding-inline": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension"
     },
     "data-grid-header-line-inset": {
@@ -1665,7 +1665,7 @@
       "$type": "dimension"
     },
     "data-grid-header-icon-size": {
-      "$value": "{plx-ref.glyph-size-14px}",
+      "$value": "{plx-ref.glyph-size-md}",
       "$type": "dimension"
     },
     "data-grid-sorter-inset": {
@@ -1678,7 +1678,7 @@
       "$type": "dimension"
     },
     "data-grid-title-reserve": {
-      "$value": "calc({plx-comp.data-grid-popup-button-inset} + {plx-comp.data-grid-cell-padding-inline} + {plx-comp.data-grid-header-icon-size} + {plx-ref.space-4px})",
+      "$value": "calc({plx-comp.data-grid-popup-button-inset} + {plx-comp.data-grid-cell-padding-inline} + {plx-comp.data-grid-header-icon-size} + {plx-ref.space-1u})",
       "$description": "DataGrid header: the room the title leaves at its end for the menu button (the button's inset and width, less the cell padding the title area already stops short by, plus a 4px gap).",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
@@ -1696,7 +1696,7 @@
       "$type": "dimension"
     },
     "data-grid-tree-control-size": {
-      "$value": "{plx-ref.glyph-size-14px}",
+      "$value": "{plx-ref.glyph-size-md}",
       "$type": "dimension"
     },
     "data-grid-tree-control-radius": {
@@ -1712,7 +1712,7 @@
       "$type": "fontWeight"
     },
     "data-grid-placeholder-font-size": {
-      "$value": "{plx-ref.font-size-14}",
+      "$value": "{plx-ref.font-size-300}",
       "$type": "dimension"
     },
     "data-grid-placeholder-font-weight": {
@@ -2021,7 +2021,7 @@
       "$description": "Count pill, danger: the negative status pill border, shade 300."
     },
     "status-dot-height": {
-      "$value": "{plx-ref.glyph-size-6px}",
+      "$value": "{plx-ref.glyph-size-xs}",
       "$type": "dimension"
     },
     "status-dot-radius": {
@@ -2029,7 +2029,7 @@
       "$type": "dimension"
     },
     "status-dot-width": {
-      "$value": "{plx-ref.glyph-size-6px}",
+      "$value": "{plx-ref.glyph-size-xs}",
       "$type": "dimension"
     },
     "status-dot-neutral-background": {
@@ -2061,7 +2061,7 @@
       "$type": "dimension"
     },
     "notice-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "notice-padding-block": {
@@ -2224,7 +2224,7 @@
       "$type": "color"
     },
     "progress-bar-label-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "progress-bar-value-text": {
@@ -2369,7 +2369,7 @@
       "$type": "color"
     },
     "tag-remove-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "tag-remove-width": {
@@ -2648,7 +2648,7 @@
       "$type": "dimension"
     },
     "sheet-grabber-inset-block-start": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension",
       "$description": "The bar's place in the band: (band - bar) / 2"
     },
@@ -2707,7 +2707,7 @@
       "$type": "fontFamily"
     },
     "sheet-title-font-size": {
-      "$value": "{plx-ref.font-size-15}",
+      "$value": "{plx-ref.font-size-400}",
       "$type": "dimension"
     },
     "sheet-title-font-weight": {
@@ -2787,7 +2787,7 @@
       "$type": "fontFamily"
     },
     "dialog-title-font-size": {
-      "$value": "{plx-ref.font-size-15}",
+      "$value": "{plx-ref.font-size-400}",
       "$type": "dimension"
     },
     "dialog-title-font-weight": {
@@ -2811,7 +2811,7 @@
       "$type": "color"
     },
     "dialog-description-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "dialog-description-line-height": {
@@ -2900,7 +2900,7 @@
       "$type": "dimension"
     },
     "toast-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "toast-max-width": {
@@ -3318,7 +3318,7 @@
       "$type": "dimension"
     },
     "app-header-brand-font-size": {
-      "$value": "{plx-ref.font-size-15}",
+      "$value": "{plx-ref.font-size-400}",
       "$type": "dimension"
     },
     "app-header-brand-font-weight": {
@@ -3399,12 +3399,12 @@
       "$type": "color"
     },
     "app-header-count-inset-block-start": {
-      "$value": "calc({plx-ref.space-4px} * -1)",
+      "$value": "calc({plx-ref.space-1u} * -1)",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "app-header-count-inset-inline-end": {
-      "$value": "calc({plx-ref.space-4px} * -1)",
+      "$value": "calc({plx-ref.space-1u} * -1)",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
@@ -3477,7 +3477,7 @@
       "$type": "dimension"
     },
     "app-switcher-panel-inset-block-start": {
-      "$value": "calc(100% + {plx-ref.space-8px})",
+      "$value": "calc(100% + {plx-ref.space-2u})",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
@@ -3518,7 +3518,7 @@
       "$type": "color"
     },
     "app-switcher-heading-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "app-switcher-heading-font-weight": {
@@ -3550,7 +3550,7 @@
       "$type": "color"
     },
     "app-switcher-open-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "app-switcher-open-padding-block": {
@@ -3833,7 +3833,7 @@
       "$type": "dimension"
     },
     "menu-item-font-size": {
-      "$value": "{plx-ref.font-size-15}",
+      "$value": "{plx-ref.font-size-400}",
       "$type": "dimension",
       "$description": "Menu item: 15px, so DM Sans draws as large as Blueprint's 14px system text (#805, owner 2026-11-01): DM Sans's x-height is 0.50 em against Blueprint's 0.53 (7.5px against 7.4px)."
     },
@@ -3935,7 +3935,7 @@
       "$description": "Menu group heading: the strongest text, the same color as the items, as Blueprint (#805)."
     },
     "menu-group-label-font-size": {
-      "$value": "{plx-ref.font-size-15}",
+      "$value": "{plx-ref.font-size-400}",
       "$type": "dimension",
       "$description": "Menu group heading: 15px, as the items, the size of Blueprint's 14px heading in DM Sans (#805)."
     },
@@ -4082,7 +4082,7 @@
       "$type": "dimension"
     },
     "app-header-action-height": {
-      "$value": "{plx-ref.control-size-32px}",
+      "$value": "{plx-ref.control-size-8u}",
       "$type": "dimension"
     },
     "app-header-action-icon-size": {
@@ -4170,7 +4170,7 @@
       "$type": "dimension"
     },
     "avatar-32-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "avatar-32-width": {
@@ -4186,7 +4186,7 @@
       "$type": "dimension"
     },
     "avatar-40-font-size": {
-      "$value": "{plx-ref.font-size-15}",
+      "$value": "{plx-ref.font-size-400}",
       "$type": "dimension"
     },
     "avatar-40-width": {
@@ -4202,7 +4202,7 @@
       "$type": "dimension"
     },
     "avatar-48-font-size": {
-      "$value": "{plx-ref.font-size-18}",
+      "$value": "{plx-ref.font-size-500}",
       "$type": "dimension"
     },
     "avatar-48-width": {
@@ -4218,7 +4218,7 @@
       "$type": "dimension"
     },
     "avatar-64-font-size": {
-      "$value": "{plx-ref.font-size-20}",
+      "$value": "{plx-ref.font-size-600}",
       "$type": "dimension"
     },
     "avatar-64-width": {
@@ -4242,7 +4242,7 @@
       "$type": "dimension"
     },
     "breadcrumbs-list-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "breadcrumbs-list-row-gap": {
@@ -4330,7 +4330,7 @@
       "$type": "fontFamily"
     },
     "panel-title-font-size": {
-      "$value": "{plx-ref.font-size-14}",
+      "$value": "{plx-ref.font-size-300}",
       "$type": "dimension"
     },
     "panel-title-font-weight": {
@@ -4342,7 +4342,7 @@
       "$type": "color"
     },
     "panel-description-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "panel-actions-gap": {
@@ -4456,7 +4456,7 @@
       "$type": "color"
     },
     "card-title-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "card-title-font-weight": {
@@ -4480,7 +4480,7 @@
       "$type": "color"
     },
     "card-meta-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "card-body-text": {
@@ -4488,7 +4488,7 @@
       "$type": "color"
     },
     "card-body-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "media-card-background": {
@@ -4578,7 +4578,7 @@
       "$type": "color"
     },
     "media-card-title-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "media-card-title-font-weight": {
@@ -4719,7 +4719,7 @@
       "$type": "fontFamily"
     },
     "chat-header-title-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "chat-header-title-font-weight": {
@@ -4775,7 +4775,7 @@
       "$type": "color"
     },
     "chat-bubble-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "chat-bubble-padding-block": {
@@ -4844,7 +4844,7 @@
       "$type": "fontWeight"
     },
     "chat-divider-gap": {
-      "$value": "{plx-ref.space-12px}",
+      "$value": "{plx-ref.space-3u}",
       "$type": "dimension"
     },
     "chat-divider-line-color": {
@@ -4856,21 +4856,21 @@
       "$type": "dimension"
     },
     "chat-divider-margin-block": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension"
     },
     "chat-avatar-above": {
-      "$value": "{plx-ref.space-12px}",
+      "$value": "{plx-ref.space-3u}",
       "$type": "dimension",
       "$description": "How much of the sender's 28px photo sits above the bubble's top edge (the owner's mockup, #637): 12px above, 16px inside, covering the border. The message keeps this room above it."
     },
     "chat-avatar-inset": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension",
       "$description": "How far the photo sits in from the bubble's start edge (yours: the end edge), about a third of its width (#637)."
     },
     "chat-bubble-avatar-padding-block-start": {
-      "$value": "{plx-ref.space-24px}",
+      "$value": "{plx-ref.space-6u}",
       "$type": "dimension",
       "$description": "A bubble's top padding under a photo: the photo's 16px inside plus 8px, so the name, time and text clear it (#637)."
     },
@@ -5118,7 +5118,7 @@
       "$description": "Chat composer: the placeholder panel the emoji button opens."
     },
     "chat-actions-offset": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension",
       "$description": "The message action bar (React, Reply, More; issue 637 slice 4): how far beside the bubble it sits, in the free space, so it never covers text."
     },
@@ -5127,7 +5127,7 @@
       "$type": "dimension"
     },
     "chat-picker-gap": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension",
       "$description": "The quick reactions panel: between its row of reactions and the More reactions note."
     },
@@ -5145,11 +5145,11 @@
       "$description": "A reaction pill under a message's text: the emoji and its count."
     },
     "chat-reaction-gap": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension"
     },
     "chat-reaction-padding-inline": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension"
     },
     "chat-reaction-radius": {
@@ -5177,7 +5177,7 @@
       "$type": "color"
     },
     "chat-reaction-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "chat-reaction-mine-border-color": {
@@ -5211,7 +5211,7 @@
       "$type": "color"
     },
     "chat-quote-padding-inline": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension"
     },
     "chat-quote-gap": {
@@ -5219,7 +5219,7 @@
       "$type": "dimension"
     },
     "chat-quote-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "chat-quote-author-font-weight": {
@@ -5231,15 +5231,15 @@
       "$type": "color"
     },
     "chat-replying-gap": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension"
     },
     "chat-replying-padding-block": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension"
     },
     "chat-replying-padding-inline": {
-      "$value": "{plx-ref.space-12px}",
+      "$value": "{plx-ref.space-3u}",
       "$type": "dimension"
     },
     "chat-replying-border-color": {
@@ -5327,7 +5327,7 @@
       "$type": "fontFamily"
     },
     "code-block-title-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "code-block-pre-background": {
@@ -5343,7 +5343,7 @@
       "$type": "fontFamily"
     },
     "code-block-pre-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "code-block-pre-line-height": {
@@ -5558,11 +5558,11 @@
       "$type": "dimension"
     },
     "color-picker-overflow-clip-margin": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension"
     },
     "color-picker-row-gap": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension"
     },
     "color-swatch-target-inset": {
@@ -5610,7 +5610,7 @@
       "$type": "dimension"
     },
     "combobox-field-padding-inline-end": {
-      "$value": "{plx-ref.space-32px}",
+      "$value": "{plx-ref.space-8u}",
       "$type": "dimension"
     },
     "combobox-field-row-gap": {
@@ -5708,7 +5708,7 @@
       "$type": "color"
     },
     "combobox-option-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "combobox-option-min-height": {
@@ -5744,7 +5744,7 @@
       "$type": "color"
     },
     "combobox-empty-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "combobox-empty-padding-block": {
@@ -5989,7 +5989,7 @@
       "$type": "color"
     },
     "date-badge-day-font-size": {
-      "$value": "{plx-ref.font-size-14}",
+      "$value": "{plx-ref.font-size-300}",
       "$type": "dimension"
     },
     "date-badge-day-min-width": {
@@ -6121,7 +6121,7 @@
       "$type": "dimension"
     },
     "empty-state-page-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "empty-state-page-padding-block": {
@@ -6149,7 +6149,7 @@
       "$type": "color"
     },
     "empty-state-title-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "empty-state-title-font-weight": {
@@ -6247,7 +6247,7 @@
       "$type": "color"
     },
     "fieldset-legend-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "fieldset-legend-margin-block-end": {
@@ -6343,7 +6343,7 @@
       "$type": "dimension"
     },
     "list-item-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "list-item-line-height": {
@@ -6404,15 +6404,15 @@
       "$type": "fontFamily"
     },
     "media-viewer-counter-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "media-viewer-counter-inset-block-start": {
-      "$value": "{plx-ref.space-20px}",
+      "$value": "{plx-ref.space-5u}",
       "$type": "dimension"
     },
     "media-viewer-counter-inset-inline-start": {
-      "$value": "{plx-ref.space-20px}",
+      "$value": "{plx-ref.space-5u}",
       "$type": "dimension"
     },
     "media-viewer-control-background": {
@@ -6440,7 +6440,7 @@
       "$type": "dimension"
     },
     "media-viewer-control-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "media-viewer-control-min-height": {
@@ -6492,11 +6492,11 @@
       "$type": "dimension"
     },
     "media-viewer-nav-previous-inset-inline-start": {
-      "$value": "{plx-ref.space-20px}",
+      "$value": "{plx-ref.space-5u}",
       "$type": "dimension"
     },
     "media-viewer-nav-next-inset-inline-end": {
-      "$value": "{plx-ref.space-20px}",
+      "$value": "{plx-ref.space-5u}",
       "$type": "dimension"
     },
     "media-viewer-figure-row-gap": {
@@ -6516,7 +6516,7 @@
       "$type": "dimension"
     },
     "media-viewer-title-font-size": {
-      "$value": "{plx-ref.font-size-15}",
+      "$value": "{plx-ref.font-size-400}",
       "$type": "dimension"
     },
     "media-viewer-title-font-weight": {
@@ -6536,7 +6536,7 @@
       "$type": "fontFamily"
     },
     "media-viewer-meta-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "media-viewer-actions-gap": {
@@ -6560,7 +6560,7 @@
       "$type": "fontFamily"
     },
     "metric-value-font-size": {
-      "$value": "{plx-ref.font-size-18}",
+      "$value": "{plx-ref.font-size-500}",
       "$type": "dimension"
     },
     "metric-value-font-weight": {
@@ -6572,7 +6572,7 @@
       "$type": "number"
     },
     "metric-lg-value-font-size": {
-      "$value": "{plx-ref.font-size-20}",
+      "$value": "{plx-ref.font-size-600}",
       "$type": "dimension"
     },
     "metric-unit-text": {
@@ -6580,7 +6580,7 @@
       "$type": "color"
     },
     "metric-unit-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "metric-change-font-family": {
@@ -6609,7 +6609,7 @@
       "$type": "color"
     },
     "metric-label-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "metric-description-text": {
@@ -6685,7 +6685,7 @@
       "$description": "Room under a static group heading: the collapsible group's room above its rows (#49)."
     },
     "nav-list-items-row-gap": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension"
     },
     "nav-list-item-radius": {
@@ -6701,7 +6701,7 @@
       "$type": "dimension"
     },
     "nav-list-item-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "nav-list-item-min-height": {
@@ -6886,7 +6886,7 @@
       "$type": "dimension"
     },
     "pagination-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "pagination-row-gap": {
@@ -6926,7 +6926,7 @@
       "$type": "color"
     },
     "pagination-page-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "pagination-page-min-height": {
@@ -6942,7 +6942,7 @@
       "$type": "dimension"
     },
     "pagination-step-font-size": {
-      "$value": "{plx-ref.font-size-15}",
+      "$value": "{plx-ref.font-size-400}",
       "$type": "dimension"
     },
     "pagination-step-line-height": {
@@ -7018,7 +7018,7 @@
       "$type": "color"
     },
     "pagination-select-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "pagination-select-min-height": {
@@ -7106,7 +7106,7 @@
       "$type": "fontFamily"
     },
     "radio-tiles-legend-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "radio-tiles-legend-font-weight": {
@@ -7190,7 +7190,7 @@
       "$type": "color"
     },
     "radio-tile-label-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "radio-tile-label-font-weight": {
@@ -7226,7 +7226,7 @@
       "$type": "color"
     },
     "rating-star-font-size": {
-      "$value": "{plx-ref.font-size-15}",
+      "$value": "{plx-ref.font-size-400}",
       "$type": "dimension"
     },
     "rating-star-line-height": {
@@ -7332,7 +7332,7 @@
       "$type": "fontFamily"
     },
     "search-input-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "search-input-min-height": {
@@ -7340,11 +7340,11 @@
       "$type": "dimension"
     },
     "search-input-padding-inline-end": {
-      "$value": "{plx-ref.space-40px}",
+      "$value": "{plx-ref.space-10u}",
       "$type": "dimension"
     },
     "search-input-padding-inline-start": {
-      "$value": "{plx-ref.space-32px}",
+      "$value": "{plx-ref.space-8u}",
       "$type": "dimension"
     },
     "search-input-placeholder-text": {
@@ -7445,7 +7445,7 @@
       "$description": "Section heading: the size of a plain label (level null) and of levels 5 and 6: 12px, the smallest step of the type scale a heading takes."
     },
     "section-heading-level-2-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "Section heading: the size of a level 2 heading (h2: a page's sections, Settings' section titles): 13px from the type scale, larger than level 3 (owner, 2026-10-12)."
     },
@@ -7484,7 +7484,7 @@
       "$type": "color"
     },
     "section-heading-chevron-height": {
-      "$value": "{plx-ref.glyph-size-6px}",
+      "$value": "{plx-ref.glyph-size-xs}",
       "$type": "dimension"
     },
     "section-heading-chevron-border-block-end-width": {
@@ -7496,7 +7496,7 @@
       "$type": "dimension"
     },
     "section-heading-chevron-width": {
-      "$value": "{plx-ref.glyph-size-6px}",
+      "$value": "{plx-ref.glyph-size-xs}",
       "$type": "dimension"
     },
     "section-heading-chevron-duration": {
@@ -7558,7 +7558,7 @@
       "$type": "fontFamily"
     },
     "segmented-item-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "segmented-item-font-weight": {
@@ -7636,7 +7636,7 @@
       "$type": "color"
     },
     "slider-label-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "slider-value-text": {
@@ -8073,7 +8073,7 @@
       "$type": "color"
     },
     "tree-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "tree-row-radius": {
@@ -8221,7 +8221,7 @@
       "$type": "color"
     },
     "activity-list-title-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "activity-list-item-unread-title-font-weight": {
@@ -8233,7 +8233,7 @@
       "$type": "color"
     },
     "activity-list-meta-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "activity-list-time-text": {
@@ -8294,7 +8294,7 @@
       "$type": "color"
     },
     "app-shell-skip-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "app-shell-skip-inset-block-start": {
@@ -8411,7 +8411,7 @@
       "$type": "color"
     },
     "selection-summary-count-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "selection-summary-count-font-weight": {
@@ -8526,11 +8526,11 @@
       "$type": "dimension"
     },
     "entity-header-padding-inline-end": {
-      "$value": "{plx-ref.space-20px}",
+      "$value": "{plx-ref.space-5u}",
       "$type": "dimension"
     },
     "entity-header-padding-inline-start": {
-      "$value": "{plx-ref.space-20px}",
+      "$value": "{plx-ref.space-5u}",
       "$type": "dimension"
     },
     "entity-header-tile-height": {
@@ -8667,7 +8667,7 @@
       "$description": "EntityHeader, section: the actions row, one sm button high."
     },
     "entity-header-actions-clip-margin": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension",
       "$description": "EntityHeader: how far past the clipped actions row a focus ring still shows (as FilterBar's)."
     },
@@ -8688,11 +8688,11 @@
       "$type": "dimension"
     },
     "filter-bar-filters-overflow-clip-margin": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension"
     },
     "filter-bar-filters-row-gap": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension"
     },
     "filter-bar-count-text": {
@@ -8783,7 +8783,7 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "image-editor-text-font-size": {
-      "$value": "{plx-ref.font-size-20}",
+      "$value": "{plx-ref.font-size-600}",
       "$type": "dimension"
     },
     "image-editor-text-font-weight": {
@@ -8815,7 +8815,7 @@
       "$type": "color"
     },
     "image-editor-status-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "image-editor-status-inset-block-end": {
@@ -8946,7 +8946,7 @@
       "$type": "fontFamily"
     },
     "nav-pane-title-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "nav-pane-title-font-weight": {
@@ -9029,7 +9029,7 @@
       "$type": "color"
     },
     "nav-bar-label-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "nav-bar-label-line-height": {
@@ -9075,7 +9075,7 @@
       "$type": "color"
     },
     "property-list-label-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "property-list-label-row-gap": {
@@ -9095,7 +9095,7 @@
       "$type": "color"
     },
     "property-list-value-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "property-list-value-data-font-family": {
@@ -9104,7 +9104,7 @@
       "$description": "A technical value (a size, a date, an ID): the data font, Reddit Mono (owner, 2026-10-11)"
     },
     "property-list-value-data-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "A technical value at the value size (--plx-comp-property-list-value-font-size), so Reddit Mono and DM Sans values share one baseline"
     },
@@ -9145,7 +9145,7 @@
       "$type": "fontFamily"
     },
     "record-page-title-font-size": {
-      "$value": "{plx-ref.font-size-20}",
+      "$value": "{plx-ref.font-size-600}",
       "$type": "dimension"
     },
     "record-page-title-font-weight": {
@@ -9153,7 +9153,7 @@
       "$type": "fontWeight"
     },
     "record-page-header-md-title-font-size": {
-      "$value": "{plx-ref.font-size-15}",
+      "$value": "{plx-ref.font-size-400}",
       "$type": "dimension"
     },
     "record-page-description-text": {
@@ -9161,7 +9161,7 @@
       "$type": "color"
     },
     "record-page-description-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "record-page-description-line-height": {
@@ -9258,7 +9258,7 @@
       "$type": "fontFamily"
     },
     "search-ws-title-font-size": {
-      "$value": "{plx-ref.font-size-20}",
+      "$value": "{plx-ref.font-size-600}",
       "$type": "dimension"
     },
     "search-ws-title-font-weight": {
@@ -9270,7 +9270,7 @@
       "$type": "color"
     },
     "search-ws-count-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "search-ws-query-max-width": {
@@ -9314,7 +9314,7 @@
       "$type": "dimension"
     },
     "secondary-pane-header-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "secondary-pane-header-font-weight": {
@@ -9464,7 +9464,7 @@
       "$type": "color"
     },
     "settings-section-description-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "settings-row-border-bottom-color": {
@@ -9492,7 +9492,7 @@
       "$type": "color"
     },
     "settings-row-label-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "settings-row-label-font-weight": {
@@ -9504,7 +9504,7 @@
       "$type": "color"
     },
     "settings-row-description-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
     "settings-rows-field-border-bottom-color": {
@@ -9652,7 +9652,7 @@
       "$type": "color"
     },
     "side-panel-title-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "side-panel-title-font-weight": {

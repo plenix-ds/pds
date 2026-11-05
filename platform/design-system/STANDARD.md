@@ -2674,7 +2674,7 @@ These refine the standard for Plenix. `check-spec.js` checks the ones marked (ch
    - The output is on the grid too: a JavaScript or React offset "has to conform to fit into the grid system!!!
      important" (owner, 2026-10-13). The concern: a look "fixed" with hard-coded inline values that have no basis cannot
      be tracked, adjusted or kept consistent. Every length JavaScript writes goes through the grid helper
-     (`platform/utils/grid.ts`: `snapToGrid`, `gridPx`, its step read from the base spacing token `--plx-ref-space-4px`)
+     (`platform/utils/grid.ts`: `snapToGrid`, `gridPx`, its step read from the base spacing token `--plx-ref-space-1u`)
      or, where a size scale applies, the size steps (`utils/sizeSteps.js`: `snapSize`, `stepSize`). A measured anchor
      (where a trigger is) is layout; the offsets and gaps added to it are tokens; the result is snapped. DataGrid column
      widths are rounded up to the grid when measured, fitted or dragged.

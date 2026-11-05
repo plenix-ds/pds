@@ -3,7 +3,7 @@
   "plx-comp": {
     "color-swatch-label-text": { "$value": "{plx-sys.content-default}", "$type": "color", "$description": "The color's name: the default text color." },
     "color-swatch-label-gap": { "$value": "{plx-sys.space-inline-xs}", "$type": "dimension", "$description": "The space between the swatch and its name." },
-    "color-swatch-label-font-size": { "$value": "{plx-ref.font-size-13}", "$type": "dimension", "$description": "The name: the body size." },
+    "color-swatch-label-font-size": { "$value": "{plx-ref.font-size-200}", "$type": "dimension", "$description": "The name: the body size." },
     "color-swatch-label-line-height": { "$value": "{plx-ref.line-height-normal}", "$type": "number", "$description": "The name's line height." },
     "color-swatch-label-min-height": { "$value": "{plx-sys.control-target-min}", "$type": "dimension", "$description": "A swatch-and-name button: at least the minimum target tall." }
   }
