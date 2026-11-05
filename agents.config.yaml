@@ -4,7 +4,7 @@
 
 long_work:
   # Building a component, a design, a migration, a release.
-  max_running: 4
+  max_running: 6
 
 coordinators:
   # Always running; they don't use long-work slots.
