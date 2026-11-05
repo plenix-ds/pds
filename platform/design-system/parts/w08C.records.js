@@ -50,7 +50,7 @@ DSParts.records.push(function (H) {
   };
   var list = function (children, width) { return box(width || 520, h(P.SearchResultGroup, { label: 'Search results' }, children)); };
   var searchResult = { id: 'search-result', lab: true, icon: 'search', sec: 'navigation', sub: 'Search, filter, and discovery', leaf: 'Search result item', title: 'Search result item',
-    plenix: 'SearchResult, highlightMatches', src: 'components/SearchResult/SearchResult.jsx', blocks: ['plx-search-result'], level: 'Component', interaction: 'Navigation',
+    plenix: 'SearchResult, highlightMatches', src: 'components/SearchResult/SearchResult.tsx', blocks: ['plx-search-result'], level: 'Component', interaction: 'Navigation',
     aliases: ['Search result', 'Result row', 'Hit', 'Search hit', 'Result card'],
     text: 'One search result: what it is (a page or a note with its icon, a file with its thumbnail, a person with their avatar), its name as a link that covers the row, its path above the name, the snippet (a few words around the match) and its details. The words searched for are bold in the name and the snippet, never colored. The row has one Tab stop; its actions have their own.',
     use: ['Every result in a search page or a search panel, one row per result', 'query on every result, so people see why it matched', 'The path when results with the same name sit in different places', 'Details that tell results apart: type, size, the date it changed, its owner'],
@@ -86,7 +86,7 @@ DSParts.records.push(function (H) {
       props.people ? h(P.SearchResultGroup, { heading: 'People', count: 1 }, result('person', { query: 'maya' })) : null));
   };
   var searchGroups = { id: 'search-result-group', lab: true, icon: 'list-lines', sec: 'navigation', sub: 'Search, filter, and discovery', leaf: 'Search result groups', title: 'Search result groups',
-    plenix: 'SearchResultGroup', src: 'components/SearchResult/SearchResult.jsx', blocks: ['plx-search-result-group'], level: 'Component', interaction: 'Navigation', statesFrom: ['search-result'],
+    plenix: 'SearchResultGroup', src: 'components/SearchResult/SearchResult.tsx', blocks: ['plx-search-result-group'], level: 'Component', interaction: 'Navigation', statesFrom: ['search-result'],
     aliases: ['Grouped results', 'Result sections', 'Federated search results', 'Results by type'],
     text: 'The first few results of one kind, under a heading that names the kind and its count (Pages 1, Files 12), then a link to all of them or a button that shows more in place. A search across kinds shows one group per kind, in the order people need them; a search of one kind needs no groups.',
     use: ['A search across kinds: pages, files, people, settings', 'The first three to five results of each kind, then a link to the rest', 'The count after the heading, so people know how much is behind the link'],

@@ -43,28 +43,41 @@ import { useBarFit } from '../../utils/barFit.ts';
 import { isRtl } from '../../utils/direction.ts';
 import { Button } from '../Button/Button.tsx';
 import { Menu, MenuGroup } from '../Menu/Menu.tsx';
+import type { MenuStart } from '../Menu/Menu.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import MoreIcon from 'plenix-platform/icons/plenix/more';
 
 // a declaration: the bar reads the label and the items of each menu and draws them itself (as a button and a Menu, or as a group in More)
-export function MenuBarMenu() { return null; }
+export function MenuBarMenu(_props: { label: React.ReactNode; children?: React.ReactNode }): null { return null; }
 
-export function MenuBar({ label, size = 'md', strings, className, children, ...rest }) {
-  const t = useStrings('menuBar', strings);
-  const menus = React.Children.toArray(children).filter((c) => React.isValidElement(c));
-  const bar = React.useRef(null), focused = React.useRef(false);
+type MenuBarProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & {
+  /** the bar's accessible name */
+  label?: string;
+  /** the buttons' size; default "md" */
+  size?: 'xs' | 'sm' | 'md' | 'lg';
+  /** { more } */
+  strings?: Catalog | null;
+  /** MenuBarMenu elements: { label, children (MenuItems) } */
+  children?: React.ReactNode;
+};
+type OpenAt = { index: number; start: MenuStart };
+export function MenuBar({ label, size = 'md', strings, className, children, ...rest }: MenuBarProps) {
+  const t = useStrings('menuBar', strings) as { more: string };
+  const menus = React.Children.toArray(children).filter((c): c is React.ReactElement<{ label: React.ReactNode; children?: React.ReactNode }> => React.isValidElement(c));
+  const bar = React.useRef<HTMLDivElement>(null), focused = React.useRef(false);
   const [active, setActive] = React.useState(0);   // the one Tab stop: the index of the top item that last had focus
-  const [openAt, setOpenAt] = React.useState(null);   // { index, start }: which menu is open, and where focus lands in it
+  const [openAt, setOpenAt] = React.useState<OpenAt | null>(null);   // { index, start }: which menu is open, and where focus lands in it
   const key = menus.map((m) => m.props.label).join('|') + '|' + size;
   const step = useBarFit(bar, key, menus.length, 0, ':self', openAt !== null);
   const shown = Math.max(0, menus.length - step), folded = menus.slice(shown);
   const stops = shown + (folded.length ? 1 : 0);   // the top items: the menus that fit, then "More menus"
   const at = Math.min(active, Math.max(0, stops - 1));
 
-  const items = () => (bar.current ? Array.prototype.slice.call(bar.current.querySelectorAll('[data-plx-menubar-item]')) : []);
-  const focusTop = (i) => { const el = items()[i]; if (el) el.focus(); };
-  const towards = (e) => (e.key === 'ArrowRight' ? 1 : -1) * (isRtl(bar.current) ? -1 : 1);
-  const labelAt = (i) => (i < shown ? String(menus[i].props.label) : t.more);
+  const items = (): HTMLElement[] => (bar.current ? Array.prototype.slice.call(bar.current.querySelectorAll('[data-plx-menubar-item]')) : []);
+  const focusTop = (i: number) => { const el = items()[i]; if (el) el.focus(); };
+  const towards = (e: React.KeyboardEvent) => (e.key === 'ArrowRight' ? 1 : -1) * (isRtl(bar.current as Element) ? -1 : 1);
+  const labelAt = (i: number) => (i < shown ? String(menus[i].props.label) : t.more);
 
   // the menu button that had focus folded away: focus would fall to the page; "More menus" takes it
   React.useLayoutEffect(() => {
@@ -75,7 +88,7 @@ export function MenuBar({ label, size = 'md', strings, className, children, ...r
   }, [shown]);   // eslint-disable-line react-hooks/exhaustive-deps
 
   // the keys of the menu buttons (a menu's own keys, Down and Up, are the Menu's)
-  const onButtonKey = (i) => (e) => {
+  const onButtonKey = (i: number) => (e: React.KeyboardEvent) => {
     if (e.ctrlKey || e.metaKey || e.altKey) return;
     if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); focusTop((i + towards(e) + stops) % stops); }
     else if (e.key === 'Home') { e.preventDefault(); focusTop(0); }
@@ -87,15 +100,15 @@ export function MenuBar({ label, size = 'md', strings, className, children, ...r
     }
   };
   // Left and Right inside an open menu switch to the neighboring one (a sub menu takes them first and stops them)
-  const onBarKey = (e) => {
-    if (openAt === null || (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') || !e.target.closest('[role="menu"]') || e.ctrlKey || e.metaKey || e.altKey) return;
+  const onBarKey = (e: React.KeyboardEvent) => {
+    if (openAt === null || (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') || !(e.target as Element).closest('[role="menu"]') || e.ctrlKey || e.metaKey || e.altKey) return;
     e.preventDefault();
     const j = (openAt.index + towards(e) + stops) % stops;
     setActive(j);
     setOpenAt({ index: j, start: 'first' });
   };
-  const change = (i) => (open, where) => setOpenAt((cur) => (open ? { index: i, start: (where && where.start) || 'first' } : cur && cur.index === i ? null : cur));
-  const button = (i, content, extra) => (
+  const change = (i: number) => (open: boolean, where?: { start?: MenuStart }) => setOpenAt((cur) => (open ? { index: i, start: (where && where.start) || 'first' } : cur && cur.index === i ? null : cur));
+  const button = (i: number, content: React.ReactNode, extra?: Record<string, unknown>) => (
     <Button variant="ghost" size={size} role="menuitem" tabIndex={at === i ? 0 : -1} data-plx-menubar-item="" className="plx-menubar__item"
       onFocus={() => { focused.current = true; setActive(i); }} onBlur={() => { focused.current = false; }}
       onPointerEnter={(e) => { if (e.pointerType === 'mouse' && openAt !== null && openAt.index !== i) setOpenAt({ index: i, start: 'first' }); }}

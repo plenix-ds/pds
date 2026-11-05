@@ -237,7 +237,7 @@ export { PermissionSummary } from './patterns/PermissionSummary/PermissionSummar
 export { QueryBuilder } from './patterns/QueryBuilder/QueryBuilder.jsx';
 export { formatQuery } from './patterns/QueryBuilder/QueryBuilder.jsx';
 export { RoleLabel } from './components/RoleLabel/RoleLabel.tsx';
-export { SearchResult, SearchResultGroup, highlightMatches } from './components/SearchResult/SearchResult.jsx';
+export { SearchResult, SearchResultGroup, highlightMatches } from './components/SearchResult/SearchResult.tsx';
 export { Timeline } from './components/Timeline/Timeline.tsx';
 export { ResourceList } from './patterns/ResourceList/ResourceList.jsx';
 export { useChartInteraction, ChartFocusMark, ChartBrush, chartAnnounce, CHART_INTERACTION_STRINGS } from './charts/interaction.js';
@@ -356,6 +356,6 @@ export { Heading } from './components/Heading/Heading.tsx';
 export { TreeChart } from './charts/TreeChart.jsx';
 export { Anchor } from './components/Anchor/Anchor.tsx';
 export { OverflowList } from './components/OverflowList/OverflowList.tsx';
-export { MenuBar, MenuBarMenu } from './components/MenuBar/MenuBar.jsx';
+export { MenuBar, MenuBarMenu } from './components/MenuBar/MenuBar.tsx';
 export { DataGridEngine } from './components/DataGrid/DataGridEngine.jsx';
 /* END library parts */
