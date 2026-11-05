@@ -26,6 +26,8 @@ function findings() {
   for (const id of known) if (!neither.has(id)) list.push({ file: BASELINE, text: 'covered now, remove it from the baseline: ' + id });
   let names = new Set();
   try { names = new Set(JSON.parse(fs.readFileSync(path.join(ROOT, 'platform', 'tokens', 'tokens.index.json'), 'utf8')).tokens.map((t) => t.name)); } catch (e) { /* no index */ }
+  // an empty table must say why (a variation that only renders other parts, #353)
+  for (const v of x.r.variants) if (v.setsSource === 'table' && !v.sets.length && !v.setsWhy) list.push({ file: path.join(ROOT, 'platform', 'standards', 'variants', 'styles.json'), text: v.id + ': "sets": [] needs a "why" (what the variation changes instead, e.g. "markup only: …")' });
   for (const v of x.r.variants) if (v.setsSource === 'table') for (const row of v.sets) if (row.token && names.size && !names.has(row.token)) list.push({ file: path.join(ROOT, 'platform', 'standards', 'variants', 'styles.json'), text: v.id + ': ' + row.token + ' is not a token' });
   return { list, counts: x.counts };
 }

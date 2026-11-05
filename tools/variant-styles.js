@@ -112,7 +112,7 @@ function apply(variants, records, root) {
   const byId = new Map(records.map((r) => [r.id, r]));
   const counts = { css: 0, table: 0, neither: [] };
   for (const v of variants) {
-    if (v.styles && Array.isArray(v.styles.sets)) { v.sets = v.styles.sets; v.setsSource = 'table'; counts.table++; continue; }
+    if (v.styles && Array.isArray(v.styles.sets)) { v.sets = v.styles.sets; v.setsSource = 'table'; if (v.styles.why) v.setsWhy = v.styles.why; counts.table++; continue; }
     const r = byId.get(v.item), files = r && r.src ? sheetsOf(root, r.src) : [];
     const block = files.length ? blockOf(files) : null;
     const rows = block ? rowsFor(v, block, files, idx) : [];
