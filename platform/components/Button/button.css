@@ -183,6 +183,7 @@
   inherits: false;
 }
 .plx-button {
+  --plx-state-button-layer-color: var(--plx-comp-button-state-layer-color);
   align-items: center;
   appearance: none;
   background-color: var(--plx-state-button-background);
@@ -485,6 +486,7 @@
   --plx-state-button-disabled-border: var(--plx-comp-button-disabled-quiet-border);
 }
 .plx-button--primary:where(:not(.plx-button--on-inverse)) {
+  --plx-state-button-layer-color: var(--plx-comp-button-primary-state-layer-color);
   --plx-state-button-rest-background: var(--plx-comp-button-primary-background);
   --plx-state-button-rest-border: var(--plx-comp-button-primary-border);
   --plx-state-button-rest-text: var(--plx-comp-button-primary-text);
@@ -500,6 +502,7 @@
   --plx-state-button-shadow: var(--plx-comp-button-primary-ring);
 }
 .plx-button--danger {
+  --plx-state-button-layer-color: var(--plx-comp-button-danger-state-layer-color);
   --plx-state-button-rest-background: var(--plx-comp-button-danger-background);
   --plx-state-button-rest-border: var(--plx-comp-button-danger-border);
   --plx-state-button-rest-text: var(--plx-comp-button-danger-text);
@@ -773,15 +776,6 @@
    The layer colour is the text colour on neutral, subtle and outline fills and white on primary and danger. Disabled and
    loading buttons draw none; the on-inverse, on-accent and 2xs buttons keep their own hover. A selected toggle keeps its
    selected fill and takes the layer on top. */
-.plx-button {
-  --plx-state-button-layer-color: var(--plx-comp-button-state-layer-color);
-}
-.plx-button--primary {
-  --plx-state-button-layer-color: var(--plx-comp-button-primary-state-layer-color);
-}
-.plx-button--danger {
-  --plx-state-button-layer-color: var(--plx-comp-button-danger-state-layer-color);
-}
 .plx-button:is(:hover, .is-hover):where(
     :not(
         :active,
