@@ -607,12 +607,12 @@
     },
     "mix-amount-xs": {
       "$value": "8%",
-      "$type": "number",
+      "$extensions": { "com.plenix": { "webOnly": true } },
       "$description": "A color-mix amount step: the state layer on hover (docs/adr/0004)."
     },
     "mix-amount-sm": {
       "$value": "10%",
-      "$type": "number",
+      "$extensions": { "com.plenix": { "webOnly": true } },
       "$description": "A color-mix amount step: the state layer while pressed or focused (docs/adr/0004)."
     },
     "motion-duration-quick": {
