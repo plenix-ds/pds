@@ -37,12 +37,14 @@ function reporterFindings(tool, script, okWord, failWord) {
   if (!last.startsWith(okWord) && !last.startsWith(failWord)) throw new Error(`${script} ended without ${okWord}/${failWord}:\n${out.slice(-2000)}\n${r.stderr}`);
   if (/build outputs are missing/.test(last)) throw new Error(`${script}: build outputs are missing`);
   const list = [];
+  const prefix = path.basename(ROOT) + '/';
   let rule = null;
   for (const line of out.split('\n')) {
     const h = line.match(/^(\S[^:]*): \d+$/);
     if (h) { rule = h[1]; continue; }
     const f = line.match(/^ {2}(\S+?)(?::\d+)? {2}(.*)$/);
-    if (f && rule) list.push([tool, f[1], rule, noNumbers(f[2])]);
+    // check-common.js prints paths from the checkout's parent ("pds/x.css", "base/x.css"): drop the checkout's folder
+    if (f && rule) list.push([tool, f[1].startsWith(prefix) ? f[1].slice(prefix.length) : f[1], rule, noNumbers(f[2])]);
   }
   return list;
 }

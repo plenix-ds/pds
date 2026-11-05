@@ -5,7 +5,7 @@
 //
 // Fails when:
 // - an entry has no id, date, decision, status or check (check may be "review-only (<reason>)");
-// - ids are not D-NNNN, are repeated, or do not increase down the file (a new entry goes at the end);
+// - ids are not D-NNNN or are repeated (order is free: parallel PRs reserve ids out of order);
 // - with a base ref: an entry from the base was removed, or its id, date, area, decided_by or decision text changed.
 //   Only status, superseded_by and check may change on a past entry (supersede it, never rewrite it).
 import { execFileSync } from 'node:child_process';
@@ -41,9 +41,8 @@ for (const e of head) {
   if (!m) { errors.push(`${where}: id must be D-NNNN`); continue; }
   if (seen.has(e.id)) errors.push(`${where}: id is used twice`);
   seen.add(e.id);
-  const n = Number(m[1]);
-  if (n <= prev) errors.push(`${where}: ids must increase down the file (after D-${String(prev).padStart(4, '0')}); add new entries at the end with the next free id`);
-  prev = Math.max(prev, n);
+  // order is not checked: parallel PRs reserve ids, so a lower free id may land after a higher one (#198)
+  prev = Math.max(prev, Number(m[1]));
   if (e.status === 'superseded' && !e.superseded_by) errors.push(`${where}: superseded without superseded_by`);
 }
 
@@ -64,4 +63,4 @@ if (errors.length) {
   console.log(`DECISIONS_FAIL (${errors.length})`);
   process.exit(1);
 }
-console.log(`DECISIONS_OK (${head.length} entries, last D-${String(prev).padStart(4, '0')})`);
+console.log(`DECISIONS_OK (${head.length} entries, highest D-${String(prev).padStart(4, '0')})`);
