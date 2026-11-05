@@ -473,6 +473,7 @@ export function bodyRows({
                   pinned && !isStatic,
                   <CellEditor
                     column={c}
+                    record={record}
                     value={editing.value}
                     onCommit={(next) => commitEdit(row.id, c.field, next)}
                     onCancel={() => setEditing(null)}

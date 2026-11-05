@@ -940,6 +940,12 @@
     "font-weight"
    ]
   },
+  "plx-data-grid__editor-message": {
+   "contract": "adjusts",
+   "props": [
+    "font-size"
+   ]
+  },
   "plx-data-grid__empty": {
    "contract": "establishes",
    "role": "body",

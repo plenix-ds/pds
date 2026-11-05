@@ -12,6 +12,7 @@
      Moved out of DataGridEngine.jsx without any change to the code (issue 688). The engine is documented in DataGridEngine.jsx.
 */
 import React from 'react';
+import { useFloating } from '../../../utils/floating.ts';
 import { dataWhenText } from '../../../utils/dataText.tsx';
 import { cx } from '../../../utils/cx.ts';
 import { usePressable } from '../../../hooks/usePressable.ts';
@@ -69,35 +70,76 @@ export function RowGap({ rows }) {
   );
 }
 
-export function CellEditor({ column, value, onCommit, onCancel }) {
+// the message under the cell: in the top layer (popover="manual") so the cell's clipping cannot hide it, placed against the
+// cell's block-end edge, aligned to its inline start, at least as wide as the cell (utils/floating.ts)
+function EditorMessage({ id, anchor, message }) {
+  const cell = React.useRef(null),
+    box = React.useRef(null);
+  React.useLayoutEffect(() => {
+    cell.current = anchor.current?.closest('[role="gridcell"]') ?? null;
+    const el = box.current;
+    if (el?.showPopover && !el.matches(':popover-open')) el.showPopover();
+  }, [anchor, message]);
+  useFloating(cell, box, { open: true, placement: 'bottom-start', matchWidth: true });
+  return (
+    <span ref={box} id={id} role="alert" popover="manual" className="plx-data-grid__editor-message">
+      {message}
+    </span>
+  );
+}
+
+export function CellEditor({ column, record, value, onCommit, onCancel }) {
   const S = useStrings('dataGrid'),
     [draft, setDraft] = React.useState(value ?? ''),
-    done = React.useRef(false);
-  const finish = () => {
+    [invalid, setInvalid] = React.useState(null),
+    done = React.useRef(false),
+    input = React.useRef(null),
+    messageId = React.useId();
+  const finish = async () => {
     if (done.current) return;
     done.current = true;
-    onCommit(column.editor === 'number' ? (draft === '' ? null : Number(draft)) : draft);
+    const next = column.editor === 'number' ? (draft === '' ? null : Number(draft)) : draft;
+    if (column.validate) {
+      // a message keeps the cell open (ADR 0016): the editor is back in play and takes the focus again
+      const message = await column.validate(next, record);
+      if (message) {
+        done.current = false;
+        setInvalid(message);
+        input.current?.focus();
+        return;
+      }
+    }
+    onCommit(next);
   };
   return (
-    <input
-      autoFocus
-      className="plx-data-grid__editor"
-      aria-label={S.editCell.replace('{title}', column.title)}
-      type={column.editor === 'number' ? 'number' : 'text'}
-      value={draft}
-      onChange={(e) => setDraft(e.target.value)}
-      onBlur={finish}
-      onKeyDown={(e) => {
-        e.stopPropagation();
-        if (e.key === 'Escape') {
-          done.current = true;
-          onCancel();
-        } else if (e.key === 'Enter') {
-          e.preventDefault();
-          finish();
-        }
-      }}
-    />
+    <>
+      <input
+        ref={input}
+        autoFocus
+        className="plx-data-grid__editor"
+        aria-label={S.editCell.replace('{title}', column.title)}
+        aria-invalid={invalid ? 'true' : undefined}
+        aria-describedby={invalid ? messageId : undefined}
+        type={column.editor === 'number' ? 'number' : 'text'}
+        value={draft}
+        onChange={(e) => {
+          setDraft(e.target.value);
+          if (invalid) setInvalid(null);
+        }}
+        onBlur={finish}
+        onKeyDown={(e) => {
+          e.stopPropagation();
+          if (e.key === 'Escape') {
+            done.current = true;
+            onCancel();
+          } else if (e.key === 'Enter') {
+            e.preventDefault();
+            finish();
+          }
+        }}
+      />
+      {invalid ? <EditorMessage id={messageId} anchor={input} message={invalid} /> : null}
+    </>
   );
 }
 
