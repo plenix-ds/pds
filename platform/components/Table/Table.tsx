@@ -19,7 +19,7 @@
 import React from 'react';
 import { DataGridEngine } from '../DataGrid/DataGridEngine.jsx';
 
-export type TableColumn = {
+type TableColumn = {
   title?: React.ReactNode; field: string; kind?: string; type?: string; pill?: unknown; render?(record: Record<string, unknown>): React.ReactNode;
   width?: number | string; minWidth?: number | string; maxWidth?: number | string; rowLabel?: boolean; frozen?: boolean;
   align?: 'start' | 'center' | 'end' | 'left' | 'right'; headerAlign?: 'start' | 'center' | 'end' | 'left' | 'right'; empty?: React.ReactNode; wrap?: boolean;

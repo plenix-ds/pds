@@ -20,7 +20,7 @@ import { useStrings } from '../../providers/LocaleProvider.tsx';
 import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import CheckIcon from 'plenix-platform/icons/plenix/check';
 import PencilIcon from 'plenix-platform/icons/plenix/pencil';
-export type CommentReaction = { id: string; label: React.ReactNode; count: number; active?: boolean };
+type CommentReaction = { id: string; label: React.ReactNode; count: number; active?: boolean };
 export type CommentProps = Omit<React.HTMLAttributes<HTMLElement>, 'children'> & {
   /** Persona props */
   author?: Partial<PersonaProps>;

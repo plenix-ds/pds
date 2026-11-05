@@ -17,7 +17,7 @@ import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import SparkleIcon from 'plenix-platform/icons/plenix/sparkle';
 type TriggerProps = ButtonProps & { externalRef?: React.Ref<HTMLElement> };
 const Trigger=React.forwardRef<HTMLElement, TriggerProps>(function Trigger({externalRef,...props},menuRef){return <Button {...props} ref={node=>{if(typeof menuRef==='function')menuRef(node);else if(menuRef)menuRef.current=node;if(typeof externalRef==='function')externalRef(node);else if(externalRef)(externalRef as React.MutableRefObject<HTMLElement | null>).current=node;}}/>;});
-export type AIButtonProps = {
+type AIButtonProps = {
   /** the accessible action name; default strings.label */
   label?: string;
   /** "trigger" (default) | "menu" | "icon" */
