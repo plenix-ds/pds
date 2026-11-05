@@ -181,7 +181,7 @@ export { InputGroup } from './components/InputGroup/InputGroup.tsx';
 export { NumberInput } from './components/NumberInput/NumberInput.tsx';
 export { ErrorSummary } from './components/ErrorSummary/ErrorSummary.tsx';
 export { FileInput } from './components/FileInput/FileInput.tsx';
-export { CodeEditor } from './components/CodeEditor/CodeEditor.jsx';
+export { CodeEditor } from './components/CodeEditor/CodeEditor.tsx';
 export { Form } from './patterns/Form/Form.jsx';
 export { FormSection } from './patterns/Form/Form.jsx';
 export { FormActions } from './patterns/Form/Form.jsx';

@@ -45,13 +45,14 @@ import { cx } from '../../utils/cx.ts';
 import { useDescribedBy } from '../../utils/describedBy.ts';
 import { highlight } from '../CodeBlock/CodeBlock.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import { useReadOnly } from '../../providers/ReadOnly.tsx';
 
 // replaces the textarea's selection with text through the browser's editing, so it joins the undo history; falls back to
 // setting the value (and telling React) where execCommand is not available
-function insert(el, text, selStart, selEnd) {
+function insert(el: HTMLTextAreaElement, text: string, selStart?: number, selEnd?: number) {
   el.focus();
-  if (selStart !== undefined) el.setSelectionRange(selStart, selEnd);
+  if (selStart !== undefined && selEnd !== undefined) el.setSelectionRange(selStart, selEnd);
   let done = false;
   try { done = typeof document !== 'undefined' && document.execCommand && document.execCommand('insertText', false, text); } catch (e) { done = false; }
   if (!done) {
@@ -60,25 +61,53 @@ function insert(el, text, selStart, selEnd) {
   }
 }
 
-export const CodeEditor = React.forwardRef(function CodeEditor({ value, defaultValue = '', onChange, language = 'jsx', lineNumbers = false, readOnly: readOnlyOwn,
+/** @public the prop type (ADR 0011) */
+export type CodeEditorProps = Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'onChange' | 'value' | 'defaultValue'> & {
+  /** the code (controlled) */
+  value?: string | null;
+  defaultValue?: string;
+  /** the new code and the change event */
+  onChange?: (code: string, event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  /** "jsx" (default) | "js" | "css" | "html" | "text" */
+  language?: string;
+  lineNumbers?: boolean;
+  readOnly?: boolean;
+  /** "sm" | "md" (default) | "lg" | "fill" */
+  height?: string;
+  /** "none" (default) | "tall" */
+  maxHeight?: 'none' | 'tall';
+  /** spaces a Tab inserts (default 2) */
+  tabSize?: number;
+  /** the accessible name */
+  label?: string;
+  invalid?: boolean;
+  /** a warning, shown as data-plx-warning */
+  warning?: string | boolean;
+  disabled?: boolean;
+  required?: boolean;
+  strings?: Catalog | null;
+  className?: string;
+};
+
+export const CodeEditor = React.forwardRef<HTMLTextAreaElement, CodeEditorProps>(function CodeEditor({ value, defaultValue = '', onChange, language = 'jsx', lineNumbers = false, readOnly: readOnlyOwn,
   height = 'md', maxHeight = 'none', tabSize = 2, label, invalid, warning, disabled = false, required, id, 'aria-describedby': describedBy, strings, className, onKeyDown, ...rest }, ref) {
   const readOnly = useReadOnly(readOnlyOwn);   // its own readOnly, else the nearest ReadOnly region's
-  const t = useStrings('codeEditor', strings);
-  const area = React.useRef(null);
+  const t = useStrings('codeEditor', strings) as Record<string, string>;
+  const area = React.useRef<HTMLTextAreaElement | null>(null);
   const release = React.useRef(false);   // Escape was pressed: the next Tab leaves the editor
   const controlled = value !== undefined;
   const [inner, setInner] = React.useState(defaultValue);
   const code = controlled ? (value == null ? '' : String(value)) : inner;
   const hintId = 'plx-ce' + React.useId().replace(/[^a-zA-Z0-9]/g, '') + '-h';
-  const setRef = (node) => { area.current = node; if (typeof ref === 'function') ref(node); else if (ref) ref.current = node; };
+  const setRef = (node: HTMLTextAreaElement | null) => { area.current = node; if (typeof ref === 'function') ref(node); else if (ref) ref.current = node; };
   const colored = React.useMemo(() => highlight(code, language), [code, language]);
   const lines = code.split('\n').length;
   const editable = !readOnly && !disabled;
   const describedAt = useDescribedBy(describedBy, editable ? hintId : null);   // what its owner (a Field) described, then the Tab hint while it can be edited
   const pad = ' '.repeat(tabSize);
 
-  const changed = (e) => { if (!controlled) setInner(e.target.value); if (onChange) onChange(e.target.value, e); };
-  const keys = (e) => {
+  const changed = (e: React.ChangeEvent<HTMLTextAreaElement>) => { if (!controlled) setInner(e.target.value); if (onChange) onChange(e.target.value, e); };
+  const keys = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (onKeyDown) onKeyDown(e);
     if (e.defaultPrevented || !editable) return;
     const el = e.currentTarget;

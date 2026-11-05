@@ -4,4 +4,4 @@ export { InputGroup } from '../components/InputGroup/InputGroup.tsx';
 export { NumberInput } from '../components/NumberInput/NumberInput.tsx';
 export { ErrorSummary } from '../components/ErrorSummary/ErrorSummary.tsx';
 export { FileInput } from '../components/FileInput/FileInput.tsx';
-export { CodeEditor } from '../components/CodeEditor/CodeEditor.jsx';
+export { CodeEditor } from '../components/CodeEditor/CodeEditor.tsx';

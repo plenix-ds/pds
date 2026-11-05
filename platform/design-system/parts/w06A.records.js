@@ -224,7 +224,7 @@ DSParts.records.push(function (H) {
   };
   var ed = function (props) { return function () { return h(Editor, props); }; };
   var codeEditor = { id: 'code-editor', lab: true, icon: 'doc-text', sec: 'forms', sub: 'Text input', leaf: 'Code editor', title: 'Code editor',
-    plenix: 'CodeEditor', src: 'components/CodeEditor/CodeEditor.jsx', level: 'Component', interaction: 'Input',
+    plenix: 'CodeEditor', src: 'components/CodeEditor/CodeEditor.tsx', level: 'Component', interaction: 'Input',
     aliases: ['Code input', 'Source editor', 'Script field'],
     text: 'A multi-line field for writing code: Reddit Mono, colored with the CodeBlock’s colors as people type, optional line numbers that stay in view, and a read-only form. It is the browser’s own textarea laid over a colored copy of its text, so typing, selection, undo and assistive technology are native and no editor engine is loaded. Tab indents and Shift+Tab outdents; Escape, then Tab, leaves the editor, and the hint says so. Enter keeps the indentation of the line above.',
     use: ['Configuration, snippets, queries and styles that people edit', 'The language in the label: Query (SQL), Styles (CSS)', 'Line numbers when people talk about lines (errors, reviews)'],

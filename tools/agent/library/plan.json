@@ -1359,7 +1359,7 @@
       "platform/components/InputGroup/InputGroup.jsx",
       "platform/components/InputGroup/input-group.css",
       "platform/tokens/components/input-group.tokens.json",
-      "platform/components/CodeEditor/CodeEditor.jsx",
+      "platform/components/CodeEditor/CodeEditor.tsx",
       "platform/components/CodeEditor/code-editor.css",
       "platform/tokens/components/code-editor.tokens.json",
       "platform/components/NumberInput/NumberInput.jsx",
@@ -4948,7 +4948,7 @@
    "wave": 6,
    "lane": "A",
    "files": [
-    "platform/components/CodeEditor/CodeEditor.jsx",
+    "platform/components/CodeEditor/CodeEditor.tsx",
     "platform/components/CodeEditor/code-editor.css",
     "platform/tokens/components/code-editor.tokens.json"
    ],
@@ -12874,7 +12874,7 @@
    "target": "CodeEditor",
    "targetKind": "component",
    "files": [
-    "platform/components/CodeEditor/CodeEditor.jsx",
+    "platform/components/CodeEditor/CodeEditor.tsx",
     "platform/components/CodeEditor/code-editor.css",
     "platform/tokens/components/code-editor.tokens.json"
    ],
