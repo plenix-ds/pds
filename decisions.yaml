@@ -384,3 +384,13 @@
   options: [boolean + tokens + Continue anyway (chosen), the same as a hard block with no way past (the CTM reference), minSize width/height in px per app]
   status: active
   check: G3 review (ADR 0010) + check-style media + behavior tests (plan §7e)
+
+- id: D-0045
+  date: 2026-11-05
+  area: architecture
+  decided_by: agent (pds1-ds-architect), on the owner's direction (2026-10-31, #57); owner may switch
+  decision: Plenix's remaining JavaScript (about 244 files) is converted to TypeScript in four waves now (components, charts, patterns, the rest), then tsc writes the declarations and build-types.js retires (docs/adr/0011).
+  why: 'The owner asked to "fix this" (#57). Converting only during rebuilds would keep JS and any types for months; 383 of 2,736 published props are any.'
+  options: [conversion waves now (chosen), convert only during each rebuild, JSDoc types with checkJs]
+  status: active
+  check: CI tsc new problems + planned:no-js-source + planned:no-build-types
