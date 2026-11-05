@@ -1596,7 +1596,7 @@
       "platform/components/TreeSelect/TreeSelect.jsx",
       "platform/components/TreeSelect/tree-select.css",
       "platform/tokens/components/tree-select.tokens.json",
-      "platform/components/TimeZoneSelect/TimeZoneSelect.jsx",
+      "platform/components/TimeZoneSelect/TimeZoneSelect.tsx",
       "platform/components/TimeZoneSelect/time-zone-select.css",
       "platform/tokens/components/time-zone-select.tokens.json",
       "platform/patterns/BottomSheetNav/BottomSheetNav.jsx",
@@ -5547,7 +5547,7 @@
    "wave": 7,
    "lane": "C",
    "files": [
-    "platform/components/TimeZoneSelect/TimeZoneSelect.jsx",
+    "platform/components/TimeZoneSelect/TimeZoneSelect.tsx",
     "platform/components/TimeZoneSelect/time-zone-select.css",
     "platform/tokens/components/time-zone-select.tokens.json"
    ],
@@ -13434,7 +13434,7 @@
    "target": "TimeZoneSelect",
    "targetKind": "component",
    "files": [
-    "platform/components/TimeZoneSelect/TimeZoneSelect.jsx",
+    "platform/components/TimeZoneSelect/TimeZoneSelect.tsx",
     "platform/components/TimeZoneSelect/time-zone-select.css",
     "platform/tokens/components/time-zone-select.tokens.json"
    ],

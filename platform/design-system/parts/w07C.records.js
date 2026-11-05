@@ -109,7 +109,7 @@ DSParts.records.push(function (H) {
     return box(320, h(P.Field, { label: 'Time zone' }, h(P.TimeZoneSelect, Object.assign({ value: s[0], onChange: s[1] }, props.select))));
   };
   var timeZone = { id: 'time-zone-select', lab: true, icon: 'clock', sec: 'forms', sub: 'Date, time, and color', leaf: 'Time-zone selector', title: 'Time-zone selector',
-    plenix: 'TimeZoneSelect, timeZoneOptions', src: 'components/TimeZoneSelect/TimeZoneSelect.jsx', level: 'Component', interaction: 'Selection', statesFrom: ['combobox'],
+    plenix: 'TimeZoneSelect, timeZoneOptions', src: 'components/TimeZoneSelect/TimeZoneSelect.tsx', level: 'Component', interaction: 'Selection', statesFrom: ['combobox'],
     aliases: ['Time zone picker', 'Time zone select', 'Timezone dropdown', 'IANA time zone'],
     text: 'A combobox over every IANA time zone the browser knows (Intl.supportedValuesOf): each zone by its city, under its region, with its offset from UTC in the data font. People find a zone by typing a city (“Tokyo”), a region, its long name (“Pacific”) or an offset (“+5:30”). Offsets are worked out for a date (now by default), so they follow daylight saving time. Closed, the field shows the city and its offset.',
     use: ['Settings and events where a time belongs to a place: a person’s time zone, a meeting’s, a schedule’s', 'Grouped by region (default) when people know the city; sorted by offset when they know the offset', 'A Field with a label; the browser’s own zone as the default value'],
