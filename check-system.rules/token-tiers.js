@@ -4,12 +4,14 @@
 //   plx-comp  refers only to plx-sys or to its own component's plx-comp tokens (never to plx-ref, never to another
 //             component's tokens); the component is the platform/tokens/components/<name>.tokens.json its name starts with
 // A plx-sys or plx-comp value may still be a CSS keyword (none, auto, initial, transparent, currentColor, 0) or a
-// forced-colors system color (Canvas, Highlight, GrayText …): those are not values a palette can hold.
+// forced-colors system color (Canvas, Highlight, GrayText …), or transparent (written typed as rgba(0, 0, 0, 0) since
+// #872): those are not values a palette can hold.
 // Known findings (the 0.x debt, measured 2026-11-05) are in token-tiers.baseline.json; it only shrinks: a known finding
 // that is fixed must be removed from it (a stale entry is a finding). New findings fail. Only pds1-ds-architect edits it.
 // Alone: node check-system.rules/token-tiers.js   -> TOKEN_TIERS_OK, or the findings and exit 1
 const path = require('path');
 const G = require('./token-graph.js');
+const { transparent } = require('../tools/token-value.js');   // a typed fully transparent color is the keyword transparent (#872)
 
 const NAME = 'token-tiers';
 const BASELINE = path.join(__dirname, 'token-tiers.baseline.json');
@@ -34,7 +36,7 @@ function raw(docs) {
         if (mine && theirs && mine !== theirs) push(self + ' -> ' + target, d.file, self + ' -> ' + target + ' uses another component\'s token (' + theirs + '): share a plx-sys role instead');
       }
     }
-    if (d.tier !== 'plx-ref' && !d.refs.length && LITERAL.test(typeof d.value === 'string' ? d.value : JSON.stringify(d.value))) {
+    if (d.tier !== 'plx-ref' && !d.refs.length && !transparent(d.raw) && LITERAL.test(typeof d.value === 'string' ? d.value : JSON.stringify(d.value))) {
       push(self + ' = literal', d.file, self + ' holds a literal (' + JSON.stringify(d.value) + '): only plx-ref holds values');
     }
   }
