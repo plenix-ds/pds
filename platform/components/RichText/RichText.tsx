@@ -52,6 +52,7 @@ type RichTextProps = Omit<React.HTMLAttributes<HTMLElement>, 'children'> & {
 export function RichText({ variant = 'article', html, as: Tag = 'div', label, className, children, ...rest }: RichTextProps) {
   devWarn('RichText', { variant }, { variant: ['article','compact'] });
   const clean = React.useMemo(() => (html != null ? cleanRichText(html) : null), [html]);
+  // nosemgrep: pds-no-dangerously-set-inner-html -- the HTML went through cleanRichText just above (this is the rich-text engine, as the rule asks)
   const content = clean != null ? { dangerouslySetInnerHTML: { __html: clean } } : null;
   return (
     <Tag aria-label={label} {...content} {...rest}
