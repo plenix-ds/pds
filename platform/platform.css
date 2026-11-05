@@ -7,6 +7,8 @@
 @import url("components/Badge/badge.css") layer(plx.components);
 @import url("components/VisuallyHidden/visually-hidden.css") layer(plx.components);
 @import url("components/Isolate/isolate.css") layer(plx.components);
+@import url("components/AnswerLines/answer-lines.css") layer(plx.components);
+@import url("components/PageBreak/page-break.css") layer(plx.components);
 @import url("components/VoteTally/vote-tally.css") layer(plx.components);
 @import url("components/Count/count.css") layer(plx.components);
 @import url("components/Metric/metric.css") layer(plx.components);
@@ -73,6 +75,7 @@
 @import url("patterns/PropertyList/property-list.css") layer(plx.patterns);
 @import url("patterns/RecordPage/record-page.css") layer(plx.patterns);
 @import url("patterns/EntityHeader/entity-header.css") layer(plx.patterns);
+@import url("patterns/PrintDocument/print-document.css") layer(plx.patterns);
 @import url("patterns/ActivityList/activity-list.css") layer(plx.patterns);
 @import url("patterns/NotificationList/notification-list.css") layer(plx.patterns);
 @import url("patterns/SettingsLayout/settings-layout.css") layer(plx.patterns);

@@ -35,6 +35,11 @@
     "font-weight"
    ]
   },
+  "plx-answer-lines__label": {
+   "contract": "establishes",
+   "role": "label",
+   "font": "sans"
+  },
   "plx-app-header__app": {
    "contract": "adjusts",
    "props": [
@@ -2287,6 +2292,11 @@
     "font-weight",
     "line-height"
    ]
+  },
+  "plx-print-document__footer": {
+   "contract": "establishes",
+   "role": "caption",
+   "font": "sans"
   },
   "plx-product-card__compare": {
    "contract": "establishes",
