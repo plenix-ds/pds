@@ -1,4 +1,4 @@
-# PDS 1.0: instructions for Codex and Claude Code (copy of CLAUDE.md until Phase 0 moves both to Rulesync)
+# PDS 1.0: instructions for Claude Code and Codex
 
 PDS restarted as **PDS 1.0** on 2026-11-05 (D-0021). It continues `plenix-platform` 0.x: same code and history, same GitHub org (`plenix-ds`), same servers and same CDN. It now works in a structured environment with one team: `pds1-*` agents, in sessions titled "PDS1 - <role>". The 0.x team and its files (`docs/legacy/`) are retired history.
 

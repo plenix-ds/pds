@@ -1,0 +1,10 @@
+// Rulesync (P0-6, #188): .rulesync/ is the single source of CLAUDE.md and AGENTS.md, so Claude and Codex
+// instructions never drift. Edit .rulesync/rules/*.md, then: npx -y rulesync@43.2.0 generate
+// CI fails when the generated files differ (ci.yml "Rulesync drift"). Version pinned; bump it in ci.yml and lefthook.yml too.
+{
+  "$schema": "https://raw.githubusercontent.com/dyoshikawa/rulesync/refs/tags/v43.2.0/config-schema.json",
+  "targets": ["claudecode", "codexcli"],
+  "features": ["rules"],
+  "baseDirs": ["."],
+  "delete": false
+}

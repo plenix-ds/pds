@@ -46,6 +46,20 @@ jobs:
       - name: Unique, increasing ids; every entry has a check; past entries never rewritten
         run: node tools/ci/check-decisions.mjs "$(git merge-base "$BASE_SHA" HEAD)"
 
+  rulesync:
+    name: Rulesync drift (CLAUDE.md, AGENTS.md)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+      - name: Generated instructions equal .rulesync/ (rulesync pinned; edit .rulesync/rules, then generate)
+        run: npx -y rulesync@43.2.0 generate --check
+
   checks:
     name: New problems (${{ matrix.tool }})
     runs-on: ubuntu-latest
@@ -94,7 +108,7 @@ jobs:
   result:
     name: CI result
     if: always()
-    needs: [zizmor, decisions, checks]
+    needs: [zizmor, decisions, rulesync, checks]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
