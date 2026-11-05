@@ -20,4 +20,4 @@ export function useDensity(): [string, ((density: string) => void) | undefined] 
   return [document.documentElement.getAttribute('data-plx-density') || 'standard', set];
 }
 
-import './this-file-does-not-exist-197.js';
+export const unusedProof197 = 1;
