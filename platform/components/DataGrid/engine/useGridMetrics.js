@@ -12,7 +12,7 @@
        change sizes) and the grid's props (height, narrow, narrowAt, mode). Returns nothing: the hook is its effects.
    Notes:
      The default grid (narrow="auto") sizes its columns to their content and fits them to its room before the cards (issue
-     929): content first (capped at the set width), spare room to the title, the most room above the minimum given up first
+     929): content first (capped at the set width), spare room shared by the text columns (issue 272), the most room above the minimum given up first
      and the title last; the narrow switch weighs the minimums. narrow="table" and "list" keep their set widths.
      Moved out of DataGridEngine.jsx (issue 714, metrics and layout): the effects were in the engine function, in the
      same order between the same neighbors. The engine is documented in DataGridEngine.jsx.
@@ -211,11 +211,21 @@ export function useGridMetrics({
       shrinkable.forEach((c) => { widths[c.field] = Math.max(least(c), snapToGrid(widths[c.field], { round: 'down', step })); });
     const used = shownColumns.reduce((sum, c) => sum + widthOf(c), 0);
     const units = Math.max(0, Math.floor((available - used) / step));
-    const spare = !fitting ? free.filter((field) => shownColumns.some((c) => c.field === field)).pop()
-      : title && isText(title) ? title.field
-      : (shrinkable.filter(isText).sort((x, y) => widths[y.field] - widths[x.field])[0] || {}).field
-        || free.filter((field) => shownColumns.some((c) => c.field === field)).pop();
-    if (spare) widths[spare] += units * step;
+    // room to spare (issue 272: a one-digit "#" column took all of it): a fixed table or list gives it to its last self-sizing column as
+    // before; the default grid shares it, in whole steps, among the text columns that hold real text (wider than the minimum), the
+    // title first; with none of those the title, else the widest text column, else the last self-sizing column takes it
+    if (!fitting) {
+      const spare = free.filter((field) => shownColumns.some((c) => c.field === field)).pop();
+      if (spare) widths[spare] += units * step;
+    } else {
+      let growers = shrinkable.filter((c) => isText(c) && !tokenPx(c.width) && widths[c.field] > metrics.min);   // a column the app gave a width keeps it
+      if (!growers.length) {   // no column with real text: the title, else the widest text column, else the last self-sizing column (as before)
+        const one = title && isText(title) ? title : shrinkable.filter(isText).sort((x, y) => widths[y.field] - widths[x.field])[0]
+          || free.filter((field) => shownColumns.some((c) => c.field === field)).map((field) => shownColumns.find((c) => c.field === field)).pop();
+        growers = one ? [one] : [];
+      }
+      growers.forEach((c, i) => { widths[c.field] += (Math.floor(units / growers.length) + (i < units % growers.length ? 1 : 0)) * step; });
+    }
     setAutoSizing((old) => (JSON.stringify(old) === JSON.stringify(widths) ? old : widths));
     setFloors((old) => (JSON.stringify(old) === JSON.stringify(floor) ? old : floor));
   }, [

@@ -19,6 +19,8 @@ export function Scrollbars({ holder, viewportId, hideX = false }) {
       frame = 0;
       const ratio = (size, total) =>
         total > size ? Math.max(10, Math.min(95, Math.round((size / total) * 20) * 5)) : null;
+      // the sideways bar floats on the bottom edge: the scroll body keeps its room clear while it scrolls sideways (issue 272)
+      el.toggleAttribute('data-plx-scroll-x', el.scrollWidth > el.clientWidth);
       setSizes((old) => {
         const next = { x: ratio(el.clientWidth, el.scrollWidth), y: ratio(el.clientHeight, el.scrollHeight) };
         return next.x === old.x && next.y === old.y ? old : next;
