@@ -1,0 +1,15 @@
+{
+  "name": "@plenix-ds/tokens",
+  "version": "0.86.0",
+  "description": "Plenix design tokens (DTCG source, CSS, JS)",
+  "private": true,
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/plenix-ds/pds.git",
+    "directory": "packages/tokens"
+  },
+  "scripts": {
+    "build": "node ../../tools/workspace-build.js"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "@plenix-ds/react",
+  "version": "0.86.0",
+  "description": "Plenix React components, patterns, hooks and providers",
+  "private": true,
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/plenix-ds/pds.git",
+    "directory": "packages/react"
+  },
+  "scripts": {
+    "build": "node ../../tools/workspace-build.js"
+  },
+  "dependencies": {
+    "@plenix-ds/styles": "0.86.0",
+    "@plenix-ds/tokens": "0.86.0",
+    "@plenix-ds/icons": "0.86.0"
+  }
+}

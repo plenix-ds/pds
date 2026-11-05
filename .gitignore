@@ -7,7 +7,6 @@ build.log
 # backups and stale copies (legacy stays separate)
 Archived/
 *.bak
-packages/
 release/
 # the icon asset layout, written by build-icons.js (platform/icons/layout.js, #279); never committed
 platform/dist/icons/
