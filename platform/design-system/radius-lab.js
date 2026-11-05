@@ -117,9 +117,11 @@ window.DSRadiusLab = function (section, data) {
   var PAGES = [['Asset browser', '../../dam/index.html'], ['System settings', '../../dam/settings-system.html'], ['Image editor', '../../dam/image-editor.html'], ['Dashboard', '../../dashboard/index.html']];
   function runOne(page) {
     return new Promise(function (resolve) {
+      // the page that asked was left: no frame loads a whole application for nobody (issue 5)
+      if (!res.isConnected) { resolve({ page: page[0], result: null }); return; }
       var f = document.createElement('iframe'); f.className = 'ds-radius-probe'; f.setAttribute('aria-hidden', 'true'); f.tabIndex = -1; f.src = page[1];
       var done = function (r) { f.remove(); resolve({ page: page[0], result: r }); };
-      f.addEventListener('load', function () { setTimeout(function () { try { done(f.contentWindow.PlenixRadius ? f.contentWindow.PlenixRadius.audit() : null); } catch { done(null); } }, 1500); });
+      f.addEventListener('load', function () { setTimeout(function () { if (!res.isConnected) { done(null); return; } try { done(f.contentWindow.PlenixRadius ? f.contentWindow.PlenixRadius.audit() : null); } catch { done(null); } }, 1500); });
       document.body.appendChild(f);
     });
   }

@@ -13,6 +13,7 @@ gh api repos/plenix-ds/pds/rules/branches/main -q '[.[].type]'
 
 - **Required checks:**
   - `CI result` (from `.github/workflows/ci.yml`). It fails when any check fails, is skipped or is cancelled.
+  - `G2 (design review)` (from `.github/workflows/g2.yml`): a PR labeled `g2-changes-requested` can't merge, in the PR or the merge queue. The Design Director adds the label with the G2 review and removes it on the re-check; nobody else removes it (D-0056, #396).
   - `Ownership (token tiers and public API)` (from `.github/workflows/ownership.yml`): a PR that changes token tier files or a package's `exports` needs the `agent:pds1-ds-architect` label (ADR 0001). It re-runs when labels change.
 - **Merge queue:** squash only, all-green grouping, up to 5 entries per group. CI runs again on `merge_group`.
 - **Pull request required:** no approvals needed (D-0014: CI is the gate).

@@ -63,6 +63,7 @@ import { VisuallyHidden } from '../../components/VisuallyHidden/VisuallyHidden.t
 import { EmptyState } from '../../components/EmptyState/EmptyState.tsx';
 import { ComparisonView } from '../ComparisonView/ComparisonView.jsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import { useBarFit } from '../../utils/barFit.ts';
 import ChevronDownIcon from 'plenix-platform/icons/plenix/chevron-down';
 import ChevronUpIcon from 'plenix-platform/icons/plenix/chevron-up';
 import CircleCheckIcon from 'plenix-platform/icons/plenix/circle-check';
@@ -99,6 +100,9 @@ function TextDiff({ base, target, context, t, uid }) {
   const [shown, setShown] = React.useState({});   // the folded runs people opened, by their first index
   const [at, setAt] = React.useState(-1);
   const refs = React.useRef({});
+  const bar = React.useRef(null);
+  // the bar of the summary and the step buttons: when they do not fit one row the buttons keep their icons and lose their labels (fit-and-overflow §2)
+  const iconsOnly = useBarFit(bar, t.previous + '|' + t.next + '|' + base.id + '|' + target.id, 1, 0, ':self') > 0;
   React.useEffect(() => { setShown({}); setAt(-1); }, [base.id, target.id]);
   const added = lines.filter((x) => x.kind === 'add').length, removed = lines.filter((x) => x.kind === 'del').length;
   const count = (k) => (k === 1 ? t.line : fill(t.lines, { n: formatNumber(k) }));
@@ -129,11 +133,11 @@ function TextDiff({ base, target, context, t, uid }) {
   if (!added && !removed) return <EmptyState icon={CircleCheckIcon} title={t.same} />;
   return (
     <div className="plx-version-compare__diff">
-      <div className="plx-version-compare__diff-bar">
+      <div className="plx-version-compare__diff-bar" ref={bar}>
         <p className="plx-version-compare__summary">{fill(t.summary, { added: count(added), removed: count(removed) })}</p>
         <span className="plx-version-compare__steps">
-          <Button size="sm" variant="ghost" icon={ChevronUpIcon} onClick={() => go(-1)}>{t.previous}</Button>
-          <Button size="sm" variant="ghost" icon={ChevronDownIcon} onClick={() => go(1)}>{t.next}</Button>
+          <Button size="sm" variant="ghost" icon={ChevronUpIcon} iconOnly={iconsOnly} label={t.previous} onClick={() => go(-1)}>{iconsOnly ? null : t.previous}</Button>
+          <Button size="sm" variant="ghost" icon={ChevronDownIcon} iconOnly={iconsOnly} label={t.next} onClick={() => go(1)}>{iconsOnly ? null : t.next}</Button>
         </span>
       </div>
       <div className="plx-version-compare__lines" tabIndex={0} role="region" aria-label={fill(t.diff, { base: base.label, target: target.label })}>
