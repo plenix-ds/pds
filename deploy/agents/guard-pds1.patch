@@ -1,0 +1,27 @@
+--- a/team/guard.js
++++ b/team/guard.js
+@@ -64,6 +64,24 @@
+     }
+   }
+ 
++  // PDS 1.0 (D-0014): pds1-* sessions merge their own PRs; the main ruleset (required CI result) is the gate.
++  // Release, deploy, tag pushes and direct pushes to main stay blocked while the owner's publishing hold (2026-10-29) stands.
++  if (String(process.env.PDS1_ROLE || '').startsWith('pds1-')) {
++    if (tool === 'Bash') {
++      const cmd = String(input.command || '');
++      const held = [
++        [/\/repos\/[^\s]+\/releases\b[^;&|]*(-X|--method)\s*(POST|PATCH|DELETE)|(-X|--method)\s*(POST|PATCH|DELETE)[^;&|]*\/releases\b/, 'changing a GitHub release'],
++        [/\bgh\s+release\s+(create|edit|delete)\b/, 'changing a GitHub release'],
++        [/\b(release|deploy)\.sh\b/, 'releasing or deploying'],
++        [/\bgit\s+push\b[^;&|]*--tags?\b/, 'pushing tags'],
++        [/\bgit\s+push\b[^;&|]*\bmain\b/, 'pushing to main (use a pull request)'],
++        [/\/git\/refs\/heads\/main\b/, 'changing main through the API'],
++      ];
++      for (const [re, what] of held) if (re.test(cmd)) block(what + " is paused by the owner's publishing hold (2026-10-29). Merges are allowed.");
++    }
++    process.exit(0);
++  }
++
+   if (tool === 'Bash') {
+     const cmd = String(input.command || '');
+     const shipper = ['lead', 'builder-1', 'builder-2', 'defect-fix', 'ux-designer', 'build-engineer', 'platform-engineer'].includes(role) || String(process.env.CTM_ROLE || '').toLowerCase() === 'ctm-lead';
