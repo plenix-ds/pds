@@ -13,6 +13,8 @@
 */
 import React from 'react';
 import { useFloating } from '../../../utils/floating.ts';
+import { announce } from '../../../utils/announce.tsx';
+import { Spinner } from '../../Loading/Loading.tsx';
 import { dataWhenText } from '../../../utils/dataText.tsx';
 import { cx } from '../../../utils/cx.ts';
 import { usePressable } from '../../../hooks/usePressable.ts';
@@ -88,6 +90,32 @@ function EditorMessage({ id, anchor, message }) {
   );
 }
 
+// a cell's save status: a small spinner while the caller's answer is awaited; a refusal's message under the cell until the next key or click
+export function CellStatus({ status, onClear }) {
+  const anchor = React.useRef(null);
+  React.useEffect(() => {
+    if (status.kind !== 'refused') return undefined;
+    const later = setTimeout(() => {
+      window.addEventListener('keydown', onClear, true);
+      window.addEventListener('pointerdown', onClear, true);
+    }, 0);
+    return () => {
+      clearTimeout(later);
+      window.removeEventListener('keydown', onClear, true);
+      window.removeEventListener('pointerdown', onClear, true);
+    };
+  }, [status, onClear]);
+  return status.kind === 'saving' ? (
+    <span className="plx-data-grid__cell-status">
+      <Spinner size="sm" />
+    </span>
+  ) : (
+    <span ref={anchor} className="plx-data-grid__cell-status">
+      <EditorMessage id={status.id} anchor={anchor} message={status.message} />
+    </span>
+  );
+}
+
 export function CellEditor({ column, record, value, onCommit, onCancel }) {
   const S = useStrings('dataGrid'),
     [draft, setDraft] = React.useState(value ?? ''),
@@ -95,6 +123,9 @@ export function CellEditor({ column, record, value, onCommit, onCancel }) {
     done = React.useRef(false),
     input = React.useRef(null),
     messageId = React.useId();
+  React.useEffect(() => {
+    announce(S.editing.replace('{column}', column.title));
+  }, []);
   const finish = async () => {
     if (done.current) return;
     done.current = true;
