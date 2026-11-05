@@ -1,5 +1,5 @@
 window.PDS_DATA = {
- "generatedAt": "2026-11-05T07:51+00:00",
+ "generatedAt": "2026-11-05T08:13+00:00",
  "mainSha": "8c24b12",
  "tasks": [
   {
@@ -1385,7 +1385,7 @@ window.PDS_DATA = {
    "decision": false,
    "next": "",
    "waiting": "",
-   "updated": "2026-11-05T07:33:29Z",
+   "updated": "2026-11-05T07:53:14Z",
    "rank": 77
   },
   {
@@ -1898,10 +1898,22 @@ window.PDS_DATA = {
    "url": "https://github.com/plenix-ds/pds/issues/195#issuecomment-6652417823",
    "replied": "",
    "at": "2026-11-05T07:33:27Z",
-   "answer": null
+   "answer": {
+    "choice": "A",
+    "text": "The owner said \"yes\" in the Product Lead chat (2026-11-05), right after he was shown the live page. I read it as confirming option A: the dashboard like CTM's, now at https://plenix-ds.github.io/pds/. Source: chat. Scope: D-0034.",
+    "at": "2026-11-05T08:12:47Z",
+    "url": "https://github.com/plenix-ds/pds/issues/195#issuecomment-6653087988"
+   }
   }
  ],
  "openPrs": [
+  {
+   "headRefName": "dashboard/pds1-pages",
+   "isDraft": false,
+   "number": 218,
+   "title": "dashboard: PDS 1.0 dashboard page like CTM 3.0 (D-0034); D-0035 owner answers are final",
+   "url": "https://github.com/plenix-ds/pds/pull/218"
+  },
   {
    "headRefName": "design/199-design-md-fixes",
    "isDraft": false,
@@ -2716,6 +2728,19 @@ window.PDS_DATA = {
    "kind": "review only",
    "state": "review",
    "url": null
+  },
+  {
+   "id": "D-0035",
+   "date": "2026-11-05",
+   "area": "process",
+   "decision": "The owner's answer is final. Agents pick the sensible reading, act on it and say in one line on the thread how they read it; an answer never produces a new question card. All pending owner answers are handled in one pass, and the dashboard is refreshed once at the end. Threads use plain words, not decision-card jargon; the A/B options stay so the dashboard can show them.",
+   "by": "owner",
+   "status": "active",
+   "superseded_by": "",
+   "check": "agent behaviour; pds1-delivery-lead checks it on decision issues",
+   "kind": "review only",
+   "state": "review",
+   "url": null
   }
  ],
  "workflows": [
@@ -2739,7 +2764,7 @@ window.PDS_DATA = {
   },
   "pages": {
    "url": "https://plenix-ds.github.io/pds/",
-   "code": 404
+   "code": 200
   }
  }
 };
