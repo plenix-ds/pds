@@ -252,3 +252,11 @@
   options: [switch after proof (chosen), switch now, keep build-tokens.js]
   status: active
   check: planned:token-output-identical (diff of generated token files in CI)
+
+- id: D-0030
+  date: 2026-11-05
+  area: design
+  decided_by: agent (pds1-design-director), owner may switch
+  decision: plx-sys.shape-pill keeps its current 6px value (no visual change); it is never used for pills (pills are 4px, D-0005), only for the round marks that use it today, and it is renamed by the DS Architect under check 7. Option B, making it a true circle (50%), would change the look of the Spotlight beacon, Pictogram and DataGrid scrollbar. Reply B to switch.
+  status: active
+  check: planned:lint-radius
