@@ -1,7 +1,7 @@
 # #84 (DT-41): the nine cell editors: design (G2)
 
 - **Source:** the owner-agreed design of 2026-10-28, `~/handoff/owner-review/464-465/DESIGN.md` §5–7 (answers 1–7 on #84). This file **records** it for PDS 1.0 and adds what G2 needs: states and tokens, densities, RTL, edge cases, message placement and the engineer's fixed choices. It changes none of the owner's answers.
-- **Scope:** Phase 1 (the editing rules every editor follows) and Phase 2 (the nine editors, behind `editing.editors`). The menu choice (F1), the active cell (phase 3), ranges, fill, undo and Form Edit are separate slices.
+- **Scope:** Phase 1 (the editing rules every editor follows) and Phase 2 (the nine editors, behind `editing.types` (ADR 0016)). The menu choice (F1), the active cell (phase 3), ranges, fill, undo and Form Edit are separate slices.
 - **Extends:**
   - today's DataGrid editor: `.plx-data-grid__editor`, a bare control filling the cell; the cell's editing outline (`data-grid-editing-outline-width`, `data-grid-outline-color`) is the frame;
   - the existing controls: Input, NumberInput, Select, Combobox, DatePicker, Checkbox, Textarea, EntityPicker, Tag, Spinner, Popover.
@@ -25,7 +25,7 @@
 | `number` | bare NumberInput, end-aligned, no stepper buttons (the arrows step) | — | ↑/↓ step, Enter saves |
 | `select` | bare Select showing the current option, plus the chevron at inline-end | the list (the Select's own) | ↑/↓ pick, Enter saves |
 | `combobox` | bare Combobox input with the typed text | its filtered list | typing filters, Enter saves |
-| `tags` | the Tag chips on one line, then the input; chips that don't fit show as one "+N" Tag | its list of suggestions | Enter adds, Backspace on an empty input removes the last |
+| `tags` (TagInput, ADR 0016) | the Tag chips on one line, then the input; chips that don't fit show as one "+N" Tag | its list of suggestions | Enter adds, Backspace on an empty input removes the last |
 | `date` | bare DatePicker input in the locale's short date | the calendar | typing or the calendar, Enter saves |
 | `checkbox` | Checkbox at inline-start (as the column's read cell), no editor mode | — | Space toggles **and saves** |
 | `textarea` | the cell shows the value's first line | a box over the cell: Textarea, `autoGrow` up to 8 lines then scrolls; inline size the cell's width or 320px (`size-80u`), whichever is larger | Enter adds a line, Ctrl+Enter saves |
@@ -76,6 +76,20 @@
   - it stays while the cell is open or until the next move, and it's linked by `aria-describedby`.
 - **Screen readers** (live region, polite): "Editing <column>" on open, "Saved" on save, and the message on a wrong or refused value. These are three catalog strings: `dataGrid.editing`, `dataGrid.saved`, and the app's own message.
 - **No Toast** for a cell save: the result belongs to the cell.
+
+### The words (ADR 0016 *Messages*; the owner's own words where he gave them)
+
+| Key | English | Where | Source |
+|---|---|---|---|
+| `dataGrid.editing` | "Editing {column}" | live region, when an editor opens | owner, 2026-10-28 ("Editing Name") |
+| `dataGrid.saved` | "Saved" | live region, after a save | owner, 2026-10-28 |
+| `dataGrid.saveRefused` | "Couldn't save. The previous value is back." | under the cell, when the app refuses without its own message | default; the app's own message replaces it |
+| `dataGrid.editMode` | "Editing" | view menu, the item's label | owner, 2026-10-28 |
+| `dataGrid.editModeInline` | "Inline Edit" | view menu, choice | owner, 2026-10-28 |
+| `dataGrid.editModeForm` | "Form Edit" | view menu, choice | owner, 2026-10-28 |
+
+- The Technical Writer may edit the wording against `docs/content/messaging.md`; the keys and the places stay.
+- **Arabic:** the i18n Engineer proposes the words on #84 for the owner's approval (D-0012). No Arabic is written before then.
 
 ## 6. Edge cases
 
