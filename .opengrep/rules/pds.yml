@@ -1,0 +1,46 @@
+# PDS Opengrep rules (plan §7 "Coding-standards tools"; #197). Each rule has fixtures in .opengrep/rules/pds.fixture.tsx
+# (`// ruleid:` must match, `// ok:` must not): `opengrep test .opengrep/rules`. CI runs them diff-aware: only findings a
+# PR adds fail it (tools/ci/new-problems.mjs). Single-file style rules belong in ESLint/Stylelint first; these are the
+# JSX/TSX ones those tools don't cover here.
+rules:
+  - id: pds-no-dangerously-set-inner-html
+    languages: [typescript, javascript]
+    severity: ERROR
+    message: >-
+      dangerouslySetInnerHTML writes unchecked HTML into the page. Render the content as elements, or pass it through the
+      rich-text engine's sanitizer; if this is the engine itself, add `// nosemgrep: pds-no-dangerously-set-inner-html`
+      with the reason.
+    pattern-either:
+      - pattern: |
+          <$EL dangerouslySetInnerHTML={$X} />
+      - pattern: |
+          {..., dangerouslySetInnerHTML: $X, ...}
+
+  - id: pds-no-hex-colour-in-code
+    languages: [typescript, javascript]
+    severity: ERROR
+    message: >-
+      A raw hex colour in component code. Colours come from tokens only (CLAUDE.md "Tokens only"): use a
+      var(--plx-sys-…) or var(--plx-comp-…) token.
+    patterns:
+      - pattern: '"$S"'
+      - metavariable-regex:
+          metavariable: $S
+          regex: ^#([0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$
+    paths:
+      exclude:
+        - "**/tokens/**"
+        - "**/*.tokens.*"
+
+  - id: pds-no-physical-side-in-style
+    languages: [typescript, javascript]
+    severity: ERROR
+    message: >-
+      A physical left/right in a style object breaks right-to-left pages. Use the logical property
+      (marginInlineStart, paddingInlineEnd, insetInlineStart, borderInlineStart…).
+    patterns:
+      - pattern: |
+          <$EL style={{..., $K: $V, ...}} />
+      - metavariable-regex:
+          metavariable: $K
+          regex: ^(marginLeft|marginRight|paddingLeft|paddingRight|borderLeft\w*|borderRight\w*|left|right|scrollMarginLeft|scrollMarginRight|scrollPaddingLeft|scrollPaddingRight)$

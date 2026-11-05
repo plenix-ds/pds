@@ -20,3 +20,16 @@
 | A PR that adds a new problem fails | Ran (CI) | Draft #211, run 41984826800: Knip "124 findings, 1 new, 123 old" → FAIL; `CI result` FAIL; other checks pass. Closed, not merged |
 | A change that breaks the build fails every check | Ran (CI) | #211's first push, run 41984644502: `npm ci` (build) failed in all six jobs |
 | `decisions.yaml` check | Ran (local) | `node tools/ci/check-decisions.mjs origin/main`: DECISIONS_OK (22); a planted duplicate id and a rewritten D-0006 gave DECISIONS_FAIL (6) |
+
+## Opengrep (2026-11-05)
+
+| Item | Status | Path / output |
+|---|---|---|
+| Version older than a week | Ran | v1.33.0 (2026-10-27); latest v1.33.1 was a week old minus a day |
+| Binary signature | Ran (openssl) | Sigstore certificate: `https://github.com/opengrep/opengrep/.github/workflows/rolling-release.yml@refs/heads/release-v1.33.0`, repo `opengrep/opengrep`, commit `641c730d`; `openssl dgst -sha256 -verify` → "Verified OK". Not checked: the Fulcio chain and the Rekor entry (no cosign on VM 131) |
+| Pinned sha256 | Ran | `2545812755572e1355ea60f96288f82a26eebed7fc8b512430d49d5667214c24` (`opengrep_manylinux_x86`), checked with `sha256sum -c` in CI |
+| Rules and fixtures | Ran | `opengrep test .opengrep/rules`: "3/3: ✓ All tests passed" (each rule has `ruleid` and `ok` cases; the object-spread form of `dangerouslySetInnerHTML` added after the first scan missed it) |
+| Findings on main | Ran | 1: `platform/components/RichText/RichText.jsx:46` (`dangerouslySetInnerHTML` of the sanitized `clean`): old debt, reported, not blocking |
+| Diff-aware compare | Ran (local) | empty base → "1 new" exit 1; same base → "0 new, 1 old" exit 0 |
+| CI leg `New problems (opengrep)` | Planned | This PR's run |
+| Banned imports rule | Skipped | No banned-import list exists; it needs the DS Architect's ADR first |

@@ -88,6 +88,18 @@ const TOOLS = {
     }
     return list;
   },
+  // PDS's own Opengrep rules (.opengrep/rules). OPENGREP_RULES names the head's rules, so the base is read with the same
+  // rules and only code changes count; OPENGREP_BIN is the pinned binary (ci.yml installs it, sha256-checked)
+  opengrep() {
+    const rules = process.env.OPENGREP_RULES || path.join(ROOT, '.opengrep', 'rules', 'pds.yml');
+    const r = exec(process.env.OPENGREP_BIN || 'opengrep', ['scan', '--config', rules, '--json', '--quiet',
+      '--exclude', 'platform/vendor', '--exclude', 'platform/design-system', '--exclude', '.opengrep',
+      ...['platform', 'suite', 'dam/app', 'apps'].filter((d) => fs.existsSync(path.join(ROOT, d)))]);
+    if (r.status !== 0 && r.status !== 1) throw new Error(`opengrep crashed (exit ${r.status}):\n${r.stderr.slice(-2000)}`);
+    const data = parseJson(r.stdout, 'opengrep');
+    if ((data.errors || []).some((e) => e.level === 'error')) throw new Error(`opengrep reported errors: ${JSON.stringify(data.errors).slice(0, 1500)}`);
+    return data.results.map((x) => ['opengrep', rel(x.path), x.check_id.split('.').pop(), noNumbers(x.extra.lines || x.extra.message)]);
+  },
   system: () => reporterFindings('system', 'check-system.js', 'SYSTEM_OK', 'SYSTEM_FAIL'),
   style: () => reporterFindings('style', 'check-style.js', 'STYLE_OK', 'STYLE_FAIL'),
 };

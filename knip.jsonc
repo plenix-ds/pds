@@ -71,6 +71,8 @@
     "platform/components/RichTextEditor/RichTextEditor.jsx": ["exports"]
   },
   "ignore": [
+    // Opengrep rule fixtures (.opengrep/rules/*.fixture.tsx): read by `opengrep test`, never imported or built (#197)
+    ".opengrep/**",
     // the app tests/baseline-scan-273.test.js and tools/baseline/scan.js read as text: nothing imports it
     "tests/fixtures/baseline-app/**",
     "platform/dist/**",
