@@ -30,7 +30,7 @@
 | `checkbox` | Checkbox at inline-start (as the column's read cell), no editor mode | — | Space toggles **and saves** |
 | `textarea` | the cell shows the value's first line | a box over the cell: Textarea, `autoGrow` up to 8 lines then scrolls; inline size the cell's width or 320px (`size-80u`), whichever is larger | Enter adds a line, Ctrl+Enter saves |
 | `person` | Avatar (xs) + name, bare EntityPicker input when typing | its search results | typing searches, Enter saves |
-| component | the application's own, inside the same frame | its own | it calls `commit(value)` or `cancel()` |
+| component | the application's own, inside the same frame | its own | it calls `onCommit(value?)` or `onCancel()` (`CellEditorProps`, ADR 0016) |
 
 - **For every editor:**
   - Escape cancels and puts the old value back.
