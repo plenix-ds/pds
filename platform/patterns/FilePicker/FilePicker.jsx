@@ -14,7 +14,7 @@ import { Notice } from '../../components/Notice/Notice.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { cx } from '../../utils/cx.ts';
 import { Dialog } from '../../components/Dialog/Dialog.tsx';
-import { Tree } from '../../components/Tree/Tree.jsx';
+import { Tree } from '../../components/Tree/Tree.tsx';
 import { FileRow,FileRowList } from '../../components/FileRow/FileRow.jsx';
 import { SearchField } from '../../components/SearchField/SearchField.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';

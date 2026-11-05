@@ -64,7 +64,7 @@ import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { formatBytes, formatNumber } from '../../utils/format.ts';
 import { Breadcrumbs } from '../../components/Breadcrumbs/Breadcrumbs.tsx';
-import { Tree } from '../../components/Tree/Tree.jsx';
+import { Tree } from '../../components/Tree/Tree.tsx';
 import { MediaCard } from '../../components/Card/Card.tsx';
 import { fileIcon, fileExtension } from '../../components/File/File.tsx';
 import { Button } from '../../components/Button/Button.tsx';
