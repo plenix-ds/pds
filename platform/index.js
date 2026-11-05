@@ -75,6 +75,7 @@ export { DataToolbar } from './patterns/DataToolbar/DataToolbar.jsx';
 export { BulkActions, SelectionSummary } from './patterns/BulkActions/BulkActions.jsx';
 export { ContentGrid } from './patterns/ContentGrid/ContentGrid.jsx';
 export { PropertyList } from './patterns/PropertyList/PropertyList.jsx';
+export { TableSettings } from './providers/TableSettings.tsx';
 export { PrintDocument } from './patterns/PrintDocument/PrintDocument.tsx';
 export { RecordPage } from './patterns/RecordPage/RecordPage.jsx';
 export { EntityHeader } from './patterns/EntityHeader/EntityHeader.jsx';

@@ -20,5 +20,5 @@ export function opening(props) {
   return { sorting: normalizeSort(Array.isArray(props.sort) ? (!props.onViewChange && !props.sort.length && !saved.sort ? options.initialSort : props.sort) : saved.sort || options.initialSort).filter(item=>known.has(item.id)),
     order: fields(props.columnOrder) || fields(saved.order) || props.columns.map(c => c.field),
     visibility: visibilityOf(fields(props.hiddenColumns) || fields(saved.hidden)), widths,
-    groupBy:groups(props.groupBy??saved.groupBy??options.groupBy??false), collapsed:Array.isArray(props.collapsedGroups)?props.collapsedGroups:Array.isArray(saved.collapsed)?saved.collapsed:[], rowHeight: step, wrapHeaders: saved.wrapHeaders ?? props.wrapHeaders ?? false };
+    groupBy:groups(props.groupBy??saved.groupBy??options.groupBy??false), collapsed:Array.isArray(props.collapsedGroups)?props.collapsedGroups:Array.isArray(saved.collapsed)?saved.collapsed:[], rowHeight: step, editMode: saved.editMode, wrapHeaders: saved.wrapHeaders ?? props.wrapHeaders ?? false };
 }

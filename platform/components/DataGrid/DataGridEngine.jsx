@@ -43,6 +43,7 @@ import { observeElementRect, observeElementOffset, elementScroll, observeWindowR
 import { useSelection, selectionActions } from './engine/useSelection.js';
 import { useColumns } from './engine/useColumns.js';
 import { useEditedRows, editActions, useEditEffect } from './engine/useEditing.js';
+import { useTableSettings } from '../../providers/TableSettings.tsx';
 import { useSorting } from './engine/useSorting.js';
 import { sortActions } from './engine/sortActions.js';
 import { useGrouping } from './engine/useGrouping.js';
@@ -187,6 +188,14 @@ function NextEngine(props) {
   }, [metrics]);
   const effectiveStep = props.rowHeight || rowHeight,
     effectiveWrap = props.wrapHeaders ?? wrapHeaders;
+  // how the table edits (ADR 0016): the person's remembered choice, then the table's editMode, then the TableSettings above it, then Inline Edit;
+  // the choice is offered in the view menu only when both ways are offered and a column can be edited
+  const settings = useTableSettings(),
+    editModes = (props.editModes ?? settings.editModes ?? ['inline']).filter((m) => m === 'inline' || m === 'form'),
+    [editModeChoice, setEditMode] = React.useState(initial.editMode),
+    canChoose = editModes.length > 1 && props.columns.some((c) => c.editor),
+    editMode = editModes.includes(editModeChoice) ? editModeChoice : editModes.includes(props.editMode ?? settings.editMode) ? props.editMode ?? settings.editMode : editModes[0] || 'inline',
+    editMenu = { mode: editMode, modes: editModes, show: canChoose, set: setEditMode };
 
   const deferredFilter = React.useDeferredValue(props.filter);
 
@@ -586,6 +595,7 @@ function NextEngine(props) {
     cells,
     columns,
     effectiveWrap,
+    editMenu,
     showTypes,
     isStatic,
     headerMenu,
@@ -632,6 +642,7 @@ function NextEngine(props) {
     sizing,
     effectiveStep,
     effectiveWrap,
+    editMenu,
     wrapColumns,
     groupBy,
     collapsed,
@@ -773,6 +784,7 @@ function NextEngine(props) {
     B,
     selectable,
     effectiveWrap,
+    editMenu,
     options,
     showTypes,
     headerMenu,
@@ -992,6 +1004,7 @@ function NextEngine(props) {
     virtualized,
     effectiveStep,
     effectiveWrap,
+    editMenu,
     failed,
     S,
     onRetry,
