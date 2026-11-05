@@ -159,7 +159,7 @@ if (window.DS && DS.registerLab) {
           case 'ring': return stack ? AG('ring') : null;
           case 'ov': return stack ? AG(size + '-overlap') : null;
           case 'gap': return stack ? null : AG('gap');
-          case 'aw': return 'plx-comp-avatar-' + AG_PX[size] + '-width';
+          case 'aw': return 'plx-comp-avatar-' + size + '-width';
           case 'mbg': return more ? AG('more-background') : null;
           case 'mfg': return more ? AG('more-text') : null;
           case 'mff': return more ? AG('more-font-family') : null;
@@ -213,7 +213,7 @@ if (window.DS && DS.registerLab) {
         var detail = variant !== 'name';
         switch (id) {
           case 'gap': return PS(size + '-gap');
-          case 'aw': return 'plx-comp-avatar-' + PS_PX[size] + '-width';
+          case 'aw': return 'plx-comp-avatar-' + size + '-width';
           case 'nc': return PS('name-color');
           case 'nfs': return PS(size + '-name-font-size');
           case 'nfw': return PS('name-font-weight');

@@ -234,7 +234,7 @@ for (const dir of ['components', 'patterns', 'providers', 'hooks']) {
   const seen = {};
   for (const f of walk(dsDir).filter((x) => /\.(js|css|html)$/.test(x) && !/(^|[\\/])(spec-parts|reviewed)\.js$/.test(x))) {
     const t = read(f), rel = path.relative(PLATFORM, f).split(path.sep).join('/');
-    const names = [...(t.match(/--plx-ref-size-\d+(?:px|u)(?![a-z0-9-])/g) || []), ...[...t.matchAll(/\b(?:box|W)\((\d+)[,)]/g)].map((m) => '--plx-ref-size-' + m[1] + 'px')];
+    const names = [...(t.match(/--plx-ref-size-\d+(?:px|u)(?![a-z0-9-])/g) || []), ...[...t.matchAll(/\b(?:box|W)\((\d+)[,)]/g)].map((m) => '--plx-ref-size-' + (+m[1] % 4 === 0 ? +m[1] / 4 + 'u' : m[1] + 'px'))];
     for (const n of names) if (!defined.has(n)) (seen[n] = seen[n] || new Set()).add(rel);
   }
   for (const [n, files] of Object.entries(seen)) add('sizes', n + ' is not a token (platform/tokens/reference.tokens.json), used in ' + [...files].slice(0, 4).join(', ') + (files.size > 4 ? ' and ' + (files.size - 4) + ' more' : ''));
