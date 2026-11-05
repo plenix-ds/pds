@@ -11,6 +11,8 @@
     "check-system.rules/*.js",
     "tokenize-component.js",
     "tests/**/*.js",
+    // component stories (Component Story Format): read by check 9 (tools/checks/states) and, later, Storybook (plan P0-5)
+    "platform/**/*.stories.tsx",
     "tools/**/*.js",
     // checks run by node and tests run by vitest or Playwright (P0-8)
     "tools/checks/**/*.mjs",

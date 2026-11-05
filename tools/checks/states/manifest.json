@@ -1,1 +1,12 @@
-{}
+{
+  "Button": {
+    "default": ["--plx-comp-button-secondary-background", "--plx-comp-button-secondary-glow-image", "--plx-comp-button-raised-rest-shadow", "--plx-comp-button-danger-secondary-border"],
+    "hover": ["--plx-comp-button-secondary-raised-hover-background", "--plx-comp-button-secondary-hover-glow-image", "--plx-comp-button-danger-glow-image", "--plx-comp-button-raised-hover-shadow"],
+    "focus": ["--plx-comp-button-focus-ring-color", "--plx-comp-button-focus-ring-width", "--plx-comp-button-focus-ring-offset"],
+    "active": ["--plx-comp-button-secondary-raised-pressed-background", "--plx-comp-button-danger-secondary-pressed-background", "--plx-comp-button-danger-secondary-pressed-border"],
+    "disabled": ["--plx-comp-button-disabled-background", "--plx-comp-button-disabled-border", "--plx-comp-button-disabled-text"],
+    "loading": ["--plx-comp-button-disabled-text", "--plx-comp-button-focus-ring-color"],
+    "error": "n/a(a button has no error state of its own: an action's error shows on the fields, in a Notice or a toast)",
+    "selected": ["--plx-comp-button-selected-background", "--plx-comp-button-selected-border", "--plx-comp-button-selected-text"]
+  }
+}
