@@ -40,7 +40,7 @@ const fixedOf = (mode) => ({
   onPrimary: v('--plx-sys-action-primary-content', mode),
   focus: v('--plx-sys-focus-ring-color', mode),
   radius: v('--plx-sys-radius-control', mode),
-  cardRadius: v('--plx-sys-radius-card-6px', mode),
+  cardRadius: v('--plx-sys-radius-card-md', mode),
   height: v('--plx-sys-control-height-dialog', mode),
   borderWidth: v('--plx-comp-input-border-width', mode),
   semibold: v('--plx-sys-font-weight-semibold', mode),
@@ -63,7 +63,7 @@ const markOnAccent = 'url("data:image/svg+xml,' + fs.readFileSync(path.join(BRAN
 const mark = 'url("data:image/svg+xml,' + fs.readFileSync(path.join(BRAND_DIR, BRAND.files.mark), 'utf8').replace(/\s+/g, ' ').trim()
   .replace(/%/g, '%25').replace(/#/g, '%23').replace(/</g, '%3C').replace(/>/g, '%3E').replace(/"/g, "'") + '")';
 // the mark is as tall as the header name's two rows (batch 279): the 20px and 16px label lines
-fixed.markSize = 'calc(' + v('--plx-sys-label-height-20px', 'light') + ' + ' + v('--plx-sys-label-height-16px', 'light') + ')';
+fixed.markSize = 'calc(' + v('--plx-sys-label-height-md', 'light') + ' + ' + v('--plx-sys-label-height-sm', 'light') + ')';
 fixed.markGap = v('--plx-sys-space-inline-md');
 const vars = (r) => Object.keys(r).map((k) => '  --plenix-' + k + ': ' + r[k] + ';').join('\n');
 

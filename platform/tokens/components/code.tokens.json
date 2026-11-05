@@ -17,7 +17,7 @@
       "$description": "Code: the code font (Reddit Mono); its size and line height are those of the text around it."
     },
     "code-radius": {
-      "$value": "{plx-sys.radius-compact-4px}",
+      "$value": "{plx-sys.radius-compact}",
       "$type": "dimension",
       "$description": "Code: the corners of the fill."
     },

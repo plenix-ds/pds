@@ -33,7 +33,7 @@
       "$description": "Rich tooltip: the border width."
     },
     "tooltip-rich-radius": {
-      "$value": "{plx-sys.radius-menu-6px}",
+      "$value": "{plx-sys.radius-menu}",
       "$type": "dimension",
       "$description": "Rich tooltip: the corners (the menu radius, as Popover)."
     },

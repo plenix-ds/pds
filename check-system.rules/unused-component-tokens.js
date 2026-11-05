@@ -8,7 +8,8 @@
 //     the design-system spec, tests, docs and tools/agent do not count);
 //   - another component token's value refers to it ("{plx-comp.name}") and that token is read;
 //   - it belongs to a family JavaScript builds the name of at run time (DYNAMIC below).
-// A token read by some other means is listed in ALLOWED with the reason.
+// A token read by some other means is listed in ALLOWED with the reason. A $deprecated token (a rename's old name, kept
+// as an alias for readers outside Plenix until 2.0.0, docs/adr/0012) is not checked.
 // The rule is a module check-style.js runs (a style rule: check-common.js, STYLE_MODULES): require('./check-system.rules/unused-component-tokens.js').check({ add })
 // Alone: node check-system.rules/unused-component-tokens.js   -> UNUSED_COMPONENT_TOKENS_OK, or the tokens and exit 1
 const fs = require('fs');
@@ -43,6 +44,7 @@ function defined() {
     let j; try { j = JSON.parse(fs.readFileSync(f, 'utf8')); } catch (e) { continue; }
     const g = j['plx-comp']; if (!g) continue;
     for (const k of Object.keys(g)) {
+      if (g[k] && g[k].$deprecated) continue;   // a renamed token's old name, kept for readers outside Plenix until 2.0.0 (docs/adr/0012)
       if (k.charAt(0) === '$') continue;
       const refs = [...String(JSON.stringify(g[k].$value)).matchAll(/\{plx-comp\.([a-z0-9-]+)\}/g)].map((m) => m[1]);
       (out[k] = out[k] || { file: rel(f), refs: [] }).refs.push(...refs);

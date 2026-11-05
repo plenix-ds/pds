@@ -22,7 +22,7 @@
       "$description": "fit=\"contain\": the frame's fill around the whole picture."
     },
     "image-radius": {
-      "$value": "{plx-sys.radius-media-4px}",
+      "$value": "{plx-sys.radius-media-sm}",
       "$type": "dimension",
       "$description": "rounded: the media corners."
     },

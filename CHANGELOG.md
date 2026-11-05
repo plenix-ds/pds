@@ -21,6 +21,7 @@ Nothing to change. Deprecated names keep working (each says what replaces it). A
 - `--plx-sys-shell-min-width` (1024px) and `--plx-sys-shell-min-height` (640px): the smallest screen an app made with AppShell `minSize` supports (#274, docs/adr/0010).
 - Palette step names (docs/adr/0012): `--plx-ref-radius-none`, `-xs`, `-sm`, `-md`; `--plx-ref-border-width-100` … `-400`; `--plx-ref-opacity-300`, `-450`, `-500`, `-700`.
 - The size palette in grid units (1u = 4px): `--plx-ref-size-1u` … `--plx-ref-size-400u` (docs/adr/0012, D-0047).
+- Palette step names (docs/adr/0012): `--plx-ref-space-1u` … `-16u`, `--plx-ref-control-size-6u` … `-13u`, `--plx-ref-font-size-100` … `-900`, `--plx-ref-font-weight-regular` / `-medium` / `-semibold` / `-bold`, `--plx-ref-breakpoint-sm` … `-xl`, `--plx-ref-content-max-sm` … `-xl`, `--plx-ref-grid-columns-*`, `-grid-margin-*`, `-grid-gutter-*` (`sm` … `xl`), `--plx-ref-glyph-size-xs` … `-lg`, `--plx-ref-motion-scale-sm` / `-md`.
 
 ### Changed
 - ColumnsMenu and ManageColumnsDialog: the column list is one Tab stop; Up and Down move between rows, Left and Right across a row's controls (mirrored in right to left), Home and End to the first and last control, Ctrl+Home and Ctrl+End to the first and last row. Alt+Arrow still reorders (#79).
@@ -46,6 +47,7 @@ Nothing to change. Deprecated names keep working (each says what replaces it). A
 - `--plx-sys-shape-pill`: use `--plx-sys-shape-mark` (no pill reads it; pills use `--plx-sys-radius-pill-4px`). It keeps working and is removed in 2.0.0.
 - `--plx-ref-radius-0px`, `-2px`, `-4px`, `-6px`; `--plx-ref-border-width-1px` … `-4px`; `--plx-ref-opacity-30`, `-45`, `-50`, `-70`: use the step names above. They keep working and are removed in 2.0.0.
 - `--plx-ref-size-4px` … `--plx-ref-size-1600px` (61 names): use `--plx-ref-size-<px ÷ 4>u`, for example `--plx-ref-size-60u` for 240px. They keep working and are removed in 2.0.0.
+- The value-named palette steps they replace (`--plx-ref-space-4px`, `--plx-ref-font-size-13`, `--plx-ref-breakpoint-1024px`, `--plx-ref-font-weight-semibold-600` …, 57 names). They keep working and are removed in 2.0.0.
 
 ### Fixed
 - Text sizes below 12px (caption, eyebrow, field counter and warning, chart ticks, tooltip, calendar, slider, version label and others) now use 12px, the type floor (#206).

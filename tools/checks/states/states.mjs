@@ -67,12 +67,24 @@ export function isTokenOnlyCss(before, after) {
 }
 
 const git = (args) => execFileSync('git', args, { cwd: root, encoding: 'utf8', maxBuffer: 1 << 28 });
+// A TypeScript conversion (.jsx to .tsx, .js to .ts, same folder and name) changes no behavior (#329, ADR 0011).
+export function isConversionRename(status, from, to) {
+  if (!/^R/.test(status)) return false;
+  const m = from.match(/^(.*)\.(jsx|js)$/);
+  return !!m && to === m[1] + (m[2] === 'jsx' ? '.tsx' : '.ts');
+}
+
 function changedComponents(base) {
-  const files = git(['diff', '--name-only', `${base}...HEAD`]).split('\n').filter(Boolean);
-  const real = files.filter((f) => {
-    if (!/^platform\/components\/[^/]+\/.+\.css$/.test(f)) return true;
-    try { return !isTokenOnlyCss(git(['show', `${base}:${f}`]), git(['show', `HEAD:${f}`])); } catch { return true; }
-  });
+  const lines = git(['diff', '--name-status', '-M25%', `${base}...HEAD`]).split('\n').filter(Boolean).map((l) => l.split('\t'));
+  const real = [];
+  for (const [status, a, b] of lines) {
+    const f = b || a;
+    if (isConversionRename(status, a, b || '')) continue;
+    if (/^platform\/components\/[^/]+\/.+\.css$/.test(f)) {
+      try { if (isTokenOnlyCss(git(['show', `${base}:${f}`]), git(['show', `HEAD:${f}`]))) continue; } catch { /* a new or removed file counts */ }
+    }
+    real.push(f);
+  }
   return [...new Set(real.map((f) => f.match(/^platform\/components\/([^/]+)\//)?.[1]).filter(Boolean))];
 }
 

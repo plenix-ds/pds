@@ -32,7 +32,7 @@
       "$description": "File: the picture’s width and height (size-20px)."
     },
     "file-picture-radius": {
-      "$value": "{plx-sys.radius-media-4px}",
+      "$value": "{plx-sys.radius-media-sm}",
       "$type": "dimension",
       "$description": "File: the picture’s corners (radius-media-4px)."
     },
@@ -67,7 +67,7 @@
       "$description": "File: name line height (size-20px)."
     },
     "file-name-radius": {
-      "$value": "{plx-sys.radius-control-4px}",
+      "$value": "{plx-sys.radius-control-sm}",
       "$type": "dimension",
       "$description": "File: the corners of the name’s hover fill and focus ring (radius-control-4px)."
     },
@@ -127,7 +127,7 @@
       "$description": "File: chip border width (border-width-thin)."
     },
     "file-chip-radius": {
-      "$value": "{plx-sys.radius-control-4px}",
+      "$value": "{plx-sys.radius-control-sm}",
       "$type": "dimension",
       "$description": "File: chip corners (radius-control-4px)."
     },

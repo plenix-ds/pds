@@ -8,6 +8,6 @@
     "file-list-count-text": { "$value": "{plx-sys.content-muted}", "$type": "color", "$description": "FileList: the count's color (content-muted)." },
     "file-list-count-font-family": { "$value": "{plx-sys.font-data}", "$type": "fontFamily", "$description": "FileList: the count is a number: the data font (Reddit Mono)." },
     "file-list-count-font-size": { "$value": "{plx-sys.text-secondary-font-size}", "$type": "dimension", "$description": "FileList: the count's size (12px)." },
-    "file-list-count-line-height": { "$value": "{plx-sys.label-height-16px}", "$type": "dimension", "$description": "FileList: the count's line height (16px)." }
+    "file-list-count-line-height": { "$value": "{plx-sys.label-height-sm}", "$type": "dimension", "$description": "FileList: the count's line height (16px)." }
   }
 }

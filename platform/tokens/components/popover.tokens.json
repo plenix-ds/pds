@@ -27,7 +27,7 @@
       "$description": "Popover: the border while the popover itself has keyboard focus (no controls inside); only the border color changes."
     },
     "popover-radius": {
-      "$value": "{plx-sys.radius-menu-6px}",
+      "$value": "{plx-sys.radius-menu}",
       "$type": "dimension",
       "$description": "Popover: the corners (the menu radius)."
     },

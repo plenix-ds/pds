@@ -81,6 +81,7 @@ child({ units: ['components/DataPill', 'components/DataGrid', 'components/Table'
 child({ units: ['components/Button'] }, 'button-selected-645.test.js');   // a selected button is readable in dark (issue 645)
 child({ units: ['components/Chat', 'components/MediaViewer', 'components/Button'] }, 'chat-media-s5.test.js');   // Chat: pictures, files and voice in a bubble (issue 637, slice 5)
 child({ units: ['components/Button', 'components/Toolbar'] }, 'button-elevation-610.test.js');   // raised action buttons (issue 610)
+child({ units: ['patterns/EntityHeader', 'patterns/RecordPage', 'components/Icon'] }, 'entity-header-media-275.test.js');   // the { icon, hue } media without a box (issue 275, D-0036)
 child({ units: ['patterns/NavPane', 'patterns/SecondaryPane', 'patterns/SidePanel', 'components/Button', 'components/Input'] }, 'navpane-fit-677.test.js');   // controls in a pane's header fit the pane (issue 677)
 // SplitWorkspace passes its list's DataGrid options (issue 681): when the grid's units or the test's own file changed; a
 // change under templates/ is not a unit in changed.js and reaches the slice, which starts it too

@@ -1932,7 +1932,7 @@
    "n": 19,
    "fallback": false
   },
-  "--plx-comp-avatar-32-height": {
+  "--plx-comp-avatar-md-height": {
    "n": 18,
    "fallback": false
   },
@@ -1940,7 +1940,7 @@
    "n": 18,
    "fallback": false
   },
-  "--plx-comp-avatar-32-width": {
+  "--plx-comp-avatar-md-width": {
    "n": 18,
    "fallback": false
   },
@@ -2608,11 +2608,11 @@
    "n": 13,
    "fallback": false
   },
-  "--plx-sys-label-height-20px": {
+  "--plx-sys-label-height-md": {
    "n": 13,
    "fallback": false
   },
-  "--plx-sys-label-height-16px": {
+  "--plx-sys-label-height-sm": {
    "n": 13,
    "fallback": false
   },
@@ -3200,7 +3200,7 @@
    "n": 10,
    "fallback": false
   },
-  "--plx-comp-avatar-24-height": {
+  "--plx-comp-avatar-xs-height": {
    "n": 9,
    "fallback": false
   },
@@ -3208,7 +3208,7 @@
    "n": 9,
    "fallback": false
   },
-  "--plx-comp-avatar-24-width": {
+  "--plx-comp-avatar-xs-width": {
    "n": 9,
    "fallback": false
   },
@@ -3232,7 +3232,7 @@
    "n": 9,
    "fallback": false
   },
-  "--plx-comp-avatar-28-height": {
+  "--plx-comp-avatar-sm-height": {
    "n": 9,
    "fallback": false
   },
@@ -3240,7 +3240,7 @@
    "n": 9,
    "fallback": false
   },
-  "--plx-comp-avatar-28-width": {
+  "--plx-comp-avatar-sm-width": {
    "n": 9,
    "fallback": false
   },
@@ -5452,7 +5452,7 @@
    "n": 1,
    "fallback": false
   },
-  "--plx-comp-avatar-48-height": {
+  "--plx-comp-avatar-xl-height": {
    "n": 1,
    "fallback": false
   },
@@ -5460,7 +5460,7 @@
    "n": 1,
    "fallback": false
   },
-  "--plx-comp-avatar-48-width": {
+  "--plx-comp-avatar-xl-width": {
    "n": 1,
    "fallback": false
   },
@@ -20431,8 +20431,8 @@
    "p": "--plx-sys-radius-control",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-sys-radius-control-6px)",
-   "vb": "var(--plx-sys-radius-control-4px)",
+   "va": "var(--plx-sys-radius-control-md)",
+   "vb": "var(--plx-sys-radius-control-sm)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": false
   },

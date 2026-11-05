@@ -27,7 +27,7 @@
       "$description": "Auth: card border width, and the footer’s and the “or” lines (border-width-thin)."
     },
     "auth-card-radius": {
-      "$value": "{plx-sys.radius-surface-6px}",
+      "$value": "{plx-sys.radius-surface-md}",
       "$type": "dimension",
       "$description": "Auth: card corners (radius-surface-6px)."
     },

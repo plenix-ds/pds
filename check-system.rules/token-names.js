@@ -16,6 +16,14 @@ const G = require('./token-graph.js');
 
 const NAME = 'token-names';
 const BASELINE = path.join(__dirname, 'token-names.baseline.json');
+// names that mirror a public prop's value: the component picks the token by that value at run time, so the number is the
+// prop's, not the token's (docs/adr/0012)
+const MIRRORS = [
+  [/^pictogram-(48|64|96)-/, "Pictogram's size prop is '48' | '64' | '96'"],
+  [/^text-lines-[2-4]$/, "Text's lines prop is 2, 3 or 4"],
+  [/^document-viewer-zoom-(50|75)$/, "DocumentViewer's zoom steps are named by their percent"],
+  [/^content-grid-ratio-1-1$/, "ContentGrid's ratio prop is '1:1'"],
+];
 const UNIT = /^\d*\.?\d+(px|rem|em|ms|s|pt|deg|vh|vw|pct|percent)$/;
 
 // the numbers a literal value can be read as: 0.8125rem -> 13; 0.3 -> 0.3, 30; 200ms -> 200; 0.2s -> 200
@@ -49,7 +57,8 @@ function raw(docs) {
   for (const d of defs) {
     const self = d.tier + '.' + d.name;
     if (seen.has(self)) continue;
-    if (d.deprecated) continue;   // a deprecated name (a renamed token's alias, docs/adr/0002) is on its way out
+    if (d.deprecated) continue;
+    if (d.tier === 'plx-comp' && MIRRORS.some(([re]) => re.test(d.name))) continue;   // a deprecated name (a renamed token's alias, docs/adr/0002) is on its way out
     const parts = d.name.split('-');
     const value = resolve(d), read = value == null ? new Set() : readings(value);
     let why = null;
