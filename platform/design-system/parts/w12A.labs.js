@@ -140,7 +140,7 @@ if (window.DS && DS.registerLab) {
       parts: { g: 'A', bg: 'B', bh: 'B', cc: 'C', cf: 'C', cs: 'C', cl: 'C' },
       anchors: { A: { part: null, side: 'left' }, B: { part: '.plx-file-list__bar', side: 'top' }, C: { part: '.plx-file-list__count', side: 'bottom' } },
       sections: [['List', ['g']], ['Sort bar', ['bg', 'bh']], ['Count', ['cc', 'cf', 'cs', 'cl']]],
-      matrixLabel: 'File list values by look', matrixColumnWidth: '--plx-ref-size-600px', statesHead: 'Looks · ' + HEAD
+      matrixLabel: 'File list values by look', matrixColumnWidth: '--plx-ref-size-150u', statesHead: 'Looks · ' + HEAD
     });
 
     // ---- FileBrowser (<FileBrowser>): the space between the breadcrumbs, the bar and the body; the tree's pane; the content
@@ -210,7 +210,7 @@ if (window.DS && DS.registerLab) {
       parts: { g: 'A', bg: 'B', tc: 'C', tw: 'C', tp: 'D', ti: 'D', th: 'D', oc: 'D', ow: 'D', oo: 'D', ch: 'E' },
       anchors: { A: { part: null, side: 'left' }, B: { part: '.plx-file-browser__body', side: 'bottom' }, C: { part: '.plx-file-browser__tree', side: 'top' }, D: { part: '.plx-file-browser__tree-scroll', side: 'left' }, E: { part: '.plx-file-browser__content', side: 'right' } },
       sections: [['Browser', ['g', 'bg', 'ch']], ['Tree pane', ['tc', 'tw', 'tp', 'ti', 'th']], ['Tree focus', ['oc', 'ow', 'oo']]],
-      matrixLabel: 'File browser values by variant and state', matrixColumnWidth: '--plx-ref-size-720px', statesHead: 'Variants and states · ' + HEAD
+      matrixLabel: 'File browser values by variant and state', matrixColumnWidth: '--plx-ref-size-180u', statesHead: 'Variants and states · ' + HEAD
     });
 
     // ---- UploadManager (<UploadManager>): the panel's frame, its head and counts, the drop zone's words, the queue
@@ -300,7 +300,7 @@ if (window.DS && DS.registerLab) {
         E: { part: '.plx-upload-manager__summary', side: 'left' }, F: { part: '.plx-upload-manager__counts', side: 'right' }, G: { part: '.plx-upload-manager__body', side: 'left' }, H: { part: '.plx-upload-manager__drop', side: 'top' },
         I: { part: '.plx-upload-manager__hint', side: 'right' }, J: { part: '.plx-upload-manager__choose', side: 'bottom' }, K: { part: '.plx-upload-manager__queue', side: 'right' } },
       sections: [['Panel', ['g', 'bg', 'bc', 'bw', 'r', 'py', 'px']], ['Docked', ['kw', 'ki', 'ks']], ['Head', ['hg', 'hh', 'tc', 'ts', 'tw', 'tl', 'ag']], ['Summary', ['sg', 'cc', 'cf', 'cs', 'cl']], ['Drop zone (dialog)', ['dg', 'dt', 'ds', 'dw', 'dl', 'nc', 'ns', 'nl', 'pg']], ['Queue', ['qh', 'oc', 'ow', 'oo']]],
-      matrixLabel: 'Upload manager values by variant and state', matrixColumnWidth: '--plx-ref-size-600px', statesHead: 'Variants and states · ' + HEAD
+      matrixLabel: 'Upload manager values by variant and state', matrixColumnWidth: '--plx-ref-size-150u', statesHead: 'Variants and states · ' + HEAD
     });
 
     // ---- VersionCompare (<VersionCompare>): the pickers' row, and the text diff's bar, frame and lines
@@ -390,7 +390,7 @@ if (window.DS && DS.registerLab) {
         E: { part: '.plx-version-compare__lines', side: 'right' }, F: { part: '.plx-version-compare__line', side: 'left' }, G: { part: '.plx-version-compare__number', side: 'left' }, H: { part: '.plx-version-compare__line--added', side: 'right' },
         I: { part: '.plx-version-compare__line--removed', side: 'right' }, J: { part: '.plx-version-compare__fold', side: 'bottom' } },
       sections: [['Pickers', ['g', 'pg', 'pw']], ['Diff bar', ['dg', 'sc', 'ss', 'sl', 'sg']], ['Lines', ['lb', 'lc', 'lw', 'lr', 'lh', 'oc', 'ow', 'oo']], ['A line', ['ig', 'ip', 'it', 'if', 'is', 'il', 'nw', 'nc', 'gw']], ['Changes', ['ab', 'as', 'rb', 'rs', 'fb']]],
-      matrixLabel: 'Version comparison values by view and state', matrixColumnWidth: '--plx-ref-size-600px', statesHead: 'Views and states · ' + HEAD
+      matrixLabel: 'Version comparison values by view and state', matrixColumnWidth: '--plx-ref-size-150u', statesHead: 'Views and states · ' + HEAD
     });
   })();
 }

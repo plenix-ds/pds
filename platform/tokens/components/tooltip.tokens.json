@@ -48,7 +48,7 @@
       "$description": "Rich tooltip: the padding inside the border, on every side."
     },
     "tooltip-rich-max-width": {
-      "$value": "{plx-ref.size-320px}",
+      "$value": "{plx-ref.size-80u}",
       "$type": "dimension",
       "$description": "Rich tooltip: it wraps at 320px (the popover's md width)."
     },

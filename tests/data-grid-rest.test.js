@@ -164,15 +164,15 @@ module.exports = async function rest(page) {
       empty: 'Deleted'
     }, {
       title: 'Zero',
-      field: 'zero', width: 'calc(var(--plx-ref-size-40px) * 3)'
+      field: 'zero', width: 'calc(var(--plx-ref-size-10u) * 3)'
     }, {
       title: 'No',
-      field: 'no', width: 'clamp(80px, calc(var(--plx-ref-size-40px) * 3), 160px)'
+      field: 'no', width: 'clamp(80px, calc(var(--plx-ref-size-10u) * 3), 160px)'
     }];
     let t = await render({
       data: rows,
       columns,
-      height: '--plx-ref-size-240px'
+      height: '--plx-ref-size-60u'
     });
     ok(t.getColumn('name').getWidth() > 60 && t.getColumn('name').getWidth() < 200, 'CSS ch length resolves as a column width');
     ok(t.getColumn('size').getWidth() === 120, 'CSS px width preserves requested grid value');
@@ -298,7 +298,7 @@ module.exports = async function rest(page) {
           name: r.name
         })
       }],
-      height: '--plx-ref-size-240px'
+      height: '--plx-ref-size-60u'
     });
     await wait(250);
     ok(mounted > 0 && mounted - unmounted < 100, 'Only virtual visible rich cells mount');

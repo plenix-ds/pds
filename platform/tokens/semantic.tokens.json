@@ -9,7 +9,7 @@
   },
   "plx-sys": {
     "icon-size": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$extensions": {
         "com.plenix": {
@@ -36,7 +36,7 @@
       "$description": "Fluent 2 state layer: its amount on keyboard focus (docs/adr/0004)."
     },
     "icon-size-xs": {
-      "$value": "{plx-ref.size-12px}",
+      "$value": "{plx-ref.size-3u}",
       "$type": "dimension",
       "$extensions": {
         "com.plenix": {
@@ -48,19 +48,19 @@
       }
     },
     "icon-size-sm": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "icon-size-md": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension"
     },
     "icon-size-lg": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension"
     },
     "icon-size-xl": {
-      "$value": "{plx-ref.size-48px}",
+      "$value": "{plx-ref.size-12u}",
       "$type": "dimension"
     },
     "shell-phone-below": {
@@ -95,7 +95,7 @@
       "$description": "AppShell minSize: below this width the shell shows the screen-size notice (docs/adr/0010)."
     },
     "shell-min-height": {
-      "$value": "{plx-ref.size-640px}",
+      "$value": "{plx-ref.size-160u}",
       "$type": "dimension",
       "$description": "AppShell minSize: below this height the shell shows the screen-size notice (docs/adr/0010)."
     },
@@ -459,7 +459,7 @@
       "$type": "dimension"
     },
     "label-height-16px": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$extensions": {
         "com.plenix": {
@@ -470,11 +470,11 @@
       }
     },
     "label-height-20px": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension"
     },
     "shell-header-height": {
-      "$value": "{plx-ref.size-56px}",
+      "$value": "{plx-ref.size-14u}",
       "$type": "dimension",
       "$extensions": {
         "com.plenix": {
@@ -485,7 +485,7 @@
       }
     },
     "field-width-xs": {
-      "$value": "{plx-ref.size-48px}",
+      "$value": "{plx-ref.size-12u}",
       "$type": "dimension",
       "$description": "a color well",
       "$extensions": {
@@ -498,7 +498,7 @@
       }
     },
     "field-width-sm": {
-      "$value": "{plx-ref.size-80px}",
+      "$value": "{plx-ref.size-20u}",
       "$type": "dimension",
       "$description": "a number, an order",
       "$extensions": {
@@ -508,7 +508,7 @@
       }
     },
     "field-width-md": {
-      "$value": "{plx-ref.size-100px}",
+      "$value": "{plx-ref.size-25u}",
       "$type": "dimension",
       "$description": "a hex value, a short code",
       "$extensions": {
@@ -518,7 +518,7 @@
       }
     },
     "field-width-lg": {
-      "$value": "{plx-ref.size-220px}",
+      "$value": "{plx-ref.size-55u}",
       "$type": "dimension",
       "$description": "a name, a filter, a picker",
       "$extensions": {
@@ -528,7 +528,7 @@
       }
     },
     "scroll-max-sm": {
-      "$value": "{plx-ref.size-240px}",
+      "$value": "{plx-ref.size-60u}",
       "$type": "dimension",
       "$description": "a short list in a dialog",
       "$extensions": {
@@ -538,15 +538,15 @@
       }
     },
     "scroll-max-md": {
-      "$value": "{plx-ref.size-320px}",
+      "$value": "{plx-ref.size-80u}",
       "$type": "dimension"
     },
     "scroll-max-lg": {
-      "$value": "{plx-ref.size-400px}",
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension"
     },
     "label-width-sm": {
-      "$value": "{plx-ref.size-100px}",
+      "$value": "{plx-ref.size-25u}",
       "$type": "dimension",
       "$description": "the label column of a narrow inline field (an inspector)",
       "$extensions": {

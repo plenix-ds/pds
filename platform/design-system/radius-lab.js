@@ -74,7 +74,7 @@ window.DSRadiusLab = function (section, data) {
     DS.sample(av, 'font-size', s >= 64 ? 'var(--plx-ref-font-size-18)' : s >= 40 ? 'var(--plx-ref-font-size-14)' : 'var(--plx-ref-font-size-11)');
     box.appendChild(av); box.appendChild(DS.el('div', 'ds-radius-av-label', s + 'px · --plx-sys-radius-avatar-' + r + 'px')); row.appendChild(box);
   });
-  var no = DS.el('div', 'ds-radius-av-item ds-radius-av-no'), nav = DS.el('span', 'ds-radius-av', 'RM'); DS.sample(nav, 'width', 'var(--plx-ref-size-40px)'); DS.sample(nav, 'height', 'var(--plx-ref-size-40px)'); DS.setVar(nav, '--ds-sample-border-radius', 'var(--plx-sys-shape-mark)'); DS.sample(nav, 'font-size', 'var(--plx-ref-font-size-14)');
+  var no = DS.el('div', 'ds-radius-av-item ds-radius-av-no'), nav = DS.el('span', 'ds-radius-av', 'RM'); DS.sample(nav, 'width', 'var(--plx-ref-size-10u)'); DS.sample(nav, 'height', 'var(--plx-ref-size-10u)'); DS.setVar(nav, '--ds-sample-border-radius', 'var(--plx-sys-shape-mark)'); DS.sample(nav, 'font-size', 'var(--plx-ref-font-size-14)');
   no.appendChild(nav); no.appendChild(DS.el('div', 'ds-radius-av-label', 'Not this: a circle')); row.appendChild(no);
   ac.appendChild(row);
 

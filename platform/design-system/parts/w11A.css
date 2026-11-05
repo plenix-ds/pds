@@ -1,11 +1,11 @@
 /* Library part w11A (wave 11, lane A): the frames the labs and examples of wave 11, lane A need. Tokens only. */
 /* a lab specimen at a list's or a card's width */
-.ds-w11a-lab{inline-size:var(--plx-ref-size-400px);max-inline-size:100%;}
-.ds-w11a-lab--wide{inline-size:var(--plx-ref-size-560px);}
+.ds-w11a-lab{inline-size:var(--plx-ref-size-100u);max-inline-size:100%;}
+.ds-w11a-lab--wide{inline-size:var(--plx-ref-size-140u);}
 /* several files under each other */
 .ds-w11a-stack{display:flex;flex-direction:column;row-gap:var(--plx-sys-space-stack-xs);}
 /* a page of its own, drawn small: the canvas under the card, a fixed height so the card sits in its middle */
-.ds-w11a-page{background-color:var(--plx-sys-surface-canvas);block-size:var(--plx-ref-size-560px);display:flex;flex-direction:column;}
+.ds-w11a-page{background-color:var(--plx-sys-surface-canvas);block-size:var(--plx-ref-size-140u);display:flex;flex-direction:column;}
 .ds-w11a-page>.plx-auth{flex-grow:1;}
 /* a dialog drawn in place (the lab shows its frame without the veil) */
 .ds-w11a-dialog>.plx-dialog{position:static;}

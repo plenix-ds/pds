@@ -1,10 +1,10 @@
 /* Library part w08A (wave 8, lane A): the frames the labs and examples of wave 8, lane A need. Tokens only. */
 /* a lab specimen: a chart part in a fixed plot, a legend under or beside a plot, a card at a card's width */
-.ds-w08a-lab{inline-size:var(--plx-ref-size-360px);max-inline-size:100%;}
-.ds-w08a-lab--card{inline-size:var(--plx-ref-size-320px);}
+.ds-w08a-lab{inline-size:var(--plx-ref-size-90u);max-inline-size:100%;}
+.ds-w08a-lab--card{inline-size:var(--plx-ref-size-80u);}
 .ds-w08a-lab--tall{padding-block-start:var(--plx-ref-space-24px);}
 .ds-w08a-lab--axis{padding-block-end:var(--plx-ref-space-24px);padding-block-start:var(--plx-ref-space-24px);padding-inline-end:var(--plx-ref-space-24px);}
 /* the plot beside a legend: an empty plot of the frame's medium height */
-.ds-w08a-plot{background-color:var(--plx-sys-surface-sunken);block-size:var(--plx-ref-size-160px);}
+.ds-w08a-plot{background-color:var(--plx-sys-surface-sunken);block-size:var(--plx-ref-size-40u);}
 /* the pointer's targets of the tooltip example: one band per month, invisible, taking the pointer */
 .ds-w08a-hit{fill:none;pointer-events:all;}

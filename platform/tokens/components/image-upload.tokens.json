@@ -2,7 +2,7 @@
   "$description": "ImageUpload and ImageCrop (platform/patterns/ImageUpload), library wave 7, lane B: the pattern’s own tokens (the placement of its Platform components, the preview frames, the file name and size in the data font).",
   "plx-comp": {
     "image-upload-max-width": {
-      "$value": "{plx-ref.size-560px}",
+      "$value": "{plx-ref.size-140u}",
       "$type": "dimension",
       "$description": "ImageUpload: maximum width (size-560px)."
     },
@@ -112,7 +112,7 @@
       "$description": "ImageUpload multiple list: gap (space-inline-md)."
     },
     "image-upload-multiple-list-grid-template-columns": {
-      "$value": "repeat(auto-fill, minmax({plx-ref.size-120px}, 1fr))",
+      "$value": "repeat(auto-fill, minmax({plx-ref.size-30u}, 1fr))",
       "$type": "dimension",
       "$description": "ImageUpload multiple list grid template columns: multiple list grid template columns (repeat(auto-fill, minmax(size-120px, 1fr))).",
       "$extensions": { "com.plenix": { "webOnly": true } }
@@ -128,7 +128,7 @@
       "$description": "ImageUpload locked preview: background (fill-neutral)."
     },
     "image-crop-max-width": {
-      "$value": "{plx-ref.size-400px}",
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension",
       "$description": "ImageUpload x: width (size-400px)."
     },

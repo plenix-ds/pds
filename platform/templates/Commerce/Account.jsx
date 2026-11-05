@@ -100,10 +100,10 @@ export function OrderManagement({ orders = [], currency = 'USD', onOpen, onFulfi
   // the rows and columns keep their identity between renders, so the table is not rebuilt (and keeps its row labels)
   const rows = React.useMemo(() => orders.map((o) => Object.assign({ count: (o.items || []).reduce((s, x) => s + (x.quantity || 0), 0) }, o)), [orders]);
   const columns = React.useMemo(() => [
-    { title: t.number, field: 'number', kind: ['name', 'data'], width: '--plx-ref-size-120px' },
+    { title: t.number, field: 'number', kind: ['name', 'data'], width: '--plx-ref-size-30u' },
     { title: t.date, field: 'date', kind: 'data', sorter: 'date', render: (o) => day(o.date) },
     { title: t.customer, field: 'customer' },
-    { title: t.items, field: 'count', kind: 'data', sorter: 'number', align: 'right', headerAlign: 'right', width: '--plx-ref-size-80px' },
+    { title: t.items, field: 'count', kind: 'data', sorter: 'number', align: 'right', headerAlign: 'right', width: '--plx-ref-size-20u' },
     { title: t.total, field: 'total', kind: 'data', sorter: 'number', align: 'right', headerAlign: 'right', render: (o) => money(o.total, o.currency || currency) },
     { title: t.status, field: 'status', kind: 'center', render: (o) => <OrderStatus status={o.status} statuses={S} /> },
   ], [S, currency, strings]);

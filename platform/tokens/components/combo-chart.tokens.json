@@ -3,6 +3,6 @@
   "plx-comp": {
     "combo-chart-legend-gap": { "$value": "{plx-sys.space-inline-lg}", "$type": "dimension", "$description": "Combo chart: the space between the columns' legend and the lines' legend in one row." },
     "combo-chart-legend-row-gap": { "$value": "{plx-sys.space-stack-xs}", "$type": "dimension", "$description": "Combo chart: the space between the two legends when they wrap to two lines." },
-    "combo-chart-point-radius": { "$value": "{plx-ref.size-4px}", "$type": "dimension", "$description": "Combo chart: the radius of a line's point (an 8px point with the frame's ring)." }
+    "combo-chart-point-radius": { "$value": "{plx-ref.size-1u}", "$type": "dimension", "$description": "Combo chart: the radius of a line's point (an 8px point with the frame's ring)." }
   }
 }

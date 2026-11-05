@@ -18,8 +18,8 @@ const assert = require('assert/strict'), { serve, launch } = require('./lib');
       document.body.innerHTML = '<div id="g"></div>';
       const h = React.createElement, P = window.Plenix;
       const rows = [{ id: 1, name: 'Northwind', note: long }, { id: 2, name: 'Contoso', note: 'Short' }];
-      ReactDOM.createRoot(document.getElementById('g')).render(h(P.DataGrid, { label: 'Grid', data: rows, height: '--plx-ref-size-320px', rowHeight: 'medium',
-        columns: [{ title: 'Name', field: 'name', kind: 'name' }, { title: 'Note', field: 'note', width: '--plx-ref-size-240px', wrap: true }] }));
+      ReactDOM.createRoot(document.getElementById('g')).render(h(P.DataGrid, { label: 'Grid', data: rows, height: '--plx-ref-size-80u', rowHeight: 'medium',
+        columns: [{ title: 'Name', field: 'name', kind: 'name' }, { title: 'Note', field: 'note', width: '--plx-ref-size-60u', wrap: true }] }));
       await new Promise((r) => setTimeout(r, 900));
     }, long);
     const cell = async (i) => (await page.$$('#g [role=row]'))[i].$('[data-plx-field="note"]');

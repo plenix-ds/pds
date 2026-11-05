@@ -74,7 +74,7 @@ window.DSMotionLab = function (section, data) {
     g.strokeStyle = ink; g.lineWidth = 3; g.beginPath();
     for (var i = 0; i <= 60; i++) { var tt = i / 60, v = curveAt(o.p, tt); if (i) g.lineTo(X(tt), Y(v)); else g.moveTo(X(tt), Y(v)); }
     g.stroke();
-    if (t != null) { var y = curveAt(o.p, t); g.fillStyle = mark; g.beginPath(); g.arc(X(t), Y(y), 6, 0, 7); g.fill(); DS.sample(o.dot, 'left', 'calc((100% - var(--plx-ref-size-16px)) * ' + y + ')'); }
+    if (t != null) { var y = curveAt(o.p, t); g.fillStyle = mark; g.beginPath(); g.arc(X(t), Y(y), 6, 0, 7); g.fill(); DS.sample(o.dot, 'left', 'calc((100% - var(--plx-ref-size-4u)) * ' + y + ')'); }
     g.fillStyle = tok('--plx-ref-color-gray-600'); g.font = tok('--plx-ref-font-size-11') + ' ' + (tok('--plx-sys-typeface-sans') || 'sans-serif');
     g.fillText('time →', W - pad - 40, H - 6); g.save(); g.translate(10, pad + 60); g.rotate(-Math.PI / 2); g.fillText('progress →', 0, 0); g.restore();
   }

@@ -63,7 +63,7 @@ export function useColumns({ initial, props, columns, frame, live, emit, api }) 
   const resize = (field, value) => {
     const definition = columns.find((c) => c.field === field),
       at = frame.current;
-    const min = Math.max(floors[field] || 0, tokenPixels(definition?.minWidth || '--plx-ref-size-80px', at)),
+    const min = Math.max(floors[field] || 0, tokenPixels(definition?.minWidth || '--plx-ref-size-20u', at)),
       max = Math.min(
         definition?.maxWidth ? tokenPixels(definition.maxWidth, at) : SIZE_STEPS[SIZE_STEPS.length - 1],
         Math.max(min, shareOf(at?.clientWidth, at))

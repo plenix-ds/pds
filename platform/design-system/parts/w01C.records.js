@@ -45,11 +45,11 @@ DSParts.records.push(function (H) {
       return { id: i + 1, use: p.use, pair: p.fg + ' on ' + p.bg, rule: p.rule + ' (' + P.CONTRAST_MINIMUMS[p.rule] + ':1)', ratio: isNaN(r) ? '—' : r.toFixed(2) + ':1', ok: !isNaN(r) && P.meetsContrast(r, p.rule) };
     });
     return h(P.Table, { label: 'Theme pairs in this mode', data: data, columns: [
-      { title: 'Use', field: 'use', kind: 'name', rowLabel: true, width: '--plx-ref-size-240px' },
+      { title: 'Use', field: 'use', kind: 'name', rowLabel: true, width: '--plx-ref-size-60u' },
       { title: 'Roles (--plx-sys-)', field: 'pair', kind: 'data' },
-      { title: 'Rule', field: 'rule', kind: 'data', width: '--plx-ref-size-140px' },
-      { title: 'Ratio', field: 'ratio', kind: 'data', width: '--plx-ref-size-100px' },
-      { title: 'Result', field: 'ok', width: '--plx-ref-size-120px', render: function (row) { return h(P.Badge, { tone: row.ok ? 'success' : 'danger', variant: 'soft' }, row.ok ? 'Meets' : 'Below'); } }] });
+      { title: 'Rule', field: 'rule', kind: 'data', width: '--plx-ref-size-35u' },
+      { title: 'Ratio', field: 'ratio', kind: 'data', width: '--plx-ref-size-25u' },
+      { title: 'Result', field: 'ok', width: '--plx-ref-size-30u', render: function (row) { return h(P.Badge, { tone: row.ok ? 'success' : 'danger', variant: 'soft' }, row.ok ? 'Meets' : 'Below'); } }] });
   }
   var RULES = [
     { id: 1, rule: 'AA normal text', min: '4.5:1', applies: 'Text under 24px (under 18.66px bold): body, labels, placeholders, table cells', wcag: '1.4.3', key: 'text' },
@@ -57,8 +57,8 @@ DSParts.records.push(function (H) {
     { id: 3, rule: 'AAA (enhanced)', min: '7:1', applies: 'Dense small text where it can be reached: data grids, code, long reading', wcag: '1.4.6', key: 'enhanced' },
     { id: 4, rule: 'Non-text 3:1', min: '3:1', applies: 'Icons that carry meaning, control edges, focus indicators, chart marks, status dots', wcag: '1.4.11', key: 'non-text' }];
   var rulesTable = function () { return h(P.Table, { label: 'Contrast rules', data: RULES, columns: [
-    { title: 'Rule', field: 'rule', kind: 'name', rowLabel: true, width: '--plx-ref-size-160px' }, { title: 'Minimum', field: 'min', kind: 'data', width: '--plx-ref-size-100px' },
-    { title: 'Applies to', field: 'applies', kind: 'wrap' }, { title: 'WCAG 2.2', field: 'wcag', kind: 'data', width: '--plx-ref-size-100px' }] }); };
+    { title: 'Rule', field: 'rule', kind: 'name', rowLabel: true, width: '--plx-ref-size-40u' }, { title: 'Minimum', field: 'min', kind: 'data', width: '--plx-ref-size-25u' },
+    { title: 'Applies to', field: 'applies', kind: 'wrap' }, { title: 'WCAG 2.2', field: 'wcag', kind: 'data', width: '--plx-ref-size-25u' }] }); };
   var contrast = { id: 'contrast-rules', icon: 'visibility', sec: 'foundations', sub: 'Color', leaf: 'Contrast rules', title: 'Contrast rules',
     plenix: 'contrastRatio, meetsContrast, relativeLuminance, parseColor, CONTRAST_MINIMUMS, CONTRAST_PAIRS', src: 'utils/contrast.ts', css: [], level: 'Foundation', interaction: 'Static',
     covers: ['interaction/Color contrast'],

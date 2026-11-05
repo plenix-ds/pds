@@ -57,7 +57,7 @@
       "$description": "PeopleGroup: description text size (font-size-12)."
     },
     "people-group-media-size": {
-      "$value": "{plx-ref.size-40px}",
+      "$value": "{plx-ref.size-10u}",
       "$type": "dimension",
       "$description": "PeopleGroup group: the width of the icon's slot, the team avatar's (size-40px), so names line up (#882)."
     },

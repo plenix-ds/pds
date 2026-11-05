@@ -2,9 +2,9 @@
   "$description": "GanttChart (platform/charts/GanttChart.jsx; library wave 9, lane C): its component tokens. Bars and milestones take the chart's data-viz color (data-plx-dataviz); everything else is an existing role.",
   "plx-comp": {
     "gantt-default-color": { "$value": "{plx-sys.dataviz-categorical-1}", "$type": "color", "$description": "Gantt chart: a milestone's color without data-plx-dataviz (the first categorical color)." },
-    "gantt-task-width": { "$value": "{plx-ref.size-140px}", "$type": "dimension", "$description": "Gantt chart: the room before the plot for the task names (the frame's start margin)." },
-    "gantt-label-room": { "$value": "{plx-ref.size-40px}", "$type": "dimension", "$description": "Gantt chart: the room after the plot for the share done after the last bar." },
-    "gantt-margin-block-start": { "$value": "{plx-ref.size-24px}", "$type": "dimension", "$description": "Gantt chart: the room above the plot for the today line's name." },
+    "gantt-task-width": { "$value": "{plx-ref.size-35u}", "$type": "dimension", "$description": "Gantt chart: the room before the plot for the task names (the frame's start margin)." },
+    "gantt-label-room": { "$value": "{plx-ref.size-10u}", "$type": "dimension", "$description": "Gantt chart: the room after the plot for the share done after the last bar." },
+    "gantt-margin-block-start": { "$value": "{plx-ref.size-6u}", "$type": "dimension", "$description": "Gantt chart: the room above the plot for the today line's name." },
     "gantt-task-text": { "$value": "{plx-sys.content-default}", "$type": "color", "$description": "Gantt chart: a task's name." },
     "gantt-task-font-family": { "$value": "{plx-sys.font-label}", "$type": "fontFamily", "$description": "Gantt chart: the task names' typeface (UI text)." },
     "gantt-task-font-size": { "$value": "{plx-ref.font-size-12}", "$type": "dimension", "$description": "Gantt chart: the task names' size." },

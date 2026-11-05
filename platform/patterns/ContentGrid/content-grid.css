@@ -1,9 +1,9 @@
 /* Plenix · ContentGrid. */
 .plx-content-grid{column-gap:var(--plx-comp-content-grid-gap);display:grid;grid-template-columns:repeat(auto-fill, minmax(var(--plx-comp-content-grid-min), 1fr));list-style-type:none;margin-block-end:0;margin-block-start:0;margin-inline-end:0;margin-inline-start:0;padding-block-end:0;padding-block-start:0;padding-inline-end:0;padding-inline-start:0;row-gap:var(--plx-comp-content-grid-row-gap);}
-.plx-content-grid--xs{--plx-comp-content-grid-min:var(--plx-ref-size-100px);}
-.plx-content-grid--sm{--plx-comp-content-grid-min:var(--plx-ref-size-140px);}
-.plx-content-grid--md{--plx-comp-content-grid-min:var(--plx-ref-size-180px);}
-.plx-content-grid--lg{--plx-comp-content-grid-min:var(--plx-ref-size-240px);}
+.plx-content-grid--xs{--plx-comp-content-grid-min:var(--plx-ref-size-25u);}
+.plx-content-grid--sm{--plx-comp-content-grid-min:var(--plx-ref-size-35u);}
+.plx-content-grid--md{--plx-comp-content-grid-min:var(--plx-ref-size-45u);}
+.plx-content-grid--lg{--plx-comp-content-grid-min:var(--plx-ref-size-60u);}
 .plx-content-grid__item{display:flex;flex-direction:column;min-inline-size:0;}
 .plx-content-grid__item>*{flex-grow:1;}
 /* masonry: columns of the card width, each item at its own height, filled top to bottom (CSS columns); a masonry grid

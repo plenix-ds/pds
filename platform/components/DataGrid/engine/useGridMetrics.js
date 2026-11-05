@@ -177,7 +177,7 @@ export function useGridMetrics({
     const shownColumns = columns.filter((c) => !columnVisibility || columnVisibility[c.field] !== false);
     // the table fits its room (owner, issue 929: "autosize and autofit"): each shown column starts at its natural width (its
     // header and its widest value, capped at its set width; measured above). Over the room, the columns with the most room
-    // above their minimum readable width (minWidth, else the header floor, never under --plx-ref-size-80px) give it up first,
+    // above their minimum readable width (minWidth, else the header floor, never under --plx-ref-size-20u) give it up first,
     // levelled down together, and the title (the first key column) last; a column the person sized keeps its width. The grid
     // draws cards only when every column is at its minimum and it still does not fit (the narrow switch below). Room to spare
     // goes to the title, else the widest text column, else the last column that sizes itself
@@ -272,7 +272,7 @@ export function useGridMetrics({
         line: tokenPixels('--plx-comp-data-grid-line-width', at),
         lead: tokenPixels('--plx-comp-data-grid-lead-column-width', at),
         menu: tokenPixels('--plx-comp-data-grid-row-menu-width', at),
-        min: tokenPixels('--plx-ref-size-80px', at),
+        min: tokenPixels('--plx-ref-size-20u', at),
         space: tokenPixels('--plx-comp-data-grid-cell-padding-inline', at),
         room: at.clientWidth,
         add: tokenPixels('--plx-sys-data-grid-row-height', at),

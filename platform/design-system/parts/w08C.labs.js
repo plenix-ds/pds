@@ -141,7 +141,7 @@ if (window.DS && DS.registerLab) {
       parts: { gap: 'A', py: 'A', ip: 'A', lc: 'B', lw: 'B', hb: 'C', sb: 'C', fo: 'C', fow: 'C', rg: 'D', pc: 'E', pfs: 'E', pg: 'E', ps: 'E', tc: 'F', tfs: 'F', tfw: 'F', mw: 'F', sc: 'G', sfs: 'G', mc: 'H', mfs: 'H' },
       anchors: { A: { part: null, side: 'left' }, B: { part: null, side: 'bottom' }, C: { part: null, side: 'right' }, D: { part: '.plx-search-result__text', side: 'left' }, E: { part: PATH, side: 'top' }, F: { part: TITLE, side: 'right' }, G: { part: SNIP, side: 'right' }, H: { part: META, side: 'bottom' } },
       sections: [['Row', ['gap', 'py', 'ip', 'lc', 'lw']], ['States', ['hb', 'sb', 'fo', 'fow']], ['Path', ['rg', 'pc', 'pfs', 'pg', 'ps']], ['Title', ['tc', 'tfs', 'tfw', 'mw']], ['Snippet and meta', ['sc', 'sfs', 'mc', 'mfs']]],
-      matrixLabel: 'Search result values by kind and state', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Kinds and states · ' + HEAD
+      matrixLabel: 'Search result values by kind and state', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Kinds and states · ' + HEAD
     });
 
     // ---- Search result groups (<SearchResultGroup>, div.plx-search-result-group): the heading with its count, the
@@ -173,7 +173,7 @@ if (window.DS && DS.registerLab) {
       parts: { gap: 'A', cc: 'B', cf: 'B', cm: 'B' },
       anchors: { A: { part: null, side: 'left' }, B: { part: '.plx-search-result-group__count', side: 'right' } },
       sections: [['Group', ['gap']], ['Count', ['cc', 'cf', 'cm']]],
-      matrixLabel: 'Search result group values by footer', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Footers · ' + HEAD
+      matrixLabel: 'Search result group values by footer', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Footers · ' + HEAD
     });
 
     // ---- Timeline (<Timeline>, ol.plx-timeline): three events (the line runs from the first two markers; the last has
@@ -263,7 +263,7 @@ if (window.DS && DS.registerLab) {
       parts: { ig: 'A', cg: 'A', hw: 'A', ms: 'B', mr: 'B', ds: 'B', db: 'B', dbc: 'B', dbw: 'B', ib: 'B', ibc: 'B', ibw: 'B', ir: 'B', ic: 'B', is: 'B', lc: 'C', lw: 'C', lh: 'C', rg: 'D', tc: 'E', tf: 'E', tfs: 'E', hg: 'F', ttc: 'F', ttfs: 'F', ttfw: 'F', dc: 'G', dfs: 'G', fo: 'H', fow: 'H', fof: 'H' },
       anchors: { A: { part: ITEM, side: 'left' }, B: { part: MARK, side: 'left' }, C: { part: ITEM, side: 'bottom' }, D: { part: '.plx-timeline__content', side: 'right' }, E: { part: TIME, side: 'top' }, F: { part: TTL, side: 'right' }, G: { part: DESC, side: 'bottom' }, H: { part: null, side: 'right' } },
       sections: [['Events', ['ig', 'cg', 'hw']], ['Marker', ['ms', 'mr', 'ds', 'db', 'dbc', 'dbw', 'ib', 'ibc', 'ibw', 'ir', 'ic', 'is']], ['Line', ['lc', 'lw', 'lh']], ['Content', ['rg', 'tc', 'tf', 'tfs', 'hg', 'ttc', 'ttfs', 'ttfw', 'dc', 'dfs']], ['Focus', ['fo', 'fow', 'fof']]],
-      matrixLabel: 'Timeline values by variant', matrixColumnWidth: '--plx-ref-size-600px', statesHead: 'Variants · ' + HEAD
+      matrixLabel: 'Timeline values by variant', matrixColumnWidth: '--plx-ref-size-150u', statesHead: 'Variants · ' + HEAD
     });
 
     // ---- Resource list (<ResourceList>, div.plx-resource-list): the header (selectable), a group heading (grouped) and
@@ -354,7 +354,7 @@ if (window.DS && DS.registerLab) {
       parts: { gap: 'A', hh: 'B', hlc: 'B', hlw: 'B', cc: 'B', cfs: 'B', gg: 'C', gcf: 'C', gcm: 'C', ig: 'D', ih: 'D', ipy: 'D', ipx: 'D', ilc: 'D', ilw: 'D', hb: 'E', sb: 'E', fo: 'E', fow: 'E', nc: 'F', nfs: 'F', nfw: 'F', dc: 'G', dfs: 'G', mc: 'H', mfs: 'H', ag: 'H' },
       anchors: { A: { part: null, side: 'left' }, B: { part: HEADER, side: 'top' }, C: { part: '.plx-resource-list__group-count', side: 'top' }, D: { part: RITEM, side: 'left' }, E: { part: RITEM, side: 'right' }, F: { part: NAME, side: 'top' }, G: { part: RDESC, side: 'bottom' }, H: { part: RMETA, side: 'right' } },
       sections: [['List', ['gap']], ['Header', ['hh', 'hlc', 'hlw', 'cc', 'cfs']], ['Group', ['gg', 'gcf', 'gcm']], ['Row', ['ig', 'ih', 'ipy', 'ipx', 'ilc', 'ilw']], ['States', ['hb', 'sb', 'fo', 'fow']], ['Text', ['nc', 'nfs', 'nfw', 'dc', 'dfs']], ['Details and actions', ['mc', 'mfs', 'ag']]],
-      matrixLabel: 'Resource list values by variant and state', matrixColumnWidth: '--plx-ref-size-600px', statesHead: 'Variants and states · ' + HEAD
+      matrixLabel: 'Resource list values by variant and state', matrixColumnWidth: '--plx-ref-size-150u', statesHead: 'Variants and states · ' + HEAD
     });
 
     // ---- Expandable card (<Card expandable>): the card lab (data-labs.js) gains the Expandable variant, and the leaf has its

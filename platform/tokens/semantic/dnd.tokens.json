@@ -2,7 +2,7 @@
   "$description": "Drag and drop (library plan wave 10, foundation dnd): the distances and rates of the drag-and-drop engine (platform/utils/dnd.ts) and the treatments system/dnd.css draws while something is dragged: the lifted item (the Dragged treatment's roles), the insertion line of a sortable list and the state of a drop target. Every color is an existing role.",
   "plx-sys": {
     "dnd-autoscroll-edge": {
-      "$value": "{plx-ref.size-48px}",
+      "$value": "{plx-ref.size-12u}",
       "$type": "dimension",
       "$description": "How close to the edge of a scrolling region (or the window) the pointer comes before the region scrolls by itself while something is dragged."
     },
@@ -12,12 +12,12 @@
       "$description": "The auto-scroll speed at the very edge, in CSS pixels per millisecond; it slows in proportion as the pointer moves back from the edge, and stops outside dnd-autoscroll-edge."
     },
     "dnd-keyboard-step": {
-      "$value": "{plx-ref.size-8px}",
+      "$value": "{plx-ref.size-2u}",
       "$type": "dimension",
       "$description": "Reposition (free move): how far one arrow key moves a picked-up item (two grid steps)."
     },
     "dnd-keyboard-step-large": {
-      "$value": "{plx-ref.size-32px}",
+      "$value": "{plx-ref.size-8u}",
       "$type": "dimension",
       "$description": "Reposition (free move): how far Shift + an arrow key moves a picked-up item."
     },

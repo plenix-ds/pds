@@ -87,7 +87,7 @@
       "$description": "Recent searches heading: its weight."
     },
     "search-list-max-height": {
-      "$value": "{plx-ref.size-220px}",
+      "$value": "{plx-ref.size-55u}",
       "$type": "dimension",
       "$description": "Search list: the tallest the options grow before they scroll (the combobox list's)."
     },
@@ -142,7 +142,7 @@
       "$description": "Search option: its description's size."
     },
     "search-bar-width": {
-      "$value": "{plx-ref.size-240px}",
+      "$value": "{plx-ref.size-60u}",
       "$type": "dimension",
       "$description": "SearchField width=\"bar\": the command bar search, one fixed width in every bar (owner, 2026-10-14: 240px, never squeezed)."
     },

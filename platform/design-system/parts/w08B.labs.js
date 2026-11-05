@@ -129,7 +129,7 @@ if (window.DS && DS.registerLab) {
       parts: { g: 'A', cc: 'A', cf: 'A', cfs: 'A', bg: 'B', bc: 'B', bw: 'B', r: 'B', fb: 'B', h: 'B', tx: 'B', fs: 'B', ih: 'C', imh: 'C', ig: 'C', ip: 'C', vp: 'C', dc: 'C', dw: 'C', ic: 'D', dt: 'D', dfs: 'D', mt: 'D', mf: 'D', mfs: 'D', hb: 'E', ht: 'E', hfs: 'E', hfw: 'E', hc: 'E', lc: 'F', lg: 'F', ec: 'F', ep: 'F' },
       anchors: { A: { part: '.plx-virtual-list__count', side: 'top' }, B: { part: '.plx-virtual-list__viewport', side: 'left' }, C: { part: '.plx-virtual-list__item', side: 'right' }, D: { part: '.plx-virtual-list__meta', side: 'right' }, E: { part: '.plx-virtual-list__header', side: 'top' }, F: { part: '.plx-virtual-list__viewport', side: 'bottom' } },
       sections: [['Count and scroll area', ['g', 'cc', 'cf', 'cfs', 'bg', 'bc', 'bw', 'r', 'fb', 'h', 'tx', 'fs']], ['Rows', ['ih', 'imh', 'ig', 'ip', 'vp', 'dc', 'dw', 'ic', 'dt', 'dfs', 'mt', 'mf', 'mfs']], ['Group headers', ['hb', 'ht', 'hfs', 'hfw', 'hc']], ['Loading and empty', ['lc', 'lg', 'ec', 'ep']]],
-      matrixLabel: 'Virtualized list by rows', matrixColumnWidth: '--plx-ref-size-560px', statesHead: 'Rows · ' + HEAD
+      matrixLabel: 'Virtualized list by rows', matrixColumnWidth: '--plx-ref-size-140u', statesHead: 'Rows · ' + HEAD
     });
 
     // ---- Carousel (<Carousel>): the strip, its slides and the controls
@@ -205,7 +205,7 @@ if (window.DS && DS.registerLab) {
       parts: { cg: 'A', g: 'B', tfc: 'B', tfw: 'B', tfo: 'B', ccg: 'C', dt: 'D', dtr: 'D', ds: 'D', dr: 'D', db: 'D', dcb: 'D', dfc: 'D', dfw: 'D', dfo: 'D' },
       anchors: { A: { part: null, side: 'left' }, B: { part: '.plx-carousel__track', side: 'top' }, C: { part: '.plx-carousel__controls', side: 'bottom' }, D: { part: '.plx-carousel__dots', side: 'right' } },
       sections: [['Strip', ['cg', 'g', 'tfc', 'tfw', 'tfo']], ['Controls', ['ccg']], ['Page dots', ['dt', 'dtr', 'ds', 'dr', 'db', 'dcb', 'dfc', 'dfw', 'dfo']]],
-      matrixLabel: 'Carousel by slides per view', matrixColumnWidth: '--plx-ref-size-560px', statesHead: 'Per view · ' + HEAD
+      matrixLabel: 'Carousel by slides per view', matrixColumnWidth: '--plx-ref-size-140u', statesHead: 'Per view · ' + HEAD
     });
 
     // ---- PeopleGroup (<PeopleGroup>): a team or a group in one row
@@ -268,7 +268,7 @@ if (window.DS && DS.registerLab) {
       parts: { g: 'A', bg: 'B', nt: 'C', nfs: 'C', nfw: 'C', mt: 'D', mfs: 'D', mg: 'D', nf: 'D', dt: 'E', dfs: 'E' },
       anchors: { A: { part: null, side: 'left' }, B: { part: '.plx-people-group__body', side: 'top' }, C: { part: '.plx-people-group__name', side: 'top' }, D: { part: '.plx-people-group__meta', side: 'right' }, E: { part: '.plx-people-group__description', side: 'bottom' } },
       sections: [['Row', ['g', 'bg']], ['Name', ['nt', 'nfs', 'nfw']], ['Kind, count and source', ['mt', 'mfs', 'mg', 'nf']], ['Description', ['dt', 'dfs']]],
-      matrixLabel: 'Team and group by kind', matrixColumnWidth: '--plx-ref-size-560px', statesHead: 'Kinds · ' + HEAD
+      matrixLabel: 'Team and group by kind', matrixColumnWidth: '--plx-ref-size-140u', statesHead: 'Kinds · ' + HEAD
     });
 
     // ---- PermissionSummary (<PermissionSummary>): the access line and the Can and Cannot lists
@@ -336,7 +336,7 @@ if (window.DS && DS.registerLab) {
       parts: { g: 'A', hg: 'B', ib: 'B', ic: 'B', lt: 'C', lfs: 'C', lfw: 'C', llh: 'C', dt: 'D', dfs: 'D', lg: 'E', sg: 'E', ht: 'F', hfs: 'F', hfw: 'F' },
       anchors: { A: { part: null, side: 'left' }, B: { part: '.plx-permission-summary__icon', side: 'left' }, C: { part: '.plx-permission-summary__level', side: 'top' }, D: { part: '.plx-permission-summary__detail', side: 'right' }, E: { part: '.plx-permission-summary__lists', side: 'bottom' }, F: { part: '.plx-permission-summary__heading', side: 'right' } },
       sections: [['Access line', ['g', 'hg', 'ib', 'ic', 'lt', 'lfs', 'lfw', 'llh', 'dt', 'dfs']], ['Can and Cannot', ['lg', 'sg', 'ht', 'hfs', 'hfw']]],
-      matrixLabel: 'Permission summary by form', matrixColumnWidth: '--plx-ref-size-560px', statesHead: 'Forms · ' + HEAD
+      matrixLabel: 'Permission summary by form', matrixColumnWidth: '--plx-ref-size-140u', statesHead: 'Forms · ' + HEAD
     });
 
     // ---- QueryBuilder (<QueryBuilder>): the switch bar, a group, its rules, a nested group and the text view
@@ -443,7 +443,7 @@ if (window.DS && DS.registerLab) {
       parts: { g: 'A', bg: 'A', mt: 'A', mfs: 'A', nf: 'A', gg: 'B', hg: 'B', ht: 'B', hfs: 'B', ag: 'B', et: 'B', efs: 'B', rc: 'C', rw: 'C', rp: 'C', ig: 'D', itg: 'D', jt: 'D', jfs: 'D', jw: 'D', jh: 'D', rg: 'E', fw: 'E', ow: 'E', vw: 'E' },
       anchors: { A: { part: '.plx-query-builder__bar', side: 'top' }, B: { part: '.plx-query-builder__group-head', side: 'left' }, C: { part: '.plx-query-builder__group[data-plx-depth="1"]', side: 'left' }, D: { part: '.plx-query-builder__join', side: 'left' }, E: { part: '.plx-query-builder__rule', side: 'right' } },
       sections: [['Switch bar', ['g', 'bg', 'mt', 'mfs', 'nf']], ['Group', ['gg', 'hg', 'ht', 'hfs', 'ag', 'et', 'efs']], ['Nested group', ['rc', 'rw', 'rp']], ['Rules', ['ig', 'itg', 'jt', 'jfs', 'jw', 'jh', 'rg', 'fw', 'ow', 'vw']]],
-      matrixLabel: 'Query builder by structure', matrixColumnWidth: '--plx-ref-size-720px', statesHead: 'Structures · ' + HEAD
+      matrixLabel: 'Query builder by structure', matrixColumnWidth: '--plx-ref-size-180u', statesHead: 'Structures · ' + HEAD
     });
   })();
 }

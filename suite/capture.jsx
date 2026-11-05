@@ -6,7 +6,7 @@ import { Button, Chat, CodeBlock, Table, Dialog, Inline, Notice, RadioTiles, Ske
 // name/value facts as the defined data grid, with a header row (owner, 2026-10-09: all name/value lists in the DataGrid's look)
 const facts=(label,rows)=>{const list=rows.filter(Boolean);return <Table label={label} headerMenu={false}
   data={list.map((r,i)=>({id:i,name:r[0],value:typeof r[1]==="string"||typeof r[1]==="number"?String(r[1]):""}))}
-  columns={[{title:"Name",field:"name",kind:"wrap",rowLabel:true,width:"--plx-ref-size-240px",sortable:false},
+  columns={[{title:"Name",field:"name",kind:"wrap",rowLabel:true,width:"--plx-ref-size-60u",sortable:false},
     {title:"Value",field:"value",kind:"wrap",sortable:false,render:d=>{const r=list[d.id];return r?(r[2]?<Text variant="data">{r[1]}</Text>:r[1]):null;}}]}/>;};
 import { CAPTURES, aiFileName } from './shared.jsx';
 const { useState } = React;

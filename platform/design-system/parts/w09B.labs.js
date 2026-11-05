@@ -116,7 +116,7 @@ if (window.DS && DS.registerLab) {
       parts: { sc: 'A', sw: 'A', gc: 'B', gw: 'B', ac: 'C', aw: 'C', kc: 'D', kf: 'D', ks: 'D', lc: 'E', lf: 'E', ls: 'E' },
       anchors: { A: { part: '.plx-bar-chart__bar', side: 'top' }, B: { part: '.plx-chart__grid-line', side: 'top' }, C: { part: '.plx-chart__axis-line', side: 'left' }, D: { part: '.plx-chart__tick-label', side: 'left' }, E: { part: '.plx-chart-data-label', side: 'right' } },
       sections: [['Bars', ['sc', 'sw']], ['Grid and axes', ['gc', 'gw', 'ac', 'aw', 'kc', 'kf', 'ks']], ['Value labels', ['lc', 'lf', 'ls']]],
-      matrixLabel: 'Bar chart values by orientation and layout', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Layouts · ' + HEAD
+      matrixLabel: 'Bar chart values by orientation and layout', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Layouts · ' + HEAD
     });
 
     // ---- Combo chart (<ComboChart>): columns and a line, on one axis or two
@@ -166,7 +166,7 @@ if (window.DS && DS.registerLab) {
       parts: { lg: 'A', lr: 'A', pr: 'B', pc: 'B', pw: 'B', lw: 'C', gc: 'D', kc: 'E', kf: 'E' },
       anchors: { A: { part: '.plx-combo-chart__legend', side: 'left' }, B: { part: '.plx-combo-chart__point', side: 'top' }, C: { part: '.plx-combo-chart__line', side: 'top' }, D: { part: '.plx-chart__grid-line', side: 'top' }, E: { part: '.plx-chart__tick-label', side: 'left' } },
       sections: [['Legends', ['lg', 'lr']], ['Line and points', ['pr', 'pc', 'pw', 'lw']], ['Grid and axes', ['gc', 'kc', 'kf']]],
-      matrixLabel: 'Combo chart values by variant', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Variants · ' + HEAD
+      matrixLabel: 'Combo chart values by variant', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Variants · ' + HEAD
     });
 
     // ---- Pie chart (<PieChart>): pie, donut, with a center value, half
@@ -217,7 +217,7 @@ if (window.DS && DS.registerLab) {
       parts: { oc: 'A', ow: 'A', vc: 'B', vf: 'B', vs: 'B', vw: 'B', lc: 'C', lf: 'C', ls: 'C' },
       anchors: { A: { part: '.plx-pie-chart__slice', side: 'top' }, B: { part: '.plx-pie-chart__center-value', side: 'right' }, C: { part: '.plx-pie-chart__center-label', side: 'bottom' } },
       sections: [['Slices', ['oc', 'ow']], ['Center', ['vc', 'vf', 'vs', 'vw', 'lc', 'lf', 'ls']]],
-      matrixLabel: 'Pie chart values by variant', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Variants · ' + HEAD
+      matrixLabel: 'Pie chart values by variant', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Variants · ' + HEAD
     });
 
     // ---- Bullet chart (<BulletChart>): ranges, value bar and target, horizontal or vertical
@@ -265,7 +265,7 @@ if (window.DS && DS.registerLab) {
       parts: { rp: 'A', rf: 'A', rg: 'A', tc: 'B', tw: 'B', mc: 'C', kc: 'D', kf: 'D' },
       anchors: { A: { part: '.plx-bullet-chart__range--3', side: 'top' }, B: { part: '.plx-bullet-chart__target', side: 'top' }, C: { part: '.plx-bullet-chart__value', side: 'bottom' }, D: { part: '.plx-chart__tick-label', side: 'left' } },
       sections: [['Ranges', ['rp', 'rf', 'rg']], ['Value and target', ['mc', 'tc', 'tw']], ['Axes', ['kc', 'kf']]],
-      matrixLabel: 'Bullet chart values by orientation', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Orientations · ' + HEAD
+      matrixLabel: 'Bullet chart values by orientation', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Orientations · ' + HEAD
     });
 
     // ---- Box plot (<BoxPlot>): boxes, medians, whiskers, outliers
@@ -320,7 +320,7 @@ if (window.DS && DS.registerLab) {
       parts: { mc: 'A', wc: 'B', ww: 'B', dc: 'C', dw: 'C', or: 'D', oc: 'D', gc: 'E', kc: 'F' },
       anchors: { A: { part: '.plx-box-plot__box', side: 'right' }, B: { part: '.plx-box-plot__cap', side: 'top' }, C: { part: '.plx-box-plot__median', side: 'left' }, D: { part: '.plx-box-plot__outlier', side: 'right' }, E: { part: '.plx-chart__grid-line', side: 'top' }, F: { part: '.plx-chart__tick-label', side: 'left' } },
       sections: [['Box and whiskers', ['mc', 'wc', 'ww', 'dc', 'dw']], ['Outliers', ['or', 'oc']], ['Grid and axes', ['gc', 'kc']]],
-      matrixLabel: 'Box plot values by orientation', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Outliers · ' + HEAD
+      matrixLabel: 'Box plot values by orientation', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Outliers · ' + HEAD
     });
 
     // ---- Radar chart (<RadarChart>): one item or two compared
@@ -372,7 +372,7 @@ if (window.DS && DS.registerLab) {
       parts: { ao: 'A', lw: 'A', pr: 'B', gc: 'C', nc: 'D', nf: 'D', ns: 'D', nw: 'D', kc: 'E' },
       anchors: { A: { part: '.plx-radar-chart__area', side: 'right' }, B: { part: '.plx-radar-chart__point', side: 'top' }, C: { part: '.plx-radar-chart__spoke', side: 'left' }, D: { part: '.plx-radar-chart__axis-label', side: 'top' }, E: { part: '.plx-radar-chart__ring-label', side: 'right' } },
       sections: [['Shapes', ['ao', 'lw', 'pr']], ['Web', ['gc', 'kc']], ['Measure names', ['nc', 'nf', 'ns', 'nw']]],
-      matrixLabel: 'Radar chart values by variant', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Variants · ' + HEAD
+      matrixLabel: 'Radar chart values by variant', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Variants · ' + HEAD
     });
 
     // ---- Sankey diagram (<SankeyDiagram>): nodes in columns, bands between them; a band highlighted
@@ -426,7 +426,7 @@ if (window.DS && DS.registerLab) {
       parts: { lo: 'A', la: 'A', nc: 'B', nf: 'B', ns: 'B', nw: 'B', hc: 'B', hw: 'B', vc: 'C', vf: 'C', vw: 'C' },
       anchors: { A: { part: '.plx-sankey-diagram__link', side: 'top' }, B: { part: '.plx-sankey-diagram__name', side: 'top' }, C: { part: '.plx-sankey-diagram__value', side: 'right' } },
       sections: [['Bands', ['lo', 'la']], ['Names', ['nc', 'nf', 'ns', 'nw', 'hc', 'hw']], ['Totals', ['vc', 'vf', 'vw']]],
-      matrixLabel: 'Sankey diagram values', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Content · ' + HEAD
+      matrixLabel: 'Sankey diagram values', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Content · ' + HEAD
     });
 
     // ---- Timeline visualization (<TimelineChart>): events, ranges, lanes
@@ -479,7 +479,7 @@ if (window.DS && DS.registerLab) {
       parts: { er: 'A', mc: 'B', nc: 'C', nf: 'C', ns: 'C', hc: 'C', hw: 'C', gc: 'D', kc: 'E' },
       anchors: { A: { part: '.plx-timeline-chart__event', side: 'top' }, B: { part: '.plx-timeline-chart__range', side: 'bottom' }, C: { part: '.plx-timeline-chart__label', side: 'top' }, D: { part: '.plx-chart__grid-line', side: 'top' }, E: { part: '.plx-chart__tick-label', side: 'bottom' } },
       sections: [['Marks', ['er', 'mc']], ['Names', ['nc', 'nf', 'ns', 'hc', 'hw']], ['Grid and axis', ['gc', 'kc']]],
-      matrixLabel: 'Timeline values by variant', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Variants · ' + HEAD
+      matrixLabel: 'Timeline values by variant', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Variants · ' + HEAD
     });
 
     // ---- Comparison view (<ComparisonView>): panes side by side, the matrix's cells, the slider's stage
@@ -590,7 +590,7 @@ if (window.DS && DS.registerLab) {
         K: { part: '.plx-comparison-view__value', side: 'right' }, L: { part: '.plx-comparison-view__stage', side: 'right' }, M: { part: '.plx-comparison-view__divider', side: 'top' } },
       sections: [['Layout', ['g', 'bg', 'br', 'pg']], ['Count', ['sc', 'ss', 'sl']], ['Pane', ['pb', 'pc', 'pw', 'pr', 'fc', 'hp', 'pi', 'hg', 'bp', 'bd', 'sh']], ['Name and version', ['tc', 'tf', 'ts', 'tw', 'tl', 'mc', 'mf', 'ms', 'ml']],
         ['Attributes', ['rg', 'ri', 'lc', 'ls', 'll', 'vc', 'vs', 'vl', 'vg', 'df', 'cg']], ['Slider', ['sb', 'sr', 'dc', 'dw']]],
-      matrixLabel: 'Comparison view values by variant', matrixColumnWidth: '--plx-ref-size-720px', statesHead: 'Variants · ' + HEAD
+      matrixLabel: 'Comparison view values by variant', matrixColumnWidth: '--plx-ref-size-180u', statesHead: 'Variants · ' + HEAD
     });
   })();
 }

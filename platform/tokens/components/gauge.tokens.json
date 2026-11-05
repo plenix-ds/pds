@@ -1,13 +1,13 @@
 {
   "$description": "Gauge (platform/charts/Gauge.jsx, gauge.css; library wave 9, lane A): its component tokens. The fill is the first categorical data-viz color and the threshold bands the data-viz alert scale (data-plx-dataviz); everything else is an existing role.",
   "plx-comp": {
-    "gauge-width-sm": { "$value": "{plx-ref.size-160px}", "$type": "dimension", "$description": "Gauge: the dial's width at size sm (a card)." },
-    "gauge-width-md": { "$value": "{plx-ref.size-200px}", "$type": "dimension", "$description": "Gauge: the dial's width at size md (the default)." },
-    "gauge-width-lg": { "$value": "{plx-ref.size-240px}", "$type": "dimension", "$description": "Gauge: the dial's width at size lg." },
+    "gauge-width-sm": { "$value": "{plx-ref.size-40u}", "$type": "dimension", "$description": "Gauge: the dial's width at size sm (a card)." },
+    "gauge-width-md": { "$value": "{plx-ref.size-50u}", "$type": "dimension", "$description": "Gauge: the dial's width at size md (the default)." },
+    "gauge-width-lg": { "$value": "{plx-ref.size-60u}", "$type": "dimension", "$description": "Gauge: the dial's width at size lg." },
     "gauge-gap": { "$value": "{plx-sys.space-stack-xs}", "$type": "dimension", "$description": "Gauge: the space between the dial, the range and the status badge." },
     "gauge-track-color": { "$value": "{plx-sys.border-subtle}", "$type": "color", "$description": "Gauge: the track (the whole range) behind the fill." },
-    "gauge-track-width": { "$value": "{plx-ref.size-12px}", "$type": "dimension", "$description": "Gauge: the thickness of the track and the fill, in the dial's units (it scales with the size)." },
-    "gauge-band-width": { "$value": "{plx-ref.size-4px}", "$type": "dimension", "$description": "Gauge: the thickness of a threshold's range outside the track." },
+    "gauge-track-width": { "$value": "{plx-ref.size-3u}", "$type": "dimension", "$description": "Gauge: the thickness of the track and the fill, in the dial's units (it scales with the size)." },
+    "gauge-band-width": { "$value": "{plx-ref.size-1u}", "$type": "dimension", "$description": "Gauge: the thickness of a threshold's range outside the track." },
     "gauge-value-text": { "$value": "{plx-sys.content-default}", "$type": "color", "$description": "Gauge: the value in the middle of the dial." },
     "gauge-value-font-family": { "$value": "{plx-sys.font-data}", "$type": "fontFamily", "$description": "Gauge: the value is a technical value: the data font (Reddit Mono)." },
     "gauge-value-font-size": { "$value": "{plx-ref.font-size-20}", "$type": "dimension", "$description": "Gauge: the value's size (the metric's large value)." },
@@ -21,6 +21,6 @@
     "gauge-end-font-family": { "$value": "{plx-sys.font-data}", "$type": "fontFamily", "$description": "Gauge: the ends are technical values: the data font." },
     "gauge-end-font-size": { "$value": "{plx-sys.text-caption-font-size}", "$type": "dimension", "$description": "Gauge: the ends' size (the tick labels' size)." },
     "gauge-end-line-height": { "$value": "{plx-sys.label-height-16px}", "$type": "dimension", "$description": "Gauge: the ends' line height." },
-    "gauge-end-inset": { "$value": "{plx-ref.size-12px}", "$type": "dimension", "$description": "Gauge: how far in from the dial's sides the ends sit, under the ends of the track." }
+    "gauge-end-inset": { "$value": "{plx-ref.size-3u}", "$type": "dimension", "$description": "Gauge: how far in from the dial's sides the ends sit, under the ends of the track." }
   }
 }

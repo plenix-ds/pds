@@ -2,7 +2,7 @@
 /* room above a specimen for the arrow, which stands outside the popover's edge */
 .ds-w05a-room{padding-block-start:var(--plx-sys-space-inset-md);}
 /* a teaching bubble's picture in the lab: the width of the bubble, a fixed height, cropped to fill */
-.ds-w05a-media{block-size:var(--plx-ref-size-120px);display:block;inline-size:100%;object-fit:cover;}
+.ds-w05a-media{block-size:var(--plx-ref-size-30u);display:block;inline-size:100%;object-fit:cover;}
 /* the mega menu's button over its panel; the accordion in a narrow column */
 .ds-w05a-stack{align-items:flex-start;display:flex;flex-direction:column;row-gap:var(--plx-sys-floating-offset-xs);}
-.ds-w05a-narrow{inline-size:var(--plx-ref-size-280px);}
+.ds-w05a-narrow{inline-size:var(--plx-ref-size-70u);}

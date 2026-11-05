@@ -27,7 +27,7 @@
       "$description": "Icon keylines: the short side of the portrait and landscape rectangles, in units (the long side is the circle’s 20)."
     },
     "keyline-specimen-size": {
-      "$value": "{plx-ref.size-96px}",
+      "$value": "{plx-ref.size-24u}",
       "$type": "dimension",
       "$description": "Keyline specimens: the size an icon keyline drawing is shown at (the 24-unit grid at four times)."
     }

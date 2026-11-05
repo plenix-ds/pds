@@ -2,7 +2,7 @@
   "$description": "Virtualization (hooks/useVirtualizer.ts, system/virtual.css): the size of one item of a virtualized collection, which the gaps standing in for unrendered items are measured in. A container sets both on itself in its own stylesheet to the size and gap its items have.",
   "plx-sys": {
     "virtual-item-size": {
-      "$value": "{plx-ref.size-32px}",
+      "$value": "{plx-ref.size-8u}",
       "$type": "dimension",
       "$description": "One item's size along the scroll axis (a row's height, a column's width); a virtualized container sets it to its own item size (for a list: --plx-sys-data-grid-row-height)"
     },

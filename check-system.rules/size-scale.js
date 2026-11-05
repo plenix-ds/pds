@@ -1,7 +1,7 @@
 // Plenix · check-system rule "size-scale" (#463, owner: the size scale goes above 900px and the panes go as wide as a box):
 //   the size tokens end at 1600px, the shell's panes and a Resizable box share one cap, and the generated files agree, so a
 //   column, a pane or a box can be dragged past 900px up to 1600px and a regression fails here.
-//   tokens     --plx-ref-size-960px, -1000px, -1200px, -1400px and -1600px exist in platform/tokens/reference.tokens.json
+//   tokens     --plx-ref-size-240u, -1000px, -1200px, -1400px and -1600px exist in platform/tokens/reference.tokens.json
 //   caps       build-steps.js sets GRID_PANE_MAX equal to GRID_BOX_MAX, and both are at least 1600
 //   generated  platform/utils/sizeSteps.js (SIZE_STEPS ends at the largest token, GRID_PANE_MAX is the build's) and the
 //              theme script's size list (platform/providers/theme-boot.js) end at the largest token too
@@ -18,8 +18,10 @@ function check({ add }) {
   const here = (f) => path.join(ROOT, f);
   let ref = {};
   try { ref = JSON.parse(read('platform/tokens/reference.tokens.json'))['plx-ref'] || {}; } catch (e) { add(NAME, here('platform/tokens/reference.tokens.json'), 0, 'cannot read the reference tokens: ' + e.message); return; }
-  const sizes = Object.keys(ref).filter((k) => /^size-\d+px$/.test(k)).map((k) => parseInt(k.slice(5), 10)).sort((a, b) => a - b);
-  for (const n of NEEDED) if (!sizes.includes(n)) add(NAME, here('platform/tokens/reference.tokens.json'), 0, 'the size token size-' + n + 'px is missing (the scale must reach 1600px)');
+  // the scale by value, not by name (docs/adr/0012: size-400u is 1600px); a deprecated alias is not a step
+  const { css } = require('../tools/token-value.js');
+  const sizes = Object.entries(ref).filter(([k, t]) => /^size-/.test(k) && !t.$deprecated).map(([, t]) => { const m = /^(\d+)px$/.exec(css(t.$value)); return m ? +m[1] : null; }).filter((n) => n !== null).sort((a, b) => a - b);
+  for (const n of NEEDED) if (!sizes.includes(n)) add(NAME, here('platform/tokens/reference.tokens.json'), 0, 'no size token is ' + n + 'px (the scale must reach 1600px)');
   const steps = read('build-steps.js');
   const m = /GRID_PANE_MAX\s*=\s*(\d+)\s*,\s*GRID_BOX_MAX\s*=\s*(\d+)/.exec(steps);
   if (!m) add(NAME, here('build-steps.js'), 0, 'GRID_PANE_MAX and GRID_BOX_MAX are not set together, or the file cannot be read');

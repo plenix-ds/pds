@@ -1,11 +1,11 @@
 {
   "$description": "FunnelChart (platform/charts/FunnelChart.jsx; library wave 9, lane C): its component tokens. The bars are the chart frame's marks (data-viz color); everything else is an existing role.",
   "plx-comp": {
-    "funnel-stage-width": { "$value": "{plx-ref.size-120px}", "$type": "dimension", "$description": "Funnel chart, vertical: the room before the plot for the stage names (the frame's start margin)." },
-    "funnel-label-room": { "$value": "{plx-ref.size-96px}", "$type": "dimension", "$description": "Funnel chart, vertical: the room after the plot for the count and share at the end of the longest bar." },
-    "funnel-label-room-block": { "$value": "{plx-ref.size-24px}", "$type": "dimension", "$description": "Funnel chart, horizontal: the room above the plot for the label over the tallest column." },
+    "funnel-stage-width": { "$value": "{plx-ref.size-30u}", "$type": "dimension", "$description": "Funnel chart, vertical: the room before the plot for the stage names (the frame's start margin)." },
+    "funnel-label-room": { "$value": "{plx-ref.size-24u}", "$type": "dimension", "$description": "Funnel chart, vertical: the room after the plot for the count and share at the end of the longest bar." },
+    "funnel-label-room-block": { "$value": "{plx-ref.size-6u}", "$type": "dimension", "$description": "Funnel chart, horizontal: the room above the plot for the label over the tallest column." },
     "funnel-drop-background": { "$value": "{plx-sys.surface-sunken}", "$type": "color", "$description": "Funnel chart: the stage before's length behind a bar, so the drop between stages shows." },
-    "funnel-name-room-block": { "$value": "{plx-ref.size-40px}", "$type": "dimension", "$description": "Funnel chart, horizontal: the room under the plot for the stage names, in one or two lines." },
-    "funnel-edge": { "$value": "{plx-ref.size-8px}", "$type": "dimension", "$description": "Funnel chart: the room on the sides without names or labels (the bars carry their values, so there is no value axis)." }
+    "funnel-name-room-block": { "$value": "{plx-ref.size-10u}", "$type": "dimension", "$description": "Funnel chart, horizontal: the room under the plot for the stage names, in one or two lines." },
+    "funnel-edge": { "$value": "{plx-ref.size-2u}", "$type": "dimension", "$description": "Funnel chart: the room on the sides without names or labels (the bars carry their values, so there is no value axis)." }
   }
 }

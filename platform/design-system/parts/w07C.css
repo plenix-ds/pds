@@ -1,10 +1,10 @@
 /* Library part w07C (wave 7, lane C): the frames the labs and examples of wave 7, lane C need. Tokens only. */
 /* a field with its list or panel open under it (examples): room below for the list */
-.ds-w07c-open{min-block-size:var(--plx-ref-size-360px);}
+.ds-w07c-open{min-block-size:var(--plx-ref-size-90u);}
 /* a phone-sized screen: the main region, the navigation pane over it as the shell places it, the bottom bar below */
-.ds-w07c-phone{background-color:var(--plx-sys-surface-canvas);block-size:var(--plx-ref-size-400px);border-bottom-color:var(--plx-sys-border-default);border-bottom-style:solid;border-bottom-width:var(--plx-sys-border-width-thin);border-left-color:var(--plx-sys-border-default);border-left-style:solid;border-left-width:var(--plx-sys-border-width-thin);border-right-color:var(--plx-sys-border-default);border-right-style:solid;border-right-width:var(--plx-sys-border-width-thin);border-top-color:var(--plx-sys-border-default);border-top-style:solid;border-top-width:var(--plx-sys-border-width-thin);box-sizing:border-box;display:flex;flex-direction:column;inline-size:100%;overflow-x:hidden;overflow-y:hidden;}
+.ds-w07c-phone{background-color:var(--plx-sys-surface-canvas);block-size:var(--plx-ref-size-100u);border-bottom-color:var(--plx-sys-border-default);border-bottom-style:solid;border-bottom-width:var(--plx-sys-border-width-thin);border-left-color:var(--plx-sys-border-default);border-left-style:solid;border-left-width:var(--plx-sys-border-width-thin);border-right-color:var(--plx-sys-border-default);border-right-style:solid;border-right-width:var(--plx-sys-border-width-thin);border-top-color:var(--plx-sys-border-default);border-top-style:solid;border-top-width:var(--plx-sys-border-width-thin);box-sizing:border-box;display:flex;flex-direction:column;inline-size:100%;overflow-x:hidden;overflow-y:hidden;}
 .ds-w07c-phone__main{display:flex;flex-basis:0%;flex-grow:1;min-block-size:0;position:relative;}
 .ds-w07c-phone__content{flex-grow:1;padding-block-start:var(--plx-sys-space-inset-md);padding-inline-start:var(--plx-sys-space-inset-md);}
 /* a lab specimen: a chart at a fixed width, a panel drawn in place */
-.ds-w07c-lab{inline-size:var(--plx-ref-size-360px);max-inline-size:100%;}
-.ds-w07c-lab--wide{inline-size:var(--plx-ref-size-600px);}
+.ds-w07c-lab{inline-size:var(--plx-ref-size-90u);max-inline-size:100%;}
+.ds-w07c-lab--wide{inline-size:var(--plx-ref-size-150u);}

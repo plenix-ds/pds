@@ -16,7 +16,7 @@ const SIGN_OUT="/outpost.goauthentik.io/sign_out";
 // name/value facts as the defined data grid, with a header row (owner, 2026-10-09: all name/value lists in the DataGrid's look)
 const facts=(label,rows)=>{const list=rows.filter(Boolean);return <Table label={label} headerMenu={false}
   data={list.map((r,i)=>({id:i,name:r[0],value:typeof r[1]==="string"||typeof r[1]==="number"?String(r[1]):""}))}
-  columns={[{title:"Name",field:"name",kind:"wrap",rowLabel:true,width:"--plx-ref-size-240px",sortable:false},
+  columns={[{title:"Name",field:"name",kind:"wrap",rowLabel:true,width:"--plx-ref-size-60u",sortable:false},
     {title:"Value",field:"value",kind:"wrap",sortable:false,render:d=>{const r=list[d.id];return r?(r[2]?<Text variant="data">{r[1]}</Text>:r[1]):null;}}]}/>;};
 
 /* A feature's status as a Badge: [tone, label] */
@@ -105,14 +105,14 @@ function CapDoc({cap,backLabel,onBack,crumb}){
     )},
     {title:"Scenarios",long:true,content:(
       <Table label="Scenarios" data={(cap.scenarios||[]).map((r,i)=>({...r,id:i}))} columns={[
-        {title:"If",field:"condition",kind:"wrap",rowLabel:true,width:"--plx-ref-size-240px"},
+        {title:"If",field:"condition",kind:"wrap",rowLabel:true,width:"--plx-ref-size-60u"},
         {title:"Then",field:"expected",kind:"wrap"},
       ]}/>
     )},
     {title:"Specification",long:true,content:(
       <Stack gap="sm">
         <Table label="Fields" data={(spec.ownFields||[]).map((f,i)=>({id:i,field:f.field+(f.required?" *":""),type:f.type,required:f.required?"Yes":"No",notes:f.notes||(f.default!==undefined?"Default: "+f.default:"")}))} columns={[
-          {title:"Field",field:"field",kind:"name",rowLabel:true,width:"--plx-ref-size-240px"},
+          {title:"Field",field:"field",kind:"name",rowLabel:true,width:"--plx-ref-size-60u"},
           {title:"Type",field:"type",kind:"data"},
           {title:"Required",field:"required"},
           {title:"Notes",field:"notes",kind:"wrap"},
@@ -204,7 +204,7 @@ function DocsPanel({docSection,setDocSection}){
       </Section>
       <Section title="What the platform unifies">
         <Table label="What the platform unifies" data={(window.PV_UNIFIES||[]).map((r,i)=>({id:i,silo:r[0],unified:r[1]}))} columns={[
-          {title:"Traditional silo",field:"silo",kind:"wrap",rowLabel:true,width:"--plx-ref-size-240px"},
+          {title:"Traditional silo",field:"silo",kind:"wrap",rowLabel:true,width:"--plx-ref-size-60u"},
           {title:"Unified in Plenix",field:"unified",kind:"wrap"},
         ]}/>
       </Section>
@@ -242,7 +242,7 @@ function DocsPanel({docSection,setDocSection}){
 
   if(docSection==="terminology"){
     // a layer's table: its headers as DataGrid columns (c0, c1…), its rows as grid rows; the first column names the row
-    const tableColumns=t=>t.headers.map((h,j)=>({title:h,field:"c"+j,kind:"wrap",rowLabel:j===0,width:j===0?"--plx-ref-size-240px":undefined}));
+    const tableColumns=t=>t.headers.map((h,j)=>({title:h,field:"c"+j,kind:"wrap",rowLabel:j===0,width:j===0?"--plx-ref-size-60u":undefined}));
     const tableRows=t=>t.rows.map((r,i)=>Object.assign({id:i},...r.map((v,j)=>({["c"+j]:v}))));
     return(
       <Screen id="docs-terminology" title="Terminology" desc="Plenix mapped to standard software development structure. Use these definitions consistently across design, development, and documentation.">
@@ -347,7 +347,7 @@ function DocsPanel({docSection,setDocSection}){
               ["categories[]","string[]","Grouped search-to-select with create — shows hierarchy"],
               ["tags[]","string[]","Grouped search-to-select with create — auto-lowercase-hyphen"],
             ].map((r,i)=>({id:i,field:r[0],type:r[1],ui:r[2]}))} columns={[
-              {title:"Field",field:"field",kind:"name",rowLabel:true,width:"--plx-ref-size-240px"},
+              {title:"Field",field:"field",kind:"name",rowLabel:true,width:"--plx-ref-size-60u"},
               {title:"Type",field:"type",kind:"data"},
               {title:"UI",field:"ui",kind:"wrap"},
             ]}/>
@@ -368,7 +368,7 @@ function DocsPanel({docSection,setDocSection}){
             <Section key={key} title={type.label} stateKey={"type-"+key} collapsible defaultExpanded={false}
               description={<Inline as="span" gap="sm" wrap><Icon name={type.icon||"doc-text"}/>{}<Text>{type.desc}</Text><Text variant="data">{fieldCount} own field{fieldCount!==1?"s":""}</Text><Tag>{type.capability}</Tag></Inline>}>
               <Table label={type.label+" fields"} empty="No own fields" data={fields.map(([n,d])=>({id:n,name:n+(d.required?" *":""),type:d.type,detail:d.enum?"enum: "+d.enum.join(", "):d.desc||d.unit?"unit: "+d.unit:""}))} columns={[
-                {title:"Field",field:"name",kind:"name",rowLabel:true,width:"--plx-ref-size-240px"},
+                {title:"Field",field:"name",kind:"name",rowLabel:true,width:"--plx-ref-size-60u"},
                 {title:"Type",field:"type",kind:"data"},
                 {title:"Detail",field:"detail",kind:"wrap"},
               ]}/>

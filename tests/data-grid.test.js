@@ -125,7 +125,7 @@ if (!VIEWS.length && !IN_PAGE.some((m) => changed.child(m))) changed.none('DATA_
       const check=(yes,message)=>{if(!yes)throw Error(message);count++;};
       const columns=['a','b','c','d'].map(field=>({field,title:field})),data=[{id:1,a:'Zulu'},{id:2,a:'Alpha'}];
       const initial=['c','a','b','d'];localStorage.setItem(storage,JSON.stringify({order:initial,hidden:['a','b'],widths:{a:'160px',b:'240px'},sort:[{column:'a',dir:'asc'}]}));
-      let props={label:'Saved view regression',columns,data,storageKey:key,height:'--plx-ref-size-400px',narrow:'table',onReady:t=>{table=t;}};
+      let props={label:'Saved view regression',columns,data,storageKey:key,height:'--plx-ref-size-100u',narrow:'table',onReady:t=>{table=t;}};
       const render=patch=>{props={...props,...patch};ReactDOM.flushSync(()=>root.render(h(Plenix.DataGrid,props)));};
       const order=()=>table.getColumns().map(c=>c.getField()).filter(Boolean);
       try {
@@ -163,7 +163,7 @@ if (!VIEWS.length && !IN_PAGE.some((m) => changed.child(m))) changed.none('DATA_
         host.style.inlineSize='320px';render({columns:[{field:'a',title:'First',width:240,frozen:true},{field:'b',title:'Second',width:240,frozen:true},{field:'c',title:'Third',width:240}],hiddenColumns:[],columnOrder:['a','b','c']});await wait();await wait();
         const scroller=host.querySelector('.plx-data-grid__grid-tableholder'),cell=()=>host.querySelector('.plx-data-grid__grid-row [data-plx-field="a"]'),left=cell().getBoundingClientRect().left;
         scroller.scrollLeft=200;await wait();check(Math.abs(cell().getBoundingClientRect().left-left)<1,'virtual rows clip content without trapping frozen columns');host.style.removeProperty('inline-size');
-        ReactDOM.flushSync(()=>root.render(h(Plenix.Table,{label:'Natural wrapping reference',data:[{id:1,a:'A long reference description that wraps over several natural lines without an inline row height.'}],columns:[{field:'a',title:'Description',kind:'wrap',width:'--plx-ref-size-160px'}],onReady:t=>{table=t;}})));await wait();await wait();
+        ReactDOM.flushSync(()=>root.render(h(Plenix.Table,{label:'Natural wrapping reference',data:[{id:1,a:'A long reference description that wraps over several natural lines without an inline row height.'}],columns:[{field:'a',title:'Description',kind:'wrap',width:'--plx-ref-size-40u'}],onReady:t=>{table=t;}})));await wait();await wait();
         check([...host.querySelectorAll('.plx-data-grid__grid-cell')].every(cell=>!cell.style.height),'static wrapping Tables retain intrinsic CSS cell heights');
         return count;
       } finally {ReactDOM.flushSync(()=>root.unmount());host.remove();localStorage.removeItem(storage);}

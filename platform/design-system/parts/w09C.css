@@ -1,5 +1,5 @@
 /* Library part w09C (wave 9, lane C): the frames the labs of wave 9, lane C need. Tokens only. */
 /* a lab specimen: a chart in a fixed plot, a sparkline at a card's width, a metric card at a card's width */
-.ds-w09c-lab{inline-size:var(--plx-ref-size-360px);max-inline-size:100%;}
-.ds-w09c-lab--fill{inline-size:var(--plx-ref-size-240px);}
-.ds-w09c-lab--card{inline-size:var(--plx-ref-size-280px);}
+.ds-w09c-lab{inline-size:var(--plx-ref-size-90u);max-inline-size:100%;}
+.ds-w09c-lab--fill{inline-size:var(--plx-ref-size-60u);}
+.ds-w09c-lab--card{inline-size:var(--plx-ref-size-70u);}

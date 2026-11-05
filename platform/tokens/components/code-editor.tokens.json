@@ -92,17 +92,17 @@
       "$description": "CodeEditor: the space on each side of the code."
     },
     "code-editor-height-sm-min-height": {
-      "$value": "{plx-ref.size-120px}",
+      "$value": "{plx-ref.size-30u}",
       "$type": "dimension",
       "$description": "CodeEditor height sm: the least height (about 5 lines)."
     },
     "code-editor-height-md-min-height": {
-      "$value": "{plx-ref.size-240px}",
+      "$value": "{plx-ref.size-60u}",
       "$type": "dimension",
       "$description": "CodeEditor height md: the least height (about 10 lines)."
     },
     "code-editor-height-lg-min-height": {
-      "$value": "{plx-ref.size-400px}",
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension",
       "$description": "CodeEditor height lg: the least height (about 20 lines)."
     },

@@ -1,12 +1,12 @@
 /* Plenix master spec · sample styles for the content labs (Every Variant, batch 333): classes the lab specimens need, loaded by
    the page and by every lab frame. Tokens only; no hard-coded values. */
 /* the text lab: a narrow frame, so a truncated text shows its ellipsis */
-.ds-sample-text-frame{inline-size:var(--plx-ref-size-160px);}
+.ds-sample-text-frame{inline-size:var(--plx-ref-size-40u);}
 /* the list lab: a pane-wide frame, so a long statement wraps */
-.ds-sample-list-frame{inline-size:var(--plx-ref-size-240px);}
+.ds-sample-list-frame{inline-size:var(--plx-ref-size-60u);}
 /* the code block lab: a frame as wide as a panel, so the code scrolls sideways inside it */
-.ds-sample-code-frame{inline-size:var(--plx-ref-size-400px);}
+.ds-sample-code-frame{inline-size:var(--plx-ref-size-100u);}
 /* the property list lab: an inspector-wide frame (the columns layout measures its container) */
-.ds-sample-property-frame{inline-size:var(--plx-ref-size-320px);}
+.ds-sample-property-frame{inline-size:var(--plx-ref-size-80u);}
 /* the keyboard hint lab: the accent header's surface behind the on-accent hint */
 .ds-sample-on-accent{background-color:var(--plx-sys-accent-surface);display:inline-flex;padding-block-end:var(--plx-sys-space-inset-sm);padding-block-start:var(--plx-sys-space-inset-sm);padding-inline-end:var(--plx-sys-space-inset-sm);padding-inline-start:var(--plx-sys-space-inset-sm);}

@@ -12,7 +12,7 @@
       "$description": "SessionTimeout: the message’s size (font-size-13)."
     },
     "session-timeout-line-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension",
       "$description": "SessionTimeout: the message’s line height (size-20px)."
     },
@@ -32,7 +32,7 @@
       "$description": "SessionTimeout: the time left’s weight (font-weight-semibold)."
     },
     "session-timeout-inline-max-width": {
-      "$value": "{plx-ref.size-400px}",
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension",
       "$description": "SessionTimeout: the message in the page: its greatest width (size-400px, a small dialog’s)."
     },
@@ -62,7 +62,7 @@
       "$description": "SessionTimeout: in the page: the title’s weight (font-weight-bold)."
     },
     "session-timeout-title-line-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension",
       "$description": "SessionTimeout: in the page: the title’s line height (size-20px)."
     },

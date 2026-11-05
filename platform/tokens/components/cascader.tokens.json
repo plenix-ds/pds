@@ -2,7 +2,7 @@
   "$description": "Cascader (platform/components/Cascader), library wave 7, lane B: its component tokens. The field in the input roles, the list a menu surface (8px corners, the menu elevation), the search matches in the option roles.",
   "plx-comp": {
     "cascader-max-width": {
-      "$value": "{plx-ref.size-400px}",
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension",
       "$description": "Cascader: maximum width (size-400px)."
     },
@@ -37,7 +37,7 @@
       "$description": "Cascader trigger: gap (space-inline-sm)."
     },
     "cascader-trigger-flex-basis": {
-      "$value": "{plx-ref.size-80px}",
+      "$value": "{plx-ref.size-20u}",
       "$type": "dimension",
       "$description": "Cascader trigger flex basis: trigger flex basis (size-80px)."
     },
@@ -62,12 +62,12 @@
       "$description": "Cascader chevron: background (content-muted)."
     },
     "cascader-chevron-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$description": "Cascader chevron: height (size-16px)."
     },
     "cascader-chevron-width": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$description": "Cascader chevron: width (size-16px)."
     },
@@ -117,7 +117,7 @@
       "$description": "Cascader popup z index: popup z index (layer-menu)."
     },
     "cascader-columns-height": {
-      "$value": "{plx-ref.size-240px}",
+      "$value": "{plx-ref.size-60u}",
       "$type": "dimension",
       "$description": "Cascader columns: height (size-240px)."
     },
@@ -142,12 +142,12 @@
       "$description": "Cascader search: padding left and right (space-inset-xs)."
     },
     "cascader-matches-max-height": {
-      "$value": "{plx-ref.size-240px}",
+      "$value": "{plx-ref.size-60u}",
       "$type": "dimension",
       "$description": "Cascader matches: maximum height (size-240px)."
     },
     "cascader-matches-min-width": {
-      "$value": "{plx-ref.size-320px}",
+      "$value": "{plx-ref.size-80u}",
       "$type": "dimension",
       "$description": "Cascader matches: minimum width (size-320px)."
     },

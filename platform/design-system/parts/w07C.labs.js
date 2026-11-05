@@ -89,7 +89,7 @@ if (window.DS && DS.registerLab) {
       parts: { gap: 'A', cgap: 'B', tc: 'B', tf: 'B', ts: 'B', tw: 'B', tl: 'B', dc: 'C', ds: 'C', dl: 'C', ph: 'D', mc: 'E', lw: 'E', po: 'E', pw: 'E', ac: 'F', aw: 'F', gc: 'G', gw: 'G', kc: 'H', kf: 'H', ks: 'H' },
       anchors: { A: { part: null, side: 'left' }, B: { part: TITLE, side: 'top' }, C: { part: DESC, side: 'right' }, D: { part: PLOT, side: 'left' }, E: { part: '.plx-chart__svg', side: 'right' }, F: { part: AXIS, side: 'bottom' }, G: { part: GRID, side: 'right' }, H: { part: TICK, side: 'left' } },
       sections: [['Frame', ['gap', 'ph']], ['Caption', ['cgap', 'tc', 'tf', 'ts', 'tw', 'tl', 'dc', 'ds', 'dl']], ['Marks', ['mc', 'lw', 'po', 'pw']], ['Axes', ['ac', 'aw', 'gc', 'gw', 'kc', 'kf', 'ks']]],
-      matrixLabel: 'Chart frame values by scale and size', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Scales · ' + HEAD
+      matrixLabel: 'Chart frame values by scale and size', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Scales · ' + HEAD
     });
 
     // ---- Time-zone selector (<TimeZoneSelect>): the Combobox's field and list with the city and offset in each option, drawn
@@ -139,7 +139,7 @@ if (window.DS && DS.registerLab) {
       parts: { gap: 'A', oc: 'B', of: 'B', os: 'B', ow: 'B', fc: 'C', fm: 'C' },
       anchors: { A: { part: '.plx-time-zone-select__option', side: 'left' }, B: { part: '.plx-time-zone-select__offset', side: 'right' }, C: { part: '.plx-time-zone-select__field-offset', side: 'top' } },
       sections: [['Option', ['gap', 'oc', 'of', 'os', 'ow']], ['Field', ['fc', 'fm']]],
-      matrixLabel: 'Time-zone selector values by list and content', matrixColumnWidth: '--plx-ref-size-320px', statesHead: 'Lists · ' + HEAD
+      matrixLabel: 'Time-zone selector values by list and content', matrixColumnWidth: '--plx-ref-size-80u', statesHead: 'Lists · ' + HEAD
     });
 
     // ---- Tree select (<TreeSelect>): the trigger (a text field's look) and the panel drawn in place under it: the search
@@ -202,7 +202,7 @@ if (window.DS && DS.registerLab) {
       parts: { mw: 'A', pe: 'B', ph: 'B', cc: 'C', cs: 'C', ci: 'C', pg: 'D', sm: 'E' },
       anchors: { A: { part: null, side: 'top' }, B: { part: TRIG, side: 'left' }, C: { part: CHEV, side: 'right' }, D: { part: '.plx-tree-select__panel', side: 'left' }, E: { part: '.plx-tree-select__scroll', side: 'right' } },
       sections: [['Field', ['mw', 'pe', 'ph']], ['Chevron', ['cc', 'cs', 'ci']], ['Panel', ['pg', 'sm']]],
-      matrixLabel: 'Tree select values by choice and state', matrixColumnWidth: '--plx-ref-size-360px', statesHead: 'Choices and states · ' + HEAD
+      matrixLabel: 'Tree select values by choice and state', matrixColumnWidth: '--plx-ref-size-90u', statesHead: 'Choices and states · ' + HEAD
     });
 
     // ---- Transfer list (<TransferList>): the two framed lists, the move buttons, a header, rows with their marks
@@ -297,7 +297,7 @@ if (window.DS && DS.registerLab) {
       anchors: { A: { part: '.plx-transfer-list__body', side: 'top' }, B: { part: '.plx-transfer-list__moves', side: 'bottom' }, C: { part: PANEL, side: 'left' }, D: { part: HEADER, side: 'top' }, E: { part: '.plx-transfer-list__title', side: 'top' },
         F: { part: '.plx-transfer-list__count', side: 'top' }, G: { part: '.plx-transfer-list__search', side: 'left' }, H: { part: LIST, side: 'left' }, I: { part: OPT, side: 'right' } },
       sections: [['Layout', ['gap', 'mgap']], ['List frame', ['pbg', 'pbc', 'pbw', 'prad', 'ofb']], ['Header', ['hsh', 'hgap', 'hh', 'hpx', 'tc', 'tf', 'ts', 'tw', 'kc', 'kf', 'ks', 'tg']], ['Search', ['sp']], ['List', ['lh', 'lpy']], ['Rows', ['oh', 'og', 'opx', 'oc', 'os', 'ohv', 'osel']]],
-      matrixLabel: 'Transfer list values by variant and state', matrixColumnWidth: '--plx-ref-size-600px', statesHead: 'Variants and states · ' + HEAD
+      matrixLabel: 'Transfer list values by variant and state', matrixColumnWidth: '--plx-ref-size-150u', statesHead: 'Variants and states · ' + HEAD
     });
 
     // ---- Bottom-sheet navigation (<BottomSheetNav>): the sheet's body: NavList rows (list) or the grid of RowButton tiles
@@ -352,7 +352,7 @@ if (window.DS && DS.registerLab) {
       parts: { gg: 'A', th: 'B', trad: 'B', tpy: 'B', tpx: 'B', tg: 'B', is: 'C', ic: 'C', icc: 'C', lc: 'D', lf: 'D', ls: 'D', ll: 'D' },
       anchors: { A: { part: '.plx-bottom-sheet-nav__grid', side: 'left' }, B: { part: TILE, side: 'top' }, C: { part: TICON, side: 'right' }, D: { part: TLABEL, side: 'bottom' } },
       sections: [['Grid', ['gg']], ['Tile', ['th', 'trad', 'tpy', 'tpx', 'tg']], ['Icon', ['is', 'ic', 'icc']], ['Label', ['lc', 'lf', 'ls', 'll']]],
-      matrixLabel: 'Bottom-sheet navigation values by layout and state', matrixColumnWidth: '--plx-ref-size-360px', statesHead: 'Layouts and states · ' + HEAD
+      matrixLabel: 'Bottom-sheet navigation values by layout and state', matrixColumnWidth: '--plx-ref-size-90u', statesHead: 'Layouts and states · ' + HEAD
     });
 
     // ---- Bottom navigation (NavPane at Narrow and Medium): the bar of destinations and Browse, the pane over the main
@@ -432,7 +432,7 @@ if (window.DS && DS.registerLab) {
       parts: { bbg: 'A', bsh: 'A', bh: 'A', ifg: 'B', icur: 'B', iff: 'B', imw: 'B', it: 'B', ipy: 'B', igap: 'B', isz: 'C', lfs: 'D', llh: 'D', foc: 'B', fow: 'B', pbg: 'E', osh: 'E', omw: 'E' },
       anchors: { A: { part: BAR, side: 'left' }, B: { part: ITEM, side: 'top' }, C: { part: ITEM + ' .plx-icon', side: 'right' }, D: { part: LABEL, side: 'bottom' }, E: { part: '.plx-nav-pane', side: 'right' } },
       sections: [['Bar', ['bbg', 'bsh', 'bh']], ['Destination', ['ifg', 'icur', 'iff', 'imw', 'it', 'ipy', 'igap', 'isz', 'foc', 'fow']], ['Label', ['lfs', 'llh']], ['Pane', ['pbg', 'osh', 'omw']]],
-      matrixLabel: 'Bottom navigation values by form and state', matrixColumnWidth: '--plx-ref-size-360px', statesHead: 'Forms and states · ' + HEAD
+      matrixLabel: 'Bottom navigation values by form and state', matrixColumnWidth: '--plx-ref-size-90u', statesHead: 'Forms and states · ' + HEAD
     });
   })();
 }

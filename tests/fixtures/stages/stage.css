@@ -1,8 +1,8 @@
 /* The test stages' page and widths (issue 772): the rules the stage pages here use, from docs/briefs/review.css, which
    moved to the archive in #694 and took the 360px and 200px widths with it. Every value is a token. */
 .rv-page{background:var(--plx-sys-surface-canvas);color:var(--plx-sys-content-default);margin:0;}
-.rv-doc{display:grid;margin-inline:auto;max-inline-size:var(--plx-ref-size-1200px,75rem);padding:var(--plx-sys-space-layout-md) var(--plx-sys-space-inset-lg);row-gap:var(--plx-sys-space-stack-lg);}
+.rv-doc{display:grid;margin-inline:auto;max-inline-size:var(--plx-ref-size-300u,75rem);padding:var(--plx-sys-space-layout-md) var(--plx-sys-space-inset-lg);row-gap:var(--plx-sys-space-stack-lg);}
 /* a side panel (360px) */
-.rv-narrow{box-sizing:border-box;inline-size:var(--plx-ref-size-360px,22.5rem);padding:var(--plx-sys-space-inset-md);}
+.rv-narrow{box-sizing:border-box;inline-size:var(--plx-ref-size-90u,22.5rem);padding:var(--plx-sys-space-inset-md);}
 /* a very narrow pane (200px): where a command bar has folded everything it can */
-.rv-tiny{box-sizing:border-box;inline-size:var(--plx-ref-size-200px,12.5rem);padding:var(--plx-sys-space-inset-md);}
+.rv-tiny{box-sizing:border-box;inline-size:var(--plx-ref-size-50u,12.5rem);padding:var(--plx-sys-space-inset-md);}

@@ -41,7 +41,7 @@ export function FilesScreen({ screen }) {
             view={<><SortPanel {...v.sortProps} /><ColumnsMenu {...v.columnsProps} fields={FIELDS.filter((f) => COLUMNS.indexOf(f.value) >= 0)} /><ViewMenu {...v.viewProps} gallery={false} /></>} />
           <DataGrid label="Files" data={ROWS} selected={sel === null ? [] : [sel]} options={{ selectableRows: 1 }} {...v.tableProps}
             onRowClick={(record) => { const i = record.id; setSel(sel === i ? null : i); }} columns={[
-              { title: 'Name', field: 'name', kind: ['name', 'data'], width: '--plx-ref-size-320px' },
+              { title: 'Name', field: 'name', kind: ['name', 'data'], width: '--plx-ref-size-80u' },
               { title: 'Type', field: 't', kind: 'data' },
               { title: 'Size', field: 's', kind: 'data', align: 'right' },
               { title: 'Modified', field: 'd', kind: 'data' },

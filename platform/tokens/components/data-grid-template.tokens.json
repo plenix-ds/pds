@@ -2,7 +2,7 @@
   "$description": "DataGrid row template (issue 839): the card layouts A and B and the wide row. Existing roles only; no new color.",
   "plx-comp": {
     "data-grid-template-line-height": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension",
       "$description": "The height of one line of a template record."
     },
@@ -12,17 +12,17 @@
       "$description": "The space between the pieces of a template record."
     },
     "data-grid-template-end-width": {
-      "$value": "{plx-ref.size-100px}",
+      "$value": "{plx-ref.size-25u}",
       "$type": "dimension",
       "$description": "Layout A: the width of the column that holds the date, the primary and the tertiary value."
     },
     "data-grid-template-b-end-width": {
-      "$value": "{plx-ref.size-48px}",
+      "$value": "{plx-ref.size-12u}",
       "$type": "dimension",
       "$description": "Layout B: the width of the date."
     },
     "data-grid-template-b-mid-width": {
-      "$value": "{plx-ref.size-100px}",
+      "$value": "{plx-ref.size-25u}",
       "$type": "dimension",
       "$description": "Layout B: the width of the tertiary value; the primary value sits above it and the date."
     },
@@ -47,17 +47,17 @@
       "$description": "A card: the space after its last column."
     },
     "data-grid-template-check-width": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension",
       "$description": "A card: the width of the checkbox column."
     },
     "data-grid-template-menu-width": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension",
       "$description": "A card: the width of the row menu column."
     },
     "data-grid-template-bar-height": {
-      "$value": "{plx-ref.size-32px}",
+      "$value": "{plx-ref.size-8u}",
       "$type": "dimension",
       "$description": "The bar over the cards: its least height."
     },
@@ -72,12 +72,12 @@
       "$description": "The bar over the cards: the space between the checkbox and the count."
     },
     "data-grid-template-menu-button-size": {
-      "$value": "{plx-ref.size-28px}",
+      "$value": "{plx-ref.size-7u}",
       "$type": "dimension",
       "$description": "A card: the row menu button (square), the sample's xs icon button at the standard density, whatever the grid's density."
     },
     "data-grid-template-menu-icon-size": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension",
       "$description": "A card: the icon in the row menu button."
     },

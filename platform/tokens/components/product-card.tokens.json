@@ -34,6 +34,6 @@
     "product-card-rating-gap": { "$value": "{plx-sys.space-inline-xs}", "$type": "dimension", "$description": "ProductCard: the gap between the stars and the review count (space-inline-xs)." },
     "product-card-actions-padding-block-start": { "$value": "{plx-sys.space-stack-xs}", "$type": "dimension", "$description": "ProductCard: the space above the action (space-stack-xs)." },
     "product-card-actions-z-index": { "$value": "{plx-sys.layer-raised}", "$type": "number", "$description": "ProductCard: the action sits above the name's card-wide target (layer-raised)." },
-    "product-card-list-media-width": { "$value": "{plx-ref.size-120px}", "$type": "dimension", "$description": "ProductCard list: the picture column's width (120px)." }
+    "product-card-list-media-width": { "$value": "{plx-ref.size-30u}", "$type": "dimension", "$description": "ProductCard list: the picture column's width (120px)." }
   }
 }

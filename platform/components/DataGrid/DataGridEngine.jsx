@@ -82,7 +82,7 @@ function NextEngine(props) {
     mode = 'fill',
     height,
     narrow: requestedNarrow,
-    narrowAt = '--plx-ref-size-600px',
+    narrowAt = '--plx-ref-size-150u',
     keyColumns,
     storageKey,
     isStatic = false,

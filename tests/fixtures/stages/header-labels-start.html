@@ -28,7 +28,7 @@
     { title: 'Price', field: 'price', kind: 'data', align: 'right', headerAlign: 'right' }];
   function Stage() {
     return h('div', { id: 'stage' }, h(P.Stack, { gap: 'lg' },
-      h('div', { id: 'grid' }, h(P.DataGrid, { label: 'Stock', wrapHeaders: true, data: rows, columns, height: '--plx-ref-size-240px' })),
+      h('div', { id: 'grid' }, h(P.DataGrid, { label: 'Stock', wrapHeaders: true, data: rows, columns, height: '--plx-ref-size-60u' })),
       h('div', { id: 'table' }, h(P.Table, { label: 'Stock (Table)', data: rows, columns }))));
   }
   ReactDOM.createRoot(document.getElementById('root')).render(h(Stage));

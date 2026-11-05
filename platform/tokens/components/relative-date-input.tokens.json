@@ -17,22 +17,22 @@
       "$description": "RelativeDateInput row: gap between rows (space-inline-sm)."
     },
     "relative-date-input-preset-width": {
-      "$value": "{plx-ref.size-180px}",
+      "$value": "{plx-ref.size-45u}",
       "$type": "dimension",
       "$description": "RelativeDateInput preset: width (size-180px)."
     },
     "relative-date-input-custom-preset-width": {
-      "$value": "{plx-ref.size-140px}",
+      "$value": "{plx-ref.size-35u}",
       "$type": "dimension",
       "$description": "RelativeDateInput custom preset: width (size-140px)."
     },
     "relative-date-input-direction-width": {
-      "$value": "{plx-ref.size-100px}",
+      "$value": "{plx-ref.size-25u}",
       "$type": "dimension",
       "$description": "RelativeDateInput direction: width (size-100px)."
     },
     "relative-date-input-unit-width": {
-      "$value": "{plx-ref.size-120px}",
+      "$value": "{plx-ref.size-30u}",
       "$type": "dimension",
       "$description": "RelativeDateInput unit: width (size-120px)."
     },

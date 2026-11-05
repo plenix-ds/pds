@@ -2,12 +2,12 @@
   "$description": "Gesture motion (library plan wave 2, foundation gesture): the distances, times and rates that turn pointer and touch movement into gestures, and the motion an element makes when a gesture ends. hooks/useGesture.ts reads them; system/gesture.css draws the settle.",
   "plx-sys": {
     "gesture-slop": {
-      "$value": "{plx-ref.size-8px}",
+      "$value": "{plx-ref.size-2u}",
       "$type": "dimension",
       "$description": "How far a pointer may move before a press becomes a pan: under it a tap or a long press, over it the movement is tracked (and a long press is canceled)."
     },
     "gesture-swipe-distance": {
-      "$value": "{plx-ref.size-48px}",
+      "$value": "{plx-ref.size-12u}",
       "$type": "dimension",
       "$description": "The distance along the swipe's axis that commits a swipe when the pointer is released slowly; a release faster than the fling velocity commits it sooner."
     },
@@ -27,7 +27,7 @@
       "$description": "How long a pointer is held still before a long press: the touch long-press delay, so every long press in the Platform waits the same."
     },
     "gesture-pull-distance": {
-      "$value": "{plx-ref.size-64px}",
+      "$value": "{plx-ref.size-16u}",
       "$type": "dimension",
       "$description": "Pull to refresh: the pull (after resistance) at which releasing refreshes; under it the pull springs back."
     },

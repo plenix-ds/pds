@@ -109,7 +109,7 @@ if (window.DS && DS.registerLab) {
       parts: { gap: 'A', lmh: 'A', gfg: 'B', gfs: 'B', gfw: 'B', gpt: 'B', ifg: 'C', ifs: 'C', ih: 'C', ipx: 'C', igap: 'C', irad: 'C', abg: 'C', icfg: 'C', dfg: 'C', dfs: 'C', xfg: 'C', ptfg: 'D', ptfw: 'D', pgap: 'D', sfg: 'E', sfs: 'E', spy: 'E' },
       anchors: { A: { part: null, side: 'left' }, B: { part: '.plx-command-menu__group-label', side: 'top' }, C: { part: '.plx-command-menu__item', side: 'right' }, D: { part: '.plx-command-menu__page', side: 'top' }, E: { part: '.plx-command-menu__status', side: 'bottom' } },
       sections: [['Menu', ['gap', 'lmh']], ['Group labels', ['gfg', 'gfs', 'gfw', 'gpt']], ['Commands', ['ifg', 'ifs', 'ih', 'ipx', 'igap', 'irad', 'abg', 'icfg', 'dfg', 'dfs', 'xfg']], ['Page', ['ptfg', 'ptfw', 'pgap']], ['Status', ['sfg', 'sfs', 'spy']]],
-      matrixLabel: 'Command menu values by variant', matrixColumnWidth: '--plx-ref-size-500px',
+      matrixLabel: 'Command menu values by variant', matrixColumnWidth: '--plx-ref-size-125u',
       statesHead: 'Variants · ' + HEAD
     });
 
@@ -139,7 +139,7 @@ if (window.DS && DS.registerLab) {
       parts: { gap: 'A', lmh: 'B' },
       anchors: { A: { part: '.plx-command-palette__menu', side: 'left' }, B: { part: '.plx-command-menu__list', side: 'right' } },
       sections: [['Palette', ['gap', 'lmh']]],
-      matrixLabel: 'Command palette values by scope', matrixColumnWidth: '--plx-ref-size-560px',
+      matrixLabel: 'Command palette values by scope', matrixColumnWidth: '--plx-ref-size-140u',
       statesHead: 'Scopes · ' + HEAD
     });
 
@@ -186,7 +186,7 @@ if (window.DS && DS.registerLab) {
       parts: { mfg: 'A', mff: 'A', mfs: 'A', mfw: 'A', mgap: 'A', pff: 'B', pgap: 'B' },
       anchors: { A: { part: '.plx-download-button__meta', side: 'top' }, B: { part: '.plx-download-button__percent', side: 'top' } },
       sections: [['File facts', ['mfg', 'mff', 'mfs', 'mfw', 'mgap']], ['Progress', ['pff', 'pgap']]],
-      matrixLabel: 'Download button values by variant', matrixColumnWidth: '--plx-ref-size-240px',
+      matrixLabel: 'Download button values by variant', matrixColumnWidth: '--plx-ref-size-60u',
       statesHead: 'Variants · ' + HEAD
     });
 
@@ -217,7 +217,7 @@ if (window.DS && DS.registerLab) {
       parts: { sh: 'A', ib: 'A', ie: 'A' },
       anchors: { A: { part: null, side: 'left' } },
       sections: [['Floating', ['sh', 'ib', 'ie']]],
-      matrixLabel: 'Back to top values by variant', matrixColumnWidth: '--plx-ref-size-320px',
+      matrixLabel: 'Back to top values by variant', matrixColumnWidth: '--plx-ref-size-80u',
       statesHead: 'Variants · ' + HEAD
     });
 
@@ -297,7 +297,7 @@ if (window.DS && DS.registerLab) {
       parts: { bg: 'A', fg: 'A', bc: 'A', bw: 'A', rad: 'A', sh: 'A', pad: 'A', pdy: 'A', pdx: 'A', mw: 'A', fs: 'A', arr: 'A', gap: 'B', tfg: 'B', tff: 'B', tfw: 'B', amt: 'C' },
       anchors: { A: { part: null, side: 'left' }, B: { part: '.plx-tooltip__title', side: 'top' }, C: { part: '.plx-tooltip__action', side: 'bottom' } },
       sections: [['Surface', ['bg', 'fg', 'bc', 'bw', 'rad', 'sh', 'pad', 'pdy', 'pdx', 'mw', 'fs', 'arr']], ['Title', ['gap', 'tfg', 'tff', 'tfw']], ['Action', ['amt']]],
-      matrixLabel: 'Tooltip values by content and placement', matrixColumnWidth: '--plx-ref-size-400px',
+      matrixLabel: 'Tooltip values by content and placement', matrixColumnWidth: '--plx-ref-size-100u',
       statesHead: 'Content · ' + HEAD
     });
 
@@ -336,7 +336,7 @@ if (window.DS && DS.registerLab) {
         DS.registerLab(id, Object.assign({}, base, {
           name: name, title: 'Plenix ' + name.toLowerCase(), store: 'plenix-' + id + '-lab-tokens', file: file || base.file,
           sizes: sizes, variants: variants, defaults: Object.assign({}, base.defaults, defaults), html: drawDialog, every: every,
-          matrixLabel: name + ' values', matrixColumnWidth: '--plx-ref-size-560px'
+          matrixLabel: name + ' values', matrixColumnWidth: '--plx-ref-size-140u'
         }));
       };
       var sized = function (list) { return list.map(function (s) { return [s[0], s[1], '.plx-dialog--' + s[0]]; }); };

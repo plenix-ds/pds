@@ -58,7 +58,7 @@ if (window.DS && DS.registerLab) {
       parts: { rc: 'B', rw: 'B', pc: 'C', pd: 'C', pw: 'C' },
       anchors: { B: { part: '.plx-chart-keys__ring', side: 'top' }, C: { part: '.plx-chart-pattern', side: 'right' } },
       sections: [['Active mark', ['rc', 'rw']], ['Textures', ['pc', 'pd', 'pw']]],
-      matrixLabel: 'Chart accessibility values by rule', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Rules · ' + HEAD
+      matrixLabel: 'Chart accessibility values by rule', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Rules · ' + HEAD
     });
 
     // ---- Sparkline (<Sparkline>): inline (96 × 24) or fill (the container's width, 32 tall); line, area, bar, last point
@@ -115,7 +115,7 @@ if (window.DS && DS.registerLab) {
       parts: { w: 'A', ih: 'A', fh: 'A', c: 'B', bc: 'B', lw: 'B', ao: 'C', pr: 'D', po: 'D', pw: 'D' },
       anchors: { A: { part: null, side: 'left' }, B: { part: '.plx-sparkline__svg', side: 'top' }, C: { part: '.plx-sparkline__svg', side: 'bottom' }, D: { part: '.plx-sparkline__svg', side: 'right' } },
       sections: [['Box', ['w', 'ih', 'fh']], ['Line and bars', ['c', 'bc', 'lw', 'ao']], ['Last point', ['pr', 'po', 'pw']]],
-      matrixLabel: 'Sparkline values by variant', matrixColumnWidth: '--plx-ref-size-300px', statesHead: 'Variants · ' + HEAD
+      matrixLabel: 'Sparkline values by variant', matrixColumnWidth: '--plx-ref-size-75u', statesHead: 'Variants · ' + HEAD
     });
 
     var MT = T('metric');   // Metric's trend tokens (Metric's own lab, below)
@@ -177,7 +177,7 @@ if (window.DS && DS.registerLab) {
       parts: { cw: 'A', vr: 'A', sc: 'B', sw: 'B', dc: 'C', dr: 'C', do: 'C', dw: 'C' },
       anchors: { A: { part: '.plx-chart__svg', side: 'left' }, B: { part: '.plx-lollipop__stem', side: 'top' }, C: { part: '.plx-lollipop__dot', side: 'right' } },
       sections: [['Frame', ['cw', 'vr']], ['Stem', ['sc', 'sw']], ['Dot', ['dc', 'dr', 'do', 'dw']]],
-      matrixLabel: 'Lollipop chart values by orientation', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Orientations · ' + HEAD
+      matrixLabel: 'Lollipop chart values by orientation', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Orientations · ' + HEAD
     });
 
     // ---- ScatterChart and its Bubble chart: points (one size), a trend line, bubbles (area by a third measure)
@@ -226,7 +226,7 @@ if (window.DS && DS.registerLab) {
       parts: { mb: 'A', ms: 'A', c: 'B', pr: 'B', po: 'B', bo: 'B', ow: 'B', tw: 'C' },
       anchors: { A: { part: '.plx-chart__svg', side: 'left' }, B: { part: '.plx-scatter__point', side: 'top' }, C: { part: '.plx-scatter__trend', side: 'right' } },
       sections: [['Frame', ['mb', 'ms']], ['Points', ['c', 'pr', 'po', 'bo', 'ow']], ['Trend line', ['tw']]],
-      matrixLabel: 'Scatter plot values by variant', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Variants · ' + HEAD
+      matrixLabel: 'Scatter plot values by variant', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Variants · ' + HEAD
     };
     DS.registerLab('scatter-chart', scatterSpec);
     DS.registerLab('bubble-chart', Object.assign({}, scatterSpec, { name: 'Bubble chart', title: 'Plenix bubble chart', store: 'plenix-bubble-chart-lab-tokens',
@@ -275,7 +275,7 @@ if (window.DS && DS.registerLab) {
       parts: { sw: 'A', lr: 'A', lb: 'A', nb: 'A', ed: 'A', db: 'B' },
       anchors: { A: { part: '.plx-chart__svg', side: 'left' }, B: { part: '.plx-funnel__drop', side: 'right' } },
       sections: [['Frame', ['sw', 'lr', 'lb', 'nb', 'ed']], ['Bars', ['db']]],
-      matrixLabel: 'Funnel values by orientation', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Orientations · ' + HEAD
+      matrixLabel: 'Funnel values by orientation', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Orientations · ' + HEAD
     });
 
     // ---- Treemap: tiles with gaps, names and values on a halo; nested groups framed and named
@@ -323,7 +323,7 @@ if (window.DS && DS.registerLab) {
       parts: { gc: 'A', gw: 'A', lt: 'B', lf: 'B', lw: 'B', ls: 'B', hc: 'B', hw: 'B', vf: 'C', bc: 'D', bw: 'D', nt: 'E', nf: 'E', ns: 'E', nw: 'E' },
       anchors: { A: { part: '.plx-treemap__tile', side: 'top' }, B: { part: '.plx-treemap__label', side: 'right' }, C: { part: '.plx-treemap__value', side: 'bottom' }, D: { part: '.plx-treemap__group-frame', side: 'left' }, E: { part: '.plx-treemap__group-label', side: 'top' } },
       sections: [['Tiles', ['gc', 'gw']], ['Names and values', ['lt', 'lf', 'lw', 'ls', 'vf', 'hc', 'hw']], ['Groups', ['bc', 'bw', 'nt', 'nf', 'ns', 'nw']]],
-      matrixLabel: 'Treemap values by variant', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Variants · ' + HEAD
+      matrixLabel: 'Treemap values by variant', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Variants · ' + HEAD
     });
 
     // ---- GanttChart: task names, bars (the rest textured), dependency arrows, milestones, the today line
@@ -370,7 +370,7 @@ if (window.DS && DS.registerLab) {
       parts: { tw: 'A', lr: 'A', mt: 'A', tt: 'B', tf: 'B', ts: 'B', lc: 'C', lw: 'C', ah: 'C', mc: 'D', mo: 'D', mw: 'D' },
       anchors: { A: { part: '.plx-chart__svg', side: 'left' }, B: { part: '.plx-gantt__task', side: 'top' }, C: { part: '.plx-gantt__link', side: 'right' }, D: { part: '.plx-gantt__milestone', side: 'bottom' } },
       sections: [['Frame', ['tw', 'lr', 'mt']], ['Task names', ['tt', 'tf', 'ts']], ['Dependencies', ['lc', 'lw', 'ah']], ['Milestones', ['mc', 'mo', 'mw']]],
-      matrixLabel: 'Gantt chart values by variant', matrixColumnWidth: '--plx-ref-size-500px', statesHead: 'Variants · ' + HEAD
+      matrixLabel: 'Gantt chart values by variant', matrixColumnWidth: '--plx-ref-size-125u', statesHead: 'Variants · ' + HEAD
     });
 
     // ---- GeoMap and its Choropleth map: land and outlines, markers, the zoom buttons' row; shaded regions, no data
@@ -422,7 +422,7 @@ if (window.DS && DS.registerLab) {
       parts: { cg: 'A', ld: 'B', bc: 'B', gc: 'B', el: 'B', bw: 'B', mc: 'C', mr: 'C', mo: 'C', mw: 'C' },
       anchors: { A: { part: '.plx-geo-map__controls', side: 'top' }, B: { part: '.plx-geo-map__region', side: 'left' }, C: { part: '.plx-geo-map__marker', side: 'right' } },
       sections: [['Controls', ['cg']], ['Regions', ['ld', 'bc', 'gc', 'el', 'bw']], ['Markers', ['mc', 'mr', 'mo', 'mw']]],
-      matrixLabel: 'Map values by variant', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Variants · ' + HEAD
+      matrixLabel: 'Map values by variant', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Variants · ' + HEAD
     };
     DS.registerLab('geo-map', geoSpec);
     DS.registerLab('choropleth-map', Object.assign({}, geoSpec, { name: 'Choropleth map', title: 'Plenix choropleth map', store: 'plenix-choropleth-map-lab-tokens',

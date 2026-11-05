@@ -73,7 +73,7 @@ DSParts.records.push(function (H) {
   var Ticks = function () {
     var cases = [[0, 87], [0, 1.3], [-12, 48], [1200, 9800]];
     return h(P.Table, { label: 'Nice ticks', data: cases.map(function (c, i) { var n = P.niceTicks(c[0], c[1]); return { id: i + 1, data: c[0] + ' to ' + c[1], step: String(n.step), ticks: n.ticks.join(', ') }; }),
-      columns: [{ title: 'Data from … to', field: 'data', kind: 'data', width: '--plx-ref-size-160px' }, { title: 'Step', field: 'step', kind: 'data', width: '--plx-ref-size-100px' }, { title: 'Ticks (niceTicks)', field: 'ticks', kind: 'data' }] });
+      columns: [{ title: 'Data from … to', field: 'data', kind: 'data', width: '--plx-ref-size-40u' }, { title: 'Step', field: 'step', kind: 'data', width: '--plx-ref-size-25u' }, { title: 'Ticks (niceTicks)', field: 'ticks', kind: 'data' }] });
   };
   var chartFoundations = { id: 'chart-foundations', lab: true, icon: 'chart', sec: 'data-display', sub: 'Charts', leaf: 'Chart foundations', title: 'Chart foundations',
     plenix: 'ChartFrame, scaleLinear, scaleLog, scaleBand, scaleTime, niceTicks, seriesColor', src: 'charts/ChartFrame.jsx', also: ['charts/scales.js'], css: ['system/charts.css'],

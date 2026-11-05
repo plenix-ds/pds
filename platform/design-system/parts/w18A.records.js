@@ -7,7 +7,7 @@ DSParts.records.push(function (H) {
   if (!M) return [];
   var table = function (label, cols, rows) {
     return h(P.Table, { label: label, data: rows.map(function (x, i) { return Object.assign({ id: i + 1 }, x); }),
-      columns: cols.map(function (c, i) { return Object.assign({ title: c[0], field: c[1], kind: c[2] || 'wrap' }, i === 0 ? { rowLabel: true, width: '--plx-ref-size-240px' } : {}); }) });
+      columns: cols.map(function (c, i) { return Object.assign({ title: c[0], field: c[1], kind: c[2] || 'wrap' }, i === 0 ? { rowLabel: true, width: '--plx-ref-size-60u' } : {}); }) });
   };
   return [{
     id: 'foundations-how-to-add-an-icon', sec: 'foundations', sub: 'Iconography', leaf: 'How to add an icon', title: 'How to add an icon',

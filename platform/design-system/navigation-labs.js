@@ -123,7 +123,7 @@
     parts: { bg: 'A', h: 'A', px: 'A', gap: 'A', mark: 'B', afs: 'B', ifg: 'C', isz: 'C', irad: 'C', ihv: 'C', icon: 'C' },
     anchors: { A: { part: null, side: 'top' }, B: { part: '.plx-app-header__brand', side: 'bottom' }, C: { part: '.plx-app-header__item', side: 'bottom' } },
     sections: [['Bar', ['bg', 'h', 'px', 'gap']], ['Brand', ['mark', 'afs']], ['Utilities', ['ifg', 'isz', 'irad', 'ihv', 'icon']]],
-    matrixLabel: 'Application header values by tone', matrixColumnWidth: '--plx-ref-size-400px',
+    matrixLabel: 'Application header values by tone', matrixColumnWidth: '--plx-ref-size-100u',
     statesHead: 'Tones and states · every value (click one to inspect it; the dashed outline marks the one shown below)'
   });
 

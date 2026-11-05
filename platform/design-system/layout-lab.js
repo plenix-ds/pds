@@ -79,12 +79,12 @@ window.DSLayoutLab = function (api) {
     ['--size-10', '10px', '15', 'Optical: small icons, version dots, chevron width', 'Kept as --plx-ref-glyph-size-10px'],
     ['--size-14', '14px', '34', 'Optical: icons, spinner, file badge, info dot', 'Kept as --plx-ref-glyph-size-14px'],
     ['--size-18', '18px', '8', 'Optical: icons, separators; two 18px buttons', 'Kept as --plx-ref-glyph-size-18px; the saved-search × and the card menu button became 24px inline actions'],
-    ['--size-70', '70px', '13', 'Layout: column widths, heights', '--plx-ref-size-72px'],
-    ['--size-78', '78px', '1', 'Layout: a minimum height', '--plx-ref-size-80px'],
-    ['--size-90', '90px', '2', 'Layout: widths', '--plx-ref-size-92px (new)'],
-    ['--size-110', '110px', '6', 'Layout: label columns', '--plx-ref-size-112px (new)'],
-    ['--size-130', '130px', '7', 'Layout: columns', '--plx-ref-size-132px (new)'],
-    ['--size-150', '150px', '2', 'Layout: columns', '--plx-ref-size-152px (new)']]);
+    ['--size-70', '70px', '13', 'Layout: column widths, heights', '--plx-ref-size-18u'],
+    ['--size-78', '78px', '1', 'Layout: a minimum height', '--plx-ref-size-20u'],
+    ['--size-90', '90px', '2', 'Layout: widths', '--plx-ref-size-23u (new)'],
+    ['--size-110', '110px', '6', 'Layout: label columns', '--plx-ref-size-28u (new)'],
+    ['--size-130', '130px', '7', 'Layout: columns', '--plx-ref-size-33u (new)'],
+    ['--size-150', '150px', '2', 'Layout: columns', '--plx-ref-size-38u (new)']]);
   c1b.appendChild(DS.el('p', 'ds-lay-lead', 'Allowed off the 4px grid, by category and never as spacing or control boxes: border widths (1–4px), typography line heights, glyph optical sizes (--plx-ref-glyph-size-*), hairline separators.'));
 
   // placement: every icon on the 4px grid, horizontally and vertically (batch 127)

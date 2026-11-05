@@ -12,7 +12,7 @@
       "$description": "DataGrid column header: the space between the type icon and the name."
     },
     "data-grid-view-column-width": {
-      "$value": "{plx-ref.size-48px}",
+      "$value": "{plx-ref.size-12u}",
       "$type": "dimension",
       "$description": "DataGrid: the view column with touch interaction: wide enough for a 44px target and its line."
     }

@@ -1,4 +1,4 @@
 /* Fixture for check-spec.js, rule color-samples: a stylesheet in which every color sample is a 120px bar that does not shrink. The rule must pass on it. */
-.ds-swatch{block-size:var(--plx-ref-size-44px);flex-shrink:0;inline-size:var(--plx-ref-size-120px);}
-.ds-vis--color{block-size:var(--plx-ref-size-16px);flex-shrink:0;inline-size:var(--plx-ref-size-120px);}
-.ds-token-render .ds-swatch{block-size:var(--plx-ref-size-24px);inline-size:var(--plx-ref-size-120px);}
+.ds-swatch{block-size:var(--plx-ref-size-11u);flex-shrink:0;inline-size:var(--plx-ref-size-30u);}
+.ds-vis--color{block-size:var(--plx-ref-size-4u);flex-shrink:0;inline-size:var(--plx-ref-size-30u);}
+.ds-token-render .ds-swatch{block-size:var(--plx-ref-size-6u);inline-size:var(--plx-ref-size-30u);}

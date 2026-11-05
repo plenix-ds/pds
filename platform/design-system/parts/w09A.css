@@ -1,4 +1,4 @@
 /* Library part w09A (wave 9, lane A): the frames the labs of wave 9, lane A need. Tokens only. */
 /* a lab specimen: a chart drawn in a fixed 400px plot */
-.ds-w09a-lab{inline-size:var(--plx-ref-size-400px);max-inline-size:100%;}
-.ds-w09a-lab--wide{inline-size:var(--plx-ref-size-560px);}
+.ds-w09a-lab{inline-size:var(--plx-ref-size-100u);max-inline-size:100%;}
+.ds-w09a-lab--wide{inline-size:var(--plx-ref-size-140u);}

@@ -82,7 +82,7 @@
       "$description": "QueryBuilder: join word text size (font-size-13)."
     },
     "query-builder-join-width": {
-      "$value": "{plx-ref.size-52px}",
+      "$value": "{plx-ref.size-13u}",
       "$type": "dimension",
       "$description": "QueryBuilder: the join column’s width (size-52px)."
     },
@@ -97,17 +97,17 @@
       "$description": "QueryBuilder: gap between a rule’s controls (space-inline-sm)."
     },
     "query-builder-field-width": {
-      "$value": "{plx-ref.size-160px}",
+      "$value": "{plx-ref.size-40u}",
       "$type": "dimension",
       "$description": "QueryBuilder: field select width (size-160px)."
     },
     "query-builder-operator-width": {
-      "$value": "{plx-ref.size-152px}",
+      "$value": "{plx-ref.size-38u}",
       "$type": "dimension",
       "$description": "QueryBuilder: operator select width (size-152px)."
     },
     "query-builder-value-min-width": {
-      "$value": "{plx-ref.size-200px}",
+      "$value": "{plx-ref.size-50u}",
       "$type": "dimension",
       "$description": "QueryBuilder: the value control’s narrowest width (size-200px)."
     },

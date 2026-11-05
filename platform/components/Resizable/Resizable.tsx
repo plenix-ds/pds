@@ -200,7 +200,7 @@ export function Resizable({ label, variant = 'default', fill: fillContent = fals
       announced.current.add(message); setAnnouncement(message);
       const handle = anchor.current;
       const transform = handle && handle.classList.contains('plx-resizable__edge--block') ? 'translateY' : 'translateX';
-      if (handle) animate(handle, [{ transform: transform + '(0)' }, { transform: transform + '(var(--plx-ref-size-4px))' }, { transform: transform + '(0)' }]);
+      if (handle) animate(handle, [{ transform: transform + '(0)' }, { transform: transform + '(var(--plx-ref-size-1u))' }, { transform: transform + '(0)' }]);
     }
   };
   const set = (next: ResizableSize, settle = true) => {

@@ -2,7 +2,7 @@
   "$description": "TimePicker (platform/components/TimePicker), library wave 7, lane B: its component tokens. The field in the input roles with the time in the data font; the list a menu surface; the segments take the selected fill in focus.",
   "plx-comp": {
     "time-picker-width": {
-      "$value": "{plx-ref.size-160px}",
+      "$value": "{plx-ref.size-40u}",
       "$type": "dimension",
       "$description": "TimePicker: width (size-160px)."
     },
@@ -42,12 +42,12 @@
       "$description": "TimePicker icon: background (content-muted)."
     },
     "time-picker-icon-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$description": "TimePicker icon: height (size-16px)."
     },
     "time-picker-icon-width": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$description": "TimePicker icon: width (size-16px)."
     },
@@ -92,7 +92,7 @@
       "$description": "TimePicker list margin block start: list margin block start (space-stack-xs)."
     },
     "time-picker-list-max-height": {
-      "$value": "{plx-ref.size-220px}",
+      "$value": "{plx-ref.size-55u}",
       "$type": "dimension",
       "$description": "TimePicker list: maximum height (size-220px)."
     },
@@ -162,7 +162,7 @@
       "$description": "TimePicker segment: corners (radius-control-4px)."
     },
     "time-picker-segment-min-width": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension",
       "$description": "TimePicker segment: minimum width (size-24px)."
     },
