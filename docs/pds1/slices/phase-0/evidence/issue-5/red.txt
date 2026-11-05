@@ -1,0 +1,9 @@
+AssertionError [ERR_ASSERTION]: DS.liveRoots exists
+    at /home/cc/pds1/work/component-engineer-1/tests/spec-roots-5.test.js:18:12 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}

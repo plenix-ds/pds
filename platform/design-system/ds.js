@@ -2,6 +2,23 @@
 /* Plenix design spec: helpers for the spec page and its labs. They read the token files as text, so the page always
    shows the tokens that are really in use. */
 var DS = {
+  /* a live React root for a specimen on the page (issue 5): roots are kept in a list, and one whose container has left the
+     page is unmounted (the next mount, or liveRoots(), sweeps). A root nobody unmounts keeps its whole tree alive
+     (ThemeProvider's observer on <html> points at it), which made the spec grow by about 1.5 MB per page. */
+  mount: function (container, element) {
+    DS.sweepRoots();
+    var root = ReactDOM.createRoot(container); DS.ROOTS.push({ root: root, container: container }); root.render(element); return root;
+  },
+  sweepRoots: function () {
+    DS.ROOTS = DS.ROOTS.filter(function (r) {
+      if (r.container.isConnected) return true;
+      try { r.root.unmount(); } catch { /* already gone */ }
+      return false;
+    });
+  },
+  // the roots held (onPage: only those whose container is on the page), after a sweep
+  liveRoots: function (onPage) { DS.sweepRoots(); return onPage ? DS.ROOTS.filter(function (r) { return r.container.isConnected; }).length : DS.ROOTS.length; },
+  ROOTS: [],
   /* an icon as the Icon component draws it, for a lab that writes HTML (issue 557: the bare class plx-icon--<name> is
      retired): Plenix.iconMarkup from the registered module (the spec loads every Plenix icon). cls: more classes, where
      plx-icon--size-<s>, plx-icon--filled and plx-icon--outline become the size and filled options; label: an image's name
@@ -181,7 +198,7 @@ var DS = {
           render: text ? undefined : function (record) { var r = nodes[record.id]; return h(CellNode, { node: r && r[j] }); } });
       })(j);
       var shown = heads.some(function (x) { return !!x; });
-      ReactDOM.createRoot(box).render(h(P.Table, { label: named(), data: data, columns: columns, headerVisible: shown }));
+      DS.mount(box, h(P.Table, { label: named(), data: data, columns: columns, headerVisible: shown }));
     };
     box.dsDraw = draw;
     Promise.resolve().then(draw);   // after the builder has placed the box (and its card has named it)
@@ -204,3 +221,5 @@ var DS = {
   },
   slug: function (t) { return t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
 };
+// a page left behind frees its roots shortly after the next one is drawn (issue 5)
+window.addEventListener('hashchange', function () { setTimeout(function () { DS.sweepRoots(); }, 600); });
