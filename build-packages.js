@@ -365,7 +365,7 @@ copyDir(path.join(P, 'vendor', 'tiptap'), path.join(R, 'dist', 'vendor', 'tiptap
 // from ./vendor/echarts/ the same way (vendorBase), shipped in both places too
 copyDir(path.join(P, 'vendor', 'echarts'), path.join(CDN, 'vendor', 'echarts'));
 copyDir(path.join(P, 'vendor', 'echarts'), path.join(R, 'dist', 'vendor', 'echarts'));
-// the DocumentViewer's PDF engine (PDF.js 4.10.38, Apache-2.0: module, worker, LICENSE): loaded from ./vendor/pdfjs/ the
+// the DocumentViewer's PDF engine (PDF.js 6.5.438, Apache-2.0: module, worker, LICENSE): loaded from ./vendor/pdfjs/ the
 // same way (vendorBase), shipped in both places too; the manifest hashes it with the rest of vendor/ (issue #238)
 copyDir(path.join(P, 'vendor', 'pdfjs'), path.join(CDN, 'vendor', 'pdfjs'));
 copyDir(path.join(P, 'vendor', 'pdfjs'), path.join(R, 'dist', 'vendor', 'pdfjs'));

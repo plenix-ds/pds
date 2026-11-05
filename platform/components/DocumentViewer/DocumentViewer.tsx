@@ -14,7 +14,7 @@
      text document keeps its own direction. Each failure has its own message (strings.failed replaces all four) and offers Retry; the
      message never shows the document's address or the server's error. The page counter, page buttons and zoom show
      once a document has pages. PDF text is exposed alongside the canvas for assistive technology.
-   Notes: PDF.js 4.10.38 (Apache-2.0) is in the shared vendor folder (platform/vendor/pdfjs/; on the CDN
+   Notes: PDF.js 6.5.438 (Apache-2.0) is in the shared vendor folder (platform/vendor/pdfjs/; on the CDN
      /cdn/<version>/vendor/pdfjs/), loaded through the page's engines script (platform/engines/plenix-engines.js, which finds the vendor folder; window.PlenixVendorBase overrides). Without that script the viewer shows its engine failure.
      Its module is an ES module: serve it as text/javascript, allow it in script-src and its worker in worker-src, and
      send CORS headers when it is on another origin. URLs must obey the application CSP/CORS policy.

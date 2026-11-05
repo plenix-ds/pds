@@ -1,0 +1,6 @@
+    Error: expect(received).toBe(expected) // Object.is equality
+    Expected: "6.5.438"
+    Received: "4.10.38"
+    Error Context: test-results/pdfjs-PDF-js-6-5-438-opens-fa7cf--PDF-from-the-vendor-folder/error-context.md
+    Error Context: test-results/pdfjs-PDF-js-6-5-438-opens-fa7cf--PDF-from-the-vendor-folder/error-context.md
+  1 failed
