@@ -46,7 +46,7 @@
 .plx-u-border-r-none{border-right-style:none;}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
 .plx-u-border-r-solid{border-right-style:var(--plx-sys-border-style-solid);}
-.plx-u-border-radius-detail-4px{border-radius:var(--plx-sys-radius-detail-4px);}
+.plx-u-border-radius-detail-4px{border-radius:var(--plx-sys-radius-detail);}
 .plx-u-border-radius-pill{border-radius:var(--plx-sys-shape-mark);}
 .plx-u-border-solid{border-style:var(--plx-sys-border-style-solid);}
 .plx-u-border-t-1px{border-top-width:var(--plx-sys-border-width-thin);}
@@ -190,8 +190,8 @@
 .plx-u-min-h-100p{min-height:100%;}
 .plx-u-min-h-180px{min-height:var(--plx-ref-size-45u);}
 .plx-u-min-h-80px{min-height:var(--plx-ref-size-20u);}
-.plx-u-min-h-label-height-16px{min-height:var(--plx-sys-label-height-16px);}
-.plx-u-min-h-label-height-20px{min-height:var(--plx-sys-label-height-20px);}
+.plx-u-min-h-label-height-16px{min-height:var(--plx-sys-label-height-sm);}
+.plx-u-min-h-label-height-20px{min-height:var(--plx-sys-label-height-md);}
 .plx-u-min-w-0{min-width:0;}
 .plx-u-min-w-100px{min-width:var(--plx-ref-size-25u);}
 .plx-u-min-w-16px{min-width:var(--plx-ref-size-4u);}
@@ -304,33 +304,33 @@
 .plx-u-py-8px{padding-bottom:var(--plx-ref-space-2u);padding-top:var(--plx-ref-space-2u);}
 .plx-u-py-inset-xs{padding-bottom:var(--plx-sys-space-inset-xs);padding-top:var(--plx-sys-space-inset-xs);}
 .plx-u-radius-0px{border-end-end-radius:var(--plx-sys-shape-none);border-end-start-radius:var(--plx-sys-shape-none);border-start-end-radius:var(--plx-sys-shape-none);border-start-start-radius:var(--plx-sys-shape-none);}
-.plx-u-radius-avatar-4px{border-end-end-radius:var(--plx-sys-radius-avatar-4px);border-end-start-radius:var(--plx-sys-radius-avatar-4px);border-start-end-radius:var(--plx-sys-radius-avatar-4px);border-start-start-radius:var(--plx-sys-radius-avatar-4px);}
-.plx-u-radius-avatar-6px{border-end-end-radius:var(--plx-sys-radius-avatar-6px);border-end-start-radius:var(--plx-sys-radius-avatar-6px);border-start-end-radius:var(--plx-sys-radius-avatar-6px);border-start-start-radius:var(--plx-sys-radius-avatar-6px);}
+.plx-u-radius-avatar-4px{border-end-end-radius:var(--plx-sys-radius-avatar-sm);border-end-start-radius:var(--plx-sys-radius-avatar-sm);border-start-end-radius:var(--plx-sys-radius-avatar-sm);border-start-start-radius:var(--plx-sys-radius-avatar-sm);}
+.plx-u-radius-avatar-6px{border-end-end-radius:var(--plx-sys-radius-avatar-md);border-end-start-radius:var(--plx-sys-radius-avatar-md);border-start-end-radius:var(--plx-sys-radius-avatar-md);border-start-start-radius:var(--plx-sys-radius-avatar-md);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
 .plx-u-radius-bl-0px{border-bottom-left-radius:var(--plx-sys-shape-none);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
-.plx-u-radius-bl-card-4px{border-bottom-left-radius:var(--plx-sys-radius-card-4px);}
+.plx-u-radius-bl-card-4px{border-bottom-left-radius:var(--plx-sys-radius-card-sm);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
-.plx-u-radius-bl-card-6px{border-bottom-left-radius:var(--plx-sys-radius-card-6px);}
+.plx-u-radius-bl-card-6px{border-bottom-left-radius:var(--plx-sys-radius-card-md);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
-.plx-u-radius-br-card-4px{border-bottom-right-radius:var(--plx-sys-radius-card-4px);}
+.plx-u-radius-br-card-4px{border-bottom-right-radius:var(--plx-sys-radius-card-sm);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
-.plx-u-radius-br-card-6px{border-bottom-right-radius:var(--plx-sys-radius-card-6px);}
-.plx-u-radius-card-4px{border-end-end-radius:var(--plx-sys-radius-card-4px);border-end-start-radius:var(--plx-sys-radius-card-4px);border-start-end-radius:var(--plx-sys-radius-card-4px);border-start-start-radius:var(--plx-sys-radius-card-4px);}
-.plx-u-radius-card-6px{border-end-end-radius:var(--plx-sys-radius-card-6px);border-end-start-radius:var(--plx-sys-radius-card-6px);border-start-end-radius:var(--plx-sys-radius-card-6px);border-start-start-radius:var(--plx-sys-radius-card-6px);}
-.plx-u-radius-detail-4px{border-end-end-radius:var(--plx-sys-radius-detail-4px);border-end-start-radius:var(--plx-sys-radius-detail-4px);border-start-end-radius:var(--plx-sys-radius-detail-4px);border-start-start-radius:var(--plx-sys-radius-detail-4px);}
+.plx-u-radius-br-card-6px{border-bottom-right-radius:var(--plx-sys-radius-card-md);}
+.plx-u-radius-card-4px{border-end-end-radius:var(--plx-sys-radius-card-sm);border-end-start-radius:var(--plx-sys-radius-card-sm);border-start-end-radius:var(--plx-sys-radius-card-sm);border-start-start-radius:var(--plx-sys-radius-card-sm);}
+.plx-u-radius-card-6px{border-end-end-radius:var(--plx-sys-radius-card-md);border-end-start-radius:var(--plx-sys-radius-card-md);border-start-end-radius:var(--plx-sys-radius-card-md);border-start-start-radius:var(--plx-sys-radius-card-md);}
+.plx-u-radius-detail-4px{border-end-end-radius:var(--plx-sys-radius-detail);border-end-start-radius:var(--plx-sys-radius-detail);border-start-end-radius:var(--plx-sys-radius-detail);border-start-start-radius:var(--plx-sys-radius-detail);}
 .plx-u-radius-pill{border-end-end-radius:var(--plx-sys-shape-mark);border-end-start-radius:var(--plx-sys-shape-mark);border-start-end-radius:var(--plx-sys-shape-mark);border-start-start-radius:var(--plx-sys-shape-mark);}
-.plx-u-radius-surface-6px{border-end-end-radius:var(--plx-sys-radius-surface-6px);border-end-start-radius:var(--plx-sys-radius-surface-6px);border-start-end-radius:var(--plx-sys-radius-surface-6px);border-start-start-radius:var(--plx-sys-radius-surface-6px);}
+.plx-u-radius-surface-6px{border-end-end-radius:var(--plx-sys-radius-surface-md);border-end-start-radius:var(--plx-sys-radius-surface-md);border-start-end-radius:var(--plx-sys-radius-surface-md);border-start-start-radius:var(--plx-sys-radius-surface-md);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
 .plx-u-radius-tl-0px{border-top-left-radius:var(--plx-sys-shape-none);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
-.plx-u-radius-tl-card-6px{border-top-left-radius:var(--plx-sys-radius-card-6px);}
+.plx-u-radius-tl-card-6px{border-top-left-radius:var(--plx-sys-radius-card-md);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
 .plx-u-radius-tr-0px{border-top-right-radius:var(--plx-sys-shape-none);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
-.plx-u-radius-tr-card-4px{border-top-right-radius:var(--plx-sys-radius-card-4px);}
+.plx-u-radius-tr-card-4px{border-top-right-radius:var(--plx-sys-radius-card-sm);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
-.plx-u-radius-tr-card-6px{border-top-right-radius:var(--plx-sys-radius-card-6px);}
+.plx-u-radius-tr-card-6px{border-top-right-radius:var(--plx-sys-radius-card-md);}
 .plx-u-relative{position:relative;}
 .plx-u-resize-vertical{resize:vertical;}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */

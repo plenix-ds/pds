@@ -32,7 +32,7 @@
       "$description": "TransferList: a list's frame width."
     },
     "transfer-list-panel-radius": {
-      "$value": "{plx-sys.radius-surface-6px}",
+      "$value": "{plx-sys.radius-surface-md}",
       "$type": "dimension",
       "$description": "TransferList: a list's corners (an 8px frame)."
     },

@@ -92,7 +92,7 @@
       "$description": "Cascader popup: border color (border-default)."
     },
     "cascader-popup-radius": {
-      "$value": "{plx-sys.radius-menu-6px}",
+      "$value": "{plx-sys.radius-menu}",
       "$type": "dimension",
       "$description": "Cascader popup: corners (radius-menu-6px)."
     },

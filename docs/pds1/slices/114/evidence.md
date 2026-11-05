@@ -18,3 +18,12 @@ Owner decisions on #114 (2026-10-29): option A, always the newest, once an app's
 | Labels `app:ctm`, `app:st-john`, `app:aiteam`, `app:redsave` | Ran | `gh label list --search app:` lists all four |
 | "App report" issue form | Ran (review) | `.github/ISSUE_TEMPLATE/app-report.yml`: app, version, component, page, steps, expected, fix made; goes to the Product Lead |
 | One documented step for app sessions | Ran (review) | `docs/integration/connected-apps.md`: duplicate search, then one `gh issue create` with the app label; fixes as a PR from a fork or a patch on the issue |
+
+## Item 4 and the `/cdn/latest/` alias (2026-11-05)
+
+| Item | Status | Path / output |
+|---|---|---|
+| Spec link in every release's notes | Ran (review) | `release.yml` publish job footer: "Design spec (each component page): https://design-system.lighthouseway.org/" |
+| Spec page field on the App report form | Ran (review) | `.github/ISSUE_TEMPLATE/app-report.yml` field `spec` (optional; the spec site needs sign-in) |
+| `/cdn/latest/` alias | Not built (superseded) | The owner's later decision on #21 (2026-11-01): apps follow the latest through `latest.json` and the page loader, RedSave and npm apps through daily update requests. Also unsafe as a folder: `curl -I /cdn/0.87.0/plenix.js` → `cache-control: public, max-age=31536000, immutable`, so a moving `/cdn/latest/` would stay stale in browsers |
+| Agents reading the spec behind sign-in | Later | Single sign-on plan #156 (labelled later) |

@@ -537,7 +537,7 @@
     ['Shadow (--shadow)', 'The components’ own elevation: --plx-sys-shadow-menu for menus, the WidgetGrid’s drag state'],
     ['Manrope, Public Sans, JetBrains Mono', 'DM Sans for UI text, Reddit Mono for data (Text variants title, display, body, secondary, data)'],
     ['Type: page title 24, card title 14 semibold, KPI value 32/40, row 14, metadata 12', 'Text title (20), Panel title, MetricCard value (size md 28, lg 36), Text body, Text secondary and data (12)'],
-    ['Corners 8 to 14px; pills 999px', 'Corners 2 to 6px: --plx-sys-radius-card-4px and -6px, --plx-sys-radius-table-2px; Badge and Count pills at 4px'],
+    ['Corners 8 to 14px; pills 999px', 'Corners 2 to 6px: --plx-sys-radius-card-sm and -6px, --plx-sys-radius-table; Badge and Count pills at 4px'],
     ['Spacing 6, 10, 14, 18, 22px', 'The 4px grid: --plx-sys-space-* and --plx-ref-space-1u to -64px'],
     ['Row heights 48 / 40 and 44 / 36 (Standard and Dense profiles)', 'Plenix display density: Compact, Standard, Comfortable (data-plx-density); the list rows follow it'],
     ['Stroke icons, 16 and 20px, one SVG family', 'Icon from the Plenix set (Material Symbols Sharp, weight 300), sizes sm 16 and md 20'],

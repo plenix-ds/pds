@@ -9,7 +9,7 @@
   },
   "plx-sys": {
     "radius-control": {
-      "$value": "{plx-sys.radius-control-4px}",
+      "$value": "{plx-sys.radius-control-sm}",
       "$type": "dimension"
     },
     "control-height-inline": {

@@ -28,6 +28,9 @@ const GRID_EXEMPT = [
   ['border-width-', 'hairline widths (1, 2 and 3px): a line is thinner than the grid'],
   ['focus-ring-offset', 'an outline offset (2px): a gap between a control and its focus ring, not a space in the layout'],
   ['font-size-', 'type sizes come from the type scale, not the grid'],
+  ['paper-', 'paper sizes and margins in mm (D-0052): the A4 sheet and its margin, for print parts only (docs/adr/0014)'],
+  ['print-sheet-', 'the A4 sheet in mm (D-0052, docs/adr/0014)'],
+  ['print-document-margin', 'the document page margin in mm (D-0052, docs/adr/0014)'],
 ];
 // a corner token (a key with "radius") may hold 0, a reference, or a length of 2, 4 or 6px; anything else (50%, 0.5em, 9999em, 100vh, any calc(), a keyword)
 // fails, unless it is named here with its value and the reason
@@ -36,8 +39,8 @@ const RADIUS_EXEMPT = [
   // a card's media or cover sits inside the card's border, so its outer corner is the card's corner minus the border (an inner corner; never above the card's)
   ['feature-card-media-radius', 'calc({plx-comp.card-radius} - {plx-comp.card-border-width})', 'inner corner: card radius minus border width'],
   ['user-card-cover-radius', 'calc({plx-comp.card-radius} - {plx-comp.card-border-width})', 'inner corner: card radius minus border width'],
-  ['media-card-media-border-top-left-radius', 'calc({plx-sys.radius-card-6px} - {plx-sys.border-width-thin})', 'inner corner: card radius minus border width'],
-  ['media-card-media-border-top-right-radius', 'calc({plx-sys.radius-card-6px} - {plx-sys.border-width-thin})', 'inner corner: card radius minus border width'],
+  ['media-card-media-border-top-left-radius', 'calc({plx-sys.radius-card-md} - {plx-sys.border-width-thin})', 'inner corner: card radius minus border width'],
+  ['media-card-media-border-top-right-radius', 'calc({plx-sys.radius-card-md} - {plx-sys.border-width-thin})', 'inner corner: card radius minus border width'],
 ];
 const radiusExempt = (key, value) => RADIUS_EXEMPT.some(([n, v]) => n === key && v === String(value).trim());
 const CORNERS = [0, 2, 4, 6];   // px: the corner scale (D-0005); no 1px, 3px or 5px corner

@@ -57,7 +57,7 @@
       "$description": "Small: the 40px square (and the extended height)."
     },
     "floating-action-button-sm-radius": {
-      "$value": "{plx-sys.radius-control-6px}",
+      "$value": "{plx-sys.radius-control-md}",
       "$type": "dimension",
       "$description": "Small: its corner."
     },
@@ -72,7 +72,7 @@
       "$description": "Standard: the 56px square (and the extended height)."
     },
     "floating-action-button-md-radius": {
-      "$value": "{plx-sys.radius-control-6px}",
+      "$value": "{plx-sys.radius-control-md}",
       "$type": "dimension",
       "$description": "Standard: its corner."
     },

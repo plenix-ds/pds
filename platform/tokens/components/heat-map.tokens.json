@@ -14,7 +14,7 @@
     "heat-map-scale-value-font-family": { "$value": "{plx-sys.font-data}", "$type": "fontFamily", "$description": "Heat map: the scale's lowest and highest values: the data font." },
     "heat-map-scale-label-font-family": { "$value": "{plx-sys.font-label}", "$type": "fontFamily", "$description": "Heat map: the missing value's name in the scale (UI text)." },
     "heat-map-scale-font-size": { "$value": "{plx-sys.text-caption-font-size}", "$type": "dimension", "$description": "Heat map: the scale's size (the tick labels' size)." },
-    "heat-map-scale-line-height": { "$value": "{plx-sys.label-height-16px}", "$type": "dimension", "$description": "Heat map: the scale's line height." },
+    "heat-map-scale-line-height": { "$value": "{plx-sys.label-height-sm}", "$type": "dimension", "$description": "Heat map: the scale's line height." },
     "heat-map-scale-swatch-width": { "$value": "{plx-ref.size-4u}", "$type": "dimension", "$description": "Heat map: the width of one step of the scale." },
     "heat-map-scale-swatch-height": { "$value": "{plx-ref.size-3u}", "$type": "dimension", "$description": "Heat map: the height of the scale's steps (and the side of the missing value's key)." }
   }

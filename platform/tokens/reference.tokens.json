@@ -940,6 +940,21 @@
       "$value": { "value": 1600, "unit": "px" },
       "$type": "dimension"
     },
+    "paper-a4-inline-size": {
+      "$value": "210mm",
+      "$extensions": { "com.plenix": { "webOnly": true } },
+      "$description": "Paper: the A4 sheet's width (D-0052, docs/adr/0014). mm only for print parts."
+    },
+    "paper-a4-block-size": {
+      "$value": "297mm",
+      "$extensions": { "com.plenix": { "webOnly": true } },
+      "$description": "Paper: the A4 sheet's height (D-0052, docs/adr/0014)."
+    },
+    "paper-margin-md": {
+      "$value": "20mm",
+      "$extensions": { "com.plenix": { "webOnly": true } },
+      "$description": "Paper: a document's page margin (D-0052, docs/adr/0014)."
+    },
     "size-1600px": {
       "$value": "{plx-ref.size-400u}",
       "$type": "dimension",

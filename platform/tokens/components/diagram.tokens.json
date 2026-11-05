@@ -10,7 +10,7 @@
     "diagram-label-font-family": { "$value": "{plx-sys.font-label}", "$type": "fontFamily", "$description": "Diagram: labels are words: the UI font." },
     "diagram-label-font-size": { "$value": "{plx-sys.text-secondary-font-size}", "$type": "dimension", "$description": "Diagram: a shape label's size." },
     "diagram-label-font-weight": { "$value": "{plx-sys.font-weight-medium}", "$type": "fontWeight", "$description": "Diagram: a shape label's weight (and a group's name)." },
-    "diagram-label-line-height": { "$value": "{plx-sys.label-height-16px}", "$type": "dimension", "$description": "Diagram: a label's line height when it wraps." },
+    "diagram-label-line-height": { "$value": "{plx-sys.label-height-sm}", "$type": "dimension", "$description": "Diagram: a label's line height when it wraps." },
     "diagram-label-padding-inline": { "$value": "{plx-sys.space-inline-sm}", "$type": "dimension", "$description": "Diagram: the room at a label's sides inside its shape." },
     "diagram-decision-padding-inline": { "$value": "{plx-ref.size-6u}", "$type": "dimension", "$description": "Diagram: the room at a decision's sides, so the label stays inside the diamond." },
     "diagram-detail-text": { "$value": "{plx-sys.content-subtle}", "$type": "color", "$description": "Diagram: a box's second line (boxes and arrows)." },

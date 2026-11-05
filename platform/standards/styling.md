@@ -441,12 +441,12 @@ never a raw value. One token per decision; the public ones say so, and give thei
 @property --plx-state-avatar-size { syntax: "*"; inherits: false; }
 /* the root owns its box; no outer margin; the default size is the fallback */
 .plx-avatar {
-  block-size: var(--plx-state-avatar-size, var(--plx-comp-avatar-32-height));
-  inline-size: var(--plx-state-avatar-size, var(--plx-comp-avatar-32-height));
+  block-size: var(--plx-state-avatar-size, var(--plx-comp-avatar-md-height));
+  inline-size: var(--plx-state-avatar-size, var(--plx-comp-avatar-md-height));
 }
 /* each size assigns the value; one size class per avatar, so no two meet */
-.plx-avatar--24 { --plx-state-avatar-size: var(--plx-comp-avatar-24-height); }
-.plx-avatar--28 { --plx-state-avatar-size: var(--plx-comp-avatar-28-height); }
+.plx-avatar--24 { --plx-state-avatar-size: var(--plx-comp-avatar-xs-height); }
+.plx-avatar--28 { --plx-state-avatar-size: var(--plx-comp-avatar-sm-height); }
 /* each part styled by its own class */
 .plx-avatar__presence { border-bottom-color: var(--plx-comp-avatar-presence-ring-color); /* … longhands … */ }
 ```
