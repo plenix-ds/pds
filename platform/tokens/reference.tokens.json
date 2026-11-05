@@ -958,6 +958,11 @@
       "$extensions": { "com.plenix": { "webOnly": true } },
       "$description": "Paper: a document's page margin (D-0052, docs/adr/0014)."
     },
+    "timeout-lg": {
+      "$value": { "value": 10, "unit": "s" },
+      "$type": "duration",
+      "$description": "A long wait before something leaves by itself (an undo window, #144, docs/adr/0017). Not a motion duration."
+    },
     "size-1600px": {
       "$value": "{plx-ref.size-400u}",
       "$type": "dimension",
