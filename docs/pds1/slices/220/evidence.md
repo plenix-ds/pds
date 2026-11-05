@@ -8,3 +8,15 @@
 | Timer installed and firing | Planned | After merge: copy units, `systemctl --user enable --now pds1-nudge.timer`, then `~/pds1/team.log` "nudge:" lines |
 | Webhook pickup (plan §5a) | Planned | Step 2 of #220 |
 | shellcheck | Skipped | Not installed on VM 131 |
+
+## Step 2: event pickup (D-0041)
+
+| Item | Status | Path / output |
+|---|---|---|
+| Webhooks to VM 131 | Blocked (owner) | No inbound route (`INFRA-HANDOVER.md`: "the VM is not reachable from the internet, so webhooks need a proxy route"); the gh token has no `admin:repo_hook` scope for `gh webhook forward` |
+| `team.sh wake` exit codes | Ran | no window → 4; `component-engineer` (a name prefix) → 4; a busy session → 3 |
+| Refactored nudge | Ran (dry) | `NUDGE_DRY=1 team.sh nudge`: scheduler plan, then "nudged 0" (every session busy) |
+| Event feed shape | Ran | `IssueCommentEvent` carries issue labels and the comment body; `PullRequestEvent` is trimmed to {id, number, url, head, base}, so the PR is read; event ids are not ordered by time, so pickup keeps the ids it has seen |
+| Routing on the live feed | Ran (`PICKUP_DRY=1`) | the last 15 events: unlabeled PR openings, pushes and branch events are ignored; the comment on #4 signed "— PDS1-Component-Engineer-1" does not wake its own author |
+| Routing fixtures | Ran | "@pds1-release-architect …— PDS1-Product-Lead" → release-architect; "Fixed. — PDS1-Component-Engineer-1" → nobody; an unsigned comment → product-lead; a self-mention → nobody |
+| Service running and a real wake | Planned | After merge: `systemctl --user enable --now pds1-pickup`, then "pickup: woke …" in `~/pds1/team.log` |
