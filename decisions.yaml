@@ -346,3 +346,11 @@
   options: [timer starts roles (chosen), Delivery Lead prompted to fill slots on each nudge]
   status: active
   check: 'planned:nudge-autostart (NUDGE_DRY=1 team.sh nudge prints "would start <role>"; #246)'
+
+- id: D-0041
+  date: 2026-11-05
+  area: process
+  decided_by: agent (pds1-release-architect), owner may switch
+  decision: Until GitHub webhooks can reach VM 131, event pickup reads the repo's event feed with conditional requests at GitHub's poll interval (60 s; an unchanged feed costs nothing) and wakes only the session an event is for, when it is idle. True webhooks need either a proxy route to VM 131 or the admin:repo_hook scope for gh webhook forward; both are owner steps. Reply to switch - B) add the scope (one browser approval) and use gh webhook forward.
+  status: active
+  check: review-only (pds1-pickup service; #220 stays open for webhooks)

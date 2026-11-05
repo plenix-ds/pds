@@ -1,0 +1,18 @@
+# systemd user unit: PDS1 event pickup (#220, D-0041). Wakes the session an event is for, within about a minute.
+# Install (Linger is on for cc):
+#   cp deploy/agents/pds1-pickup.service ~/.config/systemd/user/
+#   systemctl --user daemon-reload && systemctl --user enable --now pds1-pickup
+# Logs: ~/pds1/team.log ("pickup:"), journalctl --user -u pds1-pickup. Stop: systemctl --user disable --now pds1-pickup
+[Unit]
+Description=PDS1 event pickup (GitHub events -> the right session)
+After=network-online.target pds1-team.service
+
+[Service]
+Environment=PATH=%h/.local/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=/usr/bin/env node %h/pds1/work/pds/deploy/agents/pickup.mjs
+Restart=always
+RestartSec=30
+MemoryMax=256M
+
+[Install]
+WantedBy=default.target

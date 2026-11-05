@@ -13,6 +13,7 @@
 #   team.sh nudge               start waiting roles, stop finished ones (#246), then wake idle sessions to check
 #                               GitHub (pds1-nudge.timer, every 10 min; #220). NUDGE_DRY=1 only prints the plan
 #   team.sh schedule            only the start/stop part of nudge (NUDGE_DRY=1 prints it)
+#   team.sh wake <win> <text>   type <text> into one session if it is idle (exit 0 sent, 3 not idle, 4 no window)
 set -u
 export PATH="$HOME/.local/bin:$HOME/.bun/bin:/usr/local/bin:/usr/bin:/bin"
 S=pds1
@@ -103,26 +104,36 @@ schedule() {
   done <<<"$plan"
 }
 
+# wake <window> <text> [idle seconds]: type <text> into a PDS1 session only when it is idle: Claude is not working
+# (no "esc to interrupt"), its input box is empty and its screen has not changed for the idle time (default
+# NUDGE_IDLE_S). Returns 0 sent (or would send, NUDGE_DRY=1), 3 not idle, 4 no such window. Used by nudge and by
+# deploy/agents/pickup.mjs (#220).
+wake() {
+  local win=$1 text=$2 idle=${3:-$NUDGE_IDLE_S} pane prompt act
+  act=$(tmux display-message -p -t "$S:$win" '#{window_activity}' 2>/dev/null) || return 4
+  [ "$(tmux display-message -p -t "$S:$win" '#W' 2>/dev/null)" = "$win" ] || return 4
+  pane=$(tmux capture-pane -p -t "$S:$win" 2>/dev/null | tail -12)
+  grep -q 'esc to interrupt' <<<"$pane" && return 3
+  (( $(date +%s) - act < idle )) && return 3
+  # the box draws "❯" plus a no-break space (UTF-8 c2 a0): drop it and whitespace; only emptiness matters here
+  prompt=$(grep -m1 '^❯' <<<"$pane" | sed 's/^❯//' | tr -d ' \t\302\240')
+  [ -n "$prompt" ] && return 3
+  if [ -n "${NUDGE_DRY:-}" ]; then echo "would wake $win: ${text:0:100}"; return 0; fi
+  tmux send-keys -t "$S:$win" -l "$text"; sleep 1; tmux send-keys -t "$S:$win" Enter
+}
+
 nudge() {
-  local now last updated open win pane prompt act sent=0
+  local now last updated open win sent=0
   schedule
   now=$(date -u +%FT%TZ); last=$(cat "$NUDGE_STAMP" 2>/dev/null || echo 1970-01-01T00:00:00Z)
   updated=$(gh api 'repos/plenix-ds/pds/issues?state=all&sort=updated&direction=desc&per_page=1' -q '.[0].updated_at' 2>/dev/null || echo "$now")
   open=$(gh pr list -R plenix-ds/pds --state open --json number -q length 2>/dev/null || echo 1)
   if [[ "$updated" < "$last" && "$open" = 0 ]]; then log "nudge: quiet (no activity since $last, no open PR)"; echo "$now" >"$NUDGE_STAMP"; return; fi
   tmux has-session -t $S 2>/dev/null || { log "nudge: team not running"; return; }
-  while read -r win act; do
+  while read -r win; do
     [ "$win" = shell ] && continue
-    pane=$(tmux capture-pane -p -t "$S:$win" 2>/dev/null | tail -12)
-    if grep -q 'esc to interrupt' <<<"$pane"; then continue; fi
-    (( $(date +%s) - act < NUDGE_IDLE_S )) && continue
-    # the box draws "❯" plus a no-break space (UTF-8 c2 a0): drop it and whitespace; only emptiness matters here
-    prompt=$(grep -m1 '^❯' <<<"$pane" | sed 's/^❯//' | tr -d ' \t\302\240')
-    [ -n "$prompt" ] && { log "nudge: skip $win (input box not empty)"; continue; }
-    if [ -n "${NUDGE_DRY:-}" ]; then echo "would nudge $win"; sent=$((sent + 1)); continue; fi
-    tmux send-keys -t "$S:$win" -l "${NUDGE_TEXT//ROLE/${win%-[0-9]*}}"; sleep 1; tmux send-keys -t "$S:$win" Enter
-    sent=$((sent + 1)); log "nudge: $win"
-  done < <(tmux list-windows -t $S -F '#W #{window_activity}')
+    wake "$win" "${NUDGE_TEXT//ROLE/${win%-[0-9]*}}" && { sent=$((sent + 1)); [ -n "${NUDGE_DRY:-}" ] || log "nudge: $win"; }
+  done < <(tmux list-windows -t $S -F '#W')
   [ -n "${NUDGE_DRY:-}" ] || echo "$now" >"$NUDGE_STAMP"; echo "nudged $sent"
 }
 
@@ -140,6 +151,7 @@ case "${1:-status}" in
   update) git -C "$REPO" pull -q --ff-only; for d in "$ROOT"/work/*/; do git -C "$d" fetch -q origin; done; echo updated ;;
   nudge) nudge ;;
   schedule) schedule ;;
+  wake) wake "${2:?window}" "${3:?text}" "${4:-}"; exit $? ;;
   status) tmux list-windows -t $S -F '#W' 2>/dev/null | grep -v '^shell$' || echo "pds1 team is not running"; free -g | awk 'NR==2{print "free memory: "$7" GB available"}' ;;
-  *) sed -n 2,16p "$0"; exit 2 ;;
+  *) sed -n 2,17p "$0"; exit 2 ;;
 esac
