@@ -72,7 +72,8 @@
     },
     "11-pill-height": {
       "decision": "D-0010",
-      "measure": "Playwright bounding boxes of every pill in one row",
+      "measure": "Playwright bounding boxes of every boxed pill (soft or solid) in one row",
+      "exclude": [".plx-data-pill--plain (no box, running text)"],
       "equalHeight": true,
       "noWrap": true
     },

@@ -156,7 +156,7 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 
 - Pills stay as defined in `docs/pills-and-colors.md`: soft fill, soft border, on-soft text, 4px corners.
 - **A pill never wraps.** One line (`white-space: nowrap`). When it is too wide, its text ends in an ellipsis and its icon stays.
-- **Pills in a row have equal height** (check 11). Every pill in a row uses the same height token (`data-pill-min-height` or `data-pill-md-height`). The `plain` variant keeps the same block size as a filled pill (section 12).
+- **Pills in a row have equal height** (check 11). Every boxed pill (soft or solid) in a row uses the same height token (`data-pill-min-height` or `data-pill-md-height`). The `plain` variant has no box: it is a name in running text, so it keeps `min-block-size: 0` and is not measured.
 - A status pill always has its icon.
 
 ### Charts
@@ -203,13 +203,13 @@ Every component declares a state manifest (check 9). Each state is a token set o
 | 1 | Dark (listed, fixed after light, D-0025): `content-subtle` (gray-500) | 3.05:1 on #444, 2.22:1 on hover | Point to gray-300, the same as `content-muted`, as light mode already does: 6.31:1 and 4.61:1 |
 | 2 | Dark (listed, D-0025): `feedback-neutral-solid-label` (gray-600) | 1.91:1 on #444 | gray-300: 6.31:1 |
 | 3 | Dark (listed, D-0025): `feedback-success-solid-label` (green-300) | 3.49:1 on #444 | green-200: 5.65:1 |
-| 4 | Caption and eyebrow roles at 11px. 11 more token references to sizes 09/10/11 (focus-order, field, chart, calendar, slider and others) | below 12px | Point to `font-size-12`; retire refs 09/10/11 |
-| 5 | DataGrid number cells: end-aligned but without `tabular-nums` | check 10 | Add `font-variant-numeric: tabular-nums` to `cell--align-right` |
-| 6 | `.plx-data-pill--plain` sets `min-block-size: 0`, so a plain pill next to a filled pill is shorter | check 11 | Keep the pill height token on `plain` |
-| 7 | `semantic.density-standard-comfortable` still ships | D-0007 | Remove it, with a deprecation note |
+| 4 | Caption and eyebrow roles at 11px, among 80 token references to sizes 09/10/11 (focus-order, field, chart, tooltip, calendar, slider and others), plus `.plx-u-fs-09/10/11` | below 12px | Point to `font-size-12`; deprecate refs 09/10/11 (#214) |
+| 5 | DataGrid number cells: end-aligned but without `tabular-nums` | check 10 | Add `font-variant-numeric: tabular-nums` to `cell--align-right` (#214) |
+| 7 | `semantic.density-standard-comfortable` still ships (one token, `radius-control`, shared by standard and comfortable) | D-0007 | Move the token into the standard and comfortable files; remove the set (#214) |
 
 - Dark `border-default` and `border-subtle` (1.37:1) are decorative dividers, so they are not a defect. Control boundaries use `field-border` and `control-border`, which measure 4.00:1.
-- Items 1 to 3 wait for the light work to finish (D-0025). The token changes (1 to 4, 7) belong to the DS Architect, and the CSS changes (5, 6) to a Component Engineer. Each fix comes with a test that fails before it.
+- Items 1 to 3 wait for the light work to finish (D-0025), tracked in #206. Items 4, 5 and 7 are fixed in #214.
+- Not a defect: the plain pill's `min-block-size: 0` (no box, running text). An earlier draft listed it. Each fix comes with a test that fails before it.
 
 ## 13. Changing this file
 
