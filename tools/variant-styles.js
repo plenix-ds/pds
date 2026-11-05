@@ -3,7 +3,7 @@
 // ADR 0013) wins for a variation the stylesheets can't show.
 //   rows    [{ property, part, value, tokens: ['--plx-comp-…', '--plx-sys-…', …, '<palette value>'], condition? }]
 //   apply(variants, records, root) sets variant.sets and variant.setsSource ('css' | 'table'); returns { css, table, neither }
-// A variation's selector (ADR 0015): for each lab prop k: v, the modifier .plx-<block>--<v> on the block or one of its parts,
+// A variation's selector (ADR 0015): for each lab prop k: v, the modifier .plx-<block>--<v> or .plx-<block>--<k>-<v> on the block or one of its parts,
 // or [data-plx-<k>="<v>"]; a State variation: its pseudo-class or state class. The item's block is the first .plx-<name>
 // class of the stylesheet beside its source (record.src).
 const fs = require('fs');
@@ -62,6 +62,8 @@ function selectorsFor(v, block) {
     if (typeof val !== 'string' && typeof val !== 'number') continue;
     const s = String(val).toLowerCase();
     pats.push(new RegExp('\\.' + esc(block) + '(?:__[a-z0-9-]+)?--' + esc(s) + '(?![a-z0-9-])'));
+    // a prop-prefixed modifier, .plx-<block>--<prop>-<value> (.plx-avatar--size-sm; #353)
+    pats.push(new RegExp('\\.' + esc(block) + '(?:__[a-z0-9-]+)?--' + esc(k.replace(/[A-Z]/g, (c) => '-' + c.toLowerCase())) + '-' + esc(s) + '(?![a-z0-9-])'));
     pats.push(new RegExp('\\[data-plx-' + esc(k.replace(/[A-Z]/g, (c) => '-' + c.toLowerCase())) + '="' + esc(s) + '"\\]'));
   }
   if (/^state/i.test(v.group || '')) {

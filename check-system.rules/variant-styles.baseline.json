@@ -790,7 +790,6 @@
   "text-field--states-read-only",
   "text-field--states-required",
   "text-field--width-md",
-  "text-field--width-sm",
   "text-field--width-xs",
   "thumbnail--content-an-image-default-when-src-is-given",
   "time-picker--clock-12-hour-clock",
