@@ -1,0 +1,4 @@
+    Error: plain hover: no solid fill
+    Expected: "rgba(0, 0, 0, 0)"
+    Received: "rgb(243, 243, 243)"
+    Error: plain hover: no solid fill

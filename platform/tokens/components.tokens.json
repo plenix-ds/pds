@@ -3939,6 +3939,21 @@
       "$value": "{plx-sys.state-hover}",
       "$type": "color"
     },
+    "menu-item-state-layer-color": {
+      "$value": "{plx-sys.state-layer-color}",
+      "$type": "color",
+      "$description": "Menu item: the colour of the state layer over its row (ADR 0004, #109)."
+    },
+    "menu-item-state-layer-hover-opacity": {
+      "$value": "{plx-sys.state-layer-hover-opacity}",
+      "$type": "number",
+      "$description": "Menu item: the state layer amount on hover (8%; ADR 0004, #109)."
+    },
+    "menu-item-state-layer-pressed-opacity": {
+      "$value": "{plx-sys.state-layer-pressed-opacity}",
+      "$type": "number",
+      "$description": "Menu item: the state layer amount while pressed and on keyboard focus (10%; ADR 0004, #109)."
+    },
     "menu-item-hover-icon": {
       "$value": "{plx-sys.action-primary-background}",
       "$type": "color",
