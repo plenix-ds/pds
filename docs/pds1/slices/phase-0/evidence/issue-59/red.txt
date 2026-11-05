@@ -1,0 +1,16 @@
+AssertionError [ERR_ASSERTION]: cleaning requested no picture: http://localhost:9640/__qa-probe.png
++ actual - expected
+
++ [
++   'http://localhost:9640/__qa-probe.png'
++ ]
+- []
+
+    at /home/cc/pds1/work/component-engineer-1/tests/rich-text-clean-inert-59.test.js:20:12 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [Array],
+  expected: [],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}

@@ -24,10 +24,12 @@ export const SAFE_SRC = /^(https?:|\/|\.|[^:]*$)/i;
 export function cleanRichText(html: unknown): string {
   if (typeof document === 'undefined') return '';
   const from = document.createElement('template'); from.innerHTML = String(html || '');
+  // build the copy in the template's own inert document: an <img src> made in the live document starts a request (issue 59)
+  const doc = from.content.ownerDocument;
   const copy = (node: Node, into: Node, task: boolean): void => {
     // each child is an element past the two node-type tests below
     (node.childNodes as NodeListOf<HTMLElement>).forEach((n) => {
-      if (n.nodeType === 3) { const text = n.nodeValue!.replace(/\u200B/g, ''); if (text) into.appendChild(document.createTextNode(text)); return; }
+      if (n.nodeType === 3) { const text = n.nodeValue!.replace(/\u200B/g, ''); if (text) into.appendChild(doc.createTextNode(text)); return; }
       if (n.nodeType !== 1) return;
       // inside a task item its label, checkbox and content div stay as Tiptap writes them
       const inTask = task && n.parentNode && (n.parentNode as Element).getAttribute && (n.parentNode as Element).getAttribute('data-type') === 'taskItem';
@@ -35,7 +37,7 @@ export function cleanRichText(html: unknown): string {
       if ((tag === 'LABEL' || tag === 'DIV') && !inTask) { copy(n, into, task); return; }
       if (tag === 'INPUT') {
         if (!(task && n.closest('li[data-type="taskItem"]') && /^checkbox$/i.test(n.getAttribute('type') || ''))) return;
-        const box = document.createElement('input');
+        const box = doc.createElement('input');
         const item = n.closest('li[data-type="taskItem"]'), body = item && item.querySelector(':scope > div');
         box.setAttribute('type', 'checkbox'); box.setAttribute('class', CHECK_CLASS); box.setAttribute('disabled', '');
         if (n.hasAttribute('checked') || (item && item.getAttribute('data-checked') === 'true')) box.setAttribute('checked', 'checked');
@@ -45,7 +47,7 @@ export function cleanRichText(html: unknown): string {
       const mention = tag === 'SPAN' && n.hasAttribute('data-mention');
       const styles = (USER_STYLE[tag] || []).map((p) => [p, n.style ? n.style.getPropertyValue(p) : '']).filter((s) => s[1] && !/url\(|expression|[<>]/i.test(s[1]));
       if (!ALLOWED[tag] || (tag === 'SPAN' && !mention && !styles.length)) { copy(n, into, task); return; }
-      const el = document.createElement(tag.toLowerCase());
+      const el = doc.createElement(tag.toLowerCase());
       // an href only when there is one: SAFE_HREF's "no scheme" branch also matches the empty string, so a link whose unsafe
       // href was dropped came back as href="" on a second pass (issue 783: one pass must be final)
       if (tag === 'A') { const href = (n.getAttribute('href') || '').trim(); if (href && SAFE_HREF.test(href)) el.setAttribute('href', href); }
@@ -68,6 +70,6 @@ export function cleanRichText(html: unknown): string {
       copy(n, el, task || isTask); into.appendChild(el);
     });
   };
-  const out = document.createElement('div'); copy(from.content, out, false);
+  const out = doc.createElement('div'); copy(from.content, out, false);
   return out.innerHTML;
 }
