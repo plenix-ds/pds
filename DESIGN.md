@@ -208,6 +208,9 @@ Every component declares a state manifest (check 9). Each state is a token set o
 | 4 | Caption and eyebrow roles at 11px, among 80 token references to sizes 09/10/11 (focus-order, field, chart, tooltip, calendar, slider and others), plus `.plx-u-fs-09/10/11` | below 12px | Point to `font-size-12`; deprecate refs 09/10/11 (#214) |
 | 5 | DataGrid number cells: end-aligned but without `tabular-nums` | check 10 | Add `font-variant-numeric: tabular-nums` to `cell--align-right` (#214) |
 | 7 | `semantic.density-standard-comfortable` still ships (one token, `radius-control`, shared by standard and comfortable) | D-0007 | Move the token into the standard and comfortable files; remove the set (#214) |
+| 8 | `category-olive-on` (black) on `category-olive` (green-500), light and dark | 3.91:1 | white: 5.37:1, as the other dark category fills (#251) |
+| 9 | Light `accent-field-placeholder` (blue-300) on `accent-field-background` (blue-600) | 3.44:1 | blue-200: 4.73:1 (#251) |
+| 10 | Dark `content-link-visited` on `state-hover` / `state-selected` (listed, D-0025) | 3.84:1 | dark phase (#251) |
 
 - Dark `border-default` and `border-subtle` (1.37:1) are decorative dividers, so they are not a defect. Control boundaries use `field-border` and `control-border`, which measure 4.00:1.
 - Items 1 to 3 wait for the light work to finish (D-0025), tracked in #206. Items 4, 5 and 7 are fixed in #214.
