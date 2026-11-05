@@ -19,7 +19,7 @@
 | State | Tokens |
 |---|---|
 | default | light: the hue's existing tile text colour (`entity-header-tile-<hue>-text`, 7.0:1 or more on white) (1) / `content-muted` (2); no background, no border |
-| default, dark | the tile text colours are 1.0 to 1.5:1 on the dark card once the tile is gone, so dark uses one lighter existing shade per hue: blue-300, green-200, purple-300, red-200, orange-200 (brown), gray-300 and blue-200 (surface). Each is 5.2:1 or more on `surface-default` and 3.8:1 or more on `state-hover` (icons need 3:1). New `plx-comp.entity-header-media-<hue>-icon` tokens, dark values only. No new colours |
+| default, dark | the tile text colours are 1.0 to 1.5:1 on the dark card once the tile is gone, so dark uses one lighter existing shade per hue: blue-300, green-200, purple-300, red-200, orange-200 (brown), gray-300 and blue-200 (surface). Each is 5.2:1 or more on `surface-default` and 3.8:1 or more on `state-hover` (icons need 3:1). Tokens (ADR 0005, #234): `plx-sys.data-color-<hue>-on-surface` in both themes (light = today's `-on-soft`, dark = the shades above), read by `plx-comp.entity-header-media-<hue>-icon`; surface → `content-link`. No new colours |
 | hover, focus, active, selected | n/a (not interactive; the row or card around it carries the state) |
 | disabled | n/a (follows its container's `state-disabled-opacity`) |
 | loading | n/a (EntityHeader's own skeleton) |
