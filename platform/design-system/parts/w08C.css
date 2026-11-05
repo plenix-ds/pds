@@ -1,4 +1,4 @@
 /* Library part w08C (wave 8, lane C): the frames the labs of wave 8, lane C need. Tokens only. */
 /* a lab specimen: a list or a timeline at a fixed width, or a wide one (a resource list, a horizontal or alternating timeline) */
-.ds-w08c-lab{inline-size:var(--plx-ref-size-400px);max-inline-size:100%;}
-.ds-w08c-lab--wide{inline-size:var(--plx-ref-size-600px);}
+.ds-w08c-lab{inline-size:var(--plx-ref-size-100u);max-inline-size:100%;}
+.ds-w08c-lab--wide{inline-size:var(--plx-ref-size-150u);}

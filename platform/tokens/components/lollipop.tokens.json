@@ -2,10 +2,10 @@
   "$description": "LollipopChart (platform/charts/LollipopChart.jsx; library wave 9, lane C): its component tokens. Stems and dots take the chart's data-viz color (data-plx-dataviz); everything else is an existing role.",
   "plx-comp": {
     "lollipop-default-color": { "$value": "{plx-sys.dataviz-categorical-1}", "$type": "color", "$description": "Lollipop chart: the marks' color without data-plx-dataviz (the first categorical color)." },
-    "lollipop-category-width": { "$value": "{plx-ref.size-96px}", "$type": "dimension", "$description": "Lollipop chart, horizontal: the room before the plot for the category names (the frame's start margin)." },
-    "lollipop-value-room": { "$value": "{plx-ref.size-24px}", "$type": "dimension", "$description": "Lollipop chart, vertical: the room above the plot, so a value label over the tallest dot is not cut." },
+    "lollipop-category-width": { "$value": "{plx-ref.size-24u}", "$type": "dimension", "$description": "Lollipop chart, horizontal: the room before the plot for the category names (the frame's start margin)." },
+    "lollipop-value-room": { "$value": "{plx-ref.size-6u}", "$type": "dimension", "$description": "Lollipop chart, vertical: the room above the plot, so a value label over the tallest dot is not cut." },
     "lollipop-stem-width": { "$value": "{plx-sys.border-width-medium}", "$type": "dimension", "$description": "Lollipop chart: the stem's stroke (the chart line width)." },
-    "lollipop-dot-radius": { "$value": "{plx-ref.size-4px}", "$type": "dimension", "$description": "Lollipop chart: the dot's radius at the value." },
+    "lollipop-dot-radius": { "$value": "{plx-ref.size-1u}", "$type": "dimension", "$description": "Lollipop chart: the dot's radius at the value." },
     "lollipop-dot-outline": { "$value": "{plx-sys.surface-default}", "$type": "color", "$description": "Lollipop chart: the ring around a dot in the surface color, so dots stay apart from the grid." },
     "lollipop-dot-outline-width": { "$value": "{plx-sys.border-width-thin}", "$type": "dimension", "$description": "Lollipop chart: the dot's ring width." }
   }

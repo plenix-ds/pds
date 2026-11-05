@@ -8,7 +8,7 @@
 //   corners  Corners are 0, 2, 4 or 6px (D-0005, plan §7 check 2). A radius token (a key with "radius") must be a reference, 0, or a px/rem length of 2, 4 or 6px;
 //            anything else (50%, 0.5em, 9999em, 100vh, a keyword) fails, unless RADIUS_EXEMPT names the token and its exact value with the reason (the spinner, and four card inner corners).
 //            A reference is followed to the value it ends at, in every file that sets it (each theme, density and interaction), and
-//            that value must pass too: {plx-ref.size-12px} is a 12px corner. A reference that ends nowhere (missing, or a loop) fails.
+//            that value must pass too: {plx-ref.size-3u} is a 12px corner. A reference that ends nowhere (missing, or a loop) fails.
 // (The box shadows, 13 tokens with 1, 2, 3 and 5px blur or ring widths, are in the backlog with the reason "optical blur/ring width; owner to decide", not exempt.)
 // What already breaks a rule when the rule began is the frozen backlog in the same JSON (grid, corners): by token, with its value.
 // It only shrinks: a token that is not listed fails; a listed token that now passes (or is gone) fails until it is removed

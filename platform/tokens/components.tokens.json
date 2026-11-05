@@ -645,7 +645,7 @@
       "$type": "dimension"
     },
     "button-label-clip-margin": {
-      "$value": "{plx-ref.size-4px}",
+      "$value": "{plx-ref.size-1u}",
       "$type": "dimension",
       "$description": "Button label: how far past its trimmed box the label may draw before it is clipped, so a descender (g, y) is not cut (the label box is trimmed to the letters: text-box trim-both cap alphabetic; owner, 2026-10-29, #610)."
     },
@@ -700,7 +700,7 @@
       "$type": "dimension"
     },
     "nav-bar-height": {
-      "$value": "{plx-ref.size-56px}",
+      "$value": "{plx-ref.size-14u}",
       "$type": "dimension",
       "$description": "The bottom navigation bar at Narrow (Platforms Standard 4.1, 6.4): a 44px target per destination with its label under the icon",
       "$extensions": {
@@ -730,11 +730,11 @@
       "$type": "dimension"
     },
     "nav-bar-label-gap": {
-      "$value": "{plx-ref.size-4px}",
+      "$value": "{plx-ref.size-1u}",
       "$type": "dimension"
     },
     "secondary-pane-width-sm": {
-      "$value": "{plx-ref.size-180px}",
+      "$value": "{plx-ref.size-45u}",
       "$type": "dimension",
       "$extensions": {
         "com.plenix": {
@@ -745,50 +745,50 @@
       }
     },
     "secondary-pane-width-md": {
-      "$value": "{plx-ref.size-220px}",
+      "$value": "{plx-ref.size-55u}",
       "$type": "dimension"
     },
     "secondary-pane-width-min": {
-      "$value": "{plx-ref.size-180px}",
+      "$value": "{plx-ref.size-45u}",
       "$type": "dimension",
       "$description": "The narrowest a resizable secondary pane can be dragged: 180px on every window. The small width (secondary-pane-width-sm) rises on larger windows, so it is no longer the minimum."
     },
     "secondary-pane-width-lg": {
-      "$value": "{plx-ref.size-280px}",
+      "$value": "{plx-ref.size-70u}",
       "$type": "dimension"
     },
     "secondary-pane-width-sm-from-1440": {
-      "$value": "{plx-ref.size-220px}",
+      "$value": "{plx-ref.size-55u}",
       "$type": "dimension",
       "$description": "The secondary pane widths in a window 1440px wide up to 1919px (owner, issue 463 option C, step 2): each steps up one size; grid.css sets secondary-pane-width-sm, -md and -lg to them there."
     },
     "secondary-pane-width-md-from-1440": {
-      "$value": "{plx-ref.size-260px}",
+      "$value": "{plx-ref.size-65u}",
       "$type": "dimension"
     },
     "secondary-pane-width-lg-from-1440": {
-      "$value": "{plx-ref.size-320px}",
+      "$value": "{plx-ref.size-80u}",
       "$type": "dimension"
     },
     "secondary-pane-width-sm-from-1920": {
-      "$value": "{plx-ref.size-260px}",
+      "$value": "{plx-ref.size-65u}",
       "$type": "dimension",
       "$description": "The secondary pane widths in a window 1920px wide and wider."
     },
     "secondary-pane-width-md-from-1920": {
-      "$value": "{plx-ref.size-320px}",
+      "$value": "{plx-ref.size-80u}",
       "$type": "dimension"
     },
     "secondary-pane-width-lg-from-1920": {
-      "$value": "{plx-ref.size-400px}",
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension"
     },
     "secondary-pane-width-max": {
-      "$value": "{plx-ref.size-400px}",
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension"
     },
     "side-panel-width-default": {
-      "$value": "{plx-ref.size-240px}",
+      "$value": "{plx-ref.size-60u}",
       "$type": "dimension",
       "$extensions": {
         "com.plenix": {
@@ -799,21 +799,21 @@
       }
     },
     "side-panel-width-min": {
-      "$value": "{plx-ref.size-240px}",
+      "$value": "{plx-ref.size-60u}",
       "$type": "dimension"
     },
     "side-panel-width-default-from-1440": {
-      "$value": "{plx-ref.size-320px}",
+      "$value": "{plx-ref.size-80u}",
       "$type": "dimension",
       "$description": "The side panel's starting width in a window 1440px wide up to 1919px (owner, issue 463 option C, step 2); grid.css sets side-panel-width-default to it there."
     },
     "side-panel-width-default-from-1920": {
-      "$value": "{plx-ref.size-400px}",
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension",
       "$description": "The side panel's starting width in a window 1920px wide and wider."
     },
     "side-panel-width-max": {
-      "$value": "{plx-ref.size-560px}",
+      "$value": "{plx-ref.size-140u}",
       "$type": "dimension"
     },
     "input-background": {
@@ -849,7 +849,7 @@
       "$type": "number"
     },
     "input-max-width": {
-      "$value": "{plx-ref.size-600px}",
+      "$value": "{plx-ref.size-150u}",
       "$type": "dimension"
     },
     "input-min-height": {
@@ -898,7 +898,7 @@
       "$type": "number"
     },
     "textarea-min-height": {
-      "$value": "{plx-ref.size-60px}",
+      "$value": "{plx-ref.size-15u}",
       "$type": "dimension"
     },
     "textarea-padding-block": {
@@ -906,7 +906,7 @@
       "$type": "dimension"
     },
     "select-max-width": {
-      "$value": "{plx-ref.size-600px}",
+      "$value": "{plx-ref.size-150u}",
       "$type": "dimension"
     },
     "select-after-background": {
@@ -960,7 +960,7 @@
       "$description": "Select: the space between the field and its list."
     },
     "select-list-max-height": {
-      "$value": "{plx-ref.size-320px}",
+      "$value": "{plx-ref.size-80u}",
       "$type": "dimension",
       "$description": "Select: the list scrolls past this height."
     },
@@ -1094,7 +1094,7 @@
       "$type": "color"
     },
     "check-input-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "switch-target-inset": {
@@ -1122,11 +1122,11 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "check-input-width": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "check-input-margin-block-start": {
-      "$value": "calc((1lh - {plx-ref.size-16px}) / 2)",
+      "$value": "calc((1lh - {plx-ref.size-4u}) / 2)",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
@@ -1179,7 +1179,7 @@
       "$type": "fontWeight"
     },
     "choice-list-max-width": {
-      "$value": "{plx-ref.size-560px}",
+      "$value": "{plx-ref.size-140u}",
       "$type": "dimension"
     },
     "choice-list-row-gap": {
@@ -1255,15 +1255,15 @@
       "$type": "color"
     },
     "choice-input-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "choice-input-width": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "choice-input-margin-block-start": {
-      "$value": "calc((1lh - {plx-ref.size-16px}) / 2)",
+      "$value": "calc((1lh - {plx-ref.size-4u}) / 2)",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
@@ -1313,7 +1313,7 @@
       "$type": "color"
     },
     "switch-track-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension"
     },
     "switch-track-radius": {
@@ -1321,7 +1321,7 @@
       "$type": "dimension"
     },
     "switch-track-width": {
-      "$value": "{plx-ref.size-36px}",
+      "$value": "{plx-ref.size-9u}",
       "$type": "dimension"
     },
     "switch-track-duration": {
@@ -1337,7 +1337,7 @@
       "$type": "color"
     },
     "switch-track-after-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "switch-track-after-radius": {
@@ -1349,16 +1349,16 @@
       "$type": "shadow"
     },
     "switch-track-after-width": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "switch-track-after-inset-block-start": {
-      "$value": "calc(({plx-ref.size-20px} - {plx-ref.size-16px}) / 2)",
+      "$value": "calc(({plx-ref.size-5u} - {plx-ref.size-4u}) / 2)",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "switch-track-after-inset-inline-start": {
-      "$value": "calc(({plx-ref.size-20px} - {plx-ref.size-16px}) / 2)",
+      "$value": "calc(({plx-ref.size-5u} - {plx-ref.size-4u}) / 2)",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
@@ -1375,12 +1375,12 @@
       "$type": "color"
     },
     "switch-input-checked-track-after-transform": {
-      "$value": "translateX(calc({plx-ref.size-36px} - {plx-ref.size-20px}))",
+      "$value": "translateX(calc({plx-ref.size-9u} - {plx-ref.size-5u}))",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "switch-input-checked-track-rtl-after-transform": {
-      "$value": "translateX(calc({plx-ref.size-20px} - {plx-ref.size-36px}))",
+      "$value": "translateX(calc({plx-ref.size-5u} - {plx-ref.size-9u}))",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
@@ -1409,7 +1409,7 @@
       "$type": "dimension"
     },
     "field-inline-grid-template-columns": {
-      "$value": "{plx-ref.size-160px} minmax(0,1fr)",
+      "$value": "{plx-ref.size-40u} minmax(0,1fr)",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
@@ -1442,7 +1442,7 @@
       "$type": "fontWeight"
     },
     "field-label-line-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "number"
     },
     "field-row-label-font-size": {
@@ -1450,7 +1450,7 @@
       "$type": "dimension"
     },
     "field-row-label-line-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "number"
     },
     "field-required-text": {
@@ -1484,7 +1484,7 @@
       "$type": "color"
     },
     "field-info-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "field-info-radius": {
@@ -1508,7 +1508,7 @@
       "$type": "fontWeight"
     },
     "field-info-width": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "field-info-before-inset-block-end": {
@@ -1657,11 +1657,11 @@
       "$type": "dimension"
     },
     "data-grid-lead-column-width": {
-      "$value": "{plx-ref.size-36px}",
+      "$value": "{plx-ref.size-9u}",
       "$type": "dimension"
     },
     "data-grid-mark-size": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "data-grid-header-icon-size": {
@@ -2176,7 +2176,7 @@
       "$type": "color"
     },
     "spinner-sm-height": {
-      "$value": "{plx-ref.size-12px}",
+      "$value": "{plx-ref.size-3u}",
       "$type": "dimension"
     },
     "spinner-sm-border-width": {
@@ -2184,11 +2184,11 @@
       "$type": "dimension"
     },
     "spinner-sm-width": {
-      "$value": "{plx-ref.size-12px}",
+      "$value": "{plx-ref.size-3u}",
       "$type": "dimension"
     },
     "spinner-md-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "spinner-md-border-width": {
@@ -2196,11 +2196,11 @@
       "$type": "dimension"
     },
     "spinner-md-width": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "spinner-lg-height": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension"
     },
     "spinner-lg-border-width": {
@@ -2208,7 +2208,7 @@
       "$type": "dimension"
     },
     "spinner-lg-width": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension"
     },
     "progress-bar-row-gap": {
@@ -2244,7 +2244,7 @@
       "$type": "color"
     },
     "progress-bar-track-height": {
-      "$value": "{plx-ref.size-8px}",
+      "$value": "{plx-ref.size-2u}",
       "$type": "dimension"
     },
     "progress-bar-track-radius": {
@@ -2252,7 +2252,7 @@
       "$type": "dimension"
     },
     "progress-bar-sm-track-height": {
-      "$value": "{plx-ref.size-4px}",
+      "$value": "{plx-ref.size-1u}",
       "$type": "dimension"
     },
     "progress-bar-fill-radius": {
@@ -2361,7 +2361,7 @@
       "$type": "color"
     },
     "tag-remove-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "tag-remove-text": {
@@ -2373,7 +2373,7 @@
       "$type": "dimension"
     },
     "tag-remove-width": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "tag-remove-line-height": {
@@ -2553,19 +2553,19 @@
       "$type": "color"
     },
     "dialog-sm-max-width": {
-      "$value": "{plx-ref.size-400px}",
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension"
     },
     "dialog-md-max-width": {
-      "$value": "{plx-ref.size-560px}",
+      "$value": "{plx-ref.size-140u}",
       "$type": "dimension"
     },
     "dialog-lg-max-width": {
-      "$value": "{plx-ref.size-720px}",
+      "$value": "{plx-ref.size-180u}",
       "$type": "dimension"
     },
     "dialog-xl-max-width": {
-      "$value": "{plx-ref.size-900px}",
+      "$value": "{plx-ref.size-225u}",
       "$type": "dimension"
     },
     "drawer-animation-duration": {
@@ -2581,15 +2581,15 @@
       "$type": "dimension"
     },
     "drawer-sm-max-width": {
-      "$value": "{plx-ref.size-320px}",
+      "$value": "{plx-ref.size-80u}",
       "$type": "dimension"
     },
     "drawer-md-max-width": {
-      "$value": "{plx-ref.size-400px}",
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension"
     },
     "drawer-lg-max-width": {
-      "$value": "{plx-ref.size-560px}",
+      "$value": "{plx-ref.size-140u}",
       "$type": "dimension"
     },
     "sheet-background": {
@@ -2635,16 +2635,16 @@
       "$type": "dimension"
     },
     "sheet-band-height": {
-      "$value": "{plx-ref.size-12px}",
+      "$value": "{plx-ref.size-3u}",
       "$type": "dimension",
       "$description": "The band at the top of the bottom sheet that holds the grabber's bar"
     },
     "sheet-grabber-width": {
-      "$value": "{plx-ref.size-36px}",
+      "$value": "{plx-ref.size-9u}",
       "$type": "dimension"
     },
     "sheet-grabber-height": {
-      "$value": "{plx-ref.size-4px}",
+      "$value": "{plx-ref.size-1u}",
       "$type": "dimension"
     },
     "sheet-grabber-inset-block-start": {
@@ -2683,7 +2683,7 @@
       "$type": "dimension"
     },
     "sheet-header-min-height": {
-      "$value": "{plx-ref.size-48px}",
+      "$value": "{plx-ref.size-12u}",
       "$type": "dimension"
     },
     "sheet-header-gap": {
@@ -2767,7 +2767,7 @@
       "$type": "dimension"
     },
     "dialog-header-min-height": {
-      "$value": "{plx-ref.size-48px}",
+      "$value": "{plx-ref.size-12u}",
       "$type": "dimension"
     },
     "dialog-header-padding-block": {
@@ -2904,11 +2904,11 @@
       "$type": "dimension"
     },
     "toast-max-width": {
-      "$value": "{plx-ref.size-400px}",
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension"
     },
     "toast-min-width": {
-      "$value": "{plx-ref.size-280px}",
+      "$value": "{plx-ref.size-70u}",
       "$type": "dimension"
     },
     "toast-padding-block": {
@@ -2968,7 +2968,7 @@
       "$type": "dimension"
     },
     "tabs-more-caret-size": {
-      "$value": "{plx-ref.size-12px}",
+      "$value": "{plx-ref.size-3u}",
       "$type": "dimension",
       "$description": "The chevron on the Tabs' More menu button (the tabs that do not fit): the arrow_drop_down glyph in its whole square, 12px like the Button caret."
     },
@@ -3359,11 +3359,11 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "app-header-divider-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension"
     },
     "app-header-divider-width": {
-      "$value": "{plx-ref.size-4px}",
+      "$value": "{plx-ref.size-1u}",
       "$type": "dimension"
     },
     "app-header-divider-margin-inline": {
@@ -3433,7 +3433,7 @@
       "$type": "dimension"
     },
     "app-header-search-width": {
-      "$value": "{plx-ref.size-400px}",
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension"
     },
     "app-header-search-z-index": {
@@ -3473,7 +3473,7 @@
       "$type": "color"
     },
     "app-switcher-panel-width": {
-      "$value": "{plx-ref.size-600px}",
+      "$value": "{plx-ref.size-150u}",
       "$type": "dimension"
     },
     "app-switcher-panel-inset-block-start": {
@@ -3510,7 +3510,7 @@
       "$type": "dimension"
     },
     "app-switcher-heading-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension"
     },
     "app-switcher-heading-text": {
@@ -3538,7 +3538,7 @@
       "$type": "dimension"
     },
     "app-switcher-open-height": {
-      "$value": "{plx-ref.size-80px}",
+      "$value": "{plx-ref.size-20u}",
       "$type": "dimension"
     },
     "app-switcher-open-radius": {
@@ -3591,7 +3591,7 @@
       "$type": "color"
     },
     "app-switcher-label-line-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "number"
     },
     "app-switcher-pin-height": {
@@ -3640,7 +3640,7 @@
       "$type": "dimension"
     },
     "app-switcher-panel-width-narrow": {
-      "$value": "{plx-ref.size-320px}",
+      "$value": "{plx-ref.size-80u}",
       "$type": "dimension"
     },
     "app-header-brand-gap": {
@@ -3735,15 +3735,15 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tool-rail-divider-height": {
-      "$value": "{plx-ref.size-4px}",
+      "$value": "{plx-ref.size-1u}",
       "$type": "dimension"
     },
     "tool-rail-divider-width": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension"
     },
     "tool-rail-labels-item-width": {
-      "$value": "{plx-ref.size-52px}",
+      "$value": "{plx-ref.size-13u}",
       "$type": "dimension"
     },
     "tool-rail-labels-item-padding-block": {
@@ -3779,11 +3779,11 @@
       "$type": "shadow"
     },
     "menu-max-width": {
-      "$value": "{plx-ref.size-320px}",
+      "$value": "{plx-ref.size-80u}",
       "$type": "dimension"
     },
     "menu-min-width": {
-      "$value": "{plx-ref.size-220px}",
+      "$value": "{plx-ref.size-55u}",
       "$type": "dimension"
     },
     "menu-padding-block": {
@@ -3843,7 +3843,7 @@
       "$description": "Menu item: regular (400), as Blueprint (#805, owner 2026-11-01); the darker color (menu-item-text) gives Blueprint's darkness, so the weight no longer makes up for it."
     },
     "menu-item-line-height": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension",
       "$description": "Menu item: a 24px line, Blueprint's line ratio (22px for 14px) at 15px, on the 4px grid (#805); with the 4px padding a one-line item is 32px, and a wrapped label grows by whole lines."
     },
@@ -3897,11 +3897,11 @@
       "$type": "color"
     },
     "menu-check-height": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension"
     },
     "menu-check-width": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$description": "Menu check: the slot's width, Blueprint's 16px, so labels line up as Blueprint's; the larger check (menu-check-icon-size) is centered on it."
     },
@@ -4078,7 +4078,7 @@
       "$description": "The plain app header's surface"
     },
     "app-header-action-width": {
-      "$value": "{plx-ref.size-112px}",
+      "$value": "{plx-ref.size-28u}",
       "$type": "dimension"
     },
     "app-header-action-height": {
@@ -4086,23 +4086,23 @@
       "$type": "dimension"
     },
     "app-header-action-icon-size": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "app-header-chevron-size": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "app-header-icon-size": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension"
     },
     "app-header-item-size": {
-      "$value": "{plx-ref.size-40px}",
+      "$value": "{plx-ref.size-10u}",
       "$type": "dimension"
     },
     "app-header-name-width": {
-      "$value": "{plx-ref.size-200px}",
+      "$value": "{plx-ref.size-50u}",
       "$type": "dimension"
     },
     "avatar-font-weight": {
@@ -4114,7 +4114,7 @@
       "$type": "number"
     },
     "avatar-20-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension"
     },
     "avatar-20-radius": {
@@ -4126,11 +4126,11 @@
       "$type": "dimension"
     },
     "avatar-20-width": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension"
     },
     "avatar-24-height": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension"
     },
     "avatar-24-radius": {
@@ -4142,11 +4142,11 @@
       "$type": "dimension"
     },
     "avatar-24-width": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension"
     },
     "avatar-28-height": {
-      "$value": "{plx-ref.size-28px}",
+      "$value": "{plx-ref.size-7u}",
       "$type": "dimension"
     },
     "avatar-28-radius": {
@@ -4158,11 +4158,11 @@
       "$type": "dimension"
     },
     "avatar-28-width": {
-      "$value": "{plx-ref.size-28px}",
+      "$value": "{plx-ref.size-7u}",
       "$type": "dimension"
     },
     "avatar-32-height": {
-      "$value": "{plx-ref.size-32px}",
+      "$value": "{plx-ref.size-8u}",
       "$type": "dimension"
     },
     "avatar-32-radius": {
@@ -4174,11 +4174,11 @@
       "$type": "dimension"
     },
     "avatar-32-width": {
-      "$value": "{plx-ref.size-32px}",
+      "$value": "{plx-ref.size-8u}",
       "$type": "dimension"
     },
     "avatar-40-height": {
-      "$value": "{plx-ref.size-40px}",
+      "$value": "{plx-ref.size-10u}",
       "$type": "dimension"
     },
     "avatar-40-radius": {
@@ -4190,11 +4190,11 @@
       "$type": "dimension"
     },
     "avatar-40-width": {
-      "$value": "{plx-ref.size-40px}",
+      "$value": "{plx-ref.size-10u}",
       "$type": "dimension"
     },
     "avatar-48-height": {
-      "$value": "{plx-ref.size-48px}",
+      "$value": "{plx-ref.size-12u}",
       "$type": "dimension"
     },
     "avatar-48-radius": {
@@ -4206,11 +4206,11 @@
       "$type": "dimension"
     },
     "avatar-48-width": {
-      "$value": "{plx-ref.size-48px}",
+      "$value": "{plx-ref.size-12u}",
       "$type": "dimension"
     },
     "avatar-64-height": {
-      "$value": "{plx-ref.size-64px}",
+      "$value": "{plx-ref.size-16u}",
       "$type": "dimension"
     },
     "avatar-64-radius": {
@@ -4222,7 +4222,7 @@
       "$type": "dimension"
     },
     "avatar-64-width": {
-      "$value": "{plx-ref.size-64px}",
+      "$value": "{plx-ref.size-16u}",
       "$type": "dimension"
     },
     "breadcrumbs-link-target-inset-block": {
@@ -4538,11 +4538,11 @@
       "$type": "color"
     },
     "media-card-select-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "media-card-select-width": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "media-card-select-inset-block-start": {
@@ -4670,7 +4670,7 @@
       "$type": "color"
     },
     "chat-typing-dot-height": {
-      "$value": "{plx-ref.size-4px}",
+      "$value": "{plx-ref.size-1u}",
       "$type": "dimension"
     },
     "chat-typing-dot-radius": {
@@ -4678,7 +4678,7 @@
       "$type": "dimension"
     },
     "chat-typing-dot-width": {
-      "$value": "{plx-ref.size-4px}",
+      "$value": "{plx-ref.size-1u}",
       "$type": "dimension"
     },
     "chat-typing-second-dot-delay": {
@@ -4972,7 +4972,7 @@
       "$type": "color"
     },
     "chat-attachment-thumb-size": {
-      "$value": "{plx-ref.size-40px}",
+      "$value": "{plx-ref.size-10u}",
       "$type": "dimension"
     },
     "chat-attachment-thumb-radius": {
@@ -4988,11 +4988,11 @@
       "$type": "dimension"
     },
     "chat-attachment-progress-width": {
-      "$value": "{plx-ref.size-160px}",
+      "$value": "{plx-ref.size-40u}",
       "$type": "dimension"
     },
     "chat-voice-dot-size": {
-      "$value": "{plx-ref.size-8px}",
+      "$value": "{plx-ref.size-2u}",
       "$type": "dimension",
       "$description": "Chat composer: while dictating, the red dot beside \"Listening…\" and the ring around the microphone."
     },
@@ -5039,16 +5039,16 @@
       "$type": "color"
     },
     "chat-media-image-height": {
-      "$value": "{plx-ref.size-160px}",
+      "$value": "{plx-ref.size-40u}",
       "$type": "dimension",
       "$description": "Chat.Attachment: a single picture's height; the width follows it (up to the bubble)."
     },
     "chat-media-image-width": {
-      "$value": "{plx-ref.size-240px}",
+      "$value": "{plx-ref.size-60u}",
       "$type": "dimension"
     },
     "chat-media-row-image-height": {
-      "$value": "{plx-ref.size-96px}",
+      "$value": "{plx-ref.size-24u}",
       "$type": "dimension",
       "$description": "Chat.Attachment: a picture in a row of two or more."
     },
@@ -5062,12 +5062,12 @@
       "$type": "color"
     },
     "chat-file-min-width": {
-      "$value": "{plx-ref.size-240px}",
+      "$value": "{plx-ref.size-60u}",
       "$type": "dimension",
       "$description": "Chat.Attachment: the narrowest a file card is drawn."
     },
     "chat-voice-min-width": {
-      "$value": "{plx-ref.size-280px}",
+      "$value": "{plx-ref.size-70u}",
       "$type": "dimension",
       "$description": "Chat.Voice: the narrowest the player is drawn."
     },
@@ -5076,24 +5076,24 @@
       "$type": "dimension"
     },
     "chat-voice-bar-width": {
-      "$value": "{plx-ref.size-4px}",
+      "$value": "{plx-ref.size-1u}",
       "$type": "dimension",
       "$description": "Chat.Voice: one bar of the waveform; the waveform is drawn left to right in every language."
     },
     "chat-voice-bar-height-1": {
-      "$value": "{plx-ref.size-8px}",
+      "$value": "{plx-ref.size-2u}",
       "$type": "dimension"
     },
     "chat-voice-bar-height-2": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "chat-voice-bar-height-3": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension"
     },
     "chat-voice-bar-height-4": {
-      "$value": "{plx-ref.size-32px}",
+      "$value": "{plx-ref.size-8u}",
       "$type": "dimension"
     },
     "chat-voice-bar-color": {
@@ -5140,7 +5140,7 @@
       "$type": "dimension"
     },
     "chat-reaction-height": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension",
       "$description": "A reaction pill under a message's text: the emoji and its count."
     },
@@ -5260,7 +5260,7 @@
       "$description": "A deleted message's \"This message was deleted\": muted and slanted."
     },
     "chat-field-min-height-narrow": {
-      "$value": "{plx-ref.size-40px}",
+      "$value": "{plx-ref.size-10u}",
       "$type": "dimension",
       "$description": "Chat composer: the text area's height at a phone width (one line); at larger widths it starts at two."
     },
@@ -5347,7 +5347,7 @@
       "$type": "dimension"
     },
     "code-block-pre-line-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "number"
     },
     "code-block-pre-padding-block": {
@@ -5359,7 +5359,7 @@
       "$type": "dimension"
     },
     "code-block-tall-pre-max-height": {
-      "$value": "{plx-ref.size-500px}",
+      "$value": "{plx-ref.size-125u}",
       "$type": "dimension"
     },
     "code-block-pre-focus-outline-color": {
@@ -5517,19 +5517,19 @@
       "$type": "dimension"
     },
     "color-swatch-sm-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "color-swatch-sm-width": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "color-swatch-md-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension"
     },
     "color-swatch-md-width": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension"
     },
     "color-swatch-pressed-shadow": {
@@ -5602,7 +5602,7 @@
       "$type": "dimension"
     },
     "combobox-max-width": {
-      "$value": "{plx-ref.size-600px}",
+      "$value": "{plx-ref.size-150u}",
       "$type": "dimension"
     },
     "combobox-field-gap": {
@@ -5626,7 +5626,7 @@
       "$type": "dimension"
     },
     "combobox-input-flex-basis": {
-      "$value": "{plx-ref.size-60px}",
+      "$value": "{plx-ref.size-15u}",
       "$type": "dimension"
     },
     "combobox-input-min-height": {
@@ -5684,7 +5684,7 @@
       "$type": "dimension"
     },
     "combobox-list-max-height": {
-      "$value": "{plx-ref.size-220px}",
+      "$value": "{plx-ref.size-55u}",
       "$type": "dimension"
     },
     "combobox-list-padding-block": {
@@ -5924,7 +5924,7 @@
       "$type": "fontWeight"
     },
     "data-grid-resize-width": {
-      "$value": "{plx-ref.size-12px}",
+      "$value": "{plx-ref.size-3u}",
       "$type": "dimension"
     },
     "data-grid-resize-z-index": {
@@ -5932,7 +5932,7 @@
       "$type": "number"
     },
     "data-grid-list-intrinsic-width": {
-      "$value": "{plx-ref.size-720px}",
+      "$value": "{plx-ref.size-180u}",
       "$type": "dimension",
       "$description": "The width a grid that can become a Narrow list asks for where its container takes the width of its content (a size container has no content width of its own): wide enough to stay a table."
     },
@@ -5977,7 +5977,7 @@
       "$type": "fontWeight"
     },
     "date-badge-day-height": {
-      "$value": "{plx-ref.size-28px}",
+      "$value": "{plx-ref.size-7u}",
       "$type": "dimension"
     },
     "date-badge-day-radius": {
@@ -5993,7 +5993,7 @@
       "$type": "dimension"
     },
     "date-badge-day-min-width": {
-      "$value": "{plx-ref.size-28px}",
+      "$value": "{plx-ref.size-7u}",
       "$type": "dimension"
     },
     "date-badge-today-day-background": {
@@ -6157,7 +6157,7 @@
       "$type": "fontWeight"
     },
     "empty-state-text-max-width": {
-      "$value": "{plx-ref.size-400px}",
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension"
     },
     "empty-state-action-margin-block-start": {
@@ -6235,7 +6235,7 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "stack-field-inline-label-tip-max-width": {
-      "$value": "{plx-ref.size-160px}",
+      "$value": "{plx-ref.size-40u}",
       "$type": "dimension"
     },
     "stack-field-inline-row-gap": {
@@ -6347,11 +6347,11 @@
       "$type": "dimension"
     },
     "list-item-line-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "number"
     },
     "list-icon-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension"
     },
     "list-item-neutral-icon-text": {
@@ -6388,7 +6388,7 @@
       "$type": "dimension"
     },
     "media-viewer-padding-inline": {
-      "$value": "{plx-ref.size-80px}",
+      "$value": "{plx-ref.size-20u}",
       "$type": "dimension"
     },
     "media-viewer-z-index": {
@@ -6484,11 +6484,11 @@
       "$type": "dimension"
     },
     "media-viewer-nav-min-height": {
-      "$value": "{plx-ref.size-44px}",
+      "$value": "{plx-ref.size-11u}",
       "$type": "dimension"
     },
     "media-viewer-nav-min-width": {
-      "$value": "{plx-ref.size-44px}",
+      "$value": "{plx-ref.size-11u}",
       "$type": "dimension"
     },
     "media-viewer-nav-previous-inset-inline-start": {
@@ -7086,11 +7086,11 @@
       "$type": "dimension"
     },
     "preview-media-height": {
-      "$value": "{plx-ref.size-48px}",
+      "$value": "{plx-ref.size-12u}",
       "$type": "dimension"
     },
     "preview-media-width": {
-      "$value": "{plx-ref.size-48px}",
+      "$value": "{plx-ref.size-12u}",
       "$type": "dimension"
     },
     "preview-button-hover-background": {
@@ -7206,7 +7206,7 @@
       "$type": "dimension"
     },
     "radio-tile-check-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "radio-tile-check-text": {
@@ -7214,7 +7214,7 @@
       "$type": "color"
     },
     "radio-tile-check-width": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "rating-gap": {
@@ -7968,7 +7968,7 @@
       "$type": "color"
     },
     "thumbnail-height": {
-      "$value": "{plx-ref.size-28px}",
+      "$value": "{plx-ref.size-7u}",
       "$type": "dimension"
     },
     "thumbnail-radius": {
@@ -7976,7 +7976,7 @@
       "$type": "dimension"
     },
     "thumbnail-width": {
-      "$value": "{plx-ref.size-28px}",
+      "$value": "{plx-ref.size-7u}",
       "$type": "dimension"
     },
     "thumbnail-icon-text": {
@@ -8136,15 +8136,15 @@
       "$type": "color"
     },
     "tree-toggle-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "tree-toggle-width": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "tree-toggle-mask-size": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension"
     },
     "tree-meta-text": {
@@ -8201,7 +8201,7 @@
       "$type": "color"
     },
     "activity-list-unread-height": {
-      "$value": "{plx-ref.size-8px}",
+      "$value": "{plx-ref.size-2u}",
       "$type": "dimension"
     },
     "activity-list-unread-radius": {
@@ -8209,7 +8209,7 @@
       "$type": "dimension"
     },
     "activity-list-unread-width": {
-      "$value": "{plx-ref.size-8px}",
+      "$value": "{plx-ref.size-2u}",
       "$type": "dimension"
     },
     "activity-list-text-gap": {
@@ -8298,7 +8298,7 @@
       "$type": "dimension"
     },
     "app-shell-skip-inset-block-start": {
-      "$value": "calc({plx-ref.size-100px} * -1)",
+      "$value": "calc({plx-ref.size-25u} * -1)",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
@@ -8335,7 +8335,7 @@
       "$type": "number"
     },
     "panel-splitter-width": {
-      "$value": "{plx-ref.size-8px}",
+      "$value": "{plx-ref.size-2u}",
       "$type": "dimension"
     },
     "panel-splitter-z-index": {
@@ -8343,12 +8343,12 @@
       "$type": "number"
     },
     "panel-splitter-end-inset-inline-end": {
-      "$value": "calc({plx-ref.size-8px} / -2)",
+      "$value": "calc({plx-ref.size-2u} / -2)",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "panel-splitter-start-inset-inline-start": {
-      "$value": "calc({plx-ref.size-8px} / -2)",
+      "$value": "calc({plx-ref.size-2u} / -2)",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
@@ -8454,7 +8454,7 @@
       "$description": "The space before and after the controls, the command bar's."
     },
     "bulk-actions-divider-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension"
     },
     "bulk-actions-divider-border-inline-start-color": {
@@ -8534,7 +8534,7 @@
       "$type": "dimension"
     },
     "entity-header-tile-height": {
-      "$value": "{plx-ref.size-44px}",
+      "$value": "{plx-ref.size-11u}",
       "$type": "dimension"
     },
     "entity-header-tile-border-color": {
@@ -8550,7 +8550,7 @@
       "$type": "dimension"
     },
     "entity-header-tile-width": {
-      "$value": "{plx-ref.size-44px}",
+      "$value": "{plx-ref.size-11u}",
       "$type": "dimension"
     },
     "entity-header-tile-blue-background": {
@@ -8713,7 +8713,7 @@
       "$type": "dimension"
     },
     "image-editor-panel-width": {
-      "$value": "{plx-ref.size-220px}",
+      "$value": "{plx-ref.size-55u}",
       "$type": "dimension"
     },
     "image-editor-panel-padding-block": {
@@ -8738,7 +8738,7 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "image-editor-canvas-background-size": {
-      "$value": "{plx-ref.size-24px} {plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u} {plx-ref.size-6u}",
       "$type": "color",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
@@ -9027,7 +9027,7 @@
       "$type": "dimension"
     },
     "property-list-columns-item-grid-template-columns": {
-      "$value": "minmax(0, {plx-ref.size-160px}) minmax(0, 1fr)",
+      "$value": "minmax(0, {plx-ref.size-40u}) minmax(0, 1fr)",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
@@ -9078,7 +9078,7 @@
       "$type": "dimension"
     },
     "property-list-columns-label-tip-max-width": {
-      "$value": "{plx-ref.size-160px}",
+      "$value": "{plx-ref.size-40u}",
       "$type": "dimension"
     },
     "property-list-columns-item-row-gap": {
@@ -9239,7 +9239,7 @@
       "$type": "dimension"
     },
     "search-ws-query-max-width": {
-      "$value": "{plx-ref.size-720px}",
+      "$value": "{plx-ref.size-180u}",
       "$type": "dimension"
     },
     "search-ws-active-gap": {
@@ -9692,7 +9692,7 @@
       "$type": "dimension"
     },
     "status-bar-min-height": {
-      "$value": "{plx-ref.size-40px}",
+      "$value": "{plx-ref.size-10u}",
       "$type": "dimension"
     },
     "status-bar-padding-inline": {
@@ -9792,7 +9792,7 @@
       "$type": "dimension"
     },
     "widget-grid-grid-template-columns": {
-      "$value": "repeat(auto-fill, minmax({plx-ref.size-280px}, 1fr))",
+      "$value": "repeat(auto-fill, minmax({plx-ref.size-70u}, 1fr))",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },

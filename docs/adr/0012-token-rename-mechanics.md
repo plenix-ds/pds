@@ -34,9 +34,11 @@
 | Corner radius | `radius-0px`, `-2px`, `-4px`, `-6px` | `radius-none`, `-xs`, `-sm`, `-md` |
 | Border width | `border-width-1px` … `-4px` | `border-width-100` … `-400` |
 | Opacity | `opacity-30`, `-45`, `-50`, `-70` | `opacity-300`, `-450`, `-500`, `-700` |
-| Size, space, font size, control and glyph sizes, breakpoints … (next PRs) | `size-4px` … | an ordinal step per scale, chosen in each PR and listed here |
+| Size (D-0047) | `size-4px` … `size-1600px` | **grid units, 1u = 4px**: `size-1u` … `size-400u` (`size-92px` -> `size-23u`). `size-18px` (off the 4px grid) is not renamed: it's a grid defect, filed on its own |
+| Space, font size, control and glyph sizes, breakpoints … (next PRs) | `space-4px` … | chosen in each PR and listed here |
 
 - An ordinal step is never the value. `opacity-300` is 0.3, and check 7 reads 0.3 as 0.3 or 30, never 300.
+- A grid unit counts 4px steps, so `size-23u` is 92px. The number is the step on the grid, not the value, and nothing reads the value from the name: code that needs the px (`build-steps.js`, `size-scale`, `pane-defaults`) resolves the token's value.
 
 ## Consequences
 

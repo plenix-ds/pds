@@ -96,7 +96,7 @@ if (window.DS && DS.registerLab) {
       parts: { cg: 'A', rg: 'A', mw: 'A', ig: 'B', lc: 'C', lf: 'C', ls: 'C', ll: 'C', vc: 'D', vf: 'D', ss: 'B', sr: 'B', sb: 'B', lw: 'B', lh: 'B', tm: 'E', tp: 'E', tr: 'E', tb: 'E', th: 'E', tf: 'E', oc: 'E', ol: 'E' },
       anchors: { A: { part: '.plx-chart-legend__list', side: 'left' }, B: { part: '.plx-chart-legend__swatch', side: 'top' }, C: { part: '.plx-chart-legend__label', side: 'bottom' }, D: { part: '.plx-chart-legend__value', side: 'right' }, E: { part: '.plx-chart-legend__toggle', side: 'top' } },
       sections: [['Layout', ['cg', 'rg', 'mw', 'ig']], ['Name and value', ['lc', 'lf', 'ls', 'll', 'vc', 'vf']], ['Swatch', ['ss', 'sr', 'sb', 'lw', 'lh']], ['Toggle', ['tm', 'tp', 'tr', 'tb', 'th', 'tf', 'oc', 'ol']]],
-      matrixLabel: 'Chart legend values by placement and swatch', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Placements · ' + HEAD
+      matrixLabel: 'Chart legend values by placement and swatch', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Placements · ' + HEAD
     });
 
     // ---- Chart tooltip (<ChartTooltip>): single above a column, or shared at March with the crosshair
@@ -159,7 +159,7 @@ if (window.DS && DS.registerLab) {
       parts: { off: 'A', bg: 'B', bc: 'B', bw: 'B', r: 'B', sh: 'B', pb: 'B', pi: 'B', g: 'B', tx: 'B', ff: 'B', fs: 'B', lh: 'B', tc: 'C', tw: 'C', tf: 'C', lg: 'D', ig: 'D', sz: 'E', sr: 'E', lc: 'F', vc: 'G', vf: 'G', vm: 'G', cc: 'H', cw: 'H' },
       anchors: { A: { part: '.plx-chart-tooltip__place', side: 'left' }, B: { part: '.plx-chart-tooltip', side: 'top' }, C: { part: '.plx-chart-tooltip__title', side: 'right' }, D: { part: '.plx-chart-tooltip__list', side: 'left' }, E: { part: '.plx-chart-tooltip__swatch', side: 'left' }, F: { part: '.plx-chart-tooltip__label', side: 'bottom' }, G: { part: '.plx-chart-tooltip__value', side: 'right' }, H: { part: '.plx-chart-tooltip__crosshair', side: 'bottom' } },
       sections: [['Surface', ['off', 'bg', 'bc', 'bw', 'r', 'sh', 'pb', 'pi', 'g']], ['Text', ['tx', 'ff', 'fs', 'lh', 'tc', 'tw', 'tf']], ['Values', ['lg', 'ig', 'sz', 'sr', 'lc', 'vc', 'vf', 'vm']], ['Crosshair', ['cc', 'cw']]],
-      matrixLabel: 'Chart tooltip values by variant', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Variants · ' + HEAD
+      matrixLabel: 'Chart tooltip values by variant', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Variants · ' + HEAD
     });
 
     // ---- Data label (<DataLabel>): above columns, after bars, centered with a halo on points
@@ -196,7 +196,7 @@ if (window.DS && DS.registerLab) {
       parts: { c: 'A', f: 'A', s: 'A', hc: 'B', hw: 'B' },
       anchors: { A: { part: null, side: 'top' }, B: { part: null, side: 'right' } },
       sections: [['Text', ['c', 'f', 's']], ['Halo', ['hc', 'hw']]],
-      matrixLabel: 'Data label values by position', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Positions · ' + HEAD
+      matrixLabel: 'Data label values by position', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Positions · ' + HEAD
     });
 
     // ---- Axis (<Axis>): one side of the plot, with or without its title
@@ -242,7 +242,7 @@ if (window.DS && DS.registerLab) {
       parts: { ac: 'A', aw: 'A', kc: 'B', kf: 'B', ks: 'B', tc: 'C', tf: 'C', ts: 'C', tw: 'C' },
       anchors: { A: { part: '.plx-chart__axis-line', side: 'right' }, B: { part: '.plx-chart-axis__tick', side: 'bottom' }, C: { part: '.plx-chart-axis__label', side: 'left' } },
       sections: [['Axis line', ['ac', 'aw']], ['Tick labels', ['kc', 'kf', 'ks']], ['Title', ['tc', 'tf', 'ts', 'tw']]],
-      matrixLabel: 'Axis values by side', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Sides · ' + HEAD
+      matrixLabel: 'Axis values by side', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Sides · ' + HEAD
     });
 
     // ---- Grid line (<GridLines>): horizontal or vertical
@@ -266,7 +266,7 @@ if (window.DS && DS.registerLab) {
         return svg(g + (variant === 'vertical' ? '' : columns()) + axes());
       },
       parts: { c: 'A', w: 'A' }, anchors: { A: { part: '.plx-chart__grid-line', side: 'right' } }, sections: [['Lines', ['c', 'w']]],
-      matrixLabel: 'Grid line values by direction', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Directions · ' + HEAD
+      matrixLabel: 'Grid line values by direction', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Directions · ' + HEAD
     });
 
     // ---- Reference line and Threshold (<ReferenceLine>): a dashed rule with its name and value
@@ -314,7 +314,7 @@ if (window.DS && DS.registerLab) {
         props: refProps(threshold), token: refToken(threshold), labelSelector: '.plx-chart-reference__name',
         parts: { lc: 'A', lw: 'A', nc: 'B', nf: 'B', ns: 'B', nw: 'B', hc: 'B', hw: 'B', vc: 'C', vf: 'C', vw: 'C' },
         anchors: { A: { part: '.plx-chart-reference__line', side: 'left' }, B: { part: '.plx-chart-reference__name', side: 'top' }, C: { part: '.plx-chart-reference__value', side: 'right' } },
-        sections: [['Line', threshold ? ['lw'] : ['lc', 'lw']], ['Label', ['nc', 'nf', 'ns', 'nw', 'hc', 'hw', 'vc', 'vf', 'vw']]], matrixColumnWidth: '--plx-ref-size-400px'
+        sections: [['Line', threshold ? ['lw'] : ['lc', 'lw']], ['Label', ['nc', 'nf', 'ns', 'nw', 'hc', 'hw', 'vc', 'vf', 'vw']]], matrixColumnWidth: '--plx-ref-size-100u'
       };
     };
     DS.registerLab('chart-reference-line', Object.assign(refSpec(false), {
@@ -381,7 +381,7 @@ if (window.DS && DS.registerLab) {
       parts: { rc: 'A', rw: 'A', lc: 'B', lw: 'B', bf: 'C', nc: 'D', nf: 'D', ns: 'D', nw: 'D', hc: 'D', hw: 'D' },
       anchors: { A: { part: '.plx-chart-annotation__ring', side: 'right' }, B: { part: '.plx-chart-annotation__leader', side: 'left' }, C: { part: '.plx-chart-annotation__band', side: 'bottom' }, D: { part: '.plx-chart-annotation__label', side: 'top' } },
       sections: [['Marker', ['rc', 'rw', 'lc', 'lw', 'bf']], ['Note', ['nc', 'nf', 'ns', 'nw', 'hc', 'hw']]],
-      matrixLabel: 'Annotation values by kind', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Kinds · ' + HEAD
+      matrixLabel: 'Annotation values by kind', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Kinds · ' + HEAD
     });
 
     // ---- Feature card (<FeatureCard>): a Card with its media first; icon, image or horizontal
@@ -418,7 +418,7 @@ if (window.DS && DS.registerLab) {
       parts: { bb: 'A', bi: 'A', mr: 'A', hg: 'B', hs: 'C' },
       anchors: { A: { part: '.plx-feature-card__media', side: 'top' }, B: { part: null, side: 'left' }, C: { part: '.plx-feature-card__media', side: 'bottom' } },
       sections: [['Media', ['bb', 'bi', 'mr']], ['Horizontal', ['hg', 'hs']]],
-      matrixLabel: 'Feature card values by variant', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Variants · ' + HEAD
+      matrixLabel: 'Feature card values by variant', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Variants · ' + HEAD
     });
 
     // ---- User card (<UserCard>): a Card with the person; default, compact, with actions, with cover
@@ -483,7 +483,7 @@ if (window.DS && DS.registerLab) {
       parts: { g: 'A', ig: 'B', tg: 'C', nc: 'C', nf: 'C', ns: 'C', nw: 'C', nl: 'C', sc: 'D', ss: 'D', sl: 'D', rm: 'E', ag: 'F', cb: 'G', ci: 'G', cr: 'G', co: 'B', rc: 'B', rw: 'B', kg: 'B', ks: 'C' },
       anchors: { A: { part: '.plx-card__body', side: 'left' }, B: { part: '.plx-user-card__avatar', side: 'left' }, C: { part: '.plx-user-card__name', side: 'right' }, D: { part: '.plx-user-card__secondary', side: 'right' }, E: { part: '.plx-user-card__role', side: 'right' }, F: { part: '.plx-user-card__actions', side: 'bottom' }, G: { part: '.plx-user-card__cover', side: 'top' } },
       sections: [['Layout', ['g', 'ig', 'tg', 'ag', 'kg']], ['Name and line', ['nc', 'nf', 'ns', 'nw', 'nl', 'ks', 'sc', 'ss', 'sl', 'rm']], ['Cover', ['cb', 'ci', 'cr', 'co', 'rc', 'rw']]],
-      matrixLabel: 'User card values by variant', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Variants · ' + HEAD
+      matrixLabel: 'User card values by variant', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Variants · ' + HEAD
     });
   })();
 }

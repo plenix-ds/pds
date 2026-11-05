@@ -4,7 +4,7 @@
     "mega-menu-sections-margin-block-start": { "$value": "{plx-sys.space-stack-xs}", "$type": "dimension", "$description": "MegaMenu accordion: the space between the button and its groups." },
     "mega-menu-column-gap": { "$value": "{plx-sys.space-inline-lg}", "$type": "dimension", "$description": "MegaMenu: the gap between columns." },
     "mega-menu-row-gap": { "$value": "{plx-sys.space-stack-lg}", "$type": "dimension", "$description": "MegaMenu: the gap between rows of columns that wrapped." },
-    "mega-menu-column-width": { "$value": "{plx-ref.size-200px}", "$type": "dimension", "$description": "MegaMenu: the width of one group's column." },
+    "mega-menu-column-width": { "$value": "{plx-ref.size-50u}", "$type": "dimension", "$description": "MegaMenu: the width of one group's column." },
     "mega-menu-heading-text": { "$value": "{plx-sys.content-muted}", "$type": "color", "$description": "MegaMenu: the group heading's color (as Menu's group label)." },
     "mega-menu-heading-font-family": { "$value": "{plx-sys.font-heading}", "$type": "fontFamily", "$description": "MegaMenu: the group heading's face." },
     "mega-menu-heading-font-size": { "$value": "{plx-ref.font-size-12}", "$type": "dimension", "$description": "MegaMenu: the group heading's size." },
@@ -17,7 +17,7 @@
     "mega-menu-description-line-height": { "$value": "{plx-sys.label-height-16px}", "$type": "dimension", "$description": "MegaMenu: a link's description line, 16px." },
     "mega-menu-feature-background": { "$value": "{plx-sys.surface-sunken}", "$type": "color", "$description": "MegaMenu: the featured area's fill (the sunken surface)." },
     "mega-menu-feature-radius": { "$value": "{plx-sys.radius-card-6px}", "$type": "dimension", "$description": "MegaMenu: the featured area's corners (the card radius)." },
-    "mega-menu-feature-width": { "$value": "{plx-ref.size-240px}", "$type": "dimension", "$description": "MegaMenu: the featured area's width." },
+    "mega-menu-feature-width": { "$value": "{plx-ref.size-60u}", "$type": "dimension", "$description": "MegaMenu: the featured area's width." },
     "mega-menu-feature-padding": { "$value": "{plx-sys.space-inset-md}", "$type": "dimension", "$description": "MegaMenu: the featured area's padding." }
   }
 }

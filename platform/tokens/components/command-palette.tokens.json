@@ -2,6 +2,6 @@
   "$description": "CommandPalette (platform/patterns/CommandPalette, library wave 5, lane C): its pattern tokens. The window is the Dialog (size md) and the list the CommandMenu; these are the space between the field and the list and the list height inside the palette.",
   "plx-comp": {
     "command-palette-gap": { "$value": "{plx-sys.space-stack-sm}", "$type": "dimension", "$description": "CommandPalette: the space between the field and the list (the CommandMenu gap)." },
-    "command-palette-list-max-height": { "$value": "{plx-ref.size-400px}", "$type": "dimension", "$description": "CommandPalette: the list scrolls past 400px in the palette (room for about ten commands)." }
+    "command-palette-list-max-height": { "$value": "{plx-ref.size-100u}", "$type": "dimension", "$description": "CommandPalette: the list scrolls past 400px in the palette (room for about ten commands)." }
   }
 }

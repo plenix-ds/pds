@@ -2,7 +2,7 @@
   "$description": "AvatarUpload (platform/patterns/AvatarUpload), library wave 7, lane B: the pattern’s own tokens (the placement of the Avatar, its actions and the hint).",
   "plx-comp": {
     "avatar-upload-max-width": {
-      "$value": "{plx-ref.size-400px}",
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension",
       "$description": "AvatarUpload: maximum width (size-400px)."
     },

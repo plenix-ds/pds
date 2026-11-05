@@ -42,12 +42,12 @@
       "$description": "EntityTitle: the subtitle (12px)."
     },
     "entity-title-title-line-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension",
       "$description": "EntityTitle: the title’s line (20px, a list row’s text line and a badge’s height), on the 4px grid."
     },
     "entity-title-subtitle-line-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$description": "EntityTitle: the subtitle’s line (16px): with the title, 36px on the 4px grid."
     }

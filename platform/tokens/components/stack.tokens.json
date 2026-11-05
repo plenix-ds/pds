@@ -2,17 +2,17 @@
   "$description": "Stack (platform/components/Stack, library wave 3, extend): the tokens of Center and Bleed. The gaps and insets of Stack and Inline are in components.tokens.json.",
   "plx-comp": {
     "center-sm-max-width": {
-      "$value": "{plx-ref.size-400px}",
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension",
       "$description": "Center: the maximum width sm (a sign-in form, an empty state)."
     },
     "center-md-max-width": {
-      "$value": "{plx-ref.size-600px}",
+      "$value": "{plx-ref.size-150u}",
       "$type": "dimension",
       "$description": "Center: the maximum width md (the default: a page of one form or one message)."
     },
     "center-lg-max-width": {
-      "$value": "{plx-ref.size-900px}",
+      "$value": "{plx-ref.size-225u}",
       "$type": "dimension",
       "$description": "Center: the maximum width lg (reading width for a page of text)."
     },

@@ -53,7 +53,7 @@ if (window.DS && DS.registerLab) {
       parts: { mr: 'A', tr: 'B', dc: 'B', dw: 'B' },
       anchors: { A: { part: '.plx-split-button__main', side: 'top' }, B: { part: '.plx-split-button__toggle', side: 'right' } },
       sections: [['Join', ['mr', 'tr']], ['Divider', ['dc', 'dw']]],
-      matrixLabel: 'Split button values by variant and state', matrixColumnWidth: '--plx-ref-size-200px',
+      matrixLabel: 'Split button values by variant and state', matrixColumnWidth: '--plx-ref-size-50u',
       statesHead: 'Variants and states · ' + HEAD
     });
 
@@ -116,7 +116,7 @@ if (window.DS && DS.registerLab) {
       parts: { bg: 'A', fg: 'A', bc: 'A', bw: 'A', sh: 'A', h: 'B', w: 'B', rad: 'B', ic: 'C', ps: 'D', pe: 'D', gap: 'D', fs: 'D', fw: 'D' },
       anchors: { A: { part: null, side: 'right' }, B: { part: null, side: 'top' }, C: { part: '.plx-floating-action-button__icon', side: 'left' }, D: { part: '.plx-floating-action-button__label', side: 'bottom' } },
       sections: [['Surface', ['bg', 'fg', 'bc', 'bw', 'sh']], ['Size', ['h', 'w', 'rad', 'ic']], ['Extended', ['ps', 'pe', 'gap', 'fs', 'fw']]],
-      matrixLabel: 'Floating action button values by variant and state', matrixColumnWidth: '--plx-ref-size-200px',
+      matrixLabel: 'Floating action button values by variant and state', matrixColumnWidth: '--plx-ref-size-50u',
       statesHead: 'Variants and states · ' + HEAD
     });
 
@@ -169,7 +169,7 @@ if (window.DS && DS.registerLab) {
       parts: { bg: 'A', bc: 'A', ifg: 'B', ihv: 'B', sob: 'C', sac: 'C', sas: 'C' },
       anchors: { A: { part: null, side: 'right' }, B: { part: '.plx-menu__item', side: 'left' }, C: { part: '.plx-menu-sub__item', side: 'left' } },
       sections: [['Surface', ['bg', 'bc']], ['Items', ['ifg', 'ihv']], ['Submenu', ['sob', 'sac', 'sas']]],
-      matrixLabel: 'Context menu values by opening and state', matrixColumnWidth: '--plx-ref-size-400px',
+      matrixLabel: 'Context menu values by opening and state', matrixColumnWidth: '--plx-ref-size-100u',
       statesHead: 'Openings and states · ' + HEAD
     });
 
@@ -210,7 +210,7 @@ if (window.DS && DS.registerLab) {
       parts: { mw: 'A', vr: 'B', br: 'C' },
       anchors: { A: { part: null, side: 'bottom' }, B: { part: '.plx-copy-button-field__value', side: 'top' }, C: { part: '.plx-copy-button-field__button', side: 'right' } },
       sections: [['Field', ['mw', 'vr', 'br']]],
-      matrixLabel: 'Copy values by form and state', matrixColumnWidth: '--plx-ref-size-400px',
+      matrixLabel: 'Copy values by form and state', matrixColumnWidth: '--plx-ref-size-100u',
       statesHead: 'Forms and states · ' + HEAD
     });
 
@@ -279,7 +279,7 @@ if (window.DS && DS.registerLab) {
       parts: { fg: 'A', ff: 'A', fs: 'A', sfg: 'B', sfw: 'B', sgap: 'B', sh: 'B', shv: 'B', srad: 'B', mk: 'C', cmt: 'D', cin: 'D', bbg: 'E', bbc: 'E', bbw: 'E', brad: 'E', bpx: 'B', bpb: 'D' },
       anchors: { A: { part: null, side: 'right' }, B: { part: '.plx-details__summary', side: 'top' }, C: { part: '.plx-details__marker', side: 'left' }, D: { part: '.plx-details__content', side: 'bottom' }, E: { part: null, side: 'left' } },
       sections: [['Text', ['fg', 'ff', 'fs']], ['Summary', ['sfg', 'sfw', 'sgap', 'sh', 'shv', 'srad', 'mk']], ['Content', ['cmt', 'cin']], ['Box', ['bbg', 'bbc', 'bbw', 'brad', 'bpx', 'bpb']]],
-      matrixLabel: 'Details values by variant and state', matrixColumnWidth: '--plx-ref-size-400px',
+      matrixLabel: 'Details values by variant and state', matrixColumnWidth: '--plx-ref-size-100u',
       statesHead: 'Variants and states · ' + HEAD
     });
 
@@ -326,7 +326,7 @@ if (window.DS && DS.registerLab) {
       parts: { dbg: 'A', dop: 'A', bcol: 'B', bsz: 'B', brc: 'B', brw: 'B' },
       anchors: { A: { part: '.plx-spotlight__dim--top', side: 'top' }, B: { part: '.plx-spotlight__beacon', side: 'right' } },
       sections: [['Dim', ['dbg', 'dop']], ['Beacon', ['bcol', 'bsz', 'brc', 'brw']]],
-      matrixLabel: 'Spotlight values by variant', matrixColumnWidth: '--plx-ref-size-400px',
+      matrixLabel: 'Spotlight values by variant', matrixColumnWidth: '--plx-ref-size-100u',
       statesHead: 'Variants · ' + HEAD
     });
   })();

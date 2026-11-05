@@ -30,10 +30,10 @@
 .plx-field--inline.plx-field--label-sm{grid-template-columns:var(--plx-comp-field-grid-columns,var(--plx-comp-field-inline-context-columns,var(--plx-comp-field-inline-label-sm-grid-template-columns)));}
 /* A group of inline fields (owner, batches 269-270: side by side takes less height; "the side by side is utilizing a very
    wide width for the fields... no reason to"; "use tooltip to show the label"). In a Stack the inline fields share one
-   label column as wide as the longest label (a label is at most --plx-ref-size-160px) and one control column from
+   label column as wide as the longest label (a label is at most --plx-ref-size-40u) and one control column from
    --plx-sys-field-width-md to --plx-sys-field-width-lg, packed to the start: controls never stretch across a wide panel.
    When the group is narrow the control keeps its minimum and the label column gives way: a label cut short ends in an
-   ellipsis and shows in full in a Tooltip (Field). Only below 180px (the value of --plx-ref-size-180px; a container
+   ellipsis and shows in full in a Tooltip (Field). Only below 180px (the value of --plx-ref-size-45u; a container
    condition cannot read a custom property), when a panel is dragged that narrow, does each label move above its control. */
 .plx-field__label-tip{max-inline-size:var(--plx-comp-field-grid-label-tip-max-width,100%);min-inline-size:0;}
 /* the character counter (counter, library wave 6): the description and the count on one help line, the count at its end,

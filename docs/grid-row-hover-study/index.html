@@ -9,7 +9,7 @@
 <style>
 /* The owner's row hover study (2026-10-23): the real grid, silver header; each hover keeps the grid lines visible. Palette colors only. */
 body{background:var(--plx-sys-color-surface-page,var(--plx-ref-color-gray-75));margin:0;}
-.study{display:grid;gap:var(--plx-ref-space-32px);margin-inline:auto;max-inline-size:var(--plx-ref-size-900px);padding:var(--plx-ref-space-32px) var(--plx-ref-space-16px);}
+.study{display:grid;gap:var(--plx-ref-space-32px);margin-inline:auto;max-inline-size:var(--plx-ref-size-225u);padding:var(--plx-ref-space-32px) var(--plx-ref-space-16px);}
 .study__intro h1{font-size:var(--plx-sys-font-size-heading-lg,1.5rem);margin:0 0 var(--plx-ref-space-8px);}
 .study__intro p{color:var(--plx-ref-color-gray-700);margin:0;}
 .study__option h2{font-size:var(--plx-sys-font-size-heading-sm,1rem);margin:0 0 var(--plx-ref-space-4px);}
@@ -20,9 +20,9 @@ body{background:var(--plx-sys-color-surface-page,var(--plx-ref-color-gray-75));m
 .study__option .plx-data-grid__grid-col-title{color:var(--plx-comp-data-grid-header-text);}
 .study__option .plx-data-grid{--plx-comp-data-grid-header-text:var(--plx-ref-color-gray-900);}
 .study__option .plx-data-grid__grid-header{background-image:linear-gradient(to bottom,var(--plx-ref-color-gray-50),var(--plx-ref-color-gray-200));border-block-end-color:var(--plx-ref-color-gray-400);}
-.study__option .plx-data-grid[data-plx-density="compact"] .plx-data-grid__grid-header{--plx-comp-data-grid-height:var(--plx-ref-size-28px);}
-.study__option .plx-data-grid[data-plx-density="standard"] .plx-data-grid__grid-header{--plx-comp-data-grid-height:var(--plx-ref-size-32px);}
-.study__option .plx-data-grid[data-plx-density="comfortable"] .plx-data-grid__grid-header{--plx-comp-data-grid-height:var(--plx-ref-size-40px);}
+.study__option .plx-data-grid[data-plx-density="compact"] .plx-data-grid__grid-header{--plx-comp-data-grid-height:var(--plx-ref-size-7u);}
+.study__option .plx-data-grid[data-plx-density="standard"] .plx-data-grid__grid-header{--plx-comp-data-grid-height:var(--plx-ref-size-8u);}
+.study__option .plx-data-grid[data-plx-density="comfortable"] .plx-data-grid__grid-header{--plx-comp-data-grid-height:var(--plx-ref-size-10u);}
 /* clicking the title sorts; on hover the options button shows at the right edge, full height, a 1px line on its left */
 .study__option .plx-data-grid__grid-header-popup-button--menu{background-color:transparent;block-size:100%;border-inline-start-color:var(--plx-ref-color-gray-400);border-inline-start-style:solid;border-inline-start-width:var(--plx-sys-border-width-thin);border-radius:0;inset-block-start:0;inset-inline-end:0;padding-inline-end:var(--plx-ref-space-4px);padding-inline-start:var(--plx-ref-space-4px);transform:none;}
 .study__option .plx-data-grid__grid-header-popup-button--menu:hover{background-color:var(--plx-ref-color-gray-200);}

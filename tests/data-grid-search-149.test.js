@@ -9,7 +9,7 @@ const {serve,launch}=require('./lib');
  await page.evaluate(()=>{
   document.documentElement.setAttribute('data-plx-mode','light');const h=React.createElement,host=document.createElement('main');document.body.replaceChildren(host);
   const data=Array.from({length:600},(_,i)=>Object.fromEntries([['id',i],['name','Record '+String(600-i).padStart(3,'0')],...Array.from({length:10},(_,j)=>['field'+j,'Value '+i+' '+j])]));
-  const columns=[{field:'name',title:'Name',width:'--plx-ref-size-240px'},...Array.from({length:10},(_,j)=>({field:'field'+j,title:'Field '+j,width:'--plx-ref-size-120px'}))];
+  const columns=[{field:'name',title:'Name',width:'--plx-ref-size-60u'},...Array.from({length:10},(_,j)=>({field:'field'+j,title:'Field '+j,width:'--plx-ref-size-30u'}))];
   window.__search149={localeCalls:0,tokenReads:0,filterCalls:0,selectionChanges:0};const locale=String.prototype.localeCompare,computed=window.getComputedStyle;
   String.prototype.localeCompare=function(...args){window.__search149.localeCalls++;return locale.apply(this,args);};
   window.getComputedStyle=function(...args){window.__search149.tokenReads++;return computed.apply(this,args);};
@@ -22,7 +22,7 @@ const {serve,launch}=require('./lib');
  await page.waitForFunction(()=>{const cells=[...document.querySelectorAll('.plx-data-grid__grid-row [data-plx-field="name"]')];return cells.length===10&&cells[0].textContent.includes('Record 590')&&cells.at(-1).textContent.includes('Record 599');});
  const stats=await page.evaluate(()=>({...window.__search149,value:document.querySelector('input[aria-label="Search records"]').value}));stats.elapsedMs=Date.now()-started;
  console.log(JSON.stringify(stats));assert.equal(stats.value,'Record 59');assert.equal(stats.selectionChanges,1,'notify only when the selected record becomes hidden');assert.ok(stats.filterCalls<=600*'Record 59'.length,'each query evaluates the predicate at most once per record');assert.ok(stats.tokenReads<600,'typing must not resolve token widths separately for every record');assert.equal(stats.localeCalls,0,'search must reuse the numeric collator rather than construct one through localeCompare');
- const override=await page.addStyleTag({content:'.plx-data-grid{--plx-ref-space-4px:var(--plx-ref-size-16px)}'});
+ const override=await page.addStyleTag({content:'.plx-data-grid{--plx-ref-space-4px:var(--plx-ref-size-4u)}'});
  await page.evaluate(()=>document.documentElement.setAttribute('data-plx-density','comfortable'));
  await page.waitForFunction(()=>{const grid=document.querySelector('.plx-data-grid'),cell=grid.querySelector('.plx-data-grid__grid-row [data-plx-field="field0"]');return Math.abs(cell.getBoundingClientRect().width-parseFloat(Plenix.gridPx(120,{el:grid})))<1;});
  await override.evaluate(el=>el.remove());await page.evaluate(()=>document.documentElement.setAttribute('data-plx-density','standard'));

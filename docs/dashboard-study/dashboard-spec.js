@@ -893,7 +893,7 @@
             ['Keyboard and touch users move Calendar ahead of Notes.', 'Successful non-drag rearrangement, focus continuity, understanding of saved state.']])),
 
         h(Section, { id: 'open', eyebrow: '10 / Items to confirm', title: 'Items to confirm before implementation', lead: 'These depend on data, roles or platform decisions that the specification cannot settle. Every item stays open until the owner confirms it.' },
-          table('Items to confirm', ['Item', 'What is needed', 'Affects', 'Status', 'Today in Plenix'], CONFIRM.map(function (c) { return [c[0], c[1], c[2], badge('action-required', 'flag', 'To confirm', 'sm'), c[3] || '—']; }), [null, null, null, '--plx-ref-size-120px'])),
+          table('Items to confirm', ['Item', 'What is needed', 'Affects', 'Status', 'Today in Plenix'], CONFIRM.map(function (c) { return [c[0], c[1], c[2], badge('action-required', 'flag', 'To confirm', 'sm'), c[3] || '—']; }), [null, null, null, '--plx-ref-size-30u'])),
 
         h(Section, { id: 'sources', eyebrow: '11 / Sources', title: 'Sources' },
           h3('Internal design studies'),

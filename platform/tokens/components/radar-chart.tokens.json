@@ -2,8 +2,8 @@
   "$description": "RadarChart (platform/charts/RadarChart.jsx, library wave 9, lane B): its component tokens. Spokes, rings, outlines and points are the frame's (chart-*); these set the area's opacity, the points and the measures' names. No new color: existing roles and the theme's opacity scale.",
   "plx-comp": {
     "radar-chart-area-opacity": { "$value": "{plx-sys.opacity-low}", "$type": "number", "$description": "Radar chart: an item's area is its data color at this opacity, so overlapping shapes stay visible." },
-    "radar-chart-point-radius": { "$value": "{plx-ref.size-4px}", "$type": "dimension", "$description": "Radar chart: the radius of a value's point (the frame's point, with its ring)." },
-    "radar-chart-label-offset": { "$value": "{plx-ref.size-8px}", "$type": "dimension", "$description": "Radar chart: the distance between a spoke's end and the measure's name, and between a ring and its value." },
+    "radar-chart-point-radius": { "$value": "{plx-ref.size-1u}", "$type": "dimension", "$description": "Radar chart: the radius of a value's point (the frame's point, with its ring)." },
+    "radar-chart-label-offset": { "$value": "{plx-ref.size-2u}", "$type": "dimension", "$description": "Radar chart: the distance between a spoke's end and the measure's name, and between a ring and its value." },
     "radar-chart-axis-label-text": { "$value": "{plx-sys.content-default}", "$type": "color", "$description": "Radar chart: a measure's name at the end of its spoke." },
     "radar-chart-axis-label-font-family": { "$value": "{plx-sys.font-label}", "$type": "fontFamily", "$description": "Radar chart: the measures' names are UI text: the label font." },
     "radar-chart-axis-label-font-size": { "$value": "{plx-sys.text-label-font-size}", "$type": "dimension", "$description": "Radar chart: a measure's name's size." },

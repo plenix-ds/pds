@@ -16,6 +16,6 @@ const rows = Array.from({ length: 40 }, (_, i) => ({ id: i + 1, name: 'Record ' 
 const columns = [{ title: 'Name', field: 'name' }, { title: 'Tags', field: 'tags', type: 'multi' }, { title: 'Status', field: 'status' },
   { title: 'When', field: 'when', type: 'date' }, { title: 'Amount', field: 'amount', type: 'number', summary: 'sum' }, { title: 'Done', field: 'done', type: 'checkbox', summary: 'count' }];
 const cases = { multi: 'tags', status: 'status', month: [{ field: 'when', interval: 'month' }], range: [{ field: 'amount', range: 100 }], nested: ['status', 'tags'], bool: 'done' };
-function App() { return h(P.DataGrid, { label: 'Grouping', data: rows, columns, groupBy: cases[q.get('case') || 'multi'], height: '--plx-ref-size-900px', mode: 'fill' }); }
+function App() { return h(P.DataGrid, { label: 'Grouping', data: rows, columns, groupBy: cases[q.get('case') || 'multi'], height: '--plx-ref-size-225u', mode: 'fill' }); }
 ReactDOM.createRoot(document.getElementById('root')).render(h(App));
 </script></body></html>

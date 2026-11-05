@@ -21,7 +21,7 @@ const assert = require('assert/strict'), { serve, launch } = require('./lib');
         const rows = [{ id: 1, a: 'x', b: 'y' }];
         ReactDOM.createRoot(document.getElementById('c')).render(h('div', null,
           h('div', { id: 'pane' }, h(P.PanelSplitter, { label: 'Pane', value: 400, min: 140, max: () => 2000, onChange: (w) => steps.push(w) })),
-          h('div', { id: 'table', style: { width: '600px' } }, h(P.DataGrid, { label: 'T', data: rows, index: 'id', columns: [{ title: 'A', field: 'a' }, { title: 'B', field: 'b', maxWidth: '--plx-ref-size-120px' }] }))));
+          h('div', { id: 'table', style: { width: '600px' } }, h(P.DataGrid, { label: 'T', data: rows, index: 'id', columns: [{ title: 'A', field: 'a' }, { title: 'B', field: 'b', maxWidth: '--plx-ref-size-30u' }] }))));
         await new Promise((r) => setTimeout(r, 400));
         const edge = document.querySelector('#pane .plx-panel-splitter');
         edge.focus(); edge.dispatchEvent(new KeyboardEvent('keydown', { key: 'End', bubbles: true }));

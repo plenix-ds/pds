@@ -57,17 +57,17 @@
       "$description": "VirtualList: row text size (font-size-13)."
     },
     "virtual-list-height-sm": {
-      "$value": "{plx-ref.size-240px}",
+      "$value": "{plx-ref.size-60u}",
       "$type": "dimension",
       "$description": "VirtualList: scroll area height, height=\"sm\" (size-240px)."
     },
     "virtual-list-height-md": {
-      "$value": "{plx-ref.size-320px}",
+      "$value": "{plx-ref.size-80u}",
       "$type": "dimension",
       "$description": "VirtualList: scroll area height (default) (size-320px)."
     },
     "virtual-list-height-lg": {
-      "$value": "{plx-ref.size-500px}",
+      "$value": "{plx-ref.size-125u}",
       "$type": "dimension",
       "$description": "VirtualList: scroll area height, height=\"lg\" (size-500px)."
     },

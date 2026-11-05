@@ -1,17 +1,17 @@
 {
   "$description": "Slider (platform/components/Slider), library wave 6, lane C: the tokens of the track it draws for a range slider (two thumbs) and a slider with marks. The plain slider stays the browser's control on the shared Slider tokens (components.tokens.json); this track repeats its look with the same roles: the action color for the filled part and the thumbs.",
   "plx-comp": {
-    "slider-track-height": { "$value": "{plx-ref.size-4px}", "$type": "dimension", "$description": "Range or marked slider: the track's thickness." },
+    "slider-track-height": { "$value": "{plx-ref.size-1u}", "$type": "dimension", "$description": "Range or marked slider: the track's thickness." },
     "slider-track-radius": { "$value": "{plx-ref.radius-md}", "$type": "dimension", "$description": "Range or marked slider: the track's and the fill's round ends." },
     "slider-track-background": { "$value": "{plx-sys.border-default}", "$type": "color", "$description": "Range or marked slider: the track outside the chosen part (the default border role)." },
     "slider-fill-background": { "$value": "{plx-sys.action-primary-background}", "$type": "color", "$description": "Range or marked slider: the chosen part of the track (the plain slider's accent color)." },
-    "slider-thumb-size": { "$value": "{plx-ref.size-16px}", "$type": "dimension", "$description": "Range or marked slider: the thumb's width and height (a circle)." },
+    "slider-thumb-size": { "$value": "{plx-ref.size-4u}", "$type": "dimension", "$description": "Range or marked slider: the thumb's width and height (a circle)." },
     "slider-thumb-radius": { "$value": "{plx-ref.radius-md}", "$type": "dimension", "$description": "Range or marked slider: the thumb's corners (a circle)." },
     "slider-thumb-background": { "$value": "{plx-sys.action-primary-background}", "$type": "color", "$description": "Range or marked slider: the thumb's fill (the plain slider's accent color)." },
     "slider-thumb-top-layer": { "$value": "{plx-sys.layer-raised}", "$type": "number", "$description": "Range slider: lifts the minimum's input above the maximum's when the thumbs meet near the end, so it can still be dragged." },
     "slider-mark-text": { "$value": "{plx-sys.content-muted}", "$type": "color", "$description": "Slider mark: the label's color (the value's)." },
     "slider-mark-font-family": { "$value": "{plx-sys.font-data}", "$type": "fontFamily", "$description": "Slider mark: a value, in the data font." },
     "slider-mark-font-size": { "$value": "{plx-sys.text-caption-font-size}", "$type": "dimension", "$description": "Slider mark: the label's size (the value's)." },
-    "slider-mark-line-height": { "$value": "{plx-ref.size-16px}", "$type": "dimension", "$description": "Slider mark: the label's line, and the height of the row of marks under the track." }
+    "slider-mark-line-height": { "$value": "{plx-ref.size-4u}", "$type": "dimension", "$description": "Slider mark: the label's line, and the height of the row of marks under the track." }
   }
 }

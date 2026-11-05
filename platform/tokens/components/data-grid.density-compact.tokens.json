@@ -2,7 +2,7 @@
   "$description": "DataGrid: its tokens at the compact density.",
   "plx-comp": {
     "data-grid-text-line-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$description": "DataGrid: a line of cell text in taller rows (and the line P is measured against): 16px at Compact."
     },
@@ -19,12 +19,12 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "data-grid-view-column-width": {
-      "$value": "{plx-ref.size-36px}",
+      "$value": "{plx-ref.size-9u}",
       "$type": "dimension",
       "$description": "DataGrid: the view column at the end of the header (the view menu's button): as wide as the checkbox column."
     },
     "data-grid-header-height": {
-      "$value": "{plx-ref.size-28px}",
+      "$value": "{plx-ref.size-7u}",
       "$type": "dimension",
       "$description": "DataGrid column header: 28px at Compact, the titles unchanged (owner, 2026-10-23: Windows Explorer’s header)."
     }

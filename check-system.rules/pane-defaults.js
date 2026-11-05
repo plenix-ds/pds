@@ -20,7 +20,18 @@ const COMP = {
   'secondary-pane-width-sm-from-1440': 220, 'secondary-pane-width-md-from-1440': 260, 'secondary-pane-width-lg-from-1440': 320,
   'secondary-pane-width-sm-from-1920': 260, 'secondary-pane-width-md-from-1920': 320, 'secondary-pane-width-lg-from-1920': 400,
 };
-const px = (v) => { const m = /^\{plx-ref\.size-(\d+)px\}$/.exec(v || ''); return m ? +m[1] : null; };
+// the px a size reference ends at: {plx-ref.size-…} followed to its value in reference.tokens.json (not read from the name:
+// the palette's names say their step, docs/adr/0012)
+const { css } = require('../tools/token-value.js');
+let REF = null;
+const px = (v) => {
+  const m = /^\{plx-ref\.(size-[a-z0-9-]+)\}$/.exec(v || ''); if (!m) return null;
+  REF = REF || json('platform/tokens/reference.tokens.json')['plx-ref'] || {};
+  let t = REF[m[1]], n = 0;
+  while (t && n++ < 10) { const r = /^\{plx-ref\.([a-z0-9-]+)\}$/.exec(String(t.$value)); if (!r) break; t = REF[r[1]]; }
+  const x = t && /^(\d+(?:\.\d+)?)px$/.exec(css(t.$value));
+  return x ? +x[1] : null;
+};
 
 function check({ add }) {
   const sys = json('platform/tokens/semantic.density-standard.tokens.json')['plx-sys'] || {};

@@ -60,7 +60,7 @@ if (window.DS && DS.registerLab) {
       parts: { fg: 'A', sg: 'B', hg: 'C', gtc: 'D' },
       anchors: { A: { part: null, side: 'left' }, B: { part: '.plx-form-section', side: 'right' }, C: { part: '.plx-form-section__header', side: 'right' }, D: { part: '.plx-form-section__body', side: 'top' } },
       sections: [['Spacing', ['fg', 'sg', 'hg']], ['Two columns', ['gtc']]],
-      matrixLabel: 'Form layouts', matrixColumnWidth: '--plx-ref-size-560px',
+      matrixLabel: 'Form layouts', matrixColumnWidth: '--plx-ref-size-140u',
       statesHead: 'Layouts · ' + HEAD
     });
 
@@ -102,7 +102,7 @@ if (window.DS && DS.registerLab) {
       parts: { cc: 'A', cff: 'A', cfs: 'A', fg: 'B' },
       anchors: { A: { part: '.plx-field__counter', side: 'right' }, B: { part: '.plx-field__foot', side: 'bottom' } },
       sections: [['Count', ['cc', 'cff', 'cfs']], ['Layout', ['fg']]],
-      matrixLabel: 'Character counter by layout', matrixColumnWidth: '--plx-ref-size-320px',
+      matrixLabel: 'Character counter by layout', matrixColumnWidth: '--plx-ref-size-80u',
       statesHead: 'Layouts · ' + HEAD
     });
 
@@ -207,7 +207,7 @@ if (window.DS && DS.registerLab) {
       parts: { mx: 'A', mn: 'A', py: 'B', lh: 'C', fs: 'C' },
       anchors: { A: { part: null, side: 'right' }, B: { part: null, side: 'top' }, C: { part: null, side: 'left' } },
       sections: [['Height', ['mn', 'mx']], ['Text', ['fs', 'lh']], ['Spacing', ['py']]],
-      matrixLabel: 'Autogrowing text area by state', matrixColumnWidth: '--plx-ref-size-320px', statesHead: 'States · ' + HEAD
+      matrixLabel: 'Autogrowing text area by state', matrixColumnWidth: '--plx-ref-size-80u', statesHead: 'States · ' + HEAD
     });
 
     // ---- OtpInput (<OtpInput>): a row of square boxes in the input roles, the code in the data font
@@ -263,7 +263,7 @@ if (window.DS && DS.registerLab) {
       parts: { gap: 'A', w: 'B', h: 'B', rad: 'B', bg: 'C', bc: 'C', bw: 'C', fg: 'D', ff: 'D', fs: 'D' },
       anchors: { A: { part: null, side: 'bottom' }, B: { part: CELL, side: 'top' }, C: { part: CELL, side: 'left' }, D: { part: CELL, side: 'right' } },
       sections: [['Box', ['w', 'h', 'rad', 'bg', 'bc', 'bw']], ['Character', ['fg', 'ff', 'fs']], ['Layout', ['gap']]],
-      matrixLabel: 'OTP input by kind and state', matrixColumnWidth: '--plx-ref-size-320px', statesHead: 'Kinds and states · ' + HEAD
+      matrixLabel: 'OTP input by kind and state', matrixColumnWidth: '--plx-ref-size-80u', statesHead: 'Kinds and states · ' + HEAD
     });
 
     // ---- Search suggestions and recent searches (<SearchField suggestions recent>): the list under the field
@@ -371,7 +371,7 @@ if (window.DS && DS.registerLab) {
         parts: { bg: 'A', bc: 'A', bw: 'A', rad: 'A', mt: 'A', py: 'A', px: 'A', mh: 'A', oc: 'B', ob: 'B', oh: 'B', ofs: 'B', opx: 'B', og: 'B', orad: 'B', ic: 'C', mw: 'D', dc: 'D', dfs: 'D', tc: 'E', tff: 'E', tfs: 'E', tfw: 'E', hg: 'E', hpt: 'E', hpb: 'E', hpx: 'E' },
         anchors: { A: { part: null, side: 'right' }, B: { part: OPT, side: 'right' }, C: { part: '.plx-search__option-icon', side: 'left' }, D: { part: '.plx-search__option-label', side: 'bottom' }, E: { part: '.plx-search__popup-head', side: 'top' } },
         sections: [['List', ['bg', 'bc', 'bw', 'rad', 'mt', 'py', 'px', 'mh']], ['Options', ['oc', 'ob', 'oh', 'ofs', 'opx', 'og', 'orad', 'ic']], ['Suggestion text', ['mw', 'dc', 'dfs']], ['Recent searches heading', ['tc', 'tff', 'tfs', 'tfw', 'hg', 'hpt', 'hpb', 'hpx']]],
-        matrixLabel: name + ' by list and state', matrixColumnWidth: '--plx-ref-size-320px', statesHead: 'Lists and states · ' + HEAD
+        matrixLabel: name + ' by list and state', matrixColumnWidth: '--plx-ref-size-80u', statesHead: 'Lists and states · ' + HEAD
       });
     };
     searchLab('search-suggestions', 'Search suggestions', 'suggestions');

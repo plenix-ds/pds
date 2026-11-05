@@ -32,7 +32,7 @@
      FormActions.children: the buttons, in reading order: a destructive action first, the primary last (at the end)
    Behavior:
      The fields of a section are a Stack: in a two-column form they share one label column, as wide as the longest label
-       (at most --plx-ref-size-160px); a label cut short shows in full in a Tooltip; in a very narrow column each label
+       (at most --plx-ref-size-40u); a label cut short shows in full in a Tooltip; in a very narrow column each label
        moves above its control (Field).
      A section is a <section> named by its title; its description is part of the page text (read in order).
      FormActions is an ActionBar: buttons at the end in one row (what does not fit folds into More actions); sticky by default.

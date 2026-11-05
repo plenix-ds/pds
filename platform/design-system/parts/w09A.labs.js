@@ -94,7 +94,7 @@ if (window.DS && DS.registerLab) {
       parts: { fw: 'A', fr: 'A', fc: 'A', ag: 'B', mr: 'C', mo: 'C', mw: 'C', bb: 'D', bc: 'D', bw: 'D', do: 'E', sc: 'F', sw: 'F' },
       anchors: { A: { part: '.plx-chart__plot', side: 'left' }, B: { part: '.plx-chart__actions', side: 'top' }, C: { part: '.plx-chart-focus', side: 'right' }, D: { part: '.plx-chart-brush', side: 'bottom' }, E: { part: '.plx-chart-dim--off', side: 'top' }, F: { part: '.plx-chart-selected', side: 'right' } },
       sections: [['Focus', ['fw', 'fr', 'fc']], ['Value', ['mr', 'mo', 'mw', 'sc', 'sw', 'do']], ['Zoom', ['bb', 'bc', 'bw', 'ag']]],
-      matrixLabel: 'Chart interaction values by behavior', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Behaviors · ' + HEAD
+      matrixLabel: 'Chart interaction values by behavior', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Behaviors · ' + HEAD
     });
 
     // ---- Line chart (<LineChart>) and Step chart (curve="step"): lines, points and the frame's line tokens
@@ -131,7 +131,7 @@ if (window.DS && DS.registerLab) {
       parts: { lw: 'A', pr: 'B', po: 'B', pw: 'B' },
       anchors: { A: { part: '.plx-chart__line', side: 'top' }, B: { part: '.plx-line-chart__point', side: 'right' } },
       sections: [['Line', ['lw']], ['Points', ['pr', 'po', 'pw']]],
-      matrixLabel: 'Line chart values by variant', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Variants · ' + HEAD
+      matrixLabel: 'Line chart values by variant', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Variants · ' + HEAD
     };
     DS.registerLab('line-chart', lineSpec);
     DS.registerLab('step-chart', Object.assign({}, lineSpec, { name: 'Step chart', title: 'Plenix step chart', store: 'plenix-step-chart-lab-tokens',
@@ -168,7 +168,7 @@ if (window.DS && DS.registerLab) {
       labelSelector: '.plx-chart__title',
       parts: { fo: 'A' }, anchors: { A: { part: '.plx-area-chart__area', side: 'top' } },
       sections: [['Area', ['fo']]],
-      matrixLabel: 'Area chart values by stack', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Stacks · ' + HEAD
+      matrixLabel: 'Area chart values by stack', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Stacks · ' + HEAD
     });
 
     // ---- Gauge (<Gauge>): the dial, the readout, the ends, the threshold bands
@@ -224,7 +224,7 @@ if (window.DS && DS.registerLab) {
       parts: { w: 'A', g: 'A', tc: 'B', tw: 'B', bw: 'C', vc: 'D', vf: 'D', vs: 'D', vw: 'D', vl: 'D', lc: 'E', lf: 'E', ls: 'E', ll: 'E', ec: 'F', ef: 'F', es: 'F', el: 'F', ei: 'F' },
       anchors: { A: { part: '.plx-gauge__meter', side: 'left' }, B: { part: '.plx-gauge__track', side: 'top' }, C: { part: '.plx-gauge__band', side: 'right' }, D: { part: '.plx-gauge__value', side: 'right' }, E: { part: '.plx-gauge__label', side: 'right' }, F: { part: '.plx-gauge__range', side: 'bottom' } },
       sections: [['Dial', ['w', 'g', 'tc', 'tw', 'bw']], ['Value', ['vc', 'vf', 'vs', 'vw', 'vl']], ['Label', ['lc', 'lf', 'ls', 'll']], ['Ends', ['ec', 'ef', 'es', 'el', 'ei']]],
-      matrixLabel: 'Gauge values by variant and size', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Variants · ' + HEAD
+      matrixLabel: 'Gauge values by variant and size', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Variants · ' + HEAD
     });
 
     // ---- Heat map (<HeatMap>): cells, the empty cell, the active cell, the color scale
@@ -278,7 +278,7 @@ if (window.DS && DS.registerLab) {
       parts: { cr: 'A', cw: 'A', eb: 'B', ec: 'B', ac: 'C', aw: 'C', sg: 'D', st: 'D', sf: 'D', ss: 'D', sl: 'D', vf: 'E', mf: 'F', sw: 'G', sh: 'G' },
       anchors: { A: { part: '.plx-heat-map__cell', side: 'top' }, B: { part: '.plx-heat-map__cell--empty', side: 'bottom' }, C: { part: '.plx-heat-map__cell--active', side: 'right' }, D: { part: '.plx-heat-map-scale', side: 'left' }, E: { part: '.plx-heat-map-scale__end', side: 'bottom' }, F: { part: '.plx-heat-map-scale__missing', side: 'right' }, G: { part: '.plx-heat-map-scale__swatch', side: 'top' } },
       sections: [['Cells', ['cr', 'cw', 'eb', 'ec', 'ac', 'aw']], ['Color scale', ['sg', 'st', 'sf', 'ss', 'sl', 'vf', 'mf', 'sw', 'sh']]],
-      matrixLabel: 'Heat map values by variant', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Variants · ' + HEAD
+      matrixLabel: 'Heat map values by variant', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Variants · ' + HEAD
     });
 
     // ---- Waterfall (<WaterfallChart>): the connectors between steps (the columns are the frame's marks)
@@ -310,7 +310,7 @@ if (window.DS && DS.registerLab) {
       labelSelector: '.plx-chart__title',
       parts: { cc: 'A', cw: 'A' }, anchors: { A: { part: '.plx-waterfall-chart__connector', side: 'top' } },
       sections: [['Connector', ['cc', 'cw']]],
-      matrixLabel: 'Waterfall values by variant', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Variants · ' + HEAD
+      matrixLabel: 'Waterfall values by variant', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Variants · ' + HEAD
     });
 
     // ---- Word cloud (<WordCloud>): the words in five sizes, grouped words, the active word
@@ -354,7 +354,7 @@ if (window.DS && DS.registerLab) {
       parts: { tc: 'A', ff: 'A', fw: 'A', lw: 'B', s1: 'A', s2: 'C', s3: 'C', s4: 'C', s5: 'B', uw: 'D' },
       anchors: { A: { part: '.plx-word-cloud__word--1', side: 'bottom' }, B: { part: '.plx-word-cloud__word--5', side: 'top' }, C: { part: '.plx-word-cloud__word--3', side: 'right' }, D: { part: '.plx-word-cloud__word--active', side: 'bottom' } },
       sections: [['Words', ['tc', 'ff', 'fw', 'lw', 'uw']], ['Sizes', ['s1', 's2', 's3', 's4', 's5']]],
-      matrixLabel: 'Word cloud values by layout', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Layouts · ' + HEAD
+      matrixLabel: 'Word cloud values by layout', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Layouts · ' + HEAD
     });
 
     // ---- Graph / network (<NetworkGraph>): nodes, labels, edges, arrows, the active node
@@ -412,7 +412,7 @@ if (window.DS && DS.registerLab) {
       parts: { nr: 'A', no: 'A', nw: 'A', lc: 'B', lf: 'B', ls: 'B', hc: 'B', hw: 'B', ec: 'C', ew: 'C', ar: 'C', xc: 'D', xs: 'D', ac: 'E', aw: 'E', ao: 'F', an: 'F', al: 'F' },
       anchors: { A: { part: '.plx-network-graph__dot', side: 'top' }, B: { part: '.plx-network-graph__label', side: 'bottom' }, C: { part: '.plx-network-graph__edge', side: 'left' }, D: { part: '.plx-network-graph__edge-label', side: 'top' }, E: { part: '.plx-network-graph__edge--active', side: 'right' }, F: { part: '.plx-network-graph__node--active', side: 'right' } },
       sections: [['Nodes', ['nr', 'no', 'nw', 'lc', 'lf', 'ls', 'hc', 'hw']], ['Edges', ['ec', 'ew', 'ar', 'xc', 'xs']], ['Active', ['ac', 'aw', 'ao', 'an', 'al']]],
-      matrixLabel: 'Network graph values by layout', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Layouts · ' + HEAD
+      matrixLabel: 'Network graph values by layout', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Layouts · ' + HEAD
     });
 
     // ---- Diagram (<Diagram>): shapes, labels, connectors, groups, the active shape
@@ -485,7 +485,7 @@ if (window.DS && DS.registerLab) {
       parts: { sb: 'A', sc: 'A', sw: 'A', sr: 'A', tr: 'A', lc: 'B', lf: 'B', ls: 'B', ll: 'B', lw: 'B', lp: 'B', dp: 'B', tc: 'C', ts: 'C', cc: 'D', cw: 'D', xc: 'E', xs: 'E', hc: 'E', hw: 'E', gb: 'F', gc: 'F', gr: 'F', gl: 'F', ac: 'G', aw: 'G' },
       anchors: { A: { part: '.plx-diagram__shape', side: 'top' }, B: { part: '.plx-diagram__text', side: 'right' }, C: { part: '.plx-diagram__detail', side: 'bottom' }, D: { part: '.plx-diagram__connector', side: 'left' }, E: { part: '.plx-diagram__connector-label', side: 'top' }, F: { part: '.plx-diagram__group-box', side: 'left' }, G: { part: '.plx-diagram__node--active', side: 'right' } },
       sections: [['Shapes', ['sb', 'sc', 'sw', 'sr', 'tr', 'ac', 'aw']], ['Labels', ['lc', 'lf', 'ls', 'll', 'lw', 'lp', 'dp', 'tc', 'ts']], ['Connectors', ['cc', 'cw', 'xc', 'xs', 'hc', 'hw']], ['Groups', ['gb', 'gc', 'gr', 'gl']]],
-      matrixLabel: 'Diagram values by variant', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Variants · ' + HEAD
+      matrixLabel: 'Diagram values by variant', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Variants · ' + HEAD
     });
   })();
 }

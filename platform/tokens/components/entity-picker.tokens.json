@@ -2,7 +2,7 @@
   "$description": "EntityPicker (platform/components/EntityPicker), library wave 7, lane B: its component tokens. The field in the input roles, the list a menu surface of two-line options; the technical detail in the data font.",
   "plx-comp": {
     "entity-picker-max-width": {
-      "$value": "{plx-ref.size-400px}",
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension",
       "$description": "EntityPicker: maximum width (size-400px)."
     },
@@ -32,7 +32,7 @@
       "$description": "EntityPicker field invalid: border color (feedback-danger-solid)."
     },
     "entity-picker-input-flex-basis": {
-      "$value": "{plx-ref.size-80px}",
+      "$value": "{plx-ref.size-20u}",
       "$type": "dimension",
       "$description": "EntityPicker input flex basis: input flex basis (size-80px)."
     },
@@ -92,7 +92,7 @@
       "$description": "EntityPicker list margin block start: list margin block start (space-stack-xs)."
     },
     "entity-picker-list-max-height": {
-      "$value": "{plx-ref.size-320px}",
+      "$value": "{plx-ref.size-80u}",
       "$type": "dimension",
       "$description": "EntityPicker list: maximum height (size-320px)."
     },

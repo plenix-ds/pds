@@ -2,14 +2,14 @@
    Summary: Tells a component when an element enters or leaves the window or a scroll area (IntersectionObserver), without scroll handlers: to load a thumbnail just before it shows, fetch the next page near the end of a list, or mark a sticky header once the content passes under it.
    Usage:
      const ref = React.useRef(null);
-     const { visible } = useIntersection(ref, { once: true, rootMargin: '--plx-ref-size-200px' });   // load once, a little early
+     const { visible } = useIntersection(ref, { once: true, rootMargin: '--plx-ref-size-50u' });   // load once, a little early
      <div ref={ref}>{visible ? <img … /> : <Skeleton … />}</div>
      const { ratio } = useIntersection(ref, { threshold: [0, 0.5, 1] });                             // how much of it shows
      useIntersection(sentinel, { root: listRef, onChange: (e) => { if (e.isIntersecting) loadMore(); } });
    Props:
      ref: a ref to the element to watch
      options.root (null): a ref to the scroll area to watch in (or an element); the window when null
-     options.rootMargin (null): a length token (a name such as '--plx-ref-size-200px', or a list of up to four for the top, right, bottom and left) that grows the area, so it fires before the element is in view; a negative margin is not offered
+     options.rootMargin (null): a length token (a name such as '--plx-ref-size-50u', or a list of up to four for the top, right, bottom and left) that grows the area, so it fires before the element is in view; a negative margin is not offered
      options.threshold (0): the visible share, from 0 to 1 (or a list), at which it reports
      options.once (false): stops watching once the element has been visible, and stays visible
      options.disabled (false): does not watch
@@ -30,7 +30,7 @@ export type IntersectionOptions = {
 };
 export type IntersectionState = { visible: boolean; ratio: number; entry: IntersectionObserverEntry | null };
 
-// a length token as pixels for rootMargin ('--plx-ref-size-200px' -> '200px'); the tokens are written in rem
+// a length token as pixels for rootMargin ('--plx-ref-size-50u' -> '200px'); the tokens are written in rem
 function marginOf(value: string | string[] | null): string {
   if (!value || typeof document === 'undefined') return '0px';
   const root = document.documentElement, size = parseFloat(getComputedStyle(root).fontSize);

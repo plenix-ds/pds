@@ -1,13 +1,13 @@
 /* Library part w12A (wave 12, lane A): the frames the labs and examples of wave 12, lane A need. Tokens only. */
 /* a lab specimen at a list's width, wider for the browser */
-.ds-w12a-lab{inline-size:var(--plx-ref-size-400px);max-inline-size:100%;}
-.ds-w12a-lab--wide{inline-size:var(--plx-ref-size-560px);}
-.ds-w12a-lab--browser{inline-size:var(--plx-ref-size-720px);}
+.ds-w12a-lab{inline-size:var(--plx-ref-size-100u);max-inline-size:100%;}
+.ds-w12a-lab--wide{inline-size:var(--plx-ref-size-140u);}
+.ds-w12a-lab--browser{inline-size:var(--plx-ref-size-180u);}
 /* the table look drawn small in the file list's lab (the DataGrid's own lab has its values) */
 .ds-w12a-cells{border-block-start-color:var(--plx-sys-border-divider);border-block-start-style:solid;border-block-start-width:var(--plx-sys-border-width-thin);display:flex;flex-direction:column;}
-.ds-w12a-cell-row{align-items:center;border-block-end-color:var(--plx-sys-border-divider);border-block-end-style:solid;border-block-end-width:var(--plx-sys-border-width-thin);column-gap:var(--plx-sys-space-inline-md);display:grid;grid-template-columns:minmax(0, 1fr) var(--plx-ref-size-80px) var(--plx-ref-size-120px);min-block-size:var(--plx-sys-data-grid-row-height);padding-inline-start:var(--plx-sys-space-inset-sm);}
+.ds-w12a-cell-row{align-items:center;border-block-end-color:var(--plx-sys-border-divider);border-block-end-style:solid;border-block-end-width:var(--plx-sys-border-width-thin);column-gap:var(--plx-sys-space-inline-md);display:grid;grid-template-columns:minmax(0, 1fr) var(--plx-ref-size-20u) var(--plx-ref-size-30u);min-block-size:var(--plx-sys-data-grid-row-height);padding-inline-start:var(--plx-sys-space-inset-sm);}
 /* a live file browser's frame: room for its menus and its empty state */
-.ds-w12a-frame{min-block-size:var(--plx-ref-size-400px);}
+.ds-w12a-frame{min-block-size:var(--plx-ref-size-100u);}
 /* the docked panel drawn in place: the frame holds it (contain: paint makes it the panel's containing block) */
-.ds-w12a-dock{block-size:var(--plx-ref-size-400px);contain:paint;position:relative;}
+.ds-w12a-dock{block-size:var(--plx-ref-size-100u);contain:paint;position:relative;}
 .ds-w12a-cell-row--head{background-color:var(--plx-sys-surface-sunken);font-weight:var(--plx-sys-font-weight-medium);}

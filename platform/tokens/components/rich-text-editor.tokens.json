@@ -2,7 +2,7 @@
   "$description": "RichTextEditor (platform/components/RichTextEditor), library wave 6, lane C: its component tokens. The frame is the text field's (the input tokens), the editing area is RichText compact, the mentions list is the combobox list (a menu surface): nothing of its own look.",
   "plx-comp": {
     "rich-text-editor-max-width": {
-      "$value": "{plx-ref.size-720px}",
+      "$value": "{plx-ref.size-180u}",
       "$type": "dimension",
       "$description": "RichTextEditor: its widest (a comfortable reading width for the compact text)."
     },
@@ -77,12 +77,12 @@
       "$description": "RichTextEditor link field: the space between the address and its buttons."
     },
     "rich-text-editor-area-min-height": {
-      "$value": "{plx-ref.size-120px}",
+      "$value": "{plx-ref.size-30u}",
       "$type": "dimension",
       "$description": "RichTextEditor area: its smallest height (about five lines of compact text)."
     },
     "rich-text-editor-area-max-height": {
-      "$value": "{plx-ref.size-400px}",
+      "$value": "{plx-ref.size-100u}",
       "$type": "dimension",
       "$description": "RichTextEditor area: its largest height; past it the area scrolls inside."
     },
@@ -147,7 +147,7 @@
       "$description": "RichTextEditor mentions list: its largest height (the combobox list's)."
     },
     "rich-text-editor-mentions-min-width": {
-      "$value": "{plx-ref.size-200px}",
+      "$value": "{plx-ref.size-50u}",
       "$type": "dimension",
       "$description": "RichTextEditor mentions list: its smallest width."
     },
@@ -207,7 +207,7 @@
       "$description": "RichTextEditor color field: the space between the suggested color swatches."
     },
     "rich-text-editor-hex-width": {
-      "$value": "{plx-ref.size-120px}",
+      "$value": "{plx-ref.size-30u}",
       "$type": "dimension",
       "$description": "RichTextEditor color field: the width of the hex value field."
     },

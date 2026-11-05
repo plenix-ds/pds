@@ -136,7 +136,7 @@ if (window.DS && DS.registerLab) {
       anchors: { A: { part: '.plx-calendar__title', side: 'top' }, B: { part: '.plx-calendar__weekday', side: 'top' }, C: { part: '.plx-calendar__cell', side: 'left' }, D: { part: '.plx-calendar__day.is-today', side: 'bottom' },
         E: { part: '.plx-calendar__day.is-selected', side: 'bottom' }, F: { part: '.plx-calendar__cell.is-in-range', side: 'top' }, G: { part: '.plx-calendar__day.is-outside', side: 'left' }, H: { part: '.plx-calendar__week-number', side: 'left' } },
       sections: [['Header', ['mg', 'hh', 'ns', 'tc', 'tfs', 'tfw']], ['Weekdays', ['wc', 'wfs']], ['Days', ['cs', 'dc', 'dfs', 'dr', 'hb', 'fo', 'oc', 'xc']], ['Today', ['tb', 'tt']], ['Chosen', ['sb', 'sbc', 'st']], ['Range', ['rb', 'rh']], ['Week numbers', ['wn', 'wnf']]],
-      matrixLabel: 'Calendar values by variant and state', matrixColumnWidth: '--plx-ref-size-320px', statesHead: 'Variants and states · ' + HEAD
+      matrixLabel: 'Calendar values by variant and state', matrixColumnWidth: '--plx-ref-size-80u', statesHead: 'Variants and states · ' + HEAD
     });
 
     // ---- Date picker (<DatePicker>): the field with its calendar button, and the popover's panel under it
@@ -198,7 +198,7 @@ if (window.DS && DS.registerLab) {
       parts: { w: 'A', tw: 'A', fg: 'A', pp: 'B', pg: 'B', sg: 'C', sp: 'C', sbc: 'C', sbw: 'C', cs: 'D' },
       anchors: { A: { part: '.plx-date-picker__field', side: 'top' }, B: { part: '.plx-date-picker__panel', side: 'bottom' }, C: { part: '.plx-date-picker__presets', side: 'left' }, D: { part: '.plx-calendar__cell', side: 'right' } },
       sections: [['Field', ['w', 'tw', 'fg']], ['Popover', ['pp', 'pg']], ['Presets', ['sg', 'sp', 'sbc', 'sbw']], ['Calendar', ['cs']]],
-      matrixLabel: 'Date picker values by variant and state', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Variants and states · ' + HEAD
+      matrixLabel: 'Date picker values by variant and state', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Variants and states · ' + HEAD
     });
 
     // ---- Country / locale select (<CountrySelect>): the Combobox open on its list
@@ -255,7 +255,7 @@ if (window.DS && DS.registerLab) {
       parts: { mw: 'A', lmh: 'B', oc: 'B', ofs: 'B', ab: 'B', sc: 'B', gc: 'C' },
       anchors: { A: { part: '.plx-combobox__field', side: 'top' }, B: { part: '.plx-combobox__option', side: 'right' }, C: { part: '.plx-combobox__group', side: 'left' } },
       sections: [['Field', ['mw']], ['List', ['lmh', 'oc', 'ofs', 'ab', 'sc', 'gc']]],
-      matrixLabel: 'Country and locale select values by type and state', matrixColumnWidth: '--plx-ref-size-320px', statesHead: 'Types and states · ' + HEAD
+      matrixLabel: 'Country and locale select values by type and state', matrixColumnWidth: '--plx-ref-size-80u', statesHead: 'Types and states · ' + HEAD
     });
 
     // ---- Stepper (<ProgressSteps>): four steps of an import
@@ -355,7 +355,7 @@ if (window.DS && DS.registerLab) {
       anchors: { A: { part: '.plx-progress-steps__marker', side: 'top' }, B: { part: '.plx-progress-steps__label', side: 'bottom' }, C: { part: '.plx-progress-steps__connector', side: 'top' }, D: { part: '.plx-progress-steps__button', side: 'left' },
         E: { part: '.plx-progress-steps__count', side: 'top' }, F: { part: '.plx-progress-steps__segments', side: 'bottom' } },
       sections: [['Marker', ['ms', 'mr', 'mbw', 'ub', 'uc', 'cb', 'ct', 'db', 'dt', 'eb', 'et', 'ic']], ['Name', ['lc', 'lfs', 'clw', 'ulc', 'elc', 'dc']], ['Connector', ['kc', 'kd', 'km']], ['Clickable', ['bh', 'bf']], ['Compact', ['cc', 'cfs', 'sh', 'sb', 'sd']]],
-      matrixLabel: 'Stepper values by variant and state', matrixColumnWidth: '--plx-ref-size-560px', statesHead: 'Variants and states · ' + HEAD
+      matrixLabel: 'Stepper values by variant and state', matrixColumnWidth: '--plx-ref-size-140u', statesHead: 'Variants and states · ' + HEAD
     });
 
     // ---- Vertical tabs (<Tabs orientation="vertical">), and Tabs registered again with the vertical variant
@@ -404,7 +404,7 @@ if (window.DS && DS.registerLab) {
         parts: { vg: 'A', vw: 'A', vrg: 'A', vh: 'B', vpx: 'B', vr: 'B', vfs: 'B', vsb: 'B', vss: 'B', vst: 'B', vsw: 'B', vt: 'C', vhb: 'C' },
         anchors: { A: { part: '.plx-tabs__list', side: 'left' }, B: { part: '.plx-tabs__tab.is-selected', side: 'top' }, C: { part: '.plx-tabs__tab:not(.is-selected)', side: 'bottom' } },
         sections: [['Tab list', ['vg', 'vw', 'vrg']], ['Tabs', ['vh', 'vpx', 'vr', 'vfs', 'vt', 'vhb']], ['Open tab', ['vsb', 'vss', 'vst', 'vsw']]],
-        matrixLabel: 'Vertical tab values by state', matrixColumnWidth: '--plx-ref-size-400px'
+        matrixLabel: 'Vertical tab values by state', matrixColumnWidth: '--plx-ref-size-100u'
       }));
       DS.registerLab('tabs', Object.assign({}, TABS, {
         variants: TABS.variants.concat([['vertical', 'Vertical']]),
@@ -446,7 +446,7 @@ if (window.DS && DS.registerLab) {
         token: function (id, size, variant, state) { return barToken(id, variant, state); },
         html: function (variant, size, state, extraCls) { return '<div class="ds-w07a-phone">' + barHtml(variant, state, extraCls) + '</div>'; },
         labelSelector: '.plx-app-header__brand', reach: function () { return 'every application header (the mobile app bar is the header at Narrow)'; },
-        matrixLabel: 'Mobile app bar values by variant and state', matrixColumnWidth: '--plx-ref-size-400px'
+        matrixLabel: 'Mobile app bar values by variant and state', matrixColumnWidth: '--plx-ref-size-100u'
       }));
       DS.registerLab('application-header', Object.assign({}, HEADER, {
         variants: HEADER.variants.concat([['narrow', 'Narrow (mobile app bar)'], ['back', 'With back']]),

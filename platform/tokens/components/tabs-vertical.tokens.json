@@ -7,7 +7,7 @@
       "$description": "Vertical tabs: the space between the tab list and the panel."
     },
     "tabs-vertical-list-width": {
-      "$value": "{plx-ref.size-200px}",
+      "$value": "{plx-ref.size-50u}",
       "$type": "dimension",
       "$description": "Vertical tabs: the tab list's width (longer names wrap)."
     },

@@ -2,17 +2,17 @@
   "$description": "Illustration (platform/components/Illustration, library wave 3): the sizes, the line widths and the color role of every part of a drawing. Theme roles only: the set has no colors of its own.",
   "plx-comp": {
     "illustration-sm-size": {
-      "$value": "{plx-ref.size-64px}",
+      "$value": "{plx-ref.size-16u}",
       "$type": "dimension",
       "$description": "Illustration: the spot size (sm), beside a short message."
     },
     "illustration-md-size": {
-      "$value": "{plx-ref.size-120px}",
+      "$value": "{plx-ref.size-30u}",
       "$type": "dimension",
       "$description": "Illustration: the scene size (md, the default), in an empty state."
     },
     "illustration-lg-size": {
-      "$value": "{plx-ref.size-200px}",
+      "$value": "{plx-ref.size-50u}",
       "$type": "dimension",
       "$description": "Illustration: the large scene (lg), a full-page empty or error state."
     },

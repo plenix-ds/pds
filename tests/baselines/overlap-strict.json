@@ -1452,7 +1452,7 @@
    "n": 32,
    "fallback": false
   },
-  "--plx-ref-size-80px": {
+  "--plx-ref-size-20u": {
    "n": 31,
    "fallback": false
   },
@@ -4492,7 +4492,7 @@
    "n": 3,
    "fallback": false
   },
-  "--plx-ref-size-24px": {
+  "--plx-ref-size-6u": {
    "n": 3,
    "fallback": false
   },
@@ -4764,7 +4764,7 @@
    "n": 3,
    "fallback": false
   },
-  "--plx-ref-size-180px": {
+  "--plx-ref-size-45u": {
    "n": 2,
    "fallback": false
   },
@@ -5072,7 +5072,7 @@
    "n": 2,
    "fallback": false
   },
-  "--plx-ref-size-16px": {
+  "--plx-ref-size-4u": {
    "n": 2,
    "fallback": false
   },
@@ -5584,7 +5584,7 @@
    "n": 1,
    "fallback": false
   },
-  "--plx-ref-size-240px": {
+  "--plx-ref-size-60u": {
    "n": 1,
    "fallback": false
   },
@@ -6780,7 +6780,7 @@
    "n": 1,
    "fallback": false
   },
-  "--plx-ref-size-4px": {
+  "--plx-ref-size-1u": {
    "n": 1,
    "fallback": false
   },
@@ -18417,8 +18417,8 @@
    "p": "--plx-comp-data-grid-text-line-height",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-size-20px)",
-   "vb": "var(--plx-ref-size-16px)",
+   "va": "var(--plx-ref-size-5u)",
+   "vb": "var(--plx-ref-size-4u)",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": false
   },
@@ -19542,8 +19542,8 @@
    "p": "--plx-sys-control-icon-inline",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-size-20px)",
-   "vb": "var(--plx-ref-size-16px)",
+   "va": "var(--plx-ref-size-5u)",
+   "vb": "var(--plx-ref-size-4u)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": false
   },
@@ -19557,8 +19557,8 @@
    "p": "--plx-sys-control-icon-standard",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-size-24px)",
-   "vb": "var(--plx-ref-size-16px)",
+   "va": "var(--plx-ref-size-6u)",
+   "vb": "var(--plx-ref-size-4u)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": false
   },
@@ -19572,8 +19572,8 @@
    "p": "--plx-sys-control-icon-toolbar",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-size-20px)",
-   "vb": "var(--plx-ref-size-16px)",
+   "va": "var(--plx-ref-size-5u)",
+   "vb": "var(--plx-ref-size-4u)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": false
   },
@@ -19693,8 +19693,8 @@
    "p": "--plx-sys-data-grid-row-height",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-size-32px)",
-   "vb": "var(--plx-ref-size-28px)",
+   "va": "var(--plx-ref-size-8u)",
+   "vb": "var(--plx-ref-size-7u)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": false
   },
@@ -20401,8 +20401,8 @@
    "p": "--plx-sys-panel-filter-width",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-size-320px)",
-   "vb": "var(--plx-ref-size-280px)",
+   "va": "var(--plx-ref-size-80u)",
+   "vb": "var(--plx-ref-size-70u)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": false
   },
@@ -20416,8 +20416,8 @@
    "p": "--plx-sys-panel-inspector-width",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-size-360px)",
-   "vb": "var(--plx-ref-size-320px)",
+   "va": "var(--plx-ref-size-90u)",
+   "vb": "var(--plx-ref-size-80u)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": false
   },
@@ -21406,8 +21406,8 @@
    "p": "--plx-sys-table-row-height",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-size-32px)",
-   "vb": "var(--plx-ref-size-28px)",
+   "va": "var(--plx-ref-size-8u)",
+   "vb": "var(--plx-ref-size-7u)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": false
   },
@@ -25770,8 +25770,8 @@
    "p": "--plx-comp-data-grid-view-column-width",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-size-36px)",
-   "vb": "var(--plx-ref-size-36px)",
+   "va": "var(--plx-ref-size-9u)",
+   "vb": "var(--plx-ref-size-9u)",
    "files": "system/tokens/components.css / system/tokens/components.css",
    "same": true
   },
@@ -27471,8 +27471,8 @@
    "p": "--plx-sys-control-icon-dialog-destructive",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-size-20px)",
-   "vb": "var(--plx-ref-size-20px)",
+   "va": "var(--plx-ref-size-5u)",
+   "vb": "var(--plx-ref-size-5u)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": true
   },
@@ -27486,8 +27486,8 @@
    "p": "--plx-sys-control-icon-dialog",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-size-20px)",
-   "vb": "var(--plx-ref-size-20px)",
+   "va": "var(--plx-ref-size-5u)",
+   "vb": "var(--plx-ref-size-5u)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": true
   },
@@ -27501,8 +27501,8 @@
    "p": "--plx-sys-control-icon-prominent",
    "a": ":root",
    "b": "[data-plx-density=\"compact\"]",
-   "va": "var(--plx-ref-size-24px)",
-   "vb": "var(--plx-ref-size-24px)",
+   "va": "var(--plx-ref-size-6u)",
+   "vb": "var(--plx-ref-size-6u)",
    "files": "system/tokens/semantic.css / system/tokens/semantic.css",
    "same": true
   },

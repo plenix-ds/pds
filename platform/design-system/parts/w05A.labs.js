@@ -93,7 +93,7 @@ if (window.DS && DS.registerLab) {
       parts: { bg: 'A', fg: 'A', bc: 'A', bw: 'A', rad: 'A', sh: 'A', pad: 'A', w: 'A', fs: 'A', tfg: 'B', tfs: 'B', tfw: 'B', hgap: 'B', hmb: 'B', hh: 'B', fgap: 'C', fmt: 'C', ac: 'D', as: 'D', ai: 'D' },
       anchors: { A: { part: null, side: 'right' }, B: { part: '.plx-popover__header', side: 'top' }, C: { part: '.plx-popover__footer', side: 'bottom' }, D: { part: '.plx-popover__arrow', side: 'top' } },
       sections: [['Surface', ['bg', 'fg', 'bc', 'bw', 'rad', 'sh', 'pad', 'w', 'fs']], ['Header', ['tfg', 'tfs', 'tfw', 'hgap', 'hmb', 'hh']], ['Footer', ['fgap', 'fmt']], ['Arrow', ['ac', 'as', 'ai']]],
-      matrixLabel: 'Popover values by parts', matrixColumnWidth: '--plx-ref-size-400px',
+      matrixLabel: 'Popover values by parts', matrixColumnWidth: '--plx-ref-size-100u',
       statesHead: 'Parts · ' + HEAD
     });
 
@@ -148,7 +148,7 @@ if (window.DS && DS.registerLab) {
       parts: { mt: 'A', fg: 'B', gap: 'B', fs: 'B', lh: 'B', ic: 'C', ib: 'C', tc: 'D', tw: 'D' },
       anchors: { A: { part: '.plx-contextual-help__more', side: 'bottom' }, B: { part: null, side: 'right' }, C: { part: '.plx-contextual-help__icon', side: 'left' }, D: { part: '.plx-contextual-help__title', side: 'top' } },
       sections: [['Popover', ['mt']], ['Inline tip', ['fg', 'gap', 'fs', 'lh']], ['Icon', ['ic', 'ib']], ['Title', ['tc', 'tw']]],
-      matrixLabel: 'Contextual help values by variant', matrixColumnWidth: '--plx-ref-size-300px',
+      matrixLabel: 'Contextual help values by variant', matrixColumnWidth: '--plx-ref-size-75u',
       statesHead: 'Variants · ' + HEAD
     });
 
@@ -228,7 +228,7 @@ if (window.DS && DS.registerLab) {
         D: { part: '.plx-teaching-bubble__media', side: 'right' }, E: { part: '.plx-teaching-bubble__footer', side: 'bottom' }, F: { part: '.plx-teaching-bubble__step', side: 'left' },
         G: { part: null, side: 'right' }, H: { part: '.plx-teaching-bubble__actions', side: 'bottom' } },
       sections: [['Surface', ['bg', 'txt']], ['Title', ['tc', 'tf', 'ts', 'tw', 'tl']], ['Header and text', ['hg', 'hh', 'xm', 'mm']], ['Footer', ['fg', 'fm', 'sc', 'ss']], ['Actions on the blue', ['af', 'at', 'so', 'st']]],
-      matrixLabel: 'Teaching bubble values by content', matrixColumnWidth: '--plx-ref-size-400px',
+      matrixLabel: 'Teaching bubble values by content', matrixColumnWidth: '--plx-ref-size-100u',
       statesHead: 'Content · ' + HEAD
     });
 
@@ -266,7 +266,7 @@ if (window.DS && DS.registerLab) {
       parts: { dc: 'A', ds: 'A', dl: 'A' },
       anchors: { A: { part: '.plx-popconfirm__description', side: 'right' } },
       sections: [['Description', ['dc', 'ds', 'dl']]],
-      matrixLabel: 'Popconfirm values by tone', matrixColumnWidth: '--plx-ref-size-280px',
+      matrixLabel: 'Popconfirm values by tone', matrixColumnWidth: '--plx-ref-size-70u',
       statesHead: 'Tones · ' + HEAD
     });
 
@@ -346,7 +346,7 @@ if (window.DS && DS.registerLab) {
       anchors: { A: { part: '.plx-mega-menu__columns', side: 'bottom' }, B: { part: '.plx-mega-menu__group', side: 'top' }, C: { part: '.plx-mega-menu__heading', side: 'left' },
         D: { part: '.plx-mega-menu__links', side: 'left' }, E: { part: '.plx-mega-menu__description', side: 'right' }, F: { part: '.plx-mega-menu__feature', side: 'right' }, G: { part: '.plx-mega-menu__sections', side: 'left' } },
       sections: [['Columns', ['cg', 'rg', 'cw']], ['Group', ['hc', 'hs', 'hw', 'hl', 'hm', 'lg', 'dc', 'ds']], ['Featured area', ['fb', 'fr', 'fp', 'fw']], ['Accordion', ['sm']]],
-      matrixLabel: 'Mega menu values by layout', matrixColumnWidth: '--plx-ref-size-720px',
+      matrixLabel: 'Mega menu values by layout', matrixColumnWidth: '--plx-ref-size-180u',
       statesHead: 'Layouts · ' + HEAD
     });
   })();

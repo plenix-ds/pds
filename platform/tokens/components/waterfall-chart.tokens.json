@@ -3,6 +3,6 @@
   "plx-comp": {
     "waterfall-chart-connector-color": { "$value": "{plx-sys.border-strong}", "$type": "color", "$description": "Waterfall chart: the thin line from one step's end to the next step's start." },
     "waterfall-chart-connector-width": { "$value": "{plx-sys.border-width-thin}", "$type": "dimension", "$description": "Waterfall chart: the connector's width." },
-    "waterfall-chart-connector-dash": { "$value": "{plx-ref.size-4px}", "$type": "dimension", "$description": "Waterfall chart: the connector's dash and gap (dashed: it is a guide, not a value)." }
+    "waterfall-chart-connector-dash": { "$value": "{plx-ref.size-1u}", "$type": "dimension", "$description": "Waterfall chart: the connector's dash and gap (dashed: it is a guide, not a value)." }
   }
 }

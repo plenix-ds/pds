@@ -9,7 +9,7 @@
     "upload-manager-radius": { "$value": "{plx-sys.radius-surface-6px}", "$type": "dimension", "$description": "UploadManager panel: its corners (radius-surface-6px)." },
     "upload-manager-padding-block": { "$value": "{plx-sys.space-inset-sm}", "$type": "dimension", "$description": "UploadManager panel: padding top and bottom (space-inset-sm)." },
     "upload-manager-padding-inline": { "$value": "{plx-sys.space-inset-md}", "$type": "dimension", "$description": "UploadManager panel: padding at the start and end (space-inset-md)." },
-    "upload-manager-docked-width": { "$value": "{plx-ref.size-400px}", "$type": "dimension", "$description": "UploadManager docked: its width (400px)." },
+    "upload-manager-docked-width": { "$value": "{plx-ref.size-100u}", "$type": "dimension", "$description": "UploadManager docked: its width (400px)." },
     "upload-manager-docked-inset": { "$value": "{plx-sys.space-layout-md}", "$type": "dimension", "$description": "UploadManager docked: its distance from the window's bottom and end edges (space-layout-md, as the floating action button)." },
     "upload-manager-docked-shadow": { "$value": "{plx-sys.shadow-raised}", "$type": "shadow", "$description": "UploadManager docked: it sits over the page (shadow-raised)." },
     "upload-manager-docked-z-index": { "$value": "{plx-sys.layer-sticky}", "$type": "number", "$description": "UploadManager docked: over the content and sticky regions, under menus and dialogs (layer-sticky)." },
@@ -31,7 +31,7 @@
     "upload-manager-hint-text": { "$value": "{plx-sys.content-muted}", "$type": "color", "$description": "UploadManager: the limits' color (content-muted)." },
     "upload-manager-hint-font-size": { "$value": "{plx-ref.font-size-12}", "$type": "dimension", "$description": "UploadManager: the limits' size (12px)." },
     "upload-manager-hint-line-height": { "$value": "{plx-sys.label-height-16px}", "$type": "dimension", "$description": "UploadManager: the limits' line height (16px)." },
-    "upload-manager-queue-max-height": { "$value": "{plx-ref.size-320px}", "$type": "dimension", "$description": "UploadManager: the queue's tallest height; past it the queue scrolls (320px)." },
+    "upload-manager-queue-max-height": { "$value": "{plx-ref.size-80u}", "$type": "dimension", "$description": "UploadManager: the queue's tallest height; past it the queue scrolls (320px)." },
     "upload-manager-focus-outline-color": { "$value": "{plx-sys.focus-ring-color}", "$type": "color", "$description": "UploadManager: the queue's focus ring (focus-ring-color)." },
     "upload-manager-focus-outline-width": { "$value": "{plx-sys.focus-ring-width}", "$type": "dimension", "$description": "UploadManager: that ring's width (focus-ring-width)." },
     "upload-manager-focus-outline-offset": { "$value": "{plx-sys.focus-ring-offset}", "$type": "dimension", "$description": "UploadManager: that ring's offset (focus-ring-offset)." }

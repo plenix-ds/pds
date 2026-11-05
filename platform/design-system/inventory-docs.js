@@ -772,7 +772,7 @@ window.DSDocs = {
    "pointer": "Drag a widget's handle onto another widget to move it to that place; the dragged widget fades and the widget under the pointer shows the drop ring. A click on the handle, or Enter or Space, opens its menu: Move earlier, Move later, Move to the start, Move to the end; moves that cannot happen are turned off. Without `onReorder` there are no handles and nothing can be dragged.",
    "keyboard": "On a focused handle, Arrow Up or Arrow Left moves the widget one place earlier; Arrow Down or Arrow Right moves it one place later. Moves past the first or last place do nothing.",
    "focus": "Focus stays where the page's re-render leaves it; the grid does not move it after a move. Handles are native buttons in the Tab order.",
-   "responsive": "With columns \"auto\" the grid fits as many columns of at least --plx-ref-size-280px as the width allows. Fixed 2, 3 or 4 columns shrink but do not reduce.",
+   "responsive": "With columns \"auto\" the grid fits as many columns of at least --plx-ref-size-70u as the width allows. Fixed 2, 3 or 4 columns shrink but do not reduce.",
    "motion": "None of its own: the dragging fade and drop ring switch on without a transition.",
    "loading": "Not applicable: the grid has no loading state; each widget shows its own.",
    "error": "Not applicable: the grid has no error state; a failed save is the page's to report."
@@ -2202,7 +2202,7 @@ window.DSDocs = {
    "pointer": "Typing in the field updates the query as you type. Clicking × on a chip removes that one filter value; Clear all runs `onClearAll`.",
    "keyboard": "The search field, FilterBar menus, chips, SegmentedControl and Sort menu each keep their own keys. Enter in the field keeps focus there.",
    "focus": "Focus is not moved on its own; it stays in the field while typing and in the control that was used.",
-   "responsive": "The title row wraps. The search field is at most 720px wide (--plx-ref-size-720px) and fills narrower space; chips wrap; the filter bar moves extra filters into More filters.",
+   "responsive": "The title row wraps. The search field is at most 720px wide (--plx-ref-size-180u) and fills narrower space; chips wrap; the filter bar moves extra filters into More filters.",
    "motion": "None of its own.",
    "loading": "No loading state of its own; the capability shows loading in the results.",
    "error": "No error state of its own. With no results it shows an inline EmptyState: \"Nothing matches “query” with these filters.\""
@@ -3443,7 +3443,7 @@ window.DSDocs = {
  "status-region": {
   "purpose": "Shows facts about the whole application, such as library size or sync, in a thin line at the foot of the window, where they are always in view and never in the way.",
   "anatomy": [
-   "Bar — a footer on the inverse status-bar surface with a top edge, --plx-ref-size-40px tall (required)",
+   "Bar — a footer on the inverse status-bar surface with a top edge, --plx-ref-size-10u tall (required)",
    "Start facts — the `start` group at the start of the line (required)",
    "End facts — the `end` group, pushed to the end of the line (optional)"
   ],
@@ -3518,7 +3518,7 @@ window.DSDocs = {
    "pointer": "A click anywhere on a collapsible section's header opens or closes it; each control works as itself.",
    "keyboard": "Tab moves through the navigation, then each section: a collapsible header is one stop, and Enter or Space opens or closes it; then each row's control in order.",
    "focus": "Not moved or trapped. Choosing a section in the navigation is the page's job.",
-   "responsive": "It responds to its own width: below 37.5rem, the navigation stacks above the content with a bottom border, the side padding shrinks, and inline Fields put their label above the control. The content is at most --plx-ref-size-900px wide and scrolls on its own.",
+   "responsive": "It responds to its own width: below 37.5rem, the navigation stacks above the content with a bottom border, the side padding shrinks, and inline Fields put their label above the control. The content is at most --plx-ref-size-225u wide and scrolls on its own.",
    "motion": "The chevron turns when a collapsible section opens or closes (--plx-comp-settings-section-chevron-duration); with reduced motion it turns at once.",
    "loading": "Not applicable: no loading state of its own; the page shows Loading or Skeleton rows.",
    "error": "Not applicable here: errors belong to the controls; use Field rows (`layout` inline or row) for their error text."

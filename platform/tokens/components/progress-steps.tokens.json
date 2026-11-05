@@ -12,7 +12,7 @@
       "$description": "ProgressSteps step: the space between the marker and the name."
     },
     "progress-steps-marker-size": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension",
       "$description": "ProgressSteps marker: its width and height."
     },
@@ -163,7 +163,7 @@
       "$description": "ProgressSteps connector: the line's thickness."
     },
     "progress-steps-connector-min-length": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension",
       "$description": "ProgressSteps connector: its least length (horizontal: it grows to fill the row)."
     },
@@ -179,7 +179,7 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "progress-steps-vertical-connector-min-length": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension",
       "$description": "ProgressSteps vertical: the connector's least height between two steps."
     },

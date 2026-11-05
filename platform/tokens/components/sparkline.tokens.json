@@ -2,12 +2,12 @@
   "$description": "Sparkline (platform/charts/Sparkline.jsx; library wave 9, lane C): its component tokens. The line, area, bars and dot take the data-viz color of the sparkline (data-plx-dataviz); everything else is an existing role.",
   "plx-comp": {
     "sparkline-default-color": { "$value": "{plx-sys.dataviz-categorical-1}", "$type": "color", "$description": "Sparkline: its color without data-plx-dataviz (the first categorical color)." },
-    "sparkline-inline-width": { "$value": "{plx-ref.size-96px}", "$type": "dimension", "$description": "Sparkline, inline: its width (a word-sized trend in a sentence or a table cell)." },
-    "sparkline-inline-height": { "$value": "{plx-ref.size-24px}", "$type": "dimension", "$description": "Sparkline, inline: its height." },
-    "sparkline-fill-height": { "$value": "{plx-ref.size-32px}", "$type": "dimension", "$description": "Sparkline, fill: its height (it takes the container's width: a metric card)." },
+    "sparkline-inline-width": { "$value": "{plx-ref.size-24u}", "$type": "dimension", "$description": "Sparkline, inline: its width (a word-sized trend in a sentence or a table cell)." },
+    "sparkline-inline-height": { "$value": "{plx-ref.size-6u}", "$type": "dimension", "$description": "Sparkline, inline: its height." },
+    "sparkline-fill-height": { "$value": "{plx-ref.size-8u}", "$type": "dimension", "$description": "Sparkline, fill: its height (it takes the container's width: a metric card)." },
     "sparkline-line-width": { "$value": "{plx-sys.border-width-medium}", "$type": "dimension", "$description": "Sparkline: the line's stroke (the chart line width)." },
     "sparkline-area-opacity": { "$value": "{plx-sys.opacity-low}", "$type": "number", "$description": "Sparkline, area: the fill under the line, the line's color at low opacity." },
-    "sparkline-point-radius": { "$value": "{plx-ref.size-4px}", "$type": "dimension", "$description": "Sparkline: the radius of the dot on the latest value." },
+    "sparkline-point-radius": { "$value": "{plx-ref.size-1u}", "$type": "dimension", "$description": "Sparkline: the radius of the dot on the latest value." },
     "sparkline-point-outline": { "$value": "{plx-sys.surface-default}", "$type": "color", "$description": "Sparkline: the ring around the latest dot, in the surface color, so it stands off the line." },
     "sparkline-point-outline-width": { "$value": "{plx-sys.border-width-thin}", "$type": "dimension", "$description": "Sparkline: the latest dot's ring width." }
   }

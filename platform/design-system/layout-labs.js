@@ -135,7 +135,7 @@
     parts: { cols: 'A', gap: 'A', rgap: 'A', rad: 'B', hw: 'C', hh: 'C', ht: 'C', hr: 'C', hrad: 'C', hfg: 'C', hbg: 'C', foc: 'C', fow: 'C' },
     anchors: { A: { part: null, side: 'bottom' }, B: { part: '.plx-widget-grid__item', side: 'left' }, C: { part: '.plx-widget-grid__handle', side: 'top' } },
     sections: [['Grid', ['cols', 'gap', 'rgap']], ['Widget', ['rad']], ['Handle', ['hw', 'hh', 'ht', 'hr', 'hrad', 'hfg', 'hbg']], ['Focus', ['foc', 'fow']]],
-    matrixLabel: 'Dashboard grid values by columns and handle state', matrixColumnWidth: '--plx-ref-size-600px',
+    matrixLabel: 'Dashboard grid values by columns and handle state', matrixColumnWidth: '--plx-ref-size-150u',
     statesHead: 'Columns and handle states · ' + HEAD
   });
 
@@ -164,7 +164,7 @@
     parts: { gap: 'A', rgap: 'A' },
     anchors: { A: { part: null, side: 'bottom' } },
     sections: [['Spacing', ['gap', 'rgap']]],
-    matrixLabel: 'Content grid values by card size', matrixColumnWidth: '--plx-ref-size-600px',
+    matrixLabel: 'Content grid values by card size', matrixColumnWidth: '--plx-ref-size-150u',
     statesHead: 'Card sizes · ' + HEAD
   });
 
@@ -273,7 +273,7 @@
     parts: { bg: 'A', w: 'A', ec: 'B', ew: 'B', sc: 'B', sw: 'B', hh: 'C', hpt: 'C', hpl: 'C', hfs: 'C', hfw: 'C', bpx: 'D', bgap: 'D', spw: 'E' },
     anchors: { A: { part: null, side: 'top' }, B: { part: null, side: 'bottom' }, C: { part: '.plx-secondary-pane__header', side: 'left' }, D: { part: '.plx-secondary-pane__body', side: 'left' }, E: { part: '.plx-panel-splitter', side: 'right' } },
     sections: [['Pane', ['bg', 'w', 'ec', 'ew', 'sc', 'sw']], ['Header', ['hh', 'hpt', 'hpl', 'hfs', 'hfw']], ['Body', ['bpx', 'bgap']], ['Drag edge', ['spw']]],
-    matrixLabel: 'Split pane values by width, side and behavior', matrixColumnWidth: '--plx-ref-size-600px',
+    matrixLabel: 'Split pane values by width, side and behavior', matrixColumnWidth: '--plx-ref-size-150u',
     statesHead: 'Sides and behavior · ' + HEAD
   });
 
@@ -328,7 +328,7 @@
     parts: { bg: 'A', sh: 'A', w: 'A', hh: 'B', hpt: 'B', hpl: 'B', hgap: 'B', ic: 'B', tc: 'C', tfs: 'C', tfw: 'C', bpx: 'D', bpb: 'D', fsh: 'E', fpx: 'E', fgap: 'E', spw: 'F' },
     anchors: { A: { part: null, side: 'top' }, B: { part: '.plx-side-panel__icon', side: 'left' }, C: { part: '.plx-side-panel__title', side: 'right' }, D: { part: '.plx-side-panel__body', side: 'right' }, E: { part: '.plx-side-panel__footer', side: 'bottom' }, F: { part: '.plx-panel-splitter', side: 'left' } },
     sections: [['Panel', ['bg', 'sh', 'w']], ['Header', ['hh', 'hpt', 'hpl', 'hgap', 'ic', 'tc', 'tfs', 'tfw']], ['Body', ['bpx', 'bpb']], ['Footer', ['fsh', 'fpx', 'fgap']], ['Drag edge', ['spw']]],
-    matrixLabel: 'Inspector region values by resize', matrixColumnWidth: '--plx-ref-size-600px',
+    matrixLabel: 'Inspector region values by resize', matrixColumnWidth: '--plx-ref-size-150u',
     statesHead: 'Resize · ' + HEAD
   });
 
@@ -511,7 +511,7 @@
     sections: [['Surface', ['bg', 'bc', 'bw', 'rad', 'py', 'pl', 'pr', 'gap', 'egap', 'rgap', 'mb']], ['Media', ['avc', 'avw', 'tw', 'th', 'trad', 'tbg', 'tfg', 'mfg']],
       ['Heading and subtitle', ['cc', 'cfs', 'topgap']], ['Title', ['tc', 'tff', 'tfs', 'tfw', 'tlh', 'xgap']], ['Description and meta', ['dc', 'dfs', 'dlh', 'mgap']], ['Actions', ['agap']],
       ['Facts and rule', ['fc', 'ffs', 'flc', 'flw', 'fpt', 'sep']]],
-    matrixLabel: 'Record page header values by kind', matrixColumnWidth: '--plx-ref-size-720px',
+    matrixLabel: 'Record page header values by kind', matrixColumnWidth: '--plx-ref-size-180u',
     statesHead: 'Entity headers and record page headers · ' + HEAD
   });
 })();

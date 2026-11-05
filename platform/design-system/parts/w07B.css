@@ -1,6 +1,6 @@
 /* Library part w07B (wave 7, lane B): the frames the labs and examples of wave 7, lane B need. Tokens only. */
 /* a field whose list opens under it (Cascader, EntityPicker, TimePicker): room below for the list */
-.ds-w07b-popup{min-block-size:var(--plx-ref-size-360px);}
-.ds-w07b-popup--lab{inline-size:var(--plx-ref-size-560px);max-inline-size:100%;min-block-size:var(--plx-ref-size-360px);position:relative;}
+.ds-w07b-popup{min-block-size:var(--plx-ref-size-90u);}
+.ds-w07b-popup--lab{inline-size:var(--plx-ref-size-140u);max-inline-size:100%;min-block-size:var(--plx-ref-size-90u);position:relative;}
 /* an infinite list scrolls inside its own area */
-.ds-w07b-scroll{block-size:var(--plx-ref-size-240px);overflow-y:auto;}
+.ds-w07b-scroll{block-size:var(--plx-ref-size-60u);overflow-y:auto;}

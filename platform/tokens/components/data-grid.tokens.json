@@ -2,7 +2,7 @@
   "$description": "DataGrid (platform/components/DataGrid): its own tokens beside the shared set: the footer of the modes \"pages\" and \"load-more\" (owner, 2026-10-14), the row height steps, the padding and lines of taller rows, the Airtable-style group rows, the column header type icons and wrapped headers (owner, 2026-10-14). The grid's other tokens are in the shared set.",
   "plx-comp": {
     "data-grid-auto-max-width": {
-      "$value": "{plx-ref.size-360px}",
+      "$value": "{plx-ref.size-90u}",
       "$type": "dimension",
       "$description": "DataGrid: the widest a column grows to fit its content when it has no width of its own; longer text ends in an ellipsis with the full text on hover, and the last column takes the room that is left (owner, 2026-10-22)."
     },
@@ -58,17 +58,17 @@
       "$description": "DataGrid: a record row's height. The row height step Short is the density's row height (36 / 40 / 48; owner, 2026-10-22); the grid's rowHeight sets the other steps on its frame (data-plx-row-height). Only record rows take it: the header row, group rows, the add row and the group gap keep their own heights."
     },
     "data-grid-row-height-medium": {
-      "$value": "{plx-ref.size-56px}",
+      "$value": "{plx-ref.size-14u}",
       "$type": "dimension",
       "$description": "DataGrid row height step Medium: 56px at every density."
     },
     "data-grid-row-height-tall": {
-      "$value": "{plx-ref.size-88px}",
+      "$value": "{plx-ref.size-22u}",
       "$type": "dimension",
       "$description": "DataGrid row height step Tall: 88px at every density."
     },
     "data-grid-row-height-extra-tall": {
-      "$value": "{plx-ref.size-128px}",
+      "$value": "{plx-ref.size-32u}",
       "$type": "dimension",
       "$description": "DataGrid row height step Extra tall: 128px at every density."
     },
@@ -79,18 +79,18 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "data-grid-group-header-height": {
-      "$value": "calc({plx-sys.data-grid-row-height} + {plx-ref.size-16px})",
+      "$value": "calc({plx-sys.data-grid-row-height} + {plx-ref.size-4u})",
       "$type": "dimension",
       "$description": "DataGrid group header row: the density row height + 16px (44 / 48 / 56), the same at every row height step: the eyebrow line and the value line with P above and below.",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "data-grid-group-eyebrow-line-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$description": "DataGrid group header: the line of the eyebrow that names the grouped-by field."
     },
     "data-grid-group-gap": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension",
       "$description": "DataGrid: the band between two groups (lines above and below it), shown whether the groups are open or closed."
     },
@@ -105,12 +105,12 @@
       "$description": "DataGrid: the grouped-by column (its header and its cells) is tinted with the neutral sunken surface."
     },
     "data-grid-group-indent": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$description": "DataGrid: a nested group's header is indented one step per level."
     },
     "data-grid-group-chevron-size": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$description": "DataGrid group header: the chevron that opens and closes the group."
     },
@@ -140,13 +140,13 @@
       "$description": "DataGrid add row: the + and its words at the end of a group."
     },
     "data-grid-header-wrap-height": {
-      "$value": "calc({plx-sys.data-grid-row-height} + {plx-ref.size-16px})",
+      "$value": "calc({plx-sys.data-grid-row-height} + {plx-ref.size-4u})",
       "$type": "dimension",
       "$description": "DataGrid with Wrap headers: the column header row, two lines tall (a fixed height, never measured).",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "data-grid-header-title-line-height": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$description": "DataGrid with Wrap headers: the line of a column title that wraps onto two lines."
     },
@@ -243,7 +243,7 @@
       "$description": "DataGrid header: the options button’s sides (Windows Explorer: a narrow button the header’s height)."
     },
     "data-grid-menu-button-min-width": {
-      "$value": "{plx-ref.size-24px}",
+      "$value": "{plx-ref.size-6u}",
       "$type": "dimension",
       "$description": "DataGrid header: the options part is one target the header’s height and at least 24px wide, the chevron in its middle (owner, 2026-10-24: as Windows Explorer; WCAG 2.5.8)."
     }

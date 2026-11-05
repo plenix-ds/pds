@@ -183,7 +183,7 @@ export function FileList({ files = [], label, view = 'list', sortable = false, s
       if (fa !== fb) return (fa ? -1 : 1) * (dir === 'desc' ? -1 : 1);
       return String(a || '').localeCompare(String(b || ''), undefined, { numeric: true, sensitivity: 'base' });
     };
-    const cols = [{ title: t.name, field: 'name', kind: 'name', type: 'file', width: '--plx-ref-size-280px', sorter: byName,
+    const cols = [{ title: t.name, field: 'name', kind: 'name', type: 'file', width: '--plx-ref-size-70u', sorter: byName,
       render: (f) => <File name={f.name} kind={f.kind} type={f.type} src={f.src} icon={f.icon} href={hrefFor ? hrefFor(f) : undefined} onOpen={!hrefFor && onOpen ? () => onOpen(f) : undefined} /> }];
     if (facts.indexOf('size') >= 0) cols.push({ title: t.size, field: 'size', kind: 'data', type: 'number', sorter: 'number', align: 'right', headerAlign: 'right', render: (f) => sizeText(f) });
     if (facts.indexOf('modified') >= 0) cols.push({ title: t.modified, field: 'modified', kind: 'data', type: 'date', render: (f) => (f.modified ? formatDate(f.modified, { dateStyle: 'medium' }) : '') });

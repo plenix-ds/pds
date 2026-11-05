@@ -26,7 +26,7 @@
     "comparison-view-meta-font-size": { "$value": "{plx-sys.text-secondary-font-size}", "$type": "dimension", "$description": "Comparison view: the version or date's size." },
     "comparison-view-meta-line-height": { "$value": "{plx-sys.label-height-16px}", "$type": "dimension", "$description": "Comparison view: the version or date's line height." },
     "comparison-view-body-gap": { "$value": "{plx-sys.space-stack-md}", "$type": "dimension", "$description": "Comparison view: the space between a pane's preview, content and attributes; and around the slider's stage." },
-    "comparison-view-scroll-height": { "$value": "{plx-ref.size-320px}", "$type": "dimension", "$description": "Comparison view (scroll): the tallest a pane's body grows before it scrolls, with the others." },
+    "comparison-view-scroll-height": { "$value": "{plx-ref.size-80u}", "$type": "dimension", "$description": "Comparison view (scroll): the tallest a pane's body grows before it scrolls, with the others." },
     "comparison-view-focus-border-color": { "$value": "{plx-sys.focus-ring-color}", "$type": "color", "$description": "Comparison view (scroll): a pane's frame while its scrolling body has the keyboard focus." },
     "comparison-view-row-gap": { "$value": "{plx-sys.space-stack-sm}", "$type": "dimension", "$description": "Comparison view: the space between two attributes." },
     "comparison-view-row-inner-gap": { "$value": "{plx-sys.space-stack-xs}", "$type": "dimension", "$description": "Comparison view: the space between an attribute's label and its value, and inside a value that wraps." },

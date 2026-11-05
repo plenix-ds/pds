@@ -1,4 +1,4 @@
 /* Bound embedded page templates to the existing sample frame size. */
-.ds-w15a-template .plx-app-shell{block-size:var(--plx-ref-size-400px);inline-size:100%;}
+.ds-w15a-template .plx-app-shell{block-size:var(--plx-ref-size-100u);inline-size:100%;}
 /* A template that shares its room (SplitWorkspace: a SplitView has no width of its own) fills the preview. */
 .ds-demo-box:has(.ds-w15a-template){align-self:stretch;flex:1 1 auto;}

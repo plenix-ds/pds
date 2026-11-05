@@ -49,7 +49,7 @@ DSParts.records.push(function (H) {
       h(P.CommandBar, { label: sit === 'filters' ? 'Activity log' : 'Assets', layout: props.layout, narrow: props.narrow, actions: sit === 'filters' ? [] : props.many ? MANY : FEW,
         count: plural(n, sit === 'filters' ? 'event' : 'asset'), find: find, quickFilters: quickFilters, view: view, end: sit === 'filters' ? h(P.Button, { size: 'sm', variant: 'ghost', icon: 'export' }, 'Export') : null, selection: selection }),
       props.table === false ? null : h(P.DataGrid, Object.assign({ label: sit === 'filters' ? 'Activity log' : 'Assets', data: data, columns: sit === 'filters' ? EVENT_COLUMNS : ASSET_COLUMNS, selectable: sit !== 'filters',
-        selected: sel[0], onSelectionChange: sel[1], height: '--plx-ref-size-240px' }, v.tableProps)));
+        selected: sel[0], onSelectionChange: sel[1], height: '--plx-ref-size-60u' }, v.tableProps)));
   };
   // menu only: team members, an action, and the selection's commands when members are selected; no find or view
   var Members = function () {

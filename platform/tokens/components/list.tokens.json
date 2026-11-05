@@ -7,12 +7,12 @@
       "$description": "List: the color of an ordered list’s numbers and letters."
     },
     "list-marker-min-width": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$description": "List: the width kept for a number or letter, so the statements line up."
     },
     "list-step-size": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension",
       "$description": "List: the circle of a step, the size of the line height."
     },
@@ -62,12 +62,12 @@
       "$description": "List bullets: the square's color (blue-650 in light)."
     },
     "list-bullet-size": {
-      "$value": "{plx-ref.size-4px}",
+      "$value": "{plx-ref.size-1u}",
       "$type": "dimension",
       "$description": "List bullets: the square's side."
     },
     "list-bullet-offset": {
-      "$value": "calc(({plx-ref.size-20px} - {plx-ref.size-4px}) / 2)",
+      "$value": "calc(({plx-ref.size-5u} - {plx-ref.size-1u}) / 2)",
       "$type": "dimension",
       "$description": "List bullets: the square centered on the first line (20px line).",
       "$extensions": { "com.plenix": { "webOnly": true } }

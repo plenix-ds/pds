@@ -2,7 +2,7 @@
   "$description": "DataGrid: its tokens at the standard density.",
   "plx-comp": {
     "data-grid-text-line-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension",
       "$description": "DataGrid: a line of cell text in taller rows (and the line P is measured against): 20px at Standard."
     },
@@ -17,12 +17,12 @@
       "$description": "DataGrid column header: the space between the type icon and the name."
     },
     "data-grid-view-column-width": {
-      "$value": "{plx-ref.size-36px}",
+      "$value": "{plx-ref.size-9u}",
       "$type": "dimension",
       "$description": "DataGrid: the view column at the end of the header (the view menu's button): as wide as the checkbox column."
     },
     "data-grid-header-height": {
-      "$value": "{plx-ref.size-32px}",
+      "$value": "{plx-ref.size-8u}",
       "$type": "dimension",
       "$description": "DataGrid column header: 32px at Standard, the titles unchanged (owner, 2026-10-23: Windows Explorer’s header)."
     }

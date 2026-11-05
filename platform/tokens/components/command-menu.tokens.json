@@ -37,7 +37,7 @@
       "$description": "CommandMenu: the page name weight."
     },
     "command-menu-list-max-height": {
-      "$value": "{plx-ref.size-320px}",
+      "$value": "{plx-ref.size-80u}",
       "$type": "dimension",
       "$description": "CommandMenu: the list scrolls past 320px."
     },

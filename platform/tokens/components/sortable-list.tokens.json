@@ -2,7 +2,7 @@
   "$description": "SortableList (platform/patterns/SortableList), library wave 10, lane A: its component tokens. Items on the default surface with the subtle frame and the control corners, a data row's height (it follows the density); while an item moves it takes the drag-and-drop treatment (the dnd tokens).",
   "plx-comp": {
     "sortable-list-gap": { "$value": "{plx-sys.space-stack-sm}", "$type": "dimension", "$description": "SortableList: the space between two items (the insertion line is drawn in it)." },
-    "sortable-list-tile-min-width": { "$value": "{plx-ref.size-160px}", "$type": "dimension", "$description": "SortableList grid: a tile's least width; as many tiles as fit share a row." },
+    "sortable-list-tile-min-width": { "$value": "{plx-ref.size-40u}", "$type": "dimension", "$description": "SortableList grid: a tile's least width; as many tiles as fit share a row." },
     "sortable-list-item-background": { "$value": "{plx-sys.surface-default}", "$type": "color", "$description": "SortableList item: the default surface." },
     "sortable-list-item-border-color": { "$value": "{plx-sys.border-subtle}", "$type": "color", "$description": "SortableList item: its frame (the subtle border)." },
     "sortable-list-item-border-width": { "$value": "{plx-sys.border-width-thin}", "$type": "dimension", "$description": "SortableList item: its frame's width." },

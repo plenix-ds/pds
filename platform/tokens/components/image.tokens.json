@@ -7,7 +7,7 @@
       "$description": "The frame's fill while the picture loads (placeholder color and blur)."
     },
     "image-placeholder-blur": {
-      "$value": "{plx-ref.size-16px}",
+      "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$description": "placeholder=\"blur\": how much the tiny copy is blurred."
     },
@@ -77,7 +77,7 @@
       "$description": "The fallback's inset inside the frame."
     },
     "image-fallback-min-height": {
-      "$value": "{plx-ref.size-96px}",
+      "$value": "{plx-ref.size-24u}",
       "$type": "dimension",
       "$description": "A frame without a ratio that fails keeps at least this height, so the fallback has room."
     }

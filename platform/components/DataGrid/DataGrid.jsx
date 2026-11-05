@@ -7,7 +7,7 @@
        columns={[
          { title: 'Attachments', field: 'attach', kind: 'icon', icon: 'attachment', sorter: 'number',
            render: (a) => (a.attach ? <Icon name="attachment" label={a.attach + ' attachments'} /> : null) },
-         { title: 'Name', field: 'name', kind: 'name', filter: true, width: '--plx-ref-size-240px', editor: 'input' },
+         { title: 'Name', field: 'name', kind: 'name', filter: true, width: '--plx-ref-size-60u', editor: 'input' },
          { title: 'Status', field: 'status', kind: 'center', filter: 'list', render: (a) => <Badge tone="success">{a.status}</Badge> },
          { title: 'Size', field: 'size', type: 'bytes' }]}
        rowMenu={[{ label: 'Open', icon: 'open', onSelect: (a) => open(a) }, { separator: true },
@@ -33,7 +33,7 @@
          category order (such as folders first) compensate for the descending inversion
        filter: true (contains text) | "list" (one of the column's values); summary: "sum" | "count" | "average" | "min" |
          "max" in each group header; empty: the text for a missing value (zero and false are values)
-       width: a CSS length or a size token ("--plx-ref-size-240px"; numbers snap to a size token); without it the column
+       width: a CSS length or a size token ("--plx-ref-size-60u"; numbers snap to a size token); without it the column
          fits its content up to --plx-comp-data-grid-auto-max-width (360px; longer text ends in an ellipsis, the full
          text on hover) and the last such column takes the room left, so the grid fills its width; minWidth, maxWidth; frozen: pinned at the start, on request
          only (nothing is pinned by default; the selection column pins beside a frozen column); rowLabel: this and the columns before it are the row

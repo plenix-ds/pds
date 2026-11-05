@@ -115,7 +115,7 @@ if (window.DS && DS.registerLab) {
         E: { part: '.plx-product-card__title', side: 'right' }, F: { part: '.plx-product-card__price', side: 'left' }, G: { part: '.plx-product-card__compare', side: 'right' }, H: { part: '.plx-product-card__rating', side: 'right' }, I: { part: '.plx-product-card__actions', side: 'bottom' } },
       sections: [['Card', ['bg', 'bc', 'bw', 'r', 'sh', 'fo', 'fw']], ['Picture', ['mb', 'pc', 'lw']], ['Body', ['pb', 'pi', 'rg', 'bgp', 'ap']], ['Name', ['tc', 'ts', 'tw', 'tl']],
         ['Price', ['prg', 'prc', 'prf', 'prs', 'prw', 'prl', 'cmc', 'cms']], ['Rating', ['rtg']]],
-      matrixLabel: 'Product card values by variant and state', matrixColumnWidth: '--plx-ref-size-280px', statesHead: 'Variants and states · ' + HEAD
+      matrixLabel: 'Product card values by variant and state', matrixColumnWidth: '--plx-ref-size-70u', statesHead: 'Variants and states · ' + HEAD
     });
 
     // ---- ProductOptions (<ProductOptions>): the space between options, the option's name and chosen value, the size tiles'
@@ -198,7 +198,7 @@ if (window.DS && DS.registerLab) {
       anchors: { A: { part: null, side: 'left' }, B: { part: '.plx-product-options__option', side: 'right' }, C: { part: '.plx-product-options__label', side: 'top' }, D: { part: '.plx-product-options__chosen', side: 'right' },
         F: { part: '.plx-product-options__swatches', side: 'bottom' }, G: { part: '.plx-product-options__swatch.is-unavailable', side: 'top' }, H: { part: '.plx-product-options__error', side: 'bottom' } },
       sections: [['Options', ['g', 'og']], ['Name and chosen value', ['lc', 'lf', 'ls', 'll', 'lg', 'lw', 'cc', 'cw']], ['Color swatches', ['sg', 'uo']], ['Error', ['ec', 'es', 'eg']]],
-      matrixLabel: 'Product options values by kind and state', matrixColumnWidth: '--plx-ref-size-400px', statesHead: 'Kinds and states · ' + HEAD
+      matrixLabel: 'Product options values by kind and state', matrixColumnWidth: '--plx-ref-size-100u', statesHead: 'Kinds and states · ' + HEAD
     });
 
     // ---- the Commerce templates (<ProductDiscovery> … <Returns>): region placement only: the page's gaps, the titles, the
@@ -325,7 +325,7 @@ if (window.DS && DS.registerLab) {
         E: { part: '.plx-commerce__aside', side: 'right' }, F: { part: '.plx-commerce-line', side: 'left' }, G: { part: '.plx-commerce-summary__totals', side: 'right' }, H: { part: '.plx-commerce__pair, .plx-commerce__row-actions, .plx-commerce__returnables', side: 'bottom' } },
       sections: [['Page', ['g', 'hg', 'tc', 'tf', 'ts', 'tw', 'fo']], ['Sections', ['sg', 'ss', 'sw', 'sl']], ['Columns', ['cg', 'aw', 'pg', 'bg']], ['Lines', ['lb', 'lbw', 'lg', 'lp', 'lm', 'lt', 'lw', 'ltf', 'ltw', 'phb']],
         ['Order summary', ['smg', 'smc', 'smf', 'stw']], ['Side by side', ['ig', 'rg']]],
-      matrixLabel: 'Commerce template values by template', matrixColumnWidth: '--plx-ref-size-900px', statesHead: 'Templates · ' + HEAD
+      matrixLabel: 'Commerce template values by template', matrixColumnWidth: '--plx-ref-size-225u', statesHead: 'Templates · ' + HEAD
     });
   })();
 }

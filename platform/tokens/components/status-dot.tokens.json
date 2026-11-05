@@ -6,8 +6,8 @@
     "status-dot-busy-background": { "$value": "{plx-sys.status-busy}", "$type": "color", "$description": "StatusDot busy: the person is busy, in a meeting or a call (Status colors); the solid dot, nothing cut out." },
     "status-dot-dnd-background": { "$value": "{plx-sys.status-dnd}", "$type": "color", "$description": "StatusDot do not disturb: the person asks not to be disturbed (Status colors; the busy color, told apart by the minus cut out)." },
     "status-dot-offline-background": { "$value": "{plx-sys.status-offline}", "$type": "color", "$description": "StatusDot offline: the person is offline (Status colors)." },
-    "status-dot-md-size": { "$value": "{plx-ref.size-12px}", "$type": "dimension", "$description": "StatusDot size md: the dot's width and height, and its glyph's box (12px)." },
-    "status-dot-lg-size": { "$value": "{plx-ref.size-16px}", "$type": "dimension", "$description": "StatusDot size lg: the dot's width and height, and its glyph's box (16px)." },
+    "status-dot-md-size": { "$value": "{plx-ref.size-3u}", "$type": "dimension", "$description": "StatusDot size md: the dot's width and height, and its glyph's box (12px)." },
+    "status-dot-lg-size": { "$value": "{plx-ref.size-4u}", "$type": "dimension", "$description": "StatusDot size lg: the dot's width and height, and its glyph's box (16px)." },
     "status-dot-glyph-color": { "$value": "{plx-sys.surface-default}", "$type": "color", "$description": "StatusDot: the glyph, cut out of the dot in the surface color." }
   }
 }

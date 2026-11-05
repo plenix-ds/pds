@@ -1,7 +1,7 @@
 {
   "$description": "Metric, extended (library wave 9, lane C): the tokens of its trend and its card form (Metric card). Its other tokens are in the shared components set.",
   "plx-comp": {
-    "metric-trend-min-width": { "$value": "{plx-ref.size-96px}", "$type": "dimension", "$description": "Metric with a trend: the sparkline's narrowest (a word-sized trend), so it never collapses in a row of metrics." },
+    "metric-trend-min-width": { "$value": "{plx-ref.size-24u}", "$type": "dimension", "$description": "Metric with a trend: the sparkline's narrowest (a word-sized trend), so it never collapses in a row of metrics." },
     "metric-card-row-gap": { "$value": "{plx-sys.space-stack-sm}", "$type": "dimension", "$description": "Metric card: the space between the figure and the trend inside the card." }
   }
 }

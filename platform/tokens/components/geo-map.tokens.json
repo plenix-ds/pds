@@ -6,7 +6,7 @@
     "geo-map-border-color": { "$value": "{plx-sys.border-default}", "$type": "color", "$description": "Map: the outline between regions of an outline map." },
     "geo-map-border-width": { "$value": "{plx-sys.border-width-thin}", "$type": "dimension", "$description": "Map: the width of the outlines and gaps between regions (kept when zoomed)." },
     "geo-map-gap-color": { "$value": "{plx-sys.surface-default}", "$type": "color", "$description": "Choropleth map: the gap between shaded regions, in the surface color." },
-    "geo-map-marker-radius": { "$value": "{plx-ref.size-4px}", "$type": "dimension", "$description": "Map: a marker's radius." },
+    "geo-map-marker-radius": { "$value": "{plx-ref.size-1u}", "$type": "dimension", "$description": "Map: a marker's radius." },
     "geo-map-marker-outline": { "$value": "{plx-sys.surface-default}", "$type": "color", "$description": "Map: the ring around a marker in the surface color, so it stands off the regions." },
     "geo-map-marker-outline-width": { "$value": "{plx-sys.border-width-medium}", "$type": "dimension", "$description": "Map: the marker's ring width." },
     "geo-map-controls-gap": { "$value": "{plx-sys.space-stack-xs}", "$type": "dimension", "$description": "Map: the space between the zoom buttons and the map." }

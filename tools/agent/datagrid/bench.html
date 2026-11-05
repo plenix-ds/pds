@@ -24,7 +24,7 @@ function App() {
   const v = P.useCollectionView(fields, { data: rows, text: (r) => r.n + ' ' + r.who.name + ' ' + r.status + ' ' + r.note, quick: { status: 'list' } });
   const [sel, setSel] = React.useState([]);
   window.__set = { search: v.setSearch, groupBy: (f) => v.setGroup(f ? [{ field: f, dir: 'asc' }] : []) };
-  return h('div', { id: 'host' }, h(P.DataGrid, Object.assign({ label: 'Bench', data: rows, columns: cols, cells: 'pill', selectable: true, selected: sel, onSelectionChange: setSel, height: '--plx-ref-size-600px' }, v.tableProps)));
+  return h('div', { id: 'host' }, h(P.DataGrid, Object.assign({ label: 'Bench', data: rows, columns: cols, cells: 'pill', selectable: true, selected: sel, onSelectionChange: setSel, height: '--plx-ref-size-150u' }, v.tableProps)));
 }
 window.__t0 = performance.now();
 ReactDOM.createRoot(document.getElementById('root')).render(h(App));

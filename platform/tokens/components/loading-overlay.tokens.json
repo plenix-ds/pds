@@ -9,6 +9,6 @@
     "loading-overlay-message-font-size": { "$value": "{plx-ref.font-size-13}", "$type": "dimension", "$description": "The message: the body size." },
     "loading-overlay-message-font-weight": { "$value": "{plx-sys.font-weight-semibold}", "$type": "fontWeight", "$description": "The message: semibold, so it reads over the veil." },
     "loading-overlay-message-line-height": { "$value": "{plx-ref.line-height-normal}", "$type": "number", "$description": "The message's line height." },
-    "loading-overlay-progress-max-width": { "$value": "{plx-ref.size-240px}", "$type": "dimension", "$description": "The progress bar's greatest width in the middle of the region." }
+    "loading-overlay-progress-max-width": { "$value": "{plx-ref.size-60u}", "$type": "dimension", "$description": "The progress bar's greatest width in the middle of the region." }
   }
 }

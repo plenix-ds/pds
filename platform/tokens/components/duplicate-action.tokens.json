@@ -27,7 +27,7 @@
       "$description": "DuplicateAction: source line size (font-size-12)."
     },
     "duplicate-action-source-line-height": {
-      "$value": "{plx-ref.size-20px}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension",
       "$description": "DuplicateAction: source line height (and its icon box) (size-20px)."
     },
