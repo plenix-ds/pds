@@ -688,6 +688,25 @@
       "$value": "{plx-ref.paper-margin-md}",
       "$description": "PrintDocument: the page margin on paper (@page plx-document) and the sheet's padding on screen (docs/adr/0014)."
     },
+    "print-sheet-padding": {
+      "$value": "{plx-sys.print-document-margin}",
+      "$description": "PrintDocument: the sheet's padding on screen; 0 on paper, where the page carries the margin (docs/adr/0014; #348)."
+    },
+    "print-sheet-border-width": {
+      "$value": "{plx-sys.border-width-thin}",
+      "$type": "dimension",
+      "$description": "PrintDocument: the sheet's border on screen; 0 on paper (docs/adr/0014; #348)."
+    },
+    "print-sheet-radius": {
+      "$value": "{plx-sys.shape-sm}",
+      "$type": "dimension",
+      "$description": "PrintDocument: the sheet's corners on screen; square on paper (docs/adr/0014; #348)."
+    },
+    "print-sheet-shadow": {
+      "$value": "{plx-sys.shadow-card}",
+      "$type": "shadow",
+      "$description": "PrintDocument: the sheet's shadow on screen; none on paper (docs/adr/0014; #348)."
+    },
     "print-writing-line": {
       "$value": "{plx-ref.size-8u}",
       "$type": "dimension",

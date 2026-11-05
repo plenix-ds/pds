@@ -12,7 +12,6 @@
    and puts the mode back after, so the tokens are the light theme's (black text on white). */
 @page{margin:var(--plx-sys-print-page-margin);}
 .plx-print-urls{--plx-comp-link-context-url-after:var(--plx-sys-print-url-after);--plx-comp-link-context-url-before:var(--plx-sys-print-url-before);}
-/* PrintDocument (docs/adr/0014): its own named page, A4 with the document margin; the sheet loses its frame, padding and
-   minimum size on paper (the page carries the margin) */
+/* PrintDocument (docs/adr/0014): its own named page, A4 with the document margin; the sheet's frame, padding and size come off
+   through its print tokens (platform/tokens/semantic.print.tokens.json) */
 @page plx-document{margin:var(--plx-sys-print-document-margin);size:A4;}
-@media print{.plx-print-document{border-bottom-width:0;border-left-width:0;border-right-width:0;border-top-width:0;border-bottom-left-radius:0;border-bottom-right-radius:0;border-top-left-radius:0;border-top-right-radius:0;box-shadow:none;inline-size:auto;max-inline-size:none;min-block-size:0;padding-block-end:0;padding-block-start:0;padding-inline-end:0;padding-inline-start:0;page:plx-document;}}
