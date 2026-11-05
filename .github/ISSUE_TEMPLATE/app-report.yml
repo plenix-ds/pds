@@ -28,6 +28,13 @@ body:
     validations:
       required: true
   - type: input
+    id: spec
+    attributes:
+      label: Design spec page of the component
+      description: The component's page on https://design-system.lighthouseway.org/ (sign-in needed), so the fix is checked against its spec.
+    validations:
+      required: false
+  - type: input
     id: page
     attributes:
       label: Page or screen in the app
