@@ -1,0 +1,18 @@
+name: Feature
+description: Something new. Goes to Architecture, then Build.
+title: "Feature: "
+labels: ["type:feature", "agent:pds1-product-lead"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What do you want?
+      description: Plain words are enough. Paste a screenshot or annotated picture if it helps. Say "show me options" or "send a before/after" if you want pictures back.
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Where (component, page or link)
+    validations:
+      required: false

@@ -1,0 +1,173 @@
+# PDS 1.0 decisions. Later dates win. Never rewrite a past entry: supersede it
+# with a new one and set the old one's status to superseded + superseded_by.
+# Every entry names the check that enforces it, or review-only with a reason.
+# check: planned:<name> means Phase 0 builds that check.
+# Shown on the dashboard (plan §6a).
+
+- id: D-0001
+  date: 2026-11-04
+  area: process
+  decided_by: owner
+  decision: New repo plenix-ds/pds, continuing plenix-platform 0.x with full history (2,365 commits, 240 tags); plenix-platform stays read-only for 0.x consumers.
+  status: active
+  check: review-only (one-time setup)
+
+- id: D-0002
+  date: 2026-11-04
+  area: process
+  decided_by: owner
+  decision: Codex is on standby as a second opinion when needed, not part of the default team.
+  status: active
+  check: review-only (staffing)
+
+- id: D-0003
+  date: 2026-11-04
+  area: release
+  decided_by: owner
+  decision: Releases are on demand, triggered by agents, with no owner approval; automatic tag, live smoke test, automatic rollback.
+  status: active
+  check: planned:release-integrity
+
+- id: D-0004
+  date: 2026-11-04
+  area: design
+  decided_by: owner
+  decision: Keep the existing PDS design language; Phase 0 writes it down in DESIGN.md as-is.
+  status: active
+  check: planned:design-lint (checks 1-12)
+
+- id: D-0005
+  date: 2026-11-04
+  area: design
+  decided_by: owner
+  decision: Corner radius scale 0/2/4/6/circle; pills 4px.
+  status: active
+  check: planned:lint-radius
+
+- id: D-0006
+  date: 2026-11-04
+  area: design
+  decided_by: owner
+  decision: Keep DM Sans for text and Reddit Mono for numbers.
+  status: active
+  check: planned:lint-type-roles
+
+- id: D-0007
+  date: 2026-11-04
+  area: design
+  decided_by: owner
+  decision: Three densities - compact, standard, comfortable.
+  status: active
+  check: planned:density-tokens
+
+- id: D-0008
+  date: 2026-11-04
+  area: design
+  decided_by: owner
+  decision: The current blue accent is the default theme; theming is a later build.
+  status: active
+  check: planned:lint-colour-tokens
+
+- id: D-0009
+  date: 2026-11-04
+  area: design
+  decided_by: owner
+  decision: Dark mode stays as defined; defects are fixed as bugs.
+  status: active
+  check: planned:contrast-matrix
+
+- id: D-0010
+  date: 2026-11-04
+  area: design
+  decided_by: owner
+  decision: Table pills stay as defined; wrapping is fixed as a bug.
+  status: active
+  check: planned:pill-height (check 11)
+
+- id: D-0011
+  date: 2026-11-04
+  area: design
+  decided_by: owner
+  decision: Keep Material Symbols Sharp icons.
+  status: active
+  check: planned:icon-set
+
+- id: D-0012
+  date: 2026-11-04
+  area: i18n
+  decided_by: owner
+  decision: Keep the existing Arabic workflow (docs/i18n/arabic.md); the owner approves new Arabic words.
+  status: active
+  check: planned:locale-unapproved-ar
+
+- id: D-0013
+  date: 2026-11-04
+  area: process
+  decided_by: owner
+  decision: Mobile is deferred; pds1-mobile-app-builder is parked.
+  status: active
+  check: review-only (scope)
+
+- id: D-0014
+  date: 2026-11-04
+  area: process
+  decided_by: owner
+  decision: Full autonomy with bypass permissions; agents merge, deploy and migrate; CI is the gate; safety nets replace approvals.
+  status: active
+  check: planned:branch-protection-required-checks
+
+- id: D-0015
+  date: 2026-11-04
+  area: process
+  decided_by: owner
+  decision: GitHub is the only channel for the owner and all agents; decisions and visual checks are shown on the dashboard.
+  status: active
+  check: review-only (process)
+
+- id: D-0016
+  date: 2026-11-04
+  area: process
+  decided_by: owner
+  decision: Pictures only when the owner asks; screenshots CI already takes are always sent to the owner (PR, issue) and logged on the dashboard.
+  status: active
+  check: planned:visual-artifacts-posted
+
+- id: D-0017
+  date: 2026-11-04
+  area: process
+  decided_by: owner
+  decision: Visual regression runs per PR only (light/dark, standard density; RTL and compact when touched). No separate full run before a release.
+  status: active
+  check: planned:visual-regression
+
+- id: D-0018
+  date: 2026-11-04
+  area: process
+  decided_by: owner
+  decision: At most 4 agents on long work, plus any number of small tasks (~15 min cap); memory is the real limit; all adjustable in agents.config.yaml.
+  status: active
+  check: review-only (pds1-delivery-lead schedules by agents.config.yaml)
+
+- id: D-0019
+  date: 2026-11-05
+  area: release
+  decided_by: owner
+  decision: CTM and PDS talk both ways through the PDS GitHub App (no personal tokens); CTM opens "CTM - Plenix <v> breaks CTM" issues in plenix-ds/pds.
+  status: active
+  check: review-only (until the app exists after Phase 0)
+
+- id: D-0020
+  date: 2026-11-05
+  area: release
+  decided_by: agent (pds1 setup), owner may switch
+  decision: The instant plenix-release signal to CTM needs Contents write on CTM, so it is not used; CTM relies on its own schedule. Recommended - CTM checks every 5 minutes. Reply to switch to granting Contents write.
+  status: active
+  check: review-only (pending owner reply)
+
+- id: D-0021
+  date: 2026-11-05
+  area: process
+  decided_by: owner
+  decision: Restart as PDS 1.0 - a continuation of the existing project in a structured environment (same GitHub, servers, CDN). The 0.x team is retired; the new team's agents are named PDS1-.
+  status: active
+  check: review-only (setup)

@@ -1,0 +1,18 @@
+name: Question
+description: Ask anything. The Product Lead answers on the issue.
+title: "Question: "
+labels: ["type:question", "agent:pds1-product-lead"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: Your question
+      description: Plain words are enough. Paste a screenshot or annotated picture if it helps. Say "show me options" or "send a before/after" if you want pictures back.
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Where (component, page or link)
+    validations:
+      required: false

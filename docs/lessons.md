@@ -1,0 +1,17 @@
+# Lessons
+
+What the 0.x project taught us (plan §2), plus confirmed lessons added after each M/L item. Keep each lesson to one line: what happened, then the rule.
+
+## From 0.x (2026-10-08 to 2026-11-03)
+
+- **241 versions in 26 days, with the DataGrid reversed 5 times.** → Decide before building: a written spec and `DESIGN.md` come first. Rulings go in the ledger, not silently into code.
+- **CI had 0 green runs out of 1,509, and checks weren't a merge gate.** → Required checks only, and diff-aware so only new problems block. Tests are quarantined with an owner within 24h, never deleted.
+- **0 of 58 Codex PRs were merged.** → One team and one instruction source (Rulesync). Codex stays on standby.
+- **The owner was the gate on every merge and look: 341 queued questions, 19–21 stuck merges.** → Full autonomy, decision cards with the recommendation applied, and never asking twice (`decisions.yaml`).
+- **About 35% of effort went to process and 25% to rework.** → Small PRs the same day. Measure with the checks, not with reports.
+- **About 56 agent processes ran on 15 GB, near out-of-memory.** → Limits come from `agents.config.yaml`, with a memory limit per session.
+- **One shared owner GitHub identity made 715 of 786 commits.** → Bot identity per role through the GitHub App, and signed comments until then.
+- **Cron polling every 1–2 minutes.** → Webhooks.
+- **An agent's report was taken as fact.** → Evidence (Ran/Skipped/Planned/Manual) plus `git log` and the checks.
+- **`check | tee log` hid failures** (from CTM). → Workflows use `bash` with `pipefail`.
+- **"Arabic never shipped" was wrong:** a stale local clone was read instead of `main`. → Check `origin/main` before claiming anything about the repo.

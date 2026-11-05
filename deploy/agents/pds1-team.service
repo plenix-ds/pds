@@ -1,0 +1,15 @@
+# systemd user unit: starts the PDS1 core team at boot (needs Linger for cc).
+# Install: cp deploy/agents/pds1-team.service ~/.config/systemd/user/ && systemctl --user enable pds1-team
+[Unit]
+Description=PDS1 agent team (core sessions in tmux "pds1")
+After=network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStartPre=/bin/sleep 30
+ExecStart=%h/pds1/team.sh start-core
+ExecStop=%h/pds1/team.sh stop-all
+
+[Install]
+WantedBy=default.target

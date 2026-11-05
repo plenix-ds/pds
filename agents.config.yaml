@@ -1,0 +1,22 @@
+# How many PDS1 agents may run at once. Owner decision D-0018 (2026-11-04).
+# Adjust these numbers as needed. pds1-delivery-lead schedules by this file,
+# never by a number written in the docs. Change it by PR, logged on the D-0018 issue.
+
+long_work:
+  # Building a component, a design, a migration, a release.
+  max_running: 4
+
+coordinators:
+  # Always running; they don't use long-work slots.
+  roles: [pds1-product-lead, pds1-delivery-lead]
+
+small_tasks:
+  # A code review, a lint or typo fix, one test, triaging an issue, a GitHub
+  # reply, the daily summary. Run on top of the long-work slots.
+  max_running: unlimited       # or a number
+  max_minutes: 15              # longer -> stop and queue for a long-work slot
+
+memory:
+  # Memory sets the real limit, not the agent count (VM 131 has 15 GB).
+  per_agent_limit_gb: 1.5      # each session's own limit (systemd MemoryMax)
+  start_new_below_free_gb: 2   # new small tasks wait while free memory is below this
