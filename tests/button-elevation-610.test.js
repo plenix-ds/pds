@@ -1,6 +1,6 @@
 /* Plenix tests · Button elevation (issue 610; the owner's pick G-R4-H, his GO recorded on 610).
    Summary: secondary, tertiary, primary and danger are raised, light and dark:
-     at rest a very subtle glow (a radial gradient, the plain fill to 75%; #910) and the card's Halo shadow
+     at rest a very subtle glow (a radial gradient, the plain fill to 90%; #910, #269) and the card's Halo shadow
        (card-elevation-halo-shadow); on hover the glow on the hover fill and the same Halo (#910: hover no longer steps up
        to Lifted); pressed and disabled flat (no gradient, no shadow)
      primary and danger: the border is the glow's rim (blue-600, red-800) and the bottom edge one shade deeper (blue-700,
@@ -44,10 +44,10 @@ const contrast = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y
     for (const mode of ['light', 'dark']) {
       const r = await look(mode);
       for (const k of ['secondary', 'tertiary', 'primary', 'danger']) {
-        assert.match(r[k + '-rest'].image, /^radial-gradient\(.* 75%, .* 100%\)$/, mode + ' ' + k + ': the subtle glow at rest (fill to 75%)');
+        assert.match(r[k + '-rest'].image, /^radial-gradient\(.* 90%, .* 100%\)$/, mode + ' ' + k + ': the subtle glow at rest (fill to 75%)');
         assert.notEqual(r.halo, 'none', mode + ': the card Halo resolves');
-        assert.equal(r[k + '-rest'].shadow, r.halo, mode + ' ' + k + ': the card Halo at rest');
-        assert.match(r[k + '-hover'].image, /^radial-gradient\(.* 75%, .* 100%\)$/, mode + ' ' + k + ': the subtle glow on hover (fill to 75%)');
+        assert.equal(r[k + "-rest"].shadow, "none", mode + " " + k + ": no shadow at rest (D-0048, #269)");
+        assert.match(r[k + '-hover'].image, /^radial-gradient\(.* 90%, .* 100%\)$/, mode + ' ' + k + ': the subtle glow on hover (fill to 75%)');
         assert.equal(r[k + '-hover'].shadow, r.halo, mode + ' ' + k + ': the card Halo on hover, as at rest (#910)');
         for (const s of ['pressed', 'disabled']) assert.deepEqual([r[k + '-' + s].image, r[k + '-' + s].shadow], ['none', 'none'], mode + ' ' + k + ' ' + s + ': flat');
       }
