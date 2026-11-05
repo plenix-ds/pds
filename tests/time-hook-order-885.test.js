@@ -14,7 +14,7 @@
 const assert = require('assert/strict'), fs = require('fs'), path = require('path'), { serve, launch } = require('./lib');
 
 // the source: in the Time function, every hook call comes before its own first return
-const src = fs.readFileSync(path.join(__dirname, '..', 'platform/components/Time/Time.jsx'), 'utf8');
+const src = fs.readFileSync(path.join(__dirname, '..', 'platform/components/Time/Time.tsx'), 'utf8');
 const body = src.slice(src.indexOf('export function Time('));
 const end = body.indexOf('\n}\n');
 // the function's own first return: a statement at its top level (two spaces in), not one inside an effect's callback

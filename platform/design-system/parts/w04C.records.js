@@ -167,7 +167,7 @@ DSParts.records.push(function (H) {
           ['With progress', function () { return frame(h(P.LoadingOverlay, { progress: 42, message: 'Importing 120 assets', onCancel: noop }, region())); }, null, 'progress']]]] },
 
     /* ── 03 Content & Identity › Metadata ── */
-    { id: 'timestamp', lab: true, sec: 'content', sub: 'Metadata', leaf: 'Timestamp', title: 'Timestamp', plenix: 'Time', src: 'components/Time/Time.jsx', level: 'Component', interaction: 'Display', icon: 'clock',
+    { id: 'timestamp', lab: true, sec: 'content', sub: 'Metadata', leaf: 'Timestamp', title: 'Timestamp', plenix: 'Time', src: 'components/Time/Time.tsx', level: 'Component', interaction: 'Display', icon: 'clock',
       covers: ['Relative time', 'Date label'], aliases: ['Time', 'Date and time', 'Relative time', 'Time ago', 'Date label', 'Datetime'],
       text: 'Shows a moment as a technical value: the date and time (the default), a relative time (“5 minutes ago”; it rewrites itself and becomes the date after 7 days), a date label (“Today”, “Yesterday”, “Oct 8”), or the date or the time alone. It is a <time> with the machine-readable value, written by the formats in the reader’s locale, in the data font (Reddit Mono) at the size of the surrounding text. Relative times and date labels show the full date and time with its zone in a tooltip, and are a Tab stop for it.',
       use: ['The exact moment in logs, version history and details, where order matters (datetime)', 'Recent activity, comments and notifications (relative)', 'Due, published and expiry dates (label or date)'],

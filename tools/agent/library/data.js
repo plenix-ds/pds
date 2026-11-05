@@ -34,7 +34,7 @@ const EX = {   // existing Platform code (for extend targets)
   NavPane: ['platform/patterns/NavPane/NavPane.jsx', 'platform/patterns/NavPane/nav-pane.css'],
   AppHeader: ['platform/patterns/AppHeader/AppHeader.jsx', 'platform/patterns/AppHeader/app-header.css'],
   Card: ['platform/components/Card/Card.tsx', 'platform/components/Card/card.css'],
-  Metric: ['platform/components/Metric/Metric.jsx', 'platform/components/Metric/metric.css'],
+  Metric: ['platform/components/Metric/Metric.tsx', 'platform/components/Metric/metric.css'],
   DropZone: ['platform/components/DropZone/DropZone.tsx', 'platform/components/DropZone/drop-zone.css'],
   ActionBar: ['platform/patterns/ActionBar/ActionBar.jsx', 'platform/patterns/ActionBar/action-bar.css'],
   Chat: ['platform/components/Chat/Chat.jsx', 'platform/components/Chat/chat.css'],

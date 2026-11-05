@@ -1,0 +1,5 @@
+AssertionError [ERR_ASSERTION]: the source link shows the open icon
+    at /home/cc/pds1/work/component-engineer-1/tests/ts-wave1-a.test.js:43:12 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: null,

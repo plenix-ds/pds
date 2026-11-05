@@ -44,8 +44,31 @@ import { dataWhenText } from '../../utils/dataText.tsx';
 import { Card } from '../Card/Card.tsx';
 import { Sparkline } from '../../charts/Sparkline.jsx';
 
+type MetricProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & {
+  /** the figure */
+  value?: React.ReactNode;
+  label?: React.ReactNode;
+  unit?: React.ReactNode;
+  /** the change, such as "+4%" */
+  change?: React.ReactNode;
+  /** "neutral" (default) | "positive" | "negative" */
+  changeTone?: string;
+  description?: React.ReactNode;
+  /** "md" (default) | "lg" */
+  size?: 'md' | 'lg';
+  /** the numbers of a small trend chart */
+  trend?: number[];
+  /** "line" (default) | "area" | "bar" */
+  trendVariant?: 'line' | 'area' | 'bar';
+  trendLabel?: string;
+  trendColor?: string;
+  /** draws the metric as a Card */
+  card?: boolean;
+  /** with card: the card's link */
+  href?: string;
+};
 export function Metric({ value, label, unit, change, changeTone = 'neutral', description, size = 'md', trend, trendVariant = 'line', trendLabel, trendColor,
-  card = false, href, className, ...rest }) {
+  card = false, href, className, ...rest }: MetricProps) {
   devWarn('Metric', { size }, { size: ['md','lg'] });
   const figure = (
     <div className="plx-metric__figure">
@@ -56,6 +79,7 @@ export function Metric({ value, label, unit, change, changeTone = 'neutral', des
   );
   const spark = trend && trend.length ? (
     <div className="plx-metric__trend">
+      {/* @ts-expect-error Sparkline is still JavaScript (charts are converted in wave 2), so its optional props read as required */}
       <Sparkline values={trend} variant={trendVariant} size="fill" showLast={trendVariant !== 'bar'} color={trendColor} label={trendLabel || (typeof label === 'string' ? label : undefined)} />
     </div>
   ) : null;
@@ -79,7 +103,7 @@ export function Metric({ value, label, unit, change, changeTone = 'neutral', des
   );
 }
 
-Metric.Group = function MetricGroup({ label, className, children, ...rest }) {
+Metric.Group = function MetricGroup({ label, className, children, ...rest }: React.HTMLAttributes<HTMLElement> & { label?: string }) {
   return (
     <div className={cx('plx-metric-group', className)} role="list" aria-label={label} {...rest}>
       {React.Children.map(children, (c) => (c ? <div role="listitem" className="plx-metric-group__item">{c}</div> : null))}

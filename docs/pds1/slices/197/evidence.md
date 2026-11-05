@@ -43,6 +43,13 @@
 | Slices touched (temporary commit on 265 and 195 evidence) | Ran (local) | TRACE_FAIL: 195-dashboard AC-1..6 in no test; 265 AC-1, AC-3, AC-4, AC-5 not in its evidence (the test names all five) |
 | CI job "Traceability" | Planned | This PR's run (no slice touched → OK) |
 
+## Findings on the changed line, instead of reviewdog (D-0046)
+
+| Item | Status | Path / output |
+|---|---|---|
+| Line kept out of a finding's identity | Ran (local) | a base file without lines still matches: "1 findings on head, 0 new, 0 fixed, 1 old" |
+| Annotation with file and line | Ran (local) | `::error file=platform/components/RichText/RichText.jsx,line=46,title=opengrep%3A new problem (pds-no-dangerously-set-inner-html)::…` |
+| Escaping | Ran (local) | `file=a%2C b.js,line=7,title=eslint%3A new problem (no-x)::bad: thing, here%0Anext` |
 ## Ownership (2026-11-05)
 
 | Item | Status | Path / output |

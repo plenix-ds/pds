@@ -17,7 +17,7 @@ import { Text } from '../../components/Text/Text.tsx';
 import { Notice } from '../../components/Notice/Notice.tsx';
 import { cx } from '../../utils/cx.ts';
 import { SearchField } from '../../components/SearchField/SearchField.tsx';
-import { Time } from '../../components/Time/Time.jsx';
+import { Time } from '../../components/Time/Time.tsx';
 export function PromptHistory({items=[],searchable=true,onSelect,strings,className}){
  const t={label:'Prompt history',search:'Search prompts',empty:'No matching prompts.',failed:'The prompt could not be reused. Try again.',...strings},[query,setQuery]=React.useState(''),[busy,setBusy]=React.useState(null),[error,setError]=React.useState(''),lock=React.useRef(false),live=React.useRef(true);
  React.useEffect(()=>{live.current=true;return()=>{live.current=false;};},[]);
