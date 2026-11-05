@@ -1,15 +1,12 @@
 {
- "$description": "contrast-matrix (plan §7 check 8) known failures from 0.x, measured 2026-11-05 (dark mode is worked last, D-0025). Shrink-only: remove an entry when its pair is fixed; never add one.",
+ "$description": "contrast-matrix (plan \u00a77 check 8) known failures from 0.x, measured 2026-11-05 (dark mode is worked last, D-0025). Shrink-only: remove an entry when its pair is fixed; never add one.",
  "known": [
-  "default dark category-olive-on on category-olive",
   "default dark content-link-visited on state-hover",
   "default dark content-link-visited on state-selected",
   "default dark content-subtle on state-hover",
   "default dark content-subtle on state-selected",
   "default dark content-subtle on surface-default",
   "default dark content-subtle on surface-overlay",
-  "default dark content-subtle on surface-raised",
-  "default light accent-field-placeholder on accent-field-background",
-  "default light category-olive-on on category-olive"
+  "default dark content-subtle on surface-raised"
  ]
 }
