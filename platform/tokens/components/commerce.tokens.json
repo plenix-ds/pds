@@ -15,7 +15,7 @@
     "commerce-title-line-height": { "$value": "{plx-ref.line-height-snug}", "$type": "number", "$description": "Commerce: the page title's line height (snug)." },
     "commerce-subtitle-font-size": { "$value": "{plx-ref.font-size-400}", "$type": "dimension", "$description": "Commerce: a section title's size (15px)." },
     "commerce-subtitle-font-weight": { "$value": "{plx-sys.text-label-font-weight}", "$type": "fontWeight", "$description": "Commerce: a section title's and a legend's weight (semibold)." },
-    "commerce-subtitle-line-height": { "$value": "{plx-sys.label-height-20px}", "$type": "dimension", "$description": "Commerce: a section title's line height (20px)." },
+    "commerce-subtitle-line-height": { "$value": "{plx-sys.label-height-md}", "$type": "dimension", "$description": "Commerce: a section title's line height (20px)." },
     "commerce-focus-outline-color": { "$value": "{plx-sys.focus-ring-color}", "$type": "color", "$description": "Commerce: the ring on the confirmation's title when it takes the focus by keyboard (focus-ring-color)." },
     "commerce-focus-outline-offset": { "$value": "{plx-sys.focus-ring-offset}", "$type": "dimension", "$description": "Commerce: the title's focus ring offset (focus-ring-offset)." },
     "commerce-focus-outline-width": { "$value": "{plx-sys.border-width-medium}", "$type": "dimension", "$description": "Commerce: the title's focus ring width (border-width-medium)." },

@@ -158,7 +158,7 @@
       "$description": "With touch the rows part by the minimum target less the 20px tag (24px), so the 44px targets of one row do not cover the next"
     },
     "tag-list-padding-block": {
-      "$value": "calc(({plx-sys.control-target-min} - {plx-sys.label-height-20px}) / 2)",
+      "$value": "calc(({plx-sys.control-target-min} - {plx-sys.label-height-md}) / 2)",
       "$type": "dimension",
       "$description": "With touch a tag list keeps half the minimum target less the 20px tag (12px) above and below, so its 44px targets stay inside it and never cover the controls of the row above or below",
       "$extensions": { "com.plenix": { "webOnly": true } }

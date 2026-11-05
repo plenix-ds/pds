@@ -42,7 +42,7 @@
       "$description": "Link: the underline thickness on hover."
     },
     "link-radius": {
-      "$value": "{plx-sys.radius-compact-4px}",
+      "$value": "{plx-sys.radius-compact}",
       "$type": "dimension",
       "$description": "Link: the corners of the focus ring around the text."
     },

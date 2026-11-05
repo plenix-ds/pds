@@ -32,7 +32,7 @@
       "$description": "EntityHeader: the media square (top row, small)."
     },
     "entity-header-media-radius": {
-      "$value": "{plx-sys.radius-avatar-4px}",
+      "$value": "{plx-sys.radius-avatar-sm}",
       "$type": "dimension",
       "$description": "EntityHeader: the media square's corners."
     },
@@ -83,7 +83,7 @@
       "$description": "EntityHeader: a fact tile's inline padding."
     },
     "entity-header-fact-radius": {
-      "$value": "{plx-sys.radius-detail-4px}",
+      "$value": "{plx-sys.radius-detail}",
       "$type": "dimension",
       "$description": "EntityHeader: a fact tile's corners."
     },
@@ -278,7 +278,7 @@
       "$description": "EntityHeader: a section header's column gap."
     },
     "entity-header-section-radius": {
-      "$value": "{plx-sys.radius-surface-6px}",
+      "$value": "{plx-sys.radius-surface-md}",
       "$type": "dimension",
       "$description": "EntityHeader: a section header's corners."
     },
@@ -333,7 +333,7 @@
       "$description": "EntityHeader (header style 2, owner 2026-10-23): the fact icon square's edge."
     },
     "entity-header-fact-icon-tile-radius": {
-      "$value": "{plx-sys.radius-detail-4px}",
+      "$value": "{plx-sys.radius-detail}",
       "$type": "dimension",
       "$description": "EntityHeader (header style 2, owner 2026-10-23): the fact icon square's corners."
     },
@@ -403,7 +403,7 @@
       "$description": "EntityHeader (header style 2, owner 2026-10-23): a state's padding left and right."
     },
     "entity-header-state-radius": {
-      "$value": "{plx-sys.radius-control-4px}",
+      "$value": "{plx-sys.radius-control-sm}",
       "$type": "dimension",
       "$description": "EntityHeader (header style 2, owner 2026-10-23): a state's corners."
     },

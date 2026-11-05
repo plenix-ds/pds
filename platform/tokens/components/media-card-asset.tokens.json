@@ -8,7 +8,7 @@
     "media-card-stack-sheet-background": { "$value": "{plx-comp.media-card-background}", "$type": "color", "$description": "MediaCard collection: a sheet's fill, the card's own surface." },
     "media-card-stack-sheet-border-color": { "$value": "{plx-comp.media-card-border-color}", "$type": "color", "$description": "MediaCard collection: a sheet's border, the card's own border color." },
     "media-card-stack-sheet-border-width": { "$value": "{plx-comp.media-card-border-width}", "$type": "dimension", "$description": "MediaCard collection: a sheet's border width, the card's own." },
-    "media-card-stack-sheet-radius": { "$value": "{plx-sys.radius-card-4px}", "$type": "dimension", "$description": "MediaCard collection: a sheet's top corners (radius-card-4px: a 4px sheet cannot show the card's 12px corner)." },
+    "media-card-stack-sheet-radius": { "$value": "{plx-sys.radius-card-sm}", "$type": "dimension", "$description": "MediaCard collection: a sheet's top corners (radius-card-4px: a 4px sheet cannot show the card's 12px corner)." },
     "media-card-stack-back-inset": { "$value": "{plx-ref.size-4u}", "$type": "dimension", "$description": "MediaCard collection: how much narrower the back sheet is at each side (16px)." },
     "media-card-stack-middle-inset": { "$value": "{plx-ref.size-2u}", "$type": "dimension", "$description": "MediaCard collection: how much narrower the middle sheet is at each side (8px)." }
   }

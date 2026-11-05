@@ -1,7 +1,7 @@
 {
   "sheet-background": { "$value": "{plx-sys.surface-overlay}", "$type": "color" },
   "sheet-text": { "$value": "{plx-sys.content-default}", "$type": "color" },
-  "sheet-radius": { "$value": "{plx-sys.radius-dialog-6px}", "$type": "dimension", "$description": "The top corners of the bottom sheet (the dialog radius)" },
+  "sheet-radius": { "$value": "{plx-sys.radius-dialog}", "$type": "dimension", "$description": "The top corners of the bottom sheet (the dialog radius)" },
   "sheet-shadow": { "$value": "{plx-sys.elevation-overlay-shadow}", "$type": "shadow" },
   "sheet-medium-height": { "$value": "50dvh", "$type": "dimension", "$description": "The medium height of the bottom sheet: about half the window (Platforms Standard 5.3; HIG › Sheets, medium detent)" },
   "sheet-large-height": { "$value": "calc(100dvh - {plx-sys.space-layout-xl})", "$type": "dimension", "$description": "The large height of the bottom sheet: the window, less a strip of the screen behind it at the top (HIG › Sheets, large detent)" },

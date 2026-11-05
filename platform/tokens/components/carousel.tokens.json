@@ -57,7 +57,7 @@
       "$description": "Carousel: a page dot’s size (size-8px)."
     },
     "carousel-dot-radius": {
-      "$value": "{plx-sys.radius-pill-4px}",
+      "$value": "{plx-sys.radius-pill}",
       "$type": "dimension",
       "$description": "Carousel: a page dot’s corner radius (round at its size) (radius-pill-4px)."
     },

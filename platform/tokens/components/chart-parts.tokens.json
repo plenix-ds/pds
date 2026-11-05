@@ -67,7 +67,7 @@
       "$description": "Chart legend: the names' size."
     },
     "chart-legend-label-line-height": {
-      "$value": "{plx-sys.label-height-16px}",
+      "$value": "{plx-sys.label-height-sm}",
       "$type": "dimension",
       "$description": "Chart legend: the names' line height."
     },
@@ -117,7 +117,7 @@
       "$description": "Interactive chart legend: the space inside a toggle at its start and end."
     },
     "chart-legend-toggle-radius": {
-      "$value": "{plx-sys.radius-control-4px}",
+      "$value": "{plx-sys.radius-control-sm}",
       "$type": "dimension",
       "$description": "Interactive chart legend: a toggle's corners."
     },
@@ -172,7 +172,7 @@
       "$description": "Chart tooltip: the border width."
     },
     "chart-tooltip-radius": {
-      "$value": "{plx-sys.radius-menu-6px}",
+      "$value": "{plx-sys.radius-menu}",
       "$type": "dimension",
       "$description": "Chart tooltip: the corners (the menu radius)."
     },
@@ -217,7 +217,7 @@
       "$description": "Chart tooltip: the text size."
     },
     "chart-tooltip-line-height": {
-      "$value": "{plx-sys.label-height-16px}",
+      "$value": "{plx-sys.label-height-sm}",
       "$type": "dimension",
       "$description": "Chart tooltip: the line height."
     },

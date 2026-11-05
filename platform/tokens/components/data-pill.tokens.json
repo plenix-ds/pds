@@ -7,7 +7,7 @@
     "data-pill-md-padding-inline-start": { "$value": "{plx-ref.space-1u}", "$type": "dimension", "$description": "DataPill size md: the space before the icon or the value: equal to the space after it and to the space above and below the text (24px high, 16px text: 4px; owner, 2026-10-29, #649)." },
     "data-pill-md-padding-inline-end": { "$value": "{plx-ref.space-1u}", "$type": "dimension", "$description": "DataPill size md: the space after the value: equal to the space before it (#649)." },
     "data-pill-gap": { "$value": "{plx-sys.space-inline-xs}", "$type": "dimension", "$description": "DataPill: between the icon and the value." },
-    "data-pill-radius": { "$value": "{plx-sys.radius-pill-4px}", "$type": "dimension", "$description": "DataPill: its corners." },
+    "data-pill-radius": { "$value": "{plx-sys.radius-pill}", "$type": "dimension", "$description": "DataPill: its corners." },
     "data-pill-border-width": { "$value": "{plx-sys.border-width-thin}", "$type": "dimension", "$description": "DataPill: its border." },
     "data-pill-icon-size": { "$value": "{plx-sys.icon-size-sm}", "$type": "dimension", "$description": "DataPill: its icon." },
     "data-pill-font-weight": { "$value": "{plx-sys.font-weight-medium}", "$type": "fontWeight", "$description": "DataPill: the value's weight." },

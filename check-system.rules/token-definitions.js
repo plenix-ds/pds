@@ -36,8 +36,8 @@ const RADIUS_EXEMPT = [
   // a card's media or cover sits inside the card's border, so its outer corner is the card's corner minus the border (an inner corner; never above the card's)
   ['feature-card-media-radius', 'calc({plx-comp.card-radius} - {plx-comp.card-border-width})', 'inner corner: card radius minus border width'],
   ['user-card-cover-radius', 'calc({plx-comp.card-radius} - {plx-comp.card-border-width})', 'inner corner: card radius minus border width'],
-  ['media-card-media-border-top-left-radius', 'calc({plx-sys.radius-card-6px} - {plx-sys.border-width-thin})', 'inner corner: card radius minus border width'],
-  ['media-card-media-border-top-right-radius', 'calc({plx-sys.radius-card-6px} - {plx-sys.border-width-thin})', 'inner corner: card radius minus border width'],
+  ['media-card-media-border-top-left-radius', 'calc({plx-sys.radius-card-md} - {plx-sys.border-width-thin})', 'inner corner: card radius minus border width'],
+  ['media-card-media-border-top-right-radius', 'calc({plx-sys.radius-card-md} - {plx-sys.border-width-thin})', 'inner corner: card radius minus border width'],
 ];
 const radiusExempt = (key, value) => RADIUS_EXEMPT.some(([n, v]) => n === key && v === String(value).trim());
 const CORNERS = [0, 2, 4, 6];   // px: the corner scale (D-0005); no 1px, 3px or 5px corner

@@ -1,5 +1,5 @@
 /* Plenix · Radius (platform/system/radius.css): the corner system.
-   Three layers. VALUES name their size (--plx-sys-shape-xs). ROLES name the use and the size (--plx-sys-radius-control-4px): components use
+   Three layers. VALUES name their size (--plx-sys-shape-xs). ROLES name the use and the size (--plx-sys-radius-control-sm): components use
    a role. DERIVED radius is worked out, not picked: a surface inset inside another rounded surface follows it.
    Rules (checked by platform/dev/radius-audit.js):
    - Controls own their radius: buttons, inputs, selects, navigation items, menu items and toolbar actions use
@@ -7,14 +7,14 @@
      4px in every density (owner, 2026-10-24, issues 298 and 299: Fluent's borderRadiusMedium; at 6px a 1-screen-pixel border's
      curve read as a cut corner at 125% and 150%). Checks, swatches, tabs and
      list rows keep their own roles.
-   - Menus and dropdowns are containment surfaces at the lowest radius role (owner, batch 272): --plx-sys-radius-surface-4px
-     (--plx-sys-radius-menu-6px stays defined, unused). A menu item is a control, not a nested surface;
+   - Menus and dropdowns are containment surfaces at the lowest radius role (owner, batch 272): --plx-sys-radius-surface-sm
+     (--plx-sys-radius-menu stays defined, unused). A menu item is a control, not a nested surface;
      only an item whose outer corners meet the menu's rounded edge is checked corner by corner (it must follow the menu,
      or the menu clips it).
    - Focus rings: an outline (or ring shadow) offset by --plx-sys-focus-ring-offset follows the element's corner, so the ring's
      radius is the element's radius + 2px without a separate token.
    - Avatars are rounded squares, never circles. The corner grows with the avatar (24px: 4px, larger: 6px, the owner's 2px-to-6px corner rule), always well under half the width.
-   - Pills (status badges, tags, category pills, chips, counters) have 4px corners: --plx-sys-radius-pill-4px (owner, 2026-10-14,
+   - Pills (status badges, tags, category pills, chips, counters) have 4px corners: --plx-sys-radius-pill (owner, 2026-10-14,
      docs/pills-and-colors.md: "4px on every pill"). Round marks (dots, toggles, slider thumbs, step circles) use
      --plx-sys-shape-mark (6px since the owner's 2026-10-27 choice: they are no longer round); no pill does. Avatars are the documented exception to "full": Plenix avatars are rounded squares (above).
    - A tile radius (a calculated 25%) is reserved for a tile component; there is none yet, so there is no token.

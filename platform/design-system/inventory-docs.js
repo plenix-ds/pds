@@ -300,7 +300,7 @@ window.DSDocs = {
    "motion": "Not applicable: radius has no motion."
   },
   "content": {
-   "labels": "Name a role by its use and value (--plx-sys-radius-card-6px). Controls own their radius and never take it from their container. Menus use --plx-sys-radius-menu-6px. Avatars are rounded squares, never circles.",
+   "labels": "Name a role by its use and value (--plx-sys-radius-card-md). Controls own their radius and never take it from their container. Menus use --plx-sys-radius-menu. Avatars are rounded squares, never circles.",
    "actions": "Not applicable: radius has no actions.",
    "errors": "Not applicable: radius shows no error text.",
    "localization": "The concentric class sets all four corners, so it works the same in right-to-left."
@@ -2224,7 +2224,7 @@ window.DSDocs = {
  "badge": {
   "purpose": "Lets people scan a workflow status at a glance (Approved, Failed). Every pill in filter values, tables, tags and statuses is soft, from its assigned color family: a shade-100 background, a 1px shade-300 border, dark text from the same family (700, or 800 for red) and 4px corners (owner, 2026-10-14).",
   "anatomy": [
-   "Label — a span with bold text, a 1px border and 4px corners (--plx-sys-radius-pill-4px) (required)",
+   "Label — a span with bold text, a 1px border and 4px corners (--plx-sys-radius-pill) (required)",
    "Icon — `icon`, the status icon before the text, in the text color; decorative (required for a status)",
    "Variant (tone) — neutral (default; gray), success (green), active (blue), waiting (yellow), action-required (orange) or negative (red); the old names info, warning and danger draw active, waiting and negative (required, default neutral)",
    "Style — soft only: every pill is soft; variant=\"solid\" or \"soft\" is accepted and ignored (not applicable)",

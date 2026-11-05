@@ -67,7 +67,7 @@
       "$description": "BottomSheetNav: a tile label's size (as the bottom navigation bar's labels)."
     },
     "bottom-sheet-nav-tile-label-line-height": {
-      "$value": "{plx-sys.label-height-16px}",
+      "$value": "{plx-sys.label-height-sm}",
       "$type": "dimension",
       "$description": "BottomSheetNav: a tile label's line height."
     }

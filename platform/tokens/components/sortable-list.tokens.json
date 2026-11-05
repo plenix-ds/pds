@@ -6,7 +6,7 @@
     "sortable-list-item-background": { "$value": "{plx-sys.surface-default}", "$type": "color", "$description": "SortableList item: the default surface." },
     "sortable-list-item-border-color": { "$value": "{plx-sys.border-subtle}", "$type": "color", "$description": "SortableList item: its frame (the subtle border)." },
     "sortable-list-item-border-width": { "$value": "{plx-sys.border-width-thin}", "$type": "dimension", "$description": "SortableList item: its frame's width." },
-    "sortable-list-item-radius": { "$value": "{plx-sys.radius-control-4px}", "$type": "dimension", "$description": "SortableList item: its corners (the control radius)." },
+    "sortable-list-item-radius": { "$value": "{plx-sys.radius-control-sm}", "$type": "dimension", "$description": "SortableList item: its corners (the control radius)." },
     "sortable-list-item-text": { "$value": "{plx-sys.content-default}", "$type": "color", "$description": "SortableList item: its text." },
     "sortable-list-item-gap": { "$value": "{plx-sys.space-inline-sm}", "$type": "dimension", "$description": "SortableList item: the space between the handle, the content and the move buttons." },
     "sortable-list-item-min-height": { "$value": "{plx-sys.data-grid-row-height}", "$type": "dimension", "$description": "SortableList item: its least height (a data row's: it follows the density)." },

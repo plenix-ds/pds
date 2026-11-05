@@ -72,7 +72,7 @@
       "$description": "EntityPicker list: border color (border-default)."
     },
     "entity-picker-list-radius": {
-      "$value": "{plx-sys.radius-menu-6px}",
+      "$value": "{plx-sys.radius-menu}",
       "$type": "dimension",
       "$description": "EntityPicker list: corners (radius-menu-6px)."
     },
