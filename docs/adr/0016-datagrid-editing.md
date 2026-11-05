@@ -37,6 +37,7 @@ type CellEditorProps<V = unknown> = {
   onCancel(): void;                    // Escape: the old value stays
   invalid?: string;                    // the message to show under the cell
   autoFocus: boolean; dir: 'ltr' | 'rtl';
+  'aria-describedby'?: string;        // the message's id while invalid (addendum, #411)
 };
 
 // on a column (columns[])
@@ -79,6 +80,13 @@ onCellEdit?(record, change: { field, value, previous, row }): void | Promise<voi
 - **Semver: MINOR.** New prop values and props, a new export (`TableSettings`), and new catalog keys. Every existing table behaves as today with no new setting.
 - Built in phases (F1 the menu choice, 1 Inline rules, 2 the editors, F2–F4 Form Edit), each its own PR with its named checks (the build plan on #84).
 - TypeScript: DataGrid is still `.jsx`. Its header's `Props:` block (read by `build-types.js`) gains these shapes until the TypeScript wave converts it (ADR 0011).
+
+## Addendum (2026-11-05, #411): the application component's accessibility props
+
+- The grid also gives an application editor `aria-describedby`: the id of the cell's message, set only while `invalid` is set. The component puts it on its focusable control, so a screen reader reads the message.
+- `CellEditorProps` gains `'aria-describedby'?: string`. Additive: **MINOR**, within this ADR's release.
+- Before its first `onChange`, `value` is the cell's value, or `''` when the cell is empty (as for the built-in editors).
+- Enforced by: G3 review of #411; the #411 behavior tests.
 
 ## Enforced by
 

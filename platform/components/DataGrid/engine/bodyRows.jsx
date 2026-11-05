@@ -512,6 +512,7 @@ export function bodyRows({
                     select={turnedOn && c.editor === 'select'}
                     combobox={turnedOn && c.editor === 'combobox'}
                     date={turnedOn && c.editor === 'date'}
+                    custom={!!c.editor && typeof c.editor === 'object' && typeof c.editor.component === 'function'}
                     value={editing.value}
                     onCommit={(next, move) => {
                       commitEdit(row.id, c.field, next);

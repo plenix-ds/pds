@@ -127,6 +127,14 @@ def main():
         f = Path(r.get("path", "")).name
         if f and f not in runs:
             runs[f] = {"name": r["name"], "file": f, "conclusion": r["conclusion"], "url": r["html_url"], "at": r["updated_at"]}
+    # Screenshots tab (#195, D-0016): the visual-regression baselines (check 12, tests/visual) at main's commit. A merge
+    # passes check 12 only when the page matches them, so they are what CI verified; linked to the latest green queue run
+    main_sha = (gh("api", f"repos/{REPO}/commits/main", "--jq", ".sha", default="") or "").strip()
+    ci_ok = ((gh("api", f"repos/{REPO}/actions/workflows/ci.yml/runs?event=merge_group&status=success&per_page=1", default={}) or {}).get("workflow_runs") or [{}])[0]
+    shots = [{"name": f.stem, "file": f"https://raw.githubusercontent.com/{REPO}/{main_sha}/tests/visual/baselines/{f.name}",
+              "url": f"{GH}/blob/{main_sha}/tests/visual/baselines/{f.name}",
+              "run": f"run {ci_ok.get('id', '?')}", "runUrl": ci_ok.get("html_url", "")}
+             for f in sorted((ROOT / "tests" / "visual" / "baselines").glob("*.png"))] if main_sha else []
     data = {
         "generatedAt": now.strftime("%Y-%m-%dT%H:%M+00:00"),
         "mainSha": (gh("api", f"repos/{REPO}/commits/main", "--jq", ".sha", default="") or "").strip()[:7],
@@ -142,7 +150,7 @@ def main():
                          "--json", "number,title,url,closedAt,closedByPullRequestsReferences", default=[]) or [])],
         "decisions": decisions(runs),
         "workflows": list(runs.values()),
-        "shots": [],
+        "shots": shots,
         "sites": {
             "cdn": {"url": "https://design-system.lighthouseway.org/cdn/latest.json", "code": code("https://design-system.lighthouseway.org/cdn/latest.json")},
             "docs": {"url": "https://design-system.lighthouseway.org/", "code": code("https://design-system.lighthouseway.org/")},

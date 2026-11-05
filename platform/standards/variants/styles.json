@@ -726,5 +726,83 @@
   "ai-explanation--variant-why-this": {
     "sets": [],
     "why": "markup only: shows the summary alone, with no factor list"
+  },
+  "bleed--inset-lg": {
+    "sets": [
+      {
+        "property": "margin-inline",
+        "part": "block",
+        "token": "--plx-comp-bleed-lg-margin-inline"
+      },
+      {
+        "property": "margin-block",
+        "part": "block",
+        "token": "--plx-comp-bleed-lg-margin-block"
+      }
+    ],
+    "why": ".plx-bleed--lg with sides all (the default) in stack.css: the negative margin that pulls the block out by the inset"
+  },
+  "bleed--inset-md-default": {
+    "sets": [
+      {
+        "property": "margin-inline",
+        "part": "block",
+        "token": "--plx-comp-bleed-md-margin-inline"
+      },
+      {
+        "property": "margin-block",
+        "part": "block",
+        "token": "--plx-comp-bleed-md-margin-block"
+      }
+    ],
+    "why": ".plx-bleed--md with sides all (the default) in stack.css: the negative margin that pulls the block out by the inset"
+  },
+  "bleed--inset-sm": {
+    "sets": [
+      {
+        "property": "margin-inline",
+        "part": "block",
+        "token": "--plx-comp-bleed-sm-margin-inline"
+      },
+      {
+        "property": "margin-block",
+        "part": "block",
+        "token": "--plx-comp-bleed-sm-margin-block"
+      }
+    ],
+    "why": ".plx-bleed--sm with sides all (the default) in stack.css: the negative margin that pulls the block out by the inset"
+  },
+  "bleed--sides-all": {
+    "sets": [
+      {
+        "property": "margin-inline",
+        "part": "block",
+        "token": "--plx-comp-bleed-md-margin-inline"
+      },
+      {
+        "property": "margin-block",
+        "part": "block",
+        "token": "--plx-comp-bleed-md-margin-block"
+      }
+    ],
+    "why": ".plx-bleed--all in stack.css, at the default inset (md): the block bleeds on both axes"
+  },
+  "bleed--sides-block": {
+    "sets": [
+      {
+        "property": "margin-block",
+        "part": "block",
+        "token": "--plx-comp-bleed-md-margin-block"
+      }
+    ],
+    "why": ".plx-bleed--block in stack.css, at the default inset (md): the block bleeds on the block axis only"
+  },
+  "banner--options-dismissible": {
+    "sets": [],
+    "why": "markup only: adds a Dismiss button that runs onDismiss; without it the banner stays"
+  },
+  "banner--options-with-actions": {
+    "sets": [],
+    "why": "markup only: adds one or two small Buttons after the message"
   }
 }
