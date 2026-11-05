@@ -88,5 +88,15 @@
     "loading": "n/a(stories arrive with Storybook, P0-11)",
     "selected": "n/a(stories arrive with Storybook, P0-11)",
     "error": "n/a(a type-only change: the prop type is exported)"
+  },
+  "DocumentViewer": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(a viewer has nothing to disable; its toolbar buttons disable at the first and last page)",
+    "loading": "n/a(stories arrive with Storybook, P0-11)",
+    "selected": "n/a(a thumbnail marks the current page, which is the page state, not a selection)",
+    "error": "n/a(stories arrive with Storybook, P0-11)"
   }
 }
