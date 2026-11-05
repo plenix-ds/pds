@@ -189,7 +189,10 @@ function load(root = ROOT) {
 }
 
 // the stylesheets as text: { 'platform/system/tokens/reference.css': text, … }, and where each token is written
-function generate(manifest) {
+// value(set, name, raw, condition): the CSS text a token is written with. By default this build's own (toCss of the
+// JSON); style-dictionary/build.mjs passes Style Dictionary's values instead, for the byte gate (slice 101, task 6)
+const OWN_VALUE = (set, name, raw) => toCss(raw);
+function generate(manifest, value = OWN_VALUE) {
   const files = {}, written = [];
   for (const o of manifest.outputs) {
     let text = o.prologue;
@@ -211,8 +214,8 @@ function generate(manifest) {
         if (x.forcedColors !== undefined || x.contrastMore !== undefined || x.print !== undefined) { (x.before || []).forEach((l) => lines.push(l)); cond.push({ name, token, x }); continue; }
         (x.before || []).forEach((l) => lines.push(l));
         written.push({ name, file: o.file, set: s.tokens, selector: ext.selector, line: text.split('\n').length + lines.length + 1 });
-        if (count[name] > 1) { (layered[name] = layered[name] || new Set()).add(layer); ctxLines.push('  ' + ctxName(layer, name) + ': ' + toCss(token.$value) + ';' + (x.after || '')); continue; }
-        lines.push('  ' + name + ': ' + toCss(token.$value) + ';' + (x.after || ''));
+        if (count[name] > 1) { (layered[name] = layered[name] || new Set()).add(layer); ctxLines.push('  ' + ctxName(layer, name) + ': ' + value(s.tokens, name, token.$value, '') + ';' + (x.after || '')); continue; }
+        lines.push('  ' + name + ': ' + value(s.tokens, name, token.$value, '') + ';' + (x.after || ''));
       }
       (ext.tail || []).forEach((l) => lines.push(l));
       const own = lines.some((l) => /^\s*--/.test(l));
@@ -226,7 +229,7 @@ function generate(manifest) {
       if (cond.length) {
         const sel = ext.opener.replace(/\s*\{\s*$/, '');
         const FORCED = '(forced-colors: active)', MORE = '(prefers-contrast: more)';
-        const block = (media, pick, list) => (list.length ? '\n@media ' + media + ' {\n  ' + sel + ' {\n' + list.map((t) => '    ' + t.name + ': ' + toCss(pick(t)) + ';').join('\n') + '\n  }\n}' : '');
+        const block = (media, key, list) => (list.length ? '\n@media ' + media + ' {\n  ' + sel + ' {\n' + list.map((t) => '    ' + t.name + ': ' + value(s.tokens, t.name, key ? t.x[key] : t.token.$value, key) + ';').join('\n') + '\n  }\n}' : '');
         const both = cond.filter((t) => t.x.forcedColors !== undefined && t.x.contrastMore !== undefined);
         const forcedOnly = cond.filter((t) => t.x.forcedColors !== undefined && t.x.contrastMore === undefined);
         const moreOnly = cond.filter((t) => t.x.forcedColors === undefined && t.x.contrastMore !== undefined);
@@ -234,18 +237,18 @@ function generate(manifest) {
         const paper = cond.filter((t) => t.x.print !== undefined);
         if (paper.some((t) => t.x.forcedColors !== undefined || t.x.contrastMore !== undefined)) throw new Error('a token with a print value has no contrast values: ' + paper.map((t) => t.name).join(', '));
         text += '\n/* the person\'s contrast settings: forced colors, then more contrast, else the values above */'
-          + block('not (' + FORCED + ' or ' + MORE + ')', (t) => t.token.$value, both) + block(FORCED, (t) => t.x.forcedColors, both) + block(MORE + ' and (not ' + FORCED + ')', (t) => t.x.contrastMore, both)
-          + block('not ' + FORCED, (t) => t.token.$value, forcedOnly) + block(FORCED, (t) => t.x.forcedColors, forcedOnly)
-          + block('not ' + MORE, (t) => t.token.$value, moreOnly) + block(MORE, (t) => t.x.contrastMore, moreOnly)
-          + block('not print', (t) => t.token.$value, paper) + block('print', (t) => t.x.print, paper);
+          + block('not (' + FORCED + ' or ' + MORE + ')', '', both) + block(FORCED, 'forcedColors', both) + block(MORE + ' and (not ' + FORCED + ')', 'contrastMore', both)
+          + block('not ' + FORCED, '', forcedOnly) + block(FORCED, 'forcedColors', forcedOnly)
+          + block('not ' + MORE, '', moreOnly) + block(MORE, 'contrastMore', moreOnly)
+          + block('not print', '', paper) + block('print', 'print', paper);
         cond.forEach((t) => written.push({ name: t.name, file: o.file, set: s.tokens, selector: ext.selector, line: text.split('\n').length }));
       }
       if (still.length) {
         const decl = (pick) => still.map((t) => '    ' + t.name + ': ' + pick(t) + ';').join('\n');
         text += '\n/* motion: the values while motion is wanted; 0s for reduced motion and while the density changes (a frame) */'
-          + '\n@media (prefers-reduced-motion: no-preference) {\n  :root:not([data-plx-density-changing]) {\n' + decl((t) => toCss(t.token.$value)) + '\n  }\n'
-          + '  :root[data-plx-density-changing] {\n' + decl((t) => toCss(t.x.reducedMotion)) + '\n  }\n}'
-          + '\n@media (prefers-reduced-motion: reduce) {\n  :root {\n' + decl((t) => toCss(t.x.reducedMotion)) + '\n  }\n}';
+          + '\n@media (prefers-reduced-motion: no-preference) {\n  :root:not([data-plx-density-changing]) {\n' + decl((t) => value(s.tokens, t.name, t.token.$value, '')) + '\n  }\n'
+          + '  :root[data-plx-density-changing] {\n' + decl((t) => value(s.tokens, t.name, t.x.reducedMotion, 'reducedMotion')) + '\n  }\n}'
+          + '\n@media (prefers-reduced-motion: reduce) {\n  :root {\n' + decl((t) => value(s.tokens, t.name, t.x.reducedMotion, 'reducedMotion')) + '\n  }\n}';
         still.forEach((t) => written.push({ name: t.name, file: o.file, set: s.tokens, selector: ':root', line: text.split('\n').length }));
       }
     }
@@ -289,6 +292,8 @@ module.exports.toCss = toCss; module.exports.toJson = toJson;
 module.exports.writtenForIndex = (root = ROOT) => generate(load(root)).written;
 // TEMPORARY until issue 372 step 10 (slice 101, task 6): every set's tokens with the value this build writes, for
 // style-dictionary/build.mjs --check (steps 5 to 7: Style Dictionary writes the same value for each token of each set)
+// TEMPORARY until step 10 (slice 101): the stylesheets written with another value source (style-dictionary/build.mjs)
+module.exports.generateWith = (value, root = ROOT) => generate(load(root), value).files;
 module.exports.sets = (root = ROOT) => load(root).outputs.flatMap((o) => o.sets.map((s) => ({ output: o.file, set: s.tokens, tokens: tokensOf(s.data).map(({ name, token }) => ({ name, value: toCss(token.$value) })) })));
 // the token index, then the native files from it (build-app.js, after every stylesheet step)
 module.exports.indexAndMobile = (root = ROOT) => { require('./tools/token-index.js').writeIndex(root, module.exports.writtenForIndex(root)); return require('./build-mobile.js')(root); };

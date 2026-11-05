@@ -15,7 +15,7 @@
     "build:docs": "node build-docs.js",
     "build:packages": "node build-packages.js",
     "tokens:sd": "style-dictionary build --config style-dictionary/reference.config.json && style-dictionary build --config style-dictionary/typography.config.json && style-dictionary build --config style-dictionary/reference.reduced-motion.config.json && style-dictionary build --config style-dictionary/semantic.forced-colors.config.json && style-dictionary build --config style-dictionary/semantic.print.config.json && style-dictionary build --config style-dictionary/components.forced-colors.config.json && style-dictionary build --config style-dictionary/theme-default.light.forced-colors.config.json && style-dictionary build --config style-dictionary/theme-default.light.more-contrast.config.json && style-dictionary build --config style-dictionary/theme-default.dark.forced-colors.config.json && style-dictionary build --config style-dictionary/theme-default.dark.more-contrast.config.json",
-    "tokens:sd:check": "npm run tokens:sd && node tools/agent/sd-reference-compare.js && node style-dictionary/build.mjs --check",
+    "tokens:sd:check": "npm run tokens:sd && node tools/agent/sd-reference-compare.js && node style-dictionary/build.mjs --check && node style-dictionary/build.mjs --bytes",
     "tokens:index": "node tools/token-index.js",
     "release:build": "node build-app.js && node build-usage.js && node check-system.js && node check-style.js && node build-packages.js",
     "test": "node tests/run.js",
