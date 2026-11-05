@@ -1,6 +1,6 @@
 # ADR 0002: Token tiers and naming
 
-- **Status:** accepted
+- **Status:** accepted; "Rename mechanics" superseded by ADR 0012
 - **Date:** 2026-11-05
 - **Deciders:** pds1-ds-architect (decision D-0032)
 - **Issue:** plenix-ds/pds#178 (Phase 0, lint checks 6 and 7; Style Dictionary)

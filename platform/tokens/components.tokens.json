@@ -7951,7 +7951,7 @@
       "$type": "fontWeight"
     },
     "visually-hidden-size": {
-      "$value": "{plx-ref.border-width-1px}",
+      "$value": "{plx-ref.border-width-100}",
       "$type": "dimension",
       "$description": "The box of a text kept for screen readers only (VisuallyHidden): one pixel each way, so it never takes room on the page (#288)."
     },

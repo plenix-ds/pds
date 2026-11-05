@@ -269,7 +269,7 @@ function sheetText(url) {
         else if (/^letter-spacing-/.test(t.name)) { var ls = el('div', 'ds-phrase ds-phrase-one', 'The quick brown fox jumps'); DS.sample(ls, 'letter-spacing', v); card.appendChild(ls); }
         else if (/^font-weight-/.test(t.name)) { var tw = el('div', 'ds-type', 'Weight ' + t.value); DS.sample(tw, 'font-weight', v); card.appendChild(tw); }
         else if (/^(space|size)-/.test(t.name)) { var bar = el('div', 'ds-bar'); DS.sample(bar, 'width', v); card.appendChild(bar); }
-        else if (/^border-style-/.test(t.name)) { var bst = el('div', 'ds-box'); DS.sample(bst, 'border-style', v); DS.sample(bst, 'border-width', 'var(--plx-ref-border-width-2px)'); card.appendChild(bst); }
+        else if (/^border-style-/.test(t.name)) { var bst = el('div', 'ds-box'); DS.sample(bst, 'border-style', v); DS.sample(bst, 'border-width', 'var(--plx-ref-border-width-200)'); card.appendChild(bst); }
         else if (/^border-width-/.test(t.name)) { var bw = el('div', 'ds-box'); DS.sample(bw, 'border-width', v); DS.sample(bw, 'border-style', 'solid'); card.appendChild(bw); }
       });
       grp.appendChild(DS.grid(['Token', 'Value', 'Rendering'], gridRows, { labelled: true })); s.appendChild(grp);

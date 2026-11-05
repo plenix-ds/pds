@@ -332,7 +332,7 @@
       "$type": "dimension"
     },
     "radius-table-2px": {
-      "$value": "{plx-ref.radius-2px}",
+      "$value": "{plx-ref.radius-xs}",
       "$type": "dimension",
       "$description": "Tables and data grids: their frame corner (owner, 2026-10-19: every data grid and table at 2px)."
     },

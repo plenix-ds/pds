@@ -5,4 +5,4 @@
 /* the overlay: DM Sans in the text color, the candidate on top in blue, see-through; one baseline; the page sets the sizes */
 .pg-overlay{align-items:baseline;display:grid;line-height:var(--plx-ref-line-height-tight);overflow-x:auto;}
 .pg-overlay>span{grid-area:1/1;white-space:pre;}
-.pg-overlay>.pg-cand{color:var(--plx-sys-content-link);opacity:var(--plx-ref-opacity-70);}
+.pg-overlay>.pg-cand{color:var(--plx-sys-content-link);opacity:var(--plx-ref-opacity-700);}

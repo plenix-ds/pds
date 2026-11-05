@@ -5,7 +5,8 @@
 //              16px), as a percent (0.3 -> 30) or as ms (0.2s -> 200): font-size-13 (0.8125rem), opacity-30 (0.3),
 //              font-weight-regular-400 (400)
 //   breakpoint is a bare number equal to a breakpoint's px value (a plx-ref breakpoint-*): from-1440
-// Ordinal steps (color-blue-500, 2xs … 4xl) are fine: their number is not their value.
+// Ordinal steps (color-blue-500, 2xs … 4xl) are fine: their number is not their value. A $deprecated token (the old name a
+// rename keeps as an alias until 2.0.0, docs/adr/0002) is skipped.
 // Known findings (the 0.x debt, measured 2026-11-05) are in token-names.baseline.json; it only shrinks: a known finding
 // that is renamed must be removed from it (a stale entry is a finding). New findings fail. Only pds1-ds-architect edits it.
 // Alone: node check-system.rules/token-names.js   -> TOKEN_NAMES_OK, or the findings and exit 1
@@ -47,6 +48,7 @@ function raw(docs) {
   for (const d of defs) {
     const self = d.tier + '.' + d.name;
     if (seen.has(self)) continue;
+    if (d.deprecated) continue;   // a deprecated name (a renamed token's alias, docs/adr/0002) is on its way out
     const parts = d.name.split('-');
     const value = resolve(d), read = value == null ? new Set() : readings(value);
     let why = null;
