@@ -513,5 +513,110 @@
   "streaming-text--variant-streaming": {
     "sets": [],
     "why": "markup only: the streaming state changes the status text and announcement, no style"
+  },
+  "avatar--sizes-rounded-squares-the-corner-grows-with-the-size-2xl-64px": {
+    "sets": [
+      {
+        "property": "block-size",
+        "part": "block",
+        "token": "--plx-comp-avatar-2xl-height"
+      },
+      {
+        "property": "border-radius",
+        "part": "block",
+        "token": "--plx-comp-avatar-64-radius"
+      }
+    ],
+    "why": ".plx-avatar--64 in avatar.css: the height by size, and the corner that grows with it"
+  },
+  "avatar--sizes-rounded-squares-the-corner-grows-with-the-size-lg-40px": {
+    "sets": [
+      {
+        "property": "block-size",
+        "part": "block",
+        "token": "--plx-comp-avatar-lg-height"
+      },
+      {
+        "property": "border-radius",
+        "part": "block",
+        "token": "--plx-comp-avatar-40-radius"
+      }
+    ],
+    "why": ".plx-avatar--40 in avatar.css: the height by size, and the corner that grows with it"
+  },
+  "avatar--sizes-rounded-squares-the-corner-grows-with-the-size-md-32px": {
+    "sets": [
+      {
+        "property": "block-size",
+        "part": "block",
+        "token": "--plx-comp-avatar-md-height"
+      },
+      {
+        "property": "border-radius",
+        "part": "block",
+        "token": "--plx-comp-avatar-32-radius"
+      }
+    ],
+    "why": ".plx-avatar--32 in avatar.css: the height by size, and the corner that grows with it"
+  },
+  "avatar--sizes-rounded-squares-the-corner-grows-with-the-size-sm-28px": {
+    "sets": [
+      {
+        "property": "block-size",
+        "part": "block",
+        "token": "--plx-comp-avatar-sm-height"
+      },
+      {
+        "property": "border-radius",
+        "part": "block",
+        "token": "--plx-comp-avatar-28-radius"
+      }
+    ],
+    "why": ".plx-avatar--28 in avatar.css: the height by size, and the corner that grows with it"
+  },
+  "avatar--sizes-rounded-squares-the-corner-grows-with-the-size-xl-48px": {
+    "sets": [
+      {
+        "property": "block-size",
+        "part": "block",
+        "token": "--plx-comp-avatar-xl-height"
+      },
+      {
+        "property": "border-radius",
+        "part": "block",
+        "token": "--plx-comp-avatar-48-radius"
+      }
+    ],
+    "why": ".plx-avatar--48 in avatar.css: the height by size, and the corner that grows with it"
+  },
+  "avatar--sizes-rounded-squares-the-corner-grows-with-the-size-xs-24px": {
+    "sets": [
+      {
+        "property": "block-size",
+        "part": "block",
+        "token": "--plx-comp-avatar-xs-height"
+      },
+      {
+        "property": "border-radius",
+        "part": "block",
+        "token": "--plx-comp-avatar-24-radius"
+      }
+    ],
+    "why": ".plx-avatar--24 in avatar.css: the height by size, and the corner that grows with it"
+  },
+  "avatar--colors-a-person-s-own-colors": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-data-color-soft"
+      },
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-comp-data-color-on-soft"
+      }
+    ],
+    "why": ".plx-avatar[data-plx-color] in avatar.css: the person's own data color, soft"
   }
 }
