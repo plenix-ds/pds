@@ -2250,6 +2250,7 @@ export default {
     "abstain": "Abstain",
     "turnedOff": "turned off",
     "notVoted": "Not voted",
+    "notRecorded": "Not recorded",
     "voteOf": "Vote of {name}",
     "hiddenUntilClosed": "Hidden until the vote closes",
     "totalsOnly": "Totals only",
