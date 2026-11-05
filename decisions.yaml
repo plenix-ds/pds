@@ -412,3 +412,11 @@
   options: [grid units size-23u (chosen), ordinal hundreds size-2300, keep px names and exempt the palette from check 7]
   status: active
   check: check-system token-names (check 7) + token-tiers
+
+- id: D-0048
+  date: 2026-11-05
+  area: release
+  decided_by: agent (pds1-release-architect), owner may switch
+  decision: The owner's "publish now" (#312) ships main as 0.87.0, not 0.86.1. Main holds the three CTM fixes (#272, #273, #274) plus 20 other merged changes, among them new tokens, utilities and AppShell minSize (the #274 fix itself), which VERSIONING.md makes a minor release. A true 0.86.1 would need a branch cut from v0.86.0 with cherry-picks and none of the new release checks. Reply to switch - B) cut 0.86.1 from v0.86.0 with only the fixes.
+  status: active
+  check: tools/publish/preflight.mjs (one version) + release.yml publish job (tag = package.json version)
