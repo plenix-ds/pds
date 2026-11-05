@@ -261,6 +261,30 @@
   status: active
   check: planned:lint-radius
 
+- id: D-0031
+  date: 2026-11-05
+  area: architecture
+  decided_by: agent (pds1-ds-architect), owner may switch
+  decision: The monorepo uses npm workspaces with Changesets (not pnpm, Nx or Turborepo); packages react -> styles -> tokens, icons and locales stand alone; one version for npm, CDN and API (docs/adr/0001).
+  status: active
+  check: planned:package-boundaries
+
+- id: D-0032
+  date: 2026-11-05
+  area: architecture
+  decided_by: agent (pds1-ds-architect), owner may switch
+  decision: Token tiers are ref -> sys -> comp with no skipping, and names never contain values; tokens are renamed in 1.0.0 and every old name stays as a deprecated alias until 2.0.0 so CTM keeps working (docs/adr/0002).
+  status: active
+  check: planned:token-tiers (check 6), planned:token-names (check 7)
+
+- id: D-0033
+  date: 2026-11-05
+  area: architecture
+  decided_by: agent (pds1-ds-architect), carries forward owner decision plenix-platform#872
+  decision: Style Dictionary 5 is the only token build; finish plenix-platform#372 reusing #928, retire build-tokens.js; keep build-mobile.js for native tokens (docs/adr/0003).
+  status: active
+  check: check-system style-dictionary + planned:no-build-tokens
+
 - id: D-0034
   date: 2026-11-05
   area: process
