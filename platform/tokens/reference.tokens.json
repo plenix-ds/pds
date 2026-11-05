@@ -296,7 +296,8 @@
     },
     "space-6px": {
       "$value": { "value": 0.375, "unit": "rem" },
-      "$type": "dimension"
+      "$type": "dimension",
+      "$deprecated": "Off the 4px grid (#301): use a grid space: space-1u (4px) or space-2u (8px), or a system space role. It keeps working and is removed in 2.0.0."
     },
     "space-2u": {
       "$value": { "value": 0.5, "unit": "rem" },
@@ -309,7 +310,8 @@
     },
     "space-10px": {
       "$value": { "value": 0.625, "unit": "rem" },
-      "$type": "dimension"
+      "$type": "dimension",
+      "$deprecated": "Off the 4px grid (#301): use a grid space: space-2u (8px) or space-3u (12px). It keeps working and is removed in 2.0.0."
     },
     "space-3u": {
       "$value": { "value": 0.75, "unit": "rem" },
@@ -430,7 +432,8 @@
     },
     "size-18px": {
       "$value": { "value": 18, "unit": "px" },
-      "$type": "dimension"
+      "$type": "dimension",
+      "$deprecated": "Off the 4px grid (#301): use a grid size: size-4u (16px) or size-5u (20px). It keeps working and is removed in 2.0.0."
     },
     "size-5u": {
       "$value": { "value": 20, "unit": "px" },
