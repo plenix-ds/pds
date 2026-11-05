@@ -1,0 +1,4 @@
+  ✓  3 tests/fact-icon/fact-icon.spec.mjs:13:5 › fact icon has no box and fills its square (dark, ltr) (742ms)
+  ✓  4 tests/fact-icon/fact-icon.spec.mjs:13:5 › fact icon has no box and fills its square (dark, rtl) (739ms)
+
+  4 passed (3.4s)
