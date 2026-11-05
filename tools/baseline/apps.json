@@ -1,0 +1,50 @@
+{
+  "$description": "Connected applications (#114 item 5; plan ~/handoff/decisions/273-plan.md). Every release scans the ones it can reach, read-only (tools/baseline/drift.mjs), and lists per app 'at baseline' or 'N items to fix'. A release never fails because of an app. channel: how the app picks its Plenix version. Add an app by PR (pds1-release-architect).",
+  "apps": [
+    {
+      "name": "ctm",
+      "title": "CTM",
+      "repository": "LighthouseCollection/CTM",
+      "branch": "main",
+      "channel": "cdn/latest.json (held by pins.ctm when set; checks every 30 minutes)",
+      "owner": "the CTM team",
+      "scan": true
+    },
+    {
+      "name": "st-john",
+      "title": "St. John the Beloved site",
+      "repository": "LighthouseCollection/st-john-test-site",
+      "branch": "main",
+      "channel": "pinned CDN version, with its own icon file (plenix-icons-st-john.js)",
+      "owner": "PDS (us)",
+      "scan": true
+    },
+    {
+      "name": "suite",
+      "title": "The suite (dashboard, projects, files, ...)",
+      "repository": "plenix-ds/pds",
+      "channel": "source: built from this repository, always the current Plenix",
+      "owner": "PDS (us)",
+      "scan": false,
+      "reason": "it is part of this repository; check-system and check-style hold it to the baseline on every PR"
+    },
+    {
+      "name": "aiteam",
+      "title": "AITEAM",
+      "repository": null,
+      "channel": "pinned CDN version (0.73.0 when last seen), with integrity hashes",
+      "owner": "its maintainer",
+      "scan": false,
+      "reason": "its repository is not reachable from here; its maintainer runs tools/baseline/scan.js"
+    },
+    {
+      "name": "redsave",
+      "title": "RedSave (browser extension)",
+      "repository": null,
+      "channel": "pinned CDN version, self-hosted from the archive",
+      "owner": "its owner's sessions",
+      "scan": false,
+      "reason": "its repository is not reachable from here; its sessions run tools/baseline/scan.js"
+    }
+  ]
+}
