@@ -1,14 +1,6 @@
 {
  "$description": "variant-styles (docs/adr/0015): variations that document nothing they set yet (no rule of their own selector, no styles.json entry), measured 2026-11-05. Shrink-only: a variation leaves when it gains a table; none is added.",
  "known": [
-  "access-request--variant-approved",
-  "access-request--variant-denied",
-  "access-request--variant-pending",
-  "access-request--variant-request",
-  "action-menu--placement-bottom-end",
-  "action-menu--placement-bottom-start-default",
-  "action-menu--placement-top-end",
-  "action-menu--placement-top-start",
   "ai-button--variant-icon-only",
   "ai-button--variant-trigger",
   "ai-button--variant-with-menu-of-ai-actions",
