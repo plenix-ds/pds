@@ -1015,5 +1015,45 @@
       }
     ],
     "why": ".plx-input--auto-grow in input.css: the box stops growing at the maximum height and scrolls (overflow-y auto, no manual resize)"
+  },
+  "brand-symbol--tone-brand": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-comp-brand-mark-color"
+      }
+    ],
+    "why": ".plx-brand-mark--tone-brand in brand-lockup.css (the tool reads the block as brand-lockup)"
+  },
+  "brand-symbol--tone-on-accent": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-comp-brand-on-accent-color"
+      }
+    ],
+    "why": ".plx-brand-mark--tone-on-accent in brand-lockup.css"
+  },
+  "assign-control--form-assign-default": {
+    "sets": [
+      {
+        "property": "min-inline-size",
+        "part": "picker",
+        "token": "--plx-comp-assign-control-picker-min-width"
+      }
+    ],
+    "why": "nobody is assigned yet, so the people picker shows in the row (.plx-assign-control__picker)"
+  },
+  "assign-control--form-reassign": {
+    "sets": [
+      {
+        "property": "min-block-size",
+        "part": "block",
+        "token": "--plx-comp-assign-control-assigned-min-height"
+      }
+    ],
+    "why": ".plx-assign-control--assigned: the row with an assignee is taller than the empty row"
   }
 }
