@@ -52,3 +52,7 @@
 .plx-visibility:where(:not(.plx-visibility--print-only, .plx-visibility--no-print)){display:contents;}
 .plx-visibility--print-only{display:var(--plx-sys-print-shown,none);}
 .plx-visibility--no-print{display:var(--plx-sys-print-hidden,contents);}
+/* minSize (issue 274, ADR 0010): the hidden shell takes no room, and the notice fills the window */
+.plx-app-shell[hidden]{display:none;}
+.plx-app-shell__min-size{align-items:center;block-size:100dvh;display:flex;justify-content:center;}
+.plx-app-shell__min-size-title{font:inherit;margin-block-end:0;margin-block-start:0;}

@@ -1,0 +1,9 @@
+AssertionError [ERR_ASSERTION]: 800x600: the notice shows
+    at /home/cc/pds1/work/component-engineer-1/tests/app-shell-min-size-274.test.js:35:12 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}

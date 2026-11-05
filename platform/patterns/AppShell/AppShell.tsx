@@ -20,9 +20,14 @@
        An application never sets the mode itself; a pattern that is a kind of page claims it (SettingsLayout: "settings").
      mainId: the main region's id, the skip link's target (default "main")
      mainClassName: more classes on the main region
+     minSize: true turns on the screen-size check (default false; ADR 0010, D-0044). Narrower than --plx-sys-shell-min-width
+       (1024px) or lower than --plx-sys-shell-min-height (640px), the shell shows a "Screen size not supported" notice (an h1 in
+       the main landmark) and keeps the app mounted, hidden and inert, so its state survives a resize; "Continue anyway" shows the
+       app at the current size for the browser session. It follows the window live. The sizes are the tokens, never numbers in an app
      className: more classes on the shell
      children: the main region's content
-     strings: the words it shows, for other languages: { skip: "Skip to main content" } (the skip link)
+     strings: the words it shows, for other languages: { skip: "Skip to main content" } (the skip link),
+       minSize: { title, text, continue } (text has {width} and {height})
      PageContent.as: "section" (default) | "div"
      PageContent.className: more classes on the column
      PageContent.children: the page's parts
@@ -87,6 +92,10 @@ import { PanelSplitter } from '../../components/Resizable/Resizable.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import { useMonitorWidth } from '../../utils/monitorWidths.ts';
+import { EmptyState } from '../../components/EmptyState/EmptyState.tsx';
+import { Button } from '../../components/Button/Button.tsx';
+import { fill } from '../../utils/fill.ts';
+import ComputerIcon from 'plenix-platform/icons/plenix/computer';
 
 // the five layout modes (the Layout foundation; app-shell.css draws them)
 const LAYOUTS = ['fluid', 'contained', 'hybrid', 'multi-pane', 'focus'];
@@ -138,16 +147,24 @@ export type AppShellProps = {
   /** the main region's id (the skip link's target) */
   mainId?: string;
   mainClassName?: string;
+  /** turn on the screen-size check: below the shell's minimum screen a notice replaces the view (sizes from tokens) */
+  minSize?: boolean;
   strings?: Catalog | null;
   className?: string;
   children?: React.ReactNode;
 };
-export function AppShell({ header, sideNav, panel, footer, page = 'workspace', mainId = 'main', mainClassName, strings, className, children }: AppShellProps) {
+const MIN_SIZE_KEY = 'plx-shell-min-size-dismissed';
+export function AppShell({ header, sideNav, panel, footer, page = 'workspace', mainId = 'main', mainClassName, minSize = false, strings, className, children }: AppShellProps) {
   // the page's kind, claimed by a pattern on the page when it is that kind of page (SettingsLayout), else the page prop
   const [claimed, setClaimed] = React.useState<string | null>(null);
   const claimPage = React.useCallback((kind: string) => { setClaimed(kind); return () => setClaimed((k) => (k === kind ? null : k)); }, []);
   const layout = pageLayout(claimed || page);   // the design system's layout standard decides the mode
-  const t = useStrings('appShell', strings) as { skip: string };
+  const t = useStrings('appShell', strings) as { skip: string; minSize: { title: string; text: string; continue: string } };
+  // the screen-size check (ADR 0010): live, from the two tokens; the person may go on for the session
+  const tooSmall = useMedia(minSize ? '(width < ' + (tokenValue('--plx-sys-shell-min-width') || '0px') + '), (height < ' + (tokenValue('--plx-sys-shell-min-height') || '0px') + ')' : 'not all');
+  const [goOn, setGoOn] = React.useState(() => { try { return sessionStorage.getItem(MIN_SIZE_KEY) === '1'; } catch (e) { return false; } });
+  const blocked = minSize && tooSmall && !goOn;
+  const continueAnyway = () => { try { sessionStorage.setItem(MIN_SIZE_KEY, '1'); } catch (e) { /* not stored: it lasts until the next render of the page */ } setGoOn(true); };
   const small = useMedia(below('--plx-sys-shell-rail-below'));
   const narrow = useMedia(below('--plx-sys-shell-phone-below'));
   const [barEl, setBarEl] = React.useState<HTMLElement | null>(null);         // where NavPane puts the bottom navigation bar at Narrow
@@ -184,9 +201,9 @@ export function AppShell({ header, sideNav, panel, footer, page = 'workspace', m
     parentRow, claimParentRow, detailBack, claimBack }),
   [hasSide, slotEl, registerPortal, small, narrow, barEl, parentEl, mode, overlay, expanded, width, setWidth, toggle, claimed, page, layout, claimPage,
     parentRow, claimParentRow, detailBack, claimBack]);
-  return (
+  const shell = (
     <LayoutContext.Provider value={ctx}>
-      <div className={cx('plx-app-shell', className)} data-plx-layout={LAYOUTS.indexOf(layout) >= 0 ? layout : 'fluid'}>
+      <div className={cx('plx-app-shell', className)} data-plx-layout={LAYOUTS.indexOf(layout) >= 0 ? layout : 'fluid'} hidden={blocked || undefined} {...(blocked ? { inert: '' } : null)}>
         <a className="plx-app-shell__skip" href={'#' + mainId}>{t.skip}</a>
         {header}
         {narrow && hasSide ? <div ref={setParentEl} className="plx-app-shell__parent-slot" /> : null}
@@ -199,6 +216,20 @@ export function AppShell({ header, sideNav, panel, footer, page = 'workspace', m
         {narrow && hasSide ? <div ref={setBarEl} className="plx-app-shell__bar-slot" /> : null}
       </div>
     </LayoutContext.Provider>
+  );
+  if (!minSize) return shell;
+  // the notice is a sibling of the shell, so the app (the shell) keeps its place in the tree and its state while it is hidden
+  const size = { width: tokenValue('--plx-sys-shell-min-width'), height: tokenValue('--plx-sys-shell-min-height') };
+  return (
+    <>
+      {blocked ? (
+        <main className="plx-app-shell__min-size">
+          <EmptyState size="page" icon={ComputerIcon} title={<h1 className="plx-app-shell__min-size-title">{t.minSize.title}</h1>}
+            action={<Button onClick={continueAnyway}>{t.minSize.continue}</Button>}>{fill(t.minSize.text, size)}</EmptyState>
+        </main>
+      ) : null}
+      {shell}
+    </>
   );
 }
 

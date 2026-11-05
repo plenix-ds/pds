@@ -54,6 +54,7 @@
     "column-fit": "fit_width",
     "column-narrower": "width_normal",
     "column-wider": "width_wide",
+    "computer": "computer",
     "database": "database",
     "density-comfortable": "density_large",
     "density-compact": "density_small",
