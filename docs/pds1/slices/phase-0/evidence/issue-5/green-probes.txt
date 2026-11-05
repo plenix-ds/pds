@@ -1,0 +1,2 @@
+SPEC_PROBES_5_OK
+{"routes":64,"startMB":41.7,"endMB":30.7,"growthPerRouteMB":-0.17,"series":[41.7,45.1,22.6,19.9,20.1,20.2,20.7,20.7,20.7
