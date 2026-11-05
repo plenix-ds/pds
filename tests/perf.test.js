@@ -12,7 +12,7 @@ const BUDGETS = [
 ];
 function checkBudgets(root = ROOT, budgets = BUDGETS) {
   return budgets.map((budget) => {
-    const file = path.join(root, 'packages', budget.file);
+    const file = path.join(root, 'release', 'packages', budget.file);
     assert(fs.existsSync(file), 'Missing ' + budget.file + ': run node build-app.js and node build-packages.js first.');
     const bytes = fs.readFileSync(file), raw = bytes.length, gzip = zlib.gzipSync(bytes, { level: 9 }).length;
     assert(raw <= budget.raw && gzip <= budget.gzip, budget.file + ': ' + raw + '/' + budget.raw + ' raw, ' + gzip + '/' + budget.gzip + ' gzip bytes exceeds the performance budget.');

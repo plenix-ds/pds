@@ -17,7 +17,7 @@ const assert = require('assert/strict'), fs = require('fs'), path = require('pat
 const { launch } = require('./lib');
 require('./limit.js');   // the hard time limit (TEST_TIMEOUT_MS)
 const ROOT = path.resolve(__dirname, '..'), VERSION = require(path.join(ROOT, 'package.json')).version;
-const DIST = path.join(ROOT, 'packages', 'react', 'dist'), VENDOR = path.join(ROOT, 'platform', 'vendor');
+const DIST = path.join(ROOT, 'release', 'packages', 'react', 'dist'), VENDOR = path.join(ROOT, 'platform', 'vendor');
 const ORIGIN = 'http://names.test', NAME_ENTRY = '"add-column-left"';
 if (!fs.existsSync(path.join(DIST, 'index.js'))) { console.log('icon-names-lazy-882: FAIL the package build is missing: run npm ci (or node build-packages.js) first'); process.exit(1); }
 

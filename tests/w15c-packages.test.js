@@ -11,7 +11,7 @@ if (!fs.existsSync(path.join(ROOT, 'platform/design-system/inventory.js'))) {
 }
 (async () => {
   let checks = 0; const check = (value, message) => { assert(value, message); checks++; };
-  const { createServer, createDataSource, TOOLS, PROTOCOL } = require('../packages/mcp/server.cjs');
+  const { createServer, createDataSource, TOOLS, PROTOCOL } = require('../release/packages/mcp/server.cjs');
   const server = createServer({ offline: true });
   const request = (id, method, params) => server.handle({ jsonrpc: '2.0', id, method, params });
   check((await request(1, 'tools/list')).error.code === -32002, 'MCP requires initialization');
@@ -48,7 +48,7 @@ if (!fs.existsSync(path.join(ROOT, 'platform/design-system/inventory.js'))) {
   check((await fallback('tokens')).source.startsWith('bundled:'), 'Network failure uses the explicit bundled snapshot');
   let failed = false; try { await createDataSource({ strictRemote: true, fetch: async () => ({ ok: false, status: 503 }) })('tokens'); } catch (e) { failed = true; }
   check(failed, 'Strict remote failures are explicit');
-  const cli = path.join(ROOT, 'packages/mcp/server.cjs');
+  const cli = path.join(ROOT, 'release/packages/mcp/server.cjs');
   const output = await new Promise((resolve, reject) => {
     const child = spawn(process.execPath, [cli, '--offline'], { cwd: ROOT, stdio: ['pipe', 'pipe', 'pipe'] }); let stdout = '', stderr = '';
     child.stdout.on('data', (s) => { stdout += s; }); child.stderr.on('data', (s) => { stderr += s; });
@@ -77,9 +77,9 @@ if (!fs.existsSync(path.join(ROOT, 'platform/design-system/inventory.js'))) {
   check(perf.checkBudgets(ROOT).length === 5, 'Budgets measure all five actual generated package artifacts');
   let over = false; try { perf.checkBudgets(ROOT, [{ file: 'react/dist/index.js', raw: 1, gzip: 1 }]); } catch (e) { over = /exceeds/.test(e.message); }
   check(over, 'An oversized actual artifact fails the budget gate');
-  const wcManifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'packages/web-components/package.json'), 'utf8'));
+  const wcManifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'release/packages/web-components/package.json'), 'utf8'));
   check(wcManifest.exports['./plenix-shadow.css'] && wcManifest.types === 'index.d.ts', 'Web-component package exports shadow CSS and TypeScript definitions');
-  const css = fs.readFileSync(path.join(ROOT, 'packages/web-components/plenix-shadow.css'), 'utf8');
+  const css = fs.readFileSync(path.join(ROOT, 'release/packages/web-components/plenix-shadow.css'), 'utf8');
   check(css.includes(':host') && css.includes('.plx-button') && !/:root/.test(css) && !/url\((?!"?data:)/.test(css), 'Shadow CSS contains host token selectors, components and self-contained asset URLs');
   console.log('W15C_PACKAGES_OK ' + checks + ' package/date/protocol checks');
 })().catch((error) => { console.error(error); process.exitCode = 1; });
