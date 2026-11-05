@@ -14,7 +14,11 @@
     "entity-header-columns": {
       "$value": "minmax(63%, max-content) minmax({plx-comp.entity-header-aside-min-width}, 1fr)",
       "$description": "EntityHeader: the main column and the aside. The divider starts at 63% (1.7 to 1) and moves toward the end when the title needs the room; the aside keeps at least its minimum width, and past that the title wraps (owner, 2026-10-24, #297 option B).",
-      "$extensions": { "com.plenix": { "webOnly": true } }
+      "$extensions": {
+        "com.plenix": {
+          "webOnly": true
+        }
+      }
     },
     "entity-header-column-gap": {
       "$value": "{plx-ref.space-5u}",
@@ -65,7 +69,11 @@
       "$value": "110%",
       "$type": "dimension",
       "$description": "EntityHeader: the accent rule runs 10% past the wider of the heading and the details.",
-      "$extensions": { "com.plenix": { "webOnly": true } }
+      "$extensions": {
+        "com.plenix": {
+          "webOnly": true
+        }
+      }
     },
     "entity-header-details-gap": {
       "$value": "{plx-sys.space-cluster-md}",
@@ -318,24 +326,9 @@
       "$description": "EntityHeader (header style 2, owner 2026-10-23): the square holding a fact's identifying icon (Presiding)."
     },
     "entity-header-fact-icon-size": {
-      "$value": "{plx-ref.size-10u}",
+      "$value": "{plx-comp.entity-header-fact-icon-tile-size}",
       "$type": "dimension",
       "$description": "EntityHeader (header style 2, owner 2026-10-23): the icon in a fact's square; it fills the square, with no box around it (D-0036, #108)."
-    },
-    "entity-header-fact-icon-tile-background": {
-      "$value": "{plx-sys.surface-default}",
-      "$type": "color",
-      "$description": "EntityHeader (header style 2, owner 2026-10-23): the fact icon's square."
-    },
-    "entity-header-fact-icon-tile-border-color": {
-      "$value": "{plx-sys.border-subtle}",
-      "$type": "color",
-      "$description": "EntityHeader (header style 2, owner 2026-10-23): the fact icon square's edge."
-    },
-    "entity-header-fact-icon-tile-radius": {
-      "$value": "{plx-sys.radius-detail}",
-      "$type": "dimension",
-      "$description": "EntityHeader (header style 2, owner 2026-10-23): the fact icon square's corners."
     },
     "entity-header-fact-icon-tile-text": {
       "$value": "{plx-sys.content-muted}",
