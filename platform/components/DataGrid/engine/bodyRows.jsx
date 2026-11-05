@@ -509,6 +509,7 @@ export function bodyRows({
                     column={c}
                     record={record}
                     select={turnedOn && c.editor === 'select'}
+                    combobox={turnedOn && c.editor === 'combobox'}
                     date={turnedOn && c.editor === 'date'}
                     value={editing.value}
                     onCommit={(next, move) => {
