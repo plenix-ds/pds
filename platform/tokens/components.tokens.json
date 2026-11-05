@@ -460,7 +460,7 @@
     "button-raised-rest-shadow": {
       "$value": "none",
       "$type": "shadow",
-      "$description": "An action button at rest (secondary, tertiary, danger-secondary, primary, danger): no shadow; the Halo shows on hover only (D-0048, #269). Pressed and disabled are flat; ghost and bar buttons stay flat."
+      "$description": "An action button at rest (secondary, tertiary, danger-secondary, primary, danger): no shadow; the Halo shows on hover only (D-0054, #269). Pressed and disabled are flat; ghost and bar buttons stay flat."
     },
     "button-raised-hover-shadow": {
       "$value": "{plx-comp.card-elevation-halo-shadow}",

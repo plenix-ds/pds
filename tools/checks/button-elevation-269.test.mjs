@@ -1,4 +1,4 @@
-// #269 / #6 / D-0048: every raised outline button shares one lighter elevation. Static check of tokens and CSS.
+// #269 / #6 / D-0054: every raised outline button shares one lighter elevation. Static check of tokens and CSS.
 import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 const tokens = JSON.parse(fs.readFileSync('platform/tokens/components.tokens.json', 'utf8'));
@@ -7,7 +7,7 @@ const t = (k) => tokens[k] ?? Object.values(tokens).find((v) => v && v[k])?.[k];
 const val = (k) => (t(k) || tokens['plx-comp']?.[k] || findDeep(tokens, k))?.$value;
 function findDeep(o, k) { if (!o || typeof o !== 'object') return; if (o[k]) return o[k]; for (const v of Object.values(o)) { const r = findDeep(v, k); if (r) return r; } }
 
-describe('#269 button elevation (D-0048)', () => {
+describe('#269 button elevation (D-0054)', () => {
   it('rest shadow is none, hover shadow is Halo', () => {
     expect(val('button-raised-rest-shadow')).toBe('none');
     expect(val('button-raised-hover-shadow')).toBe('{plx-comp.card-elevation-halo-shadow}');

@@ -46,7 +46,7 @@ const contrast = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y
       for (const k of ['secondary', 'tertiary', 'primary', 'danger']) {
         assert.match(r[k + '-rest'].image, /^radial-gradient\(.* 90%, .* 100%\)$/, mode + ' ' + k + ': the subtle glow at rest (fill to 75%)');
         assert.notEqual(r.halo, 'none', mode + ': the card Halo resolves');
-        assert.equal(r[k + "-rest"].shadow, "none", mode + " " + k + ": no shadow at rest (D-0048, #269)");
+        assert.equal(r[k + "-rest"].shadow, "none", mode + " " + k + ": no shadow at rest (D-0054, #269)");
         assert.match(r[k + '-hover'].image, /^radial-gradient\(.* 90%, .* 100%\)$/, mode + ' ' + k + ': the subtle glow on hover (fill to 75%)');
         assert.equal(r[k + '-hover'].shadow, r.halo, mode + ' ' + k + ': the card Halo on hover, as at rest (#910)');
         for (const s of ['pressed', 'disabled']) assert.deepEqual([r[k + '-' + s].image, r[k + '-' + s].shadow], ['none', 'none'], mode + ' ' + k + ' ' + s + ': flat');
