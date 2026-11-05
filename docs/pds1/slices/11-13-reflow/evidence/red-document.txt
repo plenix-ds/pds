@@ -1,0 +1,2 @@
+RED (main): baseline lists test-site/index.html#/document/d1 scroller 1: section.plx-page-content 289/270px.
+Causes: the site header Inline of buttons had no wrap (265px in 222px); VersionCompare steps (Previous/Next change) did not wrap (248px). Bottom bar labels (Browse) fit: 62px items, one line, nothing cut.
