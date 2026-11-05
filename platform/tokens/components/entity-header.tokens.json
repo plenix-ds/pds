@@ -320,7 +320,6 @@
     "entity-header-fact-icon-size": {
       "$value": "{plx-ref.size-5u}",
       "$type": "dimension",
-      "$deprecated": "The fact icon fills its square, sized by the tile-size token (#108, PR #364): nothing reads it. It keeps working and is removed in 2.0.0.",
       "$description": "EntityHeader (header style 2, owner 2026-10-23): the icon in a fact's square."
     },
     "entity-header-fact-icon-tile-background": {
