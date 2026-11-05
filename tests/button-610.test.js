@@ -3,7 +3,7 @@
      1. The label is centered in the button by its capital letters: the label box is trimmed to the letters (text-box: trim-both cap alphabetic), so the
         capitals sit within half a pixel of the button's middle at 32px and at 28px. Before, the capitals sat about 1.1px high at 28px.
      2. Danger and Danger secondary have a pressed color of their own, red-900 (#7a0000, the one new color the owner approved): Danger steps rest red-700, hover
-        red-800, pressed red-900 (three distinct steps), and Danger secondary's pressed is red-900, not its hover, in the light and in the dark theme.
+        red-800, pressed red-900 (three distinct steps), and (since D-0037) Danger secondary keeps its fill on hover and press, a state layer showing the state.
    The probe is proved able to see the old values first: before the build, 28px read 1.13px high and Danger's pressed was its hover color (red-800), so the limits
      below fail on the old code.
    Descenders: gypqjy and an Arabic label draw as far down as in a reference where the label is not clipped at all; the control without the clip margin shows the cut.
@@ -93,8 +93,8 @@ const PORT0 = +process.env.TEST_PORT || 9630;
       const c = await read(mode), d = c.danger, s = c['danger-secondary'];
       assert.deepEqual([d.rest, d.hover, d.pressed], ['rgb(183, 0, 0)', 'rgb(153, 0, 0)', 'rgb(122, 0, 0)'], mode + ': Danger steps red-700, red-800, red-900');
       assert.equal(new Set([d.rest, d.hover, d.pressed]).size, 3, mode + ': Danger has three distinct steps');
-      assert.equal(s.pressed, 'rgb(122, 0, 0)', mode + ': Danger secondary pressed is red-900');
-      assert.notEqual(s.pressed, s.hover, mode + ': Danger secondary pressed is not its hover color');
+      assert.equal(s.pressed, s.rest, mode + ': Danger secondary keeps its fill when pressed: a state layer shows the press instead (D-0037, tests/button-state-layers-109.test.js)');
+      assert.equal(s.hover, s.rest, mode + ': Danger secondary keeps its fill on hover (D-0037)');
     }
     assert.deepEqual(errors, [], 'no script errors');
     console.log('button-610: OK');

@@ -5,7 +5,7 @@
        to Lifted); pressed and disabled flat (no gradient, no shadow)
      primary and danger: the border is the glow's rim (blue-600, red-800) and the bottom edge one shade deeper (blue-700,
        red-900); hovered, the border one shade deeper (blue-700, red-900)
-     secondary hover gray-200 and pressed gray-250 (dark gray-700, gray-900); tertiary on the control fill, gray when hovered
+     secondary and tertiary keep their fill on hover and press, a state layer showing the state (D-0037)
      ghost stays flat; so do buttons in a Toolbar (bar buttons) and the 2xs size
      tertiary's words pass 4.5:1 on each of its fills
    Proof first: before 610 every button is flat (no gradient, no shadow) and primary's border is its fill: those lines fail.
@@ -47,17 +47,24 @@ const contrast = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y
         assert.match(r[k + '-rest'].image, /^radial-gradient\(.* 90%, .* 100%\)$/, mode + ' ' + k + ': the subtle glow at rest (fill to 75%)');
         assert.notEqual(r.halo, 'none', mode + ': the card Halo resolves');
         assert.equal(r[k + "-rest"].shadow, "none", mode + " " + k + ": no shadow at rest (D-0054, #269)");
-        assert.match(r[k + '-hover'].image, /^radial-gradient\(.* 90%, .* 100%\)$/, mode + ' ' + k + ': the subtle glow on hover (fill to 75%)');
+        assert.match(r[k + '-hover'].image, /^(linear-gradient\(.*\), )?radial-gradient\(.* 90%, .* 100%\)$/, mode + ' ' + k + ': the subtle glow on hover (fill to 75%)');
         assert.equal(r[k + '-hover'].shadow, r.halo, mode + ' ' + k + ': the card Halo on hover, as at rest (#910)');
-        for (const s of ['pressed', 'disabled']) assert.deepEqual([r[k + '-' + s].image, r[k + '-' + s].shadow], ['none', 'none'], mode + ' ' + k + ' ' + s + ': flat');
+        for (const s of ['pressed', 'disabled']) {
+          // secondary and tertiary show their press as a state layer (D-0037): one see-through gradient, no glow, no shadow
+          const layer = s === 'pressed' && (k === 'secondary' || k === 'tertiary');
+          if (layer) { assert.match(r[k + '-pressed'].image, /^linear-gradient\(/, mode + ' ' + k + ' pressed: the state layer only'); assert.ok(!/radial/.test(r[k + '-pressed'].image), mode + ' ' + k + ' pressed: no glow'); assert.equal(r[k + '-pressed'].shadow, 'none'); }
+          else assert.deepEqual([r[k + '-' + s].image, r[k + '-' + s].shadow], ['none', 'none'], mode + ' ' + k + ' ' + s + ': flat');
+        }
       }
-      for (const s of ['rest', 'hover', 'pressed']) assert.deepEqual([r['ghost-' + s].image, r['ghost-' + s].shadow], ['none', 'none'], mode + ' ghost ' + s + ': flat');
+      assert.deepEqual([r['ghost-rest'].image, r['ghost-rest'].shadow], ['none', 'none'], mode + ' ghost rest: flat');
+      for (const s of ['hover', 'pressed']) { assert.match(r['ghost-' + s].image, /^linear-gradient\(/, mode + ' ghost ' + s + ': the state layer (D-0037)'); assert.ok(!/radial/.test(r['ghost-' + s].image) && r['ghost-' + s].shadow === 'none', mode + ' ghost ' + s + ': no glow, no shadow'); }
       for (const id of ['bar-secondary', 'bar-primary', 'small']) assert.deepEqual([r[id].image, r[id].shadow], ['none', 'none'], mode + ' ' + id + ': flat (a bar button, the 2xs size)');
       // primary and danger: the rim border, the deeper bottom edge, the deeper hover border (the same in light and dark)
       assert.deepEqual([r['primary-rest'].border, r['primary-rest'].bottom, r['primary-hover'].border], [rgb('#1F5BB8'), rgb('#005A9E'), rgb('#005A9E')], mode + ' primary edges');
       assert.deepEqual([r['danger-rest'].border, r['danger-rest'].bottom, r['danger-hover'].border], [rgb('#990000'), rgb('#7A0000'), rgb('#7A0000')], mode + ' danger edges');
       // the fills under the glow
-      const fills = mode === 'light' ? ['#FFFFFF', '#E8E9EC', '#DCDDDE'] : ['#444444', '#56585E', '#34363B'];
+      // since D-0037 the fill does not change: a state layer (tests/button-state-layers-109.test.js) shows hover and press
+      const fills = mode === 'light' ? ['#FFFFFF', '#FFFFFF', '#FFFFFF'] : ['#444444', '#444444', '#444444'];
       assert.deepEqual([r['secondary-rest'].bg, r['secondary-hover'].bg, r['secondary-pressed'].bg], fills.map(rgb), mode + ' secondary rest, hover, pressed fills');
       assert.deepEqual([r['tertiary-rest'].bg, r['tertiary-hover'].bg, r['tertiary-pressed'].bg], fills.map(rgb), mode + ' tertiary rest, hover, pressed fills');
       for (const s of ['rest', 'hover', 'pressed']) assert.ok(contrast(r['tertiary-' + s].text, r['tertiary-' + s].bg) >= 4.5, mode + ' tertiary ' + s + ': its words pass 4.5:1');

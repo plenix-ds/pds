@@ -1,6 +1,10 @@
 {
   "$description": "Button (platform/components/Button): its tokens added after the shared set. The caret (owner, 2026-10-14): the thin outline chevron (expand_more) at the button's icon size, in the muted content color on the unfilled buttons.",
   "plx-comp": {
-    "button-caret-color": { "$value": "{plx-sys.content-muted}", "$type": "color", "$description": "Button caret: the thin chevron's color on the unfilled buttons (secondary, tertiary, ghost, danger-secondary); filled and disabled buttons draw it in the label's color." }
+    "button-caret-color": { "$value": "{plx-sys.content-muted}", "$type": "color", "$description": "Button caret: the thin chevron's color on the unfilled buttons (secondary, tertiary, ghost, danger-secondary); filled and disabled buttons draw it in the label's color." },
+    "button-state-layer-color": { "$value": "{plx-sys.state-layer-color}", "$type": "color", "$description": "Button (D-0037, docs/adr/0004): the Fluent 2 state layer's colour on the neutral, subtle and outline variants: the text colour, see-through." },
+    "button-state-layer-hover-opacity": { "$value": "{plx-sys.state-layer-hover-opacity}", "$type": "number", "$description": "Button: the state layer's amount on hover (8%)." },
+    "button-state-layer-pressed-opacity": { "$value": "{plx-sys.state-layer-pressed-opacity}", "$type": "number", "$description": "Button: the state layer's amount while pressed (10%)." },
+    "button-state-layer-focus-opacity": { "$value": "{plx-sys.state-layer-focus-opacity}", "$type": "number", "$description": "Button: the state layer's amount on keyboard focus (10%)." }
   }
 }

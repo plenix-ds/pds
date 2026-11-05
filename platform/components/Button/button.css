@@ -764,3 +764,34 @@
   --plx-state-button-selected-border: var(--plx-comp-button-tone-neutral-selected-border);
   --plx-state-button-selected-text: var(--plx-comp-button-tone-neutral-selected-text);
 }
+
+/* Fluent 2 state layers (D-0037, docs/adr/0004): on the neutral, subtle and outline variants (secondary, tertiary, ghost,
+   danger-secondary) the fill does not change on hover or press; a see-through layer of the text colour sits over it (the first
+   image, above the rest glow), 8% on hover, 10% pressed and 10% on keyboard focus. Primary and danger keep their own stepped fills
+   (the owner's red-900 and blue steps), and so do the colored surfaces; disabled and loading buttons show no layer. A selected
+   toggle keeps its fill. */
+.plx-button:where(:not(.plx-button--primary, .plx-button--danger, .plx-button--on-inverse, .plx-button--on-accent)):is(:hover, .is-hover):where(:not(:active, .is-pointer-down, :disabled, [aria-disabled="true"])) {
+  --plx-state-button-image:
+    linear-gradient(
+      color-mix(in srgb, var(--plx-comp-button-state-layer-color) var(--plx-comp-button-state-layer-hover-opacity), transparent) 0 0
+    ),
+    var(--plx-state-button-rest-image, none);
+}
+.plx-button:where(:not(.plx-button--primary, .plx-button--danger, .plx-button--on-inverse, .plx-button--on-accent, .is-selected)):is(:hover, .is-hover):where(:not(:active, .is-pointer-down, :disabled, [aria-disabled="true"])) {
+  --plx-state-button-background: var(--plx-state-button-rest-background);
+}
+.plx-button:where(:not(.plx-button--primary, .plx-button--danger, .plx-button--on-inverse, .plx-button--on-accent)):is(:active, .is-pointer-down):where(:not(:disabled, [aria-disabled="true"])) {
+  --plx-state-button-image: linear-gradient(
+    color-mix(in srgb, var(--plx-comp-button-state-layer-color) var(--plx-comp-button-state-layer-pressed-opacity), transparent) 0 0
+  );
+}
+.plx-button:where(:not(.plx-button--primary, .plx-button--danger, .plx-button--on-inverse, .plx-button--on-accent, .is-selected)):is(:active, .is-pointer-down):where(:not(:disabled, [aria-disabled="true"])) {
+  --plx-state-button-background: var(--plx-state-button-rest-background);
+}
+.plx-button:where(:not(.plx-button--primary, .plx-button--danger, .plx-button--on-inverse, .plx-button--on-accent)):is(:focus-visible, .is-focus-visible):where(:not(:hover, .is-hover, :active, .is-pointer-down, :disabled, [aria-disabled="true"])) {
+  --plx-state-button-image:
+    linear-gradient(
+      color-mix(in srgb, var(--plx-comp-button-state-layer-color) var(--plx-comp-button-state-layer-focus-opacity), transparent) 0 0
+    ),
+    var(--plx-state-button-rest-image, none);
+}
