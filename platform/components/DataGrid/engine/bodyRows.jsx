@@ -19,7 +19,7 @@ import { cx } from '../../../utils/cx.ts';
 import { words, kinds, interactive, typeOf, typeIcons, cellDirection } from './helpers.jsx';
 import { valueText, CellValue } from '../cells.jsx';
 import { groupKeys, rowKeys, cellKeys } from './keys.js';
-import { Width, RowTarget, Check, CellEditor, CustomCell, RowMenuContent } from './parts.jsx';
+import { Width, RowTarget, Check, CellEditor, CellStatus, CustomCell, RowMenuContent } from './parts.jsx';
 import { Icon } from '../../Icon/Icon.tsx';
 import ChevronRightIcon from 'plenix-platform/icons/plenix/chevron-right';
 import ChevronDownIcon from 'plenix-platform/icons/plenix/chevron-down';
@@ -82,6 +82,8 @@ export function bodyRows({
   pinStart,
   leadFrozen,
   editing,
+  cellStatus,
+  setCellStatus,
   cells,
   showTypes,
   setEditing,
@@ -322,7 +324,11 @@ export function bodyRows({
             pinned = column.getIsPinned() === 'left',
             sticky = pinned ? pinStart(column) : 0;
           const cell = api.cell(row.id, c.field),
-            canEdit = !!c.editor && (typeof c.editable === 'function' ? c.editable(cell) : c.editable !== false);
+            status = cellStatus?.key === row.id && cellStatus.field === c.field ? cellStatus : null,
+            canEdit =
+              !!c.editor &&
+              status?.kind !== 'saving' &&
+              (typeof c.editable === 'function' ? c.editable(cell) : c.editable !== false);
           const value = valueAt(record, c.field),
             isTree = !!childField && c.field === (props.treeColumn || columns[0]?.field),
             isEditing = editing?.key === row.id && editing.field === c.field,
@@ -410,6 +416,7 @@ export function bodyRows({
               })}
               data-plx-sticky={pinned && sticky ? sticky + 'px' : undefined}
               data-plx-label={detail ? c.title || c.field : undefined}
+              aria-busy={status?.kind === 'saving' ? 'true' : undefined}
               aria-label={detail ? (c.title || c.field) + ': ' + valueText(value) : undefined}
               data-plx-text-follow={c.rowLabel || columns.indexOf(c) <= pinnedAt ? 'size family weight' : 'size family'}
               className={cx(
@@ -468,6 +475,7 @@ export function bodyRows({
                   ) : null}
                 </span>
               ) : null}
+              {status ? <CellStatus status={status} onClear={() => setCellStatus(null)} /> : null}
               {editing?.key === row.id && editing.field === c.field ? (
                 cellDirection(
                   pinned && !isStatic,

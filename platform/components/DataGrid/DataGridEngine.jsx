@@ -201,7 +201,7 @@ function NextEngine(props) {
     filters
   });
   const incoming = remoteMode ? remote?.rows || EMPTY_ROWS : data;
-  const { setEdited, editing, setEditing, mutations, pendingEdit, source } = useEditedRows(incoming);
+  const { setEdited, editing, setEditing, cellStatus, setCellStatus, mutations, pendingEdit, source } = useEditedRows(incoming);
   const canonical = React.useMemo(() => recordsOf(source, index, childField), [source, index, childField]);
   // TanStack tries a global filter against columns; the public predicate describes a record, so evaluate it once.
   const unreadKey = React.useCallback((record) => record[index], [index]);
@@ -247,6 +247,8 @@ function NextEngine(props) {
     props,
     setEdited,
     setEditing,
+    setCellStatus,
+    S,
     mutations,
     pendingEdit
   });
@@ -880,6 +882,8 @@ function NextEngine(props) {
     pinStart,
     leadFrozen,
     editing,
+    cellStatus,
+    setCellStatus,
     cells,
     showTypes,
     setEditing,
@@ -905,6 +909,7 @@ function NextEngine(props) {
       source,
       model,
       editing,
+      cellStatus,
       metrics,
       autoSizing,
       sizing,

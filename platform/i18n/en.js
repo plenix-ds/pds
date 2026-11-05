@@ -858,7 +858,10 @@ export default {
     "rowsLabel": "{label} rows",
     "columnActions": "{title} column actions",
     "unreadRow": "{label}, unread",
-    "editCell": "Edit {title}"
+    "editCell": "Edit {title}",
+    "editing": "Editing {column}",
+    "saved": "Saved",
+    "saveRefused": "Couldn’t save. The previous value is back."
   },
   "dataPill": {
     "male": "male",
