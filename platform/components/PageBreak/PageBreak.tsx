@@ -9,7 +9,7 @@
 */
 import React from 'react';
 
-type PageBreakProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & { preview?: boolean };
+export type PageBreakProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & { preview?: boolean };
 export function PageBreak({ preview, className, ...rest }: PageBreakProps) {
   const cls = ['plx-page-break', preview && 'plx-page-break--preview', className].filter(Boolean).join(' ');
   return <div className={cls} aria-hidden="true" {...rest} />;
