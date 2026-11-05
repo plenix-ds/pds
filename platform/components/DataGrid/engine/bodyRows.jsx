@@ -417,6 +417,8 @@ export function bodyRows({
               data-plx-sticky={pinned && sticky ? sticky + 'px' : undefined}
               data-plx-label={detail ? c.title || c.field : undefined}
               aria-busy={status?.kind === 'saving' ? 'true' : undefined}
+              aria-describedby={status?.kind === 'refused' ? status.id : undefined}
+              aria-invalid={status?.kind === 'refused' ? 'true' : undefined}
               aria-label={detail ? (c.title || c.field) + ': ' + valueText(value) : undefined}
               data-plx-text-follow={c.rowLabel || columns.indexOf(c) <= pinnedAt ? 'size family weight' : 'size family'}
               className={cx(

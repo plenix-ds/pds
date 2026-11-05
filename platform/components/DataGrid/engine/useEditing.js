@@ -24,6 +24,8 @@ import { recordKey, valueAt } from '../state.js';
 import { setField, changeRecord } from '../records.js';
 import { announce } from '../../../utils/announce.tsx';
 
+let refusals = 0;   // the refusal message's id, so the cell can name it (aria-describedby)
+
 export function useEditedRows(incoming) {
   const pendingEdit = React.useRef(null),
     mutations = React.useRef([]);
@@ -80,7 +82,7 @@ export function editActions({
         (error) => {
           updateRecord(key, (record) => setField(record, field, previous));
           const message = (error && error.message) || S.saveRefused;
-          setCellStatus({ key, field, kind: 'refused', message });
+          setCellStatus({ key, field, kind: 'refused', message, id: 'plx-data-grid-refusal-' + ++refusals });
           announce(message, { politeness: 'assertive' });
         }
       );

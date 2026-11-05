@@ -37,7 +37,7 @@ const check = async (name, fn) => { if (!shared.wanted(name)) return; try { awai
       }, dir, mode);
       const focus = (r) => page.evaluate((r) => { const row = [...document.querySelectorAll('[role=row][data-plx-record]')][r]; row.querySelector('[data-plx-field="name"]').focus(); }, r);
       const key = async (k) => { await page.keyboard.press(k); await wait(250); };
-      const cell = (r) => page.evaluate((r) => { const c = [...document.querySelectorAll('[role=row][data-plx-record]')][r].querySelector('[data-plx-field="name"]'); return { text: c.textContent.replace(/\s+/g, ' ').trim(), busy: c.getAttribute('aria-busy'), spinner: !!c.querySelector('[role=status]') }; }, r);
+      const cell = (r) => page.evaluate((r) => { const c = [...document.querySelectorAll('[role=row][data-plx-record]')][r].querySelector('[data-plx-field="name"]'); const m = document.querySelector('.plx-data-grid__editor-message'); return { text: c.textContent.replace(/\s+/g, ' ').trim(), busy: c.getAttribute('aria-busy'), spinner: !!c.querySelector('[role=status]'), invalid: c.getAttribute('aria-invalid'), linked: !!m && !!m.id && c.getAttribute('aria-describedby') === m.id, outline: getComputedStyle(c).outlineStyle + ' ' + getComputedStyle(c).outlineColor }; }, r);
       const msg = () => page.evaluate(() => { const m = document.querySelector('.plx-data-grid__editor-message'); return m ? m.textContent : null; });
       const spoken = () => page.evaluate(() => [...document.querySelectorAll('[aria-live]')].map((e) => e.textContent).join('|'));
       const settle = async () => { await page.evaluate(() => window.__settle()); await wait(500); };
@@ -58,7 +58,11 @@ const check = async (name, fn) => { if (!shared.wanted(name)) return; try { awai
       await check(T + 'when it rejects the old value comes back with the error message under the cell until the next key', async () => {
         await mount('refuse'); await edit(0, 'Ann'); await settle(); const c = await cell(0);
         assert.deepEqual([c.busy, c.spinner, c.text.includes('Person'), c.text.includes('Ann')], [null, false, true, false]); assert.equal(await msg(), 'Name already used');
+        assert.deepEqual([c.invalid, c.linked], ['true', true], 'the cell is invalid and linked to its message');
+        const bad = await page.evaluate(() => { const d = document.createElement('input'); d.style.outlineColor = 'var(--plx-comp-input-invalid-border-color)'; d.style.outlineStyle = 'solid'; document.body.appendChild(d); const v = getComputedStyle(d).outlineColor; d.remove(); return v; });
+        assert.equal(c.outline, 'solid ' + bad, 'the invalid outline');
         await key('ArrowDown'); assert.equal(await msg(), null);
+        const after = await cell(0); assert.deepEqual([after.invalid, after.linked], [null, false]);
       });
       await check(T + 'a refusal with no text shows the default message', async () => {
         await mount('refuse-plain'); await edit(0, 'Ann'); await settle(); assert.equal(await msg(), 'Couldn’t save. The previous value is back.');

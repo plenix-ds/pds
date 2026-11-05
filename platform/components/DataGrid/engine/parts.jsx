@@ -111,7 +111,7 @@ export function CellStatus({ status, onClear }) {
     </span>
   ) : (
     <span ref={anchor} className="plx-data-grid__cell-status">
-      <EditorMessage id={undefined} anchor={anchor} message={status.message} />
+      <EditorMessage id={status.id} anchor={anchor} message={status.message} />
     </span>
   );
 }
