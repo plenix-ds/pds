@@ -6,7 +6,7 @@
     "platform/components/Slider/Slider.tsx",
     "platform/components/SegmentedControl/SegmentedControl.tsx",
     "platform/components/ColorSwatch/ColorSwatch.tsx",
-    "platform/components/PromptInput/PromptInput.jsx",
+    "platform/components/PromptInput/PromptInput.tsx",
     "platform/components/TimeZoneSelect/TimeZoneSelect.jsx",
     "platform/components/NumberInput/NumberInput.tsx",
     "platform/components/DatePicker/DatePicker.jsx",

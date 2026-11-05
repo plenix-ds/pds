@@ -130,7 +130,7 @@ DSParts.records.push(function (H) {
   var ROW = function (child) { return box(320, h(P.RowButton, { onClick: function () {} }, child)); };   // a list row that opens the item
   var CARD = function (child) { return box(280, h(P.Card, null, child)); };
   var entityTitle = { id: 'entity-title', icon: 'document', sec: 'content', sub: 'Identity', leaf: 'Entity title', title: 'Entity title',
-    plenix: 'EntityTitle', src: 'components/EntityTitle/EntityTitle.jsx', level: 'Component', interaction: 'Display', aliases: ['Item title', 'Title line', 'Object title', 'Resource name'],
+    plenix: 'EntityTitle', src: 'components/EntityTitle/EntityTitle.tsx', level: 'Component', interaction: 'Display', aliases: ['Item title', 'Title line', 'Object title', 'Resource name'],
     text: 'Names an item in one compact line (EntityTitle): an icon, the title on one line cut with “…”, a subtitle under it and a tag after it, or a placeholder while it loads. It sets no height or padding of its own, so it sits in a list row or a card without changing their height rules. EntityHeader is the full page header.',
     use: ['The name of a file, a folder, a record or a page in a list row or on a card', 'One useful detail as the subtitle: a type, a date, a place', 'A status tag as a Badge with its icon; a category as a Tag'],
     avoid: ['A page header: use EntityHeader', 'Actions inside it: put them on the row or the card', 'An icon in a box: the icon is plain'],

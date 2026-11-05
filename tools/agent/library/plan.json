@@ -2493,7 +2493,7 @@
       "platform/patterns/AIChat/AIChat.jsx",
       "platform/patterns/AIChat/ai-chat.css",
       "platform/tokens/components/ai-chat.tokens.json",
-      "platform/components/PromptInput/PromptInput.jsx",
+      "platform/components/PromptInput/PromptInput.tsx",
       "platform/components/PromptInput/prompt-input.css",
       "platform/tokens/components/prompt-input.tokens.json",
       "platform/components/StreamingText/StreamingText.tsx",
@@ -2576,7 +2576,7 @@
       "platform/components/AIButton/AIButton.tsx",
       "platform/components/AIButton/ai-button.css",
       "platform/tokens/components/ai-button.tokens.json",
-      "platform/components/PromptSuggestions/PromptSuggestions.jsx",
+      "platform/components/PromptSuggestions/PromptSuggestions.tsx",
       "platform/components/PromptSuggestions/prompt-suggestions.css",
       "platform/tokens/components/prompt-suggestions.tokens.json",
       "platform/components/Chat/Chat.jsx",
@@ -8255,7 +8255,7 @@
    "wave": 14,
    "lane": "A",
    "files": [
-    "platform/components/PromptInput/PromptInput.jsx",
+    "platform/components/PromptInput/PromptInput.tsx",
     "platform/components/PromptInput/prompt-input.css",
     "platform/tokens/components/prompt-input.tokens.json"
    ],
@@ -8612,7 +8612,7 @@
    "wave": 14,
    "lane": "C",
    "files": [
-    "platform/components/PromptSuggestions/PromptSuggestions.jsx",
+    "platform/components/PromptSuggestions/PromptSuggestions.tsx",
     "platform/components/PromptSuggestions/prompt-suggestions.css",
     "platform/tokens/components/prompt-suggestions.tokens.json"
    ],
@@ -21312,7 +21312,7 @@
    "target": "PromptInput",
    "targetKind": "component",
    "files": [
-    "platform/components/PromptInput/PromptInput.jsx",
+    "platform/components/PromptInput/PromptInput.tsx",
     "platform/components/PromptInput/prompt-input.css",
     "platform/tokens/components/prompt-input.tokens.json"
    ],
@@ -21346,7 +21346,7 @@
    "target": "PromptSuggestions",
    "targetKind": "component",
    "files": [
-    "platform/components/PromptSuggestions/PromptSuggestions.jsx",
+    "platform/components/PromptSuggestions/PromptSuggestions.tsx",
     "platform/components/PromptSuggestions/prompt-suggestions.css",
     "platform/tokens/components/prompt-suggestions.tokens.json"
    ],

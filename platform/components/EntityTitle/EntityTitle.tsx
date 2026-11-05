@@ -31,14 +31,16 @@ import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { useTruncated } from '../../utils/overflow.ts';
 import { asIcon } from '../Icon/Icon.tsx';
+import type { IconValue } from '../Icon/Icon.tsx';
 import { Badge } from '../Badge/Badge.tsx';
+import type { BadgeProps } from '../Badge/Badge.tsx';
 import { Tag } from '../Tag/Tag.tsx';
 import { Tooltip } from '../Tooltip/Tooltip.tsx';
 import { Skeleton } from '../Loading/Loading.tsx';
 
 // one line that ends in "…" when cut; its whole text in a tooltip only while it is cut
-function Line({ as: As = 'span', className, children }) {
-  const ref = React.useRef(null);
+function Line({ as: As = 'span', className, children }: { as?: React.ElementType; className?: string; children?: React.ReactNode }) {
+  const ref = React.useRef<HTMLElement>(null);
   const text = typeof children === 'string' || typeof children === 'number' ? String(children) : '';
   const cut = useTruncated(ref, text);
   return (
@@ -48,16 +50,32 @@ function Line({ as: As = 'span', className, children }) {
   );
 }
 
-const tagOf = (tag) => {
+type TagObject = { label?: React.ReactNode; category?: string; tone?: BadgeProps['tone']; icon?: IconValue };
+type EntityTag = React.ReactNode | TagObject;
+const tagOf = (tag: EntityTag): React.ReactNode => {
   if (tag === undefined || tag === null || tag === false || tag === '') return null;
   if (React.isValidElement(tag)) return tag;
   if (typeof tag === 'string' || typeof tag === 'number') return <Tag>{tag}</Tag>;
-  if (tag.category) return <Tag category={tag.category}>{tag.label}</Tag>;
-  return <Badge tone={tag.tone} icon={tag.icon}>{tag.label}</Badge>;
+  const object = tag as TagObject;
+  if (object.category) return <Tag category={object.category}>{object.label}</Tag>;
+  return <Badge tone={object.tone} icon={object.icon}>{object.label}</Badge>;
 };
 
-export function EntityTitle({ title, icon, subtitle, tag, level, loading = false, className, ...rest }) {
-  const heading = level >= 1 && level <= 6 ? 'h' + Math.round(level) : 'span';
+type EntityTitleProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> & {
+  /** the title line */
+  title?: React.ReactNode;
+  /** an icon before the title */
+  icon?: IconValue;
+  subtitle?: React.ReactNode;
+  /** a tag after the title: text, an element, { label, category } (a Tag) or { label, tone, icon } (a Badge) */
+  tag?: EntityTag;
+  /** draws the title as a heading of this level (1 to 6) */
+  level?: number;
+  /** shows a placeholder in place of the text */
+  loading?: boolean;
+};
+export function EntityTitle({ title, icon, subtitle, tag, level, loading = false, className, ...rest }: EntityTitleProps) {
+  const heading = (level !== undefined && level >= 1 && level <= 6 ? 'h' + Math.round(level) : 'span') as React.ElementType;
   const badge = loading ? null : tagOf(tag);
   return (
     <div className={cx('plx-entity-title', subtitle && 'plx-entity-title--subtitle', loading && 'is-loading', className)} aria-busy={loading || undefined} {...rest}>
