@@ -863,6 +863,11 @@ export default {
     "editMode": "Editing",
     "editModeInline": "Inline Edit",
     "editModeForm": "Form Edit",
+    "formTitle": "Edit {name}",
+    "emptyValue": "—",
+    "noValue": "No value",
+    "formSaved": "Saved {name}",
+    "formSaveRefused": "Couldn’t save {name}. Check the values and try again.",
     "saved": "Saved",
     "saveRefused": "Couldn’t save. The previous value is back."
   },
