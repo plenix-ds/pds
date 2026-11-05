@@ -25,7 +25,7 @@ const check = async (name, fn) => { if (!shared.wanted(name)) return; try { awai
         window.__root && window.__root.unmount(); document.documentElement.setAttribute('dir', dir); document.documentElement.setAttribute('lang', dir === 'rtl' ? 'ar' : 'en'); window.__edits = [];
         document.querySelector('main').innerHTML = '<div id="c"></div>'; const h = React.createElement;
         const data = [{ id: 'r1', name: 'A', state: 'open' }, { id: 'r2', name: 'B', state: 'closed' }];
-        const columns = [{ title: 'Name', field: 'name', editor: 'input' }, { title: 'State', field: 'state', editor: 'person', editorProps: load ? { loadOptions: (t) => Promise.resolve(t && t !== 'nomatch' ? [{ value: t + '-1', label: t + ' one', description: t + '@example.org' }] : []) } : { options: [{ value: 'open', label: 'Open Ng', description: 'open@example.org' }, { value: 'closed', label: 'Closed Ho', description: 'closed@example.org' }, { value: 'held', label: 'Hal Dee', description: 'hal@example.org' }] } }];
+        const columns = [{ title: 'Name', field: 'name', editor: 'input' }, { title: 'State', field: 'state', width: '--plx-ref-size-40u', editor: 'person', editorProps: load ? { loadOptions: (t) => Promise.resolve(t && t !== 'nomatch' ? [{ value: t + '-1', label: t + ' one', description: t + '@example.org' }] : []) } : { options: [{ value: 'open', label: 'Open Ng', description: 'open@example.org', color: 'blue' }, { value: 'closed', label: 'Closed Ho with a very long family name that cannot fit in the cell at all', description: 'closed@example.org' }, { value: 'held', label: 'Hal Dee', description: 'hal@example.org' }] } }];
         window.__root = ReactDOM.createRoot(document.getElementById('c'));
         window.__root.render(h('div', { style: { height: 400 } }, h(Plenix.DataGrid, { label: 'Cases', data, columns, editing, onCellEdit: (r, e) => window.__edits.push(r.id + '.' + e.field + '=' + e.value) })));
         await new Promise((r) => setTimeout(r, 1000));
@@ -39,15 +39,16 @@ const check = async (name, fn) => { if (!shared.wanted(name)) return; try { awai
       // where the value's text starts (its inline-start edge) in the read cell and in the open editor: the value does not move (design §1)
       const startOf = (mode) => page.evaluate((mode, rtl) => {
         const cell = document.querySelector('[role=row][data-plx-record] [data-plx-field="state"]');
-        const edge = (r, el) => (getComputedStyle(el).direction === 'rtl' ? r.right : r.left);
+        const cr = cell.getBoundingClientRect(), edge = (r, el) => (getComputedStyle(el).direction === 'rtl' ? r.right - cr.right : r.left - cr.left);
+        const person = cell.querySelector('.plx-data-grid__person'); if (person) return edge(person.getBoundingClientRect(), person);
         if (mode === 'read') { const w = document.createTreeWalker(cell, NodeFilter.SHOW_TEXT); let n; while ((n = w.nextNode())) { if (n.textContent.trim()) { const r = document.createRange(); r.selectNodeContents(n); return edge(r.getBoundingClientRect(), n.parentElement); } } return null; }
         const t = cell.querySelector('.plx-select__value'); if (t) return edge(t.getBoundingClientRect(), t);
         const i = cell.querySelector('input'); const b = i.getBoundingClientRect(), cs = getComputedStyle(i);
-        return cs.direction === 'rtl' ? b.right - parseFloat(cs.paddingRight) : b.left + parseFloat(cs.paddingLeft);
+        return cs.direction === 'rtl' ? b.right - cr.right - parseFloat(cs.paddingRight) : b.left - cr.left + parseFloat(cs.paddingLeft);
       }, mode, dir === 'rtl');
       const ON = { types: ['person'] };
 
-      await check(T + 'Enter opens the Combobox in the cell with its list open, drawn bare', async () => {
+      await check(T + 'Enter opens the EntityPicker in the cell with its list open, drawn bare', async () => {
         await mount(ON); await focus(0); await key('Enter'); const s = await sel();
         assert.deepEqual([s.expanded, s.listOpen, s.focused], ['true', true, true]); assert.equal(s.border, '0px/0px/0px'); assert.match(s.bg, /rgba\(0, 0, 0, 0\)|transparent/); assert.equal(await oneLine(), false);
       });
@@ -67,6 +68,20 @@ const check = async (name, fn) => { if (!shared.wanted(name)) return; try { awai
       await check(T + 'loadOptions returning nothing shows the same empty row', async () => {
         await mount({ types: ['person'] }, true); await focus(0); await key('Enter'); await page.keyboard.down('Control'); await page.keyboard.press('a'); await page.keyboard.up('Control'); await page.keyboard.type('nomatch'); await wait(1100);
         assert.equal(await page.evaluate(() => document.querySelectorAll('[role=option]').length), 0); await key('Enter'); assert.deepEqual(await edits(), []); assert.notEqual(await sel(), null);
+      });
+      await check(T + 'the read cell shows the person with an avatar and the name, a long name ending in an ellipsis', async () => {
+        await mount(ON); const r = await page.evaluate(() => { const cells = [...document.querySelectorAll('[role=row][data-plx-record]')].map((row) => row.querySelector('[data-plx-field="state"]')); const info = (c) => { const n = c.querySelector('.plx-data-grid__person-name'); return { avatar: !!c.querySelector('.plx-avatar'), name: n ? n.textContent : null, cut: n ? n.scrollWidth > n.clientWidth && getComputedStyle(n).textOverflow === 'ellipsis' : false }; }; return [info(cells[0]), info(cells[1])]; });
+        assert.deepEqual([r[0].avatar, r[0].name], [true, 'Open Ng']); assert.deepEqual([r[1].avatar, r[1].cut], [true, true]);
+      });
+      await check(T + 'the open editor shows the current person with an avatar until text is typed', async () => {
+        await mount(ON); await focus(0); await key('Enter'); const shown = () => page.evaluate(() => { const c = document.querySelector('.plx-data-grid__grid-editing'); const p = c.querySelector('.plx-data-grid__person'); return p ? { avatar: !!p.querySelector('.plx-avatar'), name: p.querySelector('.plx-data-grid__person-name').textContent.trim() } : null; });
+        assert.deepEqual(await shown(), { avatar: true, name: 'Open Ng' }); await page.keyboard.type('h'); await wait(300); assert.equal(await shown(), null, 'typing replaces it with the search text');
+      });
+      await check(T + 'the suggestions show an avatar, a name and an email, and a search finds a person by name or by email', async () => {
+        await mount(ON); await focus(0); await key('Enter'); const first = await page.evaluate(() => { const o = document.querySelector('[role=option]'); return { avatar: !!o.querySelector('.plx-avatar'), text: o.textContent.replace(/\s+/g, ' ').trim() }; });
+        assert.equal(first.avatar, true); assert.match(first.text, /@example\.org/);
+        const count = async (text) => { await page.keyboard.down('Control'); await page.keyboard.press('a'); await page.keyboard.up('Control'); await page.keyboard.type(text); await wait(400); return page.evaluate(() => document.querySelectorAll('[role=option]').length); };
+        assert.equal(await count('dee'), 1, 'by name'); assert.equal(await count('closed@'), 1, 'by email');
       });
       await check(T + 'loadOptions loads for the typed text', async () => {
         await mount({ types: ['person'] }, true); await focus(0); await key('Enter'); await page.keyboard.down('Control'); await page.keyboard.press('a'); await page.keyboard.up('Control'); await page.keyboard.type('zz'); await wait(900);
