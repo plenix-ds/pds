@@ -500,3 +500,13 @@
   options: [no box (confirmed), box by default]
   status: active
   check: review-only (pds1-design-critic on each UI PR; D-0024 has no reliable static check)
+
+- id: D-0060
+  date: 2026-11-05
+  area: api
+  decided_by: agent (pds1-ds-architect), owner may switch
+  decision: 'actions[].confirm on CommandBar and BarActions takes optional name, count, plural, consequence and permanent, and the catalog (confirmAction) builds the title, body and confirm label from them and the command label; an explicit title, body or confirmLabel wins, so the ADR 0004 shape still works (docs/adr/0004 addendum, #424).'
+  why: 'The Technical Writer''s wording (#414) builds the words from the action, as DeleteFlow already does with {count} {plural}; one consistent message pattern, and apps need not write each sentence.'
+  options: [explicit fields plus catalog-built words (chosen), only title / body / confirmLabel as ADR 0004 first said]
+  status: active
+  check: review-only (G3 on #424) and tests/command-confirm-109.test.js
