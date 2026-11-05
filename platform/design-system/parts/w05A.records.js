@@ -22,7 +22,7 @@ DSParts.records.push(function (H) {
     avoid: ['A hint of a few words: use a Tooltip', 'A decision that blocks the task, or a long form: use a Dialog or a Sheet', 'A popover inside a popover', 'Opening on hover: only a hover card does, and it never holds the only way to an action'],
     related: ['tooltip', 'dialog', 'sheet', 'floating', 'contextual-help', 'popconfirm'],
     covers: [],
-    map: [[CAR, 'Popover', 'Direct'], [ATL, 'Popup', 'Direct'], [FLU, 'Popover', 'Direct'], [POL, 'Popover', 'Direct'], [SPE, 'Popover', 'Direct'], [MAT, 'Rich tooltip', 'Partial']],
+    map: [[CAR, 'Popover', 'Direct'], [ATL, 'Popup', 'Direct'], [FLU, 'Popover', 'Direct'], [POL, 'Popover', 'Direct'], [SPE, 'Popover', 'Direct'], [MAT, 'Rich tooltip', 'Partial'], ['Frappe', 'Popover (Frappe UI)', 'Direct']],
     variantPages: [
       vp('Click popover', 'Trigger', 'Click (default)', { variant: 'plain' }, 'Opens and closes with a click, Enter or Space on its trigger; focus moves into it.', 'Filters, options and short forms', 'Content that must show without a click: put it on the page'),
       vp('Popover with header and footer', 'Parts', 'With header and footer', { variant: 'header' }, 'A title that names it and a Close button above the body, and its actions in a footer at the end edge.', 'A short form with its own Apply or Save', 'A one-line explanation: the body alone is enough'),
@@ -74,7 +74,7 @@ DSParts.records.push(function (H) {
     use: ['A preview of a person, a file or a page on its name or link, to save a visit', 'size="sm", a compact summary (Persona), and at most one or two quick actions that are also on the object’s page'],
     avoid: ['The only way to an action or a fact: touch and many keyboard users never see it', 'Opening a hover card on a button: buttons act on click'],
     related: ['popover', 'profile-summary', 'link'],
-    map: [[FLU, 'HoverCard', 'Direct'], [ATL, 'Profile card', 'Partial'], [MAT, 'Rich tooltip', 'Partial']],
+    map: [[FLU, 'HoverCard', 'Direct'], [ATL, 'Profile card', 'Partial'], [MAT, 'Rich tooltip', 'Partial'], ['Frappe', 'Link preview popover', 'Direct']],
     examples: [['Hover or focus the name', function () { return row(person()); }, null, 'triggerOn="hover"']] };
 
   /* ── 09 Overlays › Contextual overlays › Contextual help ── */
@@ -84,7 +84,7 @@ DSParts.records.push(function (H) {
     use: ['Labels, headings and settings that raise a question: what a term means, why it matters', 'link to the full help page when one or two sentences are not enough', 'variant="inline" where the tip should be read without a click (Contextual education)'],
     avoid: ['Help everyone needs to fill the field: use helper text', 'Errors and warnings: they belong on the field or in a notice', 'Hover-only help: the button opens on click'],
     related: ['popover', 'field', 'tooltip', 'patterns-contextual-education'],
-    map: [[SPE, 'Contextual help', 'Direct'], [CAR, 'Toggletip', 'Direct'], [FLU, 'InfoLabel', 'Direct'], [ATL, 'Inline dialog', 'Partial']],
+    map: [[SPE, 'Contextual help', 'Direct'], [CAR, 'Toggletip', 'Direct'], [FLU, 'InfoLabel', 'Direct'], [ATL, 'Inline dialog', 'Partial'], ['Frappe', 'DocField description', 'Partial']],
     variantPages: [
       vp('Info contextual help', 'Variant', 'Info (default)', { variant: 'info' }, 'The info button, ghost and 24px, opening the explanation in a small popover.', 'A term or setting that needs a sentence of explanation', 'Text everyone needs: use helper text'),
       vp('Contextual help with a link', 'Variant', 'With a link', { variant: 'link' }, 'The explanation followed by a standalone link to the full help page.', 'Topics with a help page of their own', 'A link that repeats the explanation'),

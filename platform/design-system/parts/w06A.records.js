@@ -21,7 +21,7 @@ DSParts.records.push(function (H) {
     use: ['Parts of one value that read better side by side: dimensions, a date in parts, a range', 'Two to four short fields; give each its own short label (the legend gives the context)', 'One error for the whole group under it when the group as a whole is wrong'],
     avoid: ['Unrelated fields in one row: use a form section', 'A field group inside another field group', 'A long row that wraps on most windows: stack the fields'],
     related: ['fieldset', 'legend', 'field', 'number-input'],
-    map: [[CAR, 'Form group', 'Direct'], [ATL, 'Fieldset', 'Direct'], [POL, 'Form layout group', 'Partial'], [FLU, 'Field', 'Partial'], [ANT, 'Space.Compact / Form.Item group', 'Partial']],
+    map: [[CAR, 'Form group', 'Direct'], [ATL, 'Fieldset', 'Direct'], [POL, 'Form layout group', 'Partial'], [FLU, 'Field', 'Partial'], [ANT, 'Space.Compact / Form.Item group', 'Partial'], ['Django', 'fieldsets (ModelAdmin)', 'Direct'], ['Frappe', 'Section Break', 'Direct']],
     variantPages: [
       vp('Field group in a row', 'Layout', 'In a row', { variant: 'row' }, 'The fields side by side, aligned at their tops, the large inline gap between them; they wrap when the row is narrow.', 'Parts of one value: width and height, city and ZIP code', 'Fields that do not belong together'),
       vp('Stacked field group', 'Layout', 'Stacked (default)', { variant: 'stack' }, 'The fields under each other with the stack gap, the default Fieldset.', 'Choices that answer one question: a set of checkboxes', 'Short parts of one value: put them in a row')
@@ -42,7 +42,7 @@ DSParts.records.push(function (H) {
     use: ['Every Fieldset, field group, radio group and checkbox group', 'A short question or noun phrase: Size, Contact method, Which files?', 'hideLegend when a visible heading says the same words'],
     avoid: ['A legend for a single control: use the Field label', 'Instructions in the legend: put them in help text under it', 'An empty legend'],
     related: ['field-group', 'fieldset', 'field'],
-    map: [[CAR, 'Form group (legend)', 'Partial'], [ATL, 'Fieldset (legend)', 'Partial'], [POL, 'Choice list (title)', 'Partial']],
+    map: [[CAR, 'Form group (legend)', 'Partial'], [ATL, 'Fieldset (legend)', 'Partial'], [POL, 'Choice list (title)', 'Partial'], ['Django', 'Fieldset title (admin)', 'Partial'], ['Frappe', 'Section Break label', 'Partial']],
     variantPages: [
       vp('Visible legend', 'Legend', 'Visible (default)', { variant: 'visible' }, 'Secondary text at the label size above the controls.', 'Every group whose title is not already on screen', 'Styling the legend as a page heading inside a form'),
       vp('Hidden legend', 'Legend', 'Hidden (read by screen readers)', { variant: 'hidden' }, 'Visually hidden, still read when focus enters the group.', 'A dialog or a section whose heading says the same', 'Hiding the only title of a group')
@@ -82,7 +82,7 @@ DSParts.records.push(function (H) {
     use: ['After a failed submit on a form with more than a few fields', 'When a problem may be out of view on a long form', 'With the same message beside each field (Field error)'],
     avoid: ['Checking as people type: show field errors on blur instead', 'A problem that is not about a field (the server did not answer): use a Notice or a Banner', 'Different words in the summary and beside the field'],
     related: ['field', 'notice', 'link', 'fieldset'],
-    map: [[CAR, 'Form validation (inline notification)', 'Partial'], [ATL, 'Form (section message)', 'Partial'], [POL, 'Banner (form errors)', 'Partial'], [SPE, 'Inline alert (form)', 'Partial']],
+    map: [[CAR, 'Form validation (inline notification)', 'Partial'], [ATL, 'Form (section message)', 'Partial'], [POL, 'Banner (form errors)', 'Partial'], [SPE, 'Inline alert (form)', 'Partial'], ['Django', 'Form errornote (admin)', 'Direct'], ['Frappe', 'frappe.msgprint (validation)', 'Partial']],
     variantPages: [
       vp('Error summary with links', 'Variant', 'List of errors with links', { variant: 'links' }, 'The heading and one link per problem in the danger Notice.', 'Every failed submit of a longer form', 'A list of problems without links to the fields'),
       vp('Error summary focused on submit', 'Variant', 'Focused on submit', { variant: 'focused' }, 'After a failed submit the summary takes focus: the Notice’s edge turns the focus color.', 'Every summary shown after a submit', 'Moving focus to it while people are still typing')
@@ -152,7 +152,7 @@ DSParts.records.push(function (H) {
     use: ['Counts, sizes, measures, prices and rates', 'min, max and step whenever limits exist; say them in the description (1 to 10)', 'Stepper buttons when most changes are a step or two'],
     avoid: ['Numbers that are codes (ZIP codes, card and phone numbers): use Input', 'A wide range where precision does not matter: use a Slider', 'Blocking or reformatting keys while people type'],
     related: ['input-group', 'text-field', 'slider', 'stepper', 'currency-input', 'percentage-input', 'quantity-selector'],
-    map: [[CAR, 'Number input', 'Direct'], [SPE, 'Number field', 'Direct'], [FLU, 'Spin button', 'Direct'], [POL, 'Text field (number)', 'Partial'], [ATL, 'Text field (number)', 'Partial'], [ANT, 'InputNumber', 'Direct'], [MAT, 'Text fields (number)', 'Partial']],
+    map: [[CAR, 'Number input', 'Direct'], [SPE, 'Number field', 'Direct'], [FLU, 'Spin button', 'Direct'], [POL, 'Text field (number)', 'Partial'], [ATL, 'Text field (number)', 'Partial'], [ANT, 'InputNumber', 'Direct'], [MAT, 'Text fields (number)', 'Partial'], ['Django', 'NumberInput widget', 'Direct'], ['Frappe', 'Int, Float and Currency controls', 'Direct']],
     variantPages: [
       vp('Plain number input', 'Variant', 'Plain', { variant: 'plain' }, 'The number alone in the data font, stepped with the arrow keys.', 'A measure typed more often than stepped', 'A count changed one at a time: add stepper buttons'),
       vp('Number input with stepper buttons', 'Variant', 'Stepper buttons', { variant: 'buttons' }, 'Minus and plus joined at the end; each turns off at its limit.', 'Small counts changed a step or two at a time', 'Wide ranges people type'),
@@ -197,7 +197,7 @@ DSParts.records.push(function (H) {
     use: ['Attaching documents or importing a data file', 'The types and the size limit in the Field’s description (PDF, up to 10 MB)', 'showList with multiple, so people can check and remove files'],
     avoid: ['Images that need a preview or a crop: use an image upload', 'Files that come from inside the app: use a media picker', 'Dragging files in: use DropZone (it keeps a button too)'],
     related: ['drop-zone', 'button', 'field'],
-    map: [[CAR, 'File uploader', 'Direct'], [POL, 'Drop zone', 'Partial'], [SPE, 'Drop zone', 'Partial'], [FLU, 'Input (file)', 'Partial'], [ANT, 'Upload', 'Direct']],
+    map: [[CAR, 'File uploader', 'Direct'], [POL, 'Drop zone', 'Partial'], [SPE, 'Drop zone', 'Partial'], [FLU, 'Input (file)', 'Partial'], [ANT, 'Upload', 'Direct'], ['Django', 'ClearableFileInput widget', 'Direct'], ['Frappe', 'Attach control', 'Direct']],
     variantPages: [
       vp('File input button', 'Variant', 'Button (default)', { variant: 'button' }, 'The secondary Button that opens the picker and the line that names the chosen file.', 'One file in a form', 'Several files people need to check: add the list'),
       vp('File input with a file list', 'Variant', 'With file list', { variant: 'list' }, 'The chosen files one per row, with their size and a Remove button.', 'Several files that people may want to remove', 'One file: the line beside the button says it'),
@@ -230,7 +230,7 @@ DSParts.records.push(function (H) {
     use: ['Configuration, snippets, queries and styles that people edit', 'The language in the label: Query (SQL), Styles (CSS)', 'Line numbers when people talk about lines (errors, reviews)'],
     avoid: ['Code people only read: use CodeBlock', 'Plain prose: use a text area', 'Completion, folding or error markers: they need an editor engine, not part of Plenix'],
     related: ['code-block', 'text-area', 'field'],
-    map: [[CAR, 'Code snippet (editable)', 'Partial'], [ATL, 'Code block', 'Partial'], [SPE, 'Text area', 'Partial']],
+    map: [[CAR, 'Code snippet (editable)', 'Partial'], [ATL, 'Code block', 'Partial'], [SPE, 'Text area', 'Partial'], ['Frappe', 'Code control', 'Direct']],
     variantPages: [
       vp('Plain code editor', 'Variant', 'Plain', { variant: 'plain' }, 'The colored code in the field, no gutter.', 'Short snippets', 'Code people discuss by line: add line numbers'),
       vp('Code editor with line numbers', 'Variant', 'With line numbers', { variant: 'numbers' }, 'A gutter of line numbers on the start side, divided from the code, kept in view when the code scrolls sideways.', 'Files and longer snippets', 'Two or three lines'),

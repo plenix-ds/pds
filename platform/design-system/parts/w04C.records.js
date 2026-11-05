@@ -42,7 +42,7 @@ DSParts.records.push(function (H) {
       use: ['The state of a row, a file or a check in a table or a list: alone at the small size, or with a word', 'The icon of a banner or a message (Banner draws it)', 'A label that says the state (“Synced”, “2 errors”), so it reads without the color'],
       avoid: ['Decoration with no state behind it: use Icon', 'A count of unread items: use the count badge', 'Presence or a live state of a person or a service: use the status dot'],
       related: ['status-dot', 'banner', 'notice', 'icon'],
-      map: [[CAR, 'Status indicators (icon)', 'Direct'], [ATL, 'Icon (status)', 'Partial'], [SPE, 'Status light', 'Partial'], [POL, 'Icon (tone)', 'Partial'], [FLU, 'Presence and status icons', 'Partial']],
+      map: [[CAR, 'Status indicators (icon)', 'Direct'], [ATL, 'Icon (status)', 'Partial'], [SPE, 'Status light', 'Partial'], [POL, 'Icon (tone)', 'Partial'], [FLU, 'Presence and status icons', 'Partial'], ['Frappe', 'Indicator', 'Partial']],
       variantPages: TONES.map(function (t) {
         return vp(cap(t) + ' status icon', 'Tone', toneName(t), { variant: t }, {
           info: 'The info icon in the info color: news with no judgment.', success: 'The check in the success color: it worked or it is done.',
@@ -66,7 +66,7 @@ DSParts.records.push(function (H) {
       use: ['A state of the whole app, page or pane that stays until it changes: offline, read-only, a sync failure', 'A deadline or a change the person must know about before they work: a plan that ends, a maintenance window', 'One action that resolves it (“Retry”, “Renew”) and Dismiss when it can be put away'],
       avoid: ['A message about one field, one card or one section: use a Notice there', 'The result of an action that just happened: use a toast', 'More than one banner at a time: show the most important one', 'Marketing or tips: a banner is for the state of the work'],
       related: ['notice', 'toast', 'status-icon'],
-      map: [[CAR, 'Notification (inline, full width)', 'Partial'], [ATL, 'Banner', 'Direct'], [MAT, 'Banner (Material 2)', 'Partial'], [POL, 'Banner', 'Direct'], [FLU, 'MessageBar', 'Partial'], [SPE, 'Alert banner', 'Direct']],
+      map: [[CAR, 'Notification (inline, full width)', 'Partial'], [ATL, 'Banner', 'Direct'], [MAT, 'Banner (Material 2)', 'Partial'], [POL, 'Banner', 'Direct'], [FLU, 'MessageBar', 'Partial'], [SPE, 'Alert banner', 'Direct'], ['Django', 'Messages framework', 'Partial']],
       variantPages: TONES.map(function (t) {
         return vp(cap(t) + ' banner', 'Tone', toneName(t), { variant: t }, {
           info: 'The info fill and icon: a fact about the page that helps people work.', success: 'The success fill and icon: a state that is now good, such as “Back online”.',
@@ -173,7 +173,7 @@ DSParts.records.push(function (H) {
       use: ['The exact moment in logs, version history and details, where order matters (datetime)', 'Recent activity, comments and notifications (relative)', 'Due, published and expiry dates (label or date)'],
       avoid: ['Building a date by hand: the formats write every date', 'Seconds unless order within a minute matters', 'A relative time in an audit log: use the exact timestamp', 'A date range: use formatRange'],
       related: ['date-and-time-formats', 'tooltip', 'date'],
-      map: [[SPE, 'Date (formatted)', 'Partial'], [POL, 'Date and time (content guidelines)', 'Partial'], [CAR, 'Timestamp (content guidelines)', 'Partial']],
+      map: [[SPE, 'Date (formatted)', 'Partial'], [POL, 'Date and time (content guidelines)', 'Partial'], [CAR, 'Timestamp (content guidelines)', 'Partial'], ['Django', 'timesince filter', 'Direct'], ['Frappe', 'frappe.datetime.prettyDate', 'Direct']],
       variantPages: [
         vp('Timestamp variant', 'Format', 'Timestamp (default)', { variant: 'datetime' }, 'The date and the time in the reader’s locale: “Oct 8, 2026, 2:05 PM”.', 'Logs, history and details where the moment matters', 'Recent activity people read at a glance: use relative'),
         vp('Relative time', 'Format', 'Relative', { variant: 'relative' }, '“Just now”, “5 minutes ago”, “in 2 days”: it rewrites itself every minute, without moving the layout and without being announced, and becomes the date after 7 days. The full moment is in its tooltip.', 'Comments, notifications and recent activity', 'Audit logs and anything compared across rows: use the timestamp'),
