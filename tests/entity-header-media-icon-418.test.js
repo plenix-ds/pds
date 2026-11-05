@@ -29,7 +29,7 @@ require('./limit.js');
       if (!r.box) {
         const area = Math.min(r.tile, r.tileH);
         assert.ok(r.icon >= area - 1, name + ': the icon (' + r.icon + 'px) fills the square (' + r.tile + 'x' + r.tileH + ')');
-        assert.ok(r.glyph && Math.abs(r.glyph - area) <= Math.max(3, area * 0.1), name + ': the drawn glyph (' + r.glyph + 'px) spans the area (' + area + 'px) within 3px or 10% (D-0060)');
+        assert.ok(r.glyph && Math.abs(r.glyph - area) <= Math.max(3, area * 0.1), name + ': the drawn glyph (' + r.glyph + 'px) spans the area (' + area + 'px) within 3px or 10% (D-0059)');
       }
       else assert.ok(r.icon < r.tile, name + ': the boxed icon (' + r.icon + 'px) is smaller than its tile (' + r.tile + 'px)');
     }
