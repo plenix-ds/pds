@@ -139,6 +139,16 @@
     "selected": "n/a(a chosen value is the option's value; the parts show it)",
     "error": "n/a(an option's error shows as its message under it; stories arrive with Storybook, P0-11)"
   },
+  "Tabs": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(stories arrive with Storybook, P0-11)",
+    "loading": "n/a(the tabs and panels are given; an async panel is the caller's loading state)",
+    "selected": "n/a(stories arrive with Storybook, P0-11)",
+    "error": "n/a(tabs have no value to validate)"
+  },
   "Tree": {
     "default": "n/a(stories arrive with Storybook, P0-11)",
     "hover": "n/a(stories arrive with Storybook, P0-11)",

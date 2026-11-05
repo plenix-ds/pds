@@ -55,6 +55,8 @@ Nothing to change. Deprecated names keep working (each says what replaces it). A
 - `platform/standards/variants/styles.json`: Barcode formats and text options document what they set or render (#353).
 - `platform/standards/variants/styles.json`: the first 11 variations (Icon, Status icon, Logo, Brand symbol sizes) document what they set; the variant-styles baseline shrinks from 878 to 867 (#353).
 - The prop types of `CodeBlock`, `RefineMenu`, `SuggestedEdit`, `AnswerLines`, `PageBreak` and `PrintDocument` are exported (`CodeBlockProps`, …), as ADR 0011 requires of every converted part (#369).
+- EventChip, Checklist and ProductOptions are written in TypeScript (TSX) with exported `EventChipProps`, `ChecklistProps` and `ProductOptionsProps` types; behavior is unchanged (#292, ADR 0011). Their prop types are now exact (a Checklist `id` is a string or number; a ProductOptions `value` maps option names to string or number).
+- `platform/standards/variants/styles.json`: Avatar upload and Autogrowing text area variations document what they set or render (#353).
 
 ### Changed (visual)
 - DataGrid tree rows indent 20px per level (was 18px); a few small DataGrid and EntityHeader gaps are on the 4px grid (4px or 8px, were 6px); the EntityHeader accent rule is 4px (#301).

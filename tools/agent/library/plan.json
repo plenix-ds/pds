@@ -1501,7 +1501,7 @@
       "platform/components/ProgressSteps/ProgressSteps.jsx",
       "platform/components/ProgressSteps/progress-steps.css",
       "platform/tokens/components/progress-steps.tokens.json",
-      "platform/components/Tabs/Tabs.jsx",
+      "platform/components/Tabs/Tabs.tsx",
       "platform/components/Tabs/tabs.css"
      ],
      "targets": [
@@ -5308,7 +5308,7 @@
    "wave": 7,
    "lane": "A",
    "files": [
-    "platform/components/Tabs/Tabs.jsx",
+    "platform/components/Tabs/Tabs.tsx",
     "platform/components/Tabs/tabs.css"
    ],
    "dependsOn": [],
@@ -13954,7 +13954,7 @@
    "target": "Tabs",
    "targetKind": "extend",
    "files": [
-    "platform/components/Tabs/Tabs.jsx",
+    "platform/components/Tabs/Tabs.tsx",
     "platform/components/Tabs/tabs.css"
    ],
    "laneFiles": [
