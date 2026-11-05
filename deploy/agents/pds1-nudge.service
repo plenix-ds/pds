@@ -1,0 +1,7 @@
+# systemd user unit: wakes idle PDS1 sessions to check GitHub (#220). Run by pds1-nudge.timer.
+[Unit]
+Description=PDS1 nudge: idle sessions check their GitHub issues and PRs
+
+[Service]
+Type=oneshot
+ExecStart=%h/pds1/team.sh nudge

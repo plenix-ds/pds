@@ -1,0 +1,14 @@
+# systemd user timer, every 10 minutes (#220). Install (needs Linger for cc):
+#   cp deploy/agents/pds1-nudge.{service,timer} ~/.config/systemd/user/
+#   systemctl --user daemon-reload && systemctl --user enable --now pds1-nudge.timer
+# Stop: systemctl --user disable --now pds1-nudge.timer
+[Unit]
+Description=PDS1 nudge every 10 minutes
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=10min
+AccuracySec=30s
+
+[Install]
+WantedBy=timers.target

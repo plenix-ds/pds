@@ -10,6 +10,8 @@
 #   team.sh stop-all            stop the whole team
 #   team.sh status              list running sessions and free memory
 #   team.sh update              pull main into every worktree
+#   team.sh nudge               wake idle sessions to check GitHub (pds1-nudge.timer, every 10 min; #220;
+#                               NUDGE_DRY=1 lists them without sending)
 set -u
 export PATH="$HOME/.local/bin:$HOME/.bun/bin:/usr/local/bin:/usr/bin:/bin"
 S=pds1
@@ -67,6 +69,35 @@ trust_dir() {  # pre-accept Claude's folder-trust prompt so unattended sessions 
     if(!p.hasTrustDialogAccepted){p.hasTrustDialogAccepted=true;fs.writeFileSync(f,JSON.stringify(j,null,2))}' "$1"
 }
 
+# Wake idle sessions (#220): nothing else tells a session about new issues, comments or check results.
+# A window is idle when its screen has no "esc to interrupt" (Claude is working), its input box is empty and it
+# has not changed for NUDGE_IDLE_S seconds. A round is skipped when the repo had no activity since the last round
+# and has no open PR, so a quiet night costs nothing.
+NUDGE_TEXT='Scheduled check (#220): check your open issues and PRs on plenix-ds/pds (gh issue list -R plenix-ds/pds --label agent:pds1-ROLE --state open; gh pr list -R plenix-ds/pds --author @me) and continue. Queue every green PR of yours with gh pr merge --auto. If there is nothing to do, reply "idle" and stop.'
+NUDGE_IDLE_S=${NUDGE_IDLE_S:-120}
+NUDGE_STAMP=$ROOT/.nudge-last
+nudge() {
+  local now last updated open win pane prompt act sent=0
+  now=$(date -u +%FT%TZ); last=$(cat "$NUDGE_STAMP" 2>/dev/null || echo 1970-01-01T00:00:00Z)
+  updated=$(gh api 'repos/plenix-ds/pds/issues?state=all&sort=updated&direction=desc&per_page=1' -q '.[0].updated_at' 2>/dev/null || echo "$now")
+  open=$(gh pr list -R plenix-ds/pds --state open --json number -q length 2>/dev/null || echo 1)
+  if [[ "$updated" < "$last" && "$open" = 0 ]]; then log "nudge: quiet (no activity since $last, no open PR)"; echo "$now" >"$NUDGE_STAMP"; return; fi
+  tmux has-session -t $S 2>/dev/null || { log "nudge: team not running"; return; }
+  while read -r win act; do
+    [ "$win" = shell ] && continue
+    pane=$(tmux capture-pane -p -t "$S:$win" 2>/dev/null | tail -12)
+    if grep -q 'esc to interrupt' <<<"$pane"; then continue; fi
+    (( $(date +%s) - act < NUDGE_IDLE_S )) && continue
+    # the box draws "❯" plus a no-break space (UTF-8 c2 a0): drop it and whitespace; only emptiness matters here
+    prompt=$(grep -m1 '^❯' <<<"$pane" | sed 's/^❯//' | tr -d ' \t\302\240')
+    [ -n "$prompt" ] && { log "nudge: skip $win (input box not empty)"; continue; }
+    if [ -n "${NUDGE_DRY:-}" ]; then echo "would nudge $win"; sent=$((sent + 1)); continue; fi
+    tmux send-keys -t "$S:$win" -l "${NUDGE_TEXT//ROLE/${win%-[0-9]*}}"; sleep 1; tmux send-keys -t "$S:$win" Enter
+    sent=$((sent + 1)); log "nudge: $win"
+  done < <(tmux list-windows -t $S -F '#W #{window_activity}')
+  [ -n "${NUDGE_DRY:-}" ] || echo "$now" >"$NUDGE_STAMP"; echo "nudged $sent"
+}
+
 stop_one() { local win=$1${2:+-$2}; tmux kill-window -t "$S:$win" 2>/dev/null && { log "stop $win"; echo "stopped $win"; }; }
 
 case "${1:-status}" in
@@ -79,6 +110,7 @@ case "${1:-status}" in
   stop) stop_one "${2:?role}" "${3:-}" ;;
   stop-all) tmux kill-session -t $S 2>/dev/null && { log "stop-all"; echo "team stopped"; } ;;
   update) git -C "$REPO" pull -q --ff-only; for d in "$ROOT"/work/*/; do git -C "$d" fetch -q origin; done; echo updated ;;
+  nudge) nudge ;;
   status) tmux list-windows -t $S -F '#W' 2>/dev/null | grep -v '^shell$' || echo "pds1 team is not running"; free -g | awk 'NR==2{print "free memory: "$7" GB available"}' ;;
-  *) sed -n 2,13p "$0"; exit 2 ;;
+  *) sed -n 2,15p "$0"; exit 2 ;;
 esac
