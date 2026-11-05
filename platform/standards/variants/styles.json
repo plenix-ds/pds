@@ -323,5 +323,85 @@
       }
     ],
     "why": "stack=\"percent\" adds .plx-area-chart--stacked (LineChart.jsx), which sets the area's opacity"
+  },
+  "status-icon--tone-danger": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "glyph",
+        "token": "--plx-comp-status-icon-danger-color"
+      }
+    ],
+    "why": ".plx-status-icon__glyph--danger in status-icon.css; the rule is on the glyph part, which the derivation does not read"
+  },
+  "status-icon--tone-info-default": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "glyph",
+        "token": "--plx-comp-status-icon-info-color"
+      }
+    ],
+    "why": ".plx-status-icon__glyph--info in status-icon.css; the rule is on the glyph part, which the derivation does not read"
+  },
+  "status-icon--tone-neutral": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "glyph",
+        "token": "--plx-comp-status-icon-neutral-color"
+      }
+    ],
+    "why": ".plx-status-icon__glyph--neutral in status-icon.css; the rule is on the glyph part, which the derivation does not read"
+  },
+  "status-icon--tone-success": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "glyph",
+        "token": "--plx-comp-status-icon-success-color"
+      }
+    ],
+    "why": ".plx-status-icon__glyph--success in status-icon.css; the rule is on the glyph part, which the derivation does not read"
+  },
+  "status-icon--tone-warning": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "glyph",
+        "token": "--plx-comp-status-icon-warning-color"
+      }
+    ],
+    "why": ".plx-status-icon__glyph--warning in status-icon.css; the rule is on the glyph part, which the derivation does not read"
+  },
+  "sticky--shadow-always": {
+    "sets": [
+      {
+        "property": "box-shadow",
+        "part": "body",
+        "token": "--plx-comp-sticky-stuck-shadow"
+      }
+    ],
+    "why": ".plx-sticky--shadow-always>.plx-sticky__body in sticky.css: the shadow shows without waiting to be stuck"
+  },
+  "split-button--size-lg": {
+    "sets": [],
+    "why": "markup only: SplitButton passes size to its two Buttons; the Button size variations set the dimensions"
+  },
+  "split-button--size-sm": {
+    "sets": [],
+    "why": "markup only: SplitButton passes size to its two Buttons; the Button size variations set the dimensions"
+  },
+  "streaming-text--variant-done": {
+    "sets": [],
+    "why": "markup only: the done state changes the status text and announcement, no style"
+  },
+  "streaming-text--variant-stopped": {
+    "sets": [],
+    "why": "markup only: the stopped state changes the status text and announcement, no style"
+  },
+  "streaming-text--variant-streaming": {
+    "sets": [],
+    "why": "markup only: the streaming state changes the status text and announcement, no style"
   }
 }
