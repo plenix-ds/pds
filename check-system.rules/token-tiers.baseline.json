@@ -113,8 +113,6 @@
   "plx-comp.button-padding-inline -> plx-ref.space-12px",
   "plx-comp.button-padding-inline -> plx-ref.space-16px",
   "plx-comp.button-padding-inline -> plx-ref.space-8px",
-  "plx-comp.button-raised-hover-shadow -> plx-comp.card-elevation-halo-shadow",
-  "plx-comp.button-raised-rest-shadow -> plx-comp.card-elevation-halo-shadow",
   "plx-comp.button-size-lg-font-size -> plx-ref.font-size-14",
   "plx-comp.button-size-lg-hover-border -> plx-ref.color-gray-350",
   "plx-comp.button-size-md-font-size -> plx-ref.font-size-13",
