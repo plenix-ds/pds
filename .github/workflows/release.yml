@@ -9,7 +9,8 @@
 #   -> bundle budgets (check-bundle.js) -> no remote addresses in the shipped scripts (tools/publish/no-remote-code.mjs) -> SHA256SUMS + version.json (tools/publish/manifest.mjs, verified with sha256sum -c)
 #   -> next latest.json with every field and the pins kept (tools/publish/latest.mjs, against the live file)
 #   -> npm publish --dry-run of the four packages -> negative proof: the current version is refused as already published
-#   -> the live CDN check (tools/check-live-cdn.js, sampled) still works against the live release.
+#   -> the live CDN check (tools/check-live-cdn.js, sampled) still works against the live release
+#   -> the connected apps' drift report (tools/baseline/drift.mjs, read-only; never fails the release; #114).
 name: Release (dry run)
 
 on:
@@ -19,6 +20,7 @@ on:
       - '.github/workflows/release.yml'
       - 'build-packages.js'
       - 'build-packages.d/**'
+      - 'tools/baseline/**'
   workflow_dispatch:
 
 permissions: {}
@@ -130,6 +132,9 @@ jobs:
             echo "::endgroup::"
           done
 
+      - name: Connected apps against this build (read-only drift report; never fails the release; #114)
+        run: node tools/baseline/drift.mjs --out "$RUNNER_TEMP/drift"
+
       - name: Negative proof, the released version is refused as already published
         env:
           BASE: ${{ steps.v.outputs.base }}
@@ -147,6 +152,7 @@ jobs:
         run: |
           mkdir -p "$RUNNER_TEMP/records"
           cp "release/cdn/$DRY/version.json" "release/cdn/$DRY/SHA256SUMS" "$RUNNER_TEMP/latest.next.json" "$RUNNER_TEMP/records/"
+          cp -r "$RUNNER_TEMP/drift" "$RUNNER_TEMP/records/drift"
           {
             echo "### Release dry run: $DRY"
             echo
@@ -155,6 +161,7 @@ jobs:
             echo '```json'; cat "release/cdn/$DRY/version.json"; echo '```'
             echo
             echo "Next \`latest.json\`:"; echo '```json'; cat "$RUNNER_TEMP/latest.next.json"; echo '```'
+            echo; cat "$RUNNER_TEMP/drift/drift.md"
           } >> "$GITHUB_STEP_SUMMARY"
 
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
