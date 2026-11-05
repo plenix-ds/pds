@@ -148,5 +148,15 @@
     "loading": "n/a(the tabs and panels are given; an async panel is the caller's loading state)",
     "selected": "n/a(stories arrive with Storybook, P0-11)",
     "error": "n/a(tabs have no value to validate)"
+  },
+  "TransferList": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(stories arrive with Storybook, P0-11)",
+    "loading": "n/a(the options are given; nothing loads)",
+    "selected": "n/a(stories arrive with Storybook, P0-11)",
+    "error": "n/a(a transfer list has no value to validate)"
   }
 }

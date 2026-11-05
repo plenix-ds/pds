@@ -51,6 +51,7 @@ import { Button } from '../Button/Button.tsx';
 import { SearchField } from '../SearchField/SearchField.tsx';
 import { useVirtualizer, VirtualGap, VirtualProbe } from '../../hooks/useVirtualizer.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import { useReadOnly } from '../../providers/ReadOnly.tsx';
 import ChevronDownIcon from 'plenix-platform/icons/plenix/chevron-down';
 import ChevronLeftIcon from 'plenix-platform/icons/plenix/chevron-left';
@@ -61,7 +62,11 @@ import { fill } from '../../utils/fill.ts';
 const AUTO_VIRTUAL = 500;
 
 // one list: header (check all, title, count, the order buttons), search field, the listbox
-function Side({ id, title, items, checked, setChecked, onMove, search, virtual, disabled, t, tools, emptyText }) {
+type Value = string | number;
+type Option = { value: Value; label: React.ReactNode; meta?: React.ReactNode; disabled?: boolean };
+type Strings = Record<string, string>;
+type SideProps = { id: string; title: React.ReactNode; items: Option[]; checked: Set<Value>; setChecked: (next: Set<Value>) => void; onMove: (list: Option[], all?: boolean) => void; search: boolean; virtual: boolean; disabled: boolean; t: Strings; tools?: React.ReactNode; emptyText: string };
+function Side({ id, title, items, checked, setChecked, onMove, search, virtual, disabled, t, tools, emptyText }: SideProps) {
   const [text, setText] = React.useState('');
   const [active, setActive] = React.useState(0);
   const q = text.trim().toLowerCase();
@@ -71,18 +76,18 @@ function Side({ id, title, items, checked, setChecked, onMove, search, virtual, 
   const all = usable.length > 0 && usable.every((o) => checked.has(o.value));
   const some = nChecked > 0 && !all;
   const v = useVirtualizer({ count: virtual ? shown.length : 0 });
-  const listRef = React.useRef(null);
+  const listRef = React.useRef<HTMLDivElement | null>(null);
   const at = Math.min(active, Math.max(0, shown.length - 1));
   React.useEffect(() => { setActive(0); }, [q]);
-  const toggle = (o) => { if (!o || o.disabled || disabled) return; const next = new Set(checked); if (next.has(o.value)) next.delete(o.value); else next.add(o.value); setChecked(next); };
+  const toggle = (o?: Option) => { if (!o || o.disabled || disabled) return; const next = new Set(checked); if (next.has(o.value)) next.delete(o.value); else next.add(o.value); setChecked(next); };
   const toggleAll = () => { const next = new Set(checked); usable.forEach((o) => { if (all) next.delete(o.value); else next.add(o.value); }); setChecked(next); };
-  const go = (i) => {
+  const go = (i: number) => {
     const n = Math.max(0, Math.min(shown.length - 1, i));
     setActive(n);
     if (virtual) v.scrollToIndex(n);
     else { const el = listRef.current && listRef.current.querySelector('[data-plx-index="' + n + '"]'); if (el && el.scrollIntoView) el.scrollIntoView({ block: 'nearest' }); }
   };
-  const onKeyDown = (e) => {
+  const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'ArrowDown') go(at + 1);
     else if (e.key === 'ArrowUp') go(at - 1);
     else if (e.key === 'Home') go(0);
@@ -93,18 +98,18 @@ function Side({ id, title, items, checked, setChecked, onMove, search, virtual, 
     else return;
     e.preventDefault();
   };
-  const optId = (i) => id + '-o' + i;
-  const option = (o, i, extra) => (
+  const optId = (i: number) => id + '-o' + i;
+  const option = (o: Option, i: number, extra?: Record<string, unknown>) => (
     <div key={o.value} id={optId(i)} role="option" aria-selected={checked.has(o.value)} aria-disabled={o.disabled || disabled || undefined} data-plx-index={i}
       className={cx('plx-transfer-list__option', i === at && 'is-active', checked.has(o.value) && 'is-selected', o.disabled && 'is-disabled')}
       onMouseDown={(e) => e.preventDefault()} onClick={() => { setActive(i); toggle(o); if (listRef.current) listRef.current.focus(); }}
       onDoubleClick={() => { if (!o.disabled && !disabled) onMove([o], true); }} {...extra}>
-      <input type="checkbox" className="plx-check__input plx-transfer-list__mark" tabIndex={-1} aria-hidden="true" inert="" readOnly checked={checked.has(o.value)} disabled={o.disabled || disabled} />
+      <input type="checkbox" className="plx-check__input plx-transfer-list__mark" tabIndex={-1} aria-hidden="true" {...{ inert: "" }} readOnly checked={checked.has(o.value)} disabled={o.disabled || disabled} />
       <span className="plx-transfer-list__label">{o.label}</span>
       {o.meta !== undefined && o.meta !== null ? <span className="plx-transfer-list__meta">{o.meta}</span> : null}
     </div>
   );
-  const setRefs = (el) => { listRef.current = el; if (virtual) v.viewportRef.current = el; };
+  const setRefs = (el: HTMLDivElement | null) => { listRef.current = el; if (virtual) (v.viewportRef as React.MutableRefObject<HTMLElement | null>).current = el; };
   return (
     <section className="plx-transfer-list__panel" aria-labelledby={id + '-title'}>
       <div className="plx-transfer-list__header">
@@ -128,24 +133,48 @@ function Side({ id, title, items, checked, setChecked, onMove, search, virtual, 
   );
 }
 
+/** @public the prop type (ADR 0011) */
+export type TransferListProps = {
+  /** the group's accessible name */
+  label?: string;
+  /** every choice: { value, label, meta, disabled } */
+  options?: Option[];
+  /** the chosen values, in order */
+  value?: Value[];
+  onChange?: (next: Value[]) => void;
+  /** the two lists' titles: { source, target } */
+  titles?: { source?: React.ReactNode; target?: React.ReactNode };
+  /** a search field above each list */
+  search?: boolean;
+  /** the chosen list keeps an order the people can change */
+  ordered?: boolean;
+  /** draw only the rows in view (default: above 500 options) */
+  virtualized?: boolean;
+  size?: 'sm' | 'md' | 'lg';
+  disabled?: boolean;
+  readOnly?: boolean;
+  strings?: Catalog | null;
+  className?: string;
+};
+
 export function TransferList({ label, options = [], value = [], onChange, titles, search = false, ordered = false, virtualized, size = 'md', disabled = false, readOnly: readOnlyOwn,
-  strings, className }) {
+  strings, className }: TransferListProps) {
   devWarn('TransferList', { size }, { size: ['sm','md','lg'] });
   // read-only (its own readOnly, else the nearest ReadOnly region's): the lists show what is chosen and nothing moves or is reordered; checking items to read them still works
   const locked = useReadOnly(readOnlyOwn), frozen = disabled || locked;
-  const t = useStrings('transferList', strings);
+  const t = useStrings('transferList', strings) as Strings;
   const id = 'plx-tl' + React.useId().replace(/[^a-zA-Z0-9]/g, '');
   const title = Object.assign({ source: t.source, target: t.target }, titles);
-  const byValue = React.useMemo(() => new Map(options.map((o) => [o.value, o])), [options]);
+  const byValue = React.useMemo(() => new Map<Value, Option>(options.map((o) => [o.value, o])), [options]);
   const chosenSet = new Set(value);
   const source = options.filter((o) => !chosenSet.has(o.value));
-  const target = ordered ? value.map((v) => byValue.get(v)).filter(Boolean) : options.filter((o) => chosenSet.has(o.value));
-  const [left, setLeft] = React.useState(() => new Set());
-  const [right, setRight] = React.useState(() => new Set());
+  const target: Option[] = ordered ? value.map((v) => byValue.get(v)).filter((o): o is Option => !!o) : options.filter((o) => chosenSet.has(o.value));
+  const [left, setLeft] = React.useState<Set<Value>>(() => new Set());
+  const [right, setRight] = React.useState<Set<Value>>(() => new Set());
   const virtual = virtualized !== undefined ? virtualized : options.length > AUTO_VIRTUAL;
-  const emit = (next) => { if (onChange) onChange(next); };
+  const emit = (next: Value[]) => { if (onChange) onChange(next); };
   // moving keeps the moved items checked in their new list
-  const add = (list, title2) => {
+  const add = (list: Option[], title2: React.ReactNode) => {
     const moving = list.filter((o) => !o.disabled && !chosenSet.has(o.value)).map((o) => o.value);
     if (!moving.length || frozen) return;
     emit(value.concat(moving));
@@ -153,7 +182,7 @@ export function TransferList({ label, options = [], value = [], onChange, titles
     setRight((s) => new Set(Array.from(s).concat(moving)));
     announce(fill(t.moved, { n: moving.length, title: title2 }));
   };
-  const remove = (list, title2) => {
+  const remove = (list: Option[], title2: React.ReactNode) => {
     const moving = list.filter((o) => !o.disabled && chosenSet.has(o.value)).map((o) => o.value);
     if (!moving.length || frozen) return;
     emit(value.filter((v) => moving.indexOf(v) < 0));
@@ -163,7 +192,7 @@ export function TransferList({ label, options = [], value = [], onChange, titles
   };
   const leftChecked = source.filter((o) => left.has(o.value)), rightChecked = target.filter((o) => right.has(o.value));
   // ordered: the checked chosen items one place up or down, keeping their order among themselves
-  const shift = (dir) => {
+  const shift = (dir: number) => {
     const list = value.slice();
     const idx = list.map((v, i) => (right.has(v) ? i : -1)).filter((i) => i >= 0);
     if (!idx.length) return;
