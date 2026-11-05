@@ -490,3 +490,13 @@
   options: [no countdown, 10 s with pause (chosen), a countdown bar in the toast]
   status: active
   check: review-only (pds1-design-critic on the #144 PR)
+
+- id: D-0058
+  date: 2026-11-05
+  area: design
+  decided_by: owner (2026-11-05 about 21:20 UTC, chat, "this is good" on the no-box picture; recorded on plenix-ds/pds#275 and #108)
+  decision: No icon box on EntityHeader's { icon, hue } media and on its fact icons, as D-0036, D-0038 and D-0055 applied, is confirmed by the owner. Those entries are now owner decisions, no longer "owner may switch"; the media box stays opt-in (media.box) only where a usage needs it (D-0024).
+  why: 'The owner saw the "After (no box, D-0036)" picture (the Council Session header, the Owner and Due fact icons, and the Website relaunch, Files and Comments headers) and said "this is good".'
+  options: [no box (confirmed), box by default]
+  status: active
+  check: review-only (pds1-design-critic on each UI PR; D-0024 has no reliable static check)
