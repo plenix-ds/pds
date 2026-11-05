@@ -686,6 +686,11 @@
       "$type": "duration",
       "$description": "How long an undo stays offered before the action is final (DeleteFlow's undo toast; it pauses while hovered or focused). 10s; DeleteFlow undoDuration overrides it (#144, docs/adr/0017, D-0057)."
     },
+    "icon-fill-scale": {
+      "$value": "{plx-ref.icon-optical-scale}",
+      "$type": "number",
+      "$description": "How much larger than its area an icon is drawn when it must fill that area with no box (the drawn shape reaches the area's edges, centered; #418, D-0059)."
+    },
     "print-sheet-inline-size": {
       "$value": "{plx-ref.paper-a4-inline-size}",
       "$description": "PrintDocument: the sheet's width, on screen and paper (docs/adr/0014)."
