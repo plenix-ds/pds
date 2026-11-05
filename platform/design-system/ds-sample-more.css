@@ -1,0 +1,15 @@
+/* Plenix master spec · sample styles for the more labs (Every Variant, batch 333): classes the lab specimens need, loaded by
+   the page and by every lab frame. Tokens only; no hard-coded values. */
+/* a width for a specimen that fills its container (drop zone, search input, preview, chat thread, bulk action bar) */
+.ds-more-frame{inline-size:var(--plx-ref-size-240px);}
+.ds-more-frame.ds-more-frame--chat{inline-size:var(--plx-ref-size-320px);}
+.ds-more-frame.ds-more-frame--wide{inline-size:var(--plx-ref-size-600px);}
+/* the drop zone overlay covers its container: the container, positioned, with a height */
+.ds-more-overlay{block-size:var(--plx-ref-size-140px);position:relative;}
+/* the search input on the accent header: the header's surface behind it */
+.ds-more-accent{background-color:var(--plx-sys-accent-surface);padding-block-end:var(--plx-ref-space-8px);padding-block-start:var(--plx-ref-space-8px);padding-inline-end:var(--plx-ref-space-8px);padding-inline-start:var(--plx-ref-space-8px);}
+/* the combobox drawn open in place (its list is absolute under the field): a width, and room for the list */
+.ds-more-combobox{inline-size:var(--plx-ref-size-280px);}
+.ds-more-combobox.ds-more-combobox--open{min-block-size:var(--plx-ref-size-240px);}
+/* the preview's thumbnail stand-in: a filled box at the preview's media size */
+.ds-more-media{background-color:var(--plx-sys-fill-neutral-hover);}

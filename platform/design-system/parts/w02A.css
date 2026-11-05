@@ -1,0 +1,13 @@
+/* Library part w02A (wave 2, lane A): the frames the live examples and the labs of Link, inline Code, Blockquote, the
+   ordered List, RichText, the focus order and the writing direction need. Tokens only. */
+/* the focus order: a row of controls in reading order, and the same row drawn the other way (the example of what to avoid) */
+.ds-w02a-order{align-items:center;column-gap:var(--plx-ref-space-8px);display:flex;flex-wrap:wrap;row-gap:var(--plx-ref-space-8px);}
+.ds-w02a-order--reverse{flex-direction:row-reverse;justify-content:flex-end;}
+/* the writing direction: a column of components, and a row of buttons or icons */
+.ds-w02a-dir{display:flex;flex-direction:column;row-gap:var(--plx-ref-space-12px);}
+.ds-w02a-dir__row{align-items:center;column-gap:var(--plx-ref-space-8px);display:flex;flex-wrap:wrap;}
+/* lab frames: a line of text around inline code or a link; a column for a quote, a list and prose; a panel around prose */
+.ds-w02a-line{color:var(--plx-sys-content-default);font-family:var(--plx-sys-font-body);font-size:var(--plx-ref-font-size-13);line-height:var(--plx-ref-size-20px);word-spacing:normal;}
+.ds-w02a-column{inline-size:var(--plx-ref-size-320px);}
+.ds-w02a-wide{inline-size:var(--plx-ref-size-560px);}
+.ds-w02a-panel{background-color:var(--plx-sys-surface-default);border-bottom-color:var(--plx-sys-border-default);border-bottom-style:solid;border-bottom-width:var(--plx-sys-border-width-thin);border-left-color:var(--plx-sys-border-default);border-left-style:solid;border-left-width:var(--plx-sys-border-width-thin);border-radius:var(--plx-sys-radius-card-6px);border-right-color:var(--plx-sys-border-default);border-right-style:solid;border-right-width:var(--plx-sys-border-width-thin);border-top-color:var(--plx-sys-border-default);border-top-style:solid;border-top-width:var(--plx-sys-border-width-thin);box-sizing:border-box;inline-size:var(--plx-ref-size-320px);padding-block-end:var(--plx-sys-space-inset-md);padding-block-start:var(--plx-sys-space-inset-md);padding-inline-end:var(--plx-sys-space-inset-md);padding-inline-start:var(--plx-sys-space-inset-md);}

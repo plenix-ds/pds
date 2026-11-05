@@ -1,0 +1,46 @@
+/* Plenix design system · samples: a value only the page knows at run time (the token a picture shows, a position measured
+   from a rendered part) reaches the stylesheet as --ds-sample-<property> and is read here by the class ds-sample--<property>.
+   Set only through DS.sample / DS.place (ds.js), never as a style. Loaded by the page and by the labs' frames. */
+.ds-sample--animation{animation:var(--ds-sample-animation);}
+.ds-sample--animation-delay{animation-delay:var(--ds-sample-animation-delay);}
+.ds-sample--block-size{block-size:var(--ds-sample-block-size);}
+.ds-sample--border-radius{border-radius:var(--ds-sample-border-radius);}
+.ds-sample--border-style{border-style:var(--ds-sample-border-style);}
+.ds-sample--border-width{border-width:var(--ds-sample-border-width);}
+.ds-sample--font-family{font-family:var(--ds-sample-font-family);word-spacing:var(--ds-sample-word-spacing);}
+/* stylelint-disable-next-line declaration-property-value-allowed-list -- the sample shows the font-size token it documents */
+.ds-sample--font-size{font-size:var(--ds-sample-font-size);}
+.ds-sample--font-weight{font-weight:var(--ds-sample-font-weight);}
+.ds-sample--grid-area{grid-area:var(--ds-sample-grid-area);}
+.ds-sample--grid-template-areas{grid-template-areas:var(--ds-sample-grid-template-areas);}
+.ds-sample--grid-template-columns{grid-template-columns:var(--ds-sample-grid-template-columns);}
+.ds-sample--grid-template-rows{grid-template-rows:var(--ds-sample-grid-template-rows);}
+.ds-sample--height{height:var(--ds-sample-height);}
+.ds-sample--inline-size{inline-size:var(--ds-sample-inline-size);}
+.ds-sample--left{left:var(--ds-sample-left);}
+.ds-sample--letter-spacing{letter-spacing:var(--ds-sample-letter-spacing);}
+.ds-sample--line-height{line-height:var(--ds-sample-line-height);}
+.ds-sample--padding{padding:var(--ds-sample-padding);}
+.ds-sample--scale{scale:var(--ds-sample-scale);}
+.ds-sample--top{top:var(--ds-sample-top);}
+.ds-sample--transition-duration{transition-duration:var(--ds-sample-transition-duration);}
+.ds-sample--transition-timing-function{transition-timing-function:var(--ds-sample-transition-timing-function);}
+.ds-sample--width{width:var(--ds-sample-width);}
+.ds-sample--background-color{background-color:var(--ds-sample-background-color);}
+.ds-sample--box-shadow{box-shadow:var(--ds-sample-box-shadow);}
+.ds-sample--opacity{opacity:var(--ds-sample-opacity);}
+/* the progress bar lab (batch 264): a sample amount, so the fill shows in its frames */
+/* the progress lab draws a known amount on its sample fill (the Platform draws a known amount on <progress>, batch 280) */
+.ds-sample--progress .plx-progress-bar__fill{inline-size:62%;}
+/* the side drawer lab (batch 316): the drawer drawn in place at its side of a full-width row (the layer's side class flips it) */
+.ds-drawer-row{display:flex;inline-size:100%;justify-content:flex-end;}
+.ds-drawer-row.ds-drawer-row--start{justify-content:flex-start;}
+/* the action menu lab (batch 318): the menu is drawn open in place (absolute, under or above its trigger): room for it
+.ds-menu-row{display:flex;min-block-size:var(--plx-ref-size-160px);}
+.ds-menu-row--bottom-start,.ds-menu-row--bottom-end{align-items:flex-start;}
+.ds-menu-row--top-start,.ds-menu-row--top-end{align-items:flex-end;}
+.ds-menu-row--bottom-end,.ds-menu-row--top-end{justify-content:flex-end;}
+/* every area that shows a component sample sits on a checkered background (owner, batch 323): the sample's own edges,
+   fills and transparency read against it. Light squares of the hover state on the default surface, 8px each; the
+   variant previews, the sample stages of examples and variant cards, the lab's anatomy stage and its matrix cells */
+.ds-variant-preview,.ds-sample-stage,.lab-stage,.lab-matrix .plx-data-grid__grid-row .plx-data-grid__grid-cell:has(.lab-pick){background-color:var(--plx-sys-surface-default);background-image:linear-gradient(45deg,var(--plx-sys-state-hover) 25%,transparent 25%,transparent 75%,var(--plx-sys-state-hover) 75%),linear-gradient(45deg,var(--plx-sys-state-hover) 25%,transparent 25%,transparent 75%,var(--plx-sys-state-hover) 75%);background-position:0 0,var(--plx-ref-size-8px) var(--plx-ref-size-8px);background-size:var(--plx-ref-size-16px) var(--plx-ref-size-16px);}

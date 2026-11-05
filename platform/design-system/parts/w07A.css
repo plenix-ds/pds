@@ -1,0 +1,10 @@
+/* Library part w07A (wave 7, lane A): the frames the examples and labs of wave 7, lane A need. Tokens only. */
+/* product navigation: the header over the navigation pane, as an application shows them */
+.ds-w07a-product{display:flex;flex-direction:column;}
+.ds-w07a-product__pane{block-size:var(--plx-ref-size-240px);display:flex;}
+/* the date picker's lab: the field, and the popover's panel open under it */
+.ds-w07a-picker{display:flex;flex-direction:column;row-gap:var(--plx-sys-space-stack-sm);}
+/* the country select's lab: room under the field for its open list */
+.ds-w07a-select{min-block-size:var(--plx-ref-size-280px);}
+/* the mobile app bar's lab: a phone's width */
+.ds-w07a-phone{inline-size:var(--plx-ref-size-360px);max-inline-size:100%;}

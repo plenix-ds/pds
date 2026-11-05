@@ -1,0 +1,19 @@
+/* Plenix master spec · sample styles for the layout labs (Every Variant, batch 333): classes the lab specimens need, loaded by
+   the page and by every lab frame. Tokens only; no hard-coded values. */
+/* a specimen's width: a layout has no width of its own, so its frame gives it one. A frame never grows past the room it is drawn in (#352): in a narrower
+   window or lab the specimen takes the room there is and its content reflows, instead of running past the cell and being cut off */
+.ds-layout-frame{inline-size:var(--plx-ref-size-400px);max-inline-size:100%;}
+.ds-layout-frame--sm{inline-size:var(--plx-ref-size-240px);max-inline-size:100%;}
+.ds-layout-frame--lg{inline-size:var(--plx-ref-size-600px);max-inline-size:100%;}
+.ds-layout-frame--xl{inline-size:var(--plx-ref-size-720px);max-inline-size:100%;}
+/* a placeholder block inside a layout: a filled, framed box (its corners come from the layout or from ds-layout-box) */
+.ds-layout-fill{background-color:var(--plx-sys-surface-canvas);border-bottom-color:var(--plx-sys-border-subtle);border-bottom-style:solid;border-bottom-width:var(--plx-sys-border-width-thin);border-left-color:var(--plx-sys-border-subtle);border-left-style:solid;border-left-width:var(--plx-sys-border-width-thin);border-right-color:var(--plx-sys-border-subtle);border-right-style:solid;border-right-width:var(--plx-sys-border-width-thin);border-top-color:var(--plx-sys-border-subtle);border-top-style:solid;border-top-width:var(--plx-sys-border-width-thin);box-sizing:border-box;color:var(--plx-sys-content-muted);font-size:var(--plx-ref-font-size-12);min-block-size:var(--plx-ref-size-40px);padding-block-end:var(--plx-ref-space-8px);padding-block-start:var(--plx-ref-space-8px);padding-inline-end:var(--plx-ref-space-12px);padding-inline-start:var(--plx-ref-space-12px);}
+.ds-layout-box{border-bottom-left-radius:var(--plx-sys-radius-card-6px);border-bottom-right-radius:var(--plx-sys-radius-card-6px);border-top-left-radius:var(--plx-sys-radius-card-6px);border-top-right-radius:var(--plx-sys-radius-card-6px);}
+/* plain text in a layout that pads its own children (divided columns, pane bodies) */
+.ds-layout-cell{color:var(--plx-sys-content-muted);font-size:var(--plx-ref-font-size-12);}
+/* a divider's neighbors: a column (a horizontal divider) or a row of a fixed height (a vertical divider) */
+.ds-layout-col{display:flex;flex-direction:column;row-gap:var(--plx-ref-space-8px);}
+.ds-layout-row{align-items:stretch;block-size:var(--plx-ref-size-48px);column-gap:var(--plx-ref-space-12px);display:flex;}
+/* a pane beside the main content: a framed row of a fixed size */
+.ds-layout-shell{block-size:var(--plx-ref-size-240px);border-bottom-color:var(--plx-sys-border-subtle);border-bottom-style:solid;border-bottom-width:var(--plx-sys-border-width-thin);border-left-color:var(--plx-sys-border-subtle);border-left-style:solid;border-left-width:var(--plx-sys-border-width-thin);border-right-color:var(--plx-sys-border-subtle);border-right-style:solid;border-right-width:var(--plx-sys-border-width-thin);border-top-color:var(--plx-sys-border-subtle);border-top-style:solid;border-top-width:var(--plx-sys-border-width-thin);display:flex;inline-size:var(--plx-ref-size-600px);position:relative;}
+.ds-layout-main{background-color:var(--plx-sys-surface-canvas);flex-grow:1;min-inline-size:0;}

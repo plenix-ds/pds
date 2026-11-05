@@ -33,12 +33,13 @@ const EXEMPT_PREFIXES = {
   'docs/briefs/': 'the few working pages (briefs) that a test or a live document still opens; the rest moved to the archive (docs/ARCHIVE.md); deploy.sh does not publish them',
   'tests/fixtures/': 'a fixture that holds the violations on purpose, so a rule can be shown to catch them',
   'tools/fixtures/spec-color-samples/': 'the fixtures of the check-spec rule color-samples (#263): a good and a shrunk spec sheet, so the rule can be shown to pass and to catch a shrunk sample',
+  'platform/design-system/': 'the design spec\'s own sheets (folded in from its submodule, #183); bringing its 60 sheets onto Platform classes is a separate plan (#381)',
   'release/': 'a built release (generated)',
   'packages/': 'built packages (generated)',
 };
-// Everything else under platform/ (the design spec is a submodule, not tracked here; dev/, brand/, vendor/ and the rest) holds no sheet: a
+// Everything else under platform/ (dev/, brand/, vendor/ and the rest) holds no sheet: a
 // new folder or file there fails until it is added to a list on purpose. The published studies in docs/ have only the three files above.
-// The design spec (platform/design-system) is its own repository and project (a submodule: its 60 sheets are a separate plan, #381).
+// The design spec (platform/design-system) was a submodule until #183; its 60 sheets are exempt above and are a separate plan (#381).
 // Alone: node check-system.rules/site-styles.js     -> SITE_STYLES_OK, or the findings and exit 1
 const fs = require('fs');
 const path = require('path');

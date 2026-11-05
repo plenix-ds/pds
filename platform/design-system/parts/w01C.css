@@ -1,0 +1,5 @@
+/* Plenix design system · library part w01C: the specimen frames of the color, grid and keyline foundations' pages */
+/* a step of a chart scale (data-plx-dataviz sets --plx-comp-data-color, system/dataviz.css) */
+.ds-dataviz-swatch{background-color:var(--plx-comp-data-color);block-size:var(--plx-ref-size-32px);display:inline-block;inline-size:var(--plx-ref-size-32px);}
+/* the grid overlay drawn inside its card, not over the page */
+.ds-grid-demo.plx-layout-grid__overlay{block-size:var(--plx-ref-size-64px);position:relative;z-index:auto;}

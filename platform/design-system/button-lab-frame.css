@@ -1,0 +1,30 @@
+/* Plenix design system · the Button lab's frames (button-lab.js): the state matrix and the anatomy, drawn in their own
+   documents. Linked by each frame; positions only the rendered button knows reach it as --ds-sample-* (DS.sample, DS.place). */
+body{background-color:var(--plx-sys-surface-default);color:var(--plx-sys-content-default);font-family:var(--plx-sys-font-body);margin-block-end:0;margin-block-start:0;margin-inline-end:0;margin-inline-start:0;padding-block-end:var(--plx-ref-space-16px);padding-block-start:var(--plx-ref-space-16px);padding-inline-end:var(--plx-ref-space-16px);padding-inline-start:var(--plx-ref-space-16px);word-spacing:normal;}
+.lab-matrix{border-collapse:collapse;width:100%;}
+.lab-matrix th{color:var(--plx-sys-content-muted);font-size:var(--plx-ref-font-size-12);font-weight:var(--plx-sys-font-weight-semibold);padding-block-end:var(--plx-ref-space-8px);padding-block-start:var(--plx-ref-space-8px);padding-inline-end:var(--plx-ref-space-12px);padding-inline-start:var(--plx-ref-space-12px);text-align:left;white-space:nowrap;}
+.lab-matrix thead th{background-color:var(--plx-sys-surface-canvas);border-bottom-color:var(--plx-sys-border-subtle);border-bottom-style:solid;border-bottom-width:var(--plx-sys-border-width-thin);}
+.lab-matrix td{border-left-color:var(--plx-sys-border-subtle);border-left-style:solid;border-left-width:var(--plx-sys-border-width-thin);padding-block-end:var(--plx-ref-space-16px);padding-block-start:var(--plx-ref-space-16px);padding-inline-end:var(--plx-ref-space-12px);padding-inline-start:var(--plx-ref-space-12px);}
+.lab-matrix tbody th{font-weight:var(--plx-sys-font-weight-medium);}
+.lab-pick{border-bottom-left-radius:var(--plx-sys-radius-card-6px);border-bottom-right-radius:var(--plx-sys-radius-card-6px);border-top-left-radius:var(--plx-sys-radius-card-6px);border-top-right-radius:var(--plx-sys-radius-card-6px);cursor:pointer;display:inline-block;max-inline-size:100%;outline-color:transparent;outline-style:dashed;outline-width:var(--plx-sys-border-width-medium);padding-block-end:var(--plx-ref-space-4px);padding-block-start:var(--plx-ref-space-4px);padding-inline-end:var(--plx-ref-space-4px);padding-inline-start:var(--plx-ref-space-4px);}
+/* a wide lab's row (name over drawing) is as wide as its cell and may be narrower than the drawing's own width: the drawing then takes the room there is (#352) */
+.lab-named{inline-size:100%;min-inline-size:0;}
+.ds-grid__content--shrink{flex-basis:0%;flex-grow:1;min-inline-size:0;}
+.lab-pick:hover{outline-color:var(--plx-sys-border-default);}
+.lab-pick.on{outline-color:var(--plx-sys-feedback-warning-solid);}
+.lab-stage{align-items:center;display:flex;block-size:var(--plx-ref-size-320px);justify-content:center;position:relative;}
+.lab-zoom{position:relative;scale:var(--ds-sample-scale, 1);transform-origin:center;transition-property:none;}
+.lab-pad{background-color:var(--plx-sys-feedback-warning-soft);opacity:var(--plx-sys-opacity-low);pointer-events:none;position:absolute;}
+.lab-anat{align-items:center;column-gap:var(--plx-ref-space-24px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);}
+.lab-mark{align-items:center;background-color:var(--plx-sys-surface-inverse);border-bottom-left-radius:var(--plx-sys-shape-pill);border-bottom-right-radius:var(--plx-sys-shape-pill);border-top-left-radius:var(--plx-sys-shape-pill);border-top-right-radius:var(--plx-sys-shape-pill);color:var(--plx-sys-content-inverse);display:flex;font-family:var(--plx-sys-font-label);font-size:var(--plx-ref-font-size-11);font-weight:var(--plx-sys-font-weight-bold);block-size:var(--plx-ref-size-20px);justify-content:center;position:absolute;transform:translate(-50%, -50%);inline-size:var(--plx-ref-size-20px);word-spacing:normal;z-index:3;}
+.lab-mark--dot{block-size:var(--plx-ref-size-8px);inline-size:var(--plx-ref-size-8px);}
+.lab-mark--key{position:static;}
+.lab-lead{background-color:var(--plx-sys-surface-inverse);position:absolute;z-index:2;}
+.lab-legend{align-items:start;column-gap:var(--plx-ref-space-8px);display:grid;grid-template-columns:auto minmax(0,1fr);margin-block-end:0;margin-block-start:0;row-gap:var(--plx-ref-space-8px);}
+.lab-legend dt,.lab-legend dd{margin-block-end:0;margin-block-start:0;margin-inline-start:0;}
+.lab-row{align-items:baseline;column-gap:var(--plx-ref-space-8px);display:flex;flex-wrap:wrap;line-height:var(--plx-ref-line-height-tight);row-gap:var(--plx-ref-space-4px);}
+.lab-name{color:var(--plx-sys-surface-inverse);font-family:var(--plx-sys-font-label);font-size:var(--plx-ref-font-size-12);font-weight:var(--plx-sys-font-weight-bold);letter-spacing:var(--plx-sys-letter-spacing-wide);line-height:var(--plx-ref-line-height-tight);text-transform:uppercase;word-spacing:normal;}
+.lab-val{color:var(--plx-sys-action-primary-background-hover);font-family:var(--plx-sys-font-code);font-size:var(--plx-ref-font-size-11);font-weight:var(--plx-sys-font-weight-regular);line-height:var(--plx-ref-line-height-tight);word-spacing:var(--plx-sys-font-data-word-spacing);}
+/* a marker, its dot and the leaders are placed by their center or their start; their size is the stylesheet's */
+.lab-lead--v{inline-size:var(--plx-sys-border-width-medium);transform:translateX(-50%);}
+.lab-lead--h{block-size:var(--plx-sys-border-width-medium);transform:translateY(-50%);}

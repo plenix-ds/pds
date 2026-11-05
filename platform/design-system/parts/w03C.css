@@ -1,0 +1,12 @@
+/* Library part w03C (wave 3, lane C): the frames the live examples and the labs of the themes, theme zones, Image,
+   Figure, the masonry layout and Collapse need. Tokens only. */
+/* a theme zone drawn as a small padded region */
+.ds-w03c-zone{border-end-end-radius:var(--plx-sys-radius-surface-6px);border-end-start-radius:var(--plx-sys-radius-surface-6px);border-start-end-radius:var(--plx-sys-radius-surface-6px);border-start-start-radius:var(--plx-sys-radius-surface-6px);box-sizing:border-box;padding-block-end:var(--plx-sys-space-inset-md);padding-block-start:var(--plx-sys-space-inset-md);padding-inline-end:var(--plx-sys-space-inset-md);padding-inline-start:var(--plx-sys-space-inset-md);}
+/* a frame of a window class: it answers the main region's container queries as the shell's main region does */
+.ds-w03c-window{box-sizing:border-box;container-name:main-region;container-type:inline-size;}
+.ds-w03c-window--narrow{inline-size:var(--plx-ref-size-400px);}
+.ds-w03c-window--medium{inline-size:var(--plx-ref-size-720px);}
+.ds-w03c-cell{background-color:var(--plx-sys-surface-sunken);border-end-end-radius:var(--plx-sys-radius-card-6px);border-end-start-radius:var(--plx-sys-radius-card-6px);border-start-end-radius:var(--plx-sys-radius-card-6px);border-start-start-radius:var(--plx-sys-radius-card-6px);padding-block-end:var(--plx-sys-space-inset-sm);padding-block-start:var(--plx-sys-space-inset-sm);padding-inline-end:var(--plx-sys-space-inset-sm);padding-inline-start:var(--plx-sys-space-inset-sm);}
+/* lab frames: the width of an image or a figure */
+.ds-w03c-frame{inline-size:var(--plx-ref-size-240px);}
+.ds-w03c-frame--wide{inline-size:var(--plx-ref-size-320px);}

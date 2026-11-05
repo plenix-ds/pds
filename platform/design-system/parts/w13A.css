@@ -1,0 +1,10 @@
+/* Library part w13A (wave 13, lane A): the frames the labs and examples of wave 13, lane A need. Tokens only. */
+/* a lab specimen: the options' width; a card's grid cell; a list row; a commerce page wide enough for its two columns */
+.ds-w13a-lab{inline-size:var(--plx-ref-size-400px);max-inline-size:100%;}
+.ds-w13a-lab--card{inline-size:var(--plx-ref-size-240px);}
+.ds-w13a-lab--wide{inline-size:var(--plx-ref-size-560px);}
+.ds-w13a-lab--page{inline-size:var(--plx-ref-size-900px);}
+/* a region the commerce lab names without drawing (its component's own lab draws it) */
+.ds-w13a-stub{align-items:center;border-block-end-color:var(--plx-sys-border-default);border-block-end-style:dashed;border-block-end-width:var(--plx-sys-border-width-thin);border-block-start-color:var(--plx-sys-border-default);border-block-start-style:dashed;border-block-start-width:var(--plx-sys-border-width-thin);border-end-end-radius:var(--plx-sys-radius-surface-6px);border-end-start-radius:var(--plx-sys-radius-surface-6px);border-inline-end-color:var(--plx-sys-border-default);border-inline-end-style:dashed;border-inline-end-width:var(--plx-sys-border-width-thin);border-inline-start-color:var(--plx-sys-border-default);border-inline-start-style:dashed;border-inline-start-width:var(--plx-sys-border-width-thin);border-start-end-radius:var(--plx-sys-radius-surface-6px);border-start-start-radius:var(--plx-sys-radius-surface-6px);color:var(--plx-sys-content-muted);display:flex;min-block-size:var(--plx-ref-size-40px);padding-inline-start:var(--plx-sys-space-inset-sm);}
+/* a live template: room for its menus, dialogs and stacked columns */
+.ds-w13a-page{min-block-size:var(--plx-ref-size-400px);}
