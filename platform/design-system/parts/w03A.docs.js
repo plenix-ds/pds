@@ -1,0 +1,46 @@
+/* Plenix design system · library part w03A: the written sections of IconTile, Pictogram, the Aspect ratio page (Preview's
+   ratios and fits), the one-column and full-screen arrangements of the shell and responsive visibility (Show / Hide). */
+DSParts.docs.push({
+  'icon-tile': {
+    purpose: 'Gives each kind of item (a project, a task, an archive, an integration) a marker people find at a glance in a list, a card or a header, before they read its name.',
+    anatomy: ['Tile — the rounded square in a hue or a tone, with a thin border (required)', 'Icon — one icon of the set, centered, sized with the tile (required)', 'Size — sm, md or lg, which sets the tile, its corners and the icon together (required)'],
+    behavior: { pointer: 'Not interactive: a click reaches the row, card or button the tile sits in.', keyboard: 'Not a Tab stop.', focus: 'Not applicable: the row or card around it shows focus.', responsive: 'The tile keeps its size at every width; a dense list uses sm.', motion: 'None.', loading: 'Not applicable: the tile is drawn with the item.', error: 'An unknown hue or tone falls back to gray; an unknown size to md.' },
+    a11y: { name: 'Decorative by default (aria-hidden): the name next to it says what it is. label makes it an image with that name when it stands alone.', announce: 'Nothing when decorative; its label when it has one.', focus: 'Not applicable.', contrast: 'The icon keeps 3:1 against its tile in every hue and tone, in light and dark.', motion: 'Nothing to reduce.' },
+    content: { labels: 'A visible name next to every tile; label only for a tile with no text beside it.', actions: 'Not applicable: an action is an icon Button.', errors: 'Not applicable.', localization: 'Nothing to translate; the icon does not mirror unless the set mirrors it.' }
+  },
+  'pictogram': {
+    purpose: 'Lets a page explain itself before it is read, with a picture of the concept instead of a full illustration.',
+    anatomy: ['Frame — the round shape on the sunken surface, or on the tint when two-tone (required)', 'Symbol — the icon set’s symbol at two thirds of the frame, outline or filled (required)', 'Heading — the text next to it that names the concept (required, outside the component)'],
+    behavior: { pointer: 'Not interactive.', keyboard: 'Not a Tab stop.', focus: 'Not applicable.', responsive: 'The frame keeps its size; at Narrow use 48 or 64 so the text keeps the room.', motion: 'None.', loading: 'Not applicable.', error: 'An unknown size falls back to 64.' },
+    a11y: { name: 'Decorative by default: the heading next to it names the concept. label only when no text says the same.', announce: 'Nothing when decorative.', focus: 'Not applicable.', contrast: 'The symbol keeps 3:1 against its frame when it carries meaning.', motion: 'Nothing to reduce.' },
+    content: { labels: 'Name the concept in the heading next to it, not in the picture.', actions: 'The action of the empty state is a Button under its text, never the pictogram.', errors: 'Not applicable.', localization: 'Nothing to translate; choose symbols that mean the same in every market.' }
+  },
+  'aspect-ratio': {
+    purpose: 'Keeps pictures in a fixed shape from the aspect-ratio scale, so grids line up, nothing moves when a picture loads and no picture is ever stretched.',
+    anatomy: ['Frame — the Preview at a ratio of the scale (required)', 'Picture — the image inside, .plx-preview__media (optional: a placeholder icon otherwise)', 'Fit — none (a thumbnail at its own size), cover (cropped to fill) or contain (whole) (optional)'],
+    behavior: { pointer: 'As Preview: a display is not interactive; as="button" opens the asset.', keyboard: 'As Preview: a button preview is a Tab stop; Enter or Space opens it.', focus: 'A button preview draws the focus ring.', responsive: 'The frame takes its container’s width and keeps its ratio, so its height follows.', motion: 'None.', loading: 'The frame keeps its space before the picture loads, so the page does not shift.', error: 'A ratio outside the scale falls back to 4:3; a picture that fails shows the placeholder.' },
+    a11y: { name: 'The picture’s alt text describes the picture, not the frame; a button preview names what it opens.', announce: 'The picture by its alt text.', focus: 'A button preview is focusable and shows the ring.', contrast: 'Not applicable to the frame; a placeholder icon keeps 3:1.', motion: 'Nothing to reduce.' },
+    content: { labels: 'Describe what the picture shows in its alt text; show the asset’s name with it when people must tell assets apart.', actions: 'Not applicable.', errors: 'Not applicable.', localization: 'Nothing to translate; the frame does not mirror.' }
+  },
+  'one-column-layout': {
+    purpose: 'Gives focused tasks and reading one column of a readable width, with the shell around it, so a form or a settings page never stretches across a wide window.',
+    anatomy: ['App header — across the full width (required)', 'Column — PageContent at most 960px wide, centered in the main region (required)', 'Sections — stacked down the column, each with a heading (required)', 'Status footer — across the full width (optional)'],
+    behavior: { pointer: 'Not applicable: the arrangement has no interaction of its own.', keyboard: 'The skip link reaches the column first; the order is the column’s reading order.', focus: 'Not applicable.', responsive: 'At Wide the column centers in the main region; at Medium and Narrow it takes the full width with the layout padding. At 320px nothing scrolls sideways.', motion: 'None.', loading: 'Each section shows its own loading.', error: 'A form’s errors show on its fields and in its summary at the top of the column.' },
+    a11y: { name: 'The page title (the level 1 heading) names the page.', announce: 'Nothing of its own.', focus: 'The skip link moves focus to the main region.', contrast: 'Not applicable.', motion: 'Nothing to reduce.' },
+    content: { labels: 'Open each section with a heading that says what it is for; keep paragraphs short.', actions: 'The form’s actions sit at the end of the column.', errors: 'Not applicable.', localization: 'The column’s width suits longer languages; the layout mirrors in right-to-left pages.' }
+  },
+  'layout-full-screen-workspace': {
+    purpose: 'Gives one task the whole main region (an editor, a viewer), with the header and its way back still there.',
+    anatomy: ['App header — the item’s title and the way back (required)', 'Workspace — the main region with all the room: the canvas, its tools and options (required)', 'Status footer — facts about the item (optional)'],
+    behavior: { pointer: 'Not applicable: the workspace’s own tools carry the interaction.', keyboard: 'Escape leaves where the workspace does not use it; the header’s way back is always a Tab stop.', focus: 'Focus starts in the workspace when it opens and returns to the trigger when it closes.', responsive: 'The navigation pane and the inspector are hidden at every width; the workspace arranges its own tools.', motion: 'None of its own.', loading: 'The workspace shows its item’s loading.', error: 'Leaving with unsaved changes asks first.' },
+    a11y: { name: 'The header title names the item being worked on.', announce: 'The page title when it opens.', focus: 'A way back is always reachable by keyboard.', contrast: 'Not applicable.', motion: 'Nothing to reduce.' },
+    content: { labels: 'The item’s name as the title; the way out says “Close” or names the page it returns to.', actions: 'Save and Close in the header; the tools in the workspace.', errors: 'Not applicable.', localization: 'The arrangement mirrors in right-to-left pages.' }
+  },
+  'hide-show': {
+    purpose: 'Keeps small windows to what matters and lets wide windows show more, without leaving hidden things focusable or lost.',
+    anatomy: ['Breakpoint — above and below, a name (medium, wide, inspector) or a breakpoint token (required, or print)', 'Children — what is shown or hidden (required)', 'Fallback — what stands in where the children are not: the same action in a menu, a shorter form (optional)'],
+    behavior: { pointer: 'Not applicable.', keyboard: 'What is hidden by width is not rendered, so it is never a Tab stop.', focus: 'If the window narrows past the breakpoint while a hidden child has focus, focus is lost with it: put the same action in the fallback.', responsive: 'It follows the window class live as the window is resized (the breakpoint tokens, matched by matchMedia).', motion: 'None: content appears and goes at once.', loading: 'Not applicable.', error: 'An unknown breakpoint name is read as a token name; an unknown token matches nothing (the condition never holds).' },
+    a11y: { name: 'Not applicable.', announce: 'Content hidden by width is gone from the accessibility tree; print-only content is hidden on screen for everyone.', focus: 'Nothing hidden stays focusable.', contrast: 'Not applicable.', motion: 'Nothing to reduce.' },
+    content: { labels: 'An action keeps its label when it moves into the fallback (a menu item named the same).', actions: 'Every hidden action has a fallback place.', errors: 'Not applicable.', localization: 'Longer languages may need the wider rule sooner: test the breakpoints with them.' }
+  }
+});

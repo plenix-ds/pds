@@ -1,0 +1,3 @@
+/* Library part w04S (the settings cards): the frame the settings section lab draws its card in (a settings column). Tokens
+   only. */
+.ds-w04s-frame{box-sizing:border-box;inline-size:var(--plx-ref-size-400px);}

@@ -1,0 +1,3 @@
+/* Library part w06B (wave 6, lane B): the frames the labs and examples of wave 6, lane B need. Tokens only. */
+/* a search field with its list open under it (the lab draws the list in place): room below for the list */
+.ds-w06b-search{inline-size:var(--plx-ref-size-320px);max-inline-size:100%;min-block-size:var(--plx-ref-size-240px);}

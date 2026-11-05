@@ -1,0 +1,12 @@
+/* Plenix master spec · sample styles for the data labs (Every Variant, batch 333): classes the lab specimens need, loaded by
+   the page and by every lab frame. Tokens only; no hard-coded values. */
+/* the frame a specimen is drawn in: the width a list row, a card or a grid takes in an application (data-labs.js) */
+.ds-data-box{box-sizing:border-box;}
+.ds-data-box--list{inline-size:var(--plx-ref-size-320px);}
+.ds-data-box--card{inline-size:var(--plx-ref-size-240px);}
+.ds-data-box--media{inline-size:var(--plx-ref-size-200px);}
+.ds-data-box--tiles{inline-size:var(--plx-ref-size-400px);}
+.ds-data-box--event{inline-size:var(--plx-ref-size-240px);}
+/* an event that fills its box: the box a time grid gives it (one hour) */
+.ds-data-box--event-fill{block-size:var(--plx-ref-size-48px);inline-size:var(--plx-ref-size-160px);}
+.ds-data-box--week{inline-size:var(--plx-ref-size-320px);}

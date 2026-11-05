@@ -1,0 +1,3 @@
+/* Library part w06A (wave 6, lane A): the frames the examples of wave 6, lane A need. Tokens only. */
+/* a small form: an error summary above its fields and the Save button */
+.ds-w06a-form{display:flex;flex-direction:column;row-gap:var(--plx-sys-space-stack-md);}

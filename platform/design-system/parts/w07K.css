@@ -1,0 +1,3 @@
+/* Library part w07K (the command bar): the frame of the live command bar examples (the bar, its selection bar and its
+   table stacked). Tokens only. */
+.ds-w07k-screen{display:flex;flex-direction:column;row-gap:var(--plx-sys-space-stack-sm);}
