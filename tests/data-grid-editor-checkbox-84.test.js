@@ -32,14 +32,14 @@ const check = async (name, fn) => { if (!shared.wanted(name)) return; try { awai
       }, dir, editing, async);
       const cellEl = (r) => `[role=row][data-plx-record]:nth-of-type(${r + 1}) [data-plx-field="active"]`;
       const focus = (r) => page.evaluate((r) => { const row = [...document.querySelectorAll('[role=row][data-plx-record]')][r]; row.querySelector('[data-plx-field="active"]').focus(); }, r);
-      const box = (r) => page.evaluate((r) => { const c = [...document.querySelectorAll('[role=row][data-plx-record]')][r].querySelector('[data-plx-field="active"]'); const b = c.querySelector('input[type=checkbox]'); return b ? { checked: b.checked, disabled: b.disabled, label: b.getAttribute('aria-label') } : null; }, r);
+      const box = (r) => page.evaluate((r) => { const c = [...document.querySelectorAll('[role=row][data-plx-record]')][r].querySelector('[data-plx-field="active"]'); const b = c.querySelector('input[type=checkbox]'); return b ? { checked: b.checked, disabled: b.disabled, label: b.getAttribute('aria-label'), ariaDisabled: b.getAttribute('aria-disabled'), readonly: c.getAttribute('aria-readonly') } : null; }, r);
       const editorOpen = () => page.evaluate(() => !!document.querySelector('.plx-data-grid__editor'));
       const key = async (k) => { await page.keyboard.press(k); await wait(250); };
       const edits = () => page.evaluate(() => window.__edits.slice());
       const ON = { types: ['checkbox'] };
 
       await check(T + 'the cell shows a named checkbox, checked for true', async () => {
-        await mount(ON); assert.deepEqual(await box(0), { checked: true, disabled: false, label: 'Active' }); assert.equal((await box(1)).checked, false);
+        await mount(ON); assert.deepEqual(await box(0), { checked: true, disabled: false, label: 'Active', ariaDisabled: null, readonly: null }); assert.equal((await box(1)).checked, false);
       });
       await check(T + 'Space toggles and saves at once, with no editor', async () => {
         await mount(ON); await focus(1); await key(' '); assert.deepEqual(await edits(), ['r2.active=true']); assert.equal(await editorOpen(), false); assert.equal((await box(1)).checked, true);
@@ -52,8 +52,10 @@ const check = async (name, fn) => { if (!shared.wanted(name)) return; try { awai
       await check(T + 'Enter and F2 open no editor', async () => {
         await mount(ON); await focus(1); await key('Enter'); assert.equal(await editorOpen(), false); await key('F2'); assert.equal(await editorOpen(), false); assert.deepEqual(await edits(), []);
       });
-      await check(T + 'a cell editable() refuses is disabled and does not change', async () => {
-        await mount(ON); assert.equal((await box(2)).disabled, true); await focus(2); await key(' '); assert.deepEqual(await edits(), []);
+      await check(T + 'a cell editable() refuses stays legible (aria-disabled, aria-readonly, not disabled) and does not change on Space or a click', async () => {
+        await mount(ON); const b = await box(2); assert.deepEqual([b.disabled, b.ariaDisabled, b.readonly], [false, 'true', 'true']);
+        await focus(2); await key(' '); await page.evaluate(() => [...document.querySelectorAll('[role=row][data-plx-record]')][2].querySelector('[data-plx-field="active"] input').click()); await wait(250);
+        assert.deepEqual(await edits(), []); assert.equal((await box(2)).checked, false);
       });
       await check(T + 'a promise from onCellEdit makes the cell busy', async () => {
         await mount(ON, true); await focus(1); await key(' ');
@@ -63,6 +65,16 @@ const check = async (name, fn) => { if (!shared.wanted(name)) return; try { awai
         await mount(undefined); assert.equal(await box(0), null); await focus(1); await key('Enter'); assert.equal(await editorOpen(), true);
       });
     }
+    // an editor type the application has not turned on edits as text, with one development warning
+    const dev = await browser.newPage(); const warns = []; dev.on('console', (m) => { if (m.type() === 'warning' || m.type() === 'warn') warns.push(m.text()); });
+    await dev.goto('http://127.0.0.1:' + PORT + '/Plenix/tests/fixtures/platform-host.html?react=dev', { waitUntil: 'load' });
+    await dev.waitForFunction(() => window.Plenix && window.ReactDOM);
+    await check('a column asking for a type that is not turned on warns once', async () => {
+      await dev.evaluate(async () => { document.querySelector('main').innerHTML = '<div id="c"></div>'; const h = React.createElement;
+        ReactDOM.createRoot(document.getElementById('c')).render(h('div', { style: { height: 300 } }, h(Plenix.DataGrid, { label: 'P', data: [{ id: 'a', active: true }, { id: 'b', active: false }], columns: [{ title: 'Active', field: 'active', editor: 'checkbox' }], onCellEdit: () => {} })));
+        await new Promise((r) => setTimeout(r, 1200)); });
+      const mine = warns.filter((w) => /checkbox editor/.test(w)); assert.equal(mine.length, 1, JSON.stringify(warns)); assert.match(mine[0], /column "active".*editing\.types/);
+    });
   } finally { if (browser) await browser.close(); server.close(); }
   console.log(failed ? '\n' + failed + ' failed, ' + passed + ' passed' : 'DATA_GRID_EDITOR_CHECKBOX_84_OK (' + passed + ' checks)');
   process.exit(failed ? 1 : 0);

@@ -27,6 +27,7 @@ import { formatNumber } from '../../../utils/format.ts';
 import { Button } from '../../Button/Button.tsx';
 import AddIcon from 'plenix-platform/icons/plenix/add';
 import { valueAt } from '../state.js';
+import { editorTurnedOn } from './useEditing.js';
 import { Menu, MenuItem, ContextMenu } from '../../Menu/Menu.tsx';
 import { DragHandle } from '../../DragHandle/DragHandle.tsx';
 import { Popover } from '../../Popover/Popover.tsx';
@@ -345,7 +346,7 @@ export function bodyRows({
           const cell = api.cell(row.id, c.field),
             status = cellStatus?.key === row.id && cellStatus.field === c.field ? cellStatus : null,
             // the checkbox editor (ADR 0016) is an option the application turns on: the cell shows a box and Space or a click toggles and saves, no editor opens
-            checkboxEditor = c.editor === 'checkbox' && (props.editing?.types || []).includes('checkbox'),
+            checkboxEditor = editorTurnedOn(c, props.editing?.types) && c.editor === 'checkbox',
             editable = !!c.editor && (typeof c.editable === 'function' ? c.editable(cell) : c.editable !== false),
             canToggle = checkboxEditor && editable && status?.kind !== 'saving',
             canEdit = !checkboxEditor && editable && status?.kind !== 'saving';
@@ -438,6 +439,7 @@ export function bodyRows({
               data-plx-sticky={pinned && sticky ? sticky + 'px' : undefined}
               data-plx-label={detail ? c.title || c.field : undefined}
               aria-busy={status?.kind === 'saving' ? 'true' : undefined}
+              aria-readonly={checkboxEditor && !editable ? 'true' : undefined}
               aria-describedby={status?.kind === 'refused' ? status.id : undefined}
               aria-invalid={status?.kind === 'refused' ? 'true' : undefined}
               aria-label={detail ? (c.title || c.field) + ': ' + valueText(value) : undefined}
@@ -547,10 +549,13 @@ export function bodyRows({
                   type="checkbox"
                   className={B + '__check-input'}
                   checked={!!value}
-                  disabled={!editable || status?.kind === 'saving'}
+                  disabled={status?.kind === 'saving'}
+                  aria-disabled={editable ? undefined : 'true'}
                   tabIndex={-1}
                   aria-label={c.title || c.field}
-                  onChange={(e) => commitEdit(row.id, c.field, e.target.checked)}
+                  onChange={(e) => {
+                    if (editable) commitEdit(row.id, c.field, e.target.checked);
+                  }}
                   onClick={(e) => e.stopPropagation()}
                 />
               ) : c.render ? (
