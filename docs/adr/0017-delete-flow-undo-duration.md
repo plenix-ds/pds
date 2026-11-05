@@ -15,7 +15,7 @@
 
 | Option | For | Against |
 |---|---|---|
-| **A. `undoDuration` (ms, `0` = until dismissed) on DeleteFlow; the default from a system role `plx-sys.undo-duration` (-> `plx-ref.timeout-lg`, 10s)** | Same unit and meaning as Toast's `duration`; the default is a token, as Toast's is; tiers hold (the literal only in ref) | Two new tokens |
+| **A. `undoDuration` (ms, `0` = until dismissed) on DeleteFlow; the default from its own token `plx-comp.delete-flow-undo-duration` -> the system role `plx-sys.undo-duration` -> `plx-ref.timeout-lg` (10s)** | Same unit and meaning as Toast's `duration`; the default is a token, as Toast's is; tiers hold (the literal only in ref) | Two new tokens |
 | B. A literal 10s in DeleteFlow's code | No token | A design value in code; not themeable |
 | C. Raise `toast-duration` to 10s | One token | Every toast lingers, not just undo |
 
@@ -23,20 +23,21 @@
 
 **Option A.**
 
-- **Prop (addition):** `DeleteFlow.undoDuration?: number`, in milliseconds. It applies to the `undo` and `trash` variants' toast. `0` keeps it until dismissed or Undo is used. Missing: `tokenMs('--plx-sys-undo-duration')`. A negative or non-number value gives a development warning and the default.
+- **Prop (addition):** `DeleteFlow.undoDuration?: number`, in milliseconds. It applies to the `undo` and `trash` variants' toast. `0` keeps it until dismissed or Undo is used. Missing: `tokenMs('--plx-comp-delete-flow-undo-duration')`. A negative or non-number value gives a development warning and the default.
 - **Tokens (additions):**
 
 | Token | Value |
 |---|---|
 | `plx-ref.timeout-lg` | `10s` (a long wait; not a motion duration) |
 | `plx-sys.undo-duration` | `{plx-ref.timeout-lg}` |
+| `plx-comp.delete-flow-undo-duration` | `{plx-sys.undo-duration}` (added with the build, #404, with the code that reads it) |
 
 - The toast keeps Toast's pause on hover and focus. No countdown and no new words (D-0057).
-- No component token: DeleteFlow reads the system role, as other parts read `plx-sys` timing roles.
+- DeleteFlow reads its own component token, which points to the system role (comp -> sys -> ref), like every other part's tokens. That's amended from the first draft, which read the role directly, after the build (#404) asked.
 
 ## Consequences
 
-- **Semver: MINOR.** One optional prop and two tokens. The default undo window grows from 4s to 10s: a *Changed* entry (behavior within its role, as RedSave asked).
+- **Semver: MINOR.** One optional prop and three tokens. The default undo window grows from 4s to 10s: a *Changed* entry (behavior within its role, as RedSave asked).
 - WCAG 2.2.1 (timing adjustable): met by the pause, the 10s floor and `undoDuration: 0`.
 
 ## Enforced by
