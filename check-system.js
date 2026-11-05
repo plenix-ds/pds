@@ -17,7 +17,7 @@
 //   embedded    the asset app has no embedded SVG and no data: URIs (icons are files)
 //   generated   the token stylesheets and the standards' code (build-standards.js: providers/pageLayouts.js, system/layout-modes.css)
 //               are exactly what is generated from their JSON (platform/tokens/*.tokens.json, platform/standards/*.json);
-//               the token stylesheets are exactly what build-tokens.js writes from the token source (platform/tokens/*.tokens.json):
+//               the token stylesheets are exactly what the token build (style-dictionary/build.mjs) writes from the token source (platform/tokens/*.tokens.json):
 //               tokens are edited in the JSON, never in the CSS (batch 158); the library parts' bundles (spec-parts.js,
 //               ds-sample-parts.css) and the library block of index.js and platform.css match their part files; the
 //               compatibility icon file (platform/dist/plenix-icons-plenix.js, #553) matches the icon set; each page's
@@ -40,9 +40,9 @@
 //               refers to sys or its own component, sys to ref or sys, only ref holds literals; shrink-only baseline
 //   token-names (check-system.rules/token-names.js, plan §7 check 7, docs/adr/0002) no unit, value or breakpoint number in a
 //               token name; shrink-only baseline
-//   style-dictionary (#372 step 4) plain Style Dictionary writes the same token values as build-tokens.js, the conditional
-//               ones included (forced colors, more contrast, print, reduced motion): npm run tokens:sd:check builds it into
-//               the ignored build/sd/ and compares (tools/agent/sd-reference-compare.js; both go when step 10 retires build-tokens.js)
+//   style-dictionary (#372 steps 5 to 10, slice 101) Style Dictionary writes every token's own value, and the stylesheets
+//               written with its values equal the ones with the JSON's own, byte for byte: npm run tokens:sd:check
+//               (style-dictionary/build.mjs --sets, --bytes)
 //   site-styles (check-system.rules/site-styles.js) sites have no stylesheet, style block or style attribute of their own (#381): a tracked
 //               .css file outside the exempt list fails, and so does a <style> block or style attribute in services/ or the St. John site
 //   and the other modules of check-system.rules/ that are not style rules (check-common.js, STYLE_MODULES): composition,
@@ -117,15 +117,21 @@ for (const f of require('./build-standards.js')(ROOT, { check: true }).stale) ad
 // generated: the token stylesheets match their JSON source. When the token source breaks a rule of the token sets, the
 // build stops; the rule token-sets (check-system.rules/token-sets.js, #372 step 2) lists every finding, with the build's messages
 let tokenBuild = { stale: [] };
-try { tokenBuild = require('./build-tokens.js')(ROOT, { check: true }); } catch (e) { add('generated', path.join(ROOT, 'build-tokens.js'), 0, 'the token build stopped (see the rule token-sets): ' + String(e.message).split('\n')[0]); }
+{
+  // the token build (style-dictionary/build.mjs, slice 101): --stale writes nothing and lists the stylesheets that differ
+  const r = require('child_process').spawnSync(process.execPath, [path.join(ROOT, 'style-dictionary', 'build.mjs'), '--stale'], { cwd: ROOT, encoding: 'utf8' });
+  const line = String(r.stdout || '').trim().split('\n').pop();
+  try { tokenBuild = JSON.parse(line); } catch (e) { add('generated', path.join(ROOT, 'style-dictionary', 'build.mjs'), 0, 'the token build stopped (see the rule token-sets): ' + String(r.stderr || r.stdout || (r.error && r.error.message) || '').trim().split('\n').slice(-1)[0]); }
+}
 for (const f of tokenBuild.stale) add('generated', path.join(ROOT, f), 0, f + ' differs from platform/tokens: edit the .tokens.json, then build');
-// style-dictionary: plain Style Dictionary writes the same token values as build-tokens.js, the conditional ones included
+// style-dictionary: Style Dictionary writes every token's own value (--sets) and the stylesheets with its values are the
+// ones with the JSON's own, byte for byte (--bytes): npm run tokens:sd:check
 {
   const sd = require('child_process').spawnSync('npm', ['run', '--silent', 'tokens:sd:check'], { cwd: ROOT, encoding: 'utf8', shell: process.platform === 'win32' });
-  const where = path.join(ROOT, 'tools', 'agent', 'sd-reference-compare.js');
+  const where = path.join(ROOT, 'style-dictionary', 'build.mjs');
   if (sd.error || sd.status !== 0) {
     const found = String(sd.stdout || '').split('\n').filter((l) => /^ {4}\S/.test(l)).map((l) => l.trim());
-    if (found.length) found.forEach((l) => add('style-dictionary', where, 0, 'Style Dictionary and build-tokens.js differ: ' + l));
+    if (found.length) found.forEach((l) => add('style-dictionary', where, 0, 'Style Dictionary and the token JSON differ: ' + l));
     else add('style-dictionary', where, 0, 'npm run tokens:sd:check failed: ' + String((sd.error && sd.error.message) || sd.stderr || sd.stdout || '').trim().split('\n').slice(-3).join(' '));
   }
 }
@@ -151,7 +157,7 @@ if (fs.existsSync(path.join(ROOT, 'lanes'))) for (const lane of fs.readdirSync(p
   if (!fs.existsSync(path.join(ROOT, 'lanes', lane, 'BASE'))) console.log('warning (lanes): lanes/' + lane + '/BASE is missing: add it with the design-system commit the lane was built on');
 }
 // legacy files stay gone
-for (const f of [path.join(ROOT, 'shared'), path.join(ROOT, 'platform', 'system', 'tokens', 'legacy.css'), path.join(DAM, 'plenix.css'), path.join(DAM, 'demo.css'), path.join(ROOT, 'platform', 'system', 'nesting.css')]) {
+for (const f of [path.join(ROOT, 'build-tokens.js'), path.join(ROOT, 'tools', 'agent', 'sd-reference-compare.js'), path.join(ROOT, 'shared'), path.join(ROOT, 'platform', 'system', 'tokens', 'legacy.css'), path.join(DAM, 'plenix.css'), path.join(DAM, 'demo.css'), path.join(ROOT, 'platform', 'system', 'nesting.css')]) {
   if (fs.existsSync(f)) add('legacy', f, 0, 'retired file or folder is back');
 }
 

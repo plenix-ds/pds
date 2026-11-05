@@ -7,7 +7,7 @@
 //   "status-online": { "$value": …, "$type": "color", "$extensions": { "plenix": { "group": "status", "purpose": "…" } } }   ok
 //   a color role with no group, an unknown group, or more than one ("group": ["text", "border"], "text, border")           finding
 //   a role whose group differs between a theme's light and dark sets (one role, one group)                                finding
-// Roles are never renamed or merged to fit a group (semantic tokens stay, even when same-valued). build-tokens.js copies the
+// Roles are never renamed or merged to fit a group (semantic tokens stay, even when same-valued). packages/tokens/sd/assemble.cjs copies the
 // group and purpose into tokens.index.json; the Color pages of the design system list each group's roles from there.
 // The rule is a module check-style.js runs (a style rule: check-common.js, STYLE_MODULES) (it loads every file in check-system.rules/):
 //   require('./check-system.rules/color-groups.js').check({ files, add })   add(rule, file, line, text)

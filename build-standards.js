@@ -111,7 +111,7 @@ module.exports = function buildStandards(root, opts) {
   if (errors.length) throw new Error('platform/standards/layout.json:\n  ' + errors.join('\n  '));
 
   // ---- the themes (platform/standards/themes.json): the list the apps offer, and the stylesheet that loads every theme
-  // (each theme's own stylesheet is made by build-tokens.js from its token files)
+  // (each theme's own stylesheet is made by packages/tokens/sd/assemble.cjs from its token files)
   const themes = JSON.parse(fs.readFileSync(path.join(P, 'standards', 'themes.json'), 'utf8'));
   const tnames = Object.keys(themes.themes || {}).sort((a, b) => (a === themes.default ? -1 : b === themes.default ? 1 : 0));
   if (!themes.themes || !themes.themes[themes.default]) errors.push('themes.json: the default theme "' + themes.default + '" is not defined');

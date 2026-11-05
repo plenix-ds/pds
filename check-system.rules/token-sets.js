@@ -1,7 +1,7 @@
-// Plenix · check-system rule "token-sets" (#372, Style Dictionary step 2): the checks build-tokens.js made while it built,
+// Plenix · check-system rule "token-sets" (#372, Style Dictionary step 2): the checks packages/tokens/sd/assemble.cjs made while it built,
 // moved here so they hold whatever builds the token files (plain Style Dictionary, from #372 step 10). The messages are
-// build-tokens.js's own, word for word; build-tokens.js keeps its throws until step 10 retires it (tests/theme.test.js
-// copies build-tokens.js alone, so it cannot call this module).
+// packages/tokens/sd/assemble.cjs's own, word for word; packages/tokens/sd/assemble.cjs keeps its throws until step 10 retires it (tests/theme.test.js
+// copies packages/tokens/sd/assemble.cjs alone, so it cannot call this module).
 //   themes     every theme of platform/standards/themes.json (the default theme first): the default theme is defined; each
 //              theme has its foundations, light and dark token files; a theme value never writes a color literal (a hex
 //              color or a color function: colors come from the palette, by reference); every theme's foundations define
@@ -29,18 +29,18 @@ const ROOT = path.join(__dirname, '..');
 const EXT = 'com.plenix';
 const TIERS = ['plx-ref', 'plx-sys', 'plx-comp'];
 const COLOR_LITERAL = /#[0-9a-f]{3,8}\b|\b(?:rgb|rgba|hsl|hsla|hwb|lab|lch|oklab|oklch|color)\(/i;
-// a condition set's file name (#372 step 4; build-tokens.js, CONDITIONS), and the extension key build-tokens.js reads it into
+// a condition set's file name (#372 step 4; packages/tokens/sd/assemble.cjs, CONDITIONS), and the extension key packages/tokens/sd/assemble.cjs reads it into
 const CONDITIONS = { 'forced-colors': 'forcedColors', 'more-contrast': 'contrastMore', print: 'print', 'reduced-motion': 'reducedMotion' };
 const CONDITION_FILE = new RegExp('\\.(' + Object.keys(CONDITIONS).join('|') + ')\\.tokens\\.json$');
 const TYPOGRAPHY_COMPOSITE = 'a typography composite is not built: write the role as six tokens, -font-family, -font-size, -font-weight, -letter-spacing, -line-height and -word-spacing';
 
-// [{ file, text }]: every finding, in the order build-tokens.js meets them
+// [{ file, text }]: every finding, in the order packages/tokens/sd/assemble.cjs meets them
 function findings(root = ROOT) {
   const SRC = path.join(root, 'platform', 'tokens'), out = [];
   const at = (rel) => path.join(SRC, rel);
   const say = (file, text) => { if (!out.some((f) => f.file === file && f.text === text)) out.push({ file, text }); };
   const read = (file) => { try { return JSON.parse(fs.readFileSync(file, 'utf8')); } catch (e) { say(file, path.relative(root, file).split(path.sep).join('/') + ': ' + e.message); return null; } };
-  // a set with its condition sets' values on its tokens, as build-tokens.js reads it (withConditions); a condition set's
+  // a set with its condition sets' values on its tokens, as packages/tokens/sd/assemble.cjs reads it (withConditions); a condition set's
   // token that the base set does not define is a finding
   const withConditions = (rel, data) => {
     if (!data) return data;
@@ -73,7 +73,7 @@ function findings(root = ROOT) {
     values(data, '');
   } };
   walk(SRC);
-  // a set's tokens in order (build-tokens.js, tokensOf); a typography composite is a finding
+  // a set's tokens in order (packages/tokens/sd/assemble.cjs, tokensOf); a typography composite is a finding
   const tokensOf = (set, file) => {
     const list = [];
     for (const tier of TIERS) for (const [key, token] of Object.entries(set[tier] || {})) {
@@ -82,7 +82,7 @@ function findings(root = ROOT) {
     }
     return list.sort((a, b) => a.order - b.order);
   };
-  // print: a token with a print value has no contrast values (build-tokens.js, generate)
+  // print: a token with a print value has no contrast values (packages/tokens/sd/assemble.cjs, generate)
   const print = (data, file) => {
     const cond = [];
     for (const t of tokensOf(data, file)) {
@@ -94,7 +94,7 @@ function findings(root = ROOT) {
     if (paper.some((t) => t.x.forcedColors !== undefined || t.x.contrastMore !== undefined)) say(file, 'a token with a print value has no contrast values: ' + paper.map((t) => t.name).join(', '));
   };
 
-  // the manifest's sets, a glob set expanded (build-tokens.js, load and expandGlob)
+  // the manifest's sets, a glob set expanded (packages/tokens/sd/assemble.cjs, load and expandGlob)
   const manifest = read(at('build.json'));
   if (manifest) for (const o of manifest.outputs || []) {
     const own = [];
@@ -126,7 +126,7 @@ function findings(root = ROOT) {
     for (const o of manifest.outputs || []) {
       const shared = (o.checked || []).filter((s) => s.base === undefined);
       const lanes = (o.checked || []).filter((s) => s.base !== undefined).sort((a, b) => (a.base < b.base ? -1 : a.base > b.base ? 1 : a.rank - b.rank));
-      // the lanes stand where their glob stands in the output (build-tokens.js expands each glob in place)
+      // the lanes stand where their glob stands in the output (packages/tokens/sd/assemble.cjs expands each glob in place)
       const order = [];
       for (const s of o.sets) {
         if (s.tokens) { const x = shared.find((y) => y.tokens === s.tokens); if (x) order.push(x); }
@@ -144,7 +144,7 @@ function findings(root = ROOT) {
     }
   }
 
-  // the themes (build-tokens.js, themeOutputs)
+  // the themes (packages/tokens/sd/assemble.cjs, themeOutputs)
   const std = read(path.join(root, 'platform', 'standards', 'themes.json'));
   if (std) {
     if (!std.themes || !std.themes[std.default]) say(path.join(root, 'platform', 'standards', 'themes.json'), 'platform/standards/themes.json: the default theme "' + std.default + '" is not defined');

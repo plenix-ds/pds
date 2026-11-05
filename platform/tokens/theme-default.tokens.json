@@ -1,5 +1,5 @@
 {
-  "$description": "The default theme's foundations: the scales a theme decides (typefaces, weights, letter spacing, shape, lines, motion, opacity, the focus ring), the same in light and dark. Components and roles use only these, never the reference scales directly; the spacing, control heights, density, grid, breakpoints and layers are shared by every theme. Edit here; build-tokens.js writes them into system/themes/default.css.",
+  "$description": "The default theme's foundations: the scales a theme decides (typefaces, weights, letter spacing, shape, lines, motion, opacity, the focus ring), the same in light and dark. Components and roles use only these, never the reference scales directly; the spacing, control heights, density, grid, breakpoints and layers are shared by every theme. Edit here; style-dictionary/build.mjs writes them into system/themes/default.css.",
   "$extensions": {
     "com.plenix": {
       "output": "platform/system/themes/default.css",
