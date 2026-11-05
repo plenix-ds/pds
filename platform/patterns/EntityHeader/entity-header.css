@@ -369,8 +369,9 @@
   --plx-state-entity-header-tile-icon: var(--plx-comp-entity-header-media-gray-icon);
 }
 .plx-entity-header__tile:where(:not(.plx-entity-header__tile--box)) {
-  /* D-0059 (B): Material icons keep a built-in margin (the shape spans about 83% of its square), so the icon is drawn the fill scale
-     larger than the area and its shape reaches the edges of the former box */
+  /* D-0059 (B): Material icons keep a built-in margin (the shape spans about 83% of its square), so the icon is drawn the fill
+     scale larger than the area and its shape reaches the edges of the former box. The square keeps the area's size: size
+     containment hides the larger icon from its layout, so the square, the row and the header are as tall as with a box */
   --plx-state-entity-header-tile-icon-size: calc(
     var(
         --plx-comp-entity-header-context-tile-icon-fill,
@@ -379,6 +380,8 @@
       var(--plx-comp-entity-header-media-icon-fill-scale)
   );
   --plx-state-entity-header-tile-text: var(--plx-state-entity-header-tile-icon);
+  contain: size;
+  overflow: visible;
 }
 .plx-entity-header__tile--box {
   --plx-state-entity-header-tile-background: var(--plx-state-entity-header-tile-box-background);

@@ -20,10 +20,15 @@ require('./limit.js');
       setTimeout(() => resolve(cases.map((c, i) => {
         const root = document.getElementById('c' + i), tile = root.querySelector('.plx-entity-header__tile'), svg = tile && tile.querySelector('svg, .plx-icon'), path = svg && svg.querySelector('path');
         const t = tile && tile.getBoundingClientRect(), s = svg && svg.getBoundingClientRect(), g = path && path.getBoundingClientRect();
-        return Object.assign({}, c, { tile: t && Math.round(t.width), tileH: t && Math.round(t.height), icon: s && Math.round(s.width), glyph: g && Math.round(Math.max(g.width, g.height)) });
+        const hdr = root.firstElementChild && root.firstElementChild.getBoundingClientRect();
+        return Object.assign({}, c, { header: hdr && Math.round(hdr.height), headerW: hdr && Math.round(hdr.width), tile: t && Math.round(t.width), tileH: t && Math.round(t.height), icon: s && Math.round(s.width), glyph: g && Math.round(Math.max(g.width, g.height)) });
       })), 1500);
     }));
+    // the same layout with a box is the reference: the square and the header must be the size they are with a box
+    const boxed = Object.fromEntries(rows.filter((r) => r.box).map((r) => [r.kind + ' ' + r.layout, r]));
     for (const r of rows) {
+      const ref = boxed[r.kind + ' ' + r.layout];
+      assert.equal([r.tile, r.tileH, r.header].join('x'), [ref.tile, ref.tileH, ref.header].join('x'), r.kind + ' ' + r.layout + (r.box ? ' box' : '') + ': the square and the header keep their size with no box (tile x tileH x header)');
       const name = r.kind + ' ' + r.layout + (r.box ? ' box' : '');
       assert.ok(r.tile && r.icon, name + ': a tile and an icon are drawn');
       if (!r.box) {
@@ -33,6 +38,7 @@ require('./limit.js');
       }
       else assert.ok(r.icon < r.tile, name + ': the boxed icon (' + r.icon + 'px) is smaller than its tile (' + r.tile + 'px)');
     }
+    if (process.env.DUMP) console.log(JSON.stringify(rows.map((r) => [r.kind, r.layout, r.box, r.tile, r.tileH, r.header, r.icon, r.glyph].join(' '))));
     console.log('ENTITY_HEADER_MEDIA_ICON_418_OK ' + rows.length + ' cases');
   } catch (e) { console.log('ENTITY_HEADER_MEDIA_ICON_418_FAIL ' + e.message); await browser.close(); process.exit(1); }
   await browser.close(); process.exit(0);
