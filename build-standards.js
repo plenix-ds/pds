@@ -15,10 +15,10 @@ module.exports = function buildStandards(root, opts) {
   const std = JSON.parse(fs.readFileSync(src, 'utf8'));
   const refCss = fs.readFileSync(path.join(P, 'system', 'tokens', 'reference.css'), 'utf8');
   const errors = [];
-  // a width is a token reference, written as the token files write them: {plx-ref.content-max-960px}
+  // a width is a token reference, written as the token files write them: {plx-ref.content-max-md}
   const token = (v, where) => {
     const m = /^\{(plx-(?:ref|sys))\.([a-z0-9-]+)\}$/.exec(String(v || ''));
-    if (!m) { errors.push(where + ': "' + v + '" is not a token reference like {plx-ref.content-max-960px}'); return 'var(--missing)'; }
+    if (!m) { errors.push(where + ': "' + v + '" is not a token reference like {plx-ref.content-max-md}'); return 'var(--missing)'; }
     const name = '--' + m[1] + '-' + m[2];
     if (m[1] === 'plx-ref' && refCss.indexOf(name + ':') < 0) errors.push(where + ': ' + name + ' is not a token');
     return 'var(' + name + ')';

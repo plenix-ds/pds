@@ -7,7 +7,7 @@
     "gantt-margin-block-start": { "$value": "{plx-ref.size-6u}", "$type": "dimension", "$description": "Gantt chart: the room above the plot for the today line's name." },
     "gantt-task-text": { "$value": "{plx-sys.content-default}", "$type": "color", "$description": "Gantt chart: a task's name." },
     "gantt-task-font-family": { "$value": "{plx-sys.font-label}", "$type": "fontFamily", "$description": "Gantt chart: the task names' typeface (UI text)." },
-    "gantt-task-font-size": { "$value": "{plx-ref.font-size-12}", "$type": "dimension", "$description": "Gantt chart: the task names' size." },
+    "gantt-task-font-size": { "$value": "{plx-ref.font-size-100}", "$type": "dimension", "$description": "Gantt chart: the task names' size." },
     "gantt-link-color": { "$value": "{plx-sys.content-subtle}", "$type": "color", "$description": "Gantt chart: a dependency arrow, in the subtle content color." },
     "gantt-link-width": { "$value": "{plx-sys.border-width-thin}", "$type": "dimension", "$description": "Gantt chart: a dependency arrow's line width." },
     "gantt-milestone-outline": { "$value": "{plx-sys.surface-default}", "$type": "color", "$description": "Gantt chart: the ring around a milestone in the surface color, so it stands off the grid and the arrows." },

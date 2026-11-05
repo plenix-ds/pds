@@ -61,7 +61,7 @@
       "$description": "Focus order overlay: the font of the numbers."
     },
     "focus-order-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "Focus order overlay: the size of the numbers."
     },

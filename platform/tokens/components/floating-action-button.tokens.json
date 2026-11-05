@@ -22,7 +22,7 @@
       "$description": "Extended: the label's face."
     },
     "floating-action-button-font-size": {
-      "$value": "{plx-ref.font-size-14}",
+      "$value": "{plx-ref.font-size-300}",
       "$type": "dimension",
       "$description": "Extended: the label's size."
     },

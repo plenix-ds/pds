@@ -13,7 +13,7 @@
       "$type": "dimension"
     },
     "control-height-inline": {
-      "$value": "{plx-ref.control-size-28px}",
+      "$value": "{plx-ref.control-size-7u}",
       "$type": "dimension"
     },
     "control-icon-inline": {
@@ -21,7 +21,7 @@
       "$type": "dimension"
     },
     "control-height-toolbar": {
-      "$value": "{plx-ref.control-size-28px}",
+      "$value": "{plx-ref.control-size-7u}",
       "$type": "dimension"
     },
     "control-icon-toolbar": {
@@ -29,7 +29,7 @@
       "$type": "dimension"
     },
     "control-height-standard": {
-      "$value": "{plx-ref.control-size-32px}",
+      "$value": "{plx-ref.control-size-8u}",
       "$type": "dimension"
     },
     "control-icon-standard": {
@@ -37,7 +37,7 @@
       "$type": "dimension"
     },
     "control-height-prominent": {
-      "$value": "{plx-ref.control-size-32px}",
+      "$value": "{plx-ref.control-size-8u}",
       "$type": "dimension"
     },
     "control-icon-prominent": {
@@ -45,7 +45,7 @@
       "$type": "dimension"
     },
     "control-height-dialog": {
-      "$value": "{plx-ref.control-size-36px}",
+      "$value": "{plx-ref.control-size-9u}",
       "$type": "dimension"
     },
     "control-icon-dialog": {
@@ -54,7 +54,7 @@
       "$type": "dimension"
     },
     "control-height-dialog-destructive": {
-      "$value": "{plx-ref.control-size-36px}",
+      "$value": "{plx-ref.control-size-9u}",
       "$type": "dimension"
     },
     "control-icon-dialog-destructive": {
@@ -63,19 +63,19 @@
       "$type": "dimension"
     },
     "card-grid-gap": {
-      "$value": "{plx-ref.space-16px}",
+      "$value": "{plx-ref.space-4u}",
       "$type": "dimension"
     },
     "grid-gutter": {
-      "$value": "{plx-ref.grid-gutter-16px}",
+      "$value": "{plx-ref.grid-gutter-md}",
       "$type": "dimension"
     },
     "page-margin-desktop": {
-      "$value": "{plx-ref.grid-margin-24px}",
+      "$value": "{plx-ref.grid-margin-md}",
       "$type": "dimension"
     },
     "page-margin-wide": {
-      "$value": "{plx-ref.grid-margin-32px}",
+      "$value": "{plx-ref.grid-margin-lg}",
       "$type": "dimension"
     },
     "panel-filter-width": {
@@ -119,7 +119,7 @@
       "$type": "dimension"
     },
     "shell-rail-below": {
-      "$value": "{plx-ref.breakpoint-840px}",
+      "$value": "{plx-ref.breakpoint-md}",
       "$type": "dimension",
       "$description": "Medium window: the navigation is a rail below this width (Wide from here)",
       "$extensions": {
@@ -142,7 +142,7 @@
       }
     },
     "shell-inspector-overlay-below": {
-      "$value": "{plx-ref.breakpoint-1024px}",
+      "$value": "{plx-ref.breakpoint-lg}",
       "$type": "dimension",
       "$description": "the inspector collapses and opens over the main region below this width",
       "$extensions": {
@@ -152,55 +152,55 @@
       }
     },
     "space-component-gap-xs": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension"
     },
     "space-component-gap-sm": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension"
     },
     "space-component-gap-md": {
-      "$value": "{plx-ref.space-12px}",
+      "$value": "{plx-ref.space-3u}",
       "$type": "dimension"
     },
     "space-component-gap-lg": {
-      "$value": "{plx-ref.space-16px}",
+      "$value": "{plx-ref.space-4u}",
       "$type": "dimension"
     },
     "space-container-inset-sm": {
-      "$value": "{plx-ref.space-12px}",
+      "$value": "{plx-ref.space-3u}",
       "$type": "dimension"
     },
     "space-container-inset-md": {
-      "$value": "{plx-ref.space-16px}",
+      "$value": "{plx-ref.space-4u}",
       "$type": "dimension"
     },
     "space-container-inset-lg": {
-      "$value": "{plx-ref.space-24px}",
+      "$value": "{plx-ref.space-6u}",
       "$type": "dimension"
     },
     "space-pattern-stack-sm": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension"
     },
     "space-pattern-stack-md": {
-      "$value": "{plx-ref.space-16px}",
+      "$value": "{plx-ref.space-4u}",
       "$type": "dimension"
     },
     "space-pattern-stack-lg": {
-      "$value": "{plx-ref.space-24px}",
+      "$value": "{plx-ref.space-6u}",
       "$type": "dimension"
     },
     "space-region-space-sm": {
-      "$value": "{plx-ref.space-24px}",
+      "$value": "{plx-ref.space-6u}",
       "$type": "dimension"
     },
     "space-region-space-md": {
-      "$value": "{plx-ref.space-32px}",
+      "$value": "{plx-ref.space-8u}",
       "$type": "dimension"
     },
     "space-region-space-lg": {
-      "$value": "{plx-ref.space-48px}",
+      "$value": "{plx-ref.space-12u}",
       "$type": "dimension"
     },
     "data-grid-row-height": {
@@ -213,11 +213,11 @@
       "$type": "dimension"
     },
     "data-grid-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
     },
     "table-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-data-grid-font-size instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     }

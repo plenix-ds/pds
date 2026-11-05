@@ -22,7 +22,7 @@
       "$description": "EntityTitle: the title."
     },
     "entity-title-title-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "EntityTitle: the title (13px, the list row text)."
     },
@@ -37,7 +37,7 @@
       "$description": "EntityTitle: the subtitle under the title."
     },
     "entity-title-subtitle-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "EntityTitle: the subtitle (12px)."
     },

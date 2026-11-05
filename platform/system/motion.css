@@ -1,7 +1,7 @@
 /* Plenix design system · Motion: the shared keyframe animations (named motion-[effect], or motion-[effect]-[direction])
    and the reduced-motion fallback. Durations and easing are tokens in tokens.css
    (--motion-[property]-[variant]). Loaded last. */
-@keyframes motion-fade-up{from{opacity:0;transform:translateY(var(--plx-ref-space-8px));}to{opacity:1;transform:translateY(0);}}
+@keyframes motion-fade-up{from{opacity:0;transform:translateY(var(--plx-ref-space-2u));}to{opacity:1;transform:translateY(0);}}
 @keyframes motion-spin{to{transform:rotate(360deg);}}
 @keyframes motion-pulse{0%,80%,100%{opacity:0.2;transform:scale(0.7);}40%{opacity:1;transform:scale(1);}}
 @keyframes motion-shimmer-forward{from{background-position:-200% 0;}to{background-position:200% 0;}}

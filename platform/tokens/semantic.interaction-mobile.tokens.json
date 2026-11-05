@@ -9,7 +9,7 @@
   },
   "plx-sys": {
     "control-target-min": {
-      "$value": "{plx-ref.control-size-44px}",
+      "$value": "{plx-ref.control-size-11u}",
       "$type": "dimension",
       "$extensions": {
         "plenix": {
@@ -28,7 +28,7 @@
       }
     },
     "control-height-inline": {
-      "$value": "{plx-ref.control-size-44px}",
+      "$value": "{plx-ref.control-size-11u}",
       "$type": "dimension"
     },
     "control-icon-inline": {
@@ -36,7 +36,7 @@
       "$type": "dimension"
     },
     "control-height-toolbar": {
-      "$value": "{plx-ref.control-size-44px}",
+      "$value": "{plx-ref.control-size-11u}",
       "$type": "dimension"
     },
     "control-icon-toolbar": {
@@ -44,7 +44,7 @@
       "$type": "dimension"
     },
     "control-height-standard": {
-      "$value": "{plx-ref.control-size-44px}",
+      "$value": "{plx-ref.control-size-11u}",
       "$type": "dimension"
     },
     "control-icon-standard": {
@@ -52,7 +52,7 @@
       "$type": "dimension"
     },
     "control-height-prominent": {
-      "$value": "{plx-ref.control-size-44px}",
+      "$value": "{plx-ref.control-size-11u}",
       "$type": "dimension"
     },
     "control-icon-prominent": {
@@ -60,7 +60,7 @@
       "$type": "dimension"
     },
     "control-height-dialog": {
-      "$value": "{plx-ref.control-size-44px}",
+      "$value": "{plx-ref.control-size-11u}",
       "$type": "dimension"
     },
     "control-icon-dialog": {
@@ -69,7 +69,7 @@
       "$type": "dimension"
     },
     "control-height-dialog-destructive": {
-      "$value": "{plx-ref.control-size-44px}",
+      "$value": "{plx-ref.control-size-11u}",
       "$type": "dimension"
     },
     "control-icon-dialog-destructive": {

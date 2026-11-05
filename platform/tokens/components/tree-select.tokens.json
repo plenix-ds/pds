@@ -2,7 +2,7 @@
   "$description": "TreeSelect (platform/components/TreeSelect, library wave 7, lane C): its component tokens. The trigger is the text field's look (input tokens), the panel a Popover (popover tokens) and the rows the Tree's (tree tokens).",
   "plx-comp": {
     "tree-select-max-width": { "$value": "{plx-ref.size-150u}", "$type": "dimension", "$description": "TreeSelect: the widest the field grows (as the Combobox)." },
-    "tree-select-trigger-padding-inline-end": { "$value": "{plx-ref.space-32px}", "$type": "dimension", "$description": "TreeSelect: the room after the chosen text for the chevron (as the Combobox)." },
+    "tree-select-trigger-padding-inline-end": { "$value": "{plx-ref.space-8u}", "$type": "dimension", "$description": "TreeSelect: the room after the chosen text for the chevron (as the Combobox)." },
     "tree-select-placeholder-text": { "$value": "{plx-sys.field-placeholder}", "$type": "color", "$description": "TreeSelect: the text while nothing is chosen." },
     "tree-select-chevron-color": { "$value": "{plx-sys.content-muted}", "$type": "color", "$description": "TreeSelect: the chevron at the field's end." },
     "tree-select-chevron-size": { "$value": "{plx-sys.control-icon-inline}", "$type": "dimension", "$description": "TreeSelect: the chevron's size." },
@@ -10,7 +10,7 @@
     "tree-select-panel-gap": { "$value": "{plx-sys.space-stack-sm}", "$type": "dimension", "$description": "TreeSelect: the space between the search field and the tree." },
     "tree-select-scroll-max-height": { "$value": "{plx-ref.size-70u}", "$type": "dimension", "$description": "TreeSelect: the tallest the tree grows before it scrolls." },
     "tree-select-empty-text": { "$value": "{plx-sys.content-subtle}", "$type": "color", "$description": "TreeSelect: No matches, when the search keeps nothing." },
-    "tree-select-empty-font-size": { "$value": "{plx-ref.font-size-12}", "$type": "dimension", "$description": "TreeSelect: the size of No matches." },
+    "tree-select-empty-font-size": { "$value": "{plx-ref.font-size-100}", "$type": "dimension", "$description": "TreeSelect: the size of No matches." },
     "tree-select-empty-padding-block": { "$value": "{plx-sys.space-inset-sm}", "$type": "dimension", "$description": "TreeSelect: the space above and under No matches." }
   }
 }

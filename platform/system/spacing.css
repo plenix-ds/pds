@@ -2,7 +2,7 @@
    It sits beside the other layers (grid.css): the grid places regions, controls.css sizes targets, this file spaces
    what is inside and between closely related things, density.css packs information, interaction.css sets targets.
    Rules:
-   - Primitives are the 4px scale in tokens.css (--plx-ref-space-4px … --plx-ref-space-64px). There is no 1px or 2px step and nothing is
+   - Primitives are the 4px scale in tokens.css (--plx-ref-space-1u … --plx-ref-space-16u). There is no 1px or 2px step and nothing is
      nudged to fit; the structure produces the result:
        · a small label (tag, chip, badge, count, key cap) takes a label height, padding-block 0, and centres its text;
        · a small control takes a control role (controls.css), padding-block 0, and centres its content;

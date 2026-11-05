@@ -2,7 +2,7 @@
   "$description": "Popconfirm (platform/patterns/Popconfirm, library wave 5, lane A): its pattern tokens. The surface, title and footer are Popover's; the buttons are Button's.",
   "plx-comp": {
     "popconfirm-description-text": { "$value": "{plx-sys.content-muted}", "$type": "color", "$description": "Popconfirm: the description under the question (muted)." },
-    "popconfirm-description-font-size": { "$value": "{plx-ref.font-size-13}", "$type": "dimension", "$description": "Popconfirm: the description's size (the popover's text size)." },
+    "popconfirm-description-font-size": { "$value": "{plx-ref.font-size-200}", "$type": "dimension", "$description": "Popconfirm: the description's size (the popover's text size)." },
     "popconfirm-description-line-height": { "$value": "{plx-ref.line-height-normal}", "$type": "number", "$description": "Popconfirm: the description's line height." }
   }
 }

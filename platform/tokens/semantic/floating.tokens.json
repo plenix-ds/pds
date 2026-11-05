@@ -2,22 +2,22 @@
   "$description": "Floating positioning (library plan wave 1, foundation floating): the gaps between an anchor and its floating element (a menu, popover, tooltip or list) and the margin a pointer-placed element keeps from the window's edges. utils/floating.ts names the step; system/floating.css draws it.",
   "plx-sys": {
     "floating-offset-xs": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension",
       "$description": "Floating offset xs (the default): the gap between a menu, list or popover and its anchor."
     },
     "floating-offset-sm": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension",
       "$description": "Floating offset sm: the gap for a tooltip or a popover with a pointer."
     },
     "floating-offset-md": {
-      "$value": "{plx-ref.space-12px}",
+      "$value": "{plx-ref.space-3u}",
       "$type": "dimension",
       "$description": "Floating offset md: the gap for a large popover beside a toolbar."
     },
     "floating-viewport-margin": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension",
       "$description": "The margin a floating element placed at the pointer (a context menu) keeps from the window's edges."
     }

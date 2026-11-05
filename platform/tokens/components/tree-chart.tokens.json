@@ -16,7 +16,7 @@
     "tree-chart-name-focus-font-weight": { "$value": "{plx-sys.font-weight-semibold}", "$type": "fontWeight", "$description": "The name of the node in keyboard focus." },
     "tree-chart-detail-color": { "$value": "{plx-sys.content-muted}", "$type": "color", "$description": "The line under a node's name (its role, its count)." },
     "tree-chart-detail-font-size": { "$value": "{plx-sys.text-caption-font-size}", "$type": "dimension", "$description": "The line under a node's name." },
-    "tree-chart-label-gap": { "$value": "{plx-ref.space-8px}", "$type": "dimension", "$description": "Between a node and its label." },
+    "tree-chart-label-gap": { "$value": "{plx-ref.space-2u}", "$type": "dimension", "$description": "Between a node and its label." },
     "tree-chart-leaf-spacing": { "$value": "{plx-ref.size-10u}", "$type": "dimension", "$description": "Left to right: the height each leaf takes (two lines of label and room between)." },
     "tree-chart-level-spacing": { "$value": "{plx-ref.size-20u}", "$type": "dimension", "$description": "Top to bottom: the height each level takes." }
   }

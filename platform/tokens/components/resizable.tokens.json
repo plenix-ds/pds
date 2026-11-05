@@ -67,7 +67,7 @@
       "$description": "Resizable (both): the corner the pointer drags in both directions."
     },
     "resizable-divider-size": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension",
       "$description": "Resizable divider: the width of the gap the edge fills; a container sets it on its own element (SplitView: its gap)."
     },
@@ -92,7 +92,7 @@
       "$description": "Resizable divider: the gutter while hovered, focused or dragged (the data grid's selected-row tint)."
     },
     "resizable-divider-grip-gap": {
-      "$value": "{plx-ref.space-4px}",
+      "$value": "{plx-ref.space-1u}",
       "$type": "dimension",
       "$description": "Resizable divider: the distance between the grip's three short lines in the middle of the gutter (one grid step)."
     },

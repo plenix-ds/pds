@@ -1,6 +1,6 @@
 /* Plenix · grid (platform/utils/grid.ts)
    Summary: Puts a length that JavaScript writes inline on the Plenix grid (owner, 2026-10-13: an on-the-spot offset "has
-     to conform to fit into the grid system!!! important"). The grid step is the base spacing token (--plx-ref-space-4px),
+     to conform to fit into the grid system!!! important"). The grid step is the base spacing token (--plx-ref-space-1u),
      read from the page, never written as a number. A size with steps of its own takes them (Resizable's steps); a dragged
      pane or box lands on the grid (gridWithin).
    Usage:
@@ -24,7 +24,7 @@
      length is neither a token nor passed through this helper (or the size steps).
 */
 
-export const GRID_TOKEN = '--plx-ref-space-4px';
+export const GRID_TOKEN = '--plx-ref-space-1u';
 
 // the base spacing token in pixels where el is (a rem token follows the root font size)
 export function gridStep(el?: Element | null): number {

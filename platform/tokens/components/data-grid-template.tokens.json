@@ -7,7 +7,7 @@
       "$description": "The height of one line of a template record."
     },
     "data-grid-template-gap": {
-      "$value": "{plx-ref.space-8px}",
+      "$value": "{plx-ref.space-2u}",
       "$type": "dimension",
       "$description": "The space between the pieces of a template record."
     },
@@ -97,7 +97,7 @@
       "$description": "A card: the checkbox fill, the Checkbox's own role (the table's checkboxes keep the grid accent)."
     },
     "data-grid-template-check-target": {
-      "$value": "{plx-ref.control-size-28px}",
+      "$value": "{plx-ref.control-size-7u}",
       "$type": "dimension",
       "$description": "A card: the height the checkbox is placed in, the Checkbox's target at the regular density (the sample's). The box sits at its top, past the padding, not at its center."
     },

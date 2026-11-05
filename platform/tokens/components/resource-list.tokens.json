@@ -27,7 +27,7 @@
       "$description": "ResourceList: the count in the header and after a group's heading."
     },
     "resource-list-count-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "ResourceList: the header count's size."
     },
@@ -119,7 +119,7 @@
       "$description": "ResourceList: the record's name."
     },
     "resource-list-name-font-size": {
-      "$value": "{plx-ref.font-size-13}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "ResourceList: the name's size."
     },
@@ -134,7 +134,7 @@
       "$description": "ResourceList: the line about the record."
     },
     "resource-list-description-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "ResourceList: the description's size."
     },
@@ -144,7 +144,7 @@
       "$description": "ResourceList: the details at the row's end."
     },
     "resource-list-meta-font-size": {
-      "$value": "{plx-ref.font-size-12}",
+      "$value": "{plx-ref.font-size-100}",
       "$type": "dimension",
       "$description": "ResourceList: the details' size."
     },
