@@ -3,11 +3,13 @@
   "plugins": ["./tools/stylelint/plenix.mjs"],
   "rules": {
     "plenix/token-tiers": [true, { "severity": "error", "allowedPattern": "^--ds-sample-[a-z-]+$", "allowedIn": "^platform/design-system/" }],
-    "plenix/logical-properties": [true, { "severity": "error", "files": "^platform/(components|patterns|templates)/" }],
+    "plenix/logical-properties": [true, { "severity": "error", "files": "^platform/(?!design-system/)" }],
     "declaration-no-important": [true, { "severity": "error" }],
     "color-no-hex": [true, { "severity": "error" }],
+    "color-named": ["never", { "severity": "error" }],
     "function-disallowed-list": [["rgb", "rgba", "hsl", "hsla", "hwb", "lab", "lch", "oklab", "oklch"], { "severity": "error" }],
     "declaration-property-value-disallowed-list": [{
+      "/^transition(-property)?$/": ["/(^|[\\s,])all([\\s,]|$)/"],
       "/^border(-.+)?-radius$/": ["/(^|[\\s(,])-?(?!0+(\\.0+)?(px|rem|em|%)(?![\\w-]))[0-9.]+(px|rem|em|%)/"],
       "/.*/": ["/(?<!\\w)(?<!\\w-)(?!-?0+(\\.0+)?(px|rem|em|ms|s|vh|vw|ch|pt)(?![\\w-]))-?\\d*\\.?\\d+(px|rem|em|ms|s|vh|vw|ch|pt)(?![\\w-])/",
         "/var\\(\\s*--plx-ref-color-/",

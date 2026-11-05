@@ -1374,7 +1374,7 @@ function sheetText(url) {
     var chain = function (n, depth, seen) {
       var x = idx[n]; if (!x || seen[n]) return [];
       seen[n] = 1;
-      return x.refs.reduce(function (out, r) { return out.concat([h('div', { key: depth + r, className: depth ? 'plx-u-pl-16px' : undefined }, h(TokenLink, { name: r }), idx[r] && idx[r].resolved.all ? h('span', { className: 'plx-u-pl-12px' }, h(ValueCell, { value: idx[r].resolved.all, name: r, data: true })) : null)], chain(r, depth + 1, seen)); }, []);
+      return x.refs.reduce(function (out, r) { return out.concat([h('div', { key: depth + r, className: depth ? 'plx-u-ps-16px' : undefined }, h(TokenLink, { name: r }), idx[r] && idx[r].resolved.all ? h('span', { className: 'plx-u-ps-12px' }, h(ValueCell, { value: idx[r].resolved.all, name: r, data: true })) : null)], chain(r, depth + 1, seen)); }, []);
     };
     var refs = chain(name, 0, {});
     // the page of the component whose stylesheet uses it
