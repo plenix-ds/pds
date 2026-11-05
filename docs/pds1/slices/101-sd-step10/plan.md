@@ -16,19 +16,18 @@
 
 `build-app.js` (calls it), `check-system.js` (`generated` rule: `--check`), `check-style.js`, `check-system.rules/token-sets.js` and `color-groups.js`, `tools/token-index.js` (`writtenForIndex`, temporary since step 8), `tools/agent/sd-reference-compare.js`, `tokenize-component.js`, `services/save/server.js`, `build-standards.js`, `tests/theme.test.js` (copies `build-tokens.js` alone: it must be rewritten, not run), and the comments in `platform/tokens/build.json`, `themes.json`, `theme-default.tokens.json` and `semantic/typography.tokens.json`.
 
-## Tasks (each its own PR, each proven byte-identical on all 4 sheets + the index)
+## Tasks (each its own PR, each proven on all 4 sheets + the index)
 
-1. **One Style Dictionary config** (`style-dictionary/build.config.mjs`) replacing the 10 `tokens:sd` configs: one platform per output sheet, with sources taken from `build.json`.
-2. **Hooks in `packages/tokens/sd/`** (ADR 0003: only Style Dictionary hooks, no standalone script):
-   - a `plenix/css-sets` format: sets in `build.json` order, each under its selector and opener, with `before` / `after` comments and the prologue;
-   - a `plenix/ctx-layers` step inside that format: the `--plx-ctx-<layer>-` declarations and pick rules;
-   - condition blocks (`@media (forced-colors: active)` …), paired as today;
-   - theme sheets from `themes.json` (light, dark, `:root` for the default theme).
-   Each hook is a port of the matching `build-tokens.js` function, kept in the same order, so the diff can be reviewed side by side.
-3. **Proof gate:** `npm run tokens:sd:check` becomes a byte comparison of Style Dictionary's sheets with `build-tokens.js`'s, for all 4 sheets. It must be identical before task 4.
-4. **Switch:** `build-app.js` calls Style Dictionary; `check-system` `generated` compares against it; `token-index.js` reads `written` from Style Dictionary's sheets (ends step 8's temporary path).
-5. **Retire:** delete `build-tokens.js` and `tools/agent/sd-reference-compare.js`; rewrite `tests/theme.test.js`'s reader (edited, not run); add `planned:no-build-tokens` (CI fails if the file returns).
-6. **Then the token rename** (ADR 0002) runs on Style Dictionary: `renames.json` -> deprecated aliases.
+**Correction (2026-11-05, after reading `tools/agent/sd-reference-compare.js`):** Style Dictionary today covers the reference tier (step 1), the text roles (step 3) and the condition blocks (step 4). The **base sets** of `semantic.css`, `components.css` and the themes (#372 steps 5 to 7) were never done, and step 10 depends on them. Also, one Style Dictionary run keeps only one value per name, so sets that share names (each density, each interaction mode, light and dark) need a run each, as `style-dictionary/index/` already does (11 configs). "One config" isn't possible as written.
+
+1. **Step 5, semantic base sets:** a CSS output per set group (base, each density, each interaction mode), from the same groups as `style-dictionary/index/`. Extend `sd-reference-compare.js` to match `semantic.css`'s base values, `--plx-ctx-<layer>-` variables included, by name, context and value.
+2. **Step 6, component base sets:** the same for `components.css` (the glob sets `components/*.tokens.json`).
+3. **Step 7, themes:** light and dark per theme from `themes.json`, matched against `themes/<name>.css`.
+4. **Runner:** `style-dictionary/build.mjs` runs every config through Style Dictionary's API in one process, replacing the 10 CLI calls of `npm run tokens:sd`. It's config as code; the logic stays in hooks.
+5. **Hooks in `packages/tokens/sd/`** (ADR 0003): a format per set that writes the block (selector, opener, `before` / `after` comments), and an assembly hook that joins the sets in `build.json` order and writes the cross-set pick block (`--plx-ctx-*`, which spans sets, so it can't live in a single set's format) and the paired condition blocks. Each is a port of the matching `build-tokens.js` function.
+6. **Byte gate:** `npm run tokens:sd:check` compares bytes for all 4 sheets. It must be identical before task 7.
+7. **Switch and retire:** `build-app.js` calls Style Dictionary; `check-system` `generated` compares against it; `token-index.js` reads `written` from it; delete `build-tokens.js` and `sd-reference-compare.js`; rewrite `tests/theme.test.js`'s reader (edited, not run); add `planned:no-build-tokens`.
+8. **Then the token rename** (ADR 0002) on Style Dictionary: `renames.json` -> deprecated aliases.
 
 ## Risks
 
