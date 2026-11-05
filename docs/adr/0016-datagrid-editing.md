@@ -61,7 +61,7 @@ editModes?: ('inline' | 'form')[];   // one mode hides the menu item
 formSurface?: 'drawer' | 'dialog' | 'openPanel';   // default 'drawer'
 renderForm?(record: unknown): React.ReactNode;
 onRecordEdit?(record: unknown, changes: Record<string, unknown>): void | Promise<void>;   // a rejected promise: the form stays open with its message
-onCellEdit?(record, change): void | Promise<void>;   // may now answer later: a spinner, then the old value back if it rejects
+onCellEdit?(record, change: { field, value, previous, row }): void | Promise<void>;   // may now answer later: a spinner, then the old value back if it rejects; row is the record before the edit (#354)
 
 // a new provider
 <TableSettings editMode? editModes? editing?>{children}</TableSettings>   // application-wide defaults
