@@ -324,6 +324,116 @@
     ],
     "why": "stack=\"percent\" adds .plx-area-chart--stacked (LineChart.jsx), which sets the area's opacity"
   },
+  "spinner--size-sm": {
+    "sets": [
+      {
+        "property": "block-size",
+        "part": "block",
+        "token": "--plx-comp-spinner-sm-height"
+      },
+      {
+        "property": "inline-size",
+        "part": "block",
+        "token": "--plx-comp-spinner-sm-width"
+      },
+      {
+        "property": "border-width",
+        "part": "block",
+        "token": "--plx-comp-spinner-sm-border-width"
+      }
+    ],
+    "why": ".plx-spinner--sm in loading.css sets the size; the Spinner's source sits beside the Loading stylesheet, so the derivation does not find the block"
+  },
+  "spinner--size-md-default": {
+    "sets": [
+      {
+        "property": "block-size",
+        "part": "block",
+        "token": "--plx-comp-spinner-md-height"
+      },
+      {
+        "property": "inline-size",
+        "part": "block",
+        "token": "--plx-comp-spinner-md-width"
+      },
+      {
+        "property": "border-width",
+        "part": "block",
+        "token": "--plx-comp-spinner-md-border-width"
+      }
+    ],
+    "why": ".plx-spinner--md in loading.css sets the size; the Spinner's source sits beside the Loading stylesheet, so the derivation does not find the block"
+  },
+  "spinner--size-lg": {
+    "sets": [
+      {
+        "property": "block-size",
+        "part": "block",
+        "token": "--plx-comp-spinner-lg-height"
+      },
+      {
+        "property": "inline-size",
+        "part": "block",
+        "token": "--plx-comp-spinner-lg-width"
+      },
+      {
+        "property": "border-width",
+        "part": "block",
+        "token": "--plx-comp-spinner-lg-border-width"
+      }
+    ],
+    "why": ".plx-spinner--lg in loading.css sets the size; the Spinner's source sits beside the Loading stylesheet, so the derivation does not find the block"
+  },
+  "stack--gap-stack-xs": {
+    "sets": [
+      {
+        "property": "row-gap",
+        "part": "block",
+        "token": "--plx-comp-stack-gap-xs-row-gap"
+      }
+    ],
+    "why": ".plx-stack--gap-xs in stack.css; the lab value is named stack-xs, which the derivation does not map to the modifier"
+  },
+  "stack--gap-stack-sm": {
+    "sets": [
+      {
+        "property": "row-gap",
+        "part": "block",
+        "token": "--plx-comp-stack-gap-sm-row-gap"
+      }
+    ],
+    "why": ".plx-stack--gap-sm in stack.css; the lab value is named stack-sm, which the derivation does not map to the modifier"
+  },
+  "stack--gap-stack-md-default": {
+    "sets": [
+      {
+        "property": "row-gap",
+        "part": "block",
+        "token": "--plx-comp-stack-gap-md-row-gap"
+      }
+    ],
+    "why": ".plx-stack--gap-md in stack.css; the lab value is named stack-md, which the derivation does not map to the modifier"
+  },
+  "stack--gap-stack-lg": {
+    "sets": [
+      {
+        "property": "row-gap",
+        "part": "block",
+        "token": "--plx-comp-stack-gap-lg-row-gap"
+      }
+    ],
+    "why": ".plx-stack--gap-lg in stack.css; the lab value is named stack-lg, which the derivation does not map to the modifier"
+  },
+  "stack--gap-stack-xl": {
+    "sets": [
+      {
+        "property": "row-gap",
+        "part": "block",
+        "token": "--plx-comp-stack-gap-xl-row-gap"
+      }
+    ],
+    "why": ".plx-stack--gap-xl in stack.css; the lab value is named stack-xl, which the derivation does not map to the modifier"
+  },
   "status-icon--tone-danger": {
     "sets": [
       {
