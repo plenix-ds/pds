@@ -19,7 +19,8 @@
     "text-body-letter-spacing": {
       "$value": "normal",
       "$type": "dimension",
-      "$description": "The text-body role's letter spacing."
+      "$description": "The text-body role's letter spacing.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "text-body-line-height": {
       "$value": "{plx-ref.line-height-normal}",
@@ -29,7 +30,8 @@
     "text-body-word-spacing": {
       "$value": "normal",
       "$type": "dimension",
-      "$description": "The text-body role's word spacing (the companion of the typography token)."
+      "$description": "The text-body role's word spacing (the companion of the typography token).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "text-secondary-font-family": {
       "$value": "{plx-sys.font-body}",
@@ -49,7 +51,8 @@
     "text-secondary-letter-spacing": {
       "$value": "normal",
       "$type": "dimension",
-      "$description": "The text-secondary role's letter spacing."
+      "$description": "The text-secondary role's letter spacing.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "text-secondary-line-height": {
       "$value": "{plx-ref.line-height-normal}",
@@ -59,7 +62,8 @@
     "text-secondary-word-spacing": {
       "$value": "normal",
       "$type": "dimension",
-      "$description": "The text-secondary role's word spacing (the companion of the typography token)."
+      "$description": "The text-secondary role's word spacing (the companion of the typography token).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "text-caption-font-family": {
       "$value": "{plx-sys.font-body}",
@@ -79,7 +83,8 @@
     "text-caption-letter-spacing": {
       "$value": "normal",
       "$type": "dimension",
-      "$description": "The text-caption role's letter spacing."
+      "$description": "The text-caption role's letter spacing.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "text-caption-line-height": {
       "$value": "{plx-ref.line-height-normal}",
@@ -89,7 +94,8 @@
     "text-caption-word-spacing": {
       "$value": "normal",
       "$type": "dimension",
-      "$description": "The text-caption role's word spacing (the companion of the typography token)."
+      "$description": "The text-caption role's word spacing (the companion of the typography token).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "text-label-font-family": {
       "$value": "{plx-sys.font-label}",
@@ -109,7 +115,8 @@
     "text-label-letter-spacing": {
       "$value": "normal",
       "$type": "dimension",
-      "$description": "The text-label role's letter spacing."
+      "$description": "The text-label role's letter spacing.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "text-label-line-height": {
       "$value": "{plx-ref.line-height-normal}",
@@ -119,7 +126,8 @@
     "text-label-word-spacing": {
       "$value": "normal",
       "$type": "dimension",
-      "$description": "The text-label role's word spacing (the companion of the typography token)."
+      "$description": "The text-label role's word spacing (the companion of the typography token).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "text-heading-font-family": {
       "$value": "{plx-sys.font-heading}",
@@ -139,7 +147,8 @@
     "text-heading-letter-spacing": {
       "$value": "normal",
       "$type": "dimension",
-      "$description": "The text-heading role's letter spacing."
+      "$description": "The text-heading role's letter spacing.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "text-heading-line-height": {
       "$value": "{plx-ref.line-height-normal}",
@@ -149,7 +158,8 @@
     "text-heading-word-spacing": {
       "$value": "normal",
       "$type": "dimension",
-      "$description": "The text-heading role's word spacing (the companion of the typography token)."
+      "$description": "The text-heading role's word spacing (the companion of the typography token).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "text-title-font-family": {
       "$value": "{plx-sys.font-heading}",
@@ -169,7 +179,8 @@
     "text-title-letter-spacing": {
       "$value": "normal",
       "$type": "dimension",
-      "$description": "The text-title role's letter spacing."
+      "$description": "The text-title role's letter spacing.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "text-title-line-height": {
       "$value": "{plx-ref.line-height-normal}",
@@ -179,7 +190,8 @@
     "text-title-word-spacing": {
       "$value": "normal",
       "$type": "dimension",
-      "$description": "The text-title role's word spacing (the companion of the typography token)."
+      "$description": "The text-title role's word spacing (the companion of the typography token).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "text-eyebrow-font-family": {
       "$value": "{plx-sys.font-label}",
@@ -209,7 +221,8 @@
     "text-eyebrow-word-spacing": {
       "$value": "normal",
       "$type": "dimension",
-      "$description": "The text-eyebrow role's word spacing (the companion of the typography token)."
+      "$description": "The text-eyebrow role's word spacing (the companion of the typography token).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "text-display-font-family": {
       "$value": "{plx-sys.font-heading}",
@@ -239,7 +252,8 @@
     "text-display-word-spacing": {
       "$value": "normal",
       "$type": "dimension",
-      "$description": "The text-display role's word spacing (the companion of the typography token)."
+      "$description": "The text-display role's word spacing (the companion of the typography token).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "text-lead-font-family": {
       "$value": "{plx-sys.font-body}",
@@ -259,7 +273,8 @@
     "text-lead-letter-spacing": {
       "$value": "normal",
       "$type": "dimension",
-      "$description": "The text-lead role's letter spacing."
+      "$description": "The text-lead role's letter spacing.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "text-lead-line-height": {
       "$value": "{plx-ref.line-height-relaxed}",
@@ -269,7 +284,8 @@
     "text-lead-word-spacing": {
       "$value": "normal",
       "$type": "dimension",
-      "$description": "The text-lead role's word spacing (the companion of the typography token)."
+      "$description": "The text-lead role's word spacing (the companion of the typography token).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "text-mono-font-family": {
       "$value": "{plx-sys.font-data}",

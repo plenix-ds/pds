@@ -2,35 +2,35 @@
   "$description": "reference.tokens.json: the values with motion off: under reduced motion (@media (prefers-reduced-motion: reduce)) and while the density changes (:root[data-plx-density-changing]). A condition set: each token is defined in reference.tokens.json, and this file holds only its value under the condition (#372 step 4).",
   "plx-ref": {
     "motion-duration-quick": {
-      "$value": "0s",
+      "$value": { "value": 0, "unit": "s" },
       "$type": "duration"
     },
     "motion-duration-instant": {
-      "$value": "0s",
+      "$value": { "value": 0, "unit": "s" },
       "$type": "duration"
     },
     "motion-duration-fast": {
-      "$value": "0s",
+      "$value": { "value": 0, "unit": "s" },
       "$type": "duration"
     },
     "motion-duration-base": {
-      "$value": "0s",
+      "$value": { "value": 0, "unit": "s" },
       "$type": "duration"
     },
     "motion-duration-slow": {
-      "$value": "0s",
+      "$value": { "value": 0, "unit": "s" },
       "$type": "duration"
     },
     "motion-duration-loop-fast": {
-      "$value": "0s",
+      "$value": { "value": 0, "unit": "s" },
       "$type": "duration"
     },
     "motion-duration-loop-base": {
-      "$value": "0s",
+      "$value": { "value": 0, "unit": "s" },
       "$type": "duration"
     },
     "motion-duration-loop-slow": {
-      "$value": "0s",
+      "$value": { "value": 0, "unit": "s" },
       "$type": "duration"
     }
   }

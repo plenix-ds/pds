@@ -3,7 +3,8 @@
   "plx-comp": {
     "otp-input-cell-disabled-text": {
       "$value": "GrayText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     }
   }
 }

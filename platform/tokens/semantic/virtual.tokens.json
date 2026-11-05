@@ -7,7 +7,7 @@
       "$description": "One item's size along the scroll axis (a row's height, a column's width); a virtualized container sets it to its own item size (for a list: --plx-sys-data-grid-row-height)"
     },
     "virtual-item-gap": {
-      "$value": "0px",
+      "$value": { "value": 0, "unit": "px" },
       "$type": "dimension",
       "$description": "The gap between two items along the scroll axis (the container's row-gap or column-gap)"
     },

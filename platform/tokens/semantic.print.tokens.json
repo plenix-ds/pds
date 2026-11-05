@@ -2,31 +2,40 @@
   "$description": "semantic.tokens.json: the values on paper (@media print). A condition set: each token is defined in semantic.tokens.json, and this file holds only its value under the condition (#372 step 4).",
   "plx-sys": {
     "print-hidden": {
-      "$value": "none"
+      "$value": "none",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "print-block-size": {
-      "$value": "auto"
+      "$value": "auto",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "print-max-block-size": {
-      "$value": "none"
+      "$value": "none",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "print-overflow": {
-      "$value": "visible"
+      "$value": "visible",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "print-position": {
-      "$value": "static"
+      "$value": "static",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "print-shown": {
-      "$value": "contents"
+      "$value": "contents",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "print-keep": {
-      "$value": "avoid"
+      "$value": "avoid",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "print-url-before": {
-      "$value": "\" (\""
+      "$value": "\" (\"",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "print-url-after": {
-      "$value": "\")\""
+      "$value": "\")\"",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     }
   }
 }

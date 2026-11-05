@@ -102,7 +102,7 @@
       "$description": "TeachingBubble: the outline of the secondary action (and of the primary and Close under the pointer)."
     },
     "button-on-inverse-action-quiet-background": {
-      "$value": "transparent",
+      "$value": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 0, "hex": "#000000" },
       "$type": "color",
       "$description": "TeachingBubble: no fill: the secondary action and Close at rest, the primary under the pointer (the blue shows through)."
     },

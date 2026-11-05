@@ -3,7 +3,8 @@
   "plx-comp": {
     "bottom-sheet-nav-tile-current-icon-color": {
       "$value": "HighlightText",
-      "$type": "color"
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     }
   }
 }

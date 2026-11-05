@@ -1,12 +1,12 @@
 {
   "$description": "AvatarGroup (platform/components/AvatarGroup, library wave 4, lane B): its component tokens. The avatars themselves use Avatar's tokens.",
   "plx-comp": {
-    "avatar-group-ring": { "$value": "0 0 0 {plx-sys.border-width-medium} {plx-sys.surface-default}", "$type": "shadow", "$description": "AvatarGroup stack: the ring around each avatar, in the surface color, that keeps overlapped edges apart." },
-    "avatar-group-focus-ring": { "$value": "0 0 0 {plx-sys.border-width-medium} {plx-sys.focus-ring-color}", "$type": "shadow", "$description": "AvatarGroup: the +N tile's ring while its button has keyboard focus (the focus color)." },
-    "avatar-group-xs-overlap": { "$value": "calc(-1 * {plx-ref.size-4px})", "$type": "dimension", "$description": "AvatarGroup stack, size xs: how far each avatar overlaps the one before it (4px)." },
-    "avatar-group-sm-overlap": { "$value": "calc(-1 * {plx-ref.size-4px})", "$type": "dimension", "$description": "AvatarGroup stack, size sm: how far each avatar overlaps the one before it (4px)." },
-    "avatar-group-md-overlap": { "$value": "calc(-1 * {plx-ref.size-8px})", "$type": "dimension", "$description": "AvatarGroup stack, size md: how far each avatar overlaps the one before it (8px)." },
-    "avatar-group-lg-overlap": { "$value": "calc(-1 * {plx-ref.size-8px})", "$type": "dimension", "$description": "AvatarGroup stack, size lg: how far each avatar overlaps the one before it (8px)." },
+    "avatar-group-ring": { "$value": "0 0 0 {plx-sys.border-width-medium} {plx-sys.surface-default}", "$type": "shadow", "$description": "AvatarGroup stack: the ring around each avatar, in the surface color, that keeps overlapped edges apart.", "$extensions": { "com.plenix": { "webOnly": true } } },
+    "avatar-group-focus-ring": { "$value": "0 0 0 {plx-sys.border-width-medium} {plx-sys.focus-ring-color}", "$type": "shadow", "$description": "AvatarGroup: the +N tile's ring while its button has keyboard focus (the focus color).", "$extensions": { "com.plenix": { "webOnly": true } } },
+    "avatar-group-xs-overlap": { "$value": "calc(-1 * {plx-ref.size-4px})", "$type": "dimension", "$description": "AvatarGroup stack, size xs: how far each avatar overlaps the one before it (4px).", "$extensions": { "com.plenix": { "webOnly": true } } },
+    "avatar-group-sm-overlap": { "$value": "calc(-1 * {plx-ref.size-4px})", "$type": "dimension", "$description": "AvatarGroup stack, size sm: how far each avatar overlaps the one before it (4px).", "$extensions": { "com.plenix": { "webOnly": true } } },
+    "avatar-group-md-overlap": { "$value": "calc(-1 * {plx-ref.size-8px})", "$type": "dimension", "$description": "AvatarGroup stack, size md: how far each avatar overlaps the one before it (8px).", "$extensions": { "com.plenix": { "webOnly": true } } },
+    "avatar-group-lg-overlap": { "$value": "calc(-1 * {plx-ref.size-8px})", "$type": "dimension", "$description": "AvatarGroup stack, size lg: how far each avatar overlaps the one before it (8px).", "$extensions": { "com.plenix": { "webOnly": true } } },
     "avatar-group-gap": { "$value": "{plx-sys.space-cluster-xs}", "$type": "dimension", "$description": "AvatarGroup grid: the gap between avatars, across and down." },
     "avatar-group-more-background": { "$value": "{plx-sys.fill-neutral}", "$type": "color", "$description": "AvatarGroup: the +N tile's fill." },
     "avatar-group-more-background-hover": { "$value": "{plx-sys.fill-neutral-hover}", "$type": "color", "$description": "AvatarGroup: the +N tile's fill while its button is hovered." },

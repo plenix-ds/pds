@@ -77,7 +77,8 @@
     "check-padding-block": {
       "$value": "0",
       "$type": "dimension",
-      "$description": "Compact: no padding, so a single-line Checkbox is the 24px compact control role (owner, batch 224)."
+      "$description": "Compact: no padding, so a single-line Checkbox is the 24px compact control role (owner, batch 224).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     }
   }
 }

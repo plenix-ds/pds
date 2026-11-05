@@ -3,38 +3,38 @@
   "plx-ref": {
     "ratio-1-1": {
       "$value": "1 / 1",
-      "$type": "string",
-      "$description": "Aspect ratio 1:1, a square: avatars, icon tiles and square thumbnails in a grid."
+      "$description": "Aspect ratio 1:1, a square: avatars, icon tiles and square thumbnails in a grid.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "ratio-4-3": {
       "$value": "4 / 3",
-      "$type": "string",
-      "$description": "Aspect ratio 4:3, landscape: the default media frame of an asset card and a preview."
+      "$description": "Aspect ratio 4:3, landscape: the default media frame of an asset card and a preview.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "ratio-3-2": {
       "$value": "3 / 2",
-      "$type": "string",
-      "$description": "Aspect ratio 3:2, landscape: photographs as most cameras take them."
+      "$description": "Aspect ratio 3:2, landscape: photographs as most cameras take them.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "ratio-16-9": {
       "$value": "16 / 9",
-      "$type": "string",
-      "$description": "Aspect ratio 16:9, wide: video, screenshots and banners."
+      "$description": "Aspect ratio 16:9, wide: video, screenshots and banners.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "ratio-21-9": {
       "$value": "21 / 9",
-      "$type": "string",
-      "$description": "Aspect ratio 21:9, very wide: page heroes and cinematic video."
+      "$description": "Aspect ratio 21:9, very wide: page heroes and cinematic video.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "ratio-3-4": {
       "$value": "3 / 4",
-      "$type": "string",
-      "$description": "Aspect ratio 3:4, portrait: documents, book covers and portrait photographs."
+      "$description": "Aspect ratio 3:4, portrait: documents, book covers and portrait photographs.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "ratio-9-16": {
       "$value": "9 / 16",
-      "$type": "string",
-      "$description": "Aspect ratio 9:16, tall: phone screens, stories and vertical video."
+      "$description": "Aspect ratio 9:16, tall: phone screens, stories and vertical video.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     }
   }
 }

@@ -4,7 +4,8 @@
     "avatar-logo-size": {
       "$value": "75%",
       "$type": "dimension",
-      "$description": "Avatar: a logo takes three quarters of the square, as the gender icon does (the icon keeps its own padding)."
+      "$description": "Avatar: a logo takes three quarters of the square, as the gender icon does (the icon keeps its own padding).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     }
   }
 }

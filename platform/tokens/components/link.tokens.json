@@ -89,12 +89,14 @@
     "link-target-inset-block": {
       "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))",
       "$type": "dimension",
-      "$description": "Link: a link that is a table cell's only content reaches the minimum target with an invisible extension: its inset above and below (centered on the text; 0 when the text is already tall enough)."
+      "$description": "Link: a link that is a table cell's only content reaches the minimum target with an invisible extension: its inset above and below (centered on the text; 0 when the text is already tall enough).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "link-target-inset-inline-end": {
       "$value": "min(0px, calc(100% - {plx-sys.control-target-min}))",
       "$type": "dimension",
-      "$description": "Link: the same extension's inset at the inline end (toward the cell's end; 0 when the link is already wide enough)."
+      "$description": "Link: the same extension's inset at the inline end (toward the cell's end; 0 when the link is already wide enough).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     }
   }
 }

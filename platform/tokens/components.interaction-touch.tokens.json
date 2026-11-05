@@ -11,7 +11,8 @@
     "breadcrumbs-list-row-gap": {
       "$value": "calc({plx-sys.control-target-min} - 1lh)",
       "$type": "dimension",
-      "$description": "With touch a wrapped trail's rows part by the minimum target less one line, so the links' 44px targets of one row do not cover the next (Platforms Standard 3.2)"
+      "$description": "With touch a wrapped trail's rows part by the minimum target less one line, so the links' 44px targets of one row do not cover the next (Platforms Standard 3.2)",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "toolbar-control-gap": {
       "$value": "{plx-ref.space-12px}",
@@ -66,64 +67,79 @@
     },
     "button-target-inset-block": {
       "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-target-inset-inline": {
       "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tag-remove-before-inset-block-end": {
       "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tag-remove-before-inset-block-start": {
       "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tag-remove-before-inset-inline-end": {
       "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tag-remove-before-inset-inline-start": {
       "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tag-input-add-before-inset-block-end": {
       "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tag-input-add-before-inset-block-start": {
       "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tag-input-add-before-inset-inline-end": {
       "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tag-input-add-before-inset-inline-start": {
       "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "combobox-input-margin-block": {
       "$value": "calc({plx-comp.input-border-width} * -1)",
       "$type": "dimension",
-      "$description": "With touch the combobox's input (stretched to the field) reaches over the field's border, so its target is the field's full 44px height (Platforms Standard 3.1)"
+      "$description": "With touch the combobox's input (stretched to the field) reaches over the field's border, so its target is the field's full 44px height (Platforms Standard 3.1)",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "field-info-before-inset-block-end": {
       "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "field-info-before-inset-block-start": {
       "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "field-info-before-inset-inline-end": {
       "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "field-info-before-inset-inline-start": {
       "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "data-grid-lead-column-width": {
       "$value": "{plx-sys.control-target-min}",
@@ -133,7 +149,8 @@
     "tag-list-gap": {
       "$value": "calc({plx-sys.control-target-min} - {plx-comp.tag-remove-width})",
       "$type": "dimension",
-      "$description": "With touch the tags part by the minimum target less the × box (28px), so the × target of a tag (44px around its 16px box) and the next target (a chip, the +) do not overlap"
+      "$description": "With touch the tags part by the minimum target less the × box (28px), so the × target of a tag (44px around its 16px box) and the next target (a chip, the +) do not overlap",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "tag-list-row-gap": {
       "$value": "{plx-ref.space-24px}",
@@ -143,7 +160,8 @@
     "tag-list-padding-block": {
       "$value": "calc(({plx-sys.control-target-min} - {plx-sys.label-height-20px}) / 2)",
       "$type": "dimension",
-      "$description": "With touch a tag list keeps half the minimum target less the 20px tag (12px) above and below, so its 44px targets stay inside it and never cover the controls of the row above or below"
+      "$description": "With touch a tag list keeps half the minimum target less the 20px tag (12px) above and below, so its 44px targets stay inside it and never cover the controls of the row above or below",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "color-picker-slot-min-width": {
       "$value": "{plx-sys.control-target-min}",

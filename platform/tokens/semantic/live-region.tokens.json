@@ -2,7 +2,7 @@
   "$description": "Live regions (utils/announce.tsx): the timing of announcements.",
   "plx-sys": {
     "live-region-delay": {
-      "$value": "50ms",
+      "$value": { "value": 50, "unit": "ms" },
       "$type": "duration",
       "$description": "The pause between clearing a live region and writing its new message: the same text twice is still read, and a burst of updates is read once, in its final state"
     }

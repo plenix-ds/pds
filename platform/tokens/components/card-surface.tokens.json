@@ -3,16 +3,18 @@
   "plx-comp": {
     "card-surface-glow-image": {
       "$value": "radial-gradient(ellipse at center, {plx-sys.surface-default} 55%, {plx-sys.card-surface-rim} 100%)",
-      "$type": "string",
-      "$description": "Glow: the card surface in the middle (to 55%), fading to the rim color at the edges."
+      "$type": "gradient",
+      "$description": "Glow: the card surface in the middle (to 55%), fading to the rim color at the edges.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "card-surface-inset-shadow": {
       "$value": "inset 0 0 {plx-ref.space-12px} {plx-sys.card-surface-rim}",
       "$type": "shadow",
-      "$description": "Inset: a 12px soft inner edge in the rim color."
+      "$description": "Inset: a 12px soft inner edge in the rim color.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "card-elevation-border-color": {
-      "$value": "transparent",
+      "$value": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 0, "hex": "#000000" },
       "$type": "color",
       "$description": "Halo, Lifted and Floating: no visible border (the 1px stays, transparent, so the card keeps its size)."
     },

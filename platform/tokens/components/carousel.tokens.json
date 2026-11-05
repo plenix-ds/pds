@@ -92,7 +92,7 @@
       "$description": "Carousel: page dot focus outline offset (focus-ring-offset)."
     },
     "carousel-autoplay-interval": {
-      "$value": "6s",
+      "$value": { "value": 6, "unit": "s" },
       "$type": "duration",
       "$description": "Carousel: how long a page shows before autoplay moves on (read by the component) (6s)."
     }

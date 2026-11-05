@@ -39,7 +39,8 @@
     "transfer-list-header-shadow": {
       "$value": "inset 0 calc({plx-sys.border-width-thin} * -1) 0 {plx-sys.border-divider}",
       "$type": "shadow",
-      "$description": "TransferList: the divider under a list's header, drawn inside it."
+      "$description": "TransferList: the divider under a list's header, drawn inside it.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "transfer-list-header-gap": {
       "$value": "{plx-sys.space-inline-sm}",

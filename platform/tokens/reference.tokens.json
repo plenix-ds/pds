@@ -9,26 +9,26 @@
   },
   "plx-ref": {
     "color-black-alpha-50": {
-      "$value": "#00000080",
+      "$value": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 0.502, "hex": "#000000" },
       "$type": "color"
     },
     "color-black-alpha-14": {
-      "$value": "#00000024",
+      "$value": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 0.1412, "hex": "#000000" },
       "$type": "color"
     },
     "color-black-alpha-20": {
-      "$value": "#00000033",
+      "$value": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 0.2, "hex": "#000000" },
       "$type": "color",
       "$description": "Black at 20% (owner, 2026-10-15): the closest layer of the Lifted shadow (Material elevation)."
     },
     "color-black-alpha-12": {
-      "$value": "#0000001f",
+      "$value": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 0.1216, "hex": "#000000" },
       "$type": "color",
       "$description": "Black at 12% (owner, 2026-10-15): the widest layer of the Lifted shadow (Material elevation)."
     },
     "font-size-09": {
       "$deprecated": "Below the 12px type floor (DESIGN.md §3, #206): no Plenix token or class uses it any more; use --plx-ref-font-size-12 or a type role. It keeps working, and is removed no earlier than the next minor release.",
-      "$value": "0.5625rem",
+      "$value": { "value": 0.5625, "unit": "rem" },
       "$type": "dimension",
       "$extensions": {
         "com.plenix": {
@@ -40,55 +40,55 @@
     },
     "font-size-10": {
       "$deprecated": "Below the 12px type floor (DESIGN.md §3, #206): no Plenix token or class uses it any more; use --plx-ref-font-size-12 or a type role. It keeps working, and is removed no earlier than the next minor release.",
-      "$value": "0.625rem",
+      "$value": { "value": 0.625, "unit": "rem" },
       "$type": "dimension"
     },
     "font-size-11": {
       "$deprecated": "Below the 12px type floor (DESIGN.md §3, #206): no Plenix token or class uses it any more; use --plx-ref-font-size-12 or a type role. It keeps working, and is removed no earlier than the next minor release.",
-      "$value": "0.6875rem",
+      "$value": { "value": 0.6875, "unit": "rem" },
       "$type": "dimension"
     },
     "font-size-12": {
-      "$value": "0.75rem",
+      "$value": { "value": 0.75, "unit": "rem" },
       "$type": "dimension"
     },
     "font-size-13": {
-      "$value": "0.8125rem",
+      "$value": { "value": 0.8125, "unit": "rem" },
       "$type": "dimension"
     },
     "font-size-14": {
-      "$value": "0.875rem",
+      "$value": { "value": 0.875, "unit": "rem" },
       "$type": "dimension"
     },
     "font-size-15": {
-      "$value": "0.9375rem",
+      "$value": { "value": 0.9375, "unit": "rem" },
       "$type": "dimension"
     },
     "font-size-18": {
-      "$value": "1.125rem",
+      "$value": { "value": 1.125, "unit": "rem" },
       "$type": "dimension"
     },
     "font-size-20": {
-      "$value": "1.25rem",
+      "$value": { "value": 1.25, "unit": "rem" },
       "$type": "dimension"
     },
     "font-size-24": {
-      "$value": "1.5rem",
+      "$value": { "value": 1.5, "unit": "rem" },
       "$type": "dimension",
       "$description": "Display size: a metric card's small value (owner, 2026-10-19)."
     },
     "font-size-28": {
-      "$value": "1.75rem",
+      "$value": { "value": 1.75, "unit": "rem" },
       "$type": "dimension",
       "$description": "Display size: a metric card's value (owner, 2026-10-19)."
     },
     "font-size-36": {
-      "$value": "2.25rem",
+      "$value": { "value": 2.25, "unit": "rem" },
       "$type": "dimension",
       "$description": "Display size: a metric card's large value, a dashboard's first row (owner, 2026-10-19)."
     },
     "font-sans": {
-      "$value": "\"DM Sans\", \"IBM Plex Sans Arabic\", system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Arial, sans-serif",
+      "$value": ["DM Sans", "IBM Plex Sans Arabic", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Arial", "sans-serif"],
       "$type": "fontFamily",
       "$description": "The sans stack: DM Sans, then IBM Plex Sans Arabic for Arabic letters only (owner, arabic-font-35).",
       "$extensions": {
@@ -100,17 +100,17 @@
       }
     },
     "font-sans-title": {
-      "$value": "\"DM Sans\", \"Readex Pro\", system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Arial, sans-serif",
+      "$value": ["DM Sans", "Readex Pro", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Arial", "sans-serif"],
       "$type": "fontFamily",
       "$description": "The titles' stack: DM Sans, then Readex Pro for Arabic letters only (owner, arabic-font-35). Latin titles are DM Sans, as before."
     },
     "font-mono": {
-      "$value": "\"Reddit Mono\", \"IBM Plex Sans Arabic\", ui-monospace, \"SFMono-Regular\", Menlo, Monaco, Consolas, \"Liberation Mono\", monospace",
+      "$value": ["Reddit Mono", "IBM Plex Sans Arabic", "ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "monospace"],
       "$type": "fontFamily",
       "$description": "The code and data stack: Reddit Mono, then IBM Plex Sans Arabic for Arabic letters only (owner, arabic-font-35), so Arabic in data text and chart axes is drawn joined, not by a system monospace font."
     },
     "font-weight-regular-400": {
-      "$value": "400",
+      "$value": 400,
       "$type": "fontWeight",
       "$extensions": {
         "com.plenix": {
@@ -121,19 +121,19 @@
       }
     },
     "font-weight-medium-500": {
-      "$value": "500",
+      "$value": 500,
       "$type": "fontWeight"
     },
     "font-weight-semibold-600": {
-      "$value": "600",
+      "$value": 600,
       "$type": "fontWeight"
     },
     "font-weight-bold-700": {
-      "$value": "700",
+      "$value": 700,
       "$type": "fontWeight"
     },
     "line-height-none": {
-      "$value": "1",
+      "$value": 1,
       "$type": "number",
       "$extensions": {
         "com.plenix": {
@@ -144,25 +144,26 @@
       }
     },
     "line-height-tight": {
-      "$value": "1.3",
+      "$value": 1.3,
       "$type": "number"
     },
     "line-height-snug": {
-      "$value": "1.4",
+      "$value": 1.4,
       "$type": "number"
     },
     "line-height-normal": {
-      "$value": "1.5",
+      "$value": 1.5,
       "$type": "number"
     },
     "line-height-relaxed": {
-      "$value": "1.7",
+      "$value": 1.7,
       "$type": "number"
     },
     "word-spacing-mono-fit": {
       "$value": "-0.279em",
       "$type": "dimension",
-      "$description": "Reddit Mono fitted to DM Sans (owner, 2026-10-18, docs/font-study/playground): a space between words as wide as DM Sans's at the same font-size."
+      "$description": "Reddit Mono fitted to DM Sans (owner, 2026-10-18, docs/font-study/playground): a space between words as wide as DM Sans's at the same font-size.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "letter-spacing-tight": {
       "$value": "-0.02em",
@@ -171,32 +172,38 @@
         "com.plenix": {
           "before": [
             "  /* ── TYPOGRAPHY: letter spacing ── */"
-          ]
+          ],
+          "webOnly": true
         }
       }
     },
     "letter-spacing-snug": {
       "$value": "-0.01em",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "letter-spacing-wide": {
       "$value": "0.04em",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "letter-spacing-wider": {
       "$value": "0.05em",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "letter-spacing-caps": {
       "$value": "0.06em",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "letter-spacing-widest": {
       "$value": "0.08em",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "symbol-size": {
-      "$value": "32px",
+      "$value": { "value": 32, "unit": "px" },
       "$type": "dimension",
       "$extensions": {
         "com.plenix": {
@@ -207,7 +214,7 @@
       }
     },
     "space-4px": {
-      "$value": "0.25rem",
+      "$value": { "value": 0.25, "unit": "rem" },
       "$type": "dimension",
       "$extensions": {
         "com.plenix": {
@@ -218,303 +225,303 @@
       }
     },
     "space-6px": {
-      "$value": "0.375rem",
+      "$value": { "value": 0.375, "unit": "rem" },
       "$type": "dimension"
     },
     "space-8px": {
-      "$value": "0.5rem",
+      "$value": { "value": 0.5, "unit": "rem" },
       "$type": "dimension"
     },
     "space-10px": {
-      "$value": "0.625rem",
+      "$value": { "value": 0.625, "unit": "rem" },
       "$type": "dimension"
     },
     "space-12px": {
-      "$value": "0.75rem",
+      "$value": { "value": 0.75, "unit": "rem" },
       "$type": "dimension"
     },
     "space-16px": {
-      "$value": "1rem",
+      "$value": { "value": 1, "unit": "rem" },
       "$type": "dimension"
     },
     "space-20px": {
-      "$value": "1.25rem",
+      "$value": { "value": 1.25, "unit": "rem" },
       "$type": "dimension"
     },
     "space-24px": {
-      "$value": "1.5rem",
+      "$value": { "value": 1.5, "unit": "rem" },
       "$type": "dimension"
     },
     "space-28px": {
-      "$value": "1.75rem",
+      "$value": { "value": 1.75, "unit": "rem" },
       "$type": "dimension"
     },
     "space-32px": {
-      "$value": "2rem",
+      "$value": { "value": 2, "unit": "rem" },
       "$type": "dimension"
     },
     "space-40px": {
-      "$value": "2.5rem",
+      "$value": { "value": 2.5, "unit": "rem" },
       "$type": "dimension"
     },
     "space-48px": {
-      "$value": "3rem",
+      "$value": { "value": 3, "unit": "rem" },
       "$type": "dimension"
     },
     "space-64px": {
-      "$value": "4rem",
+      "$value": { "value": 4, "unit": "rem" },
       "$type": "dimension"
     },
     "size-4px": {
-      "$value": "4px",
+      "$value": { "value": 4, "unit": "px" },
       "$type": "dimension"
     },
     "size-8px": {
-      "$value": "8px",
+      "$value": { "value": 8, "unit": "px" },
       "$type": "dimension"
     },
     "size-12px": {
-      "$value": "12px",
+      "$value": { "value": 12, "unit": "px" },
       "$type": "dimension"
     },
     "size-16px": {
-      "$value": "16px",
+      "$value": { "value": 16, "unit": "px" },
       "$type": "dimension"
     },
     "size-18px": {
-      "$value": "18px",
+      "$value": { "value": 18, "unit": "px" },
       "$type": "dimension"
     },
     "size-20px": {
-      "$value": "20px",
+      "$value": { "value": 20, "unit": "px" },
       "$type": "dimension"
     },
     "size-24px": {
-      "$value": "24px",
+      "$value": { "value": 24, "unit": "px" },
       "$type": "dimension"
     },
     "size-28px": {
-      "$value": "28px",
+      "$value": { "value": 28, "unit": "px" },
       "$type": "dimension"
     },
     "size-32px": {
-      "$value": "32px",
+      "$value": { "value": 32, "unit": "px" },
       "$type": "dimension"
     },
     "size-36px": {
-      "$value": "36px",
+      "$value": { "value": 36, "unit": "px" },
       "$type": "dimension"
     },
     "size-40px": {
-      "$value": "40px",
+      "$value": { "value": 40, "unit": "px" },
       "$type": "dimension"
     },
     "size-44px": {
-      "$value": "44px",
+      "$value": { "value": 44, "unit": "px" },
       "$type": "dimension"
     },
     "size-48px": {
-      "$value": "48px",
+      "$value": { "value": 48, "unit": "px" },
       "$type": "dimension"
     },
     "size-52px": {
-      "$value": "52px",
+      "$value": { "value": 52, "unit": "px" },
       "$type": "dimension"
     },
     "size-56px": {
-      "$value": "56px",
+      "$value": { "value": 56, "unit": "px" },
       "$type": "dimension"
     },
     "size-60px": {
-      "$value": "60px",
+      "$value": { "value": 60, "unit": "px" },
       "$type": "dimension"
     },
     "size-64px": {
-      "$value": "64px",
+      "$value": { "value": 64, "unit": "px" },
       "$type": "dimension"
     },
     "size-68px": {
-      "$value": "68px",
+      "$value": { "value": 68, "unit": "px" },
       "$type": "dimension"
     },
     "size-72px": {
-      "$value": "72px",
+      "$value": { "value": 72, "unit": "px" },
       "$type": "dimension"
     },
     "size-80px": {
-      "$value": "80px",
+      "$value": { "value": 80, "unit": "px" },
       "$type": "dimension"
     },
     "size-88px": {
-      "$value": "88px",
+      "$value": { "value": 88, "unit": "px" },
       "$type": "dimension"
     },
     "size-92px": {
-      "$value": "92px",
+      "$value": { "value": 92, "unit": "px" },
       "$type": "dimension"
     },
     "size-96px": {
-      "$value": "96px",
+      "$value": { "value": 96, "unit": "px" },
       "$type": "dimension"
     },
     "size-100px": {
-      "$value": "100px",
+      "$value": { "value": 100, "unit": "px" },
       "$type": "dimension"
     },
     "size-112px": {
-      "$value": "112px",
+      "$value": { "value": 112, "unit": "px" },
       "$type": "dimension"
     },
     "size-120px": {
-      "$value": "120px",
+      "$value": { "value": 120, "unit": "px" },
       "$type": "dimension"
     },
     "size-128px": {
-      "$value": "128px",
+      "$value": { "value": 128, "unit": "px" },
       "$type": "dimension"
     },
     "size-132px": {
-      "$value": "132px",
+      "$value": { "value": 132, "unit": "px" },
       "$type": "dimension"
     },
     "size-140px": {
-      "$value": "140px",
+      "$value": { "value": 140, "unit": "px" },
       "$type": "dimension"
     },
     "size-152px": {
-      "$value": "152px",
+      "$value": { "value": 152, "unit": "px" },
       "$type": "dimension"
     },
     "size-160px": {
-      "$value": "160px",
+      "$value": { "value": 160, "unit": "px" },
       "$type": "dimension"
     },
     "size-180px": {
-      "$value": "180px",
+      "$value": { "value": 180, "unit": "px" },
       "$type": "dimension"
     },
     "size-200px": {
-      "$value": "200px",
+      "$value": { "value": 200, "unit": "px" },
       "$type": "dimension"
     },
     "size-220px": {
-      "$value": "220px",
+      "$value": { "value": 220, "unit": "px" },
       "$type": "dimension"
     },
     "size-240px": {
-      "$value": "240px",
+      "$value": { "value": 240, "unit": "px" },
       "$type": "dimension"
     },
     "size-260px": {
-      "$value": "260px",
+      "$value": { "value": 260, "unit": "px" },
       "$type": "dimension"
     },
     "size-272px": {
-      "$value": "272px",
+      "$value": { "value": 272, "unit": "px" },
       "$type": "dimension"
     },
     "size-280px": {
-      "$value": "280px",
+      "$value": { "value": 280, "unit": "px" },
       "$type": "dimension"
     },
     "size-300px": {
-      "$value": "300px",
+      "$value": { "value": 300, "unit": "px" },
       "$type": "dimension"
     },
     "size-320px": {
-      "$value": "320px",
+      "$value": { "value": 320, "unit": "px" },
       "$type": "dimension"
     },
     "size-360px": {
-      "$value": "360px",
+      "$value": { "value": 360, "unit": "px" },
       "$type": "dimension"
     },
     "size-380px": {
-      "$value": "380px",
+      "$value": { "value": 380, "unit": "px" },
       "$type": "dimension"
     },
     "size-400px": {
-      "$value": "400px",
+      "$value": { "value": 400, "unit": "px" },
       "$type": "dimension"
     },
     "size-420px": {
-      "$value": "420px",
+      "$value": { "value": 420, "unit": "px" },
       "$type": "dimension"
     },
     "size-440px": {
-      "$value": "440px",
+      "$value": { "value": 440, "unit": "px" },
       "$type": "dimension"
     },
     "size-460px": {
-      "$value": "460px",
+      "$value": { "value": 460, "unit": "px" },
       "$type": "dimension"
     },
     "size-480px": {
-      "$value": "480px",
+      "$value": { "value": 480, "unit": "px" },
       "$type": "dimension"
     },
     "size-500px": {
-      "$value": "500px",
+      "$value": { "value": 500, "unit": "px" },
       "$type": "dimension"
     },
     "size-520px": {
-      "$value": "520px",
+      "$value": { "value": 520, "unit": "px" },
       "$type": "dimension"
     },
     "size-560px": {
-      "$value": "560px",
+      "$value": { "value": 560, "unit": "px" },
       "$type": "dimension"
     },
     "size-600px": {
-      "$value": "600px",
+      "$value": { "value": 600, "unit": "px" },
       "$type": "dimension"
     },
     "size-640px": {
-      "$value": "640px",
+      "$value": { "value": 640, "unit": "px" },
       "$type": "dimension"
     },
     "size-720px": {
-      "$value": "720px",
+      "$value": { "value": 720, "unit": "px" },
       "$type": "dimension"
     },
     "size-760px": {
-      "$value": "760px",
+      "$value": { "value": 760, "unit": "px" },
       "$type": "dimension"
     },
     "size-800px": {
-      "$value": "800px",
+      "$value": { "value": 800, "unit": "px" },
       "$type": "dimension"
     },
     "size-860px": {
-      "$value": "860px",
+      "$value": { "value": 860, "unit": "px" },
       "$type": "dimension"
     },
     "size-900px": {
-      "$value": "900px",
+      "$value": { "value": 900, "unit": "px" },
       "$type": "dimension"
     },
     "size-960px": {
-      "$value": "960px",
+      "$value": { "value": 960, "unit": "px" },
       "$type": "dimension"
     },
     "size-1000px": {
-      "$value": "1000px",
+      "$value": { "value": 1000, "unit": "px" },
       "$type": "dimension"
     },
     "size-1200px": {
-      "$value": "1200px",
+      "$value": { "value": 1200, "unit": "px" },
       "$type": "dimension"
     },
     "size-1400px": {
-      "$value": "1400px",
+      "$value": { "value": 1400, "unit": "px" },
       "$type": "dimension"
     },
     "size-1600px": {
-      "$value": "1600px",
+      "$value": { "value": 1600, "unit": "px" },
       "$type": "dimension"
     },
     "glyph-size-6px": {
-      "$value": "6px",
+      "$value": { "value": 6, "unit": "px" },
       "$type": "dimension",
       "$extensions": {
         "com.plenix": {
@@ -525,19 +532,19 @@
       }
     },
     "glyph-size-10px": {
-      "$value": "10px",
+      "$value": { "value": 10, "unit": "px" },
       "$type": "dimension"
     },
     "glyph-size-14px": {
-      "$value": "14px",
+      "$value": { "value": 14, "unit": "px" },
       "$type": "dimension"
     },
     "glyph-size-18px": {
-      "$value": "18px",
+      "$value": { "value": 18, "unit": "px" },
       "$type": "dimension"
     },
     "border-width-1px": {
-      "$value": "1px",
+      "$value": { "value": 1, "unit": "px" },
       "$type": "dimension",
       "$extensions": {
         "com.plenix": {
@@ -548,15 +555,15 @@
       }
     },
     "border-width-2px": {
-      "$value": "2px",
+      "$value": { "value": 2, "unit": "px" },
       "$type": "dimension"
     },
     "border-width-3px": {
-      "$value": "3px",
+      "$value": { "value": 3, "unit": "px" },
       "$type": "dimension"
     },
     "border-width-4px": {
-      "$value": "4px",
+      "$value": { "value": 4, "unit": "px" },
       "$type": "dimension"
     },
     "border-style-solid": {
@@ -567,13 +574,15 @@
             "  /* ── BORDER: styles ── */"
           ]
         }
-      }
+      },
+      "$type": "strokeStyle"
     },
     "border-style-dashed": {
-      "$value": "dashed"
+      "$value": "dashed",
+      "$type": "strokeStyle"
     },
     "opacity-30": {
-      "$value": "0.3",
+      "$value": 0.3,
       "$type": "number",
       "$extensions": {
         "com.plenix": {
@@ -584,38 +593,38 @@
       }
     },
     "opacity-45": {
-      "$value": "0.45",
+      "$value": 0.45,
       "$deprecated": "Not used by any page, application or the design spec (issue 882): it keeps working, and is removed no earlier than the next minor release.",
       "$type": "number"
     },
     "opacity-50": {
-      "$value": "0.5",
+      "$value": 0.5,
       "$type": "number"
     },
     "opacity-70": {
-      "$value": "0.7",
+      "$value": 0.7,
       "$type": "number"
     },
     "mix-amount-xs": {
       "$value": "8%",
-      "$type": "number",
+      "$extensions": { "com.plenix": { "webOnly": true } },
       "$description": "A color-mix amount step: the state layer on hover (docs/adr/0004)."
     },
     "mix-amount-sm": {
       "$value": "10%",
-      "$type": "number",
+      "$extensions": { "com.plenix": { "webOnly": true } },
       "$description": "A color-mix amount step: the state layer while pressed or focused (docs/adr/0004)."
     },
     "motion-duration-quick": {
-      "$value": "0.12s",
+      "$value": { "value": 0.12, "unit": "s" },
       "$type": "duration"
     },
     "motion-duration-instant": {
-      "$value": "0.08s",
+      "$value": { "value": 0.08, "unit": "s" },
       "$type": "duration"
     },
     "motion-duration-fast": {
-      "$value": "0.15s",
+      "$value": { "value": 0.15, "unit": "s" },
       "$type": "duration",
       "$extensions": {
         "com.plenix": {
@@ -626,53 +635,56 @@
       }
     },
     "motion-duration-base": {
-      "$value": "0.2s",
+      "$value": { "value": 0.2, "unit": "s" },
       "$type": "duration"
     },
     "motion-duration-slow": {
-      "$value": "0.25s",
+      "$value": { "value": 0.25, "unit": "s" },
       "$type": "duration"
     },
     "motion-ease-standard": {
-      "$value": "ease"
+      "$value": "ease",
+      "$extensions": { "com.plenix": { "webOnly": true } },
+      "$type": "cubicBezier"
     },
     "motion-ease-out": {
-      "$value": "cubic-bezier(0.2, 0, 0, 1)"
+      "$value": [0.2, 0, 0, 1],
+      "$type": "cubicBezier"
     },
     "motion-scale-98": {
-      "$value": "0.98",
+      "$value": 0.98,
       "$type": "number"
     },
     "motion-scale-96": {
-      "$value": "0.96",
+      "$value": 0.96,
       "$type": "number"
     },
     "motion-duration-loop-fast": {
-      "$value": "0.7s",
+      "$value": { "value": 0.7, "unit": "s" },
       "$type": "duration"
     },
     "motion-duration-loop-base": {
-      "$value": "1.1s",
+      "$value": { "value": 1.1, "unit": "s" },
       "$type": "duration"
     },
     "motion-duration-loop-slow": {
-      "$value": "1.4s",
+      "$value": { "value": 1.4, "unit": "s" },
       "$type": "duration"
     },
     "motion-delay-stagger": {
-      "$value": "0.18s",
+      "$value": { "value": 0.18, "unit": "s" },
       "$type": "duration"
     },
     "motion-delay-long-press": {
-      "$value": "0.5s",
+      "$value": { "value": 0.5, "unit": "s" },
       "$type": "duration"
     },
     "motion-delay-dismiss": {
-      "$value": "1.5s",
+      "$value": { "value": 1.5, "unit": "s" },
       "$type": "duration"
     },
     "radius-0px": {
-      "$value": "0px",
+      "$value": { "value": 0, "unit": "px" },
       "$type": "dimension",
       "$extensions": {
         "com.plenix": {
@@ -683,19 +695,19 @@
       }
     },
     "radius-2px": {
-      "$value": "2px",
+      "$value": { "value": 2, "unit": "px" },
       "$type": "dimension"
     },
     "radius-4px": {
-      "$value": "4px",
+      "$value": { "value": 4, "unit": "px" },
       "$type": "dimension"
     },
     "radius-6px": {
-      "$value": "6px",
+      "$value": { "value": 6, "unit": "px" },
       "$type": "dimension"
     },
     "breakpoint-600px": {
-      "$value": "600px",
+      "$value": { "value": 600, "unit": "px" },
       "$type": "dimension",
       "$extensions": {
         "com.plenix": {
@@ -707,61 +719,61 @@
       }
     },
     "breakpoint-768px": {
-      "$value": "768px",
+      "$value": { "value": 768, "unit": "px" },
       "$deprecated": "Not used by any page, application or the design spec (issue 882): it keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
     "breakpoint-840px": {
-      "$value": "840px",
+      "$value": { "value": 840, "unit": "px" },
       "$type": "dimension"
     },
     "breakpoint-1024px": {
-      "$value": "1024px",
+      "$value": { "value": 1024, "unit": "px" },
       "$type": "dimension"
     },
     "breakpoint-1440px": {
-      "$value": "1440px",
+      "$value": { "value": 1440, "unit": "px" },
       "$type": "dimension"
     },
     "breakpoint-1920px": {
-      "$value": "1920px",
+      "$value": { "value": 1920, "unit": "px" },
       "$deprecated": "Not used by any page, application or the design spec (issue 882): it keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
     "control-size-24px": {
-      "$value": "1.5rem",
+      "$value": { "value": 1.5, "unit": "rem" },
       "$type": "dimension"
     },
     "control-size-28px": {
-      "$value": "1.75rem",
+      "$value": { "value": 1.75, "unit": "rem" },
       "$type": "dimension"
     },
     "control-size-32px": {
-      "$value": "2rem",
+      "$value": { "value": 2, "unit": "rem" },
       "$type": "dimension"
     },
     "control-size-36px": {
-      "$value": "2.25rem",
+      "$value": { "value": 2.25, "unit": "rem" },
       "$type": "dimension"
     },
     "control-size-40px": {
-      "$value": "2.5rem",
+      "$value": { "value": 2.5, "unit": "rem" },
       "$type": "dimension"
     },
     "control-size-44px": {
-      "$value": "2.75rem",
+      "$value": { "value": 2.75, "unit": "rem" },
       "$type": "dimension"
     },
     "control-size-48px": {
-      "$value": "3rem",
+      "$value": { "value": 3, "unit": "rem" },
       "$type": "dimension"
     },
     "control-size-52px": {
-      "$value": "3.25rem",
+      "$value": { "value": 3.25, "unit": "rem" },
       "$type": "dimension"
     },
     "control-visual-size-16px": {
-      "$value": "16px",
+      "$value": { "value": 16, "unit": "px" },
       "$deprecated": "Not used by any page, application or the design spec (issue 882): it keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension",
       "$extensions": {
@@ -773,37 +785,37 @@
       }
     },
     "control-visual-size-20px": {
-      "$value": "20px",
+      "$value": { "value": 20, "unit": "px" },
       "$deprecated": "Not used by any page, application or the design spec (issue 882): it keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
     "control-visual-size-24px": {
-      "$value": "24px",
+      "$value": { "value": 24, "unit": "px" },
       "$deprecated": "Not used by any page, application or the design spec (issue 882): it keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
     "control-target-size-24px": {
-      "$value": "24px",
+      "$value": { "value": 24, "unit": "px" },
       "$deprecated": "Not used by any page, application or the design spec (issue 882): it keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
     "control-target-size-28px": {
-      "$value": "28px",
+      "$value": { "value": 28, "unit": "px" },
       "$deprecated": "Not used by any page, application or the design spec (issue 882): it keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
     "control-target-size-32px": {
-      "$value": "32px",
+      "$value": { "value": 32, "unit": "px" },
       "$deprecated": "Not used by any page, application or the design spec (issue 882): it keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
     "control-target-size-44px": {
-      "$value": "44px",
+      "$value": { "value": 44, "unit": "px" },
       "$deprecated": "Not used by any page, application or the design spec (issue 882): it keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
     "grid-columns-4": {
-      "$value": "4",
+      "$value": 4,
       "$type": "number",
       "$extensions": {
         "com.plenix": {
@@ -814,19 +826,19 @@
       }
     },
     "grid-columns-8": {
-      "$value": "8",
+      "$value": 8,
       "$type": "number"
     },
     "grid-columns-12": {
-      "$value": "12",
+      "$value": 12,
       "$type": "number"
     },
     "grid-columns-16": {
-      "$value": "16",
+      "$value": 16,
       "$type": "number"
     },
     "grid-gutter-12px": {
-      "$value": "12px",
+      "$value": { "value": 12, "unit": "px" },
       "$type": "dimension",
       "$extensions": {
         "com.plenix": {
@@ -837,31 +849,31 @@
       }
     },
     "grid-gutter-16px": {
-      "$value": "16px",
+      "$value": { "value": 16, "unit": "px" },
       "$type": "dimension"
     },
     "grid-gutter-24px": {
-      "$value": "24px",
+      "$value": { "value": 24, "unit": "px" },
       "$type": "dimension"
     },
     "grid-margin-16px": {
-      "$value": "16px",
+      "$value": { "value": 16, "unit": "px" },
       "$type": "dimension"
     },
     "grid-margin-24px": {
-      "$value": "24px",
+      "$value": { "value": 24, "unit": "px" },
       "$type": "dimension"
     },
     "grid-margin-32px": {
-      "$value": "32px",
+      "$value": { "value": 32, "unit": "px" },
       "$type": "dimension"
     },
     "grid-margin-48px": {
-      "$value": "48px",
+      "$value": { "value": 48, "unit": "px" },
       "$type": "dimension"
     },
     "content-max-760px": {
-      "$value": "760px",
+      "$value": { "value": 760, "unit": "px" },
       "$type": "dimension",
       "$extensions": {
         "com.plenix": {
@@ -872,24 +884,24 @@
       }
     },
     "content-max-960px": {
-      "$value": "960px",
+      "$value": { "value": 960, "unit": "px" },
       "$type": "dimension"
     },
     "content-max-1200px": {
-      "$value": "1200px",
+      "$value": { "value": 1200, "unit": "px" },
       "$type": "dimension"
     },
     "content-max-1600px": {
-      "$value": "1600px",
+      "$value": { "value": 1600, "unit": "px" },
       "$type": "dimension"
     },
     "content-max-2600px": {
-      "$value": "2600px",
+      "$value": { "value": 2600, "unit": "px" },
       "$deprecated": "Not used by any page, application or the design spec (issue 882): it keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
     "color-black": {
-      "$value": "#000000",
+      "$value": { "colorSpace": "srgb", "components": [0, 0, 0], "hex": "#000000" },
       "$type": "color",
       "$extensions": {
         "com.plenix": {
@@ -900,343 +912,343 @@
       }
     },
     "color-gray-950": {
-      "$value": "#1e1f22",
+      "$value": { "colorSpace": "srgb", "components": [0.1176, 0.1216, 0.1333], "hex": "#1e1f22" },
       "$type": "color"
     },
     "color-gray-900": {
-      "$value": "#34363b",
+      "$value": { "colorSpace": "srgb", "components": [0.2039, 0.2118, 0.2314], "hex": "#34363b" },
       "$type": "color"
     },
     "color-gray-800": {
-      "$value": "#444444",
+      "$value": { "colorSpace": "srgb", "components": [0.2667, 0.2667, 0.2667], "hex": "#444444" },
       "$type": "color"
     },
     "color-gray-700": {
-      "$value": "#56585e",
+      "$value": { "colorSpace": "srgb", "components": [0.3373, 0.3451, 0.3686], "hex": "#56585e" },
       "$type": "color"
     },
     "color-gray-600": {
-      "$value": "#6e6e6e",
+      "$value": { "colorSpace": "srgb", "components": [0.4314, 0.4314, 0.4314], "hex": "#6e6e6e" },
       "$type": "color"
     },
     "color-gray-500": {
-      "$value": "#8e9094",
+      "$value": { "colorSpace": "srgb", "components": [0.5569, 0.5647, 0.5804], "hex": "#8e9094" },
       "$type": "color"
     },
     "color-gray-400": {
-      "$value": "#a3a6ad",
+      "$value": { "colorSpace": "srgb", "components": [0.6392, 0.651, 0.6784], "hex": "#a3a6ad" },
       "$type": "color"
     },
     "color-gray-350": {
-      "$value": "#c0c2c8",
+      "$value": { "colorSpace": "srgb", "components": [0.7529, 0.7608, 0.7843], "hex": "#c0c2c8" },
       "$type": "color"
     },
     "color-gray-300": {
-      "$value": "#d0d0d0",
+      "$value": { "colorSpace": "srgb", "components": [0.8157, 0.8157, 0.8157], "hex": "#d0d0d0" },
       "$type": "color"
     },
     "color-gray-250": {
-      "$value": "#dcddde",
+      "$value": { "colorSpace": "srgb", "components": [0.8627, 0.8667, 0.8706], "hex": "#dcddde" },
       "$type": "color",
       "$description": "Halfway between gray 200 and gray 300: the edge after a frozen DataGrid or Table column (owner, 2026-10-26)."
     },
     "color-gray-200": {
-      "$value": "#e8e9ec",
+      "$value": { "colorSpace": "srgb", "components": [0.9098, 0.9137, 0.9255], "hex": "#e8e9ec" },
       "$type": "color"
     },
     "color-gray-100": {
-      "$value": "#f3f3f3",
+      "$value": { "colorSpace": "srgb", "components": [0.9529, 0.9529, 0.9529], "hex": "#f3f3f3" },
       "$type": "color"
     },
     "color-gray-75": {
-      "$value": "#f7f7f8",
+      "$value": { "colorSpace": "srgb", "components": [0.9686, 0.9686, 0.9725], "hex": "#f7f7f8" },
       "$type": "color"
     },
     "color-gray-50": {
-      "$value": "#fcfcfc",
+      "$value": { "colorSpace": "srgb", "components": [0.9882, 0.9882, 0.9882], "hex": "#fcfcfc" },
       "$type": "color",
       "$description": "The form fields' fill (owner, 2026-10-15): one step above white, lighter than gray-75."
     },
     "color-white": {
-      "$value": "#ffffff",
+      "$value": { "colorSpace": "srgb", "components": [1, 1, 1], "hex": "#ffffff" },
       "$type": "color"
     },
     "color-red-900": {
-      "$value": "#7a0000",
+      "$value": { "colorSpace": "srgb", "components": [0.4784, 0, 0], "hex": "#7a0000" },
       "$type": "color",
       "$description": "One step darker than red-800: the pressed step of the Danger and Danger secondary buttons, so rest (red-700), hover (red-800) and pressed (red-900) are three distinct steps (owner, 2026-10-29, #610: an explicit OK for this one color, an exception to no new colors)."
     },
     "color-red-800": {
-      "$value": "#990000",
+      "$value": { "colorSpace": "srgb", "components": [0.6, 0, 0], "hex": "#990000" },
       "$type": "color",
       "$description": "Two shades darker than red-500, same hue (the danger solid border; owner, 2026-10-09). red-700 is plum."
     },
     "color-red-700": {
-      "$value": "#b70000",
+      "$value": { "colorSpace": "srgb", "components": [0.7176, 0, 0], "hex": "#b70000" },
       "$type": "color"
     },
     "color-red-500": {
-      "$value": "#f60000",
+      "$value": { "colorSpace": "srgb", "components": [0.9647, 0, 0], "hex": "#f60000" },
       "$type": "color"
     },
     "color-red-300": {
-      "$value": "#e96060",
+      "$value": { "colorSpace": "srgb", "components": [0.9137, 0.3765, 0.3765], "hex": "#e96060" },
       "$type": "color"
     },
     "color-red-200": {
-      "$value": "#f8aca2",
+      "$value": { "colorSpace": "srgb", "components": [0.9725, 0.6745, 0.6353], "hex": "#f8aca2" },
       "$type": "color"
     },
     "color-red-100": {
-      "$value": "#fde7e7",
+      "$value": { "colorSpace": "srgb", "components": [0.9922, 0.9059, 0.9059], "hex": "#fde7e7" },
       "$type": "color"
     },
     "color-pink-700": {
-      "$value": "#6c3b4f",
+      "$value": { "colorSpace": "srgb", "components": [0.4235, 0.2314, 0.3098], "hex": "#6c3b4f" },
       "$type": "color",
       "$description": "Canonical palette (owner, 2026-10-15, the palette consolidation)."
     },
     "color-pink-300": {
-      "$value": "#f3b7cd",
+      "$value": { "colorSpace": "srgb", "components": [0.9529, 0.7176, 0.8039], "hex": "#f3b7cd" },
       "$type": "color",
       "$description": "Canonical palette (owner, 2026-10-15, the palette consolidation)."
     },
     "color-pink-100": {
-      "$value": "#ffeef4",
+      "$value": { "colorSpace": "srgb", "components": [1, 0.9333, 0.9569], "hex": "#ffeef4" },
       "$type": "color",
       "$description": "Canonical palette (owner, 2026-10-15, the palette consolidation)."
     },
     "color-magenta-700": {
-      "$value": "#752870",
+      "$value": { "colorSpace": "srgb", "components": [0.4588, 0.1569, 0.4392], "hex": "#752870" },
       "$type": "color",
       "$description": "Canonical palette (owner, 2026-10-15, the palette consolidation)."
     },
     "color-magenta-500": {
-      "$value": "#f032e6",
+      "$value": { "colorSpace": "srgb", "components": [0.9412, 0.1961, 0.902], "hex": "#f032e6" },
       "$type": "color",
       "$description": "Canonical palette (owner, 2026-10-15, the palette consolidation)."
     },
     "color-magenta-300": {
-      "$value": "#f4b0ec",
+      "$value": { "colorSpace": "srgb", "components": [0.9569, 0.6902, 0.9255], "hex": "#f4b0ec" },
       "$type": "color",
       "$description": "Canonical palette (owner, 2026-10-15, the palette consolidation)."
     },
     "color-magenta-100": {
-      "$value": "#ffedfc",
+      "$value": { "colorSpace": "srgb", "components": [1, 0.9294, 0.9882], "hex": "#ffedfc" },
       "$type": "color",
       "$description": "Canonical palette (owner, 2026-10-15, the palette consolidation)."
     },
     "color-brown-800": {
-      "$value": "#4d3800",
+      "$value": { "colorSpace": "srgb", "components": [0.302, 0.2196, 0], "hex": "#4d3800" },
       "$type": "color",
       "$description": "Canonical palette (owner revised 70-color proposal, 2026-10-16)."
     },
     "color-brown-700": {
-      "$value": "#7a3400",
+      "$value": { "colorSpace": "srgb", "components": [0.4784, 0.2039, 0], "hex": "#7a3400" },
       "$type": "color",
       "$description": "Canonical palette (owner revised 70-color proposal, 2026-10-16)."
     },
     "color-brown-500": {
-      "$value": "#963f00",
+      "$value": { "colorSpace": "srgb", "components": [0.5882, 0.2471, 0], "hex": "#963f00" },
       "$type": "color",
       "$description": "Canonical palette (owner revised 70-color proposal, 2026-10-16)."
     },
     "color-orange-500": {
-      "$value": "#d96800",
+      "$value": { "colorSpace": "srgb", "components": [0.851, 0.4078, 0], "hex": "#d96800" },
       "$type": "color",
       "$description": "Orange 500: the action / correction required family (owner, 2026-10-14, docs/pills-and-colors.md)."
     },
     "color-orange-300": {
-      "$value": "#f2ad70",
+      "$value": { "colorSpace": "srgb", "components": [0.949, 0.6784, 0.4392], "hex": "#f2ad70" },
       "$type": "color",
       "$description": "Orange 300: the action / correction required family (owner, 2026-10-14, docs/pills-and-colors.md)."
     },
     "color-orange-200": {
-      "$value": "#f8d0ad",
+      "$value": { "colorSpace": "srgb", "components": [0.9725, 0.8157, 0.6784], "hex": "#f8d0ad" },
       "$type": "color",
       "$description": "Orange 200: the action / correction required family (owner, 2026-10-14, docs/pills-and-colors.md)."
     },
     "color-orange-100": {
-      "$value": "#fff0e3",
+      "$value": { "colorSpace": "srgb", "components": [1, 0.9412, 0.8902], "hex": "#fff0e3" },
       "$type": "color",
       "$description": "Orange 100: the action / correction required family (owner, 2026-10-14, docs/pills-and-colors.md)."
     },
     "color-brown-900": {
-      "$value": "#3a2e22",
+      "$value": { "colorSpace": "srgb", "components": [0.2275, 0.1804, 0.1333], "hex": "#3a2e22" },
       "$type": "color"
     },
     "color-brown-600": {
-      "$value": "#765600",
+      "$value": { "colorSpace": "srgb", "components": [0.4627, 0.3373, 0], "hex": "#765600" },
       "$type": "color",
       "$description": "Canonical palette (owner revised 70-color proposal, 2026-10-16)."
     },
     "color-green-500": {
-      "$value": "#107c10",
+      "$value": { "colorSpace": "srgb", "components": [0.0627, 0.4863, 0.0627], "hex": "#107c10" },
       "$type": "color"
     },
     "color-yellow-500": {
-      "$value": "#d5a300",
+      "$value": { "colorSpace": "srgb", "components": [0.8353, 0.6392, 0], "hex": "#d5a300" },
       "$type": "color",
       "$description": "Canonical palette (owner revised 70-color proposal, 2026-10-16)."
     },
     "color-yellow-300": {
-      "$value": "#e8c34a",
+      "$value": { "colorSpace": "srgb", "components": [0.9098, 0.7647, 0.2902], "hex": "#e8c34a" },
       "$type": "color",
       "$description": "Yellow 300: the waiting / paused family (owner, 2026-10-14, docs/pills-and-colors.md)."
     },
     "color-yellow-200": {
-      "$value": "#f4dfa0",
+      "$value": { "colorSpace": "srgb", "components": [0.9569, 0.8745, 0.6275], "hex": "#f4dfa0" },
       "$type": "color",
       "$description": "Yellow 200: the waiting / paused family (owner, 2026-10-14, docs/pills-and-colors.md)."
     },
     "color-yellow-150": {
-      "$value": "#ffe119",
+      "$value": { "colorSpace": "srgb", "components": [1, 0.8824, 0.098], "hex": "#ffe119" },
       "$type": "color",
       "$description": "Canonical palette (owner revised 70-color proposal, 2026-10-16)."
     },
     "color-yellow-100": {
-      "$value": "#fff8df",
+      "$value": { "colorSpace": "srgb", "components": [1, 0.9725, 0.8745], "hex": "#fff8df" },
       "$type": "color",
       "$description": "Yellow 100: the waiting / paused family (owner, 2026-10-14, docs/pills-and-colors.md)."
     },
     "color-green-700": {
-      "$value": "#1b5e0c",
+      "$value": { "colorSpace": "srgb", "components": [0.1059, 0.3686, 0.0471], "hex": "#1b5e0c" },
       "$type": "color"
     },
     "color-green-300": {
-      "$value": "#58ad58",
+      "$value": { "colorSpace": "srgb", "components": [0.3451, 0.6784, 0.3451], "hex": "#58ad58" },
       "$type": "color"
     },
     "color-green-200": {
-      "$value": "#9bd39b",
+      "$value": { "colorSpace": "srgb", "components": [0.6078, 0.8275, 0.6078], "hex": "#9bd39b" },
       "$type": "color"
     },
     "color-green-100": {
-      "$value": "#dff6dd",
+      "$value": { "colorSpace": "srgb", "components": [0.8745, 0.9647, 0.8667], "hex": "#dff6dd" },
       "$type": "color"
     },
     "color-teal-700": {
-      "$value": "#065a53",
+      "$value": { "colorSpace": "srgb", "components": [0.0235, 0.3529, 0.3255], "hex": "#065a53" },
       "$type": "color",
       "$description": "Canonical palette (owner, 2026-10-15, the palette consolidation)."
     },
     "color-teal-500": {
-      "$value": "#469990",
+      "$value": { "colorSpace": "srgb", "components": [0.2745, 0.6, 0.5647], "hex": "#469990" },
       "$type": "color",
       "$description": "Canonical palette (owner, 2026-10-15, the palette consolidation)."
     },
     "color-teal-300": {
-      "$value": "#8adcd2",
+      "$value": { "colorSpace": "srgb", "components": [0.5412, 0.8627, 0.8235], "hex": "#8adcd2" },
       "$type": "color",
       "$description": "Canonical palette (owner, 2026-10-15, the palette consolidation)."
     },
     "color-teal-100": {
-      "$value": "#dafcf7",
+      "$value": { "colorSpace": "srgb", "components": [0.8549, 0.9882, 0.9686], "hex": "#dafcf7" },
       "$type": "color",
       "$description": "Canonical palette (owner, 2026-10-15, the palette consolidation)."
     },
     "color-cyan-700": {
-      "$value": "#045766",
+      "$value": { "colorSpace": "srgb", "components": [0.0157, 0.3412, 0.4], "hex": "#045766" },
       "$type": "color",
       "$description": "Canonical palette (owner, 2026-10-15, the palette consolidation)."
     },
     "color-cyan-300": {
-      "$value": "#6bddf8",
+      "$value": { "colorSpace": "srgb", "components": [0.4196, 0.8667, 0.9725], "hex": "#6bddf8" },
       "$type": "color",
       "$description": "Canonical palette (owner, 2026-10-15, the palette consolidation)."
     },
     "color-cyan-100": {
-      "$value": "#e2f8fe",
+      "$value": { "colorSpace": "srgb", "components": [0.8863, 0.9725, 0.9961], "hex": "#e2f8fe" },
       "$type": "color",
       "$description": "Canonical palette (owner, 2026-10-15, the palette consolidation)."
     },
     "color-blue-950": {
-      "$value": "#000075",
+      "$value": { "colorSpace": "srgb", "components": [0, 0, 0.4588], "hex": "#000075" },
       "$type": "color",
       "$description": "Canonical palette (owner, 2026-10-15, the palette consolidation)."
     },
     "color-blue-900": {
-      "$value": "#1f2a3a",
+      "$value": { "colorSpace": "srgb", "components": [0.1216, 0.1647, 0.2275], "hex": "#1f2a3a" },
       "$type": "color"
     },
     "color-blue-700": {
-      "$value": "#005a9e",
+      "$value": { "colorSpace": "srgb", "components": [0, 0.3529, 0.6196], "hex": "#005a9e" },
       "$type": "color"
     },
     "color-blue-650": {
-      "$value": "#3d5a80",
+      "$value": { "colorSpace": "srgb", "components": [0.2392, 0.3529, 0.502], "hex": "#3d5a80" },
       "$type": "color"
     },
     "color-blue-600": {
-      "$value": "#1f5bb8",
+      "$value": { "colorSpace": "srgb", "components": [0.1216, 0.3569, 0.7216], "hex": "#1f5bb8" },
       "$type": "color"
     },
     "color-blue-400": {
-      "$value": "#2a6fdb",
+      "$value": { "colorSpace": "srgb", "components": [0.1647, 0.4353, 0.8588], "hex": "#2a6fdb" },
       "$type": "color"
     },
     "color-blue-300": {
-      "$value": "#a2c0e3",
+      "$value": { "colorSpace": "srgb", "components": [0.6353, 0.7529, 0.8902], "hex": "#a2c0e3" },
       "$type": "color"
     },
     "color-blue-275": {
-      "$value": "#b2cbe9",
+      "$value": { "colorSpace": "srgb", "components": [0.698, 0.7961, 0.9137], "hex": "#b2cbe9" },
       "$type": "color",
       "$description": "The owner's chat color (2026-10-29, #637): an outgoing message's border. Between blue 300 and blue 250 by lightness."
     },
     "color-blue-250": {
-      "$value": "#c0ccda",
+      "$value": { "colorSpace": "srgb", "components": [0.7529, 0.8, 0.8549], "hex": "#c0ccda" },
       "$type": "color"
     },
     "color-blue-200": {
-      "$value": "#c8dff7",
+      "$value": { "colorSpace": "srgb", "components": [0.7843, 0.8745, 0.9686], "hex": "#c8dff7" },
       "$type": "color"
     },
     "color-blue-125": {
-      "$value": "#e6f0fc",
+      "$value": { "colorSpace": "srgb", "components": [0.902, 0.9412, 0.9882], "hex": "#e6f0fc" },
       "$type": "color",
       "$description": "The owner's chat color (2026-10-29, #637): an outgoing message's fill. Between blue 200 and blue 100 by lightness."
     },
     "color-blue-100": {
-      "$value": "#ebf0f7",
+      "$value": { "colorSpace": "srgb", "components": [0.9216, 0.9412, 0.9686], "hex": "#ebf0f7" },
       "$type": "color"
     },
     "color-blue-50": {
-      "$value": "#f8fafd",
+      "$value": { "colorSpace": "srgb", "components": [0.9725, 0.9804, 0.9922], "hex": "#f8fafd" },
       "$type": "color"
     },
     "color-slate-900": {
-      "$value": "#253442",
+      "$value": { "colorSpace": "srgb", "components": [0.1451, 0.2039, 0.2588], "hex": "#253442" },
       "$type": "color",
       "$description": "Slate, the owner's blue-gray family (2026-10-29, #637): a message's text. Steps numbered by the gray scale's lightness."
     },
     "color-slate-375": {
-      "$value": "#a9b8c7",
+      "$value": { "colorSpace": "srgb", "components": [0.6627, 0.7216, 0.7804], "hex": "#a9b8c7" },
       "$type": "color",
       "$description": "Slate (the owner, 2026-10-29, #637): an incoming message's border. Between the gray 350 and gray 400 lightness."
     },
     "color-purple-900": {
-      "$value": "#551a8b",
+      "$value": { "colorSpace": "srgb", "components": [0.3333, 0.102, 0.5451], "hex": "#551a8b" },
       "$type": "color",
       "$description": "Canonical palette (owner, 2026-10-15, the palette consolidation)."
     },
     "color-purple-700": {
-      "$value": "#6a2e7f",
+      "$value": { "colorSpace": "srgb", "components": [0.4157, 0.1804, 0.498], "hex": "#6a2e7f" },
       "$type": "color",
       "$description": "Canonical palette (owner, 2026-10-15, the palette consolidation)."
     },
     "color-purple-500": {
-      "$value": "#911eb4",
+      "$value": { "colorSpace": "srgb", "components": [0.5686, 0.1176, 0.7059], "hex": "#911eb4" },
       "$type": "color",
       "$description": "Canonical palette (owner, 2026-10-15, the palette consolidation)."
     },
     "color-purple-300": {
-      "$value": "#d7aefb",
+      "$value": { "colorSpace": "srgb", "components": [0.8431, 0.6824, 0.9843], "hex": "#d7aefb" },
       "$type": "color",
       "$description": "Canonical palette (owner, 2026-10-15, the palette consolidation)."
     },
     "color-purple-100": {
-      "$value": "#f6f0fe",
+      "$value": { "colorSpace": "srgb", "components": [0.9647, 0.9412, 0.9961], "hex": "#f6f0fe" },
       "$type": "color",
       "$description": "Canonical palette (owner, 2026-10-15, the palette consolidation)."
     },

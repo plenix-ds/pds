@@ -2,7 +2,7 @@
   "$description": "Clipboard (utils/clipboard.ts): the timing of the copy confirmation.",
   "plx-sys": {
     "clipboard-feedback-duration": {
-      "$value": "2s",
+      "$value": { "value": 2, "unit": "s" },
       "$type": "duration",
       "$description": "How long a copy control shows Copied (useClipboard's copied state) before it returns to Copy"
     }

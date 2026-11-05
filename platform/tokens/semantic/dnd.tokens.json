@@ -7,7 +7,7 @@
       "$description": "How close to the edge of a scrolling region (or the window) the pointer comes before the region scrolls by itself while something is dragged."
     },
     "dnd-autoscroll-speed": {
-      "$value": "1",
+      "$value": 1,
       "$type": "number",
       "$description": "The auto-scroll speed at the very edge, in CSS pixels per millisecond; it slows in proportion as the pointer moves back from the edge, and stops outside dnd-autoscroll-edge."
     },

@@ -74,7 +74,8 @@
     "resource-list-item-interactive-margin-inline": {
       "$value": "calc({plx-sys.space-inset-sm} * -1)",
       "$type": "dimension",
-      "$description": "ResourceList: a row that opens reaches past the list's edges by its inset, so only its fill does."
+      "$description": "ResourceList: a row that opens reaches past the list's edges by its inset, so only its fill does.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "resource-list-item-interactive-padding-inline": {
       "$value": "{plx-sys.space-inset-sm}",
@@ -104,7 +105,8 @@
     "resource-list-item-focus-outline-offset": {
       "$value": "calc({plx-sys.border-width-medium} * -1)",
       "$type": "dimension",
-      "$description": "ResourceList: the focus ring sits inside the row."
+      "$description": "ResourceList: the focus ring sits inside the row.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "resource-list-control-z-index": {
       "$value": "{plx-sys.layer-raised}",
@@ -154,7 +156,8 @@
     "resource-list-field-share": {
       "$value": "45%",
       "$type": "dimension",
-      "$description": "ResourceList: the share of a row its trailing field takes (P-52, owner 2026-10-19)."
+      "$description": "ResourceList: the share of a row its trailing field takes (P-52, owner 2026-10-19).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     }
   }
 }

@@ -310,7 +310,7 @@
       }
     },
     "overlay-border": {
-      "$value": "transparent",
+      "$value": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 0, "hex": "#000000" },
       "$type": "color",
       "$description": "The edge of a menu, list or popover that opens: none (owner, 2026-10-15: Flat + Lifted); the width stays, so nothing moves.",
       "$extensions": {
@@ -1141,44 +1141,53 @@
         "com.plenix": {
           "before": [
             "  /* elevation recipes (the shadow-* classes) and roles */"
-          ]
+          ],
+          "webOnly": true
         }
       }
     },
     "shadow-md": {
       "$value": "0 0 8px {plx-ref.color-black}, 0 0 0 1px {plx-ref.color-gray-700}",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "shadow-lg": {
       "$value": "0 0 32px {plx-ref.color-black}, 0 0 0 1px {plx-ref.color-gray-700}",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "shadow-card": {
       "$value": "0 0 4px {plx-ref.color-black}, 0 0 0 1px {plx-ref.color-gray-700}",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "shadow-raised": {
       "$value": "0 0 16px {plx-ref.color-black}, 0 0 0 1px {plx-ref.color-gray-700}",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "shadow-menu": {
       "$value": "0 0 40px {plx-ref.color-black}, 0 0 0 1px {plx-ref.color-gray-700}",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "shadow-lifted": {
       "$value": "0 0 1px {plx-ref.color-black}, 0 0 2px {plx-ref.color-black}, 0 0 5px {plx-ref.color-black}",
       "$type": "shadow",
-      "$description": "Lifted (owner, 2026-10-15, the card builder): a fuller even shadow with no offset (Material elevation 2 without its offsets); every menu, list and popover that opens, and Lifted cards. Dark: black."
+      "$description": "Lifted (owner, 2026-10-15, the card builder): a fuller even shadow with no offset (Material elevation 2 without its offsets); every menu, list and popover that opens, and Lifted cards. Dark: black.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "shadow-halo": {
       "$value": "0 0 1px {plx-ref.color-black}, 0 0 1px {plx-ref.color-black}, 0 0 3px {plx-ref.color-black}",
       "$type": "shadow",
-      "$description": "Halo (owner, 2026-10-15, the card builder): a thin even shadow with no offset (Material elevation 1 without its offsets); Halo cards and panels. Dark: black."
+      "$description": "Halo (owner, 2026-10-15, the card builder): a thin even shadow with no offset (Material elevation 1 without its offsets); Halo cards and panels. Dark: black.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "shadow-floating": {
       "$value": "0 0 1px {plx-ref.color-black}, 0 0 3px {plx-ref.color-black}, 0 0 6px {plx-ref.color-black}",
       "$type": "shadow",
-      "$description": "Floating (owner, 2026-10-15, the card builder): soft and wide, even on all sides; Floating cards and panels. Dark: black."
+      "$description": "Floating (owner, 2026-10-15, the card builder): soft and wide, even on all sides; Floating cards and panels. Dark: black.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "card-surface-rim": {
       "$value": "{plx-ref.color-gray-900}",
@@ -1212,19 +1221,23 @@
     },
     "shadow-modal": {
       "$value": "0 0 40px {plx-ref.color-gray-800}, 0 0 0 1px {plx-ref.color-gray-800}",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "shadow-ring": {
       "$value": "0 0 0 2px {plx-ref.color-blue-400}",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "shadow-ring-subtle": {
       "$value": "0 0 0 2px {plx-ref.color-black}",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "shadow-underline-focus": {
       "$value": "0 1px 0 {plx-ref.color-blue-400}",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "elevation-raised-shadow": {
       "$value": "{plx-sys.shadow-card}",
@@ -1241,7 +1254,8 @@
         "com.plenix": {
           "after": "   /* D9: menus are border-only */"
         }
-      }
+      },
+      "$type": "shadow"
     },
     "fill-neutral": {
       "$value": "{plx-ref.color-gray-800}",
@@ -2172,7 +2186,8 @@
     "data-grid-menu-shadow": {
       "$value": "0 {plx-ref.space-8px} {plx-ref.space-24px} {plx-ref.color-black-alpha-50}",
       "$deprecated": "Not used by any page, application or the design spec (issue 882): no role or component token has its values in every theme and density; the nearest is --plx-sys-shadow-menu (a larger shadow on every side). It keeps working, and is removed no earlier than the next minor release.",
-      "$type": "shadow"
+      "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "data-color-blue": {
       "$value": "{plx-ref.color-blue-400}",

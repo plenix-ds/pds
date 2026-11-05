@@ -69,7 +69,8 @@
     "list-bullet-offset": {
       "$value": "calc(({plx-ref.size-20px} - {plx-ref.size-4px}) / 2)",
       "$type": "dimension",
-      "$description": "List bullets: the square centered on the first line (20px line)."
+      "$description": "List bullets: the square centered on the first line (20px line).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     }
   }
 }

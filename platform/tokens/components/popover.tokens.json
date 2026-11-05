@@ -74,7 +74,8 @@
     "popover-max-width": {
       "$value": "calc(100vw - {plx-sys.floating-viewport-margin} * 2)",
       "$type": "dimension",
-      "$description": "Popover: never wider than the window less its margins."
+      "$description": "Popover: never wider than the window less its margins.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "popover-header-gap": {
       "$value": "{plx-sys.space-inline-sm}",
@@ -144,7 +145,8 @@
     "popover-arrow-outset": {
       "$value": "calc(100% + {plx-sys.border-width-thin})",
       "$type": "dimension",
-      "$description": "Popover arrow: its base on the outer edge of the border."
+      "$description": "Popover arrow: its base on the outer edge of the border.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "popover-arrow-fill-offset": {
       "$value": "{plx-sys.border-width-thin}",
@@ -154,7 +156,8 @@
     "popover-arrow-fill-center": {
       "$value": "calc({plx-ref.size-8px} * -1)",
       "$type": "dimension",
-      "$description": "Popover arrow: the fill centered on the outline (minus the arrow size)."
+      "$description": "Popover arrow: the fill centered on the outline (minus the arrow size).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "popover-arrow-inset": {
       "$value": "{plx-sys.space-inset-sm}",
@@ -164,7 +167,8 @@
     "popover-arrow-middle": {
       "$value": "calc(50% - {plx-ref.size-8px})",
       "$type": "dimension",
-      "$description": "Popover arrow: centered on the edge in a centered placement."
+      "$description": "Popover arrow: centered on the edge in a centered placement.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "popover-hover-open-delay": {
       "$value": "{plx-ref.motion-delay-long-press}",

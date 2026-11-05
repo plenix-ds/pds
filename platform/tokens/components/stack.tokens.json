@@ -24,52 +24,62 @@
     "bleed-xs-margin-inline": {
       "$value": "calc(-1 * {plx-comp.layout-inset-xs-padding-inline})",
       "$type": "dimension",
-      "$description": "Bleed: the start and end margin that cancels a Stack's xs inset (its inline padding, negated)."
+      "$description": "Bleed: the start and end margin that cancels a Stack's xs inset (its inline padding, negated).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "bleed-xs-margin-block": {
       "$value": "calc(-1 * {plx-comp.layout-inset-xs-padding-block})",
       "$type": "dimension",
-      "$description": "Bleed: the top and bottom margin that cancels a Stack's xs inset (its block padding, negated)."
+      "$description": "Bleed: the top and bottom margin that cancels a Stack's xs inset (its block padding, negated).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "bleed-sm-margin-inline": {
       "$value": "calc(-1 * {plx-comp.layout-inset-sm-padding-inline})",
       "$type": "dimension",
-      "$description": "Bleed: the start and end margin that cancels a Stack's sm inset (its inline padding, negated)."
+      "$description": "Bleed: the start and end margin that cancels a Stack's sm inset (its inline padding, negated).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "bleed-sm-margin-block": {
       "$value": "calc(-1 * {plx-comp.layout-inset-sm-padding-block})",
       "$type": "dimension",
-      "$description": "Bleed: the top and bottom margin that cancels a Stack's sm inset (its block padding, negated)."
+      "$description": "Bleed: the top and bottom margin that cancels a Stack's sm inset (its block padding, negated).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "bleed-md-margin-inline": {
       "$value": "calc(-1 * {plx-comp.layout-inset-md-padding-inline})",
       "$type": "dimension",
-      "$description": "Bleed: the start and end margin that cancels a Stack's md inset (its inline padding, negated)."
+      "$description": "Bleed: the start and end margin that cancels a Stack's md inset (its inline padding, negated).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "bleed-md-margin-block": {
       "$value": "calc(-1 * {plx-comp.layout-inset-md-padding-block})",
       "$type": "dimension",
-      "$description": "Bleed: the top and bottom margin that cancels a Stack's md inset (its block padding, negated)."
+      "$description": "Bleed: the top and bottom margin that cancels a Stack's md inset (its block padding, negated).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "bleed-lg-margin-inline": {
       "$value": "calc(-1 * {plx-comp.layout-inset-lg-padding-inline})",
       "$type": "dimension",
-      "$description": "Bleed: the start and end margin that cancels a Stack's lg inset (its inline padding, negated)."
+      "$description": "Bleed: the start and end margin that cancels a Stack's lg inset (its inline padding, negated).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "bleed-lg-margin-block": {
       "$value": "calc(-1 * {plx-comp.layout-inset-lg-padding-block})",
       "$type": "dimension",
-      "$description": "Bleed: the top and bottom margin that cancels a Stack's lg inset (its block padding, negated)."
+      "$description": "Bleed: the top and bottom margin that cancels a Stack's lg inset (its block padding, negated).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "bleed-xl-margin-inline": {
       "$value": "calc(-1 * {plx-comp.layout-inset-xl-padding-inline})",
       "$type": "dimension",
-      "$description": "Bleed: the start and end margin that cancels a Stack's xl inset (its inline padding, negated)."
+      "$description": "Bleed: the start and end margin that cancels a Stack's xl inset (its inline padding, negated).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "bleed-xl-margin-block": {
       "$value": "calc(-1 * {plx-comp.layout-inset-xl-padding-block})",
       "$type": "dimension",
-      "$description": "Bleed: the top and bottom margin that cancels a Stack's xl inset (its block padding, negated)."
+      "$description": "Bleed: the top and bottom margin that cancels a Stack's xl inset (its block padding, negated).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     }
   }
 }

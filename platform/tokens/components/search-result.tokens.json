@@ -44,7 +44,8 @@
     "search-result-interactive-margin-inline": {
       "$value": "calc({plx-sys.space-inset-sm} * -1)",
       "$type": "dimension",
-      "$description": "SearchResult: a result that opens reaches past the list's edges by its inset, so only its fill does."
+      "$description": "SearchResult: a result that opens reaches past the list's edges by its inset, so only its fill does.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "search-result-interactive-padding-inline": {
       "$value": "{plx-sys.space-inset-sm}",
@@ -74,7 +75,8 @@
     "search-result-focus-outline-offset": {
       "$value": "calc({plx-sys.border-width-medium} * -1)",
       "$type": "dimension",
-      "$description": "SearchResult: the focus ring sits inside the row."
+      "$description": "SearchResult: the focus ring sits inside the row.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "search-result-text-row-gap": {
       "$value": "{plx-sys.space-stack-xs}",

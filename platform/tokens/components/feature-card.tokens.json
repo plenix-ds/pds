@@ -1,9 +1,9 @@
 {
   "$description": "FeatureCard (platform/patterns/FeatureCard, library wave 8, lane A): its component tokens. The surface, title and description are Card's (card-*); these place the media. Nothing here adds a color.",
   "plx-comp": {
-    "feature-card-media-bleed-block": { "$value": "calc(-1 * {plx-comp.card-padding-block})", "$type": "dimension", "$description": "Feature card (image): the picture reaches the card's top edge (minus the card's padding)." },
-    "feature-card-media-bleed-inline": { "$value": "calc(-1 * {plx-comp.card-padding-inline})", "$type": "dimension", "$description": "Feature card (image): the picture reaches the card's side edges (minus the card's padding)." },
-    "feature-card-media-radius": { "$value": "calc({plx-comp.card-radius} - {plx-comp.card-border-width})", "$type": "dimension", "$description": "Feature card (image): the picture's top corners, inside the card's corners." },
+    "feature-card-media-bleed-block": { "$value": "calc(-1 * {plx-comp.card-padding-block})", "$type": "dimension", "$description": "Feature card (image): the picture reaches the card's top edge (minus the card's padding).", "$extensions": { "com.plenix": { "webOnly": true } } },
+    "feature-card-media-bleed-inline": { "$value": "calc(-1 * {plx-comp.card-padding-inline})", "$type": "dimension", "$description": "Feature card (image): the picture reaches the card's side edges (minus the card's padding).", "$extensions": { "com.plenix": { "webOnly": true } } },
+    "feature-card-media-radius": { "$value": "calc({plx-comp.card-radius} - {plx-comp.card-border-width})", "$type": "dimension", "$description": "Feature card (image): the picture's top corners, inside the card's corners.", "$extensions": { "com.plenix": { "webOnly": true } } },
     "feature-card-horizontal-gap": { "$value": "{plx-sys.space-inline-md}", "$type": "dimension", "$description": "Feature card (horizontal): the space between the media and the text." },
     "feature-card-horizontal-image-size": { "$value": "{plx-ref.size-40px}", "$type": "dimension", "$description": "Feature card (horizontal): the square picture's side (40px)." },
     "feature-card-icon-color": { "$value": "{plx-sys.content-muted}", "$type": "color", "$description": "Feature card: the plain icon, gray (no tile, #882). A data hue colors it with its data color." },

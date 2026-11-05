@@ -3,13 +3,13 @@
   "plx-comp": {
     "columns-sidebar-start-columns": {
       "$value": "minmax(0, 1fr) minmax(0, 2fr)",
-      "$type": "string",
-      "$description": "Sidebar at the start: the narrow first column takes one third of the row, the main column two thirds."
+      "$description": "Sidebar at the start: the narrow first column takes one third of the row, the main column two thirds.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "columns-sidebar-end-columns": {
       "$value": "minmax(0, 2fr) minmax(0, 1fr)",
-      "$type": "string",
-      "$description": "Sidebar at the end: the main column takes two thirds of the row, the narrow last column one third."
+      "$description": "Sidebar at the end: the main column takes two thirds of the row, the narrow last column one third.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "columns-collapse-row-gap": {
       "$value": "{plx-sys.space-layout-sm}",

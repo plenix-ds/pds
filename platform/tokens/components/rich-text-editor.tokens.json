@@ -102,7 +102,7 @@
       "$description": "RichTextEditor area: the hint in the empty area (the placeholder's color)."
     },
     "rich-text-editor-hidden-selection": {
-      "$value": "transparent",
+      "$value": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 0, "hex": "#000000" },
       "$type": "color",
       "$description": "RichTextEditor area: no visible caret or selection highlight while the engine selects a whole node (ProseMirror-hideselection)."
     },

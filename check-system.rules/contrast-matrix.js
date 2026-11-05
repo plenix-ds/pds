@@ -12,7 +12,8 @@
 //             surface-dialog-chrome, message-text on both message backgrounds, field-placeholder on surface-default,
 //             accent-field-placeholder on accent-field-background, data-color-<hue>-on-surface on surface-default and state-hover
 // The minimum: 4.5:1 for text, 3:1 for an icon or mark role (a name ending in -on-surface, or with -icon). A background
-// with alpha is laid over surface-canvas first. A value that isn't a plain color (a var(), color-mix, a keyword) is skipped.
+// with alpha is laid over surface-canvas first. A color is #hex or rgb()/rgba() (as tools/token-value.js writes a typed
+// color); a value that isn't a plain color (a var(), color-mix, a keyword) is skipped.
 // Known failures (the 0.x debt, measured 2026-11-05; dark mode is worked last, D-0025) are in contrast-matrix.baseline.json;
 // it only shrinks: a fixed pair must be removed (a stale entry is a finding). New failures fail.
 // Alone: node check-system.rules/contrast-matrix.js [--all] [--write-baseline]  -> CONTRAST_MATRIX_OK, or the findings and exit 1
@@ -43,6 +44,8 @@ function flat(data, tier) {
   return out;
 }
 function hex(v) {
+  const r = String(v).trim().match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)$/i);
+  if (r) return { r: +r[1], g: +r[2], b: +r[3], a: r[4] === undefined ? 1 : +r[4] };
   const m = String(v).trim().match(/^#([0-9a-f]{3,8})$/i); if (!m) return null;
   let h = m[1]; if (h.length <= 4) h = h.split('').map((c) => c + c).join('');
   return { r: parseInt(h.slice(0, 2), 16), g: parseInt(h.slice(2, 4), 16), b: parseInt(h.slice(4, 6), 16), a: h.length === 8 ? parseInt(h.slice(6, 8), 16) / 255 : 1 };

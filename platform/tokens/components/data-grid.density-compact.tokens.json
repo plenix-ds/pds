@@ -9,12 +9,14 @@
     "data-grid-header-type-icon-size": {
       "$value": "0",
       "$type": "dimension",
-      "$description": "DataGrid column header type icon: hidden in Compact (a 28px header row is too small for it)."
+      "$description": "DataGrid column header type icon: hidden in Compact (a 28px header row is too small for it).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "data-grid-header-type-icon-gap": {
       "$value": "0",
       "$type": "dimension",
-      "$description": "DataGrid column header: no gap where the type icon is hidden (Compact)."
+      "$description": "DataGrid column header: no gap where the type icon is hidden (Compact).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "data-grid-view-column-width": {
       "$value": "{plx-ref.size-36px}",

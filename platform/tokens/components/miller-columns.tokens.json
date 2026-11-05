@@ -129,7 +129,8 @@
     "miller-columns-item-hover-shadow": {
       "$value": "inset 0 0 0 {plx-sys.border-width-thin} {plx-sys.state-hover-border}",
       "$type": "shadow",
-      "$description": "MillerColumns item hover: shadow (inset 0 0 0 border-width-thin state-hover-border)."
+      "$description": "MillerColumns item hover: shadow (inset 0 0 0 border-width-thin state-hover-border).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "miller-columns-item-selected-background": {
       "$value": "{plx-sys.state-selected}",
@@ -139,7 +140,8 @@
     "miller-columns-item-selected-shadow": {
       "$value": "inset 0 0 0 {plx-sys.border-width-thin} {plx-sys.state-selected-border}",
       "$type": "shadow",
-      "$description": "MillerColumns item selected: shadow (inset 0 0 0 border-width-thin state-selected-border)."
+      "$description": "MillerColumns item selected: shadow (inset 0 0 0 border-width-thin state-selected-border).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "miller-columns-item-selected-text": {
       "$value": "{plx-sys.selected-content}",
@@ -159,7 +161,8 @@
     "miller-columns-list-focus-item-selected-outline-offset": {
       "$value": "calc({plx-sys.border-width-medium} * -1)",
       "$type": "dimension",
-      "$description": "MillerColumns list focus item selected outline offset: list focus item selected outline offset (calc(border-width-medium * -1))."
+      "$description": "MillerColumns list focus item selected outline offset: list focus item selected outline offset (calc(border-width-medium * -1)).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "miller-columns-list-focus-item-selected-outline-width": {
       "$value": "{plx-sys.border-width-medium}",
@@ -249,7 +252,8 @@
     "miller-columns-preview-focus-shadow": {
       "$value": "inset 0 0 0 {plx-sys.border-width-medium} {plx-sys.focus-ring-color}",
       "$type": "shadow",
-      "$description": "MillerColumns preview focus: shadow (inset 0 0 0 border-width-medium focus-ring-color)."
+      "$description": "MillerColumns preview focus: shadow (inset 0 0 0 border-width-medium focus-ring-color).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "miller-columns-resizer-background": {
       "$value": "{plx-sys.border-subtle}",

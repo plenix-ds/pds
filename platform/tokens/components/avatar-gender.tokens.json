@@ -4,7 +4,8 @@
     "avatar-gender-icon-size": {
       "$value": "75%",
       "$type": "dimension",
-      "$description": "Avatar: the gender icon takes three quarters of the square (no picture, a known gender)."
+      "$description": "Avatar: the gender icon takes three quarters of the square (no picture, a known gender).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     }
   }
 }

@@ -98,7 +98,8 @@
           "before": [
             "  /* the safe areas (Platforms Standard 3.5): what the device keeps for itself at each edge; every page sets",
             "     viewport-fit=cover, so the shell keeps its content inside them. 0 where the device keeps nothing */"
-          ]
+          ],
+          "webOnly": true
         },
         "plenix": {
           "source": {
@@ -132,7 +133,8 @@
             "published": "env(safe-area-inset-*) with viewport-fit=cover",
             "url": "https://drafts.csswg.org/css-env-1/#safe-area-insets"
           }
-        }
+        },
+        "com.plenix": { "webOnly": true }
       }
     },
     "safe-area-start": {
@@ -152,7 +154,8 @@
             "published": "env(safe-area-inset-*) with viewport-fit=cover",
             "url": "https://drafts.csswg.org/css-env-1/#safe-area-insets"
           }
-        }
+        },
+        "com.plenix": { "webOnly": true }
       }
     },
     "safe-area-end": {
@@ -172,7 +175,8 @@
             "published": "env(safe-area-inset-*) with viewport-fit=cover",
             "url": "https://drafts.csswg.org/css-env-1/#safe-area-insets"
           }
-        }
+        },
+        "com.plenix": { "webOnly": true }
       }
     },
     "touch-long-press-delay": {
@@ -218,7 +222,7 @@
       "$description": "Every Reddit Mono text (data, code, numbers): its word spacing, so a space is as wide as DM Sans's beside it (the text-data and text-code roles carry it; check-system rule text-contract)."
     },
     "layer-behind": {
-      "$value": "-1",
+      "$value": -1,
       "$type": "number",
       "$extensions": {
         "com.plenix": {
@@ -230,38 +234,39 @@
     },
     "layer-base": {
       "$value": "0",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "layer-raised": {
-      "$value": "1",
+      "$value": 1,
       "$type": "number"
     },
     "layer-sticky": {
-      "$value": "10",
+      "$value": 10,
       "$type": "number"
     },
     "layer-menu": {
-      "$value": "100",
+      "$value": 100,
       "$type": "number"
     },
     "layer-overlay": {
-      "$value": "1000",
+      "$value": 1000,
       "$type": "number"
     },
     "layer-modal": {
-      "$value": "1100",
+      "$value": 1100,
       "$type": "number"
     },
     "layer-popover": {
-      "$value": "1200",
+      "$value": 1200,
       "$type": "number"
     },
     "layer-toast": {
-      "$value": "1300",
+      "$value": 1300,
       "$type": "number"
     },
     "layer-critical": {
-      "$value": "9999",
+      "$value": 9999,
       "$type": "number"
     },
     "radius-detail-4px": {
@@ -541,12 +546,12 @@
       }
     },
     "boundary-outline-width": {
-      "$value": "0px",
+      "$value": { "value": 0, "unit": "px" },
       "$type": "dimension",
       "$description": "The outline of a surface that floats on a shadow (menus, dialogs, cards): none, and a thin line in forced colors, where shadows are not drawn."
     },
     "boundary-outline-color": {
-      "$value": "transparent",
+      "$value": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 0, "hex": "#000000" },
       "$type": "color",
       "$description": "The color of the boundary outline: none, and the text color in forced colors.",
       "$extensions": {
@@ -558,47 +563,58 @@
     },
     "forced-indicator": {
       "$value": "initial",
-      "$description": "An indicator's fill in forced colors (a progress fill): Highlight there; otherwise not set (initial), so the component keeps its own color."
+      "$description": "An indicator's fill in forced colors (a progress fill): Highlight there; otherwise not set (initial), so the component keeps its own color.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "forced-gap": {
       "$value": "initial",
-      "$description": "The gap in a ring in forced colors (the spinner's): Canvas there; otherwise not set (initial), so the component keeps its own."
+      "$description": "The gap in a ring in forced colors (the spinner's): Canvas there; otherwise not set (initial), so the component keeps its own.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "print-hidden": {
       "$value": "initial",
-      "$description": "On paper the chrome is left out (the app header, the navigation pane, the skip link, the scrim, the floating action button, toasts, the spotlight): their display reads it. Not set on screen (initial: the element keeps its own)."
+      "$description": "On paper the chrome is left out (the app header, the navigation pane, the skip link, the scrim, the floating action button, toasts, the spotlight): their display reads it. Not set on screen (initial: the element keeps its own).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "print-block-size": {
       "$value": "initial",
-      "$description": "On paper the shell is as tall as its content: the shell's fixed heights read it. Not set on screen."
+      "$description": "On paper the shell is as tall as its content: the shell's fixed heights read it. Not set on screen.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "print-max-block-size": {
       "$value": "initial",
-      "$description": "On paper nothing is cut to a maximum height: a region with a set height (a data grid's) reads it. Not set on screen."
+      "$description": "On paper nothing is cut to a maximum height: a region with a set height (a data grid's) reads it. Not set on screen.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "print-overflow": {
       "$value": "initial",
-      "$description": "On paper nothing scrolls: the shell's scrolling regions read it. Not set on screen."
+      "$description": "On paper nothing scrolls: the shell's scrolling regions read it. Not set on screen.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "print-position": {
       "$value": "initial",
-      "$description": "On paper the shell's positioned regions take their place in the flow. Not set on screen."
+      "$description": "On paper the shell's positioned regions take their place in the flow. Not set on screen.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "print-shown": {
       "$value": "initial",
-      "$description": "On paper what Show print marks is shown: its box reads it. Not set on screen (initial: hidden)."
+      "$description": "On paper what Show print marks is shown: its box reads it. Not set on screen (initial: hidden).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "print-keep": {
       "$value": "initial",
-      "$description": "On paper cards, notices and figures are not split across two sheets and headings stay with what follows them: their break-inside and break-after read it. Not set on screen (initial: auto)."
+      "$description": "On paper cards, notices and figures are not split across two sheets and headings stay with what follows them: their break-inside and break-after read it. Not set on screen (initial: auto).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "print-url-before": {
       "$value": "initial",
-      "$description": "On paper inside plx-print-urls, the text before an external link's address. Not set on screen (initial: no address)."
+      "$description": "On paper inside plx-print-urls, the text before an external link's address. Not set on screen (initial: no address).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "print-url-after": {
       "$value": "initial",
-      "$description": "On paper inside plx-print-urls, the text after an external link's address. Not set on screen."
+      "$description": "On paper inside plx-print-urls, the text after an external link's address. Not set on screen.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     }
   }
 }

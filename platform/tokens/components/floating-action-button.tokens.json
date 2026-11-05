@@ -174,7 +174,8 @@
     "floating-action-button-clearance": {
       "$value": "calc({plx-ref.size-56px} + {plx-sys.space-layout-md} * 2)",
       "$type": "dimension",
-      "$description": "The bottom space a scrolling region gives its last line so the standard button in the corner does not cover it (for the page to use)."
+      "$description": "The bottom space a scrolling region gives its last line so the standard button in the corner does not cover it (for the page to use).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     }
   }
 }

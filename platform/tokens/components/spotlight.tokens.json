@@ -9,7 +9,7 @@
     "spotlight-animation-duration": { "$value": "{plx-sys.motion-duration-fast}", "$type": "duration", "$description": "Spotlight: the dim's fade in (the scrim's)." },
     "spotlight-animation-timing-function": { "$value": "{plx-sys.motion-ease-standard}", "$type": "dimension", "$description": "Spotlight: the easing of the fade and the pulse." },
     "spotlight-beacon-size": { "$value": "{plx-ref.size-16px}", "$type": "dimension", "$description": "Beacon: the dot's size." },
-    "spotlight-beacon-offset": { "$value": "calc({plx-ref.size-16px} / 2)", "$type": "dimension", "$description": "Beacon: half its size, so it is centered on the target's top end corner." },
+    "spotlight-beacon-offset": { "$value": "calc({plx-ref.size-16px} / 2)", "$type": "dimension", "$description": "Beacon: half its size, so it is centered on the target's top end corner.", "$extensions": { "com.plenix": { "webOnly": true } } },
     "spotlight-beacon-color": { "$value": "{plx-sys.brand-primary}", "$type": "color", "$description": "Beacon: the dot, in the brand blue (as the teaching bubble)." },
     "spotlight-beacon-ring-color": { "$value": "{plx-sys.brand-on-primary}", "$type": "color", "$description": "Beacon: its ring, the color on the brand blue, so it shows on any target." },
     "spotlight-beacon-ring-width": { "$value": "{plx-sys.border-width-medium}", "$type": "dimension", "$description": "Beacon: the ring's width." },

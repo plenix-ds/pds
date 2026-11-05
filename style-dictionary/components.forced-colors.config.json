@@ -5,9 +5,7 @@
   ],
   "platforms": {
     "css": {
-      "transforms": [
-        "name/kebab"
-      ],
+      "transforms": ["name/kebab", "size/rem", "time/seconds", "color/css", "fontFamily/css", "cubicBezier/css"],
       "buildPath": "build/sd/",
       "files": [
         {

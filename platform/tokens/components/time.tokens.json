@@ -6,6 +6,6 @@
     "time-focus-outline-offset": { "$value": "{plx-sys.focus-ring-offset}", "$type": "dimension", "$description": "The focus ring's distance from the text." },
     "time-focus-outline-width": { "$value": "{plx-sys.border-width-medium}", "$type": "dimension", "$description": "The focus ring's width." },
     "time-focus-radius": { "$value": "{plx-sys.shape-2xs}", "$type": "dimension", "$description": "The focus ring's corners." },
-    "time-refresh-interval": { "$value": "60s", "$type": "duration", "$description": "How often a relative time and a date label rewrite themselves." }
+    "time-refresh-interval": { "$value": { "value": 60, "unit": "s" }, "$type": "duration", "$description": "How often a relative time and a date label rewrite themselves." }
   }
 }

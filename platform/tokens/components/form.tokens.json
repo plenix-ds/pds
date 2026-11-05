@@ -19,7 +19,8 @@
     "form-two-column-grid-template-columns": {
       "$value": "{plx-ref.size-160px} minmax({plx-sys.field-width-md},{plx-sys.field-width-lg})",
       "$type": "dimension",
-      "$description": "Two-column form: the label column every section shares (the inline field's label column) and the control column (the inline field's range, as in a Stack of inline fields)."
+      "$description": "Two-column form: the label column every section shares (the inline field's label column) and the control column (the inline field's range, as in a Stack of inline fields).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     }
   }
 }

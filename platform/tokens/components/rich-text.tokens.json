@@ -189,7 +189,8 @@
     "rich-text-image-max-width": {
       "$value": "100%",
       "$type": "dimension",
-      "$description": "RichText: a picture never wider than its column."
+      "$description": "RichText: a picture never wider than its column.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "rich-text-task-gap": {
       "$value": "{plx-comp.check-gap}",
