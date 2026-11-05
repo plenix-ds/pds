@@ -1,0 +1,3 @@
+### Added
+
+- DataGrid: the `person` cell editor (ADR 0016, #84 phase 2), the last of the nine built-in editors, turned on with `editing={{ types: ['person'] }}` and `editor: 'person'` plus `editorProps: { options }` or `{ loadOptions(text) }` (records `{ value, label, description, src, color, presence }`) on a column. Plenix's EntityPicker (people) opens in the cell, bare, with its list open, each suggestion with its picture, name and email or role. Typing searches; choosing a person saves their value at once; with the list closed Enter saves; the first Escape closes the list and the second cancels; Tab saves and moves. Without the type turned on, nothing changes.

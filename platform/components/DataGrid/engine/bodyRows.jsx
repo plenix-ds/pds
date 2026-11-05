@@ -19,6 +19,7 @@ import { cx } from '../../../utils/cx.ts';
 import { words, kinds, interactive, typeOf, typeIcons, cellDirection } from './helpers.jsx';
 import { valueText, CellValue } from '../cells.jsx';
 import { groupKeys, rowKeys, cellKeys } from './keys.js';
+import { Avatar } from '../../Avatar/Avatar.tsx';
 import { Width, RowTarget, Check, CellEditor, CellStatus, CustomCell, RowMenuContent } from './parts.jsx';
 import { Icon } from '../../Icon/Icon.tsx';
 import ChevronRightIcon from 'plenix-platform/icons/plenix/chevron-right';
@@ -352,6 +353,8 @@ export function bodyRows({
             canToggle = checkboxEditor && editable && status?.kind !== 'saving',
             canEdit = !checkboxEditor && editable && status?.kind !== 'saving';
           const value = valueAt(record, c.field),
+            // the person editor's read cell: the person with a small avatar and the name, found among the column's options (ADR 0016, design §2)
+            personOpt = turnedOn && c.editor === 'person' && !c.render ? (c.editorProps?.options || []).find((o) => String(o.value) === String(value)) : null,
             isTree = !!childField && c.field === (props.treeColumn || columns[0]?.field),
             isEditing = editing?.key === row.id && editing.field === c.field,
             handled = c.rowHandle && (recordPositions.get(record) ?? -1) >= 0,
@@ -511,6 +514,7 @@ export function bodyRows({
                     area={turnedOn && c.editor === 'textarea'}
                     select={turnedOn && c.editor === 'select'}
                     combobox={turnedOn && c.editor === 'combobox'}
+                    person={turnedOn && c.editor === 'person'}
                     tags={turnedOn && c.editor === 'tags'}
                     date={turnedOn && c.editor === 'date'}
                     custom={!!c.editor && typeof c.editor === 'object' && typeof c.editor.component === 'function'}
@@ -551,6 +555,11 @@ export function bodyRows({
                     {S.moveBottom}
                   </MenuItem>
                 </Menu>
+              ) : personOpt ? (
+                <span className={B + '__person'}>
+                  <Avatar size="xs" name={personOpt.label} src={personOpt.src} color={personOpt.color} />
+                  <span className={B + '__person-name'}>{personOpt.label}</span>
+                </span>
               ) : checkboxEditor ? (
                 <input
                   type="checkbox"

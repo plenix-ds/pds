@@ -19,6 +19,8 @@ import { Select } from '../../Input/Input.tsx';
 import { useDirection } from '../../../providers/DirectionProvider.tsx';
 import { DatePicker } from '../../DatePicker/DatePicker.jsx';
 import { Combobox } from '../../Combobox/Combobox.tsx';
+import { EntityPicker } from '../../EntityPicker/EntityPicker.jsx';
+import { Avatar } from '../../Avatar/Avatar.tsx';
 import { dataWhenText } from '../../../utils/dataText.tsx';
 import { cx } from '../../../utils/cx.ts';
 import { usePressable } from '../../../hooks/usePressable.ts';
@@ -459,7 +461,70 @@ function TagsEditor({ draft, setDraft, invalid, messageId, finish, cancel, input
   );
 }
 
-export function CellEditor({ column, record, value, area, select, date, combobox, tags, custom, onCommit, onCancel }) {
+// the person editor (ADR 0016): Plenix's EntityPicker (people) inside the cell, bare, its list open as it takes the focus. Typing filters (or loads
+// the options), choosing one saves it at once; with the list closed Enter saves the current value; Escape closes the list, then cancels.
+function PersonEditor({ draft, setDraft, invalid, messageId, finish, cancel, input, done, options, load, label }) {
+  const wrap = React.useRef(null),
+    [typed, setTyped] = React.useState(false),
+    current = options.find((o) => String(o.value) === String(draft));
+  React.useEffect(() => {
+    wrap.current?.querySelector('input')?.focus();
+  }, []);
+  return (
+    <>
+      <span
+        ref={wrap}
+        className="plx-data-grid__editor-field"
+        dir="auto"
+        onInput={() => setTyped(true)}
+        onKeyDownCapture={(e) => {
+          // before the combobox's own keys: Tab and the closed-list Enter and Escape are the cell's; the rest (arrows, typing, Enter on an open list) are the combobox's
+          const open = e.target.getAttribute?.('aria-expanded') === 'true';
+          if (e.key === 'Tab' && !e.altKey && !e.ctrlKey && !e.metaKey) {
+            e.preventDefault();
+            e.stopPropagation();
+            finish(e.shiftKey ? -1 : 1);
+          } else if (!open && e.key === 'Escape') {
+            e.preventDefault();
+            e.stopPropagation();
+            done.current = true;
+            cancel();
+          } else if (!open && e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+            finish();
+          }
+        }}
+      >
+        {current && !typed ? (
+          <span className="plx-data-grid__person plx-data-grid__person--over" aria-hidden="true">
+            <Avatar size="xs" name={current.label} src={current.src} color={current.color} />
+            <span className="plx-data-grid__person-name">{current.label}</span>
+          </span>
+        ) : null}
+        <EntityPicker
+          ref={input}
+          kind="people"
+          placeholder={current && !typed ? ' ' : undefined}
+          label={label}
+          aria-describedby={invalid ? messageId : undefined}
+          invalid={!!invalid}
+          width="fill"
+          {...(load ? { loadOptions: load } : { options })}
+          value={draft ?? ''}
+          onChange={(v) => {
+            setDraft(v);
+            finish(0, v);
+          }}
+          onBlur={() => finish()}
+        />
+      </span>
+      {invalid ? <EditorMessage id={messageId} anchor={wrap} message={invalid} /> : null}
+    </>
+  );
+}
+
+export function CellEditor({ column, record, value, area, select, date, combobox, person, tags, custom, onCommit, onCancel }) {
   const S = useStrings('dataGrid'),
     [draft, setDraft] = React.useState(value ?? ''),
     [invalid, setInvalid] = React.useState(null),
@@ -496,6 +561,16 @@ export function CellEditor({ column, record, value, area, select, date, combobox
   if (tags)
     return (
       <TagsEditor
+        {...{ draft, setDraft, invalid, messageId, finish, input, done }}
+        cancel={onCancel}
+        options={column.editorProps?.options ?? []}
+        load={column.editorProps?.loadOptions}
+        label={S.editCell.replace('{title}', column.title)}
+      />
+    );
+  if (person)
+    return (
+      <PersonEditor
         {...{ draft, setDraft, invalid, messageId, finish, input, done }}
         cancel={onCancel}
         options={column.editorProps?.options ?? []}
