@@ -27,6 +27,9 @@
        Move down in the handle's menu (the way without dragging), or by Alt + Arrow Up /
        Down on the focused row; the First column select moves a column to the top. Each change is announced politely. The
        first column cannot be hidden. No row carries a "Make first column" or arrow button of its own.
+     The list is one Tab stop (a grid-style pattern, issue 79): Up and Down move between rows, Left and Right across a row's
+       controls (the row, its Move handle, its checkbox; mirrored in right to left), Home and End to the first and last control
+       of the row, Ctrl + Home and Ctrl + End to the first and last row. A control that is turned off is skipped.
      The button reads "Columns" with the thin chevron; icons only, its icon and tooltip; hidden columns tint it and show
        their count. */
 import React from 'react';
@@ -53,6 +56,8 @@ import VisibilityIcon from 'plenix-platform/icons/plenix/visibility';
 import VisibilityOffIcon from 'plenix-platform/icons/plenix/visibility-off';
 
 const moveTo = (order, f, i) => { const rest = order.filter((x) => x !== f); rest.splice(i, 0, f); return rest; };
+// a row's controls in order: the row, its Move handle, its checkbox (when it can be used)
+const controlsOf = (row) => [row, row.querySelector('.plx-columns-list__handle'), row.querySelector('input[type="checkbox"]:not(:disabled)')].filter(Boolean);
 const nameIn = (fields) => (f) => { const x = fields.find((y) => y.value === f); return x ? x.label : f; };
 
 // the list: one row per column
@@ -74,13 +79,42 @@ function ColumnsList({ fields, value, onChange, filter = '', t }) {
   };
   const q = filter.trim().toLowerCase();
   const shown = order.filter((f) => !q || name(f).toLowerCase().indexOf(q) >= 0);
+  // one Tab stop for the whole list (issue 79): the control last focused keeps tabindex 0, the others -1
+  const [stop, setStop] = React.useState(null);
+  React.useLayoutEffect(() => {
+    const el = box.current; if (!el) return;
+    const rows = [...el.querySelectorAll('.plx-columns-list__row')];
+    const current = stop && el.contains(stop) ? stop : rows[0];
+    rows.forEach((row) => controlsOf(row).forEach((c) => c.setAttribute('tabindex', c === current ? '0' : '-1')));
+  });
+  const onFocus = (e) => { const row = e.target.closest && e.target.closest('.plx-columns-list__row'); if (row && controlsOf(row).includes(e.target)) setStop(e.target); };
+  // arrows across the grid; a key from a menu opened by a handle (a portal) is not the list's
+  const onKeys = (e) => {
+    if (e.altKey || e.metaKey || e.shiftKey) return;
+    const row = e.target.closest && e.target.closest('.plx-columns-list__row');
+    if (!row || !box.current.contains(row)) return;
+    const cells = controlsOf(row), at = cells.indexOf(e.target);
+    if (at < 0) return;
+    const rtl = getComputedStyle(row).direction === 'rtl', rows = [...box.current.querySelectorAll('.plx-columns-list__row')], r = rows.indexOf(row);
+    let next = null;
+    const rowAt = (i) => { const target = rows[Math.max(0, Math.min(rows.length - 1, i))]; const c = controlsOf(target); return c[Math.min(at, c.length - 1)]; };
+    if (e.key === 'ArrowDown') next = rowAt(r + 1);
+    else if (e.key === 'ArrowUp') next = rowAt(r - 1);
+    else if (e.key === (rtl ? 'ArrowLeft' : 'ArrowRight')) next = cells[Math.min(at + 1, cells.length - 1)];
+    else if (e.key === (rtl ? 'ArrowRight' : 'ArrowLeft')) next = cells[Math.max(at - 1, 0)];
+    else if (e.key === 'Home') next = e.ctrlKey ? controlsOf(rows[0])[0] : cells[0];
+    else if (e.key === 'End') next = e.ctrlKey ? controlsOf(rows[rows.length - 1])[0] : cells[cells.length - 1];
+    if (!next) return;
+    e.preventDefault();
+    if (next !== e.target) next.focus();
+  };
   return (
-    <div className="plx-columns-list" ref={box}>
+    <div className="plx-columns-list" ref={box} onFocus={onFocus} onKeyDown={onKeys}>
       {shown.length ? null : <Text variant="secondary">{t.none}</Text>}
       {shown.map((f) => {
         const i = order.indexOf(f);
         return (
-          <div key={f} data-plx-field={f} tabIndex={0} draggable aria-label={fill(t.row, { name: name(f), first: i === 0 ? t.firstMark : '' })} aria-keyshortcuts="Alt+ArrowUp Alt+ArrowDown"
+          <div key={f} data-plx-field={f} draggable aria-label={fill(t.row, { name: name(f), first: i === 0 ? t.firstMark : '' })} aria-keyshortcuts="Alt+ArrowUp Alt+ArrowDown"
             className={cx('plx-columns-list__row', drag === f && 'is-dragging')}
             onKeyDown={(e) => { if (e.target !== e.currentTarget || !e.altKey) return; if (e.key === 'ArrowUp') { e.preventDefault(); move(f, i - 1, true); } if (e.key === 'ArrowDown') { e.preventDefault(); move(f, i + 1, true); } }}
             onDragStart={(e) => { setDrag(f); e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', f); }}
