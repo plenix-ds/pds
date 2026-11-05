@@ -6,6 +6,23 @@ The batch numbers point to the work log (Plenix - DAM/audit/batches/).
 
 ## [Unreleased]
 
+## [0.88.0] - 2026-11-05
+
+### Upgrading from 0.87.0
+Nothing to change. Deprecated names keep working (each says what replaces it). Apps on the CDN loader follow this release by themselves; npm apps update the version as usual.
+
+### Added
+- `--plx-comp-entity-header-media-{blue,green,purple,red,brown,gray,surface}-icon`: the colour of an EntityHeader icon media drawn without a box (#275, docs/adr/0005).
+- EntityHeader `media={{ icon, hue, box: true }}` and the class `plx-entity-header__tile--box`: the tinted, bordered tile, for a usage that needs the box (D-0024).
+- Role names (docs/adr/0012): `--plx-sys-radius-<role>-sm` / `-md` (avatar, card, control, media, surface), `--plx-sys-radius-compact`, `-detail`, `-dialog`, `-menu`, `-pill`, `-table`; `--plx-sys-label-height-sm` / `-md`; `--plx-sys-shell-nav-width-from-wide` / `-ultrawide` and the side and secondary pane widths `-from-wide` / `-from-ultrawide`; `--plx-comp-avatar-<2xs…2xl>-height` / `-width`.
+
+### Changed (visual)
+- EntityHeader's `media={{ icon, hue }}` has no box by default, as the owner decided (D-0024, D-0036): no fill and no border, and the icon fills its square (44px; 32px in a section) in its hue's on-surface colour (#275, CTM#109).
+- Raised buttons share one lighter elevation (#269, #6): no shadow at rest, the halo only on hover, the glow rim at 90% (was 75%), and the danger secondary button joins the raised family.
+
+### Deprecated
+- The value-named names they replace (`--plx-sys-radius-card-6px`, `--plx-sys-radius-pill-4px`, `--plx-sys-shell-nav-width-from-1440`, `--plx-comp-avatar-32-height` …, 42 names). They keep working and are removed in 2.0.0.
+
 ## [0.87.0] - 2026-11-05
 
 ### Upgrading from 0.86.0
