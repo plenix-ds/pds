@@ -880,6 +880,13 @@ export default {
     "thisMonth": "This month",
     "lastMonth": "Last month"
   },
+  "confirmAction": {
+    "title": "{verb} {name}?",
+    "titleMany": "{verb} {count} {plural}?",
+    "permanent": "This cannot be undone.",
+    "confirm": "{verb}",
+    "cancel": "Cancel"
+  },
   "deleteFlow": {
     "title": "Delete {name}?",
     "titleMany": "Delete {count} {plural}?",
