@@ -75,8 +75,8 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 ## 1. Character
 
 - Quiet, dense, work-focused UI for data-heavy applications. Fluent-style controls on near-white surfaces, with one blue accent.
-- **Buttons** are Fluent-style: filled primary in the accent colour, outlined secondary, ghost for toolbars.
-- **No icon in a box.** An icon is never drawn on its own tinted tile.
+- **Buttons** and menu commands are Fluent 2 style (D-0023): 1px borders, 4px corners; filled primary in the accent colour, outlined secondary, ghost for toolbars.
+- **No icon in a box** (D-0024). By default an icon is never drawn on its own tinted tile; a box stays only where a specific usage calls for it.
 - **No action links.** An action is a Button, never a text link. Links only navigate.
 - **Statuses are badges with an icon,** never a bare coloured dot. A dot only shows presence (online/away).
 - **Table header labels are start-aligned** (left in LTR, right in RTL), including the header of a number column.
@@ -95,7 +95,7 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 ### Dark mode (D-0009)
 
 - Dark mode stays as defined. The canvas is `plx-ref.color-black`, and the default and raised surfaces are `gray-800` (#444444).
-- Only contrast defects get fixed. See section 12.
+- Only contrast defects get fixed. Dark mode is worked last (D-0025): its defects are listed in section 12 and fixed after the light work is done.
 
 ## 3. Type (D-0006)
 
@@ -117,7 +117,7 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 
 - No other radius value (check 2).
 - Pills are 4px, never round. This replaces the old written "pills at 6".
-- `plx-sys.shape-pill` resolves to 6px today. Despite its name, it isn't used for pills. See D-0022.
+- `plx-sys.shape-pill` resolves to 6px today. Despite its name, it isn't used for pills. See D-0030.
 
 ## 5. Space and density (D-0007)
 
@@ -161,7 +161,7 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 
 ### Charts
 
-- Charts use ECharts, themed only from tokens (`plx-sys.dataviz-*`, `plx-sys.font-*`). Inline styles are allowed only in ECharts options built from token values.
+- Charts use Apache ECharts (D-0027), bundled locally, themed only from tokens (`plx-sys.dataviz-*`, `plx-sys.font-*`). Inline styles are allowed only in ECharts options built from token values.
 - Palettes: categorical 1 to 6, sequential 1 to 7, diverging 1 to 7, and status colours.
 - Axis and label text uses `dataviz-label` at 12px or more. Numbers on axes and in tooltips use `tabular-nums`.
 
@@ -200,16 +200,16 @@ Every component declares a state manifest (check 9). Each state is a token set o
 
 | # | Defect | Measured | Fix (existing palette only) |
 |---|---|---|---|
-| 1 | Dark `content-subtle` (gray-500) | 3.05:1 on #444, 2.22:1 on hover | Point to gray-300, the same as `content-muted`, as light mode already does: 6.31:1 and 4.61:1 |
-| 2 | Dark `feedback-neutral-solid-label` (gray-600) | 1.91:1 on #444 | gray-300: 6.31:1 |
-| 3 | Dark `feedback-success-solid-label` (green-300) | 3.49:1 on #444 | green-200: 5.65:1 |
+| 1 | Dark (listed, fixed after light, D-0025): `content-subtle` (gray-500) | 3.05:1 on #444, 2.22:1 on hover | Point to gray-300, the same as `content-muted`, as light mode already does: 6.31:1 and 4.61:1 |
+| 2 | Dark (listed, D-0025): `feedback-neutral-solid-label` (gray-600) | 1.91:1 on #444 | gray-300: 6.31:1 |
+| 3 | Dark (listed, D-0025): `feedback-success-solid-label` (green-300) | 3.49:1 on #444 | green-200: 5.65:1 |
 | 4 | Caption and eyebrow roles at 11px. 11 more token references to sizes 09/10/11 (focus-order, field, chart, calendar, slider and others) | below 12px | Point to `font-size-12`; retire refs 09/10/11 |
 | 5 | DataGrid number cells: end-aligned but without `tabular-nums` | check 10 | Add `font-variant-numeric: tabular-nums` to `cell--align-right` |
 | 6 | `.plx-data-pill--plain` sets `min-block-size: 0`, so a plain pill next to a filled pill is shorter | check 11 | Keep the pill height token on `plain` |
 | 7 | `semantic.density-standard-comfortable` still ships | D-0007 | Remove it, with a deprecation note |
 
 - Dark `border-default` and `border-subtle` (1.37:1) are decorative dividers, so they are not a defect. Control boundaries use `field-border` and `control-border`, which measure 4.00:1.
-- The token changes (1 to 4, 7) belong to the DS Architect, and the CSS changes (5, 6) to a Component Engineer. Each fix comes with a test that fails before it.
+- Items 1 to 3 wait for the light work to finish (D-0025). The token changes (1 to 4, 7) belong to the DS Architect, and the CSS changes (5, 6) to a Component Engineer. Each fix comes with a test that fails before it.
 
 ## 13. Changing this file
 

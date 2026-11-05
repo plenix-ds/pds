@@ -174,6 +174,87 @@
 
 - id: D-0022
   date: 2026-11-05
+  area: release
+  decided_by: agent (pds1-release-architect), owner may switch
+  decision: CI v1 on main - only new problems block (head vs merge base); "CI result" is the one required check, through a merge queue, squash only, with no bypass actors (the shared owner identity is also the agents' identity, so a bypass would let agents skip CI). Actions are limited to GitHub-owned ones and must be pinned to a commit SHA. The 0.x tag publish workflow is removed until the new release job exists, so a tag publishes nothing meanwhile. Reply to switch - B) let repository admins bypass the ruleset.
+  status: active
+  check: ci.yml "CI result" + ruleset 26593194 + Actions sha_pinning_required
+
+# Carried from 0.x (2026-11-05, pds1-product-lead, triage of the 177 transferred
+# issues, plenix-ds/pds#178). Owner rulings that still apply, so nobody asks twice.
+
+- id: D-0023
+  date: 2026-11-05
+  area: design
+  decided_by: owner (2026-10-24, chat; plenix-ds/pds#109, #77)
+  decision: Buttons and menu commands follow the Fluent 2 style (1px borders, 4px corners); hover and pressed details are built under plenix-ds/pds#109.
+  why: '"i would like to follow fluent style buttons and menu commands" (owner, 2026-10-24).'
+  options: [Fluent 2 style (chosen), keep the 0.6x button look]
+  status: active
+  check: planned:design-lint (radius and border checks)
+
+- id: D-0024
+  date: 2026-11-05
+  area: design
+  decided_by: owner (2026-10-24 and 2026-11-01, chat; plenix-ds/pds#108, #78)
+  decision: No icon inside a decorative box; drop the frame and fill and draw the icon at the tile's full size. A box stays only where a specific usage needs it.
+  why: '"do not put an icon inside a box" (2026-10-24); "The box is a per usage based on certain UI" (2026-11-01).'
+  options: [no box by default (chosen), keep boxes]
+  status: active
+  check: review-only (pds1-design-critic on each UI PR; no reliable static check)
+
+- id: D-0025
+  date: 2026-11-05
+  area: design
+  decided_by: owner (2026-10-19; plenix-ds/pds#135)
+  decision: Dark mode is worked last; dark-mode findings are listed, not fixed, until the light work is done. D-0009 still applies to what is defined.
+  why: 'Owner priority, 2026-10-19.'
+  options: [dark mode last (chosen), dark mode alongside light]
+  status: active
+  check: review-only (pds1-delivery-lead orders work by it)
+
+- id: D-0026
+  date: 2026-11-05
+  area: components
+  decided_by: owner (2026-10-24; plenix-ds/pds#127)
+  decision: App page headers use the Structured header style by default.
+  why: '"for the header the default is structured" (owner, 2026-10-24).'
+  options: [Structured (chosen), the other header style of the owner's study]
+  status: active
+  check: review-only (pds1-design-critic)
+
+- id: D-0027
+  date: 2026-11-05
+  area: components
+  decided_by: owner (2026-10-26; plenix-ds/pds#106)
+  decision: Plenix chart components draw with Apache ECharts, bundled locally and modular, themed from Plenix tokens; component names and props stay the same.
+  why: '"use apache charts" (owner, 2026-10-26), after comparing LineChart, Recharts and ECharts.'
+  options: [Apache ECharts (chosen), Recharts, own LineChart]
+  status: active
+  check: review-only (dependency choice)
+
+- id: D-0028
+  date: 2026-11-05
+  area: styles
+  decided_by: owner (2026-10-31; plenix-ds/pds#54, #48)
+  decision: Component CSS stays as written; no source rewrite to shorthand and no Lightning CSS minifier for now.
+  why: 'Measured gain about 3% (1.6% compressed); the owner chose to leave it.'
+  options: [leave as is (chosen), shorthand rewrite, Lightning CSS minifier]
+  status: active
+  check: review-only (no change to enforce)
+
+- id: D-0029
+  date: 2026-11-05
+  area: tokens
+  decided_by: owner (2026-10-26 and 2026-11-02; plenix-ds/pds#101)
+  decision: Style Dictionary replaces build-tokens.js only once the output is proven identical; steps go through QA with a computed-style proof and need no owner preview, unless something visible changes.
+  why: '"Yes, only after the output is proven identical"; "i dont need a preview.. just do it correctly".'
+  options: [switch after proof (chosen), switch now, keep build-tokens.js]
+  status: active
+  check: planned:token-output-identical (diff of generated token files in CI)
+
+- id: D-0030
+  date: 2026-11-05
   area: design
   decided_by: agent (pds1-design-director), owner may switch
   decision: plx-sys.shape-pill keeps its current 6px value (no visual change); it is never used for pills (pills are 4px, D-0005), only for the round marks that use it today, and it is renamed by the DS Architect under check 7. Option B, making it a true circle (50%), would change the look of the Spotlight beacon, Pictogram and DataGrid scrollbar. Reply B to switch.
