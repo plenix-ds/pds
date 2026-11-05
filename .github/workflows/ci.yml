@@ -138,7 +138,8 @@ jobs:
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: visual-regression
-          path: test-results/
+          # Playwright writes its output beside its config (tests/visual/test-results: visual.json and any diff images)
+          path: tests/visual/test-results/
           if-no-files-found: ignore
           retention-days: 90
       - name: Dashboard acceptance tests (#195 AC-1 to AC-6), when the dashboard or its tests change
