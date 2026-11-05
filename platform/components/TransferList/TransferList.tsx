@@ -62,8 +62,12 @@ import { fill } from '../../utils/fill.ts';
 const AUTO_VIRTUAL = 500;
 
 // one list: header (check all, title, count, the order buttons), search field, the listbox
-type Value = string | number;
-type Option = { value: Value; label: React.ReactNode; meta?: React.ReactNode; disabled?: boolean };
+/** @public a choice's value (ADR 0011) */
+export type TransferListValue = string | number;
+type Value = TransferListValue;
+/** @public a choice: { value, label, meta, disabled } (ADR 0011) */
+export type TransferListOption = { value: TransferListValue; label: React.ReactNode; meta?: React.ReactNode; disabled?: boolean };
+type Option = TransferListOption;
 type Strings = Record<string, string>;
 type SideProps = { id: string; title: React.ReactNode; items: Option[]; checked: Set<Value>; setChecked: (next: Set<Value>) => void; onMove: (list: Option[], all?: boolean) => void; search: boolean; virtual: boolean; disabled: boolean; t: Strings; tools?: React.ReactNode; emptyText: string };
 function Side({ id, title, items, checked, setChecked, onMove, search, virtual, disabled, t, tools, emptyText }: SideProps) {
