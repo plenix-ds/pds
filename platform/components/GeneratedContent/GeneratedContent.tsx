@@ -25,17 +25,37 @@ import { cx } from '../../utils/cx.ts';
 import { AILabel } from '../AILabel/AILabel.tsx';
 import { Badge } from '../Badge/Badge.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import CheckIcon from 'plenix-platform/icons/plenix/check';
 import RefreshIcon from 'plenix-platform/icons/plenix/refresh';
 import SparkleIcon from 'plenix-platform/icons/plenix/sparkle';
-export function GeneratedContent({versions=[],versionId,defaultVersionId,onVersionChange,children,loading=false,onRegenerate,onFeedback,strings,className}){
- const t=useStrings('generatedContent', strings),[own,setOwn]=React.useState(defaultVersionId),[busy,setBusy]=React.useState(''),[error,setError]=React.useState(''),[feedback,setFeedback]=React.useState(null),lock=React.useRef(false),epoch=React.useRef(0),controller=React.useRef(null);
+type GeneratedVersion = { id: string; content: React.ReactNode };
+export type GeneratedContentProps = {
+  /** the generated versions, oldest first: { id, content } */
+  versions?: GeneratedVersion[];
+  /** the shown version (controlled); default the last */
+  versionId?: string;
+  defaultVersionId?: string;
+  onVersionChange?(id: string): void;
+  /** shown when there are no versions */
+  children?: React.ReactNode;
+  loading?: boolean;
+  /** asks for a new version: ({ versionId, signal }) */
+  onRegenerate?(info: { versionId?: string; signal: AbortSignal }): unknown;
+  /** sends feedback: ("helpful" | "unhelpful", { versionId, signal }) */
+  onFeedback?(value: 'helpful' | 'unhelpful', info: { versionId?: string; signal: AbortSignal }): unknown;
+  /** { label, pending, failed, feedbackSaved, previous, next, version, helpful, unhelpful, regenerate, aiLabel } */
+  strings?: (Catalog & { aiLabel?: Catalog }) | null;
+  className?: string;
+};
+export function GeneratedContent({versions=[],versionId,defaultVersionId,onVersionChange,children,loading=false,onRegenerate,onFeedback,strings,className}: GeneratedContentProps){
+ const t=useStrings('generatedContent', strings) as Record<string, string>,[own,setOwn]=React.useState(defaultVersionId),[busy,setBusy]=React.useState(''),[error,setError]=React.useState(''),[feedback,setFeedback]=React.useState<string | null>(null),lock=React.useRef(false),epoch=React.useRef(0),controller=React.useRef<AbortController | null>(null);
  const id=versionId!==undefined?versionId:own,index=Math.max(0,versions.findIndex(v=>v.id===(id??versions[versions.length-1]?.id))),version=versions[index];
  React.useEffect(()=>{epoch.current++;controller.current?.abort();lock.current=false;setBusy('');setError('');setFeedback(null);return()=>{epoch.current++;controller.current?.abort();};},[version?.id]);
- const run=async(type,value)=>{const callback=type==='regenerate'?onRegenerate:onFeedback;if(lock.current||loading||!callback)return;const at=epoch.current;lock.current=true;setBusy(type);setError('');const abort=new AbortController();controller.current=abort;
-  try{if(type==='regenerate')await callback({versionId:version?.id,signal:abort.signal});else await callback(value,{versionId:version?.id,signal:abort.signal});if(at===epoch.current&&type==='feedback')setFeedback(value);}catch(e){if(at===epoch.current&&!abort.signal.aborted)setError(e?.message||t.failed);}finally{if(at===epoch.current){lock.current=false;setBusy('');}}
+ const run=async(type: 'regenerate' | 'feedback',value?: 'helpful' | 'unhelpful')=>{const callback=type==='regenerate'?onRegenerate:onFeedback;if(lock.current||loading||!callback)return;const at=epoch.current;lock.current=true;setBusy(type);setError('');const abort=new AbortController();controller.current=abort;
+  try{if(type==='regenerate')await (callback as NonNullable<typeof onRegenerate>)({versionId:version?.id,signal:abort.signal});else await (callback as NonNullable<typeof onFeedback>)(value as 'helpful' | 'unhelpful',{versionId:version?.id,signal:abort.signal});if(at===epoch.current&&type==='feedback')setFeedback(value as string);}catch(e){if(at===epoch.current&&!abort.signal.aborted)setError((e as Error | undefined)?.message||t.failed);}finally{if(at===epoch.current){lock.current=false;setBusy('');}}
  };
- const choose=i=>{if(busy||loading)return;const v=versions[i];if(!v)return;if(versionId===undefined)setOwn(v.id);onVersionChange?.(v.id);};
+ const choose=(i: number)=>{if(busy||loading)return;const v=versions[i];if(!v)return;if(versionId===undefined)setOwn(v.id);onVersionChange?.(v.id);};
  return <Stack className={cx('plx-ai','plx-generated-content',className)} role="region" aria-label={t.label} aria-busy={!!busy||loading||undefined}>
  <Inline wrap><AILabel strings={strings?.aiLabel}/>{loading||busy?<Badge icon={SparkleIcon}>{t.pending}</Badge>:null}</Inline><Stack>{version?version.content:children}</Stack>
  {error?<Notice tone="danger">{error}</Notice>:null}{feedback?<Inline><Badge icon={CheckIcon} role="status">{t.feedbackSaved}</Badge></Inline>:null}

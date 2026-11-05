@@ -61,7 +61,7 @@ check('parseDate: a date-only value stays its calendar day in a US time zone #34
 check('parseDate: the parts that show dates read them through it, never on their own #342', () => {
   // the parts known to show dates: no new Date(<a name>) of their own (Time's bug was new Date(v))
   const NAMED = /new Date\(\s*[A-Za-z_$][\w$.]*\s*\)/;
-  for (const f of ['components/Time/Time.jsx', 'components/File/File.tsx', 'components/FileRow/FileRow.jsx', 'patterns/ConnectedAccounts/ConnectedAccounts.jsx',
+  for (const f of ['components/Time/Time.tsx', 'components/File/File.tsx', 'components/FileRow/FileRow.jsx', 'patterns/ConnectedAccounts/ConnectedAccounts.jsx',
     'patterns/VersionCompare/VersionCompare.jsx', 'patterns/FileList/FileList.jsx', 'patterns/ReviewFlow/ReviewFlow.jsx', 'patterns/AssignControl/AssignControl.jsx']) {
     assert.ok(!NAMED.test(fs.readFileSync(path.join(ROOT, 'platform', f), 'utf8')), f + ' builds a Date from a value itself: read it with parseDate (utils/format.ts), or add a reasoned exception here');
   }
@@ -72,13 +72,13 @@ check('parseDate: the parts that show dates read them through it, never on their
   ['platform/components', 'platform/patterns', 'platform/templates', 'platform/utils', 'platform/hooks', 'platform/providers', 'suite'].forEach((d) => { if (fs.existsSync(path.join(ROOT, d))) walk(path.join(ROOT, d)); });
   const copies = files.filter((q) => !q.endsWith(path.join('utils', 'format.ts'))).filter((q) => { const t = fs.readFileSync(q, 'utf8'); return DATE_ONLY.test(t) && BUILD.test(t); });
   assert.deepStrictEqual(copies.map((q) => path.relative(ROOT, q)), [], 'private date-only parsers: use parseDate (utils/format.ts), or add a reasoned exception here');
-  assert.ok(/parseDate\(/.test(fs.readFileSync(path.join(ROOT, 'platform', 'components/Time/Time.jsx'), 'utf8')), 'Time does not use parseDate');
+  assert.ok(/parseDate\(/.test(fs.readFileSync(path.join(ROOT, 'platform', 'components/Time/Time.tsx'), 'utf8')), 'Time does not use parseDate');
 });
 check('Time: a date-only value has the dateTime and text of its own day in a US time zone #342', () => {
   const zone = process.env.TZ; process.env.TZ = 'America/Los_Angeles';
   try {
     const esbuild = require('esbuild'), React = require('react'), Server = require('react-dom/server');
-    const out = esbuild.buildSync({ entryPoints: [path.join(ROOT, 'platform/components/Time/Time.jsx')], bundle: true, write: false, format: 'cjs', platform: 'node',
+    const out = esbuild.buildSync({ entryPoints: [path.join(ROOT, 'platform/components/Time/Time.tsx')], bundle: true, write: false, format: 'cjs', platform: 'node',
       external: ['react', 'react-dom', 'plenix-platform/icons/*'], jsx: 'transform', loader: { '.js': 'jsx' }, logLevel: 'silent' });
     // a component may import an icon module (plenix-platform/icons/<set>/<name>, resolved only by build-app.js and tests/icon-modules.js); buildSync takes no plugin, so it stays external and is a stub here
     const need = (id) => (/^plenix-platform\/icons\//.test(id) ? { default: {} } : require(id));

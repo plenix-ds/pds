@@ -40,7 +40,16 @@ import { devWarn } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
 import { cleanRichText } from '../../utils/richTextClean.ts';
 
-export function RichText({ variant = 'article', html, as: Tag = 'div', label, className, children, ...rest }) {
+type RichTextProps = Omit<React.HTMLAttributes<HTMLElement>, 'children'> & {
+  /** "article" (default) | "compact" */
+  variant?: 'article' | 'compact';
+  /** HTML to clean and show (it is cleaned with cleanRichText); without it the children show */
+  html?: string | null;
+  as?: React.ElementType;
+  label?: string;
+  children?: React.ReactNode;
+};
+export function RichText({ variant = 'article', html, as: Tag = 'div', label, className, children, ...rest }: RichTextProps) {
   devWarn('RichText', { variant }, { variant: ['article','compact'] });
   const clean = React.useMemo(() => (html != null ? cleanRichText(html) : null), [html]);
   const content = clean != null ? { dangerouslySetInnerHTML: { __html: clean } } : null;

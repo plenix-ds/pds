@@ -57,7 +57,7 @@
     "platform/components/Banner/Banner.tsx",
     "platform/components/Field/Field.tsx",
     "platform/components/Checkbox/Checkbox.tsx",
-    "platform/components/Metric/Metric.jsx",
+    "platform/components/Metric/Metric.tsx",
     "platform/charts/ChartFrame.jsx",
     "platform/charts/Gauge.jsx",
     "platform/patterns/RecordPage/RecordPage.jsx",

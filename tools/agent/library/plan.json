@@ -783,7 +783,7 @@
       "platform/design-system/parts/w02A.{records,labs,docs}.js + .css",
       "platform/exports/w02A.{js,css}",
       "platform/standards/web-native-map.d/w02A.json",
-      "platform/components/RichText/RichText.jsx",
+      "platform/components/RichText/RichText.tsx",
       "platform/components/RichText/rich-text.css",
       "platform/tokens/components/rich-text.tokens.json",
       "platform/components/Blockquote/Blockquote.jsx",
@@ -1146,7 +1146,7 @@
       "platform/standards/web-native-map.d/w04C.json",
       "platform/components/ColorSwatch/ColorSwatch.jsx",
       "platform/components/ColorSwatch/color-swatch.css",
-      "platform/components/Time/Time.jsx",
+      "platform/components/Time/Time.tsx",
       "platform/components/Time/time.css",
       "platform/tokens/components/time.tokens.json",
       "platform/components/Banner/Banner.jsx",
@@ -1869,7 +1869,7 @@
       "platform/design-system/parts/w09C.{records,labs,docs}.js + .css",
       "platform/exports/w09C.{js,css}",
       "platform/standards/web-native-map.d/w09C.json",
-      "platform/components/Metric/Metric.jsx",
+      "platform/components/Metric/Metric.tsx",
       "platform/components/Metric/metric.css",
       "platform/charts/ScatterChart.jsx",
       "platform/charts/FunnelChart.jsx",
@@ -2527,7 +2527,7 @@
       "platform/components/Citation/Citation.tsx",
       "platform/components/Citation/citation.css",
       "platform/tokens/components/citation.tokens.json",
-      "platform/components/GeneratedContent/GeneratedContent.jsx",
+      "platform/components/GeneratedContent/GeneratedContent.tsx",
       "platform/components/GeneratedContent/generated-content.css",
       "platform/tokens/components/generated-content.tokens.json",
       "platform/components/SuggestedAction/SuggestedAction.tsx",
@@ -3296,7 +3296,7 @@
    "wave": 2,
    "lane": "A",
    "files": [
-    "platform/components/RichText/RichText.jsx",
+    "platform/components/RichText/RichText.tsx",
     "platform/components/RichText/rich-text.css",
     "platform/tokens/components/rich-text.tokens.json"
    ],
@@ -4191,7 +4191,7 @@
    "wave": 4,
    "lane": "C",
    "files": [
-    "platform/components/Time/Time.jsx",
+    "platform/components/Time/Time.tsx",
     "platform/components/Time/time.css",
     "platform/tokens/components/time.tokens.json"
    ],
@@ -6507,7 +6507,7 @@
    "wave": 9,
    "lane": "C",
    "files": [
-    "platform/components/Metric/Metric.jsx",
+    "platform/components/Metric/Metric.tsx",
     "platform/components/Metric/metric.css"
    ],
    "dependsOn": [
@@ -8377,7 +8377,7 @@
    "wave": 14,
    "lane": "B",
    "files": [
-    "platform/components/GeneratedContent/GeneratedContent.jsx",
+    "platform/components/GeneratedContent/GeneratedContent.tsx",
     "platform/components/GeneratedContent/generated-content.css",
     "platform/tokens/components/generated-content.tokens.json"
    ],
@@ -11002,7 +11002,7 @@
    "target": "RichText",
    "targetKind": "component",
    "files": [
-    "platform/components/RichText/RichText.jsx",
+    "platform/components/RichText/RichText.tsx",
     "platform/components/RichText/rich-text.css",
     "platform/tokens/components/rich-text.tokens.json"
    ],
@@ -11860,7 +11860,7 @@
    "target": "Time",
    "targetKind": "component",
    "files": [
-    "platform/components/Time/Time.jsx",
+    "platform/components/Time/Time.tsx",
     "platform/components/Time/time.css",
     "platform/tokens/components/time.tokens.json"
    ],
@@ -11896,7 +11896,7 @@
    "target": "Time",
    "targetKind": "component",
    "files": [
-    "platform/components/Time/Time.jsx",
+    "platform/components/Time/Time.tsx",
     "platform/components/Time/time.css",
     "platform/tokens/components/time.tokens.json"
    ],
@@ -11924,7 +11924,7 @@
    "target": "Time",
    "targetKind": "component",
    "files": [
-    "platform/components/Time/Time.jsx",
+    "platform/components/Time/Time.tsx",
     "platform/components/Time/time.css",
     "platform/tokens/components/time.tokens.json"
    ],
@@ -14714,7 +14714,7 @@
    "target": "Metric",
    "targetKind": "extend",
    "files": [
-    "platform/components/Metric/Metric.jsx",
+    "platform/components/Metric/Metric.tsx",
     "platform/components/Metric/metric.css"
    ],
    "laneFiles": [
@@ -21529,7 +21529,7 @@
    "target": "GeneratedContent",
    "targetKind": "component",
    "files": [
-    "platform/components/GeneratedContent/GeneratedContent.jsx",
+    "platform/components/GeneratedContent/GeneratedContent.tsx",
     "platform/components/GeneratedContent/generated-content.css",
     "platform/tokens/components/generated-content.tokens.json"
    ],
@@ -21648,7 +21648,7 @@
    "target": "GeneratedContent",
    "targetKind": "component",
    "files": [
-    "platform/components/GeneratedContent/GeneratedContent.jsx",
+    "platform/components/GeneratedContent/GeneratedContent.tsx",
     "platform/components/GeneratedContent/generated-content.css",
     "platform/tokens/components/generated-content.tokens.json"
    ],
