@@ -15,3 +15,8 @@ What the 0.x project taught us (plan §2), plus confirmed lessons added after ea
 - **An agent's report was taken as fact.** → Evidence (Ran/Skipped/Planned/Manual) plus `git log` and the checks.
 - **`check | tee log` hid failures** (from CTM). → Workflows use `bash` with `pipefail`.
 - **"Arabic never shipped" was wrong:** a stale local clone was read instead of `main`. → Check `origin/main` before claiming anything about the repo.
+
+## PDS 1.0
+
+- **CTM 3.0 re-asked the owner after each answer (new cards D-0032, D-0033) and ran each answer as its own long chain.** → The owner's answer is final: act on the sensible reading, say it in one line, handle all answers in one pass, and refresh the dashboard once (D-0035).
+- **PDS had no dashboard page when the owner asked for "the html page like CTM".** → When the owner points at a working example, ship that example first, then improve it (D-0034).
