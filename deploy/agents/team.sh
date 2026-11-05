@@ -10,8 +10,9 @@
 #   team.sh stop-all            stop the whole team
 #   team.sh status              list running sessions and free memory
 #   team.sh update              pull main into every worktree
-#   team.sh nudge               wake idle sessions to check GitHub (pds1-nudge.timer, every 10 min; #220;
-#                               NUDGE_DRY=1 lists them without sending)
+#   team.sh nudge               start waiting roles, stop finished ones (#246), then wake idle sessions to check
+#                               GitHub (pds1-nudge.timer, every 10 min; #220). NUDGE_DRY=1 only prints the plan
+#   team.sh schedule            only the start/stop part of nudge (NUDGE_DRY=1 prints it)
 set -u
 export PATH="$HOME/.local/bin:$HOME/.bun/bin:/usr/local/bin:/usr/bin:/bin"
 S=pds1
@@ -76,8 +77,35 @@ trust_dir() {  # pre-accept Claude's folder-trust prompt so unattended sessions 
 NUDGE_TEXT='Scheduled check (#220): check your open issues and PRs on plenix-ds/pds (gh issue list -R plenix-ds/pds --label agent:pds1-ROLE --state open; gh pr list -R plenix-ds/pds --author @me) and continue. Queue every green PR of yours with gh pr merge --auto. If there is nothing to do, reply "idle" and stop.'
 NUDGE_IDLE_S=${NUDGE_IDLE_S:-120}
 NUDGE_STAMP=$ROOT/.nudge-last
+# Start waiting roles and stop finished ones (#246, D-0040): deploy/agents/scheduler.mjs makes the plan from GitHub,
+# tmux, agents.config.yaml and free memory; this carries it out. Each start is logged and posted on #178.
+schedule() {
+  local plan line verb a b why roles=() here
+  for r in "${ROLES[@]}"; do roles+=("${r%%|*}"); done
+  here=$(dirname "$(readlink -f "$0")")
+  plan=$(PDS1_CFG="$CFG" PDS1_ROOT="$ROOT" PDS1_SESSION="$S" node "$here/scheduler.mjs" "${roles[@]}" 2>>"$LOG") \
+    || { log "schedule: scheduler.mjs failed"; echo "schedule: scheduler failed (see $LOG)"; return; }
+  while IFS= read -r line; do
+    [ -n "$line" ] || continue
+    read -r verb a b <<<"${line%% |*}"; why=${line#*| }
+    case $verb in
+      start)
+        if [ -n "${NUDGE_DRY:-}" ]; then echo "would start $a${b:+ $b} ($why)"; continue; fi
+        start_one "$a" "$b" && log "schedule: started $a${b:+ $b}: $why"
+        gh issue comment 178 -R plenix-ds/pds --body "Started **PDS1 - $(display "$a")${b:+ $b}** (scheduler, #246): $why.
+
+— PDS1-Release-Architect (team.sh scheduler)" >/dev/null 2>>"$LOG" || log "schedule: could not post on #178" ;;
+      stop)
+        if [ -n "${NUDGE_DRY:-}" ]; then echo "would stop $a ($why)"; continue; fi
+        tmux kill-window -t "$S:$a" 2>/dev/null && log "schedule: stopped $a: $why" ;;
+      note) echo "$a $b${why:+ | $why}" ;;
+    esac
+  done <<<"$plan"
+}
+
 nudge() {
   local now last updated open win pane prompt act sent=0
+  schedule
   now=$(date -u +%FT%TZ); last=$(cat "$NUDGE_STAMP" 2>/dev/null || echo 1970-01-01T00:00:00Z)
   updated=$(gh api 'repos/plenix-ds/pds/issues?state=all&sort=updated&direction=desc&per_page=1' -q '.[0].updated_at' 2>/dev/null || echo "$now")
   open=$(gh pr list -R plenix-ds/pds --state open --json number -q length 2>/dev/null || echo 1)
@@ -111,6 +139,7 @@ case "${1:-status}" in
   stop-all) tmux kill-session -t $S 2>/dev/null && { log "stop-all"; echo "team stopped"; } ;;
   update) git -C "$REPO" pull -q --ff-only; for d in "$ROOT"/work/*/; do git -C "$d" fetch -q origin; done; echo updated ;;
   nudge) nudge ;;
+  schedule) schedule ;;
   status) tmux list-windows -t $S -F '#W' 2>/dev/null | grep -v '^shell$' || echo "pds1 team is not running"; free -g | awk 'NR==2{print "free memory: "$7" GB available"}' ;;
-  *) sed -n 2,15p "$0"; exit 2 ;;
+  *) sed -n 2,16p "$0"; exit 2 ;;
 esac

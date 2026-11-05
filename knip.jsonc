@@ -18,6 +18,8 @@
     "services/**/*.js",
     // run by hand from a runbook: services/login/README.md ("with services/auth/npm-advanced-config.mjs, dry run first")
     "services/auth/*.mjs",
+    // run by deploy/agents/team.sh (schedule, #246)
+    "deploy/agents/*.mjs",
     // a proof tool run by hand (the other proof folders moved to the archive, docs/ARCHIVE.md)
     "tests/ci197-*.cjs",
     // loaded by script tags in pages
