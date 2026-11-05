@@ -42,8 +42,8 @@
 | disabled | a field whose cell can't be edited (`editable(record)` false) is read-only text (§3), not a disabled input |
 | loading (saving) | FormFlow's saving state: the Save button shows its spinner and is `aria-busy`; the fields stay as they are; Escape waits until the answer |
 | error (a wrong value, `validate`) | the message under its field (Field's error, `field-error-text`, 12px, with the error icon); on Save, focus moves to the first wrong field; Save stays available |
-| error (refused by the app, `onRecordEdit` rejects) | the form stays open with every value kept; the app's message (or `dataGrid.saveRefused`) shows in an **ErrorSummary at the top of the form body** (DESIGN.md §11: an error from the whole form) |
-| saved | the surface closes; a **Toast** "Saved" (`dataGrid.saved`, DESIGN.md §11: the result of an action); the edited row stays the open row, marked |
+| error (refused by the app, `onRecordEdit` rejects) | the form stays open with every value kept; the app's message (or `dataGrid.formSaveRefused`) shows in an **ErrorSummary at the top of the form body** (DESIGN.md §11: an error from the whole form) |
+| saved | the surface closes; a **Toast** "Saved {name}" (`dataGrid.formSaved`, DESIGN.md §11: the result of an action); the edited row stays the open row, marked |
 | unsaved changes on close | FormFlow's existing "Discard changes?" confirmation (its own words) |
 | selected | the form edits the active row only; the selection doesn't change (§12) |
 | empty | a record with no editable column: Form Edit has nothing to edit, so the menu choice isn't offered (§1) |
@@ -61,13 +61,17 @@
 - **10,000 rows:** the form edits one record. The edited row stays rendered and marked while the form is open, so closing returns focus to it.
 - **320px:** the drawer is full width under the shell's narrow breakpoint (FormFlow's own rule), and the footer stacks below 400px (fit-and-overflow §2).
 
-## 7. Words (the Technical Writer may edit; Arabic needs the owner's approval, D-0012)
+## 7. Words (the Technical Writer's review on #84; Arabic needs the owner's approval, D-0012)
 
 | Key | English | Where |
 |---|---|---|
-| `dataGrid.formTitle` | "Edit {name}" | the surface's header and its accessible name |
-| `dataGrid.emptyValue` | "—" | an empty read-only value |
-| `dataGrid.saved` / `dataGrid.saveRefused` | as in `design.md` §5 | Toast / ErrorSummary |
+| `dataGrid.formTitle` | "Edit {name}" (`{name}` is a value, never a sentence) | the surface's header and its accessible name |
+| `dataGrid.emptyValue` | "—" (shown) | an empty read-only value |
+| `dataGrid.noValue` | "No value" (visually hidden, read with the dash) | the same empty value, for screen readers |
+| `dataGrid.formSaved` | "Saved {name}" | the Toast after a form save |
+| `dataGrid.formSaveRefused` | "Couldn't save {name}. Check the values and try again." | the ErrorSummary when the app refuses without its own message |
+
+- **The inline keys stay as shipped:** `dataGrid.saved` ("Saved", read by screen readers after a cell save) and `dataGrid.saveRefused` (under a refused cell, #354). Form Edit uses its own two keys above, so Inline Edit doesn't change.
 
 ## 8. The engineer must not invent
 
