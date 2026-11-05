@@ -16,7 +16,7 @@
 */
 import React from 'react';
 import { Form, FormActions } from '../Form/Form.jsx';
-import { Tabs } from '../../components/Tabs/Tabs.jsx';
+import { Tabs } from '../../components/Tabs/Tabs.tsx';
 import { ProgressSteps } from '../../components/ProgressSteps/ProgressSteps.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Text } from '../../components/Text/Text.tsx';

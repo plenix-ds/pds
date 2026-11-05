@@ -15,7 +15,7 @@
 import React from 'react';
 import { Dialog } from '../../components/Dialog/Dialog.tsx';
 import { Stack } from '../../components/Stack/Stack.tsx';
-import { Tabs } from '../../components/Tabs/Tabs.jsx';
+import { Tabs } from '../../components/Tabs/Tabs.tsx';
 import { Field } from '../../components/Field/Field.tsx';
 import { Input, Textarea } from '../../components/Input/Input.tsx';
 import { FileInput } from '../../components/FileInput/FileInput.tsx';
