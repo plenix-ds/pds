@@ -144,7 +144,7 @@ DSParts.records.push(function (H) {
     use: ['Every collection whose records people narrow by their fields', 'The button reads Filter; with conditions it takes the tint and a count badge', 'Operators by the field’s type: contains, is any of, has any of, =, is before, is within', 'Condition groups for an or inside an and'],
     avoid: ['Filter chips under the command bar: except on the Search workspace, set filters show in their buttons', 'Labeling it "Advanced"', 'A filter that applies on Apply: conditions apply as they change'],
     related: ['command-bar', 'quick-filter', 'sort-panel', 'group-panel', 'data-grid'],
-    map: [[AIR, 'Filter', 'Direct'], [ATL, 'JQL basic filters', 'Partial'], [CAR, 'Filtering (panel)', 'Partial'], [ANT, 'QueryFilter', 'Partial']],
+    map: [[AIR, 'Filter', 'Direct'], [ATL, 'JQL basic filters', 'Partial'], [CAR, 'Filtering (panel)', 'Partial'], [ANT, 'QueryFilter', 'Partial'], ['Django', 'list_filter (admin)', 'Direct'], ['Frappe', 'Filter popover', 'Direct']],
     variantPages: [
       vp('Filter button', 'Bar button', 'Filter (no conditions)', { variant: 'idle' }, 'The bar button with its icon and the word Filter.', 'The bar while nothing is filtered', 'Rewording it ("Filtered by 2 fields"): the word stays, the badge counts'),
       vp('Active filter button', 'Bar button', 'Filter with conditions (tint and count)', { variant: 'active' }, 'The tint and a count badge while conditions apply.', 'Showing that the rows are filtered', 'A second marker elsewhere'),
@@ -166,7 +166,7 @@ DSParts.records.push(function (H) {
     use: ['Ordering a collection by one field or several', 'The button shows the sort in force (a pop-up button): Sort while there is none, "Sort: Updated" with one level, "Sort: Updated +1" with more, tinted', 'Reordering levels by drag, the handle’s Move up and Move down, or Alt + Arrow Up / Down'],
     avoid: ['A sort menu with a fixed list of orders', 'Wording that hides the field ("Sorted by 1 field")'],
     related: ['command-bar', 'group-panel', 'filter-panel', 'data-grid'],
-    map: [[AIR, 'Sort', 'Direct'], [CAR, 'Data table sorting', 'Partial'], [POL, 'IndexFilters sort', 'Partial']],
+    map: [[AIR, 'Sort', 'Direct'], [CAR, 'Data table sorting', 'Partial'], [POL, 'IndexFilters sort', 'Partial'], ['Django', 'Changelist column sorting', 'Partial'], ['Frappe', 'Sort selector', 'Direct']],
     variantPages: [
       vp('Sort button', 'Bar button', 'Sort (no levels)', { variant: 'idle' }, 'The bar button with its icon and the word Sort.', 'The bar while the rows keep their own order', 'Rewording it'),
       vp('Sort panel with levels', 'Panel', 'Two sort levels', { content: 'levels' }, 'Two levels: the main sort first, the next where the first is the same.', 'Ordering by a field, then another', 'More levels than people can follow'),
@@ -187,7 +187,7 @@ DSParts.records.push(function (H) {
     use: ['Gathering records that share a value under one header', 'A subgroup to split each group again', 'Collapse all and Expand all over a long grouped table'],
     avoid: ['Grouping by a free-text field: every row becomes its own group', 'More than two or three levels'],
     related: ['command-bar', 'sort-panel', 'data-grid'],
-    map: [[AIR, 'Group', 'Direct'], [ATL, 'Group by (boards)', 'Partial'], [ANT, 'Table expandable groups', 'Partial']],
+    map: [[AIR, 'Group', 'Direct'], [ATL, 'Group by (boards)', 'Partial'], [ANT, 'Table expandable groups', 'Partial'], ['Frappe', 'Group By sidebar', 'Direct']],
     variantPages: [
       vp('Group button', 'Bar button', 'Group (not grouped)', { variant: 'idle' }, 'The bar button with the group-by icon and the word Group.', 'The bar while the table is not grouped', 'A list-bullets icon: Group has its own icon'),
       vp('Group panel with a subgroup', 'Panel', 'A group and a subgroup', { content: 'levels' }, 'Two levels: the outer group first; Collapse all and Expand all at the top.', 'Grouping by type, then by category', 'Deep nesting')
@@ -207,7 +207,7 @@ DSParts.records.push(function (H) {
     use: ['Choosing which columns show and in which order', 'First column for the column that names the rows', 'The dialog for a long column list'],
     avoid: ['Drag as the only way to move', 'Hiding the first column'],
     related: ['command-bar', 'data-grid', 'group-panel'],
-    map: [[AIR, 'Hide fields', 'Partial'], [CAR, 'Data table column customization', 'Partial'], [FLU, 'DataGrid column options', 'Partial']],
+    map: [[AIR, 'Hide fields', 'Partial'], [CAR, 'Data table column customization', 'Partial'], [FLU, 'DataGrid column options', 'Partial'], ['Frappe', 'Pick Columns (report view)', 'Direct']],
     variantPages: [
       vp('Columns dropdown', 'Form', 'The Columns dropdown', { variant: 'dropdown' }, 'The list in the bar’s dropdown; changes apply at once.', 'Hiding or moving a few columns', 'A very long list: use the dialog'),
       vp('Manage columns dialog', 'Form', 'The Manage columns dialog', { variant: 'dialog' }, 'The list in a dialog with a find field, Show all, Hide all and First column; applied with Apply.', 'Many columns, or several changes at once', 'One quick change: the dropdown is closer')
@@ -230,7 +230,7 @@ DSParts.records.push(function (H) {
     use: ['The one or two questions an app’s people ask most (Category, Type, Tags, Date)', 'Between Filter and Sort in the bar', 'The find field fills the panel', 'The button shows the choice in force (a pop-up button): "Status: In review", "Tags: Client +2", "Date: Last 7 days"; its name alone while it does not filter'],
     avoid: ['Quick filters an app does not have', 'A row of chips under the command bar: except on the Search workspace, set filters show in their buttons'],
     related: ['command-bar', 'filter-panel'],
-    map: [[POL, 'Filters (quick)', 'Partial'], ['GitHub', 'Labels filter', 'Direct'], ['Google Analytics', 'Date range', 'Direct']],
+    map: [[POL, 'Filters (quick)', 'Partial'], ['GitHub', 'Labels filter', 'Direct'], ['Google Analytics', 'Date range', 'Direct'], ['Django', 'list_filter (admin)', 'Partial'], ['Frappe', 'Standard filters', 'Direct']],
     variantPages: [
       vp('Checklist quick filter', 'Kind', 'Searchable checklist (Tags, Category, Type)', { variant: 'list' }, 'A find field that fills the panel, then each value as a checkbox with its pill; Clear in the footer.', 'Tags, categories, types', 'A field with one or two values: a filter condition is enough'),
       vp('Date quick filter', 'Kind', 'Presets and a range (Date)', { variant: 'date' }, 'Any time, Last 7 days, Last 30 days, This year, or a custom range from and to.', 'Dates people narrow by most', 'Exact timestamps: use a Filter condition')

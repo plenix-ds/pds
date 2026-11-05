@@ -509,6 +509,7 @@ export function bodyRows({
                     column={c}
                     record={record}
                     area={turnedOn && c.editor === 'textarea'}
+                    select={turnedOn && c.editor === 'select'}
                     value={editing.value}
                     onCommit={(next, move) => {
                       commitEdit(row.id, c.field, next);

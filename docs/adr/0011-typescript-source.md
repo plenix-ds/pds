@@ -48,6 +48,7 @@ Measured on main, 2026-11-05:
   - `@plenix-ds/react` declarations come from `tsc --emitDeclarationOnly`.
   - `build-types.js` is deleted, and check-system's `legacy` rule keeps it gone.
   - `tests/types.test.js` (the RedSave fixture) must still compile against the new `index.d.ts`.
+  - `platform/index.js` becomes `index.ts` and re-exports every converted part's props type (`export type { CodeBlockProps } from …`). That isn't possible while it's JS (#369), and a hand-written `.d.ts` would be a second source of types, so there's none in the meantime.
 - **Public API:**
   - Export names and runtime behavior don't change.
   - Prop types become stricter (`any` -> real types). That's a compile-time change for apps that passed wrong values, so it's listed under *Changed* in each wave's changelog.

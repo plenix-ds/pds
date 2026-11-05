@@ -394,7 +394,6 @@
   "plx-comp.entity-header-eyebrow-font-size -> plx-ref.font-size-100",
   "plx-comp.entity-header-fact-count-font-size -> plx-ref.font-size-700",
   "plx-comp.entity-header-fact-count-line-height -> plx-ref.line-height-tight",
-  "plx-comp.entity-header-fact-icon-size -> plx-ref.size-5u",
   "plx-comp.entity-header-fact-icon-tile-size -> plx-ref.size-10u",
   "plx-comp.entity-header-fact-label-icon-size -> plx-ref.size-4u",
   "plx-comp.entity-header-fact-value-font-size -> plx-ref.font-size-200",

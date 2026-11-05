@@ -177,7 +177,7 @@ DSParts.records.push(function (H) {
     use: ['A field’s hint and error, connected to the control', 'A dialog’s body text, connected to the dialog', 'A hidden description only for what sighted people read from the layout (VisuallyHidden with the id)'],
     avoid: ['Repeating the name in the description', 'Essential instructions only in a description or a tooltip: show them', 'Replacing the ids an element already has: join them'],
     related: ['field', 'tooltip', 'visually-hidden'],
-    map: [m(C, 'Helper text', 'Partial'), m(A, 'Helper message', 'Partial'), m(M, 'Supporting text', 'Partial'), m(PO, 'Help text', 'Partial'), m(SP, 'Help text', 'Partial')],
+    map: [m(C, 'Helper text', 'Partial'), m(A, 'Helper message', 'Partial'), m(M, 'Supporting text', 'Partial'), m(PO, 'Help text', 'Partial'), m(SP, 'Help text', 'Partial'), ['Django', 'Field help_text', 'Direct'], ['Frappe', 'DocField description', 'Direct']],
     examples: [
       ['aria-describedby joined', function () { return box(320, h(DescribedDemo)); }],
       ['Description id helper', function () { return h(P.CodeBlock, null, 'joinIds(props[\'aria-describedby\'], hintId, error && errorId)\n// "owner-id plx-hint1 plx-error2"; undefined when there is none'); }],

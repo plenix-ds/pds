@@ -15,6 +15,7 @@ import React from 'react';
 import { useFloating } from '../../../utils/floating.ts';
 import { announce } from '../../../utils/announce.tsx';
 import { Spinner } from '../../Loading/Loading.tsx';
+import { Select } from '../../Input/Input.tsx';
 import { dataWhenText } from '../../../utils/dataText.tsx';
 import { cx } from '../../../utils/cx.ts';
 import { usePressable } from '../../../hooks/usePressable.ts';
@@ -175,7 +176,56 @@ function AreaEditor({ draft, setDraft, invalid, setInvalid, messageId, finish, c
   );
 }
 
-export function CellEditor({ column, record, value, area, onCommit, onCancel }) {
+// the select editor (ADR 0016): Plenix's own Select inside the cell, its list open, drawn bare by Input's context hooks (the cell's
+// outline is the frame). Picking an option saves it; with the list closed Enter saves the current choice, Escape cancels, Tab saves and moves.
+function SelectEditor({ draft, setDraft, invalid, messageId, finish, cancel, input, done, options, label }) {
+  const wrap = React.useRef(null);
+  React.useEffect(() => {
+    const field = wrap.current?.querySelector('[role="combobox"]');
+    field?.focus();
+    field?.click();
+  }, []);
+  return (
+    <>
+      <span ref={wrap} className="plx-data-grid__editor-field">
+        <Select
+          ref={input}
+          aria-label={label}
+          aria-describedby={invalid ? messageId : undefined}
+          invalid={!!invalid}
+          options={options}
+          value={draft ?? ''}
+          block
+          onChange={(e) => {
+            setDraft(e.target.value);
+            finish(0, e.target.value);
+          }}
+          onBlur={() => finish()}
+          onKeyDown={(e) => {
+            const open = e.currentTarget?.getAttribute?.('aria-expanded') === 'true' || !!e.target?.closest?.('[aria-expanded="true"]');
+            if (e.key === 'Tab' && !e.altKey && !e.ctrlKey && !e.metaKey) {
+              e.preventDefault();
+              e.stopPropagation();
+              finish(e.shiftKey ? -1 : 1);
+            } else if (!open && e.key === 'Escape') {
+              e.preventDefault();
+              e.stopPropagation();
+              done.current = true;
+              cancel();
+            } else if (!open && e.key === 'Enter') {
+              e.preventDefault();
+              e.stopPropagation();
+              finish();
+            } else e.stopPropagation();
+          }}
+        />
+      </span>
+      {invalid ? <EditorMessage id={messageId} anchor={wrap} message={invalid} /> : null}
+    </>
+  );
+}
+
+export function CellEditor({ column, record, value, area, select, onCommit, onCancel }) {
   const S = useStrings('dataGrid'),
     [draft, setDraft] = React.useState(value ?? ''),
     [invalid, setInvalid] = React.useState(null),
@@ -185,10 +235,10 @@ export function CellEditor({ column, record, value, area, onCommit, onCancel }) 
   React.useEffect(() => {
     announce(S.editing.replace('{column}', column.title));
   }, []);
-  const finish = async (move = 0) => {
+  const finish = async (move = 0, picked) => {
     if (done.current) return;
     done.current = true;
-    const next = column.editor === 'number' ? (draft === '' ? null : Number(draft)) : draft;
+    const next = picked !== undefined ? picked : column.editor === 'number' ? (draft === '' ? null : Number(draft)) : draft;
     if (column.validate) {
       // a message keeps the cell open (ADR 0016): the editor is back in play and takes the focus again
       const message = await column.validate(next, record);
@@ -206,6 +256,15 @@ export function CellEditor({ column, record, value, area, onCommit, onCancel }) 
       <AreaEditor
         {...{ draft, setDraft, invalid, setInvalid, messageId, finish, input, done }}
         cancel={onCancel}
+        label={S.editCell.replace('{title}', column.title)}
+      />
+    );
+  if (select)
+    return (
+      <SelectEditor
+        {...{ draft, setDraft, invalid, messageId, finish, input, done }}
+        cancel={onCancel}
+        options={column.editorProps?.options ?? []}
         label={S.editCell.replace('{title}', column.title)}
       />
     );

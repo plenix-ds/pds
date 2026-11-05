@@ -201,7 +201,7 @@ DSParts.records.push(function (H) {
       use: ['DirectionProvider (root for the page, or a region) with the locale or dir', 'Logical properties in every stylesheet: margin-inline-start, padding-inline-end, inset-inline-start, text-align: start', 'arrowStep for arrow keys and physicalSide where a measurement only speaks left and right', 'The icon set’s directional icons (chevrons, arrows, undo, redo), which mirror by themselves; .plx-mirror-rtl for a directional picture'],
       avoid: ['left, right, margin-left, padding-right, float: left or text-align: left in a component', 'Mirroring what has no direction: logos, numbers, clocks, media controls, check marks', 'A layout written twice, once per direction', 'Concatenated strings that put words in English order'],
       related: ['floating', 'keyboard-navigation', 'icon'],
-      map: [[MAT, 'Bidirectionality', 'Direct'], [CAR, 'Globalization (bidi)', 'Partial'], [FLU, 'Right-to-left', 'Direct'], [POL, 'Internationalization (RTL)', 'Partial'], [SPE, 'Bidirectionality', 'Partial']],
+      map: [[MAT, 'Bidirectionality', 'Direct'], [CAR, 'Globalization (bidi)', 'Partial'], [FLU, 'Right-to-left', 'Direct'], [POL, 'Internationalization (RTL)', 'Partial'], [SPE, 'Bidirectionality', 'Partial'], ['Django', 'LANGUAGE_BIDI', 'Direct'], ['Frappe', 'Right-to-left language setting', 'Partial']],
       examples: [['Direction', [['Left to right', function () { return box(360, h(DirSample, { dir: 'ltr' })); }, null, 'dir="ltr"'],
         ['Right to left', function () { return box(360, h(DirSample, { dir: 'rtl' })); }, null, 'dir="rtl"']], { prop: 'dir' }],
         ['Rule', [['Mirrored icons', function () { return h(MirrorSample); }, null, 'icon set (bidirectional icons)'],

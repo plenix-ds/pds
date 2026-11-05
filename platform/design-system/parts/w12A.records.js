@@ -149,7 +149,7 @@ DSParts.records.push(function (H) {
       related: ['file-row', 'file', 'file-browser', 'data-grid', 'rename-action', 'delete-flow'],
       states: [['Default', 'The rows at rest', 'The default'], ['Hover', 'The row under the pointer takes the hover fill', ':hover'], ['Selected', 'Checked rows take the selected fill (the table’s are the DataGrid’s)', '.is-selected'],
         ['Dragging', 'A file follows the pointer; a folder that takes it shows the drop outline', '[data-plx-dnd-state]'], ['Empty', 'The empty state in place of the rows', 'files=[]']],
-      map: [[CAR, 'Data table', 'Partial'], [ATL, 'Dynamic table', 'Partial'], [POL, 'Index table', 'Partial'], [FLU, 'DataGrid (files)', 'Partial'], [HIG, 'Lists and tables', 'Partial']],
+      map: [[CAR, 'Data table', 'Partial'], [ATL, 'Dynamic table', 'Partial'], [POL, 'Index table', 'Partial'], [FLU, 'DataGrid (files)', 'Partial'], [HIG, 'Lists and tables', 'Partial'], ['Frappe', 'List view', 'Partial']],
       variantPages: [
         vp('File list rows', 'Look', 'List (default)', { variant: 'list' }, 'A FileRow per file: the checkbox, the name that opens it, the size and the date, the owner and the status, Download and More actions.', 'Files people open one at a time', 'Comparing by column: the table'),
         vp('File table', 'Look', 'Table', { variant: 'table' }, 'The DataGrid: the name, the size and the date in the data font, the owner and the status Badge; the headers sort, a right-click opens the row’s menu.', 'Comparing, sorting and filtering many files', 'A handful of attachments: the list'),
@@ -203,7 +203,7 @@ DSParts.records.push(function (H) {
       related: ['file-row', 'drop-zone', 'progress-bar', 'file-browser', 'file-input'],
       states: [['Waiting', 'A bar at 0% named Waiting, with Cancel', 'queued'], ['Uploading', 'The bar and its percent in the data font, with Cancel', 'uploading'], ['Uploaded', 'A success Badge with its icon', 'done'],
         ['Failed', 'The danger icon, the reason and Try again (not for a refused type or size)', 'error'], ['Canceled', 'A neutral Badge; More actions › Upload again', 'canceled'], ['Collapsed', 'The panel shows its head and the overall bar only', '.is-collapsed']],
-      map: [[CAR, 'File uploader', 'Partial'], [POL, 'Drop zone', 'Partial'], [SPE, 'Drop zone', 'Partial'], [FLU, 'Progress bar (files)', 'Partial'], [MAT, 'Progress indicators', 'Partial']],
+      map: [[CAR, 'File uploader', 'Partial'], [POL, 'Drop zone', 'Partial'], [SPE, 'Drop zone', 'Partial'], [FLU, 'Progress bar (files)', 'Partial'], [MAT, 'Progress indicators', 'Partial'], ['Frappe', 'File uploader dialog', 'Direct']],
       variantPages: [
         vp('Upload panel', 'Variant', 'Panel (default)', { variant: 'panel' }, 'A framed panel: what is happening, Cancel all or Clear finished, the toggle that hides the list, the overall bar and counts, then the queue.', 'Uploads people keep working beside', 'Starting an upload: the dialog'),
         vp('Upload dialog', 'Variant', 'Dialog', { variant: 'dialog' }, 'The drop zone with Choose files and Choose a folder and the limits, then the summary and the queue; Done closes it and the uploads go on.', 'Starting an upload from a command', 'Following uploads across pages: the panel'),
