@@ -1,0 +1,3 @@
+  ✓  1 tests/pdfjs/pdfjs.spec.mjs:22:1 › PDF.js 6.5.438 opens and draws the sample PDF from the vendor folder (205ms)
+
+  1 passed (782ms)

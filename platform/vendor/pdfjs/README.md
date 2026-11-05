@@ -6,8 +6,8 @@ header; the upstream code is unchanged.
 
 | File | SHA-256 |
 |---|---|
-| `pdf.js` | `7a7c23693521dad18b017e86881e538d5fb9c54314f8db978549add85400c7e7` |
-| `pdf.worker.js` | `345bfc303101c22f2e7dcbc9c8cd16506987cab905be02134c5dd5dcb541d412` |
+| `pdf.js` | `5e5142b3b46e21515b4cbdbba583cd7302af307ffdab0f1dd8d35a0a563bb6a4` |
+| `pdf.worker.js` | `9b5fb0ccc1025eb37292962bcb70d859b9fc8e736f93f33a84519a38c58efca9` |
 
 DocumentViewer loads it lazily from the shared vendor folder through `vendorBase()` (platform/utils/vendorBase.js): beside
 the repository's `platform/dist/platform.js` it is `platform/vendor/pdfjs/`; beside the CDN's `plenix.js` it is
