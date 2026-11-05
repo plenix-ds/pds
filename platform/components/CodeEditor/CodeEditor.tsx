@@ -68,12 +68,12 @@ export type CodeEditorProps = Omit<React.TextareaHTMLAttributes<HTMLTextAreaElem
   defaultValue?: string;
   /** the new code and the change event */
   onChange?: (code: string, event: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  /** "jsx" (default) | "js" | "css" | "html" | "text" */
-  language?: string;
+  /** "jsx" (default) | "js" | "css" | "html" | "text" (not colored) */
+  language?: 'jsx' | 'js' | 'css' | 'html' | 'text';
   lineNumbers?: boolean;
   readOnly?: boolean;
-  /** "sm" | "md" (default) | "lg" | "fill" */
-  height?: string;
+  /** "sm" | "md" (default) | "lg" */
+  height?: 'sm' | 'md' | 'lg';
   /** "none" (default) | "tall" */
   maxHeight?: 'none' | 'tall';
   /** spaces a Tab inserts (default 2) */
