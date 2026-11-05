@@ -10,7 +10,7 @@
 - **Applied (A):** the layer is an existing colour at opacity, so no new colour is added:
   `background-image: linear-gradient(color-mix(in srgb, var(--plx-sys-state-layer-color) var(--plx-sys-state-layer-hover-opacity), transparent) 0 0)` over the variant's own fill.
   - `plx-sys.state-layer-color` → `plx-sys.content-default` on neutral, subtle and outline fills, and `plx-sys.action-primary-content` (white) on primary and danger.
-  - New `plx-ref.opacity-8` and `plx-ref.opacity-10` (opacities, not colours), as `plx-sys.state-layer-{hover,pressed,focus}-opacity`.
+  - New mix amounts `plx-ref.mix-amount-xs` (8%) and `plx-ref.mix-amount-sm` (10%), not colours, as `plx-sys.state-layer-{hover,pressed,focus}-opacity`; on primary and danger the colour role is `plx-sys.state-layer-on-accent-color` (ADR 0004, #229).
 - **B (reply B on #109):** new see-through palette colours instead (`plx-ref.color-*-alpha-8/10`). Not recommended, because of the "no new colours" rule.
 - The glow (D-0023, #910) stays the rest image. The layer sits above it, and pressed stays flat (no shadow), as today.
 
@@ -39,5 +39,5 @@
 
 ## Choices the engineer must not invent
 
-- No new colour values. Only the two opacity steps above, added by the DS Architect.
+- No new colour values. Only the two mix amounts above (ADR 0004).
 - No layer on disabled or loading buttons. No change to the focus ring.
