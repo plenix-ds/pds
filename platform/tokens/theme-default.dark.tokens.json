@@ -1219,6 +1219,12 @@
         }
       }
     },
+    "control-raised-shadow": {
+      "$value": "0 0 1px {plx-ref.color-black}, 0 0 2px {plx-ref.color-black}",
+      "$type": "shadow",
+      "$description": "A raised control (Button) at rest and hovered: one step lighter than the card Halo (pds#269). Dark: black, as every dark shadow.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
+    },
     "shadow-modal": {
       "$value": "0 0 40px {plx-ref.color-gray-800}, 0 0 0 1px {plx-ref.color-gray-800}",
       "$type": "shadow",

@@ -518,8 +518,9 @@
   --plx-state-button-pressed-border: var(--plx-comp-button-tertiary-pressed-border);
   --plx-state-button-pressed-text: var(--plx-comp-button-tertiary-hover-text);
 }
-/* raised action buttons (the owner's pick G-R4-H, #610): secondary, tertiary, primary and danger take the Card builder's
-   Glow, made very subtle (the fill to 75%, fading to its rim; #910), with the card's Halo shadow at rest and on hover,
+/* raised action buttons (the owner's pick G-R4-H, #610): secondary, tertiary, danger-secondary, primary and danger take
+   the Card builder's Glow, made very subtle (the fill to 90%, fading to its rim; #910, pds#269), with one light shadow
+   for every variant (control-raised-shadow, a step lighter than the card Halo; pds#269) at rest and on hover,
    and are flat when pressed or disabled. Primary and danger: the border is the glow's rim and the bottom edge one shade
    deeper, so the outermost line is the darkest. Ghost stays flat, and so does the 2xs size (its tinted hover). A bar
    sets the context hooks --plx-comp-button-context-glow and --plx-comp-button-context-elevation (none) on its own
@@ -607,6 +608,21 @@
   --plx-state-button-selected-background: var(--plx-comp-button-danger-secondary-hover-background);
   --plx-state-button-selected-border: var(--plx-comp-button-danger-secondary-hover-border);
   --plx-state-button-selected-text: var(--plx-comp-button-danger-secondary-hover-text);
+}
+/* danger-secondary is raised like secondary and tertiary (CTM owner, 2026-11-05, pds#269: "Delete has no glow or
+   shadow"): the same light elevation and the secondary glow at rest; hovered, it fills red, so it takes the danger
+   glow of that fill. Flat when pressed or disabled, in a bar, on a colored surface and at the 2xs size, as the others. */
+.plx-button--danger-secondary:where(:not(.plx-button--on-inverse, .plx-button--on-accent, .plx-button--size-2xs)) {
+  --plx-state-button-hover-elevation: var(
+    --plx-comp-button-context-elevation,
+    var(--plx-comp-button-raised-hover-shadow)
+  );
+  --plx-state-button-hover-image: var(--plx-comp-button-context-glow, var(--plx-comp-button-danger-glow-image));
+  --plx-state-button-rest-elevation: var(
+    --plx-comp-button-context-elevation,
+    var(--plx-comp-button-raised-rest-shadow)
+  );
+  --plx-state-button-rest-image: var(--plx-comp-button-context-glow, var(--plx-comp-button-secondary-glow-image));
 }
 /* on a colored surface (SurfaceContext): the inverse TeachingBubble and the accent AppHeader. Pressed is the hovered
    look on inverse, and a step past hover on accent (batch 238). */

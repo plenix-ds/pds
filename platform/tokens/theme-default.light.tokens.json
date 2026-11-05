@@ -1202,6 +1202,12 @@
         }
       }
     },
+    "control-raised-shadow": {
+      "$value": "0 0 1px {plx-ref.color-black-alpha-14}, 0 0 2px {plx-ref.color-black-alpha-12}",
+      "$type": "shadow",
+      "$description": "A raised control (Button: secondary, tertiary, danger-secondary, primary, danger) at rest and hovered: one step lighter than the card Halo (Halo without its darkest 1px layer, 2px blur), so every button shares one light elevation (CTM owner, 2026-11-05, pds#269; pds#6). Dark: black.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
+    },
     "shadow-modal": {
       "$value": "0 0 40px {plx-ref.color-gray-800}, 0 0 0 1px {plx-ref.color-gray-800}",
       "$type": "shadow",

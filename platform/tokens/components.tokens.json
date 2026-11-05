@@ -458,25 +458,25 @@
       "$type": "color"
     },
     "button-raised-rest-shadow": {
-      "$value": "{plx-comp.card-elevation-halo-shadow}",
+      "$value": "{plx-sys.control-raised-shadow}",
       "$type": "shadow",
-      "$description": "An action button at rest (secondary, tertiary, primary, danger): the card's Halo, the lightest card shadow (#610; #910). Pressed and disabled are flat; ghost and bar buttons stay flat."
+      "$description": "An action button at rest (secondary, tertiary, danger-secondary, primary, danger): one light elevation for every variant, a step lighter than the card Halo (#610; #910; CTM owner 2026-11-05, pds#269). Pressed and disabled are flat; ghost and bar buttons stay flat."
     },
     "button-raised-hover-shadow": {
-      "$value": "{plx-comp.card-elevation-halo-shadow}",
+      "$value": "{plx-sys.control-raised-shadow}",
       "$type": "shadow",
-      "$description": "An action button hovered: the card's Halo, as at rest, so hover does not deepen the shadow (owner, 2026-11-02, #910)."
+      "$description": "An action button hovered: the same light elevation as at rest, so hover does not deepen the shadow (owner, 2026-11-02, #910; pds#269)."
     },
     "button-secondary-glow-image": {
-      "$value": "radial-gradient(ellipse at center, {plx-sys.control-background} 75%, {plx-sys.card-surface-rim} 100%)",
+      "$value": "radial-gradient(ellipse at center, {plx-sys.control-background} 90%, {plx-sys.card-surface-rim} 100%)",
       "$type": "gradient",
-      "$description": "Secondary and tertiary at rest: a very subtle glow, the control fill to 75% fading to the card rim (#610; 75% since #910).",
+      "$description": "Secondary and tertiary at rest: a very subtle glow, the control fill to 90% fading to the card rim (#610; 75% since #910; 90% since pds#269).",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-secondary-hover-glow-image": {
-      "$value": "radial-gradient(ellipse at center, {plx-sys.fill-neutral-hover} 75%, {plx-sys.control-raised-hover-rim} 100%)",
+      "$value": "radial-gradient(ellipse at center, {plx-sys.fill-neutral-hover} 90%, {plx-sys.control-raised-hover-rim} 100%)",
       "$type": "gradient",
-      "$description": "Secondary and tertiary hovered: the subtle glow on the hover fill, from 75% (#610; #910).",
+      "$description": "Secondary and tertiary hovered: the subtle glow on the hover fill, from 90% (#610; #910; pds#269).",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-secondary-raised-hover-background": {
@@ -490,27 +490,27 @@
       "$description": "Secondary pressed: flat, one step past hover (gray-250; dark gray-900) (#610)."
     },
     "button-primary-glow-image": {
-      "$value": "radial-gradient(ellipse at center, {plx-sys.action-primary-background} 75%, {plx-sys.action-primary-background-hover} 100%)",
+      "$value": "radial-gradient(ellipse at center, {plx-sys.action-primary-background} 90%, {plx-sys.action-primary-background-hover} 100%)",
       "$type": "gradient",
-      "$description": "Primary at rest: the subtle glow, from 75% fading to its own next shade (#610; #910).",
+      "$description": "Primary at rest: the subtle glow, from 90% fading to its own next shade (#610; #910).",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-primary-hover-glow-image": {
-      "$value": "radial-gradient(ellipse at center, {plx-sys.action-primary-background-hover} 75%, {plx-sys.action-primary-background-pressed} 100%)",
+      "$value": "radial-gradient(ellipse at center, {plx-sys.action-primary-background-hover} 90%, {plx-sys.action-primary-background-pressed} 100%)",
       "$type": "gradient",
-      "$description": "Primary hovered: the subtle glow on the hover fill, from 75% (#610; #910).",
+      "$description": "Primary hovered: the subtle glow on the hover fill, from 90% (#610; #910; pds#269).",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-danger-glow-image": {
-      "$value": "radial-gradient(ellipse at center, {plx-sys.action-danger-background} 75%, {plx-sys.action-danger-background-hover} 100%)",
+      "$value": "radial-gradient(ellipse at center, {plx-sys.action-danger-background} 90%, {plx-sys.action-danger-background-hover} 100%)",
       "$type": "gradient",
-      "$description": "Danger at rest: the subtle glow, from 75% fading to its own next shade (#610; #910).",
+      "$description": "Danger at rest: the subtle glow, from 90% fading to its own next shade (#610; #910).",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-danger-hover-glow-image": {
-      "$value": "radial-gradient(ellipse at center, {plx-sys.action-danger-background-hover} 75%, {plx-sys.action-danger-background-pressed} 100%)",
+      "$value": "radial-gradient(ellipse at center, {plx-sys.action-danger-background-hover} 90%, {plx-sys.action-danger-background-pressed} 100%)",
       "$type": "gradient",
-      "$description": "Danger hovered: the subtle glow on the hover fill, from 75% (red-800 to red-900) (#610; #910).",
+      "$description": "Danger hovered: the subtle glow on the hover fill, from 90% (red-800 to red-900) (#610; #910; pds#269).",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "button-danger-secondary-border": {

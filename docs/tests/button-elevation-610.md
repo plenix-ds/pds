@@ -6,8 +6,8 @@ Action buttons look slightly raised at rest, lift on hover and go flat when pres
 
 ## What it checks
 - Secondary, tertiary, primary and danger Buttons, in light and dark:
-  - At rest: a soft glow (a radial gradient) and the Halo shadow.
-  - On hover: the glow and a higher shadow (Lifted).
+  - At rest: a very subtle glow (a radial gradient, the fill to 90%) and the raised shadow (`control-raised-shadow`, a step lighter than the card Halo; #269).
+  - On hover: the glow on the hover fill and the same shadow (#910).
   - Pressed and disabled: flat (no gradient, no shadow).
 - Primary and danger edges: the border is the glow's rim (blue-600, red-800), the bottom edge one shade deeper (blue-700, red-900), and the hover border one shade deeper.
 - Secondary and tertiary fills at rest, hover and pressed: in light white, gray-200 and gray-250; in dark the three dark colors written in the test (hover gray-700, pressed gray-900, per the file header).

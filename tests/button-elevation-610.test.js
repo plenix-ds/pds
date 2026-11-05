@@ -1,8 +1,9 @@
 /* Plenix tests · Button elevation (issue 610; the owner's pick G-R4-H, his GO recorded on 610).
    Summary: secondary, tertiary, primary and danger are raised, light and dark:
-     at rest a very subtle glow (a radial gradient, the plain fill to 75%; #910) and the card's Halo shadow
-       (card-elevation-halo-shadow); on hover the glow on the hover fill and the same Halo (#910: hover no longer steps up
-       to Lifted); pressed and disabled flat (no gradient, no shadow)
+     at rest a very subtle glow (a radial gradient, the plain fill to 90%; #910, pds#269) and one light shadow
+       (control-raised-shadow, a step lighter than the card Halo; pds#269); on hover the glow on the hover fill and the
+       same shadow (#910: hover no longer steps up to Lifted); pressed and disabled flat (no gradient, no shadow)
+     danger-secondary is raised the same way (pds#269): tests/button-outline-elevation-269.test.js
      primary and danger: the border is the glow's rim (blue-600, red-800) and the bottom edge one shade deeper (blue-700,
        red-900); hovered, the border one shade deeper (blue-700, red-900)
      secondary hover gray-200 and pressed gray-250 (dark gray-700, gray-900); tertiary on the control fill, gray when hovered
@@ -36,7 +37,7 @@ const contrast = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y
         const out = {};
         for (const e of document.querySelectorAll('#c .plx-button[id]')) { const cs = getComputedStyle(e);
           out[e.id] = { image: cs.backgroundImage, shadow: cs.boxShadow, border: cs.borderTopColor, bottom: cs.borderBottomColor, bg: cs.backgroundColor, text: cs.color }; }
-        const probe = document.createElement('div'); probe.style.boxShadow = 'var(--plx-comp-card-elevation-halo-shadow)';
+        const probe = document.createElement('div'); probe.style.boxShadow = 'var(--plx-sys-control-raised-shadow)';
         document.getElementById('c').appendChild(probe); out.halo = getComputedStyle(probe).boxShadow; probe.remove();
         return out;
       }, mode);
@@ -44,11 +45,11 @@ const contrast = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y
     for (const mode of ['light', 'dark']) {
       const r = await look(mode);
       for (const k of ['secondary', 'tertiary', 'primary', 'danger']) {
-        assert.match(r[k + '-rest'].image, /^radial-gradient\(.* 75%, .* 100%\)$/, mode + ' ' + k + ': the subtle glow at rest (fill to 75%)');
-        assert.notEqual(r.halo, 'none', mode + ': the card Halo resolves');
-        assert.equal(r[k + '-rest'].shadow, r.halo, mode + ' ' + k + ': the card Halo at rest');
-        assert.match(r[k + '-hover'].image, /^radial-gradient\(.* 75%, .* 100%\)$/, mode + ' ' + k + ': the subtle glow on hover (fill to 75%)');
-        assert.equal(r[k + '-hover'].shadow, r.halo, mode + ' ' + k + ': the card Halo on hover, as at rest (#910)');
+        assert.match(r[k + '-rest'].image, /^radial-gradient\(.* 90%, .* 100%\)$/, mode + ' ' + k + ': the subtle glow at rest (fill to 90%)');
+        assert.notEqual(r.halo, 'none', mode + ': the raised shadow resolves');
+        assert.equal(r[k + '-rest'].shadow, r.halo, mode + ' ' + k + ': the raised shadow at rest');
+        assert.match(r[k + '-hover'].image, /^radial-gradient\(.* 90%, .* 100%\)$/, mode + ' ' + k + ': the subtle glow on hover (fill to 90%)');
+        assert.equal(r[k + '-hover'].shadow, r.halo, mode + ' ' + k + ': the raised shadow on hover, as at rest (#910)');
         for (const s of ['pressed', 'disabled']) assert.deepEqual([r[k + '-' + s].image, r[k + '-' + s].shadow], ['none', 'none'], mode + ' ' + k + ' ' + s + ': flat');
       }
       for (const s of ['rest', 'hover', 'pressed']) assert.deepEqual([r['ghost-' + s].image, r['ghost-' + s].shadow], ['none', 'none'], mode + ' ghost ' + s + ': flat');

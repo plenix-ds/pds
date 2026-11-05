@@ -148,6 +148,7 @@ Each line links to the test's page. A test that a group test starts is listed un
 - [avatar-ai-637](avatar-ai-637.md): An avatar for an AI assistant (Claude, Gemini and others) shows that provider's known logo, cleanly sized and colored, while people's avatars keep their initials.
 - [button-610](button-610.md): Button labels sit exactly in the middle of the button, letters with tails are not cut off, and red Delete buttons visibly darken when pressed.
 - [button-elevation-610](button-elevation-610.md): Action buttons look slightly raised at rest, lift on hover and go flat when pressed or disabled, exactly as the owner chose, in light and dark.
+- [button-outline-elevation-269](button-outline-elevation-269.md): Secondary, tertiary and danger-secondary buttons share one light shadow and a very subtle glow, lighter than the card Halo, in light and dark.
 - [button-selected-645](button-selected-645.md): A button that is switched on (selected) stays readable in the dark theme, with its text and icon clearly standing out from its fill.
 - [card-accent-621](card-accent-621.md): Cards no longer draw a colored edge, and the suite pages that used that edge still show each item's color in a clear new form.
 - [chat-composer-s3](chat-composer-s3.md): The chat message box works as one clean outlined box: typing and sending, attaching files, the emoji button and speaking a message aloud (dictation), in English and Arabic.
