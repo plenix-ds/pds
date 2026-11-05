@@ -5,7 +5,7 @@
 //   PR_LABELS='["agent:pds1-ds-architect", …]' node tools/ci/check-ownership.mjs <base ref>
 //
 // Owned changes:
-//   - any file under packages/tokens/** (the tier files after the source move, ADR 0001)
+//   - any file under packages/tokens/** except its package.json (the tier files after the source move, ADR 0001)
 //   - platform/tokens/**/*.tokens.json (where the tier files live until then)
 //   - packages/*/package.json, only when its "exports" differ from the base (a version bump is not an API change)
 // A PR with owned changes needs the label agent:pds1-ds-architect. Every agent shares one GitHub identity until the
@@ -24,7 +24,7 @@ const exportsOf = (text) => { try { return JSON.stringify(text == null ? null : 
 const changed = git('diff', '--name-only', `${base}...HEAD`).split('\n').filter(Boolean);
 const owned = [];
 for (const f of changed) {
-  if (f.startsWith('packages/tokens/')) owned.push(`${f} (token package)`);
+  if (f.startsWith('packages/tokens/') && f !== 'packages/tokens/package.json') owned.push(`${f} (token package)`);
   else if (/^platform\/tokens\/.+\.tokens\.json$/.test(f)) owned.push(`${f} (token tier file)`);
   else if (/^packages\/[^/]+\/package\.json$/.test(f) && exportsOf(show(base, f)) !== exportsOf(show('HEAD', f))) owned.push(`${f} ("exports", the public API)`);
 }

@@ -18,5 +18,5 @@ small_tasks:
 
 memory:
   # Memory sets the real limit, not the agent count (VM 131 has 15 GB).
-  per_agent_limit_gb: 1.5      # each session's own limit (systemd MemoryMax)
+  per_agent_limit_gb: 2.5      # each session's own limit (systemd MemoryMax)
   start_new_below_free_gb: 2   # new small tasks wait while free memory is below this

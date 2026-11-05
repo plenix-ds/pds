@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { STATES, checkStates } from './states.mjs';
+import { STATES, checkStates, isTokenOnlyCss } from './states.mjs';
 
 const full = Object.fromEntries(STATES.map((s) => [s, ['plx-sys.state-' + s]]));
 const storiesFor = (names) => ({ Button: names });
@@ -27,5 +27,15 @@ describe('check 9: state manifest', () => {
   });
   it('rejects an unknown state', () => {
     expect(checkStates({ Button: { ...full, pressed: ['x'] } }, storiesFor(STATES))[0]).toContain('unknown state "pressed"');
+  });
+
+  it('treats a token-name-only stylesheet edit as not a component change (#315)', () => {
+    const a = '.x { gap: var(--plx-ref-space-8px); }';
+    expect(isTokenOnlyCss(a, a.replace('space-8px', 'space-2u'))).toBe(true);
+  });
+  it('still counts a real stylesheet edit', () => {
+    const a = '.x { gap: var(--plx-ref-space-8px); }';
+    expect(isTokenOnlyCss(a, a.replace('8px', '2u').replace('gap', 'margin'))).toBe(false);
+    expect(isTokenOnlyCss(a, '.x { gap: 8px; }')).toBe(false);
   });
 });

@@ -6,6 +6,56 @@ The batch numbers point to the work log (Plenix - DAM/audit/batches/).
 
 ## [Unreleased]
 
+## [0.87.0] - 2026-11-05
+
+### Upgrading from 0.86.0
+Nothing to change. Deprecated names keep working (each says what replaces it). Apps on the CDN loader follow this release by themselves; npm apps update the version as usual.
+
+### Added
+- State layer tokens for Fluent 2 hover, pressed and focus (#109, docs/adr/0004): `--plx-sys-state-layer-hover-opacity` (8%), `--plx-sys-state-layer-pressed-opacity` and `--plx-sys-state-layer-focus-opacity` (10%), `--plx-sys-state-layer-color` and `--plx-sys-state-layer-on-accent-color`, with the palette steps `--plx-ref-mix-amount-xs` and `--plx-ref-mix-amount-sm`.
+- `--plx-sys-data-color-{blue,green,purple,red,brown,gray}-on-surface`: a data hue for an icon or text drawn on the surface without its soft fill; lighter in dark mode (#108, docs/adr/0005).
+- `plx-u-ms-auto`, `plx-u-ps-12px`, `plx-u-ps-16px`: logical utilities (start side) that follow the reading direction (docs/adr/0006).
+- `--plx-sys-data-color-slate`, `-soft`, `-on-soft` and `-on-surface`: the data hue that was named purple (it is a slate blue) (docs/adr/0007).
+- `--plx-sys-shape-mark`: the corner of round marks (dots, tracks, markers, grabbers), 6px (docs/adr/0008).
+- AppShell `minSize`: below 1024 x 640 (the new tokens) the shell shows "Screen size not supported" and keeps the app mounted; "Continue anyway" goes on for the session (#274).
+- `--plx-sys-shell-min-width` (1024px) and `--plx-sys-shell-min-height` (640px): the smallest screen an app made with AppShell `minSize` supports (#274, docs/adr/0010).
+- Palette step names (docs/adr/0012): `--plx-ref-radius-none`, `-xs`, `-sm`, `-md`; `--plx-ref-border-width-100` … `-400`; `--plx-ref-opacity-300`, `-450`, `-500`, `-700`.
+- The size palette in grid units (1u = 4px): `--plx-ref-size-1u` … `--plx-ref-size-400u` (docs/adr/0012, D-0047).
+
+### Changed
+- ColumnsMenu and ManageColumnsDialog: the column list is one Tab stop; Up and Down move between rows, Left and Right across a row's controls (mirrored in right to left), Home and End to the first and last control, Ctrl+Home and Ctrl+End to the first and last row. Alt+Arrow still reorders (#79).
+- The `semantic.density-standard-comfortable` token set is removed; its one token (`--plx-sys-radius-control`) is unchanged and now set by the standard and comfortable densities (D-0007).
+- `plx-u-p-*`, `plx-u-px-*`, `plx-u-mx-*` and the four-corner `plx-u-radius-*` use logical properties. They look the same in both directions.
+- In right-to-left pages, the search bar's trailing item now sits at the start side.
+- Token values are stored in the W3C Design Tokens typed form (2025.10) (#184). In the CSS, `transparent` is written `rgba(0, 0, 0, 0)`, the black-alpha palette steps as `rgba()`, and the font lists with single quotes. Every computed value is the same.
+- `--plx-sys-live-region-delay` is written `0.05s` (was `50ms`), the same value, as every other duration (#101).
+- The token stylesheets are built by Style Dictionary (`style-dictionary/build.mjs`); `build-tokens.js` is retired (#101). Only the generated-file comment at the top of each token stylesheet changes.
+- TypeScript, wave 1 batch A: AIDisclaimer, ConfidenceIndicator, AIButton, StreamingText, Table, AILabel, Citation, SuggestedAction, Comment and DateBadge are written in TypeScript with exported prop types. No behavior change (#292).
+- TypeScript, wave 1 batch B: Time, Metric, Anchor, RichText and GeneratedContent are written in TypeScript with prop types. No behavior change (#292).
+- TypeScript, wave 1 batch C: OverflowList, EntityTitle, PromptSuggestions and PromptInput are written in TypeScript with prop types. No behavior change (#292).
+
+### Changed (visual)
+- Dark mode: the purple media icon of EntityHeader is slate-375, so it keeps its hue between modes (#235).
+- Text on the olive category fill is white, so it reads at 5.37:1 (was 3.91:1) (#251).
+- The placeholder in the header search field is lighter blue (blue-200), so it reads at 4.73:1 (was 3.44:1) (#251).
+
+### Deprecated
+- `--plx-ref-font-size-09`, `-10` and `-11`: no Plenix token or class uses them any more. Use `--plx-ref-font-size-12` or a type role. `.plx-u-fs-09/10/11` now set 12px.
+- `plx-u-ml-auto`, `plx-u-pl-12px`, `plx-u-pl-16px`, `plx-u-left-0`, `plx-u-right-0`: use `plx-u-ms-auto`, `plx-u-ps-12px`, `plx-u-ps-16px`, or a logical inset. Removed in 2.0.0.
+- `--plx-sys-data-color-purple`, `-soft`, `-on-soft` and `-on-surface`: use the `data-color-slate` names. They keep working and are removed in 2.0.0.
+- `--plx-sys-shape-pill`: use `--plx-sys-shape-mark` (no pill reads it; pills use `--plx-sys-radius-pill-4px`). It keeps working and is removed in 2.0.0.
+- `--plx-ref-radius-0px`, `-2px`, `-4px`, `-6px`; `--plx-ref-border-width-1px` … `-4px`; `--plx-ref-opacity-30`, `-45`, `-50`, `-70`: use the step names above. They keep working and are removed in 2.0.0.
+- `--plx-ref-size-4px` … `--plx-ref-size-1600px` (61 names): use `--plx-ref-size-<px ÷ 4>u`, for example `--plx-ref-size-60u` for 240px. They keep working and are removed in 2.0.0.
+
+### Fixed
+- Text sizes below 12px (caption, eyebrow, field counter and warning, chart ticks, tooltip, calendar, slider, version label and others) now use 12px, the type floor (#206).
+- DataGrid number cells use tabular figures, so digits line up (#207).
+- A DataGrid with the default sizing keeps a short column such as "#" at its content width and shares the spare room among the text columns, so no column is cut off and nothing scrolls sideways when the columns fit; while it scrolls sideways, the scroll body keeps room under the last row for the scrollbar (#272).
+- Columns with a medium or large gap now space the rows as they space the columns, so a second row of Fields no longer touches the first (#273).
+- VoteTally warns in development when a member's vote is not a key of `options`; it counts as not recorded, as before (#281).
+- Citation's source links use Link's `external` prop, so they open in a new tab with the open icon and no longer warn about an unknown Link variant (#295).
+- The baseline scan counts a prop that a note names with its part (SplitView `maxSize`) only in a file that uses that part, so an upload size limit is no longer reported as a SplitView change (#307).
+
 ## [0.86.0] - 2026-11-03
 
 **In short.** A DataGrid's narrow card list draws only the cards near the view, as its table already does: a list of 10,000 cards opens and jumps to its end at once (End took about 2 seconds before), memory stays flat, and the cards look exactly as before. Selection, the open row, the keyboard and printing work on every row.
