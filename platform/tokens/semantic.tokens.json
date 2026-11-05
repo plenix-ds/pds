@@ -681,6 +681,11 @@
       "$description": "On paper the chrome is left out (the app header, the navigation pane, the skip link, the scrim, the floating action button, toasts, the spotlight): their display reads it. Not set on screen (initial: the element keeps its own).",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
+    "undo-duration": {
+      "$value": "{plx-ref.timeout-lg}",
+      "$type": "duration",
+      "$description": "How long an undo stays offered before the action is final (DeleteFlow's undo toast; it pauses while hovered or focused). 10s; DeleteFlow undoDuration overrides it (#144, docs/adr/0017, D-0057)."
+    },
     "print-sheet-inline-size": {
       "$value": "{plx-ref.paper-a4-inline-size}",
       "$description": "PrintDocument: the sheet's width, on screen and paper (docs/adr/0014)."
