@@ -6,7 +6,7 @@
 #
 # What the dry run does, on a throwaway version <package.json version>-dryrun.<run number> so nothing collides:
 #   build (npm ci builds; release:build steps) -> one version everywhere + CDN immutability (tools/publish/preflight.mjs)
-#   -> bundle budgets (check-bundle.js) -> SHA256SUMS + version.json (tools/publish/manifest.mjs, verified with sha256sum -c)
+#   -> bundle budgets (check-bundle.js) -> no remote addresses in the shipped scripts (tools/publish/no-remote-code.mjs) -> SHA256SUMS + version.json (tools/publish/manifest.mjs, verified with sha256sum -c)
 #   -> next latest.json with every field and the pins kept (tools/publish/latest.mjs, against the live file)
 #   -> npm publish --dry-run of the four packages -> negative proof: the current version is refused as already published
 #   -> the live CDN check (tools/check-live-cdn.js, sampled) still works against the live release.
@@ -85,6 +85,13 @@ jobs:
 
       - name: Bundle-size budgets
         run: node check-bundle.js
+
+      - name: No remote addresses in the shipped scripts (MV3 extensions; #150)
+        env:
+          DRY: ${{ steps.v.outputs.dry }}
+        run: |
+          shopt -s nullglob
+          node tools/publish/no-remote-code.mjs "release/cdn/$DRY"/*.js release/packages/react/*.js release/packages/react/*.mjs release/packages/react/*.cjs
 
       - name: SHA256SUMS and version.json, verified
         env:
