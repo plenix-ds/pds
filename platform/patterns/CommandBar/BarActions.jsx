@@ -14,7 +14,11 @@
        onSelect(next) runs with the new state; folded into More it is a checked menu item
      actions[].choices: a command that picks one of [{ value, label, icon }]: a menu button showing the current choice
        (named "label: choice"), onChange(value) runs on a pick; folded into More it is a submenu of radio items
-     actions[].items: a menu: Menu children (MenuItem…) or [{ id, label, icon, danger, disabled, single, onSelect }]
+     actions[].confirm: { name, count, plural, consequence, permanent, title, body, confirmLabel }: the command opens the destructive Dialog before it runs (docs/adr/0004).
+     The words come from the catalog's confirmAction strings: the title "{verb} {name}?" (or "{verb} {count} {plural}?"), the verb being the command's label, the
+     consequence (one sentence, required for a danger command), "This cannot be undone." with permanent, and the button repeating the verb. A title, body or
+     confirmLabel the application gives wins. Focus starts on Cancel, Escape cancels, and focus returns to the command; folded into More it confirms the same way.
+   actions[].items: a menu: Menu children (MenuItem…) or [{ id, label, icon, danger, disabled, single, onSelect }]
      actions[].why: the tooltip of a disabled command, saying why (owner, 2026-10-14: commands are never hidden by state,
        only disabled, with a why-tooltip)
      actions[].loading: uses the existing Button spinner and busy state; folded commands are busy and cannot be chosen
@@ -37,6 +41,7 @@ import { Menu, MenuItem, MenuGroup, MenuDivider, MenuRadioGroup, MenuSub } from 
 import { Tooltip } from '../../components/Tooltip/Tooltip.tsx';
 import { Popover } from '../../components/Popover/Popover.tsx';
 import { Spinner } from '../../components/Loading/Loading.tsx';
+import { ConfirmDialog } from '../../components/Dialog/Dialog.tsx';
 import { focusables } from '../../utils/layer.ts';
 import { foldOrder, menuOrder } from '../../utils/foldOrder.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
@@ -119,8 +124,21 @@ export { foldOrder };
 
 export function BarActions({ actions = [], iconOnly = false, fold = 0, off = (a) => !!a.disabled, why = (a) => a.why, moreLabel,
   dangerClass, size = 'sm', extra = [] }) {
-  const t = useStrings('commandBar');
+  const t = useStrings('commandBar'),
+    C = useStrings('confirmAction'),
+    [pending, setPending] = React.useState(null);
   moreLabel = moreLabel ?? t.moreLabel;
+  // a command with confirm opens the destructive Dialog first (ADR 0004); the others run at once
+  const ask = (a, run) => (a.confirm ? () => setPending({ a, run }) : run);
+  const words = (a) => {
+    const c = a.confirm || {}, fill = (text, values) => text.replace(/\{(\w+)\}/g, (m, k) => (values[k] === undefined ? m : values[k]));
+    const verb = a.label;
+    return {
+      title: c.title ?? (c.count !== undefined ? fill(C.titleMany, { verb, count: c.count, plural: c.plural ?? '' }) : fill(C.title, { verb, name: c.name ?? '' })),
+      message: c.body ?? [c.consequence, c.permanent ? C.permanent : null].filter(Boolean).join(' '),
+      confirmLabel: c.confirmLabel ?? fill(C.confirm, { verb })
+    };
+  };
   const folded = new Set(foldOrder(actions).slice(0, fold).map((a) => a.id || a.label));
   const kept = actions.filter((a) => !folded.has(a.id || a.label));
   const away = menuOrder(actions.filter((a) => folded.has(a.id || a.label)));   // in More: the others in the bar's order, then the danger ones after a divider
@@ -140,7 +158,7 @@ export function BarActions({ actions = [], iconOnly = false, fold = 0, off = (a)
     // a choices command shows its current choice and is named by both ("Profile: Jordan")
     const name = a.choices ? a.label + ': ' + current(a) : a.label;
     const text = a.choices ? current(a) || a.label : a.label;
-    const click = panel ? undefined : a.toggle ? () => a.onSelect && a.onSelect(!a.pressed) : menu ? undefined : a.onSelect;
+    const click = panel ? undefined : a.toggle ? () => a.onSelect && a.onSelect(!a.pressed) : menu ? undefined : a.confirm ? ask(a, () => a.onSelect && a.onSelect()) : a.onSelect;
     const button = (
       <Button size={size} variant={filled ? 'primary' : 'ghost'} icon={a.icon} iconOnly={only} label={only || a.choices ? name : undefined} caret={menu && !only}
         aria-haspopup={panel ? 'dialog' : menu ? 'menu' : undefined} expanded={loading && (panel || menu) ? false : undefined}
@@ -165,7 +183,7 @@ export function BarActions({ actions = [], iconOnly = false, fold = 0, off = (a)
             : a.choices ? <MenuSub key={a.id || a.label} label={a.label + ': ' + current(a)} icon={a.icon} disabled={off(a)}>{radios(a)}</MenuSub>
             : a.toggle ? <MenuItem key={a.id || a.label} icon={a.icon} checked={!!a.pressed} disabled={off(a)} onSelect={() => a.onSelect && a.onSelect(!a.pressed)}>{a.label}</MenuItem>
             : a.items ? <MenuGroup key={a.id || a.label} label={a.label}>{itemsOf(a, off)}</MenuGroup>
-            : <MenuItem key={a.id || a.label} icon={a.icon} danger={a.danger} disabled={off(a)} onSelect={a.onSelect}>{a.label}</MenuItem>;
+            : <MenuItem key={a.id || a.label} icon={a.icon} danger={a.danger} disabled={off(a)} onSelect={a.confirm ? ask(a, () => a.onSelect && a.onSelect()) : a.onSelect}>{a.label}</MenuItem>;
           const tip = (off(a) && why(a)) || a.tooltip;
           const described = tip ? <ActionHint key={a.id || a.label} content={tip} className="plx-bar-actions__tooltip">{item}</ActionHint> : item;
           return sep ? [sep, described] : described;
@@ -177,6 +195,20 @@ export function BarActions({ actions = [], iconOnly = false, fold = 0, off = (a)
   ) : null;
   return (
     <>
+      {pending ? (
+        <ConfirmDialog
+          open
+          destructive={!!pending.a.danger}
+          {...words(pending.a)}
+          cancelLabel={C.cancel}
+          onConfirm={() => {
+            const run = pending.run;
+            setPending(null);
+            run();
+          }}
+          onCancel={() => setPending(null)}
+        />
+      ) : null}
       {plain.map(one)}
       {more}
       {danger.length && (plain.length || more) ? <span key="plx-danger-divider" className={cx('plx-bar-actions__divider')} aria-hidden="true" /> : null}
