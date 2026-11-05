@@ -1,0 +1,15 @@
+# lefthook (P0-6, #188): the same fast checks as CI, locally, before a push only. The owner's rule: checks never run
+# on a commit or while editing. Install once per worktree: npx -y lefthook@2.2.2 install
+# CI stays the gate (ci.yml); these only fail earlier.
+pre-push:
+  parallel: true
+  commands:
+    rulesync-drift:
+      glob: "{.rulesync/**,rulesync.jsonc,CLAUDE.md,AGENTS.md}"
+      run: npx -y rulesync@43.2.0 generate --check
+    decisions:
+      glob: "decisions.yaml"
+      run: node tools/ci/check-decisions.mjs origin/main
+    zizmor:
+      glob: ".github/workflows/*.{yml,yaml}"
+      run: uvx zizmor@1.32.0 --offline .github/workflows
