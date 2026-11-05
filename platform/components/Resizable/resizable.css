@@ -33,8 +33,6 @@
 .plx-resizable[data-plx-height="12px"]{--plx-comp-resizable-height:var(--plx-ref-size-3u);}
 .plx-resizable[data-plx-width="16px"]{--plx-comp-resizable-width:var(--plx-ref-size-4u);}
 .plx-resizable[data-plx-height="16px"]{--plx-comp-resizable-height:var(--plx-ref-size-4u);}
-.plx-resizable[data-plx-width="18px"]{--plx-comp-resizable-width:var(--plx-ref-size-18px);}
-.plx-resizable[data-plx-height="18px"]{--plx-comp-resizable-height:var(--plx-ref-size-18px);}
 .plx-resizable[data-plx-width="20px"]{--plx-comp-resizable-width:var(--plx-ref-size-5u);}
 .plx-resizable[data-plx-height="20px"]{--plx-comp-resizable-height:var(--plx-ref-size-5u);}
 .plx-resizable[data-plx-width="24px"]{--plx-comp-resizable-width:var(--plx-ref-size-6u);}
