@@ -60,9 +60,20 @@ function readStories(dir) {
   return out;
 }
 
+// A stylesheet edit that only renames tokens (`var(--plx-…)` names) is not a component change (#315, token renames, ADR 0012).
+const normTokens = (t) => t.replace(/var\(--plx-[\w-]+/g, 'var(--T');
+export function isTokenOnlyCss(before, after) {
+  return before !== after && normTokens(before) === normTokens(after);
+}
+
+const git = (args) => execFileSync('git', args, { cwd: root, encoding: 'utf8', maxBuffer: 1 << 28 });
 function changedComponents(base) {
-  const files = execFileSync('git', ['diff', '--name-only', `${base}...HEAD`], { cwd: root, encoding: 'utf8' }).split('\n');
-  return [...new Set(files.map((f) => f.match(/^platform\/components\/([^/]+)\//)?.[1]).filter(Boolean))];
+  const files = git(['diff', '--name-only', `${base}...HEAD`]).split('\n').filter(Boolean);
+  const real = files.filter((f) => {
+    if (!/^platform\/components\/[^/]+\/.+\.css$/.test(f)) return true;
+    try { return !isTokenOnlyCss(git(['show', `${base}:${f}`]), git(['show', `HEAD:${f}`])); } catch { return true; }
+  });
+  return [...new Set(real.map((f) => f.match(/^platform\/components\/([^/]+)\//)?.[1]).filter(Boolean))];
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
