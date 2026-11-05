@@ -32,6 +32,20 @@ jobs:
       - name: zizmor, pinned, offline (no findings allowed)
         run: pipx run zizmor==1.32.0 --offline --format=github .github/workflows
 
+  decisions:
+    name: Decisions (decisions.yaml)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Unique, increasing ids; every entry has a check; past entries never rewritten
+        run: node tools/ci/check-decisions.mjs "$(git merge-base "$BASE_SHA" HEAD)"
+
   checks:
     name: New problems (${{ matrix.tool }})
     runs-on: ubuntu-latest
@@ -80,7 +94,7 @@ jobs:
   result:
     name: CI result
     if: always()
-    needs: [zizmor, checks]
+    needs: [zizmor, decisions, checks]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
