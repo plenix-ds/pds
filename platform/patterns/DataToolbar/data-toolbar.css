@@ -1,5 +1,5 @@
 /* Plenix · DataToolbar. */
-.plx-data-toolbar{flex-wrap:wrap;inline-size:100%;margin-block-end:var(--plx-comp-data-toolbar-margin-block-end);}
+.plx-data-toolbar{flex-wrap:wrap;inline-size:100%;margin-block-end:var(--plx-comp-data-toolbar-margin-block-end);row-gap:var(--plx-comp-data-toolbar-group-gap);}
 .plx-data-toolbar__group{align-items:center;column-gap:var(--plx-comp-data-toolbar-group-gap);display:flex;}
 /* a narrow row wraps: when the start group and the end group (a count, a summary) do not fit side by side, the end group moves
    under the start group and its text wraps; nothing runs past the toolbar (issue 880, #11, #13: the Directory ran to 390px at 320) */
