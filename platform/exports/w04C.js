@@ -3,6 +3,6 @@ export { StatusIcon, resolveIcon, setIconLibrary, registerIcons, setDefaultIconL
 export { Banner } from '../components/Banner/Banner.tsx';
 export { Scrim } from '../components/Scrim/Scrim.tsx';
 export { LoadingOverlay } from '../components/LoadingOverlay/LoadingOverlay.tsx';
-export { Time } from '../components/Time/Time.jsx';
+export { Time } from '../components/Time/Time.tsx';
 export { useUndo } from '../components/Toast/Toast.tsx';
 export { plenixTokens } from '../utils/tokenSheet.ts';

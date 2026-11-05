@@ -41,16 +41,18 @@ import { formatDate, formatTime, formatDateTime, formatRelative, formatLocale, n
 import { tokenMs } from '../../utils/tokenTime.ts';
 import { Tooltip } from '../Tooltip/Tooltip.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 
 const FORMATS = ['datetime', 'relative', 'label', 'date', 'time'];
 // the shared parser: a date-only value is that calendar day where the reader is, never midnight UTC (issue 342)
-const toDate = (v) => (v === undefined || v === null || v === '' ? null : parseDate(v));
-const dayStart = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
-const pad = (n) => (n < 10 ? '0' : '') + n;
-const calendarDay = (d) => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+type Dated = string | number | Date | null | undefined;
+const toDate = (v: Dated) => (v === undefined || v === null || v === '' ? null : parseDate(v));
+const dayStart = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+const pad = (n: number) => (n < 10 ? '0' : '') + n;
+const calendarDay = (d: Date) => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
 
 // "Today", "Yesterday", "Tomorrow" (Intl, numeric auto), else the short date
-function dayLabel(d, now, o) {
+function dayLabel(d: Date, now: Date, o: { locale?: string; timeZone?: string }) {
   const days = Math.round((dayStart(d) - dayStart(now)) / 86400000);
   if (Math.abs(days) > 1) return formatDate(d, { dateStyle: 'short', timeZone: o.timeZone, locale: o.locale });
   const lang = numeralLocale(o.locale || formatLocale());
@@ -58,8 +60,27 @@ function dayLabel(d, now, o) {
   return w.charAt(0).toLocaleUpperCase(lang) + w.slice(1);
 }
 
-export function Time({ value, format = 'datetime', dateStyle, seconds = false, timeZone, timeZoneName, tooltip, live, now, strings, locale, className, ...rest }) {
-  const f = FORMATS.indexOf(format) >= 0 ? format : 'datetime';
+type TimeFormat = 'datetime' | 'relative' | 'label' | 'date' | 'time';
+export type TimeProps = Omit<React.TimeHTMLAttributes<HTMLTimeElement>, 'children'> & {
+  /** the moment: a Date, an ISO string, a date-only string or a number */
+  value?: Dated;
+  /** "datetime" (default) | "relative" | "label" | "date" | "time" */
+  format?: TimeFormat;
+  dateStyle?: 'short' | 'medium' | 'long' | 'full' | string;
+  seconds?: boolean;
+  timeZone?: string;
+  timeZoneName?: Intl.DateTimeFormatOptions['timeZoneName'];
+  /** the full date and time in a tooltip; default on for relative and label */
+  tooltip?: boolean;
+  /** re-reads the clock every minute; default on for relative and label */
+  live?: boolean;
+  /** the moment to count from instead of now */
+  now?: Dated;
+  strings?: Catalog | null;
+  locale?: string;
+};
+export function Time({ value, format = 'datetime', dateStyle, seconds = false, timeZone, timeZoneName, tooltip, live, now, strings, locale, className, ...rest }: TimeProps) {
+  const f: TimeFormat = FORMATS.indexOf(format) >= 0 ? format : 'datetime';
   const moving = f === 'relative' || f === 'label';
   const ticking = live !== undefined ? !!live : moving;
   const [, tick] = React.useState(0);
@@ -68,7 +89,7 @@ export function Time({ value, format = 'datetime', dateStyle, seconds = false, t
     const t = setInterval(() => tick((n) => n + 1), tokenMs('--plx-comp-time-refresh-interval', 60000));
     return () => clearInterval(t);
   }, [ticking, now]);
-  const words = useStrings('time', strings);   // every hook before the return below (issue 885)
+  const words = useStrings('time', strings) as { now: string };   // every hook before the return below (issue 885)
   const d = toDate(value);
   if (!d) return null;
   const o = { locale, timeZone, timeZoneName, dateStyle, seconds };

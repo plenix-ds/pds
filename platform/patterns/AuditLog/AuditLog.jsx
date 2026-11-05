@@ -12,7 +12,7 @@ import React from 'react';
 import { devWarn } from '../../utils/devWarn.ts';
 import { DataGrid } from '../../components/DataGrid/DataGrid.jsx';
 import { Persona } from '../../components/Persona/Persona.tsx';
-import { Time } from '../../components/Time/Time.jsx';
+import { Time } from '../../components/Time/Time.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Dialog } from '../../components/Dialog/Dialog.tsx';
 import { Stack } from '../../components/Stack/Stack.tsx';

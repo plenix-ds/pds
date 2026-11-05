@@ -21,7 +21,7 @@ import { Stack } from '../../components/Stack/Stack.tsx';
 import { VisuallyHidden } from '../../components/VisuallyHidden/VisuallyHidden.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { AILabel } from '../../components/AILabel/AILabel.tsx';
-import { GeneratedContent } from '../../components/GeneratedContent/GeneratedContent.jsx';
+import { GeneratedContent } from '../../components/GeneratedContent/GeneratedContent.tsx';
 import { Citation } from '../../components/Citation/Citation.tsx';
 import { PromptSuggestions } from '../../components/PromptSuggestions/PromptSuggestions.jsx';
 import { AIDisclaimer } from '../../components/AIDisclaimer/AIDisclaimer.tsx';

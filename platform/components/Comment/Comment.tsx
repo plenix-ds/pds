@@ -15,7 +15,7 @@ import { Field } from '../../components/Field/Field.tsx';
 import { Textarea } from '../../components/Input/Input.tsx';
 import { Persona } from '../Persona/Persona.tsx';
 import type { PersonaProps } from '../Persona/Persona.tsx';
-import { Time } from '../Time/Time.jsx';
+import { Time } from '../Time/Time.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import CheckIcon from 'plenix-platform/icons/plenix/check';
@@ -44,9 +44,7 @@ export function Comment({author={},body='',time,own=false,edited=false,resolved=
  React.useEffect(()=>{if(!editing)setDraft(body);},[body,editing]);
  async function act(fn: (() => unknown) | undefined,done?: () => void){if(lock.current||!fn)return;lock.current=true;setBusy(true);setError('');try{await fn();if(mounted.current&&done)done();}catch(e){if(mounted.current)setError(t.failed);}finally{lock.current=false;if(mounted.current)setBusy(false);}}
  return <Stack as="article" className={cx('plx-comment',className)} aria-busy={busy||undefined} {...rest}>
- <Inline wrap><Persona {...(author as PersonaProps)}/>{time?(
-  // @ts-expect-error Time is still JavaScript here, so its optional props read as required (it is converted in this wave)
-  <Time value={time}/>):null}{edited?<Badge icon={PencilIcon}>{t.edited}</Badge>:null}{resolved?<Badge tone="success" icon={CheckIcon}>{t.resolved}</Badge>:null}</Inline>
+ <Inline wrap><Persona {...(author as PersonaProps)}/>{time?<Time value={time}/>:null}{edited?<Badge icon={PencilIcon}>{t.edited}</Badge>:null}{resolved?<Badge tone="success" icon={CheckIcon}>{t.resolved}</Badge>:null}</Inline>
  {editing?<Field label={t.message} error={error}><Textarea value={draft} disabled={busy} onChange={e=>setDraft(e.target.value)}/></Field>:<Text as="p" className="plx-comment__body">{body}</Text>}
  {!editing&&error?<Text role="alert">{error}</Text>:null}
  <Inline wrap>{editing?<><Button disabled={busy} onClick={()=>{if(!draft.trim()){setError(t.empty);return;}act(()=>onEdit?.(draft.trim()),()=>setEditing(false));}}>{t.save}</Button><Button variant="secondary" disabled={busy} onClick={()=>{setEditing(false);setError('');}}>{t.cancel}</Button></>:<>{own&&onEdit?<Button variant="secondary" disabled={busy} onClick={()=>{setDraft(body);setEditing(true);setError('');}}>{t.edit}</Button>:null}{onResolve?<Button variant="secondary" disabled={busy} onClick={()=>act(()=>onResolve?.(!resolved))}>{resolved?t.reopen:t.resolve}</Button>:null}{reactions.map(r=><Button key={r.id} variant="secondary" aria-pressed={!!r.active} disabled={busy||!onReact} onClick={()=>act(()=>onReact?.(r.id))}><Text>{r.label}</Text> <Text variant="data">{r.count}</Text></Button>)}</>}</Inline></Stack>;

@@ -28,21 +28,35 @@ import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { reducedMotion as reduced } from '../../utils/tokenTime.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 
-const flatten = (items, out = []) => { items.forEach((it) => { out.push(it); if (it.children) flatten(it.children, out); }); return out; };
+type AnchorItem = { id: string; label: React.ReactNode; children?: AnchorItem[] };
+const flatten = (items: AnchorItem[], out: AnchorItem[] = []): AnchorItem[] => { items.forEach((it) => { out.push(it); if (it.children) flatten(it.children, out); }); return out; };
 // how long a press keeps its section current while the smooth scroll passes the others
 const HOLD = 900;
 
-export function Anchor({ items = [], label, scrollRef, value, onChange, strings, className, ...rest }) {
-  const t = useStrings('anchor', strings);
-  const nav = React.useRef(null);
-  const [own, setOwn] = React.useState(null);
+type AnchorProps = Omit<React.HTMLAttributes<HTMLElement>, 'onChange'> & {
+  /** the sections: { id, label, children? }; each id is the id of an element on the page */
+  items?: AnchorItem[];
+  /** the navigation's accessible name; default strings.label */
+  label?: string;
+  /** the scrolling area the sections sit in; default the window */
+  scrollRef?: React.RefObject<HTMLElement | null>;
+  /** the current section's id (controlled) */
+  value?: string | null;
+  onChange?(id: string): void;
+  strings?: Catalog | null;
+};
+export function Anchor({ items = [], label, scrollRef, value, onChange, strings, className, ...rest }: AnchorProps) {
+  const t = useStrings('anchor', strings) as { label: string };
+  const nav = React.useRef<HTMLElement>(null);
+  const [own, setOwn] = React.useState<string | null>(null);
   const controlled = value !== undefined;
-  const current = controlled ? value : own;
-  const now = React.useRef(current), change = React.useRef(onChange), until = React.useRef(0), measureNow = React.useRef(null), mounted = React.useRef(false);
+  const current: string | null = controlled ? (value as string | null) : own;
+  const now = React.useRef(current), change = React.useRef(onChange), until = React.useRef(0), measureNow = React.useRef<(() => void) | null>(null), mounted = React.useRef(false);
   now.current = current; change.current = onChange;
   // quiet: the first reading when it is drawn sets the current section without telling onChange (it is not a change)
-  const set = (id, quiet) => { if (id === now.current) return; now.current = id; if (!controlled) setOwn(id); if (change.current && !quiet) change.current(id); };
+  const set = (id: string, quiet?: boolean) => { if (id === now.current) return; now.current = id; if (!controlled) setOwn(id); if (change.current && !quiet) change.current(id); };
   const flat = flatten(items), ids = flat.map((i) => i.id).join('|');
   const pageOf = () => (nav.current && nav.current.ownerDocument) || document;
 
@@ -50,11 +64,11 @@ export function Anchor({ items = [], label, scrollRef, value, onChange, strings,
     const area = scrollRef && scrollRef.current, doc = pageOf(), view = doc.defaultView || window;
     const scroller = area || view;
     let frame = 0;
-    const measure = (quiet) => {
+    const measure = (quiet?: boolean) => {
       frame = 0;
       if (performance.now() < until.current) return;
       const top = area ? area.getBoundingClientRect().top : 0;
-      const there = flat.map((i) => ({ id: i.id, el: doc.getElementById(i.id) })).filter((x) => x.el);
+      const there = flat.map((i) => ({ id: i.id, el: doc.getElementById(i.id) })).filter((x): x is { id: string; el: HTMLElement } => !!x.el);
       if (!there.length) return;
       let found = there[0].id;
       there.forEach((x) => { const margin = parseFloat(view.getComputedStyle(x.el).scrollMarginTop) || 0; if (x.el.getBoundingClientRect().top <= top + margin + 1) found = x.id; });
@@ -63,14 +77,14 @@ export function Anchor({ items = [], label, scrollRef, value, onChange, strings,
       set(atEnd && scrolled ? there[there.length - 1].id : found, quiet === true);
     };
     measureNow.current = () => measure();
-    const onScroll = () => { if (!frame) frame = view.requestAnimationFrame(measure); };
+    const onScroll = () => { if (!frame) frame = view.requestAnimationFrame(() => measure()); };
     scroller.addEventListener('scroll', onScroll, { passive: true });
     view.addEventListener('resize', onScroll);
     if (!mounted.current) { mounted.current = true; measure(true); } else measure();
     return () => { scroller.removeEventListener('scroll', onScroll); view.removeEventListener('resize', onScroll); if (frame) view.cancelAnimationFrame(frame); measureNow.current = null; };
   }, [ids, scrollRef]);   // eslint-disable-line react-hooks/exhaustive-deps
 
-  const go = (e, id) => {
+  const go = (e: React.MouseEvent, id: string) => {
     const el = pageOf().getElementById(id);
     e.preventDefault();
     if (!el) return;
@@ -82,7 +96,7 @@ export function Anchor({ items = [], label, scrollRef, value, onChange, strings,
     setTimeout(() => { if (measureNow.current) measureNow.current(); }, HOLD + 50);
   };
 
-  const list = (rows, nested) => (
+  const list = (rows: AnchorItem[], nested: boolean): React.ReactElement => (
     <ul className={cx('plx-anchor__list', nested && 'plx-anchor__list--nested')}>
       {rows.map((it) => (
         <li key={it.id} className="plx-anchor__item">
