@@ -24,6 +24,8 @@
      onDelete(items): deletes them (confirm, type), hides them (undo) or moves them to the trash (trash)
      onRestore(items): puts them back (Undo in the toast); without it the toast has no Undo
      onCommit(items): the undo form's final delete, when the toast leaves without Undo
+     undoDuration: milliseconds the undo and trash toast stays before the delete is final; default 10 seconds (the
+       --plx-comp-delete-flow-undo-duration token); 0 keeps it until it is dismissed. The toast pauses while the pointer or focus is on it.
      trigger: the button that starts the flow (one element; its onClick is taken)
      open: starts the flow from elsewhere (a command bar's Delete): the dialog shows; with undo or trash the deletion runs
        at once and onClose follows
@@ -58,6 +60,7 @@ import { Field } from '../../components/Field/Field.tsx';
 import { Input } from '../../components/Input/Input.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { useOptionalToast } from '../../components/Toast/Toast.tsx';
+import { tokenMs } from '../../utils/tokenTime.ts';
 import { useStrings, useLocale } from '../../providers/LocaleProvider.tsx';
 import { dataPhrase } from '../../utils/dataText.tsx';
 import { fill } from '../../utils/fill.ts';
@@ -65,7 +68,7 @@ import { fill } from '../../utils/fill.ts';
 const SHOWN = 5;
 
 export function DeleteFlow({ items = [], noun, plural, variant = 'confirm', consequence, confirmPhrase, retention,
-  onDelete, onRestore, onCommit, trigger, open, onClose, strings, className }) {
+  onDelete, onRestore, onCommit, undoDuration, trigger, open, onClose, strings, className }) {
   devWarn('DeleteFlow', { variant }, { variant: ['confirm','type','undo','trash'] });
   const t = useStrings('deleteFlow', strings);
   const toast = useOptionalToast();
@@ -94,6 +97,7 @@ export function DeleteFlow({ items = [], noun, plural, variant = 'confirm', cons
     if (variant === 'trash' && retention) text += ' ' + fill(t.retention, { them: n === 1 ? t.it : t.them, days: formatNumber(retention) });
     if (toast) {
       toast.show(text, {
+        duration: undoDuration !== undefined ? undoDuration : tokenMs('--plx-comp-delete-flow-undo-duration'),
         action: onRestore ? { label: t.undo, onAction: () => onRestore(list) } : undefined,
         onClose: (reason) => { if (reason !== 'action' && variant === 'undo' && onCommit) onCommit(list); },
       });
