@@ -540,12 +540,7 @@
 .plx-entity-header__fact-icon {
   --plx-comp-icon-size: var(--plx-comp-entity-header-fact-icon-size);
   align-items: center;
-  background-color: var(--plx-comp-entity-header-fact-icon-tile-background);
   block-size: var(--plx-comp-entity-header-fact-icon-tile-size);
-  border-color: var(--plx-comp-entity-header-fact-icon-tile-border-color);
-  border-radius: var(--plx-comp-entity-header-fact-icon-tile-radius);
-  border-style: solid;
-  border-width: var(--plx-comp-entity-header-fact-border-width);
   color: var(--plx-comp-entity-header-fact-icon-tile-text);
   display: inline-flex;
   grid-column: 1;
