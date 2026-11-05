@@ -4,6 +4,8 @@
 export { Badge } from './components/Badge/Badge.tsx';
 export { VisuallyHidden } from './components/VisuallyHidden/VisuallyHidden.tsx';
 export { Isolate } from './components/Isolate/Isolate.tsx';
+export { AnswerLines } from './components/AnswerLines/AnswerLines.tsx';
+export { PageBreak } from './components/PageBreak/PageBreak.tsx';
 export { VoteTally } from './components/VoteTally/VoteTally.jsx';
 export { Count } from './components/Count/Count.tsx';
 export { Metric } from './components/Metric/Metric.tsx';
@@ -73,6 +75,7 @@ export { DataToolbar } from './patterns/DataToolbar/DataToolbar.jsx';
 export { BulkActions, SelectionSummary } from './patterns/BulkActions/BulkActions.jsx';
 export { ContentGrid } from './patterns/ContentGrid/ContentGrid.jsx';
 export { PropertyList } from './patterns/PropertyList/PropertyList.jsx';
+export { PrintDocument } from './patterns/PrintDocument/PrintDocument.tsx';
 export { RecordPage } from './patterns/RecordPage/RecordPage.jsx';
 export { EntityHeader } from './patterns/EntityHeader/EntityHeader.jsx';
 export { ActivityList } from './patterns/ActivityList/ActivityList.jsx';
