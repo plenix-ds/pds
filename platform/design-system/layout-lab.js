@@ -289,10 +289,13 @@ window.DSLayoutLab = function (api) {
   var OK = [24, 28, 32, 36, 40, 44, 48, 52];
   function measure(page) {
     return new Promise(function (resolve) {
+      // the page that asked was left: no frame loads a whole application for nobody (issue 5)
+      if (!auditOut.isConnected) { resolve({ page: page[0], ok: 0, off: {} }); return; }
       var f = document.createElement('iframe'); f.className = 'ds-radius-probe'; f.setAttribute('aria-hidden', 'true'); f.tabIndex = -1; f.src = page[1];
       f.addEventListener('load', function () {
         setTimeout(function () {
           var res = { page: page[0], ok: 0, off: {} };
+          if (!auditOut.isConnected) { f.remove(); resolve(res); return; }
           try {
             var d = f.contentDocument;
             d.querySelectorAll('button,input:not([type=checkbox]):not([type=radio]):not([type=hidden]):not([type=range]):not([type=color]),select,[role=button]').forEach(function (e) {
