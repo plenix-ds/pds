@@ -37,6 +37,15 @@ const check = async (name, fn) => { if (!shared.wanted(name)) return; try { awai
       const key = async (k) => { await page.keyboard.press(k); await wait(300); };
       const edits = () => page.evaluate(() => window.__edits.slice());
       const typeDate = async (text) => { await page.keyboard.down('Control'); await page.keyboard.press('a'); await page.keyboard.up('Control'); await page.keyboard.type(text); };
+      // where the value's text starts (its inline-start edge) in the read cell and in the open editor: the value does not move (design §1)
+      const startOf = (mode) => page.evaluate((mode, rtl) => {
+        const cell = document.querySelector('[role=row][data-plx-record] [data-plx-field="due"]');
+        const edge = (r, el) => (getComputedStyle(el).direction === 'rtl' ? r.right : r.left);
+        if (mode === 'read') { const w = document.createTreeWalker(cell, NodeFilter.SHOW_TEXT); let n; while ((n = w.nextNode())) { if (n.textContent.trim()) { const r = document.createRange(); r.selectNodeContents(n); return edge(r.getBoundingClientRect(), n.parentElement); } } return null; }
+        const t = cell.querySelector('.plx-select__value'); if (t) return edge(t.getBoundingClientRect(), t);
+        const i = cell.querySelector('input'); const b = i.getBoundingClientRect(), cs = getComputedStyle(i);
+        return cs.direction === 'rtl' ? b.right - parseFloat(cs.paddingRight) : b.left + parseFloat(cs.paddingLeft);
+      }, mode, dir === 'rtl');
       const ON = { types: ['date'] };
 
       await check(T + 'Enter opens the DatePicker field in the cell, bare and focused, in the locale form', async () => {
@@ -63,6 +72,10 @@ const check = async (name, fn) => { if (!shared.wanted(name)) return; try { awai
       });
       await check(T + 'emptying the field saves null', async () => {
         await mount(ON); await focus(0); await key('Enter'); await page.keyboard.down('Control'); await page.keyboard.press('a'); await page.keyboard.up('Control'); await key('Delete'); await key('Enter'); assert.deepEqual(await edits(), ['r1.due=null']);
+      });
+      await check(T + 'the value text starts where the read text starts (within 1px)', async () => {
+        await mount(ON); const before = await startOf('read'); await focus(0); await key('Enter'); const during = await startOf('edit');
+        assert.ok(Math.abs(before - during) <= 1, 'read ' + before + ' vs editing ' + during);
       });
       await check(T + 'with the type not turned on Enter opens the one-line editor', async () => {
         await mount(undefined); await focus(0); await key('Enter'); assert.equal(await oneLine(), true); assert.equal(await field(), null);
