@@ -26,17 +26,45 @@ import { Chip } from '../Tag/Tag.tsx';
 import { Menu, MenuItem, MenuRadioGroup } from '../Menu/Menu.tsx';
 import { Notice } from '../Notice/Notice.tsx';
 import { useReadOnly } from '../../providers/ReadOnly.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import SparkleIcon from 'plenix-platform/icons/plenix/sparkle';
 import StopIcon from 'plenix-platform/icons/plenix/stop';
-export const PromptInput = React.forwardRef(function PromptInput({value,defaultValue='',onChange,onSend,multiline=false,streaming=false,onStop,disabled=false,attachments=false,accept,onAttachmentsChange,models=[],model,onModelChange,strings,readOnly,className},ref){
+type PromptModel = { id: string; label: string; disabled?: boolean };
+type PromptInputProps = {
+  /** the text (controlled) */
+  value?: string;
+  defaultValue?: string;
+  onChange?(text: string): void;
+  /** sends the prompt: (text, { attachments, model, signal }); async. Enter sends, Shift+Enter breaks the line */
+  onSend?(text: string, info: { attachments: File[]; model?: string; signal: AbortSignal }): unknown;
+  /** a multi-line field */
+  multiline?: boolean;
+  /** a reply is streaming: Send becomes Stop */
+  streaming?: boolean;
+  onStop?(): unknown;
+  disabled?: boolean;
+  /** offers a file picker */
+  attachments?: boolean;
+  accept?: string;
+  onAttachmentsChange?(files: File[]): void;
+  /** the models to choose from: { id, label, disabled? } */
+  models?: PromptModel[];
+  model?: string;
+  onModelChange?(id: string): void;
+  /** { label, placeholder, send, stop, stopping, failed, attachments, model } */
+  strings?: Catalog | null;
+  readOnly?: boolean;
+  className?: string;
+};
+export const PromptInput = React.forwardRef(function PromptInput({value,defaultValue='',onChange,onSend,multiline=false,streaming=false,onStop,disabled=false,attachments=false,accept,onAttachmentsChange,models=[],model,onModelChange,strings,readOnly,className}: PromptInputProps,ref: React.ForwardedRef<HTMLInputElement & HTMLTextAreaElement>){
  const locked=useReadOnly(readOnly);
- const t={label:'Prompt',placeholder:'Ask a question',send:'Send prompt',stop:'Stop generating',stopping:'Stopping',failed:'Could not send the prompt. Try again.',attachments:'Attachments',model:'Choose model',...strings};
- const [own,setOwn]=React.useState(defaultValue),[files,setFiles]=React.useState([]),[fileKey,setFileKey]=React.useState(0),[busy,setBusy]=React.useState(false),[stopping,setStopping]=React.useState(false),[error,setError]=React.useState('');
- const text=value===undefined?own:value,latest=React.useRef(text),alive=React.useRef(true),lock=React.useRef(false),stopLock=React.useRef(false),abort=React.useRef(null);latest.current=text;
+ const t={label:'Prompt',placeholder:'Ask a question',send:'Send prompt',stop:'Stop generating',stopping:'Stopping',failed:'Could not send the prompt. Try again.',attachments:'Attachments',model:'Choose model',...(strings as Record<string, string> | null | undefined)};
+ const [own,setOwn]=React.useState(defaultValue),[files,setFiles]=React.useState<File[]>([]),[fileKey,setFileKey]=React.useState(0),[busy,setBusy]=React.useState(false),[stopping,setStopping]=React.useState(false),[error,setError]=React.useState('');
+ const text=value===undefined?own:value,latest=React.useRef(text),alive=React.useRef(true),lock=React.useRef(false),stopLock=React.useRef(false),abort=React.useRef<AbortController | null>(null);latest.current=text;
  React.useEffect(()=>{alive.current=true;return()=>{alive.current=false;abort.current?.abort();};},[]);
  React.useEffect(()=>{if(!streaming){stopLock.current=false;setStopping(false);}},[streaming]);
- const change=next=>{if(value===undefined)setOwn(next);onChange?.(next);};
- const selectFiles=next=>{setFiles(next);onAttachmentsChange?.(next);};
+ const change=(next: string)=>{if(value===undefined)setOwn(next);onChange?.(next);};
+ const selectFiles=(next: File[])=>{setFiles(next);onAttachmentsChange?.(next);};
  async function send(){if(disabled||locked||streaming||lock.current||!onSend||!String(text).trim())return;lock.current=true;setBusy(true);setError('');const sent=text,controller=new AbortController();abort.current=controller;
   try{await onSend(sent,{attachments:files.slice(),model,signal:controller.signal});if(alive.current&&!controller.signal.aborted){if(latest.current===sent)change('');selectFiles([]);setFileKey(k=>k+1);}}
   catch(e){if(alive.current&&!controller.signal.aborted)setError(t.failed);}finally{lock.current=false;if(alive.current)setBusy(false);}}
@@ -45,7 +73,7 @@ export const PromptInput = React.forwardRef(function PromptInput({value,defaultV
  return <Stack as="form" className={cx('plx-ai','plx-prompt-input',className)} aria-label={t.label} aria-busy={busy||undefined} onSubmit={e=>{e.preventDefault();send();}}>
  <Field label={t.label}><Control ref={ref} value={text} rows={multiline?3:undefined} disabled={disabled} readOnly={locked||undefined} placeholder={t.placeholder} enterKeyHint="send" onChange={e=>change(e.target.value)} onKeyDown={e=>{if(e.key==='Enter'&&!e.shiftKey&&!e.nativeEvent.isComposing&&e.keyCode!==229){e.preventDefault();send();}}}/></Field>
  <Inline wrap>{attachments?<FileInput key={fileKey} multiple showList accept={accept} label={t.attachments} strings={strings} disabled={disabled||locked||busy||streaming} onChange={selectFiles}/>:null}
- {models.length?<Menu label={t.model} trigger={<Chip disabled={disabled||locked||busy||streaming||!onModelChange} aria-label={t.model+': '+(chosen?.label||t.model)}>{chosen?.label||t.model}</Chip>}><MenuRadioGroup label={t.model} value={model} onChange={onModelChange}>{models.map(m=><MenuItem key={m.id} value={m.id} disabled={m.disabled}>{m.label}</MenuItem>)}</MenuRadioGroup></Menu>:null}
+ {models.length?<Menu label={t.model} trigger={<Chip disabled={disabled||locked||busy||streaming||!onModelChange} aria-label={t.model+': '+(chosen?.label||t.model)}>{chosen?.label||t.model}</Chip>}><MenuRadioGroup label={t.model} value={model} onChange={onModelChange && ((v: unknown)=>onModelChange(v as string))}>{models.map(m=><MenuItem key={m.id} value={m.id} disabled={m.disabled}>{m.label}</MenuItem>)}</MenuRadioGroup></Menu>:null}
  {streaming?<Button icon={StopIcon} disabled={disabled||stopping||!onStop} onClick={stop}>{stopping?t.stopping:t.stop}</Button>:<Button type="submit" icon={SparkleIcon} disabled={disabled||locked||busy||!onSend||!String(text).trim()}>{t.send}</Button>}</Inline>
  {error?<Notice tone="danger">{error}</Notice>:null}</Stack>;
 });

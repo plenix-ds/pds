@@ -29,33 +29,54 @@ import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { useBarFit } from '../../utils/barFit.ts';
 import { Button } from '../Button/Button.tsx';
+import type { IconValue } from '../Icon/Icon.tsx';
 import { Menu, MenuItem } from '../Menu/Menu.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import MoreIcon from 'plenix-platform/icons/plenix/more';
 
-export function OverflowList({ items = [], label, size = 'md', strings, className, ...rest }) {
-  const t = useStrings('overflowList', strings);
-  const row = React.useRef(null);
+type OverflowItem = {
+  id: string;
+  /** the button's text, and its name in the "…" menu */
+  label: React.ReactNode;
+  icon?: IconValue;
+  href?: string;
+  disabled?: boolean;
+  onSelect?(id: string): void;
+  /** your own element instead of a button */
+  content?: React.ReactNode;
+};
+type OverflowListProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & {
+  items?: OverflowItem[];
+  /** the group's accessible name */
+  label?: string;
+  /** the buttons' size; default "md" */
+  size?: 'xs' | 'sm' | 'md' | 'lg';
+  strings?: Catalog | null;
+};
+export function OverflowList({ items = [], label, size = 'md', strings, className, ...rest }: OverflowListProps) {
+  const t = useStrings('overflowList', strings) as { more: string };
+  const row = React.useRef<HTMLDivElement>(null);
   const focused = React.useRef(false);   // focus is on an item of the row (not on the "…" button): if that item folds, the "…" button takes it
   const key = items.map((i) => i.id + ':' + i.label).join('|') + '|' + size;
   const step = useBarFit(row, key, items.length, 0, ':self');
   const shown = Math.max(0, items.length - step);
-  const choose = (it) => () => { if (it.onSelect) it.onSelect(it.id); };
+  const choose = (it: OverflowItem) => () => { if (it.onSelect) it.onSelect(it.id); };
   const folded = items.slice(shown);
 
   // the item that had focus folded away: focus would fall to the page; the "…" button takes it
   React.useLayoutEffect(() => {
     const el = row.current;
     if (!el || !focused.current || el.contains(document.activeElement)) return;
-    const more = el.querySelector('[aria-haspopup]');
+    const more = el.querySelector<HTMLElement>('[aria-haspopup]');
     if (more) { focused.current = false; more.focus(); }
   }, [shown]);
 
-  const drawn = (it) => (it.content !== undefined && it.content !== null ? <span key={it.id} className="plx-overflow-list__item">{it.content}</span>
+  const drawn = (it: OverflowItem) => (it.content !== undefined && it.content !== null ? <span key={it.id} className="plx-overflow-list__item">{it.content}</span>
     : <Button key={it.id} className="plx-overflow-list__item" variant="ghost" size={size} icon={it.icon} href={it.href} disabled={it.disabled} onClick={choose(it)}>{it.label}</Button>);
   return (
     <div ref={row} role={label ? 'group' : undefined} aria-label={label || undefined} className={cx('plx-overflow-list', className)}
-      onFocus={(e) => { focused.current = !e.target.closest('[aria-haspopup]'); }} onBlur={() => { focused.current = false; }} {...rest}>
+      onFocus={(e) => { focused.current = !(e.target as Element).closest('[aria-haspopup]'); }} onBlur={() => { focused.current = false; }} {...rest}>
       {items.slice(0, shown).map(drawn)}
       {folded.length ? (
         <Menu label={t.more} placement="bottom-end" className="plx-overflow-list__item" trigger={<Button variant="ghost" size={size} iconOnly icon={MoreIcon} label={t.more} />}>

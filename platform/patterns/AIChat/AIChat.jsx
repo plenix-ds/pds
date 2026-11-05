@@ -23,10 +23,10 @@ import { Text } from '../../components/Text/Text.tsx';
 import { AILabel } from '../../components/AILabel/AILabel.tsx';
 import { GeneratedContent } from '../../components/GeneratedContent/GeneratedContent.tsx';
 import { Citation } from '../../components/Citation/Citation.tsx';
-import { PromptSuggestions } from '../../components/PromptSuggestions/PromptSuggestions.jsx';
+import { PromptSuggestions } from '../../components/PromptSuggestions/PromptSuggestions.tsx';
 import { AIDisclaimer } from '../../components/AIDisclaimer/AIDisclaimer.tsx';
 import { RefineMenu } from '../../components/RefineMenu/RefineMenu.jsx';
-import { PromptInput } from '../../components/PromptInput/PromptInput.jsx';
+import { PromptInput } from '../../components/PromptInput/PromptInput.tsx';
 import { StreamingText } from '../../components/StreamingText/StreamingText.tsx';
 export function AIChat({messages=[],onSend,streaming=false,onStop,variant='panel',title,suggestions=[],prompt,onPromptChange,composer={},strings,className}){
  const t={title:'AI assistant',thread:'AI conversation',you:'You',assistant:'AI assistant',empty:'Ask a question to start the conversation.',...strings},[own,setOwn]=React.useState(''),field=React.useRef(null),draft=prompt===undefined?own:prompt;

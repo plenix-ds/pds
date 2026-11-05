@@ -16,10 +16,24 @@ import { Icon } from '../Icon/Icon.tsx';
 import { Chip } from '../Tag/Tag.tsx';
 import { Card } from '../Card/Card.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import SparkleIcon from 'plenix-platform/icons/plenix/sparkle';
-export function PromptSuggestions({ options = [], variant = 'chips', onSelect, disabled = false, strings, className }) {
+type PromptOption = { id: string; label: string; description?: React.ReactNode; disabled?: boolean };
+type PromptSuggestionsProps = {
+  /** the suggestions: { id, label, description?, disabled? } */
+  options?: PromptOption[];
+  /** "chips" (default) | "cards" */
+  variant?: 'chips' | 'cards';
+  /** a suggestion chosen; async */
+  onSelect?(option: PromptOption): unknown;
+  disabled?: boolean;
+  /** { label, empty, failed } */
+  strings?: Catalog | null;
+  className?: string;
+};
+export function PromptSuggestions({ options = [], variant = 'chips', onSelect, disabled = false, strings, className }: PromptSuggestionsProps) {
   devWarn('PromptSuggestions', { variant }, { variant: ['chips', 'cards'] });
-  const t = useStrings('promptSuggestions', strings),
+  const t = useStrings('promptSuggestions', strings) as Record<string, string>,
     [busy, setBusy] = React.useState(false),
     [error, setError] = React.useState('');
   const lock = React.useRef(false),
@@ -30,7 +44,7 @@ export function PromptSuggestions({ options = [], variant = 'chips', onSelect, d
       alive.current = false;
     };
   }, []);
-  async function choose(o) {
+  async function choose(o: PromptOption) {
     if (disabled || o.disabled || lock.current || !onSelect) return;
     lock.current = true;
     setBusy(true);

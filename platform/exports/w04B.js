@@ -2,7 +2,7 @@
 // encoder) and version labels. StatusDot's availability tones and Avatar's presence extend components already public.
 export { AvatarGroup } from '../components/AvatarGroup/AvatarGroup.tsx';
 export { Persona } from '../components/Persona/Persona.tsx';
-export { EntityTitle } from '../components/EntityTitle/EntityTitle.jsx';
+export { EntityTitle } from '../components/EntityTitle/EntityTitle.tsx';
 export { ProgressCircle } from '../components/ProgressCircle/ProgressCircle.tsx';
 export { QRCode } from '../components/QRCode/QRCode.tsx';
 export { qrEncode } from '../utils/qr.ts';
