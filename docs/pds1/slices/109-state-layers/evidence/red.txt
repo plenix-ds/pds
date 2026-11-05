@@ -1,0 +1,6 @@
+    Error: secondary hover: the fill is the rest fill
+    Expected: "rgb(255, 255, 255)"
+    Received: "rgb(232, 233, 236)"
+    Error Context: test-results/state-layers-buttons-draw--938a5--over-their-own-fill-light-/error-context.md
+    Error: secondary hover: the fill is the rest fill
+    Expected: "rgb(68, 68, 68)"

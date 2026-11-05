@@ -174,6 +174,10 @@
   syntax: "*";
   inherits: false;
 }
+@property --plx-state-button-layer-color {
+  syntax: "*";
+  inherits: false;
+}
 @property --plx-state-button-hover-elevation {
   syntax: "*";
   inherits: false;
@@ -763,4 +767,129 @@
   --plx-state-button-selected-background: var(--plx-comp-button-tone-neutral-selected-background);
   --plx-state-button-selected-border: var(--plx-comp-button-tone-neutral-selected-border);
   --plx-state-button-selected-text: var(--plx-comp-button-tone-neutral-selected-text);
+}
+/* state layers (#109, D-0037, ADR 0004): hover, pressed and keyboard focus draw one see-through layer (8%, 10%, 10%) over the
+   variant's own fill, above the rest glow; the fill, border and text stay as at rest (the secondary keeps its hover border).
+   The layer colour is the text colour on neutral, subtle and outline fills and white on primary and danger. Disabled and
+   loading buttons draw none; the on-inverse, on-accent and 2xs buttons keep their own hover. A selected toggle keeps its
+   selected fill and takes the layer on top. */
+.plx-button {
+  --plx-state-button-layer-color: var(--plx-comp-button-state-layer-color);
+}
+.plx-button--primary {
+  --plx-state-button-layer-color: var(--plx-comp-button-primary-state-layer-color);
+}
+.plx-button--danger {
+  --plx-state-button-layer-color: var(--plx-comp-button-danger-state-layer-color);
+}
+.plx-button:is(:hover, .is-hover):where(
+    :not(
+        :active,
+        .is-pointer-down,
+        :disabled,
+        [aria-disabled="true"],
+        .is-loading,
+        .plx-button--on-inverse,
+        .plx-button--on-accent,
+        .plx-button--size-2xs
+      )
+  ) {
+  --plx-state-button-image: linear-gradient(
+      color-mix(in srgb, var(--plx-state-button-layer-color) var(--plx-comp-button-state-layer-hover-opacity), transparent) 0 0
+    ),
+    var(--plx-state-button-rest-image, none);
+}
+.plx-button:is(:hover, .is-hover):where(
+    :not(
+        :active,
+        .is-pointer-down,
+        :disabled,
+        [aria-disabled="true"],
+        .is-loading,
+        .is-selected,
+        .plx-button--on-inverse,
+        .plx-button--on-accent,
+        .plx-button--size-2xs
+      )
+  ) {
+  --plx-state-button-background: var(--plx-state-button-rest-background);
+  --plx-state-button-text: var(--plx-state-button-rest-text);
+}
+.plx-button:is(:hover, .is-hover):where(
+    :not(
+        :active,
+        .is-pointer-down,
+        :disabled,
+        [aria-disabled="true"],
+        .is-loading,
+        .is-selected,
+        .plx-button--on-inverse,
+        .plx-button--on-accent,
+        .plx-button--size-2xs,
+        .plx-button--secondary
+      )
+  ) {
+  --plx-state-button-border: var(--plx-state-button-rest-border);
+}
+.plx-button:is(:focus-visible, .is-focus-visible):where(
+    :not(
+        :active,
+        .is-pointer-down,
+        :disabled,
+        [aria-disabled="true"],
+        .is-loading,
+        .plx-button--on-inverse,
+        .plx-button--on-accent,
+        .plx-button--size-2xs
+      )
+  ) {
+  --plx-state-button-image: linear-gradient(
+      color-mix(in srgb, var(--plx-state-button-layer-color) var(--plx-comp-button-state-layer-focus-opacity), transparent) 0 0
+    ),
+    var(--plx-state-button-rest-image, none);
+}
+.plx-button:is(:focus-visible, .is-focus-visible):where(
+    :not(
+        :active,
+        .is-pointer-down,
+        :disabled,
+        [aria-disabled="true"],
+        .is-loading,
+        .is-selected,
+        .plx-button--on-inverse,
+        .plx-button--on-accent,
+        .plx-button--size-2xs
+      )
+  ) {
+  --plx-state-button-background: var(--plx-state-button-rest-background);
+}
+.plx-button:is(:active, .is-pointer-down):where(
+    :not(
+        :disabled,
+        [aria-disabled="true"],
+        .is-loading,
+        .plx-button--on-inverse,
+        .plx-button--on-accent,
+        .plx-button--size-2xs
+      )
+  ) {
+  --plx-state-button-image: linear-gradient(
+      color-mix(in srgb, var(--plx-state-button-layer-color) var(--plx-comp-button-state-layer-pressed-opacity), transparent) 0 0
+    ),
+    var(--plx-state-button-rest-image, none);
+}
+.plx-button:is(:active, .is-pointer-down):where(
+    :not(
+        :disabled,
+        [aria-disabled="true"],
+        .is-loading,
+        .is-selected,
+        .plx-button--on-inverse,
+        .plx-button--on-accent,
+        .plx-button--size-2xs
+      )
+  ) {
+  --plx-state-button-background: var(--plx-state-button-rest-background);
+  --plx-state-button-border: var(--plx-state-button-rest-border);
+  --plx-state-button-text: var(--plx-state-button-rest-text);
 }
