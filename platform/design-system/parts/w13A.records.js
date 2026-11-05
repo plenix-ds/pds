@@ -209,7 +209,7 @@ DSParts.records.push(function (H) {
 
     /* ── 12 Specialized › Commerce › Product options: ProductOptions ── */
     { id: 'product-options', lab: true, icon: 'settings-customize', sec: 'specialized', sub: COMMERCE, leaf: 'Product options', title: 'Product options',
-      plenix: 'ProductOptions', src: 'components/ProductOptions/ProductOptions.jsx', level: 'Component', interaction: 'Selection', variantClasses: [],
+      plenix: 'ProductOptions', src: 'components/ProductOptions/ProductOptions.tsx', level: 'Component', interaction: 'Selection', variantClasses: [],
       aliases: ['Variant picker', 'Product variants', 'Size and color', 'Swatches', 'Quantity selector'],
       text: 'The controls that choose one variant of a product: sizes as small radio tiles (size buttons), colors as swatch buttons named in words (color swatches) and how many to buy with the quantity stepper (quantity). Each option says its chosen value beside its name; a choice that is out of stock stays in view, marked and explained, and cannot be chosen.',
       use: ['Product pages and quick-add surfaces', 'Any variant that changes the price, the picture, the stock or the fit', 'A note under a size (“Only 2 left”, “Back in November”)', 'The size guide as a link after the sizes'],

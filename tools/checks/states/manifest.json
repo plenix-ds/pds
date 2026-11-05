@@ -108,5 +108,35 @@
     "loading": "n/a(a menu opens with its items; an async list is the caller's loading state)",
     "selected": "n/a(a checked or radio item shows a check mark; no row stays selected)",
     "error": "n/a(a menu has no value to validate)"
+  },
+  "EventChip": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(a chip is plain text or a button; it has no disabled state)",
+    "loading": "n/a(an event is shown as given; nothing loads)",
+    "selected": "n/a(an event chip does not stay selected)",
+    "error": "n/a(a chip has no value to validate)"
+  },
+  "Checklist": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(a task is a native checkbox: its pressed look is the browser's)",
+    "disabled": "n/a(stories arrive with Storybook, P0-11)",
+    "loading": "n/a(tasks are given; persistence belongs to the caller)",
+    "selected": "n/a(a completed task is its checked state)",
+    "error": "n/a(a checklist has no value to validate)"
+  },
+  "ProductOptions": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(its tiles, swatches and stepper are the RadioTiles, ColorSwatch and NumberInput parts: their states)",
+    "disabled": "n/a(stories arrive with Storybook, P0-11)",
+    "loading": "n/a(the product's options are given)",
+    "selected": "n/a(a chosen value is the option's value; the parts show it)",
+    "error": "n/a(an option's error shows as its message under it; stories arrive with Storybook, P0-11)"
   }
 }

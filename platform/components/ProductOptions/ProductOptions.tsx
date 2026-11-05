@@ -61,13 +61,18 @@ import { NumberInput } from '../NumberInput/NumberInput.tsx';
 import { Field } from '../Field/Field.tsx';
 import { Icon } from '../Icon/Icon.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import AlertIcon from 'plenix-platform/icons/plenix/alert';
 import { fill } from '../../utils/fill.ts';
 
-const labelOf = (v) => (v.label !== undefined ? v.label : String(v.value));
+type OptionValue = { value: string | number; label?: string; available?: boolean; note?: string; category?: string; color?: string };
+type Option = { name: string; label?: string; kind?: 'buttons' | 'swatches'; values?: OptionValue[]; required?: boolean };
+type Strings = Record<string, string>;
+
+const labelOf = (v: OptionValue): string => (v.label !== undefined ? v.label : String(v.value));
 
 // the option's name and its chosen value ("Size: M")
-function Legend({ option, value, t }) {
+function Legend({ option, value, t }: { option: Option; value: unknown; t: Strings }) {
   const chosen = (option.values || []).find((v) => v.value === value);
   return (
     <span className="plx-product-options__legend-text">
@@ -77,15 +82,44 @@ function Legend({ option, value, t }) {
   );
 }
 
-function ErrorLine({ id, children }) {
+function ErrorLine({ id, children }: { id: string; children?: React.ReactNode }) {
   return children ? <span id={id} className="plx-product-options__error"><Icon name={AlertIcon} size="sm" />{children}</span> : null;
 }
 
+/** @public the prop type (ADR 0011) */
+export type ProductOptionsProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> & {
+  /** the product's options, in order */
+  options?: Option[];
+  /** the chosen values, by option name */
+  value?: Record<string, string | number | undefined>;
+  /** runs with the whole new value and the option that changed */
+  onChange?: (next: Record<string, string | number | undefined>, name: string) => void;
+  /** how many to buy; with onQuantityChange the quantity stepper shows */
+  quantity?: number;
+  onQuantityChange?: (n: number) => void;
+  /** how many units at least (default 1) */
+  min?: number;
+  /** the greatest quantity (default 99) */
+  max?: number;
+  /** the product's name, for the controls' accessible names */
+  product?: string;
+  /** an element after the first button option */
+  sizeGuide?: React.ReactNode;
+  /** the swatches show their names as text beside them (default false) */
+  swatchLabels?: boolean;
+  /** the error of an option, by name */
+  errors?: Record<string, React.ReactNode>;
+  /** turns every control off (default false) */
+  disabled?: boolean;
+  strings?: Catalog | null;
+  className?: string;
+};
+
 export function ProductOptions({ options = [], value = {}, onChange, quantity, onQuantityChange, min = 1, max = 99, product, sizeGuide,
-  swatchLabels = false, errors = {}, disabled = false, strings, className, ...rest }) {
-  const t = useStrings('productOptions', strings);
+  swatchLabels = false, errors = {}, disabled = false, strings, className, ...rest }: ProductOptionsProps) {
+  const t = useStrings('productOptions', strings) as Strings;
   const uid = useUid('plx-product-options');
-  const pick = (name, v) => { if (onChange) onChange(Object.assign({}, value, { [name]: v }), name); };
+  const pick = (name: string, v: string | number) => { if (onChange) onChange(Object.assign({}, value, { [name]: v }), name); };
   let guided = false;
   return (
     <div className={cx('plx-product-options', disabled && 'is-disabled', className)} {...rest}>
@@ -128,7 +162,7 @@ export function ProductOptions({ options = [], value = {}, onChange, quantity, o
       {onQuantityChange ? (
         <div className="plx-product-options__option plx-product-options__option--quantity">
           <Field label={t.quantity}>
-            <NumberInput stepper="quantity" value={quantity} onChange={(n) => onQuantityChange(n)} min={min} max={max} disabled={disabled}
+            <NumberInput stepper="quantity" value={quantity} onChange={(n) => onQuantityChange(n as number)} min={min} max={max} disabled={disabled}
               aria-label={product ? fill(t.quantityOf, { product }) : undefined} />
           </Field>
         </div>

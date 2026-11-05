@@ -21,9 +21,31 @@ import { Text } from '../Text/Text.tsx';
 import { CollapsibleSection } from '../CollapsibleSection/CollapsibleSection.tsx';
 import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 
-export function Checklist({ title, items = [], completed = [], onChange, progress = true, collapsible = false, onDismiss, strings, className }) {
-  const t = useStrings('checklist', strings);
+type ChecklistItem = { id: string | number; label: React.ReactNode; description?: React.ReactNode; disabled?: boolean };
+/** @public the prop type (ADR 0011) */
+export type ChecklistProps = {
+  /** group heading */
+  title?: string;
+  items?: ChecklistItem[];
+  /** completed ids */
+  completed?: Array<string | number>;
+  /** controlled updates: the new completed ids and the id that changed */
+  onChange?: (ids: Array<string | number>, changedId: string | number) => void;
+  /** show progress (default true) */
+  progress?: boolean;
+  /** show a CollapsibleSection (default false) */
+  collapsible?: boolean;
+  /** an optional dismissal action */
+  onDismiss?: () => void;
+  /** { dismiss, progress } */
+  strings?: Catalog | null;
+  className?: string;
+};
+
+export function Checklist({ title, items = [], completed = [], onChange, progress = true, collapsible = false, onDismiss, strings, className }: ChecklistProps) {
+  const t = useStrings('checklist', strings) as Record<string, string>;
   const done = items.filter((item) => completed.includes(item.id)).length;
   const body = <Stack className="plx-checklist__items">
     {progress ? <Stack gap="xs"><Text variant="data" role="status">{done + ' / ' + items.length}</Text>
