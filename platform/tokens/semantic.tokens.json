@@ -279,7 +279,7 @@
       "$value": 9999,
       "$type": "number"
     },
-    "radius-detail-4px": {
+    "radius-detail": {
       "$value": "{plx-sys.shape-xs}",
       "$type": "dimension",
       "$extensions": {
@@ -290,67 +290,147 @@
         }
       }
     },
-    "radius-compact-4px": {
+    "radius-detail-4px": {
+      "$value": "{plx-sys.radius-detail}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-sys-radius-detail (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "radius-compact": {
       "$value": "{plx-sys.shape-xs}",
       "$type": "dimension"
     },
-    "radius-pill-4px": {
+    "radius-compact-4px": {
+      "$value": "{plx-sys.radius-compact}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-sys-radius-compact (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "radius-pill": {
       "$value": "{plx-sys.shape-xs}",
       "$type": "dimension",
       "$description": "Pills: every status, tag and category pill, and the count pill, has 4px corners (owner, 2026-10-14, docs/pills-and-colors.md). The fully round shape (--plx-sys-shape-mark) is for dots, toggles and round marks, never for pills."
     },
-    "radius-control-4px": {
+    "radius-pill-4px": {
+      "$value": "{plx-sys.radius-pill}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-sys-radius-pill (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "radius-control-sm": {
       "$value": "{plx-sys.shape-xs}",
+      "$type": "dimension"
+    },
+    "radius-control-4px": {
+      "$value": "{plx-sys.radius-control-sm}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-sys-radius-control-sm (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "radius-control-md": {
+      "$value": "{plx-sys.shape-sm}",
       "$type": "dimension"
     },
     "radius-control-6px": {
-      "$value": "{plx-sys.shape-sm}",
+      "$value": "{plx-sys.radius-control-md}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-sys-radius-control-md (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "radius-media-sm": {
+      "$value": "{plx-sys.shape-xs}",
       "$type": "dimension"
     },
     "radius-media-4px": {
-      "$value": "{plx-sys.shape-xs}",
+      "$value": "{plx-sys.radius-media-sm}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-sys-radius-media-sm (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "radius-media-md": {
+      "$value": "{plx-sys.shape-sm}",
       "$type": "dimension"
     },
     "radius-media-6px": {
-      "$value": "{plx-sys.shape-sm}",
+      "$value": "{plx-sys.radius-media-md}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-sys-radius-media-md (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "radius-surface-sm": {
+      "$value": "{plx-sys.shape-xs}",
       "$type": "dimension"
     },
     "radius-surface-4px": {
-      "$value": "{plx-sys.shape-xs}",
+      "$value": "{plx-sys.radius-surface-sm}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-sys-radius-surface-sm (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "radius-surface-md": {
+      "$value": "{plx-sys.shape-sm}",
       "$type": "dimension"
     },
     "radius-surface-6px": {
-      "$value": "{plx-sys.shape-sm}",
-      "$type": "dimension"
+      "$value": "{plx-sys.radius-surface-md}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-sys-radius-surface-md (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
     },
-    "radius-card-4px": {
+    "radius-card-sm": {
       "$value": "{plx-sys.shape-xs}",
       "$type": "dimension"
     },
-    "radius-card-6px": {
+    "radius-card-4px": {
+      "$value": "{plx-sys.radius-card-sm}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-sys-radius-card-sm (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "radius-card-md": {
       "$value": "{plx-sys.shape-sm}",
       "$type": "dimension"
     },
-    "radius-table-2px": {
+    "radius-card-6px": {
+      "$value": "{plx-sys.radius-card-md}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-sys-radius-card-md (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "radius-table": {
       "$value": "{plx-ref.radius-xs}",
       "$type": "dimension",
       "$description": "Tables and data grids: their frame corner (owner, 2026-10-19: every data grid and table at 2px)."
     },
+    "radius-table-2px": {
+      "$value": "{plx-sys.radius-table}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-sys-radius-table (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "radius-menu": {
+      "$value": "{plx-sys.shape-sm}",
+      "$type": "dimension"
+    },
     "radius-menu-6px": {
+      "$value": "{plx-sys.radius-menu}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-sys-radius-menu (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "radius-dialog": {
       "$value": "{plx-sys.shape-sm}",
       "$type": "dimension"
     },
     "radius-dialog-6px": {
-      "$value": "{plx-sys.shape-sm}",
-      "$type": "dimension"
+      "$value": "{plx-sys.radius-dialog}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-sys-radius-dialog (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
     },
-    "radius-avatar-4px": {
+    "radius-avatar-sm": {
       "$value": "{plx-sys.shape-xs}",
       "$type": "dimension"
     },
-    "radius-avatar-6px": {
+    "radius-avatar-4px": {
+      "$value": "{plx-sys.radius-avatar-sm}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-sys-radius-avatar-sm (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "radius-avatar-md": {
       "$value": "{plx-sys.shape-sm}",
       "$type": "dimension"
+    },
+    "radius-avatar-6px": {
+      "$value": "{plx-sys.radius-avatar-md}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-sys-radius-avatar-md (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
     },
     "space-inline-xs": {
       "$value": "{plx-ref.space-1u}",
@@ -458,7 +538,7 @@
       "$value": "{plx-ref.space-12u}",
       "$type": "dimension"
     },
-    "label-height-16px": {
+    "label-height-sm": {
       "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
       "$extensions": {
@@ -469,9 +549,19 @@
         }
       }
     },
-    "label-height-20px": {
+    "label-height-16px": {
+      "$value": "{plx-sys.label-height-sm}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-sys-label-height-sm (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "label-height-md": {
       "$value": "{plx-ref.size-5u}",
       "$type": "dimension"
+    },
+    "label-height-20px": {
+      "$value": "{plx-sys.label-height-md}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-sys-label-height-md (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
     },
     "shell-header-height": {
       "$value": "{plx-ref.size-14u}",

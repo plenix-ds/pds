@@ -212,7 +212,7 @@
       guide: { families: ['BORDER'] } },
     { id: 'radius', text: 'Corner radius by intent: a role for each use (detail, compact, control, surface, card, media, menu, dialog, avatar) on top of the value scale, plus the density role --plx-sys-radius-control.', sec: 'foundations', sub: 'Shape and surfaces', leaf: 'Radius scale', title: 'Radius', level: 'Foundation', interaction: 'Static',
       css: ['system/radius.css', 'system/tokens/semantic.css'], aliases: ['Corner radius', 'Border radius', 'Rounding'],
-      use: ['A role for each use (--plx-sys-radius-card-6px, -surface-8px, -menu-8px): components reference the role, never the scale', 'Standard controls: --plx-sys-radius-control, which follows the density'], avoid: ['A radius picked per component', 'The value scale (--plx-ref-radius-) inside a component'],
+      use: ['A role for each use (--plx-sys-radius-card-md, -surface-8px, -menu-8px): components reference the role, never the scale', 'Standard controls: --plx-sys-radius-control, which follows the density'], avoid: ['A radius picked per component', 'The value scale (--plx-ref-radius-) inside a component'],
       guide: { families: ['RADIUS'] } },
     { id: 'shadows', text: 'Shadows and elevation for raised and overlay surfaces, by theme.', sec: 'foundations', sub: 'Shape and surfaces', leaf: 'Shadows', title: 'Elevation and shadows', level: 'Foundation', interaction: 'Static',
       css: ['system/shadows.css', 'system/themes/default.css'], aliases: ['Elevation', 'Depth', 'Drop shadow'],

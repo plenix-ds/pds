@@ -57,7 +57,7 @@
       "$description": "ImageUpload preview: border color (border-default)."
     },
     "image-upload-preview-radius": {
-      "$value": "{plx-sys.radius-media-4px}",
+      "$value": "{plx-sys.radius-media-sm}",
       "$type": "dimension",
       "$description": "ImageUpload preview: corners (radius-media-4px)."
     },
@@ -143,7 +143,7 @@
       "$description": "ImageUpload ame: border color (border-default)."
     },
     "image-crop-frame-radius": {
-      "$value": "{plx-sys.radius-media-4px}",
+      "$value": "{plx-sys.radius-media-sm}",
       "$type": "dimension",
       "$description": "ImageUpload ame: corners (radius-media-4px)."
     },

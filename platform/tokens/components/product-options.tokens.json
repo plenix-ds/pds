@@ -6,7 +6,7 @@
     "product-options-legend-text": { "$value": "{plx-sys.content-default}", "$type": "color", "$description": "ProductOptions: the option's name (content-default, as RadioTiles' legend)." },
     "product-options-legend-font-family": { "$value": "{plx-sys.font-label}", "$type": "fontFamily", "$description": "ProductOptions: the option's name in the label font (font-label)." },
     "product-options-legend-font-size": { "$value": "{plx-sys.text-secondary-font-size}", "$type": "dimension", "$description": "ProductOptions: the option's name and chosen value (12px, as RadioTiles' legend)." },
-    "product-options-legend-line-height": { "$value": "{plx-sys.label-height-20px}", "$type": "dimension", "$description": "ProductOptions: the name line's height (20px)." },
+    "product-options-legend-line-height": { "$value": "{plx-sys.label-height-md}", "$type": "dimension", "$description": "ProductOptions: the name line's height (20px)." },
     "product-options-legend-gap": { "$value": "{plx-sys.space-inline-xs}", "$type": "dimension", "$description": "ProductOptions: the gap between the option's name and its chosen value (space-inline-xs)." },
     "product-options-label-font-weight": { "$value": "{plx-sys.font-weight-semibold}", "$type": "fontWeight", "$description": "ProductOptions: the option's name (semibold, as RadioTiles' legend)." },
     "product-options-chosen-text": { "$value": "{plx-sys.content-muted}", "$type": "color", "$description": "ProductOptions: the chosen value after the name (content-muted)." },

@@ -757,31 +757,61 @@
       "$value": "{plx-ref.size-70u}",
       "$type": "dimension"
     },
-    "secondary-pane-width-sm-from-1440": {
+    "secondary-pane-width-sm-from-wide": {
       "$value": "{plx-ref.size-55u}",
       "$type": "dimension",
       "$description": "The secondary pane widths in a window 1440px wide up to 1919px (owner, issue 463 option C, step 2): each steps up one size; grid.css sets secondary-pane-width-sm, -md and -lg to them there."
     },
-    "secondary-pane-width-md-from-1440": {
+    "secondary-pane-width-sm-from-1440": {
+      "$value": "{plx-comp.secondary-pane-width-sm-from-wide}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-secondary-pane-width-sm-from-wide (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "secondary-pane-width-md-from-wide": {
       "$value": "{plx-ref.size-65u}",
       "$type": "dimension"
     },
-    "secondary-pane-width-lg-from-1440": {
+    "secondary-pane-width-md-from-1440": {
+      "$value": "{plx-comp.secondary-pane-width-md-from-wide}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-secondary-pane-width-md-from-wide (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "secondary-pane-width-lg-from-wide": {
       "$value": "{plx-ref.size-80u}",
       "$type": "dimension"
     },
-    "secondary-pane-width-sm-from-1920": {
+    "secondary-pane-width-lg-from-1440": {
+      "$value": "{plx-comp.secondary-pane-width-lg-from-wide}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-secondary-pane-width-lg-from-wide (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "secondary-pane-width-sm-from-ultrawide": {
       "$value": "{plx-ref.size-65u}",
       "$type": "dimension",
       "$description": "The secondary pane widths in a window 1920px wide and wider."
     },
-    "secondary-pane-width-md-from-1920": {
+    "secondary-pane-width-sm-from-1920": {
+      "$value": "{plx-comp.secondary-pane-width-sm-from-ultrawide}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-secondary-pane-width-sm-from-ultrawide (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "secondary-pane-width-md-from-ultrawide": {
       "$value": "{plx-ref.size-80u}",
       "$type": "dimension"
     },
-    "secondary-pane-width-lg-from-1920": {
+    "secondary-pane-width-md-from-1920": {
+      "$value": "{plx-comp.secondary-pane-width-md-from-ultrawide}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-secondary-pane-width-md-from-ultrawide (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "secondary-pane-width-lg-from-ultrawide": {
       "$value": "{plx-ref.size-100u}",
       "$type": "dimension"
+    },
+    "secondary-pane-width-lg-from-1920": {
+      "$value": "{plx-comp.secondary-pane-width-lg-from-ultrawide}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-secondary-pane-width-lg-from-ultrawide (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
     },
     "secondary-pane-width-max": {
       "$value": "{plx-ref.size-100u}",
@@ -802,15 +832,25 @@
       "$value": "{plx-ref.size-60u}",
       "$type": "dimension"
     },
-    "side-panel-width-default-from-1440": {
+    "side-panel-width-default-from-wide": {
       "$value": "{plx-ref.size-80u}",
       "$type": "dimension",
       "$description": "The side panel's starting width in a window 1440px wide up to 1919px (owner, issue 463 option C, step 2); grid.css sets side-panel-width-default to it there."
     },
-    "side-panel-width-default-from-1920": {
+    "side-panel-width-default-from-1440": {
+      "$value": "{plx-comp.side-panel-width-default-from-wide}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-side-panel-width-default-from-wide (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "side-panel-width-default-from-ultrawide": {
       "$value": "{plx-ref.size-100u}",
       "$type": "dimension",
       "$description": "The side panel's starting width in a window 1920px wide and wider."
+    },
+    "side-panel-width-default-from-1920": {
+      "$value": "{plx-comp.side-panel-width-default-from-ultrawide}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-side-panel-width-default-from-ultrawide (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
     },
     "side-panel-width-max": {
       "$value": "{plx-ref.size-140u}",
@@ -1552,7 +1592,7 @@
       "$type": "color"
     },
     "field-info-text-radius": {
-      "$value": "{plx-sys.radius-surface-4px}",
+      "$value": "{plx-sys.radius-surface-sm}",
       "$type": "dimension"
     },
     "field-info-text-text": {
@@ -1577,13 +1617,13 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "data-grid-radius": {
-      "$value": "{plx-sys.radius-table-2px}",
+      "$value": "{plx-sys.radius-table}",
       "$type": "dimension",
       "$description": "DataGrid: the frame corner, 2px (owner, 2026-10-19)."
     },
     "table-radius": {
-      "$value": "{plx-sys.radius-table-2px}",
-      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-radius-table-2px (its value) instead. It keeps working, and is removed no earlier than the next minor release.",
+      "$value": "{plx-sys.radius-table}",
+      "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-radius-table (its value) instead. It keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension",
       "$description": "Table: the frame corner, 2px (owner, 2026-10-19)."
     },
@@ -1764,7 +1804,7 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "badge-radius": {
-      "$value": "{plx-sys.radius-pill-4px}",
+      "$value": "{plx-sys.radius-pill}",
       "$type": "dimension",
       "$description": "Badge: 4px corners, as every pill (owner, 2026-10-14, docs/pills-and-colors.md)."
     },
@@ -1781,7 +1821,7 @@
       "$type": "number"
     },
     "badge-min-height": {
-      "$value": "{plx-sys.label-height-20px}",
+      "$value": "{plx-sys.label-height-md}",
       "$type": "dimension"
     },
     "badge-padding-inline": {
@@ -1797,7 +1837,7 @@
       "$type": "dimension"
     },
     "badge-sm-min-height": {
-      "$value": "{plx-sys.label-height-16px}",
+      "$value": "{plx-sys.label-height-sm}",
       "$type": "dimension"
     },
     "badge-sm-padding-inline": {
@@ -1913,7 +1953,7 @@
       "$type": "dimension"
     },
     "count-pill-radius": {
-      "$value": "{plx-sys.radius-pill-4px}",
+      "$value": "{plx-sys.radius-pill}",
       "$type": "dimension",
       "$description": "Counter pill: 4px corners, as every pill (owner, 2026-10-14, docs/pills-and-colors.md)."
     },
@@ -1930,11 +1970,11 @@
       "$type": "number"
     },
     "count-pill-min-height": {
-      "$value": "{plx-sys.label-height-16px}",
+      "$value": "{plx-sys.label-height-sm}",
       "$type": "dimension"
     },
     "count-pill-min-width": {
-      "$value": "{plx-sys.label-height-16px}",
+      "$value": "{plx-sys.label-height-sm}",
       "$type": "dimension"
     },
     "count-pill-padding-inline": {
@@ -2053,7 +2093,7 @@
       "$type": "color"
     },
     "notice-radius": {
-      "$value": "{plx-sys.radius-surface-4px}",
+      "$value": "{plx-sys.radius-surface-sm}",
       "$type": "dimension"
     },
     "notice-gap": {
@@ -2146,7 +2186,7 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "skeleton-radius": {
-      "$value": "{plx-sys.radius-compact-4px}",
+      "$value": "{plx-sys.radius-compact}",
       "$type": "dimension"
     },
     "spinner-animation-duration": {
@@ -2300,7 +2340,7 @@
       "$type": "color"
     },
     "tag-radius": {
-      "$value": "{plx-sys.radius-pill-4px}",
+      "$value": "{plx-sys.radius-pill}",
       "$type": "dimension",
       "$description": "Tag and chip: 4px corners, as every pill (owner, 2026-10-14, docs/pills-and-colors.md)."
     },
@@ -2329,7 +2369,7 @@
       "$type": "number"
     },
     "tag-min-height": {
-      "$value": "{plx-sys.label-height-20px}",
+      "$value": "{plx-sys.label-height-md}",
       "$type": "dimension"
     },
     "tag-padding-inline": {
@@ -2454,7 +2494,7 @@
       "$type": "color"
     },
     "tag-input-radius": {
-      "$value": "{plx-sys.radius-compact-4px}",
+      "$value": "{plx-sys.radius-compact}",
       "$type": "dimension"
     },
     "tag-border-color": {
@@ -2474,7 +2514,7 @@
       "$type": "dimension"
     },
     "tag-tag-input-add-width": {
-      "$value": "{plx-sys.label-height-20px}",
+      "$value": "{plx-sys.label-height-md}",
       "$type": "dimension"
     },
     "tag-input-add-before-inset-block-end": {
@@ -2541,7 +2581,7 @@
       "$description": "The height of the buttons in a destructive confirmation dialog footer"
     },
     "dialog-radius": {
-      "$value": "{plx-sys.radius-dialog-6px}",
+      "$value": "{plx-sys.radius-dialog}",
       "$type": "dimension"
     },
     "dialog-shadow": {
@@ -2601,7 +2641,7 @@
       "$type": "color"
     },
     "sheet-radius": {
-      "$value": "{plx-sys.radius-dialog-6px}",
+      "$value": "{plx-sys.radius-dialog}",
       "$type": "dimension",
       "$description": "The top corners of the bottom sheet (the dialog radius)"
     },
@@ -2876,7 +2916,7 @@
       "$type": "color"
     },
     "toast-radius": {
-      "$value": "{plx-sys.radius-surface-4px}",
+      "$value": "{plx-sys.radius-surface-sm}",
       "$type": "dimension"
     },
     "toast-border-inline-start-color": {
@@ -3176,7 +3216,7 @@
       "$type": "color"
     },
     "tabs-contained-panel-radius": {
-      "$value": "{plx-sys.radius-surface-4px}",
+      "$value": "{plx-sys.radius-surface-sm}",
       "$type": "dimension"
     },
     "tabs-contained-panel-border-color": {
@@ -3453,7 +3493,7 @@
       "$type": "color"
     },
     "app-switcher-panel-radius": {
-      "$value": "{plx-sys.radius-surface-4px}",
+      "$value": "{plx-sys.radius-surface-sm}",
       "$type": "dimension"
     },
     "app-switcher-panel-border-color": {
@@ -3502,7 +3542,7 @@
       "$type": "color"
     },
     "app-switcher-pinned-radius": {
-      "$value": "{plx-sys.radius-surface-6px}",
+      "$value": "{plx-sys.radius-surface-md}",
       "$type": "dimension"
     },
     "app-switcher-pinned-padding-block": {
@@ -3648,11 +3688,11 @@
       "$type": "dimension"
     },
     "app-header-product-line-height": {
-      "$value": "{plx-sys.label-height-20px}",
+      "$value": "{plx-sys.label-height-md}",
       "$type": "number"
     },
     "app-header-app-line-height": {
-      "$value": "{plx-sys.label-height-16px}",
+      "$value": "{plx-sys.label-height-sm}",
       "$type": "number"
     },
     "tool-rail-background": {
@@ -3767,7 +3807,7 @@
       "$type": "color"
     },
     "menu-radius": {
-      "$value": "{plx-sys.radius-surface-4px}",
+      "$value": "{plx-sys.radius-surface-sm}",
       "$type": "dimension"
     },
     "menu-border-width": {
@@ -3940,7 +3980,7 @@
       "$description": "Menu group heading: 15px, as the items, the size of Blueprint's 14px heading in DM Sans (#805)."
     },
     "menu-group-label-line-height": {
-      "$value": "{plx-sys.label-height-16px}",
+      "$value": "{plx-sys.label-height-sm}",
       "$type": "dimension",
       "$description": "Menu group heading: a 16px line, on the 4px grid, the nearest to Blueprint's 17px (#805, owner 2026-11-01); with its 4px padding the heading is 24px, and its text sits within 1px of Blueprint's under the divider (cap top 10px below the line against 11px, the next item 1px higher)."
     },
@@ -4113,117 +4153,187 @@
       "$value": "{plx-ref.line-height-none}",
       "$type": "number"
     },
-    "avatar-20-height": {
+    "avatar-2xs-height": {
       "$value": "{plx-ref.size-5u}",
       "$type": "dimension"
     },
+    "avatar-20-height": {
+      "$value": "{plx-comp.avatar-2xs-height}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-avatar-2xs-height (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
     "avatar-20-radius": {
-      "$value": "{plx-sys.radius-avatar-4px}",
+      "$value": "{plx-sys.radius-avatar-sm}",
       "$type": "dimension"
     },
     "avatar-20-font-size": {
       "$value": "{plx-sys.text-caption-font-size}",
       "$type": "dimension"
     },
-    "avatar-20-width": {
+    "avatar-2xs-width": {
       "$value": "{plx-ref.size-5u}",
       "$type": "dimension"
     },
-    "avatar-24-height": {
+    "avatar-20-width": {
+      "$value": "{plx-comp.avatar-2xs-width}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-avatar-2xs-width (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "avatar-xs-height": {
       "$value": "{plx-ref.size-6u}",
       "$type": "dimension"
     },
+    "avatar-24-height": {
+      "$value": "{plx-comp.avatar-xs-height}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-avatar-xs-height (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
     "avatar-24-radius": {
-      "$value": "{plx-sys.radius-avatar-4px}",
+      "$value": "{plx-sys.radius-avatar-sm}",
       "$type": "dimension"
     },
     "avatar-24-font-size": {
       "$value": "{plx-sys.text-caption-font-size}",
       "$type": "dimension"
     },
-    "avatar-24-width": {
+    "avatar-xs-width": {
       "$value": "{plx-ref.size-6u}",
       "$type": "dimension"
     },
-    "avatar-28-height": {
+    "avatar-24-width": {
+      "$value": "{plx-comp.avatar-xs-width}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-avatar-xs-width (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "avatar-sm-height": {
       "$value": "{plx-ref.size-7u}",
       "$type": "dimension"
     },
+    "avatar-28-height": {
+      "$value": "{plx-comp.avatar-sm-height}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-avatar-sm-height (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
     "avatar-28-radius": {
-      "$value": "{plx-sys.radius-avatar-6px}",
+      "$value": "{plx-sys.radius-avatar-md}",
       "$type": "dimension"
     },
     "avatar-28-font-size": {
       "$value": "{plx-sys.text-caption-font-size}",
       "$type": "dimension"
     },
-    "avatar-28-width": {
+    "avatar-sm-width": {
       "$value": "{plx-ref.size-7u}",
       "$type": "dimension"
     },
-    "avatar-32-height": {
+    "avatar-28-width": {
+      "$value": "{plx-comp.avatar-sm-width}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-avatar-sm-width (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "avatar-md-height": {
       "$value": "{plx-ref.size-8u}",
       "$type": "dimension"
     },
+    "avatar-32-height": {
+      "$value": "{plx-comp.avatar-md-height}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-avatar-md-height (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
     "avatar-32-radius": {
-      "$value": "{plx-sys.radius-avatar-6px}",
+      "$value": "{plx-sys.radius-avatar-md}",
       "$type": "dimension"
     },
     "avatar-32-font-size": {
       "$value": "{plx-ref.font-size-100}",
       "$type": "dimension"
     },
-    "avatar-32-width": {
+    "avatar-md-width": {
       "$value": "{plx-ref.size-8u}",
       "$type": "dimension"
     },
-    "avatar-40-height": {
+    "avatar-32-width": {
+      "$value": "{plx-comp.avatar-md-width}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-avatar-md-width (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "avatar-lg-height": {
       "$value": "{plx-ref.size-10u}",
       "$type": "dimension"
     },
+    "avatar-40-height": {
+      "$value": "{plx-comp.avatar-lg-height}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-avatar-lg-height (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
     "avatar-40-radius": {
-      "$value": "{plx-sys.radius-avatar-6px}",
+      "$value": "{plx-sys.radius-avatar-md}",
       "$type": "dimension"
     },
     "avatar-40-font-size": {
       "$value": "{plx-ref.font-size-400}",
       "$type": "dimension"
     },
-    "avatar-40-width": {
+    "avatar-lg-width": {
       "$value": "{plx-ref.size-10u}",
       "$type": "dimension"
     },
-    "avatar-48-height": {
+    "avatar-40-width": {
+      "$value": "{plx-comp.avatar-lg-width}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-avatar-lg-width (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "avatar-xl-height": {
       "$value": "{plx-ref.size-12u}",
       "$type": "dimension"
     },
+    "avatar-48-height": {
+      "$value": "{plx-comp.avatar-xl-height}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-avatar-xl-height (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
     "avatar-48-radius": {
-      "$value": "{plx-sys.radius-avatar-6px}",
+      "$value": "{plx-sys.radius-avatar-md}",
       "$type": "dimension"
     },
     "avatar-48-font-size": {
       "$value": "{plx-ref.font-size-500}",
       "$type": "dimension"
     },
-    "avatar-48-width": {
+    "avatar-xl-width": {
       "$value": "{plx-ref.size-12u}",
       "$type": "dimension"
     },
-    "avatar-64-height": {
+    "avatar-48-width": {
+      "$value": "{plx-comp.avatar-xl-width}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-avatar-xl-width (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
+    "avatar-2xl-height": {
       "$value": "{plx-ref.size-16u}",
       "$type": "dimension"
     },
+    "avatar-64-height": {
+      "$value": "{plx-comp.avatar-2xl-height}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-avatar-2xl-height (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
+    },
     "avatar-64-radius": {
-      "$value": "{plx-sys.radius-avatar-6px}",
+      "$value": "{plx-sys.radius-avatar-md}",
       "$type": "dimension"
     },
     "avatar-64-font-size": {
       "$value": "{plx-ref.font-size-600}",
       "$type": "dimension"
     },
-    "avatar-64-width": {
+    "avatar-2xl-width": {
       "$value": "{plx-ref.size-16u}",
       "$type": "dimension"
+    },
+    "avatar-64-width": {
+      "$value": "{plx-comp.avatar-2xl-width}",
+      "$type": "dimension",
+      "$deprecated": "Renamed: use --plx-comp-avatar-2xl-width (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
     },
     "breadcrumbs-link-target-inset-block": {
       "$value": "min(0px, calc((100% - {plx-sys.control-target-min}) / 2))",
@@ -4290,7 +4400,7 @@
       "$type": "color"
     },
     "panel-radius": {
-      "$value": "{plx-sys.radius-surface-6px}",
+      "$value": "{plx-sys.radius-surface-md}",
       "$type": "dimension"
     },
     "panel-border-width": {
@@ -4390,7 +4500,7 @@
       "$type": "color"
     },
     "card-radius": {
-      "$value": "{plx-sys.radius-card-6px}",
+      "$value": "{plx-sys.radius-card-md}",
       "$type": "dimension"
     },
     "card-border-width": {
@@ -4500,7 +4610,7 @@
       "$type": "color"
     },
     "media-card-radius": {
-      "$value": "{plx-sys.radius-card-6px}",
+      "$value": "{plx-sys.radius-card-md}",
       "$type": "dimension"
     },
     "media-card-border-width": {
@@ -4508,12 +4618,12 @@
       "$type": "dimension"
     },
     "media-card-media-border-top-left-radius": {
-      "$value": "calc({plx-sys.radius-card-6px} - {plx-sys.border-width-thin})",
+      "$value": "calc({plx-sys.radius-card-md} - {plx-sys.border-width-thin})",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "media-card-media-border-top-right-radius": {
-      "$value": "calc({plx-sys.radius-card-6px} - {plx-sys.border-width-thin})",
+      "$value": "calc({plx-sys.radius-card-md} - {plx-sys.border-width-thin})",
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
@@ -4763,7 +4873,7 @@
       "$type": "color"
     },
     "chat-bubble-radius": {
-      "$value": "{plx-sys.radius-card-6px}",
+      "$value": "{plx-sys.radius-card-md}",
       "$type": "dimension"
     },
     "chat-bubble-border-width": {
@@ -4964,7 +5074,7 @@
       "$type": "color"
     },
     "chat-attachment-radius": {
-      "$value": "{plx-sys.radius-card-6px}",
+      "$value": "{plx-sys.radius-card-md}",
       "$type": "dimension"
     },
     "chat-attachment-background": {
@@ -4976,7 +5086,7 @@
       "$type": "dimension"
     },
     "chat-attachment-thumb-radius": {
-      "$value": "{plx-sys.radius-avatar-6px}",
+      "$value": "{plx-sys.radius-avatar-md}",
       "$type": "dimension"
     },
     "chat-attachment-thumb-background": {
@@ -5027,7 +5137,7 @@
       "$description": "Chat.Attachment: the space between attachments in a bubble, and between a picture and the text."
     },
     "chat-media-radius": {
-      "$value": "{plx-sys.radius-media-6px}",
+      "$value": "{plx-sys.radius-media-md}",
       "$type": "dimension"
     },
     "chat-media-border-width": {
@@ -5105,7 +5215,7 @@
       "$type": "color"
     },
     "chat-voice-bar-radius": {
-      "$value": "{plx-sys.radius-compact-4px}",
+      "$value": "{plx-sys.radius-compact}",
       "$type": "dimension"
     },
     "chat-voice-time-font-size": {
@@ -5153,7 +5263,7 @@
       "$type": "dimension"
     },
     "chat-reaction-radius": {
-      "$value": "{plx-sys.radius-pill-4px}",
+      "$value": "{plx-sys.radius-pill}",
       "$type": "dimension"
     },
     "chat-reaction-border-width": {
@@ -5278,7 +5388,7 @@
       "$type": "dimension"
     },
     "code-block-radius": {
-      "$value": "{plx-sys.radius-surface-6px}",
+      "$value": "{plx-sys.radius-surface-md}",
       "$type": "dimension"
     },
     "code-block-border-color": {
@@ -5630,7 +5740,7 @@
       "$type": "dimension"
     },
     "combobox-input-min-height": {
-      "$value": "{plx-sys.label-height-20px}",
+      "$value": "{plx-sys.label-height-md}",
       "$type": "dimension"
     },
     "combobox-input-margin-block": {
@@ -5668,7 +5778,7 @@
       "$type": "color"
     },
     "combobox-list-radius": {
-      "$value": "{plx-sys.radius-surface-4px}",
+      "$value": "{plx-sys.radius-surface-sm}",
       "$type": "dimension"
     },
     "combobox-list-border-width": {
@@ -6037,7 +6147,7 @@
       "$type": "color"
     },
     "drop-zone-radius": {
-      "$value": "{plx-sys.radius-surface-6px}",
+      "$value": "{plx-sys.radius-surface-md}",
       "$type": "dimension"
     },
     "drop-zone-border-width": {
@@ -6174,7 +6284,7 @@
       "$type": "color"
     },
     "event-chip-radius": {
-      "$value": "{plx-sys.radius-compact-4px}",
+      "$value": "{plx-sys.radius-compact}",
       "$type": "dimension"
     },
     "event-chip-border-inline-start-width": {
@@ -6259,7 +6369,7 @@
       "$type": "dimension"
     },
     "input-color-radius": {
-      "$value": "{plx-sys.radius-compact-4px}",
+      "$value": "{plx-sys.radius-compact}",
       "$type": "dimension"
     },
     "input-color-width": {
@@ -6287,7 +6397,7 @@
       "$type": "color"
     },
     "kbd-radius": {
-      "$value": "{plx-sys.radius-compact-4px}",
+      "$value": "{plx-sys.radius-compact}",
       "$type": "dimension"
     },
     "kbd-border-width": {
@@ -6311,7 +6421,7 @@
       "$type": "number"
     },
     "kbd-min-height": {
-      "$value": "{plx-sys.label-height-16px}",
+      "$value": "{plx-sys.label-height-sm}",
       "$type": "dimension"
     },
     "kbd-padding-inline": {
@@ -6480,7 +6590,7 @@
       "$type": "dimension"
     },
     "media-viewer-nav-radius": {
-      "$value": "{plx-sys.radius-control-6px}",
+      "$value": "{plx-sys.radius-control-md}",
       "$type": "dimension"
     },
     "media-viewer-nav-min-height": {
@@ -6508,7 +6618,7 @@
       "$type": "color"
     },
     "media-viewer-stage-radius": {
-      "$value": "{plx-sys.radius-dialog-6px}",
+      "$value": "{plx-sys.radius-dialog}",
       "$type": "dimension"
     },
     "media-viewer-info-row-gap": {
@@ -7046,7 +7156,7 @@
       "$type": "color"
     },
     "preview-radius": {
-      "$value": "{plx-sys.radius-surface-6px}",
+      "$value": "{plx-sys.radius-surface-md}",
       "$type": "dimension"
     },
     "preview-text": {
@@ -7134,7 +7244,7 @@
       "$type": "color"
     },
     "radio-tile-radius": {
-      "$value": "{plx-sys.radius-surface-6px}",
+      "$value": "{plx-sys.radius-surface-md}",
       "$type": "dimension"
     },
     "radio-tile-border-width": {
@@ -7972,7 +8082,7 @@
       "$type": "dimension"
     },
     "thumbnail-radius": {
-      "$value": "{plx-sys.radius-compact-4px}",
+      "$value": "{plx-sys.radius-compact}",
       "$type": "dimension"
     },
     "thumbnail-width": {
@@ -7992,7 +8102,7 @@
       "$type": "color"
     },
     "tooltip-bubble-radius": {
-      "$value": "{plx-sys.radius-compact-4px}",
+      "$value": "{plx-sys.radius-compact}",
       "$type": "dimension"
     },
     "tooltip-bubble-text": {
@@ -8430,7 +8540,7 @@
       "$description": "The selection bar's frame, the command bar's."
     },
     "bulk-actions-radius": {
-      "$value": "{plx-sys.radius-control-6px}",
+      "$value": "{plx-sys.radius-control-md}",
       "$type": "dimension",
       "$description": "The selection bar's corners, the command bar's."
     },
@@ -8514,7 +8624,7 @@
       "$type": "color"
     },
     "entity-header-radius": {
-      "$value": "{plx-sys.radius-card-6px}",
+      "$value": "{plx-sys.radius-card-md}",
       "$type": "dimension"
     },
     "entity-header-border-width": {
@@ -8542,7 +8652,7 @@
       "$type": "color"
     },
     "entity-header-tile-radius": {
-      "$value": "{plx-sys.radius-avatar-4px}",
+      "$value": "{plx-sys.radius-avatar-sm}",
       "$type": "dimension"
     },
     "entity-header-tile-border-width": {
@@ -8772,7 +8882,7 @@
       "$type": "color"
     },
     "image-editor-status-radius": {
-      "$value": "{plx-sys.radius-surface-4px}",
+      "$value": "{plx-sys.radius-surface-sm}",
       "$type": "dimension"
     },
     "image-editor-status-text": {
@@ -8998,7 +9108,7 @@
       "$type": "dimension"
     },
     "nav-bar-label-line-height": {
-      "$value": "{plx-sys.label-height-16px}",
+      "$value": "{plx-sys.label-height-sm}",
       "$type": "number"
     },
     "notification-list-footer-shadow": {
@@ -9159,7 +9269,7 @@
       "$type": "color"
     },
     "record-page-header-card-radius": {
-      "$value": "{plx-sys.radius-surface-6px}",
+      "$value": "{plx-sys.radius-surface-md}",
       "$type": "dimension"
     },
     "record-page-header-card-border-width": {
@@ -9379,7 +9489,7 @@
       "$type": "color"
     },
     "settings-section-card-radius": {
-      "$value": "{plx-sys.radius-surface-6px}",
+      "$value": "{plx-sys.radius-surface-md}",
       "$type": "dimension"
     },
     "settings-section-card-border-width": {
@@ -9801,7 +9911,7 @@
       "$type": "dimension"
     },
     "widget-grid-item-radius": {
-      "$value": "{plx-sys.radius-card-6px}",
+      "$value": "{plx-sys.radius-card-md}",
       "$type": "dimension"
     },
     "widget-grid-item-dragging-opacity": {
@@ -9825,7 +9935,7 @@
       "$type": "dimension"
     },
     "widget-grid-handle-radius": {
-      "$value": "{plx-sys.radius-compact-4px}",
+      "$value": "{plx-sys.radius-compact}",
       "$type": "dimension"
     },
     "widget-grid-handle-text": {

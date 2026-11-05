@@ -57,7 +57,7 @@
       "$description": "Calendar: the weekday names' weight."
     },
     "calendar-weekday-height": {
-      "$value": "{plx-sys.label-height-20px}",
+      "$value": "{plx-sys.label-height-md}",
       "$type": "dimension",
       "$description": "Calendar: the height of the weekday row."
     },

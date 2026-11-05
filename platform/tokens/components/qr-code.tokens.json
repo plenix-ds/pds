@@ -12,7 +12,7 @@
       "$description": "QRCode: the dark modules, and a logo in the center (black in both modes: the media roles do not follow the theme)."
     },
     "qr-code-plate-radius": {
-      "$value": "{plx-sys.radius-media-4px}",
+      "$value": "{plx-sys.radius-media-sm}",
       "$type": "dimension",
       "$description": "QRCode: the plate’s corners (inside the quiet zone, so they never touch a module)."
     },
