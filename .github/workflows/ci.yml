@@ -85,6 +85,20 @@ jobs:
             exit 1
           fi
 
+  trace:
+    name: Traceability (acceptance IDs in tests and evidence)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Each AC-n of a slice this PR implements is in its tests and its evidence (plan §7)
+        run: node tools/ci/check-trace.mjs "$(git merge-base "$BASE_SHA" HEAD)"
+
   checks:
     name: New problems (${{ matrix.tool }})
     runs-on: ubuntu-latest
@@ -147,7 +161,7 @@ jobs:
   result:
     name: CI result
     if: always()
-    needs: [zizmor, decisions, rulesync, generated, checks]
+    needs: [zizmor, decisions, rulesync, generated, trace, checks]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
