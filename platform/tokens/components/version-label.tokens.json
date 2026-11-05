@@ -5,7 +5,7 @@
     "version-label-font-family": { "$value": "{plx-sys.font-data}", "$type": "fontFamily", "$description": "VersionLabel: the number's face (the data font: a technical value)." },
     "version-label-line-height": { "$value": "{plx-ref.line-height-snug}", "$type": "number", "$description": "VersionLabel: the number's line height." },
     "version-label-md-font-size": { "$value": "{plx-sys.text-secondary-font-size}", "$type": "dimension", "$description": "VersionLabel size md: the number (12px, the default)." },
-    "version-label-sm-font-size": { "$value": "{plx-ref.font-size-11}", "$type": "dimension", "$description": "VersionLabel size sm (compact): the number (11px)." },
+    "version-label-sm-font-size": { "$value": "{plx-ref.font-size-12}", "$type": "dimension", "$description": "VersionLabel size sm (compact): the number (12px)." },
     "version-label-gap": { "$value": "{plx-sys.space-inline-xs}", "$type": "dimension", "$description": "VersionLabel: the gap between the number and the qualifier." }
   }
 }

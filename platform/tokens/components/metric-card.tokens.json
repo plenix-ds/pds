@@ -40,7 +40,7 @@
     "metric-card-delta-neutral-text": { "$value": "{plx-sys.content-muted}", "$type": "color", "$description": "MetricCard: a change with no good or bad direction." },
     "metric-card-footer-font-size": { "$value": "{plx-ref.font-size-12}", "$type": "dimension", "$description": "MetricCard: the footer note." },
     "metric-card-label-font-size": { "$value": "{plx-ref.font-size-13}", "$type": "dimension", "$description": "MetricCard: the rows and labels inside the visual." },
-    "metric-card-small-font-size": { "$value": "{plx-ref.font-size-11}", "$type": "dimension", "$description": "MetricCard: the day letters and the calendar's day numbers." },
+    "metric-card-small-font-size": { "$value": "{plx-ref.font-size-12}", "$type": "dimension", "$description": "MetricCard: the day letters and the calendar's day numbers." },
     "metric-card-subtle-text": { "$value": "{plx-sys.content-subtle}", "$type": "color", "$description": "MetricCard: ranks, day letters, days still to come." },
     "metric-card-rows-gap": { "$value": "{plx-sys.space-stack-md}", "$type": "dimension", "$description": "MetricCard: between rows of measures (progress rows, ranges, bars)." },
     "metric-card-row-padding-block": { "$value": "{plx-sys.space-stack-xs}", "$type": "dimension", "$description": "MetricCard: the block padding of a list row." },

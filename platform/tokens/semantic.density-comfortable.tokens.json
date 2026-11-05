@@ -8,6 +8,10 @@
     }
   },
   "plx-sys": {
+    "radius-control": {
+      "$value": "{plx-sys.radius-control-4px}",
+      "$type": "dimension"
+    },
     "control-height-inline": {
       "$value": "{plx-ref.control-size-32px}",
       "$type": "dimension"

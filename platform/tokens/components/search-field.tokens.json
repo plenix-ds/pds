@@ -77,7 +77,7 @@
       "$description": "Recent searches heading: the label font."
     },
     "search-popup-title-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension",
       "$description": "Recent searches heading: its size."
     },
@@ -137,7 +137,7 @@
       "$description": "Search option: its description under the label."
     },
     "search-option-description-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension",
       "$description": "Search option: its description's size."
     },

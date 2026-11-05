@@ -192,7 +192,7 @@
       "$type": "shadow"
     },
     "button-size-2xs-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "button-size-2xs-font-weight": {
@@ -1017,7 +1017,7 @@
       "$description": "Select: a group heading color; its own since the menu's heading took Blueprint's style (#805)."
     },
     "select-group-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension",
       "$description": "Select: a group heading size; its own since the menu's heading took Blueprint's style (#805)."
     },
@@ -1137,7 +1137,7 @@
       "$type": "color"
     },
     "check-description-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "check-input-disabled-opacity": {
@@ -1153,7 +1153,7 @@
       "$type": "color"
     },
     "radio-group-legend-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "radio-group-legend-font-weight": {
@@ -1410,7 +1410,7 @@
       "$type": "fontFamily"
     },
     "field-label-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "field-label-font-weight": {
@@ -1439,7 +1439,7 @@
       "$type": "color"
     },
     "field-description-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "field-row-description-font-size": {
@@ -1452,7 +1452,7 @@
       "$description": "Danger on a surface (not on the soft fill): the danger solid, red-700 in light and red-200 in dark, at least 4.5:1 on the surfaces; feedback-danger-content is the text on the soft danger fill (2026-10-12: kept red when that role moved to red-100 in dark)."
     },
     "field-error-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "field-info-background": {
@@ -1476,7 +1476,7 @@
       "$type": "fontFamily"
     },
     "field-info-font-size": {
-      "$value": "{plx-ref.font-size-10}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "field-info-font-weight": {
@@ -1532,7 +1532,7 @@
       "$type": "color"
     },
     "field-info-text-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "field-info-text-padding-block": {
@@ -1688,7 +1688,7 @@
       "$type": "fontWeight"
     },
     "data-grid-filter-label-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "action-bar-background": {
@@ -1735,7 +1735,7 @@
       "$description": "Badge: 4px corners, as every pill (owner, 2026-10-14, docs/pills-and-colors.md)."
     },
     "badge-font-size": {
-      "$value": "{plx-ref.font-size-10}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "badge-font-weight": {
@@ -1759,7 +1759,7 @@
       "$type": "dimension"
     },
     "badge-sm-font-size": {
-      "$value": "{plx-ref.font-size-09}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "badge-sm-min-height": {
@@ -1875,7 +1875,7 @@
       "$type": "color"
     },
     "count-plain-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "count-pill-radius": {
@@ -1884,7 +1884,7 @@
       "$description": "Counter pill: 4px corners, as every pill (owner, 2026-10-14, docs/pills-and-colors.md)."
     },
     "count-pill-font-size": {
-      "$value": "{plx-ref.font-size-10}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "count-pill-font-weight": {
@@ -2200,7 +2200,7 @@
       "$type": "fontFamily"
     },
     "progress-bar-value-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "progress-bar-track-background": {
@@ -2281,7 +2281,7 @@
       "$type": "fontFamily"
     },
     "tag-font-size": {
-      "$value": "{plx-ref.font-size-10}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "tag-font-weight": {
@@ -3073,7 +3073,7 @@
       "$type": "color"
     },
     "tabs-folder-tab-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "tabs-folder-tab-font-weight": {
@@ -3353,7 +3353,7 @@
       "$type": "number"
     },
     "app-header-app-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "app-header-app-font-weight": {
@@ -3689,7 +3689,7 @@
       "$type": "dimension"
     },
     "tool-rail-label-font-size": {
-      "$value": "{plx-ref.font-size-10}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "menu-background": {
@@ -4050,7 +4050,7 @@
       "$type": "dimension"
     },
     "avatar-20-font-size": {
-      "$value": "{plx-ref.font-size-10}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "avatar-20-width": {
@@ -4066,7 +4066,7 @@
       "$type": "dimension"
     },
     "avatar-24-font-size": {
-      "$value": "{plx-ref.font-size-10}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "avatar-24-width": {
@@ -4082,7 +4082,7 @@
       "$type": "dimension"
     },
     "avatar-28-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "avatar-28-width": {
@@ -4516,7 +4516,7 @@
       "$type": "fontFamily"
     },
     "media-card-meta-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "media-card-card-opener-focus-outline-color": {
@@ -4652,7 +4652,7 @@
       "$type": "color"
     },
     "chat-header-meta-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "chat-header-actions-gap": {
@@ -4734,7 +4734,7 @@
       "$description": "A message's sent and read times in the data font (the owner's #260: numbers in Mono), at the footer's size (#637)."
     },
     "chat-footer-font-size": {
-      "$value": "{plx-ref.font-size-10}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension",
       "$description": "The footer line at the bottom of a bubble (Sent and Read times, the status): smaller than the caption (the owner's slice 2 go, #637), as badges and field hints; its gray passes AA (4.5:1) on every message fill."
     },
@@ -4757,7 +4757,7 @@
       "$type": "color"
     },
     "chat-divider-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "chat-divider-unread-font-weight": {
@@ -4800,7 +4800,7 @@
       "$type": "dimension"
     },
     "chat-meta-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "chat-author-font-weight": {
@@ -5365,7 +5365,7 @@
       "$type": "fontFamily"
     },
     "collapsible-section-toggle-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "collapsible-section-toggle-font-weight": {
@@ -5676,7 +5676,7 @@
       "$type": "fontFamily"
     },
     "combobox-group-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "combobox-group-font-weight": {
@@ -5878,7 +5878,7 @@
       "$type": "fontFamily"
     },
     "date-badge-weekday-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "date-badge-weekday-font-weight": {
@@ -6018,7 +6018,7 @@
       "$type": "dimension"
     },
     "empty-state-inline-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "empty-state-inline-padding-block": {
@@ -6099,7 +6099,7 @@
       "$type": "dimension"
     },
     "event-chip-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "event-chip-padding-block": {
@@ -6211,7 +6211,7 @@
       "$type": "fontFamily"
     },
     "kbd-font-size": {
-      "$value": "{plx-ref.font-size-10}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "kbd-line-height": {
@@ -6496,7 +6496,7 @@
       "$type": "fontFamily"
     },
     "metric-change-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "metric-change-neutral-text": {
@@ -6525,7 +6525,7 @@
       "$type": "color"
     },
     "metric-description-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "metric-group-row-gap": {
@@ -6553,7 +6553,7 @@
       "$type": "color"
     },
     "nav-list-heading-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "nav-list-heading-font-weight": {
@@ -6701,7 +6701,7 @@
       "$type": "color"
     },
     "nav-list-count-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "nav-list-count-font-weight": {
@@ -6795,7 +6795,7 @@
       "$type": "dimension"
     },
     "pagination-info-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "pagination-pages-gap": {
@@ -6895,7 +6895,7 @@
       "$type": "dimension"
     },
     "pagination-per-page-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "pagination-select-background": {
@@ -7103,7 +7103,7 @@
       "$type": "color"
     },
     "radio-tile-description-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "radio-tile-check-height": {
@@ -7338,9 +7338,9 @@
       "$type": "fontFamily"
     },
     "section-heading-font-size": {
-      "$value": "{plx-ref.font-size-10}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension",
-      "$description": "Section heading: the size of a plain label (level null) and of levels 5 and 6: 10px, the smallest step of the type scale a heading takes."
+      "$description": "Section heading: the size of a plain label (level null) and of levels 5 and 6: 12px, the smallest step of the type scale a heading takes."
     },
     "section-heading-level-2-font-size": {
       "$value": "{plx-ref.font-size-13}",
@@ -7353,9 +7353,9 @@
       "$description": "Section heading: the size of a level 3 heading (h3, the default: navigation and panel groups): 11px from the type scale, between level 2 and level 4 (owner, 2026-10-12)."
     },
     "section-heading-level-4-font-size": {
-      "$value": "{plx-ref.font-size-10}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension",
-      "$description": "Section heading: the size of a level 4 heading (h4: a part inside a section): 10px from the type scale, smaller than level 3 (owner, 2026-10-12)."
+      "$description": "Section heading: the size of a level 4 heading (h4: a part inside a section): 12px from the type scale, smaller than level 3 (owner, 2026-10-12)."
     },
     "section-heading-font-weight": {
       "$value": "{plx-sys.text-eyebrow-font-weight}",
@@ -7514,7 +7514,7 @@
       "$description": "SegmentedControl: a focused segment sits above its neighbors so its ring is not covered."
     },
     "segmented-sm-item-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "segmented-sm-item-padding-inline": {
@@ -7546,7 +7546,7 @@
       "$type": "fontFamily"
     },
     "slider-value-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "slider-input-accent-color": {
@@ -7902,7 +7902,7 @@
       "$type": "fontFamily"
     },
     "tooltip-bubble-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "tooltip-bubble-line-height": {
@@ -8048,7 +8048,7 @@
       "$type": "fontFamily"
     },
     "tree-meta-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "activity-list-item-border-bottom-color": {
@@ -8136,7 +8136,7 @@
       "$type": "fontFamily"
     },
     "activity-list-time-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "activity-list-actions-gap": {
@@ -8152,7 +8152,7 @@
       "$type": "color"
     },
     "activity-list-stacked-meta-font-size": {
-      "$value": "{plx-ref.font-size-09}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "activity-list-item-interactive-margin-inline": {
@@ -8555,7 +8555,7 @@
       "$type": "fontFamily"
     },
     "filter-bar-count-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "filter-bar-count-margin-inline-start": {
@@ -8703,7 +8703,7 @@
       "$type": "color"
     },
     "image-editor-preset-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "image-editor-preset-padding-block-end": {
@@ -8927,7 +8927,7 @@
       "$type": "color"
     },
     "property-list-description-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "property-list-value-text": {
@@ -9556,7 +9556,7 @@
       "$type": "dimension"
     },
     "status-bar-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "status-bar-min-height": {
@@ -9612,7 +9612,7 @@
       "$type": "fontFamily"
     },
     "time-grid-hour-font-size": {
-      "$value": "{plx-ref.font-size-10}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension"
     },
     "time-grid-hour-padding-block-start": {

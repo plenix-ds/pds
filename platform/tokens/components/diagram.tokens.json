@@ -14,7 +14,7 @@
     "diagram-label-padding-inline": { "$value": "{plx-sys.space-inline-sm}", "$type": "dimension", "$description": "Diagram: the room at a label's sides inside its shape." },
     "diagram-decision-padding-inline": { "$value": "{plx-ref.size-24px}", "$type": "dimension", "$description": "Diagram: the room at a decision's sides, so the label stays inside the diamond." },
     "diagram-detail-text": { "$value": "{plx-sys.content-subtle}", "$type": "color", "$description": "Diagram: a box's second line (boxes and arrows)." },
-    "diagram-detail-font-size": { "$value": "{plx-ref.font-size-11}", "$type": "dimension", "$description": "Diagram: the second line's size." },
+    "diagram-detail-font-size": { "$value": "{plx-ref.font-size-12}", "$type": "dimension", "$description": "Diagram: the second line's size." },
     "diagram-connector-color": { "$value": "{plx-sys.border-strong}", "$type": "color", "$description": "Diagram: a connector and its arrowhead." },
     "diagram-connector-width": { "$value": "{plx-sys.border-width-thin}", "$type": "dimension", "$description": "Diagram: a connector's width." },
     "diagram-connector-label-text": { "$value": "{plx-sys.content-subtle}", "$type": "color", "$description": "Diagram: a branch's label on its connector." },

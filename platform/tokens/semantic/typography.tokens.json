@@ -67,7 +67,7 @@
       "$description": "The smallest running text: captions, hints, help under a field. The text-caption role's font family."
     },
     "text-caption-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension",
       "$description": "The text-caption role's font size."
     },
@@ -187,7 +187,7 @@
       "$description": "A small spaced label above a heading. The text-eyebrow role's font family."
     },
     "text-eyebrow-font-size": {
-      "$value": "{plx-ref.font-size-11}",
+      "$value": "{plx-ref.font-size-12}",
       "$type": "dimension",
       "$description": "The text-eyebrow role's font size."
     },

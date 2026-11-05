@@ -70,9 +70,9 @@
 .plx-u-flex-column{flex-direction:column;}
 .plx-u-flex-wrap{flex-wrap:wrap;}
 .plx-u-flex{display:flex;}
-.plx-u-fs-09{font-size:var(--plx-ref-font-size-09);}
-.plx-u-fs-10{font-size:var(--plx-ref-font-size-10);}
-.plx-u-fs-11{font-size:var(--plx-ref-font-size-11);}
+.plx-u-fs-09{font-size:var(--plx-ref-font-size-12);}
+.plx-u-fs-10{font-size:var(--plx-ref-font-size-12);}
+.plx-u-fs-11{font-size:var(--plx-ref-font-size-12);}
 .plx-u-fs-12{font-size:var(--plx-ref-font-size-12);}
 .plx-u-fs-13{font-size:var(--plx-ref-font-size-13);}
 .plx-u-fs-14{font-size:var(--plx-ref-font-size-14);}

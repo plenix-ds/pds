@@ -11,7 +11,7 @@
     "slider-thumb-top-layer": { "$value": "{plx-sys.layer-raised}", "$type": "number", "$description": "Range slider: lifts the minimum's input above the maximum's when the thumbs meet near the end, so it can still be dragged." },
     "slider-mark-text": { "$value": "{plx-sys.content-muted}", "$type": "color", "$description": "Slider mark: the label's color (the value's)." },
     "slider-mark-font-family": { "$value": "{plx-sys.font-data}", "$type": "fontFamily", "$description": "Slider mark: a value, in the data font." },
-    "slider-mark-font-size": { "$value": "{plx-ref.font-size-11}", "$type": "dimension", "$description": "Slider mark: the label's size (the value's)." },
+    "slider-mark-font-size": { "$value": "{plx-ref.font-size-12}", "$type": "dimension", "$description": "Slider mark: the label's size (the value's)." },
     "slider-mark-line-height": { "$value": "{plx-ref.size-16px}", "$type": "dimension", "$description": "Slider mark: the label's line, and the height of the row of marks under the track." }
   }
 }
