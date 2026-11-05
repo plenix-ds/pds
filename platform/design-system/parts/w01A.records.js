@@ -94,7 +94,7 @@ DSParts.records.push(function (H) {
         'formatCompact ("1.2K") only where space is tight, with the full value beside it (a tooltip or the title)', 'Numerals, not words, and the data role (Text variant="data") for technical values'],
       avoid: ['Separators, decimal marks or unit names written by hand (toFixed, string concatenation)', 'Mixing unit systems or precisions in one view', 'A compact number as the only way to read the value'],
       related: ['date-and-time-formats', 'currency-and-percentages', 'typography'],
-      map: [m(PO, 'Numbers / Formatting'), m(['Carbon'], 'Numbers and units (writing style)'), m(SP, 'Grammar and mechanics: numbers', 'Partial'), m(['Atlassian'], 'Numbers', 'Partial'), m(['Material 3'], 'Numbers in content', 'Partial')],
+      map: [m(PO, 'Numbers / Formatting'), m(['Carbon'], 'Numbers and units (writing style)'), m(SP, 'Grammar and mechanics: numbers', 'Partial'), m(['Atlassian'], 'Numbers', 'Partial'), m(['Material 3'], 'Numbers in content', 'Partial'), ['Django', 'humanize intcomma and floatformat', 'Direct'], ['Frappe', 'System Settings number format', 'Direct']],
       examples: [
         ['Number', function () { return formats('Numbers', [
           ['formatNumber(1234567.891)', function (l) { return P.formatNumber(1234567.891, { locale: l }); }],
@@ -119,7 +119,7 @@ DSParts.records.push(function (H) {
         'formatRange for a span of dates ("Mar 4 – 6, 2026"), so the shared month and year are written once', 'The time zone (timeZoneName: "short") for scheduled events and audit logs', '<time dateTime={dateTimeAttr(d)}> around every date shown', 'A date-only value ("2026-10-18") is that calendar day where the reader is: it shows its own day in every time zone (never the day before west of Greenwich). Every format helper, Time and the parts that show dates read values through one shared parser (parseDate); a timestamp with a time keeps its moment'],
       avoid: ['All-numeric dates (03/04/2026) that read differently by region', 'Formats written by hand (getMonth() + 1, padStart)', 'new Date(value) on a date-only value: it reads it as midnight UTC; pass the value to the format helpers', '"Today" or "Yesterday" without a time'],
       related: ['numbers-and-units', 'currency-and-percentages'],
-      map: [m(['Carbon'], 'Dates and times (writing style)'), m(PO, 'Date and time formatting'), m(['Atlassian'], 'Dates and times', 'Partial'), m(SP, 'Grammar and mechanics: dates', 'Partial'), m(['Material 3'], 'Date formatting', 'Partial')],
+      map: [m(['Carbon'], 'Dates and times (writing style)'), m(PO, 'Date and time formatting'), m(['Atlassian'], 'Dates and times', 'Partial'), m(SP, 'Grammar and mechanics: dates', 'Partial'), m(['Material 3'], 'Date formatting', 'Partial'), ['Django', 'date template filter and DATE_FORMAT', 'Direct'], ['Frappe', 'System Settings date format', 'Direct']],
       examples: [
         ['Date (short, medium, long)', function () { return formats('Dates', [
           ['formatDate(d, { dateStyle: "short" })', function (l) { return P.formatDate(WHEN, { locale: l, dateStyle: 'short' }); }],
@@ -151,7 +151,7 @@ DSParts.records.push(function (H) {
         'Amounts right-aligned with tabular figures; a gain or loss marked by its sign and a word or icon as well as its color'],
       avoid: ['A symbol, its position or the separators written by hand', 'Rounding money that people reconcile', 'Color as the only sign of a gain or a loss'],
       related: ['numbers-and-units', 'metric', 'date-and-time-formats'],
-      map: [m(PO, 'Formatting localized currency'), m(['Carbon'], 'Currency and percentages (writing style)', 'Partial'), m(SP, 'Grammar and mechanics: currency', 'Partial'), m(['Atlassian'], 'Numbers and currency', 'Partial')],
+      map: [m(PO, 'Formatting localized currency'), m(['Carbon'], 'Currency and percentages (writing style)', 'Partial'), m(SP, 'Grammar and mechanics: currency', 'Partial'), m(['Atlassian'], 'Numbers and currency', 'Partial'), ['Django', 'floatformat and localization', 'Partial'], ['Frappe', 'Currency field type', 'Direct']],
       examples: [
         ['Currency', function () { return formats('Currency', [
           ['formatCurrency(1234.5, "USD")', function (l) { return P.formatCurrency(1234.5, 'USD', { locale: l }); }],
@@ -171,7 +171,7 @@ DSParts.records.push(function (H) {
         'Phone numbers stored as E.164 (+14155550123) and shown with formatPhone', 'autocomplete on every field that collects them (name, street-address, postal-code, tel)'],
       avoid: ['First and last name fields, or a name order assumed from one country', 'A fixed postal-code or phone pattern in a form: accept spaces and symbols', 'Placeholders as labels'],
       related: ['avatar', 'field', 'numbers-and-units'],
-      map: [m(GOV, 'Names, Addresses, Telephone numbers'), m(PO, 'Names / Addresses (international)', 'Partial'), m(['Carbon'], 'Forms (international fields)', 'Partial'), m(['Atlassian'], 'Personal names', 'Partial')],
+      map: [m(GOV, 'Names, Addresses, Telephone numbers'), m(PO, 'Names / Addresses (international)', 'Partial'), m(['Carbon'], 'Forms (international fields)', 'Partial'), m(['Atlassian'], 'Personal names', 'Partial'), ['Frappe', 'Address and Phone controls', 'Direct']],
       examples: [
         ['Person name', function () { return formats('Names', [
           ['formatPersonName("María José García Pérez")', function () { return P.formatPersonName('María José García Pérez'); }],
@@ -222,7 +222,7 @@ DSParts.records.push(function (H) {
       use: ['useHotkey("Mod+K", run, { label }) for a page command; Mod is Cmd on a Mac and Ctrl elsewhere', 'scope: a region’s ref for a command that belongs to it (the innermost region wins)', 'The same label as the command’s menu item, and hotkeyLabel for the hint beside it', 'A setting that turns single-key shortcuts off (setSingleKeyHotkeys(false)), as WCAG 2.2 SC 2.1.4 asks'],
       avoid: ['A keydown listener of a component’s own for a shortcut', 'Shortcuts that fire while typing in a field (unless allowInFields)', 'Keys that the browser or assistive technology needs (Tab, F6, Ctrl L)'],
       related: ['keyboard-hint', 'action-menu', 'focus-ring'],
-      map: [m(SP, 'useKeyboard (React Aria)', 'Partial'), m(['Fluent 2'], 'Keyboard shortcuts', 'Partial')],
+      map: [m(SP, 'useKeyboard (React Aria)', 'Partial'), m(['Fluent 2'], 'Keyboard shortcuts', 'Partial'), ['Frappe', 'Keyboard shortcuts (frappe.ui.keys)', 'Partial']],
       examples: [
         ['Single key', function () { return h(HotkeyDemo, { bindings: [['N', 'New note']] }); }],
         ['Chord (Ctrl K)', function () { return h(HotkeyDemo, { bindings: [['Mod+Shift+L', 'Lock the note']] }); }],

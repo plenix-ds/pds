@@ -62,7 +62,7 @@ DSParts.records.push(function (H) {
     use: ['Dates near today: due dates, deadlines, appointments', 'The form in the Field’s description as well as in the placeholder (MM/DD/YYYY)', 'min, max or isDateDisabled when some dates cannot be chosen, with the reason in the description'],
     avoid: ['Dates people know by heart (a birth date): a plain field is faster', 'A start and an end: use the range mode', 'Reformatting the text while people type'],
     related: ['calendar', 'date-range-picker', 'date-time-picker', 'input-group', 'popover', 'field'],
-    map: [[CAR, 'Date picker', 'Direct'], [ATL, 'Date picker', 'Direct'], [MAT, 'Date pickers', 'Direct'], [FLU, 'DatePicker', 'Direct'], [POL, 'Date picker', 'Partial'], [SPE, 'Date picker', 'Direct'], [ANT, 'DatePicker', 'Direct']],
+    map: [[CAR, 'Date picker', 'Direct'], [ATL, 'Date picker', 'Direct'], [MAT, 'Date pickers', 'Direct'], [FLU, 'DatePicker', 'Direct'], [POL, 'Date picker', 'Partial'], [SPE, 'Date picker', 'Direct'], [ANT, 'DatePicker', 'Direct'], ['Django', 'DateInput widget', 'Direct'], ['Frappe', 'Date control', 'Direct']],
     variantPages: [
       vp('Single date picker', 'Variant', 'Single (default)', { variant: 'single' }, 'One date in the field, the calendar button joined at its end; the calendar opens under the field.', 'A due date, a deadline', 'A period: use the range mode'),
       vp('Date picker for a range', 'Variant', 'Range', { variant: 'range' }, 'Two dates with a dash between them in one field; the calendar shows two months and the range between the ends.', 'Reporting periods and bookings', 'Two dates that do not belong together'),
@@ -80,7 +80,7 @@ DSParts.records.push(function (H) {
     use: ['Reporting periods, filters by date, bookings', 'Presets for the periods people pick most', 'The whole range in the field (10/01/2026 – 10/14/2026)'],
     avoid: ['A single date: use the single mode', 'A start and an end that are not one period: use two date pickers', 'A range longer than a few months picked by clicking: offer presets or let people type it'],
     related: ['date-picker', 'calendar'], docsFrom: 'date-picker',
-    map: [[CAR, 'Date picker (range)', 'Direct'], [MAT, 'Date range picker', 'Direct'], [SPE, 'Date range picker', 'Direct'], [ANT, 'RangePicker', 'Direct'], [POL, 'Date picker (allowRange)', 'Partial']],
+    map: [[CAR, 'Date picker (range)', 'Direct'], [MAT, 'Date range picker', 'Direct'], [SPE, 'Date range picker', 'Direct'], [ANT, 'RangePicker', 'Direct'], [POL, 'Date picker (allowRange)', 'Partial'], ['Frappe', 'Date Range control', 'Direct']],
     examples: [['A reporting period with presets', picker(Object.assign({}, RANGE, { presets: true }))], ['A range in one month', picker(RANGE)]] };
   var dateTime = { id: 'date-time-picker', icon: 'clock', sec: 'forms', sub: 'Date, time, and color', leaf: 'Date-time picker', title: 'Date-time picker', purpose: 'Takes a moment, a date and a time, typed in people’s own form or chosen from a calendar and a time list next to the field.',
     plenix: 'DatePicker mode="date-time"', src: 'components/DatePicker/DatePicker.jsx', level: 'Component', interaction: 'Input', variantClasses: [], statesFrom: ['date-picker'],
@@ -89,7 +89,7 @@ DSParts.records.push(function (H) {
     use: ['Scheduling: meetings, publishing, reminders', 'The time zone shown whenever people may be in different zones', 'A timeZone on LocaleProvider when a team works across countries: every picker shows and saves the moment in it', 'min with today when the moment must be in the future'],
     avoid: ['A date whose time does not matter: use the single mode', 'Two separate errors for the date and the time'],
     related: ['date-picker', 'calendar'], docsFrom: 'date-picker',
-    map: [[ANT, 'DatePicker (showTime)', 'Direct'], [MAT, 'Date pickers with time pickers', 'Partial'], [SPE, 'Date picker (granularity)', 'Direct']],
+    map: [[ANT, 'DatePicker (showTime)', 'Direct'], [MAT, 'Date pickers with time pickers', 'Partial'], [SPE, 'Date picker (granularity)', 'Direct'], ['Django', 'SplitDateTimeWidget', 'Direct'], ['Frappe', 'Datetime control', 'Direct']],
     examples: [['A start time with its zone', picker(DATETIME)],
       // issue 813: the app's time zone, never the reader's computer's (Tokyo, or New York on a computer in Tokyo)
       ['In the app’s time zone (LocaleProvider timeZone), not the computer’s', function () {
@@ -112,7 +112,7 @@ DSParts.records.push(function (H) {
     use: ['Address, phone, tax and shipping countries; the language and the regional format of an account', 'priority for the few codes most people choose (their own country)', 'codes for technical settings where people know the codes'],
     avoid: ['A flag alone for a language: a language is not a country', 'A free-text field for a country: names vary, codes do not', 'Guessing the country from the language'],
     related: ['combobox', 'date-and-time-formats'],
-    map: [[POL, 'Select (country)', 'Partial'], [SPE, 'Picker / Combo box', 'Partial'], [ATL, 'Select', 'Partial'], [CAR, 'Combo box', 'Partial'], [ANT, 'Select (showSearch)', 'Partial']],
+    map: [[POL, 'Select (country)', 'Partial'], [SPE, 'Picker / Combo box', 'Partial'], [ATL, 'Select', 'Partial'], [CAR, 'Combo box', 'Partial'], [ANT, 'Select (showSearch)', 'Partial'], ['Frappe', 'Link control (Country)', 'Partial']],
     variantPages: [
       vp('Country select', 'Type', 'Country (default)', { variant: 'country' }, 'Every country and region by its name in the reader’s language; the value is its ISO 3166 code.', 'Addresses, phone numbers, tax and shipping', 'A language: use the language type'),
       vp('Locale select', 'Type', 'Locale', { variant: 'locale' }, 'A language with its region, named in itself with the reader’s name after it; the value is a locale tag such as de-DE.', 'Regional formats: dates, numbers and money', 'The language of the interface alone: use the language type'),

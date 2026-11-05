@@ -8,6 +8,7 @@
 //   - any file under packages/tokens/** except its package.json (the tier files after the source move, ADR 0001)
 //   - platform/tokens/**/*.tokens.json (where the tier files live until then)
 //   - packages/*/package.json, only when its "exports" differ from the base (a version bump is not an API change)
+//   - platform/index.js and platform/exports/*.js, only when the set of exported names differs (#370)
 // A PR with owned changes needs the label agent:pds1-ds-architect. Every agent shares one GitHub identity until the
 // GitHub App's bot identities exist, so the label is how a PR says which role made it; a change by another role is
 // handed to (or agreed with) the DS Architect, who adds the label. Without PR_LABELS (a merge-queue run) nothing is
@@ -22,7 +23,29 @@ const show = (ref, f) => { try { return git('show', `${ref}:${f}`); } catch { re
 const exportsOf = (text) => { try { return JSON.stringify(text == null ? null : JSON.parse(text).exports ?? null); } catch { return 'unreadable'; } };
 
 const changed = git('diff', '--name-only', `${base}...HEAD`).split('\n').filter(Boolean);
+// the export list of @plenix-ds/react (#370): platform/index.js and platform/exports/*.js. A change counts only when the
+// set of exported names differs (a path re-pointed from .jsx to .tsx under the same names stays free)
+const EXPORT_FILE = /^platform\/(index\.js|exports\/[^/]+\.js)$/;
+function exportedNames(ref) {
+  const files = ['platform/index.js', ...git('ls-tree', '--name-only', ref, 'platform/exports/').split('\n').filter((f) => /\.js$/.test(f))];
+  const names = new Set();
+  for (const f of files) {
+    const text = show(ref, f) || '';
+    for (const m of text.matchAll(/export\s*\{([^}]*)\}/g)) {
+      for (const part of m[1].split(',')) {
+        const p = part.replace(/^\s*type\s+/, '').trim();
+        if (p) names.add(p.split(/\s+as\s+/).pop().trim());
+      }
+    }
+  }
+  return names;
+}
 const owned = [];
+if (changed.some((f) => EXPORT_FILE.test(f))) {
+  const before = exportedNames(base), after = exportedNames('HEAD');
+  const added = [...after].filter((n) => !before.has(n)), removed = [...before].filter((n) => !after.has(n));
+  if (added.length || removed.length) owned.push(`platform/index.js + platform/exports (the @plenix-ds/react export list: ${added.length ? 'added ' + added.slice(0, 8).join(', ') : ''}${added.length && removed.length ? '; ' : ''}${removed.length ? 'removed ' + removed.slice(0, 8).join(', ') : ''})`);
+}
 for (const f of changed) {
   if (f.startsWith('packages/tokens/') && f !== 'packages/tokens/package.json') owned.push(`${f} (token package)`);
   else if (/^platform\/tokens\/.+\.tokens\.json$/.test(f)) owned.push(`${f} (token tier file)`);
