@@ -989,5 +989,31 @@
       }
     ],
     "why": ".plx-barcode__text, the value printed under the bars in the data font"
+  },
+  "avatar-upload--picture-square-default": {
+    "sets": [],
+    "why": "markup only: shows the current Avatar beside Change photo; the picture is kept as a square"
+  },
+  "avatar-upload--picture-with-remove": {
+    "sets": [],
+    "why": "markup only: adds Remove photo while there is a picture (removable, default true)"
+  },
+  "avatar-upload--picture-crop-step": {
+    "sets": [],
+    "why": "markup only: opens the square ImageCrop step after a picture is chosen (crop, default true)"
+  },
+  "autogrowing-text-area--content-a-short-note": {
+    "sets": [],
+    "why": "markup only: the box is as tall as its text, under the maximum, so it does not scroll"
+  },
+  "autogrowing-text-area--content-past-the-maximum-scrolls": {
+    "sets": [
+      {
+        "property": "max-block-size",
+        "part": "block",
+        "token": "--plx-comp-textarea-auto-grow-max-height"
+      }
+    ],
+    "why": ".plx-input--auto-grow in input.css: the box stops growing at the maximum height and scrolls (overflow-y auto, no manual resize)"
   }
 }
