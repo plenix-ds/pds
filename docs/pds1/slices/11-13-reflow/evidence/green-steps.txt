@@ -1,0 +1,2 @@
+VERSION_COMPARE_STEPS_13_OK
+REFLOW_OK 14 known findings on 56 pages at 320px (7 exempt two-dimensional scrollers)
