@@ -18,7 +18,8 @@
 
 | State | Tokens |
 |---|---|
-| default | icon in `category-on-soft` of its hue (1) / `content-muted` (2); no background, no border |
+| default | light: the hue's existing tile text colour (`entity-header-tile-<hue>-text`, 7.0:1 or more on white) (1) / `content-muted` (2); no background, no border |
+| default, dark | the tile text colours are 1.0 to 1.5:1 on the dark card once the tile is gone, so dark uses one lighter existing shade per hue: blue-300, green-200, purple-300, red-200, orange-200 (brown), gray-300 and blue-200 (surface). Each is 5.2:1 or more on `surface-default` and 3.8:1 or more on `state-hover` (icons need 3:1). New `plx-comp.entity-header-media-<hue>-icon` tokens, dark values only. No new colours |
 | hover, focus, active, selected | n/a (not interactive; the row or card around it carries the state) |
 | disabled | n/a (follows its container's `state-disabled-opacity`) |
 | loading | n/a (EntityHeader's own skeleton) |
@@ -27,9 +28,16 @@
 | long text | n/a (no text) |
 
 - Densities: the icon size follows the existing tile size tokens (`entity-header-media-size`, `entity-header-fact-icon-tile-size`) in every density.
-- Light and dark: hue on-soft colours are the data colours (the same in both). `content-muted` passes AA in both (DESIGN.md §2).
+- Light and dark: see the two default rows. `content-muted` passes AA in both (DESIGN.md §2).
 - RTL: none of these icons shows direction; no flip.
 - Check: D-0024 is review-only (pds1-design-critic). There is no reliable static check.
+
+## Pictures (headless Chrome, a mock that loads the built Platform, 2026-11-05)
+
+- `icon-box-light-en.png` and `icon-box-dark-en.png`: before on the left, after on the right.
+- The fonts show in a fallback face because Chrome blocks local web fonts from `file://`. The real pages use DM Sans.
+- No Arabic picture: no text or direction changes (DESIGN.md), and a mock must not show Arabic the owner hasn't approved (D-0012).
+- Open point for the owner: fact icons at the full tile size (A, applied, the rule as written) read heavier than their labels. B: 20px, the text's icon size, still without a box.
 
 ## Before the build
 
