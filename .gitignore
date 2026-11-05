@@ -59,3 +59,4 @@ build/sd/
 /lanes/*/design-system/usage.js
 /lanes/*/design-system/spec-index.js
 /lanes/*/design-system/spec-chunks/
+test-results

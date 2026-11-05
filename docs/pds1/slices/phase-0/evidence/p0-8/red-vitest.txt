@@ -1,0 +1,36 @@
+
+ RUN  v5.1.0 /home/cc/pds1/work/component-engineer-1
+
+ ❯ tools/checks/states/states.test.mjs (0 test)
+ ❯ tools/checks/numeric/numeric.test.mjs (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tools/checks/numeric/numeric.test.mjs [ tools/checks/numeric/numeric.test.mjs ]
+Error: Cannot find module './numeric.mjs' imported from /home/cc/pds1/work/component-engineer-1/tools/checks/numeric/numeric.test.mjs
+ ❯ tools/checks/numeric/numeric.test.mjs:2:1
+      1| import { describe, it, expect } from 'vitest';
+      2| import { checkNumericCss } from './numeric.mjs';
+       | ^
+      3|
+      4| describe('check 10: numeric columns', () => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tools/checks/states/states.test.mjs [ tools/checks/states/states.test.mjs ]
+Error: Cannot find module './states.mjs' imported from /home/cc/pds1/work/component-engineer-1/tools/checks/states/states.test.mjs
+ ❯ tools/checks/states/states.test.mjs:2:1
+      1| import { describe, it, expect } from 'vitest';
+      2| import { STATES, checkStates } from './states.mjs';
+       | ^
+      3|
+      4| const full = Object.fromEntries(STATES.map((s) => [s, ['plx-sys.state-…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  no tests
+   Start at  10:58:55
+   Duration  90ms (worker 97%, environment 3%)
+

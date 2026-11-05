@@ -1,0 +1,12 @@
+
+Running 7 tests using 1 worker
+
+  ✓  1 tests/pills/pills.spec.mjs:26:5 › all status badges in a row are one height (light, ltr) (791ms)
+  ✓  2 tests/pills/pills.spec.mjs:26:5 › all status badges in a row are one height (light, rtl) (714ms)
+  ✓  3 tests/pills/pills.spec.mjs:26:5 › all status badges in a row are one height (dark, ltr) (716ms)
+  ✓  4 tests/pills/pills.spec.mjs:26:5 › all status badges in a row are one height (dark, rtl) (718ms)
+  ✓  5 tests/pills/pills.spec.mjs:35:1 › long text and an icon do not change the height of a badge in the row (742ms)
+  ✓  6 tests/pills/pills.spec.mjs:41:1 › a data pill in the row matches the data pill beside it (761ms)
+  ✓  7 tests/pills/pills.spec.mjs:48:1 › the measurement sees the stylesheet: a count badge (sm) is shorter than a status badge (715ms)
+
+  7 passed (5.6s)

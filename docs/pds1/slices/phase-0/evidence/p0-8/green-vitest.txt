@@ -1,0 +1,9 @@
+
+ RUN  v5.1.0 /home/cc/pds1/work/component-engineer-1
+
+
+ Test Files  2 passed (2)
+      Tests  14 passed (14)
+   Start at  10:59:17
+   Duration  119ms (transform 50%, import 30%, tests 12%, worker 8%)
+
