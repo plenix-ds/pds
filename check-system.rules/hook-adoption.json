@@ -12,7 +12,7 @@
     "platform/components/DatePicker/DatePicker.jsx",
     "platform/components/Combobox/Combobox.tsx",
     "platform/components/TreeSelect/TreeSelect.jsx",
-    "platform/components/TransferList/TransferList.jsx",
+    "platform/components/TransferList/TransferList.tsx",
     "platform/components/InlineEdit/InlineEdit.tsx",
     "platform/components/RichTextEditor/RichTextEditor.jsx",
     "platform/components/CodeEditor/CodeEditor.tsx",

@@ -177,7 +177,7 @@ DSParts.records.push(function (H) {
     return box(props.width || 600, h(P.TransferList, Object.assign({ label: 'Columns', options: COLUMNS, value: s[0], onChange: s[1], titles: { source: 'Hidden columns', target: 'Shown columns' } }, props.list)));
   };
   var transferList = { id: 'transfer-list', lab: true, icon: 'move', sec: 'patterns', sub: 'Selection and organization', leaf: 'Transfer list', title: 'Transfer list',
-    plenix: 'TransferList', src: 'components/TransferList/TransferList.jsx', level: 'Component', interaction: 'Selection',
+    plenix: 'TransferList', src: 'components/TransferList/TransferList.tsx', level: 'Component', interaction: 'Selection',
     covers: ['Dual listbox'],
     aliases: ['Dual listbox', 'Shuttle', 'List builder', 'Two-list selector', 'Pick list'],
     text: 'Two lists for choosing a subset of many items: the items not chosen on one side, the chosen ones on the other, and Add, Add all, Remove and Remove all between them. Each list is a listbox with one Tab stop and a checkbox on each row; its header checks every item it shows and counts them in the data font (2/12). A move is announced and the moved items stay checked, so a wrong move is one click back. Optionally, the chosen list keeps an order of its own (Move up, Move down), each list has a search field, and long lists draw only the rows in view.',
@@ -203,7 +203,7 @@ DSParts.records.push(function (H) {
       ['Narrow: the lists stack', function () { return h(Transfer, { width: 320 }); }],
       ['Disabled', function () { return h(Transfer, { list: { disabled: true } }); }]] };
   var dualListbox = { id: 'patterns-dual-listbox', icon: 'move', sec: 'patterns', sub: 'Selection and organization', leaf: 'Dual listbox', title: 'Dual listbox',
-    plenix: 'TransferList', src: 'components/TransferList/TransferList.jsx', level: 'Component', interaction: 'Selection', statesFrom: ['transfer-list'], variantClasses: [], docsFrom: 'transfer-list',
+    plenix: 'TransferList', src: 'components/TransferList/TransferList.tsx', level: 'Component', interaction: 'Selection', statesFrom: ['transfer-list'], variantClasses: [], docsFrom: 'transfer-list',
     aliases: ['Dual list box', 'Two listboxes'], related: ['transfer-list'],
     text: 'A dual listbox is the transfer list: two listboxes, the items not chosen and the chosen ones, with buttons that move the checked items between them (TransferList).',
     use: ['The same as the transfer list: a subset of many items, both sides visible'], avoid: ['A single listbox with checkboxes when the chosen items need not be seen together'],
