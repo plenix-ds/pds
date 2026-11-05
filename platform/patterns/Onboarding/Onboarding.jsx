@@ -16,7 +16,7 @@ import React from 'react';
 import { Stack } from '../../components/Stack/Stack.tsx';
 import { Dialog } from '../../components/Dialog/Dialog.tsx';
 import { Button } from '../../components/Button/Button.tsx';
-import { Checklist } from '../../components/Checklist/Checklist.jsx';
+import { Checklist } from '../../components/Checklist/Checklist.tsx';
 import { Tour } from '../Tour/Tour.jsx';
 import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';

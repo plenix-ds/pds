@@ -20,7 +20,22 @@
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
 
-export function EventChip({ title, time, color, fill = false, onClick, className, ...rest }) {
+/** @public the prop type (ADR 0011) */
+export type EventChipProps = Omit<React.HTMLAttributes<HTMLElement>, 'onClick' | 'title' | 'color'> & {
+  /** the event's name */
+  title?: React.ReactNode;
+  /** when, as shown */
+  time?: React.ReactNode;
+  /** a data color: a hue name (blue, green, purple, red, brown, gray) */
+  color?: string;
+  /** the chip fills its box (an event placed in a time grid) */
+  fill?: boolean;
+  /** makes the chip a button that opens the event */
+  onClick?: React.MouseEventHandler<HTMLElement>;
+  className?: string;
+};
+
+export function EventChip({ title, time, color, fill = false, onClick, className, ...rest }: EventChipProps) {
   const Tag = onClick ? 'button' : 'span';
   return (
     <Tag type={onClick ? 'button' : undefined} onClick={onClick} className={cx('plx-event-chip', fill && 'plx-event-chip--fill', onClick && 'plx-event-chip--interactive', className)}
