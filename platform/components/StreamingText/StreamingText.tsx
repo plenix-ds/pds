@@ -16,8 +16,19 @@ import { Text } from '../Text/Text.tsx';
 import { Badge } from '../Badge/Badge.tsx';
 import CheckIcon from 'plenix-platform/icons/plenix/check';
 import SparkleIcon from 'plenix-platform/icons/plenix/sparkle';
-export function StreamingText({text='',state='done',announce=true,strings,className}){
- const t={label:'AI response',streaming:'Generating response',done:'Response complete',stopped:'Generation stopped',...strings},status=['streaming','stopped'].includes(state)?state:'done';
+export type StreamingTextProps = {
+  /** trusted plain text, never parsed as HTML */
+  text?: string;
+  /** "streaming" | "done" (default) | "stopped" */
+  state?: 'streaming' | 'done' | 'stopped';
+  /** false hands the announcements to a parent; default true */
+  announce?: boolean;
+  /** { label, streaming, done, stopped } */
+  strings?: { label?: string; streaming?: string; done?: string; stopped?: string } | null;
+  className?: string;
+};
+export function StreamingText({text='',state='done',announce=true,strings,className}: StreamingTextProps){
+ const t={label:'AI response',streaming:'Generating response',done:'Response complete',stopped:'Generation stopped',...strings},status: 'streaming' | 'done' | 'stopped'=state==='streaming'||state==='stopped'?state:'done';
  const [announcement,setAnnouncement]=React.useState('');
  React.useEffect(()=>{setAnnouncement(status==='streaming'?t.streaming:t[status]+(text?' — '+text:''));},[text,status,t.streaming,t.done,t.stopped]);
  return <Stack className={cx('plx-streaming-text',className)} role="group" aria-label={t.label}>

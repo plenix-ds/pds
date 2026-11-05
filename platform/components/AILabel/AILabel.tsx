@@ -20,10 +20,22 @@ import { Text } from '../Text/Text.tsx';
 import { Button } from '../Button/Button.tsx';
 import { Popover } from '../Popover/Popover.tsx';
 import { cx } from '../../utils/cx.ts';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import SparkleIcon from 'plenix-platform/icons/plenix/sparkle';
-export const AILabel=React.forwardRef(function AILabel({variant='badge',children,explanation,strings,className},ref){
+export type AILabelProps = {
+  /** "badge" (default) | "inline" | "explanation" */
+  variant?: 'badge' | 'inline' | 'explanation';
+  /** the readable origin label; default strings.label */
+  children?: React.ReactNode;
+  /** text or a trusted node disclosed in the explanation variant */
+  explanation?: React.ReactNode;
+  /** { label, explain } */
+  strings?: Catalog | null;
+  className?: string;
+};
+export const AILabel=React.forwardRef(function AILabel({variant='badge',children,explanation,strings,className}: AILabelProps,ref: React.ForwardedRef<HTMLButtonElement>){
   devWarn('AILabel', { variant }, { variant: ['badge','inline','explanation'] });
- const t={label:'AI-generated',explain:'About this AI content',...strings},label=children||t.label,cls=cx('plx-ai','plx-ai-label',className);
+ const t={label:'AI-generated',explain:'About this AI content',...(strings as { label?: string; explain?: string } | null | undefined)},label=children||t.label,cls=cx('plx-ai','plx-ai-label',className);
  if(variant==='explanation'&&explanation)return <Popover label={t.explain} title={t.explain} trigger={<Button ref={ref} className={cls} variant="ghost" size="sm" icon={SparkleIcon}>{label}</Button>}><Text>{explanation}</Text></Popover>;
  return variant==='inline'?<Inline as="span" className={cls}><Icon name={SparkleIcon}/><Text as="span">{label}</Text></Inline>:<Badge className={cls} tone="neutral" icon={SparkleIcon}>{label}</Badge>;
 });

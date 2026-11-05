@@ -36,7 +36,7 @@ import { cx } from '../utils/cx.ts';
 import { formatNumber } from '../utils/format.ts';
 import { dataWhenText } from '../utils/dataText.tsx';
 import { Details } from '../components/Details/Details.tsx';
-import { Table } from '../components/Table/Table.jsx';
+import { Table } from '../components/Table/Table.tsx';
 import { Badge } from '../components/Badge/Badge.tsx';
 import { seriesColor } from './scales.js';
 import { useStrings } from '../providers/LocaleProvider.tsx';

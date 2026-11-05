@@ -43,7 +43,7 @@ import { Button } from '../../components/Button/Button.tsx';
 import { Link } from '../../components/Link/Link.tsx';
 import { Notice } from '../../components/Notice/Notice.tsx';
 import { Tabs } from '../../components/Tabs/Tabs.jsx';
-import { Table } from '../../components/Table/Table.jsx';
+import { Table } from '../../components/Table/Table.tsx';
 import { useUid } from '../../utils/layer.ts';
 import { useCommercePage } from './shared.jsx';
 import { fill } from '../../utils/fill.ts';

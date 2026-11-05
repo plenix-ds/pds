@@ -23,7 +23,7 @@
 */
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
-import { DateBadge } from '../../components/DateBadge/DateBadge.jsx';
+import { DateBadge } from '../../components/DateBadge/DateBadge.tsx';
 import { EventChip } from '../../components/EventChip/EventChip.jsx';
 
 const hourText = (h) => h + ':00';

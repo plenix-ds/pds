@@ -51,7 +51,7 @@ import { Badge } from '../../components/Badge/Badge.tsx';
 import { SegmentedControl } from '../../components/SegmentedControl/SegmentedControl.tsx';
 import { Switch } from '../../components/Checkbox/Checkbox.tsx';
 import { Slider } from '../../components/Slider/Slider.tsx';
-import { Table } from '../../components/Table/Table.jsx';
+import { Table } from '../../components/Table/Table.tsx';
 import { Image } from '../../components/Image/Image.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import PencilIcon from 'plenix-platform/icons/plenix/pencil';

@@ -19,8 +19,18 @@ import { cx } from '../../utils/cx.ts';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 
-export function DateBadge({ day, weekday, today = false, dateTime, className, ...rest }) {
-  const t = useStrings('dateBadge');
+export type DateBadgeProps = React.HTMLAttributes<HTMLElement> & {
+  /** the day of the month */
+  day: number | string;
+  /** the short weekday name, shown above the number */
+  weekday?: string;
+  /** marks today: the number on the action color */
+  today?: boolean;
+  /** the date, machine-readable (wraps the badge in <time>) */
+  dateTime?: string;
+};
+export function DateBadge({ day, weekday, today = false, dateTime, className, ...rest }: DateBadgeProps) {
+  const t = useStrings('dateBadge') as { today: string };
   const Tag = dateTime ? 'time' : 'span';
   return (
     <Tag className={cx('plx-date-badge', today && 'is-today', className)} dateTime={dateTime} {...rest}>

@@ -2409,7 +2409,7 @@
       "platform/design-system/parts/w13B.{records,labs,docs}.js + .css",
       "platform/exports/w13B.{js,css}",
       "platform/standards/web-native-map.d/w13B.json",
-      "platform/components/Comment/Comment.jsx",
+      "platform/components/Comment/Comment.tsx",
       "platform/components/Comment/comment.css",
       "platform/tokens/components/comment.tokens.json",
       "platform/patterns/CommentThread/CommentThread.jsx",
@@ -2496,7 +2496,7 @@
       "platform/components/PromptInput/PromptInput.jsx",
       "platform/components/PromptInput/prompt-input.css",
       "platform/tokens/components/prompt-input.tokens.json",
-      "platform/components/StreamingText/StreamingText.jsx",
+      "platform/components/StreamingText/StreamingText.tsx",
       "platform/components/StreamingText/streaming-text.css",
       "platform/tokens/components/streaming-text.tokens.json"
      ],
@@ -2524,13 +2524,13 @@
       "platform/patterns/PromptHistory/PromptHistory.jsx",
       "platform/patterns/PromptHistory/prompt-history.css",
       "platform/tokens/components/prompt-history.tokens.json",
-      "platform/components/Citation/Citation.jsx",
+      "platform/components/Citation/Citation.tsx",
       "platform/components/Citation/citation.css",
       "platform/tokens/components/citation.tokens.json",
       "platform/components/GeneratedContent/GeneratedContent.jsx",
       "platform/components/GeneratedContent/generated-content.css",
       "platform/tokens/components/generated-content.tokens.json",
-      "platform/components/SuggestedAction/SuggestedAction.jsx",
+      "platform/components/SuggestedAction/SuggestedAction.tsx",
       "platform/components/SuggestedAction/suggested-action.css",
       "platform/tokens/components/suggested-action.tokens.json",
       "platform/patterns/AISearch/AISearch.jsx",
@@ -2539,7 +2539,7 @@
       "platform/patterns/Recommendation/Recommendation.jsx",
       "platform/patterns/Recommendation/recommendation.css",
       "platform/tokens/components/recommendation.tokens.json",
-      "platform/components/AILabel/AILabel.jsx",
+      "platform/components/AILabel/AILabel.tsx",
       "platform/components/AILabel/ai-label.css",
       "platform/tokens/components/ai-label.tokens.json"
      ],
@@ -2573,7 +2573,7 @@
       "platform/design-system/parts/w14C.{records,labs,docs}.js + .css",
       "platform/exports/w14C.{js,css}",
       "platform/standards/web-native-map.d/w14C.json",
-      "platform/components/AIButton/AIButton.jsx",
+      "platform/components/AIButton/AIButton.tsx",
       "platform/components/AIButton/ai-button.css",
       "platform/tokens/components/ai-button.tokens.json",
       "platform/components/PromptSuggestions/PromptSuggestions.jsx",
@@ -2587,13 +2587,13 @@
       "platform/components/RefineMenu/RefineMenu.jsx",
       "platform/components/RefineMenu/refine-menu.css",
       "platform/tokens/components/refine-menu.tokens.json",
-      "platform/components/ConfidenceIndicator/ConfidenceIndicator.jsx",
+      "platform/components/ConfidenceIndicator/ConfidenceIndicator.tsx",
       "platform/components/ConfidenceIndicator/confidence-indicator.css",
       "platform/tokens/components/confidence-indicator.tokens.json",
       "platform/patterns/AIExplanation/AIExplanation.jsx",
       "platform/patterns/AIExplanation/ai-explanation.css",
       "platform/tokens/components/ai-explanation.tokens.json",
-      "platform/components/AIDisclaimer/AIDisclaimer.jsx",
+      "platform/components/AIDisclaimer/AIDisclaimer.tsx",
       "platform/components/AIDisclaimer/ai-disclaimer.css",
       "platform/tokens/components/ai-disclaimer.tokens.json"
      ],
@@ -8060,7 +8060,7 @@
    "wave": 13,
    "lane": "B",
    "files": [
-    "platform/components/Comment/Comment.jsx",
+    "platform/components/Comment/Comment.tsx",
     "platform/components/Comment/comment.css",
     "platform/tokens/components/comment.tokens.json"
    ],
@@ -8281,7 +8281,7 @@
    "wave": 14,
    "lane": "A",
    "files": [
-    "platform/components/StreamingText/StreamingText.jsx",
+    "platform/components/StreamingText/StreamingText.tsx",
     "platform/components/StreamingText/streaming-text.css",
     "platform/tokens/components/streaming-text.tokens.json"
    ],
@@ -8352,7 +8352,7 @@
    "wave": 14,
    "lane": "B",
    "files": [
-    "platform/components/AILabel/AILabel.jsx",
+    "platform/components/AILabel/AILabel.tsx",
     "platform/components/AILabel/ai-label.css",
     "platform/tokens/components/ai-label.tokens.json"
    ],
@@ -8425,7 +8425,7 @@
    "wave": 14,
    "lane": "B",
    "files": [
-    "platform/components/Citation/Citation.jsx",
+    "platform/components/Citation/Citation.tsx",
     "platform/components/Citation/citation.css",
     "platform/tokens/components/citation.tokens.json"
    ],
@@ -8450,7 +8450,7 @@
    "wave": 14,
    "lane": "B",
    "files": [
-    "platform/components/SuggestedAction/SuggestedAction.jsx",
+    "platform/components/SuggestedAction/SuggestedAction.tsx",
     "platform/components/SuggestedAction/suggested-action.css",
     "platform/tokens/components/suggested-action.tokens.json"
    ],
@@ -8519,7 +8519,7 @@
    "wave": 14,
    "lane": "C",
    "files": [
-    "platform/components/AIButton/AIButton.jsx",
+    "platform/components/AIButton/AIButton.tsx",
     "platform/components/AIButton/ai-button.css",
     "platform/tokens/components/ai-button.tokens.json"
    ],
@@ -8544,7 +8544,7 @@
    "wave": 14,
    "lane": "C",
    "files": [
-    "platform/components/AIDisclaimer/AIDisclaimer.jsx",
+    "platform/components/AIDisclaimer/AIDisclaimer.tsx",
     "platform/components/AIDisclaimer/ai-disclaimer.css",
     "platform/tokens/components/ai-disclaimer.tokens.json"
    ],
@@ -8565,7 +8565,7 @@
    "wave": 14,
    "lane": "C",
    "files": [
-    "platform/components/ConfidenceIndicator/ConfidenceIndicator.jsx",
+    "platform/components/ConfidenceIndicator/ConfidenceIndicator.tsx",
     "platform/components/ConfidenceIndicator/confidence-indicator.css",
     "platform/tokens/components/confidence-indicator.tokens.json"
    ],
@@ -20457,7 +20457,7 @@
    "target": "Comment",
    "targetKind": "component",
    "files": [
-    "platform/components/Comment/Comment.jsx",
+    "platform/components/Comment/Comment.tsx",
     "platform/components/Comment/comment.css",
     "platform/tokens/components/comment.tokens.json"
    ],
@@ -21188,7 +21188,7 @@
    "target": "AIButton",
    "targetKind": "component",
    "files": [
-    "platform/components/AIButton/AIButton.jsx",
+    "platform/components/AIButton/AIButton.tsx",
     "platform/components/AIButton/ai-button.css",
     "platform/tokens/components/ai-button.tokens.json"
    ],
@@ -21220,7 +21220,7 @@
    "target": "AIButton",
    "targetKind": "component",
    "files": [
-    "platform/components/AIButton/AIButton.jsx",
+    "platform/components/AIButton/AIButton.tsx",
     "platform/components/AIButton/ai-button.css",
     "platform/tokens/components/ai-button.tokens.json"
    ],
@@ -21406,7 +21406,7 @@
    "target": "StreamingText",
    "targetKind": "component",
    "files": [
-    "platform/components/StreamingText/StreamingText.jsx",
+    "platform/components/StreamingText/StreamingText.tsx",
     "platform/components/StreamingText/streaming-text.css",
     "platform/tokens/components/streaming-text.tokens.json"
    ],
@@ -21467,7 +21467,7 @@
    "target": "Citation",
    "targetKind": "component",
    "files": [
-    "platform/components/Citation/Citation.jsx",
+    "platform/components/Citation/Citation.tsx",
     "platform/components/Citation/citation.css",
     "platform/tokens/components/citation.tokens.json"
    ],
@@ -21500,7 +21500,7 @@
    "target": "Citation",
    "targetKind": "component",
    "files": [
-    "platform/components/Citation/Citation.jsx",
+    "platform/components/Citation/Citation.tsx",
     "platform/components/Citation/citation.css",
     "platform/tokens/components/citation.tokens.json"
    ],
@@ -21592,7 +21592,7 @@
    "target": "SuggestedAction",
    "targetKind": "component",
    "files": [
-    "platform/components/SuggestedAction/SuggestedAction.jsx",
+    "platform/components/SuggestedAction/SuggestedAction.tsx",
     "platform/components/SuggestedAction/suggested-action.css",
     "platform/tokens/components/suggested-action.tokens.json"
    ],
@@ -21801,7 +21801,7 @@
    "target": "ConfidenceIndicator",
    "targetKind": "component",
    "files": [
-    "platform/components/ConfidenceIndicator/ConfidenceIndicator.jsx",
+    "platform/components/ConfidenceIndicator/ConfidenceIndicator.tsx",
     "platform/components/ConfidenceIndicator/confidence-indicator.css",
     "platform/tokens/components/confidence-indicator.tokens.json"
    ],
@@ -21861,7 +21861,7 @@
    "target": "AILabel",
    "targetKind": "component",
    "files": [
-    "platform/components/AILabel/AILabel.jsx",
+    "platform/components/AILabel/AILabel.tsx",
     "platform/components/AILabel/ai-label.css",
     "platform/tokens/components/ai-label.tokens.json"
    ],
@@ -21926,7 +21926,7 @@
    "target": "AIDisclaimer",
    "targetKind": "component",
    "files": [
-    "platform/components/AIDisclaimer/AIDisclaimer.jsx",
+    "platform/components/AIDisclaimer/AIDisclaimer.tsx",
     "platform/components/AIDisclaimer/ai-disclaimer.css",
     "platform/tokens/components/ai-disclaimer.tokens.json"
    ],
