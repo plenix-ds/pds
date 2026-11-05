@@ -1,3 +1,0 @@
-### Added
-
-- CommandBar and the bars built on `BarActions` (BulkActions, the page's actions): `actions[].confirm` (#109, docs/adr/0004). A command with `confirm` opens the destructive Dialog before it runs; focus starts on Cancel, Escape cancels and the command does not run, focus returns to the command, and a command folded into More confirms the same way. The words come from the catalog (`confirmAction`: the title "{verb} {name}?" or "{verb} {count} {plural}?", the action's `confirm.consequence`, "This cannot be undone." with `confirm.permanent`, and a confirm button repeating the verb); a `confirm.title`, `body` or `confirmLabel` the application gives wins. New catalog strings `confirmAction.*` (English; the Arabic is with the i18n Engineer).

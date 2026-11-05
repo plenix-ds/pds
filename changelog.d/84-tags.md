@@ -1,3 +1,0 @@
-### Added
-
-- DataGrid: the `tags` cell editor (ADR 0016, #84 phase 2), turned on with `editing={{ types: ['tags'] }}` and `editor: 'tags'` plus `editorProps: { options }` (or `loadOptions`) on a column whose values are arrays of strings. Plenix's Combobox with several values opens in the cell, bare, the current tags as chips and its suggestions open. Choosing a suggestion adds a tag and the list stays open; a new text and Enter adds it; Backspace in the empty field removes the last tag. With the list closed Enter saves the array; the first Escape closes the list and the second cancels; Tab saves and moves; the focus leaving the editor saves. Without the type turned on, nothing changes.

@@ -6,6 +6,73 @@ The batch numbers point to the work log (Plenix - DAM/audit/batches/).
 
 ## [Unreleased]
 
+## [0.89.0] - 2026-11-05
+
+### Upgrading from 0.88.0
+Nothing to change. Deprecated names keep working (each says what replaces it). Apps on the CDN loader follow this release by themselves; npm apps update the version as usual.
+
+### Added
+- DataGrid: the `checkbox` cell editor (ADR 0016, #84 phase 2), an option the application turns on with `editing={{ types: ['checkbox'] }}` and `editor: 'checkbox'` on a column. The cell shows a checkbox named after the column; Space on the cell or a click on the box toggles and saves at once through `onCellEdit` (no editor opens; Enter and F2 do nothing). A cell `editable()` refuses shows a disabled box. Without the type turned on, nothing changes.
+- DataGrid: the `combobox` cell editor (ADR 0016, #84 phase 2), turned on with `editing={{ types: ['combobox'] }}` and `editor: 'combobox'` plus `editorProps: { options }` or `{ loadOptions(text) }` on a column. Plenix's Combobox opens in the cell, bare, with its list open; typing filters (or loads), choosing an option saves it at once; with the list closed Enter saves the current value; the first Escape closes the list and the second cancels; Tab saves and moves. Without the type turned on, nothing changes.
+- DataGrid: an application's own cell editor (ADR 0016, #84 phase 2): `editor: { component, props }` on a column. The component opens inside the cell's editing frame and gets `CellEditorProps` (`value`, `record`, `field`, `dir`, `autoFocus`, `invalid`, `onChange`, `onCommit`, `onCancel`, plus its own `props`). `onCommit(value?)` saves the value (the last `onChange` draft when none is given), `onCancel()` cancels; Tab saves the draft and moves, an Escape the component does not handle cancels, and the focus leaving the editor saves the draft. A message from `validate` reaches it as `invalid`. It always works: it is not gated by `editing.types`.
+- DataGrid: the `date` cell editor (ADR 0016, #84 phase 2), turned on with `editing={{ types: ['date'] }}` and `editor: 'date'` on a column whose values are `YYYY-MM-DD`. Plenix's DatePicker field opens in the cell, drawn bare through Input's context hooks. A date typed (read on Enter or when the field is left) or chosen in the calendar saves its calendar day; Escape cancels; Tab saves what was typed and moves; a click elsewhere saves; emptying the field saves `null`. Without the type turned on, nothing changes.
+- DataGrid: while editing (ADR 0016, #84 phase 1), Enter and Escape leave the focus on the cell, and Tab / Shift+Tab save and move the focus to the next / previous editable cell in reading order (mirrored in right to left; a column with no editor or a cell that is not editable is skipped; at the end of a row, on to the next row; at the last editable cell the focus stays). A value `validate` refuses keeps the cell open.
+- DataGrid: `onCellEdit` may answer later (a promise; ADR 0016, #84 phase 1). While it waits, the new value shows and the cell is `aria-busy` with a small spinner and takes no new edit; "Saved" is announced when it resolves. If it rejects, the old value comes back and the error's message (else "Couldn’t save. The previous value is back.") shows under the cell until the next key or click. Opening an editor announces "Editing <column>". New catalog strings `dataGrid.editing`, `dataGrid.saved`, `dataGrid.saveRefused` (English; the Arabic is with the i18n Engineer). A plain `onCellEdit` behaves as before.
+- DataGrid: the `select` cell editor (ADR 0016, #84 phase 2), turned on with `editing={{ types: ['select'] }}` and `editor: 'select'` plus `editorProps: { options: [{ value, label }] }` on a column. Plenix's own Select opens in the cell with its list open, drawn bare through Input's context hooks (the cell's editing outline is the frame). Picking an option saves it at once; the first Escape closes the list and the second cancels; with the list closed Enter saves the current choice and Tab saves and moves. Without the type turned on, nothing changes.
+- DataGrid: the `tags` cell editor (ADR 0016, #84 phase 2), turned on with `editing={{ types: ['tags'] }}` and `editor: 'tags'` plus `editorProps: { options }` (or `loadOptions`) on a column whose values are arrays of strings. Plenix's Combobox with several values opens in the cell, bare, the current tags as chips and its suggestions open. Choosing a suggestion adds a tag and the list stays open; a new text and Enter adds it; Backspace in the empty field removes the last tag. With the list closed Enter saves the array; the first Escape closes the list and the second cancels; Tab saves and moves; the focus leaving the editor saves. Without the type turned on, nothing changes.
+- DataGrid: the `textarea` cell editor (ADR 0016, #84 phase 2), turned on with `editing={{ types: ['textarea'] }}` and `editor: 'textarea'` on a column. The cell shows the value's first line; a box under the cell holds a text area for the whole value, which grows to 8 lines and then scrolls. Enter adds a line, Ctrl or Command with Enter saves, Escape cancels, a click outside saves, Tab saves and moves. A message from `validate` shows under the text. Without the type turned on, nothing changes.
+- DataGrid: a column's `validate(value, record)` (ADR 0016, #84 phase 1). It may return a message, or a promise of one. A message keeps the cell open: the editor is `aria-invalid`, the message shows under the cell (linked by `aria-describedby`, announced) and nothing is saved; `null` saves as before. Columns without `validate` behave as before.
+- `PrintDocument`, `AnswerLines` and `PageBreak` (#87, docs/adr/0014): an A4 document (a card-like sheet on screen; A4 with 20mm margins on paper via `@page plx-document`), ruled writing lines (1–40, default 3, 32px apart) and a page break (dashed line with `preview`). Tokens: `--plx-comp-answer-lines-row-height`, `--plx-comp-answer-lines-border-color`.
+- CommandBar and the bars built on `BarActions` (BulkActions, the page's actions): `actions[].confirm` (#109, docs/adr/0004). A command with `confirm` opens the destructive Dialog before it runs; focus starts on Cancel, Escape cancels and the command does not run, focus returns to the command, and a command folded into More confirms the same way. The words come from the catalog (`confirmAction`: the title "{verb} {name}?" or "{verb} {count} {plural}?", the action's `confirm.consequence`, "This cannot be undone." with `confirm.permanent`, and a confirm button repeating the verb); a `confirm.title`, `body` or `confirmLabel` the application gives wins. New catalog strings `confirmAction.*` (English; the Arabic is with the i18n Engineer).
+- `docs/content/messaging.md`: the messaging standard, one pattern per type, with the command and action confirm wording for #109.
+- Design spec: 127 mappings now name the Django (forms and widgets, admin) and Frappe (controls, desk, Frappe UI, Frappe Charts) counterpart, with its match level. Records with no counterpart are left out (#129).
+- DeleteFlow: the undo and trash toast stays 10 seconds by default (token `--plx-comp-delete-flow-undo-duration`, was the 4-second toast default) and takes `undoDuration` in milliseconds (0 keeps it until dismissed). It pauses while hovered or focused, as every toast with an action does (#144, D-0057).
+- `docs/pds1/leaves-without-record.md`: recount of the taxonomy leaves with no record (483; 174 on the web) and their classification (#166).
+- `docs/integration/arabic-typography.md`: which Arabic face each kind of text uses (IBM Plex Sans Arabic, Readex Pro for titles), the Arabic line-height rule, and right-to-left coverage for eleven parts (#180).
+- Icons `calendar-add` (calendar_add_on), `balance`, `gavel` and `certificate` (workspace_premium), Material Symbols Sharp, for CTM to replace its interim icons `event_available`, `description` and `article` (#181).
+- Storybook and the docs shell: `npm run storybook` and `npm run build-storybook` build `docs/site` (an introduction page and a Badge story) with the Platform stylesheet and a left-to-right / right-to-left toolbar switch (#193).
+- `/api/v1/variants.json`: every variation of the design spec as its own record with a stable id (`<item>--<group>-<name>`), and `components[].variants` in `/api/v1/components.json` (#117, docs/adr/0013).
+- `/api/v1/variants.json`: each variation lists the styling properties it sets (`sets`: property, part, value and the token chain to the palette), read from its own rules in the stylesheets, and where they come from (`setsSource`) (#116, docs/adr/0015).
+- `--plx-sys-overlay-editor-min-inline-size` (320px): the smallest width of an editor that opens over its field, such as the DataGrid long-text editor (#84).
+- `--plx-ref-timeout-lg` (10s) and `--plx-sys-undo-duration`: how long an undo stays offered (#144, docs/adr/0017).
+
+### Changed
+- VersionCompare: the Previous and Next change buttons keep one row in a narrow window by hiding their labels (the icons stay, with their names as the accessible name and tooltip), instead of wrapping (#13).
+- EntityHeader: a fact's icon has no box any more; the icon fills its 40px square (#108, D-0036).
+- Button: hover, pressed and keyboard focus draw one see-through state layer (8%, 10%, 10%) over the variant's own fill instead of a different solid fill; outline buttons (tertiary, danger secondary) no longer fill solid on hover. The layer is the text colour, white on primary and danger. Six `button-*state-layer*` component tokens (ADR 0004, D-0037, #109).
+- Menu: an item's hover, keyboard focus and press draw the same see-through state layer as Button (8%, 10%) instead of a solid fill; three `menu-item-state-layer-*` component tokens (ADR 0004, #109).
+- TypeScript, wave 1 batch D: CodeBlock, SuggestedEdit and RefineMenu are written in TypeScript with prop types. No behavior change (#292).
+- PrintDocument (#348): the sheet reads its own `--plx-comp-print-document-*` tokens (it no longer reads Card's), its shadow is `shadow-card` as designed, and its borders and corners use logical properties. On paper the frame, padding and size come off through print tokens (`--plx-sys-print-sheet-padding`, `-border-width`, `-radius`, `-shadow`, and the existing `-inline-size`/`-block-size`), so `print.css` has no `@media print` rule for it any more.
+- `platform/standards/variants/styles.json`: Access request statuses and Action menu placements document what they set; the variant-styles baseline is 859 (#353).
+- `platform/standards/variants/styles.json`: Aspect ratio and Area chart variations document what they set; the variant-styles baseline is 848 (#353).
+- Spinner sizes and Stack gaps document what they set in the design spec (variant styles, #353).
+- StatusIcon tones, Sticky shadow, SplitButton sizes and StreamingText states document what they set in the design spec (variant styles, #353).
+- `platform/standards/variants/styles.json`: Avatar sizes (rounded squares) and own colors document what they set; the variant-styles baseline is 841 (#353).
+- `platform/standards/variants/styles.json`: 16 markup-only variations (AI chat, AI disclaimer, AI label, Assistant panel, Announcement, Attachment picker, Audit log) say what they render instead of what they set (#353).
+- `platform/standards/variants/styles.json`: 11 more markup-only variations (AI search, AI explanation, Approval workflow, Archive restore, Asset gallery lightbox) say what they render; the variant-styles baseline is 795 (#353).
+- `platform/standards/variants/styles.json`: Autosave states, Back to top and Blockquote variations document what they set; the variant-styles baseline is 787 (#353).
+- `platform/standards/variants/styles.json`: Bleed insets and sides, and two Banner options, document what they set; the variant-styles baseline shrinks by 7 (#353).
+- `platform/standards/variants/styles.json`: Barcode formats and text options document what they set or render (#353).
+- `platform/standards/variants/styles.json`: the first 11 variations (Icon, Status icon, Logo, Brand symbol sizes) document what they set; the variant-styles baseline shrinks from 878 to 867 (#353).
+- The prop types of `CodeBlock`, `RefineMenu`, `SuggestedEdit`, `AnswerLines`, `PageBreak` and `PrintDocument` are exported (`CodeBlockProps`, …), as ADR 0011 requires of every converted part (#369).
+
+### Changed (visual)
+- DataGrid tree rows indent 20px per level (was 18px); a few small DataGrid and EntityHeader gaps are on the 4px grid (4px or 8px, were 6px); the EntityHeader accent rule is 4px (#301).
+
+### Deprecated
+- `--plx-ref-size-18px`, `--plx-ref-space-6px`, `--plx-ref-space-10px`: off the 4px grid; use a grid size or space (`size-4u` / `size-5u`, `space-1u` / `space-2u` / `space-3u`) or a system space role. Removed in 2.0.0.
+- `--plx-comp-entity-header-fact-icon-tile-background`, `-tile-border-color`, `-tile-radius`: the EntityHeader fact icon has no tile any more (#108). Removed in 2.0.0.
+
+### Fixed
+- Design spec: the radius and control-height audits stop loading application frames once their page is left; the heap no longer climbs over the foundations pages (#5).
+- DataToolbar: in a narrow row the end group (a count or summary) moves under the start group and its text wraps; the Directory no longer reaches 326px at 320 (#13, #11).
+- VersionCompare: the Previous and Next change buttons wrap in a narrow window; DataToolbar keeps a gap between its wrapped rows (#13).
+- DeleteFlow (undo): if the page is hidden for good (a closed tab or side panel, a reload) while the Undo toast is up, the delete is committed then, once, unless Undo was used (#143).
+- EntityHeader: with no box, the media icon fills the whole former box area in every layout: it is drawn a fifth larger than the area so the shape (which spans about 83% of its square) reaches the edges (#418, D-0055, D-0059).
+
+### Security
+- Vendored PDF.js updated from 4.10.38 to 6.5.438 (DocumentViewer; same files, same loading; #86).
+
 ## [0.88.0] - 2026-11-05
 
 ### Upgrading from 0.87.0
