@@ -5,7 +5,7 @@
 // proxy signs people in through Authentik (forward auth) and passes X-authentik-username, -email and -groups (or, after
 // the cutover, the VM's Nginx asks the Plenix login and passes X-Plenix-User, -Email and -Groups); only the Editors and
 // Admins groups may save. A save: fetch main, check each token still has the value the dialog started from,
-// write the new values into the token JSON, rebuild the token stylesheets (build-tokens.js), run the system check
+// write the new values into the token JSON, rebuild the token stylesheets (style-dictionary/build.mjs), run the system check
 // (check-system.js), commit on a new branch as the person who saved, push, and open a pull request. Nothing reaches main
 // without a review; nothing reaches the live site without a release. Every attempt is logged (who, when, the changes, the
 // result) in /data/log.jsonl. The GitHub token is the file /data/github-token (fine-grained: plenix-ds/plenix-platform,
@@ -91,7 +91,7 @@ async function save(body, person) {
   }
   fs.writeFileSync(file, JSON.stringify(json, null, 2) + '\n');
   // the build and the check: a change that breaks the system is not proposed
-  try { await run('node', ['build-tokens.js']); await run('node', ['check-system.js']); }
+  try { await run('node', ['style-dictionary/build.mjs']); await run('node', ['check-system.js']); }
   catch (e) { return [422, { error: 'check-failed', message: 'The change does not pass the system check.', output: String(e.output || e.message).slice(-1500) }]; }
   // the branch, the commit as the person who saved, the pull request
   const stamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\..*$/, '').replace('T', '-');

@@ -24,7 +24,9 @@
 const fs = require('fs');
 const path = require('path');
 const buildIcons = require('./build-icons.js');
-const buildTokens = require('./build-tokens.js');
+// the token build: Style Dictionary writes the values, packages/tokens/sd/assemble.cjs the stylesheets (slice 101, #372 step 10)
+const tokenBuild = () => JSON.parse(require('child_process').execFileSync(process.execPath, [path.join(ROOT, 'style-dictionary', 'build.mjs'), '--no-index', '--json'], { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'inherit'] }).trim().split('\n').pop());
+const assemble = require('./packages/tokens/sd/assemble.cjs');
 
 const ROOT = __dirname;
 const DAM = path.join(ROOT, 'dam');
@@ -38,7 +40,7 @@ const PARTS = require('./build-spec-parts.js')(ROOT);
 if (!PARTS.skipped) console.log('Built platform/design-system/spec-parts.js and ds-sample-parts.css (' + PARTS.parts + ' part files' + (PARTS.changed ? '' : ', unchanged') + ')');
 // the token stylesheets first (platform/tokens/*.tokens.json -> system/tokens/*.css, themes/plenix.css; batch 158)
 // the stylesheets only: the token index reads every Platform stylesheet, so it comes after the steps that write the others
-const TOKENS = buildTokens(ROOT, { index: false });
+const TOKENS = tokenBuild();
 console.log('Built ' + TOKENS.files.length + ' token stylesheets from platform/tokens (' + TOKENS.count + ' tokens' + (TOKENS.stale.length ? ', ' + TOKENS.stale.length + ' changed' : '') + ')');
 // then the icon stylesheet (platform/icons/ -> components/Icon/icon.css): the bundles below do not read it, the pages do
 const ICONS = buildIcons(ROOT);
@@ -59,7 +61,7 @@ console.log('Built ' + PAGE_ICONS.pages + ' page icon files (' + PAGE_ICONS.icon
 const STEPS = require('./build-steps.js')(ROOT);
 // then the token index (tools/token-index.js), now that every stylesheet exists, and the native files from it; the steps
 // below read the index (build-native-guidance.js). A fresh checkout gets the same index as a rebuilt one (#692)
-const MOB = buildTokens.indexAndMobile(ROOT);
+const MOB = assemble.indexAndMobile(ROOT);
 // the Platforms Standard (platform/standards/platforms.md) as the design system's data (batch 297)
 const PLAT = require('./build-platforms.js')(ROOT);
 // Plenix's own guidance for the Apple HIG pages, mapped to Web and Android (platform/standards/native-guidance.json, batch 330)

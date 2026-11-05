@@ -73,7 +73,7 @@ for (const { file } of files) {
     if (!/\.css$/.test(file)) for (const m of line.matchAll(/var\(\s*(--[a-z][a-z0-9-]*)/g)) {
       // the design system's samples (--ds-sample-<property>) are set at run time by DS.sample (ds.js)
       // the three token tiers, the state variables (Styling Standard 4.1: --plx-state-<component>-…, never inherited) and the
-      // token layers build-tokens.js writes (--plx-ctx-<interaction|density|base>-<token>: one rule per context picks)
+      // token layers packages/tokens/sd/assemble.cjs writes (--plx-ctx-<interaction|density|base>-<token>: one rule per context picks)
       if (/^--plx-(ref|sys|comp|state|ctx)-/.test(m[1]) || DECLARED.has(m[1]) || (SPEC_PAGE.test(file) && /^--ds-sample-[a-z-]+$/.test(m[1]))) continue;
       add('tokens', file, n, m[1] + ' in: ' + line);
     }

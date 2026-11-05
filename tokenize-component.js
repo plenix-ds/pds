@@ -2,7 +2,7 @@
 //   node tokenize-component.js <stylesheet under platform/> [--dry] [--out components/<name>.tokens.json]
 //   e.g. node tokenize-component.js components/Input/input.css
 //   --out writes the new tokens into that file under platform/tokens/ (a library component's own token file, read by
-//   build-tokens.js's glob set) instead of components.tokens.json, which a library lane never edits
+//   packages/tokens/sd/assemble.cjs's glob set) instead of components.tokens.json, which a library lane never edits
 //
 // Every declaration of a Platform stylesheet whose value points to a shared token (var(--plx-sys-…) / var(--plx-ref-…))
 // gets a component token, --plx-comp-<block>-<context>-<property>, written into platform/tokens/components.tokens.json
@@ -67,7 +67,7 @@ function context(sel, block) {
 }
 
 // the names already taken (the shared set and, with --out, the component's own file); new tokens go into OUT
-const tok = fs.existsSync(OUT) ? JSON.parse(fs.readFileSync(OUT, 'utf8')) : { $description: 'Component tokens of ' + path.basename(OUT, '.tokens.json') + ' (a library component file, read by build-tokens.js).', 'plx-comp': {} };
+const tok = fs.existsSync(OUT) ? JSON.parse(fs.readFileSync(OUT, 'utf8')) : { $description: 'Component tokens of ' + path.basename(OUT, '.tokens.json') + ' (a library component file, read by packages/tokens/sd/assemble.cjs).', 'plx-comp': {} };
 const comp = tok['plx-comp'] = tok['plx-comp'] || {};
 const shared = OUT === TOKENS ? {} : JSON.parse(fs.readFileSync(TOKENS, 'utf8'))['plx-comp'];
 const taken = (n) => comp[n] || shared[n];

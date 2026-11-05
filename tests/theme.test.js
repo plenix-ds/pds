@@ -22,7 +22,9 @@ function stage(name, edit) {
   const T = fs.mkdtempSync(path.join(os.tmpdir(), 'plx-theme-' + name + '-'));
   for (const d of ['platform/tokens', 'platform/standards', 'platform/system']) copyDir(path.join(ROOT, d), path.join(T, d));
   fs.mkdirSync(path.join(T, 'platform', 'providers'), { recursive: true });
-  for (const f of ['build-tokens.js', 'build-standards.js']) fs.copyFileSync(path.join(ROOT, f), path.join(T, f));
+  // the token build (slice 101): style-dictionary/build.mjs with its assembly and the value reader, and the packages it imports
+  for (const f of ['build-standards.js', 'style-dictionary/build.mjs', 'packages/tokens/sd/assemble.cjs', 'tools/token-value.js']) { fs.mkdirSync(path.dirname(path.join(T, f)), { recursive: true }); fs.copyFileSync(path.join(ROOT, f), path.join(T, f)); }
+  fs.symlinkSync(path.join(ROOT, 'node_modules'), path.join(T, 'node_modules'), 'dir');
   fs.copyFileSync(path.join(ROOT, 'platform', 'index.js'), path.join(T, 'platform', 'index.js'));
   edit(T);
   return T;
@@ -43,8 +45,9 @@ function addSample(T, change, foundations) {
   std.themes.sample = { label: 'Sample', description: 'A test theme.', foundations: 'theme-sample.tokens.json', light: 'theme-sample.light.tokens.json', dark: 'theme-sample.dark.tokens.json' };
   fs.writeFileSync(path.join(T, 'platform', 'standards', 'themes.json'), JSON.stringify(std, null, 2));
 }
-const build = (T) => { require(path.join(T, 'build-tokens.js'))(T); require(path.join(T, 'build-standards.js'))(T); };
-const fails = (T) => { try { require(path.join(T, 'build-tokens.js'))(T); return false; } catch (e) { return String(e.message); } };
+const tokens = (T) => require('child_process').execFileSync(process.execPath, [path.join(T, 'style-dictionary', 'build.mjs'), '--no-index'], { cwd: T, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
+const build = (T) => { tokens(T); require(path.join(T, 'build-standards.js'))(T); };
+const fails = (T) => { try { tokens(T); return false; } catch (e) { return String(e.stderr || e.message); } };
 
 (async () => {
   // 1. a good sample theme builds

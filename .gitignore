@@ -21,7 +21,7 @@ publish.config
 tools/overflow-report/
 # the Platform bundle's hidden source map (node build-app.js, Vite; check-bundle.js reads it, #709); never committed
 build/vite/
-# Style Dictionary's side-by-side token output (npm run tokens:sd, #372 step 1); never committed
+# Style Dictionary's per-group token output (style-dictionary/build.mjs, build/sd/sets/; the index, build/sd/index/); never committed
 build/sd/
 
 # Build outputs (#692): written by `npm ci` (its prepare script: node build-app.js), never committed.
