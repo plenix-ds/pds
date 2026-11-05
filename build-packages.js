@@ -472,6 +472,8 @@ if (fs.existsSync(path.join(DS, 'inventory.js'))) {
   // every variation as its own record (docs/adr/0013, #117): stable ids, side tables; a duplicate id stops the release
   const VR = require('./tools/variant-records.js').derive(recs, ROOT);
   if (VR.problems.length) throw new Error('variant records (docs/adr/0013):\n  ' + VR.problems.join('\n  '));
+  // what each variation sets (docs/adr/0015, #116): its own rules in the stylesheets, or the side table styles.json
+  require('./tools/variant-styles.js').apply(VR.variants, recs, ROOT);
   components.forEach((c) => { if (VR.byItem[c.id]) c.variants = VR.byItem[c.id]; });
   json(path.join(API, 'variants.json'), Object.assign({}, meta, { count: VR.variants.length, redirects: VR.redirects, variants: VR.variants }));
   json(path.join(API, 'components.json'), Object.assign({}, meta, { count: components.length, components }));
