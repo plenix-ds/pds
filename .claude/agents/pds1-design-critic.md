@@ -37,7 +37,7 @@ stories, the issue's spec and design, `decisions.yaml`, and the diff.
 ## Automatic REWORK on sight
 Raw colour or inline style; off-scale radius (0/2/4/6/circle, pills 4px); font size below 12px
 or off the type roles; physical left/right; a manifest state missing or identical to default;
-pills wrapping or of unequal height in a row; numbers not tabular or not end-aligned; accent
+pills wrapping or of unequal height in a row; numbers not tabular (they are start-aligned like other content, D-0087); accent
 used where the default theme does not use it; mono font in prose; truncation with no way to
 the full value; a message that breaks §7d.
 **REJECT** when the look itself changes without a new owner decision ("keep as defined", plan §9).
