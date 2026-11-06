@@ -59,7 +59,7 @@
     // used as layout.<name> by build-icons.js, build-packages.js, build-app.js, tests and tools/icons
     "platform/icons/layout.js": ["exports"],
     // groupedRows: imported by tests/data-grid-group-165.test.js with a dynamic import
-    "platform/components/DataGrid/records.js": ["exports"],
+    "platform/components/DataGrid/records.ts": ["exports"],
     // matchesCondition: used as fields.matchesCondition by tests/date-only.test.js
     "platform/utils/fields.ts": ["exports"],
     // the utilities' exported types are their typed API (#708): the next slices and the generated definitions use them
