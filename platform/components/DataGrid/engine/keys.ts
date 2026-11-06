@@ -134,7 +134,7 @@ export const rowKeys =
   };
 
 export const cellKeys =
-  ({ isStatic, value, canEdit, enterEdits, typeToReplace, formMode, toggle, setEditing, row, c, model, ordered, column, frame, focusCell, cellRange, kept, cardList }: any) =>
+  ({ isStatic, value, canEdit, enterEdits, typeToReplace, formMode, toggle, setEditing, row, c, model, ordered, column, frame, focusCell, cellRange, undoRedo, kept, cardList }: any) =>
   (event: any) => {
     if (isStatic || event.target !== event.currentTarget) return;
     // a checkbox cell (the option editing.types): Space toggles it and saves at once (ADR 0016)
@@ -164,6 +164,17 @@ export const cellKeys =
       if (!event.shiftKey && !event.altKey && (event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'c' && cellRange.rect && !document.getSelection()?.toString()) {
         event.preventDefault();
         cellRange.copy();
+        return;
+      }
+    }
+    // undo and redo of cell edits (the option editing.undo, ADR 0021): Ctrl or Command with Z undoes, with Shift or with Y redoes; only
+    // inside this table. Without the option the keys are the browser's.
+    if (undoRedo && (event.ctrlKey || event.metaKey) && !event.altKey) {
+      const k = event.key.toLowerCase();
+      if (k === 'z' || k === 'y') {
+        event.preventDefault();
+        if (k === 'y' || event.shiftKey) undoRedo.redo();
+        else undoRedo.undo();
         return;
       }
     }
