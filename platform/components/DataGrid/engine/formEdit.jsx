@@ -15,6 +15,8 @@
      Loaded on first use (one dynamic import from DataGridEngine.jsx), so a table that never edits in a form does not carry it.
 */
 import React from 'react';
+import { createPortal } from 'react-dom';
+import { development } from '../../../utils/devWarn.ts';
 import { FormFlow } from '../../../patterns/FormFlow/FormFlow.jsx';
 import { Field } from '../../Field/Field.tsx';
 import { Input, Select, Textarea } from '../../Input/Input.tsx';
@@ -73,16 +75,32 @@ function Control({ column, kind, value, set, invalid, record }) {
   }
 }
 
-export default function FormEdit({ record, rowKey, columns, isEditable, name, types, surface = 'drawer', onRecordEdit, commitEdit, onClose, S }) {
+export default function FormEdit({ record, rowKey, columns, isEditable, name, types, surface = 'drawer', renderForm, openKey, onRecordEdit, commitEdit, onClose, S }) {
   const editable = columns.filter((c) => c.editor && isEditable(c)),
     initial = React.useMemo(() => Object.fromEntries(editable.map((c) => [c.field, valueAt(record, c.field)])), [record]),
     [errors, setErrors] = React.useState({}),
     [refusal, setRefusal] = React.useState(null);
   const title = S.formTitle.replace('{name}', name);
+  // formSurface={{ panel: ref }} (ADR 0016 addendum): the whole form goes into the application's own panel, which is marked while it is open; no element: the drawer
+  const wantsPanel = surface && typeof surface === 'object',
+    panelEl = wantsPanel ? surface.panel?.current ?? null : null;
+  React.useEffect(() => {
+    if (wantsPanel && !panelEl && development()) console.warn('[Plenix] DataGrid: formSurface.panel has no element; the form opens in the drawer');
+    if (!panelEl) return undefined;
+    panelEl.setAttribute('data-plx-form-open', '');
+    return () => panelEl.removeAttribute('data-plx-form-open');
+  }, [panelEl, wantsPanel]);
+  // the application's close button moves the open row away from the edited record: while the form is in its panel that is Cancel, through FormFlow's
+  // unsaved-changes question (ADR 0016 addendum D-0063)
+  React.useEffect(() => {
+    if (!panelEl || openKey === undefined || String(openKey ?? '') === String(rowKey)) return;
+    const cancel = panelEl.querySelector('.plx-form-actions button:not([type="submit"])');
+    if (cancel) cancel.click();
+  }, [panelEl, openKey, rowKey]);
   const validate = async (value) => {
     const found = {};
     for (const c of editable) {
-      const message = c.validate ? await c.validate(value[c.field], record) : null;
+      const message = c.validate && c.field in value ? await c.validate(value[c.field], record) : null;
       if (message) found[c.field] = message;
     }
     setErrors(found);
@@ -92,7 +110,7 @@ export default function FormEdit({ record, rowKey, columns, isEditable, name, ty
   };
   const submit = async (value) => {
     const changes = {};
-    for (const c of editable) if (!Object.is(value[c.field], initial[c.field])) changes[c.field] = value[c.field];
+    for (const field of Object.keys(value)) if (!Object.is(value[field], field in initial ? initial[field] : valueAt(record, field))) changes[field] = value[field];
     setRefusal(null);
     try {
       if (onRecordEdit) await onRecordEdit(record, changes);
@@ -102,10 +120,10 @@ export default function FormEdit({ record, rowKey, columns, isEditable, name, ty
       throw error;
     }
   };
-  return (
+  const flow = (
     <FormFlow
       mode="edit"
-      surface={surface === 'dialog' ? 'dialog' : 'drawer'}
+      surface={panelEl ? 'page' : surface === 'dialog' ? 'dialog' : 'drawer'}
       title={title}
       initialValue={initial}
       sessionKey={String(rowKey)}
@@ -115,10 +133,10 @@ export default function FormEdit({ record, rowKey, columns, isEditable, name, ty
       onCancel={onClose}
       strings={{ saved: S.formSaved.replace('{name}', name), failed: '' }}
     >
-      {({ value, setValue }) => (
+      {({ value, setValue, busy }) => (
         <>
           {refusal ? <ErrorSummary errors={[{ target: idOf(editable[0] || columns[0]), message: refusal }]} /> : null}
-          {columns.map((c) => {
+          {renderForm ? renderForm(record, { value, setValue, errors, busy }) : columns.map((c) => {
             if (editable.includes(c)) {
               return (
                 <Field key={c.field} label={c.title} error={errors[c.field]}>
@@ -148,4 +166,5 @@ export default function FormEdit({ record, rowKey, columns, isEditable, name, ty
       )}
     </FormFlow>
   );
+  return panelEl ? createPortal(flow, panelEl) : flow;
 }
