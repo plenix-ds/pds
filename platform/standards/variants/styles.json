@@ -2904,5 +2904,59 @@
       }
     ],
     "why": ".plx-field__counter.is-over in field.css"
+  },
+  "circular-progress--amount-known-determinate": {
+    "sets": [
+      {
+        "property": "stroke",
+        "part": "track",
+        "token": "--plx-comp-progress-circle-track-color"
+      }
+    ],
+    "why": ".plx-progress-circle__track, the faint ring; the arc fills clockwise from the top to value out of max, in the tone's color"
+  },
+  "circular-progress--amount-unknown-indeterminate": {
+    "sets": [
+      {
+        "property": "stroke",
+        "part": "track",
+        "token": "--plx-comp-progress-circle-track-color"
+      }
+    ],
+    "why": "the same faint ring; with no value the arc turns until the amount is known"
+  },
+  "bottom-sheet-navigation--layout-grid": {
+    "sets": [
+      {
+        "property": "column-gap",
+        "part": "grid",
+        "token": "--plx-comp-bottom-sheet-nav-grid-gap"
+      },
+      {
+        "property": "min-inline-size",
+        "part": "grid",
+        "token": "--plx-comp-bottom-sheet-nav-tile-min-width"
+      },
+      {
+        "property": "border-radius",
+        "part": "tile",
+        "token": "--plx-comp-bottom-sheet-nav-tile-radius"
+      },
+      {
+        "property": "color",
+        "part": "tile-icon",
+        "token": "--plx-comp-bottom-sheet-nav-tile-icon-color"
+      },
+      {
+        "property": "color",
+        "part": "tile-label",
+        "token": "--plx-comp-bottom-sheet-nav-tile-label-text"
+      }
+    ],
+    "why": ".plx-bottom-sheet-nav__grid and its tiles: the places as a grid of icon tiles"
+  },
+  "bottom-sheet-navigation--layout-list-default": {
+    "sets": [],
+    "why": "markup only: the places as a NavList (groups, icons, counts) in the Sheet; .plx-bottom-sheet-nav__list sets only a zero minimum width"
   }
 }
