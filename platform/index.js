@@ -68,7 +68,7 @@ export { ActionBar } from './patterns/ActionBar/ActionBar.tsx';
 export { NavList } from './components/NavList/NavList.tsx';
 export { Tree } from './components/Tree/Tree.tsx';
 export { MediaViewer } from './components/MediaViewer/MediaViewer.tsx';
-export { AppHeader } from './patterns/AppHeader/AppHeader.jsx';
+export { AppHeader } from './patterns/AppHeader/AppHeader.tsx';
 export { FilterBar } from './patterns/FilterBar/FilterBar.tsx';
 export { SearchWorkspace } from './patterns/SearchWorkspace/SearchWorkspace.jsx';
 export { DataToolbar } from './patterns/DataToolbar/DataToolbar.tsx';

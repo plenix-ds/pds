@@ -32,7 +32,7 @@ const EX = {   // existing Platform code (for extend targets)
   Slider: ['platform/components/Slider/Slider.tsx', 'platform/components/Slider/slider.css'],
   Tabs: ['platform/components/Tabs/Tabs.tsx', 'platform/components/Tabs/tabs.css'],
   NavPane: ['platform/patterns/NavPane/NavPane.tsx', 'platform/patterns/NavPane/nav-pane.css'],
-  AppHeader: ['platform/patterns/AppHeader/AppHeader.jsx', 'platform/patterns/AppHeader/app-header.css'],
+  AppHeader: ['platform/patterns/AppHeader/AppHeader.tsx', 'platform/patterns/AppHeader/app-header.css'],
   Card: ['platform/components/Card/Card.tsx', 'platform/components/Card/card.css'],
   Metric: ['platform/components/Metric/Metric.tsx', 'platform/components/Metric/metric.css'],
   DropZone: ['platform/components/DropZone/DropZone.tsx', 'platform/components/DropZone/drop-zone.css'],
