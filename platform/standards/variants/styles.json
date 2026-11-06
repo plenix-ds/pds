@@ -5212,7 +5212,7 @@
         "token": "--plx-comp-retry-status-margin-block-start"
       }
     ],
-    "why": "retry.css: .plx-retry__status holds the countdown (\"Retrying in …\") while the next attempt waits"
+    "why": "retry.css: .plx-retry__status holds the countdown (\"Retrying in \u2026\") while the next attempt waits"
   },
   "retry-pattern--kind-retry-count": {
     "sets": [
@@ -5342,5 +5342,87 @@
       }
     ],
     "why": "avatar-group.css: .plx-avatar-group__more, the \"+N\" avatar that stands for the people past the maximum (with --stack it has the same ring as the avatars); as a button it shows the rest in a popover"
+  },
+  "ai-button--variant-trigger": {
+    "sets": [],
+    "why": "markup only: a Button with the sparkle icon and the action label, which runs onAction only when pressed (mode trigger)"
+  },
+  "ai-button--variant-icon-only": {
+    "sets": [],
+    "why": "markup only: the sparkle icon alone; the action name is its accessible name (mode icon)"
+  },
+  "ai-button--variant-with-menu-of-ai-actions": {
+    "sets": [],
+    "why": "markup only: a button that opens a Menu of named AI actions, each run once (mode menu)"
+  },
+  "ai-thinking--variant-thinking": {
+    "sets": [],
+    "why": "markup only: a Chat.Typing indicator that says the assistant is working, with a label (variant thinking)"
+  },
+  "ai-thinking--variant-with-steps": {
+    "sets": [],
+    "why": "markup only: a Chat.Typing indicator with the steps listed and the current step marked (variant steps)"
+  },
+  "combobox--groups-options-under-group-headings": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "group",
+        "token": "--plx-comp-combobox-group-text"
+      },
+      {
+        "property": "font-family",
+        "part": "group",
+        "token": "--plx-comp-combobox-group-font-family"
+      },
+      {
+        "property": "font-size",
+        "part": "group",
+        "token": "--plx-comp-combobox-group-font-size"
+      }
+    ],
+    "why": ".plx-combobox__group in combobox.css: the heading above each group of options (options[].group)"
+  },
+  "combobox--selection-one-choice-default": {
+    "sets": [],
+    "why": "markup only: one value is chosen and shown in the field; multiple turns the chosen values into tags"
+  },
+  "entity-picker--choice-single": {
+    "sets": [],
+    "why": "markup only: one record is chosen; with multiple the chosen records are listed instead"
+  },
+  "full-screen-dialog--size-full-screen": {
+    "sets": [],
+    "why": ".plx-dialog--full sets block-size and max-block-size to 100% and drops the maximum width, none of them tokens; the modal layer keeps the layout inset on every side"
+  },
+  "details--variant-default": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-comp-details-text"
+      },
+      {
+        "property": "font-family",
+        "part": "block",
+        "token": "--plx-comp-details-font-family"
+      },
+      {
+        "property": "font-size",
+        "part": "block",
+        "token": "--plx-comp-details-font-size"
+      },
+      {
+        "property": "color",
+        "part": "summary",
+        "token": "--plx-comp-details-summary-text"
+      },
+      {
+        "property": "column-gap",
+        "part": "summary",
+        "token": "--plx-comp-details-summary-gap"
+      }
+    ],
+    "why": ".plx-details and .plx-details__summary in details.css: the base look, one block of detail behind a summary line"
   }
 }
