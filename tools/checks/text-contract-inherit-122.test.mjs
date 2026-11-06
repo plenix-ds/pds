@@ -29,6 +29,15 @@ describe('#122 context-sized parts', () => {
     const m = css('.plx-x{' + FAMILY + 'font-weight:inherit;font-size:inherit;letter-spacing:inherit;line-height:inherit;}');
     expect(m.declared['plx-x'].contract).toBe('follows');
   });
+  it('a weight of its own that no text role has (500) keeps the part on the backlog, however many inherits it writes (plx-link--standalone)', () => {
+    const m = css('.plx-x{' + FAMILY + 'font-weight:500;font-size:inherit;letter-spacing:inherit;line-height:inherit;}');
+    expect(m.declared['plx-x'].contract).not.toBe('context-sized');
+  });
+  it('a ::before or ::after rule is the pseudo-element\'s typography, not the part\'s (the print-only address after a link)', () => {
+    const m = css('.plx-x{' + WEIGHT + '}.plx-x[href]::after{font-family:var(--plx-sys-font-data);word-spacing:var(--plx-sys-font-data-word-spacing);}');
+    expect(m.declared['plx-x']).toEqual({ contract: 'adjusts', props: ['font-weight'] });
+    expect(m.incomplete['plx-x']).toBeUndefined();
+  });
 });
 // #122 batch A (G3): a part's older block form beside its own modifier is the modifier's rule; a base part named on its own is still the base part's
 describe('#122 the data modifier of a part and its older block form', () => {

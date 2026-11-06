@@ -1,10 +1,6 @@
 {
  "$description": "The text contract of every part that declares typography (the Plenix Styling Standard, section 6; checked by check-system.rules/text-contract.js). establishes: the part applies one whole text role (platform/tokens/semantic/typography.tokens.json). adjusts: the part sets only these properties and inherits the rest. A part that is not listed declares no typography: it follows its context.",
  "parts": {
-  "<a>": {
-   "contract": "follows",
-   "font": "mono"
-  },
   "<body>": {
    "contract": "establishes",
    "role": "body",
@@ -321,22 +317,23 @@
    ]
   },
   "plx-brand-lockup__app": {
-   "contract": "adjusts",
-   "props": [
-    "font-family",
+   "contract": "establishes",
+   "role": "body",
+   "font": "sans",
+   "adjusts": [
+    "font-size",
     "font-weight",
-    "line-height",
-    "word-spacing"
+    "line-height"
    ]
   },
   "plx-brand-lockup__name": {
-   "contract": "adjusts",
-   "props": [
-    "font-family",
-    "font-weight",
+   "contract": "establishes",
+   "role": "heading",
+   "font": "sans",
+   "adjusts": [
+    "font-size",
     "letter-spacing",
-    "line-height",
-    "word-spacing"
+    "line-height"
    ]
   },
   "plx-breadcrumbs__list": {
@@ -970,11 +967,6 @@
     "font-weight",
     "line-height"
    ]
-  },
-  "plx-data-grid__grid-cell--narrow": {
-   "contract": "establishes",
-   "role": "body",
-   "font": "sans"
   },
   "plx-data-grid__grid-cell--data": {
    "contract": "establishes",
@@ -1667,17 +1659,19 @@
    ]
   },
   "plx-image-editor__text": {
-   "contract": "adjusts",
-   "props": [
-    "font-family",
+   "contract": "establishes",
+   "role": "body",
+   "font": "sans",
+   "adjusts": [
     "font-size",
-    "font-weight",
-    "word-spacing"
+    "font-weight"
    ]
   },
   "plx-image-editor__text--bold": {
-   "contract": "adjusts",
-   "props": [
+   "contract": "establishes",
+   "role": "body",
+   "font": "sans",
+   "adjusts": [
     "font-weight"
    ]
   },
@@ -1780,9 +1774,7 @@
   "plx-link": {
    "contract": "adjusts",
    "props": [
-    "font-family",
-    "font-weight",
-    "word-spacing"
+    "font-weight"
    ]
   },
   "plx-link--standalone": {
@@ -1795,7 +1787,6 @@
    "contract": "adjusts",
    "props": [
     "font-size",
-    "font-weight",
     "line-height"
    ]
   },
@@ -2279,12 +2270,12 @@
    ]
   },
   "plx-popover": {
-   "contract": "adjusts",
-   "props": [
-    "font-family",
+   "contract": "establishes",
+   "role": "body",
+   "font": "sans",
+   "adjusts": [
     "font-size",
-    "line-height",
-    "word-spacing"
+    "line-height"
    ]
   },
   "plx-popover__title": {
@@ -2870,8 +2861,13 @@
    ]
   },
   "plx-session-timeout__inline-time": {
-   "contract": "follows",
-   "font": "mono"
+   "contract": "establishes",
+   "role": "body",
+   "font": "mono",
+   "adjusts": [
+    "font-size",
+    "line-height"
+   ]
   },
   "plx-session-timeout__text": {
    "contract": "adjusts",
@@ -2881,11 +2877,13 @@
    ]
   },
   "plx-session-timeout__time": {
-   "contract": "adjusts",
-   "props": [
-    "font-family",
+   "contract": "establishes",
+   "role": "body",
+   "font": "mono",
+   "adjusts": [
+    "font-size",
     "font-weight",
-    "word-spacing"
+    "line-height"
    ]
   },
   "plx-session-timeout__title": {

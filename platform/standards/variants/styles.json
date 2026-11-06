@@ -5558,5 +5558,197 @@
   "data-grid--column-headers-type-icons-wrap-headers-the-column-menu-wrap-headers": {
     "sets": [],
     "why": "markup only: wrapHeaders lets a long column name wrap onto more lines instead of being cut with an ellipsis (off by default)"
+  },
+  "sparkline--variant-area": {
+    "sets": [],
+    "why": "markup only: ECharts draws the sparkline (the area under the line); its color is the series' data-viz step (data-plx-dataviz) and the chart engine reads the sparkline tokens, not a stylesheet rule of this variation"
+  },
+  "sparkline--variant-bar": {
+    "sets": [],
+    "why": "markup only: ECharts draws the sparkline (one bar per value); its color is the series' data-viz step (data-plx-dataviz) and the chart engine reads the sparkline tokens, not a stylesheet rule of this variation"
+  },
+  "sparkline--variant-line-default": {
+    "sets": [],
+    "why": "markup only: ECharts draws the sparkline (the line); its color is the series' data-viz step (data-plx-dataviz) and the chart engine reads the sparkline tokens, not a stylesheet rule of this variation"
+  },
+  "sparkline--variant-with-last-point": {
+    "sets": [],
+    "why": "markup only: ECharts draws the sparkline (a dot on the last value); its color is the series' data-viz step (data-plx-dataviz) and the chart engine reads the sparkline tokens, not a stylesheet rule of this variation"
+  },
+  "pie-chart--variant-pie": {
+    "sets": [],
+    "why": "markup only: ECharts draws the slices in the data-viz steps, in the order of the data"
+  },
+  "pie-chart--variant-donut": {
+    "sets": [],
+    "why": "markup only: ECharts draws the slices as a ring (the hole is geometry the chart draws); the center value is the with-center-value variation"
+  },
+  "pie-chart--variant-with-center-value": {
+    "sets": [
+      {
+        "property": "fill",
+        "part": "center-value",
+        "token": "--plx-comp-pie-chart-center-value-text"
+      },
+      {
+        "property": "font-family",
+        "part": "center-value",
+        "token": "--plx-comp-pie-chart-center-value-font-family"
+      },
+      {
+        "property": "font-size",
+        "part": "center-value",
+        "token": "--plx-comp-pie-chart-center-value-font-size"
+      },
+      {
+        "property": "font-weight",
+        "part": "center-value",
+        "token": "--plx-comp-pie-chart-center-value-font-weight"
+      },
+      {
+        "property": "fill",
+        "part": "center-label",
+        "token": "--plx-comp-pie-chart-center-label-text"
+      },
+      {
+        "property": "font-family",
+        "part": "center-label",
+        "token": "--plx-comp-pie-chart-center-label-font-family"
+      },
+      {
+        "property": "font-size",
+        "part": "center-label",
+        "token": "--plx-comp-pie-chart-center-label-font-size"
+      }
+    ],
+    "why": "pie-chart.css: .plx-pie-chart__center-value and __center-label, the total (or the given value) in the data font with its words under it"
+  },
+  "pie-chart--variant-half": {
+    "sets": [
+      {
+        "property": "transform",
+        "part": "center-value",
+        "token": "--plx-comp-pie-chart-center-label-line-height"
+      }
+    ],
+    "why": "pie-chart.css: .plx-pie-chart--half moves the center value up by the label's line height and sets the label's baseline (a keyword with no token); the half ring itself is geometry the chart draws"
+  },
+  "radar-chart--variant-single": {
+    "sets": [
+      {
+        "property": "fill",
+        "part": "area",
+        "token": "--plx-comp-chart-mark-default-color"
+      },
+      {
+        "property": "fill-opacity",
+        "part": "area",
+        "token": "--plx-comp-radar-chart-area-opacity"
+      },
+      {
+        "property": "r",
+        "part": "point",
+        "token": "--plx-comp-radar-chart-point-radius"
+      }
+    ],
+    "why": "radar-chart.css: the filled area and the points of the one item; the area takes its series' data color when it has one (data-plx-dataviz), otherwise the default mark color (the chart engine reads these tokens to draw it in ECharts)"
+  },
+  "radar-chart--variant-compare": {
+    "sets": [
+      {
+        "property": "fill",
+        "part": "area",
+        "token": "--plx-comp-chart-mark-default-color"
+      },
+      {
+        "property": "fill-opacity",
+        "part": "area",
+        "token": "--plx-comp-radar-chart-area-opacity"
+      },
+      {
+        "property": "r",
+        "part": "point",
+        "token": "--plx-comp-radar-chart-point-radius"
+      }
+    ],
+    "why": "radar-chart.css: the same area and points for each item, in the item's color; the legend tells them apart; the area takes its series' data color when it has one (data-plx-dataviz), otherwise the default mark color (the chart engine reads these tokens to draw it in ECharts)"
+  },
+  "waterfall-chart--variant-start-to-end": {
+    "sets": [
+      {
+        "property": "stroke",
+        "part": "connector",
+        "token": "--plx-comp-waterfall-chart-connector-color"
+      },
+      {
+        "property": "stroke-dasharray",
+        "part": "connector",
+        "token": "--plx-comp-waterfall-chart-connector-dash"
+      },
+      {
+        "property": "stroke-width",
+        "part": "connector",
+        "token": "--plx-comp-waterfall-chart-connector-width"
+      }
+    ],
+    "why": "waterfall-chart.css: .plx-waterfall-chart__connector, a dashed line from one step's end to the next step's start (the chart engine reads these tokens to draw it in ECharts)"
+  },
+  "waterfall-chart--variant-with-totals": {
+    "sets": [
+      {
+        "property": "stroke",
+        "part": "connector",
+        "token": "--plx-comp-waterfall-chart-connector-color"
+      },
+      {
+        "property": "stroke-dasharray",
+        "part": "connector",
+        "token": "--plx-comp-waterfall-chart-connector-dash"
+      },
+      {
+        "property": "stroke-width",
+        "part": "connector",
+        "token": "--plx-comp-waterfall-chart-connector-width"
+      }
+    ],
+    "why": "waterfall-chart.css: the same connectors; totals are columns from zero (geometry the chart draws) (the chart engine reads these tokens to draw it in ECharts)"
+  },
+  "navigation-menu--layout-columns-default": {
+    "sets": [
+      {
+        "property": "column-gap",
+        "part": "columns",
+        "token": "--plx-comp-mega-menu-column-gap"
+      },
+      {
+        "property": "row-gap",
+        "part": "columns",
+        "token": "--plx-comp-mega-menu-row-gap"
+      },
+      {
+        "property": "inline-size",
+        "part": "group",
+        "token": "--plx-comp-mega-menu-column-width"
+      },
+      {
+        "property": "color",
+        "part": "heading",
+        "token": "--plx-comp-mega-menu-heading-text"
+      },
+      {
+        "property": "font-size",
+        "part": "heading",
+        "token": "--plx-comp-mega-menu-heading-font-size"
+      }
+    ],
+    "why": ".plx-mega-menu__columns, __group and __heading in mega-menu.css: the grouped links in columns under a heading each"
+  },
+  "navigation-menu--layout-mobile-accordion": {
+    "sets": [],
+    "why": ".plx-mega-menu--accordion sets only display flex in a stretched column (no token): the groups fold one under another instead of opening as a panel"
+  },
+  "navigation-menu--layout-with-featured": {
+    "sets": [],
+    "why": "markup only: a featured area for one current highlight beside the columns; mega-menu.css has no rule specific to it"
   }
 }

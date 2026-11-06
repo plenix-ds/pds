@@ -47,7 +47,7 @@
       "$description": "Brand: the wordmark’s face (the heading face)."
     },
     "brand-name-font-weight": {
-      "$value": "{plx-sys.font-weight-semibold}",
+      "$value": "{plx-sys.text-heading-font-weight}",
       "$type": "fontWeight",
       "$description": "Brand: the wordmark’s weight (the kit’s wordmark is semibold)."
     },
@@ -110,6 +110,11 @@
       "$value": "{plx-ref.size-5u}",
       "$type": "dimension",
       "$description": "Brand: the mark’s square at MD (the default lockup size)."
+    },
+    "brand-font-size": {
+      "$value": "{plx-comp.brand-md-font-size}",
+      "$type": "dimension",
+      "$description": "Brand: the wordmark and the application name's size, as the size variant (SM to XL) sets it; the default is MD."
     },
     "brand-md-font-size": {
       "$value": "{plx-ref.font-size-400}",

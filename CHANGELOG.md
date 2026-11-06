@@ -6,6 +6,15 @@ The batch numbers point to the work log (Plenix - DAM/audit/batches/).
 
 ## [Unreleased]
 
+## [0.90.1] - 2026-11-06
+
+### Upgrading from 0.90.0
+Nothing to change. An app that serves the PDF.js files itself serves the new `wasm/` folder next to the worker, with `application/wasm` for the `.wasm` files.
+
+### Fixed
+- DocumentViewer: scanned PDFs that use JPEG 2000 or JBIG2 images no longer show blank images. PDF.js 6.x decodes them with WebAssembly, so the viewer now vendors its `wasm/` folder (`platform/vendor/pdfjs/wasm/`, shipped on the CDN and in the npm package) and passes `wasmUrl` beside the worker. An app that serves the PDF.js files itself serves `wasm/` next to the worker (#384).
+- DataGrid: an empty group row and the "Add to …" label read "(Empty)" again in English, as in Arabic; 0.90.0 showed "No value" there because the English catalog wrote `dataGrid.noValue` twice. The Form Edit's hidden text for an empty field has its own word, `dataGrid.formNoValue` ("No value"), and the locale check now fails on a key written twice (#720).
+
 ## [0.90.0] - 2026-11-06
 
 ### Upgrading from 0.89.0

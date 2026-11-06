@@ -52,6 +52,7 @@
 .plx-u-leading-16px{line-height:var(--plx-ref-size-4u);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
+.plx-u-left-0{left:0;}
 .plx-u-max-w-600px{max-width:var(--plx-ref-size-150u);}
 .plx-u-mb-stack-md{margin-bottom:var(--plx-sys-space-stack-md);}
 .plx-u-mb-stack-sm{margin-bottom:var(--plx-sys-space-stack-sm);}
@@ -60,6 +61,7 @@
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
+.plx-u-ml-auto{margin-left:auto;}
 .plx-u-ms-auto{margin-inline-start:auto;}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
@@ -71,6 +73,9 @@
 .plx-u-overflow-y-auto{overflow-y:auto;}
 .plx-u-p-12px{padding-block-end:var(--plx-ref-space-3u);padding-block-start:var(--plx-ref-space-3u);padding-inline-end:var(--plx-ref-space-3u);padding-inline-start:var(--plx-ref-space-3u);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
+.plx-u-pl-12px{padding-left:var(--plx-ref-space-3u);}
+/* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
+.plx-u-pl-16px{padding-left:var(--plx-ref-space-4u);}
 .plx-u-ps-12px{padding-inline-start:var(--plx-ref-space-3u);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
 .plx-u-ps-16px{padding-inline-start:var(--plx-ref-space-4u);}
@@ -100,6 +105,7 @@
 .plx-u-relative{position:relative;}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
+.plx-u-right-0{right:0;}
 .plx-u-self-center{align-self:center;}
 .plx-u-shrink-0{flex-shrink:0;}
 .plx-u-text-content-muted{color:var(--plx-sys-content-muted);}
@@ -117,10 +123,6 @@
 .plx-u-absolute{position:absolute;}
 .plx-u-bg-transparent{background-color:transparent;}
 .plx-u-justify-center{justify-content:center;}
-/* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
-.plx-u-left-0{left:0;}
-/* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
-.plx-u-right-0{right:0;}
 .plx-u-text-center{text-align:center;}
 .plx-u-top-0{top:0;}
 .plx-u-w-100px{width:var(--plx-ref-size-25u);}
