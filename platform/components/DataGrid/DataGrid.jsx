@@ -138,7 +138,7 @@
        third, for short lists where the primary value matters most. "wide" draws the same slots as one aligned row at any width, a column each in the
        order title, subtitle, date, primary, secondary, tertiary, for when the room always fits. With only template set, the layout is "A"
      template: { title, subtitle, date, primary, secondary, tertiary }: the row template's slots, each a column's field, every slot optional. Slots left
-       out are filled by one fixed rule (engine/rowTemplate.js): the first date column is the date, the first number column the primary value, then
+       out are filled by one fixed rule (engine/rowTemplate.ts): the first date column is the date, the first number column the primary value, then
        title, subtitle, primary, secondary, tertiary and date take the next columns in the order of `columns`. A column that fills no slot is not drawn
        in a card that names its layout or template: map every field a person needs while scanning; the rest shows when the row is opened (the default card
        keeps such fields as "Label: value" lines under its last line). Selection, the open row, the keyboard and the row menu work in every layout
@@ -185,7 +185,7 @@
 */
 import React from 'react';
 import { DataGridEngine } from './DataGridEngine.jsx';
-import { useRowTemplate } from './engine/rowTemplate.js';
+import { useRowTemplate } from './engine/rowTemplate.ts';
 import { useDataGridActions } from './actions.jsx';
 import { unreadCommands } from './unread-commands.js';
 import { ToastProvider, useOptionalToast } from '../Toast/Toast.tsx';

@@ -12,7 +12,7 @@
      Moved out of DataGridEngine.jsx without any change to the code (issue 714, the sorting concern): the parts were lines of
      the engine function, in the same order with the same values. The engine is documented in DataGridEngine.jsx.
 */
-import { sorted } from './helpers.jsx';
+import { sorted } from './helpers.tsx';
 
 export function sortActions({ sorting, setSortOwner, sortSignal, setSorting, setPage, props, emit }) {
   const changeSort = (update) => {

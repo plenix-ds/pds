@@ -4,7 +4,7 @@
      filled from the column order by one fixed rule. The result tells the grid how to draw a record as a card (layout A or B, in the
      narrow view) or as one aligned row (layout wide, at any width).
    Usage:
-     import { useRowTemplate } from './engine/rowTemplate.js';
+     import { useRowTemplate } from './engine/rowTemplate.ts';
      const resolved = useRowTemplate(props);   // the grid's props, with columns, narrow and rowTemplate set for a layout; the props as given when no layout or template is set
      resolveRowTemplate({ columns, layout, template })   // { layout, slots, slotOf, keep } or null
    Props:
@@ -31,19 +31,21 @@
      menu, editing) is the grid's own, because a card is the same row with its cells placed in a grid.
 */
 import React from 'react';
-import { kinds } from './helpers.jsx';
+import { kinds } from './helpers.tsx';
+import type { GridColumn, RowTemplate, ResolvedTemplate } from '../types.ts';
 
 // the layout of a grid that names none (owner, 2026-11-01: A)
 const DEFAULT_LAYOUT = 'A';
-const SLOTS = ['title', 'subtitle', 'date', 'primary', 'secondary', 'tertiary'];
-const FILL = ['title', 'subtitle', 'primary', 'secondary', 'tertiary', 'date'];
-const LAYOUTS = { A: 'A', B: 'B', WIDE: 'wide' };
+const SLOTS: Array<keyof RowTemplate> = ['title', 'subtitle', 'date', 'primary', 'secondary', 'tertiary'];
+const FILL: Array<keyof RowTemplate> = ['title', 'subtitle', 'primary', 'secondary', 'tertiary', 'date'];
+const LAYOUTS: Record<string, string> = { A: 'A', B: 'B', WIDE: 'wide' };
 const DATES = ['date', 'datetime'], NUMBERS = ['number', 'currency', 'percent'];
-const showable = (c) => !c.rowHandle && !kinds(c).some((k) => k === 'icon' || k === 'actions');
-const typed = (c) => c.type || (c.sorter === 'number' ? 'number' : c.sorter === 'date' ? 'date' : 'text');
+const showable = (c: GridColumn): boolean => !c.rowHandle && !kinds(c).some((k) => k === 'icon' || k === 'actions');
+const typed = (c: GridColumn): string => c.type || (c.sorter === 'number' ? 'number' : c.sorter === 'date' ? 'date' : 'text');
 
 // narrow: the grid's narrow prop; a grid that names no layout and no template gets the default layout in its narrow card (unless it is a table by choice, or layout "plain")
-function resolveRowTemplate({ columns, layout, template, keyColumns, narrow }) {
+type RowTemplateProps = { columns: GridColumn[]; layout?: string; template?: RowTemplate | null; keyColumns?: string[]; narrow?: string; [key: string]: unknown };
+function resolveRowTemplate({ columns, layout, template, keyColumns, narrow }: RowTemplateProps): ResolvedTemplate | null {
   if (layout === 'plain') return null;   // the plain card of before: every other field a labeled detail
   const implicit = layout === undefined && !template;
   if (implicit && narrow !== undefined && narrow !== 'auto' && narrow !== 'list') return null;
@@ -52,12 +54,12 @@ function resolveRowTemplate({ columns, layout, template, keyColumns, narrow }) {
   // keyColumns keep their meaning: the first three are the title, the subtitle and the primary value
   if (implicit && keyColumns && keyColumns.length) template = { title: keyColumns[0], subtitle: keyColumns[1], primary: keyColumns[2] };
   const list = columns.filter(showable), known = new Set(list.map((c) => c.field));
-  const slots = {}, used = new Set();
+  const slots: ResolvedTemplate['slots'] = {}, used = new Set<string>();
   for (const slot of SLOTS) {
-    const field = template && template[slot];
+    const field = template ? template[slot] : undefined;
     if (field !== undefined && known.has(field) && !used.has(field)) { slots[slot] = field; used.add(field); }
   }
-  const take = (slot, test) => {
+  const take = (slot: keyof RowTemplate, test: (c: GridColumn) => boolean) => {
     if (slots[slot] !== undefined) return;
     const column = list.find((c) => !used.has(c.field) && test(c));
     if (column) { slots[slot] = column.field; used.add(column.field); }
@@ -65,7 +67,7 @@ function resolveRowTemplate({ columns, layout, template, keyColumns, narrow }) {
   take('date', (c) => DATES.includes(typed(c)));
   take('primary', (c) => NUMBERS.includes(typed(c)));
   for (const slot of FILL) take(slot, () => true);
-  const slotOf = {};
+  const slotOf: ResolvedTemplate['slotOf'] = {};
   for (const slot of SLOTS) if (slots[slot] !== undefined) slotOf[slots[slot]] = slot;
   // an explicit layout draws only the slots (the rest shows when the row is opened); the default draws every column, the ones no slot takes as labeled details under the last line
   const keep = new Set(columns.filter((c) => implicit || !showable(c) || slotOf[c.field]).map((c) => c.field));
@@ -73,14 +75,14 @@ function resolveRowTemplate({ columns, layout, template, keyColumns, narrow }) {
 }
 
 // wide: the slots as columns in slot order, the handle and icon columns first, the actions last
-const wideColumns = (columns, resolved) => {
+const wideColumns = (columns: GridColumn[], resolved: ResolvedTemplate) => {
   const first = columns.filter((c) => !showable(c) && !kinds(c).includes('actions')),
     last = columns.filter((c) => kinds(c).includes('actions')),
     byField = new Map(columns.map((c) => [c.field, c]));
-  return first.concat(SLOTS.filter((s) => resolved.slots[s] !== undefined).map((s) => byField.get(resolved.slots[s])), last);
+  return first.concat(SLOTS.filter((s) => resolved.slots[s] !== undefined).map((s) => byField.get(resolved.slots[s] as string) as GridColumn), last);
 };
 
-export function useRowTemplate(props) {
+export function useRowTemplate<P extends RowTemplateProps>(props: P): P & { rowTemplate?: ResolvedTemplate } {
   const { columns, layout, template, narrow, keyColumns } = props;
   const signal = JSON.stringify(template || null);
   return React.useMemo(() => {

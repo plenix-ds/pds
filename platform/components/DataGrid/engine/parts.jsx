@@ -22,7 +22,7 @@ import { usePressable } from '../../../hooks/usePressable.ts';
 import { gridPx } from '../../../utils/grid.ts';
 import { gapPieces } from '../../../hooks/useVirtualizer.ts';
 import { useStrings } from '../../../providers/LocaleProvider.tsx';
-import { GRID } from './helpers.jsx';
+import { GRID } from './helpers.tsx';
 
 function Gap({ count, kind = 'record' }) {
   return count > 0 ? (

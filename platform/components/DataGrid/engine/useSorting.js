@@ -15,7 +15,7 @@
 */
 import React from 'react';
 import { normalizeSort } from '../state.js';
-import { EMPTY_ROWS } from './helpers.jsx';
+import { EMPTY_ROWS } from './helpers.tsx';
 
 export function useSorting({ initial, props }) {
   const [localSort, setSorting] = React.useState(initial.sorting);

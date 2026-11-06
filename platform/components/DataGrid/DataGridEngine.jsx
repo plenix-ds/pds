@@ -37,7 +37,7 @@ import { createAdapter } from './adapter.js';
 import { recordsOf } from './records.js';
 import { useStrings, useLocale } from '../../providers/LocaleProvider.tsx';
 import { formatNumber } from '../../utils/format.ts';
-import { EMPTY_ROWS, GRID, kinds } from './engine/helpers.jsx';
+import { EMPTY_ROWS, GRID, kinds } from './engine/helpers.tsx';
 
 import { useVirtualizer } from './engine/useVirtualizer.js';
 import { observeElementRect, observeElementOffset, elementScroll, observeWindowRect, observeWindowOffset, windowScroll, defaultRangeExtractor } from '@tanstack/react-virtual';
@@ -56,7 +56,7 @@ import { usePillWidths } from './engine/usePillWidths.js';
 import { useGridMetrics } from './engine/useGridMetrics.js';
 import { gridFrame } from './engine/gridFrame.jsx';
 const LazyFormEdit = React.lazy(() => import('./engine/formEdit.jsx'));
-import { columnSizing } from './engine/columnSizing.js';
+import { columnSizing } from './engine/columnSizing.ts';
 import { syncLive } from './engine/liveState.js';
 import { useRemoteRows } from './engine/useRemoteRows.js';
 import { useTableModel } from './engine/useTableModel.js';

@@ -14,7 +14,7 @@
      engine function, in the same order with the same values. The engine is documented in DataGridEngine.jsx.
 */
 import React from 'react';
-import { EMPTY_ROWS } from './helpers.jsx';
+import { EMPTY_ROWS } from './helpers.tsx';
 import { valueAt } from '../state.js';
 import { groupValue, valueKey, groupDisplay } from '../records.js';
 import { aggregationFns, useReactTable, getCoreRowModel, getGroupedRowModel } from '@tanstack/react-table';
