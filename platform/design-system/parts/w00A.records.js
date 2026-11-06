@@ -19,7 +19,7 @@ DSParts.records.push(function (H) {
   };
   return [
     /* ── 01 Foundations ── */
-    thin('heading', { sec: 'foundations', sub: 'Typography', leaf: 'Heading hierarchy', purpose: 'Headings give a page an outline: one page title, then sections and subsections in order, never skipping a level, so people and screen readers can scan the page.',
+    thin('heading', { sec: 'foundations', sub: 'Typography', leaf: 'Heading hierarchy', docsFrom: undefined, purpose: 'Headings give a page an outline: one page title, then sections and subsections in order, never skipping a level, so people and screen readers can scan the page.',
       text: 'Headings follow the outline of the page: one level 1 title, then sections and subsections in order. The level comes from the structure, not the size wanted. SectionHeading gives each level its own size from the type scale (--plx-comp-section-heading-level-2/3/4-font-size): level 2 is 13px, level 3 (the default) 11px and level 4 10px, so a higher level is always larger.',
       use: ['One level 1 heading per page (the page title); sections at level 2, their parts at level 3', 'SectionHeading with level for every heading, so the size follows the level'], avoid: ['Skipping a level to get a smaller heading', 'Bold body text in place of a heading'] }),
 

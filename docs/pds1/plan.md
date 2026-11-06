@@ -217,10 +217,13 @@ Built from superpowers (workflow and gates), agency-agents (roles), MetaGPT (art
 - **Never ask twice.** Every decision becomes a `decision` issue and an entry in `decisions.yaml` with date, reason, and the **check that enforces it**.
 - **"Other" is not an ending.** The Product Lead maps it back to options in the next card.
 - **Feedback register.** Each owner comment is tracked as open → accepted → applied (with a link to the changed file). No silent drops, and nothing is redone without a new decision.
+- **The owner's answer is final** (D-0035). Agents pick the sensible reading, act on it and say in one line on the thread how they read it; an answer never produces a new question card. All pending answers are handled in one pass, and the dashboard is refreshed once at the end. Threads use plain words, not card jargon; the A/B options stay so the dashboard can show them.
 
 ---
 
 ## 6a. The dashboard: decisions and visual checks
+
+**Interactive dashboard (D-0034, P1).** The dashboard is built like the CTM 3.0 dashboard: an interactive page with Overview, To decide, To do, Decisions, Done, Checks, Team and Screenshots tabs, where the owner answers decisions in place with his own fine-grained key (Issues read and write on plenix-ds/pds only). It reads GitHub; its acceptance tests are `docs/pds1/slices/195-dashboard/brief.md` (AC-1 to AC-6). The generated read-only page described below follows as P2.
 
 One read-only page with two tabs: **Decisions**, where every decision is logged and presented, and **Visual checks**, where every screenshot CI takes is logged. It is generated, not a hand-built dashboard, so it can't drift from GitHub.
 
@@ -247,7 +250,7 @@ One read-only page with two tabs: **Decisions**, where every decision is logged 
 - every changed screenshot also goes as a comment on the PR and on the owner's issue, so nothing has to be looked up
 - screenshots are stored as CI artifacts and published with the page; old runs are kept for 90 days
 
-**Limits** (lessons from the old dashboards): read-only, no backend, no login of its own, no separate data store. To change a decision, comment on its GitHub issue. Building it (both tabs) is time-boxed to two days in Phase 0.
+**Limits** (lessons from the old dashboards): no backend and no data store of its own; GitHub is the source. The generated page is read-only and has no login of its own. The interactive dashboard writes only through the owner's own fine-grained key (Issues read and write on plenix-ds/pds). To change a decision, answer it on the dashboard or comment on its GitHub issue. Building it (both tabs) is time-boxed to two days in Phase 0.
 
 ## 7. Enforcement: making rules real
 

@@ -38,7 +38,7 @@ DSParts.docs.push({
       "Step indicator — the steps and where the person is (required)",
       "Step content — the current step’s heading and fields (required)",
       "Actions — Cancel, Back, Next, then Finish on the last step (required)",
-      "Unsaved-changes check — closing asks before losing work"
+      "Unsaved-changes check — closing asks before losing work (when there is unsaved work)"
     ],
     "behavior": {
       "pointer": "Next checks the current step before the next one opens; Back keeps the values entered. Finish checks every step, then waits for the save; the caller closes the dialog when it succeeds. Close, Escape, a click on the veil and Cancel ask first when values would be lost.",

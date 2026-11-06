@@ -6,12 +6,15 @@
 // Fails when:
 // - an entry has no id, date, decision, status or check (check may be "review-only (<reason>)");
 // - ids are not D-NNNN or are repeated (order is free: parallel PRs reserve ids out of order);
+// - the file is not valid YAML for PyYAML's yaml.safe_load, the parser the dashboard uses (dashboard/pds1/collect.py; #589).
+//   A missing python3 or PyYAML is a failure too, never a skip;
 // - with a base ref: an entry from the base was removed, or its id, date, area, decided_by or decision text changed.
 //   Only status, superseded_by and check may change on a past entry (supersede it, never rewrite it).
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 
-const FILE = 'decisions.yaml';
+const FILE = process.env.DECISIONS_FILE || 'decisions.yaml'; // DECISIONS_FILE: the self-test's fixtures
+const PYTHON = process.env.DECISIONS_PYTHON || 'python3';
 const FROZEN = ['id', 'date', 'area', 'decided_by', 'decision'];
 const REQUIRED = ['id', 'date', 'decision', 'status', 'check'];
 
@@ -29,8 +32,21 @@ function parse(text) {
   return entries;
 }
 
+// real YAML, as the dashboard reads it (#589): the light parser above lets through text that yaml.safe_load rejects
+function yamlError(text) {
+  const code = 'import sys, yaml\ntry:\n    yaml.safe_load(sys.stdin.read())\nexcept yaml.YAMLError as e:\n    print(e)\n    sys.exit(3)';
+  const r = spawnSync(PYTHON, ['-I', '-c', code], { input: text, encoding: 'utf8' });
+  if (r.error) return `${PYTHON} not found; the YAML parse cannot run (CI installs PyYAML)`;
+  if (r.status === 3) return `not valid YAML (yaml.safe_load, as the dashboard reads it): ${r.stdout.trim().replace(/\s*\n\s*/g, ' ')}`;
+  if (r.status !== 0) return `the YAML parse did not run (is PyYAML installed?): ${(r.stderr || '').trim().split('\n').at(-1)}`;
+  return '';
+}
+
 const errors = [];
-const head = parse(fs.readFileSync(FILE, 'utf8'));
+const text = fs.readFileSync(FILE, 'utf8');
+const yamlErr = yamlError(text);
+if (yamlErr) errors.push(`${FILE}: ${yamlErr}`);
+const head = parse(text);
 let prev = 0;
 const seen = new Set();
 for (const e of head) {

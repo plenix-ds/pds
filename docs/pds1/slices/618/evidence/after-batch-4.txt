@@ -1,0 +1,6 @@
+flowchart {"text":"Sign-up flowZoom inZoom outFitUse the arrow keys to move between the values. Plus and minus zoom, 0 fits the graph.YesNoStartEnter emailValid?Create accountShow the data","shapes":2,"texts":0,"label":"Sign-up flow","said":"Start: Kind Start or end, Leads to Enter email"}
+boxes {"text":"PartsZoom inZoom outFitUse the arrow keys to move between the values. Plus and minus zoom, 0 fits the graph.CoreAPIHandles callsStoreKeeps dataCacheShow the data","shapes":2,"texts":0,"label":"Parts","said":"API: Kind Part, Leads to Store and Cache"}
+force {"text":"TeamZoom inZoom outFitUse the arrow keys to move between the values. Plus and minus zoom, 0 fits the graph.AnnBoCyDiCoreGuestsShow the data","shapes":2,"texts":0,"label":"Team","said":"Ann: Group Core, Connected to Bo"}
+hierarchical {"text":"OrgZoom inZoom outFitUse the arrow keys to move between the values. Plus and minus zoom, 0 fits the graph.AnnBoCyShow the data","shapes":2,"texts":0,"label":"Org","said":"Ann: Connected to Bo and Cy"}
+sankey {"text":"BudgetIncome 100Rent 40Food 25Savings 35Show the data","shapes":7,"texts":4,"label":"Budget","said":"no plot"}
+charts-graph-ts-618: OK

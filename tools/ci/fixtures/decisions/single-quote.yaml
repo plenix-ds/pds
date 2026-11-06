@@ -1,0 +1,5 @@
+- id: D-0001
+  date: 2026-11-06
+  decision: 'The owner's apostrophe is not doubled.'
+  status: accepted
+  check: tools/ci/check-decisions.mjs

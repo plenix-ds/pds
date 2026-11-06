@@ -1,1 +1,0 @@
-TimePicker options and BottomSheetNav tile labels draw their whole text role (issue 122): the time option adds the body weight, letter spacing and line height; the tile label moves from the label font and label-height-sm to the secondary role (body font, line height 1.5).

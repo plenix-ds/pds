@@ -43,7 +43,18 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-      - name: Unique, increasing ids; every entry has a check; past entries never rewritten
+      # the dashboard's own YAML parser (dashboard.yml): text it cannot read fails here, not on the live dashboard (#589)
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.12'
+      - name: PyYAML, as the dashboard pins it
+        shell: bash
+        run: python -m pip install --disable-pip-version-check -q 'PyYAML==6.0.2'
+      - name: Self-test (the three YAML breaks of #585 fail, a valid file passes)
+        shell: bash
+        run: node tools/ci/check-decisions.test.mjs
+      - name: Valid YAML; unique ids; every entry has a check; past entries never rewritten
+        shell: bash
         run: node tools/ci/check-decisions.mjs "$(git merge-base "$BASE_SHA" HEAD)"
 
   rulesync:
@@ -120,6 +131,9 @@ jobs:
         run: node tools/checks/states/states.mjs "$(git merge-base "$BASE_SHA" HEAD)"
       - name: Check 10, numeric columns
         run: node tools/checks/numeric/numeric.mjs
+      - name: Locale checks (diff-aware; G6; only findings the PR adds fail, missing Arabic is reported and never blocks)
+        shell: bash
+        run: node tools/checks/locale/locale.mjs "$(git merge-base "$BASE_SHA" HEAD)"
       - name: The checks' own unit tests (Vitest)
         run: npx --no-install vitest run tools/checks
       - name: Check 11, pill height (Playwright, the runner's Chrome; a missing browser fails)

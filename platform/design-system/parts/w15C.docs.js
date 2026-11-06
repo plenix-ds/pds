@@ -185,7 +185,7 @@ DSParts.docs.push({
       "responsive": "Does not apply.",
       "motion": "Does not apply.",
       "loading": "Without the live API it answers from the bundled offline snapshot, and each answer says which source it used.",
-      "error": "Initialize first; arguments are checked. Protocol errors are kept apart from tool and data failures."
+      "error": "A tool call before the session is initialized is refused (error -32002, \"Initialize the MCP session first.\"). A missing, unknown or invalid argument is rejected (error -32602). Protocol errors are kept apart from tool and data failures."
     },
     "a11y": {
       "name": "Does not apply.",
