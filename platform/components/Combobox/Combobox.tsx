@@ -103,7 +103,14 @@ export type ComboOption = { value: ComboValue; label: string; description?: stri
 export type ComboEmptyAction = { label: React.ReactNode; icon?: IconValue; onSelect?: (typed: string) => void };
 // a row of the open list: an option, the create row, or the empty action
 type ComboItem = { kind: 'option'; o: ComboOption } | { kind: 'create'; o?: undefined } | { kind: 'action'; o?: undefined };
-type ComboWords = { emptyText: string; results?: string | ((count: number) => string); removeItem: string; moreChips: string; clear: string; loading: string; error: string };
+// the create option's words (combobox.create, "Create “{text}”"): the typed text is isolated (<bdi>), so text in the other
+// writing direction keeps its place in the sentence (#656)
+function createLabel(template: string, typed: string): React.ReactNode {
+  const at = template.indexOf('{text}');
+  if (at < 0) return template;
+  return <>{template.slice(0, at)}<bdi>{typed}</bdi>{template.slice(at + 6)}</>;
+}
+type ComboWords = { emptyText: string; results?: string | ((count: number) => string); removeItem: string; moreChips: string; clear: string; create: string; loading: string; error: string };
 export type ComboboxProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange' | 'size' | 'width'> & {
   options?: ComboOption[];
   /** the chosen value (single); '' or null: none */
@@ -265,7 +272,7 @@ export const Combobox = React.forwardRef(function Combobox({ options = [], value
                 {emptyAction!.icon ? <span className="plx-combobox__option-icon" aria-hidden="true"><Icon name={emptyAction!.icon} /></span> : null}{emptyAction!.label}</li>
             : it.kind === 'create'
             ? <li key="create" id={optId(i)} role="option" aria-selected={false} className={cx('plx-combobox__option', 'plx-combobox__create', i === active && 'is-active')}
-                onMouseDown={(e) => e.preventDefault()} onClick={() => choose(it)} onMouseEnter={() => setActive(i)}>Create “{text.trim()}”</li>
+                onMouseDown={(e) => e.preventDefault()} onClick={() => choose(it)} onMouseEnter={() => setActive(i)}>{createLabel(words.create, text.trim())}</li>
             : [it.o.group && (i === 0 || !items[i - 1].o || items[i - 1].o!.group !== it.o.group) ? <li key={'g-' + it.o.group} className="plx-combobox__group" role="presentation">{it.o.group}</li> : null,
               <li key={it.o.value} id={optId(i)} role="option" aria-selected={chosen.indexOf(it.o.value) >= 0}
                 className={cx('plx-combobox__option', i === active && 'is-active', chosen.indexOf(it.o.value) >= 0 && 'is-selected')}
