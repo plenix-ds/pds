@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Self-test of tools/publish/notify-apps.mjs (#750, D-0082): the release step sends each app with a "notify" entry one
+// Self-test of tools/publish/notify-apps.mjs (#750, D-0083): the release step sends each app with a "notify" entry one
 // repository_dispatch, with the version, and only when the live CDN serves that version.
 //   node tools/publish/notify-apps.test.mjs
 import { plan } from './notify-apps.mjs';
