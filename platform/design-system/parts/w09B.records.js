@@ -23,7 +23,7 @@ DSParts.records.push(function (H) {
   /* ── 07 Data Display › Charts › Bar chart (and Column chart, Stacked bar chart, Histogram): BarChart ── */
   var bar = function (o) { return h(P.BarChart, Object.assign({ title: 'Storage by team', description: 'Design uses the most storage, four times what Support uses.', categories: TEAMS, series: STORAGE, valueLabel: 'Storage (GB)' }, o)); };
   var barChart = { id: 'bar-chart', lab: true, icon: 'chart', sec: 'data-display', sub: 'Charts', leaf: 'Bar chart', title: 'Bar chart',
-    plenix: 'BarChart, binValues', src: 'charts/BarChart.jsx', also: ['charts/chart-kit.js'], css: CSS('bar-chart.css'), blocks: ['plx-bar-chart'],
+    plenix: 'BarChart, binValues', src: 'charts/BarChart.jsx', also: ['charts/chart-kit.ts'], css: CSS('bar-chart.css'), blocks: ['plx-bar-chart'],
     level: 'Component', interaction: 'Display',
     aliases: ['Horizontal bar chart', 'Column chart', 'Vertical bar chart', 'Grouped bar chart', 'Stacked bar chart', '100% stacked bar chart', 'Histogram'],
     covers: ['Column chart', 'Stacked bar chart', 'Histogram'],
@@ -59,7 +59,7 @@ DSParts.records.push(function (H) {
   var RATE = [{ id: 'rate', label: 'Approval rate', values: [0.86, 0.88, 0.91, 0.89, 0.92, 0.9] }];
   var combo = function (o) { return h(P.ComboChart, Object.assign({ title: 'Uploads and approval rate', description: 'Uploads grew by 60% while the approval rate held near 90%.', categories: MONTHS, bars: UPLOADS.slice(0, 1), lines: RATE, axis: 'dual', barLabel: 'Uploads', lineLabel: 'Approval rate', formatLine: function (v) { return P.formatPercent(v); } }, o)); };
   var comboChart = { id: 'combo-chart', lab: true, icon: 'chart', sec: 'data-display', sub: 'Charts', leaf: 'Combo chart', title: 'Combo chart',
-    plenix: 'ComboChart', src: 'charts/ComboChart.jsx', also: ['charts/chart-kit.js'], css: CSS('combo-chart.css'), blocks: ['plx-combo-chart'],
+    plenix: 'ComboChart', src: 'charts/ComboChart.jsx', also: ['charts/chart-kit.ts'], css: CSS('combo-chart.css'), blocks: ['plx-combo-chart'],
     level: 'Component', interaction: 'Display',
     aliases: ['Bar and line chart', 'Dual-axis chart', 'Column and line chart', 'Mixed chart'],
     text: 'Two related measures on one category axis: columns for the main amount, and a line with points for the second (a rate, a target, a running figure). Both share one value axis when they have the same unit, or each has its own (axis="dual": the columns’ axis on the start side, the line’s on the end side, each titled with its unit). The legends name each series and its kind (square swatches for columns, line swatches for lines); one tooltip per category gives every value.',
@@ -82,7 +82,7 @@ DSParts.records.push(function (H) {
   var MANY = PARTS.concat([{ id: 'font', label: 'Fonts', value: 12 }, { id: 'arch', label: 'Archives', value: 18 }, { id: 'code', label: 'Code', value: 6 }]);
   var pie = function (o) { return h(P.PieChart, Object.assign({ title: 'Storage by file type', description: 'Videos take more than half of the storage.', data: PARTS, format: function (v) { return P.formatNumber(v) + ' GB'; }, legendPosition: 'end' }, o)); };
   var pieChart = { id: 'pie-chart', lab: true, icon: 'chart', sec: 'data-display', sub: 'Charts', leaf: 'Pie chart', title: 'Pie chart',
-    plenix: 'PieChart, pieSlices', src: 'charts/PieChart.jsx', also: ['charts/chart-kit.js'], css: CSS('pie-chart.css'), blocks: ['plx-pie-chart'],
+    plenix: 'PieChart, pieSlices', src: 'charts/PieChart.jsx', also: ['charts/chart-kit.ts'], css: CSS('pie-chart.css'), blocks: ['plx-pie-chart'],
     level: 'Component', interaction: 'Display',
     aliases: ['Donut chart', 'Doughnut chart', 'Ring chart', 'Half donut', 'Semicircle chart'],
     covers: ['Donut chart'],
@@ -110,7 +110,7 @@ DSParts.records.push(function (H) {
     { id: 'ap', label: 'Approvals', value: 420, target: 560, ranges: [350, 600, 1000] }];
   var bullet = function (o) { return h(P.BulletChart, Object.assign({ title: 'Quarter against targets', description: 'Uploads and reviews beat their targets; approvals are behind.', items: KPIS, valueLabel: 'Items this quarter' }, o)); };
   var bulletChart = { id: 'bullet-chart', lab: true, icon: 'chart', sec: 'data-display', sub: 'Charts', leaf: 'Bullet chart', title: 'Bullet chart',
-    plenix: 'BulletChart', src: 'charts/BulletChart.jsx', also: ['charts/chart-kit.js'], css: CSS('bullet-chart.css'), blocks: ['plx-bullet-chart'],
+    plenix: 'BulletChart', src: 'charts/BulletChart.jsx', also: ['charts/chart-kit.ts'], css: CSS('bullet-chart.css'), blocks: ['plx-bullet-chart'],
     level: 'Component', interaction: 'Display',
     aliases: ['Bullet graph', 'Target bar', 'KPI bar'],
     text: 'Key measures against their targets, each in a compact row on one value axis from zero: a short value bar over three bands for its qualitative ranges (poor, fair, good, in neutral shades, the darkest nearest zero) and a line across at its target. Horizontal rows stack in a dashboard card; vertical columns fit a wide strip. The tooltip names the range a value is in; the data grid lists value, target and ranges.',
@@ -133,7 +133,7 @@ DSParts.records.push(function (H) {
     { id: 'brand', label: 'Brand', values: [2, 3, 3, 4, 5, 5, 6, 7, 8, 9, 21] }, { id: 'web', label: 'Web', values: [5, 6, 6, 7, 8, 9, 9, 10, 11, 12] }];
   var boxPlot = function (o) { return h(P.BoxPlot, Object.assign({ title: 'Review time by team', description: 'Legal reviews are steady; Design varies most, with two very long reviews. Whiskers reach 1.5 × the box.', groups: REVIEWS, valueLabel: 'Hours' }, o)); };
   var boxPlotRec = { id: 'box-plot', lab: true, icon: 'chart', sec: 'data-display', sub: 'Charts', leaf: 'Box plot', title: 'Box plot',
-    plenix: 'BoxPlot, boxStats', src: 'charts/BoxPlot.jsx', also: ['charts/chart-kit.js'], css: CSS('box-plot.css'), blocks: ['plx-box-plot'],
+    plenix: 'BoxPlot, boxStats', src: 'charts/BoxPlot.jsx', also: ['charts/chart-kit.ts'], css: CSS('box-plot.css'), blocks: ['plx-box-plot'],
     level: 'Component', interaction: 'Display',
     aliases: ['Box and whisker plot', 'Boxplot', 'Five-number summary'],
     text: 'Distributions compared by their summaries. For each group: a box from the first to the third quartile (the middle half of its values), a line at the median, whiskers to the lowest and highest values within 1.5 times the box’s length, and the values beyond them as outlier points. Groups share one value axis. The tooltip gives the five numbers; the data grid gives them all, with the outliers and the count. It takes raw values (and computes the summary) or a summary already made.',
@@ -161,7 +161,7 @@ DSParts.records.push(function (H) {
   var BANNER = { id: 'banner', label: 'Banner', values: { res: 6, color: 7, meta: 9, size: 8, rights: 5, alt: 9 } };
   var radar = function (o) { return h(P.RadarChart, Object.assign({ title: 'Asset quality', description: 'The hero image scores high on all but file size.', axes: AXES, series: [HERO], max: 10 }, o)); };
   var radarChart = { id: 'radar-chart', lab: true, icon: 'chart', sec: 'data-display', sub: 'Charts', leaf: 'Radar chart', title: 'Radar chart',
-    plenix: 'RadarChart', src: 'charts/RadarChart.jsx', also: ['charts/chart-kit.js'], css: CSS('radar-chart.css'), blocks: ['plx-radar-chart'],
+    plenix: 'RadarChart', src: 'charts/RadarChart.jsx', also: ['charts/chart-kit.ts'], css: CSS('radar-chart.css'), blocks: ['plx-radar-chart'],
     level: 'Component', interaction: 'Display',
     aliases: ['Spider chart', 'Web chart', 'Star chart', 'Polar chart'],
     text: 'The profile of one item, or two or three compared, across several measures on one scale. A spoke per measure runs from the center (zero) to the scale’s end, with rings at the scale’s round ticks. Each item is a closed shape through its values, outlined in its color with its area lightly filled so overlapping shapes stay visible. Measure names sit off the spokes’ ends; ring values are in the data font.',
@@ -184,7 +184,7 @@ DSParts.records.push(function (H) {
   var FLOW_LINKS = [{ source: 'web', target: 'review', value: 520 }, { source: 'web', target: 'auto', value: 100 }, { source: 'app', target: 'review', value: 300 }, { source: 'app', target: 'auto', value: 80 },
     { source: 'api', target: 'auto', value: 240 }, { source: 'review', target: 'ok', value: 560 }, { source: 'review', target: 'no', value: 160 }, { source: 'review', target: 'wait', value: 100 }, { source: 'auto', target: 'ok', value: 420 }];
   var sankeyDiagram = { id: 'sankey-diagram', lab: true, icon: 'merge', sec: 'data-display', sub: 'Charts', leaf: 'Sankey diagram', title: 'Sankey diagram',
-    plenix: 'SankeyDiagram, sankeyLayout', src: 'charts/SankeyDiagram.jsx', also: ['charts/chart-kit.js'], css: CSS('sankey-diagram.css'), blocks: ['plx-sankey-diagram'],
+    plenix: 'SankeyDiagram, sankeyLayout', src: 'charts/SankeyDiagram.jsx', also: ['charts/chart-kit.ts'], css: CSS('sankey-diagram.css'), blocks: ['plx-sankey-diagram'],
     level: 'Component', interaction: 'Display',
     aliases: ['Flow diagram', 'Alluvial diagram', 'Flow chart (quantities)'],
     text: 'How a quantity flows, splits and merges through stages: a bar per node (a source, a stage, an outcome) in columns from left to right, with bands between them as wide as the amounts that move. It has its own layout, without a dependency: columns by the longest path, nodes ordered to keep bands from crossing, outcomes in the last column. A band takes its source’s color at a low opacity and darkens with its node under the pointer; names and totals sit beside the nodes.',
@@ -210,7 +210,7 @@ DSParts.records.push(function (H) {
   var EVENTS = [{ id: 'a', label: 'Brief', start: '2026-09-01' }, { id: 'b', label: 'First cut', start: '2026-09-14' }, { id: 'c', label: 'Review', start: '2026-09-21' }, { id: 'd', label: 'Approved', start: '2026-10-02' }];
   var timeline = function (o) { return h(P.TimelineChart, Object.assign({ title: 'Campaign assets', description: 'The video ran two weeks past its shoot; the banners shipped first.', lanes: LANES, items: ITEMS, today: '2026-10-05' }, o)); };
   var timelineChart = { id: 'timeline-chart', lab: true, icon: 'schedule', sec: 'data-display', sub: 'Specialized displays', leaf: 'Timeline visualization', title: 'Timeline visualization',
-    plenix: 'TimelineChart', src: 'charts/TimelineChart.jsx', also: ['charts/chart-kit.js'], css: CSS('timeline-chart.css'), blocks: ['plx-timeline-chart'],
+    plenix: 'TimelineChart', src: 'charts/TimelineChart.jsx', also: ['charts/chart-kit.ts'], css: CSS('timeline-chart.css'), blocks: ['plx-timeline-chart'],
     level: 'Component', interaction: 'Display',
     aliases: ['Timeline chart', 'Time chart', 'Event timeline', 'Swimlane timeline'],
     text: 'When things happened and how long they lasted, on one time axis in calendar steps. Events are points at their date; periods are bars from start to end. They sit on one track or on lanes (one per asset, team or category, each in its own data-viz color), each item with its short name above its mark, plus an optional today line. The tooltip gives an item’s full dates; the data grid lists every item with its lane and dates.',

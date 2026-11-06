@@ -41,7 +41,7 @@ import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { snapToGrid } from '../utils/grid.ts';
 import { ChartFrame } from './ChartFrame.jsx';
-import { useChartInteraction } from './interaction.js';
+import { useChartInteraction } from './interaction.ts';
 import { useEChartsPlot, NO_MARGIN } from './echarts/EChartsPlot.jsx';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 

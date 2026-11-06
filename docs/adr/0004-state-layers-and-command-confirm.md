@@ -66,6 +66,21 @@ actions[].confirm?: {
 - **Semver: MINOR** (optional fields on a new optional prop).
 - Enforced by: G3 review of #424 (the API diff matches this shape); the #424 behavior tests; locale checks (`confirmAction` in `en.js`, no unapproved Arabic).
 
+## Addendum (2026-11-06, #630, #633): `confirm.plural` takes the language's plural forms (D-0076)
+
+- `plural` (D-0060) was one string, which can't agree with every count: Arabic has six forms (zero, one, two, few, many, other).
+- **`plural?: string | ConfirmPlural`**, where `ConfirmPlural` is the catalog's own plural shape:
+
+```ts
+type ConfirmPlural = Partial<Record<Intl.LDMLPluralRule, string>> & { other: string } & { [exact: `=${number}`]: string };
+```
+
+- The form is picked for `count` with the page language's plural rules (`useLocale().plural`, the same rules as `t(key, { count })` in LocaleProvider). An exact key (`"=0"`) wins.
+- A plain string works as before: no break.
+- The words are the application's own, in the page's language. The catalog's title template is unchanged, and no Arabic is added here (D-0012).
+- **Semver: MINOR** (a wider type for a documented field).
+- Enforced by: G3 review of #633; `tests/command-confirm-plural-630.test.js` (string, en one and other, `=0`, the Arabic categories).
+
 ## Consequences
 
 - **Semver: MINOR.** 7 new tokens and 1 new optional prop. Nothing is removed or renamed.

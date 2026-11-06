@@ -187,7 +187,7 @@ t('MillerColumns', 'component', 'L', 6, 'C', [], ['with preview column', 'keyboa
 t('ImageUpload', 'pattern', 'M', 6, 'B', ['Image'], ['single', 'multiple', 'with crop', 'aspect locked'], '');
 t('AvatarUpload', 'pattern', 'S', 6, 'B', ['ImageUpload'], ['circle', 'square', 'remove'], '');
 t('ChartKit', 'foundation', 'L', 6, 'C', ['dataviz-colors', 'format'], ['linear, band, time, log scales', 'nice ticks', 'responsive frame', 'margins'],
-  'platform/charts/: scales, ticks, ChartFrame (SVG, ResizeObserver), series color; no dependency', ['platform/charts/scales.js', 'platform/charts/ChartFrame.jsx', 'platform/charts/charts.css']);
+  'platform/charts/: scales, ticks, ChartFrame (SVG, ResizeObserver), series color; no dependency', ['platform/charts/scales.ts', 'platform/charts/ChartFrame.jsx', 'platform/charts/charts.css']);
 
 /* ───────── wave 7: navigation, lists, chart parts ───────── */
 t('ProgressSteps', 'component', 'M', 7, 'A', [], ['horizontal', 'vertical', 'clickable', 'with status (complete, current, error)', 'compact'], 'step indicator: navigation stepper = progress tracker = step progress');
@@ -213,8 +213,8 @@ t('chart-parts', 'foundation', 'L', 7, 'B', ['ChartKit'], ['Axis (bottom, left, 
   'platform/charts/parts/*.jsx', ['platform/charts/parts/']);
 
 /* ───────── wave 8: charts 1 ───────── */
-t('chart-a11y', 'foundation', 'M', 8, 'A', ['chart-parts'], ['data grid fallback', 'keyboard point navigation', 'summary text', 'patterns'], 'platform/charts/a11y.js', ['platform/charts/a11y.js']);
-t('chart-interaction', 'foundation', 'M', 8, 'A', ['chart-parts'], ['hover crosshair', 'brush/zoom', 'legend toggle', 'click a point'], 'platform/charts/interaction.js', ['platform/charts/interaction.js']);
+t('chart-a11y', 'foundation', 'M', 8, 'A', ['chart-parts'], ['data grid fallback', 'keyboard point navigation', 'summary text', 'patterns'], 'platform/charts/a11y.ts', ['platform/charts/a11y.ts']);
+t('chart-interaction', 'foundation', 'M', 8, 'A', ['chart-parts'], ['hover crosshair', 'brush/zoom', 'legend toggle', 'click a point'], 'platform/charts/interaction.ts', ['platform/charts/interaction.ts']);
 t('LineChart', 'component', 'M', 8, 'A', ['chart-parts'], ['line', 'step', 'multi-series', 'points'], 'platform/charts/LineChart.jsx', ['platform/charts/LineChart.jsx']);
 t('AreaChart', 'component', 'S', 8, 'A', ['LineChart'], ['area', 'stacked', 'percent'], '', ['platform/charts/AreaChart.jsx']);
 t('BarChart', 'component', 'M', 8, 'B', ['chart-parts'], ['bar (horizontal)', 'column (vertical)', 'grouped', 'stacked', 'percent', 'histogram (binned)'], '', ['platform/charts/BarChart.jsx']);

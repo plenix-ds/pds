@@ -23,7 +23,7 @@
      The label room is an estimate from the number of characters (the data font is monospaced: about 7px a character at
        the tick labels' 11px); a margin given to the chart always wins. */
 import React from 'react';
-import { seriesColor } from './scales.js';
+import { seriesColor } from './scales.ts';
 
 // px: about one character of the data font at the tick labels' size (Reddit Mono 11px is 6.6px wide)
 const CHAR = 7;
@@ -31,30 +31,30 @@ const CHAR = 7;
 const TICK_ROOM = 12;
 
 export function useChartHover() {
-  const [active, setActive] = React.useState(null);
-  const hover = (key) => ({
+  const [active, setActive] = React.useState<any>(null);
+  const hover = (key: any) => ({
     onPointerEnter: () => setActive(key),
-    onPointerLeave: () => setActive((a) => (a === key ? null : a))
+    onPointerLeave: () => setActive((a: any) => (a === key ? null : a))
   });
   return [active, hover, setActive];
 }
 
-export function labelRoom(texts, extra = 0) {
-  const longest = (texts || []).reduce((n, s) => Math.max(n, String(s === undefined || s === null ? '' : s).length), 0);
+export function labelRoom(texts: any, extra = 0) {
+  const longest = (texts || []).reduce((n: any, s: any) => Math.max(n, String(s === undefined || s === null ? '' : s).length), 0);
   return Math.ceil((longest * CHAR + TICK_ROOM + extra) / 4) * 4;
 }
 
 // the room after the plot that a tick label centered on its end needs (half its text and a gap; at least the 8px default)
-export function halfRoom(text) {
+export function halfRoom(text: any) {
   return Math.max(8, Math.ceil((String(text === undefined || text === null ? '' : text).length * CHAR / 2 + 4) / 4) * 4);
 }
 
-export function withColors(series) {
-  return (series || []).map((s, i) => Object.assign({}, s, { id: s.id === undefined ? String(i) : s.id, color: s.color || seriesColor(i) }));
+export function withColors(series: any) {
+  return (series || []).map((s: any, i: any) => Object.assign({}, s, { id: s.id === undefined ? String(i) : s.id, color: s.color || seriesColor(i) }));
 }
 
-export function legendItems(series, value) {
-  return (series || []).map((s, i) => ({ id: s.id, label: s.label, color: s.color, value: value ? value(s, i) : undefined }));
+export function legendItems(series: any, value: any) {
+  return (series || []).map((s: any, i: any) => ({ id: s.id, label: s.label, color: s.color, value: value ? value(s, i) : undefined }));
 }
 
-export function finite(v) { const n = Number(v); return isFinite(n) ? n : 0; }
+export function finite(v: any) { const n = Number(v); return isFinite(n) ? n : 0; }

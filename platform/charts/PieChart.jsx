@@ -44,13 +44,13 @@ import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatNumber, formatPercent } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.jsx';
-import { seriesColor } from './scales.js';
+import { seriesColor } from './scales.ts';
 import { ChartLegend } from './parts/ChartLegend.tsx';
 import { ChartTooltip, chartTooltipText } from './parts/ChartTooltip.tsx';
 import { DataLabel } from './parts/DataLabel.tsx';
-import { useChartInteraction } from './interaction.js';
-import { legendItems, finite } from './chart-kit.js';
-import { pieSlices } from './chart-helpers.js';
+import { useChartInteraction } from './interaction.ts';
+import { legendItems, finite } from './chart-kit.ts';
+import { pieSlices } from './chart-helpers.ts';
 import { useEChartsPlot, NO_MARGIN } from './echarts/EChartsPlot.jsx';
 import { snapToGrid } from '../utils/grid.ts';
 import { useStrings } from '../providers/LocaleProvider.tsx';
@@ -65,7 +65,7 @@ const TURN = Math.PI * 2;
 // the point at an angle (0 = 12 o'clock, clockwise) and a radius from the center
 const at = (cx0, cy0, r, a) => [cx0 + r * Math.sin(a), cy0 - r * Math.cos(a)];
 
-export { pieSlices } from './chart-helpers.js';
+export { pieSlices } from './chart-helpers.ts';
 
 export function PieChart({ title, description, hideCaption, size, data = [], variant = 'pie', centerValue, centerLabel, sort = true, maxSlices = 6,
   format, showValues = false, legend, legendPosition, tooltip = true, interactive = true, margin, strings, className }) {

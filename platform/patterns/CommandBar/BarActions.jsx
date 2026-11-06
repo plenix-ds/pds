@@ -14,7 +14,7 @@
        onSelect(next) runs with the new state; folded into More it is a checked menu item
      actions[].choices: a command that picks one of [{ value, label, icon }]: a menu button showing the current choice
        (named "label: choice"), onChange(value) runs on a pick; folded into More it is a submenu of radio items
-     actions[].confirm: { name, count, plural, consequence, permanent, title, body, confirmLabel }: the command opens the destructive Dialog before it runs (docs/adr/0004).
+     actions[].confirm: { name, count, plural (a word, or a plural object { one, other } / { zero, one, two, few, many, other } the count picks from), consequence, permanent, title, body, confirmLabel }: the command opens the destructive Dialog before it runs (docs/adr/0004).
      The words come from the catalog's confirmAction strings: the title "{verb} {name}?" (or "{verb} {count} {plural}?"), the verb being the command's label, the
      consequence (one sentence, required for a danger command), "This cannot be undone." with permanent, and the button repeating the verb. A title, body or
      confirmLabel the application gives wins. Focus starts on Cancel, Escape cancels, and focus returns to the command; folded into More it confirms the same way.
@@ -44,7 +44,7 @@ import { Spinner } from '../../components/Loading/Loading.tsx';
 import { ConfirmDialog } from '../../components/Dialog/Dialog.tsx';
 import { focusables } from '../../utils/layer.ts';
 import { foldOrder, menuOrder } from '../../utils/foldOrder.ts';
-import { useStrings } from '../../providers/LocaleProvider.tsx';
+import { useStrings, useLocale } from '../../providers/LocaleProvider.tsx';
 import MoreIcon from 'plenix-platform/icons/plenix/more';
 
 
@@ -126,15 +126,24 @@ export function BarActions({ actions = [], iconOnly = false, fold = 0, off = (a)
   dangerClass, size = 'sm', extra = [], selectionKeys = null }) {
   const t = useStrings('commandBar'),
     C = useStrings('confirmAction'),
+    { plural: pluralOf } = useLocale(),
     [pending, setPending] = React.useState(null);
   moreLabel = moreLabel ?? t.moreLabel;
   // a command with confirm opens the destructive Dialog first (ADR 0004); the others run at once
   const ask = (a, run) => (a.confirm ? () => setPending({ a, run }) : run);
+  // confirm.plural: one string, or a plural object ({ one, other }; Arabic { zero, one, two, few, many, other }) whose form the locale's plural rules pick for the count
+  // (an exact count key such as "=0" wins), so a noun agrees with its number in every language (#630)
+  const nounFor = (plural, count) => {
+    if (plural === undefined || plural === null) return '';
+    if (typeof plural !== 'object') return plural;
+    const exact = plural['=' + Number(count)];
+    return exact !== undefined ? exact : plural[pluralOf(count)] ?? plural.other ?? '';
+  };
   const words = (a) => {
     const c = a.confirm || {}, fill = (text, values) => text.replace(/\{(\w+)\}/g, (m, k) => (values[k] === undefined ? m : values[k]));
     const verb = a.label;
     return {
-      title: c.title ?? (c.count !== undefined ? fill(C.titleMany, { verb, count: c.count, plural: c.plural ?? '' }) : fill(C.title, { verb, name: c.name ?? '' })),
+      title: c.title ?? (c.count !== undefined ? fill(C.titleMany, { verb, count: c.count, plural: nounFor(c.plural, c.count) }) : fill(C.title, { verb, name: c.name ?? '' })),
       message: c.body ?? [c.consequence, c.permanent ? C.permanent : null].filter(Boolean).join(' '),
       confirmLabel: c.confirmLabel ?? fill(C.confirm, { verb })
     };

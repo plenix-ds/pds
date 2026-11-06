@@ -31,9 +31,9 @@ import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatNumber } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.jsx';
-import { seriesColor } from './scales.js';
+import { seriesColor } from './scales.ts';
 import { ChartTooltip } from './parts/ChartTooltip.tsx';
-import { useChartHover, finite } from './chart-kit.js';
+import { useChartHover, finite } from './chart-kit.ts';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 
 // px: a node's bar and the least space between two nodes of a column (on the 4px grid)

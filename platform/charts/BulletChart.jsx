@@ -32,9 +32,9 @@ import { cx } from '../utils/cx.ts';
 import { formatNumber } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.jsx';
 import { ChartTooltip } from './parts/ChartTooltip.tsx';
-import { useChartHover, finite } from './chart-kit.js';
+import { useChartHover, finite } from './chart-kit.ts';
 import { useEChartsPlot, plotGrid } from './echarts/EChartsPlot.jsx';
-import { gridRoom } from './chart-helpers.js';
+import { gridRoom } from './chart-helpers.ts';
 import { snapToGrid } from '../utils/grid.ts';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 

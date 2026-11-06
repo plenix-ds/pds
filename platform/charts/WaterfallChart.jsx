@@ -32,13 +32,13 @@ import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatNumber } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.jsx';
-import { seriesColor } from './scales.js';
+import { seriesColor } from './scales.ts';
 import { DataLabel } from './parts/DataLabel.tsx';
 import { ChartLegend } from './parts/ChartLegend.tsx';
 import { ChartTooltip, chartTooltipText } from './parts/ChartTooltip.tsx';
-import { useChartInteraction } from './interaction.js';
+import { useChartInteraction } from './interaction.ts';
 import { useEChartsPlot, plotGrid } from './echarts/EChartsPlot.jsx';
-import { gridRoom, waterfallSteps } from './chart-helpers.js';
+import { gridRoom, waterfallSteps } from './chart-helpers.ts';
 import { tickLineHeight } from './echarts/engine.js';
 import { snapToGrid } from '../utils/grid.ts';
 import { useStrings } from '../providers/LocaleProvider.tsx';
@@ -141,4 +141,4 @@ export function WaterfallChart({ title, description, data = [], endLabel, format
     </ChartFrame>
   );
 }
-export { waterfallSteps } from './chart-helpers.js';
+export { waterfallSteps } from './chart-helpers.ts';
