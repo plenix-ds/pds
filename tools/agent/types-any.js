@@ -4,6 +4,8 @@
 // alone) and counts the prop lines typed `?: any;`. The index signature every Props interface keeps ([prop: string]: any)
 // is not a prop and is not counted.
 //   --check   fails (TYPES_ANY_FAIL) when the count is above the recorded one (types-any.baseline.json): it only goes down
+// CI does not run this script. Its gate is tools/ci/new-problems.mjs types (#61), which reads index.d.ts and the types/ files it
+// re-exports, and also counts a component whose whole props object is `any`.
 //   --update  records today's count (a deliberate step, in the pull request that lowers it)
 //   --top N   also prints the N prop names most often left `any`
 'use strict';

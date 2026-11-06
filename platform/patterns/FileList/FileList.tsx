@@ -91,21 +91,21 @@ import TrashIcon from 'plenix-platform/icons/plenix/trash';
 import { fill } from '../../utils/fill.ts';
 
 const FIELDS = ['name', 'size', 'modified', 'owner'];
-const idOf = (f) => (f.id === undefined ? f.name : f.id);
-const stamp = (v) => (v instanceof Date ? v.toISOString() : String(v || ''));
+const idOf = (f: any) => (f.id === undefined ? f.name : f.id);
+const stamp = (v: any) => (v instanceof Date ? v.toISOString() : String(v || ''));
 
 // the order of the list: folders first, then the field, then the name
-export function sortFiles(files, sort) {
+export function sortFiles(files: any, sort: any) {
   const s = Object.assign({ field: 'name', dir: 'asc' }, sort);
   const sign = s.dir === 'desc' ? -1 : 1;
-  const byName = (a, b) => String(a.name || '').localeCompare(String(b.name || ''), undefined, { numeric: true, sensitivity: 'base' });
-  const by = (a, b) => {
+  const byName = (a: any, b: any) => String(a.name || '').localeCompare(String(b.name || ''), undefined, { numeric: true, sensitivity: 'base' });
+  const by = (a: any, b: any) => {
     if (s.field === 'size') return (a.kind === 'folder' ? a.count || 0 : Number(a.size) || 0) - (b.kind === 'folder' ? b.count || 0 : Number(b.size) || 0);
     if (s.field === 'modified') return stamp(a.modified).localeCompare(stamp(b.modified));
     if (s.field === 'owner') return String(a.owner || '').localeCompare(String(b.owner || ''));
     return byName(a, b);
   };
-  return files.slice().sort((a, b) => {
+  return files.slice().sort((a: any, b: any) => {
     const fa = a.kind === 'folder' ? 0 : 1, fb = b.kind === 'folder' ? 0 : 1;
     if (fa !== fb) return fa - fb;
     return sign * by(a, b) || byName(a, b);
@@ -113,30 +113,63 @@ export function sortFiles(files, sort) {
 }
 
 // one row of the list: a file drags onto folders, a folder takes files (the engine's props on the <li>)
-function DragRow({ file, dragType, onMove, children }) {
+function DragRow({ file, dragType, onMove, children }: any) {
   const folder = file.kind === 'folder';
   const drag = useDraggable({ data: file, type: dragType, name: file.name, handle: false, disabled: !dragType || folder || !onMove });
   const drop = useDropTarget({ name: file.name, accepts: (data, type) => type === dragType && idOf(data) !== idOf(file), onDrop: (data) => onMove && onMove(data, file), disabled: !dragType || !folder || !onMove });
   const props = folder ? drop.props : dragType && onMove ? drag.props : {};
-  return <li {...props} className={cx('plx-file-list__item', props.className)}>{children}</li>;
+  return <li {...props} className={cx('plx-file-list__item', (props as any).className)}>{children}</li>;
 }
 
+/** @public a file or folder in a list */
+export type ListedFile = { id: string | number; name: string; kind?: 'file' | 'folder'; size?: number; count?: number; modified?: string | Date; owner?: string; status?: { tone?: string; icon?: unknown; label: string }; type?: string; src?: string; parent?: string | number | null };
+/** @public the order of a list */
+export type FileSort = { field: 'name' | 'size' | 'modified' | 'owner'; dir: 'asc' | 'desc' };
+/** @public */
+export type FileListProps = {
+  files?: ListedFile[];
+  label: string;
+  view?: 'list' | 'table';
+  sortable?: boolean;
+  sort?: FileSort;
+  defaultSort?: FileSort;
+  onSortChange?(sort: FileSort): void;
+  columns?: Array<'size' | 'modified' | 'owner' | 'status'>;
+  selectable?: boolean;
+  selected?: Array<string | number>;
+  onSelectionChange?(ids: Array<string | number>): void;
+  onOpen?(file: ListedFile): void;
+  hrefFor?(file: ListedFile): string;
+  onDownload?(file: ListedFile): void | Promise<void>;
+  onRename?(file: ListedFile, name: string): void | Promise<void>;
+  onDelete?(file: ListedFile): void | Promise<void>;
+  deleteVariant?: 'confirm' | 'trash' | 'undo';
+  onRestore?(file: ListedFile): void | Promise<void>;
+  /** files are dragged onto folders as items of this type */
+  dragType?: string;
+  onMove?(file: ListedFile, folder: ListedFile): void | Promise<void>;
+  moveTargets?: Array<{ id: string | number; name: string }>;
+  rowHeight?: 'short' | 'medium' | 'tall' | 'extra-tall';
+  empty?: React.ReactNode;
+  strings?: Record<string, string>;
+  className?: string;
+};
 export function FileList({ files = [], label, view = 'list', sortable = false, sort, defaultSort, onSortChange, columns, selectable = false, selected = [],
   onSelectionChange, onOpen, hrefFor, onDownload, onRename, onDelete, deleteVariant = 'confirm', onRestore, dragType, onMove, moveTargets,
-  rowHeight, empty, strings, className }) {
-  const t = useStrings('fileList', strings);
-  const [own, setOwn] = React.useState(Object.assign({ field: 'name', dir: 'asc' }, defaultSort));
+  rowHeight, empty, strings, className }: FileListProps) {
+  const t: any = useStrings('fileList', strings);
+  const [own, setOwn] = React.useState<any>(Object.assign({ field: 'name', dir: 'asc' }, defaultSort));
   const order = Object.assign({ field: 'name', dir: 'asc' }, sort === undefined ? own : sort);
-  const setOrder = (next) => { if (sort === undefined) setOwn(next); if (onSortChange) onSortChange(next); };
-  const [ask, setAsk] = React.useState(null);   // { kind: "rename" | "delete", file }
+  const setOrder = (next: any) => { if (sort === undefined) setOwn(next); if (onSortChange) onSortChange(next); };
+  const [ask, setAsk] = React.useState<any>(null);   // { kind: "rename" | "delete", file }
   const facts = columns || ['size', 'modified'].concat(files.some((f) => f.owner) ? ['owner'] : [], files.some((f) => f.status) ? ['status'] : []);
   const table = view === 'table';
   const rows = table ? files : sortFiles(files, order);
   const keys = selected || [];
-  const toggle = (f, on) => { if (!onSelectionChange) return; const id = idOf(f); onSelectionChange(on ? keys.concat(id) : keys.filter((x) => x !== id)); };
-  const others = (f) => files.filter((x) => idOf(x) !== idOf(f)).map((x) => x.name);
+  const toggle = (f: any, on: any) => { if (!onSelectionChange) return; const id = idOf(f); onSelectionChange(on ? keys.concat(id) : keys.filter((x) => x !== id)); };
+  const others = (f: any) => files.filter((x) => idOf(x) !== idOf(f)).map((x) => x.name);
   // the folders a file can move to: not itself, not where it is now (a file without a parent is at the root, id null)
-  const targetsFor = (f) => (moveTargets || []).filter((x) => idOf(x) !== idOf(f) && idOf(x) !== (f.parent === undefined ? null : f.parent));
+  const targetsFor = (f: any) => (moveTargets || []).filter((x: any) => idOf(x) !== idOf(f) && idOf(x) !== (f.parent === undefined ? null : f.parent));
   const countText = files.length === 1 ? t.one : fill(t.count, { n: formatNumber(files.length) });
 
   // the sort menu above the list: the field, then the direction
@@ -176,26 +209,26 @@ export function FileList({ files = [], label, view = 'list', sortable = false, s
 
   let body;
   if (table) {
-    const sizeText = (f) => (f.kind === 'folder' ? (typeof f.count === 'number' ? fill(f.count === 1 ? t.item : t.items, { n: formatNumber(f.count) }) : '') : typeof f.size === 'number' ? formatBytes(f.size) : (f.size || ''));
+    const sizeText = (f: any) => (f.kind === 'folder' ? (typeof f.count === 'number' ? fill(f.count === 1 ? t.item : t.items, { n: formatNumber(f.count) }) : '') : typeof f.size === 'number' ? formatBytes(f.size) : (f.size || ''));
     // folders stay first whichever way the name sorts (the comparator compensates for descending order)
-    const byName = (a, b, ra, rb, col, dir) => {
+    const byName = (a: any, b: any, ra: any, rb: any, col: any, dir: any) => {
       const fa = ra.kind === 'folder', fb = rb.kind === 'folder';
       if (fa !== fb) return (fa ? -1 : 1) * (dir === 'desc' ? -1 : 1);
       return String(a || '').localeCompare(String(b || ''), undefined, { numeric: true, sensitivity: 'base' });
     };
-    const cols = [{ title: t.name, field: 'name', kind: 'name', type: 'file', width: '--plx-ref-size-70u', sorter: byName,
-      render: (f) => <File name={f.name} kind={f.kind} type={f.type} src={f.src} icon={f.icon} href={hrefFor ? hrefFor(f) : undefined} onOpen={!hrefFor && onOpen ? () => onOpen(f) : undefined} /> }];
-    if (facts.indexOf('size') >= 0) cols.push({ title: t.size, field: 'size', kind: 'data', type: 'number', sorter: 'number', align: 'right', headerAlign: 'right', render: (f) => sizeText(f) });
-    if (facts.indexOf('modified') >= 0) cols.push({ title: t.modified, field: 'modified', kind: 'data', type: 'date', render: (f) => (f.modified ? formatDate(f.modified, { dateStyle: 'medium' }) : '') });
+    const cols: any[] = [{ title: t.name, field: 'name', kind: 'name', type: 'file', width: '--plx-ref-size-70u', sorter: byName,
+      render: (f: any) => <File name={f.name} kind={f.kind} type={f.type} src={f.src} icon={f.icon} href={hrefFor ? hrefFor(f) : undefined} onOpen={!hrefFor && onOpen ? () => onOpen(f) : undefined} /> }];
+    if (facts.indexOf('size') >= 0) cols.push({ title: t.size, field: 'size', kind: 'data', type: 'number', sorter: 'number', align: 'right', headerAlign: 'right', render: (f: any) => sizeText(f) });
+    if (facts.indexOf('modified') >= 0) cols.push({ title: t.modified, field: 'modified', kind: 'data', type: 'date', render: (f: any) => (f.modified ? formatDate(f.modified, { dateStyle: 'medium' }) : '') });
     if (facts.indexOf('owner') >= 0) cols.push({ title: t.owner, field: 'owner', type: 'person' });
-    if (facts.indexOf('status') >= 0) cols.push({ title: t.status, field: 'statusLabel', kind: 'center', type: 'select', render: (f) => (f.status ? <Badge tone={f.status.tone} icon={f.status.icon}>{f.status.label}</Badge> : null) });
-    const menu = (f) => [].concat(
-      onOpen ? [{ label: t.open, icon: f.kind === 'folder' ? FolderOpenIcon : OpenIcon, onSelect: () => onOpen(f) }] : [],
+    if (facts.indexOf('status') >= 0) cols.push({ title: t.status, field: 'statusLabel', kind: 'center', type: 'select', render: (f: any) => (f.status ? <Badge tone={f.status.tone} icon={f.status.icon}>{f.status.label}</Badge> : null) });
+    const menu = (f: any) => ([] as any[]).concat(
+      onOpen ? [{ label: t.open, icon: f.kind === 'folder' ? FolderOpenIcon : OpenIcon, onSelect: () => onOpen!(f) }] : [],
       onDownload && f.kind !== 'folder' ? [{ label: t.download, icon: DownloadTrayIcon, onSelect: () => onDownload(f) }] : [],
       onRename ? [{ label: t.rename, icon: RenameIcon, onSelect: () => setAsk({ kind: 'rename', file: f }) }] : [],
       onDelete ? [{ separator: true }, { label: t.delete, icon: TrashIcon, danger: true, onSelect: () => setAsk({ kind: 'delete', file: f }) }] : []);
     body = (
-      <DataGrid label={label} index="id" data={rows.map((f) => Object.assign({}, f, { id: idOf(f), statusLabel: f.status ? f.status.label : '' }))} columns={cols}
+      <DataGrid label={label} index="id" data={rows.map((f: any) => Object.assign({}, f, { id: idOf(f), statusLabel: f.status ? f.status.label : '' }))} columns={cols}
         selectable={selectable} selected={selectable ? keys : undefined} onSelectionChange={selectable ? onSelectionChange : undefined}
         sort={[{ field: order.field === 'owner' ? 'owner' : order.field, dir: order.dir }]} rowHeight={rowHeight}
         rowMenu={onOpen || onDownload || onRename || onDelete ? menu : undefined} />
@@ -203,7 +236,7 @@ export function FileList({ files = [], label, view = 'list', sortable = false, s
   } else {
     body = (
       <FileRowList label={label} className="plx-file-list__rows">
-        {rows.map((f) => {
+        {rows.map((f: any) => {
           const id = idOf(f);
           const moves = onMove ? targetsFor(f) : [];
           return (
@@ -217,7 +250,7 @@ export function FileList({ files = [], label, view = 'list', sortable = false, s
                 onDelete={onDelete ? () => onDelete(f) : undefined} deleteVariant={deleteVariant} onRestore={onRestore ? () => onRestore(f) : undefined}
                 actions={moves.length ? (
                   <MenuSub label={t.moveTo} icon={MoveIcon}>
-                    {moves.map((x) => <MenuItem key={String(idOf(x))} icon={FolderIcon} onSelect={() => onMove(f, x)}>{x.name}</MenuItem>)}
+                    {moves.map((x: any) => <MenuItem key={String(idOf(x))} icon={FolderIcon} onSelect={() => onMove!(f, x as any)}>{x.name}</MenuItem>)}
                   </MenuSub>
                 ) : undefined} />
             </DragRow>

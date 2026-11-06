@@ -1,0 +1,14 @@
+AssertionError [ERR_ASSERTION]: ltr: a header divider is absolute, got fixed
++ actual - expected
+
++ 'fixed'
+- 'absolute'
+
+    at /home/cc/pds1/work/component-engineer-2/tests/data-grid-header-lines-797.test.js:39:39 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'fixed',
+  expected: 'absolute',
+  operator: 'strictEqual',
+  diff: 'simple'
+}

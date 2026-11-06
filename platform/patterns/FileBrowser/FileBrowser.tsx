@@ -61,6 +61,7 @@
      cards (MediaCard type and status) in the grid.
 */
 import React from 'react';
+import type { ListedFile } from '../FileList/FileList.tsx';
 import { cx } from '../../utils/cx.ts';
 import { formatBytes, formatNumber } from '../../utils/format.ts';
 import { Breadcrumbs } from '../../components/Breadcrumbs/Breadcrumbs.tsx';
@@ -77,7 +78,7 @@ import { SortPanel } from '../SortPanel/SortPanel.jsx';
 import { ViewMenu } from '../ViewMenu/ViewMenu.tsx';
 import { ContentGrid } from '../ContentGrid/ContentGrid.tsx';
 import { DeleteFlow } from '../DeleteFlow/DeleteFlow.tsx';
-import { FileList, sortFiles } from '../FileList/FileList.jsx';
+import { FileList, sortFiles } from '../FileList/FileList.tsx';
 import { useDraggable, useDropTarget } from '../../utils/dnd.ts';
 import { useSelection } from '../../hooks/useSelection.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
@@ -92,87 +93,116 @@ import { fill } from '../../utils/fill.ts';
 
 const ROOT = '__plx-root';
 const DRAG = 'plx-file';
-const keyOf = (id) => (id === null || id === undefined ? ROOT : id);
+const keyOf = (id: any) => (id === null || id === undefined ? ROOT : id);
 // the fields Sort offers (utils/fields.ts)
 const SORT_FIELDS = [{ value: 'name', label: 'Name', kind: 'text' }, { value: 'size', label: 'Size', kind: 'number' }, { value: 'modified', label: 'Modified', kind: 'date' }];
 const CARD_SIZE = { s: 'sm', m: 'md', l: 'lg' };
 
 // a folder's name in the tree: a drop target for dragged files
-function TreeTarget({ id, name, onMove, children }) {
-  const drop = useDropTarget({ name, accepts: (data, type) => type === DRAG && keyOf(data.parent) !== id, onDrop: (data) => onMove([data], id === ROOT ? null : id), disabled: !onMove });
+function TreeTarget({ id, name, onMove, children }: any) {
+  const drop = useDropTarget({ name, accepts: (data: any, type: any) => type === DRAG && keyOf(data.parent) !== id, onDrop: (data: any) => onMove!([data], id === ROOT ? null : id), disabled: !onMove });
   return <span {...drop.props} className={cx('plx-file-browser__target', drop.props.className)}>{children}</span>;
 }
 
 // one card of the grid: a file drags onto folders, a folder takes files
-function GridItem({ item, onMove, children }) {
+function GridItem({ item, onMove, children }: any) {
   const folder = item.kind === 'folder';
   const drag = useDraggable({ data: item, type: DRAG, name: item.name, handle: false, disabled: folder || !onMove });
-  const drop = useDropTarget({ name: item.name, accepts: (data, type) => type === DRAG && data.id !== item.id, onDrop: (data) => onMove([data], item.id), disabled: !folder || !onMove });
+  const drop = useDropTarget({ name: item.name, accepts: (data: any, type: any) => type === DRAG && data.id !== item.id, onDrop: (data: any) => onMove!([data], item.id), disabled: !folder || !onMove });
   const props = !onMove ? {} : folder ? drop.props : drag.props;
-  return <div {...props} className={cx('plx-file-browser__card', props.className)}>{children}</div>;
+  return <div {...props} className={cx('plx-file-browser__card', (props as any).className)}>{children}</div>;
 }
 
+/** @public */
+export type FileBrowserProps = {
+  items: ListedFile[];
+  root?: { id?: string | number | null; name?: string };
+  folder?: string | number | null;
+  defaultFolder?: string | number | null;
+  onFolderChange?(id: string | number | null): void;
+  view?: 'list' | 'grid';
+  defaultView?: 'list' | 'grid';
+  onViewChange?(view: 'list' | 'grid'): void;
+  listView?: 'list' | 'table';
+  tree?: boolean;
+  breadcrumbs?: boolean;
+  selectable?: boolean;
+  selected?: Array<string | number>;
+  onSelectionChange?(ids: Array<string | number>): void;
+  onOpenFile?(file: ListedFile): void;
+  hrefFor?(item: ListedFile): string;
+  onCreateFolder?(name: string, parentId: string | number | null): void | Promise<void>;
+  onUpload?(files: File[], folderId: string | number | null): void | Promise<void>;
+  onDownload?(items: ListedFile[]): void | Promise<void>;
+  onRename?(item: ListedFile, name: string): void | Promise<void>;
+  onDelete?(items: ListedFile[]): void | Promise<void>;
+  onMove?(items: ListedFile[], folderId: string | number | null): void | Promise<void>;
+  /** more commands for the bar (CommandBar's actions) */
+  actions?: Array<Record<string, unknown>>;
+  strings?: Record<string, string>;
+  className?: string;
+};
 export function FileBrowser({ items = [], root, folder, defaultFolder, onFolderChange, view, defaultView = 'list', onViewChange, listView = 'list', tree = false,
   breadcrumbs = true, selectable = true, selected, onSelectionChange, onOpenFile, hrefFor, onCreateFolder, onUpload, onDownload, onRename, onDelete, onMove,
-  actions = [], strings, className }) {
-  const t = useStrings('fileBrowser', strings);
+  actions = [], strings, className }: FileBrowserProps) {
+  const t: any = useStrings('fileBrowser', strings);
   const top = { id: root && root.id !== undefined ? root.id : null, name: (root && root.name) || t.root };
-  const [ownFolder, setOwnFolder] = React.useState(defaultFolder === undefined ? top.id : defaultFolder);
+  const [ownFolder, setOwnFolder] = React.useState<any>(defaultFolder === undefined ? top.id : defaultFolder);
   const current = keyOf(folder === undefined ? ownFolder : folder);
-  const [ownView, setOwnView] = React.useState({ layout: defaultView === 'grid' ? 'gallery' : 'list', size: 'm', height: 'short' });
+  const [ownView, setOwnView] = React.useState<any>({ layout: defaultView === 'grid' ? 'gallery' : 'list', size: 'm', height: 'short' });
   const layout = view === undefined ? ownView.layout : view === 'grid' ? 'gallery' : 'list';
-  const [ownSel, setOwnSel] = React.useState([]);
+  const [ownSel, setOwnSel] = React.useState<any>([]);
   const sel = selected === undefined ? ownSel : selected;
-  const setSel = (next) => { if (selected === undefined) setOwnSel(next); if (onSelectionChange) onSelectionChange(next); };
-  const [sort, setSort] = React.useState([]);
-  const [q, setQ] = React.useState('');
-  const [asking, setAsking] = React.useState(null);   // "folder" | "delete"
-  const [over, setOver] = React.useState(false);
-  const depth = React.useRef(0);
-  const picker = React.useRef(null);
+  const setSel = (next: any) => { if (selected === undefined) setOwnSel(next); if (onSelectionChange) onSelectionChange(next); };
+  const [sort, setSort] = React.useState<any>([]);
+  const [q, setQ] = React.useState<any>('');
+  const [asking, setAsking] = React.useState<any>(null);   // "folder" | "delete"
+  const [over, setOver] = React.useState<any>(false);
+  const depth = React.useRef<any>(0);
+  const picker = React.useRef<any>(null);
 
   // the hierarchy
   const folders = items.filter((x) => x.kind === 'folder');
-  const byId = {}; items.forEach((x) => { byId[x.id] = x; });
-  const kids = (id) => items.filter((x) => keyOf(x.parent) === id);
-  const nameOf = (id) => (id === ROOT ? top.name : byId[id] ? byId[id].name : top.name);
-  const pathTo = (id) => { const out = []; let at = id; const seen = {}; while (at !== ROOT && byId[at] && !seen[at]) { seen[at] = true; out.unshift(at); at = keyOf(byId[at].parent); } return [ROOT].concat(out); };
-  const inside = (id) => { const out = []; const walk = (p) => kids(p).forEach((x) => { out.push(x); if (x.kind === 'folder') walk(x.id); }); walk(id); return out; };
+  const byId: any = {}; items.forEach((x) => { byId[x.id] = x; });
+  const kids = (id: any) => items.filter((x) => keyOf(x.parent) === id);
+  const nameOf = (id: any) => (id === ROOT ? top.name : byId[id] ? byId[id].name : top.name);
+  const pathTo = (id: any) => { const out: any = []; let at = id; const seen: any = {}; while (at !== ROOT && byId[at] && !seen[at]) { seen[at] = true; out.unshift(at); at = keyOf(byId[at].parent); } return [ROOT].concat(out); };
+  const inside = (id: any) => { const out: any = []; const walk = (p: any) => kids(p).forEach((x) => { out.push(x); if (x.kind === 'folder') walk(x.id); }); walk(id); return out; };
   const path = pathTo(current);
 
-  const go = (id) => {
+  const go = (id: any) => {
     const k = keyOf(id);
     if (folder === undefined) setOwnFolder(k === ROOT ? top.id : k);
     if (onFolderChange) onFolderChange(k === ROOT ? top.id : k);
     setQ(''); setSel([]);
   };
-  const setLayout = (v) => { if (view === undefined) setOwnView(v); if (onViewChange) onViewChange(v.layout === 'gallery' ? 'grid' : 'list'); };
+  const setLayout = (v: any) => { if (view === undefined) setOwnView(v); if (onViewChange) onViewChange(v.layout === 'gallery' ? 'grid' : 'list'); };
   const viewValue = Object.assign({}, ownView, { layout });
 
   // what the open folder shows: its children (with a folder's count), or the search's matches inside it
-  const withCount = (x) => (x.kind === 'folder' && typeof x.count !== 'number' ? Object.assign({}, x, { count: kids(x.id).length }) : x);
+  const withCount = (x: any) => (x.kind === 'folder' && typeof x.count !== 'number' ? Object.assign({}, x, { count: kids(x.id).length }) : x);
   const query = q.trim().toLowerCase();
-  const shown = (query ? inside(current).filter((x) => String(x.name).toLowerCase().indexOf(query) >= 0) : kids(current)).map(withCount);
+  const shown = (query ? inside(current).filter((x: any) => String(x.name).toLowerCase().indexOf(query) >= 0) : kids(current)).map(withCount);
   const order = sort[0] ? { field: sort[0].field, dir: sort[0].dir } : { field: 'name', dir: 'asc' };
   // the grid's selection model: a click toggles a card, Shift extends from the last one picked, Ctrl or ⌘ toggles
-  const pick = useSelection({ items: sortFiles(shown, order).map((x) => x.id), mode: 'multiple', selected: sel, onChange: setSel });
-  const move = onMove ? (list, to) => onMove(list, to === ROOT ? null : to) : undefined;
-  const chosen = sel.map((id) => byId[id]).filter(Boolean);
+  const pick = useSelection({ items: sortFiles(shown, order).map((x: any) => x.id), mode: 'multiple', selected: sel, onChange: setSel });
+  const move = onMove ? (list: any, to: any) => onMove(list, to === ROOT ? null : to) : undefined;
+  const chosen = sel.map((id: any) => byId[id]).filter(Boolean);
   // where the selection can go: every folder but the chosen folders, the ones inside them and the open one
-  const blocked = {}; chosen.forEach((x) => { blocked[x.id] = true; if (x.kind === 'folder') inside(x.id).forEach((y) => { blocked[y.id] = true; }); });
-  const targets = [{ id: ROOT, name: top.name }].concat(folders).filter((f) => !blocked[f.id] && keyOf(f.id) !== current);
+  const blocked: any = {}; chosen.forEach((x: any) => { blocked[x.id] = true; if (x.kind === 'folder') inside(x.id).forEach((y: any) => { blocked[y.id] = true; }); });
+  const targets = ([{ id: ROOT, name: top.name }] as any[]).concat(folders).filter((f: any) => !blocked[f.id] && keyOf(f.id) !== current);
 
   const countText = shown.length === 1 ? t.one : fill(t.count, { n: formatNumber(shown.length) });
   const bar = (
-    <CommandBar label={nameOf(current)} count={countText}
-      actions={[].concat(
+    <CommandBar {...({} as any)} label={nameOf(current)} count={countText}
+      actions={([] as any[]).concat(
         onCreateFolder ? [{ id: 'new-folder', label: t.newFolder, icon: FolderAddIcon, onSelect: () => setAsking('folder') }] : [],
         onUpload ? [{ id: 'upload', label: t.upload, icon: UploadIcon, onSelect: () => picker.current && picker.current.click() }] : [],
         actions)}
-      find={<CommandBarSearch value={q} onChange={(e) => setQ(e.target.value)} onClear={() => setQ('')} placeholder={t.search} aria-label={t.search} />}
-      view={<><SortPanel fields={SORT_FIELDS} value={sort} onChange={(v) => setSort(v.slice(0, 1))} /><ViewMenu value={viewValue} onChange={setLayout} /></>}
-      selection={selectable ? { count: sel.length, noun: t.noun, plural: t.plural, onClear: () => setSel([]), actions: [].concat(
-        onDownload ? [{ id: 'download', label: t.download, icon: DownloadTrayIcon, onSelect: () => onDownload(chosen) }] : [],
+      find={<CommandBarSearch {...({} as any)} value={q} onChange={(e: any) => setQ(e.target.value)} onClear={() => setQ('')} placeholder={t.search} aria-label={t.search} />}
+      view={<><SortPanel {...({} as any)} fields={SORT_FIELDS as any} value={sort} onChange={(v: any) => setSort(v.slice(0, 1))} /><ViewMenu {...({} as any)} value={viewValue} onChange={setLayout} /></>}
+      selection={selectable ? { count: sel.length, noun: t.noun, plural: t.plural, onClear: () => setSel([]), actions: ([] as any[]).concat(
+        onDownload ? [{ id: 'download', label: t.download, icon: DownloadTrayIcon, onSelect: () => onDownload!(chosen) }] : [],
         move ? [{ id: 'move', label: t.moveTo, icon: MoveIcon, items: targets.map((f) => ({ id: String(f.id), label: f.name, icon: FolderIcon, onSelect: () => { move(chosen, keyOf(f.id)); setSel([]); } })) }] : [],
         onDelete ? [{ id: 'delete', label: t.delete, icon: TrashIcon, danger: true, onSelect: () => setAsking('delete') }] : []) } : undefined} />
   );
@@ -188,8 +218,8 @@ export function FileBrowser({ items = [], root, folder, defaultFolder, onFolderC
   if (layout === 'gallery') {
     const cards = sortFiles(shown, order);
     content = cards.length ? (
-      <ContentGrid label={nameOf(current)} size={CARD_SIZE[viewValue.size] || 'md'} className="plx-file-browser__grid">
-        {cards.map((x) => {
+      <ContentGrid label={nameOf(current)} size={(CARD_SIZE as any)[viewValue.size] || 'md'} className="plx-file-browser__grid">
+        {cards.map((x: any) => {
           const isFolder = x.kind === 'folder';
           const ext = fileExtension(x.name);
           const facts = isFolder ? fill(x.count === 1 ? t.item : t.items, { n: formatNumber(x.count || 0) })
@@ -198,7 +228,7 @@ export function FileBrowser({ items = [], root, folder, defaultFolder, onFolderC
             <GridItem key={x.id} item={x} onMove={move}>
               <MediaCard src={x.src} alt="" icon={isFolder ? FolderIcon : fileIcon(x.name, x.type)} title={x.name} meta={facts} aspect="4/3"
                 status={x.status} selected={sel.indexOf(x.id) >= 0} selecting={sel.length > 0}
-                onSelectChange={selectable ? (on, e) => pick.choose(x.id, e) : undefined}
+                onSelectChange={selectable ? (on: any, e: any) => pick.choose(x.id, e as any) : undefined}
                 href={hrefFor ? hrefFor(x) : undefined} onOpen={hrefFor ? undefined : isFolder ? () => go(x.id) : onOpenFile ? () => onOpenFile(x) : undefined} />
             </GridItem>
           );
@@ -207,38 +237,38 @@ export function FileBrowser({ items = [], root, folder, defaultFolder, onFolderC
     ) : empty;
   } else {
     content = (
-      <FileList label={nameOf(current)} files={shown} view={listView} sort={order} onSortChange={(o) => setSort([o])} selectable={selectable} selected={sel} onSelectionChange={setSel}
-        hrefFor={hrefFor} onOpen={(x) => (x.kind === 'folder' ? go(x.id) : onOpenFile && onOpenFile(x))}
-        onDownload={onDownload ? (x) => onDownload([x]) : undefined} onRename={onRename} onDelete={onDelete ? (x) => onDelete([x]) : undefined}
-        dragType={move ? DRAG : undefined} onMove={move ? (x, to) => move([x], to.id) : undefined}
-        moveTargets={move ? [{ id: top.id, name: top.name }].concat(folders) : undefined} rowHeight={viewValue.height} empty={empty} />
+      <FileList label={nameOf(current)} files={shown} view={listView} sort={order} onSortChange={(o: any) => setSort([o])} selectable={selectable} selected={sel} onSelectionChange={setSel}
+        hrefFor={hrefFor} onOpen={(x: any) => (x.kind === 'folder' ? go(x.id) : onOpenFile && onOpenFile(x))}
+        onDownload={onDownload ? (x: any) => onDownload([x]) : undefined} onRename={onRename} onDelete={onDelete ? (x: any) => onDelete([x]) : undefined}
+        dragType={move ? DRAG : undefined} onMove={move ? (x: any, to: any) => move([x], to.id) : undefined}
+        moveTargets={move ? ([{ id: top.id, name: top.name }] as any[]).concat(folders) : undefined} rowHeight={viewValue.height} empty={empty} />
     );
   }
 
   // the tree: the root and every folder, the open folder's parents open
-  const node = (f) => {
+  const node = (f: any): any => {
     const sub = folders.filter((x) => keyOf(x.parent) === f.id);
     return { id: f.id, label: <TreeTarget id={f.id} name={f.name} onMove={move}>{f.name}</TreeTarget>, icon: FolderIcon, children: sub.length ? sub.map(node) : undefined };
   };
-  const [open, setOpen] = React.useState([]);
+  const [open, setOpen] = React.useState<any>([]);
   const expanded = Array.from(new Set(open.concat(path.slice(0, -1))));
   const treeEl = tree ? (
     <div className="plx-file-browser__tree">
       <Resizable label={t.folders} axis="horizontal" defaultWidth={240} minWidth={160} maxWidth={400} className="plx-file-browser__pane">
         <div className="plx-file-browser__tree-scroll" tabIndex={0} role="region" aria-label={t.folders}>
-          <Tree label={t.folders} nodes={[node({ id: ROOT, name: top.name })]} selected={current} onSelect={go} expanded={expanded} onExpandedChange={setOpen} />
+          <Tree label={t.folders} nodes={[node({ id: ROOT, name: top.name })]} selected={current} onSelect={go as any} expanded={expanded as any} onExpandedChange={setOpen} />
         </div>
       </Resizable>
     </div>
   ) : null;
 
   // files dragged in from the computer: the drop overlay over the content, then onUpload
-  const hasFiles = (e) => Array.from((e.dataTransfer && e.dataTransfer.types) || []).indexOf('Files') >= 0;
+  const hasFiles = (e: any) => Array.from((e.dataTransfer && e.dataTransfer.types) || []).indexOf('Files') >= 0;
   const dropProps = onUpload ? {
-    onDragEnter: (e) => { if (!hasFiles(e)) return; e.preventDefault(); depth.current += 1; setOver(true); },
-    onDragOver: (e) => { if (!hasFiles(e)) return; e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; },
-    onDragLeave: (e) => { if (!hasFiles(e)) return; depth.current = Math.max(0, depth.current - 1); if (!depth.current) setOver(false); },
-    onDrop: (e) => { if (!hasFiles(e)) return; e.preventDefault(); depth.current = 0; setOver(false); const list = Array.from(e.dataTransfer.files || []); if (list.length) onUpload(list, current === ROOT ? top.id : current); },
+    onDragEnter: (e: any) => { if (!hasFiles(e)) return; e.preventDefault(); depth.current += 1; setOver(true); },
+    onDragOver: (e: any) => { if (!hasFiles(e)) return; e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; },
+    onDragLeave: (e: any) => { if (!hasFiles(e)) return; depth.current = Math.max(0, depth.current - 1); if (!depth.current) setOver(false); },
+    onDrop: (e: any) => { if (!hasFiles(e)) return; e.preventDefault(); depth.current = 0; setOver(false); const list = Array.from(e.dataTransfer.files || []); if (list.length) onUpload!(list as any, current === ROOT ? top.id : current); },
   } : {};
 
   const names = kids(current).map((x) => String(x.name).toLowerCase());
@@ -257,14 +287,14 @@ export function FileBrowser({ items = [], root, folder, defaultFolder, onFolderC
           {onUpload && over ? <DropZone overlay active className="plx-file-browser__drop">{fill(t.drop, { folder: nameOf(current) })}</DropZone> : null}
         </div>
       </div>
-      {onUpload ? <input ref={picker} type="file" multiple hidden aria-label={t.upload} onChange={(e) => { const list = Array.from(e.target.files || []); if (list.length) onUpload(list, current === ROOT ? top.id : current); e.target.value = ''; }} /> : null}
+      {onUpload ? <input ref={picker} type="file" multiple hidden aria-label={t.upload} onChange={(e) => { const list = Array.from(e.target.files || []); if (list.length) onUpload!(list as any, current === ROOT ? top.id : current); e.target.value = ''; }} /> : null}
       {onCreateFolder ? (
         <PromptDialog open={asking === 'folder'} title={t.newFolder} label={t.folderName} confirmLabel={t.create}
           validate={(v) => (!v.trim() ? t.nameEmpty : names.indexOf(v.trim().toLowerCase()) >= 0 ? fill(t.nameTaken, { name: v.trim() }) : '')}
           onSubmit={(v) => { setAsking(null); onCreateFolder(v.trim(), current === ROOT ? top.id : current); }} onCancel={() => setAsking(null)} />
       ) : null}
       {onDelete ? (
-        <DeleteFlow open={asking === 'delete'} onClose={() => setAsking(null)} items={chosen.map((x) => ({ id: x.id, label: x.name }))} noun={t.noun} plural={t.plural}
+        <DeleteFlow open={asking === 'delete'} onClose={() => setAsking(null)} items={chosen.map((x: any) => ({ id: x.id, label: x.name }))} noun={t.noun} plural={t.plural}
           onDelete={() => { onDelete(chosen); setSel([]); }} />
       ) : null}
     </section>

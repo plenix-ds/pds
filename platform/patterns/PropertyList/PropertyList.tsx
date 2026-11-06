@@ -32,12 +32,27 @@ import { useTruncated } from '../../utils/overflow.ts';
 import { Tooltip } from '../../components/Tooltip/Tooltip.tsx';
 import { Isolate } from '../../components/Isolate/Isolate.tsx';
 
-export function PropertyList({ layout = 'columns', className, children, ...rest }) {
+/** @public the prop type of PropertyList (ADR 0011) */
+export type PropertyListProps = React.HTMLAttributes<HTMLDListElement> & { layout?: 'columns' | 'stacked'; className?: string; children?: React.ReactNode };
+/** @public the prop type of PropertyList.Item (ADR 0011) */
+export type PropertyListItemProps = {
+  label: React.ReactNode;
+  /** the id of a control in the item, so the label names it */
+  htmlFor?: string;
+  description?: React.ReactNode;
+  /** the value is a technical value: the data font */
+  data?: boolean;
+  /** "id": a computed identifier that follows the page's direction */
+  kind?: 'id';
+  className?: string;
+  children?: React.ReactNode;
+};
+export function PropertyList({ layout = 'columns', className, children, ...rest }: PropertyListProps) {
   return <dl className={cx('plx-property-list', 'plx-property-list--' + layout, className)} {...rest}>{children}</dl>;
 }
 
-PropertyList.Item = function PropertyListItem({ label, htmlFor, description, data = false, kind, className, children }) {
-  const textRef = React.useRef(null);
+PropertyList.Item = function PropertyListItem({ label, htmlFor, description, data = false, kind, className, children }: PropertyListItemProps) {
+  const textRef = React.useRef<any>(null);
   const cut = useTruncated(textRef);
   return (
     <div className={cx('plx-property-list__item', className)}>

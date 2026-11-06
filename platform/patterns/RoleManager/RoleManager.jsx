@@ -65,7 +65,7 @@ import { Notice } from '../../components/Notice/Notice.tsx';
 import { RoleLabel } from '../../components/RoleLabel/RoleLabel.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { ResourceList } from '../ResourceList/ResourceList.jsx';
-import { PermissionSummary } from '../PermissionSummary/PermissionSummary.jsx';
+import { PermissionSummary } from '../PermissionSummary/PermissionSummary.tsx';
 import { AssignControl } from '../AssignControl/AssignControl.tsx';
 import { DuplicateAction } from '../DuplicateAction/DuplicateAction.tsx';
 import { DeleteFlow } from '../DeleteFlow/DeleteFlow.tsx';

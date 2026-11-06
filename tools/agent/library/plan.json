@@ -1686,10 +1686,10 @@
       "platform/design-system/parts/w08B.{records,labs,docs}.js + .css",
       "platform/exports/w08B.{js,css}",
       "platform/standards/web-native-map.d/w08B.json",
-      "platform/patterns/PeopleGroup/PeopleGroup.jsx",
+      "platform/patterns/PeopleGroup/PeopleGroup.tsx",
       "platform/patterns/PeopleGroup/people-group.css",
       "platform/tokens/components/people-group.tokens.json",
-      "platform/patterns/PermissionSummary/PermissionSummary.jsx",
+      "platform/patterns/PermissionSummary/PermissionSummary.tsx",
       "platform/patterns/PermissionSummary/permission-summary.css",
       "platform/tokens/components/permission-summary.tokens.json",
       "platform/patterns/QueryBuilder/QueryBuilder.jsx",
@@ -1978,7 +1978,7 @@
       "platform/patterns/AssignControl/AssignControl.tsx",
       "platform/patterns/AssignControl/assign-control.css",
       "platform/tokens/components/assign-control.tokens.json",
-      "platform/patterns/Publish/Publish.jsx",
+      "platform/patterns/Publish/Publish.tsx",
       "platform/patterns/Publish/publish.css",
       "platform/tokens/components/publish.tokens.json"
      ],
@@ -2133,7 +2133,7 @@
       "platform/patterns/HelpPanel/HelpPanel.tsx",
       "platform/patterns/HelpPanel/help-panel.css",
       "platform/tokens/components/help-panel.tokens.json",
-      "platform/patterns/Onboarding/Onboarding.jsx",
+      "platform/patterns/Onboarding/Onboarding.tsx",
       "platform/patterns/Onboarding/onboarding.css",
       "platform/tokens/components/onboarding.tokens.json",
       "platform/patterns/Tour/Tour.tsx",
@@ -2145,7 +2145,7 @@
       "platform/patterns/FeatureIntro/FeatureIntro.tsx",
       "platform/patterns/FeatureIntro/feature-intro.css",
       "platform/tokens/components/feature-intro.tokens.json",
-      "platform/patterns/PermissionsEditor/PermissionsEditor.jsx",
+      "platform/patterns/PermissionsEditor/PermissionsEditor.tsx",
       "platform/patterns/PermissionsEditor/permissions-editor.css",
       "platform/tokens/components/permissions-editor.tokens.json"
      ],
@@ -2193,7 +2193,7 @@
       "platform/patterns/TrialUpgrade/TrialUpgrade.tsx",
       "platform/patterns/TrialUpgrade/trial-upgrade.css",
       "platform/tokens/components/trial-upgrade.tokens.json",
-      "platform/patterns/Offboarding/Offboarding.jsx",
+      "platform/patterns/Offboarding/Offboarding.tsx",
       "platform/patterns/Offboarding/offboarding.css",
       "platform/tokens/components/offboarding.tokens.json",
       "platform/patterns/ShortcutsDialog/ShortcutsDialog.jsx",
@@ -2238,10 +2238,10 @@
       "platform/standards/web-native-map.d/w12A.json",
       "platform/components/Card/Card.jsx",
       "platform/components/Card/card.css",
-      "platform/patterns/FileBrowser/FileBrowser.jsx",
+      "platform/patterns/FileBrowser/FileBrowser.tsx",
       "platform/patterns/FileBrowser/file-browser.css",
       "platform/tokens/components/file-browser.tokens.json",
-      "platform/patterns/FileList/FileList.jsx",
+      "platform/patterns/FileList/FileList.tsx",
       "platform/patterns/FileList/file-list.css",
       "platform/tokens/components/file-list.tokens.json",
       "platform/patterns/UploadManager/UploadManager.tsx",
@@ -2373,7 +2373,7 @@
       "platform/design-system/parts/w13A.{records,labs,docs}.js + .css",
       "platform/exports/w13A.{js,css}",
       "platform/standards/web-native-map.d/w13A.json",
-      "platform/patterns/ProductCard/ProductCard.jsx",
+      "platform/patterns/ProductCard/ProductCard.tsx",
       "platform/patterns/ProductCard/product-card.css",
       "platform/tokens/components/product-card.tokens.json",
       "platform/templates/Commerce/",
@@ -2418,7 +2418,7 @@
       "platform/patterns/ImageAnnotation/ImageAnnotation.tsx",
       "platform/patterns/ImageAnnotation/image-annotation.css",
       "platform/tokens/components/image-annotation.tokens.json",
-      "platform/patterns/PresenceBar/PresenceBar.jsx",
+      "platform/patterns/PresenceBar/PresenceBar.tsx",
       "platform/patterns/PresenceBar/presence-bar.css",
       "platform/tokens/components/presence-bar.tokens.json"
      ],
@@ -2521,7 +2521,7 @@
       "platform/design-system/parts/w14B.{records,labs,docs}.js + .css",
       "platform/exports/w14B.{js,css}",
       "platform/standards/web-native-map.d/w14B.json",
-      "platform/patterns/PromptHistory/PromptHistory.jsx",
+      "platform/patterns/PromptHistory/PromptHistory.tsx",
       "platform/patterns/PromptHistory/prompt-history.css",
       "platform/tokens/components/prompt-history.tokens.json",
       "platform/components/Citation/Citation.tsx",
@@ -5852,7 +5852,7 @@
    "wave": 8,
    "lane": "B",
    "files": [
-    "platform/patterns/PeopleGroup/PeopleGroup.jsx",
+    "platform/patterns/PeopleGroup/PeopleGroup.tsx",
     "platform/patterns/PeopleGroup/people-group.css",
     "platform/tokens/components/people-group.tokens.json"
    ],
@@ -5877,7 +5877,7 @@
    "wave": 8,
    "lane": "B",
    "files": [
-    "platform/patterns/PermissionSummary/PermissionSummary.jsx",
+    "platform/patterns/PermissionSummary/PermissionSummary.tsx",
     "platform/patterns/PermissionSummary/permission-summary.css",
     "platform/tokens/components/permission-summary.tokens.json"
    ],
@@ -6837,7 +6837,7 @@
    "wave": 10,
    "lane": "B",
    "files": [
-    "platform/patterns/Publish/Publish.jsx",
+    "platform/patterns/Publish/Publish.tsx",
     "platform/patterns/Publish/publish.css",
     "platform/tokens/components/publish.tokens.json"
    ],
@@ -7292,7 +7292,7 @@
    "wave": 11,
    "lane": "B",
    "files": [
-    "platform/patterns/PermissionsEditor/PermissionsEditor.jsx",
+    "platform/patterns/PermissionsEditor/PermissionsEditor.tsx",
     "platform/patterns/PermissionsEditor/permissions-editor.css",
     "platform/tokens/components/permissions-editor.tokens.json"
    ],
@@ -7363,7 +7363,7 @@
    "wave": 11,
    "lane": "B",
    "files": [
-    "platform/patterns/Onboarding/Onboarding.jsx",
+    "platform/patterns/Onboarding/Onboarding.tsx",
     "platform/patterns/Onboarding/onboarding.css",
     "platform/tokens/components/onboarding.tokens.json"
    ],
@@ -7556,7 +7556,7 @@
    "wave": 11,
    "lane": "C",
    "files": [
-    "platform/patterns/Offboarding/Offboarding.jsx",
+    "platform/patterns/Offboarding/Offboarding.tsx",
     "platform/patterns/Offboarding/offboarding.css",
     "platform/tokens/components/offboarding.tokens.json"
    ],
@@ -7604,7 +7604,7 @@
    "wave": 12,
    "lane": "A",
    "files": [
-    "platform/patterns/FileList/FileList.jsx",
+    "platform/patterns/FileList/FileList.tsx",
     "platform/patterns/FileList/file-list.css",
     "platform/tokens/components/file-list.tokens.json"
    ],
@@ -7628,7 +7628,7 @@
    "wave": 12,
    "lane": "A",
    "files": [
-    "platform/patterns/FileBrowser/FileBrowser.jsx",
+    "platform/patterns/FileBrowser/FileBrowser.tsx",
     "platform/patterns/FileBrowser/file-browser.css",
     "platform/tokens/components/file-browser.tokens.json"
    ],
@@ -7970,7 +7970,7 @@
    "wave": 13,
    "lane": "A",
    "files": [
-    "platform/patterns/ProductCard/ProductCard.jsx",
+    "platform/patterns/ProductCard/ProductCard.tsx",
     "platform/patterns/ProductCard/product-card.css",
     "platform/tokens/components/product-card.tokens.json"
    ],
@@ -8135,7 +8135,7 @@
    "wave": 13,
    "lane": "B",
    "files": [
-    "platform/patterns/PresenceBar/PresenceBar.jsx",
+    "platform/patterns/PresenceBar/PresenceBar.tsx",
     "platform/patterns/PresenceBar/presence-bar.css",
     "platform/tokens/components/presence-bar.tokens.json"
    ],
@@ -8402,7 +8402,7 @@
    "wave": 14,
    "lane": "B",
    "files": [
-    "platform/patterns/PromptHistory/PromptHistory.jsx",
+    "platform/patterns/PromptHistory/PromptHistory.tsx",
     "platform/patterns/PromptHistory/prompt-history.css",
     "platform/tokens/components/prompt-history.tokens.json"
    ],
@@ -11679,7 +11679,7 @@
    "target": "PeopleGroup",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/PeopleGroup/PeopleGroup.jsx",
+    "platform/patterns/PeopleGroup/PeopleGroup.tsx",
     "platform/patterns/PeopleGroup/people-group.css",
     "platform/tokens/components/people-group.tokens.json"
    ],
@@ -11711,7 +11711,7 @@
    "target": "PeopleGroup",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/PeopleGroup/PeopleGroup.jsx",
+    "platform/patterns/PeopleGroup/PeopleGroup.tsx",
     "platform/patterns/PeopleGroup/people-group.css",
     "platform/tokens/components/people-group.tokens.json"
    ],
@@ -11770,7 +11770,7 @@
    "target": "PermissionSummary",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/PermissionSummary/PermissionSummary.jsx",
+    "platform/patterns/PermissionSummary/PermissionSummary.tsx",
     "platform/patterns/PermissionSummary/permission-summary.css",
     "platform/tokens/components/permission-summary.tokens.json"
    ],
@@ -14650,7 +14650,7 @@
    "target": "ProductCard",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/ProductCard/ProductCard.jsx",
+    "platform/patterns/ProductCard/ProductCard.tsx",
     "platform/patterns/ProductCard/product-card.css",
     "platform/tokens/components/product-card.tokens.json"
    ],
@@ -18402,7 +18402,7 @@
    "target": "Publish",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/Publish/Publish.jsx",
+    "platform/patterns/Publish/Publish.tsx",
     "platform/patterns/Publish/publish.css",
     "platform/tokens/components/publish.tokens.json"
    ],
@@ -18433,7 +18433,7 @@
    "target": "Publish",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/Publish/Publish.jsx",
+    "platform/patterns/Publish/Publish.tsx",
     "platform/patterns/Publish/publish.css",
     "platform/tokens/components/publish.tokens.json"
    ],
@@ -18520,7 +18520,7 @@
    "target": "Onboarding",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/Onboarding/Onboarding.jsx",
+    "platform/patterns/Onboarding/Onboarding.tsx",
     "platform/patterns/Onboarding/onboarding.css",
     "platform/tokens/components/onboarding.tokens.json"
    ],
@@ -18952,7 +18952,7 @@
    "target": "PermissionsEditor",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/PermissionsEditor/PermissionsEditor.jsx",
+    "platform/patterns/PermissionsEditor/PermissionsEditor.tsx",
     "platform/patterns/PermissionsEditor/permissions-editor.css",
     "platform/tokens/components/permissions-editor.tokens.json"
    ],
@@ -19253,7 +19253,7 @@
    "target": "Offboarding",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/Offboarding/Offboarding.jsx",
+    "platform/patterns/Offboarding/Offboarding.tsx",
     "platform/patterns/Offboarding/offboarding.css",
     "platform/tokens/components/offboarding.tokens.json"
    ],
@@ -19798,7 +19798,7 @@
    "target": "FileBrowser",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/FileBrowser/FileBrowser.jsx",
+    "platform/patterns/FileBrowser/FileBrowser.tsx",
     "platform/patterns/FileBrowser/file-browser.css",
     "platform/tokens/components/file-browser.tokens.json"
    ],
@@ -19873,7 +19873,7 @@
    "target": "FileList",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/FileList/FileList.jsx",
+    "platform/patterns/FileList/FileList.tsx",
     "platform/patterns/FileList/file-list.css",
     "platform/tokens/components/file-list.tokens.json"
    ],
@@ -20779,7 +20779,7 @@
    "target": "PresenceBar",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/PresenceBar/PresenceBar.jsx",
+    "platform/patterns/PresenceBar/PresenceBar.tsx",
     "platform/patterns/PresenceBar/presence-bar.css",
     "platform/tokens/components/presence-bar.tokens.json"
    ],
@@ -21375,7 +21375,7 @@
    "target": "PromptHistory",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/PromptHistory/PromptHistory.jsx",
+    "platform/patterns/PromptHistory/PromptHistory.tsx",
     "platform/patterns/PromptHistory/prompt-history.css",
     "platform/tokens/components/prompt-history.tokens.json"
    ],

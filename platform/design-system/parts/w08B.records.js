@@ -104,7 +104,7 @@ DSParts.records.push(function (H) {
   /* ── 03 Content › Identity › Team and Group: PeopleGroup ── */
   var team = function (o) { return box(o.width || 480, h(P.PeopleGroup, Object.assign({ name: 'Brand team', description: 'Design, print and the parish style guide', members: PEOPLE, href: '#team-brand', onShowMembers: noop }, o.g))); };
   var peopleGroup = { id: 'people-group', lab: true, icon: 'settings-users', sec: 'content', sub: 'Identity', leaf: 'Team', title: 'Team',
-    plenix: 'PeopleGroup', src: 'patterns/PeopleGroup/PeopleGroup.jsx', level: 'Pattern', interaction: 'Display',
+    plenix: 'PeopleGroup', src: 'patterns/PeopleGroup/PeopleGroup.tsx', level: 'Pattern', interaction: 'Display',
     aliases: ['Team card', 'Team identity', 'Team row', 'Squad'],
     text: 'Shows a team as one identity in a row: its own picture or initials, its name (a link to the team’s page), the word Team and its member count, what it does, and its members’ avatars with +N for the rest. The word Team is read with the name, so a team is never taken for a person: Plenix avatars are rounded squares for everyone, so the shape cannot tell them apart.',
     use: ['Where ownership or access belongs to a team: a project’s owner, a shared folder’s audience', 'Pickers and lists that mix people and teams (each team as this row)', 'The member count as a number people can trust: from the directory, not the avatars shown'],
@@ -127,7 +127,7 @@ DSParts.records.push(function (H) {
       }]
     ] };
   var userGroup = { id: 'user-group', icon: 'settings-users', sec: 'content', sub: 'Identity', leaf: 'Group', title: 'Group',
-    plenix: 'PeopleGroup kind="group"', src: 'patterns/PeopleGroup/PeopleGroup.jsx', level: 'Pattern', interaction: 'Display', variantClasses: ['plx-people-group--group'],
+    plenix: 'PeopleGroup kind="group"', src: 'patterns/PeopleGroup/PeopleGroup.tsx', level: 'Pattern', interaction: 'Display', variantClasses: ['plx-people-group--group'],
     aliases: ['User group', 'Permission group', 'Security group', 'Directory group', 'Distribution list'],
     text: 'A permission or directory group as one row: the group icon tile, its name, the word Group, how many members it holds (the number in the data font) and where it comes from (“Synced from directory”), with Show members to list them on demand. It is PeopleGroup with kind="group": members are not shown inline, because a group is managed as a whole and can hold hundreds.',
     use: ['Access settings and sharing: a group granted a role', 'Pickers that offer groups beside people and teams', 'The source for a synced group, which is managed in the directory and read only here'],
@@ -147,7 +147,7 @@ DSParts.records.push(function (H) {
   var perm = function (o) { return box(o.width || 520, h(P.PermissionSummary, Object.assign({ access: 'Your team can edit', icon: 'settings-users', detail: 'From the Marketing folder · 12 people',
     can: ['View', 'Comment', 'Edit details', 'Download'], cannot: ['Share', 'Delete'], onManage: noop }, o.p))); };
   var permissionSummary = { id: 'permission-summary', lab: true, icon: 'settings-permissions', sec: 'content', sub: 'Identity', leaf: 'Permission summary', title: 'Permission summary',
-    plenix: 'PermissionSummary', src: 'patterns/PermissionSummary/PermissionSummary.jsx', level: 'Pattern', interaction: 'Display',
+    plenix: 'PermissionSummary', src: 'patterns/PermissionSummary/PermissionSummary.tsx', level: 'Pattern', interaction: 'Display',
     aliases: ['Access summary', 'Who has access', 'Sharing summary', 'Role summary'],
     text: 'Shows who can reach an item and what they may do, before anyone shares or changes it: the access in words with its icon, audience first (“Your team can edit”), where it comes from (“From the Marketing folder · 12 people”), then Can and Cannot as two short lists, each right with a check in the success color or a cross in the danger color. Compact folds each list into one sentence. Manage access opens the sharing settings; the summary itself changes nothing.',
     use: ['The top of a sharing dialog and an item’s details pane', 'Inherited or restricted access: name where it comes from', 'The rights people ask about (share, delete, download), not every permission'],

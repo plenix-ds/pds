@@ -43,14 +43,33 @@ import SettingsUsersIcon from 'plenix-platform/icons/plenix/settings-users';
 import { fill } from '../../utils/fill.ts';
 
 // "8 members" with the number in the data font
-function Members({ n, t }) {
+function Members({ n, t }: { n: any; t: any }) {
   const words = n === 1 ? t.member : t.members;
   const [before, after] = words.split('{n}');
   return <span className="plx-people-group__count">{before}<span className="plx-people-group__number">{formatNumber(n)}</span>{after}</span>;
 }
 
-export function PeopleGroup({ name, kind = 'team', description, members, count, max = 4, src, source, href, onShowMembers, strings, className, ...rest }) {
-  const t = useStrings('peopleGroup', strings);
+/** @public one member shown in the avatars */
+export type PeopleGroupMember = { id: string | number; name: string; src?: string; presence?: 'online' | 'away' | 'busy' | 'dnd' | 'offline' };
+/** @public the prop type (ADR 0011) */
+export type PeopleGroupProps = Omit<React.HTMLAttributes<HTMLElement>, 'children'> & {
+  name: string;
+  kind?: 'team' | 'group';
+  description?: string;
+  members?: PeopleGroupMember[];
+  /** how many members it has (default: not shown) */
+  count?: number;
+  max?: number;
+  src?: string;
+  /** where a group comes from ("Synced from directory") */
+  source?: string;
+  href?: string;
+  onShowMembers?(): void;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function PeopleGroup({ name, kind = 'team', description, members, count, max = 4, src, source, href, onShowMembers, strings, className, ...rest }: PeopleGroupProps) {
+  const t: any = useStrings('peopleGroup', strings);
   const group = kind === 'group';
   const kindWord = group ? t.group : t.team;
   const showAvatars = !group && members && members.length;

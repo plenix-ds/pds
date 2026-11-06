@@ -24,7 +24,7 @@ import { useOptionalToast } from '../../components/Toast/Toast.tsx';
 import { DeleteFlow } from '../../patterns/DeleteFlow/DeleteFlow.tsx';
 import { Wizard } from '../../patterns/Wizard/Wizard.tsx';
 import { Form, FormSection, FormActions } from '../../patterns/Form/Form.tsx';
-import { PropertyList } from '../../patterns/PropertyList/PropertyList.jsx';
+import { PropertyList } from '../../patterns/PropertyList/PropertyList.tsx';
 import { Field } from '../../components/Field/Field.tsx';
 import { Input } from '../../components/Input/Input.tsx';
 import { Checkbox, RadioGroup, ChoiceList } from '../../components/Checkbox/Checkbox.tsx';

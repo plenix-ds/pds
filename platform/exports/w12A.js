@@ -2,7 +2,7 @@
 // FileBrowser (folders, breadcrumbs, the tree, a list or a grid), UploadManager (a panel or a dialog of uploads, with
 // useUploadQueue) and VersionCompare (two versions side by side, with a slider, or as a text diff). MediaCard's asset and
 // collection parts are in Card.tsx (already public).
-export { FileList, sortFiles } from '../patterns/FileList/FileList.jsx';
-export { FileBrowser } from '../patterns/FileBrowser/FileBrowser.jsx';
+export { FileList, sortFiles } from '../patterns/FileList/FileList.tsx';
+export { FileBrowser } from '../patterns/FileBrowser/FileBrowser.tsx';
 export { UploadManager, useUploadQueue } from '../patterns/UploadManager/UploadManager.tsx';
 export { VersionCompare, diffLines } from '../patterns/VersionCompare/VersionCompare.tsx';
