@@ -82,7 +82,7 @@ DSParts.records.push(function (H) {
   var MANY = PARTS.concat([{ id: 'font', label: 'Fonts', value: 12 }, { id: 'arch', label: 'Archives', value: 18 }, { id: 'code', label: 'Code', value: 6 }]);
   var pie = function (o) { return h(P.PieChart, Object.assign({ title: 'Storage by file type', description: 'Videos take more than half of the storage.', data: PARTS, format: function (v) { return P.formatNumber(v) + ' GB'; }, legendPosition: 'end' }, o)); };
   var pieChart = { id: 'pie-chart', lab: true, icon: 'chart', sec: 'data-display', sub: 'Charts', leaf: 'Pie chart', title: 'Pie chart',
-    plenix: 'PieChart, pieSlices', src: 'charts/PieChart.jsx', also: ['charts/chart-kit.ts'], css: CSS('pie-chart.css'), blocks: ['plx-pie-chart'],
+    plenix: 'PieChart, pieSlices', src: 'charts/PieChart.tsx', also: ['charts/chart-kit.ts'], css: CSS('pie-chart.css'), blocks: ['plx-pie-chart'],
     level: 'Component', interaction: 'Display',
     aliases: ['Donut chart', 'Doughnut chart', 'Ring chart', 'Half donut', 'Semicircle chart'],
     covers: ['Donut chart'],
@@ -110,7 +110,7 @@ DSParts.records.push(function (H) {
     { id: 'ap', label: 'Approvals', value: 420, target: 560, ranges: [350, 600, 1000] }];
   var bullet = function (o) { return h(P.BulletChart, Object.assign({ title: 'Quarter against targets', description: 'Uploads and reviews beat their targets; approvals are behind.', items: KPIS, valueLabel: 'Items this quarter' }, o)); };
   var bulletChart = { id: 'bullet-chart', lab: true, icon: 'chart', sec: 'data-display', sub: 'Charts', leaf: 'Bullet chart', title: 'Bullet chart',
-    plenix: 'BulletChart', src: 'charts/BulletChart.jsx', also: ['charts/chart-kit.ts'], css: CSS('bullet-chart.css'), blocks: ['plx-bullet-chart'],
+    plenix: 'BulletChart', src: 'charts/BulletChart.tsx', also: ['charts/chart-kit.ts'], css: CSS('bullet-chart.css'), blocks: ['plx-bullet-chart'],
     level: 'Component', interaction: 'Display',
     aliases: ['Bullet graph', 'Target bar', 'KPI bar'],
     text: 'Key measures against their targets, each in a compact row on one value axis from zero: a short value bar over three bands for its qualitative ranges (poor, fair, good, in neutral shades, the darkest nearest zero) and a line across at its target. Horizontal rows stack in a dashboard card; vertical columns fit a wide strip. The tooltip names the range a value is in; the data table lists value, target and ranges.',
@@ -133,7 +133,7 @@ DSParts.records.push(function (H) {
     { id: 'brand', label: 'Brand', values: [2, 3, 3, 4, 5, 5, 6, 7, 8, 9, 21] }, { id: 'web', label: 'Web', values: [5, 6, 6, 7, 8, 9, 9, 10, 11, 12] }];
   var boxPlot = function (o) { return h(P.BoxPlot, Object.assign({ title: 'Review time by team', description: 'Legal reviews are steady; Design varies most, with two very long reviews. Whiskers reach 1.5 × the box.', groups: REVIEWS, valueLabel: 'Hours' }, o)); };
   var boxPlotRec = { id: 'box-plot', lab: true, icon: 'chart', sec: 'data-display', sub: 'Charts', leaf: 'Box plot', title: 'Box plot',
-    plenix: 'BoxPlot, boxStats', src: 'charts/BoxPlot.jsx', also: ['charts/chart-kit.ts'], css: CSS('box-plot.css'), blocks: ['plx-box-plot'],
+    plenix: 'BoxPlot, boxStats', src: 'charts/BoxPlot.tsx', also: ['charts/chart-kit.ts'], css: CSS('box-plot.css'), blocks: ['plx-box-plot'],
     level: 'Component', interaction: 'Display',
     aliases: ['Box and whisker plot', 'Boxplot', 'Five-number summary'],
     text: 'Distributions compared by their summaries. For each group: a box from the first to the third quartile (the middle half of its values), a line at the median, whiskers to the lowest and highest values within 1.5 times the box’s length, and the values beyond them as outlier points. Groups share one value axis. The tooltip gives the five numbers; the data table gives them all, with the outliers and the count. It takes raw values (and computes the summary) or a summary already made.',

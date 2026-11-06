@@ -1,4 +1,4 @@
-/* Plenix · FunnelChart (platform/charts/FunnelChart.jsx), drawn in ChartFrame (system/charts.css) with the chart parts. The
+/* Plenix · FunnelChart (platform/charts/FunnelChart.tsx), drawn in ChartFrame (system/charts.css) with the chart parts. The
    bars are the frame's marks (plx-chart__mark, the data-viz color); the stage before's length sits behind each bar in the
    sunken surface color; the frame keeps room for the stage names and the labels (its margin tokens, set here). Every
    value is a --plx-comp-funnel-* token. */

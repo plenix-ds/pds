@@ -1,5 +1,5 @@
 {
-  "$description": "LollipopChart (platform/charts/LollipopChart.jsx; library wave 9, lane C): its component tokens. Stems and dots take the chart's data-viz color (data-plx-dataviz); everything else is an existing role.",
+  "$description": "LollipopChart (platform/charts/LollipopChart.tsx; library wave 9, lane C): its component tokens. Stems and dots take the chart's data-viz color (data-plx-dataviz); everything else is an existing role.",
   "plx-comp": {
     "lollipop-default-color": { "$value": "{plx-sys.dataviz-categorical-1}", "$type": "color", "$description": "Lollipop chart: the marks' color without data-plx-dataviz (the first categorical color)." },
     "lollipop-category-width": { "$value": "{plx-ref.size-24u}", "$type": "dimension", "$description": "Lollipop chart, horizontal: the room before the plot for the category names (the frame's start margin)." },

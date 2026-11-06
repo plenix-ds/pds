@@ -1822,9 +1822,9 @@
       "platform/exports/w09B.{js,css}",
       "platform/standards/web-native-map.d/w09B.json",
       "platform/charts/BarChart.tsx",
-      "platform/charts/PieChart.jsx",
-      "platform/charts/BoxPlot.jsx",
-      "platform/charts/BulletChart.jsx",
+      "platform/charts/PieChart.tsx",
+      "platform/charts/BoxPlot.tsx",
+      "platform/charts/BulletChart.tsx",
       "platform/charts/SankeyDiagram.jsx",
       "platform/charts/RadarChart.jsx",
       "platform/charts/ComboChart.tsx",
@@ -1872,11 +1872,11 @@
       "platform/components/Metric/Metric.tsx",
       "platform/components/Metric/metric.css",
       "platform/charts/ScatterChart.jsx",
-      "platform/charts/FunnelChart.jsx",
+      "platform/charts/FunnelChart.tsx",
       "platform/charts/Sparkline.tsx",
       "platform/charts/a11y.js",
       "platform/charts/Treemap.jsx",
-      "platform/charts/LollipopChart.jsx",
+      "platform/charts/LollipopChart.tsx",
       "platform/charts/GanttChart.jsx",
       "platform/charts/GeoMap.jsx",
       "platform/vendor/geo/"
@@ -6286,7 +6286,7 @@
    "wave": 9,
    "lane": "B",
    "files": [
-    "platform/charts/PieChart.jsx"
+    "platform/charts/PieChart.tsx"
    ],
    "dependsOn": [
     "chart-parts"
@@ -6310,7 +6310,7 @@
    "wave": 9,
    "lane": "B",
    "files": [
-    "platform/charts/BulletChart.jsx"
+    "platform/charts/BulletChart.tsx"
    ],
    "dependsOn": [
     "chart-parts"
@@ -6331,7 +6331,7 @@
    "wave": 9,
    "lane": "B",
    "files": [
-    "platform/charts/BoxPlot.jsx"
+    "platform/charts/BoxPlot.tsx"
    ],
    "dependsOn": [
     "chart-parts"
@@ -6463,7 +6463,7 @@
    "wave": 9,
    "lane": "C",
    "files": [
-    "platform/charts/LollipopChart.jsx"
+    "platform/charts/LollipopChart.tsx"
    ],
    "dependsOn": [
     "chart-parts"
@@ -6551,7 +6551,7 @@
    "wave": 9,
    "lane": "C",
    "files": [
-    "platform/charts/FunnelChart.jsx"
+    "platform/charts/FunnelChart.tsx"
    ],
    "dependsOn": [
     "chart-parts"
@@ -15206,7 +15206,7 @@
    "target": "PieChart",
    "targetKind": "component",
    "files": [
-    "platform/charts/PieChart.jsx"
+    "platform/charts/PieChart.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09B.records.js",
@@ -15237,7 +15237,7 @@
    "target": "PieChart",
    "targetKind": "component",
    "files": [
-    "platform/charts/PieChart.jsx"
+    "platform/charts/PieChart.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09B.records.js",
@@ -15375,7 +15375,7 @@
    "target": "BoxPlot",
    "targetKind": "component",
    "files": [
-    "platform/charts/BoxPlot.jsx"
+    "platform/charts/BoxPlot.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09B.records.js",
@@ -15405,7 +15405,7 @@
    "target": "BulletChart",
    "targetKind": "component",
    "files": [
-    "platform/charts/BulletChart.jsx"
+    "platform/charts/BulletChart.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09B.records.js",
@@ -15463,7 +15463,7 @@
    "target": "FunnelChart",
    "targetKind": "component",
    "files": [
-    "platform/charts/FunnelChart.jsx"
+    "platform/charts/FunnelChart.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09C.records.js",
@@ -15700,7 +15700,7 @@
    "target": "LollipopChart",
    "targetKind": "component",
    "files": [
-    "platform/charts/LollipopChart.jsx"
+    "platform/charts/LollipopChart.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09C.records.js",

@@ -1,5 +1,5 @@
 {
-  "$description": "PieChart (platform/charts/PieChart.jsx, library wave 9, lane B): its component tokens. Slices take the frame's mark color (their data-viz step); these part the slices and set the center value and label. No new color: existing roles.",
+  "$description": "PieChart (platform/charts/PieChart.tsx, library wave 9, lane B): its component tokens. Slices take the frame's mark color (their data-viz step); these part the slices and set the center value and label. No new color: existing roles.",
   "plx-comp": {
     "pie-chart-slice-outline-color": { "$value": "{plx-sys.surface-default}", "$type": "color", "$description": "Pie chart: the line between two slices, in the chart's surface color (the small gap between slices)." },
     "pie-chart-slice-outline-width": { "$value": "{plx-sys.border-width-medium}", "$type": "dimension", "$description": "Pie chart: the width of the line between two slices." },

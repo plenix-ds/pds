@@ -31,7 +31,7 @@ DSParts.records.push(function (H) {
     ['Page actions bar', function () { return examples.action(true, 'Page actions bar preview'); }],
     ['Page actions bar · Position', [['Sticky bottom', function () { return examples.action(true, 'Sticky bottom variant preview'); }, 'plx-action-bar'], ['Embedded', function () { return examples.action(false); }, 'plx-action-bar--static']]]);
   return data.map(function (r) {
-    var ex = r.example, variants = r.variants || [], props = Object.assign({}, r, { level: r.plenix ? 'Composite' : 'Foundation', interaction: r.plenix ? 'Action' : 'None', docsFrom: 'dialog', related: ['button'], variantClasses: [],
+    var ex = r.example, variants = r.variants || [], props = Object.assign({}, r, { level: r.plenix ? 'Composite' : 'Foundation', interaction: r.plenix ? 'Action' : 'None', docsFrom: r.sec === 'implementation' ? undefined : 'dialog', related: ['button'], variantClasses: [],
       map: [H.m(H.M, 'Implementation guidance', 'Partial'), H.m(H.C, 'Engineering guidance', 'Partial')], examples: [[r.title, function () { return examples[ex](r.leaf, r.title + ' preview'); }]],
       variantPages: variants.map(function (v) { return { leaf: v[0], group: 'Guidance', name: v[1], text: v[2], use: v[3] || r.use, avoid: v[4] || r.avoid }; }) });
     if (variants.length) props.examples.push(['Guidance', variants.map(function (v) { return [v[1], function () { return h(P.Stack, { gap: 'sm' }, h(P.Text, null, v[2]), examples[ex](v[0])); }]; })]);

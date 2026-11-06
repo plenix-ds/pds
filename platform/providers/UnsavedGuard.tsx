@@ -32,6 +32,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { ConfirmDialog } from '../components/Dialog/Dialog.tsx';
+import { useStrings } from './LocaleProvider.tsx';
 
 // ConfirmDialog as this file draws it (Dialog.tsx is not typed yet: its inferred props would all be required)
 const LeaveDialog = ConfirmDialog as React.ComponentType<{
@@ -43,9 +44,8 @@ export type GuardStrings = { title?: string; message?: string; leave?: string; s
 // the next screen (useScreenLocation's { path, parts, params }), or null for another page
 export type NextScreen = { path: string; parts: string[]; params: Record<string, string> } | null;
 export type GuardOptions = { keeps?(next: NonNullable<NextScreen>): boolean; strings?: GuardStrings };
-type GuardState = { dirty: boolean; message?: string; options: GuardOptions };
+type GuardState = { dirty: boolean; message?: string; options: GuardOptions; words: GuardStrings };
 
-const STRINGS = { title: 'Leave without saving?', message: 'Your changes will be lost.', leave: 'Leave', stay: 'Keep editing' };
 const guards = new Set<React.MutableRefObject<GuardState | null>>();          // every mounted guard: a ref to { dirty, message, options }
 let leaving = false;               // the person chose Leave: the page may unload without asking again
 let pending: Promise<boolean> | null = null;                // the question on screen, if any (one at a time)
@@ -62,7 +62,7 @@ function blocking(next: NextScreen): GuardState | null {
 // asks with the Plenix dialog in a root of its own; resolves true for Leave
 function ask(c: GuardState): Promise<boolean> {
   if (pending) return pending;
-  const t = Object.assign({}, STRINGS, c.options.strings);
+  const t = c.words;
   pending = new Promise((resolve) => {
     const el = document.createElement('div');
     document.body.appendChild(el);
@@ -111,7 +111,10 @@ function install() {
 
 export function useUnsavedGuard(dirty: unknown, message?: string, options?: GuardOptions) {
   const ref = React.useRef<GuardState | null>(null);
-  ref.current = { dirty: !!dirty, message, options: options || {} };
+  // the dialog draws in a root of its own, outside the app's LocaleProvider: its words are read here, from the catalog
+  // (providers.UnsavedGuard, in the page's language), with options.strings on top (#668)
+  const words = useStrings('providers.UnsavedGuard', options && options.strings) as GuardStrings;
+  ref.current = { dirty: !!dirty, message, options: options || {}, words };
   React.useEffect(() => {
     install();
     guards.add(ref);

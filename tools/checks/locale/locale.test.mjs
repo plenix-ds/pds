@@ -71,6 +71,10 @@ describe('5. literal JSX text', () => {
     const src = 'type P = { a: string };\nexport const A = ({ a }: P) => <div className="plx-a" aria-label={t.close}>{a} · {"+" + 3} ×</div>;';
     expect(await checkJsx(src, 'a.tsx')).toEqual([]);
   });
+  it('skips the product name and a component\'s one-word setting, but not a DOM element\'s', async () => {
+    const src = 'export const A = () => <a><span>Plenix</span><Image placeholder="none" /><input placeholder="name" /></a>;';
+    expect((await checkJsx(src, 'a.jsx')).map((x) => x.message)).toEqual(['placeholder="name"']);
+  });
 });
 
 describe('6. unused keys', () => {

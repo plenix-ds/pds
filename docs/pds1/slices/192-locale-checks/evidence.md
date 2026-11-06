@@ -72,6 +72,8 @@
 - unused-key: platform/i18n/en.json utils.clipboard.failed: no Platform source reads it
 - unused-key: platform/i18n/en.json commerce.orders.notRefundable: no Platform source reads it
 - jsx-literal: platform/components/Combobox/Combobox.tsx:268 text "Create “"
-- jsx-literal: platform/patterns/AppHeader/AppHeader.jsx:202 text "Plenix"
-- jsx-literal: platform/patterns/AppHeader/AppHeader.jsx:202 text "Plenix"
-- jsx-literal: platform/patterns/ImageUpload/ImageUpload.jsx:126 placeholder="none"
+
+## Update 2026-11-06
+
+- **jsx-literal:** the product name (Plenix) and a component's one-word setting (`<Image placeholder="none">`) are no longer reported. A DOM element's `placeholder` still is.
+- **Ran:** `node tools/checks/locale/locale.mjs origin/main` on main after #642, #656, #668 and #671: 43 findings (missing-ar 33, unused-key 10), 0 new.

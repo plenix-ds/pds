@@ -170,7 +170,7 @@ export function AppHeader({ tone = 'accent', appName, brand, brandHref, currentA
     if (!searching) {
       // the search button is hidden while the field is open; give it focus back once it shows again
       // (on the next frame: an Escape is a discrete event, so this runs before the button's hidden style is cleared)
-      if (refocus.current && toggle.current) { const t = toggle.current; requestAnimationFrame(() => t.focus()); }
+      if (refocus.current && toggle.current) { const btn = toggle.current; requestAnimationFrame(() => btn.focus()); }
       refocus.current = false;
       return undefined;
     }
@@ -275,7 +275,8 @@ AppHeader.Item = React.forwardRef(function AppHeaderItem({ icon: iconProp, label
 // the sign-in proxy's sign-out (Authentik's forward-auth outpost on every Plenix host): ends the session, then signs in again
 const SIGN_OUT = '/outpost.goauthentik.io/sign_out';
 AppHeader.Account = function AppHeaderAccount({ name: nameProp, email: emailProp, src: srcProp, placement = 'header', current, myAccount = {}, settings = {}, appSettings = {}, signOut = { href: SIGN_OUT }, density = false, extra, strings }) {
-  const t = Object.assign({}, ACCOUNT_STRINGS, strings);
+  // the account menu's words come from the catalog (appHeader.account), so an Arabic page shows them in Arabic; strings wins (#671)
+  const t = useStrings('appHeader.account', strings);
   const { account } = useSession();   // who is signed in: the session, unless the application names someone
   const name = nameProp || account.name, email = emailProp || account.email, src = srcProp || account.src;
   const [dens, setDens] = useDensity();
@@ -303,9 +304,6 @@ AppHeader.Account = function AppHeaderAccount({ name: nameProp, email: emailProp
     </Menu>
   );
 };
-// the account menu's words, in English; AppHeader.Account strings replaces any of them (issue #245)
-const ACCOUNT_STRINGS = { trigger: 'Account and settings for {name}', menu: 'Account', myAccount: 'My account', settings: 'Plenix settings',
-  appSettings: '{app} settings', app: 'App', density: 'Display density', compact: 'Compact', standard: 'Standard', comfortable: 'Comfortable', signOut: 'Sign out' };
 // the density choices when the workspace script is not on the page
 // the density menu's icons (#280): a workspace's own density without one here keeps its name (density-<value>)
 const DENSITY_ICONS = { compact: DensityCompactIcon, standard: DensityStandardIcon, comfortable: DensityComfortableIcon };
