@@ -2496,18 +2496,6 @@
     "sets": [],
     "why": "behavior only: the interaction is the chart's own event handling (ECharts), not a stylesheet rule the variation sets"
   },
-  "checklist--variant-collapsible": {
-    "sets": [],
-    "why": "markup only: the mode adds or removes parts (collapse, dismiss, progress) that are other components with their own styles"
-  },
-  "checklist--variant-dismissible": {
-    "sets": [],
-    "why": "markup only: the mode adds or removes parts (collapse, dismiss, progress) that are other components with their own styles"
-  },
-  "checklist--variant-with-progress": {
-    "sets": [],
-    "why": "markup only: the mode adds or removes parts (collapse, dismiss, progress) that are other components with their own styles"
-  },
   "content-style--guidance-action-labels": {
     "sets": [],
     "why": "guidance, not a styled variation: it is writing guidance for the words, with no component style"
