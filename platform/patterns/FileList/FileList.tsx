@@ -222,7 +222,7 @@ export function FileList({ files = [], label, view = 'list', sortable = false, s
     if (facts.indexOf('modified') >= 0) cols.push({ title: t.modified, field: 'modified', kind: 'data', type: 'date', render: (f: any) => (f.modified ? formatDate(f.modified, { dateStyle: 'medium' }) : '') });
     if (facts.indexOf('owner') >= 0) cols.push({ title: t.owner, field: 'owner', type: 'person' });
     if (facts.indexOf('status') >= 0) cols.push({ title: t.status, field: 'statusLabel', kind: 'center', type: 'select', render: (f: any) => (f.status ? <Badge tone={f.status.tone} icon={f.status.icon}>{f.status.label}</Badge> : null) });
-    const menu = (f: any) => [].concat(
+    const menu = (f: any) => ([] as any[]).concat(
       onOpen ? [{ label: t.open, icon: f.kind === 'folder' ? FolderOpenIcon : OpenIcon, onSelect: () => onOpen!(f) }] : [],
       onDownload && f.kind !== 'folder' ? [{ label: t.download, icon: DownloadTrayIcon, onSelect: () => onDownload(f) }] : [],
       onRename ? [{ label: t.rename, icon: RenameIcon, onSelect: () => setAsk({ kind: 'rename', file: f }) }] : [],

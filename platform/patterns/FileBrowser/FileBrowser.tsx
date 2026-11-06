@@ -195,13 +195,13 @@ export function FileBrowser({ items = [], root, folder, defaultFolder, onFolderC
   const countText = shown.length === 1 ? t.one : fill(t.count, { n: formatNumber(shown.length) });
   const bar = (
     <CommandBar {...({} as any)} label={nameOf(current)} count={countText}
-      actions={[].concat(
+      actions={([] as any[]).concat(
         onCreateFolder ? [{ id: 'new-folder', label: t.newFolder, icon: FolderAddIcon, onSelect: () => setAsking('folder') }] : [],
         onUpload ? [{ id: 'upload', label: t.upload, icon: UploadIcon, onSelect: () => picker.current && picker.current.click() }] : [],
         actions)}
       find={<CommandBarSearch {...({} as any)} value={q} onChange={(e: any) => setQ(e.target.value)} onClear={() => setQ('')} placeholder={t.search} aria-label={t.search} />}
       view={<><SortPanel {...({} as any)} fields={SORT_FIELDS as any} value={sort} onChange={(v: any) => setSort(v.slice(0, 1))} /><ViewMenu {...({} as any)} value={viewValue} onChange={setLayout} /></>}
-      selection={selectable ? { count: sel.length, noun: t.noun, plural: t.plural, onClear: () => setSel([]), actions: [].concat(
+      selection={selectable ? { count: sel.length, noun: t.noun, plural: t.plural, onClear: () => setSel([]), actions: ([] as any[]).concat(
         onDownload ? [{ id: 'download', label: t.download, icon: DownloadTrayIcon, onSelect: () => onDownload!(chosen) }] : [],
         move ? [{ id: 'move', label: t.moveTo, icon: MoveIcon, items: targets.map((f) => ({ id: String(f.id), label: f.name, icon: FolderIcon, onSelect: () => { move(chosen, keyOf(f.id)); setSel([]); } })) }] : [],
         onDelete ? [{ id: 'delete', label: t.delete, icon: TrashIcon, danger: true, onSelect: () => setAsking('delete') }] : []) } : undefined} />
