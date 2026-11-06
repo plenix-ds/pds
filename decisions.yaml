@@ -700,3 +700,14 @@
   options: ['Microsoft standard accepted by default (chosen)', 'owner approves each choice']
   status: active
   check: 'review-only (the i18n proposal and decision cards cite the Microsoft source; pds1-i18n-engineer marks Microsoft-term rows as pre-approved)'
+  check: G3 review of #647 and its test (only onRecordEdit; Ctrl+Z calls it with the previous values and source undo)
+
+- id: D-0079
+  date: 2026-11-06
+  area: i18n
+  decided_by: owner (chat, 2026-11-06, plenix-ds/pds#476)
+  decision: 'For international work (terminology in every language, Arabic included; date, number and name formats; right-to-left behaviour), follow the first standard that covers the case, in this order - 1 Microsoft; 2 IBM; 3 any of Adobe, SAP, GitHub, Atlassian or ISO (equal rank). A choice that follows this order is accepted by default (D-0078); the owner is asked only when none of them covers it. His own explicit decisions still win.'
+  why: 'Owner, 2026-11-06: "When it comes to international the order to follow is always 1 Microsoft 2 IBM 3 Adobe or SaaS or Github or Altaisaan or iso" ("SaaS" read as SAP, "Altaisaan" as Atlassian).'
+  options: ['Microsoft, then IBM, then Adobe/SAP/GitHub/Atlassian/ISO (chosen)']
+  status: active
+  check: 'review-only (each i18n proposal row and PR cites which standard it follows, by this order)'
