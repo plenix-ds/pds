@@ -1,0 +1,9 @@
+AssertionError [ERR_ASSERTION]: ltr: the table draws a header per column (0)
+    at /home/cc/pds1/work/component-engineer-1/tests/data-grid-header-tooltip-794.test.js:32:14 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
