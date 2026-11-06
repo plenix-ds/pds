@@ -365,5 +365,5 @@ export { TreeChart } from './charts/lazy.jsx';
 export { Anchor } from './components/Anchor/Anchor.tsx';
 export { OverflowList } from './components/OverflowList/OverflowList.tsx';
 export { MenuBar, MenuBarMenu } from './components/MenuBar/MenuBar.tsx';
-export { DataGridEngine } from './components/DataGrid/DataGridEngine.jsx';
+export { DataGridEngine } from './components/DataGrid/DataGridEngine.tsx';
 /* END library parts */

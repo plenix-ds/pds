@@ -10,7 +10,7 @@
        data, true for a data pill; returns { scale, font, wordSpacing }, scale being the page's width over the canvas's
      pillSheet(doc): the one constructed sheet per document that holds the uniform pill widths; returns { rules, flush }
    Notes:
-     Moved out of DataGridEngine.jsx without any change to the code (issue 688). The engine is documented in DataGridEngine.jsx.
+     Moved out of DataGridEngine.tsx without any change to the code (issue 688). The engine is documented in DataGridEngine.tsx.
 */
 
 // a pill's text measured as the page draws it: a hidden probe pill (md, data or not) inside the grid gives its font, size,

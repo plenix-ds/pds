@@ -9,7 +9,7 @@
      each part takes the props the engine passes it (for example CellEditor: column, value, onCommit, onCancel; Check:
      checked, mixed, label, onChange); used only by the DataGrid engine (not public exports)
    Notes:
-     Moved out of DataGridEngine.jsx without any change to the code (issue 688). The engine is documented in DataGridEngine.jsx.
+     Moved out of DataGridEngine.tsx without any change to the code (issue 688). The engine is documented in DataGridEngine.tsx.
 */
 import React from 'react';
 import { rememberPerson } from '../cells.tsx';

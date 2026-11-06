@@ -11,8 +11,8 @@
      frame (the grid's element ref), cells ('pill' turns it on), columns, allRows (the rows in view), metrics (the measured cell
        space and row height) and showTypes. Returns gridKey, the id the grid's pill rule is under (data-plx-grid-key).
    Notes:
-     Moved out of DataGridEngine.jsx without any change to the code (issue 714, the pill widths): the effects were in the engine function, in the
-     same order between the same neighbors. The engine is documented in DataGridEngine.jsx.
+     Moved out of DataGridEngine.tsx without any change to the code (issue 714, the pill widths): the effects were in the engine function, in the
+     same order between the same neighbors. The engine is documented in DataGridEngine.tsx.
 */
 import React from 'react';
 import { pillSheet, pillFont } from '../engine/pill.ts';

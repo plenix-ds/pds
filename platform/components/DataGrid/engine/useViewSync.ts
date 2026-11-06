@@ -12,8 +12,8 @@
        canonical, table, the adapter api and emit) and the grid's props (onReady, onViewChange, storageKey, onSelectionChange,
        keepHiddenSelection). Returns nothing: the hook is its effects.
    Notes:
-     Moved out of DataGridEngine.jsx without any change to the code (issue 714, view state and the adapter): the effects were in
-     the engine function, in this order, between the same neighbors. The engine is documented in DataGridEngine.jsx.
+     Moved out of DataGridEngine.tsx without any change to the code (issue 714, view state and the adapter): the effects were in
+     the engine function, in this order, between the same neighbors. The engine is documented in DataGridEngine.tsx.
 */
 import React from 'react';
 import { writeView, recordKey } from '../state.ts';

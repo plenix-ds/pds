@@ -10,8 +10,8 @@
        own state, which a new request follows. Returns remoteMode (true with a server), scrollFill (the "fill" mode), remote
        ({ rows, total } so far), remoteBusy, remoteError, retry and setRetry (Retry asks again) and fetching (a ref: a request is on its way).
    Notes:
-     Moved out of DataGridEngine.jsx without any change to the code (issue 714, the remote fetch): the parts were lines of the
-     engine function, in the same order with the same values. The engine is documented in DataGridEngine.jsx.
+     Moved out of DataGridEngine.tsx without any change to the code (issue 714, the remote fetch): the parts were lines of the
+     engine function, in the same order with the same values. The engine is documented in DataGridEngine.tsx.
 */
 import React from 'react';
 import { sorted } from './helpers.tsx';

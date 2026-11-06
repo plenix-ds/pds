@@ -12,8 +12,8 @@
        headerCell(column) and chooserColumns() (the columns the manage-columns dialog lists); the column menu and the chooser are
        built inside.
    Notes:
-     Moved out of DataGridEngine.jsx without any change to the code (issue 714, the header): the parts were lines of the engine
-     function, in the same order with the same values. The engine is documented in DataGridEngine.jsx.
+     Moved out of DataGridEngine.tsx without any change to the code (issue 714, the header): the parts were lines of the engine
+     function, in the same order with the same values. The engine is documented in DataGridEngine.tsx.
 */
 import React from 'react';
 import { typeOf, kinds, interactive, typeIcons } from './helpers.tsx';

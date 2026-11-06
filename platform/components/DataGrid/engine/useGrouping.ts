@@ -9,8 +9,8 @@
        view (groupBy, collapsed). Returns groupBy (a field, a function, a list of levels, or false), groupSignal (props.groupBy
        as text), collapsed (a Set of group ids) and the setters the group actions use.
    Notes:
-     Moved out of DataGridEngine.jsx without any change to the code (issue 714, the grouping concern): the parts were lines of
-     the engine function, in the same order with the same values. The engine is documented in DataGridEngine.jsx.
+     Moved out of DataGridEngine.tsx without any change to the code (issue 714, the grouping concern): the parts were lines of
+     the engine function, in the same order with the same values. The engine is documented in DataGridEngine.tsx.
 */
 import React from 'react';
 

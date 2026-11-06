@@ -9,8 +9,8 @@
        (onViewChange); emit: the engine's event emitter. Returns changeSort(update): update is the new sorting or a function of the
        current one (TanStack's onSortingChange).
    Notes:
-     Moved out of DataGridEngine.jsx without any change to the code (issue 714, the sorting concern): the parts were lines of
-     the engine function, in the same order with the same values. The engine is documented in DataGridEngine.jsx.
+     Moved out of DataGridEngine.tsx without any change to the code (issue 714, the sorting concern): the parts were lines of
+     the engine function, in the same order with the same values. The engine is documented in DataGridEngine.tsx.
 */
 import { sorted } from './helpers.tsx';
 

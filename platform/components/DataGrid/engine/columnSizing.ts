@@ -9,8 +9,8 @@
      columns, frame (the grid's element ref), source (the records), metrics (the measured cell space), resize (the engine's
        width setter), table (TanStack's) and B (the block class). Returns fit(field) and startResize(event, column).
    Notes:
-     Moved out of DataGridEngine.jsx without any change to the code (issue 714, column sizing): the functions were in the engine
-     function, in the same place. The engine is documented in DataGridEngine.jsx.
+     Moved out of DataGridEngine.tsx without any change to the code (issue 714, column sizing): the functions were in the engine
+     function, in the same place. The engine is documented in DataGridEngine.tsx.
 */
 import type React from 'react';
 import { kinds } from './helpers.tsx';

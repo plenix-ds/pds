@@ -14,7 +14,7 @@ The table's independent renderer (DataGridEngine) works on its own, with none of
 - Added in commit 76ebc7a4 (2026-10-16) "0.49.0: DataTableNext on TanStack (phase 1, #128); DataTable option B (#126)". Issue #128 is "Task: DataTableNext, a TanStack Table trial with the same API, look and capabilities".
 
 ## How it checks
-- Bundles `platform/components/DataGrid/DataGridEngine.jsx` alone with esbuild and reads the list of files it used.
+- Bundles `platform/components/DataGrid/DataGridEngine.tsx` alone with esbuild and reads the list of files it used.
 - Opens a page made by the test that loads only platform.css and React (no Platform script), adds the bundle, blocks other vendored scripts, and draws a 600-row grid.
 
 ## What a failure means
