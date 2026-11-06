@@ -4005,6 +4005,66 @@
     "sets": [],
     "why": ".plx-radio-group--column sets flex-direction: column, a keyword with no token"
   },
+  "comparison-view--variant-side-by-side-columns": {
+    "sets": [],
+    "why": "markup only: a pane per item with its name, date, preview and attributes in aligned rows (modes columns)"
+  },
+  "comparison-view--variant-feature-matrix": {
+    "sets": [],
+    "why": "markup only: the same attributes as a table with a column per item (modes matrix)"
+  },
+  "comparison-view--variant-highlight-differences": {
+    "sets": [],
+    "why": "markup only: values that differ from the first item carry a Changed badge, with a difference count and a Show only differences option"
+  },
+  "comparison-view--variant-image-slider-before-after": {
+    "sets": [],
+    "why": "markup only: two pictures over each other with a slider that moves the line between before and after (modes slider)"
+  },
+  "contextual-help--variant-info-default": {
+    "sets": [],
+    "why": "markup only: an info button beside a label that opens a short explanation in a Popover"
+  },
+  "contextual-help--variant-inline-tip": {
+    "sets": [],
+    "why": "markup only: the same explanation shown in place, with the title in bold before the text (variant inline)"
+  },
+  "contextual-help--variant-with-a-link": {
+    "sets": [],
+    "why": "markup only: adds a link to more help after the explanation (link)"
+  },
+  "document-viewer--variant-pdf": {
+    "sets": [],
+    "why": "markup only: reads a PDF with page navigation, thumbnails and stepped zoom (kind pdf)"
+  },
+  "document-viewer--variant-image-pages": {
+    "sets": [],
+    "why": "markup only: reads image pages with page navigation and zoom (kind images)"
+  },
+  "document-viewer--variant-text": {
+    "sets": [],
+    "why": "markup only: reads plain text (kind text)"
+  },
+  "document-viewer--variant-page-thumbnails": {
+    "sets": [],
+    "why": "markup only: shows a thumbnail strip for jumping between pages (thumbnails)"
+  },
+  "document-viewer--variant-zoom": {
+    "sets": [],
+    "why": "markup only: stepped zoom from 50 to 200 percent (initialZoom)"
+  },
+  "feature-card--variant-icon-default": {
+    "sets": [],
+    "why": "markup only: an icon above the feature's name and description (variant icon)"
+  },
+  "feature-card--variant-image": {
+    "sets": [],
+    "why": "markup only: a picture across the top at 16:9 (variant image)"
+  },
+  "feature-card--variant-horizontal": {
+    "sets": [],
+    "why": "markup only: the icon, or the picture as a square, before the name and description, for lists and narrow columns (variant horizontal)"
+  },
   "sparkline--size-inline-default": {
     "sets": [
       {
