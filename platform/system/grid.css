@@ -63,10 +63,7 @@
 /* ── spans: a child of the grid takes the full width or N columns, never more than the grid has (a span of 13 in a
    12-column grid is the full width); outside a content grid N is N ── */
 .plx-span-full{grid-column:1 / -1;min-inline-size:0;}
-.plx-span-1{grid-column:span min(1,var(--plx-comp-page-grid-columns,16));min-inline-size:0;}.plx-span-2{grid-column:span min(2,var(--plx-comp-page-grid-columns,16));min-inline-size:0;}.plx-span-3{grid-column:span min(3,var(--plx-comp-page-grid-columns,16));min-inline-size:0;}.plx-span-4{grid-column:span min(4,var(--plx-comp-page-grid-columns,16));min-inline-size:0;}
-.plx-span-5{grid-column:span min(5,var(--plx-comp-page-grid-columns,16));min-inline-size:0;}.plx-span-6{grid-column:span min(6,var(--plx-comp-page-grid-columns,16));min-inline-size:0;}.plx-span-7{grid-column:span min(7,var(--plx-comp-page-grid-columns,16));min-inline-size:0;}.plx-span-8{grid-column:span min(8,var(--plx-comp-page-grid-columns,16));min-inline-size:0;}
-.plx-span-9{grid-column:span min(9,var(--plx-comp-page-grid-columns,16));min-inline-size:0;}.plx-span-10{grid-column:span min(10,var(--plx-comp-page-grid-columns,16));min-inline-size:0;}.plx-span-11{grid-column:span min(11,var(--plx-comp-page-grid-columns,16));min-inline-size:0;}.plx-span-12{grid-column:span min(12,var(--plx-comp-page-grid-columns,16));min-inline-size:0;}
-.plx-span-13{grid-column:span min(13,var(--plx-comp-page-grid-columns,16));min-inline-size:0;}.plx-span-14{grid-column:span min(14,var(--plx-comp-page-grid-columns,16));min-inline-size:0;}.plx-span-15{grid-column:span min(15,var(--plx-comp-page-grid-columns,16));min-inline-size:0;}.plx-span-16{grid-column:span min(16,var(--plx-comp-page-grid-columns,16));min-inline-size:0;}
+.plx-span-1{grid-column:span min(1,var(--plx-comp-page-grid-columns,16));min-inline-size:0;}.plx-span-4{grid-column:span min(4,var(--plx-comp-page-grid-columns,16));min-inline-size:0;}.plx-span-12{grid-column:span min(12,var(--plx-comp-page-grid-columns,16));min-inline-size:0;}.plx-span-16{grid-column:span min(16,var(--plx-comp-page-grid-columns,16));min-inline-size:0;}
 
 /* ── bounded content: readable widths that do not stretch with the screen ── */
 .plx-content-prose{grid-column:1 / -1;inline-size:min(100%,var(--plx-ref-content-max-sm));}
