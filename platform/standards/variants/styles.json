@@ -1893,5 +1893,36 @@
   "tooltip--placement-top": {
     "sets": [],
     "why": "markup only: the placement is a data attribute read by the floating layer (system/floating.css), which positions it; the tooltip's own styles do not change"
+  },
+  "image--loading-lazy-default": {
+    "sets": [
+      {
+        "property": "transition-duration",
+        "part": "img",
+        "token": "--plx-comp-image-fade-duration"
+      },
+      {
+        "property": "transition-timing-function",
+        "part": "img",
+        "token": "--plx-comp-image-fade-easing"
+      }
+    ],
+    "why": ".plx-image.is-loading .plx-image__img starts at opacity 0 and fades in with these when the picture loads (the browser loads it lazily)"
+  },
+  "image--error-fallback": {
+    "sets": [],
+    "why": ".plx-image.is-error hides the picture (display none, no token) and the fallback shows in its place"
+  },
+  "image--responsive-responsive-srcset-sizes": {
+    "sets": [],
+    "why": "markup only: srcSet and sizes let the browser pick the file; no style differs"
+  },
+  "heat-map--variant-matrix": {
+    "sets": [],
+    "why": "markup only: a grid of cells where a row and a column meet, colored by the sequential data scale"
+  },
+  "heat-map--variant-calendar": {
+    "sets": [],
+    "why": "markup only: one cell per day laid out in weeks, colored by the same scale"
   }
 }

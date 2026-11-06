@@ -36,6 +36,16 @@
       "$type": "fontWeight",
       "$description": "CommandMenu: the page name weight."
     },
+    "command-menu-page-title-letter-spacing": {
+      "$value": "{plx-sys.text-label-letter-spacing}",
+      "$type": "dimension",
+      "$description": "command-menu-page-title letter spacing: the label role's (docs/pds1 text roles; #122)."
+    },
+    "command-menu-page-title-line-height": {
+      "$value": "{plx-sys.text-label-line-height}",
+      "$type": "number",
+      "$description": "command-menu-page-title line height: the label role's (docs/pds1 text roles; #122)."
+    },
     "command-menu-list-max-height": {
       "$value": "{plx-ref.size-80u}",
       "$type": "dimension",

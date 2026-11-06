@@ -740,12 +740,11 @@
    ]
   },
   "plx-combobox__group": {
-   "contract": "adjusts",
-   "props": [
-    "font-family",
-    "font-size",
-    "font-weight",
-    "word-spacing"
+   "contract": "establishes",
+   "role": "label",
+   "font": "sans",
+   "adjusts": [
+    "font-weight"
    ]
   },
   "plx-combobox__loading": {
@@ -779,12 +778,12 @@
    ]
   },
   "plx-command-menu__page-title": {
-   "contract": "adjusts",
-   "props": [
-    "font-family",
+   "contract": "establishes",
+   "role": "label",
+   "font": "sans",
+   "adjusts": [
     "font-size",
-    "font-weight",
-    "word-spacing"
+    "font-weight"
    ]
   },
   "plx-command-menu__status": {
@@ -1557,12 +1556,12 @@
    ]
   },
   "plx-focus-order__number": {
-   "contract": "adjusts",
-   "props": [
-    "font-family",
+   "contract": "establishes",
+   "role": "label",
+   "font": "sans",
+   "adjusts": [
     "font-size",
-    "font-weight",
-    "word-spacing"
+    "font-weight"
    ]
   },
   "plx-gantt__task": {
@@ -2775,12 +2774,11 @@
    ]
   },
   "plx-search__popup-title": {
-   "contract": "adjusts",
-   "props": [
-    "font-family",
-    "font-size",
-    "font-weight",
-    "word-spacing"
+   "contract": "establishes",
+   "role": "label",
+   "font": "sans",
+   "adjusts": [
+    "font-weight"
    ]
   },
   "plx-secondary-pane__header": {
