@@ -7,6 +7,8 @@
 .plx-heat-map__cell--empty{stroke:var(--plx-comp-heat-map-empty-border-color);stroke-dasharray:var(--plx-comp-heat-map-empty-dash) var(--plx-comp-heat-map-empty-dash);}
 /* the cell in focus or under the pointer: its edge in the strong content color */
 .plx-heat-map__cell--active{stroke:var(--plx-comp-heat-map-active-border-color);stroke-dasharray:none;stroke-width:var(--plx-comp-heat-map-active-border-width);}
+/* the focused cell's edge drawn over ECharts' cells (the frame's overlay) */
+.plx-heat-map__focus{fill:none;pointer-events:none;stroke:var(--plx-comp-heat-map-active-border-color);stroke-width:var(--plx-comp-heat-map-active-border-width);}
 
 /* the color scale: the lowest value, the seven steps, the highest value (the data font), and the missing value's key */
 .plx-heat-map-scale{align-items:center;color:var(--plx-comp-heat-map-scale-text);column-gap:var(--plx-comp-heat-map-scale-gap);display:flex;flex-wrap:wrap;font-family:var(--plx-comp-heat-map-scale-font-family);font-size:var(--plx-comp-heat-map-scale-font-size);font-weight:var(--plx-sys-text-caption-font-weight);letter-spacing:var(--plx-sys-text-caption-letter-spacing);line-height:var(--plx-comp-heat-map-scale-line-height);row-gap:var(--plx-comp-heat-map-scale-gap);word-spacing:normal;}

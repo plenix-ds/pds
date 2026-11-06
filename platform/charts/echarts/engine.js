@@ -52,6 +52,12 @@ export function tickLineHeight(t, texts) {
   for (const x of deep) { const m = ctx.measureText(x); h = Math.max(h, Math.ceil(m.actualBoundingBoxDescent - Math.min(0, -m.actualBoundingBoxAscent))); }
   return h;
 }
+// the color the chart sits on: the nearest background that is not transparent (a gap drawn in it reads as a gap)
+function surfaceOf(el) {
+  const win = el.ownerDocument.defaultView;
+  for (let e = el; e; e = e.parentElement) { const c = win.getComputedStyle(e).backgroundColor; if (c && !/rgba\(0, 0, 0, 0\)|transparent/.test(c)) return c; }
+  return win.getComputedStyle(el.ownerDocument.documentElement).backgroundColor;
+}
 export function chartTokens(where) {
   const doc = where.ownerDocument, win = doc.defaultView;
   const svg = doc.createElementNS(NS, 'svg');
@@ -82,6 +88,7 @@ export function chartTokens(where) {
   const box = [mk('line', 'plx-box-plot__whisker'), mk('line', 'plx-box-plot__median'), mk('circle', 'plx-chart__point plx-box-plot__outlier')];
   const rad = mk('text', 'plx-radar-chart__axis-label');
   const tm = [mk('rect', 'plx-chart__mark plx-treemap__tile'), mk('text', 'plx-treemap__label'), mk('text', 'plx-treemap__value'), mk('rect', 'plx-treemap__group-frame'), mk('text', 'plx-treemap__group-label')];
+  const hm = [mk('rect', 'plx-heat-map__cell'), mk('rect', 'plx-heat-map__cell plx-heat-map__cell--empty')];
   where.appendChild(svg);
   const cs = (e) => win.getComputedStyle(e);
   const font = (e) => { const s = cs(e); return { color: s.fill, fontFamily: s.fontFamily, fontSize: num(s.fontSize), fontWeight: s.fontWeight }; };
@@ -135,6 +142,8 @@ export function chartTokens(where) {
     radar: { area: num(prop('--plx-comp-radar-chart-area-opacity')), point: num(prop('--plx-comp-radar-chart-point-radius')), label: font(rad) },
     // a treemap's look (Treemap): the gap between tiles, the names and values on their halo, the groups' frame and name
     treemap: { gap: { color: cs(tm[0]).stroke, width: num(cs(tm[0]).strokeWidth) }, label: Object.assign(font(tm[1]), { halo: cs(tm[1]).stroke, haloWidth: num(cs(tm[1]).strokeWidth) }), value: font(tm[2]), group: { color: cs(tm[3]).stroke, width: num(cs(tm[3]).strokeWidth), label: font(tm[4]) } },
+    // a heat map's look (HeatMap): an empty cell's fill and dashed edge, a cell's corner, the focused cell's edge, the gap between cells in the surface color
+    heatmap: { empty: cs(hm[0]).fill, emptyEdge: cs(hm[1]).stroke, dash: len(prop('--plx-comp-heat-map-empty-dash')), edgeWidth: num(cs(hm[1]).strokeWidth), surface: surfaceOf(where) },
     // the values not in focus dim to the interaction's token; the drawing's animation is the motion token (reduced motion: 0)
     dim: num(prop('--plx-comp-chart-interaction-dim-opacity')) || 1,
     motion: ms(prop('--plx-sys-motion-duration-slow')),
