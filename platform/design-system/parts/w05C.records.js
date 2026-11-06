@@ -31,7 +31,7 @@ DSParts.records.push(function (H) {
 
   /* ── 04 Actions & Commands › Menus and commands › Command menu ── */
   var commandMenu = { id: 'command-menu', lab: true, icon: 'search', sec: 'actions', sub: 'Menus and commands', leaf: 'Command menu', title: 'Command menu',
-    plenix: 'CommandMenu', src: 'components/CommandMenu/CommandMenu.jsx', level: 'Component', interaction: 'Search',
+    plenix: 'CommandMenu', src: 'components/CommandMenu/CommandMenu.tsx', level: 'Component', interaction: 'Search',
     aliases: ['Command list', 'Command search', 'Quick actions', 'cmdk'],
     text: 'A search field over the commands that match what is typed, ranked and kept in their groups, each with its icon, an optional description and its keyboard shortcut. A command can open a page of further commands. It is drawn in place (a pane, a popover); the Command palette opens it in a dialog with Ctrl K.',
     use: ['Many commands of similar weight that people find faster by typing than by scanning', 'Groups of a word or two; the shortcut on every command that has one, so people learn it', 'A page (items) for a choice that has its own options: a theme, a density, a project'],

@@ -268,5 +268,25 @@
     "loading": "n/a(a sheet's content is the caller's)",
     "selected": "n/a(a sheet is not selectable)",
     "error": "n/a(an error shows in the content; stories arrive with Storybook, P0-11)"
+  },
+  "CommandMenu": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(a command can be disabled: aria-disabled and the muted look; stories arrive with Storybook, P0-11)",
+    "loading": "n/a(the loading flag shows the search field's busy look and a status line; stories arrive with Storybook, P0-11)",
+    "selected": "n/a(the active command is the one Enter runs; it has the is-active look)",
+    "error": "n/a(a command menu has no value to validate)"
+  },
+  "EntityPicker": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(an option's highlighted look is its hover and active-descendant state)",
+    "disabled": "n/a(stories arrive with Storybook, P0-11)",
+    "loading": "n/a(a server search shows its busy row with a Spinner; stories arrive with Storybook, P0-11)",
+    "selected": "n/a(stories arrive with Storybook, P0-11)",
+    "error": "n/a(invalid is the is-invalid state set by its Field; a failed search shows its error row; stories arrive with Storybook, P0-11)"
   }
 }
