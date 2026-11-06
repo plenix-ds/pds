@@ -263,7 +263,7 @@ export { pieSlices } from './charts/chart-helpers.js';
 export { BulletChart } from './charts/lazy.jsx';
 export { BoxPlot } from './charts/lazy.jsx';
 export { boxStats } from './charts/chart-helpers.js';
-export { RadarChart } from './charts/RadarChart.jsx';
+export { RadarChart } from './charts/lazy.jsx';
 export { SankeyDiagram, sankeyLayout } from './charts/SankeyDiagram.jsx';
 export { TimelineChart } from './charts/TimelineChart.jsx';
 export { ComparisonView } from './patterns/ComparisonView/ComparisonView.jsx';
