@@ -2609,26 +2609,24 @@
    ]
   },
   "plx-rich-text": {
-   "contract": "adjusts",
-   "props": [
-    "font-family",
-    "font-size",
-    "font-weight",
-    "letter-spacing",
-    "line-height",
-    "word-spacing"
-   ]
+   "contract": "establishes",
+   "role": "body",
+   "font": "sans"
   },
   "plx-rich-text--article": {
-   "contract": "adjusts",
-   "props": [
+   "contract": "establishes",
+   "role": "body",
+   "font": "sans",
+   "adjusts": [
     "font-size",
     "line-height"
    ]
   },
   "plx-rich-text--compact": {
-   "contract": "adjusts",
-   "props": [
+   "contract": "establishes",
+   "role": "body",
+   "font": "sans",
+   "adjusts": [
     "font-size",
     "line-height"
    ]
