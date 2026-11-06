@@ -32,6 +32,7 @@ ROLES=(
   "i18n-engineer|i18n Engineer"
   "release-architect|Backend & Release Architect"
   "technical-writer|Technical Writer"
+  "qa-engineer|QA Engineer"
 )
 # Started at boot. The Delivery Lead starts the rest as work needs them.
 CORE=(product-lead delivery-lead design-director ds-architect release-architect)
