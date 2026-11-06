@@ -30,3 +30,18 @@ describe('#122 context-sized parts', () => {
     expect(m.declared['plx-x'].contract).toBe('follows');
   });
 });
+// #122 batch A (G3): a part's older block form beside its own modifier is the modifier's rule; a base part named on its own is still the base part's
+describe('#122 the data modifier of a part and its older block form', () => {
+  const SANS = 'font-family:var(--plx-sys-text-body-font-family);word-spacing:normal;font-weight:var(--plx-sys-text-body-font-weight);font-size:var(--plx-sys-text-body-font-size);letter-spacing:var(--plx-sys-text-body-letter-spacing);line-height:var(--plx-sys-text-body-line-height);';
+  const MONO = 'font-family:var(--plx-sys-font-data);word-spacing:var(--plx-sys-font-data-word-spacing);';
+  it('the older form beside the modifier is the modifier\'s rule: the base part keeps one font switch', () => {
+    const m = css('.plx-x__read{' + SANS + '}.plx-x--data .plx-x__read, .plx-x__read--data{' + MONO + '}');
+    expect(m.incomplete['plx-x__read']).toBeUndefined();
+    expect(m.declared['plx-x__read'].font).toBe('sans');
+    expect(m.declared['plx-x__read--data']).toBeDefined();
+  });
+  it('a base part named on its own beside the modifier is still the base part\'s rule', () => {
+    const m = css('.plx-x__read{' + SANS + '}.plx-x__read, .plx-x__read--data{' + MONO + '}');
+    expect(m.incomplete['plx-x__read']).toBeDefined();
+  });
+});
