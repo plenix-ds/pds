@@ -3827,5 +3827,73 @@
   "bullet-chart--orientation-vertical": {
     "sets": [],
     "why": "markup only: one column per measure, a value bar over its ranges with a target line (vertical)"
+  },
+  "asset--kind-asset": {
+    "sets": [],
+    "why": "markup only: the kind picks the icon and wording of the item; asset has no stylesheet of its own"
+  },
+  "asset--kind-collection": {
+    "sets": [],
+    "why": "markup only: the kind picks the icon and wording of the item; asset has no stylesheet of its own"
+  },
+  "asset-gallery--variant-justified": {
+    "sets": [],
+    "why": "markup only: the layout is passed to ContentGrid, which draws it; asset-gallery.css has no modifier for it"
+  },
+  "asset-gallery--variant-masonry": {
+    "sets": [],
+    "why": "markup only: the layout is passed to ContentGrid, which draws it; asset-gallery.css has no modifier for it"
+  },
+  "columns-menu--form-the-columns-dropdown": {
+    "sets": [],
+    "why": "markup only: the form chooses a dropdown or a dialog, both drawn by other components; the pattern has no stylesheet"
+  },
+  "columns-menu--form-the-manage-columns-dialog": {
+    "sets": [],
+    "why": "markup only: the form chooses a dropdown or a dialog, both drawn by other components; the pattern has no stylesheet"
+  },
+  "confirmation-dialog--intent-confirm-default": {
+    "sets": [],
+    "why": "markup only: the intent picks the confirm button's intent and the wording; the Dialog and Button draw it"
+  },
+  "confirmation-dialog--intent-destructive": {
+    "sets": [],
+    "why": "markup only: the intent picks the confirm button's intent and the wording; the Dialog and Button draw it"
+  },
+  "context-menu--items-submenu-menusub": {
+    "sets": [],
+    "why": "markup only: how the menu opens and whether items have a submenu are behavior and parts of Menu; the pattern has no stylesheet for them"
+  },
+  "context-menu--opening-at-the-pointer-right-click-long-press": {
+    "sets": [],
+    "why": "markup only: how the menu opens and whether items have a submenu are behavior and parts of Menu; the pattern has no stylesheet for them"
+  },
+  "context-menu--opening-at-the-target-shift-f10-menu-key": {
+    "sets": [],
+    "why": "markup only: how the menu opens and whether items have a submenu are behavior and parts of Menu; the pattern has no stylesheet for them"
+  },
+  "onboarding--variant-setup-checklist": {
+    "sets": [],
+    "why": "markup only: the variation arranges other components (checklist, welcome dialog); onboarding.css has no modifier for it"
+  },
+  "onboarding--variant-welcome-dialog": {
+    "sets": [],
+    "why": "markup only: the variation arranges other components (checklist, welcome dialog); onboarding.css has no modifier for it"
+  },
+  "popconfirm--tone-default": {
+    "sets": [],
+    "why": "markup only: the tone picks the confirm button's intent, drawn by Button; popconfirm.css styles only the description"
+  },
+  "popconfirm--tone-destructive": {
+    "sets": [],
+    "why": "markup only: the tone picks the confirm button's intent, drawn by Button; popconfirm.css styles only the description"
+  },
+  "quick-filter--kind-presets-and-a-range-date": {
+    "sets": [],
+    "why": "markup only: the kind picks which controls the filter renders; the pattern has no stylesheet"
+  },
+  "quick-filter--kind-searchable-checklist-tags-category-type": {
+    "sets": [],
+    "why": "markup only: the kind picks which controls the filter renders; the pattern has no stylesheet"
   }
 }
