@@ -2,7 +2,7 @@
    Summary: What a change of sort does: the person's choice becomes the owner, the page goes back to the first, onViewChange
      and the dataSorted event hear it.
    Usage:
-     import { sortActions } from './engine/sortActions.js';
+     import { sortActions } from './engine/sortActions.ts';
      const { changeSort } = sortActions({ sorting, setSortOwner, sortSignal, setSorting, setPage, props, emit });
    Props:
      sorting, setSortOwner, sortSignal, setSorting: from useSorting; setPage: the engine's page state; props: the grid's props
@@ -14,8 +14,8 @@
 */
 import { sorted } from './helpers.tsx';
 
-export function sortActions({ sorting, setSortOwner, sortSignal, setSorting, setPage, props, emit }) {
-  const changeSort = (update) => {
+export function sortActions({ sorting, setSortOwner, sortSignal, setSorting, setPage, props, emit }: any) {
+  const changeSort = (update: any) => {
     const next = typeof update === 'function' ? update(sorting) : update;
     setSortOwner(sortSignal);
     setSorting(next);
@@ -23,7 +23,7 @@ export function sortActions({ sorting, setSortOwner, sortSignal, setSorting, set
     props.onViewChange?.({ sort: sorted(next) });
     emit(
       'dataSorted',
-      next.map((s) => ({ field: s.id, dir: s.desc ? 'desc' : 'asc' }))
+      next.map((s: any) => ({ field: s.id, dir: s.desc ? 'desc' : 'asc' }))
     );
   };
   return { changeSort };

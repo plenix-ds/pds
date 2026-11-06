@@ -3,7 +3,7 @@
      replaces it), the cell being edited, committing an edit (the record changes, onCellEdit tells the caller, the cellEdit
      event follows once the rows have drawn), and replacing or changing records through the adapter (replaceData, updateRecord).
    Usage:
-     import { useEditedRows, editActions, useEditEffect } from './engine/useEditing.js';
+     import { useEditedRows, editActions, useEditEffect } from './engine/useEditing.ts';
      const { setEdited, editing, setEditing, mutations, pendingEdit, source } = useEditedRows(incoming);
      const { replaceData, updateRecord, commitEdit } = editActions({ incoming, source, canonical, index, childField, props, setEdited, setEditing, mutations, pendingEdit });
      useEditEffect({ source, mutations, pendingEdit, emit, api });
@@ -27,13 +27,13 @@ import { development } from '../../../utils/devWarn.ts';
 
 let refusals = 0;   // the refusal message's id, so the cell can name it (aria-describedby)
 
-export function useEditedRows(incoming) {
-  const pendingEdit = React.useRef(null),
+export function useEditedRows(incoming: any) {
+  const pendingEdit = React.useRef<any>(null),
     mutations = React.useRef([]);
-  const [edited, setEdited] = React.useState(null),
-    [editing, setEditing] = React.useState(null),
+  const [edited, setEdited] = React.useState<any>(null),
+    [editing, setEditing] = React.useState<any>(null),
     // a cell whose save is waiting for the caller ({ key, field, kind: 'saving' }) or was refused ({ …, kind: 'refused', message })
-    [cellStatus, setCellStatus] = React.useState(null);
+    [cellStatus, setCellStatus] = React.useState<any>(null);
   const source = edited?.input === incoming ? edited.rows : incoming;
   return { setEdited, editing, setEditing, cellStatus, setCellStatus, mutations, pendingEdit, source };
 }
@@ -51,24 +51,24 @@ export function editActions({
   S,
   mutations,
   pendingEdit
-}) {
-  const replaceData = (rows) =>
+}: any) {
+  const replaceData = (rows: any) =>
     new Promise((resolve) => {
       mutations.current.push(resolve);
       setEdited({ input: incoming, rows: rows.slice() });
     });
-  const updateRecord = (key, change) =>
+  const updateRecord = (key: any, change: any) =>
     new Promise((resolve) => {
       mutations.current.push(resolve);
-      setEdited((old) => ({
+      setEdited((old: any) => ({
         input: incoming,
         rows: changeRecord(old?.input === incoming ? old.rows : source, key, change, index, childField)
       }));
     });
-  const commitEdit = (key, field, value) => {
-    const old = canonical.find((record) => recordKey(record[index]) === key),
+  const commitEdit = (key: any, field: any, value: any) => {
+    const old = canonical.find((record: any) => recordKey(record[index]) === key),
       previous = valueAt(old, field);
-    updateRecord(key, (record) => setField(record, field, value));
+    updateRecord(key, (record: any) => setField(record, field, value));
     setEditing(null);
     pendingEdit.current = { key, field };
     const answer = props.onCellEdit?.(setField(old, field, value), { field, value, previous, row: old });
@@ -77,11 +77,11 @@ export function editActions({
       setCellStatus({ key, field, kind: 'saving' });
       answer.then(
         () => {
-          setCellStatus((now) => (now?.key === key && now.field === field ? null : now));
+          setCellStatus((now: any) => (now?.key === key && now.field === field ? null : now));
           announce(S.saved);
         },
-        (error) => {
-          updateRecord(key, (record) => setField(record, field, previous));
+        (error: any) => {
+          updateRecord(key, (record: any) => setField(record, field, previous));
           const message = (error && error.message) || S.saveRefused;
           setCellStatus({ key, field, kind: 'refused', message, id: 'plx-data-grid-refusal-' + ++refusals });
           announce(message, { politeness: 'assertive' });
@@ -92,9 +92,9 @@ export function editActions({
   return { replaceData, updateRecord, commitEdit };
 }
 
-export function useEditEffect({ source, mutations, pendingEdit, emit, api }) {
+export function useEditEffect({ source, mutations, pendingEdit, emit, api }: any) {
   React.useLayoutEffect(() => {
-    mutations.current.splice(0).forEach((resolve) => resolve());
+    mutations.current.splice(0).forEach((resolve: any) => resolve());
     if (pendingEdit.current) {
       const { key, field } = pendingEdit.current;
       pendingEdit.current = null;
@@ -106,7 +106,7 @@ export function useEditEffect({ source, mutations, pendingEdit, emit, api }) {
 // an editor type the application has not turned on (editing.types) edits as text; one development warning per column and type (ADR 0016)
 const TURN_ON = ['select', 'combobox', 'tags', 'date', 'checkbox', 'textarea', 'person'],
   warned = new Set();
-export function editorTurnedOn(column, types) {
+export function editorTurnedOn(column: any, types: any) {
   const type = column.editor;
   if (typeof type !== 'string' || !TURN_ON.includes(type)) return false;
   if ((types || []).includes(type)) return true;

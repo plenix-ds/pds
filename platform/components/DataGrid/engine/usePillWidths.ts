@@ -15,7 +15,7 @@
      same order between the same neighbors. The engine is documented in DataGridEngine.jsx.
 */
 import React from 'react';
-import { pillSheet, pillFont } from '../engine/pill.js';
+import { pillSheet, pillFont } from '../engine/pill.ts';
 import { tokenPixels } from '../environment.ts';
 import { gridStep, snapToGrid } from '../../../utils/grid.ts';
 import { kinds, typeOf } from './helpers.tsx';

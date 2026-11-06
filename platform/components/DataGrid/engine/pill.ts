@@ -2,7 +2,7 @@
    Summary: Measures a pill's text the way the page draws it, with a hidden probe pill, so the grid can size a column's
      pills.
    Usage:
-     import { pillFont, pillSheet } from './engine/pill.js';
+     import { pillFont, pillSheet } from './engine/pill.ts';
      const { scale, font, wordSpacing } = pillFont(gridElement, ctx, data);
      const { rules, flush } = pillSheet(document);
    Props:
@@ -18,7 +18,7 @@
 // size-adjust and fitted spaces are not the canvas's); the canvas is left set to that font
 const PROBE = '0123456789 ABCDEFGHIJ abcdefghij';
 
-export function pillFont(at, ctx, data) {
+export function pillFont(at: any, ctx: any, data: any) {
   const doc = at.ownerDocument,
     box = doc.createElement('span'),
     pill = doc.createElement('span'),
@@ -40,7 +40,7 @@ export function pillFont(at, ctx, data) {
 }
 
 // uniform pill widths: the widths live in one constructed sheet per document, one entry per grid
-export function pillSheet(doc) {
+export function pillSheet(doc: any) {
   if (doc.__plxPillWidths) return doc.__plxPillWidths;
   const sheet = new doc.defaultView.CSSStyleSheet(),
     rules = new Map();
