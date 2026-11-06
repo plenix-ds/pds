@@ -110,6 +110,7 @@ import { SIZE_STEPS } from '../../utils/sizeSteps.js';
 import { Avatar } from '../../components/Avatar/Avatar.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Icon } from '../../components/Icon/Icon.tsx';
+import type { IconValue } from '../../components/Icon/Icon.tsx';
 import { Menu, MenuItem } from '../../components/Menu/Menu.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { Badge } from '../../components/Badge/Badge.tsx';
@@ -123,24 +124,24 @@ import MoreIcon from 'plenix-platform/icons/plenix/more';
 
 const HUES = ['blue', 'green', 'purple', 'red', 'brown', 'gray', 'surface'];
 const TONES = ['neutral', 'success', 'active', 'waiting', 'action-required', 'negative'];
-const ALIASES = { info: 'active', warning: 'waiting', danger: 'negative' };
+const ALIASES: Record<string, string> = { info: 'active', warning: 'waiting', danger: 'negative' };
 const MAX_BUTTONS = 4;   // at most four buttons in the aside: three actions, then More (always last)
 
 const LAYOUTS = ['top-small', 'top-large', 'column-small', 'column-large', 'edge'];
-const STRETCH = { 'column-large': 1, edge: 1 };
+const STRETCH: Record<string, number> = { 'column-large': 1, edge: 1 };
 // the stretched media's smallest square, by kind (the size tokens entity-header-[section-]media-size-column-large, -edge)
-const STRETCH_MIN = { page: { 'column-large': 112, edge: 128 }, section: { 'column-large': 64, edge: 80 } };
+const STRETCH_MIN: Record<string, Record<string, number>> = { page: { 'column-large': 112, edge: 128 }, section: { 'column-large': 64, edge: 80 } };
 // and its largest: the size tokens up to here, and never more than a quarter of the header's width (so a narrow header,
 // whose text wraps taller, does not grow the square without end)
-const STRETCH_MAX = { page: { 'column-large': 160, edge: 180 }, section: { 'column-large': 96, edge: 112 } };
+const STRETCH_MAX: Record<string, Record<string, number>> = { page: { 'column-large': 160, edge: 180 }, section: { 'column-large': 96, edge: 112 } };
 
 // the media: its size by kind and layout (a class of its own); a stretched media (column, large and edge to edge) is a
 // square as tall as its row, on the size tokens (data-plx-size, system/steps.css), measured here
-function Media({ media, section, layout }) {
+function Media({ media, section, layout }: any) {
   const kind = section ? 'section' : 'page';
   const stretch = !!STRETCH[layout];
-  const ref = React.useRef(null);
-  const [size, setSize] = React.useState(null);
+  const ref = React.useRef<any>(null);
+  const [size, setSize] = React.useState<number | null>(null);
   React.useLayoutEffect(() => {
     const el = ref.current;
     if (!stretch || !el || typeof ResizeObserver === 'undefined') { setSize(null); return undefined; }
@@ -178,11 +179,11 @@ function Media({ media, section, layout }) {
 
 // header style 2 (owner, 2026-10-23): the entity's state as a box of its own, each state with its icon and tone, the
 // current one filled; a radio group (arrow keys move and select)
-function States({ states, label, iconOnly }) {
+function States({ states, label, iconOnly }: any) {
   const opts = (states.options || []).filter(Boolean);
-  const refs = React.useRef([]);
-  const pick = (i) => { const o = opts[(i + opts.length) % opts.length]; if (o && states.onChange) states.onChange(o.value); refs.current[(i + opts.length) % opts.length]?.focus(); };
-  const key = (e, i) => {
+  const refs = React.useRef<any[]>([]);
+  const pick = (i: any) => { const o = opts[(i + opts.length) % opts.length]; if (o && states.onChange) states.onChange(o.value); refs.current[(i + opts.length) % opts.length]?.focus(); };
+  const key = (e: any, i: any) => {
     // Left and Right follow the writing direction (right-to-left: Right goes to the previous option, which sits on the right), Down and Up stay
     const step = arrowStep(e, e.currentTarget);
     if (step) { e.preventDefault(); pick(i + step); }
@@ -191,10 +192,10 @@ function States({ states, label, iconOnly }) {
     <div className="plx-entity-header__fact plx-entity-header__fact--states">
       <dt className="plx-entity-header__fact-label">{states.label || label}</dt>
       <dd className="plx-entity-header__fact-line"><div className="plx-entity-header__states" role="radiogroup" aria-label={states.label || label}>
-        {opts.map((o, i) => {
+        {opts.map((o: any, i: any) => {
           const on = o.value === states.value, tone = TONES.indexOf(ALIASES[o.tone] || o.tone) >= 0 ? (ALIASES[o.tone] || o.tone) : 'neutral';
           return (
-            <button key={o.value} ref={(el) => { refs.current[i] = el; }} type="button" role="radio" aria-checked={on} tabIndex={on || (!opts.some((x) => x.value === states.value) && i === 0) ? 0 : -1}
+            <button key={o.value} ref={(el) => { refs.current[i] = el; }} type="button" role="radio" aria-checked={on} tabIndex={on || (!opts.some((x: any) => x.value === states.value) && i === 0) ? 0 : -1}
               disabled={states.disabled} onClick={() => states.onChange && states.onChange(o.value)} onKeyDown={(e) => key(e, i)}
               aria-label={iconOnly && o.icon ? o.label : undefined} title={iconOnly && o.icon ? o.label : undefined}
               className={cx('plx-entity-header__state', 'plx-entity-header__state--' + tone, on && 'is-selected')}>
@@ -214,14 +215,14 @@ function States({ states, label, iconOnly }) {
 // data role where it is a date, a time or a number (with its currency, percent, separators and units), word by word
 const MONTH = '(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)[a-z]*\\.?';
 const DATUM = new RegExp('(\\d{4}-\\d{2}-\\d{2}(?:[ T]\\d{1,2}:\\d{2})?|' + MONTH + ' \\d{1,2}(?:, \\d{4})?|\\d{1,2}:\\d{2}(?:\\s?[AP]M)?|[$€£]?\\d[\\d,.]*(?:\\s?(?:%|[kKMB]\\b|KB|MB|GB|TB))?(?:\\s?[×x]\\s?\\d[\\d,.]*)?)', 'g');
-function dataText(value) {
+function dataText(value: any) {
   if (typeof value === 'number') return <Text variant="data">{value}</Text>;
   if (typeof value !== 'string' || !/\d/.test(value)) return value;
   const parts = value.split(DATUM);
   return parts.map((p, i) => (i % 2 ? <Text key={i} variant="data">{p}</Text> : p || null));
 }
 
-function Fact({ f, iconOnly }) {
+function Fact({ f, iconOnly }: any) {
   const value = f.data ? <Text variant="data">{f.value}</Text> : f.data === false ? f.value : dataText(f.value);
   if (f.action) {
     const a = f.action;
@@ -253,7 +254,7 @@ function Fact({ f, iconOnly }) {
   );
 }
 
-function Details({ status, states, facts, strings, step = 0 }) {
+function Details({ status, states, facts, strings, step = 0 }: any) {
   const tiles = [];
   if (status && React.isValidElement(status)) tiles.push(<div key="st" className="plx-entity-header__fact">{status}</div>);
   else if (status) {
@@ -265,7 +266,7 @@ function Details({ status, states, facts, strings, step = 0 }) {
       </div>
     );
   }
-  (facts || []).filter(Boolean).slice(0, 4).forEach((f, i) => {
+  (facts || []).filter(Boolean).slice(0, 4).forEach((f: any, i: any) => {
     const plain = typeof f === 'string' || typeof f === 'number' || React.isValidElement(f);
     tiles.push(plain
       ? <div key={'f' + i} className="plx-entity-header__fact"><dd className="plx-entity-header__fact-value">{dataText(f)}</dd></div>
@@ -275,17 +276,17 @@ function Details({ status, states, facts, strings, step = 0 }) {
   return tiles.length ? <dl className="plx-entity-header__details">{tiles}</dl> : null;
 }
 
-function Actions({ actions, moreActions, size, strings, labels = 'icon', layout = 'row' }) {
+function Actions({ actions, moreActions, size, strings, labels = 'icon', layout = 'row' }: any) {
   const text = labels === 'text', column = layout === 'column';
-  const ref = React.useRef(null);
+  const ref = React.useRef<any>(null);
   const extra = moreActions || [];
   let list = actions || [];
   let folded = [];
   if (list.length > MAX_BUTTONS - 1) { folded = list.slice(MAX_BUTTONS - 1); list = list.slice(0, MAX_BUTTONS - 1); }
-  const none = React.useRef(null);   // a column is not measured: the helper would hide what sits below the first row
-  const measured = useOverflow(column ? none : ref, list.length, list.map((a) => a.label).join('|') + labels + layout);
+  const none = React.useRef<any>(null);   // a column is not measured: the helper would hide what sits below the first row
+  const measured = useOverflow(column ? none : ref, list.length, list.map((a: any) => a.label).join('|') + labels + layout);
   const fit = column ? list.length : measured;   // a column has room for every action: nothing folds
-  const items = list.map((a) => (
+  const items = list.map((a: any) => (
     <span key={a.label} data-plx-overflow-item="" className={cx('plx-entity-header__action', column && 'plx-entity-header__action--stretch')}>
       {text
         ? <Button size={size} icon={a.icon} variant={a.primary ? 'primary' : 'secondary'} disabled={a.disabled} onClick={a.onClick}>{a.label}</Button>
@@ -296,8 +297,8 @@ function Actions({ actions, moreActions, size, strings, labels = 'icon', layout 
   const more = (
     <span key="plx-more" data-plx-overflow-more="" className={cx('plx-entity-header__action', column && 'plx-entity-header__action--stretch')}>
       <Menu label={strings.more} placement="bottom-end" trigger={text ? <Button size={size} icon={MoreIcon} variant="secondary">{strings.more}</Button> : <Button size={size} iconOnly icon={MoreIcon} label={strings.more} title={strings.more} variant="secondary" />}>
-        {hidden.map((a) => <MenuItem key={a.label} icon={a.icon} disabled={a.disabled} onSelect={a.onClick}>{a.label}</MenuItem>)}
-        {extra.map((a) => <MenuItem key={a.label} icon={a.icon} danger={a.danger} onSelect={a.onSelect}>{a.label}</MenuItem>)}
+        {hidden.map((a: any) => <MenuItem key={a.label} icon={a.icon} disabled={a.disabled} onSelect={a.onClick}>{a.label}</MenuItem>)}
+        {extra.map((a: any) => <MenuItem key={a.label} icon={a.icon} danger={a.danger} onSelect={a.onSelect}>{a.label}</MenuItem>)}
       </Menu>
     </span>
   );
@@ -306,14 +307,14 @@ function Actions({ actions, moreActions, size, strings, labels = 'icon', layout 
 
 // a subtitle written with **names** in bold (a string); an element passes as it is. A bold part's dates, times and
 // numbers are in the data font, as in the facts (#260)
-function strongText(text) {
+function strongText(text: any) {
   if (typeof text !== 'string' || text.indexOf('**') < 0) return text;
   return text.split('**').map((part, i) => (i % 2 ? <strong key={i} className="plx-entity-header__strong">{dataText(part)}</strong> : part));
 }
-const toneOf = (t) => (TONES.indexOf(ALIASES[t] || t) >= 0 ? (ALIASES[t] || t) : 'neutral');
+const toneOf = (t: any) => (TONES.indexOf(ALIASES[t] || t) >= 0 ? (ALIASES[t] || t) : 'neutral');
 
 // a detail item: its icon and text, colored when it is on track (success) or needs attention (warning)
-function Item({ it }) {
+function Item({ it }: any) {
   return (
     <span className={cx('plx-entity-header__item', it.tone === 'success' && 'plx-entity-header__item--success', it.tone === 'warning' && 'plx-entity-header__item--warning')}>
       {it.icon ? <span className="plx-entity-header__item-icon" aria-hidden="true"><Icon name={it.icon} /></span> : null}
@@ -325,9 +326,9 @@ function Item({ it }) {
 // header style Streamlined (the owner's study "Plenix page headers", 2026-10-19): the media, the title with its badges
 // (status first) over the subtitle; at the end the people, an inline progress and the actions (one primary); under a
 // divider the details strip (Detailed view only). A section: its icon, title and summary badge, with its actions.
-function Streamlined({ section, H, title, sub, media, status, badges, summary, people, progress, actions, detail, view, className, strings }) {
+function Streamlined({ section, H, title, sub, media, status, badges, summary, people, progress, actions, detail, view, className, strings }: any) {
   const list = (actions || []).filter(Boolean);
-  const icons = list.filter((a) => !a.primary && !a.text), labeled = list.filter((a) => !a.primary && a.text), primary = list.filter((a) => a.primary).slice(0, 1);
+  const icons = list.filter((a: any) => !a.primary && !a.text), labeled = list.filter((a: any) => !a.primary && a.text), primary = list.filter((a: any) => a.primary).slice(0, 1);
   const allBadges = (section ? (summary || sub ? [{ label: summary || sub, tone: 'neutral' }] : [])
     : [status && !React.isValidElement(status) ? status : null].concat(badges || [])).filter(Boolean);
   const d = !section && view !== 'compact' ? detail : null;
@@ -358,9 +359,9 @@ function Streamlined({ section, H, title, sub, media, status, badges, summary, p
             ) : null}
             {list.length ? (
               <div className="plx-entity-header__buttons">
-                {icons.map((a) => <Button key={a.label} size={section ? 'sm' : 'md'} iconOnly icon={a.icon} label={a.label} title={a.label} variant="secondary" disabled={a.disabled} onClick={a.onClick} />)}
-                {labeled.map((a) => <Button key={a.label} size="sm" icon={a.icon} variant="secondary" disabled={a.disabled} onClick={a.onClick}>{a.label}</Button>)}
-                {primary.map((a) => <Button key={a.label} size={section ? 'sm' : 'md'} icon={a.icon} variant="primary" disabled={a.disabled} onClick={a.onClick}>{a.label}</Button>)}
+                {icons.map((a: any) => <Button key={a.label} size={section ? 'sm' : 'md'} iconOnly icon={a.icon} label={a.label} title={a.label} variant="secondary" disabled={a.disabled} onClick={a.onClick} />)}
+                {labeled.map((a: any) => <Button key={a.label} size="sm" icon={a.icon} variant="secondary" disabled={a.disabled} onClick={a.onClick}>{a.label}</Button>)}
+                {primary.map((a: any) => <Button key={a.label} size={section ? 'sm' : 'md'} icon={a.icon} variant="primary" disabled={a.disabled} onClick={a.onClick}>{a.label}</Button>)}
               </div>
             ) : null}
           </div>
@@ -377,15 +378,15 @@ function Streamlined({ section, H, title, sub, media, status, badges, summary, p
               <ProgressBar value={d.progress.value} max={d.progress.max} label={d.progress.label} labelHidden />
               {d.facts && d.facts.length ? (
                 <dl className="plx-entity-header__details plx-entity-header__details--strip">
-                  {d.facts.map((f, i) => (f.tone
+                  {d.facts.map((f: any, i: any) => (f.tone
                     ? <div key={i} className="plx-entity-header__fact plx-entity-header__fact--status" data-plx-tone={toneOf(f.tone)}><dt className="plx-entity-header__fact-label">{f.label}</dt><dd className="plx-entity-header__fact-value">{f.data ? <Text variant="data">{f.value}</Text> : dataText(f.value)}</dd></div>
                     : <Fact key={i} f={f} />))}
                 </dl>
               ) : null}
             </div>
           ) : null}
-          {(d.tags || []).map((t, i) => <Tag key={'t' + i} category={t.category}>{t.label}</Tag>)}
-          {(d.items || []).map((it, i) => <Item key={'i' + i} it={it} />)}
+          {(d.tags || []).map((t: any, i: any) => <Tag key={'t' + i} category={t.category}>{t.label}</Tag>)}
+          {(d.items || []).map((it: any, i: any) => <Item key={'i' + i} it={it} />)}
           {d.text ? <span className="plx-entity-header__strip-text">{d.text}</span> : null}
           {endItem ? <span className="plx-entity-header__strip-end">{endItem}</span> : null}
         </div>
@@ -395,9 +396,79 @@ function Streamlined({ section, H, title, sub, media, status, badges, summary, p
 }
 
 // the header style picks the component: Structured (style 1, default) or Streamlined
-export function EntityHeader(props) {
-  if (props.headerStyle !== 'streamlined') return <Structured {...props} />;
-  const { kind = 'page', title, subtitle, description, context, media, status, live, badges, summary, people, progress, actions, detail, view = 'detailed', headingLevel, className, strings } = props;
+/** @public the tone of a status, badge or state */
+export type EntityHeaderTone = 'neutral' | 'success' | 'active' | 'waiting' | 'action-required' | 'negative' | 'info' | 'warning' | 'danger';
+/** @public the entity's picture: an Avatar ({ person, src, color, gender }), a generic icon ({ icon, hue, box }) or an element */
+export type EntityHeaderMedia =
+  | { person: string; src?: string; color?: string; gender?: string }
+  | { icon: IconValue; hue?: 'blue' | 'green' | 'purple' | 'red' | 'brown' | 'gray' | 'surface'; box?: boolean | React.ReactNode }
+  | React.ReactElement
+  | null;
+/** @public the Status tile, or a badge */
+export type EntityHeaderStatus = { tone?: EntityHeaderTone; label: React.ReactNode; icon?: IconValue };
+/** @public a fact tile, or a plain string or element */
+export type EntityHeaderFact =
+  | React.ReactNode
+  | { label?: React.ReactNode; value?: React.ReactNode; data?: boolean; icon?: IconValue; tone?: EntityHeaderTone;
+      action?: { label: string; icon?: IconValue; name?: string; onClick?(): void; disabled?: boolean } };
+/** @public an action button of the header */
+export type EntityHeaderAction = { icon?: IconValue; label: string; onClick?(): void; primary?: boolean; disabled?: boolean; text?: boolean };
+/** @public an item only in the More menu */
+export type EntityHeaderMoreAction = { icon?: IconValue; label: string; onSelect?(): void; danger?: boolean };
+/** @public header style 2: the entity's state as a box among the facts */
+export type EntityHeaderStates = { value: string; onChange?(value: string): void; label?: string; disabled?: boolean;
+  options: { value: string; label: string; icon?: IconValue; tone?: EntityHeaderTone }[] };
+/** @public the streamlined header's details strip */
+export type EntityHeaderDetail = {
+  progress?: { label?: React.ReactNode; valueText?: string; value: number; max?: number };
+  facts?: EntityHeaderFact[];
+  tags?: Array<{ label: React.ReactNode; category?: string }>;
+  items?: Array<{ icon?: IconValue; label: React.ReactNode; tone?: 'success' | 'warning'; data?: boolean }>;
+  text?: React.ReactNode;
+  end?: { badge: { tone?: EntityHeaderTone; icon?: IconValue; label: React.ReactNode } } | { link: { label: React.ReactNode; href: string } } | React.ReactElement;
+};
+/** @public the prop type (ADR 0011) */
+export type EntityHeaderProps = {
+  /** "structured" (default) | "streamlined" */
+  headerStyle?: 'structured' | 'streamlined';
+  kind?: 'page' | 'section';
+  layout?: 'top-small' | 'top-large' | 'column-small' | 'column-large' | 'edge';
+  title?: React.ReactNode;
+  subtitle?: React.ReactNode;
+  /** the older names for the subtitle (description wins) */
+  description?: React.ReactNode;
+  context?: React.ReactNode;
+  media?: EntityHeaderMedia;
+  status?: EntityHeaderStatus;
+  /** the older name for status */
+  live?: EntityHeaderStatus;
+  states?: EntityHeaderStates;
+  facts?: EntityHeaderFact[];
+  summary?: React.ReactNode;
+  next?: { title: React.ReactNode; detail?: React.ReactNode; label?: React.ReactNode };
+  actions?: EntityHeaderAction[];
+  moreActions?: EntityHeaderMoreAction[];
+  actionLabels?: 'icon' | 'text';
+  actionsLayout?: 'row' | 'column';
+  control?: React.ReactNode;
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+  className?: string;
+  strings?: Record<string, string>;
+  /** (streamlined) more badges after the status */
+  badges?: { label: React.ReactNode; tone?: EntityHeaderTone; icon?: IconValue }[];
+  /** (streamlined) an AvatarGroup */
+  people?: { label?: string; list: { name: string; src?: string }[]; max?: number; onMore?(): void };
+  /** (streamlined) an inline progress */
+  progress?: { label?: string; value: number; max?: number };
+  /** (streamlined) the details strip */
+  detail?: EntityHeaderDetail;
+  /** (streamlined) "detailed" (default) | "compact" */
+  view?: 'detailed' | 'compact';
+};
+export function EntityHeader(props: EntityHeaderProps) {
+  const p: any = props;
+  if (p.headerStyle !== 'streamlined') return <Structured {...p} />;
+  const { kind = 'page', title, subtitle, description, context, media, status, live, badges, summary, people, progress, actions, detail, view = 'detailed', headingLevel, className, strings } = p;
   const section = kind === 'section';
   return <Streamlined section={section} H={'h' + (headingLevel || (section ? 2 : 1))} title={title} sub={subtitle !== undefined ? subtitle : (description !== undefined ? description : context)}
     media={media} status={status || live} badges={badges} summary={summary} people={people} progress={progress} actions={actions} detail={detail} view={view}
@@ -405,11 +476,11 @@ export function EntityHeader(props) {
 }
 
 function Structured({ kind = 'page', layout = 'top-small', title, subtitle, media, status, states, facts, summary, next, actions, moreActions,
-  actionLabels = 'icon', actionsLayout = 'row', control, description, context, live, headingLevel, className, strings }) {
+  actionLabels = 'icon', actionsLayout = 'row', control, description, context, live, headingLevel, className, strings }: any) {
   const section = kind === 'section';
   const lay = LAYOUTS.indexOf(layout) >= 0 ? layout : 'top-small';
   const top = lay === 'top-small' || lay === 'top-large';
-  const H = 'h' + (headingLevel || (section ? 2 : 1));
+  const H: any = 'h' + (headingLevel || (section ? 2 : 1));
   const s = { more: 'More actions', status: 'Status', next: 'Next step', ...strings };
   const sub = subtitle !== undefined ? subtitle : (description !== undefined ? description : context);
   const st = status || live;
@@ -417,9 +488,9 @@ function Structured({ kind = 'page', layout = 'top-small', title, subtitle, medi
   const aside = !!(next && !section) || !!hasActions || !!control;
   // header style 2, the button rule (as in a command bar): while the facts would wrap, step 1 shows the count buttons as
   // their icons, step 2 the states too (each keeps its words as its tooltip and name); past that the boxes wrap
-  const root = React.useRef(null);
-  const fitted = !section && ((facts || []).some((f) => f && f.action) || !!states);
-  const fitKey = (facts || []).map((f) => (f && (f.label || '') + (f.value || '') + (f.action ? f.action.label : ''))).join('|') + '§' + (states ? states.value + (states.options || []).map((o) => o.label).join(',') : '');
+  const root = React.useRef<any>(null);
+  const fitted = !section && ((facts || []).some((f: any) => f && f.action) || !!states);
+  const fitKey = (facts || []).map((f: any) => (f && (f.label || '') + (f.value || '') + (f.action ? f.action.label : ''))).join('|') + '§' + (states ? states.value + (states.options || []).map((o: any) => o.label).join(',') : '');
   const step = useBarFit(root, fitKey, fitted ? 2 : 0, 0, '.plx-entity-header__details');
   // top row: the media beside the title; column and edge: the media in a column of its own, before the text
   const mediaEl = <Media media={media || { icon: DocTextIcon }} section={section} layout={lay} />;

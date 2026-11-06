@@ -917,7 +917,7 @@
       "platform/components/IconTile/IconTile.jsx",
       "platform/components/IconTile/icon-tile.css",
       "platform/tokens/components/icon-tile.tokens.json",
-      "platform/patterns/EntityHeader/EntityHeader.jsx",
+      "platform/patterns/EntityHeader/EntityHeader.tsx",
       "platform/patterns/EntityHeader/entity-header.css",
       "platform/components/Preview/Preview.jsx",
       "platform/components/Preview/preview.css",
@@ -3600,7 +3600,7 @@
     "platform/components/IconTile/IconTile.jsx",
     "platform/components/IconTile/icon-tile.css",
     "platform/tokens/components/icon-tile.tokens.json",
-    "platform/patterns/EntityHeader/EntityHeader.jsx",
+    "platform/patterns/EntityHeader/EntityHeader.tsx",
     "platform/patterns/EntityHeader/entity-header.css"
    ],
    "dependsOn": [],
@@ -9526,7 +9526,7 @@
     "platform/components/IconTile/IconTile.jsx",
     "platform/components/IconTile/icon-tile.css",
     "platform/tokens/components/icon-tile.tokens.json",
-    "platform/patterns/EntityHeader/EntityHeader.jsx",
+    "platform/patterns/EntityHeader/EntityHeader.tsx",
     "platform/patterns/EntityHeader/entity-header.css"
    ],
    "laneFiles": [

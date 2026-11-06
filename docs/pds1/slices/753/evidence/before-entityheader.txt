@@ -1,0 +1,6 @@
+structured {"text":"MC Maya Chen Creative Director · Apex Co Status Reconnect due Last message 10:24 AM Owner Sam Patel Next step Send the revised quote Due tomorrow","buttons":4,"inputs":0,"links":0,"roles":"tooltip","names":"Call|Message|Share|More actions"}
+section {"text":"Comments 3 open · 5 resolved","buttons":2,"inputs":0,"links":0,"roles":"tooltip","names":"Add comment|More actions"}
+layouts {"text":"Layout top-large Sub A 1 Layout column-small Sub A 1 Layout column-large Sub A 1 Layout edge Sub A 1","buttons":0,"inputs":0,"links":0,"roles":"","names":""}
+style2 {"text":"Council Session 2026-10-22 Thursday, October 22, 2026 at 10:00 AM Presiding H.E. Serapion Attendance 12 Attendance Status Draft In progress","buttons":3,"inputs":0,"links":0,"roles":"radio,radiogroup","names":"Take attendance|Status"}
+streamlined {"text":"Project Atlas Active Priority Owned by Sam since 2026-01-04 AL BC Done Edit Q4","buttons":2,"inputs":0,"links":0,"roles":"group,img,tooltip","names":"Team|Ann Lee|Bo Chen|Done|Share"}
+streamlinedCompact {"text":"Compact Draft","buttons":0,"inputs":0,"links":0,"roles":"","names":""}

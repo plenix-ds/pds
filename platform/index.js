@@ -78,7 +78,7 @@ export { PropertyList } from './patterns/PropertyList/PropertyList.tsx';
 export { TableSettings } from './providers/TableSettings.tsx';
 export { PrintDocument } from './patterns/PrintDocument/PrintDocument.tsx';
 export { RecordPage } from './patterns/RecordPage/RecordPage.tsx';
-export { EntityHeader } from './patterns/EntityHeader/EntityHeader.jsx';
+export { EntityHeader } from './patterns/EntityHeader/EntityHeader.tsx';
 export { ActivityList } from './patterns/ActivityList/ActivityList.tsx';
 export { NotificationList } from './patterns/NotificationList/NotificationList.tsx';
 export { SettingsLayout, SettingsSection, SettingsRow } from './patterns/SettingsLayout/SettingsLayout.tsx';
