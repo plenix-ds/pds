@@ -14,6 +14,7 @@ For the owner's approval (D-0012). Nothing here is in `platform/i18n/ar.js`; unt
 | 8 | `confirmAction.confirm` | same, button | {verb} | {verb} | The command's own label; no word to translate | |
 | 9 | `confirmAction.cancel` | same, button | Cancel | إلغاء | Same word | `wizard.cancel` |
 | 10 | `voteTally.notRecorded` | VoteTally, a seat with no vote recorded | Not recorded | لم يُسجَّل | Record (verb) = سجّل | `voteTally.notVoted` |
+| 11 | `combobox.create` | Combobox, the option that adds what you typed (#656) | Create “{text}” | إنشاء “{text}” | Create = إنشاء; the typed text in quotes, isolated in a `<bdi>` | `formFlow.create`, `fileBrowser.create` |
 
 **Row 6, wiring problem (not a word choice):** the title joins a count to a plural word the app passes (`plural`). Arabic needs a different noun form for 1, 2, 3 to 10 and 11 or more, so "حذف 11 ملفات" comes out wrong. The fix is a plural-aware `plural` (one value per count form), which is an API change for the CommandBar's owner. Until then the Arabic is the joined form above.
 
