@@ -6,7 +6,7 @@ export { chartTooltipText } from '../charts/parts/ChartTooltip.jsx';
 export { LineChart } from '../charts/lazy.jsx';
 export { AreaChart } from '../charts/lazy.jsx';
 export { Gauge } from '../charts/Gauge.jsx';
-export { HeatMap } from '../charts/HeatMap.jsx';
+export { HeatMap } from '../charts/lazy.jsx';
 export { WaterfallChart } from '../charts/lazy.jsx';
 export { waterfallSteps } from '../charts/chart-helpers.js';
 export { WordCloud, wordCloudLayout } from '../charts/WordCloud.jsx';
