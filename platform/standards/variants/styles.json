@@ -3222,5 +3222,70 @@
   "teaching-bubble--width-wide-400px": {
     "sets": [],
     "why": "markup only: the variation is the content (title, text, picture, steps, actions), the spotlight, or the wide width, which the Popover's lg size draws; the stylesheet has no modifier for it"
+  },
+  "bulk-action-bar--selection-something-selected": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-bulk-actions-background"
+      },
+      {
+        "property": "border-block-end-color",
+        "part": "block",
+        "token": "--plx-comp-bulk-actions-border-color"
+      }
+    ],
+    "why": ".plx-bulk-actions in bulk-actions.css (the record is Bulk action bar, the component BulkActions, deprecated for the command bar's selection state)"
+  },
+  "bulk-action-bar--selection-nothing-selected-always-shown-actions-disabled": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-bulk-actions-empty-background"
+      },
+      {
+        "property": "border-block-end-color",
+        "part": "block",
+        "token": "--plx-comp-bulk-actions-empty-border-color"
+      }
+    ],
+    "why": ".plx-bulk-actions--empty: the bar stays shown with its actions disabled until something is selected"
+  },
+  "bar-chart--layout-grouped": {
+    "sets": [],
+    "why": "markup only: several series side by side for each category, drawn by the chart engine (layout grouped)"
+  },
+  "bar-chart--layout-stacked": {
+    "sets": [],
+    "why": "markup only: the series stacked into each category's total (layout stacked)"
+  },
+  "bar-chart--layout-percent": {
+    "sets": [],
+    "why": "markup only: each series as a share of its category's total (layout percent)"
+  },
+  "bar-chart--layout-histogram-binned": {
+    "sets": [
+      {
+        "property": "stroke",
+        "part": "bar",
+        "token": "--plx-comp-bar-chart-separator-color"
+      },
+      {
+        "property": "stroke-width",
+        "part": "bar",
+        "token": "--plx-comp-bar-chart-separator-width"
+      }
+    ],
+    "why": ".plx-bar-chart__bar--joined: touching columns, each set apart by a thin separator, that count the values in each range"
+  },
+  "bar-chart--orientation-bar-horizontal": {
+    "sets": [],
+    "why": "markup only: horizontal bars, for long names and rankings, drawn by the chart engine"
+  },
+  "bar-chart--orientation-column-vertical": {
+    "sets": [],
+    "why": "markup only: vertical columns, for periods, drawn by the chart engine (orientation vertical)"
   }
 }
