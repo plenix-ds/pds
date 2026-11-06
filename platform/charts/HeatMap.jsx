@@ -38,14 +38,14 @@ import { cx } from '../utils/cx.ts';
 import { formatNumber, formatDate, formatLocale, numeralLocale, parseDate } from '../utils/format.ts';
 import { datavizStep, DATAVIZ_SCALES } from '../utils/dataviz.ts';
 import { ChartFrame } from './ChartFrame.jsx';
-import { scaleBand } from './scales.js';
-import { scalePosition } from './parts/position.js';
-import { Axis } from './parts/Axis.jsx';
+import { useEChartsPlot } from './echarts/EChartsPlot.jsx';
 import { ChartTooltip, chartTooltipText } from './parts/ChartTooltip.jsx';
 import { useChartInteraction } from './interaction.js';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 
 const DAY = 24 * 60 * 60 * 1000;
+const NO_MARGIN = Object.freeze({ top: 0, end: 0, bottom: 0, start: 0 });
+const cols0 = (n) => { const out = []; for (let c = 0; c < n; c++) out.push(c); return out; };
 // the gap between cells, as a fraction of a cell (band padding: geometry)
 const GAP = 0.1;
 
@@ -132,50 +132,74 @@ export function HeatMap({ title, description, variant = 'matrix', rows = [], col
     </div>
   );
 
-  const draw = ({ inner, margin: m }) => {
-    if (!nCols || !rowNames.length) return null;
-    const cols = []; for (let c = 0; c < nCols; c++) cols.push(c);
-    const rs = rowNames.map((x, r) => r);
-    // the calendar's cells are square: the smaller of the two steps
-    let w = inner.width, h = inner.height;
-    if (calendar) { const s = Math.min(inner.width / nCols, inner.height / 7); w = s * nCols; h = s * 7; }
-    const x = scaleBand({ domain: cols, range: [0, w], paddingInner: GAP, paddingOuter: 0 });
-    const y = scaleBand({ domain: rs, range: [0, h], paddingInner: GAP, paddingOuter: 0 });
-    const pick = (px, py) => {
-      const c = Math.min(nCols - 1, Math.max(0, Math.floor(px / x.step()))), r = Math.min(rs.length - 1, Math.max(0, Math.floor(py / y.step())));
-      return px < 0 || py < 0 || px > w || py > h || !insideAt(r, c) ? null : { r, c };
+  // the cells ECharts draws, one by one in their data-viz step (a missing value an empty cell with a dashed edge); the frame keeps the keyboard, the ring, the tooltip and the pointer
+  const plot = useEChartsPlot();
+  const cellList = [];
+  for (let c = 0; c < nCols; c++) for (let r = 0; r < rowNames.length; r++) { const x = cellAt(r, c); if (x && x.inside) cellList.push({ r, c, value: x.value }); }
+  const dataKey = JSON.stringify([cellList, sc, lo, hi, calendar, rowNames, calendar ? null : columns, nCols, margin]);
+  const room = (tk) => {
+    // the room beside and above the cells for the row and column names (the old frame's margins)
+    const m = Object.assign(calendar ? { top: 24, start: 40 } : {}, margin);
+    const left = m.start !== undefined ? m.start : Math.max(32, Math.ceil(rowNames.reduce((n, x) => Math.max(n, String(x).length), 0) * 7 + tk.tickOffset * 2));
+    return { left, top: m.top !== undefined ? m.top : 0, right: m.end !== undefined ? m.end : 8, bottom: calendar ? (m.bottom !== undefined ? m.bottom : 24) : (m.bottom !== undefined ? m.bottom : Math.ceil(tk.tick.fontSize + tk.tickOffset * 2)) };
+  };
+  // the grid in pixels: the calendar's cells are square (the smaller of the two steps)
+  const gridOf = (tk, dims) => {
+    const rm = room(tk), w = Math.max(0, dims.width - rm.left - rm.right), h = Math.max(0, dims.height - rm.top - rm.bottom);
+    if (!calendar) return { left: rm.left, top: rm.top, width: w, height: h };
+    const st = Math.min(w / Math.max(1, nCols), h / 7);
+    return { left: rm.left, top: rm.top, width: st * nCols, height: st * 7 };
+  };
+  const option = React.useCallback((tk, dims) => {
+    const g = gridOf(tk, dims);
+    const hm = tk.heatmap;
+    const thin = Math.max(1, Math.ceil(nCols / Math.max(2, Math.floor(g.width / 48))));
+    const monthAt = calendar ? new Set(cols0(nCols).filter((c) => { const d = cal.cells[c * 7].date; const prev = c ? cal.cells[(c - 1) * 7].date : null; return !prev || prev.getMonth() !== d.getMonth(); })) : null;
+    const months = calendar ? [...monthAt].filter((c, k, a) => k === a.length - 1 || a[k + 1] - c >= 3) : [];
+    const named = { splitLine: { show: false }, axisTick: { show: false } };
+    return {
+      animationDuration: 0, animationDurationUpdate: 0,
+      grid: { left: g.left, top: g.top, width: g.width, height: g.height, outerBoundsMode: 'none' },
+      xAxis: Object.assign({ type: 'category', data: cols0(nCols).map(String), position: calendar ? 'top' : 'bottom', axisLine: { show: false }, axisLabel: { interval: (i) => (calendar ? months.indexOf(i) >= 0 : i % thin === 0), formatter: (v) => (calendar ? new Intl.DateTimeFormat(locale, { month: 'short' }).format(cal.cells[Number(v) * 7].date) : String(columns[Number(v)])), hideOverlap: false } }, named),
+      yAxis: Object.assign({ type: 'category', data: rowNames.map((x, r) => String(r)), inverse: true, axisLine: { show: false }, axisLabel: { interval: (i) => (calendar ? i === 1 || i === 3 || i === 5 : true), formatter: (v) => String(rowNames[Number(v)]) } }, named),
+      // one rounded rectangle per cell, set in by the gap of the old band scale (a gap is a tenth of a step, per axis); a missing value is an empty cell with a dashed edge
+      series: [{ type: 'custom', id: 'cells', silent: true, progressive: 0, coordinateSystem: 'none', clip: false,
+        data: cellList.map((x) => [x.c, x.r, x.value === null ? 0 : x.value, x.value === null ? 1 : 0]),
+        renderItem: (params, api) => {
+          const c = api.value(0), r = api.value(1), v = api.value(2), mt = api.value(3) === 1;
+          const sx = g.width / (nCols - GAP), sy = g.height / (rowNames.length - GAP);
+          const shape = { x: g.left + c * sx, y: g.top + r * sy, width: sx * (1 - GAP), height: sy * (1 - GAP), r: hm.radius };
+          return { type: 'rect', shape, style: mt ? { fill: hm.empty, stroke: hm.emptyEdge, lineWidth: hm.edgeWidth || 1, lineDash: [hm.dash, hm.dash] } : { fill: tk.color(datavizStep(sc, v, lo, hi)) } };
+        } }],
     };
-    ia.register({ nearest: pick, columnAt: (px) => Math.min(nCols - 1, Math.max(0, Math.floor(px / x.step()))) });
+  }, [dataKey]);   // eslint-disable-line react-hooks/exhaustive-deps
+
+  const draw = (dims) => {
+    const layer = plot.layer(dims, option);
+    const tk = plot.tokens, chart = plot.chart;
+    if (!chart || !tk || !nCols || !rowNames.length) return layer;
+    const g = gridOf(tk, dims), cw = g.width / nCols, ch = g.height / rowNames.length;
+    const pick = (px, py) => {
+      const c = Math.floor((px - g.left) / cw), r = Math.floor((py - g.top) / ch);
+      return px < g.left || py < g.top || px > g.left + g.width || py > g.top + g.height || c < 0 || r < 0 || c >= nCols || r >= rowNames.length || !insideAt(r, c) ? null : { r, c };
+    };
+    ia.register({ nearest: pick, columnAt: (px) => Math.min(nCols - 1, Math.max(0, Math.floor((px - g.left) / cw))) });
     const a = ia.active && insideAt(ia.active.r, ia.active.c) ? ia.active : null;
     const sel = ia.selected;
-    // month labels over the calendar's first week of each month; weekday labels on Monday, Wednesday and Friday
-    const starts = calendar ? cols.filter((c) => { const d = cal.cells[c * 7].date; const prev = c ? cal.cells[(c - 1) * 7].date : null; return !prev || prev.getMonth() !== d.getMonth(); }) : [];
-    // a month that starts less than three weeks before the next one has no room for its name
-    const monthTicks = calendar ? starts.filter((c, k) => k === starts.length - 1 || starts[k + 1] - c >= 3) : null;
-    return (
-      <g className="plx-heat-map__plot">
-        {cols.map((c) => rs.map((r) => {
-          const cell = cellAt(r, c);
-          if (!cell || !cell.inside) return null;
-          const empty = cell.value === null;
-          return (
-            <rect key={c + '-' + r} className={cx('plx-heat-map__cell', empty && 'plx-heat-map__cell--empty', a && a.r === r && a.c === c && 'plx-heat-map__cell--active', sel && sel.r === r && sel.c === c && 'plx-chart-selected')}
-              data-plx-dataviz={empty ? undefined : datavizStep(sc, cell.value, lo, hi)} x={x(c)} y={y(r)} width={x.bandwidth()} height={y.bandwidth()} />
-          );
-        }))}
-        <Axis scale={y} orient="left" inner={{ width: w, height: h }} margin={m} ticks={calendar ? [1, 3, 5] : undefined} format={(r) => rowNames[r]} />
-        {calendar
-          ? <Axis scale={x} orient="top" inner={{ width: w, height: h }} margin={m} line={false} ticks={monthTicks} format={(c) => new Intl.DateTimeFormat(locale, { month: 'short' }).format(cal.cells[c * 7].date)} className="plx-heat-map__months" />
-          : <Axis scale={x} orient="bottom" inner={{ width: w, height: h }} margin={m} line={false} format={(c) => columns[c]} ticks={cols.filter((c, k) => k % Math.max(1, Math.ceil(nCols / Math.max(2, Math.floor(w / 48)))) === 0)} />}
-        {a ? <ChartTooltip x={scalePosition(x, a.c)} y={y(a.r)} inner={{ width: w, height: h }} title={titleOf(cellAt(a.r, a.c))} titleKind={calendar ? 'data' : 'text'}
+    const box = (cell) => ({ x: g.left + cell.c * cw, y: g.top + cell.r * ch, width: cw, height: ch });
+    const inner = { width: dims.width, height: dims.height };
+    return [layer, (
+      <g key="plx-chart-overlay" className="plx-heat-map__plot">
+        {sel ? <rect className="plx-chart-selected plx-heat-map__focus-box" fill="none" {...box(sel)} /> : null}
+        {a ? <rect className="plx-heat-map__focus" {...box(a)} /> : null}
+        {a ? <ChartTooltip x={g.left + (a.c + 0.5) * cw} y={g.top + a.r * ch} inner={inner} title={titleOf(cellAt(a.r, a.c))} titleKind={calendar ? 'data' : 'text'}
           items={[{ label: vLabel, value: valueOf(cellAt(a.r, a.c)), color: cellAt(a.r, a.c).value === null ? undefined : datavizStep(sc, cellAt(a.r, a.c).value, lo, hi) }]} /> : null}
       </g>
-    );
+    )];
   };
 
-  const mg = Object.assign(calendar ? { top: 24, start: 40 } : {}, margin);
   return (
-    <ChartFrame title={title} description={description} size={size || (calendar ? 'sm' : 'md')} margin={mg} table={table} legend={legend}
+    <ChartFrame title={title} description={description} size={size || (calendar ? 'sm' : 'md')} margin={NO_MARGIN} table={table} legend={legend}
       interaction={interactive ? ia : undefined} strings={frameStrings}
       className={cx('plx-heat-map', 'plx-heat-map--' + (calendar ? 'calendar' : 'matrix'), className)}>
       {draw}
