@@ -84,6 +84,7 @@ export function bodyRows({
   pinStart,
   leadFrozen,
   editing,
+  draftStore,
   formMode,
   cellStatus,
   setCellStatus,
@@ -522,7 +523,10 @@ export function bodyRows({
                     tags={turnedOn && c.editor === 'tags'}
                     date={turnedOn && c.editor === 'date'}
                     custom={!!c.editor && typeof c.editor === 'object' && typeof c.editor.component === 'function'}
-                    value={editing.value}
+                    value={draftStore?.current?.key === row.id && draftStore.current.field === c.field ? draftStore.current.value : editing.value}
+                    onDraft={(draft) => {
+                      if (draftStore) draftStore.current = { key: row.id, field: c.field, value: draft };
+                    }}
                     onCommit={(next, move) => {
                       commitEdit(row.id, c.field, next);
                       focusAfterEdit(row, column, move);

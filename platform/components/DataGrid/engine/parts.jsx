@@ -118,7 +118,7 @@ export function CellStatus({ status, onClear }) {
 
 const LazyEditor = React.lazy(() => import('./editors.jsx'));
 
-export function CellEditor({ column, record, value, area, select, date, combobox, person, tags, custom, onCommit, onCancel }) {
+export function CellEditor({ column, record, value, area, select, date, combobox, person, tags, custom, onDraft, onCommit, onCancel }) {
   const S = useStrings('dataGrid'),
     [draft, setDraft] = React.useState(value ?? ''),
     [invalid, setInvalid] = React.useState(null),
@@ -128,6 +128,10 @@ export function CellEditor({ column, record, value, area, select, date, combobox
   React.useEffect(() => {
     announce(S.editing.replace('{column}', column.title));
   }, []);
+  // the draft is kept outside the editor, so scrolling the row out of the window and back does not lose what was typed
+  React.useEffect(() => {
+    onDraft?.(draft);
+  }, [draft]);
   const finish = async (move = 0, picked) => {
     if (done.current) return;
     done.current = true;
