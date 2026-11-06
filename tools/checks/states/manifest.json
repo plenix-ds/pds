@@ -198,5 +198,15 @@
     "loading": "n/a(a parent loading its children shows a status row from useBranchLoader; stories arrive with Storybook, P0-11)",
     "selected": "n/a(stories arrive with Storybook, P0-11)",
     "error": "n/a(a parent that failed to load shows a status row and retries; stories arrive with Storybook, P0-11)"
+  },
+  "Cascader": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(stories arrive with Storybook, P0-11)",
+    "loading": "n/a(a parent loading its children shows a status row from MillerColumns; stories arrive with Storybook, P0-11)",
+    "selected": "n/a(stories arrive with Storybook, P0-11)",
+    "error": "n/a(invalid is the is-invalid state set by its Field; stories arrive with Storybook, P0-11)"
   }
 }

@@ -61,8 +61,12 @@ import { useBranchLoader, BranchStatus } from '../../hooks/useBranchLoader.ts';
 import type { BranchNode, BranchLoader, LoadChildren } from '../../hooks/useBranchLoader.ts';
 
 const MIN_STEP = 1, MAX_STEP = 6, DEFAULT_STEP = 3;
-type Id = string | number;
-type MillerItem = BranchNode & { icon?: IconValue; description?: React.ReactNode; disabled?: boolean; children?: MillerItem[] | null };
+/** @public an item's id (ADR 0011) */
+export type MillerColumnsId = string | number;
+/** @public an item: { id, label, icon, description, disabled, children } (ADR 0011) */
+export type MillerColumnsItem = BranchNode & { icon?: IconValue; description?: React.ReactNode; disabled?: boolean; children?: MillerColumnsItem[] | null };
+type Id = MillerColumnsId;
+type MillerItem = MillerColumnsItem;
 type Column = { items: MillerItem[]; parent: MillerItem | null };
 const EMPTY: MillerItem[] = [];
 
