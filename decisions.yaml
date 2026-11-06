@@ -690,3 +690,13 @@
   options: [the save's own path with info.source (chosen), always onCellEdit per field (as first built)]
   status: active
   check: G3 review of #647 and its test (only onRecordEdit; Ctrl+Z calls it with the previous values and source undo)
+
+- id: D-0078
+  date: 2026-11-06
+  area: i18n
+  decided_by: owner (chat, 2026-11-06, plenix-ds/pds#476)
+  decision: 'Standards are accepted by default, in this order - 1 Microsoft (Arabic and other terminology from the Microsoft Language Portal and style guide; Windows, Office and Fluent 2 conventions); 2 IBM; 3 any of Adobe, SAP, GitHub, Atlassian or ISO (equal rank). For international work (terminology in every language, formats, right-to-left behaviour) use the first one that covers the case. A choice that follows this order needs no owner approval: agents apply it and cite the source in one line, so new Arabic words that are terms of these standards no longer go to the owner (this narrows D-0012). The owner is asked only when none of them covers it, and his own explicit decisions still win.'
+  why: 'Owner, 2026-11-06: "Use b Microsoft''s standard. As a default from now on. Anything that is a Microsoft standard to accept it by default." and "When it comes to international the order to follow is always 1 Microsoft 2 IBM 3 Adobe or SaaS or Github or Altaisaan or iso" ("SaaS" read as SAP, "Altaisaan" as Atlassian), then "Merge them".'
+  options: ['Microsoft, then IBM, then Adobe/SAP/GitHub/Atlassian/ISO, accepted by default (chosen)', 'owner approves each choice']
+  status: active
+  check: 'review-only (each i18n proposal row, PR and decision card cites the standard it follows, by this order)'

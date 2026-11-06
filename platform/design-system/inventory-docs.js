@@ -3372,7 +3372,7 @@ window.DSDocs = {
    "labels": "Name the main region's page with one h1. Keep landmark labels short nouns (\"Settings sections\", \"Details\").",
    "actions": "Not applicable: the shell holds no actions; the AppHeader action and the page's own buttons do.",
    "errors": "Not applicable: the shell has no error text.",
-   "localization": "The skip link text \"Skip to main content\" is fixed in code and needs translating. The layout uses logical properties; the splitter's arrow keys follow physical Left and Right, which should be checked in right-to-left."
+   "localization": "The skip link text \"Skip to main content\" comes from the `strings` prop and the catalog, so it is translated like every word. The layout uses logical properties; the splitters follow the writing direction: in right-to-left their edges are mirrored, and Arrow Left and Arrow Right move them the way the edge moves."
   }
  },
  "secondary-pane": {
@@ -3991,13 +3991,12 @@ window.DSDocs = {
   ]
  },
  "changelog": {
-  "purpose": "Records what changed, why and how it was proven, so anyone can trace a change back to its request.",
+  "purpose": "Records what changed in each release, so teams know what to update and anyone can trace a change back to its issue.",
   "anatomy": [
-   "Batch entry — a numbered batch file in Plenix - DAM/audit/batches/ (required)",
-   "Request — the owner's request or approval (required)",
-   "Change — what changed (required)",
-   "Verification — how it was verified (required)",
-   "Before copies — NN-before/ folders with the changed files (optional)"
+   "Fragment — a file in changelog.d/, one per change, written with the change and collected into CHANGELOG.md at release (required)",
+   "Entry — what changed, under Added, Changed, Fixed, Deprecated or Breaking (required)",
+   "Issue — the issue number the change answers (required)",
+   "Replacement — for a Breaking or Deprecated entry, what to do instead (when it applies)"
   ],
   "behavior": {
    "pointer": "Not applicable: a governance record.",
@@ -4016,8 +4015,8 @@ window.DSDocs = {
    "motion": "Not applicable: a governance record."
   },
   "content": {
-   "labels": "Title each entry with its batch number and a short summary.",
-   "actions": "Write changes as plain past-tense facts with counts.",
+   "labels": "Start each entry with the part it changes, in backticks if it is a name.",
+   "actions": "Write changes as plain facts in the present tense, with counts, and name the issue.",
    "errors": "Not applicable: a governance record.",
    "localization": "Not applicable: internal documentation."
   },

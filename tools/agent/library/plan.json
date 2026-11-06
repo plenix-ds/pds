@@ -1783,7 +1783,7 @@
       "platform/charts/AreaChart.jsx",
       "platform/charts/HeatMap.tsx",
       "platform/charts/Gauge.tsx",
-      "platform/charts/WaterfallChart.jsx",
+      "platform/charts/WaterfallChart.tsx",
       "platform/charts/WordCloud.jsx",
       "platform/charts/interaction.js",
       "platform/charts/NetworkGraph.jsx",
@@ -1821,13 +1821,13 @@
       "platform/design-system/parts/w09B.{records,labs,docs}.js + .css",
       "platform/exports/w09B.{js,css}",
       "platform/standards/web-native-map.d/w09B.json",
-      "platform/charts/BarChart.jsx",
+      "platform/charts/BarChart.tsx",
       "platform/charts/PieChart.tsx",
       "platform/charts/BoxPlot.tsx",
       "platform/charts/BulletChart.tsx",
       "platform/charts/SankeyDiagram.jsx",
       "platform/charts/RadarChart.tsx",
-      "platform/charts/ComboChart.jsx",
+      "platform/charts/ComboChart.tsx",
       "platform/charts/TimelineChart.jsx",
       "platform/patterns/ComparisonView/ComparisonView.jsx",
       "platform/patterns/ComparisonView/comparison-view.css",
@@ -1871,7 +1871,7 @@
       "platform/standards/web-native-map.d/w09C.json",
       "platform/components/Metric/Metric.tsx",
       "platform/components/Metric/metric.css",
-      "platform/charts/ScatterChart.jsx",
+      "platform/charts/ScatterChart.tsx",
       "platform/charts/FunnelChart.tsx",
       "platform/charts/Sparkline.tsx",
       "platform/charts/a11y.js",
@@ -6152,7 +6152,7 @@
    "wave": 9,
    "lane": "A",
    "files": [
-    "platform/charts/WaterfallChart.jsx"
+    "platform/charts/WaterfallChart.tsx"
    ],
    "dependsOn": [
     "chart-parts"
@@ -6237,7 +6237,7 @@
    "wave": 9,
    "lane": "B",
    "files": [
-    "platform/charts/BarChart.jsx"
+    "platform/charts/BarChart.tsx"
    ],
    "dependsOn": [
     "chart-parts"
@@ -6265,7 +6265,7 @@
    "wave": 9,
    "lane": "B",
    "files": [
-    "platform/charts/ComboChart.jsx"
+    "platform/charts/ComboChart.tsx"
    ],
    "dependsOn": [
     "BarChart"
@@ -6528,7 +6528,7 @@
    "wave": 9,
    "lane": "C",
    "files": [
-    "platform/charts/ScatterChart.jsx"
+    "platform/charts/ScatterChart.tsx"
    ],
    "dependsOn": [
     "chart-parts"
@@ -15120,7 +15120,7 @@
    "target": "BarChart",
    "targetKind": "component",
    "files": [
-    "platform/charts/BarChart.jsx"
+    "platform/charts/BarChart.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09B.records.js",
@@ -15153,7 +15153,7 @@
    "target": "BarChart",
    "targetKind": "component",
    "files": [
-    "platform/charts/BarChart.jsx"
+    "platform/charts/BarChart.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09B.records.js",
@@ -15180,7 +15180,7 @@
    "target": "BarChart",
    "targetKind": "component",
    "files": [
-    "platform/charts/BarChart.jsx"
+    "platform/charts/BarChart.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09B.records.js",
@@ -15263,7 +15263,7 @@
    "target": "ScatterChart",
    "targetKind": "component",
    "files": [
-    "platform/charts/ScatterChart.jsx"
+    "platform/charts/ScatterChart.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09C.records.js",
@@ -15293,7 +15293,7 @@
    "target": "ScatterChart",
    "targetKind": "component",
    "files": [
-    "platform/charts/ScatterChart.jsx"
+    "platform/charts/ScatterChart.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09C.records.js",
@@ -15348,7 +15348,7 @@
    "target": "BarChart",
    "targetKind": "component",
    "files": [
-    "platform/charts/BarChart.jsx"
+    "platform/charts/BarChart.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09B.records.js",
@@ -15492,7 +15492,7 @@
    "target": "WaterfallChart",
    "targetKind": "component",
    "files": [
-    "platform/charts/WaterfallChart.jsx"
+    "platform/charts/WaterfallChart.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09A.records.js",
@@ -15671,7 +15671,7 @@
    "target": "ComboChart",
    "targetKind": "component",
    "files": [
-    "platform/charts/ComboChart.jsx"
+    "platform/charts/ComboChart.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09B.records.js",

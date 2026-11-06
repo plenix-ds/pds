@@ -16,7 +16,7 @@ DSParts.records.push(function (H) {
       h(P.Anchor, { scrollRef: area, label: 'On this page', items: [{ id: parts[0][0], label: parts[0][1] }, { id: parts[1][0], label: parts[1][1], children: [{ id: parts[2][0], label: parts[2][1] }] }, { id: parts[3][0], label: parts[3][1] }] }),
       h('div', { className: 'ds-w05c-window' }, h('div', { ref: area, className: 'ds-w05c-scroll', tabIndex: 0, role: 'region', 'aria-label': 'A long guide (scroll it)' }, body)));
   };
-  /* T(main, r): a thin record for r.leaf on main's code. r.examples are this leaf's own examples (required unless r.guide
+  /* T(main, r): a thin record for r.leaf on main's code (the Implementation topics are guidance, not UI, so they do not show main's behavior and accessibility rows). r.examples are this leaf's own examples (required unless r.guide
      or r.wire); r.base stands in for a main record that a later part lists (its plenix, src, css, level, interaction) */
   var T = function (main, r) {
     var M = H.record(main) || r.base;
@@ -26,7 +26,7 @@ DSParts.records.push(function (H) {
       : INTERACTIVE.indexOf(M.interaction) >= 0 ? { statesFrom: [main] } : {};
     var out = Object.assign({ id: r.sec + '-' + slug(r.leaf), title: r.leaf, plenix: M.plenix, src: M.src, also: M.also, css: M.css, blocks: M.blocks,
       level: M.level, interaction: M.interaction, icon: M.icon || H.iconOf(main), variantClasses: [],
-      related: [main].concat((M.related || []).filter(function (x) { return x !== main; }).slice(0, 2)), docsFrom: main }, states, r);
+      related: [main].concat((M.related || []).filter(function (x) { return x !== main; }).slice(0, 2)), docsFrom: r.sec === 'implementation' ? undefined : main }, states, r);
     delete out.base;
     return out;
   };
@@ -782,7 +782,7 @@ DSParts.records.push(function (H) {
 
     /* ── 10 Patterns ── */
     T('bulk-selection', { sec: 'patterns', sub: 'Selection and organization', leaf: 'Multi-selection',
-      text: 'Multi-selection lets people pick several items and act on them together: the checkboxes of a selectable DataGrid or the selection boxes of MediaCards, with BulkActions above the results showing how many are selected and what can be done.',
+      text: 'Multi-selection lets people pick several items and act on them together: the checkboxes of a selectable DataGrid or the selection boxes of MediaCards, with the selection’s commands in the command bar (or in the Bulk action bar on a page without one), showing how many are selected and what can be done.',
       use: ['Lists and grids whose items are moved, tagged or deleted in groups'], avoid: ['Selection that disappears when the person scrolls or changes a filter without saying so'],
       examples: [exOf('bulk-selection', 'Select rows')] }),
     T('bulk-selection', { sec: 'patterns', sub: 'Selection and organization', leaf: 'Select all', purpose: 'Selects every record in the list, including those on other pages, in one step.',
@@ -919,7 +919,7 @@ DSParts.records.push(function (H) {
       examples: [['A primary button in HTML', function () { return box(560, h(P.Stack, { gap: 'sm' }, h(P.CodeBlock, null, '<button type="button" class="plx-button plx-button--primary">\n  <span class="plx-button__label">Save</span>\n</button>'), h(P.Button, { variant: 'primary' }, 'Save'))); }]] }),
     T('testing', { sec: 'implementation', sub: 'Governance', leaf: 'Code review',
       anatomy: ['Build — node build-app.js (required)', 'System and style lint — node check-system.js, node check-style.js and npm run lint:css (required)', 'Spec check — node check-spec.js (required)', 'Tests — npm test (required)'],
-      text: 'Every change passes the same review: node build-app.js builds; node check-system.js, node check-style.js, npm run lint:css and node check-spec.js pass; npm test runs the visual snapshot, every page and the accessibility scan (known issues may only go down); the changelog has its entry; and the work is logged as a batch.',
+      text: 'Every change passes the same review: node build-app.js builds; node check-system.js, node check-style.js, npm run lint:css and node check-spec.js pass; npm test runs the visual snapshot, every page and the accessibility scan (known issues may only go down); and the change has its changelog fragment in changelog.d/.',
       use: ['The review checklist of CONTRIBUTING.md on every pull request'], avoid: ['Merging with a failing check', 'Updating a visual baseline that was not meant to change'],
       examples: [['The checks', function () { return box(560, h(P.CodeBlock, null, 'node build-app.js\nnode check-system.js   # SYSTEM_OK\nnode check-style.js    # STYLE_OK\nnpm run lint:css       # no errors\nnode check-spec.js     # SPEC_OK\nnpm test')); }]] }),
     T('testing', { sec: 'implementation', sub: 'Governance', leaf: 'Design review', purpose: 'The owner approves every visible change before it is released, so the look stays as decided.',
@@ -947,13 +947,13 @@ DSParts.records.push(function (H) {
       examples: [['Install and import', function () { return box(560, h(P.CodeBlock, null, "npm install @plenix-ds/react @plenix-ds/styles\n\nimport '@plenix-ds/styles/plenix.css';\nimport { AppShell, Button, Table } from '@plenix-ds/react';")); }]] }),
     T('contribution-model', { sec: 'implementation', sub: 'Governance', leaf: 'Release process',
       purpose: 'How a Plenix version is made: one version for the packages, the CDN folder and the API, approved by the owner, released by tag, with every change listed in the changelog.',
-      text: 'A release writes its entries under Unreleased in CHANGELOG.md as the work is done. It then picks the version from VERSIONING.md, sets it in package.json, publishes the CDN folder and API with deploy.sh, and tags it. The Release workflow checks the tag, builds, runs the checks and publishes the packages.',
+      text: 'Each change writes a fragment in changelog.d/ as the work is done, and the release collects them into CHANGELOG.md. It then picks the version from VERSIONING.md, sets it in package.json, publishes the CDN folder and API with deploy.sh, and tags it. The Release workflow checks the tag, builds, runs the checks and publishes the packages.',
       use: ['The steps of VERSIONING.md › Releasing, in order'], avoid: ['Overwriting a published version'],
       examples: [['The steps', function () { return box(560, h(P.List, { ordered: true, label: 'Release steps', items: [{ children: 'Changelog entries under Unreleased' }, { children: 'The version from the table; set it in package.json' }, { children: 'bash deploy.sh publishes /cdn/<version>/ and refreshes the API' }, { children: 'Commit, tag v<version> and push: the Release workflow publishes the packages' }] })); }]] }),
     T('contribution-model', { sec: 'implementation', sub: 'Governance', leaf: 'Design-system roadmap',
       purpose: 'Shows what the design system will build next and in what order, so teams know what is coming and what to ask for.',
-      text: 'The roadmap is TODO.md in the Plenix repository: the owner’s open items, newest first, each with the date it was added and what done means. The complete library (every inventory leaf built and published) is the current program.',
-      use: ['TODO.md to see what is planned and what done means'], avoid: ['Work the owner has not approved; being on the roadmap is not approval.'],
+      text: 'The roadmap is the open issues of the plenix-ds/pds repository and the delivery plan (docs/pds1/plan.md): the owner’s requests, each with what done means. The complete library (every inventory leaf built and published) is the current program.',
+      use: ['The open issues and the plan, to see what is planned and what done means'], avoid: ['Work the owner has not approved; being on the roadmap is not approval.'],
       examples: [['Open items', function () { return box(null, table('Roadmap', [['Item', 'i'], ['Added', 'd', 'data']], [
         { i: 'Settings in cards, matching the design system', d: '2026-10-12' }, { i: 'Themes authored in Figma (a future release)', d: '2026-10-12' }, { i: 'The complete library: every inventory leaf built and published', d: '2026-10-11' }, { i: 'Native designs and the Plenix Platforms Standard on the web', d: '2026-10-11' }])); }]] })
   ];

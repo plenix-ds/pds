@@ -2812,6 +2812,66 @@
      "maxWidth": "تحتاج اللوحة الأخرى إلى {n} بكسل على الأقل"
     }
    }
+  },
+  {
+   "source": "Owner, chat, 2026-11-06 ~17:0x UTC, final answer recorded by PDS1-Product-Lead on #476: \"Use b Microsoft's standard.\" All 19 rows of docs/pds1/slices/476-arabic-datagrid/proposal.md approved, row 18 (dataGrid.fillRight) = B, تعبئة لليمين. https://github.com/plenix-ds/pds/issues/476#issuecomment (16:48:21Z). An earlier B (16:45Z) was withdrawn at 16:46Z and replaced by this one.",
+   "date": "2026-11-06",
+   "strings": {
+    "dataGrid": {
+     "editMode": "التعديل",
+     "editModeInline": "تعديل مضمّن",
+     "editModeForm": "تعديل في نموذج",
+     "editing": "جارٍ تعديل {column}",
+     "formTitle": "تعديل {name}",
+     "emptyValue": "—",
+     "saved": "تم الحفظ",
+     "formSaved": "تم حفظ {name}",
+     "saveRefused": "تعذّر الحفظ. تمت استعادة القيمة السابقة.",
+     "formSaveRefused": "تعذّر حفظ {name}. تحقق من القيم وحاول مرة أخرى.",
+     "undone": "تم التراجع عن التعديل",
+     "redone": "تمت إعادة التعديل",
+     "cellsPasted": {
+      "zero": "لم تُلصق خلايا",
+      "one": "لُصقت خلية واحدة",
+      "two": "لُصقت خليتان",
+      "few": "لُصقت {n} خلايا",
+      "many": "لُصقت {n} خلية",
+      "other": "لُصقت {n} خلية"
+     },
+     "cellsSkipped": {
+      "zero": "لم يتم تخطّي أي خلية",
+      "one": "تم تخطّي خلية واحدة",
+      "two": "تم تخطّي خليتين",
+      "few": "تم تخطّي {n} خلايا",
+      "many": "تم تخطّي {n} خلية",
+      "other": "تم تخطّي {n} خلية"
+     },
+     "cellsRefused": {
+      "zero": "لا توجد خلايا تعذّر حفظها",
+      "one": "تعذّر حفظ خلية واحدة",
+      "two": "تعذّر حفظ خليتين",
+      "few": "تعذّر حفظ {n} خلايا",
+      "many": "تعذّر حفظ {n} خلية",
+      "other": "تعذّر حفظ {n} خلية"
+     },
+     "fillMenu": "تعبئة",
+     "fillDown": "تعبئة لأسفل",
+     "fillRight": "تعبئة لليمين",
+     "cellsFilled": {
+      "zero": "لم تتم تعبئة أي خلية",
+      "one": "تمت تعبئة خلية واحدة",
+      "two": "تمت تعبئة خليتين",
+      "few": "تمت تعبئة {n} خلايا",
+      "many": "تمت تعبئة {n} خلية",
+      "other": "تمت تعبئة {n} خلية"
+     }
+    },
+    "viewMenu": {
+     "editMode": "التعديل",
+     "editModeInline": "تعديل مضمّن",
+     "editModeForm": "تعديل في نموذج"
+    }
+   }
   }
  ]
 }

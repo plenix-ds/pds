@@ -93,93 +93,97 @@ DSParts.docs.push({
     }
   },
   "listing-page": {
-    "purpose": "Provides a reusable implementation using existing Platform roles and controls.",
+    "purpose": "Lets people scan, sort and act on many records of one kind: a title row with the page's actions, an optional command bar, and a DataGrid that fills the room left and scrolls inside.",
     "anatomy": [
-      "Header — the page purpose or implementation contract",
-      "Content — live composition or source example",
-      "Application handlers — data, navigation and persistence stay with the application"
+      "Title row — the page title, its description and its actions (optional)",
+      "Toolbar — a CommandBar above the grid (optional, `toolbar`)",
+      "Grid — a DataGrid named by `label` (default: the title), filling the room left, with virtual rows (required)",
+      "Detail — the chosen record in a SidePanel beside the list, titled by `detailTitle` (optional, `detail`)",
+      "Empty state — shown when there are no rows, or your own (`empty`)"
     ],
     "behavior": {
-      "pointer": "Existing controls preserve their own activation contract.",
-      "keyboard": "Tab follows the controls; Enter activates an action or link.",
-      "focus": "Controls retain existing focus behavior; route changes are owned by the application.",
-      "responsive": "Shell and SecondaryPane use the existing responsive layout standard.",
-      "motion": "No new motion.",
-      "loading": "Applications supply pending state to their controls.",
-      "error": "Forms preserve values after a rejected save; error pages explain the recovery action."
+      "pointer": "A click on a row runs the grid's `onRowClick`; with `detail` the chosen record opens in the side panel, and closing the panel runs `onDetailClose`.",
+      "keyboard": "Tab enters the grid and the panel; each keeps its own keys (the grid's arrow keys, the panel's Escape).",
+      "focus": "The grid and the panel keep their own focus behavior; the template moves no focus.",
+      "responsive": "The grid fills the room left below the toolbar and scrolls inside, with no page controls unless `grid.mode` asks for them. The panel opens over the main region under 1024px.",
+      "motion": "None of its own.",
+      "loading": "The application supplies the rows and any pending state; with no rows the empty state shows.",
+      "error": "The template never fetches: the application shows a failed load."
     },
     "a11y": {
-      "name": "Give every landmark, control and field a meaningful name.",
-      "announce": "Save and event feedback uses polite status text.",
-      "focus": "No automatic focus theft in embedded examples.",
+      "name": "The page has one h1, its title; the grid is named by its label.",
+      "announce": "The grid announces its rows, columns and sort; the panel is a named region.",
+      "focus": "The grid is one Tab stop; the side panel follows it.",
       "contrast": "Existing text and surface roles only.",
-      "motion": "No additional motion."
+      "motion": "Nothing to reduce."
     },
     "content": {
-      "labels": "Use task-specific American English and sentence case.",
-      "actions": "Use verbs for commands and real hrefs for navigation.",
-      "errors": "Describe the recovery action without exposing personal data.",
-      "localization": "Pass strings and localized application content."
+      "labels": "Title the page with the records it lists (\"Assets\"); name the grid the same way.",
+      "actions": "Header actions are verbs (New asset); a row opens its record.",
+      "errors": "Not applicable: the page has no error text of its own.",
+      "localization": "The words (the empty state, the panel title) come from `strings` and can be replaced."
     }
   },
   "content-template": {
-    "purpose": "Provides a reusable implementation using existing Platform roles and controls.",
+    "purpose": "Shows items people recognize by a picture or a title as cards in a grid, under a title row, so they can pick one to open.",
     "anatomy": [
-      "Header — the page purpose or implementation contract",
-      "Content — live composition or source example",
-      "Application handlers — data, navigation and persistence stay with the application"
+      "Title row — the page title, its description and its actions (optional)",
+      "Filter row — whatever the application puts above the cards as `children` (optional)",
+      "Cards — FeatureCards in a ContentGrid, each opening a link or `onOpen` (required)",
+      "Empty state — shown when there are no items, or your own (`empty`)"
     ],
     "behavior": {
-      "pointer": "Existing controls preserve their own activation contract.",
-      "keyboard": "Tab follows the controls; Enter activates an action or link.",
-      "focus": "Controls retain existing focus behavior; route changes are owned by the application.",
-      "responsive": "Shell and SecondaryPane use the existing responsive layout standard.",
-      "motion": "No new motion.",
-      "loading": "Applications supply pending state to their controls.",
-      "error": "Forms preserve values after a rejected save; error pages explain the recovery action."
+      "pointer": "A card is one target: it follows its `href` or runs `onOpen`.",
+      "keyboard": "Tab moves from card to card; Enter follows a link or runs the action.",
+      "focus": "Each card shows the focus ring of its own component.",
+      "responsive": "The grid follows the content grid: it fits as many cards as the main region allows.",
+      "motion": "None of its own.",
+      "loading": "The application supplies the items and any pending state.",
+      "error": "The template never fetches: the application shows a failed load."
     },
     "a11y": {
-      "name": "Give every landmark, control and field a meaningful name.",
-      "announce": "Save and event feedback uses polite status text.",
-      "focus": "No automatic focus theft in embedded examples.",
+      "name": "The page has one h1, its title; each card is named by its title.",
+      "announce": "A card is announced as a link or a button with its title and description.",
+      "focus": "Cards are Tab stops in reading order.",
       "contrast": "Existing text and surface roles only.",
-      "motion": "No additional motion."
+      "motion": "Nothing to reduce."
     },
     "content": {
-      "labels": "Use task-specific American English and sentence case.",
-      "actions": "Use verbs for commands and real hrefs for navigation.",
-      "errors": "Describe the recovery action without exposing personal data.",
-      "localization": "Pass strings and localized application content."
+      "labels": "A card's title names the item; its line says what it is or does.",
+      "actions": "Cards open items; the page's actions are verbs in the title row.",
+      "errors": "Not applicable: the page has no error text of its own.",
+      "localization": "The words come from `strings`; the grid uses logical properties and mirrors in right-to-left."
     }
   },
   "master-detail-workspace": {
-    "purpose": "Provides a reusable implementation using existing Platform roles and controls.",
+    "purpose": "Shows a list and the selected item's details side by side, so people can move through the records of one list without leaving the page.",
     "anatomy": [
-      "Header — the page purpose or implementation contract",
-      "Content — live composition or source example",
-      "Application handlers — data, navigation and persistence stay with the application"
+      "Pane — the list, in a SecondaryPane titled by `paneTitle` (required)",
+      "Detail — the selected item's content in the main region (required)",
+      "Back — on a phone the details open on their own screen, with Back to the list",
+      "Shell — the header, the navigation pane and the footer around it (AppShell, page kind master-detail)"
     ],
     "behavior": {
-      "pointer": "Existing controls preserve their own activation contract.",
-      "keyboard": "Tab follows the controls; Enter activates an action or link.",
-      "focus": "Controls retain existing focus behavior; route changes are owned by the application.",
-      "responsive": "Shell and SecondaryPane use the existing responsive layout standard.",
-      "motion": "No new motion.",
-      "loading": "Applications supply pending state to their controls.",
-      "error": "Forms preserve values after a rejected save; error pages explain the recovery action."
+      "pointer": "Choosing an item in the pane fills the detail; on a phone it opens the detail on its own screen, and Back (`onBack`) returns to the list.",
+      "keyboard": "Tab moves from the pane to the detail; the pane's list keeps its own keys.",
+      "focus": "The pane and the detail keep their own focus behavior; the template moves no focus.",
+      "responsive": "Side by side on wide windows; on a phone one screen at a time, switched by `detailOpen`.",
+      "motion": "None of its own.",
+      "loading": "The application supplies the list and the detail and any pending state.",
+      "error": "The template never fetches: the application shows a failed load."
     },
     "a11y": {
-      "name": "Give every landmark, control and field a meaningful name.",
-      "announce": "Save and event feedback uses polite status text.",
-      "focus": "No automatic focus theft in embedded examples.",
+      "name": "The pane is a named region (its title); the page has one h1.",
+      "announce": "The selected item and its detail are announced by their own components.",
+      "focus": "Back is a button at the top of the detail screen on a phone.",
       "contrast": "Existing text and surface roles only.",
-      "motion": "No additional motion."
+      "motion": "Nothing to reduce."
     },
     "content": {
-      "labels": "Use task-specific American English and sentence case.",
-      "actions": "Use verbs for commands and real hrefs for navigation.",
-      "errors": "Describe the recovery action without exposing personal data.",
-      "localization": "Pass strings and localized application content."
+      "labels": "The pane title names the list (\"Assets\"); the detail names the item.",
+      "actions": "Back says Back; item actions are verbs.",
+      "errors": "Not applicable: the page has no error text of its own.",
+      "localization": "The words come from `strings`; the layout mirrors in right-to-left."
     }
   }
 });
