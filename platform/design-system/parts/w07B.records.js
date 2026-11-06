@@ -166,7 +166,7 @@ DSParts.records.push(function (H) {
     return frame('popup', box(240, h(P.Field, { label: props.label || 'Start time', description: props.description, error: props.error }, h(P.TimePicker, Object.assign({ value: s[0], onChange: s[1] }, props.t)))));
   };
   var timePicker = { id: 'time-picker', lab: true, icon: 'clock', sec: 'forms', sub: 'Date, time, and color', leaf: 'Time picker', title: 'Time picker',
-    plenix: 'TimePicker', src: 'components/TimePicker/TimePicker.jsx', level: 'Component', interaction: 'Input',
+    plenix: 'TimePicker', src: 'components/TimePicker/TimePicker.tsx', level: 'Component', interaction: 'Input',
     aliases: ['Time field', 'Time input', 'Time selector', 'Clock picker'],
     text: 'A time of day, typed or chosen, on the reader’s clock (12 or 24 hours) and in the data font. The list form is a field people type in (“2pm”, “14:30”, “1430”), with the times at each step (15 minutes by default) in a list under it; the segments form has a spin button for the hour, the minute and the period. The value is always “HH:MM” on a 24-hour clock, whatever the reader sees; min and max keep it inside the hours that are allowed.',
     use: ['Meeting times, schedules and deadlines', 'A step that matches the task: 15 or 30 minutes for meetings, 1 minute where exact times matter', 'The time zone in the description when people in several zones use the data'],

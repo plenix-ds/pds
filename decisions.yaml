@@ -560,3 +560,13 @@
   options: [optional defaultValue (chosen, A), a controlled FormFlow with value and onChange (B)]
   status: active
   check: G3 review of the #465 PR and its behavior check (close the panel, keep editing, the same values in the drawer)
+
+- id: D-0065
+  date: 2026-11-06
+  area: api
+  decided_by: agent (pds1-ds-architect), owner may switch
+  decision: 'Combobox gains an opt-in chipOverflow (''wrap'' default, today; ''count'': the chosen chips on one line, the rest as one "+N" Tag at inline-end, named "{count} more"); DataGrid''s tags editor sets ''count'', and the grid''s tags read cell folds the same way through the same internal fit step (no public API) (docs/adr/0016 addendum, #477).'
+  why: 'The tags editor is Combobox multiple and the design wants "+N" in the cell; making it the default would change every multiple Combobox outside the grid.'
+  options: [opt-in chipOverflow on Combobox (chosen, A), "+N" always on for multiple (B), a separate TagInput for the grid (C)]
+  status: active
+  check: G3 review of the #477 item 1 PR and its behavior checks (one line, "+N" count and name, Backspace, RTL, default unchanged)

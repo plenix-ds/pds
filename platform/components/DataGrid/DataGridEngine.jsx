@@ -227,6 +227,11 @@ function NextEngine(rawProps) {
   });
   const incoming = remoteMode ? remote?.rows || EMPTY_ROWS : data;
   const { setEdited, editing, setEditing, cellStatus, setCellStatus, mutations, pendingEdit, source } = useEditedRows(incoming);
+  // what was typed in the editing cell, kept while its row is out of the virtual window and cleared when the edit ends
+  const draftStore = React.useRef(null);
+  React.useEffect(() => {
+    if (!editing) draftStore.current = null;
+  }, [editing]);
   const canonical = React.useMemo(() => recordsOf(source, index, childField), [source, index, childField]);
   // TanStack tries a global filter against columns; the public predicate describes a record, so evaluate it once.
   const unreadKey = React.useCallback((record) => record[index], [index]);
@@ -916,6 +921,7 @@ function NextEngine(rawProps) {
     showTypes,
     setEditing: beginEdit,
     formMode: editMode === 'form' && canChoose,
+    draftStore,
     frame,
     pinnedAt,
     groupBy,

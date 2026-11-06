@@ -19,6 +19,7 @@ import { byteFilter, listFilter, textFilter } from '../cells.jsx';
 import { compare, kinds } from './helpers.jsx';
 import { tokenPixels } from '../environment.js';
 import { SIZE_STEPS } from '../../../utils/sizeSteps.js';
+import { parseDate } from '../../../utils/format.ts';
 import { shareOf } from '../../../utils/paneLimit.ts';
 import {
   useReactTable,
@@ -30,6 +31,12 @@ import {
   getPaginationRowModel,
 } from '@tanstack/react-table';
 import { isRtl } from '../../../utils/direction.ts';
+
+// dates in time order, whatever form they come in (a Date, a timestamp, a bare "YYYY-MM-DD" as its local midnight); no date sorts last (issue 161)
+const dateOrder = (a, b) => {
+  const x = parseDate(a)?.getTime(), y = parseDate(b)?.getTime();
+  return x === y ? 0 : x === undefined ? 1 : y === undefined ? -1 : x - y;
+};
 
 export function useTableModel({
   columns,
@@ -90,7 +97,9 @@ export function useTableModel({
                 )
             : c.sorter === 'number' || c.type === 'bytes'
               ? 'basic'
-              : compare,
+              : c.type === 'date' || c.sorter === 'date'
+                ? (a, b, id) => dateOrder(a.getValue(id), b.getValue(id))
+                : compare,
         size: kinds(c).includes('icon')
           ? metrics.lead
           : Math.max(
