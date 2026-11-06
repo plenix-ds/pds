@@ -1,4 +1,4 @@
-/* Plenix tests · #34: the DataGrid's column menu panel loads on first use (engine/chromeRare.jsx) and the header trigger starts the load on
+/* Plenix tests · #34: the DataGrid's column menu and view menu panels load on first use (engine/chromeRare.jsx) and the header trigger starts the load on
    hover, focus and touch, so the first open, after a hover, shows its items with no busy row; opening by keyboard works; the items still do
    what they did (sort, filter, group, wrap).   Usage: node tests/data-grid-column-menu-lazy-34.test.js   -> DATA_GRID_COLUMN_MENU_LAZY_34_OK */
 const assert = require('assert/strict'), { serve, launch } = require('./lib');
@@ -16,7 +16,7 @@ const assert = require('assert/strict'), { serve, launch } = require('./lib');
       const h = React.createElement;
       document.querySelector('main').innerHTML = '<div id="v" style="height:400px"></div>';
       const data = [{ id: 1, name: 'Alpha', n: 3 }, { id: 2, name: 'Bravo', n: 1 }, { id: 3, name: 'Charlie', n: 2 }];
-      ReactDOM.createRoot(document.getElementById('v')).render(h(Plenix.DataGrid, { label: 'People', data, headerMenu: true, rowKey: 'id', groupable: true,
+      ReactDOM.createRoot(document.getElementById('v')).render(h(Plenix.DataGrid, { label: 'People', data, headerMenu: true, viewMenu: true, rowKey: 'id', groupable: true,
         columns: [{ field: 'name', title: 'Name' }, { field: 'n', title: 'Count', type: 'number' }] }));
     });
     await sleep(900);
@@ -32,6 +32,15 @@ const assert = require('assert/strict'), { serve, launch } = require('./lib');
     await page.keyboard.press('Escape'); await sleep(300);
     await page.focus(chevron); await page.keyboard.press('Enter'); await sleep(400);
     assert.ok((await items()).length >= 4, 'opening by keyboard shows the items');
+    await page.keyboard.press('Escape'); await sleep(200);
+    const view = '[aria-label="View"], .plx-data-grid__w-view button, .plx-data-grid__w-view [role=button]';
+    assert.ok(await page.$(view), 'the view menu button is drawn');
+    await page.hover(view); await sleep(300); await page.click(view); await sleep(300);
+    const v1 = await items();
+    assert.ok(v1.length >= 4, 'the view menu, opened after a hover, shows its row heights and wrap: ' + v1); assert.equal(await busy(), 0, 'no busy row in the view menu');
+    await page.keyboard.press('Escape'); await sleep(300);
+    await page.focus(view); await page.keyboard.press('Enter'); await sleep(400);
+    assert.ok((await items()).length >= 4, 'opening the view menu by keyboard shows its items');
     await page.keyboard.press('Escape'); await sleep(200);
     assert.deepEqual(problems.filter((p) => !/Failed to load resource|net::/.test(p)), [], 'no errors or warnings');
     console.log('DATA_GRID_COLUMN_MENU_LAZY_34_OK');

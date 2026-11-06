@@ -13,7 +13,7 @@
 */
 import React from 'react';
 import { ManageColumnsDialog } from '../../../patterns/ColumnsMenu/ColumnsMenu.jsx';
-import { MenuDivider, MenuItem } from '../../Menu/Menu.tsx';
+import { MenuDivider, MenuItem, MenuRadioGroup } from '../../Menu/Menu.tsx';
 import { typeOf } from './helpers.jsx';
 import SortAscendingIcon from 'plenix-platform/icons/plenix/sort-ascending';
 import SortDescendingIcon from 'plenix-platform/icons/plenix/sort-descending';
@@ -100,6 +100,56 @@ export function columnMenuItems({ column, columnMenu, S, menuItems, api, props, 
       >
         {S.wrapText}
       </MenuItem>
+    </>
+  );
+}
+
+// the items of the grid's view menu (row height, wrap headers, and the Editing choice when the grid offers two modes): loaded the first time the menu
+// opens, started by the view button on hover, focus and touch (rare.jsx preloadRare)
+export function viewMenuItems({ props, S, effectiveStep, setRowHeight, effectiveWrap, setWrapHeaders, editMenu }) {
+  return (
+    <>
+        {['short', 'medium', 'tall', 'extra-tall'].map((step) => (
+          <MenuItem
+            key={step}
+            checked={effectiveStep === step}
+            onSelect={() => {
+              setRowHeight(step);
+              props.onViewChange?.({ rowHeight: step });
+            }}
+          >
+            {S[step]}
+          </MenuItem>
+        ))}
+        <MenuDivider />
+        <MenuItem
+          checked={effectiveWrap}
+          onSelect={() => {
+            setWrapHeaders(!effectiveWrap);
+            props.onViewChange?.({ wrapHeaders: !effectiveWrap });
+          }}
+        >
+          {S.wrapHeaders}
+        </MenuItem>
+        {editMenu?.show ? (
+          <>
+            <MenuDivider />
+            <MenuRadioGroup
+              label={S.editMode}
+              value={editMenu.mode}
+              onChange={(mode) => {
+                editMenu.set(mode);
+                props.onViewChange?.({ editMode: mode });
+              }}
+            >
+              {editMenu.modes.map((mode) => (
+                <MenuItem key={mode} value={mode}>
+                  {mode === 'form' ? S.editModeForm : S.editModeInline}
+                </MenuItem>
+              ))}
+            </MenuRadioGroup>
+          </>
+        ) : null}
     </>
   );
 }
