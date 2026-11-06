@@ -1501,5 +1501,37 @@
   "help-panel--variant-in-the-inspector": {
     "sets": [],
     "why": "markup only: draws the panel in the inspector SidePanel, which owns placement and scrolling"
+  },
+  "floating-action-button--placement-corner-default": {
+    "sets": [
+      {
+        "property": "inset-block-end",
+        "part": "block",
+        "token": "--plx-comp-floating-action-button-inset"
+      },
+      {
+        "property": "inset-inline-end",
+        "part": "block",
+        "token": "--plx-comp-floating-action-button-inset"
+      },
+      {
+        "property": "z-index",
+        "part": "block",
+        "token": "--plx-comp-floating-action-button-z-index"
+      }
+    ],
+    "why": ".plx-floating-action-button--corner in floating-action-button.css: fixed at the corner of the window"
+  },
+  "floating-action-button--placement-inline": {
+    "sets": [],
+    "why": "markup only: stays in the flow where it is written; it has no fixed position"
+  },
+  "heading--variants-collapsible": {
+    "sets": [],
+    "why": "markup only: renders a button that shows or hides the section body (collapsible, expanded, onToggle, controls)"
+  },
+  "heading--variants-plain": {
+    "sets": [],
+    "why": "markup only: a plain label with no heading level (level null)"
   }
 }
