@@ -9,7 +9,7 @@ The St. John test site really uses every part of Plenix, so the automatic tests 
 - Not required: data, plain functions and constants, the building hooks inside components, and a short list of names applications never draw (for example DataGridEngine and Portal).
 - Every screen named in the site's `pages.js` has a screen file, and every screen file has a route.
 - No screen file is an unfinished stub.
-- `--list` prints every required name and the screens that use it.
+- `--list` prints every required name and the screens that use it; the printed map is kept in `docs/tests/site-coverage-map.md`.
 
 ## Why it exists
 - Owner, 2026-10-25: "a dummy site that utilizes all the defined pages, controls, components", quoted in the file header.
