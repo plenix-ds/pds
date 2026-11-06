@@ -23,7 +23,7 @@ import { gridStep, snapToGrid, gridPx } from '../../../utils/grid.ts';
 import { tokenPixels } from '../environment.ts';
 import { kinds, typeOf } from './helpers.tsx';
 import { valueAt } from '../state.ts';
-import { valueText } from '../cells.jsx';
+import { valueText } from '../cells.tsx';
 
 export function useGridMetrics({
   frame,
