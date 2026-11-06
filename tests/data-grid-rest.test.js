@@ -5,7 +5,7 @@ const fs = require('fs'),
 module.exports = async function rest(page) {
   const build = await require('esbuild').build({
     stdin: {
-      contents: (process.env.DT_ENGINE==='next'?"import React from 'react';import {DataGrid as Base} from './platform/components/DataGrid/DataGrid.jsx';export const DataGrid=Object.assign(props=>React.createElement(Base,{...props,engine:'next'}),{useActions:Base.useActions});":"export {DataGrid} from './platform/components/DataGrid/DataGrid.jsx';")+"export {ToastProvider} from './platform/components/Toast/Toast.tsx';export {CommandBar} from './platform/patterns/CommandBar/CommandBar.jsx';export {Button} from './platform/components/Button/Button.tsx';",
+      contents: (process.env.DT_ENGINE==='next'?"import React from 'react';import {DataGrid as Base} from './platform/components/DataGrid/DataGrid.tsx';export const DataGrid=Object.assign(props=>React.createElement(Base,{...props,engine:'next'}),{useActions:Base.useActions});":"export {DataGrid} from './platform/components/DataGrid/DataGrid.tsx';")+"export {ToastProvider} from './platform/components/Toast/Toast.tsx';export {CommandBar} from './platform/patterns/CommandBar/CommandBar.jsx';export {Button} from './platform/components/Button/Button.tsx';",
       resolveDir: ROOT
     },
     bundle: true,

@@ -18,7 +18,7 @@ import { Dialog } from '../../components/Dialog/Dialog.tsx';
 import { Stack } from '../../components/Stack/Stack.tsx';
 import { Field } from '../../components/Field/Field.tsx';
 import { Select } from '../../components/Input/Input.tsx';
-import { DataGrid } from '../../components/DataGrid/DataGrid.jsx';
+import { DataGrid } from '../../components/DataGrid/DataGrid.tsx';
 import { Badge } from '../../components/Badge/Badge.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Text } from '../../components/Text/Text.tsx';

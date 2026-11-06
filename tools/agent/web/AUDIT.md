@@ -4,7 +4,7 @@
    - PanelSplitter (platform/patterns/AppShell/AppShell.tsx:154-178; used by NavPane, SidePanel, SecondaryPane) has
      arrows, Home/End and Enter, plus a collapse button. There is no click way to change the width.
    - WidgetGrid (platform/patterns/WidgetGrid/WidgetGrid.jsx:59-65) handle takes arrows only.
-   - DataGrid row move, wireRows (DataGrid.jsx:380-401), is native drag only (used in dam BrowseDialogs.jsx:204, 243).
+   - DataGrid row move, wireRows (DataGrid.tsx:380-401), is native drag only (used in dam BrowseDialogs.jsx:204, 243).
    - Column move is drag only. The resize grip is aria-hidden and pointer only; the header menu has "Fit to content".
    - OK: the upload dialogs (Browse button), Slider (a native range), and the image editor (buttons).
 2. Unsaved-changes guard, MISSING: no hook and no beforeunload anywhere. These need it:
@@ -29,7 +29,7 @@
    for Narrow.
 8. Error states, MISSING:
    - EmptyState has no error tone or recovery action;
-   - DataGrid shows plain role=alert text with no Retry (DataGrid.jsx:78, 352, 489);
+   - DataGrid shows plain role=alert text with no Retry (DataGrid.tsx:78, 352, 489);
    - the apps have no load-failure paths.
 9. Target floor, PARTLY. Touch and mobile make controls 44px (semantic.css:223-250), but there is no coarse-pointer
    audit. Unverified: the DataGrid resize grip, the WidgetGrid handle, and size="xs" icon buttons (SecondaryPane.jsx:72-73).
