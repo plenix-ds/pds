@@ -1,0 +1,7 @@
+- id: D-0001
+  date: 2026-11-06
+  area: release
+  decided_by: owner
+  decision: 'The owner''s rule, quoted the right way: {braces} and "quotes" are fine inside a quoted value.'
+  status: accepted
+  check: ["tools/ci/check-decisions.mjs", "CI {Decisions}"]

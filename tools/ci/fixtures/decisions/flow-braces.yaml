@@ -1,0 +1,6 @@
+- id: D-0001
+  date: 2026-11-06
+  decision: Braces inside a flow list.
+  status: accepted
+  check: [tools/ci/check-decisions.mjs, { kind: review }]
+  refs: [#1, {a: b} c]
