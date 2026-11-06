@@ -50,7 +50,7 @@ function reporterFindings(tool, script, okWord, failWord) {
 }
 
 // the published TypeScript types of @plenix-ds/react (ADR 0011, #61): build them (build-types.js), then one finding per prop
-// typed `any` and per exported component whose whole props object is `any`. index.d.ts and the tsc declarations it
+// typed `any`, per exported component whose whole props object is `any`, and per callback typed `(...args: never[])`. index.d.ts and the tsc declarations it
 // re-exports are read, so a part converted to TypeScript counts too. A finding names the part and the prop, never a line.
 function typesFindings() {
   const r = exec('node', ['build-types.js']);
@@ -74,6 +74,9 @@ function typesFindings() {
       const whole = /^export declare (?:function|const) ([\w$]+)\s*[:(]\s*(?:\{[^}]*\}|props|_props)\s*:\s*any\b/.exec(l)
         || (/^\s+var ([\w$]+): \((?:\{[^}]*\}|props)\s*:\s*any\)/.exec(l) && [null, owner + '.' + /^\s+var ([\w$]+)/.exec(l)[1]]);
       if (whole) out.push(['types', name, 'any-props-object', `${whole[1]}'s props are any`, i + 1]);
+      // a callback typed (...args: never[]) takes any function but gives an inline handler's parameters the type never (#812)
+      const never = /^\s+([\w$]+)\??: \(\.\.\.args: never\[\]\) =>/.exec(l);
+      if (never) out.push(['types', name, 'never-callback', `${owner}.${never[1]} takes (...args: never[]): type its parameters`, i + 1]);
     });
   }
   return out;
