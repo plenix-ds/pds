@@ -155,12 +155,14 @@ jobs:
         run: node tools/baseline/drift.mjs --out "$RUNNER_TEMP/drift"
 
       # #125 release check: a class this release removes must not be in use in a connected app's main (CTM auto-upgrades)
-      - name: Removed classes are unused in the connected apps (the live release is the base)
+      - name: Connected apps, removed classes unused (the live release is the base) and the plenix-release plan (#750)
         run: |
           node tools/publish/removed-in-apps.test.mjs
+          node tools/publish/notify-apps.test.mjs
           prev=$(curl -fsS "${CDN}latest.json" | node -p 'JSON.parse(require("fs").readFileSync(0)).latest')
           git fetch -q --depth=1 origin tag "v$prev"
           node tools/publish/removed-in-apps.mjs "v$prev"
+          node tools/publish/notify-apps.mjs "$prev" --dry-run   # the plenix-release step (D-0082), not sent here
 
       - name: Negative proof, the live latest version is refused as already published
         run: |
