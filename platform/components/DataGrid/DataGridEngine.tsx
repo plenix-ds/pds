@@ -70,7 +70,7 @@ const CARD_ALL = 100;
 // the cards drawn beyond each edge of the view in the long card list (issue 809)
 const CARD_OVERSCAN = 6;
 
-function NextEngine(rawProps) {
+function NextEngine(rawProps: any) {
   // the editing options (ADR 0016): a TableSettings above supplies defaults, the table's own win; rangeSelect is the cellSelection option by its other name
   const tableDefaults = useTableSettings().editing,
     editingOptions = tableDefaults ? { ...tableDefaults, ...rawProps.editing } : rawProps.editing,
@@ -117,19 +117,19 @@ function NextEngine(rawProps) {
   // 2026-10-19): a static Table draws the grid's parts and marks its root plx-data-grid--static and plx-table
   const B = GRID;
   const loc = useLocale();
-  const S = useStrings('dataGrid', props.strings),
+  const S: any = useStrings('dataGrid', props.strings),
     initial = React.useMemo(() => opening(props), [storageKey]);
-  const frame = React.useRef(null),
-    holder = React.useRef(null),
-    header = React.useRef(null),
-    live = React.useRef({}),
+  const frame = React.useRef<any>(null),
+    holder = React.useRef<any>(null),
+    header = React.useRef<any>(null),
+    live = React.useRef<any>({}),
     ready = React.useRef(false);
   const warnedActions = React.useRef(new Set()),
     viewportId = React.useId(),
     displayElements = React.useRef(new Map()),
-    parkedFocus = React.useRef(null),
-    printView = React.useRef(null);
-  const deliveredReady = React.useRef(null);
+    parkedFocus = React.useRef<any>(null),
+    printView = React.useRef<any>(null);
+  const deliveredReady = React.useRef<any>(null);
   const listeners = React.useRef(new Map()),
     rowElements = React.useRef(new Map()),
     headerElements = React.useRef(new Map());
@@ -139,15 +139,15 @@ function NextEngine(rawProps) {
     [wrapHeaders, setWrapHeaders] = React.useState(initial.wrapHeaders);
   // Wrap text, per column (owner, 2026-10-24): the column's wrap prop or kind "wrap" is the default; the column menu turns it on or off
   // the cut cell under the pointer or focus ("rowId|field") and its popover (owner, 2026-10-24: a popover with the full text)
-  const [cutAt, setCutAt] = React.useState(null),
+  const [cutAt, setCutAt] = React.useState<any>(null),
     cutOpen = React.useRef(false);
-  const [wrapColumns, setWrapColumns] = React.useState(() => props.wrapColumns || initial.wrapColumns || {});
-  const wrapOf = (c) => (props.wrapColumns || wrapColumns)[c.field] ?? (c.wrap === true || kinds(c).includes('wrap'));
-  const kindsOf = (c) => {
+  const [wrapColumns, setWrapColumns] = React.useState<any>(() => props.wrapColumns || (initial as any).wrapColumns || {});
+  const wrapOf = (c: any) => (props.wrapColumns || wrapColumns)[c.field] ?? (c.wrap === true || kinds(c).includes('wrap'));
+  const kindsOf = (c: any) => {
     const k = kinds(c).filter((x) => x !== 'wrap');
     return wrapOf(c) ? k.concat('wrap') : k;
   };
-  const changeWrap = (next) => {
+  const changeWrap = (next: any) => {
     setWrapColumns(next);
     props.onViewChange?.({ wrapColumns: next });
     props.onWrapColumnsChange?.(next);
@@ -157,7 +157,7 @@ function NextEngine(rawProps) {
       props.onViewChange?.({ rowHeight: 'medium' });
     }
   };
-  const [filterField, setFilterField] = React.useState(null),
+  const [filterField, setFilterField] = React.useState<any>(null),
     [managing, setManaging] = React.useState(false);
   const [expanded, setExpanded] = React.useState(props.treeExpanded ?? false);
 
@@ -170,7 +170,7 @@ function NextEngine(rawProps) {
     [printing, setPrinting] = React.useState(false);
 
   const childField = props.tree ? props.childrenField || 'children' : null;
-  const [filters, setFilters] = React.useState([]),
+  const [filters, setFilters] = React.useState<any>([]),
     [page, setPage] = React.useState(0),
     [pageSize, setPageSize] = React.useState(props.pageSize || 50);
 
@@ -182,12 +182,12 @@ function NextEngine(rawProps) {
     setResetSeen(resetBy);
     if (page !== 0) setPage(0);
   }
-  const [metrics, setMetrics] = React.useState({ row: 0, line: 0, lead: 0, menu: 0, min: 0, space: 0, room: 0 }),
+  const [metrics, setMetrics] = React.useState<any>({ row: 0, line: 0, lead: 0, menu: 0, min: 0, space: 0, room: 0 }),
     [isNarrow, setNarrow] = React.useState(false);
   // One conversion per distinct width and measured environment, shared by every visible cell.
   const widthPixels = React.useMemo(() => {
     const cache = new Map();
-    return (value) => {
+    return (value: any) => {
       if (!cache.has(value)) cache.set(value, gridPx(value, { el: frame.current || document.documentElement }));
       return cache.get(value);
     };
@@ -197,15 +197,15 @@ function NextEngine(rawProps) {
   // how the table edits (ADR 0016): the person's remembered choice, then the table's editMode, then the TableSettings above it, then Inline Edit;
   // the choice is offered in the view menu only when both ways are offered and a column can be edited
   const settings = useTableSettings(),
-    editModes = (props.editModes ?? settings.editModes ?? ['inline']).filter((m) => m === 'inline' || m === 'form'),
+    editModes = (props.editModes ?? settings.editModes ?? ['inline']).filter((m: any) => m === 'inline' || m === 'form'),
     [editModeChoice, setEditMode] = React.useState(initial.editMode),
-    canChoose = editModes.length > 1 && props.columns.some((c) => c.editor),
+    canChoose = editModes.length > 1 && props.columns.some((c: any) => c.editor),
     editMode = props.onViewChange && editModes.includes(props.editMode) ? props.editMode : editModes.includes(editModeChoice) ? editModeChoice : editModes.includes(props.editMode ?? settings.editMode) ? props.editMode ?? settings.editMode : editModes[0] || 'inline',
     editMenu = { mode: editMode, modes: editModes, show: canChoose, set: setEditMode };
   // Form Edit (ADR 0016, #84 F2): in this mode an edit asked for on a cell opens the record in a form instead of the inline editor
-  const [formKey, setFormKey] = React.useState(null),
-    formFrom = React.useRef(null),
-    beginEdit = (next) => {
+  const [formKey, setFormKey] = React.useState<any>(null),
+    formFrom = React.useRef<any>(null),
+    beginEdit = (next: any) => {
       if (next && editMode === 'form' && canChoose) {
         formFrom.current = { key: next.key, field: next.field };
         if (props.openKey === undefined) setOwnOpen(next.key);   // the edited row is the open, marked row (design form-edit.md §4)
@@ -228,14 +228,14 @@ function NextEngine(rawProps) {
   const incoming = remoteMode ? remote?.rows || EMPTY_ROWS : data;
   const { setEdited, editing, setEditing, cellStatus, setCellStatus, mutations, pendingEdit, source } = useEditedRows(incoming);
   // what was typed in the editing cell, kept while its row is out of the virtual window and cleared when the edit ends
-  const draftStore = React.useRef(null);
+  const draftStore = React.useRef<any>(null);
   React.useEffect(() => {
     if (!editing) draftStore.current = null;
   }, [editing]);
   const canonical = React.useMemo(() => recordsOf(source, index, childField), [source, index, childField]);
   // TanStack tries a global filter against columns; the public predicate describes a record, so evaluate it once.
-  const unreadKey = React.useCallback((record) => record[index], [index]);
-  const [ownOpen, setOwnOpen] = React.useState(null);
+  const unreadKey = React.useCallback((record: any) => record[index], [index]);
+  const [ownOpen, setOwnOpen] = React.useState<any>(null);
   const unread = useUnread(canonical, unreadKey, props),
     [localUnreadOnly] = React.useState(false);
   const unreadOnly = props.unreadOnly ?? localUnreadOnly;
@@ -245,7 +245,7 @@ function NextEngine(rawProps) {
   );
   const rowMenu =
     unread.enabled && !isStatic
-      ? (record) => [
+      ? (record: any) => [
           ...(typeof suppliedRowMenu === 'function' ? suppliedRowMenu(record) : suppliedRowMenu || []),
           {
             label: unread.has(record) ? S.markRead : S.markUnread,
@@ -255,7 +255,7 @@ function NextEngine(rawProps) {
       : suppliedRowMenu;
   const recordFilter = React.useMemo(() => {
     const results = new WeakMap();
-    return (row) => {
+    return (row: any) => {
       const record = row.original;
       if (unreadOnly && !unread.has(record)) return false;
       if (typeof deferredFilter !== 'function') return true;
@@ -292,20 +292,20 @@ function NextEngine(rawProps) {
     live,
     S,
   });
-  const emit = (name, ...args) => {
+  const emit = (name: any, ...args: any[]) => {
     live.current.props.on?.[name]?.(...args);
-    listeners.current.get(name)?.forEach((fn) => fn(...args));
+    listeners.current.get(name)?.forEach((fn: any) => fn(...args));
   };
-  const api = React.useMemo(() => createAdapter(live), []);
+  const api: any = React.useMemo(() => createAdapter(live), []);
   api.getUnreadCount = () => unread.count;
-  api.markRead = (keys) =>
+  api.markRead = (keys: any) =>
     unread.mark(
-      canonical.filter((record) => [].concat(keys).includes(record[index])),
+      canonical.filter((record) => ([] as any[]).concat(keys).includes(record[index])),
       false
     );
-  api.markUnread = (keys) =>
+  api.markUnread = (keys: any) =>
     unread.mark(
-      canonical.filter((record) => [].concat(keys).includes(record[index])),
+      canonical.filter((record) => ([] as any[]).concat(keys).includes(record[index])),
       true
     );
 
@@ -391,7 +391,7 @@ function NextEngine(rawProps) {
     collapsed,
     props,
   });
-  const estimate = (row) =>
+  const estimate = (row: any) =>
     row?.__group
       ? metrics.group + metrics.line * (row.__group.separated ? 2 : 1)
       : row?.__gap
@@ -409,8 +409,8 @@ function NextEngine(rawProps) {
     initialRect: { width: 0, height: 0 },
     initialOffset: () => printView.current?.top ?? holder.current?.scrollTop ?? 0
   });
-  const semanticRows = model.filter((row) => !row.__gap),
-    semanticIndex = new Map(semanticRows.map((row, i) => [row.displayKey || row.id, i + 2]));
+  const semanticRows = model.filter((row: any) => !row.__gap),
+    semanticIndex = new Map(semanticRows.map((row: any, i: any) => [row.displayKey || row.id, i + 2]));
   const virtualItems = virtual.getVirtualItems(),
     first = virtualized ? virtualItems[0]?.index || 0 : 0,
     last = virtualized
@@ -437,13 +437,13 @@ function NextEngine(rawProps) {
   };
   const windowed = cardScroller === 'window';
   // the card that has focus stays drawn wherever the list scrolls (Home, a scroll by the wheel), so focus is never lost
-  const cardFocus = React.useRef(null);   // the focused card's key
+  const cardFocus = React.useRef<any>(null);   // the focused card's key
   // and the headers of the group the view is in (each level) stay drawn, so they stay stuck at the top as their rows scroll,
   // exactly as when every card was drawn
-  const cardHeads = React.useMemo(() => (cardsVirtual ? model.map((row, i) => (row.__group ? [i, row.__group.depth] : null)).filter(Boolean) : []), [cardsVirtual, model]);
-  const cardRange = (range) => {
+  const cardHeads = React.useMemo(() => (cardsVirtual ? model.map((row: any, i: any) => (row.__group ? [i, row.__group.depth] : null)).filter(Boolean) : []), [cardsVirtual, model]);
+  const cardRange = (range: any) => {
     const out = defaultRangeExtractor(range), at = cardFocus.current == null ? undefined : cardIndex.current.get(cardFocus.current);
-    const add = (i) => { if (i !== undefined && i >= 0 && i < model.length && !out.includes(i)) out.push(i); };
+    const add = (i: any) => { if (i !== undefined && i >= 0 && i < model.length && !out.includes(i)) out.push(i); };
     add(at);
     // the nearest header before the view at each level, going up the levels
     let depth = Infinity;
@@ -456,10 +456,10 @@ function NextEngine(rawProps) {
   };
   const cardVirtual = useVirtualizer({
     count: cardsVirtual ? model.length : 0,
-    getScrollElement: () => (windowed ? window : holder.current),
-    observeElementRect: windowed ? observeWindowRect : observeElementRect,
-    observeElementOffset: windowed ? observeWindowOffset : observeElementOffset,
-    scrollToFn: windowed ? windowScroll : elementScroll,
+    getScrollElement: () => (windowed ? window as any : holder.current),
+    observeElementRect: (windowed ? observeWindowRect : observeElementRect) as any,
+    observeElementOffset: (windowed ? observeWindowOffset : observeElementOffset) as any,
+    scrollToFn: (windowed ? windowScroll : elementScroll) as any,
     estimateSize: cardEstimate,
     getItemKey: (i) => model[i]?.displayKey || model[i]?.id,
     scrollMargin: cardTop,
@@ -481,11 +481,11 @@ function NextEngine(rawProps) {
   });
   // each drawn card is measured as it is drawn and whenever its size changes (an open row, a wrap): whole pixels
   const cardIndex = React.useRef(new Map());
-  if (cardsVirtual) cardIndex.current = new Map(model.map((row, i) => [row.displayKey || row.id, i]));
-  const cardObserver = React.useRef(null);
+  if (cardsVirtual) cardIndex.current = new Map(model.map((row: any, i: any) => [row.displayKey || row.id, i]));
+  const cardObserver = React.useRef<any>(null);
   const cardKeyOf = React.useRef(new WeakMap());
   const cardMeasured = React.useRef(new Map());   // a card's key -> its last measured height
-  const measureCard = (node) => {
+  const measureCard = (node: any) => {
     const key = cardKeyOf.current.get(node), index = cardIndex.current.get(key);
     if (index === undefined) return;
     const size = Math.round(node.getBoundingClientRect().height), last = cardMeasured.current.get(key);
@@ -495,7 +495,7 @@ function NextEngine(rawProps) {
     cardMeasured.current.set(key, size);
     cardVirtual.resizeItem(index, size);
   };
-  const watchCard = (row, node, previous) => {
+  const watchCard = (row: any, node: any, previous: any) => {
     if (!cardsVirtual || typeof ResizeObserver === 'undefined') return;
     if (!cardObserver.current) cardObserver.current = new ResizeObserver((entries) => entries.forEach((e) => measureCard(e.target)));
     if (previous && previous !== node) cardObserver.current.unobserve(previous);
@@ -505,12 +505,12 @@ function NextEngine(rawProps) {
   React.useEffect(() => {
     const h = holder.current;
     if (!cardsVirtual || !h) return undefined;
-    const onFocus = (e) => {
+    const onFocus = (e: any) => {
       const card = e.target.closest && e.target.closest('.' + B + '__grid-row');
       const key = card ? cardKeyOf.current.get(card) : undefined;
       if (key !== undefined) cardFocus.current = key;
     };
-    const onBlur = (e) => { if (!h.contains(e.relatedTarget)) cardFocus.current = null; };
+    const onBlur = (e: any) => { if (!h.contains(e.relatedTarget)) cardFocus.current = null; };
     h.addEventListener('focusin', onFocus);
     h.addEventListener('focusout', onBlur);
     return () => { h.removeEventListener('focusin', onFocus); h.removeEventListener('focusout', onBlur); };
@@ -525,26 +525,26 @@ function NextEngine(rawProps) {
   const cardAfter = cardsVirtual ? <PixelGap px={cardVirtual.getTotalSize() + cardTop - cardEnd} /> : null;
   const frozen = new Set(columnPinning.left),
     ordered = table.getLeftVisibleLeafColumns().concat(table.getCenterVisibleLeafColumns());
-  const pinStart = (column) => (selectable ? metrics.lead : 0) + column.getStart('left');
+  const pinStart = (column: any) => (selectable ? metrics.lead : 0) + column.getStart('left');
   // the selection column pins only beside an explicit frozen column (issue 679): nothing is pinned by default
   const leadFrozen = frozen.size > 0 && !isNarrow;
   const widths = Object.fromEntries(ordered.map((column) => [column.id, column.getSize()]));
-  const listable = (column) => !column.rowHandle && !kinds(column).some((kind) => ['icon', 'actions'].includes(kind));
+  const listable = (column: any) => !column.rowHandle && !kinds(column).some((kind) => ['icon', 'actions'].includes(kind));
   const keys = keyColumns?.length
     ? keyColumns
     : columns
-        .filter((c) => !kinds(c).some((k) => ['icon', 'actions'].includes(k)) && !c.rowHandle)
+        .filter((c: any) => !kinds(c).some((k) => ['icon', 'actions'].includes(k)) && !c.rowHandle)
         .slice(0, 3)
-        .map((c) => c.field);
+        .map((c: any) => c.field);
   const listed = props.rowTemplate
     ? narrow !== 'table' && columns.some(listable)
     : narrow === 'auto'
       ? columns.some(listable)
-      : narrow === 'list' && columns.some((column) => listable(column) && !keys.includes(column.field));
+      : narrow === 'list' && columns.some((column: any) => listable(column) && !keys.includes(column.field));
   const columnDnd = useSortable({
     items: ordered,
     getId: (column) => column.id,
-    getName: (column) => column.columnDef.meta.title || column.id,
+    getName: (column) => (column.columnDef.meta as any).title || column.id,
     label: S.columnsLabel.replace('{label}', label),
     orientation: 'horizontal',
     disabled: !(props.movableColumns ?? options.movableColumns),
@@ -736,8 +736,8 @@ function NextEngine(rawProps) {
   // the open row (#453): the record whose details show, the row last opened by a click or Enter, or openKey (null: none);
   // it is aria-current, and in a grid without selection it takes the selected look (with selection, opening selects it)
   const openId = props.openKey !== undefined ? (props.openKey == null ? null : recordKey(props.openKey)) : ownOpen;
-  const isOpen = (id) => openId != null && String(id) === String(openId),
-    marked = (id) => !!selection[id] || (!selectable && !options.selectableRows && isOpen(id));
+  const isOpen = (id: any) => openId != null && String(id) === String(openId),
+    marked = (id: any) => !!selection[id] || (!selectable && !options.selectableRows && isOpen(id));
   const { selectedVisible, allVisible, selectAll, pickCheckbox, chooseRow } = selectionActions({
     table,
     live,
@@ -749,8 +749,8 @@ function NextEngine(rawProps) {
   });
 
   const { fit, startResize } = columnSizing({ columns, frame, source, resize, metrics, table, B });
-  const menuItems = (items, row, extra) =>
-    items.map((item, i) => {
+  const menuItems = (items: any, row: any, extra: any) =>
+    items.map((item: any, i: any) => {
       if (
         !item.separator &&
         !item.disabled &&
@@ -825,7 +825,7 @@ function NextEngine(rawProps) {
   live.current.cellRange = cellRange;
   const focusCell = makeFocusCell({ model, ordered, virtualized, virtual, displayElements, cards: cardsVirtual ? cardVirtual : null });
 
-  const rememberRow = (row, node) => {
+  const rememberRow = (row: any, node: any) => {
     const displayKey = row.displayKey || row.id,
       previous = displayElements.current.get(displayKey),
       active = document.activeElement;
@@ -846,13 +846,13 @@ function NextEngine(rawProps) {
         });
       }
     } else {
-      if (previous?.contains(active)) {
-        const cell = active.closest('[data-plx-field]'),
+      if (previous?.contains(active as any)) {
+        const cell = (active as any).closest('[data-plx-field]'),
           controls = cell ? [...cell.querySelectorAll('input,button,a[href],select,textarea')] : [];
         parkedFocus.current = {
           key: displayKey,
           field: cell?.getAttribute('data-plx-field'),
-          control: controls.indexOf(active)
+          control: controls.indexOf(active as any)
         };
         holder.current?.focus({ preventScroll: true });
       }
@@ -963,7 +963,7 @@ function NextEngine(rawProps) {
       cellRange.rect
     ]
   );
-  const renderRow = (row) =>
+  const renderRow = (row: any) =>
     row.original ? (
       <MemoGridRow
         key={row.displayKey || row.id}
@@ -977,14 +977,14 @@ function NextEngine(rawProps) {
     );
   const priorGroups = model
       .slice(0, first)
-      .filter((row) => row.__group)
-      .map((row) => row.__group),
+      .filter((row: any) => row.__group)
+      .map((row: any) => row.__group),
     currentGroup = model[first]?.__group || priorGroups[priorGroups.length - 1];
   const stickyGroups = currentGroup
     ? priorGroups.filter(
-        (group, i) =>
-          group.path.every((part, depth) => JSON.stringify(part) === JSON.stringify(currentGroup.path[depth])) &&
-          !priorGroups.slice(i + 1).some((next) => next.depth === group.depth)
+        (group: any, i: any) =>
+          group.path.every((part: any, depth: any) => JSON.stringify(part) === JSON.stringify(currentGroup.path[depth])) &&
+          !priorGroups.slice(i + 1).some((next: any) => next.depth === group.depth)
       )
     : [];
   // a fill grid that already shows rows says a failed next page in its last row (with Retry), not over the table
@@ -997,7 +997,7 @@ function NextEngine(rawProps) {
           const n = remoteMode ? remote?.total || 0 : table.getFilteredRowModel().rows.length;
           // the words: strings.cardCount (an app names its records: "6 members"), else the catalog's; a plural object picks its
           // form by the locale's plural rules (an exact "=n" first, then the category, then other), a text is used as it is
-          const words = S.cardCount, values = { count: n, n: formatNumber(n) };
+          const words: any = S.cardCount, values = { count: n, n: formatNumber(n) };
           if (!words || typeof words !== 'object') return words ? String(words).replace(/\{n\}/g, values.n) : loc.t('dataGrid.cardCount', values);
           const form = words['=' + n] !== undefined ? words['=' + n] : words[loc.plural(n)] !== undefined ? words[loc.plural(n)] : words.other;
           return String(form).replace(/\{n\}/g, values.n);
@@ -1086,8 +1086,8 @@ function NextEngine(rawProps) {
   });
   const formRecord = formKey != null ? recordsByKey.get(formKey) : null;
   if (!formRecord) return frameNode;
-  const formColumns = ordered.map((column) => column.columnDef.meta),
-    nameColumn = formColumns.find((c) => c.kind === 'name') || formColumns[0];
+  const formColumns = ordered.map((column) => column.columnDef.meta as any),
+    nameColumn = formColumns.find((c: any) => c.kind === 'name') || formColumns[0];
   return (
     <>
       {frameNode}
@@ -1096,8 +1096,8 @@ function NextEngine(rawProps) {
           record={formRecord}
           rowKey={formKey}
           columns={formColumns}
-          isEditable={(c) => (typeof c.editable === 'function' ? c.editable(api.cell(formKey, c.field)) : c.editable !== false)}
-          name={valueText(valueAt(formRecord, nameColumn.field))}
+          isEditable={(c: any) => (typeof c.editable === 'function' ? c.editable(api.cell(formKey, c.field)) : c.editable !== false)}
+          name={valueText(valueAt(formRecord, (nameColumn as any).field))}
           types={props.editing?.types ?? settings.editing?.types}
           surface={props.formSurface}
           renderForm={props.renderForm}
@@ -1108,7 +1108,7 @@ function NextEngine(rawProps) {
             // focus goes back to the cell the edit began in (a drawer or dialog does it itself; the application's panel does not)
             const from = formFrom.current;
             setFormKey(null);
-            if (from) focusCell(model.findIndex((r) => r.id === from.key), Math.max(0, ordered.findIndex((col) => col.columnDef.meta.field === from.field)));
+            if (from) focusCell(model.findIndex((r: any) => r.id === from.key), Math.max(0, ordered.findIndex((col) => (col.columnDef.meta as any).field === from.field)));
           }}
           S={S}
         />
@@ -1117,7 +1117,7 @@ function NextEngine(rawProps) {
   );
 }
 
-export function DataGridEngine(props) {
+export function DataGridEngine(props: any) {
   return <NextEngine key={props.storageKey || ''} {...props} />;
 }
 

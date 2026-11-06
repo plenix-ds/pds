@@ -8,7 +8,7 @@
      options: TanStack Virtual's Virtualizer options; returns the Virtualizer. redrawOnSize: true also redraws when the
        total size or the first drawn item's place changes (measured items: the card list's spacers, issue 809)
    Notes:
-     Moved out of DataGridEngine.jsx (issue 688); redrawOnSize added for the card list (issue 809). The engine is documented in DataGridEngine.jsx.
+     Moved out of DataGridEngine.tsx (issue 688); redrawOnSize added for the card list (issue 809). The engine is documented in DataGridEngine.tsx.
 */
 import React from 'react';
 import { flushSync } from 'react-dom';

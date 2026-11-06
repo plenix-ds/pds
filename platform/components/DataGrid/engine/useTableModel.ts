@@ -10,8 +10,8 @@
        its handlers (changeSort, notifySelection, changeVisibility, changeOrder, resize, setFilters, setPage). Returns leafDefs (the
        column definitions) and table (the TanStack table).
    Notes:
-     Moved out of DataGridEngine.jsx without any change to the code (issue 714, the table model): the parts were lines of the
-     engine function, in the same order with the same values. The engine is documented in DataGridEngine.jsx.
+     Moved out of DataGridEngine.tsx without any change to the code (issue 714, the table model): the parts were lines of the
+     engine function, in the same order with the same values. The engine is documented in DataGridEngine.tsx.
 */
 import React from 'react';
 import { valueAt, recordKey } from '../state.ts';

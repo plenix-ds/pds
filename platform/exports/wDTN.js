@@ -1,1 +1,1 @@
-export { DataGridEngine } from '../components/DataGrid/DataGridEngine.jsx';
+export { DataGridEngine } from '../components/DataGrid/DataGridEngine.tsx';

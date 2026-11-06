@@ -14,8 +14,8 @@
        pinnedAt, orderAt) and what changes it: resize(field, width), changeOrder(order), changeVisibility(map) and
        move(field, target, after), which tell the caller and emit columnMoved.
    Notes:
-     Moved out of DataGridEngine.jsx without any change to the code (issue 714, the columns concern): the parts were lines of
-     the engine function, in the same order with the same values. The engine is documented in DataGridEngine.jsx.
+     Moved out of DataGridEngine.tsx without any change to the code (issue 714, the columns concern): the parts were lines of
+     the engine function, in the same order with the same values. The engine is documented in DataGridEngine.tsx.
 */
 import React from 'react';
 import { visibilityOf } from '../state.ts';

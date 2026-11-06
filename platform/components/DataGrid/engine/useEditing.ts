@@ -15,9 +15,9 @@
        drawn) and commitEdit(key, field, value), which calls props.onCellEdit(record, { field, value, previous, row }).
      useEditEffect: after the rows draw, resolves the waiting promises and emits cellEdit for the committed cell.
    Notes:
-     Moved out of DataGridEngine.jsx without any change to the code (issue 714, the editing concern): the parts were lines of
+     Moved out of DataGridEngine.tsx without any change to the code (issue 714, the editing concern): the parts were lines of
      the engine function, in the same order with the same values. The editor itself is CellEditor (engine/parts.jsx). The engine
-     is documented in DataGridEngine.jsx.
+     is documented in DataGridEngine.tsx.
 */
 import React from 'react';
 import { recordKey, valueAt } from '../state.ts';
