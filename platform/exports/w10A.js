@@ -2,6 +2,6 @@
 // PanelSplitter, promoted from AppShell) and RenameAction. DropZone (extended as a drop target) was public already.
 export { useSortable, useDraggable, useDropTarget, useReposition, useDndSession, moveItem, transferItem, setDragOffset, clearDragOffset, mergeDndProps, DND_STRINGS } from '../utils/dnd.ts';
 export { DragHandle } from '../components/DragHandle/DragHandle.tsx';
-export { SortableList } from '../patterns/SortableList/SortableList.jsx';
+export { SortableList } from '../patterns/SortableList/SortableList.tsx';
 export { Resizable, PanelSplitter } from '../components/Resizable/Resizable.tsx';
 export { RenameAction, baseNameEnd } from '../patterns/RenameAction/RenameAction.tsx';

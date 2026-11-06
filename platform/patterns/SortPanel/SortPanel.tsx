@@ -23,11 +23,16 @@
      The panel opens with the focus on its first row (else the Add button).
    Notes:
      The panel holds the levels; the page applies them (DataGrid sort, or compareLevels on its rows). */
+import type { Field } from '../../utils/fields.ts';
 import React from 'react';
 import { Button } from '../../components/Button/Button.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { Tooltip } from '../../components/Tooltip/Tooltip.tsx';
-import { PanelTrigger, PanelHead, Pick, useReorder } from '../CommandBar/panel-parts.jsx';
+import { PanelTrigger as PanelTriggerJs, PanelHead as PanelHeadJs, Pick as PickJs, useReorder as useReorderJs } from '../CommandBar/panel-parts.jsx';
+const PanelTrigger: any = PanelTriggerJs;
+const PanelHead: any = PanelHeadJs;
+const Pick: any = PickJs;
+const useReorder: any = useReorderJs;
 import { fill } from '../../utils/fill.ts';
 import { fieldOf, kindOf, fieldWords, fieldOption } from '../../utils/fields.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
@@ -36,25 +41,30 @@ import PlusIcon from 'plenix-platform/icons/plenix/plus';
 import SortIcon from 'plenix-platform/icons/plenix/sort';
 
 
-export function SortPanel({ fields = [], value = [], onChange, grouped = false, inline = false, strings }) {
-  const t = useStrings('sortPanel', strings);
-  const fw = useStrings('fields');
+/** @public one sort level, the first the main sort */
+export type SortLevel = { field: string; dir?: 'asc' | 'desc' };
+/** @public the prop type (ADR 0011) */
+export type SortPanelProps = { fields?: Field[]; value?: SortLevel[]; onChange(value: SortLevel[]): void; grouped?: boolean; inline?: boolean; strings?: Record<string, string> };
+export function SortPanel(props: SortPanelProps) {
+  const { fields = [], value = [], onChange, grouped = false, inline = false, strings } = props as any;
+  const t: any = useStrings('sortPanel', strings);
+  const fw: any = useStrings('fields');
   const levels = value;
-  const ro = useReorder(levels, onChange, (l) => fieldOf(fields, l.field).label, t);
-  const put = (i, ch) => onChange(levels.map((l, j) => (j === i ? Object.assign({}, l, ch) : l)));
-  const free = fields.filter((f) => !levels.some((l) => l.field === f.value));
+  const ro = useReorder(levels, onChange, (l: any) => fieldOf(fields, l.field).label, t);
+  const put = (i: any, ch: any) => onChange(levels.map((l: any, j: any) => (j === i ? Object.assign({}, l, ch) : l)));
+  const free = fields.filter((f: any) => !levels.some((l: any) => l.field === f.value));
   const body = (
     <div className="plx-find-panel plx-find-panel--sort">
       <PanelHead title={grouped ? t.within : t.title} info={t.info} />
       <div className="plx-find-panel__rows" ref={ro.box}>
         {levels.length ? null : <Text variant="secondary">{t.empty}</Text>}
-        {levels.map((l, i) => {
+        {levels.map((l: any, i: any) => {
           const f = fieldOf(fields, l.field), words = fieldWords.directions(fw, kindOf(f));
           return (
             <div key={l.field} {...ro.rowProps(i, f.label)}>
-              <Pick label={t.field} value={l.field} options={fields.filter((x) => x.value === l.field || !levels.some((y) => y.field === x.value)).map(fieldOption)} onChange={(v) => put(i, { field: v })} />
-              <Pick label={t.direction} size="dir" value={l.dir} options={[{ value: 'asc', label: words[0] }, { value: 'desc', label: words[1] }]} onChange={(v) => put(i, { dir: v })} />
-              <Tooltip content={t.removeTip}><Button variant="ghost" icon={CloseIcon} iconOnly label={fill(t.remove, { name: f.label })} onClick={() => onChange(levels.filter((_, j) => j !== i))} /></Tooltip>
+              <Pick label={t.field} value={l.field} options={fields.filter((x: any) => x.value === l.field || !levels.some((y: any) => y.field === x.value)).map(fieldOption)} onChange={(v: any) => put(i, { field: v })} />
+              <Pick label={t.direction} size="dir" value={l.dir} options={[{ value: 'asc', label: words[0] }, { value: 'desc', label: words[1] }]} onChange={(v: any) => put(i, { dir: v })} />
+              <Tooltip content={t.removeTip}><Button variant="ghost" icon={CloseIcon} iconOnly label={fill(t.remove, { name: f.label })} onClick={() => onChange(levels.filter((_: any, j: any) => j !== i))} /></Tooltip>
               {ro.handle(i, f.label)}
             </div>
           );

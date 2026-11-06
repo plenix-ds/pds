@@ -63,7 +63,7 @@
     "platform/patterns/RecordPage/RecordPage.tsx",
     "platform/patterns/ActivityList/ActivityList.tsx",
     "platform/components/DataGrid/engine/parts.tsx",
-    "platform/patterns/SettingsLayout/SettingsLayout.jsx"
+    "platform/patterns/SettingsLayout/SettingsLayout.tsx"
   ],
   "useGesture": [
     "platform/components/Sheet/Sheet.tsx",

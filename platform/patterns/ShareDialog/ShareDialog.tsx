@@ -31,25 +31,46 @@ import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 
 const ROLES = [{ value: 'viewer', label: 'Viewer' }, { value: 'editor', label: 'Editor' }];
-export function ShareDialog({ open, title, onClose, people = [], grants = [], roles = ROLES, defaultRole = 'viewer', url = '', linkAccess = 'restricted', onSave, initialTab = 'people', webShare = true, strings, className }) {
-  const t = useStrings('shareDialog', strings);
+/** @public one grant: a person and their role */
+export type ShareGrant = { person: string; role: string };
+/** @public the prop type (ADR 0011) */
+export type ShareDialogProps = {
+  open?: boolean;
+  title?: string;
+  onClose?(): void;
+  /** EntityPicker options */
+  people?: { value: string; label: string; description?: string; src?: string }[];
+  grants?: ShareGrant[];
+  roles?: { value: string; label: string }[];
+  defaultRole?: string;
+  url?: string;
+  linkAccess?: 'restricted' | 'view';
+  onSave(result: { grants: ShareGrant[]; linkAccess: 'restricted' | 'view' }): unknown;
+  initialTab?: 'people' | 'link';
+  webShare?: boolean;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function ShareDialog(props: ShareDialogProps) {
+  const { open, title, onClose, people = [], grants = [], roles = ROLES, defaultRole = 'viewer', url = '', linkAccess = 'restricted', onSave, initialTab = 'people', webShare = true, strings, className } = props as any;
+  const t: any = useStrings('shareDialog', strings);
   const [draft, setDraft] = React.useState(grants), [access, setAccess] = React.useState(linkAccess);
   const [person, setPerson] = React.useState(''), [role, setRole] = React.useState(defaultRole), [tab, setTab] = React.useState(initialTab);
   const [busy, setBusy] = React.useState(false), [error, setError] = React.useState('');
-  const lock = React.useRef(false), epoch = React.useRef(0), initial = React.useRef(null);
+  const lock = React.useRef(false), epoch = React.useRef(0), initial = React.useRef<any>(null);
   initial.current = { grants, linkAccess, defaultRole, initialTab };
   React.useEffect(() => { epoch.current++; const v = initial.current; setDraft(v.grants); setAccess(v.linkAccess); setPerson(''); setRole(v.defaultRole); setTab(v.initialTab); setError(''); setBusy(false); lock.current = false; return () => { epoch.current++; }; }, [open]);
   const dirty = JSON.stringify(draft) !== JSON.stringify(grants) || access !== linkAccess;
   const guard = useUnsavedGuard(open && dirty, t.unsaved);
   const close = guard(() => { if (!lock.current && onClose) onClose(); });
-  const run = async (fn) => {
+  const run = async (fn: any) => {
     if (lock.current) return; const at = epoch.current; lock.current = true; setBusy(true); setError('');
-    try { await fn(); } catch (e) { if (at === epoch.current && e?.name !== 'AbortError') setError(t.failed); }
+    try { await fn(); } catch (e: any) { if (at === epoch.current && e?.name !== 'AbortError') setError(t.failed); }
     finally { if (at === epoch.current) { lock.current = false; setBusy(false); } }
   };
   const add = () => {
-    if (!people.some((p) => p.value === person) || !roles.some((r) => r.value === role)) { setError(t.invalid); return; }
-    setDraft((all) => all.some((g) => g.person === person) ? all : all.concat([{ person, role }]));
+    if (!people.some((p: any) => p.value === person) || !roles.some((r: any) => r.value === role)) { setError(t.invalid); return; }
+    setDraft((all: any) => all.some((g: any) => g.person === person) ? all : all.concat([{ person, role }]));
     setPerson(''); setError('');
   };
   const save = () => { const at = epoch.current; return run(async () => { await onSave({ grants: draft, linkAccess: access }); if (at === epoch.current && onClose) onClose(); }); };
@@ -58,14 +79,14 @@ export function ShareDialog({ open, title, onClose, people = [], grants = [], ro
     <Stack className={cx('plx-share-dialog', className)} aria-busy={busy}>
       <Tabs variant="folder" label={title || t.title} value={tab} onChange={setTab} items={[
         { value: 'people', label: t.people, content: <Stack>
-          <Field label={t.person}><EntityPicker kind="people" options={people} value={person} onChange={setPerson} disabled={busy} /></Field>
+          <Field label={t.person}><EntityPicker kind="people" options={people} value={person} onChange={(v: any) => setPerson(v)} disabled={busy} /></Field>
           <Field label={t.role}><Select value={role} options={roles} disabled={busy} onChange={(e) => setRole(e.target.value)} /></Field>
           <Button disabled={busy || !person || !onSave} onClick={add}>{t.add}</Button>
-          {draft.map((g) => <Inline key={g.person} wrap><Text>{people.find((p) => p.value === g.person)?.label || g.person}</Text>
-            <RoleLabel role={g.role} label={roles.find((r) => r.value === g.role)?.label} />
-            <Select aria-label={t.role + ': ' + (people.find((p) => p.value === g.person)?.label || g.person)} value={g.role} options={roles} disabled={busy || !onSave}
-              onChange={(e) => setDraft(draft.map((v) => v.person === g.person ? { ...v, role: e.target.value } : v))} />
-            <Button disabled={busy || !onSave} onClick={() => setDraft(draft.filter((v) => v.person !== g.person))}>{t.remove}</Button></Inline>)}
+          {draft.map((g: any) => <Inline key={g.person} wrap><Text>{people.find((p: any) => p.value === g.person)?.label || g.person}</Text>
+            <RoleLabel role={g.role} label={roles.find((r: any) => r.value === g.role)?.label} />
+            <Select aria-label={t.role + ': ' + (people.find((p: any) => p.value === g.person)?.label || g.person)} value={g.role} options={roles} disabled={busy || !onSave}
+              onChange={(e) => setDraft(draft.map((v: any) => v.person === g.person ? { ...v, role: e.target.value } : v))} />
+            <Button disabled={busy || !onSave} onClick={() => setDraft(draft.filter((v: any) => v.person !== g.person))}>{t.remove}</Button></Inline>)}
         </Stack> },
         { value: 'link', label: t.link, content: <Stack>
           <Field label={t.access}><Select value={access} disabled={busy || !onSave} onChange={(e) => setAccess(e.target.value)}
