@@ -65,6 +65,7 @@ import { validZone, wallOf, isInstant, instantIso } from '../../utils/zone.ts';
 
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import type { Catalog } from '../../providers/LocaleProvider.tsx';
+import type { FieldWidth } from '../Input/Input.tsx';
 import { Icon } from '../Icon/Icon.tsx';
 import { Tooltip } from '../Tooltip/Tooltip.tsx';
 import { useTruncated } from '../../utils/overflow.ts';
@@ -107,14 +108,14 @@ export type TimePickerProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 
   /** "list" (default) | "segments" */
   variant?: 'list' | 'segments';
   /** "12" | "24" (default the locale's) */
-  hourCycle?: string | number;
+  hourCycle?: '12' | '24' | 12 | 24;
   /** minutes between the list's times (default 15) or a segment's minute step (default 1) */
   step?: number;
   /** the earliest and latest time, "HH:MM" */
   min?: string;
   max?: string;
   label?: string;
-  width?: string;
+  width?: FieldWidth;
   invalid?: boolean;
   warning?: string | boolean;
   readOnly?: boolean;
