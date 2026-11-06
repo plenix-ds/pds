@@ -36,7 +36,7 @@ scales that the lint rules read. You record it; you do not redesign it.
 - **Motion:** durations from motion tokens, no `transition: all`,
   `prefers-reduced-motion` guard.
 - **Data display:** DataGrid on TanStack, charts on ECharts themed from
-  tokens; numbers `tabular-nums` and end-aligned; pills in a row equal height.
+  tokens; numbers `tabular-nums`, start-aligned like other content (D-0087); pills in a row equal height.
 - Logical properties only; colours only through tokens.
 
 Defects inside these definitions (contrast below AA, wrapping, uneven heights,
