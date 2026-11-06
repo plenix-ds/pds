@@ -2847,6 +2847,150 @@
     "sets": [],
     "why": "markup only: opens only while focus is inside the region the scope ref names"
   },
+  "save-as--variant-name-and-location": {
+    "sets": [],
+    "why": "markup only: the variation adds fields (location, format) to the dialog; the stylesheet has no modifier for it"
+  },
+  "save-as--variant-with-format": {
+    "sets": [],
+    "why": "markup only: the variation adds fields (location, format) to the dialog; the stylesheet has no modifier for it"
+  },
+  "settings-page--kind-static-default": {
+    "sets": [],
+    "why": "markup only: static, create and edit are the page's mode (its fields and actions); the stylesheet has no modifier for them"
+  },
+  "settings-page--page-create": {
+    "sets": [],
+    "why": "markup only: static, create and edit are the page's mode (its fields and actions); the stylesheet has no modifier for them"
+  },
+  "settings-page--page-edit": {
+    "sets": [],
+    "why": "markup only: static, create and edit are the page's mode (its fields and actions); the stylesheet has no modifier for them"
+  },
+  "share-dialog--variant-link": {
+    "sets": [],
+    "why": "markup only: the variation is which tab or section the dialog shows (link, people, roles, web share); the stylesheet has no modifier for it"
+  },
+  "share-dialog--variant-people": {
+    "sets": [],
+    "why": "markup only: the variation is which tab or section the dialog shows (link, people, roles, web share); the stylesheet has no modifier for it"
+  },
+  "share-dialog--variant-roles": {
+    "sets": [],
+    "why": "markup only: the variation is which tab or section the dialog shows (link, people, roles, web share); the stylesheet has no modifier for it"
+  },
+  "share-dialog--variant-web-share": {
+    "sets": [],
+    "why": "markup only: the variation is which tab or section the dialog shows (link, people, roles, web share); the stylesheet has no modifier for it"
+  },
+  "shortcuts-dialog--variant-grouped": {
+    "sets": [],
+    "why": "markup only: grouping and search add parts inside the dialog; the stylesheet has no modifier for them"
+  },
+  "shortcuts-dialog--variant-searchable": {
+    "sets": [],
+    "why": "markup only: grouping and search add parts inside the dialog; the stylesheet has no modifier for them"
+  },
+  "sign-in--form-with-an-error": {
+    "sets": [],
+    "why": "markup only: the variation adds parts (an error message, a single sign-on button) or sets the card layout, drawn by the Card and Field parts; the stylesheet has no modifier for it"
+  },
+  "sign-in--form-with-single-sign-on": {
+    "sets": [],
+    "why": "markup only: the variation adds parts (an error message, a single sign-on button) or sets the card layout, drawn by the Card and Field parts; the stylesheet has no modifier for it"
+  },
+  "sign-in--layout-card-default": {
+    "sets": [],
+    "why": "markup only: the variation adds parts (an error message, a single sign-on button) or sets the card layout, drawn by the Card and Field parts; the stylesheet has no modifier for it"
+  },
+  "sort-panel--bar-button-sort-no-levels": {
+    "sets": [],
+    "why": "markup only: the number of sort levels and the group-by section change the panel's rows; the stylesheet has no modifier for them"
+  },
+  "sort-panel--panel-sort-within-groups-by": {
+    "sets": [],
+    "why": "markup only: the number of sort levels and the group-by section change the panel's rows; the stylesheet has no modifier for them"
+  },
+  "sort-panel--panel-two-sort-levels": {
+    "sets": [],
+    "why": "markup only: the number of sort levels and the group-by section change the panel's rows; the stylesheet has no modifier for them"
+  },
+  "sortable-list--layout-vertical-default": {
+    "sets": [],
+    "why": "markup only: handles or move buttons change the controls drawn on each row (the grid layout is its own variation, --grid); the stylesheet has no modifier for them"
+  },
+  "sortable-list--moving-handles-default": {
+    "sets": [],
+    "why": "markup only: handles or move buttons change the controls drawn on each row (the grid layout is its own variation, --grid); the stylesheet has no modifier for them"
+  },
+  "sortable-list--moving-with-move-buttons": {
+    "sets": [],
+    "why": "markup only: handles or move buttons change the controls drawn on each row (the grid layout is its own variation, --grid); the stylesheet has no modifier for them"
+  },
+  "table-editing-planned--planned-inline-edit-and-form-edit": {
+    "sets": [],
+    "why": "documentation of planned table editing (options and sizes): it sets no style of its own"
+  },
+  "table-editing-planned--planned-options-per-application": {
+    "sets": [],
+    "why": "documentation of planned table editing (options and sizes): it sets no style of its own"
+  },
+  "table-editing-planned--planned-parts-that-are-always-on": {
+    "sets": [],
+    "why": "documentation of planned table editing (options and sizes): it sets no style of its own"
+  },
+  "table-editing-planned--planned-sizes": {
+    "sets": [],
+    "why": "documentation of planned table editing (options and sizes): it sets no style of its own"
+  },
+  "time-zone-select--content-search": {
+    "sets": [],
+    "why": "markup only: the list grouping, sorting, offsets and search change the options, not the styles; the stylesheet has no modifier for them"
+  },
+  "time-zone-select--list-grouped-by-region-default": {
+    "sets": [],
+    "why": "markup only: the list grouping, sorting, offsets and search change the options, not the styles; the stylesheet has no modifier for them"
+  },
+  "time-zone-select--list-sorted-by-offset": {
+    "sets": [],
+    "why": "markup only: the list grouping, sorting, offsets and search change the options, not the styles; the stylesheet has no modifier for them"
+  },
+  "time-zone-select--list-without-offsets": {
+    "sets": [],
+    "why": "markup only: the list grouping, sorting, offsets and search change the options, not the styles; the stylesheet has no modifier for them"
+  },
+  "trial-upgrade--variant-plan-comparison": {
+    "sets": [],
+    "why": "markup only: banner, dialog and plan comparison are other components arranged by the pattern; the stylesheet has no modifier for them"
+  },
+  "trial-upgrade--variant-trial-banner": {
+    "sets": [],
+    "why": "markup only: banner, dialog and plan comparison are other components arranged by the pattern; the stylesheet has no modifier for them"
+  },
+  "trial-upgrade--variant-upgrade-dialog": {
+    "sets": [],
+    "why": "markup only: banner, dialog and plan comparison are other components arranged by the pattern; the stylesheet has no modifier for them"
+  },
+  "undo-pattern--action-persistent-until-action": {
+    "sets": [],
+    "why": "markup only: the variation is how the undo toast stays and whether it has an action; the Toast carries the styles"
+  },
+  "undo-pattern--action-with-action-undo": {
+    "sets": [],
+    "why": "markup only: the variation is how the undo toast stays and whether it has an action; the Toast carries the styles"
+  },
+  "version-history--variant-list": {
+    "sets": [],
+    "why": "markup only: list, preview and restore show or hide parts of the pattern; the stylesheet has no modifier for them"
+  },
+  "version-history--variant-preview": {
+    "sets": [],
+    "why": "markup only: list, preview and restore show or hide parts of the pattern; the stylesheet has no modifier for them"
+  },
+  "version-history--variant-restore": {
+    "sets": [],
+    "why": "markup only: list, preview and restore show or hide parts of the pattern; the stylesheet has no modifier for them"
+  },
   "checkbox--values-checked": {
     "sets": [
       {
