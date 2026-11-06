@@ -13,6 +13,8 @@ import React from 'react';
 import { Avatar } from '../Avatar/Avatar.tsx';
 import { Badge } from '../Badge/Badge.tsx';
 import { Tag } from '../Tag/Tag.tsx';
+import { Tooltip } from '../Tooltip/Tooltip.tsx';
+import { useStrings } from '../../providers/LocaleProvider.tsx';
 import { DataPill } from '../DataPill/DataPill.tsx';
 import { formatBytes, formatDate, parseDate } from '../../utils/format.ts';
 import { Isolate } from '../Isolate/Isolate.tsx';
@@ -64,15 +66,19 @@ export function CellValue({ column, value, strings, record, pill = false, pillFi
 
 // A tags cell: the tags that fit, then one "+N" Tag for the rest (design 84-cell-editors §2 and §3, issue 477). The fit is useBarFit's (the same step
 // ladder as the command bar and the tags editor): the row starts with every tag, and each step hides one more from the end until the row fits on one line.
-// The "+N" Tag is named by the hidden tags for a screen reader and shows them on hover.
+// The "+N" Tag is named "{count} more" (the same words as the tags editor's) and the hidden tags show in a Tooltip on hover and keyboard focus (D-0065).
 function TagsCell({ tags, block }) {
-  const box = React.useRef(null), label = (tag) => (typeof tag === 'object' ? tag.label : String(tag)), names = tags.map(label);
+  const more = useStrings('combobox').moreChips, box = React.useRef(null), label = (tag) => (typeof tag === 'object' ? tag.label : String(tag)), names = tags.map(label);
   const step = useBarFit(box, names.join('|'), Math.max(0, tags.length - 1), 0, ':self');
   const hidden = tags.slice(tags.length - step);
   return (
     <span ref={box} className={`${block}__rich ${block}__rich--tags`}>
       {tags.slice(0, tags.length - step).map((tag, i) => <Tag key={i} category={typeof tag === 'object' ? tag.category : undefined}>{label(tag)}</Tag>)}
-      {hidden.length ? <Tag title={hidden.map(label).join(', ')} aria-label={hidden.map(label).join(', ')}>{'+' + hidden.length}</Tag> : null}
+      {hidden.length ? (
+        <Tooltip content={hidden.map(label).join(', ')}>
+          <Tag tabIndex={0} aria-label={more.replace('{count}', String(hidden.length))}>{'+' + hidden.length}</Tag>
+        </Tooltip>
+      ) : null}
     </span>
   );
 }
