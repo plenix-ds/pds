@@ -22,9 +22,22 @@ import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import CircleInfoIcon from 'plenix-platform/icons/plenix/circle-info';
 
-export function FeatureIntro({ title, children, target, showBadge = true, initiallyOpen = false, onDismiss, strings, className }) {
-  const t = useStrings('featureIntro', strings);
-  const [bubble, setBubble] = React.useState(initiallyOpen), [dialog, setDialog] = React.useState(false);
+/** @public */
+export type FeatureIntroProps = {
+  title: string;
+  /** the feature's explanation */
+  children?: React.ReactNode;
+  /** an optional Platform control the bubble points at */
+  target?: React.ReactElement;
+  showBadge?: boolean;
+  initiallyOpen?: boolean;
+  onDismiss?(): void;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function FeatureIntro({ title, children, target, showBadge = true, initiallyOpen = false, onDismiss, strings, className }: FeatureIntroProps) {
+  const t: any = useStrings('featureIntro', strings);
+  const [bubble, setBubble] = React.useState<any>(initiallyOpen), [dialog, setDialog] = React.useState<any>(false);
   const done = () => { setBubble(false); setDialog(false); if (onDismiss) onDismiss(); };
   return <Inline className={cx('plx-feature-intro', className)} wrap>
     {target ? <TeachingBubble target={target} open={bubble} title={title} onDismiss={done} spotlight={false} strings={t}

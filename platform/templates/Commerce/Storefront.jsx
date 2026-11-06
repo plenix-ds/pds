@@ -23,7 +23,7 @@ import { formatNumber, formatLocale } from '../../utils/format.ts';
 import { compareLevels } from '../../utils/fields.ts';
 import { useCollectionView } from '../../hooks/useCollectionView.ts';
 import { CommandBar, CommandBarSearch } from '../../patterns/CommandBar/CommandBar.jsx';
-import { FilterPanel } from '../../patterns/FilterPanel/FilterPanel.jsx';
+import { FilterPanel } from '../../patterns/FilterPanel/FilterPanel.tsx';
 import { SortPanel } from '../../patterns/SortPanel/SortPanel.jsx';
 import { ViewMenu } from '../../patterns/ViewMenu/ViewMenu.jsx';
 import { QuickFilter } from '../../patterns/QuickFilter/QuickFilter.jsx';

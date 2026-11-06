@@ -39,16 +39,31 @@ const VARIANTS = ['icon', 'image', 'horizontal'];
 const DATA_HUES = ['blue', 'green', 'purple', 'red', 'brown'];
 const TONES = ['neutral', 'info', 'success', 'warning', 'danger'];
 
-export function FeatureCard({ title, description, variant = 'icon', icon, hue, tone, image, imageAlt = '', href, onOpen, headingLevel = 3, className, ...rest }) {
+/** @public */
+export type FeatureCardProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & {
+  title: string;
+  description?: string;
+  variant?: 'icon' | 'image' | 'horizontal';
+  icon?: string;
+  hue?: 'blue' | 'green' | 'purple' | 'red' | 'brown' | 'surface' | 'gray';
+  tone?: 'info' | 'success' | 'warning' | 'danger' | 'neutral';
+  image?: string;
+  imageAlt?: string;
+  href?: string;
+  onOpen?(): void;
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+  className?: string;
+};
+export function FeatureCard({ title, description, variant = 'icon', icon, hue, tone, image, imageAlt = '', href, onOpen, headingLevel = 3, className, ...rest }: FeatureCardProps) {
   devWarn('FeatureCard', { variant, tone }, { variant: ['icon','image','horizontal'], tone: ['info','success','warning','danger','neutral'] });
   const v = VARIANTS.indexOf(variant) >= 0 ? variant : 'icon';
   const picture = v === 'image' || (v === 'horizontal' && image && !icon);
   // the plain icon (no tile, #882): a tone's content color, a data hue's color, the link blue (surface) or gray
-  const look = TONES.indexOf(tone) >= 0 ? tone : hue === 'surface' ? 'surface' : null;
+  const look = TONES.indexOf(tone as string) >= 0 ? tone : hue === 'surface' ? 'surface' : null;
   const media = picture && image
     ? <Image src={image} alt={imageAlt} ratio={v === 'image' ? '16-9' : '1-1'} rounded={v === 'horizontal'} className="plx-feature-card__image" />
     : <Icon name={icon || SparkleIcon} size="md" className={cx('plx-feature-card__icon', look && 'plx-feature-card__icon--' + look)}
-        data-plx-color={!look && DATA_HUES.indexOf(hue) >= 0 ? hue : undefined} />;
+        data-plx-color={!look && DATA_HUES.indexOf(hue as string) >= 0 ? hue : undefined} />;
   return (
     <Card layout={v === 'horizontal' ? 'media-start' : 'media-first'} titleWrap title={title} meta={description} href={href} onOpen={onOpen} headingLevel={headingLevel}
       className={cx('plx-feature-card', 'plx-feature-card--' + v, className)} {...rest}>

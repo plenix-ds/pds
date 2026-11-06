@@ -195,7 +195,7 @@ DSParts.records.push(function (H) {
     return box(360, bar);
   };
   var mobileAppBar = { id: 'mobile-app-bar', lab: true, icon: 'app-switcher', sec: 'navigation', sub: 'Mobile navigation', leaf: 'Mobile app bar', title: 'Mobile app bar',
-    plenix: 'AppHeader (Narrow), back, title', src: 'patterns/AppHeader/AppHeader.jsx', variantClasses: [], level: 'Composite', interaction: 'Navigation', statesFrom: ['application-header'],
+    plenix: 'AppHeader (Narrow), back, title', src: 'patterns/AppHeader/AppHeader.tsx', variantClasses: [], level: 'Composite', interaction: 'Navigation', statesFrom: ['application-header'],
     aliases: ['Top app bar', 'Navigation bar', 'Mobile header'],
     text: 'On a phone (the Narrow window class) AppHeader is the mobile app bar: the header name and switcher at the start, search and the utilities at the end. The header links leave it (they stay in the switcher), and search opens a full-screen search view. On a screen inside the application, back puts Back first and title puts the screen’s title after it, in place of the header name (cut short with an ellipsis); the actions stay at the end. With a touch pointer every item has a 44 × 44px target.',
     use: ['Every screen of an application on a phone, through AppShell', 'back and title on a child screen (a note, a record); the title the same as the page’s heading', 'Two or three actions at most; the rest in a More menu'],
@@ -208,7 +208,7 @@ DSParts.records.push(function (H) {
     ],
     examples: [['Variant', [['Narrow (mobile app bar)', function () { return h(Phone, {}); }, null, 'AppHeader'], ['With back', function () { return h(Phone, { child: true }); }, null, 'back title']]]] };
   var productNavigation = { id: 'product-navigation', icon: 'panel-left-open', sec: 'navigation', sub: 'Local navigation', leaf: 'Product navigation', title: 'Product navigation',
-    plenix: 'AppHeader, NavPane', src: 'patterns/AppHeader/AppHeader.jsx', also: ['patterns/NavPane/NavPane.tsx'], variantClasses: [], level: 'Composite', interaction: 'Navigation', statesFrom: ['application-header', 'side-navigation'],
+    plenix: 'AppHeader, NavPane', src: 'patterns/AppHeader/AppHeader.tsx', also: ['patterns/NavPane/NavPane.tsx'], variantClasses: [], level: 'Composite', interaction: 'Navigation', statesFrom: ['application-header', 'side-navigation'],
     aliases: ['Product nav', 'App navigation', 'Main navigation'],
     text: 'A Plenix product is navigated at two levels. Across applications: the header (AppHeader), whose header name opens the switcher and whose links are the applications the person pinned. Inside an application: the navigation pane (NavPane) beside the content, with the application’s sections, collections and saved views, the current one marked; it collapses to a rail, opens over the content at Medium and becomes the bottom navigation bar on a phone.',
     use: ['Every application: AppHeader across the top and NavPane at the start, through AppShell', 'Short nouns for the pane’s rows; groups for more than about seven'],
