@@ -66,7 +66,8 @@ export function useGridMetrics({
     const ctx = at.ownerDocument.createElement('canvas').getContext('2d'),
       widths: Record<string, any> = {},
       free: any[] = [],
-      floor: Record<string, any> = {};
+      floor: Record<string, any> = {},
+      bodyFloor: Record<string, any> = {};
     // the probe pills are the only writes: measured first, so the reads below find the styles already computed
     const scales: any = cells === 'pill' ? { data: pillFont(at, ctx, true), text: pillFont(at, ctx, false) } : null,
       cs = getComputedStyle(at),
@@ -150,18 +151,19 @@ export function useGridMetrics({
             ? tokenPx('--plx-comp-data-pill-icon-size') + tokenPx('--plx-comp-data-pill-gap')
             : 0)
         : 0; // the icon only where the pill has one
+      let body = 0;   // the widest value alone, without the title (the floor a squeezed column keeps, #783)
       source.forEach((record: any) => {
         const value = valueAt(record, c.field);
         // a tags cell is a row of Tags: each tag's text plus its own padding and border, with the gap between them (issue 477, so the column fits its tags)
         const tagged = k.includes('tags') && !pill ? ([] as any[]).concat(value ?? []).map((tag) => (typeof tag === 'object' ? tag.label : String(tag))) : null;
-        width = Math.max(
-          width,
-          tagged
-            ? tagged.reduce((sum, text) => sum + ctx.measureText(text).width + 2 * (tokenPx('--plx-comp-tag-padding-inline') + tokenPx('--plx-comp-tag-border-width')), 0) +
-                tokenPx('--plx-comp-data-grid-cell-rich-gap') * Math.max(0, tagged.length - 1)
-            : ctx.measureText(valueText(value)).width * scale + chrome
-        );
+        const here = tagged
+          ? tagged.reduce((sum, text) => sum + ctx.measureText(text).width + 2 * (tokenPx('--plx-comp-tag-padding-inline') + tokenPx('--plx-comp-tag-border-width')), 0) +
+              tokenPx('--plx-comp-data-grid-cell-rich-gap') * Math.max(0, tagged.length - 1)
+          : ctx.measureText(valueText(value)).width * scale + chrome;
+        body = Math.max(body, here);
+        width = Math.max(width, here);
       });
+      bodyFloor[c.field] = snapUp(Math.max(metrics.min, body + metrics.space * 2));
       const content = width + metrics.space * 2;
       // a fixed table or a list (narrow="table" | "list") keeps its set widths as before; the default grid sizes to content
       if (explicit) {
@@ -185,13 +187,13 @@ export function useGridMetrics({
     const shownColumns = columns.filter((c: any) => !columnVisibility || columnVisibility[c.field] !== false);
     // (issue 783, owner P1) a column's floor is its whole title (the type icon and the options button too), so a wide grid of ordinary titles
     // "needed" more than its room and drew cards while a table of readable columns fits. When the floors together do not fit, the floor of
-    // each column comes down to its minimum readable width (its minWidth, else the grid's minimum): a title that no longer fits ends in an
+    // each column comes down to its minimum readable width (its minWidth, else the grid's minimum, but never under its widest value, so a date or a number stays whole): a title that no longer fits ends in an
     // ellipsis. Only when even those minimums do not fit does the card switch below take over
     if (fitting) {
       const floors = shownColumns.reduce((sum: any, c: any) => sum + (kinds(c).includes('icon') ? 0 : floor[c.field] || 0), 0)
         + shownColumns.reduce((sum: any, c: any) => sum + (kinds(c).includes('icon') ? metrics.lead : 0), 0);
       if (floors > available)
-        shownColumns.forEach((c: any) => { if (!kinds(c).includes('icon')) floor[c.field] = snapUp(Math.max(metrics.min, tokenPx(c.minWidth) || 0)); });
+        shownColumns.forEach((c: any) => { if (!kinds(c).includes('icon')) floor[c.field] = snapUp(Math.max(metrics.min, tokenPx(c.minWidth) || 0, Math.min(bodyFloor[c.field] || 0, tokenPx('--plx-comp-data-grid-auto-max-width') || Infinity))); });
     }
     // the table fits its room (owner, issue 929: "autosize and autofit"): each shown column starts at its natural width (its
     // header and its widest value, capped at its set width; measured above). Over the room, the columns with the most room
