@@ -7,7 +7,9 @@
      <ViewMenu value={view} onChange={setView} />
      {view.layout === 'list' ? <DataGrid … rowHeight={view.height} /> : <ContentGrid size={…}>…</ContentGrid>}
    Props:
-     value: { layout: "list" | "gallery", size: "s" | "m" | "l", height: "short" | "medium" | "tall" | "extra-tall" }
+     value: { layout: "list" | "gallery", size: "s" | "m" | "l", height: "short" | "medium" | "tall" | "extra-tall", editMode?: "inline" | "form" }
+     editModes: the ways the table can edit, ["inline", "form"]: with both, the menu ends with an "Editing" group (Inline Edit, Form Edit); value.editMode holds the
+       choice. Pass it only when the table has an editable column; without it (or with one way) nothing appears (ADR 0016, issue 477)
      onReset(): optional Reset view action (useCollectionView supplies it)
      onChange(value): runs on every change
      gallery: the collection has a gallery layout; without it Gallery and the card sizes are disabled; default true
@@ -31,7 +33,7 @@ import ViewTableIcon from 'plenix-platform/icons/plenix/view-table';
 const SIZES = [['s', 'cards-small'], ['m', 'cards-medium'], ['l', 'cards-large']];
 const HEIGHTS = ['short', 'medium', 'tall', 'extra-tall'];
 
-export function ViewMenu({ value, onChange, gallery = true, strings, onReset }) {
+export function ViewMenu({ value, onChange, gallery = true, editModes, strings, onReset }) {
   const t = useStrings('viewMenu', strings);
   const ctx = useCommandBar();
   const v = Object.assign({ layout: 'list', size: 'm', height: 'short' }, value);
@@ -50,6 +52,14 @@ export function ViewMenu({ value, onChange, gallery = true, strings, onReset }) 
       <MenuGroup label={t.height}>
         {HEIGHTS.map((k) => <MenuItem key={k} type="radio" checked={v.height === k} disabled={v.layout !== 'list'} keepOpen onSelect={() => set('height')(k)}>{t[k]}</MenuItem>)}
       </MenuGroup>
+      {Array.isArray(editModes) && editModes.length > 1 ? (
+        <>
+          <MenuDivider />
+          <MenuRadioGroup label={t.editMode} value={v.editMode || editModes[0]} onChange={set('editMode')} keepOpen>
+            {editModes.map((mode) => <MenuItem key={mode} value={mode}>{mode === 'form' ? t.editModeForm : t.editModeInline}</MenuItem>)}
+          </MenuRadioGroup>
+        </>
+      ) : null}
       {onReset ? <><MenuDivider /><MenuItem icon={RefreshIcon} onSelect={onReset}>{t.reset}</MenuItem></> : null}
     </Menu>
   );

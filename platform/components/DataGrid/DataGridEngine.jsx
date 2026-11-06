@@ -200,7 +200,7 @@ function NextEngine(rawProps) {
     editModes = (props.editModes ?? settings.editModes ?? ['inline']).filter((m) => m === 'inline' || m === 'form'),
     [editModeChoice, setEditMode] = React.useState(initial.editMode),
     canChoose = editModes.length > 1 && props.columns.some((c) => c.editor),
-    editMode = editModes.includes(editModeChoice) ? editModeChoice : editModes.includes(props.editMode ?? settings.editMode) ? props.editMode ?? settings.editMode : editModes[0] || 'inline',
+    editMode = props.onViewChange && editModes.includes(props.editMode) ? props.editMode : editModes.includes(editModeChoice) ? editModeChoice : editModes.includes(props.editMode ?? settings.editMode) ? props.editMode ?? settings.editMode : editModes[0] || 'inline',
     editMenu = { mode: editMode, modes: editModes, show: canChoose, set: setEditMode };
   // Form Edit (ADR 0016, #84 F2): in this mode an edit asked for on a cell opens the record in a form instead of the inline editor
   const [formKey, setFormKey] = React.useState(null),
