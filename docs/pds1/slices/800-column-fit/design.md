@@ -1,6 +1,7 @@
 # #800: DataGrid column sizing (owner P1, D-0087): design (G2)
 
 - **Owner, 2026-11-06:** "the UI has lots of space... yet in some columns its truncating." His rule is D-0087 (steps 1 to 7 on #800). This file makes it buildable without inventing anything.
+- **Spec:** the Product Lead's brief, `brief.md` (#802), with its acceptance AC-1 to AC-8. Where this file once differed, it now follows the brief.
 - **Extends:** DataGrid's fit (`narrow: "auto"`, #272, #679, #783/#793), the existing column `kind`s, the pill width equalizing (D-0010), the row menu and `kind: "actions"`, fit-and-overflow §2 (table-header ladder) and §5 (Tooltip while cut).
 
 ## 1. Column classes, from what exists (no new prop)
@@ -9,9 +10,9 @@
 |---|---|---|
 | **Fixed** | the selection checkbox; the row menu (⋮) | never; their own fixed width tokens |
 | **Compact** | `name`, `avatar-name`, `data`, `id`, `code`, `phone`, `email`, `badge`, `tags`, `icon`, `center`, `deleted`; every number, currency, percent, duration and date column (by type); status and pill columns | only at step 4 below, the last before cards |
-| **Long text** | `kind: "wrap"`; `url`; and an unkinded text column whose widest value is wider than `size-80u` (320px) | first, at step 3 |
+| **Long text** | `kind: "wrap"`; `url`; and a text column whose widest value is longer than `long_text_threshold` characters (the brief; named at G3) | first, at step 4.1 |
 
-- An unkinded text column whose widest value is 320px or less is **compact**. So a short "Reason for divorce" or "Status" text never cuts.
+- A text column whose widest value is within `long_text_threshold` is **compact**. So a short "Reason for divorce" or "Status" text never cuts.
 - A person-resized column keeps its width (as today).
 
 ## 2. Widths
@@ -23,12 +24,13 @@
    1. **long text** columns give up width first, down to the grid's minimum readable width (80px), with their text ending in an ellipsis and the full value in the Tooltip;
    2. then **compact headers** cut (the table-header ladder, #793), never a value: each compact column keeps at least its widest value;
    3. only when even that doesn't fit does the grid switch to the **row cards** (#783's corrected rule).
-- **Measuring "widest value":** over the rows loaded so far (the first page, at most 200 rows), recomputed when the data or the visible columns change, **never while scrolling**, so columns don't jump. 10,000 rows don't cost a measure.
+- **Measuring "widest value":** over the **current view** (the visible window plus the current page, AC-8). It's recomputed on resize, a column shown or hidden, and a data, page or filter change, **never by scrolling alone**, so columns don't jump.
 
-## 3. Alignment
+## 3. Alignment (D-0087)
 
-- Content stays **start-aligned** in its column when spare room widens it. Nothing is centred or stretched.
-- **Exception, as today:** number, currency, percent and duration cells stay **end-aligned** with `tabular-nums` (DESIGN.md §8, check 10). Their headers stay start-aligned.
+- **All cell content is start-aligned** (left in LTR), **numbers included**, so a value sits under its start-aligned header however wide the column gets. A column may still say `align`.
+- Numbers, currency, percent and duration keep **`tabular-nums`** (digits line up), and the data font where they used it.
+- This replaces DESIGN.md §8's "numbers end-aligned" rule and check 10's alignment part (the owner's newer rule wins). @pds1-ds-architect updates check 10: tabular-nums is kept, end alignment is dropped.
 
 ## 4. The first and last columns
 
@@ -49,7 +51,7 @@
 
 ## 6. The engineer must not invent
 
-- No new column prop and no new token (`size-80u` and the existing minimum and fixed widths only). If a `kind` for long text is needed beyond `wrap`, @pds1-ds-architect names it (G3).
+- No new column prop and no new token beyond what the brief names: the checkbox and ⋮ widths, and `long_text_threshold`, as tokens or constants per G3. If a `kind` for long text is needed beyond `wrap`, @pds1-ds-architect names it (G3).
 - Spare room is shared **evenly**, not to the title.
 - Values in compact columns are never cut before the cards. Cut text always shows in the Plenix Tooltip (#794).
 
