@@ -140,8 +140,20 @@ wake() {
   tmux send-keys -t "$S:$win" -l "$text"; sleep 1; tmux send-keys -t "$S:$win" Enter
 }
 
+# selfupdate: the timers run this script from the Delivery Lead's checkout of main, so a merged change to team.sh,
+# registry.mjs or agents.config.yaml only took effect when someone pulled by hand (the stale heartbeat of 2026-11-06,
+# #821: #772 merged at 22:06 and the nudge kept running the old script). Fast-forward it each round, but only when that
+# checkout is on main and clean, so it never touches work in progress.
+selfupdate() {
+  [ -n "${NUDGE_DRY:-}" ] && return
+  [ "$(git -C "$REPO" branch --show-current 2>/dev/null)" = main ] || return
+  [ -z "$(git -C "$REPO" status --porcelain 2>/dev/null)" ] || return
+  git -C "$REPO" fetch -q origin main 2>>"$LOG" && git -C "$REPO" merge -q --ff-only origin/main >>"$LOG" 2>&1 || log "selfupdate: could not fast-forward $REPO"
+}
+
 nudge() {
   local now last updated open win sent=0 hb
+  selfupdate
   schedule
   now=$(date -u +%FT%TZ); last=$(cat "$NUDGE_STAMP" 2>/dev/null || echo 1970-01-01T00:00:00Z)
   hb=$(node "$HERE/registry.mjs" get dispatch.heartbeat_issue "$CFG" 2>>"$LOG")
