@@ -28,20 +28,40 @@ import { AIDisclaimer } from '../../components/AIDisclaimer/AIDisclaimer.tsx';
 import { RefineMenu } from '../../components/RefineMenu/RefineMenu.tsx';
 import { PromptInput } from '../../components/PromptInput/PromptInput.tsx';
 import { StreamingText } from '../../components/StreamingText/StreamingText.tsx';
-export function AIChat({messages=[],onSend,streaming=false,onStop,variant='panel',title,suggestions=[],prompt,onPromptChange,composer={},strings,className}){
- const t={title:'AI assistant',thread:'AI conversation',you:'You',assistant:'AI assistant',empty:'Ask a question to start the conversation.',...strings},[own,setOwn]=React.useState(''),field=React.useRef(null),draft=prompt===undefined?own:prompt;
+/** @public one message of the conversation */
+export type AIChatMessage = { id: string | number; role: 'user' | 'assistant'; text: string; state?: string; sources?: unknown[]; versions?: unknown[]; onFeedback?(value: unknown): void; onRegenerate?(): void; onRefine?(value: unknown): void };
+/** @public */
+export type AIChatProps = {
+  messages?: AIChatMessage[];
+  /** the caller's request: an async send */
+  onSend?(text: string, context?: unknown): void | Promise<void>;
+  streaming?: boolean;
+  onStop?(): void;
+  variant?: 'panel' | 'page';
+  title?: string;
+  suggestions?: string[];
+  /** the draft, when the parent controls it */
+  prompt?: string;
+  onPromptChange?(text: string): void;
+  /** extra PromptInput props */
+  composer?: Record<string, unknown>;
+  strings?: Record<string, unknown>;
+  className?: string;
+};
+export function AIChat({messages=[],onSend,streaming=false,onStop,variant='panel',title,suggestions=[],prompt,onPromptChange,composer={},strings,className}: AIChatProps) {
+ const t: any={title:'AI assistant',thread:'AI conversation',you:'You',assistant:'AI assistant',empty:'Ask a question to start the conversation.',...strings},[own,setOwn]=React.useState(''),field=React.useRef<any>(null),draft=prompt===undefined?own:prompt;
  const threadId='plx-ai-thread-'+React.useId().replace(/[^a-zA-Z0-9]/g,''),atEnd=React.useRef(true);
  const [announcement,setAnnouncement]=React.useState(''),latest=messages.filter(m=>m.role==='assistant').slice(-1)[0];
  React.useLayoutEffect(()=>{const el=document.getElementById(threadId);if(el&&atEnd.current)el.scrollTop=el.scrollHeight;},[latest?.text,messages.length,threadId]);
  React.useEffect(()=>{const a={streaming:'Generating response',done:'Response complete',stopped:'Generation stopped',...t.response},state=latest?.state||'done';setAnnouncement(latest?(a[state]||a.done)+(state==='streaming'?'':latest.text?' — '+latest.text:''):'');},[latest?.id,latest?.text,latest?.state,t.response?.streaming,t.response?.done,t.response?.stopped]);
- const change=next=>{if(prompt===undefined)setOwn(next);onPromptChange?.(next);};
+ const change=(next: any)=>{if(prompt===undefined)setOwn(next);onPromptChange?.(next);};
  return <Stack grow={variant==='page'} className={cx('plx-ai','plx-ai-chat','plx-ai-chat--'+(variant==='page'?'page':'panel'),className)}>
  <Chat.Header title={title||t.title} meta={<AILabel strings={t.aiLabel}/>}/>
  <Chat.Thread id={threadId} label={t.thread} aria-live="off" onScroll={e=>{const el=e.currentTarget;atEnd.current=el.scrollHeight-el.scrollTop-el.clientHeight<=el.clientHeight/4;}}>{messages.length?messages.map(m=><Chat.Message key={m.id} mine={m.role==='user'} author={m.role==='user'?t.you:t.assistant}>
- {m.role==='user'?<><VisuallyHidden>{t.you+': '}</VisuallyHidden>{m.text}</>:<Stack><GeneratedContent versions={m.versions} loading={m.state==='streaming'} onFeedback={m.onFeedback} onRegenerate={m.onRegenerate} strings={t.generated}><StreamingText announce={false} text={m.text} state={m.state} strings={t.response}/></GeneratedContent>{m.sources?.length?<Citation variant="list" sources={m.sources} strings={t.citation}/>:null}{m.onRefine?<RefineMenu onRefine={m.onRefine} strings={t.refine} disabled={streaming}/>:null}</Stack>}</Chat.Message>):<Text>{t.empty}</Text>}</Chat.Thread>
+ {m.role==='user'?<><VisuallyHidden>{t.you+': '}</VisuallyHidden>{m.text}</>:<Stack><GeneratedContent versions={m.versions as any} loading={m.state==='streaming'} onFeedback={m.onFeedback} onRegenerate={m.onRegenerate} strings={t.generated}><StreamingText announce={false} text={m.text} state={m.state as any} strings={t.response}/></GeneratedContent>{m.sources?.length?<Citation variant="list" sources={(m.sources as any)} strings={t.citation}/>:null}{m.onRefine?<RefineMenu onRefine={m.onRefine} strings={t.refine} disabled={streaming}/>:null}</Stack>}</Chat.Message>):<Text>{t.empty}</Text>}</Chat.Thread>
  <LiveRegion kind="status">{announcement}</LiveRegion>
  {streaming&&!messages.some(m=>m.state==='streaming')?<Chat.Typing variant="thinking" label={t.response?.streaming}/>:null}
- {suggestions.length?<PromptSuggestions options={suggestions} disabled={streaming} strings={t.suggestions} onSelect={o=>{change(o.prompt||o.label);field.current?.focus();}}/>:null}
+ {suggestions.length?<PromptSuggestions options={suggestions as any} disabled={streaming} strings={t.suggestions} onSelect={(o: any)=>{change(o.prompt||o.label);field.current?.focus();}}/>:null}
  <PromptInput {...composer} ref={field} value={draft} onChange={change} onSend={onSend} streaming={streaming} onStop={onStop} strings={t.prompt}/>
  <AIDisclaimer strings={t.disclaimer}/></Stack>;
 }

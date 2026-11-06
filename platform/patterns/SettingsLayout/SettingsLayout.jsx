@@ -57,7 +57,7 @@ import { useUid } from '../../utils/layer.ts';
 import { useViewState, readView } from '../../providers/ScreenLocation.ts';
 import { Icon } from '../../components/Icon/Icon.tsx';
 import { NavPane } from '../NavPane/NavPane.jsx';
-import { ActionBar } from '../ActionBar/ActionBar.jsx';
+import { ActionBar } from '../ActionBar/ActionBar.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import ChevronDownIcon from 'plenix-platform/icons/plenix/chevron-down';
 

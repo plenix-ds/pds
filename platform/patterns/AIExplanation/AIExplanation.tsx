@@ -14,4 +14,17 @@ import { Popover } from '../../components/Popover/Popover.tsx';
 import { ConfidenceIndicator } from '../../components/ConfidenceIndicator/ConfidenceIndicator.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import SparkleIcon from 'plenix-platform/icons/plenix/sparkle';
-export function AIExplanation({summary,factors=[],confidence,label,title,open,onOpenChange,strings,className}){const t=useStrings('aiExplanation', strings);return <Popover title={title||t.title} open={open} onOpenChange={onOpenChange} closeButton strings={{close:t.close}} trigger={<Button icon={SparkleIcon}>{label||t.label}</Button>}><Stack className={cx('plx-ai-explanation',className)}><Text as="p">{summary}</Text>{factors.length?<Stack as="ul">{factors.map(f=><Text as="li" key={f.id}><Text variant="strong">{f.label}</Text>{f.detail?' — '+f.detail:null}</Text>)}</Stack>:null}{confidence?<ConfidenceIndicator {...confidence}/>:null}</Stack></Popover>;}
+/** @public */
+export type AIExplanationProps = {
+  summary?: React.ReactNode;
+  factors?: Array<{ id: string | number; label: string; detail?: string }>;
+  /** ConfidenceIndicator's props */
+  confidence?: Record<string, unknown>;
+  label?: string;
+  title?: string;
+  open?: boolean;
+  onOpenChange?(open: boolean): void;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function AIExplanation({summary,factors=[],confidence,label,title,open,onOpenChange,strings,className}: AIExplanationProps) {const t: any=useStrings('aiExplanation', strings);return <Popover title={title||t.title} open={open} onOpenChange={onOpenChange} closeButton strings={{close:t.close}} trigger={<Button icon={SparkleIcon}>{label||t.label}</Button>}><Stack className={cx('plx-ai-explanation',className)}><Text as="p">{summary}</Text>{factors.length?<Stack as="ul">{factors.map(f=><Text as="li" key={f.id}><Text variant="strong">{f.label}</Text>{f.detail?' — '+f.detail:null}</Text>)}</Stack>:null}{confidence?<ConfidenceIndicator {...confidence}/>:null}</Stack></Popover>;}

@@ -2034,7 +2034,7 @@
       "platform/patterns/SaveAs/SaveAs.jsx",
       "platform/patterns/SaveAs/save-as.css",
       "platform/tokens/components/save-as.tokens.json",
-      "platform/patterns/ArchiveRestore/ArchiveRestore.jsx",
+      "platform/patterns/ArchiveRestore/ArchiveRestore.tsx",
       "platform/patterns/ArchiveRestore/archive-restore.css",
       "platform/tokens/components/archive-restore.tokens.json"
      ],
@@ -2184,7 +2184,7 @@
       "platform/patterns/ImportDialog/ImportDialog.jsx",
       "platform/patterns/ImportDialog/import-dialog.css",
       "platform/tokens/components/import-dialog.tokens.json",
-      "platform/patterns/AccessRequest/AccessRequest.jsx",
+      "platform/patterns/AccessRequest/AccessRequest.tsx",
       "platform/patterns/AccessRequest/access-request.css",
       "platform/tokens/components/access-request.tokens.json",
       "platform/patterns/ImportWizard/ImportWizard.jsx",
@@ -2279,7 +2279,7 @@
       "platform/design-system/parts/w12B.{records,labs,docs}.js + .css",
       "platform/exports/w12B.{js,css}",
       "platform/standards/web-native-map.d/w12B.json",
-      "platform/patterns/AssetGallery/AssetGallery.jsx",
+      "platform/patterns/AssetGallery/AssetGallery.tsx",
       "platform/patterns/AssetGallery/asset-gallery.css",
       "platform/tokens/components/asset-gallery.tokens.json",
       "platform/components/MediaPlayer/MediaPlayer.jsx",
@@ -2454,7 +2454,7 @@
       "platform/patterns/AuditLog/AuditLog.jsx",
       "platform/patterns/AuditLog/audit-log.css",
       "platform/tokens/components/audit-log.tokens.json",
-      "platform/patterns/ApprovalWorkflow/ApprovalWorkflow.jsx",
+      "platform/patterns/ApprovalWorkflow/ApprovalWorkflow.tsx",
       "platform/patterns/ApprovalWorkflow/approval-workflow.css",
       "platform/tokens/components/approval-workflow.tokens.json"
      ],
@@ -2490,7 +2490,7 @@
       "platform/patterns/AssistantPanel/AssistantPanel.jsx",
       "platform/patterns/AssistantPanel/assistant-panel.css",
       "platform/tokens/components/assistant-panel.tokens.json",
-      "platform/patterns/AIChat/AIChat.jsx",
+      "platform/patterns/AIChat/AIChat.tsx",
       "platform/patterns/AIChat/ai-chat.css",
       "platform/tokens/components/ai-chat.tokens.json",
       "platform/components/PromptInput/PromptInput.tsx",
@@ -2533,7 +2533,7 @@
       "platform/components/SuggestedAction/SuggestedAction.tsx",
       "platform/components/SuggestedAction/suggested-action.css",
       "platform/tokens/components/suggested-action.tokens.json",
-      "platform/patterns/AISearch/AISearch.jsx",
+      "platform/patterns/AISearch/AISearch.tsx",
       "platform/patterns/AISearch/ai-search.css",
       "platform/tokens/components/ai-search.tokens.json",
       "platform/patterns/Recommendation/Recommendation.jsx",
@@ -2590,7 +2590,7 @@
       "platform/components/ConfidenceIndicator/ConfidenceIndicator.tsx",
       "platform/components/ConfidenceIndicator/confidence-indicator.css",
       "platform/tokens/components/confidence-indicator.tokens.json",
-      "platform/patterns/AIExplanation/AIExplanation.jsx",
+      "platform/patterns/AIExplanation/AIExplanation.tsx",
       "platform/patterns/AIExplanation/ai-explanation.css",
       "platform/tokens/components/ai-explanation.tokens.json",
       "platform/components/AIDisclaimer/AIDisclaimer.tsx",
@@ -2671,7 +2671,7 @@
       "platform/standards/web-native-map.d/w15B.json",
       "platform/standards/content/",
       "check-copy.js",
-      "platform/patterns/ActionBar/ActionBar.jsx",
+      "platform/patterns/ActionBar/ActionBar.tsx",
       "platform/patterns/ActionBar/action-bar.css",
       "platform/design-system/platforms-standard.js",
       "packages/vue/",
@@ -7065,7 +7065,7 @@
    "wave": 10,
    "lane": "C",
    "files": [
-    "platform/patterns/ArchiveRestore/ArchiveRestore.jsx",
+    "platform/patterns/ArchiveRestore/ArchiveRestore.tsx",
     "platform/patterns/ArchiveRestore/archive-restore.css",
     "platform/tokens/components/archive-restore.tokens.json"
    ],
@@ -7507,7 +7507,7 @@
    "wave": 11,
    "lane": "C",
    "files": [
-    "platform/patterns/AccessRequest/AccessRequest.jsx",
+    "platform/patterns/AccessRequest/AccessRequest.tsx",
     "platform/patterns/AccessRequest/access-request.css",
     "platform/tokens/components/access-request.tokens.json"
    ],
@@ -7725,7 +7725,7 @@
    "wave": 12,
    "lane": "B",
    "files": [
-    "platform/patterns/AssetGallery/AssetGallery.jsx",
+    "platform/patterns/AssetGallery/AssetGallery.tsx",
     "platform/patterns/AssetGallery/asset-gallery.css",
     "platform/tokens/components/asset-gallery.tokens.json"
    ],
@@ -8230,7 +8230,7 @@
    "wave": 13,
    "lane": "C",
    "files": [
-    "platform/patterns/ApprovalWorkflow/ApprovalWorkflow.jsx",
+    "platform/patterns/ApprovalWorkflow/ApprovalWorkflow.tsx",
     "platform/patterns/ApprovalWorkflow/approval-workflow.css",
     "platform/tokens/components/approval-workflow.tokens.json"
    ],
@@ -8305,7 +8305,7 @@
    "wave": 14,
    "lane": "A",
    "files": [
-    "platform/patterns/AIChat/AIChat.jsx",
+    "platform/patterns/AIChat/AIChat.tsx",
     "platform/patterns/AIChat/ai-chat.css",
     "platform/tokens/components/ai-chat.tokens.json"
    ],
@@ -8471,7 +8471,7 @@
    "wave": 14,
    "lane": "B",
    "files": [
-    "platform/patterns/AISearch/AISearch.jsx",
+    "platform/patterns/AISearch/AISearch.tsx",
     "platform/patterns/AISearch/ai-search.css",
     "platform/tokens/components/ai-search.tokens.json"
    ],
@@ -8588,7 +8588,7 @@
    "wave": 14,
    "lane": "C",
    "files": [
-    "platform/patterns/AIExplanation/AIExplanation.jsx",
+    "platform/patterns/AIExplanation/AIExplanation.tsx",
     "platform/patterns/AIExplanation/ai-explanation.css",
     "platform/tokens/components/ai-explanation.tokens.json"
    ],
@@ -8802,7 +8802,7 @@
    "wave": 15,
    "lane": "B",
    "files": [
-    "platform/patterns/ActionBar/ActionBar.jsx",
+    "platform/patterns/ActionBar/ActionBar.tsx",
     "platform/patterns/ActionBar/action-bar.css"
    ],
    "dependsOn": [
@@ -11369,7 +11369,7 @@
    "target": "AssetGallery",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/AssetGallery/AssetGallery.jsx",
+    "platform/patterns/AssetGallery/AssetGallery.tsx",
     "platform/patterns/AssetGallery/asset-gallery.css",
     "platform/tokens/components/asset-gallery.tokens.json"
    ],
@@ -18460,7 +18460,7 @@
    "target": "ArchiveRestore",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/ArchiveRestore/ArchiveRestore.jsx",
+    "platform/patterns/ArchiveRestore/ArchiveRestore.tsx",
     "platform/patterns/ArchiveRestore/archive-restore.css",
     "platform/tokens/components/archive-restore.tokens.json"
    ],
@@ -18492,7 +18492,7 @@
    "target": "ArchiveRestore",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/ArchiveRestore/ArchiveRestore.jsx",
+    "platform/patterns/ArchiveRestore/ArchiveRestore.tsx",
     "platform/patterns/ArchiveRestore/archive-restore.css",
     "platform/tokens/components/archive-restore.tokens.json"
    ],
@@ -19014,7 +19014,7 @@
    "target": "AccessRequest",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/AccessRequest/AccessRequest.jsx",
+    "platform/patterns/AccessRequest/AccessRequest.tsx",
     "platform/patterns/AccessRequest/access-request.css",
     "platform/tokens/components/access-request.tokens.json"
    ],
@@ -19597,7 +19597,7 @@
    "target": "ActionBar",
    "targetKind": "extend",
    "files": [
-    "platform/patterns/ActionBar/ActionBar.jsx",
+    "platform/patterns/ActionBar/ActionBar.tsx",
     "platform/patterns/ActionBar/action-bar.css"
    ],
    "laneFiles": [
@@ -19926,7 +19926,7 @@
    "target": "AssetGallery",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/AssetGallery/AssetGallery.jsx",
+    "platform/patterns/AssetGallery/AssetGallery.tsx",
     "platform/patterns/AssetGallery/asset-gallery.css",
     "platform/tokens/components/asset-gallery.tokens.json"
    ],
@@ -20812,7 +20812,7 @@
    "target": "ApprovalWorkflow",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/ApprovalWorkflow/ApprovalWorkflow.jsx",
+    "platform/patterns/ApprovalWorkflow/ApprovalWorkflow.tsx",
     "platform/patterns/ApprovalWorkflow/approval-workflow.css",
     "platform/tokens/components/approval-workflow.tokens.json"
    ],
@@ -21279,7 +21279,7 @@
    "target": "AIChat",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/AIChat/AIChat.jsx",
+    "platform/patterns/AIChat/AIChat.tsx",
     "platform/patterns/AIChat/ai-chat.css",
     "platform/tokens/components/ai-chat.tokens.json"
    ],
@@ -21709,7 +21709,7 @@
    "target": "AISearch",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/AISearch/AISearch.jsx",
+    "platform/patterns/AISearch/AISearch.tsx",
     "platform/patterns/AISearch/ai-search.css",
     "platform/tokens/components/ai-search.tokens.json"
    ],
@@ -21741,7 +21741,7 @@
    "target": "AISearch",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/AISearch/AISearch.jsx",
+    "platform/patterns/AISearch/AISearch.tsx",
     "platform/patterns/AISearch/ai-search.css",
     "platform/tokens/components/ai-search.tokens.json"
    ],
@@ -21894,7 +21894,7 @@
    "target": "AIExplanation",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/AIExplanation/AIExplanation.jsx",
+    "platform/patterns/AIExplanation/AIExplanation.tsx",
     "platform/patterns/AIExplanation/ai-explanation.css",
     "platform/tokens/components/ai-explanation.tokens.json"
    ],

@@ -48,7 +48,7 @@ import { useUid } from '../../utils/layer.ts';
 import { FieldLayoutContext } from '../../components/Field/Field.tsx';
 import { Stack } from '../../components/Stack/Stack.tsx';
 import { Text } from '../../components/Text/Text.tsx';
-import { ActionBar } from '../ActionBar/ActionBar.jsx';
+import { ActionBar } from '../ActionBar/ActionBar.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 
 const LAYOUTS = ['one-column', 'two-column'];
