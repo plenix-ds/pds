@@ -15,6 +15,22 @@
 - [ ] Meant to look different: listed below with a picture (the owner updates the visual baseline himself)
 - [ ] Design system page complete (no "Not written yet" on a built item)
 
+## Gates (template v2.4 §7)
+
+Record each gate PASS, FAIL or N/A with a reason; a gate with no entry is not passed.
+
+- G1 spec: 
+- G2 design: 
+- G3 contract (API, token tiers): 
+- G4 plan: 
+- G5a code review: 
+- G5b visual: 
+- G5c a11y and RTL: 
+- G5d behaviour tests: 
+- G5e security: 
+- G6 locale: 
+- G7 docs: 
+
 ## Left undone
 
 <!-- With the reason. -->
