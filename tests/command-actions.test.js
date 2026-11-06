@@ -63,9 +63,13 @@ module.exports = async function regressions(page) {
     await reset(); await mount(h(P.CommandBar, { label: 'Posts', actions: [{ id: 'new', label: 'New post', icon: 'plus', onSelect() {} }],
       find: h(P.CommandBarSearch, { value: '', onChange() {}, placeholder: 'Search posts' }),
       quickFilters: [{ id: 'community', label: 'Community', options: [{ value: 'a', label: 'A' }], value: [], onChange() {} }],
-      selection: { count: 2, onClear() {}, actions: [{ id: 'archive', label: 'Archive', icon: 'archive', onSelect() {} }] } }));
+      selection: { mode: 'swap', count: 2, onClear() {}, actions: [{ id: 'archive', label: 'Archive', icon: 'archive', onSelect() {} }] } }));
     check(!!host.querySelector('.plx-command-bar input') && !!button('Community') && !!button('Archive') && !button('New post'),
-      'CommandBar: while rows are ticked, search and filters stay and only the page actions give way to the selection commands #454');
+      'CommandBar: in selection.mode "swap", while rows are ticked, search and filters stay and only the page actions give way to the selection commands #454');
+    await reset(); await mount(h(P.CommandBar, { label: 'Posts', actions: [{ id: 'new', label: 'New post', icon: 'plus', onSelect() {} }],
+      find: h(P.CommandBarSearch, { value: '', onChange() {}, placeholder: 'Search posts' }),
+      selection: { count: 2, onClear() {}, actions: [{ id: 'archive', label: 'Archive', icon: 'archive', onSelect() {} }] } }));
+    check(!!host.querySelector('.plx-command-bar input') && !!button('Archive') && !!button('New post'), 'CommandBar: by default (selection.mode "add", D-0068) the selection commands come with the page commands, not instead of them');
     let cleared = 0; await reset(); await mount(h(P.CommandBar, { label: 'Posts', find: h(P.CommandBarSearch, { value: 'cairo', onChange() {}, placeholder: 'Search posts' }),
       selection: { count: 2, onClear: () => cleared++, actions: [{ id: 'archive', label: 'Archive', icon: 'archive', onSelect() {} }] } }));
     const field = host.querySelector('.plx-command-bar input'); field.focus();
