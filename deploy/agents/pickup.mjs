@@ -140,6 +140,10 @@ async function round() {
   if (runs) {
     for (const run of runs.workflow_runs.filter((x) => DRY || x.id > (state.lastRunId || 0)).reverse().slice(DRY ? -3 : 0)) {
       if (!state.lastRunId && !DRY) continue;
+      // a failed G2 run is the gate working as designed: it fails while g2-/g3-changes-requested is on the PR and re-runs
+      // on every label change, so routing it woke the reviewer who set the label, again and again (#491). The label and
+      // the review comment already tell the builder.
+      if (run.name === 'G2') { if (DRY) console.log(`${run.created_at} G2 failed on ${run.head_branch} -> (gate working as designed: ignored)`); continue; }
       const n = run.pull_requests?.[0]?.number || Number((/\/pr-(\d+)-/.exec(run.head_branch) || [])[1]);
       if (!n) continue;
       const pr = (await get(`/repos/${REPO}/pulls/${n}`)).data;
