@@ -17,13 +17,30 @@ import { Field } from '../../components/Field/Field.tsx';
 import { Input, Textarea } from '../../components/Input/Input.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Text } from '../../components/Text/Text.tsx';
-import { WizardDialog } from '../WizardDialog/WizardDialog.jsx';
-import { ExportDialog } from '../ExportDialog/ExportDialog.jsx';
+import { WizardDialog as WizardDialogJs } from '../WizardDialog/WizardDialog.jsx';
+const WizardDialog: any = WizardDialogJs;
+import { ExportDialog as ExportDialogJs } from '../ExportDialog/ExportDialog.jsx';
+const ExportDialog: any = ExportDialogJs;
 import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 
-export function Offboarding({ open, onClose, accountName, action = 'cancel', onConfirm, onExport, formats = [], children, strings, className }) {
-  const words = useStrings('offboarding', strings);
+/** @public the prop type (ADR 0011) */
+export type OffboardingProps = {
+  open?: boolean;
+  onClose?(): void;
+  /** the exact text the person types to confirm */
+  accountName: string;
+  action?: 'cancel' | 'delete';
+  onConfirm(result: { action: 'cancel' | 'delete'; reason: string }): unknown;
+  /** the export step (ExportDialog): the formats it offers and what it runs */
+  onExport?(options: unknown): unknown;
+  formats?: unknown[];
+  children?: React.ReactNode;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function Offboarding({ open, onClose, accountName, action = 'cancel', onConfirm, onExport, formats = [], children, strings, className }: OffboardingProps) {
+  const words: any = useStrings('offboarding', strings);
   // the title and the last button name the action: an app's own words in strings win
   const named = action === 'delete' ? words.deleteAccount : words.cancelSubscription;
   const t = Object.assign({}, words, { title: (strings && strings.title) || named, complete: (strings && strings.complete) || named });
@@ -37,6 +54,6 @@ export function Offboarding({ open, onClose, accountName, action = 'cancel', onC
         { id: 'confirm', label: t.review, validate: () => action === 'delete' && (!accountName || name !== accountName) ? t.mismatch : '',
           content: <Stack><Text>{accountName}</Text>{action === 'delete' ? <Field label={t.confirmName} required><Input value={name} onChange={(e) => setName(e.target.value)} autoComplete="off" /></Field> : null}</Stack> }
       ]} />
-    {onExport ? <ExportDialog open={exporting && open} onClose={() => setExporting(false)} formats={formats} onExport={onExport} strings={strings} /> : null}
+    {onExport ? <ExportDialog open={exporting && open} onClose={() => setExporting(false)} formats={formats as any} onExport={onExport} strings={strings} /> : null}
   </Stack>;
 }
