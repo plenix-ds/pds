@@ -1,0 +1,20 @@
+# systemd user unit: GitHub webhooks for the PDS1 pickup (#220, plan §5a). `gh webhook forward` (cli/gh-webhook, pinned
+# v0.2.0) creates a repository webhook while it runs and relays each delivery over its own outbound connection to
+# pds1-pickup's listener, so the session an event is for is woken within seconds. No inbound route to VM 131 is needed.
+# Needs the admin:repo_hook scope on the agent host's GitHub login (granted 2026-11-06). The 60-second feed check in
+# pds1-pickup stays as the fallback.
+# Install: gh extension install cli/gh-webhook --pin v0.2.0
+#          cp deploy/agents/pds1-webhook.service ~/.config/systemd/user/ && systemctl --user enable --now pds1-webhook
+[Unit]
+Description=PDS1 GitHub webhooks -> pds1-pickup (127.0.0.1:8795)
+After=network-online.target pds1-pickup.service
+
+[Service]
+Environment=PATH=%h/.local/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=/usr/bin/env gh webhook forward --repo=plenix-ds/pds --events=issues,issue_comment,pull_request_review,pull_request_review_comment,workflow_run --url=http://127.0.0.1:8795/webhook
+Restart=always
+RestartSec=30
+MemoryMax=128M
+
+[Install]
+WantedBy=default.target

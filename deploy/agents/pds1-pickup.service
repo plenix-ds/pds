@@ -9,6 +9,8 @@ After=network-online.target pds1-team.service
 
 [Service]
 Environment=PATH=%h/.local/bin:/usr/local/bin:/usr/bin:/bin
+# the webhook listener for pds1-webhook.service (#220)
+Environment=PICKUP_WEBHOOK_PORT=8795
 ExecStart=/usr/bin/env node %h/pds1/work/pds/deploy/agents/pickup.mjs
 Restart=always
 RestartSec=30

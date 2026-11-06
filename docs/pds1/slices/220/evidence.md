@@ -20,3 +20,14 @@
 | Routing on the live feed | Ran (`PICKUP_DRY=1`) | the last 15 events: unlabeled PR openings, pushes and branch events are ignored; the comment on #4 signed "— PDS1-Component-Engineer-1" does not wake its own author |
 | Routing fixtures | Ran | "@pds1-release-architect …— PDS1-Product-Lead" → release-architect; "Fixed. — PDS1-Component-Engineer-1" → nobody; an unsigned comment → product-lead; a self-mention → nobody |
 | Service running and a real wake | Ran | `pds1-pickup` active since 12:18 UTC; 12:24:35 "pickup: woke ds-architect: 2 event(s)" (Product Lead comments on #87 and #265, held while it was busy); the pane shows the message |
+
+## True webhooks (2026-11-06)
+
+| Item | Status | Path / output |
+|---|---|---|
+| `admin:repo_hook` granted | Ran | `gh auth status`: scopes include `admin:repo_hook` (owner, 2026-11-06) |
+| `gh webhook forward` works without an inbound route | Ran (live, 45 s) | `--events=pull_request` to stdout; toggling a label on merged #391 delivered `labeled` and `unlabeled` within seconds; the temporary hook was removed on exit (`gh api …/hooks` empty) |
+| Listener routes a comment once | Ran (local test instance, fake team.sh, port 8796) | the same `issue_comment` posted twice → one `wake design-director` |
+| Failed G2 run by webhook | Ran (same) | `workflow_run` completed/failure, name G2 → no wake |
+| Feed fallback kept, no double delivery | Ran (review) | `once()` keys shared by both paths: comment id, review id, workflow run id, issue action |
+| Live: pds1-webhook + pickup listener | Planned | After merge: install the unit, restart pds1-pickup, then a real comment wakes its session within seconds |
