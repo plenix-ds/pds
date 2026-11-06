@@ -1,4 +1,4 @@
-/* Plenix · GeoMap (platform/charts/GeoMap.jsx), drawn in ChartFrame (system/charts.css). Regions are land in the sunken
+/* Plenix · GeoMap (platform/charts/GeoMap.tsx), drawn in ChartFrame (system/charts.css). Regions are land in the sunken
    surface with outlines, or (a choropleth) their value's data-viz step (data-plx-dataviz) with gaps in the surface color;
    a region without a value carries the no-data texture (ChartPatterns); markers are dots in the data-viz color. Lines keep
    their width when the map is zoomed. Every value is a --plx-comp-geo-map-* token. */

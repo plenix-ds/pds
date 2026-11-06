@@ -700,3 +700,23 @@
   options: ['Microsoft, then IBM, then Adobe/SAP/GitHub/Atlassian/ISO, accepted by default (chosen)', 'owner approves each choice']
   status: active
   check: 'review-only (each i18n proposal row, PR and decision card cites the standard it follows, by this order)'
+
+- id: D-0079
+  date: 2026-11-06
+  area: release
+  decided_by: pds1-release-architect (decision card on plenix-ds/pds#698; owner may reply B)
+  decision: 'A release whose locale check adds no new finding ships even when Arabic strings that were already missing in the previous release are still missing (G6 reads them as carried over, listed in the readiness report). They show in English until the owner approves the Arabic. A string that the release itself adds without approved Arabic still blocks G6.'
+  why: 'Release 0.90.0 (#84, #3, asked for now by the Product Lead): 11 missing-ar findings, all present in 0.89.0 and none from this release; waiting would hold the owner''s urgent DT-41 for words not in it.'
+  options: ['A - ship, carry over the old missing strings and list them (chosen)', 'B - hold every release until no Arabic string is missing']
+  status: active
+  check: 'tools/checks/locale/locale.mjs <previous tag> in the release readiness report (new findings must be 0; carried-over missing-ar listed)'
+
+- id: D-0081
+  date: 2026-11-06
+  area: api
+  decided_by: agent (pds1-ds-architect) on #61, owner may switch
+  decision: 'The published TypeScript types of @plenix-ds/react come from the TypeScript sources: build-types.js emits tsc declarations into types/ (import paths rewritten to .js) and index.d.ts re-exports each .ts/.tsx-sourced export from there, with export type * per file; JavaScript sources keep the header reading until they convert; npm and the CDN ship types/ beside the index (docs/adr/0011 addendum wave 5a).'
+  why: 'The reviewed TypeScript props never reached consumers; this cuts the published any props from 334 to 131 now, and to none as the last sources convert.'
+  options: [tsc declarations for TS sources, header for the rest (chosen), wait for wave 5 to switch everything at once, a d.ts bundler (new tooling)]
+  status: active
+  check: build-types.js coverage gate; a consumer compile of index.d.ts; G3 on converted sources

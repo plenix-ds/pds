@@ -293,7 +293,7 @@ DSParts.records.push(function (H) {
 
   /* ── 07 Data Display › Charts › Treemap: Treemap ── */
   var treemap = { id: 'treemap', lab: true, icon: 'grid-2x2', sec: 'data-display', sub: 'Charts', leaf: 'Treemap', title: 'Treemap',
-    plenix: 'Treemap', src: 'charts/Treemap.jsx', css: ['charts/treemap.css'], blocks: ['plx-treemap'], level: 'Component', interaction: 'Display',
+    plenix: 'Treemap', src: 'charts/Treemap.tsx', css: ['charts/treemap.css'], blocks: ['plx-treemap'], level: 'Component', interaction: 'Display',
     aliases: ['Tree map', 'Space-filling chart', 'Mosaic'],
     text: 'The parts of a whole as rectangles whose areas are their sizes, laid out by the squarified algorithm, largest first from the top start corner: many parts in little room. Flat: every tile in one color. Nested: each group framed and named, its tiles in the group’s color. Names and values show on tiles big enough for them, on a halo in the surface color; the tooltip and the table always have them.',
     use: ['Many parts of a whole: storage by folder, budget by team', 'Two levels: groups and their parts (nested)', 'A description that names the largest parts'],
@@ -311,7 +311,7 @@ DSParts.records.push(function (H) {
 
   /* ── 07 Data Display › Charts › Gantt chart: GanttChart ── */
   var gantt = { id: 'gantt-chart', lab: true, icon: 'schedule', sec: 'data-display', sub: 'Charts', leaf: 'Gantt chart', title: 'Gantt chart',
-    plenix: 'GanttChart', src: 'charts/GanttChart.jsx', css: ['charts/gantt-chart.css'], blocks: ['plx-gantt'], level: 'Component', interaction: 'Display',
+    plenix: 'GanttChart', src: 'charts/GanttChart.tsx', css: ['charts/gantt-chart.css'], blocks: ['plx-gantt'], level: 'Component', interaction: 'Display',
     aliases: ['Gantt', 'Project schedule', 'Timeline chart', 'Roadmap chart'],
     text: 'A schedule on a time axis: one row per task with a bar from its start to its end, the part not done yet textured (so progress shows without a second color) and the share done after it; diamonds for milestones; arrows from a task to the tasks that wait for it; a dashed line at today. Read-only: the keyboard reads every task, and the table lists each with its dates, progress, status and dependencies.',
     use: ['Project schedules, release plans and bookings where start, end and dependencies matter', 'today to show what is late; status in words for every task', 'About ten tasks per chart (size lg); split longer plans by phase'],
@@ -333,7 +333,7 @@ DSParts.records.push(function (H) {
 
   /* ── 07 Data Display › Specialized displays › Map, and Charts › Choropleth map: GeoMap ── */
   var geoMap = { id: 'geo-map', lab: true, icon: 'pin', sec: 'data-display', sub: 'Specialized displays', leaf: 'Map', title: 'Map',
-    plenix: 'GeoMap', src: 'charts/GeoMap.jsx', css: ['charts/geo-map.css'], blocks: ['plx-geo-map'], level: 'Component', interaction: 'Display',
+    plenix: 'GeoMap', src: 'charts/GeoMap.tsx', css: ['charts/geo-map.css'], blocks: ['plx-geo-map'], level: 'Component', interaction: 'Display',
     aliases: ['Geographic map', 'Location map', 'Region map', 'Marker map'],
     text: 'A map drawn from the app’s own geography: regions from GeoJSON (fitted to the frame, Mercator or plain longitude and latitude) as land in the sunken surface with outlines, and markers at places in a data-viz color. Zoom buttons and dragging move around; the wheel never zooms, so the page keeps scrolling. No tiles and no network: Plenix ships no geography. The sample regions on this page are a made-up layout, not a real place.',
     use: ['Where things are when location is the point: sites, assets, deliveries', 'The places also as a table (the frame’s data table), with names and coordinates', 'Shapes kept with the app: a public-domain source such as Natural Earth, simplified'],
@@ -349,7 +349,7 @@ DSParts.records.push(function (H) {
         ['Regions', function () { return box(640, h(P.GeoMap, { title: 'Sales regions (sample)', description: 'Nine made-up regions on a 3 by 3 layout.', features: REGIONS, size: 'md' })); }, 'plx-geo-map__region', 'features'],
         ['Markers', function () { return box(640, h(P.GeoMap, { title: 'Sites (sample)', description: 'Four sites: two in the north, one on the coast, one in the south.', features: REGIONS, markers: SITES, size: 'md' })); }, 'plx-geo-map__marker', 'markers']], { prop: 'variant' }]] };
   var choropleth = { id: 'choropleth-map', lab: true, icon: 'grid-3x2', sec: 'data-display', sub: 'Charts', leaf: 'Choropleth map', title: 'Choropleth map',
-    plenix: 'GeoMap values', src: 'charts/GeoMap.jsx', css: ['charts/geo-map.css'], blocks: ['plx-geo-map'], variantClasses: [], level: 'Component', interaction: 'Display',
+    plenix: 'GeoMap values', src: 'charts/GeoMap.tsx', css: ['charts/geo-map.css'], blocks: ['plx-geo-map'], variantClasses: [], level: 'Component', interaction: 'Display',
     aliases: ['Filled map', 'Heat map (geographic)', 'Shaded region map'],
     text: 'A map whose regions are shaded by a measure: GeoMap with values. Each region takes a step of the sequential data-viz scale (seven steps from the lowest value to the highest), or of the diverging scale around the middle for a change. The legend lists the steps and their ranges in the data font; a region without a value carries the no-data texture. The table lists every region with its value.',
     use: ['Rates and shares per region (normalized values), such as the share of active users', 'scale="diverging" for a change that goes both ways', 'A description that names the highest and lowest regions'],

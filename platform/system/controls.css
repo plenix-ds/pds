@@ -29,6 +29,3 @@
 
 /* role classes for any control (inputs, selects, custom triggers): the height follows the density and the environment */
 .plx-control-inline-action{min-block-size:var(--plx-sys-control-height-inline);}
-.plx-control-toolbar{min-block-size:var(--plx-sys-control-height-toolbar);}
-.plx-control-standard{min-block-size:var(--plx-sys-control-height-standard);}
-.plx-control-dialog{min-block-size:var(--plx-sys-control-height-dialog);}

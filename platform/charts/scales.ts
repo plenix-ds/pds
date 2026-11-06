@@ -194,7 +194,7 @@ export function wholeDays(dates: any) {
   return list.length > 0 && list.every((x) => x && x.getHours() === 0 && x.getMinutes() === 0 && x.getSeconds() === 0 && x.getMilliseconds() === 0);
 }
 
-export function scaleTime({ domain = [0, DAY], range = [0, 1], nice = false, clamp = false, count = 5, unit: least }: ScaleOptions & { domain?: Array<number | Date>; unit?: string } = {}) {
+export function scaleTime({ domain = [0, DAY], range = [0, 1], nice = false, clamp = false, count = 5, unit: least }: Omit<ScaleOptions, "domain"> & { domain?: Array<number | Date>; unit?: string } = {}) {
   let d = pair(domain, [0, DAY]).map(toTime);
   const r = pair(range, [0, 1]).map(Number);
   if (d[0] === d[1]) d = [d[0] - DAY / 2, d[1] + DAY / 2];

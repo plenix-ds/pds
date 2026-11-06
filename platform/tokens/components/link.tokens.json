@@ -22,9 +22,9 @@
       "$description": "Link: a link on the accent surface (the blue header)."
     },
     "link-font-weight": {
-      "$value": "{plx-sys.font-weight-regular}",
+      "$value": "{plx-sys.text-body-font-weight}",
       "$type": "fontWeight",
-      "$description": "Link: the weight of an inline link (the weight of the text around it)."
+      "$description": "Link: the weight of an inline link, the body role's (400, the weight of the text around it; #726)."
     },
     "link-standalone-font-weight": {
       "$value": "{plx-sys.font-weight-medium}",

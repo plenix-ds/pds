@@ -15,7 +15,7 @@ export type ChartScale = {
   /** a band scale: the width of one band */
   bandwidth?(): number;
   /** a band scale: the distance from one band to the next */
-  step?(): number;
+  step?(...args: any[]): any;
   /** the ticks to label, aiming for `count` */
   ticks?(count?: number): any[];
   /** the scale's own label for a value */

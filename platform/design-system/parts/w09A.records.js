@@ -184,7 +184,7 @@ DSParts.records.push(function (H) {
 
   /* ── 07 Data Display › Charts › Heat map: HeatMap ── */
   var heatMap = { id: 'heat-map', lab: true, icon: 'grid-3x2', sec: 'data-display', sub: 'Charts', leaf: 'Heat map', title: 'Heat map',
-    plenix: 'HeatMap', src: 'charts/HeatMap.jsx', css: ['charts/heat-map.css'], blocks: ['plx-heat-map', 'plx-heat-map-scale'], level: 'Component', interaction: 'Navigation', statesFrom: ['chart-interaction'],
+    plenix: 'HeatMap', src: 'charts/HeatMap.tsx', css: ['charts/heat-map.css'], blocks: ['plx-heat-map', 'plx-heat-map-scale'], level: 'Component', interaction: 'Navigation', statesFrom: ['chart-interaction'],
     aliases: ['Heatmap', 'Matrix chart', 'Calendar heat map', 'Contribution graph', 'Punch card'],
     text: 'A grid of cells colored by value: where a row and a column meet (matrix), or one cell per day laid out in weeks (calendar). The colors come from the sequential data-viz scale, or the diverging one around a midpoint. A missing value is an empty cell with a dashed edge, never the lowest color. The color scale under the plot shows the seven steps from the lowest value to the highest. The arrow keys move from cell to cell; the tooltip shows each cell’s value and the live region says it.',
     use: ['Patterns across two dimensions: hour by weekday, team by month', 'The calendar for activity over days and weeks', 'The diverging scale around a meaningful midpoint (change, difference from a target)'],
@@ -225,7 +225,7 @@ DSParts.records.push(function (H) {
 
   /* ── 07 Data Display › Charts › Word cloud: WordCloud ── */
   var wordCloud = { id: 'word-cloud', lab: true, icon: 'text-card', sec: 'data-display', sub: 'Charts', leaf: 'Word cloud', title: 'Word cloud',
-    plenix: 'WordCloud, wordCloudLayout', src: 'charts/WordCloud.jsx', css: ['charts/word-cloud.css'], blocks: ['plx-word-cloud'], level: 'Component', interaction: 'Navigation', statesFrom: ['chart-interaction'],
+    plenix: 'WordCloud, wordCloudLayout', src: 'charts/WordCloud.tsx', css: ['charts/word-cloud.css'], blocks: ['plx-word-cloud'], level: 'Component', interaction: 'Navigation', statesFrom: ['chart-interaction'],
     aliases: ['Tag cloud', 'Term cloud', 'Text cloud'],
     text: 'The main terms of a body of text, each sized by how often it appears (five steps of the type scale) and placed around the middle, largest first, on a round or a square spiral. Words stay horizontal; groups such as praise and requests take the categorical colors, with a legend. A first impression only: the table under it lists every term and its count, sorted, and onSelect lets a word filter a list.',
     use: ['A first look at free text: feedback, search terms, tags', 'The top 50 terms or fewer', 'onSelect to open the items that use a word'],
