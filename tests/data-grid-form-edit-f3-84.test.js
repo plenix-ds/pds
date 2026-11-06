@@ -71,6 +71,21 @@ const check = async (name, fn) => { if (!shared.wanted(name)) return; try { awai
         await page.evaluate(() => window.__setOpen('r2')); await wait(700);
         assert.equal((await panelState()).open, false, 'the mark is removed'); assert.deepEqual(await saved(), []);
       });
+      await check(T + 'closing the panel with unsaved changes asks; Keep editing moves the form to the drawer with the draft', async () => {
+        await mount('panel'); await open(); await page.evaluate(() => { const i = document.getElementById('panel').querySelector('input'); i.focus(); i.select(); }); await page.keyboard.type('Edited draft'); await wait(200);
+        await page.evaluate(() => window.__setOpen('r2')); await wait(900);
+        assert.match(await page.evaluate(() => document.body.textContent), /Your changes will be lost/, 'FormFlow asks first');
+        await page.evaluate(() => [...document.querySelectorAll('button')].find((b) => /keep editing/i.test(b.textContent)).click()); await wait(700);
+        const d = await page.evaluate(() => { const x = document.querySelector('[role=dialog]'); const i = x && x.querySelector('input'); return { drawer: !!x, value: i ? i.value : null }; });
+        assert.deepEqual(d, { drawer: true, value: 'Edited draft' }, 'the drawer holds the same draft'); assert.equal((await panelState()).open, false, 'the panel is free again');
+        assert.deepEqual(await saved(), []);
+      });
+      await check(T + 'closing the panel with unsaved changes and choosing Leave closes the form', async () => {
+        await mount('panel'); await open(); await page.evaluate(() => { const i = document.getElementById('panel').querySelector('input'); i.focus(); i.select(); }); await page.keyboard.type('Edited draft'); await wait(200);
+        await page.evaluate(() => window.__setOpen('r2')); await wait(900);
+        await page.evaluate(() => [...document.querySelectorAll('button')].find((b) => /^leave/i.test(b.textContent.trim())).click()); await wait(700);
+        assert.equal(await dialog(), false); assert.equal((await panelState()).open, false); assert.deepEqual(await saved(), []);
+      });
       await check(T + 'a panel ref with no element falls back to the drawer', async () => {
         await mount('nopanel'); await open(); assert.equal(await dialog(), true);
       });

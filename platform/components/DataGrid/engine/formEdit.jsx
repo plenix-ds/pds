@@ -84,19 +84,38 @@ export default function FormEdit({ record, rowKey, columns, isEditable, name, ty
   // formSurface={{ panel: ref }} (ADR 0016 addendum): the whole form goes into the application's own panel, which is marked while it is open; no element: the drawer
   const wantsPanel = surface && typeof surface === 'object',
     panelEl = wantsPanel ? surface.panel?.current ?? null : null;
+  const [moved, setMoved] = React.useState(false);
   React.useEffect(() => {
     if (wantsPanel && !panelEl && development()) console.warn('[Plenix] DataGrid: formSurface.panel has no element; the form opens in the drawer');
-    if (!panelEl) return undefined;
+    if (!panelEl || moved) return undefined;
     panelEl.setAttribute('data-plx-form-open', '');
     return () => panelEl.removeAttribute('data-plx-form-open');
-  }, [panelEl, wantsPanel]);
-  // the application's close button moves the open row away from the edited record: while the form is in its panel that is Cancel, through FormFlow's
-  // unsaved-changes question (ADR 0016 addendum D-0063)
+  }, [panelEl, wantsPanel, moved]);
+  // the application's close button moves the open row away from the edited record: while the form is in its panel that is Cancel (ADR 0016
+  // addendum D-0063). With no changes the form just closes. With unsaved changes the form moves to the drawer with its draft (FormFlow's
+  // defaultValue, #465) and asks there, so Leave closes it and Keep editing leaves the draft in the drawer: nothing is lost
+  const draft = React.useRef(initial),
+    movedAsked = React.useRef(false),
+    inPanel = !!panelEl && !moved;
+  const changed = (value) => Object.keys(value).some((field) => !Object.is(value[field], field in initial ? initial[field] : valueAt(record, field)));
   React.useEffect(() => {
-    if (!panelEl || openKey === undefined || String(openKey ?? '') === String(rowKey)) return;
+    if (!panelEl || openKey === undefined || String(openKey ?? '') === String(rowKey) || moved) return;
+    if (changed(draft.current)) {
+      setMoved(true);
+      return;
+    }
     const cancel = panelEl.querySelector('.plx-form-actions button:not([type="submit"])');
     if (cancel) cancel.click();
   }, [panelEl, openKey, rowKey]);
+  // once the drawer has the draft, ask there (its Cancel is FormFlow's own question)
+  React.useEffect(() => {
+    if (!moved || movedAsked.current) return undefined;
+    const later = setTimeout(() => {
+      movedAsked.current = true;
+      document.querySelector('[role="dialog"] .plx-form-actions button:not([type="submit"])')?.click();
+    }, 400);
+    return () => clearTimeout(later);
+  }, [moved]);
   const validate = async (value) => {
     const found = {};
     for (const c of editable) {
@@ -123,9 +142,10 @@ export default function FormEdit({ record, rowKey, columns, isEditable, name, ty
   const flow = (
     <FormFlow
       mode="edit"
-      surface={panelEl ? 'page' : surface === 'dialog' ? 'dialog' : 'drawer'}
+      surface={inPanel ? 'page' : surface === 'dialog' && !moved ? 'dialog' : 'drawer'}
       title={title}
       initialValue={initial}
+      defaultValue={moved ? draft.current : undefined}
       sessionKey={String(rowKey)}
       validate={validate}
       onSubmit={submit}
@@ -133,7 +153,9 @@ export default function FormEdit({ record, rowKey, columns, isEditable, name, ty
       onCancel={onClose}
       strings={{ saved: S.formSaved.replace('{name}', name), failed: '' }}
     >
-      {({ value, setValue, busy }) => (
+      {({ value, setValue, busy }) => {
+        draft.current = value;
+        return (
         <>
           {refusal ? <ErrorSummary errors={[{ target: idOf(editable[0] || columns[0]), message: refusal }]} /> : null}
           {renderForm ? renderForm(record, { value, setValue, errors, busy }) : columns.map((c) => {
@@ -163,8 +185,9 @@ export default function FormEdit({ record, rowKey, columns, isEditable, name, ty
             );
           })}
         </>
-      )}
+      );
+      }}
     </FormFlow>
   );
-  return panelEl ? createPortal(flow, panelEl) : flow;
+  return inPanel ? createPortal(flow, panelEl) : flow;
 }
