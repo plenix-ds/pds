@@ -5949,6 +5949,16 @@
       "$value": "{plx-sys.font-weight-semibold}",
       "$type": "fontWeight"
     },
+    "combobox-group-letter-spacing": {
+      "$value": "{plx-sys.text-label-letter-spacing}",
+      "$type": "dimension",
+      "$description": "combobox-group letter spacing: the label role's (docs/pds1 text roles; #122)."
+    },
+    "combobox-group-line-height": {
+      "$value": "{plx-sys.text-label-line-height}",
+      "$type": "number",
+      "$description": "combobox-group line height: the label role's (docs/pds1 text roles; #122)."
+    },
     "combobox-group-padding-block-end": {
       "$value": "{plx-sys.space-inset-xs}",
       "$type": "dimension"

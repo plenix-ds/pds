@@ -66,8 +66,12 @@ import SearchIcon from 'plenix-platform/icons/plenix/search';
 import SettingsUsersIcon from 'plenix-platform/icons/plenix/settings-users';
 import { fill } from '../../utils/fill.ts';
 
-type EntityKind = 'people' | 'teams' | 'records';
-type EntityValue = string | number;
+/** @public what the picker lists: "records" (default) | "people" | "teams" (ADR 0011) */
+export type EntityPickerKind = 'people' | 'teams' | 'records';
+/** @public an option's value (ADR 0011) */
+export type EntityPickerValue = string | number;
+type EntityKind = EntityPickerKind;
+type EntityValue = EntityPickerValue;
 /** @public an option: { value, label, description, meta, disabled, icon, src, color, presence } (ADR 0011) */
 export type EntityPickerOption = { value: EntityValue; label: string; description?: React.ReactNode; meta?: React.ReactNode; disabled?: boolean; icon?: IconValue; src?: string; color?: string; presence?: AvatarPresence };
 type Item = { kind: 'option'; o: EntityPickerOption } | { kind: 'browse' };
