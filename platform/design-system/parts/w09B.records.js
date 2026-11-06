@@ -110,7 +110,7 @@ DSParts.records.push(function (H) {
     { id: 'ap', label: 'Approvals', value: 420, target: 560, ranges: [350, 600, 1000] }];
   var bullet = function (o) { return h(P.BulletChart, Object.assign({ title: 'Quarter against targets', description: 'Uploads and reviews beat their targets; approvals are behind.', items: KPIS, valueLabel: 'Items this quarter' }, o)); };
   var bulletChart = { id: 'bullet-chart', lab: true, icon: 'chart', sec: 'data-display', sub: 'Charts', leaf: 'Bullet chart', title: 'Bullet chart',
-    plenix: 'BulletChart', src: 'charts/BulletChart.jsx', also: ['charts/chart-kit.ts'], css: CSS('bullet-chart.css'), blocks: ['plx-bullet-chart'],
+    plenix: 'BulletChart', src: 'charts/BulletChart.tsx', also: ['charts/chart-kit.ts'], css: CSS('bullet-chart.css'), blocks: ['plx-bullet-chart'],
     level: 'Component', interaction: 'Display',
     aliases: ['Bullet graph', 'Target bar', 'KPI bar'],
     text: 'Key measures against their targets, each in a compact row on one value axis from zero: a short value bar over three bands for its qualitative ranges (poor, fair, good, in neutral shades, the darkest nearest zero) and a line across at its target. Horizontal rows stack in a dashboard card; vertical columns fit a wide strip. The tooltip names the range a value is in; the data table lists value, target and ranges.',
