@@ -23,7 +23,7 @@
      The label room is an estimate from the number of characters (the data font is monospaced: about 7px a character at
        the tick labels' 11px); a margin given to the chart always wins. */
 import React from 'react';
-import { seriesColor } from './scales.js';
+import { seriesColor } from './scales.ts';
 
 // px: about one character of the data font at the tick labels' size (Reddit Mono 11px is 6.6px wide)
 const CHAR = 7;

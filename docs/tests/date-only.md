@@ -20,7 +20,7 @@ This test makes sure a date with no time, such as a due date of October 18, show
 - Added in commit 65797dab "#342: a date-only value is that calendar day wherever the reader is, everywhere (the owner's option A)".
 
 ## How it checks
-- First in Node: loads `platform/utils/format.ts`, `utils/fields.ts` and `charts/scales.js` (converted with Babel) and switches the time zone between checks.
+- First in Node: loads `platform/utils/format.ts`, `utils/fields.ts` and `charts/scales.ts` (converted with Babel) and switches the time zone between checks.
 - Then in headless Chrome at 1100 by 900 pixels: emulates each time zone, opens `tests/fixtures/platform-host.html`, draws the charts, Time and DatePicker, and reads their text.
 
 ## What a failure means

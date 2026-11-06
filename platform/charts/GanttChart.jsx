@@ -37,14 +37,14 @@ import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatDate, formatPercent, formatList, parseDate } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.jsx';
-import { scaleTime, scaleBand, seriesColor, wholeDays } from './scales.js';
-import { Axis } from './parts/Axis.jsx';
-import { GridLines } from './parts/GridLines.jsx';
-import { ReferenceLine } from './parts/ReferenceLine.jsx';
-import { ChartTooltip } from './parts/ChartTooltip.jsx';
-import { DataLabel } from './parts/DataLabel.jsx';
-import { scalePosition } from './parts/position.js';
-import { useChartPoints, ChartPatterns, patternFill } from './a11y.js';
+import { scaleTime, scaleBand, seriesColor, wholeDays } from './scales.ts';
+import { Axis } from './parts/Axis.tsx';
+import { GridLines } from './parts/GridLines.tsx';
+import { ReferenceLine } from './parts/ReferenceLine.tsx';
+import { ChartTooltip } from './parts/ChartTooltip.tsx';
+import { DataLabel } from './parts/DataLabel.tsx';
+import { scalePosition } from './parts/position.ts';
+import { useChartPoints, ChartPatterns, patternFill } from './a11y.ts';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 
 // SVG geometry on the 4px grid: a milestone's half width, how far before a task's end its arrow leaves it, the arrowhead's

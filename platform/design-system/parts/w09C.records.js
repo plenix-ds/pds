@@ -1,4 +1,4 @@
-/* Plenix design system · library part w09C (wave 9, lane C): chart accessibility (the rules and platform/charts/a11y.js),
+/* Plenix design system · library part w09C (wave 9, lane C): chart accessibility (the rules and platform/charts/a11y.ts),
    Sparkline, Metric's trend and card (Metric card), LollipopChart, ScatterChart (Scatter plot) and its Bubble chart,
    FunnelChart (Funnel), Treemap, GanttChart, and GeoMap (Map) with its Choropleth map. Every chart is drawn in ChartFrame
    with the chart parts; every color is a data-viz step or an existing role. The map's regions are a made-up sample
@@ -88,7 +88,7 @@ DSParts.records.push(function (H) {
     });
   };
   var chartA11y = { id: 'chart-accessibility', lab: true, icon: 'view-table', sec: 'data-display', sub: 'Charts', leaf: 'Chart accessibility', title: 'Chart accessibility',
-    plenix: 'summarizeSeries, ChartPatterns, chartPattern, patternFill, useChartPoints', src: 'charts/a11y.js', css: ['charts/chart-a11y.css'], blocks: ['plx-chart-keys', 'plx-chart-pattern'],
+    plenix: 'summarizeSeries, ChartPatterns, chartPattern, patternFill, useChartPoints', src: 'charts/a11y.ts', css: ['charts/chart-a11y.css'], blocks: ['plx-chart-keys', 'plx-chart-pattern'],
     level: 'Foundation', interaction: 'Navigation', statesFrom: ['chart-interaction'],   // the plot's focus and keys are the chart interaction's
     aliases: ['Accessible charts', 'Chart a11y', 'Data grid fallback', 'Chart keyboard navigation', 'Chart textures', 'Chart summary'],
     text: 'The rules that make every Plenix chart usable without seeing it, without a mouse and without telling colors apart. ChartFrame gives each chart a name (its title), a takeaway (its description) and its data as a table one click away; summarizeSeries writes that takeaway for a series; ChartPatterns adds textures so series differ by more than color. On line, scatter, heat map, treemap, waterfall and similar charts, the chart interaction (ChartFrame’s plot; useChartPoints for charts of separate marks) lets the keyboard read the values one by one, each spoken; on the others the keyboard reaches “Show the data”, the same values as a table. Charts draw once, with no motion, and keep their marks at 3:1 against the surface.',

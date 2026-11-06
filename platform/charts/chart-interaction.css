@@ -1,4 +1,4 @@
-/* Plenix · Chart interaction (platform/charts/chart-interaction.css; the code is platform/charts/interaction.js): the
+/* Plenix · Chart interaction (platform/charts/chart-interaction.css; the code is platform/charts/interaction.ts): the
    interactive plot (one Tab stop; its border takes the focus color), the ring on the value in focus, the brush of a
    zoom, the dimmed series and the selected mark, and the frame's actions row (Reset zoom). Every value is a
    --plx-comp-chart-interaction-* token on an existing role; transitions use the motion tokens (none with reduced motion). */

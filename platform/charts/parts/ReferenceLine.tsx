@@ -29,11 +29,26 @@
 */
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
-import { scalePosition } from './position.js';
+import { scalePosition } from './position.ts';
+import type { PlotSize, Scale, ScaleValue } from '../scales.ts';
 
-const LEVELS = ['warning', 'critical'];
+const LEVELS = ['warning', 'critical'] as const;
+/** @public the prop type (ADR 0011) */
+export type ReferenceLineProps = {
+  scale?: Scale;
+  value?: ScaleValue | null;
+  axis?: 'x' | 'y';
+  inner?: PlotSize;
+  kind?: 'reference' | 'threshold';
+  /** a threshold's color */
+  level?: (typeof LEVELS)[number];
+  label?: React.ReactNode;
+  showValue?: boolean;
+  format?: (value: ScaleValue) => string;
+  className?: string;
+};
 
-export function ReferenceLine({ scale, value, axis = 'y', inner, kind = 'reference', level = 'warning', label, showValue = true, format, className }) {
+export function ReferenceLine({ scale, value, axis = 'y', inner, kind = 'reference', level = 'warning', label, showValue = true, format, className }: ReferenceLineProps) {
   if (!scale || !inner || value === undefined || value === null) return null;
   const p = scalePosition(scale, value);
   const a = axis === 'x' ? 'x' : 'y';

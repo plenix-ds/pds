@@ -3,7 +3,7 @@
      chart components so the components can load on their own (charts/lazy.jsx) while these stay in the first load.
    Notes: Moved out of LineChart.jsx, PieChart.jsx and BarChart.jsx without any change to the code; those files still export them. */
 import { snapToGrid } from '../utils/grid.ts';
-import { niceTicks, seriesColor } from './scales.js';
+import { niceTicks, seriesColor } from './scales.ts';
 import { finite } from './chart-kit.js';
 
 const OTHER_COLOR = 'categorical-6';

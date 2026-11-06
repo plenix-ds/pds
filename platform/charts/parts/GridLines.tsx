@@ -20,9 +20,19 @@
 */
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
-import { scalePosition, scaleTicks } from './position.js';
+import { scalePosition, scaleTicks } from './position.ts';
+import type { PlotSize, Scale, ScaleValue } from '../scales.ts';
 
-export function GridLines({ scale, direction = 'horizontal', inner, ticks, className }) {
+/** @public the prop type (ADR 0011) */
+export type GridLinesProps = {
+  scale?: Scale;
+  direction?: 'horizontal' | 'vertical';
+  inner?: PlotSize;
+  ticks?: number | ScaleValue[];
+  className?: string;
+};
+
+export function GridLines({ scale, direction = 'horizontal', inner, ticks, className }: GridLinesProps) {
   if (!scale || !inner) return null;
   const d = direction === 'vertical' ? 'vertical' : 'horizontal';
   return (

@@ -25,11 +25,20 @@ import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { formatNumber } from '../../utils/format.ts';
 
-const POSITIONS = ['top', 'end', 'center'];
+const POSITIONS = ['top', 'end', 'center'] as const;
+/** @public the prop type (ADR 0011) */
+export type DataLabelProps = {
+  x?: number | null;
+  y?: number | null;
+  value?: number | string;
+  format?: (value: number | string | undefined) => string;
+  position?: (typeof POSITIONS)[number];
+  className?: string;
+};
 
-export function DataLabel({ x, y, value, format, position = 'top', className }) {
+export function DataLabel({ x, y, value, format, position = 'top', className }: DataLabelProps) {
   if (x === undefined || y === undefined || x === null || y === null) return null;
-  const p = POSITIONS.indexOf(position) >= 0 ? position : 'top';
+  const p: (typeof POSITIONS)[number] = POSITIONS.indexOf(position) >= 0 ? position : 'top';
   const text = typeof format === 'function' ? format(value) : typeof value === 'number' ? formatNumber(value) : value;
   return <text className={cx('plx-chart-data-label', 'plx-chart-data-label--' + p, className)} x={x} y={y}>{text}</text>;
 }

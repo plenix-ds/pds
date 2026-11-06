@@ -34,15 +34,33 @@
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
+
+/** @public one series of a legend (ADR 0011) */
+export type ChartLegendItem = { id?: string | number; label?: React.ReactNode; color?: string; value?: React.ReactNode };
+/** @public the prop type (ADR 0011) */
+export type ChartLegendProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'onToggle'> & {
+  items?: ChartLegendItem[];
+  orientation?: 'horizontal' | 'vertical';
+  shape?: 'square' | 'line';
+  interactive?: boolean;
+  /** the ids of the hidden series, when the parent controls them */
+  hidden?: (string | number)[];
+  defaultHidden?: (string | number)[];
+  onToggle?: (id: string | number, visible: boolean) => void;
+  label?: string;
+  strings?: Catalog | null;
+  className?: string;
+};
 
 export function ChartLegend({ items = [], orientation = 'horizontal', shape = 'square', interactive = false, hidden, defaultHidden = [],
-  onToggle, label, strings, className, ...rest }) {
-  const t = useStrings('chart.chartLegend', strings);
-  const [own, setOwn] = React.useState(defaultHidden);
+  onToggle, label, strings, className, ...rest }: ChartLegendProps) {
+  const t = useStrings('chart.chartLegend', strings) as { legend: string };
+  const [own, setOwn] = React.useState<(string | number)[]>(defaultHidden);
   const off = hidden === undefined ? own : hidden;
   const o = orientation === 'vertical' ? 'vertical' : 'horizontal';
   const s = shape === 'line' ? 'line' : 'square';
-  const toggle = (id) => {
+  const toggle = (id: string | number) => {
     const visible = off.indexOf(id) >= 0;
     // the last series shown stays shown: a chart never goes empty from its legend
     if (!visible && items.length - off.length <= 1) return;

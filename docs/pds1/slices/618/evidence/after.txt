@@ -1,0 +1,13 @@
+== charts-echarts-353 (after)
+CHARTS_ECHARTS_353_OK four charts on ECharts, engine loaded once, Bar and Pie on the keyboard, no style findings
+== sparkline-echarts-353 (after)
+SPARKLINE_ECHARTS_353_OK line, area, bar and fill on ECharts, engine loaded once, named, no style findings, same pixels as the SVG sparkline in 6 cases; 200 sparklines in 1072 ms
+== charts-lazy-106 (after)
+CHARTS_LAZY_106_OK
+== funnel-chart-echarts-106 (after)
+FUNNEL_CHART_ECHARTS_106_OK
+== treechart-echarts (after)
+TREECHART_ECHARTS_OK left to right and top to bottom, desktop and phone width: drawn, engine once, no overlapping labels, keyboard, folding, no style findings
+== date-only (after)
+}
+(date-only and a11y fail identically on main before this change: gantt label and two select names)

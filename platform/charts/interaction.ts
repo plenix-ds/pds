@@ -1,4 +1,4 @@
-/* Plenix · Chart interaction (platform/charts/interaction.js)
+/* Plenix · Chart interaction (platform/charts/interaction.ts)
    Summary: How people explore a Plenix chart (07 Data Display › Charts › Chart interaction): one Tab stop per chart, the
      arrow keys move between the values (columns across, series or rows up and down), the value in focus or under the
      pointer shows the ChartTooltip and is said in the live region, a crosshair follows lines and areas, a click or Enter
@@ -69,41 +69,78 @@ export const CHART_INTERACTION_STRINGS = Object.freeze({
   selected: 'Selected. {text}',
 });
 
-const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+/** a value of a chart: its row (series) and column (point) */
+/** @public (ADR 0011) */
+export type ChartCell = { r: number; c: number };
+/** what the interaction needs of a series: its id (default its index) and its name */
+/** @public (ADR 0011) */
+export type ChartSeriesRef = { id?: string | number; label?: string };
+/** the interaction's words (CHART_INTERACTION_STRINGS); any of them may be replaced */
+export type ChartInteractionStrings = Partial<Record<keyof typeof CHART_INTERACTION_STRINGS, string>>;
+/** what a chart tells the interaction about its geometry: the value nearest a pointer position, the column at an x */
+/** @public (ADR 0011) */
+export type ChartGeometry = { nearest?: (x: number, y: number) => ChartCell | null; columnAt?: (x: number) => number | null };
+type HiddenId = string | number;
+/** @public (ADR 0011) */
+export type ChartInteractionOptions = {
+  rows?: number; columns?: number; mode?: 'x' | 'point'; series?: ChartSeriesRef[]; defaultHidden?: HiddenId[]; hidden?: HiddenId[];
+  onToggle?: (id: HiddenId, visible: boolean) => void; zoom?: boolean; select?: boolean; onSelect?: (cell: ChartCell) => void;
+  describe?: (cell: ChartCell) => string; labelOf?: (column: number) => string;
+  move?: (cell: ChartCell, key: string, info: { shift: boolean; view: [number, number] }) => ChartCell | null | undefined;
+  first?: () => ChartCell | null | undefined; strings?: ChartInteractionStrings | null;
+};
+type PointerEventLike = { button?: number };
+/** what useChartInteraction returns: the state a chart draws from and the handlers ChartFrame wires up */
+/** @public (ADR 0011) */
+export type ChartInteraction = {
+  interactive: true; mode: 'x' | 'point'; active: ChartCell | null; source: 'keyboard' | 'pointer' | null; selected: ChartCell | null;
+  brush: [number, number] | null; zoom: [number, number] | null; zoomed: boolean; focused: boolean; hidden: HiddenId[];
+  strings: Record<keyof typeof CHART_INTERACTION_STRINGS, string>; hint: string;
+  view: () => [number, number]; visible: (id: HiddenId) => boolean; isDimmed: (row: number) => boolean;
+  legendProps: { interactive: true; hidden: HiddenId[]; onToggle: (id: HiddenId, visible: boolean) => void };
+  register: (geometry: ChartGeometry | null) => void;
+  setActive: (cell: ChartCell | null, from?: 'keyboard' | 'pointer') => void;
+  select: (cell: ChartCell | null) => void; resetZoom: () => void; setZoom: (a: number, b: number) => void;
+  keyDown: (event: React.KeyboardEvent | KeyboardEvent) => void;
+  pointerDown: (x: number, y: number, event?: PointerEventLike) => void; pointerMove: (x: number, y: number) => void;
+  pointerUp: (x: number, y: number) => void; pointerLeave: () => void; onFocus: () => void; onBlur: () => void;
+};
 
-export function chartAnnounce(text) { if (text) announce(text); }
+const clamp = (v: number, lo: number, hi: number): number => Math.min(hi, Math.max(lo, v));
+
+export function chartAnnounce(text?: string | null): void { if (text) announce(text); }
 
 export function useChartInteraction({ rows = 1, columns = 0, mode = 'x', series, defaultHidden = [], hidden: hiddenProp, onToggle,
-  zoom = false, select = false, onSelect, describe, labelOf, move, first, strings } = {}) {
-  const t = Object.assign({}, CHART_INTERACTION_STRINGS, strings);
-  const [active, setActiveState] = React.useState(null);
-  const [source, setSource] = React.useState(null);
-  const [selected, setSelected] = React.useState(null);
-  const [brush, setBrush] = React.useState(null);
-  const [zoomRange, setZoom] = React.useState(null);
-  const [ownHidden, setOwnHidden] = React.useState(defaultHidden);
+  zoom = false, select = false, onSelect, describe, labelOf, move, first, strings }: ChartInteractionOptions = {}): ChartInteraction {
+  const t: Record<keyof typeof CHART_INTERACTION_STRINGS, string> = Object.assign({}, CHART_INTERACTION_STRINGS, strings);
+  const [active, setActiveState] = React.useState<ChartCell | null>(null);
+  const [source, setSource] = React.useState<'keyboard' | 'pointer' | null>(null);
+  const [selected, setSelected] = React.useState<ChartCell | null>(null);
+  const [brush, setBrush] = React.useState<[number, number] | null>(null);
+  const [zoomRange, setZoom] = React.useState<[number, number] | null>(null);
+  const [ownHidden, setOwnHidden] = React.useState<HiddenId[]>(defaultHidden);
   const [focused, setFocused] = React.useState(false);
-  const geometry = React.useRef(null);
-  const drag = React.useRef(null);
+  const geometry = React.useRef<ChartGeometry | null>(null);
+  const drag = React.useRef<{ from: number; moved: boolean } | null>(null);
   const hidden = hiddenProp === undefined ? ownHidden : hiddenProp;
   const ids = (series || []).map((s, i) => (s.id === undefined ? i : s.id));
-  const rowShown = (r) => !ids.length || hidden.indexOf(ids[r]) < 0;
+  const rowShown = (r: number): boolean => !ids.length || hidden.indexOf(ids[r]) < 0;
   const n = Math.max(0, columns);
-  const view = () => (zoomRange ? [clamp(zoomRange[0], 0, n - 1), clamp(zoomRange[1], 0, n - 1)] : [0, Math.max(0, n - 1)]);
-  const say = (cell) => { if (cell && typeof describe === 'function') chartAnnounce(describe(cell)); };
-  const label = (c) => (typeof labelOf === 'function' ? labelOf(c) : String(c + 1));
+  const view = (): [number, number] => (zoomRange ? [clamp(zoomRange[0], 0, n - 1), clamp(zoomRange[1], 0, n - 1)] : [0, Math.max(0, n - 1)]);
+  const say = (cell: ChartCell | null | undefined) => { if (cell && typeof describe === 'function') chartAnnounce(describe(cell)); };
+  const label = (c: number): string => (typeof labelOf === 'function' ? labelOf(c) : String(c + 1));
 
-  const setActive = (cell, from) => {
+  const setActive = (cell: ChartCell | null, from?: 'keyboard' | 'pointer') => {
     setActiveState((a) => (a && cell && a.r === cell.r && a.c === cell.c ? a : cell));
     if (from) setSource(from);
   };
-  const doSelect = (cell) => {
+  const doSelect = (cell: ChartCell | null) => {
     if (!select || !cell) return;
     setSelected(cell);
     if (typeof onSelect === 'function') onSelect(cell);
     if (typeof describe === 'function') chartAnnounce(fill(t.selected, { text: describe(cell) }));
   };
-  const applyZoom = (a, b) => {
+  const applyZoom = (a: number, b: number) => {
     const from = Math.min(a, b), to = Math.max(a, b);
     if (to <= from) { setBrush(null); return; }
     setZoom([from, to]); setBrush(null);
@@ -111,14 +148,14 @@ export function useChartInteraction({ rows = 1, columns = 0, mode = 'x', series,
     chartAnnounce(fill(t.zoomed, { from: label(from), to: label(to) }));
   };
   const resetZoom = () => { setZoom(null); setBrush(null); chartAnnounce(t.zoomReset); };
-  const firstRow = () => { for (let r = 0; r < rows; r++) if (rowShown(r)) return r; return 0; };
-  const stepRow = (r, d) => { for (let k = r + d; k >= 0 && k < rows; k += d) if (rowShown(k)) return k; return r; };
+  const firstRow = (): number => { for (let r = 0; r < rows; r++) if (rowShown(r)) return r; return 0; };
+  const stepRow = (r: number, d: number): number => { for (let k = r + d; k >= 0 && k < rows; k += d) if (rowShown(k)) return k; return r; };
 
-  const keyDown = (e) => {
+  const keyDown = (e: React.KeyboardEvent | KeyboardEvent) => {
     const k = e.key;
     const [v0, v1] = view();
     const cur = active && rowShown(active.r) ? active : null;
-    let next = null;
+    let next: ChartCell | null = null;
     if (k === 'Escape') {
       if (brush) { setBrush(null); e.preventDefault(); return; }
       if (cur || selected) { setActiveState(null); setSelected(null); e.preventDefault(); }
@@ -154,18 +191,18 @@ export function useChartInteraction({ rows = 1, columns = 0, mode = 'x', series,
     say(next);
   };
 
-  const nearest = (x, y) => (geometry.current && typeof geometry.current.nearest === 'function' ? geometry.current.nearest(x, y) : null);
-  const columnAt = (x) => {
+  const nearest = (x: number, y: number): ChartCell | null => (geometry.current && typeof geometry.current.nearest === 'function' ? geometry.current.nearest(x, y) : null);
+  const columnAt = (x: number): number | null | undefined => {
     if (geometry.current && typeof geometry.current.columnAt === 'function') return geometry.current.columnAt(x);
     const cell = nearest(x, 0); return cell ? cell.c : null;
   };
-  const pointerDown = (x, y, e) => {
+  const pointerDown = (x: number, _y: number, e?: PointerEventLike) => {
     if (!zoom || (e && e.button !== undefined && e.button !== 0)) return;
     const c = columnAt(x);
     if (c === null || c === undefined) return;
     drag.current = { from: c, moved: false };
   };
-  const pointerMove = (x, y) => {
+  const pointerMove = (x: number, y: number) => {
     if (drag.current) {
       const c = columnAt(x);
       if (c !== null && c !== undefined && c !== drag.current.from) { drag.current.moved = true; setBrush([drag.current.from, c]); }
@@ -174,7 +211,7 @@ export function useChartInteraction({ rows = 1, columns = 0, mode = 'x', series,
     if (cell && rowShown(cell.r)) setActive(cell, 'pointer');
     else if (!focused || source === 'pointer') setActiveState(null);
   };
-  const pointerUp = (x, y) => {
+  const pointerUp = (x: number, y: number) => {
     const d = drag.current; drag.current = null;
     if (d && d.moved) { const c = columnAt(x); applyZoom(d.from, c === null || c === undefined ? d.from : c); return; }
     const cell = nearest(x, y);
@@ -184,7 +221,7 @@ export function useChartInteraction({ rows = 1, columns = 0, mode = 'x', series,
   const onFocus = () => setFocused(true);
   const onBlur = () => { setFocused(false); setActiveState(null); setBrush(null); };
 
-  const toggle = (id, visible) => {
+  const toggle = (id: HiddenId, visible: boolean) => {
     if (hiddenProp === undefined) setOwnHidden((h) => (visible ? h.filter((x) => x !== id) : h.concat([id])));
     if (typeof onToggle === 'function') onToggle(id, visible);
     const s = (series || []).find((x, i) => (x.id === undefined ? i : x.id) === id);
@@ -195,20 +232,20 @@ export function useChartInteraction({ rows = 1, columns = 0, mode = 'x', series,
   return {
     interactive: true, mode, active, source, selected, brush, zoom: zoomRange, zoomed: !!zoomRange, focused, hidden, strings: t,
     hint: t.hint + (select ? t.hintSelect : '') + (zoom && !move ? t.hintZoom : ''),
-    view, visible: (id) => hidden.indexOf(id) < 0, isDimmed: (r) => mode === 'point' && !!active && active.r !== r,
+    view, visible: (id: HiddenId) => hidden.indexOf(id) < 0, isDimmed: (r: number) => mode === 'point' && !!active && active.r !== r,
     legendProps: { interactive: true, hidden, onToggle: toggle },
-    register: (g) => { geometry.current = g; },
+    register: (g: ChartGeometry | null) => { geometry.current = g; },
     setActive, select: doSelect, resetZoom, setZoom: applyZoom,
     keyDown, pointerDown, pointerMove, pointerUp, pointerLeave, onFocus, onBlur,
   };
 }
 
-export function ChartFocusMark({ x, y, color, className }) {
+export function ChartFocusMark({ x, y, color, className }: { x?: number | null; y?: number | null; color?: string; className?: string }) {
   if (x === undefined || x === null || y === undefined || y === null || isNaN(x) || isNaN(y)) return null;
   return React.createElement('circle', { className: cx('plx-chart-focus', className), 'data-plx-dataviz': color || undefined, cx: x, cy: y });
 }
 
-export function ChartBrush({ x0, x1, inner, className }) {
+export function ChartBrush({ x0, x1, inner, className }: { x0?: number; x1?: number; inner?: { height: number }; className?: string }) {
   if (x0 === undefined || x1 === undefined || !inner) return null;
   const a = Math.min(x0, x1), b = Math.max(x0, x1);
   return React.createElement('rect', { className: cx('plx-chart-brush', className), x: a, y: 0, width: Math.max(0, b - a), height: inner.height });

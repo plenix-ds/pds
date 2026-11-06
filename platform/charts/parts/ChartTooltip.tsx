@@ -24,7 +24,7 @@
      The tooltip goes after the point when it is in the first half of the plot and before it in the second half, so it
        stays inside the chart.
      It shows values already in the chart's data grid; with the plot it is hidden from assistive technology. The chart
-       interaction (useChartInteraction, platform/charts/interaction.js) moves it with the pointer and the arrow keys and
+       interaction (useChartInteraction, platform/charts/interaction.ts) moves it with the pointer and the arrow keys and
        says the same values in the live region: chartTooltipText({ title, items }) is that sentence ("March 2026: Web
        150, iOS 130, Android 90"), so the tooltip and the announcement never differ.
      chartTooltipText({ title, items }): the tooltip's content as one plain sentence, for the live region
@@ -34,17 +34,32 @@
 */
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
+import type { PlotSize } from '../scales.ts';
+
+/** one series' value in a tooltip: its name, the formatted value and its data-viz color */
+export type ChartTooltipItem = { label?: React.ReactNode; value?: React.ReactNode; color?: string };
+/** @public the prop type (ADR 0011) */
+export type ChartTooltipProps = {
+  x?: number | null;
+  y?: number | null;
+  inner?: PlotSize;
+  variant?: 'single' | 'shared';
+  title?: React.ReactNode;
+  titleKind?: 'text' | 'data';
+  items?: ChartTooltipItem[];
+  className?: string;
+};
 
 // the room the tooltip may take beside its point, in pixels (SVG geometry): it is laid out inside this box
 const BOX_W = 240, BOX_H = 200;
 
 // the tooltip as one sentence: the title, then each series' name and value (what the live region says)
-export function chartTooltipText({ title, items = [] } = {}) {
+export function chartTooltipText({ title, items = [] }: { title?: React.ReactNode; items?: ChartTooltipItem[] } = {}): string {
   const values = items.map((it) => [it.label, it.value].filter((x) => x !== undefined && x !== null && x !== '').join(' ')).join(', ');
   return title !== undefined && title !== null && title !== '' ? String(title) + (values ? ': ' + values : '') : values;
 }
 
-export function ChartTooltip({ x, y, inner, variant = 'single', title, titleKind = 'text', items = [], className }) {
+export function ChartTooltip({ x, y, inner, variant = 'single', title, titleKind = 'text', items = [], className }: ChartTooltipProps) {
   if (x === undefined || x === null || !inner) return null;
   const v = variant === 'shared' ? 'shared' : 'single';
   const side = x > inner.width / 2 ? 'start' : 'end';

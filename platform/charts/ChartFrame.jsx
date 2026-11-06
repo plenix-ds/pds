@@ -23,7 +23,7 @@
      legendPosition: "bottom" (default: under the plot) | "top" (between the caption and the plot: tight dashboard
        cards) | "end" (beside the
        plot, after it; give the legend orientation="vertical"); the plot keeps the rest of the width
-     interaction: the chart's interaction (useChartInteraction, platform/charts/interaction.js; wave 9): the plot becomes
+     interaction: the chart's interaction (useChartInteraction, platform/charts/interaction.ts; wave 9): the plot becomes
        one Tab stop named "{title}, interactive chart" with the keyboard hint as its description, and hands its keys and
        the pointer (in plot coordinates) to the interaction; a Reset zoom button shows above the plot while it is zoomed
      actions: controls above the plot, at its end (a network graph's zoom buttons); Buttons of size sm

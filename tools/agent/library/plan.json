@@ -1602,7 +1602,7 @@
       "platform/patterns/BottomSheetNav/BottomSheetNav.jsx",
       "platform/patterns/BottomSheetNav/bottom-sheet-nav.css",
       "platform/tokens/components/bottom-sheet-nav.tokens.json",
-      "platform/charts/scales.js",
+      "platform/charts/scales.ts",
       "platform/charts/ChartFrame.jsx",
       "platform/charts/charts.css",
       "platform/components/TransferList/TransferList.tsx",
@@ -1785,7 +1785,7 @@
       "platform/charts/Gauge.jsx",
       "platform/charts/WaterfallChart.jsx",
       "platform/charts/WordCloud.jsx",
-      "platform/charts/interaction.js",
+      "platform/charts/interaction.ts",
       "platform/charts/NetworkGraph.jsx",
       "platform/charts/Diagram.jsx"
      ],
@@ -1874,7 +1874,7 @@
       "platform/charts/ScatterChart.jsx",
       "platform/charts/FunnelChart.jsx",
       "platform/charts/Sparkline.jsx",
-      "platform/charts/a11y.js",
+      "platform/charts/a11y.ts",
       "platform/charts/Treemap.jsx",
       "platform/charts/LollipopChart.jsx",
       "platform/charts/GanttChart.jsx",
@@ -5618,7 +5618,7 @@
    "wave": 7,
    "lane": "C",
    "files": [
-    "platform/charts/scales.js",
+    "platform/charts/scales.ts",
     "platform/charts/ChartFrame.jsx",
     "platform/charts/charts.css"
    ],
@@ -6041,7 +6041,7 @@
    "wave": 9,
    "lane": "A",
    "files": [
-    "platform/charts/interaction.js"
+    "platform/charts/interaction.ts"
    ],
    "dependsOn": [
     "chart-parts"
@@ -6052,7 +6052,7 @@
     "legend toggle",
     "click a point"
    ],
-   "note": "platform/charts/interaction.js",
+   "note": "platform/charts/interaction.ts",
    "leaves": [
     "data-display/Chart interaction"
    ]
@@ -6440,7 +6440,7 @@
    "wave": 9,
    "lane": "C",
    "files": [
-    "platform/charts/a11y.js"
+    "platform/charts/a11y.ts"
    ],
    "dependsOn": [
     "chart-parts"
@@ -6451,7 +6451,7 @@
     "summary text",
     "patterns"
    ],
-   "note": "platform/charts/a11y.js",
+   "note": "platform/charts/a11y.ts",
    "leaves": [
     "data-display/Chart accessibility"
    ]
@@ -14804,7 +14804,7 @@
    "target": "ChartKit",
    "targetKind": "foundation",
    "files": [
-    "platform/charts/scales.js",
+    "platform/charts/scales.ts",
     "platform/charts/ChartFrame.jsx",
     "platform/charts/charts.css"
    ],
@@ -15609,7 +15609,7 @@
    "target": "chart-a11y",
    "targetKind": "foundation",
    "files": [
-    "platform/charts/a11y.js"
+    "platform/charts/a11y.ts"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09C.records.js",
@@ -15629,7 +15629,7 @@
     "summary text",
     "patterns"
    ],
-   "note": "platform/charts/a11y.js",
+   "note": "platform/charts/a11y.ts",
    "wave": 9,
    "lane": "C"
   },
@@ -15843,7 +15843,7 @@
    "target": "chart-interaction",
    "targetKind": "foundation",
    "files": [
-    "platform/charts/interaction.js"
+    "platform/charts/interaction.ts"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09A.records.js",
@@ -15863,7 +15863,7 @@
     "legend toggle",
     "click a point"
    ],
-   "note": "platform/charts/interaction.js",
+   "note": "platform/charts/interaction.ts",
    "wave": 9,
    "lane": "A"
   },

@@ -25,11 +25,24 @@
 */
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
+import type { PlotSize } from '../scales.ts';
+
+/** @public the prop type (ADR 0011) */
+export type ChartAnnotationProps = {
+  x?: number | null;
+  y?: number | null;
+  x2?: number;
+  inner?: PlotSize;
+  kind?: 'point' | 'range';
+  label?: React.ReactNode;
+  placement?: 'top' | 'bottom';
+  className?: string;
+};
 
 // SVG geometry, in pixels on the 4px grid: the ring's radius and the leader line's length
 const RING = 6, LEADER = 24;
 
-export function ChartAnnotation({ x, y, x2, inner, kind = 'point', label, placement = 'top', className }) {
+export function ChartAnnotation({ x, y, x2, inner, kind = 'point', label, placement = 'top', className }: ChartAnnotationProps) {
   if (x === undefined || x === null || !inner) return null;
   if (kind === 'range') {
     const a = Math.min(x, x2 === undefined ? x : x2), b = Math.max(x, x2 === undefined ? x : x2);

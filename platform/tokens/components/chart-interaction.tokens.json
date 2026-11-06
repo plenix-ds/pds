@@ -1,5 +1,5 @@
 {
-  "$description": "Chart interaction (platform/charts/interaction.js and chart-interaction.css, library wave 9, lane A): the interactive plot's focus border, the ring on the value in focus, the brush of a zoom, dimming, the selected mark and the frame's actions row. Existing roles only.",
+  "$description": "Chart interaction (platform/charts/interaction.ts and chart-interaction.css, library wave 9, lane A): the interactive plot's focus border, the ring on the value in focus, the brush of a zoom, dimming, the selected mark and the frame's actions row. Existing roles only.",
   "plx-comp": {
     "chart-interaction-focus-border-width": { "$value": "{plx-sys.border-width-medium}", "$type": "dimension", "$description": "Chart interaction: the interactive plot's border, transparent until it is focused." },
     "chart-interaction-focus-border-color": { "$value": "{plx-sys.focus-ring-color}", "$type": "color", "$description": "Chart interaction: the plot's border while it has keyboard focus (focus = border color only)." },

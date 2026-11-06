@@ -1,4 +1,4 @@
-/* Plenix · Chart accessibility (platform/charts/a11y.js)
+/* Plenix · Chart accessibility (platform/charts/a11y.ts)
    Summary: The helpers behind the chart accessibility rules (07 Data Display › Charts › Chart accessibility): a summary
      sentence of a series for the chart's description (summarizeSeries), textures that tell series apart without their
      color (ChartPatterns, chartPattern), and keyboard reading of a chart's points one at a time, each value spoken
@@ -23,7 +23,7 @@
      patternFill(id, index): the fill that draws that texture ('url(#<id>-<texture>)'), for a mark's overlay
      ChartPatterns: <defs> with the six textures (id: a prefix unique on the page, React.useId); drawn inside the plot
      useChartPoints({ count, describe, select, onSelect, strings }) → { interaction, index, hover }: useChartInteraction
-       (platform/charts/interaction.js) in "point" mode over count values in data order; pass interaction to ChartFrame;
+       (platform/charts/interaction.ts) in "point" mode over count values in data order; pass interaction to ChartFrame;
        index is the active value (pointer or keyboard) or null; hover(i) from a mark's pointer events (null on leave);
        describe(i) is said for each value; strings: the interaction's words (CHART_INTERACTION_STRINGS)
    Behavior:
@@ -41,36 +41,41 @@
        prefers-reduced-motion. */
 import React from 'react';
 import { formatNumber, formatPercent } from '../utils/format.ts';
-import { useChartInteraction } from './interaction.js';
+import { useChartInteraction } from './interaction.ts';
+import type { ChartCell, ChartInteraction, ChartInteractionStrings } from './interaction.ts';
 import { fill } from '../utils/fill.ts';
 
 const h = React.createElement;
-const SUMMARY = { up: 'Up {change}', down: 'Down {change}', flat: 'Flat', range: 'from {first} to {last}', low: 'lowest {value}', high: 'highest {value}', at: '{value} ({label})', empty: 'No data' };
+/** the words of a series summary; any of them may be replaced */
+export type SeriesSummaryStrings = { up?: string; down?: string; flat?: string; range?: string; low?: string; high?: string; at?: string; empty?: string };
+const SUMMARY: Required<SeriesSummaryStrings> = { up: 'Up {change}', down: 'Down {change}', flat: 'Flat', range: 'from {first} to {last}', low: 'lowest {value}', high: 'highest {value}', at: '{value} ({label})', empty: 'No data' };
 
-export function summarizeSeries(values, { labels, format, strings } = {}) {
+export function summarizeSeries(values: ArrayLike<number | string> | null | undefined, { labels, format, strings }: { labels?: ArrayLike<string | number>; format?: (value: number) => string; strings?: SeriesSummaryStrings } = {}): string {
   const t = Object.assign({}, SUMMARY, strings);
-  const f = typeof format === 'function' ? format : (v) => formatNumber(v);
-  const pts = (values || []).map((v, i) => ({ v: Number(v), i })).filter((p) => isFinite(p.v));
+  const f = typeof format === 'function' ? format : (v: number) => formatNumber(v);
+  const pts = Array.from(values || []).map((v, i) => ({ v: Number(v), i })).filter((p) => isFinite(p.v));
   if (!pts.length) return t.empty;
   const first = pts[0], last = pts[pts.length - 1];
   let lo = pts[0], hi = pts[0];
   pts.forEach((p) => { if (p.v < lo.v) lo = p; if (p.v > hi.v) hi = p; });
   const change = first.v ? (last.v - first.v) / Math.abs(first.v) : 0;
   const dir = Math.abs(change) < 0.005 && last.v === first.v ? t.flat : fill(change >= 0 ? t.up : t.down, { change: formatPercent(Math.abs(change), { decimals: 0 }) });
-  const at = (p) => (labels && labels[p.i] !== undefined ? fill(t.at, { value: f(p.v), label: labels[p.i] }) : f(p.v));
+  const at = (p: { v: number; i: number }): string => (labels && labels[p.i] !== undefined ? fill(t.at, { value: f(p.v), label: labels[p.i] }) : f(p.v));
   return dir + ' ' + fill(t.range, { first: f(first.v), last: f(last.v) }) + '; ' + fill(t.low, { value: at(lo) }) + ', ' + fill(t.high, { value: at(hi) }) + '.';
 }
 
-export const CHART_PATTERNS = Object.freeze(['diagonal', 'dots', 'cross', 'horizontal', 'vertical', 'reverse']);
-export function chartPattern(index) {
+export const CHART_PATTERNS = Object.freeze(['diagonal', 'dots', 'cross', 'horizontal', 'vertical', 'reverse'] as const);
+/** @public one of the six textures (ADR 0011) */
+export type ChartPatternName = (typeof CHART_PATTERNS)[number];
+export function chartPattern(index: number): ChartPatternName {
   const n = CHART_PATTERNS.length, i = Math.floor(Number(index) || 0);
   return CHART_PATTERNS[((i % n) + n) % n];
 }
-export function patternFill(id, index) { return 'url(#' + id + '-' + chartPattern(index) + ')'; }
+export function patternFill(id: string, index: number): string { return 'url(#' + id + '-' + chartPattern(index) + ')'; }
 
 // one 8 × 8 tile per texture (SVG geometry, on the 4px grid); strokes and dots take the chart-a11y classes
 const TILE = 8;
-const SHAPES = {
+const SHAPES: Record<ChartPatternName, [string, Record<string, string | number>][]> = {
   diagonal: [['path', { d: 'M-2,2 L2,-2 M0,8 L8,0 M6,10 L10,6' }]],
   dots: [['circle', { cx: 4, cy: 4, r: 1.5 }]],
   cross: [['path', { d: 'M-2,2 L2,-2 M0,8 L8,0 M6,10 L10,6 M-2,6 L2,10 M0,0 L8,8 M6,-2 L10,2' }]],
@@ -79,7 +84,7 @@ const SHAPES = {
   reverse: [['path', { d: 'M-2,6 L2,10 M0,0 L8,8 M6,-2 L10,2' }]],
 };
 
-export function ChartPatterns({ id }) {
+export function ChartPatterns({ id }: { id?: string }) {
   if (!id) return null;
   return h('defs', { className: 'plx-chart-patterns' }, CHART_PATTERNS.map((name) => h('pattern', { key: name, id: id + '-' + name, width: TILE, height: TILE, patternUnits: 'userSpaceOnUse' },
     SHAPES[name].map(([tag, geo], k) => h(tag, Object.assign({ key: k, className: tag === 'circle' ? 'plx-chart-pattern__dot' : 'plx-chart-pattern__stroke' }, geo))))));
@@ -87,12 +92,14 @@ export function ChartPatterns({ id }) {
 
 // a chart whose values are marks of their own (a funnel's steps, a treemap's tiles, a map's regions, scatter points):
 // the standard chart interaction (useChartInteraction, one value at a time) with the pointer read from the mark under it
-export function useChartPoints({ count = 0, describe, select = false, onSelect, strings } = {}) {
-  const hovered = React.useRef(null);
+/** what useChartPoints returns: the interaction to pass to ChartFrame, the active value (or null) and hover(i) for a mark's pointer events */
+export type ChartPoints = { interaction: ChartInteraction; index: number | null; hover: (index: number | null | undefined) => void };
+export function useChartPoints({ count = 0, describe, select = false, onSelect, strings }: { count?: number; describe?: (index: number) => string; select?: boolean; onSelect?: (index: number) => void; strings?: ChartInteractionStrings | null } = {}): ChartPoints {
+  const hovered = React.useRef<ChartCell | null>(null);
   const interaction = useChartInteraction({ rows: 1, columns: count, mode: 'point', select, strings,
-    onSelect: typeof onSelect === 'function' ? (cell) => onSelect(cell.c) : undefined,
-    describe: typeof describe === 'function' ? (cell) => describe(cell.c) : undefined });
+    onSelect: typeof onSelect === 'function' ? (cell: ChartCell) => onSelect(cell.c) : undefined,
+    describe: typeof describe === 'function' ? (cell: ChartCell) => describe(cell.c) : undefined });
   interaction.register({ nearest: () => hovered.current });
-  const hover = (i) => { hovered.current = i === null || i === undefined ? null : { r: 0, c: i }; interaction.setActive(hovered.current, 'pointer'); };
+  const hover = (i: number | null | undefined) => { hovered.current = i === null || i === undefined ? null : { r: 0, c: i }; interaction.setActive(hovered.current, 'pointer'); };
   return { interaction, index: interaction.active ? interaction.active.c : null, hover };
 }

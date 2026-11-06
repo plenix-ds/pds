@@ -38,7 +38,7 @@ import { dataWhenText } from '../utils/dataText.tsx';
 import { Details } from '../components/Details/Details.tsx';
 import { Table } from '../components/Table/Table.tsx';
 import { Badge } from '../components/Badge/Badge.tsx';
-import { seriesColor } from './scales.js';
+import { seriesColor } from './scales.ts';
 import { EChartsHost } from './echarts/EChartsPlot.jsx';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 import AlertIcon from 'plenix-platform/icons/plenix/alert';

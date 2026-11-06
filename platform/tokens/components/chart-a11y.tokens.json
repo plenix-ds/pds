@@ -1,5 +1,5 @@
 {
-  "$description": "Chart accessibility (platform/charts/a11y.js and chart-a11y.css; library wave 9, lane C): the ring around the active mark (pointer or keyboard), and the textures that tell series apart without their color (ChartPatterns). Existing roles only.",
+  "$description": "Chart accessibility (platform/charts/a11y.ts and chart-a11y.css; library wave 9, lane C): the ring around the active mark (pointer or keyboard), and the textures that tell series apart without their color (ChartPatterns). Existing roles only.",
   "plx-comp": {
     "chart-keys-ring-color": {
       "$value": "{plx-sys.content-default}",

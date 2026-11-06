@@ -9,7 +9,7 @@
        }}
      </ChartFrame>
    Props:
-     scale: the axis's scale (scaleLinear, scaleLog, scaleBand or scaleTime from platform/charts/scales.js) (required)
+     scale: the axis's scale (scaleLinear, scaleLog, scaleBand or scaleTime from platform/charts/scales.ts) (required)
      orient: the side of the plot: "bottom" (default) | "left" | "right" | "top"
      inner: the plot area's size, { width, height } (ChartFrame's inner) (required)
      margin: the frame's margins, { top, end, bottom, start } (ChartFrame's margin); the axis title sits at their edge
@@ -29,14 +29,33 @@
 */
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
-import { scalePosition, scaleTicks, scaleLabel } from './position.js';
+import { scalePosition, scaleTicks, scaleLabel } from './position.ts';
+import type { PlotSize, Scale, ScaleValue } from '../scales.ts';
 
-const ORIENTS = ['bottom', 'left', 'right', 'top'];
+const ORIENTS = ['bottom', 'left', 'right', 'top'] as const;
+/** the side of the plot an axis sits on */
+/** @public (ADR 0011) */
+export type AxisOrient = (typeof ORIENTS)[number];
+/** @public the prop type (ADR 0011) */
+export type AxisProps = {
+  scale?: Scale;
+  orient?: AxisOrient;
+  inner?: PlotSize;
+  /** the frame's margins, { top, end, bottom, start } */
+  margin?: Partial<Record<'top' | 'end' | 'bottom' | 'start', number>>;
+  /** the number of ticks to aim for, or the values to label */
+  ticks?: number | ScaleValue[];
+  format?: (value: ScaleValue) => string;
+  /** the axis title */
+  label?: React.ReactNode;
+  line?: boolean;
+  className?: string;
+};
 const NO_MARGIN = { top: 0, end: 0, bottom: 0, start: 0 };
 
-export function Axis({ scale, orient = 'bottom', inner, margin, ticks, format, label, line, className }) {
+export function Axis({ scale, orient = 'bottom', inner, margin, ticks, format, label, line, className }: AxisProps) {
   if (!scale || !inner) return null;
-  const o = ORIENTS.indexOf(orient) >= 0 ? orient : 'bottom';
+  const o: AxisOrient = ORIENTS.indexOf(orient) >= 0 ? orient : 'bottom';
   const m = Object.assign({}, NO_MARGIN, margin);
   const across = o === 'bottom' || o === 'top';
   const showLine = line === undefined ? across : !!line;

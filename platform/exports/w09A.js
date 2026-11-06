@@ -1,8 +1,8 @@
-// Library part w09A (wave 9, lane A): the chart interaction (platform/charts/interaction.js: keyboard, pointer, tooltip,
+// Library part w09A (wave 9, lane A): the chart interaction (platform/charts/interaction.ts: keyboard, pointer, tooltip,
 // live region, legend toggles, brush and zoom; ChartFrame's interaction and actions props, chartTooltipText) and the
 // charts LineChart (with its step curve), AreaChart, Gauge, HeatMap, WaterfallChart, WordCloud, NetworkGraph and Diagram.
-export { useChartInteraction, ChartFocusMark, ChartBrush, chartAnnounce, CHART_INTERACTION_STRINGS } from '../charts/interaction.js';
-export { chartTooltipText } from '../charts/parts/ChartTooltip.jsx';
+export { useChartInteraction, ChartFocusMark, ChartBrush, chartAnnounce, CHART_INTERACTION_STRINGS } from '../charts/interaction.ts';
+export { chartTooltipText } from '../charts/parts/ChartTooltip.tsx';
 export { LineChart } from '../charts/lazy.jsx';
 export { AreaChart } from '../charts/lazy.jsx';
 export { Gauge } from '../charts/Gauge.jsx';

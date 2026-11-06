@@ -1,4 +1,4 @@
-/* Plenix · Chart accessibility (platform/charts/chart-a11y.css; the helpers are platform/charts/a11y.js): the ring a chart draws around its active mark, and
+/* Plenix · Chart accessibility (platform/charts/chart-a11y.css; the helpers are platform/charts/a11y.ts): the ring a chart draws around its active mark, and
    the textures (ChartPatterns) drawn over a mark in the surface color so a series is told by more than its color. Every
    value is a --plx-comp-chart-keys-* or --plx-comp-chart-pattern-* token on an existing role. */
 

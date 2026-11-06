@@ -1,0 +1,3 @@
+### Changed
+
+- TypeScript wave 2, batch 1 (#618, ADR 0011): the chart parts (`Axis`, `ChartAnnotation`, `ChartLegend`, `ChartTooltip`, `DataLabel`, `GridLines`, `ReferenceLine`), the scales, the chart accessibility helpers and the chart interaction hook are now `.ts` and `.tsx`, with exported types: `AxisProps`, `ChartAnnotationProps`, `ChartLegendProps`, `ChartLegendItem`, `ChartTooltipProps`, `DataLabelProps`, `GridLinesProps`, `ReferenceLineProps`, `Scale` (`LinearScale`, `LogScale`, `BandScale`, `TimeScale`), `ScaleValue`, `PlotSize`, `ChartInteraction` and `ChartInteractionOptions`. No `any` in a public type. No behavior change.
