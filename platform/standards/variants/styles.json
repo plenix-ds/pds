@@ -5212,7 +5212,7 @@
         "token": "--plx-comp-retry-status-margin-block-start"
       }
     ],
-    "why": "retry.css: .plx-retry__status holds the countdown (\"Retrying in …\") while the next attempt waits"
+    "why": "retry.css: .plx-retry__status holds the countdown (\"Retrying in \u2026\") while the next attempt waits"
   },
   "retry-pattern--kind-retry-count": {
     "sets": [
@@ -5712,5 +5712,43 @@
       }
     ],
     "why": "waterfall-chart.css: the same connectors; totals are columns from zero (geometry the chart draws) (the chart engine reads these tokens to draw it in ECharts)"
+  },
+  "navigation-menu--layout-columns-default": {
+    "sets": [
+      {
+        "property": "column-gap",
+        "part": "columns",
+        "token": "--plx-comp-mega-menu-column-gap"
+      },
+      {
+        "property": "row-gap",
+        "part": "columns",
+        "token": "--plx-comp-mega-menu-row-gap"
+      },
+      {
+        "property": "inline-size",
+        "part": "group",
+        "token": "--plx-comp-mega-menu-column-width"
+      },
+      {
+        "property": "color",
+        "part": "heading",
+        "token": "--plx-comp-mega-menu-heading-text"
+      },
+      {
+        "property": "font-size",
+        "part": "heading",
+        "token": "--plx-comp-mega-menu-heading-font-size"
+      }
+    ],
+    "why": ".plx-mega-menu__columns, __group and __heading in mega-menu.css: the grouped links in columns under a heading each"
+  },
+  "navigation-menu--layout-mobile-accordion": {
+    "sets": [],
+    "why": ".plx-mega-menu--accordion sets only display flex in a stretched column (no token): the groups fold one under another instead of opening as a panel"
+  },
+  "navigation-menu--layout-with-featured": {
+    "sets": [],
+    "why": "markup only: a featured area for one current highlight beside the columns; mega-menu.css has no rule specific to it"
   }
 }
