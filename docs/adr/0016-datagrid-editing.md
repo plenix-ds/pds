@@ -146,6 +146,27 @@ type FormEditState = {
 - **Semver: MINOR** (an additive optional prop on a public pattern).
 - Enforced by: G3 review of the #465 PR; a behavior check (changes, close the panel, keep editing -> the drawer with the same values, and the question still asks on Cancel).
 
+## Addendum (2026-11-06, #477): Combobox `chipOverflow`, the tags editor's "+N" (D-0065)
+
+The `tags` editor is Plenix's `Combobox multiple`, and the design (84-cell-editors §2, §3) wants its chips on one line, with the ones that don't fit shown as one "+N" Tag. Combobox has no such behavior, so it gains an **opt-in** prop. Changing every multiple Combobox would change pages outside the grid.
+
+```ts
+chipOverflow?: 'wrap' | 'count';   // Combobox, with multiple; default 'wrap' (today: chips wrap to more lines)
+```
+
+- **`'count'`:** the chosen chips stay on one line before the input. The chips that don't fit fold into one "+N" Tag at the inline-end.
+  - The Tag's accessible name is "{count} more" (catalog `combobox.moreChips`, English; Arabic needs the owner, D-0012).
+  - The full list stays in the popup, where the chosen options are checked.
+  - It refits on resize, and logical sides apply in RTL.
+- Backspace on an empty input still removes the last chosen value, including a hidden one: N drops by one.
+- No new token: the "+N" is a Tag at its existing size and tone.
+- DataGrid's `tags` editor sets `chipOverflow="count"`. Everywhere else Combobox is unchanged.
+- **The read cell folds the same way (G2):** a `tags` column's read cell (not editing; the grid's own tag rendering in `cells.jsx`) shows its tags on one line, with the rest as one "+N" Tag named "{count} more". The cell keeps its shape when the editor opens.
+  - Combobox and the read cell share **one internal fit step** (a hook beside `useBarFit`, not exported), so both fold at the same widths.
+  - No public API for the read cell: it's the grid's own rendering. TagList is unchanged.
+- **Semver: MINOR** (an additive optional prop on a public control, and one catalog key).
+- Enforced by: G3 review of the #477 item 1 PR; behavior checks (the chips fit on one line, "+N" counts the hidden ones and is announced, Backspace removes the last value, RTL); the default `'wrap'` is unchanged (a regression check).
+
 ## Enforced by
 
 - G3 review of each phase's API diff against this ADR.
