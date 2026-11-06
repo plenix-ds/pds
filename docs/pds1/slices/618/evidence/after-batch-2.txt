@@ -1,0 +1,6 @@
+== box-plot-echarts-106
+BOX_PLOT_ECHARTS_106_OK
+== bullet-chart-echarts-106
+BULLET_CHART_ECHARTS_106_OK
+== charts-lazy-106
+CHARTS_LAZY_106_OK

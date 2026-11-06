@@ -225,11 +225,11 @@ t('Metric', 'extend', 'S', 8, 'C', ['Sparkline'], ['card with trend'], 'Metric c
 t('PieChart', 'component', 'M', 8, 'C', ['chart-parts'], ['pie', 'donut', 'with center value', 'half'], '', ['platform/charts/PieChart.jsx']);
 t('ScatterChart', 'component', 'M', 8, 'C', ['chart-parts'], ['scatter', 'bubble (size)', 'with trend line'], '', ['platform/charts/ScatterChart.jsx']);
 t('Gauge', 'component', 'S', 8, 'B', ['ChartKit'], ['semicircle', 'with thresholds'], '', ['platform/charts/Gauge.tsx']);
-t('BulletChart', 'component', 'S', 8, 'B', ['chart-parts'], ['horizontal', 'vertical'], '', ['platform/charts/BulletChart.jsx']);
+t('BulletChart', 'component', 'S', 8, 'B', ['chart-parts'], ['horizontal', 'vertical'], '', ['platform/charts/BulletChart.tsx']);
 
 /* ───────── wave 9: charts 2 and visualizations ───────── */
 t('HeatMap', 'component', 'M', 9, 'A', ['chart-parts'], ['matrix', 'calendar heat map'], '', ['platform/charts/HeatMap.jsx']);
-t('BoxPlot', 'component', 'M', 9, 'A', ['chart-parts'], ['vertical', 'horizontal', 'with outliers'], '', ['platform/charts/BoxPlot.jsx']);
+t('BoxPlot', 'component', 'M', 9, 'A', ['chart-parts'], ['vertical', 'horizontal', 'with outliers'], '', ['platform/charts/BoxPlot.tsx']);
 t('FunnelChart', 'component', 'S', 9, 'A', ['chart-parts'], ['vertical', 'horizontal'], '', ['platform/charts/FunnelChart.jsx']);
 t('WaterfallChart', 'component', 'S', 9, 'A', ['chart-parts'], ['with totals'], '', ['platform/charts/WaterfallChart.jsx']);
 t('RadarChart', 'component', 'S', 9, 'A', ['chart-parts'], ['single', 'compare'], '', ['platform/charts/RadarChart.jsx']);

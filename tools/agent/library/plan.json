@@ -1823,8 +1823,8 @@
       "platform/standards/web-native-map.d/w09B.json",
       "platform/charts/BarChart.jsx",
       "platform/charts/PieChart.jsx",
-      "platform/charts/BoxPlot.jsx",
-      "platform/charts/BulletChart.jsx",
+      "platform/charts/BoxPlot.tsx",
+      "platform/charts/BulletChart.tsx",
       "platform/charts/SankeyDiagram.jsx",
       "platform/charts/RadarChart.jsx",
       "platform/charts/ComboChart.jsx",
@@ -6310,7 +6310,7 @@
    "wave": 9,
    "lane": "B",
    "files": [
-    "platform/charts/BulletChart.jsx"
+    "platform/charts/BulletChart.tsx"
    ],
    "dependsOn": [
     "chart-parts"
@@ -6331,7 +6331,7 @@
    "wave": 9,
    "lane": "B",
    "files": [
-    "platform/charts/BoxPlot.jsx"
+    "platform/charts/BoxPlot.tsx"
    ],
    "dependsOn": [
     "chart-parts"
@@ -15375,7 +15375,7 @@
    "target": "BoxPlot",
    "targetKind": "component",
    "files": [
-    "platform/charts/BoxPlot.jsx"
+    "platform/charts/BoxPlot.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09B.records.js",
@@ -15405,7 +15405,7 @@
    "target": "BulletChart",
    "targetKind": "component",
    "files": [
-    "platform/charts/BulletChart.jsx"
+    "platform/charts/BulletChart.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09B.records.js",

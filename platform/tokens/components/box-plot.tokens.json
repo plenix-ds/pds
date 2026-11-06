@@ -1,5 +1,5 @@
 {
-  "$description": "BoxPlot (platform/charts/BoxPlot.jsx, library wave 9, lane B): its component tokens. The box and the outliers are the frame's mark and point (chart-*); these draw the whiskers and the median. No new color: existing roles.",
+  "$description": "BoxPlot (platform/charts/BoxPlot.tsx, library wave 9, lane B): its component tokens. The box and the outliers are the frame's mark and point (chart-*); these draw the whiskers and the median. No new color: existing roles.",
   "plx-comp": {
     "box-plot-whisker-color": { "$value": "{plx-sys.content-subtle}", "$type": "color", "$description": "Box plot: the whiskers and their caps (the range within 1.5 × the box)." },
     "box-plot-whisker-width": { "$value": "{plx-sys.border-width-thin}", "$type": "dimension", "$description": "Box plot: the whiskers' width." },
