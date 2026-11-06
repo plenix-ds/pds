@@ -102,11 +102,11 @@ function TagsCell({ tags, block }) {
   }, [listed, descId]);
   return (
     <span ref={box} className={`${block}__rich ${block}__rich--tags`}>
-      {tags.slice(0, tags.length - step).map((tag, i) => <Tag key={i} category={typeof tag === 'object' ? tag.category : undefined}>{label(tag)}</Tag>)}
+      {tags.slice(0, tags.length - step).map((tag, i) => <Tag key={i} className={i > 0 ? `${block}__tag-fixed` : undefined} category={typeof tag === 'object' ? tag.category : undefined}>{label(tag)}</Tag>)}
       {hidden.length ? (
         <>
           <Tooltip content={listed} describe={false}>
-            <Tag tabIndex={-1} data-plx-more="" aria-label={more.replace('{count}', String(hidden.length))}>{'+' + hidden.length}</Tag>
+            <Tag className={`${block}__tag-fixed`} tabIndex={-1} data-plx-more="" aria-label={more.replace('{count}', String(hidden.length))}>{'+' + hidden.length}</Tag>
           </Tooltip>
           <span id={descId} className="plx-visually-hidden">{listed}</span>
         </>

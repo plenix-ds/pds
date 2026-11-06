@@ -56,3 +56,4 @@ button.plx-tag--chip:not(.plx-tag--add)::before,.plx-tag__toggle::before{content
 .plx-tag--chip:active:not(.plx-tag--selected){background-color:var(--plx-sys-fill-neutral-pressed);}
 .plx-tag--chip.plx-tag--selected:active{background-color:var(--plx-sys-action-primary-background-pressed);}
 .plx-tag__label{min-inline-size:0;overflow-x:hidden;overflow-y:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.plx-tag__tip{display:flex;min-inline-size:0;}
