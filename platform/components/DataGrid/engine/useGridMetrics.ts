@@ -25,6 +25,8 @@ import { kinds, typeOf } from './helpers.tsx';
 import { valueAt } from '../state.ts';
 import { valueText } from '../cells.tsx';
 
+// a plain-text column whose widest value is longer than this many characters is long text (#800): the only kind that may be cut
+const LONG_CHARS = 48;
 export function useGridMetrics({
   frame,
   metrics,
@@ -67,7 +69,8 @@ export function useGridMetrics({
       widths: Record<string, any> = {},
       free: any[] = [],
       floor: Record<string, any> = {},
-      bodyFloor: Record<string, any> = {};
+      bodyFloor: Record<string, any> = {},
+      longCols = new Set<string>();
     // the probe pills are the only writes: measured first, so the reads below find the styles already computed
     const scales: any = cells === 'pill' ? { data: pillFont(at, ctx, true), text: pillFont(at, ctx, false) } : null,
       cs = getComputedStyle(at),
@@ -151,7 +154,7 @@ export function useGridMetrics({
             ? tokenPx('--plx-comp-data-pill-icon-size') + tokenPx('--plx-comp-data-pill-gap')
             : 0)
         : 0; // the icon only where the pill has one
-      let body = 0;   // the widest value alone, without the title (the floor a squeezed column keeps, #783)
+      let body = 0, chars = 0;   // the widest value alone, without the title (the floor a squeezed column keeps, #783), and its longest text in characters (the long-text test, #800)
       source.forEach((record: any) => {
         const value = valueAt(record, c.field);
         // a tags cell is a row of Tags: each tag's text plus its own padding and border, with the gap between them (issue 477, so the column fits its tags)
@@ -161,19 +164,25 @@ export function useGridMetrics({
               tokenPx('--plx-comp-data-grid-cell-rich-gap') * Math.max(0, tagged.length - 1)
           : ctx.measureText(valueText(value)).width * scale + chrome;
         body = Math.max(body, here);
+        chars = Math.max(chars, tagged ? 0 : valueText(value).length);
         width = Math.max(width, here);
       });
       bodyFloor[c.field] = snapUp(Math.max(metrics.min, body + metrics.space * 2));
       const content = width + metrics.space * 2;
-      // a fixed table or a list (narrow="table" | "list") keeps its set widths as before; the default grid sizes to content
+      // (#800, D-0087) a column is long text, the only kind that may be cut, when it says so (kind "wrap", type "long-text") or is plain text whose widest value is over
+      // LONG_CHARS characters; every other column is compact: names, numbers, dates, ids, people, status and pills always fit their widest value
+      const plain = !k.some((x: string) => ['data', 'badge', 'tags', 'avatar-name', 'icon', 'deleted', 'id', 'email', 'url', 'phone', 'code'].includes(x)) && !['number', 'currency', 'date', 'bytes', 'person', 'select', 'checkbox', 'file', 'image', 'link', 'multi'].includes(c.type);
+      if (fitting && (k.includes('wrap') || c.type === 'long-text' || (plain && !pill && chars > LONG_CHARS))) longCols.add(c.field);
+      // a fixed table or a list (narrow="table" | "list") keeps its set widths as before; the default grid sizes to content. A set width is a minimum for a compact
+      // column (never a cap), and a cap only for long text
       if (explicit) {
-        widths[c.field] = fitting ? snapUp(Math.max(metrics.min, floor[c.field], Math.min(explicit, content))) : Math.max(explicit, floor[c.field]);
+        widths[c.field] = fitting ? snapUp(Math.max(metrics.min, floor[c.field], longCols.has(c.field) ? Math.min(explicit, content) : Math.max(explicit, content))) : Math.max(explicit, floor[c.field]);
         return;
       }
       widths[c.field] = snapUp(
         Math.max(
           metrics.min,
-          Math.min(content, tokenPx('--plx-comp-data-grid-auto-max-width') || Infinity)
+          longCols.has(c.field) || !fitting ? Math.min(content, tokenPx('--plx-comp-data-grid-auto-max-width') || Infinity) : content
         )
       );
       free.push(c.field);
@@ -212,9 +221,11 @@ export function useGridMetrics({
     // the others, levelled: every column above the level comes down to it (its minimum plus the level)
     const others = shrinkable.filter((c: any) => c !== title);
     const extra = (c: any) => Math.max(0, widths[c.field] - least(c));
-    const room = others.reduce((sum: any, c: any) => sum + extra(c), 0);
-    if (over > 0 && room > 0) {
-      const cut = Math.min(over, room), byExtra = others.map(extra).sort((x: any, y: any) => y - x);
+    // (#800) long text gives its width up first, down to its minimum; only then do the other columns level down together, and the title last
+    const levelDown = (list: any[]) => {
+      const room = list.reduce((sum: any, c: any) => sum + extra(c), 0);
+      if (!(over > 0 && room > 0)) return;
+      const cut = Math.min(over, room), byExtra = list.map(extra).sort((x: any, y: any) => y - x);
       // the level L where the extras above it add up to the cut
       let level = 0, above = 0;
       for (let i = 0; i < byExtra.length; i += 1) {
@@ -222,28 +233,25 @@ export function useGridMetrics({
         const next = i + 1 < byExtra.length ? byExtra[i + 1] : 0, take = above - (i + 1) * next;
         if (take >= cut) { level = next + (take - cut) / (i + 1); break; }
       }
-      others.forEach((c: any) => { widths[c.field] = least(c) + Math.min(extra(c), level); });
+      list.forEach((c: any) => { widths[c.field] = least(c) + Math.min(extra(c), level); });
       over -= cut;
-    }
+    };
+    levelDown(others.filter((c: any) => longCols.has(c.field)));
+    levelDown(others.filter((c: any) => !longCols.has(c.field)));
     if (over > 0 && title) widths[title.field] = Math.max(least(title), widths[title.field] - over);
     // whole grid steps, rounded down (a shrunk column never rounds back over the room) and never under its minimum
     if (shrank)
       shrinkable.forEach((c: any) => { widths[c.field] = Math.max(least(c), snapToGrid(widths[c.field], { round: 'down', step })); });
     const used = shownColumns.reduce((sum: any, c: any) => sum + widthOf(c), 0);
     const units = Math.max(0, Math.floor((available - used) / step));
-    // room to spare (issue 272: a one-digit "#" column took all of it): a fixed table or list gives it to its last self-sizing column as
-    // before; the default grid shares it, in whole steps, among the text columns that hold real text (wider than the minimum), the
-    // title first; with none of those the title, else the widest text column, else the last self-sizing column takes it
+    // room to spare: a fixed table or list gives it to its last self-sizing column as before; the default grid shares it evenly (#800)
     if (!fitting) {
       const spare = free.filter((field) => shownColumns.some((c: any) => c.field === field)).pop();
       if (spare) widths[spare] += units * step;
     } else {
-      let growers = shrinkable.filter((c: any) => isText(c) && !tokenPx(c.width) && widths[c.field] > metrics.min);   // a column the app gave a width keeps it
-      if (!growers.length) {   // no column with real text: the title, else the widest text column, else the last self-sizing column (as before)
-        const one = title && isText(title) ? title : shrinkable.filter(isText).sort((x: any, y: any) => widths[y.field] - widths[x.field])[0]
-          || free.filter((field) => shownColumns.some((c: any) => c.field === field)).map((field) => shownColumns.find((c: any) => c.field === field)).pop();
-        growers = one ? [one] : [];
-      }
+      // (#800, D-0087) the room left is shared evenly, in whole steps, across every column that sizes itself (an app's set width is a minimum, so those grow too);
+      // the checkbox and row menu columns are fixed and the cells stay at the start edge
+      const growers = shrinkable;
       growers.forEach((c: any, i: any) => { widths[c.field] += (Math.floor(units / growers.length) + (i < units % growers.length ? 1 : 0)) * step; });
     }
     setAutoSizing((old: any) => (JSON.stringify(old) === JSON.stringify(widths) ? old : widths));

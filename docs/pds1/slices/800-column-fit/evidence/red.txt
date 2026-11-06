@@ -1,0 +1,51 @@
+AssertionError [ERR_ASSERTION]: ltr: AC-1: no value is cut at 1,600px (["Ibrahim Mansour0","Mariam Youssef0","Judge Anthony Hanna","Ibrahim Mansour1","Mariam Youssef1","Judge Anthony Hanna","Ibrahim Mansour2","Mariam Youssef2","Judge Anthony Hanna","Ibrahim Mansour3","Mariam Youssef3","Judge Anthony Hanna","Ibrahim Mansour4","Mariam Youssef4","Judge Anthony Hanna","Ibrahim Mansour5","Mariam Youssef5","Judge Anthony Hanna","Ibrahim Mansour6","Mariam Youssef6","Judge Anthony Hanna","Ibrahim Mansour7","Mariam Youssef7","Judge Anthony Hanna","Ibrahim Mansour8","Mariam Youssef8","Judge Anthony Hanna","Ibrahim Mansour9","Mariam Youssef9","Judge Anthony Hanna","Ibrahim Mansour10","Mariam Youssef10","Judge Anthony Hanna","Ibrahim Mansour11","Mariam Youssef11","Judge Anthony Hanna"])
++ actual - expected
+
++ [
++   'Ibrahim Mansour0',
++   'Mariam Youssef0',
++   'Judge Anthony Hanna',
++   'Ibrahim Mansour1',
++   'Mariam Youssef1',
++   'Judge Anthony Hanna',
++   'Ibrahim Mansour2',
++   'Mariam Youssef2',
++   'Judge Anthony Hanna',
++   'Ibrahim Mansour3',
++   'Mariam Youssef3',
++   'Judge Anthony Hanna',
++   'Ibrahim Mansour4',
++   'Mariam Youssef4',
++   'Judge Anthony Hanna',
++   'Ibrahim Mansour5',
++   'Mariam Youssef5',
++   'Judge Anthony Hanna',
++   'Ibrahim Mansour6',
++   'Mariam Youssef6',
++   'Judge Anthony Hanna',
++   'Ibrahim Mansour7',
++   'Mariam Youssef7',
++   'Judge Anthony Hanna',
++   'Ibrahim Mansour8',
++   'Mariam Youssef8',
++   'Judge Anthony Hanna',
++   'Ibrahim Mansour9',
++   'Mariam Youssef9',
++   'Judge Anthony Hanna',
++   'Ibrahim Mansour10',
++   'Mariam Youssef10',
++   'Judge Anthony Hanna',
++   'Ibrahim Mansour11',
++   'Mariam Youssef11',
++   'Judge Anthony Hanna'
++ ]
+- []
+
+    at /home/cc/pds1/work/component-engineer-1/tests/data-grid-column-fit-800.test.js:40:14 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [Array],
+  expected: [],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
