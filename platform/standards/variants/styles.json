@@ -2578,19 +2578,19 @@
   },
   "country-select--flags-with-flag-emoji": {
     "sets": [],
-    "why": "markup only: the type or the flags change the list's data and its labels, not a style"
+    "why": "markup only: shows a flag emoji before each country name (flags)"
   },
   "country-select--type-country-default": {
     "sets": [],
-    "why": "markup only: the type or the flags change the list's data and its labels, not a style"
+    "why": "markup only: lists countries and regions by ISO 3166 code, named in the reader's language"
   },
   "country-select--type-language": {
     "sets": [],
-    "why": "markup only: the type or the flags change the list's data and its labels, not a style"
+    "why": "markup only: lists languages by ISO 639 code, such as de"
   },
   "country-select--type-locale": {
     "sets": [],
-    "why": "markup only: the type or the flags change the list's data and its labels, not a style"
+    "why": "markup only: lists locales by BCP 47 tag, such as de-DE"
   },
   "design-principles--guidance-empty-state-and-onboarding-copy": {
     "sets": [],
@@ -2818,5 +2818,33 @@
   "word-cloud--layout-spiral": {
     "sets": [],
     "why": "data only: the layout is a chart option the word cloud engine reads; the stylesheet has no modifier for it"
+  },
+  "command-menu--variant-grouped": {
+    "sets": [],
+    "why": "markup only: lists the matching commands under group headings (the group field)"
+  },
+  "command-menu--variant-with-shortcuts": {
+    "sets": [],
+    "why": "markup only: shows each command's keyboard shortcut at its end"
+  },
+  "command-menu--variant-nested-pages": {
+    "sets": [],
+    "why": "markup only: a command with items opens a page of further commands"
+  },
+  "command-menu--variant-loading": {
+    "sets": [],
+    "why": "markup only: shows a loading row while the app's search is pending (loading)"
+  },
+  "command-menu--variant-empty": {
+    "sets": [],
+    "why": "markup only: shows an empty message when no command matches"
+  },
+  "command-palette--scope-global-ctrl-k": {
+    "sets": [],
+    "why": "markup only: opens the command menu in a dialog with Ctrl K (Mod+K) anywhere in the page"
+  },
+  "command-palette--scope-scoped": {
+    "sets": [],
+    "why": "markup only: opens only while focus is inside the region the scope ref names"
   }
 }
