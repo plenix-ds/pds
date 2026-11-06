@@ -2773,16 +2773,25 @@
       "$type": "dimension"
     },
     "sheet-title-font-family": {
-      "$value": "{plx-sys.font-heading}",
+      "$value": "{plx-sys.text-surface-title-font-family}",
       "$type": "fontFamily"
     },
     "sheet-title-font-size": {
-      "$value": "{plx-ref.font-size-400}",
+      "$value": "{plx-sys.text-surface-title-font-size}",
       "$type": "dimension"
     },
     "sheet-title-font-weight": {
-      "$value": "{plx-sys.font-weight-bold}",
+      "$value": "{plx-sys.text-surface-title-font-weight}",
       "$type": "fontWeight"
+    },
+    "sheet-title-line-height": {
+      "$value": "{plx-sys.text-surface-title-line-height}",
+      "$type": "number"
+    },
+    "sheet-title-letter-spacing": {
+      "$value": "{plx-sys.text-surface-title-letter-spacing}",
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "sheet-body-padding-block": {
       "$value": "{plx-sys.space-inset-lg}",
@@ -2853,16 +2862,25 @@
       "$type": "dimension"
     },
     "dialog-title-font-family": {
-      "$value": "{plx-sys.font-heading}",
+      "$value": "{plx-sys.text-surface-title-font-family}",
       "$type": "fontFamily"
     },
     "dialog-title-font-size": {
-      "$value": "{plx-ref.font-size-400}",
+      "$value": "{plx-sys.text-surface-title-font-size}",
       "$type": "dimension"
     },
     "dialog-title-font-weight": {
-      "$value": "{plx-sys.font-weight-bold}",
+      "$value": "{plx-sys.text-surface-title-font-weight}",
       "$type": "fontWeight"
+    },
+    "dialog-title-line-height": {
+      "$value": "{plx-sys.text-surface-title-line-height}",
+      "$type": "number"
+    },
+    "dialog-title-letter-spacing": {
+      "$value": "{plx-sys.text-surface-title-letter-spacing}",
+      "$type": "dimension",
+      "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "dialog-close-text": {
       "$value": "{plx-sys.content-dialog-chrome}",

@@ -1,0 +1,6 @@
+    Error: plx-dialog__title word spacing
+    Expected: "normal"
+    Received: "0px"
+    Error Context: test-results/surface-title-the-dialog-a-47b39-rface-title-role-light-ltr-/error-context.md
+    Error: plx-dialog__title word spacing
+    Expected: "normal"

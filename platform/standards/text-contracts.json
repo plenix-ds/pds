@@ -1204,13 +1204,9 @@
    ]
   },
   "plx-dialog__title": {
-   "contract": "adjusts",
-   "props": [
-    "font-family",
-    "font-size",
-    "font-weight",
-    "word-spacing"
-   ]
+   "contract": "establishes",
+   "role": "surface-title",
+   "font": "sans"
   },
   "plx-document-viewer__text": {
    "contract": "establishes",
@@ -2945,13 +2941,9 @@
    ]
   },
   "plx-sheet__title": {
-   "contract": "adjusts",
-   "props": [
-    "font-family",
-    "font-size",
-    "font-weight",
-    "word-spacing"
-   ]
+   "contract": "establishes",
+   "role": "surface-title",
+   "font": "sans"
   },
   "plx-side-panel__title": {
    "contract": "adjusts",

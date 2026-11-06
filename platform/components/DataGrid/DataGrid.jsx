@@ -43,6 +43,8 @@
        editor: "input" | "number" (a Plenix input; double-click or Enter edits, Escape cancels); editable(record): which
          rows may edit; validate(value, record): a message (or a promise of one) keeps the cell open with the message under it
          and nothing saved, null saves (ADR 0016); rowHandle: true makes the column the drag handle for moving rows
+         A person column (type person) keeps a person's id and draws their Avatar and name: give editorProps.options (or a render) so the read cell can find the name; with
+         only editorProps.loadOptions the grid remembers each person picked in the editor, so a saved cell shows the name, but an id it has not seen shows as the raw value
      selectable: the checkbox column (select all in its header); selected (keys) with onSelectionChange(keys,
        { count, hidden }); keepHiddenSelection (default true) keeps rows a filter hides selected
      cellSelection: true: cells can be selected as a block (off by default; a grid without it behaves exactly as before). Shift with an arrow,
