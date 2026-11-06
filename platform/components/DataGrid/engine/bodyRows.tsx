@@ -507,7 +507,7 @@ export function bodyRows({
                 detail && B + '__cell--list-detail',
                 detail && card && B + '__cell--detail-line',
                 !card && keys[0] === c.field && B + '__cell--key-first',
-                (c.align || c.type === 'bytes') && B + '__cell--align-' + (c.align || 'right')
+                c.align && B + '__cell--align-' + c.align
               )}
             >
               {childField && c.field === (props.treeColumn || columns[0]?.field) ? (
