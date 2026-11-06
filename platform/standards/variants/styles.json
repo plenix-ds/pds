@@ -2742,5 +2742,81 @@
   "code-editor--language-text": {
     "sets": [],
     "why": "markup only: colors the code as plain text as it is typed, with the CodeBlock's colors; plain text has no colored tokens"
+  },
+  "tour--variant-resume": {
+    "sets": [],
+    "why": "markup only: the variation shows or hides the tour's own buttons (skip, resume, steps); the stylesheet has no modifier for it"
+  },
+  "tour--variant-skip": {
+    "sets": [],
+    "why": "markup only: the variation shows or hides the tour's own buttons (skip, resume, steps); the stylesheet has no modifier for it"
+  },
+  "tour--variant-steps": {
+    "sets": [],
+    "why": "markup only: the variation shows or hides the tour's own buttons (skip, resume, steps); the stylesheet has no modifier for it"
+  },
+  "transfer-list--variant-basic-default": {
+    "sets": [],
+    "why": "markup only: the variation is a prop (search, ordered, virtualized) that adds parts or changes how many rows are drawn; the stylesheet has no modifier for it"
+  },
+  "transfer-list--variant-ordered-target": {
+    "sets": [],
+    "why": "markup only: the variation is a prop (search, ordered, virtualized) that adds parts or changes how many rows are drawn; the stylesheet has no modifier for it"
+  },
+  "transfer-list--variant-virtualized": {
+    "sets": [],
+    "why": "markup only: the variation is a prop (search, ordered, virtualized) that adds parts or changes how many rows are drawn; the stylesheet has no modifier for it"
+  },
+  "transfer-list--variant-with-search": {
+    "sets": [],
+    "why": "markup only: the variation is a prop (search, ordered, virtualized) that adds parts or changes how many rows are drawn; the stylesheet has no modifier for it"
+  },
+  "treemap--variant-flat": {
+    "sets": [],
+    "why": "data only: flat or nested is how the data is laid out by the chart engine; the stylesheet has no modifier for it"
+  },
+  "treemap--variant-nested": {
+    "sets": [],
+    "why": "data only: flat or nested is how the data is laid out by the chart engine; the stylesheet has no modifier for it"
+  },
+  "version-label--format-number-v12": {
+    "sets": [],
+    "why": "markup only: the format changes the label's text (v12, 2.1.0) or adds a qualifier word; the stylesheet only has the sm and md sizes"
+  },
+  "version-label--format-semantic-version-2-1-0": {
+    "sets": [],
+    "why": "markup only: the format changes the label's text (v12, 2.1.0) or adds a qualifier word; the stylesheet only has the sm and md sizes"
+  },
+  "version-label--qualifier-draft": {
+    "sets": [],
+    "why": "markup only: the format changes the label's text (v12, 2.1.0) or adds a qualifier word; the stylesheet only has the sm and md sizes"
+  },
+  "version-label--qualifier-latest": {
+    "sets": [],
+    "why": "markup only: the format changes the label's text (v12, 2.1.0) or adds a qualifier word; the stylesheet only has the sm and md sizes"
+  },
+  "wizard--variant-free-navigation": {
+    "sets": [],
+    "why": "markup only: the variation changes how the steps are navigated or whether a summary step exists; the stylesheet has no modifier for it"
+  },
+  "wizard--variant-linear": {
+    "sets": [],
+    "why": "markup only: the variation changes how the steps are navigated or whether a summary step exists; the stylesheet has no modifier for it"
+  },
+  "wizard--variant-page": {
+    "sets": [],
+    "why": "markup only: the variation changes how the steps are navigated or whether a summary step exists; the stylesheet has no modifier for it"
+  },
+  "wizard--variant-with-summary-step": {
+    "sets": [],
+    "why": "markup only: the variation changes how the steps are navigated or whether a summary step exists; the stylesheet has no modifier for it"
+  },
+  "word-cloud--layout-rectangular": {
+    "sets": [],
+    "why": "data only: the layout is a chart option the word cloud engine reads; the stylesheet has no modifier for it"
+  },
+  "word-cloud--layout-spiral": {
+    "sets": [],
+    "why": "data only: the layout is a chart option the word cloud engine reads; the stylesheet has no modifier for it"
   }
 }
