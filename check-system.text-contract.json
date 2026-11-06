@@ -6,8 +6,6 @@
   "plx-data-pill--data": "changes the font family without the whole role (missing font-size, letter-spacing)",
   "plx-image-editor__text": "changes the font family without the whole role (missing letter-spacing, line-height)",
   "plx-image-editor__text--bold": "changes the font family without the whole role (missing letter-spacing, line-height)",
-  "plx-inline-edit__read": "changes the font family without the whole role (its font and word spacing are not one switch)",
-  "plx-input-group__affix": "changes the font family without the whole role (its font and word spacing are not one switch)",
   "plx-link": "changes the font family without the whole role (missing font-size, letter-spacing, line-height)",
   "plx-link--standalone": "changes the font family without the whole role (missing font-size, letter-spacing, line-height)",
   "plx-popover": "changes the font family without the whole role (missing font-weight, letter-spacing)",

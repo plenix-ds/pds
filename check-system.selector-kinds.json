@@ -274,7 +274,6 @@
    "combinator | .plx-image--contain .plx-image__img": 1
   },
   "platform/components/InlineEdit/inline-edit.css": {
-   "combinator | .plx-inline-edit--data .plx-inline-edit__read": 1,
    "combinator | .plx-inline-edit--textarea .plx-inline-edit__read": 1,
    "combinator | .plx-inline-edit__read:hover .plx-inline-edit__hint": 1,
    "combinator | .plx-inline-edit__read.is-hover .plx-inline-edit__hint": 1,
@@ -286,7 +285,6 @@
    "combinator | .plx-input-group__box>.plx-input.plx-input-group__input--after-affix": 1,
    "combinator | .plx-input-group__box>.plx-input.plx-input-group__input--before-affix": 1,
    "combinator | .plx-input-group__icon+.plx-input-group__affix--prefix": 1,
-   "combinator | .plx-input-group.plx-input-group--data .plx-input-group__affix": 1,
    "combinator | .plx-input-group__box.is-disabled>.plx-input-group__affix": 1,
    "combinator | .plx-input-group__box.is-disabled>.plx-input-group__icon": 1,
    "combinator | .plx-input-group>:not(.plx-input-group__box)": 1,
