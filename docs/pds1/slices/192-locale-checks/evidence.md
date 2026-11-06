@@ -5,17 +5,17 @@
 
 ## Evidence (2026-11-06, main at a5876c52)
 
-- **Ran:** `node tools/checks/locale/locale.mjs`: 60 findings (missing-ar 28, plural-forms 1, unused-key 27, jsx-literal 4); G6 release state FAIL (28 missing Arabic, all on the owner's open proposals #476 and #629).
+- **Ran:** `node tools/checks/locale/locale.mjs`: 59 findings (missing-ar 28, unused-key 27, jsx-literal 4; the plural-forms finding on collection.selected was a false alarm, its exact "=0" is the zero form); G6 release state FAIL (28 missing Arabic, all on the owner's open proposals #476 and #629).
 - **Ran:** `node tools/checks/locale/locale.mjs origin/main`: 0 new, exit 0.
 - **Ran:** the same with a planted `{x}` and changed Arabic in `ar.js` and a literal `title` in Combobox (reverted): 3 new (placeholder, unapproved-ar, jsx-literal), exit 1.
 - **Ran:** `node tools/ci/check-decisions.mjs origin/main`: DECISIONS_OK.
+- **Rule:** missing-ar is reported and counted for G6 but never fails a PR: a new English word waits for the owner's answer (D-0012).
 - **Skipped:** `npx vitest run tools/checks/locale`: tests run only when the owner starts them. CI's existing step "The checks' own unit tests (Vitest)" runs them.
 - **Planned:** the CI step running the check diff-aware (`.github/workflows/ci.yml`, release-architect's file; requested on #192).
 - **Planned:** loading `ar-XB` in the RTL visual snapshots; a mixed-direction isolation rule (`dir="auto"`, `<bdi>`) for user data in JSX.
 
 ## Today's findings (old debt; not blocking)
 
-- plural-forms: platform/i18n/ar.js collection.selected: Arabic lacks zero
 - missing-ar: platform/i18n/ar.js appShell.minSize.title: no Arabic (English: "Screen size not supported")
 - missing-ar: platform/i18n/ar.js appShell.minSize.text: no Arabic (English: "This app shows a lot of detailed information and isn't designed for small scree)
 - missing-ar: platform/i18n/ar.js appShell.minSize.continue: no Arabic (English: "Continue anyway")

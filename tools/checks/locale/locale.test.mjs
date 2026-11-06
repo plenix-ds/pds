@@ -55,6 +55,11 @@ describe('4. Arabic plural forms', () => {
     expect(checkCatalogs(en, { g: { cells: two } }, { 'g.cells': two }).map((x) => x.message)).toEqual(['g.cells: Arabic lacks zero, two, few, many']);
     expect(rules(checkCatalogs(en, { g: { cells: '{n} خلية' } }, { 'g.cells': '{n} خلية' }))).toEqual(['plural-forms']);
   });
+  it('counts an exact "=0" as the zero form', () => {
+    const en = { c: { selected: { '=0': 'Nothing selected', one: '{count} item', other: '{count} items' } } };
+    const ar = { '=0': 'لا شيء', one: 'عنصر واحد', two: 'عنصران', few: '{count} عناصر', many: '{count} عنصرًا', other: '{count} عنصر' };
+    expect(checkCatalogs(en, { c: { selected: ar } }, { 'c.selected': ar })).toEqual([]);
+  });
 });
 
 describe('5. literal JSX text', () => {
@@ -88,6 +93,9 @@ describe('only new problems block', () => {
     const a = { rule: 'jsx-literal', file: 'a.jsx', message: 'text "Save"', line: 3 };
     expect(newFindings([a], [{ ...a, line: 9 }])).toEqual([]);
     expect(newFindings([a], [a, { ...a, line: 12 }])).toHaveLength(1);
+  });
+  it('reports a new missing Arabic key without blocking (the word waits for the owner)', () => {
+    expect(newFindings([], [{ rule: 'missing-ar', file: 'platform/i18n/ar.js', message: 'x.y: no Arabic' }])).toEqual([]);
   });
 });
 

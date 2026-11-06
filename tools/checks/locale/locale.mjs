@@ -13,7 +13,8 @@
 // Diff-aware (plan §7 "Only new problems block"): with a base ref, the same checks run on the base (the catalogs and the
 // changed files as they were there) and only findings the head adds fail. Old ones are counted and never block.
 // A finding is "<rule> | <file> | <message>", without a line number, so moving code does not make it new.
-// G6 passes when the release has no missing-ar or unapproved-ar finding and this check reports no new problem.
+// missing-ar is reported but never blocks a PR (a new word waits for the owner); G6 passes when the release has no
+// missing-ar or unapproved-ar finding and this check reports no new problem.
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
@@ -27,6 +28,7 @@ export const APPROVED_FILE = 'tools/checks/locale/approved-ar.json';
 export const AR_FORMS = ['zero', 'one', 'two', 'few', 'many', 'other'];
 const PLURAL_KEY = /^(zero|one|two|few|many|other|=\d+)$/;
 const COUNT_NAMES = new Set(['n', 'count']);
+const EXACT_FOR = { zero: '=0', one: '=1', two: '=2' };
 const OPTIONAL_COUNT_FORMS = new Set(['zero', 'one', 'two', '=0', '=1', '=2']);
 export const ARABIC = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/;
 const VISIBLE_ATTRS = new Set(['aria-label', 'aria-description', 'title', 'placeholder', 'alt', 'label']);
@@ -80,7 +82,8 @@ export function checkCatalogs(en, ar, approved = {}) {
     // 4. plural forms
     if (isPlural(ev)) {
       if (typeof av === 'string') f('plural-forms', AR_FILE, `${k}: English is a plural; Arabic needs ${AR_FORMS.join(', ')}`);
-      else { const miss = AR_FORMS.filter((x) => !(x in av)); if (miss.length) f('plural-forms', AR_FILE, `${k}: Arabic lacks ${miss.join(', ')}`); }
+      // an exact count wins over its category (LocaleProvider), so "=0" stands for zero, "=1" for one and "=2" for two
+      else { const miss = AR_FORMS.filter((x) => !(x in av) && !(EXACT_FOR[x] && EXACT_FOR[x] in av)); if (miss.length) f('plural-forms', AR_FILE, `${k}: Arabic lacks ${miss.join(', ')}`); }
     }
     // 3. placeholders
     const enNames = union(Object.values(forms(ev)).map(placeholders));
@@ -220,11 +223,14 @@ export async function runAll(ref, { jsxFiles } = {}) {
 // ---------- compare head with base ----------
 
 export const findingKey = (x) => `${x.rule} | ${x.file} | ${x.message}`;
+// missing Arabic never fails a PR: a new English word waits for the owner's answer and shows in English until then
+// (D-0012, "waiting never blocks other work"); it is reported, and G6 counts it at a release
+export const NON_BLOCKING = new Set(['missing-ar']);
 export function newFindings(base, head) {
   const left = new Map();
   for (const x of base) left.set(findingKey(x), (left.get(findingKey(x)) || 0) + 1);
   const added = [];
-  for (const x of head) { const k = findingKey(x), n = left.get(k) || 0; if (n) left.set(k, n - 1); else added.push(x); }
+  for (const x of head) { const k = findingKey(x), n = left.get(k) || 0; if (n) left.set(k, n - 1); else if (!NON_BLOCKING.has(x.rule)) added.push(x); }
   return added;
 }
 
