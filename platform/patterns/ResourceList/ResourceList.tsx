@@ -53,6 +53,7 @@
      A pattern of the Polaris resource list. Use the DataGrid when people compare records by column or sort by a column.
 */
 import React from 'react';
+import type { IconValue } from '../../components/Icon/Icon.tsx';
 import { cx } from '../../utils/cx.ts';
 import { useUid } from '../../utils/layer.ts';
 import { useSelection } from '../../hooks/useSelection.ts';
@@ -66,9 +67,9 @@ import { useStrings } from '../../providers/LocaleProvider.tsx';
 import { fill } from '../../utils/fill.ts';
 
 // a phrase with its numbers in the data font: "{n} of {total} selected" → [<Text data>3</Text>, ' of ', …]
-const phrase = (s, map) => s.split(/(\{n\}|\{total\})/).map((p, i) => (p === '{n}' || p === '{total}' ? <Text key={i} variant="data">{map[p.slice(1, -1)]}</Text> : fill(p, map)));
+const phrase = (s: any, map: any) => s.split(/(\{n\}|\{total\})/).map((p: any, i: any) => (p === '{n}' || p === '{total}' ? <Text key={i} variant="data">{map[p.slice(1, -1)]}</Text> : fill(p, map)));
 
-function Row({ item, selectable, checked, onCheck, t }) {
+function Row({ item, selectable, checked, onCheck, t }: any) {
   const name = item.name;
   const opener = item.href ? <a href={item.href} className="plx-resource-list__opener">{name}</a>
     : item.onOpen ? <button type="button" className="plx-resource-list__opener" onClick={item.onOpen}>{name}</button>
@@ -95,21 +96,56 @@ function Row({ item, selectable, checked, onCheck, t }) {
   );
 }
 
-export function ResourceList({ items = [], label, noun, plural, selectable = false, selected, onSelectionChange, defaultSelected, showCount = false,
-  bar, emptyState, headingLevel = 3, strings, className }) {
-  const t = useStrings('resourceList', strings);
+/** @public one record of the list */
+export type ResourceItem = {
+  id: string | number;
+  name: string;
+  description?: string;
+  meta?: React.ReactNode;
+  href?: string;
+  onOpen?(): void;
+  thumbnail?: { src?: string; alt?: string; icon?: IconValue };
+  avatar?: { name: string; src?: string; gender?: string };
+  media?: React.ReactNode;
+  field?: React.ReactNode;
+  fieldOnHover?: boolean;
+  actions?: React.ReactNode;
+  group?: string;
+  disabled?: boolean;
+};
+/** @public the prop type (ADR 0011) */
+export type ResourceListProps = {
+  items?: ResourceItem[];
+  label: string;
+  noun?: string;
+  plural?: string;
+  selectable?: boolean;
+  selected?: (string | number)[];
+  onSelectionChange?(ids: (string | number)[]): void;
+  defaultSelected?: (string | number)[];
+  showCount?: boolean;
+  bar?: React.ReactNode;
+  emptyState?: React.ReactNode;
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function ResourceList(props: ResourceListProps) {
+  const { items = [], label, noun, plural, selectable = false, selected, onSelectionChange, defaultSelected, showCount = false,
+  bar, emptyState, headingLevel = 3, strings, className } = props as any;
+  const t: any = useStrings('resourceList', strings);
   const uid = useUid('plx-resource-list');
-  const ids = items.map((it) => it.id);
+  const ids = items.map((it: any) => it.id);
   const sel = useSelection({ items: ids, mode: 'multiple', selected, defaultSelected, onChange: onSelectionChange,
-    disabledKeys: items.filter((it) => it.disabled).map((it) => it.id) });
+    disabledKeys: items.filter((it: any) => it.disabled).map((it: any) => it.id) });
   const one = noun || t.item;
   const nouns = plural || one + 's';
   const total = items.length;
   // the groups, in the order they first appear (grouped); one unnamed group otherwise
-  const groups = [];
-  items.forEach((it) => { const g = it.group || ''; let at = groups.find((x) => x.heading === g); if (!at) { at = { heading: g, items: [] }; groups.push(at); } at.items.push(it); });
+  const groups: any[] = [];
+  items.forEach((it: any) => { const g = it.group || ''; let at = groups.find((x) => x.heading === g); if (!at) { at = { heading: g, items: [] }; groups.push(at); } at.items.push(it); });
   const grouped = groups.some((g) => g.heading);
-  const row = (it) => <Row key={it.id} item={it} selectable={selectable} checked={sel.isSelected(it.id)} onCheck={() => sel.toggle(it.id)} t={t} />;
+  const row = (it: any) => <Row key={it.id} item={it} selectable={selectable} checked={sel.isSelected(it.id)} onCheck={() => sel.toggle(it.id)} t={t} />;
   const header = selectable || showCount ? (
     <div className="plx-resource-list__header">
       {selectable ? (

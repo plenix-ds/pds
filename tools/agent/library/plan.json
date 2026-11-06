@@ -1060,7 +1060,7 @@
       "platform/components/Notice/notice.css",
       "platform/components/EmptyState/EmptyState.jsx",
       "platform/components/EmptyState/empty-state.css",
-      "platform/patterns/Retry/Retry.jsx",
+      "platform/patterns/Retry/Retry.tsx",
       "platform/patterns/Retry/retry.css",
       "platform/tokens/components/retry.tokens.json"
      ],
@@ -1692,7 +1692,7 @@
       "platform/patterns/PermissionSummary/PermissionSummary.tsx",
       "platform/patterns/PermissionSummary/permission-summary.css",
       "platform/tokens/components/permission-summary.tokens.json",
-      "platform/patterns/QueryBuilder/QueryBuilder.jsx",
+      "platform/patterns/QueryBuilder/QueryBuilder.tsx",
       "platform/patterns/QueryBuilder/query-builder.css",
       "platform/tokens/components/query-builder.tokens.json",
       "platform/components/VirtualList/VirtualList.jsx",
@@ -1736,7 +1736,7 @@
       "platform/patterns/FilterPanel/FilterPanel.tsx",
       "platform/patterns/FilterPanel/filter-panel.css",
       "platform/tokens/components/filter-panel.tokens.json",
-      "platform/patterns/ResourceList/ResourceList.jsx",
+      "platform/patterns/ResourceList/ResourceList.tsx",
       "platform/patterns/ResourceList/resource-list.css",
       "platform/tokens/components/resource-list.tokens.json",
       "platform/components/Timeline/Timeline.jsx",
@@ -1972,7 +1972,7 @@
       "platform/patterns/DeleteFlow/DeleteFlow.jsx",
       "platform/patterns/DeleteFlow/delete-flow.css",
       "platform/tokens/components/delete-flow.tokens.json",
-      "platform/patterns/ReviewFlow/ReviewFlow.jsx",
+      "platform/patterns/ReviewFlow/ReviewFlow.tsx",
       "platform/patterns/ReviewFlow/review-flow.css",
       "platform/tokens/components/review-flow.tokens.json",
       "platform/patterns/AssignControl/AssignControl.tsx",
@@ -2031,7 +2031,7 @@
       "platform/patterns/DraftState/DraftState.tsx",
       "platform/patterns/DraftState/draft-state.css",
       "platform/tokens/components/draft-state.tokens.json",
-      "platform/patterns/SaveAs/SaveAs.jsx",
+      "platform/patterns/SaveAs/SaveAs.tsx",
       "platform/patterns/SaveAs/save-as.css",
       "platform/tokens/components/save-as.tokens.json",
       "platform/patterns/ArchiveRestore/ArchiveRestore.tsx",
@@ -2079,7 +2079,7 @@
       "platform/patterns/Auth/Auth.jsx",
       "platform/patterns/Auth/auth.css",
       "platform/tokens/components/auth.tokens.json",
-      "platform/patterns/RoleManager/RoleManager.jsx",
+      "platform/patterns/RoleManager/RoleManager.tsx",
       "platform/patterns/RoleManager/role-manager.css",
       "platform/tokens/components/role-manager.tokens.json",
       "platform/patterns/ConnectedAccounts/ConnectedAccounts.tsx",
@@ -2291,7 +2291,7 @@
       "platform/patterns/MetadataEditor/MetadataEditor.tsx",
       "platform/patterns/MetadataEditor/metadata-editor.css",
       "platform/tokens/components/metadata-editor.tokens.json",
-      "platform/patterns/RelatedAssets/RelatedAssets.jsx",
+      "platform/patterns/RelatedAssets/RelatedAssets.tsx",
       "platform/patterns/RelatedAssets/related-assets.css",
       "platform/tokens/components/related-assets.tokens.json"
      ],
@@ -2336,7 +2336,7 @@
       "platform/patterns/VersionHistory/VersionHistory.tsx",
       "platform/patterns/VersionHistory/version-history.css",
       "platform/tokens/components/version-history.tokens.json",
-      "platform/patterns/RenditionList/RenditionList.jsx",
+      "platform/patterns/RenditionList/RenditionList.tsx",
       "platform/patterns/RenditionList/rendition-list.css",
       "platform/tokens/components/rendition-list.tokens.json"
      ],
@@ -2536,7 +2536,7 @@
       "platform/patterns/AISearch/AISearch.tsx",
       "platform/patterns/AISearch/ai-search.css",
       "platform/tokens/components/ai-search.tokens.json",
-      "platform/patterns/Recommendation/Recommendation.jsx",
+      "platform/patterns/Recommendation/Recommendation.tsx",
       "platform/patterns/Recommendation/recommendation.css",
       "platform/tokens/components/recommendation.tokens.json",
       "platform/components/AILabel/AILabel.tsx",
@@ -3997,7 +3997,7 @@
    "wave": 4,
    "lane": "A",
    "files": [
-    "platform/patterns/Retry/Retry.jsx",
+    "platform/patterns/Retry/Retry.tsx",
     "platform/patterns/Retry/retry.css",
     "platform/tokens/components/retry.tokens.json"
    ],
@@ -5776,7 +5776,7 @@
    "wave": 8,
    "lane": "B",
    "files": [
-    "platform/patterns/QueryBuilder/QueryBuilder.jsx",
+    "platform/patterns/QueryBuilder/QueryBuilder.tsx",
     "platform/patterns/QueryBuilder/query-builder.css",
     "platform/tokens/components/query-builder.tokens.json"
    ],
@@ -5949,7 +5949,7 @@
    "wave": 8,
    "lane": "C",
    "files": [
-    "platform/patterns/ResourceList/ResourceList.jsx",
+    "platform/patterns/ResourceList/ResourceList.tsx",
     "platform/patterns/ResourceList/resource-list.css",
     "platform/tokens/components/resource-list.tokens.json"
    ],
@@ -6861,7 +6861,7 @@
    "wave": 10,
    "lane": "B",
    "files": [
-    "platform/patterns/ReviewFlow/ReviewFlow.jsx",
+    "platform/patterns/ReviewFlow/ReviewFlow.tsx",
     "platform/patterns/ReviewFlow/review-flow.css",
     "platform/tokens/components/review-flow.tokens.json"
    ],
@@ -7042,7 +7042,7 @@
    "wave": 10,
    "lane": "C",
    "files": [
-    "platform/patterns/SaveAs/SaveAs.jsx",
+    "platform/patterns/SaveAs/SaveAs.tsx",
     "platform/patterns/SaveAs/save-as.css",
     "platform/tokens/components/save-as.tokens.json"
    ],
@@ -7168,7 +7168,7 @@
    "wave": 11,
    "lane": "A",
    "files": [
-    "platform/patterns/RoleManager/RoleManager.jsx",
+    "platform/patterns/RoleManager/RoleManager.tsx",
     "platform/patterns/RoleManager/role-manager.css",
     "platform/tokens/components/role-manager.tokens.json"
    ],
@@ -7827,7 +7827,7 @@
    "wave": 12,
    "lane": "B",
    "files": [
-    "platform/patterns/RelatedAssets/RelatedAssets.jsx",
+    "platform/patterns/RelatedAssets/RelatedAssets.tsx",
     "platform/patterns/RelatedAssets/related-assets.css",
     "platform/tokens/components/related-assets.tokens.json"
    ],
@@ -7898,7 +7898,7 @@
    "wave": 12,
    "lane": "C",
    "files": [
-    "platform/patterns/RenditionList/RenditionList.jsx",
+    "platform/patterns/RenditionList/RenditionList.tsx",
     "platform/patterns/RenditionList/rendition-list.css",
     "platform/tokens/components/rendition-list.tokens.json"
    ],
@@ -8496,7 +8496,7 @@
    "wave": 14,
    "lane": "B",
    "files": [
-    "platform/patterns/Recommendation/Recommendation.jsx",
+    "platform/patterns/Recommendation/Recommendation.tsx",
     "platform/patterns/Recommendation/recommendation.css",
     "platform/tokens/components/recommendation.tokens.json"
    ],
@@ -14467,7 +14467,7 @@
    "target": "QueryBuilder",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/QueryBuilder/QueryBuilder.jsx",
+    "platform/patterns/QueryBuilder/QueryBuilder.tsx",
     "platform/patterns/QueryBuilder/query-builder.css",
     "platform/tokens/components/query-builder.tokens.json"
    ],
@@ -14522,7 +14522,7 @@
    "target": "ResourceList",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/ResourceList/ResourceList.jsx",
+    "platform/patterns/ResourceList/ResourceList.tsx",
     "platform/patterns/ResourceList/resource-list.css",
     "platform/tokens/components/resource-list.tokens.json"
    ],
@@ -14558,7 +14558,7 @@
    "targetKind": "pattern",
    "duplicateOf": "data-display/Resource list",
    "files": [
-    "platform/patterns/ResourceList/ResourceList.jsx",
+    "platform/patterns/ResourceList/ResourceList.tsx",
     "platform/patterns/ResourceList/resource-list.css",
     "platform/tokens/components/resource-list.tokens.json"
    ],
@@ -16594,7 +16594,7 @@
    "target": "Retry",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/Retry/Retry.jsx",
+    "platform/patterns/Retry/Retry.tsx",
     "platform/patterns/Retry/retry.css",
     "platform/tokens/components/retry.tokens.json"
    ],
@@ -18070,7 +18070,7 @@
    "target": "SaveAs",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/SaveAs/SaveAs.jsx",
+    "platform/patterns/SaveAs/SaveAs.tsx",
     "platform/patterns/SaveAs/save-as.css",
     "platform/tokens/components/save-as.tokens.json"
    ],
@@ -18223,7 +18223,7 @@
    "target": "ReviewFlow",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/ReviewFlow/ReviewFlow.jsx",
+    "platform/patterns/ReviewFlow/ReviewFlow.tsx",
     "platform/patterns/ReviewFlow/review-flow.css",
     "platform/tokens/components/review-flow.tokens.json"
    ],
@@ -18286,7 +18286,7 @@
    "target": "ReviewFlow",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/ReviewFlow/ReviewFlow.jsx",
+    "platform/patterns/ReviewFlow/ReviewFlow.tsx",
     "platform/patterns/ReviewFlow/review-flow.css",
     "platform/tokens/components/review-flow.tokens.json"
    ],
@@ -18314,7 +18314,7 @@
    "target": "ReviewFlow",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/ReviewFlow/ReviewFlow.jsx",
+    "platform/patterns/ReviewFlow/ReviewFlow.tsx",
     "platform/patterns/ReviewFlow/review-flow.css",
     "platform/tokens/components/review-flow.tokens.json"
    ],
@@ -18983,7 +18983,7 @@
    "target": "RoleManager",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/RoleManager/RoleManager.jsx",
+    "platform/patterns/RoleManager/RoleManager.tsx",
     "platform/patterns/RoleManager/role-manager.css",
     "platform/tokens/components/role-manager.tokens.json"
    ],
@@ -19168,7 +19168,7 @@
    "target": "ReviewFlow",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/ReviewFlow/ReviewFlow.jsx",
+    "platform/patterns/ReviewFlow/ReviewFlow.tsx",
     "platform/patterns/ReviewFlow/review-flow.css",
     "platform/tokens/components/review-flow.tokens.json"
    ],
@@ -20395,7 +20395,7 @@
    "target": "RelatedAssets",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/RelatedAssets/RelatedAssets.jsx",
+    "platform/patterns/RelatedAssets/RelatedAssets.tsx",
     "platform/patterns/RelatedAssets/related-assets.css",
     "platform/tokens/components/related-assets.tokens.json"
    ],
@@ -20426,7 +20426,7 @@
    "target": "RenditionList",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/RenditionList/RenditionList.jsx",
+    "platform/patterns/RenditionList/RenditionList.tsx",
     "platform/patterns/RenditionList/rendition-list.css",
     "platform/tokens/components/rendition-list.tokens.json"
    ],
@@ -21770,7 +21770,7 @@
    "target": "Recommendation",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/Recommendation/Recommendation.jsx",
+    "platform/patterns/Recommendation/Recommendation.tsx",
     "platform/patterns/Recommendation/recommendation.css",
     "platform/tokens/components/recommendation.tokens.json"
    ],
@@ -21832,7 +21832,7 @@
    "target": "ReviewFlow",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/ReviewFlow/ReviewFlow.jsx",
+    "platform/patterns/ReviewFlow/ReviewFlow.tsx",
     "platform/patterns/ReviewFlow/review-flow.css",
     "platform/tokens/components/review-flow.tokens.json"
    ],

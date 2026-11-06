@@ -4,4 +4,4 @@
 export { RoleLabel } from '../components/RoleLabel/RoleLabel.tsx';
 export { SearchResult, SearchResultGroup, highlightMatches } from '../components/SearchResult/SearchResult.tsx';
 export { Timeline } from '../components/Timeline/Timeline.tsx';
-export { ResourceList } from '../patterns/ResourceList/ResourceList.jsx';
+export { ResourceList } from '../patterns/ResourceList/ResourceList.tsx';

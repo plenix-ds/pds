@@ -53,34 +53,47 @@ import RefreshIcon from 'plenix-platform/icons/plenix/refresh';
 import { fill } from '../../utils/fill.ts';
 import { fillNodes } from '../../utils/fillNodes.tsx';
 
-export function useRetry(task, { attempts = 3, auto = false, delay, maxDelay, immediate = true } = {}) {
-  const [state, setState] = React.useState({ status: immediate ? 'running' : 'idle', attempt: immediate ? 1 : 0, seconds: 0, error: null, result: undefined });
-  const live = React.useRef({ run: 0, timer: null, tick: null, mounted: true });
+/** @public what useRetry returns */
+export type RetryState<T = unknown> = {
+  status: 'idle' | 'running' | 'waiting' | 'failed' | 'done';
+  attempt: number;
+  attempts: number;
+  seconds: number;
+  error: unknown;
+  result: T | undefined;
+  retry(): void;
+  cancel(): void;
+};
+/** @public the options of useRetry */
+export type RetryOptions = { attempts?: number; auto?: boolean; delay?: number; maxDelay?: number; immediate?: boolean };
+export function useRetry<T = unknown>(task: () => T | Promise<T>, { attempts = 3, auto = false, delay, maxDelay, immediate = true }: RetryOptions = {}): RetryState<T> {
+  const [state, setState] = React.useState<any>({ status: immediate ? 'running' : 'idle', attempt: immediate ? 1 : 0, seconds: 0, error: null, result: undefined });
+  const live = React.useRef<any>({ run: 0, timer: null, tick: null, mounted: true });
   const taskRef = React.useRef(task);
   taskRef.current = task;
-  const opts = React.useRef({});
+  const opts = React.useRef<any>({});
   opts.current = { attempts, auto, delay, maxDelay };
 
   const stopTimers = () => { clearTimeout(live.current.timer); clearInterval(live.current.tick); live.current.timer = null; live.current.tick = null; };
 
-  const run = React.useCallback((attempt) => {
+  const run = React.useCallback((attempt: any) => {
     stopTimers();
     const id = ++live.current.run;
-    setState((s) => Object.assign({}, s, { status: 'running', attempt, seconds: 0 }));
+    setState((s: any) => Object.assign({}, s, { status: 'running', attempt, seconds: 0 }));
     Promise.resolve().then(() => taskRef.current()).then((result) => {
       if (!live.current.mounted || id !== live.current.run) return;
       setState({ status: 'done', attempt, seconds: 0, error: null, result });
     }, (error) => {
       if (!live.current.mounted || id !== live.current.run) return;
       const o = opts.current;
-      if (!o.auto || attempt >= o.attempts) { setState((s) => Object.assign({}, s, { status: 'failed', attempt, seconds: 0, error })); return; }
+      if (!o.auto || attempt >= o.attempts) { setState((s: any) => Object.assign({}, s, { status: 'failed', attempt, seconds: 0, error })); return; }
       const first = o.delay !== undefined ? o.delay : tokenMs('--plx-comp-retry-delay', 2000);
       const most = o.maxDelay !== undefined ? o.maxDelay : tokenMs('--plx-comp-retry-delay-max', 30000);
       const wait = Math.min(first * Math.pow(2, attempt - 1), most);
       const until = Date.now() + wait;
-      setState((s) => Object.assign({}, s, { status: 'waiting', attempt, seconds: Math.ceil(wait / 1000), error }));
+      setState((s: any) => Object.assign({}, s, { status: 'waiting', attempt, seconds: Math.ceil(wait / 1000), error }));
       live.current.tick = setInterval(() => {
-        if (live.current.mounted) setState((s) => Object.assign({}, s, { seconds: Math.max(0, Math.ceil((until - Date.now()) / 1000)) }));
+        if (live.current.mounted) setState((s: any) => Object.assign({}, s, { seconds: Math.max(0, Math.ceil((until - Date.now()) / 1000)) }));
       }, 1000);
       live.current.timer = setTimeout(() => run(attempt + 1), wait);
     });
@@ -102,7 +115,7 @@ export function useRetry(task, { attempts = 3, auto = false, delay, maxDelay, im
   const cancel = React.useCallback(() => {
     stopTimers();
     live.current.run++;
-    setState((s) => (s.status === 'waiting' ? Object.assign({}, s, { status: 'failed', seconds: 0 }) : s));
+    setState((s: any) => (s.status === 'waiting' ? Object.assign({}, s, { status: 'failed', seconds: 0 }) : s));
   }, []);
 
   return Object.assign({}, state, { attempts, retry, cancel });
@@ -111,9 +124,20 @@ export function useRetry(task, { attempts = 3, auto = false, delay, maxDelay, im
 
 // a string with {name} places filled by values in the data font (numbers and durations are technical values)
 
-export function RetryNotice({ retry, title, tone = 'danger', showCount = false, onDismiss, strings, className, children, ...rest }) {
+/** @public the prop type of RetryNotice (ADR 0011) */
+export type RetryNoticeProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & {
+  retry: RetryState<unknown>;
+  title?: string;
+  tone?: 'danger' | 'warning';
+  showCount?: boolean;
+  onDismiss?(event: React.SyntheticEvent): void;
+  strings?: Record<string, string>;
+  className?: string;
+  children?: React.ReactNode;
+};
+export function RetryNotice({ retry, title, tone = 'danger', showCount = false, onDismiss, strings, className, children, ...rest }: RetryNoticeProps) {
   devWarn('RetryNotice', { tone }, { tone: ['danger','warning'] });
-  const t = useStrings('retry', strings);
+  const t: any = useStrings('retry', strings);
   const r = retry || {};
   const failing = r.status === 'failed' || r.status === 'waiting' || (r.status === 'running' && r.attempt > 1);
   const values = { attempt: r.attempt, attempts: r.attempts, time: formatDuration(r.seconds || 0) };

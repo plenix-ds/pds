@@ -1,0 +1,2 @@
+- DataGrid: double-clicking a column's resize handle (or a double tap), or pressing Enter on the focused handle, fits the column to what is drawn in it: pills, people with their icon, icons and the header title. The column menu's "Size column to fit" and "Size all columns to fit" use the same measure (#815).
+- DataGrid: a text pill is measured in the text face, not in the first cell's mono face, so its uniform width is no longer too narrow (#815).

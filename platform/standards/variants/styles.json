@@ -6285,5 +6285,41 @@
   "text-area--states-required": {
     "sets": [],
     "why": "markup only: the field is the same; its Field label carries the required marker"
+  },
+  "scatter-chart--variant-points-default": {
+    "sets": [],
+    "why": "markup only: every point the same size, a little transparent, drawn by the chart engine"
+  },
+  "scatter-chart--variant-with-trend-line": {
+    "sets": [],
+    "why": "markup only: each group's least-squares line, dashed, across its points"
+  },
+  "scatter-chart--variant-bubble-size": {
+    "sets": [],
+    "why": "markup only: each point's area follows a third measure, as in the Bubble chart"
+  },
+  "step-chart--variant-step-after-default": {
+    "sets": [],
+    "why": "markup only: each value holds until the next one; the jump is at the next value (curve step)"
+  },
+  "step-chart--variant-step-before": {
+    "sets": [],
+    "why": "markup only: the jump is at the value itself; the value holds back to the one before"
+  },
+  "sankey-diagram--variant-horizontal": {
+    "sets": [],
+    "why": "markup only: columns of nodes from left to right with the bands between them; names after the nodes, and before them in the last column"
+  },
+  "timeline-chart--variant-events": {
+    "sets": [],
+    "why": "markup only: points at their dates on one track, each with its name above it"
+  },
+  "timeline-chart--variant-ranges": {
+    "sets": [],
+    "why": "markup only: bars from each period's start to its end on one track"
+  },
+  "timeline-chart--variant-lanes": {
+    "sets": [],
+    "why": "markup only: one lane per asset or team, events and ranges together, with the names on the start side"
   }
 }

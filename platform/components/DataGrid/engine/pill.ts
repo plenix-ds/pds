@@ -29,7 +29,10 @@ export function pillFont(at: any, ctx: any, data: any) {
   value.textContent = PROBE;
   pill.appendChild(value);
   box.appendChild(pill);
-  (at.querySelector('.plx-data-grid__grid-row .plx-data-grid__grid-cell') || at).appendChild(box); // in a body cell: the cell's own text size
+  // in a body cell: the cell's own text size and face. A data pill's probe sits in a data cell, a text pill's in one that is not (the first cell is often the mono key
+  // column, whose font a text pill must not be measured in; #815)
+  const cells = '.plx-data-grid__grid-row .plx-data-grid__grid-cell';
+  (at.querySelector(data ? cells + '.plx-data-grid__cell--data' : cells + ':not(.plx-data-grid__cell--data)') || at.querySelector(cells) || at).appendChild(box);
   const cs = getComputedStyle(value),
     page = value.scrollWidth;
   ctx.font = cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily;

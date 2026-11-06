@@ -21,14 +21,29 @@ import { useUnsavedGuard } from '../../providers/UnsavedGuard.tsx';
 import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 
-export function SaveAs({ locations = [], initialName = '', initialLocation = '', initialFormat = '', formats = [], onSave, onCancel, strings, className }) {
-  const t = useStrings('saveAs', strings);
+/** @public the prop type (ADR 0011) */
+export type SaveAsProps = {
+  /** TreeSelect nodes */
+  locations?: unknown[];
+  initialName?: string;
+  initialLocation?: string;
+  initialFormat?: string;
+  /** Select options */
+  formats?: { value: string; label?: string }[];
+  onSave(result: { name: string; location: string; format: string }): unknown;
+  onCancel?(): void;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function SaveAs(props: SaveAsProps) {
+  const { locations = [], initialName = '', initialLocation = '', initialFormat = '', formats = [], onSave, onCancel, strings, className } = props as any;
+  const t: any = useStrings('saveAs', strings);
   const [name, setName] = React.useState(initialName), [location, setLocation] = React.useState(initialLocation);
   const [format, setFormat] = React.useState(initialFormat || formats[0]?.value || '');
   const [busy, setBusy] = React.useState(false), [error, setError] = React.useState(''), [saved, setSaved] = React.useState(false);
   const lock = React.useRef(false);
   const guard = useUnsavedGuard(!saved && (name !== initialName || location !== initialLocation || format !== (initialFormat || formats[0]?.value || '')), t.unsaved);
-  const submit = async (e) => {
+  const submit = async (e: any) => {
     e.preventDefault(); if (lock.current) return;
     if (!name.trim() || location === '' || location == null) { setError(t.required); return; }
     lock.current = true; setBusy(true); setError('');

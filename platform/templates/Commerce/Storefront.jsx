@@ -26,7 +26,7 @@ import { CommandBar, CommandBarSearch } from '../../patterns/CommandBar/CommandB
 import { FilterPanel } from '../../patterns/FilterPanel/FilterPanel.tsx';
 import { SortPanel } from '../../patterns/SortPanel/SortPanel.jsx';
 import { ViewMenu } from '../../patterns/ViewMenu/ViewMenu.tsx';
-import { QuickFilter } from '../../patterns/QuickFilter/QuickFilter.jsx';
+import { QuickFilter } from '../../patterns/QuickFilter/QuickFilter.tsx';
 import { ContentGrid } from '../../patterns/ContentGrid/ContentGrid.tsx';
 import { ProductCard, ProductPrice } from '../../patterns/ProductCard/ProductCard.tsx';
 import { ProductOptions } from '../../components/ProductOptions/ProductOptions.tsx';

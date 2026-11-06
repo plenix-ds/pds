@@ -22,7 +22,21 @@ import { Carousel } from '../../components/Carousel/Carousel.tsx';
 import { Link } from '../../components/Link/Link.tsx';
 import { Popover } from '../../components/Popover/Popover.tsx';
 import SparkleIcon from 'plenix-platform/icons/plenix/sparkle';
-export function Recommendation({items=[],variant='row',perView=3,onSelect,strings,className}){
+/** @public one recommendation, ranked by the caller */
+export type RecommendationItem = { id: string | number; title: string; description?: string; reason?: string; href?: string; content?: React.ReactNode };
+/** @public the prop type (ADR 0011) */
+export type RecommendationProps = {
+  items?: RecommendationItem[];
+  variant?: 'row' | 'reason';
+  /** slides per page, 1 to 4 */
+  perView?: number;
+  /** for items without a navigation href */
+  onSelect?(item: RecommendationItem): unknown;
+  /** label, open, why, empty, action ({ failed, pending }); plus the Carousel strings */
+  strings?: { label?: string; open?: string; why?: string; empty?: string; action?: { failed?: string; pending?: string } } & Record<string, unknown>;
+  className?: string;
+};
+export function Recommendation({items=[],variant='row',perView=3,onSelect,strings,className}: RecommendationProps){
   devWarn('Recommendation', { variant }, { variant: ['row','reason'] });
  const t={label:'Recommended for you',open:'Open',why:'Why recommended',empty:'No recommendations.',...strings};
  return <Stack className={cx('plx-recommendation',className)}>{items.length?<Carousel label={t.label} perView={perView} autoplay={false} strings={strings}>{items.map(item=><Stack key={item.id}><Text as="h3" variant="heading">{item.title}</Text>{item.content}{item.description?<Text>{item.description}</Text>:null}{variant==='reason'&&item.reason?<Popover title={t.why} trigger={<Button variant="ghost" icon={SparkleIcon}>{t.why}</Button>}><Text>{item.reason}</Text></Popover>:null}{item.href?<Link href={item.href}>{item.title}</Link>:onSelect?<SuggestedAction strings={strings?.action} onAction={()=>onSelect(item)}>{t.open+' '+item.title}</SuggestedAction>:null}</Stack>)}</Carousel>:<Text>{t.empty}</Text>}</Stack>;
