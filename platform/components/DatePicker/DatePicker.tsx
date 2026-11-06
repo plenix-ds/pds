@@ -82,6 +82,7 @@ import { Tooltip } from '../Tooltip/Tooltip.tsx';
 import { useTruncated } from '../../utils/overflow.ts';
 import { Calendar, parseIsoDate, addDays, addMonths, todayIso } from '../Calendar/Calendar.tsx';
 import type { CalendarRange } from '../Calendar/Calendar.tsx';
+import type { FieldWidth } from '../Input/Input.tsx';
 import CalendarIcon from 'plenix-platform/icons/plenix/calendar';
 import { useStrings, useTimeZone } from '../../providers/LocaleProvider.tsx';
 import type { Catalog } from '../../providers/LocaleProvider.tsx';
@@ -131,7 +132,7 @@ export type DatePickerProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 
   months?: 1 | 2;
   min?: string;
   max?: string;
-  width?: string;
+  width?: FieldWidth;
   isDateDisabled?: (iso: string) => boolean;
   weekNumbers?: boolean;
   /** the time a date-time takes when only a date is picked (default "09:00") */
