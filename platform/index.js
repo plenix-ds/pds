@@ -260,7 +260,7 @@ export { binValues } from './charts/chart-helpers.js';
 export { ComboChart } from './charts/lazy.jsx';
 export { PieChart } from './charts/lazy.jsx';
 export { pieSlices } from './charts/chart-helpers.js';
-export { BulletChart } from './charts/BulletChart.jsx';
+export { BulletChart } from './charts/lazy.jsx';
 export { BoxPlot, boxStats } from './charts/BoxPlot.jsx';
 export { RadarChart } from './charts/RadarChart.jsx';
 export { SankeyDiagram, sankeyLayout } from './charts/SankeyDiagram.jsx';
@@ -270,7 +270,7 @@ export { summarizeSeries, CHART_PATTERNS, chartPattern, patternFill, ChartPatter
 export { Sparkline } from './charts/lazy.jsx';
 export { LollipopChart } from './charts/lazy.jsx';
 export { ScatterChart } from './charts/lazy.jsx';
-export { FunnelChart } from './charts/FunnelChart.jsx';
+export { FunnelChart } from './charts/lazy.jsx';
 export { Treemap } from './charts/Treemap.jsx';
 export { GanttChart } from './charts/GanttChart.jsx';
 export { GeoMap } from './charts/GeoMap.jsx';

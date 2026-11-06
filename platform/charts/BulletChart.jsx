@@ -31,12 +31,15 @@ import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatNumber } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.jsx';
-import { scaleBand, scaleLinear, niceTicks } from './scales.js';
-import { Axis } from './parts/Axis.jsx';
 import { ChartTooltip } from './parts/ChartTooltip.jsx';
-import { useChartHover, labelRoom, halfRoom, finite, AXIS_TITLE_ROOM } from './chart-kit.js';
+import { useChartHover, finite } from './chart-kit.js';
+import { useEChartsPlot, plotGrid } from './echarts/EChartsPlot.jsx';
+import { gridRoom } from './chart-helpers.js';
+import { snapToGrid } from '../utils/grid.ts';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 
+const NO_MARGIN = Object.freeze({ top: 0, end: 0, bottom: 0, start: 0 });
+const BAND = 1 / 1.4;   // a measure's band as a share of its row (the room between rows is 40% of a band)
 const BAR = 1 / 3;      // the value bar's thickness, a share of the band
 const TARGET = 2 / 3;   // the target line's length, a share of the band
 
@@ -51,64 +54,82 @@ export function BulletChart({ title, description, hideCaption, size, items = [],
   const top = max !== undefined ? Number(max) : list.reduce((a, it) => Math.max(a, finite(it.value), finite(it.target), Math.max.apply(null, [0].concat(it.ranges))), 0) || 1;
   const names = [t.poor, t.fair, t.good];
   const rangeOf = (it) => { const v = finite(it.value); for (let i = 0; i < it.ranges.length; i++) if (v <= it.ranges[i]) return names[i + (3 - it.ranges.length)]; return names[2]; };
-  const tickTexts = niceTicks(0, top, 5).ticks.map(fmt);
-  const auto = across
-    ? { start: labelRoom(list.map((it) => it.label)), bottom: valueLabel ? 24 + AXIS_TITLE_ROOM : undefined, end: halfRoom(tickTexts[tickTexts.length - 1]) }
-    : { start: labelRoom(tickTexts, valueLabel ? AXIS_TITLE_ROOM : 0) };
-  const m = Object.assign({}, auto, margin);
-  Object.keys(m).forEach((k) => { if (m[k] === undefined) delete m[k]; });
   const table = {
     columns: [{ title: t.measure, field: 'measure', kind: 'name', rowLabel: true }, { title: t.value, field: 'value', kind: 'data', align: 'right' },
       { title: t.target, field: 'target', kind: 'data', align: 'right' }, { title: t.ranges, field: 'ranges', kind: 'data' }],
     data: list.map((it, i) => ({ id: i + 1, measure: it.label, value: fmt(finite(it.value)), target: it.target === undefined || it.target === null ? '' : fmt(it.target),
-      ranges: it.ranges.map(fmt).join(' · ') + (it.ranges.length ? ' (' + rangeOf(it) + ')' : '') }))
+      ranges: it.ranges.map(fmt).join(' \u00b7 ') + (it.ranges.length ? ' (' + rangeOf(it) + ')' : '') }))
   };
+  // the format the drawing calls, kept current without redrawing (a format written inline is a new function each render)
+  const fmts = React.useRef(null); fmts.current = { fmt };
+
+  const plot = useEChartsPlot();
+  const dataKey = JSON.stringify(list.map((it) => [it.id, it.label, it.value, it.target, it.ranges])) + '|' + o + '|' + max + '|' + valueLabel + '|' + (margin ? [margin.top, margin.end, margin.bottom, margin.start].join(':') : '');
+  const option = React.useCallback((tk) => {
+    const room = gridRoom(margin, 0);
+    // (horizontal: the value axis's labels and title under the plot are laid out by ECharts; vertical: the measures' names need their line)
+    if (!across) room.bottom = Math.max(room.bottom, snapToGrid(tk.tickOffset + tk.tick.fontSize, { round: 'up' }));
+    const named = { nameLocation: 'middle', nameMoveOverlap: true };
+    const nameRoom = tk.tickOffset * 2 + tk.tick.fontSize;
+    const valAxis = Object.assign({ type: 'value', min: 0, max: max === undefined ? undefined : Number(max), name: valueLabel, nameGap: across ? nameRoom : 0, inverse: across && tk.rtl,
+      axisLabel: { formatter: (v) => fmts.current.fmt(v) }, axisLine: { show: across, lineStyle: { color: tk.axis.color, width: tk.axis.width } } }, named);
+    const catAxis = Object.assign({ type: 'category', data: list.map((it) => it.label), inverse: across, position: across ? (tk.rtl ? 'right' : 'left') : 'bottom', boundaryGap: true, axisLine: { show: false } }, named);
+    const pct = (share) => (Math.round(share * BAND * 10000) / 100) + '%';   // a share of a measure's band, as a share of its row
+    const fill = (i, n) => tk.bullet.ranges[i + (3 - n)];
+    // the bands, widest first (so the narrower sit in front of them), all on one row; then the value bar, narrower, on a second (hidden) category axis so it
+    // sits centred on the same row. The target mark is the frame's overlay (it needs the row's exact size)
+    const series = [];
+    [2, 1, 0].forEach((r) => series.push({ type: 'bar', id: 'r' + r, silent: true, barGap: '-100%', barWidth: pct(1), z: 1 + (2 - r) * 0.1, emphasis: { disabled: true },
+      data: list.map((it) => (it.ranges[r] === undefined ? null : { value: it.ranges[r], itemStyle: { color: fill(r, it.ranges.length) } })) }));
+    series.push({ type: 'bar', id: 'value', silent: true, barWidth: pct(BAR), z: 3, itemStyle: { color: tk.color('categorical-1') }, emphasis: { disabled: true }, data: list.map((it) => finite(it.value)),
+      [across ? 'yAxisIndex' : 'xAxisIndex']: 1 });
+    const spare = Object.assign({}, catAxis, { show: false });
+    return {
+      animationDuration: tk.motion, animationDurationUpdate: tk.motion,
+      grid: Object.assign(room, { outerBoundsMode: 'same', outerBoundsContain: 'all' }),
+      xAxis: across ? valAxis : [catAxis, spare], yAxis: across ? [catAxis, spare] : valAxis, series,
+    };
+  }, [dataKey]);   // eslint-disable-line react-hooks/exhaustive-deps
+
+  const draw = (dims) => {
+    const layer = plot.layer(dims, option);
+    const c = plot.chart;
+    const g = c ? plotGrid(c) : null;
+    if (!g || !list.length) return layer;
+    const step = (across ? g.height : g.width) / list.length;
+    const at = (i, v) => { const p = c.convertToPixel({ xAxisIndex: 0, yAxisIndex: 0 }, across ? [v, i] : [i, v]); return { x: p[0] - g.x, y: p[1] - g.y }; };
+    const inner = { width: g.width, height: g.height };
+    const ai = active === null ? -1 : list.findIndex((x) => x.id === active);
+    let tip = null;
+    if (tooltip && ai >= 0) {
+      const it = list[ai], end = at(ai, finite(it.value));
+      const shown = fmt(finite(it.value)) + (it.target === undefined || it.target === null ? '' : ' \u00b7 ' + t.target + ' ' + fmt(it.target));
+      tip = <ChartTooltip x={end.x} y={end.y} inner={inner} title={it.label + (it.ranges.length ? ' \u00b7 ' + rangeOf(it) : '')} items={[{ label: t.value, value: shown, color: 'categorical-1' }]} />;
+    }
+    // the target marks: a line across each row at its target (the frame's overlay: it needs the row's exact size)
+    const len = step * BAND * TARGET;
+    return [layer, (
+      <g key="plx-chart-overlay" transform={'translate(' + g.x + ',' + g.y + ')'}>
+        {list.map((it, i) => {
+          if (it.target === undefined || it.target === null) return null;
+          const p = at(i, finite(it.target));
+          return across ? <line key={'t' + it.id} className="plx-bullet-chart__target" x1={p.x} x2={p.x} y1={p.y - len / 2} y2={p.y + len / 2} /> : <line key={'t' + it.id} className="plx-bullet-chart__target" x1={p.x - len / 2} x2={p.x + len / 2} y1={p.y} y2={p.y} />;
+        })}
+        {tooltip ? list.map((it, i) => {
+          const p = at(i, 0);
+          return across
+            ? <rect key={it.id} className="plx-bullet-chart__item" fill="none" pointerEvents="all" x={0} y={p.y - step / 2} width={g.width} height={step} {...hover(it.id)} />
+            : <rect key={it.id} className="plx-bullet-chart__item" fill="none" pointerEvents="all" x={p.x - step / 2} y={0} width={step} height={g.height} {...hover(it.id)} />;
+        }) : null}
+        {tip}
+      </g>
+    )];
+  };
+
   return (
-    <ChartFrame title={title} description={description} hideCaption={hideCaption} size={size} margin={m} legend={legend} legendPosition={legendPosition}
+    <ChartFrame title={title} description={description} hideCaption={hideCaption} size={size} margin={NO_MARGIN} legend={legend} legendPosition={legendPosition}
       table={table} strings={strings} className={cx('plx-bullet-chart', 'plx-bullet-chart--' + o, className)}>
-      {({ inner, margin: fm }) => {
-        const L = across ? inner.height : inner.width, V = across ? inner.width : inner.height;
-        const band = scaleBand({ domain: list.map((it) => it.id), range: [0, L], paddingInner: 0.4, paddingOuter: 0.2 });
-        const vs = scaleLinear({ domain: [0, top], range: across ? [0, V] : [V, 0], nice: max === undefined });
-        const span = (start, thick, a, b) => {
-          const p0 = vs(a), p1 = vs(b), low = Math.min(p0, p1), len = Math.abs(p1 - p0);
-          return across ? { x: low, y: start, width: len, height: thick } : { x: start, y: low, width: thick, height: len };
-        };
-        let tip = null;
-        if (tooltip && active !== null) {
-          const it = list.filter((x) => x.id === active)[0];
-          if (it) {
-            const mid = band(it.id) + band.bandwidth() / 2, end = vs(finite(it.value));
-            const shown = fmt(finite(it.value)) + (it.target === undefined || it.target === null ? '' : ' · ' + t.target + ' ' + fmt(it.target));
-            tip = <ChartTooltip x={across ? end : mid} y={across ? mid : end} inner={inner} title={it.label + (it.ranges.length ? ' · ' + rangeOf(it) : '')}
-              items={[{ label: t.value, value: shown, color: 'categorical-1' }]} />;
-          }
-        }
-        return (
-          <g>
-            {list.map((it) => {
-              const start = band(it.id), thick = band.bandwidth();
-              const n = it.ranges.length;
-              const bar = thick * BAR, tl = thick * TARGET;
-              const tp = it.target === undefined || it.target === null ? null : vs(finite(it.target));
-              return (
-                <g key={it.id} className="plx-bullet-chart__item" {...(tooltip ? hover(it.id) : {})}>
-                  {it.ranges.map((r, i) => i).reverse().map((i) => (
-                    <rect key={'r' + i} className={cx('plx-bullet-chart__range', 'plx-bullet-chart__range--' + (i + 1 + (3 - n)))} {...span(start, thick, 0, it.ranges[i])} />
-                  ))}
-                  <rect className="plx-chart__mark plx-bullet-chart__value" {...span(start + (thick - bar) / 2, bar, 0, finite(it.value))} />
-                  {tp === null ? null : across
-                    ? <line className="plx-bullet-chart__target" x1={tp} x2={tp} y1={start + (thick - tl) / 2} y2={start + (thick + tl) / 2} />
-                    : <line className="plx-bullet-chart__target" x1={start + (thick - tl) / 2} x2={start + (thick + tl) / 2} y1={tp} y2={tp} />}
-                </g>
-              );
-            })}
-            <Axis scale={vs} orient={across ? 'bottom' : 'left'} inner={inner} margin={fm} format={fmt} label={valueLabel} line={across} />
-            <Axis scale={band} orient={across ? 'left' : 'bottom'} inner={inner} margin={fm} line={false} format={(id) => (list.filter((x) => x.id === id)[0] || {}).label} />
-            {tip}
-          </g>
-        );
-      }}
+      {draw}
     </ChartFrame>
   );
 }
