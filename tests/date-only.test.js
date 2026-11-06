@@ -3,7 +3,7 @@
    Summary: in five time zones (New York, Los Angeles, UTC, Cairo, Tokyo; the cases of the issue's measurement) the value
      2026-10-18 lands on October 18:
        Node (utils, no browser): parseDate and isoDay (utils/format.ts), the "within N days" filter and the date quick filter
-         (utils/fields.ts: today and the days before it are local days), the time scale (charts/scales.js scaleTime: its
+         (utils/fields.ts: today and the days before it are local days), the time scale (charts/scales.ts scaleTime: its
          domain read from date-only texts)
        the browser (the zone emulated): GanttChart (its data table's start and end), HeatMap's calendar (its data table's
          day), LineChart with a time axis (its data table's x), and what was already right stays right: Time, formatDate,
@@ -38,7 +38,7 @@ function load(file) {
 }
 const F = load(path.join(ROOT, 'platform', 'utils', 'format.ts'));
 const fields = load(path.join(ROOT, 'platform', 'utils', 'fields.ts'));
-const scales = load(path.join(ROOT, 'platform', 'charts', 'scales.js'));
+const scales = load(path.join(ROOT, 'platform', 'charts', 'scales.ts'));
 
 (async () => {
   const zone0 = process.env.TZ;

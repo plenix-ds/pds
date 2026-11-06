@@ -33,8 +33,8 @@
 */
 import React from 'react';
 import { cx } from '../utils/cx.ts';
-import { summarizeSeries } from './a11y.js';
-import { scaleLinear, scaleBand } from './scales.js';
+import { summarizeSeries } from './a11y.ts';
+import { scaleLinear, scaleBand } from './scales.ts';
 import { EChartsHost } from './echarts/EChartsPlot.jsx';
 
 // the room kept inside the box so the line and the dot are not cut (geometry, the 4px grid)

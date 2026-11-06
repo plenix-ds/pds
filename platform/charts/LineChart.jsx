@@ -55,15 +55,15 @@ import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatNumber, formatDate, formatPercent, parseDate } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.jsx';
-import { seriesColor, scaleTime, wholeDays } from './scales.js';
+import { seriesColor, scaleTime, wholeDays } from './scales.ts';
 import { ChartLegend } from './parts/ChartLegend.tsx';
 import { ChartTooltip, chartTooltipText } from './parts/ChartTooltip.tsx';
-import { useChartInteraction, ChartFocusMark, ChartBrush } from './interaction.js';
+import { useChartInteraction, ChartFocusMark, ChartBrush } from './interaction.ts';
 import { useEChartsPlot, plotGrid } from './echarts/EChartsPlot.jsx';
 import { tickLineHeight } from './echarts/engine.js';
 import { snapToGrid } from '../utils/grid.ts';
-import { gridRoom } from './chart-helpers.js';
-import { halfRoom } from './chart-kit.js';
+import { gridRoom } from './chart-helpers.ts';
+import { halfRoom } from './chart-kit.ts';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 
 const DASH = '—';
@@ -75,7 +75,7 @@ const TICK_ROOM = 64;
 
 const isNum = (v) => typeof v === 'number' && isFinite(v);
 const typeOf = (v) => (v instanceof Date ? 'time' : typeof v === 'number' ? 'linear' : 'band');
-export { gridRoom } from './chart-helpers.js';
+export { gridRoom } from './chart-helpers.ts';
 // ECharts' axis ticks, for an overlay's scale
 const axisTicks = (chart, axis) => {
   try { return chart.getModel().getComponent(axis, 0).axis.scale.getTicks().map((t) => t.value); } catch (e) { return []; }

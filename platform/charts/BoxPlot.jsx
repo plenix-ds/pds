@@ -32,11 +32,11 @@ import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatNumber } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.jsx';
-import { niceTicks } from './scales.js';
+import { niceTicks } from './scales.ts';
 import { ChartTooltip } from './parts/ChartTooltip.tsx';
-import { useChartHover } from './chart-kit.js';
+import { useChartHover } from './chart-kit.ts';
 import { useEChartsPlot, plotGrid } from './echarts/EChartsPlot.jsx';
-import { gridRoom, boxStats } from './chart-helpers.js';
+import { gridRoom, boxStats } from './chart-helpers.ts';
 import { snapToGrid } from '../utils/grid.ts';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 
@@ -126,4 +126,4 @@ export function BoxPlot({ title, description, hideCaption, size, groups = [], or
   );
 }
 // boxStats stays in the first load (chart-helpers.js); BoxPlot re-exports it
-export { boxStats } from './chart-helpers.js';
+export { boxStats } from './chart-helpers.ts';

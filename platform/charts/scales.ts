@@ -1,4 +1,4 @@
-/* Plenix · Chart scales (platform/charts/scales.js)
+/* Plenix · Chart scales (platform/charts/scales.ts)
    Summary: The math every Plenix chart shares (07 Data Display › Charts › Chart foundations): scales that turn a value
      into a position (linear, log, band, time), "nice" tick values on round numbers and calendar steps, tick labels in
      the reader's locale (utils/format.ts), and the series color of the data-viz scales (utils/dataviz.ts). No
@@ -25,7 +25,7 @@
      scaleTime({ domain, range, nice, clamp, count, unit }): a continuous scale over dates (Date or anything Date accepts);
        ticks fall on calendar steps (seconds to years) in local time; unit ("second" … "year") is the smallest step it
        may use: "day" for dates without a time, so their ticks land on days or coarser, never hours
-     wholeDays(dates) (the charts' own, from './scales.js'): true when every date is a whole day (a date-only
+     wholeDays(dates) (the charts' own, from './scales.ts'): true when every date is a whole day (a date-only
        "YYYY-MM-DD" or a Date at local midnight); the charts pass unit: "day" to their time scale then
      Every continuous scale: scale(value) → position; scale.invert(position) → value; scale.ticks(count?);
        scale.format(value, count?) → the tick label; scale.domain(), scale.range(); scale.type
@@ -45,76 +45,78 @@ import { datavizCategory } from '../utils/dataviz.ts';
 
 const E10 = Math.sqrt(50), E5 = Math.sqrt(10), E2 = Math.sqrt(2);
 // a step of 1, 2 or 5 × 10ⁿ for about count ticks over the span
-function tickStep(span, count) {
+function tickStep(span: any, count: any) {
   const raw = Math.abs(span) / Math.max(1, count);
   if (!raw || !isFinite(raw)) return 1;
   const pow = Math.pow(10, Math.floor(Math.log10(raw)));
   const err = raw / pow;
   return (err >= E10 ? 10 : err >= E5 ? 5 : err >= E2 ? 2 : 1) * pow;
 }
-const decimalsOf = (step) => Math.max(0, -Math.floor(Math.log10(Math.abs(step)) + 1e-9));
-const round = (v, d) => Number(v.toFixed(Math.min(20, d)));
+const decimalsOf = (step: any) => Math.max(0, -Math.floor(Math.log10(Math.abs(step)) + 1e-9));
+const round = (v: any, d: any) => Number(v.toFixed(Math.min(20, d)));
 
-export function niceTicks(min, max, count = 5) {
+export function niceTicks(min: any, max: any, count = 5) {
   let lo = Number(min), hi = Number(max);
   if (lo > hi) { const t = lo; lo = hi; hi = t; }
   if (lo === hi) { const half = tickStep(Math.abs(lo) || 1, count) / 2; lo -= half; hi += half; }
   const step = tickStep(hi - lo, count), d = decimalsOf(step);
   const start = round(Math.floor(lo / step) * step, d), stop = round(Math.ceil(hi / step) * step, d);
-  const ticks = [];
+  const ticks: any = [];
   for (let v = start, i = 0; v <= stop + step / 2 && i < 1000; i++, v = start + i * step) ticks.push(round(v, d));
   return { start, stop, step, ticks };
 }
 
-const pair = (a, fallback) => (Array.isArray(a) && a.length === 2 ? a.slice() : fallback.slice());
-const interpolate = (r0, r1, t) => r0 + (r1 - r0) * t;
+const pair = (a: any, fallback: any) => (Array.isArray(a) && a.length === 2 ? a.slice() : fallback.slice());
+const interpolate = (r0: any, r1: any, t: any) => r0 + (r1 - r0) * t;
 
-export function scaleLinear({ domain = [0, 1], range = [0, 1], nice = false, clamp = false, count = 5 } = {}) {
+/** @public */
+export type ScaleOptions = { domain?: number[]; range?: number[]; nice?: boolean; clamp?: boolean; count?: number };
+export function scaleLinear({ domain = [0, 1], range = [0, 1], nice = false, clamp = false, count = 5 }: ScaleOptions = {}) {
   let d = pair(domain, [0, 1]).map(Number);
   const r = pair(range, [0, 1]).map(Number);
   if (d[0] === d[1]) { const n = niceTicks(d[0], d[1], count); d = [n.start, n.stop]; }
   if (nice) { const n = niceTicks(Math.min(d[0], d[1]), Math.max(d[0], d[1]), count); d = d[0] <= d[1] ? [n.start, n.stop] : [n.stop, n.start]; }
-  const scale = (v) => {
+  const scale = (v: any) => {
     let t = (Number(v) - d[0]) / (d[1] - d[0]);
     if (clamp) t = Math.min(1, Math.max(0, t));
     return interpolate(r[0], r[1], t);
   };
-  scale.invert = (p) => d[0] + ((Number(p) - r[0]) / (r[1] - r[0])) * (d[1] - d[0]);
-  scale.ticks = (n = count) => niceTicks(Math.min(d[0], d[1]), Math.max(d[0], d[1]), n).ticks.filter((v) => v >= Math.min(d[0], d[1]) - 1e-9 && v <= Math.max(d[0], d[1]) + 1e-9);
-  scale.format = (v, n = count, o = {}) => formatNumber(v, { decimals: decimalsOf(tickStep(d[1] - d[0], n)), locale: o.locale });
+  scale.invert = (p: any) => d[0] + ((Number(p) - r[0]) / (r[1] - r[0])) * (d[1] - d[0]);
+  scale.ticks = (n = count) => niceTicks(Math.min(d[0], d[1]), Math.max(d[0], d[1]), n).ticks.filter((v: any) => v >= Math.min(d[0], d[1]) - 1e-9 && v <= Math.max(d[0], d[1]) + 1e-9);
+  scale.format = (v: any, n = count, o: { locale?: string } = {}) => formatNumber(v, { decimals: decimalsOf(tickStep(d[1] - d[0], n)), locale: o.locale });
   scale.domain = () => d.slice();
   scale.range = () => r.slice();
   scale.type = 'linear';
   return scale;
 }
 
-export function scaleLog({ domain = [1, 10], range = [0, 1], base = 10, clamp = false } = {}) {
-  const d = pair(domain, [1, 10]).map((v) => Math.max(Number(v), Number.MIN_VALUE));
+export function scaleLog({ domain = [1, 10], range = [0, 1], base = 10, clamp = false }: { domain?: number[]; range?: number[]; base?: number; clamp?: boolean } = {}) {
+  const d = pair(domain, [1, 10]).map((v: any) => Math.max(Number(v), Number.MIN_VALUE));
   const r = pair(range, [0, 1]).map(Number);
-  const log = (v) => Math.log(v) / Math.log(base);
+  const log = (v: any) => Math.log(v) / Math.log(base);
   const l0 = log(d[0]), l1 = log(d[1]);
-  const scale = (v) => {
+  const scale = (v: any) => {
     let t = (log(Math.max(Number(v), Number.MIN_VALUE)) - l0) / ((l1 - l0) || 1);
     if (clamp) t = Math.min(1, Math.max(0, t));
     return interpolate(r[0], r[1], t);
   };
-  scale.invert = (p) => Math.pow(base, l0 + ((Number(p) - r[0]) / (r[1] - r[0])) * (l1 - l0));
+  scale.invert = (p: any) => Math.pow(base, l0 + ((Number(p) - r[0]) / (r[1] - r[0])) * (l1 - l0));
   scale.ticks = () => {
     const lo = Math.min(d[0], d[1]), hi = Math.max(d[0], d[1]);
     const e0 = Math.floor(log(lo)), e1 = Math.ceil(log(hi));
     const between = e1 - e0 <= 2 && base === 10 ? [1, 2, 5] : [1];
-    const out = [];
+    const out: any = [];
     for (let e = e0; e <= e1; e++) between.forEach((m) => { const v = m * Math.pow(base, e); if (v >= lo * (1 - 1e-9) && v <= hi * (1 + 1e-9)) out.push(Number(v.toPrecision(12))); });
     return out;
   };
-  scale.format = (v, n, o = {}) => formatNumber(v, { decimals: v < 1 ? decimalsOf(v) : 0, locale: o.locale });
+  scale.format = (v: any, n?: any, o: { locale?: string } = {}) => formatNumber(v, { decimals: v < 1 ? decimalsOf(v) : 0, locale: o.locale });
   scale.domain = () => d.slice();
   scale.range = () => r.slice();
   scale.type = 'log';
   return scale;
 }
 
-export function scaleBand({ domain = [], range = [0, 1], paddingInner = 0.2, paddingOuter = 0.1, align = 0.5 } = {}) {
+export function scaleBand({ domain = [], range = [0, 1], paddingInner = 0.2, paddingOuter = 0.1, align = 0.5 }: { domain?: Array<string | number>; range?: number[]; paddingInner?: number; paddingOuter?: number; align?: number } = {}) {
   const keys = Array.from(domain);
   const r = pair(range, [0, 1]).map(Number);
   const n = keys.length;
@@ -123,7 +125,7 @@ export function scaleBand({ domain = [], range = [0, 1], paddingInner = 0.2, pad
   const step = (r1 - r0) / Math.max(1, n - paddingInner + paddingOuter * 2);
   const start = r0 + (r1 - r0 - step * (n - paddingInner)) * align;
   const band = step * (1 - paddingInner);
-  const scale = (key) => {
+  const scale = (key: any) => {
     const i = keys.indexOf(key);
     if (i < 0) return undefined;
     return start + step * (reverse ? n - 1 - i : i);
@@ -131,7 +133,7 @@ export function scaleBand({ domain = [], range = [0, 1], paddingInner = 0.2, pad
   scale.bandwidth = () => band;
   scale.step = () => step;
   scale.ticks = () => keys.slice();
-  scale.format = (key) => String(key);
+  scale.format = (key: any) => String(key);
   scale.domain = () => keys.slice();
   scale.range = () => r.slice();
   scale.type = 'band';
@@ -145,9 +147,9 @@ const TIME_STEPS = [['second', 1, S], ['second', 5, 5 * S], ['second', 15, 15 * 
   ['day', 2, 2 * DAY], ['week', 1, 7 * DAY], ['month', 1, 30 * DAY], ['month', 3, 91 * DAY], ['year', 1, 365 * DAY]];
 // a time value: a Date, a number, or a text read by the shared reader (a date-only "YYYY-MM-DD" is that calendar day where
 // the reader is, issue 342)
-const toTime = (v) => { if (typeof v === 'number') return v; const d = parseDate(v); return d ? d.getTime() : NaN; };
+const toTime = (v: any) => { if (typeof v === 'number') return v; const d = parseDate(v); return d ? d.getTime() : NaN; };
 // the start of the step that holds t (local time)
-function floorTo(t, unit, amount) {
+function floorTo(t: any, unit: any, amount: any) {
   const x = new Date(t);
   if (unit === 'second') { x.setMilliseconds(0); x.setSeconds(Math.floor(x.getSeconds() / amount) * amount); }
   else if (unit === 'minute') { x.setSeconds(0, 0); x.setMinutes(Math.floor(x.getMinutes() / amount) * amount); }
@@ -158,7 +160,7 @@ function floorTo(t, unit, amount) {
   else { x.setHours(0, 0, 0, 0); x.setMonth(0, 1); x.setFullYear(Math.floor(x.getFullYear() / amount) * amount); }
   return x;
 }
-function addTo(x, unit, amount) {
+function addTo(x: any, unit: any, amount: any) {
   const y = new Date(x.getTime());
   if (unit === 'second') y.setSeconds(y.getSeconds() + amount);
   else if (unit === 'minute') y.setMinutes(y.getMinutes() + amount);
@@ -172,12 +174,12 @@ function addTo(x, unit, amount) {
 // the steps a scale may use: all of them, or from a smallest unit up (issue 593: dates without a time get day ticks or
 // coarser, never hours)
 const UNITS = ['second', 'minute', 'hour', 'day', 'week', 'month', 'year'];
-const stepsFrom = (unit) => (UNITS.indexOf(unit) > 0 ? TIME_STEPS.filter((s) => UNITS.indexOf(s[0]) >= UNITS.indexOf(unit)) : TIME_STEPS);
-function timeStep(span, count, unit) {
+const stepsFrom = (unit?: string) => (UNITS.indexOf(unit as string) > 0 ? TIME_STEPS.filter((s) => UNITS.indexOf(s[0] as string) >= UNITS.indexOf(unit as string)) : TIME_STEPS);
+function timeStep(span: any, count: any, unit: any) {
   const target = Math.abs(span) / Math.max(1, count);
   if (target <= 365 * DAY) {   // the calendar step nearest the wanted one (by ratio)
     const steps = stepsFrom(unit);
-    const gap = (s) => Math.abs(Math.log(s[2] / Math.max(1, target)));
+    const gap = (s: any) => Math.abs(Math.log(s[2] / Math.max(1, target)));
     return steps.reduce((best, s) => (gap(s) < gap(best) ? s : best), steps[0]);
   }
   const years = tickStep(target / (365 * DAY), 1);
@@ -187,16 +189,16 @@ const TIME_LABELS = { second: { hour: 'numeric', minute: '2-digit', second: '2-d
   day: { month: 'short', day: 'numeric' }, week: { month: 'short', day: 'numeric' }, month: { month: 'short', year: 'numeric' }, year: { year: 'numeric' } };
 
 // true when every date is a whole day: a date-only value ("2026-10-01") or a Date at local midnight (issue 593)
-export function wholeDays(dates) {
+export function wholeDays(dates: any) {
   const list = Array.from(dates || []).map((v) => (typeof v === 'number' ? new Date(v) : parseDate(v)));
   return list.length > 0 && list.every((x) => x && x.getHours() === 0 && x.getMinutes() === 0 && x.getSeconds() === 0 && x.getMilliseconds() === 0);
 }
 
-export function scaleTime({ domain = [0, DAY], range = [0, 1], nice = false, clamp = false, count = 5, unit: least } = {}) {
+export function scaleTime({ domain = [0, DAY], range = [0, 1], nice = false, clamp = false, count = 5, unit: least }: ScaleOptions & { domain?: Array<number | Date>; unit?: string } = {}) {
   let d = pair(domain, [0, DAY]).map(toTime);
   const r = pair(range, [0, 1]).map(Number);
   if (d[0] === d[1]) d = [d[0] - DAY / 2, d[1] + DAY / 2];
-  const timeStepOf = (span, n) => timeStep(span, n, least);
+  const timeStepOf = (span: any, n: any) => timeStep(span, n, least);
   if (nice) {
     const [unit, amount] = timeStepOf(d[1] - d[0], count);
     const lo = Math.min(d[0], d[1]), hi = Math.max(d[0], d[1]);
@@ -204,28 +206,28 @@ export function scaleTime({ domain = [0, DAY], range = [0, 1], nice = false, cla
     let stop = floorTo(hi, unit, amount); if (stop.getTime() < hi) stop = addTo(stop, unit, amount);
     d = d[0] <= d[1] ? [start, stop.getTime()] : [stop.getTime(), start];
   }
-  const scale = (v) => {
+  const scale = (v: any) => {
     let t = (toTime(v) - d[0]) / (d[1] - d[0]);
     if (clamp) t = Math.min(1, Math.max(0, t));
     return interpolate(r[0], r[1], t);
   };
-  scale.invert = (p) => new Date(d[0] + ((Number(p) - r[0]) / (r[1] - r[0])) * (d[1] - d[0]));
+  scale.invert = (p: any) => new Date(d[0] + ((Number(p) - r[0]) / (r[1] - r[0])) * (d[1] - d[0]));
   scale.step = (n = count) => timeStepOf(d[1] - d[0], n);
   scale.ticks = (n = count) => {
     const [unit, amount] = timeStepOf(d[1] - d[0], n);
     const lo = Math.min(d[0], d[1]), hi = Math.max(d[0], d[1]);
-    const out = [];
+    const out: any = [];
     let x = floorTo(lo, unit, amount);
     if (x.getTime() < lo) x = addTo(x, unit, amount);
     for (let i = 0; x.getTime() <= hi && i < 1000; i++, x = addTo(x, unit, amount)) out.push(new Date(x.getTime()));
     return out;
   };
-  scale.format = (v, n = count, o = {}) => new Intl.DateTimeFormat(numeralLocale(o.locale || formatLocale()), TIME_LABELS[timeStepOf(d[1] - d[0], n)[0]]).format(new Date(toTime(v)));
-  scale.domain = () => d.map((t) => new Date(t));
+  scale.format = (v: any, n = count, o: { locale?: string } = {}) => new Intl.DateTimeFormat(numeralLocale(o.locale || formatLocale()), (TIME_LABELS as Record<string, any>)[timeStepOf(d[1] - d[0], n)[0] as string]).format(new Date(toTime(v)));
+  scale.domain = () => d.map((t: any) => new Date(t));
   scale.range = () => r.slice();
   scale.type = 'time';
   return scale;
 }
 
-export function seriesColor(index) { return datavizCategory(index); }
+export function seriesColor(index: any) { return datavizCategory(index); }
 

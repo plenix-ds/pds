@@ -18,7 +18,7 @@ const FOUNDATIONS = '';   // the owner name of the foundations
 // files cut by declaration or by rule, instead of owned whole
 const TOKENS = 'platform/system/tokens/components.css', STEPS = 'platform/system/steps.css';
 // parts whose source is not one folder: the chart files in platform/charts (one part per stylesheet), and three shared ones
-const SOURCES = { 'chart-parts': ['platform/charts/parts'], 'chart-a11y': ['platform/charts/a11y.js'], 'chart-interaction': ['platform/charts/interaction.js', 'platform/charts/useChartInteraction.js'],
+const SOURCES = { 'chart-parts': ['platform/charts/parts'], 'chart-a11y': ['platform/charts/a11y.ts'], 'chart-interaction': ['platform/charts/interaction.ts', 'platform/charts/useChartInteraction.js'],
   floating: ['platform/utils/floating.ts'], virtual: ['platform/hooks/useVirtualizer.ts'], dnd: ['platform/utils/dnd.ts'],
   'chart-base': ['platform/charts/ChartFrame.jsx', 'platform/utils/dataviz.ts'] };
 // foundation files that only some parts use: their own part, needed by the parts whose source imports the module that
