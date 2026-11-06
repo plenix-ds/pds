@@ -65,7 +65,7 @@ import { Persona } from '../../components/Persona/Persona.tsx';
 import { Avatar } from '../../components/Avatar/Avatar.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { PromptDialog } from '../../components/Dialog/Dialog.tsx';
-import { DataGrid } from '../../components/DataGrid/DataGrid.jsx';
+import { DataGrid } from '../../components/DataGrid/DataGrid.tsx';
 import { useOptionalToast } from '../../components/Toast/Toast.tsx';
 import { ActivityList } from '../ActivityList/ActivityList.jsx';
 import { CommandBar } from '../CommandBar/CommandBar.jsx';

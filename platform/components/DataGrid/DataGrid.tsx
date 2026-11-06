@@ -190,12 +190,214 @@ import { useDataGridActions } from './actions.tsx';
 import { unreadCommands } from './unread-commands.ts';
 import { ToastProvider, useOptionalToast } from '../Toast/Toast.tsx';
 
+/* The public types (issue 292, ADR 0011, G3 ruling on #292; ADR 0016 for the editing props). Written from the Props block above.
+   Records are R; what a column holds is unknown unless its type narrows it; callbacks get R. */
+
+/** @public the cell editors a column can name (ADR 0016) */
+export type EditorType = 'input' | 'number' | 'select' | 'combobox' | 'tags' | 'date' | 'checkbox' | 'textarea' | 'person';
+
+/** @public what an application's own cell editor receives (ADR 0016) */
+export type CellEditorProps<V = unknown> = {
+  value: V;
+  record: unknown;
+  field: string;
+  /** the draft */
+  onChange(value: V): void;
+  /** save (Enter, Tab, blur by the grid's rules) */
+  onCommit(value?: V): void;
+  /** Escape: the old value stays */
+  onCancel(): void;
+  /** the message to show under the cell */
+  invalid?: string;
+  autoFocus: boolean;
+  dir: 'ltr' | 'rtl';
+  /** the message's id while invalid */
+  'aria-describedby'?: string;
+};
+
+/** @public the form's state a renderForm gets (ADR 0016 addendum F3, D-0063) */
+export type FormEditState = {
+  /** the draft: the record's editable fields, edited */
+  value: Record<string, unknown>;
+  setValue(next: Record<string, unknown>): void;
+  /** field -> the message from the column's validate, after Save */
+  errors: Record<string, string>;
+  /** true while onRecordEdit's promise runs */
+  busy: boolean;
+};
+
+/** @public the `editing` options object (ADR 0016) */
+export type DataGridEditing = {
+  /** the editor types this application turns on; "input" and "number" always work */
+  types?: EditorType[];
+  /** typing replaces the value (default true) */
+  typeToReplace?: boolean;
+  /** Enter edits an editable cell (default true) */
+  enterEdits?: boolean;
+  /** dragging across cells selects a range (default false) */
+  rangeSelect?: boolean;
+};
+
+/** @public */
+export type DataGridColumnType = 'text' | 'number' | 'currency' | 'date' | 'select' | 'checkbox' | 'file' | 'image' | 'link' | 'person' | 'long-text' | 'bytes' | 'multi';
+/** @public */
+export type DataGridColumnKind = 'name' | 'data' | 'icon' | 'center' | 'actions' | 'wrap' | 'deleted' | 'avatar-name' | 'tags' | 'badge' | 'id' | 'email' | 'url' | 'phone' | 'code';
+/** @public */
+export type DataGridSortDir = 'asc' | 'desc';
+/** @public */
+export type DataGridOption = { value: string; label: string; src?: string; color?: string; gender?: string };
+
+/** @public a column of the grid; `field` names a field of the record */
+export type DataGridColumn<R = Record<string, unknown>> = {
+  field: keyof R & string;
+  title?: string;
+  /** one kind, or several that combine as a list */
+  kind?: DataGridColumnKind | DataGridColumnKind[];
+  type?: DataGridColumnType;
+  icon?: unknown;
+  groupable?: boolean;
+  groupRange?: number;
+  groupBucket?(value: unknown): string;
+  /** the cell as a React element */
+  render?(record: R, cell?: unknown): React.ReactNode;
+  sorter?: 'string' | 'number' | 'date' | ((a: unknown, b: unknown, recordA: R, recordB: R, field: string, direction: DataGridSortDir) => number);
+  sortable?: boolean;
+  /** true: contains text; "list": one of the column's values */
+  filter?: boolean | 'list';
+  summary?: 'sum' | 'count' | 'average' | 'min' | 'max';
+  /** the text for a missing value */
+  empty?: string;
+  /** a CSS length or a size token */
+  width?: string | number;
+  minWidth?: string | number;
+  maxWidth?: string | number;
+  frozen?: boolean;
+  rowLabel?: boolean;
+  align?: 'left' | 'center' | 'right';
+  resizable?: boolean;
+  wrap?: boolean;
+  rowHandle?: boolean;
+  /** a technical or custom pill for the pill view; false keeps the plain value */
+  pill?: false | ((value: unknown, record: R) => { tone?: string; icon?: unknown; variant?: string; data?: boolean; gender?: string; fill?: boolean } | void);
+  /** ADR 0016 */
+  editor?: EditorType | { component: React.ComponentType<CellEditorProps>; props?: object };
+  editorProps?: {
+    options?: DataGridOption[];
+    loadOptions?(query: string): Promise<DataGridOption[]>;
+    min?: string;
+    max?: string;
+    rows?: number;
+  };
+  editable?(record: R): boolean;
+  /** a message keeps the cell open with it under; null saves */
+  validate?(value: unknown, record: R): string | null | Promise<string | null>;
+};
+
+/** @public */
+export type DataGridMenuAction<R> = { label?: string; icon?: unknown; onSelect?(record: R): void; danger?: boolean; disabled?: boolean; separator?: boolean };
+/** @public */
+export type DataGridColumnMenuAction = { label?: string; icon?: unknown; onSelect?(column: DataGridColumn<any>): void; danger?: boolean; disabled?: boolean; separator?: boolean };
+/** @public */
+export type DataGridCellPoint = { rowId: unknown; field: string };
+/** @public */
+export type DataGridRowTemplate = { title?: string; subtitle?: string; date?: string; primary?: string; secondary?: string; tertiary?: string };
+/** @public */
+export type DataGridFetch = { page: number; size: number; sort?: { field: string; dir: DataGridSortDir }[]; filters?: unknown; search?: string };
+/** @public */
+export type DataGridGroup = string | { field: string; interval?: 'day' | 'week' | 'month' | 'year'; range?: number };
+
+/** @public the DataGrid's props (ADR 0011) */
+export type DataGridProps<R = Record<string, unknown>> = {
+  /** names the grid for screen readers */
+  label: string;
+  /** the rows */
+  data?: R[];
+  /** the field that identifies a row (default "id") */
+  index?: keyof R & string;
+  columns: DataGridColumn<R>[];
+  selectable?: boolean;
+  selected?: unknown[];
+  onSelectionChange?(keys: unknown[], info: { count: number; hidden: number }): void;
+  keepHiddenSelection?: boolean;
+  cellSelection?: boolean;
+  onCellSelectionChange?(change: { from: DataGridCellPoint; to: DataGridCellPoint; cellCount: number; rowCount: number; columnCount: number; fields: string[] } | null): void;
+  unread?(record: R): boolean;
+  unreadKeys?: unknown[];
+  onUnreadChange?(keys: unknown[], info: { unreadCount: number }): void;
+  markReadOnOpen?: boolean;
+  readDelay?: number;
+  unreadOnly?: boolean;
+  onUnreadOnlyChange?(next: boolean): void;
+  onRowClick?(record: R, event: React.SyntheticEvent): void;
+  onRowDoubleClick?(record: R, event: React.SyntheticEvent): void;
+  onCellEdit?(record: R, change: { field: string; value: unknown; previous: unknown; row: R }): void | Promise<void>;
+  /** ADR 0016 */
+  editing?: DataGridEditing;
+  editMode?: 'inline' | 'form';
+  editModes?: ('inline' | 'form')[];
+  formSurface?: 'drawer' | 'dialog' | { panel: React.RefObject<HTMLElement | null> };
+  renderForm?(record: R, form: FormEditState): React.ReactNode;
+  onRecordEdit?(record: R, changes: Record<string, unknown>): void | Promise<void>;
+  /** the key of the record whose details show; null: none */
+  openKey?: string | number | null;
+  density?: 'compact' | 'standard' | 'comfortable' | 'page';
+  /** deprecated, ignored */
+  uniformPillWidths?: boolean;
+  typeIcons?: boolean;
+  headerMenu?: boolean;
+  columnMenu?: DataGridColumnMenuAction[];
+  rowMenu?: DataGridMenuAction<R>[] | ((record: R) => DataGridMenuAction<R>[]);
+  rowMenuButton?: boolean;
+  /** the page's view */
+  filter?(record: R): boolean;
+  sort?: { field: string; dir: DataGridSortDir }[];
+  groupBy?: DataGridGroup | DataGridGroup[];
+  columnOrder?: string[];
+  hiddenColumns?: string[];
+  onAddToGroup?(value: unknown, path: unknown[]): void;
+  tree?: boolean;
+  childrenField?: string;
+  treeColumn?: string;
+  treeExpanded?: boolean;
+  movableRows?: boolean;
+  onRowMove?(records: R[]): void;
+  movableColumns?: boolean;
+  rowHeight?: 'short' | 'medium' | 'tall' | 'extra-tall';
+  wrapHeaders?: boolean;
+  viewMenu?: boolean;
+  cells?: 'text' | 'pill';
+  mode?: 'fill' | 'pages' | 'load-more';
+  pageSize?: number;
+  pageSizes?: number[];
+  height?: string;
+  fetchRows?(request: DataGridFetch): Promise<{ rows: R[]; total: number }>;
+  search?: string;
+  storageKey?: string;
+  onViewChange?(patch: Record<string, unknown>): void;
+  columnWidths?: Record<string, number | string>;
+  onFilterField?(field: string): void;
+  wrapColumns?: Record<string, boolean>;
+  onWrapColumnsChange?(next: Record<string, boolean>): void;
+  narrow?: 'auto' | 'table' | 'list';
+  narrowAt?: number;
+  keyColumns?: string[];
+  layout?: 'A' | 'B' | 'wide' | 'plain';
+  template?: DataGridRowTemplate;
+  empty?: React.ReactNode;
+  error?: React.ReactNode;
+  onRetry?(): void;
+  strings?: Record<string, unknown>;
+  className?: string;
+  /** called with the grid's controller once it is ready */
+  onReady?(api: unknown): void;
+};
+
 // a toast when the page has a ToastProvider; nothing otherwise. Toast's own hook, not ReviewFlow's: ReviewFlow would pull the command bar, the quick filter, the avatar and a dialog into every grid (issue 807)
 
 // the row menu's actions with Undo, as the CommandBar's selection commands
-function ActionTable(props) { const rowMenu = useDataGridActions(props.rowMenu, undefined, props.strings), shaped = useRowTemplate(props); return <DataGridEngine {...shaped} rowMenu={rowMenu} />; }
+function ActionTable(props: any) { const rowMenu = useDataGridActions(props.rowMenu, undefined, props.strings), shaped = useRowTemplate(props); return <DataGridEngine {...shaped} rowMenu={rowMenu} />; }
 
-export function DataGrid(props) { const toast = useOptionalToast(); return toast ? <ActionTable {...props} /> : <ToastProvider><ActionTable {...props} /></ToastProvider>; }
+export function DataGrid<R = Record<string, unknown>>(props: DataGridProps<R>) { const toast = useOptionalToast(); return toast ? <ActionTable {...props} /> : <ToastProvider><ActionTable {...props} /></ToastProvider>; }
 DataGrid.useActions = useDataGridActions;
 DataGrid.unreadCommands = unreadCommands;
 // nothing to load ahead: the engine is part of the Platform bundle (kept so pages that called it keep working)
