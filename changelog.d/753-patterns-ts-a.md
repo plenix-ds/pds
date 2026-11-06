@@ -1,0 +1,3 @@
+### Changed
+
+- TypeScript wave 3, batch A (#753, ADR 0011): ten patterns are now `.tsx` with exported prop types: `FormFlow` (`FormFlowProps`, `FormFlowState`), `GroupPanel` (`GroupPanelProps`, `GroupLevel`), `HelpPanel` (`HelpPanelProps`, `HelpArticle`), `ImageAnnotation` (`ImageAnnotationProps`, `Annotation`), `ImageUpload` and `ImageCrop` (`ImageUploadProps`, `ImageCropProps`, `UploadedImage`, `ImageRatio`), `ImportDialog` (`ImportDialogProps`, `ImportSource`), `ImportWizard` (`ImportWizardProps`, `ImportField`), `MetadataEditor` (`MetadataEditorProps`, `MetadataField`), `NavPane` (`NavPaneProps`), `NotificationList` (`NotificationListProps`, `NotificationItem`). No `any` in a public prop. No behavior change.
