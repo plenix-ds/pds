@@ -39,7 +39,7 @@ import { ChartLegend } from './parts/ChartLegend.jsx';
 import { ChartTooltip } from './parts/ChartTooltip.jsx';
 import { useChartPoints } from './a11y.js';
 import { useEChartsPlot, plotGrid } from './echarts/EChartsPlot.jsx';
-import { gridRoom } from './LineChart.jsx';
+import { gridRoom } from './chart-helpers.js';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 
 // the drawing's geometry on the 4px grid: a point's radius, the largest and smallest bubble's, the active ring's room

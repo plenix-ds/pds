@@ -42,7 +42,7 @@ import { devWarn } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
 import { dataWhenText } from '../../utils/dataText.tsx';
 import { Card } from '../Card/Card.tsx';
-import { Sparkline } from '../../charts/Sparkline.jsx';
+import { Sparkline } from '../../charts/lazy.jsx';
 
 type MetricProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & {
   /** the figure */
@@ -79,7 +79,6 @@ export function Metric({ value, label, unit, change, changeTone = 'neutral', des
   );
   const spark = trend && trend.length ? (
     <div className="plx-metric__trend">
-      {/* @ts-expect-error Sparkline is still JavaScript (charts are converted in wave 2), so its optional props read as required */}
       <Sparkline values={trend} variant={trendVariant} size="fill" showLast={trendVariant !== 'bar'} color={trendColor} label={trendLabel || (typeof label === 'string' ? label : undefined)} />
     </div>
   ) : null;

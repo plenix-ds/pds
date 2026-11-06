@@ -62,6 +62,7 @@ import { useChartInteraction, ChartFocusMark, ChartBrush } from './interaction.j
 import { useEChartsPlot, plotGrid } from './echarts/EChartsPlot.jsx';
 import { tickLineHeight } from './echarts/engine.js';
 import { snapToGrid } from '../utils/grid.ts';
+import { gridRoom } from './chart-helpers.js';
 import { halfRoom } from './chart-kit.js';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 
@@ -74,12 +75,7 @@ const TICK_ROOM = 64;
 
 const isNum = (v) => typeof v === 'number' && isFinite(v);
 const typeOf = (v) => (v instanceof Date ? 'time' : typeof v === 'number' ? 'linear' : 'band');
-// the room around the plot, from ChartFrame's margin prop (pixels on the grid)
-export const gridRoom = (margin, top) => {
-  const m = margin || {};
-  const at = (k, d) => snapToGrid(m[k] === undefined ? d : m[k]);
-  return { top: at('top', top), right: at('end', 0), bottom: at('bottom', 0), left: at('start', 0) };
-};
+export { gridRoom } from './chart-helpers.js';
 // ECharts' axis ticks, for an overlay's scale
 const axisTicks = (chart, axis) => {
   try { return chart.getModel().getComponent(axis, 0).axis.scale.getTicks().map((t) => t.value); } catch (e) { return []; }

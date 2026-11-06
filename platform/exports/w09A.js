@@ -3,8 +3,8 @@
 // charts LineChart (with its step curve), AreaChart, Gauge, HeatMap, WaterfallChart, WordCloud, NetworkGraph and Diagram.
 export { useChartInteraction, ChartFocusMark, ChartBrush, chartAnnounce, CHART_INTERACTION_STRINGS } from '../charts/interaction.js';
 export { chartTooltipText } from '../charts/parts/ChartTooltip.jsx';
-export { LineChart } from '../charts/LineChart.jsx';
-export { AreaChart } from '../charts/AreaChart.jsx';
+export { LineChart } from '../charts/lazy.jsx';
+export { AreaChart } from '../charts/lazy.jsx';
 export { Gauge } from '../charts/Gauge.jsx';
 export { HeatMap } from '../charts/HeatMap.jsx';
 export { WaterfallChart, waterfallSteps } from '../charts/WaterfallChart.jsx';

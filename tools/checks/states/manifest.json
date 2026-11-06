@@ -368,5 +368,15 @@
     "loading": "n/a(stories arrive with Storybook, P0-11)",
     "selected": "n/a(stories arrive with Storybook, P0-11)",
     "error": "n/a(stories arrive with Storybook, P0-11)"
+  },
+  "Metric": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(a metric is a display; its link or action carries the Button's states)",
+    "focus": "n/a(a metric is a display; its link or action carries the Button's states)",
+    "active": "n/a(a metric is a display)",
+    "disabled": "n/a(a metric is a display)",
+    "loading": "n/a(the value and trend are given; a trend line draws after its chart module loads; stories arrive with Storybook, P0-11)",
+    "selected": "n/a(a metric is not selectable)",
+    "error": "n/a(a metric has no value to validate)"
   }
 }

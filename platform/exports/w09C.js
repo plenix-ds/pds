@@ -2,7 +2,7 @@
 // ScatterChart (also the Bubble chart), FunnelChart, Treemap, GanttChart and GeoMap (Map, Choropleth map). Metric's
 // trend and card (Metric card) are an extension of a public component.
 export { summarizeSeries, CHART_PATTERNS, chartPattern, patternFill, ChartPatterns, useChartPoints } from '../charts/a11y.js';
-export { Sparkline } from '../charts/Sparkline.jsx';
+export { Sparkline } from '../charts/lazy.jsx';
 export { LollipopChart } from '../charts/LollipopChart.jsx';
 export { ScatterChart } from '../charts/ScatterChart.jsx';
 export { FunnelChart } from '../charts/FunnelChart.jsx';
