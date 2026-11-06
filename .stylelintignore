@@ -9,3 +9,5 @@ platform/vendor/
 node_modules/
 # generated from the Plenix tokens (services/auth/brand-css.js) and pasted into Authentik, which cannot load Plenix tokens: it carries the values (issue 365)
 services/auth/brand.css
+# archived (#706): nothing builds or publishes it
+archive/
