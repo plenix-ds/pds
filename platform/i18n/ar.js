@@ -345,6 +345,38 @@ export default {
       "many": "نُسخت {n} خلية",
       "other": "نُسخت {n} خلية"
     },
+    "cellsPasted": {
+      "zero": "لم تُلصق خلايا",
+      "one": "لُصقت خلية واحدة",
+      "two": "لُصقت خليتان",
+      "few": "لُصقت {n} خلايا",
+      "many": "لُصقت {n} خلية",
+      "other": "لُصقت {n} خلية"
+    },
+    "cellsFilled": {
+      "zero": "لم تتم تعبئة أي خلية",
+      "one": "تمت تعبئة خلية واحدة",
+      "two": "تمت تعبئة خليتين",
+      "few": "تمت تعبئة {n} خلايا",
+      "many": "تمت تعبئة {n} خلية",
+      "other": "تمت تعبئة {n} خلية"
+    },
+    "cellsSkipped": {
+      "zero": "لم يتم تخطّي أي خلية",
+      "one": "تم تخطّي خلية واحدة",
+      "two": "تم تخطّي خليتين",
+      "few": "تم تخطّي {n} خلايا",
+      "many": "تم تخطّي {n} خلية",
+      "other": "تم تخطّي {n} خلية"
+    },
+    "cellsRefused": {
+      "zero": "لا توجد خلايا تعذّر حفظها",
+      "one": "تعذّر حفظ خلية واحدة",
+      "two": "تعذّر حفظ خليتين",
+      "few": "تعذّر حفظ {n} خلايا",
+      "many": "تعذّر حفظ {n} خلية",
+      "other": "تعذّر حفظ {n} خلية"
+    },
     "empty": "لا يوجد شيء للعرض",
     "failed": "تعذّر تحميل الجدول",
     "retry": "إعادة المحاولة",
@@ -433,7 +465,22 @@ export default {
     "rowsLabel": "صفوف {label}",
     "columnActions": "إجراءات العمود {title}",
     "unreadRow": "{label}، غير مقروء",
-    "editCell": "تعديل {title}"
+    "editCell": "تعديل {title}",
+    "editing": "جارٍ تعديل {column}",
+    "editMode": "التعديل",
+    "editModeInline": "تعديل مضمّن",
+    "editModeForm": "تعديل في نموذج",
+    "formTitle": "تعديل {name}",
+    "emptyValue": "—",
+    "formSaved": "تم حفظ {name}",
+    "formSaveRefused": "تعذّر حفظ {name}. تحقق من القيم وحاول مرة أخرى.",
+    "saved": "تم الحفظ",
+    "saveRefused": "تعذّر الحفظ. تمت استعادة القيمة السابقة.",
+    "fillDown": "تعبئة لأسفل",
+    "fillRight": "تعبئة لليمين",
+    "fillMenu": "تعبئة",
+    "undone": "تم التراجع عن التعديل",
+    "redone": "تمت إعادة التعديل"
   },
   "dataPill": {
     "male": "ذكر",
@@ -1535,6 +1582,9 @@ export default {
     "empty": "لا توجد إصدارات."
   },
   "viewMenu": {
+    "editMode": "التعديل",
+    "editModeInline": "تعديل مضمّن",
+    "editModeForm": "تعديل في نموذج",
     "reset": "إعادة ضبط العرض",
     "label": "العرض",
     "layout": "التخطيط",
