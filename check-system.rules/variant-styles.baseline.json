@@ -190,9 +190,6 @@
   "rich-tooltip--content-title-and-text",
   "rich-tooltip--content-with-an-action",
   "role-label--role-custom-a-category-color",
-  "role-label--role-editor",
-  "role-label--role-owner",
-  "role-label--role-viewer",
   "sankey-diagram--variant-horizontal",
   "scatter-chart--variant-bubble-size",
   "scatter-chart--variant-points-default",
@@ -226,7 +223,6 @@
   "text-area--states-filled",
   "text-area--states-read-only",
   "text-area--states-required",
-  "thumbnail--content-an-image-default-when-src-is-given",
   "timeline-chart--variant-events",
   "timeline-chart--variant-lanes",
   "timeline-chart--variant-ranges",
@@ -235,8 +231,6 @@
   "typing-indicator--message-mine",
   "typing-indicator--message-theirs-default",
   "typing-indicator--variants-typing",
-  "user-card--variant-default",
-  "user-card--variant-with-actions",
   "waterfall-chart--variant-start-to-end",
   "waterfall-chart--variant-with-totals"
  ]
