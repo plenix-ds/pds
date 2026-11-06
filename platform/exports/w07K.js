@@ -6,7 +6,7 @@ export { FilterPanel } from '../patterns/FilterPanel/FilterPanel.tsx';
 export { SortPanel } from '../patterns/SortPanel/SortPanel.tsx';
 export { GroupPanel } from '../patterns/GroupPanel/GroupPanel.tsx';
 export { ColumnsMenu, ManageColumnsDialog } from '../patterns/ColumnsMenu/ColumnsMenu.tsx';
-export { ViewMenu } from '../patterns/ViewMenu/ViewMenu.jsx';
+export { ViewMenu } from '../patterns/ViewMenu/ViewMenu.tsx';
 export { QuickFilter } from '../patterns/QuickFilter/QuickFilter.tsx';
 export { matchesFilter, matchesDate, compareLevels, conditionsOf } from '../utils/fields.ts';
 export { useCollectionView } from '../hooks/useCollectionView.ts';

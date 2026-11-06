@@ -23,7 +23,9 @@
 import React from 'react';
 import { Menu, MenuItem, MenuDivider, MenuGroup, MenuRadioGroup } from '../../components/Menu/Menu.tsx';
 import { Tooltip } from '../../components/Tooltip/Tooltip.tsx';
-import { CommandBarButton, useCommandBar } from '../CommandBar/CommandBar.jsx';
+import { CommandBarButton as CommandBarButtonJs, useCommandBar as useCommandBarJs } from '../CommandBar/CommandBar.jsx';
+const CommandBarButton: any = CommandBarButtonJs;
+const useCommandBar: any = useCommandBarJs;
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import GridN2x2Icon from 'plenix-platform/icons/plenix/grid-2x2';
 import ListLinesIcon from 'plenix-platform/icons/plenix/list-lines';
@@ -33,11 +35,23 @@ import ViewTableIcon from 'plenix-platform/icons/plenix/view-table';
 const SIZES = [['s', 'cards-small'], ['m', 'cards-medium'], ['l', 'cards-large']];
 const HEIGHTS = ['short', 'medium', 'tall', 'extra-tall'];
 
-export function ViewMenu({ value, onChange, gallery = true, editModes, strings, onReset }) {
-  const t = useStrings('viewMenu', strings);
+/** @public the view the menu edits */
+export type ViewMenuValue = { layout: 'list' | 'gallery'; size: 's' | 'm' | 'l'; height: 'short' | 'medium' | 'tall' | 'extra-tall'; editMode?: 'inline' | 'form' };
+/** @public the prop type (ADR 0011) */
+export type ViewMenuProps = {
+  value: ViewMenuValue;
+  onChange(value: ViewMenuValue): void;
+  gallery?: boolean;
+  editModes?: ('inline' | 'form')[];
+  strings?: Record<string, string>;
+  onReset?(): void;
+};
+export function ViewMenu(props: ViewMenuProps) {
+  const { value, onChange, gallery = true, editModes, strings, onReset } = props as any;
+  const t: any = useStrings('viewMenu', strings);
   const ctx = useCommandBar();
   const v = Object.assign({ layout: 'list', size: 'm', height: 'short' }, value);
-  const set = (k) => (x) => onChange(Object.assign({}, v, { [k]: x }));
+  const set = (k: any) => (x: any) => onChange(Object.assign({}, v, { [k]: x }));
   const menu = (
     <Menu label={t.label} placement="bottom-end" trigger={<CommandBarButton icon={ViewTableIcon} label={t.label} caret />}>
       <MenuRadioGroup label={t.layout} value={v.layout} onChange={set('layout')} keepOpen>

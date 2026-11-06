@@ -13,7 +13,7 @@
 */
 import React from 'react';
 import { ImportDialog } from '../ImportDialog/ImportDialog.tsx';
-import { Wizard as WizardJs } from '../Wizard/Wizard.jsx';
+import { Wizard as WizardJs } from '../Wizard/Wizard.tsx';
 const Wizard: any = WizardJs;
 import { Dialog } from '../../components/Dialog/Dialog.tsx';
 import { Stack } from '../../components/Stack/Stack.tsx';

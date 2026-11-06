@@ -72,7 +72,7 @@
   "platform/patterns/CommandBar/BarActions.jsx",
   "platform/patterns/CommandBar/CommandBar.jsx",
   "platform/patterns/CommandBar/panel-parts.jsx",
-  "platform/patterns/EntityHeader/EntityHeader.jsx",
+  "platform/patterns/EntityHeader/EntityHeader.tsx",
   "platform/patterns/QueryBuilder/QueryBuilder.jsx",
   "platform/patterns/QuickFilter/QuickFilter.jsx",
   "platform/patterns/QuickFilter/single-choice.js",

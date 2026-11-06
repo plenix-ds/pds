@@ -7,7 +7,8 @@
 // Output, one per line:  start <role> [<instance>] | <reason>      stop <window> | <reason>      note <text>
 //
 // Rules (issue #246):
-// - A role is waiting when it has open issues labeled agent:pds1-<role> without "later" and no running window.
+// - A role is waiting when it has open issues labeled agent:pds1-<role> without "later" or "blocked" (parked on a named blocker,
+//   template §5.5) and no running window.
 //   component-engineer runs as instance 1, then 2 (2 only when it has 2 or more waiting issues).
 // - Starts only while long-work windows (everything but product-lead and delivery-lead) are below
 //   long_work.max_running and free memory stays at or above start_new_below_free_gb after each start
@@ -58,7 +59,7 @@ const prs = gh('pr', 'list', '-R', REPO, '--state', 'open', '--limit', '200', '-
 const byRole = new Map();
 for (const i of issues) {
   const names = i.labels.map((l) => l.name);
-  if (names.includes('later')) continue;
+  if (names.includes('later') || names.includes('blocked')) continue; // parked: deferred, or waiting on a named blocker (template §5.5)
   const sev = Math.min(5, ...names.map((n) => (/^sev:S([1-4])$/.exec(n) || [])[1]).filter(Boolean).map(Number));
   for (const n of names) {
     const m = /^agent:pds1-(.+)$/.exec(n);

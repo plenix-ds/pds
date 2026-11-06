@@ -29,7 +29,7 @@ const CommandBarSearch: any = CommandBarSearchJs;
 import { FilterPanel } from '../../patterns/FilterPanel/FilterPanel.tsx';
 import { SortPanel as SortPanelJs } from '../../patterns/SortPanel/SortPanel.tsx';
 const SortPanel: any = SortPanelJs;
-import { ViewMenu as ViewMenuJs } from '../../patterns/ViewMenu/ViewMenu.jsx';
+import { ViewMenu as ViewMenuJs } from '../../patterns/ViewMenu/ViewMenu.tsx';
 const ViewMenu: any = ViewMenuJs;
 import { QuickFilter as QuickFilterJs } from '../../patterns/QuickFilter/QuickFilter.tsx';
 const QuickFilter: any = QuickFilterJs;
