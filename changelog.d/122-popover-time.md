@@ -1,0 +1,3 @@
+### Changed
+
+- Popover and the session timeout's countdown take their whole text role (#122, Phase 4): the popover sets the body role's weight and letter spacing as well as its size and line height, and the countdown (the time in the warning and in the signed-out message) sets the body weight, size, letter spacing and line height with the data font. In ordinary text nothing looks different. The one change is inside text that is bold or letter-spaced (a popover opened inside a heading, a countdown inside a bold title): they no longer inherit that weight and spacing. Two parts leave the text-role backlog.
