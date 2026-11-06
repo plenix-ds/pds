@@ -208,6 +208,7 @@ function NextEngine(rawProps) {
     beginEdit = (next) => {
       if (next && editMode === 'form' && canChoose) {
         formFrom.current = { key: next.key, field: next.field };
+        if (props.openKey === undefined) setOwnOpen(next.key);   // the edited row is the open, marked row (design form-edit.md §4)
         setFormKey(next.key);
       } else setEditing(next);
     };

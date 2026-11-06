@@ -50,6 +50,10 @@ const check = async (name, fn) => { if (!shared.wanted(name)) return; try { awai
       await check(T + 'F2 opens a drawer titled for the record, not the inline editor', async () => {
         await mount(); await focus(0); await key('F2'); const d = await drawer(); assert.ok(d, 'a drawer opens'); assert.match(d.text, /Edit Person 1/); assert.equal(await inlineOpen(), false);
       });
+      await check(T + 'the edited row is the open, marked row while the form is open and after it closes', async () => {
+        await mount(); const mark = () => page.evaluate(() => [...document.querySelectorAll('[role=row][data-plx-record]')].map((r) => r.getAttribute('aria-current') === 'true'));
+        assert.deepEqual(await mark(), [false, false]); await focus(1); await key('F2'); assert.deepEqual(await mark(), [false, true], 'row 2 is open while the form shows'); await click('Cancel'); assert.deepEqual(await mark(), [false, true], 'and stays open after it closes');
+      });
       await check(T + 'Enter and a typed letter do not open the form (nor the inline editor)', async () => {
         await mount(); await focus(0); await key('Enter'); assert.equal(await drawer(), null); assert.equal(await inlineOpen(), false);
         await key('x'); assert.equal(await drawer(), null); assert.equal(await inlineOpen(), false);
