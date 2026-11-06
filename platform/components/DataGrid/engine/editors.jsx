@@ -340,6 +340,7 @@ function TagsEditor({ draft, setDraft, invalid, messageId, finish, cancel, input
           invalid={!!invalid}
           width="fill"
           multiple
+          chipOverflow="count"
           creatable
           {...(load ? { loadOptions: load } : { options })}
           values={values}

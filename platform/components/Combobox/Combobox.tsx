@@ -78,6 +78,7 @@ import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { highlightMatch, matchesText } from '../../utils/highlight.tsx';
 import { Tag } from '../Tag/Tag.tsx';
+import { useBarFit } from '../../utils/barFit.ts';
 import { Button } from '../Button/Button.tsx';
 import { Spinner } from '../Loading/Loading.tsx';
 import { announce } from '../../utils/announce.tsx';
@@ -102,11 +103,13 @@ export type ComboOption = { value: ComboValue; label: string; description?: stri
 export type ComboEmptyAction = { label: React.ReactNode; icon?: IconValue; onSelect?: (typed: string) => void };
 // a row of the open list: an option, the create row, or the empty action
 type ComboItem = { kind: 'option'; o: ComboOption } | { kind: 'create'; o?: undefined } | { kind: 'action'; o?: undefined };
-type ComboWords = { emptyText: string; results?: string | ((count: number) => string); removeItem: string; clear: string; loading: string; error: string };
+type ComboWords = { emptyText: string; results?: string | ((count: number) => string); removeItem: string; moreChips: string; clear: string; loading: string; error: string };
 export type ComboboxProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange' | 'size' | 'width'> & {
   options?: ComboOption[];
   /** the chosen value (single); '' or null: none */
   value?: ComboValue | null;
+  /** with multiple: "wrap" (default) lets the chosen chips wrap onto more rows; "count" keeps them on one line and folds the ones that don't fit into one "+N" Tag */
+  chipOverflow?: 'wrap' | 'count';
   /** the chosen values (multiple) */
   values?: ComboValue[];
   /** single: the value ('' when cleared); multiple: the values */
@@ -135,7 +138,7 @@ export type ComboboxProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'v
   data?: boolean;
 };
 export const Combobox = React.forwardRef(function Combobox({ options = [], value, values, onChange, multiple = false, creatable = false, onCreate, width,
-  placeholder, label, invalid, warning, disabled, readOnly: readOnlyOwn, emptyText, emptyAction, clearable = false, loadOptions, loadDelay = 300, minChars = 0, loading = false, marks, strings,
+  placeholder, label, invalid, warning, disabled, readOnly: readOnlyOwn, chipOverflow = 'wrap', emptyText, emptyAction, clearable = false, loadOptions, loadDelay = 300, minChars = 0, loading = false, marks, strings,
   className, id, size, data, ...rest }: ComboboxProps, ref: React.ForwardedRef<HTMLInputElement>) {
   const locked = useReadOnly(readOnlyOwn);   // its own readOnly, else the nearest ReadOnly region's: the value shows; the list does not open, nothing is chosen, created or removed
   const t = useStrings('combobox', strings) as ComboWords, words = t;
@@ -146,6 +149,7 @@ export const Combobox = React.forwardRef(function Combobox({ options = [], value
   const [open, setOpen] = React.useState(false);
   const [text, setText] = React.useState('');
   const [active, setActive] = React.useState(0);
+  const fieldRef = React.useRef<HTMLDivElement>(null);
   const wrap = React.useRef<HTMLDivElement>(null), input = React.useRef<HTMLInputElement>(null), list = React.useRef<HTMLUListElement>(null);
   // the list opens in the top layer, placed against the field by the floating layer (flips up near an edge, follows scroll and resize): no dialog, drawer or scroll area clips it
   useFloating(wrap, list, { open, placement: 'bottom-start', matchWidth: true });
@@ -177,6 +181,10 @@ export const Combobox = React.forwardRef(function Combobox({ options = [], value
   const isLoading = !!loading || (async && busy);
   const optionOf = (v: ComboValue): ComboOption | undefined => options.find((x) => x.value === v) || (async ? loaded.find((x) => x.value === v) || seen.current.get(v) : undefined);
   const chosen: ComboValue[] = multiple ? (values || []) : (value !== undefined && value !== null && value !== '' ? [value] : []);
+  // chipOverflow="count": the chips stay on one line; the number that does not fit folds into one "+N" Tag (the fit is the field's own width, measured before paint)
+  const counting = multiple && chipOverflow === 'count';
+  const folded = useBarFit(fieldRef, chosen.join('\u0001') + '|' + (open ? 1 : 0), counting ? chosen.length : 0, 0, ':self');
+  const shownChips = counting && folded > 0 ? chosen.slice(0, Math.max(0, chosen.length - folded)) : chosen;
   const current = !multiple && chosen.length ? optionOf(chosen[0]) || null : null;
   // the data font: forced by data (true or false); otherwise when the chosen label is wholly a number, a date or another technical value
   // what the input shows decides: the typed text while there is some (open or not), else the chosen label
@@ -240,9 +248,10 @@ export const Combobox = React.forwardRef(function Combobox({ options = [], value
   );
   return (
     <div ref={wrap} className={cx('plx-combobox', size === 'sm' && 'plx-combobox--size-sm', width && 'plx-combobox--width-' + width, multiple && 'plx-combobox--multiple', marks && 'plx-combobox--marks', open && 'is-open', disabled && 'is-disabled', className)}>
-      <div className={cx('plx-combobox__field', 'plx-input', asData && 'plx-input--data', disabled && 'is-disabled')} aria-invalid={invalid || undefined} data-plx-warning={warning || undefined} onClick={() => { if (!disabled && input.current) input.current.focus(); }}>
-        {multiple ? chosen.map((v) => { const o = optionOf(v); const t = o ? o.label : v;
+      <div ref={fieldRef} className={cx('plx-combobox__field', 'plx-input', counting && 'plx-combobox__field--count', asData && 'plx-input--data', disabled && 'is-disabled')} aria-invalid={invalid || undefined} data-plx-warning={warning || undefined} onClick={() => { if (!disabled && input.current) input.current.focus(); }}>
+        {multiple ? shownChips.map((v) => { const o = optionOf(v); const t = o ? o.label : v;
           return <Tag key={v} onRemove={locked ? undefined : () => onChange(chosen.filter((x) => x !== v))} removeLabel={words.removeItem.replace('{label}', t as string)}>{t}</Tag>; }) : null}
+        {counting && folded > 0 ? <Tag className="plx-combobox__more" aria-label={words.moreChips.replace('{count}', String(folded))} title={words.moreChips.replace('{count}', String(folded))}>{'+' + folded}</Tag> : null}
         {multiple ? field : <Tooltip content={label1} disabled={!cut} describe={false} placement={open ? 'top' : 'bottom'} className="plx-combobox__tip">{field}</Tooltip>}
         {canClear ? <Button variant="ghost" size="xs" iconOnly icon={CloseIcon} label={t.clear} className="plx-combobox__clear" onMouseDown={(e) => e.preventDefault()} onClick={clear} /> : null}
         <span className="plx-combobox__chevron" aria-hidden="true"><Icon icon={SelectChevronIcon} filled={false} /></span>

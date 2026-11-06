@@ -636,6 +636,7 @@ export default {
     "error": "The options could not be loaded",
     "emptyText": "No matches",
     "removeItem": "Remove {label}",
+    "moreChips": "{count} more",
     "clear": "Clear",
     "results": {
       "one": "{n} option",
