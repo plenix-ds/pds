@@ -20,28 +20,45 @@ import { Checkbox } from '../../components/Checkbox/Checkbox.tsx';
 import { DataGrid } from '../../components/DataGrid/DataGrid.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Notice } from '../../components/Notice/Notice.tsx';
-import { PermissionSummary } from '../PermissionSummary/PermissionSummary.jsx';
+import { PermissionSummary } from '../PermissionSummary/PermissionSummary.tsx';
 import { useUnsavedGuard } from '../../providers/UnsavedGuard.tsx';
 import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import PersonIcon from 'plenix-platform/icons/plenix/person';
 import SettingsPermissionsIcon from 'plenix-platform/icons/plenix/settings-permissions';
 
-export function PermissionsEditor({ subjects = [], capabilities = [], value = {}, mode = 'roles', onChange, onSave, readOnly = false, strings, className }) {
-  const t = useStrings('permissionsEditor', strings);
+/** @public a row of the matrix: a role or a person */
+export type PermissionSubject = { id: string | number; label: string; locked?: boolean };
+/** @public a column of the matrix */
+export type PermissionCapability = { id: string | number; label: string };
+/** @public the prop type (ADR 0011) */
+export type PermissionsEditorProps = {
+  subjects?: PermissionSubject[];
+  capabilities?: PermissionCapability[];
+  /** { subjectId: [capabilityId] } */
+  value?: Record<string, (string | number)[]>;
+  mode?: 'roles' | 'people';
+  onChange?(next: Record<string, (string | number)[]>): void;
+  onSave?(next: Record<string, (string | number)[]>): unknown;
+  readOnly?: boolean;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function PermissionsEditor({ subjects = [], capabilities = [], value = {}, mode = 'roles', onChange, onSave, readOnly = false, strings, className }: PermissionsEditorProps) {
+  const t: any = useStrings('permissionsEditor', strings);
   const [selected, setSelected] = React.useState(subjects[0]?.id || ''), [busy, setBusy] = React.useState(false), [error, setError] = React.useState('');
   const [saved, setSaved] = React.useState(value), lock = React.useRef(false);
   React.useEffect(() => { if (!onSave) setSaved(value); }, [value, onSave]);
   useUnsavedGuard(!!onSave && JSON.stringify(saved) !== JSON.stringify(value), t.unsaved);
   const subject = subjects.find((s) => s.id === selected) || subjects[0];
-  const change = (s, cap, checked) => {
+  const change = (s: any, cap: any, checked: any) => {
     if (readOnly || lock.current || s.locked || !onChange) return;
     const had = value[s.id] || [], next = { ...value, [s.id]: checked ? Array.from(new Set(had.concat(cap))) : had.filter((v) => v !== cap) };
     onChange(next);
   };
-  const columns = [{ title: t.capability, field: 'label', kind: 'wrap', rowLabel: true }].concat(subjects.map((s) => ({
+  const columns: any[] = ([{ title: t.capability, field: 'label', kind: 'wrap', rowLabel: true }] as any[]).concat(subjects.map((s) => ({
     title: s.label, field: 'permission-' + s.id, kind: 'center', sortable: false,
-    render: (cap) => <Checkbox label={s.label + ': ' + cap.label} checked={(value[s.id] || []).includes(cap.id)}
+    render: (cap: any) => <Checkbox label={s.label + ': ' + cap.label} checked={(value[s.id] || []).includes(cap.id)}
       disabled={readOnly || busy || s.locked || !onChange} onChange={(e) => change(s, cap.id, e.target.checked)} />
   })));
   const save = async () => {

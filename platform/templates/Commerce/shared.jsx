@@ -45,7 +45,7 @@ import { Text } from '../../components/Text/Text.tsx';
 import { Icon } from '../../components/Icon/Icon.tsx';
 import { NumberInput } from '../../components/NumberInput/NumberInput.tsx';
 import { Notice } from '../../components/Notice/Notice.tsx';
-import { ProductPrice } from '../../patterns/ProductCard/ProductCard.jsx';
+import { ProductPrice } from '../../patterns/ProductCard/ProductCard.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import ImageBIcon from 'plenix-platform/icons/plenix/image-b';
 import { dataPhrase } from '../../utils/dataText.tsx';

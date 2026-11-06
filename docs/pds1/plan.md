@@ -308,7 +308,7 @@ One read-only page with two tabs: **Decisions**, where every decision is logged 
 7. Token names may not contain values.
 8. Full fg×bg contrast matrix in light and dark, every commit.
 9. State manifest per component (default, hover, focus, active, disabled, loading, error, selected), checked against stories.
-10. Numeric columns: `tabular-nums` and end alignment.
+10. Numeric columns: `tabular-nums`, start-aligned like other content (D-0087).
 11. Pills in a table row: equal measured height (Playwright bounding boxes).
 12. Visual regression, automated in CI; **its screenshots and diffs go to the owner and the dashboard** (see §6a): every story in light and dark at standard density on every PR. RTL/Arabic and compact snapshots run only for components whose text, direction or density code changed. There is no separate full run before a release. A missing browser = FAIL, not skip.
 

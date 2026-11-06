@@ -177,7 +177,7 @@ DSParts.records.push(function (H) {
   return [
     /* ── 07 Data display › Cards and objects › Product card: ProductCard ── */
     { id: 'product-card', lab: true, icon: 'tags', sec: 'data-display', sub: 'Cards and objects', leaf: 'Product card', title: 'Product card',
-      plenix: 'ProductCard, ProductPrice', src: 'patterns/ProductCard/ProductCard.jsx', level: 'Pattern', interaction: 'Navigation',
+      plenix: 'ProductCard, ProductPrice', src: 'patterns/ProductCard/ProductCard.tsx', level: 'Pattern', interaction: 'Navigation',
       variantClasses: ['plx-product-card--grid', 'plx-product-card--list', 'plx-product-card--sale', 'plx-product-card--out-of-stock'],
       aliases: ['Product tile', 'Catalog card', 'Shop card', 'Item card'],
       text: 'One product in a catalog: its picture at a fixed ratio, its name as the card’s one link, a line of facts, its price in the data font, the rating and one action. The picture sits on top in a grid (grid) and at the row’s start in a list (list). On sale, the old price is struck through after the price and a Sale Badge shows (sale). A product that cannot be bought shows an Out of stock Badge and its action turned off, never hidden (out of stock).',

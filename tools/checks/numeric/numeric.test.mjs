@@ -13,12 +13,15 @@ describe('check 10: numeric columns', () => {
   it('fails without tabular-nums', () => {
     expect(checkNumericCss('.plx-x--numeric{text-align:end;}', 'a.css')[0]).toContain('tabular-nums');
   });
-  it('fails without end alignment', () => {
-    expect(checkNumericCss('.plx-x--numeric{font-variant-numeric:tabular-nums;}', 'a.css')[0]).toContain('text-align:end');
-  });
-  it('fails on left or start alignment', () => {
+  it('passes start alignment with tabular-nums (D-0087: grid content is start-aligned, numbers included)', () => {
     const css = '.plx-x--numeric{font-variant-numeric:tabular-nums;text-align:start;}';
-    expect(checkNumericCss(css, 'a.css')[0]).toContain('text-align:end');
+    expect(checkNumericCss(css, 'a.css')).toEqual([]);
+  });
+  it('passes tabular-nums with no alignment of its own', () => {
+    expect(checkNumericCss('.plx-x--numeric{font-variant-numeric:tabular-nums;}', 'a.css')).toEqual([]);
+  });
+  it('still fails on start alignment without tabular-nums', () => {
+    expect(checkNumericCss('.plx-x--numeric{text-align:start;}', 'a.css')[0]).toContain('tabular-nums');
   });
   it('skips the layout-only rule of a right-aligned cell', () => {
     expect(checkNumericCss('.plx-g__cell--align-right{justify-content:flex-end;}', 'a.css')).toEqual([]);
