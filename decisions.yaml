@@ -700,3 +700,13 @@
   options: ['Microsoft, then IBM, then Adobe/SAP/GitHub/Atlassian/ISO, accepted by default (chosen)', 'owner approves each choice']
   status: active
   check: 'review-only (each i18n proposal row, PR and decision card cites the standard it follows, by this order)'
+
+- id: D-0079
+  date: 2026-11-06
+  area: release
+  decided_by: pds1-release-architect (decision card on plenix-ds/pds#698; owner may reply B)
+  decision: 'A release whose locale check adds no new finding ships even when Arabic strings that were already missing in the previous release are still missing (G6 reads them as carried over, listed in the readiness report). They show in English until the owner approves the Arabic. A string that the release itself adds without approved Arabic still blocks G6.'
+  why: 'Release 0.90.0 (#84, #3, asked for now by the Product Lead): 11 missing-ar findings, all present in 0.89.0 and none from this release; waiting would hold the owner''s urgent DT-41 for words not in it.'
+  options: ['A - ship, carry over the old missing strings and list them (chosen)', 'B - hold every release until no Arabic string is missing']
+  status: active
+  check: 'tools/checks/locale/locale.mjs <previous tag> in the release readiness report (new findings must be 0; carried-over missing-ar listed)'
