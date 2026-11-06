@@ -23,8 +23,6 @@
   "box-plot--outliers-with-outliers",
   "bubble-chart--variant-bubble-default",
   "bubble-chart--variant-in-groups",
-  "bulk-action-bar--selection-nothing-selected-always-shown-actions-disabled",
-  "bulk-action-bar--selection-something-selected",
   "bullet-chart--orientation-horizontal",
   "bullet-chart--orientation-vertical",
   "button--behavior-loading",

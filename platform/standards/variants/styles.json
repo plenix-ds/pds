@@ -3102,5 +3102,35 @@
   "bottom-sheet-navigation--layout-list-default": {
     "sets": [],
     "why": "markup only: the places as a NavList (groups, icons, counts) in the Sheet; .plx-bottom-sheet-nav__list sets only a zero minimum width"
+  },
+  "bulk-action-bar--selection-something-selected": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-bulk-actions-background"
+      },
+      {
+        "property": "border-block-end-color",
+        "part": "block",
+        "token": "--plx-comp-bulk-actions-border-color"
+      }
+    ],
+    "why": ".plx-bulk-actions in bulk-actions.css (the record is Bulk action bar, the component BulkActions, deprecated for the command bar's selection state)"
+  },
+  "bulk-action-bar--selection-nothing-selected-always-shown-actions-disabled": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-bulk-actions-empty-background"
+      },
+      {
+        "property": "border-block-end-color",
+        "part": "block",
+        "token": "--plx-comp-bulk-actions-empty-border-color"
+      }
+    ],
+    "why": ".plx-bulk-actions--empty: the bar stays shown with its actions disabled until something is selected"
   }
 }
