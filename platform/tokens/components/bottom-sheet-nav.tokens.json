@@ -68,14 +68,17 @@
     },
     "bottom-sheet-nav-tile-label-font-weight": {
       "$value": "{plx-sys.text-secondary-font-weight}",
+      "$type": "fontWeight",
       "$description": "BottomSheetNav: a tile label's weight, the secondary role's (#122)."
     },
     "bottom-sheet-nav-tile-label-letter-spacing": {
       "$value": "{plx-sys.text-secondary-letter-spacing}",
+      "$type": "dimension",
       "$description": "BottomSheetNav: a tile label's letter spacing, the secondary role's."
     },
     "bottom-sheet-nav-tile-label-line-height": {
       "$value": "{plx-sys.text-secondary-line-height}",
+      "$type": "number",
       "$description": "BottomSheetNav: a tile label's line height, the secondary role's (was label-height-sm; #122)."
     }
   }

@@ -133,14 +133,17 @@
     },
     "time-picker-option-font-weight": {
       "$value": "{plx-sys.text-body-font-weight}",
+      "$type": "fontWeight",
       "$description": "TimePicker option: weight, the body role's (times are data in the body size; #122)."
     },
     "time-picker-option-letter-spacing": {
       "$value": "{plx-sys.text-body-letter-spacing}",
+      "$type": "dimension",
       "$description": "TimePicker option: letter spacing, the body role's."
     },
     "time-picker-option-line-height": {
       "$value": "{plx-sys.text-body-line-height}",
+      "$type": "number",
       "$description": "TimePicker option: line height, the body role's."
     },
     "time-picker-option-min-height": {
