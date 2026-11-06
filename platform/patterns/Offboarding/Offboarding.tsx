@@ -53,6 +53,6 @@ export function Offboarding({ open, onClose, accountName, action = 'cancel', onC
         { id: 'confirm', label: t.review, validate: () => action === 'delete' && (!accountName || name !== accountName) ? t.mismatch : '',
           content: <Stack><Text>{accountName}</Text>{action === 'delete' ? <Field label={t.confirmName} required><Input value={name} onChange={(e) => setName(e.target.value)} autoComplete="off" /></Field> : null}</Stack> }
       ]} />
-    {onExport ? <ExportDialog open={exporting && open} onClose={() => setExporting(false)} formats={formats as any} onExport={onExport} strings={strings} /> : null}
+    {onExport ? <ExportDialog open={exporting && open} onClose={() => setExporting(false)} formats={formats as any} onExport={onExport as any} strings={strings} /> : null}
   </Stack>;
 }
