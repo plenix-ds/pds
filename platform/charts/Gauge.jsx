@@ -39,6 +39,7 @@ import { Details } from '../components/Details/Details.tsx';
 import { Table } from '../components/Table/Table.tsx';
 import { Badge } from '../components/Badge/Badge.tsx';
 import { seriesColor } from './scales.js';
+import { EChartsHost } from './echarts/EChartsPlot.jsx';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 import AlertIcon from 'plenix-platform/icons/plenix/alert';
 import CircleCheckIcon from 'plenix-platform/icons/plenix/circle-check';
@@ -50,11 +51,36 @@ const LEVELS = { warning: { tone: 'waiting', icon: WarningIcon }, critical: { to
 // thresholds' radius outside it
 const VB_W = 160, VB_H = 88, CX = 80, CY = 80, R = 60, RB = 74;
 
-const arc = (r, t0, t1) => {
-  const at = (t) => { const a = Math.PI * (1 - t); return [CX + r * Math.cos(a), CY - r * Math.sin(a)]; };
-  const p = at(t0), q = at(t1);
-  return 'M' + p[0] + ',' + p[1] + 'A' + r + ',' + r + ' 0 0 1 ' + q[0] + ',' + q[1];
-};
+// the dial: ECharts draws the track, the fill (its progress arc) and the threshold bands as two gauge series on the 160-wide dial's geometry, scaled to the width
+function Dial({ fraction, bands, frac, mark }) {
+  const ref = React.useRef(null);
+  const [width, setWidth] = React.useState(0);
+  React.useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return undefined;
+    const measure = () => setWidth((w) => { const next = Math.floor(el.getBoundingClientRect().width); return w === next ? w : next; });
+    measure();
+    if (typeof ResizeObserver === 'undefined') return undefined;
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  const key = fraction + '|' + bands.map((b) => frac(b.value) + b.level).join(',') + '|' + mark;
+  const option = React.useCallback((tk, size) => {
+    const k = size.width / VB_W, quiet = { show: false };
+    const off = { pointer: quiet, axisTick: quiet, splitLine: quiet, axisLabel: quiet, anchor: quiet, title: quiet, detail: quiet };
+    const dial = { type: 'gauge', min: 0, max: 1, startAngle: 180, endAngle: 0, center: [CX * k, CY * k], silent: true, animation: false };
+    // the bands: transparent up to the first threshold, then each threshold's alert color to the next threshold or the end
+    const stops = bands.length ? [[frac(bands[0].value), 'transparent']].concat(bands.map((b, i) => [i + 1 < bands.length ? frac(bands[i + 1].value) : 1, tk.color('alert-' + b.level)])) : [];
+    return {
+      animationDuration: 0, animationDurationUpdate: 0,
+      series: (bands.length ? [Object.assign({ id: 'bands', radius: (RB + tk.gauge.bandWidth / 2) * k, axisLine: { lineStyle: { width: tk.gauge.bandWidth * k, color: stops } } }, dial, off)] : []).concat([
+        Object.assign({ id: 'dial', radius: (R + tk.gauge.trackWidth / 2) * k, axisLine: { lineStyle: { width: tk.gauge.trackWidth * k, color: [[1, tk.gauge.track]] } },
+          progress: { show: fraction > 0, width: tk.gauge.trackWidth * k, itemStyle: { color: tk.color(mark) } }, data: [{ value: fraction }] }, dial, off)]),
+    };
+  }, [key]);   // eslint-disable-line react-hooks/exhaustive-deps
+  return <div ref={ref} className="plx-gauge__svg" aria-hidden="true">{width ? <EChartsHost width={width} height={Math.round(width * VB_H / VB_W)} option={option} /> : null}</div>;
+}
 
 export function Gauge({ title, description, value, min = 0, max = 100, format, label, thresholds = [], size = 'md', hideCaption = false, strings, className }) {
   const t = useStrings('chart.gauge', strings);
@@ -82,13 +108,7 @@ export function Gauge({ title, description, value, min = 0, max = 100, format, l
       <div className="plx-gauge__meter" role="meter" aria-labelledby={uid + '-title'} aria-describedby={description ? uid + '-desc' : undefined}
         aria-valuenow={v} aria-valuemin={min} aria-valuemax={max} aria-valuetext={valueText}>
         <div className="plx-gauge__dial">
-          <svg className="plx-gauge__svg" viewBox={'0 0 ' + VB_W + ' ' + VB_H} aria-hidden="true" focusable="false">
-            {bands.map((b, i) => (
-              <path key={i} className="plx-gauge__band" data-plx-dataviz={'alert-' + b.level} d={arc(RB, frac(b.value), i + 1 < bands.length ? frac(bands[i + 1].value) : 1)} />
-            ))}
-            <path className="plx-gauge__track" d={arc(R, 0, 1)} />
-            {frac(v) > 0 ? <path className="plx-gauge__fill" data-plx-dataviz={seriesColor(0)} d={arc(R, 0, frac(v))} /> : null}
-          </svg>
+          <Dial fraction={frac(v)} bands={bands} frac={frac} mark={seriesColor(0)} />
           <div className="plx-gauge__readout" aria-hidden="true">
             <span className="plx-gauge__value">{fmt(v)}</span>
             {label ? <span className="plx-gauge__label">{label}</span> : null}
