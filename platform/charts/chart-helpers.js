@@ -49,3 +49,19 @@ export function binValues(values, { bins, domain } = {}) {
   });
   return out;
 }
+
+// each bar: its kind, the running total before and after it
+export function waterfallSteps(data = [], endLabel) {
+  let run = 0;
+  const out = data.map((d, i) => {
+    const v = typeof d.value === 'number' && isFinite(d.value) ? d.value : null;
+    if (d.total) {
+      if (v !== null && (i === 0 || d.value !== undefined)) run = v;
+      return { label: d.label, kind: 'total', from: 0, to: run, change: null };
+    }
+    const from = run; run += v || 0;
+    return { label: d.label, kind: (v || 0) < 0 ? 'down' : 'up', from, to: run, change: v || 0 };
+  });
+  if (endLabel !== false && (!out.length || out[out.length - 1].kind !== 'total')) out.push({ label: endLabel, kind: 'total', from: 0, to: run, change: null, end: true });
+  return out;
+}

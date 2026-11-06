@@ -75,6 +75,7 @@ export function chartTokens(where) {
   const tree = { link: mk('path', 'plx-tree-chart__link'), node: mk('circle', 'plx-tree-chart__node'), folded: mk('circle', 'plx-tree-chart__node plx-tree-chart__node--folded'),
     focus: mk('circle', 'plx-tree-chart__node plx-tree-chart__node--focus'), name: mk('text', 'plx-tree-chart__name'),
     nameFocus: mk('text', 'plx-tree-chart__name plx-tree-chart__name--focus'), detail: mk('text', 'plx-tree-chart__detail') };
+  const conn = mk('line', 'plx-waterfall-chart__connector'), selected = mk('rect', 'plx-chart-selected');
   where.appendChild(svg);
   const cs = (e) => win.getComputedStyle(e);
   const font = (e) => { const s = cs(e); return { color: s.fill, fontFamily: s.fontFamily, fontSize: num(s.fontSize), fontWeight: s.fontWeight }; };
@@ -111,6 +112,9 @@ export function chartTokens(where) {
     // a scatter plot's look (ScatterChart): a point's radius, its fill opacity (a bubble's own), its outline, and the trend line's width and dashes
     scatter: { r: len(prop('--plx-comp-scatter-point-radius')), pointOpacity: num(prop('--plx-comp-scatter-point-opacity')), bubbleOpacity: num(prop('--plx-comp-scatter-bubble-opacity')),
       outline: len(prop('--plx-comp-scatter-point-outline-width')), trend: { width: len(prop('--plx-comp-scatter-trend-width')), dash: len(prop('--plx-comp-scatter-trend-dash')), gap: len(prop('--plx-comp-scatter-trend-gap')) } },
+    // a waterfall's connector between one step's end and the next step's start, and the outline of the selected step
+    waterfall: { color: cs(conn).stroke, width: num(cs(conn).strokeWidth), dash: num(cs(conn).strokeDasharray.split(/[ ,]+/)[0]) },
+    selected: { color: cs(selected).stroke, width: num(cs(selected).strokeWidth) },
     // the values not in focus dim to the interaction's token; the drawing's animation is the motion token (reduced motion: 0)
     dim: num(prop('--plx-comp-chart-interaction-dim-opacity')) || 1,
     motion: ms(prop('--plx-sys-motion-duration-slow')),
