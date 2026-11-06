@@ -768,6 +768,6 @@
   decided_by: agent (pds1-delivery-lead), applied from the release-architect's card on #768; owner may switch
   decision: The role registry in agents.config.yaml uses the keys id, title, kind, label, instances, parked, boot, definition and wakes_on, plus optional memory_limit_gb. The template's other skeleton keys (lane, priority, gate, always, applies_to_paths, source, model, skills) are added only when the rule that reads them lands - priority, gate and the reserved gate slots with #769; wakes_on additions with #772 - so no key exists that nothing reads. Template v2.4 §5.1 asks the Delivery Lead to log the exact keys.
   why: 'A key that nothing reads drifts from the code (lesson A-16: the config said 8 slots while the docs said 4). The release-architect proposed this set on #768 (Applied: A).'
-  options: [keys as in #778, add every template key now, a smaller set]
+  options: ['keys as in PR 778 (chosen)', 'add every template key now', 'a smaller set']
   status: active
   check: check 13 (role registry) in CI, from #778
