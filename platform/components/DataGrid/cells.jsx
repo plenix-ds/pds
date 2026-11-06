@@ -87,14 +87,29 @@ export function CellValue({ column, value: given, strings, record, pill = false,
 function TagsCell({ tags, block }) {
   const more = useStrings('combobox').moreChips, box = React.useRef(null), label = (tag) => (typeof tag === 'object' ? tag.label : String(tag)), names = tags.map(label);
   const step = useBarFit(box, names.join('|'), Math.max(0, tags.length - 1), 0, ':self');
-  const hidden = tags.slice(tags.length - step);
+  const hidden = tags.slice(tags.length - step), listed = hidden.map(label).join(', '), descId = React.useId();
+  // the table keeps one Tab stop (owner answer 7): the "+N" Tag is not a stop of its own. Its Tooltip shows while its cell is the active cell (the cell has the focus: the Tag is told, as a
+  // focus on it would be), and the hidden names are the cell's description for a screen reader.
+  React.useEffect(() => {
+    const cell = box.current && box.current.closest('[data-plx-field]'), tag = box.current && box.current.querySelector('[data-plx-more]');
+    if (!cell || !listed) return undefined;
+    const tell = (type) => (event) => { if (event.target === cell && tag) tag.dispatchEvent(new FocusEvent(type, { bubbles: true, relatedTarget: null })); };
+    const on = tell('focusin'), off = tell('focusout');
+    cell.addEventListener('focusin', on); cell.addEventListener('focusout', off);
+    const before = cell.getAttribute('aria-describedby'); cell.setAttribute('aria-describedby', (before ? before + ' ' : '') + descId);
+    if (document.activeElement === cell) tag && tag.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
+    return () => { cell.removeEventListener('focusin', on); cell.removeEventListener('focusout', off); if (before) cell.setAttribute('aria-describedby', before); else cell.removeAttribute('aria-describedby'); };
+  }, [listed, descId]);
   return (
     <span ref={box} className={`${block}__rich ${block}__rich--tags`}>
       {tags.slice(0, tags.length - step).map((tag, i) => <Tag key={i} category={typeof tag === 'object' ? tag.category : undefined}>{label(tag)}</Tag>)}
       {hidden.length ? (
-        <Tooltip content={hidden.map(label).join(', ')}>
-          <Tag tabIndex={0} aria-label={more.replace('{count}', String(hidden.length))}>{'+' + hidden.length}</Tag>
-        </Tooltip>
+        <>
+          <Tooltip content={listed} describe={false}>
+            <Tag tabIndex={-1} data-plx-more="" aria-label={more.replace('{count}', String(hidden.length))}>{'+' + hidden.length}</Tag>
+          </Tooltip>
+          <span id={descId} className="plx-visually-hidden">{listed}</span>
+        </>
       ) : null}
     </span>
   );

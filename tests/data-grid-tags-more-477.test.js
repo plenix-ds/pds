@@ -26,8 +26,10 @@ require('./limit.js');
         const moreEl = [...box.querySelectorAll('.plx-tag')].find((t) => /^\+\d+$/.test(t.textContent.trim()));
         const tipId = moreEl && (moreEl.getAttribute('aria-describedby') || (moreEl.parentElement && moreEl.parentElement.getAttribute('aria-describedby')));
         const detail = moreEl ? { title: moreEl.hasAttribute('title') || (moreEl.parentElement && moreEl.parentElement.hasAttribute('title')), name: moreEl.getAttribute('aria-label') || (moreEl.parentElement && moreEl.parentElement.getAttribute('aria-label')), tip: tipId ? (document.getElementById(tipId) || {}).textContent : null, focusable: moreEl.tabIndex >= 0 || (moreEl.parentElement && moreEl.parentElement.tabIndex >= 0) || !!moreEl.querySelector('[tabindex]') } : null;
+        const descIds = (cell.getAttribute('aria-describedby') || '').split(' ').filter(Boolean); const cellDesc = descIds.map((i) => (document.getElementById(i) || {}).textContent || '').join(' ').trim();
+        let tooltip = null; if (moreEl) { cell.focus(); await new Promise((r) => setTimeout(r, 300)); const tt = document.querySelector('[role=tooltip]'); tooltip = tt ? tt.textContent.trim() : null; cell.blur(); await new Promise((r) => setTimeout(r, 300)); }
         const inside = [...box.querySelectorAll('.plx-tag')].filter((t) => !t.closest('[aria-hidden=true]')).every((t) => { const r = t.getBoundingClientRect(), c = cell.getBoundingClientRect(); return r.left >= c.left - 1 && r.right <= c.right + 1; });
-        return { shown, more, inside, detail };
+        return { shown, more, inside, detail, cellDesc, tooltip, stops: [...cell.querySelectorAll('[tabindex]')].filter((e) => e.tabIndex >= 0).length, moreTab: moreEl ? moreEl.getAttribute('tabindex') : null };
       }, dir, width, count);
       const T = dir + ': ';
       const wide = await read(undefined, 3); assert.equal(wide.more, undefined, T + 'a column that fits them shows every tag'); assert.equal(wide.shown.length, 3);
@@ -35,9 +37,9 @@ require('./limit.js');
       assert.ok(narrow.more, T + 'a narrow column shows a "+N" Tag: ' + JSON.stringify(narrow.shown)); assert.equal(tagsShown.length + Number(narrow.more.slice(1)), 6, T + 'shown + N = all six'); assert.ok(tagsShown.length >= 1);
       assert.equal(narrow.inside, true, T + 'the tags stay inside the cell');
       const left = Number(narrow.more.slice(1)), d = narrow.detail;
-      assert.equal(d.title, false, T + 'the "+N" has no bare title'); assert.equal(d.name, left + ' more', T + 'it is named "{count} more"'); assert.ok(d.tip, T + 'a Tooltip describes it: ' + JSON.stringify(d));
-      const hiddenNames = ['Alpha', 'Bravo', 'Charlie', 'Delta', 'Echo', 'Foxtrot'].slice(6 - left); assert.equal(d.tip.replace(/\s+/g, ' ').trim(), hiddenNames.join(', '), T + 'the Tooltip lists the hidden tags, comma-separated');
-      assert.equal(d.focusable, true, T + 'it is focusable because it has a Tooltip to show');
+      assert.equal(d.title, false, T + 'the "+N" has no bare title'); assert.equal(d.name, left + ' more', T + 'it is named "{count} more"'); assert.equal(narrow.moreTab, '-1', T + 'the "+N" Tag is not a Tab stop');
+      const hiddenNames = ['Alpha', 'Bravo', 'Charlie', 'Delta', 'Echo', 'Foxtrot'].slice(6 - left); assert.equal(narrow.cellDesc, hiddenNames.join(', '), T + 'the hidden names are the cell description'); assert.equal(narrow.tooltip, hiddenNames.join(', '), T + 'the Tooltip shows when the cell is the active cell');
+      assert.equal(narrow.stops, 0, T + 'the table keeps one Tab stop: nothing inside the cell is a stop');
       await page.close();
     }
     assert.deepEqual(errors, [], 'no script errors');
