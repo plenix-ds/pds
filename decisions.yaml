@@ -547,7 +547,7 @@
   decided_by: agent (pds1-ds-architect) on the Component Engineer's questions (#84 F3), owner may switch
   decision: 'DataGrid Form Edit (docs/adr/0016 addendum F3): renderForm(record, { value, setValue, errors, busy }) keeps the record first and gives the application''s form the draft, its setter, the validate messages and the busy state; Save sends only the changed fields to onRecordEdit. formSurface { panel: ref } replaces the unbuilt ''openPanel'': the grid portals its form into the application''s panel element and marks it data-plx-form-open; a null ref falls back to the drawer with a dev warning; closing the open row while the form is in the panel cancels it (the unsaved-changes question first; keeping on moves the draft to the drawer). No new prop.'
   why: 'The ADR''s one-line renderForm(record) gave a form no way to report its values; the grid cannot draw into a panel it does not own without a mount point, and a callback that hands the form to the application would split Save, Cancel and errors across two owners.'
-  options: [second argument plus a panel ref (chosen), renderForm({ record, value, setValue, busy }) as one object, a new onFormEdit({ record, close }) callback]
+  options: ['second argument plus a panel ref (chosen)', 'renderForm({ record, value, setValue, busy }) as one object', 'a new onFormEdit({ record, close }) callback']
   status: active
   check: G3 review of the F3 PR and its behavior tests (renderForm changes, errors, the panel portal, the null-panel fallback)
 
@@ -567,7 +567,7 @@
   decided_by: agent (pds1-ds-architect), owner may switch
   decision: 'Combobox gains an opt-in chipOverflow (''wrap'' default, today; ''count'': the chosen chips on one line, the rest as one "+N" Tag at inline-end, named "{count} more"); DataGrid''s tags editor sets ''count'', and the grid''s tags read cell folds the same way through the same internal fit step (no public API) (docs/adr/0016 addendum, #477).'
   why: 'The tags editor is Combobox multiple and the design wants "+N" in the cell; making it the default would change every multiple Combobox outside the grid.'
-  options: [opt-in chipOverflow on Combobox (chosen, A), "+N" always on for multiple (B), a separate TagInput for the grid (C)]
+  options: ['opt-in chipOverflow on Combobox (chosen, A)', '"+N" always on for multiple (B)', 'a separate TagInput for the grid (C)']
   status: active
   check: G3 review of the #477 item 1 PR and its behavior checks (one line, "+N" count and name, Backspace, RTL, default unchanged)
 
@@ -596,7 +596,7 @@
   area: components
   decided_by: owner (2026-10-19, on plenix-ds/plenix-platform#195), carried by pds1-design-director (#140)
   decision: With rows selected, CommandBar adds the selection's commands before the page's (a separator between; Search, filters and quick filters stay); selection.mode "swap" stays available; a command may say selection "also" | "only" | "never". When the bar is narrow, the page's commands fold before the selection's. Supersedes the 2026-10-15 swap default (issue 454).
-  why: 'Owner: "add, don't swap" (2026-10-19), later than the swap decision of 2026-10-15.'
+  why: 'Owner: "add, don''t swap" (2026-10-19), later than the swap decision of 2026-10-15.'
   options: [add (chosen, default), swap]
   status: active
   check: planned:behaviour tests on the #140 PR (add order, fold order, swap unchanged)
@@ -630,3 +630,13 @@
   options: [count plus getItem (chosen, A), renderItem(index) (B), document cheap items only (C)]
   status: active
   check: G3 review of the #142 build PR and its behavior test (getItem called only for the shown index and its neighbors)
+
+- id: D-0072
+  date: 2026-11-06
+  area: components
+  decided_by: agent (pds1-component-engineer 1, carried by pds1-product-lead), owner may switch
+  decision: Under D-0026 (charts on Apache ECharts), TimelineChart, GanttChart, WordCloud and GeoMap stay Plenix SVG drawings for now, because ECharts has no native series for them (custom series, an extra package or map data). Radar, HeatMap, Treemap, Sankey and NetworkGraph move to ECharts.
+  why: 'Moving the four gains nothing visible and costs code and bytes; the owner already said of WordCloud "for now keep what is here" (#104, 2026-10-26).'
+  options: ['four stay SVG, the rest move (chosen)', 'move all nine through custom series and extra packages']
+  status: active
+  check: 'review-only (component scope; the chart list in #106 is the record)'

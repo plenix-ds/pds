@@ -80,6 +80,7 @@ export function chartTokens(where) {
   const bul = [mk('rect', 'plx-bullet-chart__range--1'), mk('rect', 'plx-bullet-chart__range--2'), mk('rect', 'plx-bullet-chart__range--3'), mk('line', 'plx-bullet-chart__target')];
   const gau = [mk('path', 'plx-gauge__track'), mk('path', 'plx-gauge__band')];
   const box = [mk('line', 'plx-box-plot__whisker'), mk('line', 'plx-box-plot__median'), mk('circle', 'plx-chart__point plx-box-plot__outlier')];
+  const rad = mk('text', 'plx-radar-chart__axis-label');
   where.appendChild(svg);
   const cs = (e) => win.getComputedStyle(e);
   const font = (e) => { const s = cs(e); return { color: s.fill, fontFamily: s.fontFamily, fontSize: num(s.fontSize), fontWeight: s.fontWeight }; };
@@ -129,6 +130,8 @@ export function chartTokens(where) {
     gauge: { track: cs(gau[0]).stroke, trackWidth: num(cs(gau[0]).strokeWidth), bandWidth: num(cs(gau[1]).strokeWidth) },
     // a box plot's look (BoxPlot): the whiskers' and the median's stroke, the outlier's radius
     boxplot: { whisker: { color: cs(box[0]).stroke, width: num(cs(box[0]).strokeWidth) }, median: { color: cs(box[1]).stroke, width: num(cs(box[1]).strokeWidth) }, outlier: { r: num(cs(box[2]).r), fill: cs(box[2]).fill, outline: cs(box[2]).stroke, outlineWidth: num(cs(box[2]).strokeWidth) } },
+    // a radar's look (RadarChart): the area's opacity, the point's radius, the measures' names
+    radar: { area: num(prop('--plx-comp-radar-chart-area-opacity')), point: num(prop('--plx-comp-radar-chart-point-radius')), label: font(rad) },
     // the values not in focus dim to the interaction's token; the drawing's animation is the motion token (reduced motion: 0)
     dim: num(prop('--plx-comp-chart-interaction-dim-opacity')) || 1,
     motion: ms(prop('--plx-sys-motion-duration-slow')),

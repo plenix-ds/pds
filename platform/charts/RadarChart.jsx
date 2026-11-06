@@ -31,12 +31,14 @@ import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatNumber } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.jsx';
-import { scaleLinear } from './scales.js';
+import { niceTicks } from './scales.js';
 import { ChartLegend } from './parts/ChartLegend.jsx';
 import { ChartTooltip } from './parts/ChartTooltip.jsx';
 import { useChartHover, withColors, legendItems, finite } from './chart-kit.js';
+import { useEChartsPlot } from './echarts/EChartsPlot.jsx';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 
+const NO_MARGIN = Object.freeze({ top: 0, end: 0, bottom: 0, start: 0 });
 // px: the room around the web for the measures' names (on the 4px grid); the start and end sides take the longest name
 const WEB_MARGIN = { top: 24, bottom: 24 };
 const CHAR = 7;   // px: about one character of the measures' names (the label font at 12px)
@@ -49,6 +51,11 @@ export function RadarChart({ title, description, hideCaption, size = 'lg', axes 
   const list = withColors(series);
   const valueOf = (s, ai) => finite(Array.isArray(s.values) ? s.values[ai] : (s.values || {})[axes[ai].key]);
   const top = max !== undefined ? Number(max) : list.reduce((a, s) => Math.max(a, Math.max.apply(null, [0].concat(axes.map((x, ai) => valueOf(s, ai))))), 0) || 1;
+  // the scale's end: the given max, or the round tick above the largest value
+  const scale = niceTicks(0, max !== undefined ? top : top, rings).ticks.filter((v) => v <= (max !== undefined ? top : Infinity));
+  const end = max !== undefined ? top : scale[scale.length - 1];
+  // the rings: the scale's round ticks (the outermost is the scale's end), each ring's value written up the first spoke (the outermost left out: the first measure's name sits there)
+  const ringValues = scale.filter((v) => v > 0 && v < end);
   const side = Math.ceil((axes.reduce((n, a) => Math.max(n, String(a.label || '').length), 0) * CHAR + 8) / 4) * 4;
   const m = Object.assign({}, WEB_MARGIN, { start: side, end: side }, margin);
   const table = {
@@ -57,55 +64,55 @@ export function RadarChart({ title, description, hideCaption, size = 'lg', axes 
   };
   const showLegend = legend === undefined ? list.length > 1 : !!legend;
   const key = showLegend ? <ChartLegend items={legendItems(list)} orientation={legendPosition === 'end' ? 'vertical' : 'horizontal'} /> : null;
+  // the format the drawing calls, kept current without redrawing (a format written inline is a new function each render)
+  const fmts = React.useRef(null); fmts.current = { fmt };
+
+  const plot = useEChartsPlot();
+  const dataKey = JSON.stringify([axes.map((a) => [a.key, a.label]), list.map((s) => [s.id, s.color, axes.map((a, ai) => valueOf(s, ai))]), end, rings, showPoints, m]);
+  const option = React.useCallback((tk, dims) => {
+    // the web fills the plot less the room for the measures' names (the frame's old margin), centered
+    const R = Math.max(0, Math.min(dims.width - m.start - m.end, dims.height - m.top - m.bottom) / 2);
+    return {
+      animationDuration: tk.motion, animationDurationUpdate: tk.motion,
+      radar: { center: ['50%', '50%'], radius: R, startAngle: 90, clockwise: true, splitNumber: Math.max(1, scale.filter((v) => v > 0).length), shape: 'polygon', indicator: axes.map((a) => ({ name: a.label, max: end, min: 0 })),
+        axisName: { color: tk.radar.label.color, fontFamily: tk.radar.label.fontFamily, fontSize: tk.radar.label.fontSize, fontWeight: tk.radar.label.fontWeight },
+        axisLabel: { show: false },
+        axisLine: { lineStyle: { color: tk.grid.color, width: tk.grid.width } }, splitLine: { lineStyle: { color: tk.grid.color, width: tk.grid.width } }, splitArea: { show: false } },
+      series: list.map((s) => ({ type: 'radar', id: String(s.id), name: s.label, silent: true, emphasis: { disabled: true }, symbol: 'circle', symbolSize: showPoints ? tk.radar.point * 2 : 0,
+        lineStyle: { color: tk.color(s.color), width: tk.lineWidth }, itemStyle: { color: tk.color(s.color), borderColor: tk.point.outline, borderWidth: tk.point.outlineWidth },
+        areaStyle: { color: tk.color(s.color), opacity: tk.radar.area }, data: [{ value: axes.map((a, ai) => valueOf(s, ai)), name: s.label }] })),
+    };
+  }, [dataKey]);   // eslint-disable-line react-hooks/exhaustive-deps
+
+  const draw = (dims) => {
+    const layer = plot.layer(dims, option);
+    const c = plot.chart;
+    const radar = c ? c.getModel().getComponent('radar') : null;
+    const cs = radar && radar.coordinateSystem;
+    if (!cs) return layer;
+    const at = (v, ai) => { const p = cs.dataToPoint(v, ai); return { x: p[0], y: p[1] }; };
+    let tip = null;
+    if (tooltip && active !== null) {
+      const [si, ai] = String(active).split(':').map(Number);
+      if (list[si] && axes[ai]) {
+        const p = at(valueOf(list[si], ai), ai);
+        tip = <ChartTooltip x={p.x} y={p.y} inner={{ width: dims.width, height: dims.height }} title={axes[ai].label} items={[{ label: list[si].label, value: fmt(valueOf(list[si], ai)), color: list[si].color }]} />;
+      }
+    }
+    // the points are the tooltip's targets: a round hit area over each, in the frame's overlay
+    return [layer, (
+      <g key="plx-chart-overlay">
+        {ringValues.map((v) => { const p = at(v, 0); return <text key={'v' + v} className="plx-chart__tick-label plx-radar-chart__ring-label" x={p.x} y={p.y}>{fmt(v)}</text>; })}
+        {tooltip ? list.map((s, si) => axes.map((a, ai) => { const p = at(valueOf(s, ai), ai); return <circle key={s.id + a.key} className="plx-radar-chart__hit" fill="none" stroke="none" pointerEvents="all" cx={p.x} cy={p.y} r={Math.max(8, plot.tokens ? plot.tokens.radar.point : 4)} {...hover(si + ':' + ai)} />; })) : null}
+        {tip}
+      </g>
+    )];
+  };
+
   return (
-    <ChartFrame title={title} description={description} hideCaption={hideCaption} size={size} margin={m} legend={key} legendPosition={legendPosition}
+    <ChartFrame title={title} description={description} hideCaption={hideCaption} size={size} margin={NO_MARGIN} legend={key} legendPosition={legendPosition}
       table={table} strings={strings} className={cx('plx-radar-chart', list.length > 1 && 'plx-radar-chart--compare', className)}>
-      {({ inner }) => {
-        const R = Math.max(0, Math.min(inner.width, inner.height) / 2);
-        const cx0 = inner.width / 2, cy0 = inner.height / 2;
-        const r = scaleLinear({ domain: [0, top], range: [0, R], nice: max === undefined, count: rings });
-        const n = Math.max(1, axes.length);
-        const angle = (ai) => (Math.PI * 2 * ai) / n;
-        const pt = (ai, radius) => [cx0 + radius * Math.sin(angle(ai)), cy0 - radius * Math.cos(angle(ai))];
-        const poly = (radius) => axes.map((a, ai) => pt(ai, radius).join(',')).join(' ');
-        const ticks = r.ticks(rings).filter((v) => v > 0);
-        const end = r(r.domain()[1]);
-        // the name's anchor at the end of its spoke: after it on the right, before it on the left, centered at the top and bottom
-        const place = (ai) => {
-          const s = Math.sin(angle(ai)), c = Math.cos(angle(ai));
-          const h = Math.abs(s) < 0.2 ? 'middle' : s > 0 ? 'start' : 'end';
-          const v = c > 0.8 ? 'above' : c < -0.8 ? 'below' : 'beside';
-          return 'plx-radar-chart__axis-label--' + h + ' plx-radar-chart__axis-label--' + v;
-        };
-        let tip = null;
-        if (tooltip && active !== null) {
-          const [si, ai] = String(active).split(':').map(Number);
-          if (list[si] && axes[ai]) {
-            const [px, py] = pt(ai, r(valueOf(list[si], ai)));
-            tip = <ChartTooltip x={px} y={py} inner={inner} title={axes[ai].label} items={[{ label: list[si].label, value: fmt(valueOf(list[si], ai)), color: list[si].color }]} />;
-          }
-        }
-        return (
-          <g>
-            <g className="plx-radar-chart__web">
-              {ticks.map((v) => <polygon key={v} className="plx-chart__grid-line plx-radar-chart__ring" points={poly(r(v))} />)}
-              {axes.map((a, ai) => { const [x2, y2] = pt(ai, end); return <line key={a.key} className="plx-chart__grid-line plx-radar-chart__spoke" x1={cx0} y1={cy0} x2={x2} y2={y2} />; })}
-            </g>
-            {list.map((s) => (
-              <polygon key={s.id} className="plx-chart__line plx-radar-chart__area" data-plx-dataviz={s.color} points={axes.map((a, ai) => pt(ai, r(valueOf(s, ai))).join(',')).join(' ')} />
-            ))}
-            {showPoints ? list.map((s, si) => axes.map((a, ai) => {
-              const [px, py] = pt(ai, r(valueOf(s, ai)));
-              return <circle key={s.id + a.key} className="plx-chart__point plx-radar-chart__point" data-plx-dataviz={s.color}
-                cx={px} cy={py} {...(tooltip ? hover(si + ':' + ai) : {})} />;
-            })) : null}
-            {/* the rings' values up the first spoke; the outermost is left out: the first measure's name sits there */}
-            {ticks.slice(0, -1).map((v) => <text key={'v' + v} className="plx-chart__tick-label plx-radar-chart__ring-label" x={cx0} y={cy0 - r(v)}>{fmt(v)}</text>)}
-            {axes.map((a, ai) => { const [x2, y2] = pt(ai, end); return <text key={'l' + a.key} className={'plx-radar-chart__axis-label ' + place(ai)} x={x2} y={y2}>{a.label}</text>; })}
-            {tip}
-          </g>
-        );
-      }}
+      {draw}
     </ChartFrame>
   );
 }
