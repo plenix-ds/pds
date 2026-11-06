@@ -12,7 +12,7 @@
      Moved out of DataGridEngine.jsx without any change to the code (issue 688). The engine is documented in DataGridEngine.jsx.
 */
 import React from 'react';
-import { rememberPerson } from '../cells.jsx';
+import { rememberPerson } from '../cells.tsx';
 import { useFloating } from '../../../utils/floating.ts';
 import { announce } from '../../../utils/announce.tsx';
 import { Spinner } from '../../Loading/Loading.tsx';

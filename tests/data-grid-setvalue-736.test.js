@@ -22,7 +22,7 @@ const load = (file, requires) => {
   return mod.exports;
 };
 const state = load('state.ts', {});
-const adapter = load('adapter.js', { './state.ts': state, './cells.jsx': { valueText: String } });
+const adapter = load('adapter.ts', { './state.ts': state, './cells.tsx': { valueText: String } });
 const { recordKey } = state;
 
 const records = [{ id: 'r10', name: 'Ten' }, { id: 3, name: 'Three' }];

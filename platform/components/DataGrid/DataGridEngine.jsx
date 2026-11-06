@@ -31,8 +31,8 @@ import { gridPx } from '../../utils/grid.ts';
 import { MenuItem, MenuDivider } from '../Menu/Menu.tsx';
 
 import { opening, recordKey, valueAt } from './state.ts';
-import { valueText } from './cells.jsx';
-import { createAdapter } from './adapter.js';
+import { valueText } from './cells.tsx';
+import { createAdapter } from './adapter.ts';
 
 import { recordsOf } from './records.ts';
 import { useStrings, useLocale } from '../../providers/LocaleProvider.tsx';

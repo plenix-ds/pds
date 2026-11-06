@@ -17,7 +17,7 @@
 import React from 'react';
 import { cx } from '../../../utils/cx.ts';
 import { words, kinds, interactive, typeOf, typeIcons, cellDirection } from './helpers.tsx';
-import { valueText, CellValue } from '../cells.jsx';
+import { valueText, CellValue } from '../cells.tsx';
 import { groupKeys, rowKeys, cellKeys } from './keys.js';
 import { Avatar } from '../../Avatar/Avatar.tsx';
 import { Width, RowTarget, Check, CellEditor, CellStatus, CustomCell, RowMenuContent } from './parts.jsx';

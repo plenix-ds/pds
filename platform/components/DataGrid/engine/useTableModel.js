@@ -15,7 +15,7 @@
 */
 import React from 'react';
 import { valueAt, recordKey } from '../state.ts';
-import { byteFilter, listFilter, textFilter } from '../cells.jsx';
+import { byteFilter, listFilter, textFilter } from '../cells.tsx';
 import { compare, kinds } from './helpers.tsx';
 import { tokenPixels } from '../environment.js';
 import { SIZE_STEPS } from '../../../utils/sizeSteps.js';

@@ -23,7 +23,7 @@
      The engine is documented in DataGridEngine.jsx.
 */
 import { stepSize } from '../../../utils/sizeSteps.js';
-import { valueText } from '../cells.jsx';
+import { valueText } from '../cells.tsx';
 import { isRtl } from '../../../utils/direction.ts';
 
 export const headerKeys =
