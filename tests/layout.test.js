@@ -91,6 +91,7 @@ child({ units: ['components/EmptyState', 'providers/LocaleProvider.tsx'] }, 'tem
 child({ units: ['patterns/CommandBar', 'providers/LocaleProvider.tsx', 'utils/format.ts'] }, 'command-confirm-digits-649.test.js');   // the confirm title's count in the locale's digits (issue 649)
 child({ units: ['components/Banner', 'components/Field', 'components/Checkbox', 'utils/dataText.tsx'] }, 'data-phrase-260b-feedback.test.js');   // a count in a banner, hint or check description is in the data font (issue 260)
 child({ units: ['patterns/SettingsLayout'] }, 'data-phrase-260b-settings.test.js');   // a count in a settings description is in the data font (issue 260)
+child({ units: ['patterns/AppHeader'] }, 'app-header-account-words-671.test.js');   // the account menu's words from the catalog (issue 671)
 child({ units: ['components/Metric', 'charts', 'patterns/RecordPage', 'patterns/ActivityList', 'components/DataGrid', 'components/Table'] }, 'data-phrase-260b-data.test.js');   // a count in a metric, chart, record header, activity row or table value is in the data font (issue 260)
 // the Messages app on the Chat parts and the Chat spec page (issue 637, slice 6): messages/ is an app in changed.js, not a unit (issue 756)
 child({ units: ['components/Chat', 'components/Avatar'], apps: ['messages'] }, 'messages-chat-s6.test.js');
