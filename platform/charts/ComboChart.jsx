@@ -35,22 +35,16 @@ import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatNumber } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.jsx';
-import { scaleBand, scaleLinear, niceTicks, seriesColor } from './scales.js';
-import { Axis } from './parts/Axis.jsx';
-import { GridLines } from './parts/GridLines.jsx';
+import { seriesColor } from './scales.js';
 import { ChartLegend } from './parts/ChartLegend.jsx';
 import { ChartTooltip } from './parts/ChartTooltip.jsx';
-import { scalePosition } from './parts/position.js';
-import { useChartHover, labelRoom, legendItems, finite, AXIS_TITLE_ROOM } from './chart-kit.js';
+import { useChartHover, legendItems } from './chart-kit.js';
+import { useEChartsPlot, plotGrid } from './echarts/EChartsPlot.jsx';
+import { gridRoom } from './LineChart.jsx';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 
-const extent = (list, from0) => {
-  let lo = from0 ? 0 : Infinity, hi = from0 ? 0 : -Infinity;
-  list.forEach((s) => (s.values || []).forEach((v) => { if (v === null || v === undefined || !isFinite(Number(v))) return; lo = Math.min(lo, Number(v)); hi = Math.max(hi, Number(v)); }));
-  if (!isFinite(lo)) { lo = 0; hi = 1; }
-  if (lo === hi) hi = lo + 1;
-  return [lo, hi];
-};
+const NO_MARGIN = Object.freeze({ top: 0, end: 0, bottom: 0, start: 0 });
+const isNum = (v) => v !== null && v !== undefined && isFinite(Number(v));
 
 export function ComboChart({ title, description, hideCaption, size, categories = [], bars = [], lines = [], axis = 'shared', barLabel, lineLabel, categoryLabel,
   formatBar, formatLine, showPoints = true, legend, legendPosition, tooltip = true, margin, strings, className }) {
@@ -61,14 +55,6 @@ export function ComboChart({ title, description, hideCaption, size, categories =
   const [active, hover] = useChartHover();
   const cols = bars.map((s, i) => Object.assign({}, s, { id: s.id === undefined ? 'b' + i : s.id, color: s.color || seriesColor(i) }));
   const lns = lines.map((s, i) => Object.assign({}, s, { id: s.id === undefined ? 'l' + i : s.id, color: s.color || seriesColor(cols.length + i) }));
-  const barDom = dual ? extent(cols, true) : extent(cols.concat(lns), true);
-  const lineDom = dual ? extent(lns, false) : barDom;
-  const startTexts = niceTicks(barDom[0], barDom[1], 5).ticks.map(fb);
-  const endTexts = dual ? niceTicks(lineDom[0], lineDom[1], 5).ticks.map(fl) : [];
-  const auto = { start: labelRoom(startTexts, barLabel ? AXIS_TITLE_ROOM : 0), end: dual ? labelRoom(endTexts, lineLabel ? AXIS_TITLE_ROOM : 0) : undefined,
-    bottom: categoryLabel ? 24 + AXIS_TITLE_ROOM : undefined };
-  const m = Object.assign({}, auto, margin);
-  Object.keys(m).forEach((k) => { if (m[k] === undefined) delete m[k]; });
   const table = {
     columns: [{ title: categoryLabel || t.category, field: 'category', kind: 'name', rowLabel: true }]
       .concat(cols.map((s, i) => ({ title: s.label, field: 'b' + i, kind: 'data', align: 'right' })))
@@ -86,56 +72,58 @@ export function ComboChart({ title, description, hideCaption, size, categories =
       {lns.length ? <ChartLegend items={legendItems(lns)} shape="line" label={t.lines} orientation={legendPosition === 'end' ? 'vertical' : 'horizontal'} /> : null}
     </div>
   );
+  // the formats the drawing calls, kept current without redrawing (a format written inline is a new function each render)
+  const fmts = React.useRef(null); fmts.current = { fb, fl };
+
+  const plot = useEChartsPlot();
+  const dataKey = JSON.stringify([categories, cols.map((s) => [s.id, s.values, s.color]), lns.map((s) => [s.id, s.values, s.color]), dual, showPoints, barLabel, lineLabel, categoryLabel,
+    margin ? [margin.top, margin.end, margin.bottom, margin.start] : null]);
+  const option = React.useCallback((tk) => {
+    const room = gridRoom(margin, tk.top);
+    const named = { nameLocation: 'middle', nameMoveOverlap: true };
+    const valueAxis = (name, position, format, extra) => Object.assign({ type: 'value', name, nameGap: 0, position, axisLabel: { formatter: (v) => format(v) } }, named, extra);
+    return {
+      animationDuration: tk.motion, animationDurationUpdate: tk.motion,
+      grid: Object.assign(room, { outerBoundsMode: 'same', outerBoundsContain: 'all' }),
+      xAxis: Object.assign({ type: 'category', data: categories.map(String), boundaryGap: true, name: categoryLabel, nameGap: tk.tickOffset * 2 + tk.tick.fontSize, inverse: false,
+        axisLine: { show: true, lineStyle: { color: tk.axis.color, width: tk.axis.width } } }, named),
+      // the columns' axis starts at zero; with dual axes the lines have their own, fitted to their values
+      yAxis: dual ? [valueAxis(barLabel, 'left', (v) => fmts.current.fb(v), { min: 0 }), valueAxis(lineLabel, 'right', (v) => fmts.current.fl(v), { scale: true, splitLine: { show: false } })]
+        : [valueAxis(barLabel, 'left', (v) => fmts.current.fb(v), { min: Math.min(0, ...cols.concat(lns).flatMap((s) => s.values.filter(isNum).map(Number))) })],
+      series: cols.map((s) => ({ type: 'bar', id: 'b' + s.id, name: s.label, silent: true, emphasis: { disabled: true }, barCategoryGap: '25%', barGap: '10%', itemStyle: { color: tk.color(s.color) },
+        data: s.values.map((v) => (isNum(v) ? Number(v) : null)) }))
+        .concat(lns.map((s) => ({ type: 'line', id: 'l' + s.id, name: s.label, silent: true, emphasis: { disabled: true }, yAxisIndex: dual ? 1 : 0, showSymbol: !!showPoints, connectNulls: false,
+          lineStyle: { color: tk.color(s.color) }, itemStyle: { color: tk.color(s.color) }, z: 3, data: s.values.map((v) => (isNum(v) ? Number(v) : null)) }))),
+    };
+  }, [dataKey]);   // eslint-disable-line react-hooks/exhaustive-deps
+
+  const draw = (dims) => {
+    const layer = plot.layer(dims, option);
+    const c = plot.chart;
+    const g = c ? plotGrid(c) : null;
+    if (!g) return layer;
+    const step = categories.length ? g.width / categories.length : 0;
+    const at = (ci) => c.convertToPixel({ xAxisIndex: 0 }, ci) - g.x;
+    const inner = { width: g.width, height: g.height };
+    let tip = null;
+    if (tooltip && active !== null && categories[active] !== undefined) {
+      const ci = Number(active);
+      tip = <ChartTooltip variant="shared" x={at(ci)} inner={inner} title={String(categories[ci])}
+        items={cols.map((s) => ({ label: s.label, value: s.values[ci] === undefined || s.values[ci] === null ? '–' : fb(s.values[ci]), color: s.color }))
+          .concat(lns.map((s) => ({ label: s.label, value: s.values[ci] === undefined || s.values[ci] === null ? '–' : fl(s.values[ci]), color: s.color })))} />;
+    }
+    return [layer, (
+      <g key="plx-chart-overlay" transform={'translate(' + g.x + ',' + g.y + ')'}>
+        {tooltip ? categories.map((cat, ci) => <rect key={'hit' + ci} className="plx-combo-chart__hit" x={at(ci) - step / 2} y={0} width={step} height={g.height} {...hover(ci)} />) : null}
+        {tip}
+      </g>
+    )];
+  };
+
   return (
-    <ChartFrame title={title} description={description} hideCaption={hideCaption} size={size} margin={m} legend={key} legendPosition={legendPosition}
+    <ChartFrame title={title} description={description} hideCaption={hideCaption} size={size} margin={NO_MARGIN} legend={key} legendPosition={legendPosition}
       table={table} strings={strings} className={cx('plx-combo-chart', dual && 'plx-combo-chart--dual', className)}>
-      {({ inner, margin: fm }) => {
-        const x = scaleBand({ domain: categories, range: [0, inner.width], paddingInner: 0.2, paddingOuter: 0.1 });
-        const yb = scaleLinear({ domain: barDom, range: [inner.height, 0], nice: true });
-        const yl = dual ? scaleLinear({ domain: lineDom, range: [inner.height, 0], nice: true }) : yb;
-        const sub = scaleBand({ domain: cols.map((s) => s.id), range: [0, x.bandwidth()], paddingInner: cols.length > 1 ? 0.1 : 0, paddingOuter: 0 });
-        const zero = yb(0);
-        const path = (s) => {
-          let d = '', pen = false;
-          categories.forEach((c, ci) => {
-            const v = s.values[ci];
-            if (v === null || v === undefined || !isFinite(Number(v))) { pen = false; return; }
-            d += (pen ? 'L' : 'M') + scalePosition(x, c) + ',' + yl(v); pen = true;
-          });
-          return d;
-        };
-        let tip = null;
-        if (tooltip && active !== null && categories[active] !== undefined) {
-          const ci = Number(active);
-          tip = <ChartTooltip variant="shared" x={scalePosition(x, categories[ci])} inner={inner} title={String(categories[ci])}
-            items={cols.map((s) => ({ label: s.label, value: s.values[ci] === undefined || s.values[ci] === null ? '–' : fb(s.values[ci]), color: s.color }))
-              .concat(lns.map((s) => ({ label: s.label, value: s.values[ci] === undefined || s.values[ci] === null ? '–' : fl(s.values[ci]), color: s.color })))} />;
-        }
-        return (
-          <g>
-            <GridLines scale={yb} inner={inner} />
-            {categories.map((c, ci) => cols.map((s) => {
-              const v = s.values[ci];
-              if (v === null || v === undefined || !isFinite(Number(v))) return null;
-              const p = yb(v);
-              return <rect key={ci + ':' + s.id} className="plx-chart__mark plx-combo-chart__bar" data-plx-dataviz={s.color}
-                x={x(c) + sub(s.id)} y={Math.min(p, zero)} width={sub.bandwidth()} height={Math.abs(zero - p)} />;
-            }))}
-            <line className="plx-chart__axis-line" x1={0} x2={inner.width} y1={zero} y2={zero} />
-            {lns.map((s) => <path key={s.id} className="plx-chart__line plx-combo-chart__line" data-plx-dataviz={s.color} d={path(s)} />)}
-            {showPoints ? lns.map((s) => categories.map((c, ci) => {
-              const v = s.values[ci];
-              if (v === null || v === undefined || !isFinite(Number(v))) return null;
-              return <circle key={s.id + ci} className="plx-chart__point plx-combo-chart__point" data-plx-dataviz={s.color} cx={scalePosition(x, c)} cy={yl(finite(v))} />;
-            })) : null}
-            <Axis scale={yb} orient="left" inner={inner} margin={fm} format={fb} label={barLabel} />
-            {dual ? <Axis scale={yl} orient="right" inner={inner} margin={fm} format={fl} label={lineLabel} /> : null}
-            <Axis scale={x} orient="bottom" inner={inner} margin={fm} line={false} label={categoryLabel} />
-            {tooltip ? categories.map((c, ci) => <rect key={'hit' + ci} className="plx-combo-chart__hit" x={x(c) - x.step() * 0.1} y={0} width={x.step()} height={inner.height} {...hover(ci)} />) : null}
-            {tip}
-          </g>
-        );
-      }}
+      {draw}
     </ChartFrame>
   );
 }
