@@ -149,7 +149,13 @@ export function CellEditor({ column, record, value, area, select, date, combobox
   const kind = custom ? 'custom' : tags ? 'tags' : person ? 'person' : combobox ? 'combobox' : date ? 'date' : area ? 'area' : select ? 'select' : null;
   if (kind)
     return (
-      <React.Suspense fallback={null}>
+      <React.Suspense
+        fallback={
+          <span className="plx-data-grid__value" aria-busy="true">
+            {Array.isArray(value) ? value.join(', ') : value == null ? '' : String(value)}
+          </span>
+        }
+      >
         <LazyEditor
           {...{ kind, column, record, draft, setDraft, invalid, setInvalid, messageId, finish, input, done }}
           editor={column.editor}
