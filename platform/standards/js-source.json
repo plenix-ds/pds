@@ -68,7 +68,7 @@
   "platform/i18n/ar.optin.js",
   "platform/i18n/optional.js",
   "platform/index.js",
-  "platform/patterns/Auth/Auth.jsx",
+  "platform/patterns/Auth/Auth.tsx",
   "platform/patterns/CommandBar/BarActions.jsx",
   "platform/patterns/CommandBar/CommandBar.jsx",
   "platform/patterns/CommandBar/panel-parts.jsx",

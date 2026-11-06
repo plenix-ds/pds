@@ -69,6 +69,7 @@
      services/login is the Plenix sign-in service; it draws this layout with the release's classes (no stylesheet of its own).
 */
 import React from 'react';
+import type { IconValue } from '../../components/Icon/Icon.tsx';
 import { cx } from '../../utils/cx.ts';
 import { around } from '../../utils/fillNodes.tsx';
 import { useUid } from '../../utils/layer.ts';
@@ -89,11 +90,32 @@ import VisibilityOffIcon from 'plenix-platform/icons/plenix/visibility-off';
 import { dataPhrase } from '../../utils/dataText.tsx';
 import { fill } from '../../utils/fill.ts';
 
+/** @public a link a form names: { href } is a Link, { onClick } a ghost button; { label } replaces its words */
+export type AuthLink = { href?: string; onClick?(): void; label?: string };
+type AuthShared = { className?: string; strings?: Record<string, string>; busy?: boolean };
+/** @public the prop type (ADR 0011) */
+export type AuthProps = { title?: React.ReactNode; description?: React.ReactNode; page?: boolean; footer?: React.ReactNode; headingLevel?: 1 | 2 | 3 | 4 | 5 | 6; className?: string; children?: React.ReactNode };
+/** @public the prop type (ADR 0011) */
+export type SignInFormProps = AuthShared & { onSubmit?(v: { identifier: string; password: string; keep: boolean }): void; error?: React.ReactNode; defaultIdentifier?: string; keepSignedIn?: boolean; keepDescription?: React.ReactNode; forgot?: AuthLink; signUp?: AuthLink; sso?: React.ReactNode };
+/** @public the prop type (ADR 0011) */
+export type SignUpFormProps = AuthShared & { onSubmit?(v: { name: string; email: string; password: string; terms: boolean }): void; errors?: Partial<Record<'name' | 'email' | 'password' | 'terms', string>>; minLength?: number; terms?: React.ReactNode; signIn?: AuthLink; sso?: React.ReactNode };
+/** @public the prop type (ADR 0011) */
+export type PasswordResetFormProps = AuthShared & { step?: 'request' | 'sent' | 'new' | 'done'; defaultStep?: 'request' | 'sent' | 'new' | 'done'; onRequest?(email: string): void; onResend?(email: string): void; onReset?(password: string): void; expires?: string; minLength?: number; error?: React.ReactNode; signIn?: AuthLink };
+/** @public a way to verify a sign-in */
+export type MfaMethod = { id: string; kind: 'app' | 'sms' | 'email' | 'key'; label: string; detail?: string };
+/** @public the prop type (ADR 0011) */
+export type MfaChallengeProps = AuthShared & { methods?: MfaMethod[]; defaultMethod?: string; onVerify?(code: string | null, info: { method: string; remember: boolean }): void; onResend?(method: string): void; resendAfter?: number; remember?: boolean; length?: number; error?: React.ReactNode; recovery?: AuthLink; autoFocus?: boolean };
+/** @public a single-sign-on provider */
+export type SsoProvider = { id: string; label: string; icon?: IconValue };
+/** @public the prop type (ADR 0011) */
+export type SsoButtonsProps = AuthShared & { providers?: SsoProvider[]; onProvider?(provider: SsoProvider): void; organization?: boolean; onOrganization?(email: string): void; redirecting?: string; error?: React.ReactNode };
+/** @public the prop type (ADR 0011) */
+export type AccountRecoveryProps = AuthShared & { step?: 'choose' | 'code' | 'help' | 'done'; defaultStep?: 'choose' | 'code' | 'help' | 'done'; onCode?(code: string): void; onFactor?(): void; admin?: React.ReactNode; onSetUp?(): void; error?: React.ReactNode; back?: AuthLink };
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const H = ({ level, ...props }) => React.createElement('h' + Math.min(6, Math.max(1, level || 1)), props);
+const H = ({ level, ...props }: any) => React.createElement('h' + Math.min(6, Math.max(1, level || 1)), props);
 
 /* ── the frame ── */
-export function Auth({ title, description, page = false, footer, headingLevel = 1, className, children, ...rest }) {
+export function Auth({ title, description, page = false, footer, headingLevel = 1, className, children, ...rest }: AuthProps) {
   const id = useUid('plx-auth');
   return (
     <div className={cx('plx-auth', page && 'plx-auth--page', className)} {...rest}>
@@ -113,24 +135,24 @@ export function Auth({ title, description, page = false, footer, headingLevel = 
 
 /* ── shared parts ── */
 // a way to another page (a Link) or to another step of the same card (a ghost button): never a link that acts
-function Alt({ to, children }) {
+function Alt({ to, children }: any) {
   if (!to) return null;
   const text = to.label || children;
   if (to.href) return <Link variant="standalone" href={to.href}>{text}</Link>;
   return <Button variant="ghost" size="sm" onClick={to.onClick}>{text}</Button>;
 }
-function Alts({ children }) {
+function Alts({ children }: any) {
   const list = React.Children.toArray(children).filter(Boolean);
   return list.length ? <div className="plx-auth__links">{list}</div> : null;
 }
-function Or({ text }) {
+function Or({ text }: any) {
   return <div className="plx-auth__or"><span className="plx-auth__or-text">{text}</span></div>;
 }
-function Submit({ busy, children, ...rest }) {
+function Submit({ busy, children, ...rest }: any) {
   return <Button type="submit" variant="primary" loading={!!busy} className="plx-auth__submit" {...rest}>{children}</Button>;
 }
 // a password field with Show: a toggle button joined to the field's end
-const Password = React.forwardRef(function Password({ show, hide, value, onChange, autoComplete, invalid, id, ...rest }, ref) {
+const Password = React.forwardRef<any, any>(function Password({ show, hide, value, onChange, autoComplete, invalid, id, ...rest }: any, ref) {
   const [visible, setVisible] = React.useState(false);
   return (
     <InputGroup id={id} invalid={invalid} {...rest}
@@ -140,16 +162,16 @@ const Password = React.forwardRef(function Password({ show, hide, value, onChang
   );
 });
 // checks fields on submit: { key: message }, focuses the first with a message
-function useCheck(refs) {
-  const [errors, setErrors] = React.useState({});
-  const check = (found) => {
+function useCheck(refs: any) {
+  const [errors, setErrors] = React.useState<Record<string, string>>({});
+  const check = (found: any) => {
     setErrors(found);
     const first = Object.keys(refs).find((k) => found[k] && refs[k].current);
     if (first) refs[first].current.focus();
     return !Object.keys(found).some((k) => found[k]);
   };
-  const clear = (k) => { if (errors[k]) setErrors(Object.assign({}, errors, { [k]: '' })); };
-  return [errors, check, clear];
+  const clear = (k: any) => { if (errors[k]) setErrors(Object.assign({}, errors, { [k]: '' })); };
+  return [errors, check, clear] as [Record<string, any>, (found: any) => boolean, (k: any) => void];
 }
 
 /* ── Sign in ── */
@@ -160,14 +182,14 @@ const SIGN_IN = {
   needPassword: 'Enter your password.',
 };
 export function SignInForm({ onSubmit, error, defaultIdentifier = '', busy = false, keepSignedIn = true, keepDescription, forgot, signUp, sso,
-  strings, className, ...rest }) {
-  const t = Object.assign({}, SIGN_IN, strings);
+  strings, className, ...rest }: SignInFormProps) {
+  const t: any = Object.assign({}, SIGN_IN, strings);
   const [identifier, setIdentifier] = React.useState(defaultIdentifier);
   const [password, setPassword] = React.useState('');
   const [keep, setKeep] = React.useState(false);
-  const refs = { identifier: React.useRef(null), password: React.useRef(null) };
+  const refs = { identifier: React.useRef<any>(null), password: React.useRef<any>(null) };
   const [errors, check, clear] = useCheck(refs);
-  const submit = (e) => {
+  const submit = (e: any) => {
     e.preventDefault();
     if (check({ identifier: identifier.trim() ? '' : t.needIdentifier, password: password ? '' : t.needPassword }) && onSubmit) {
       onSubmit({ identifier: identifier.trim(), password, keep });
@@ -183,7 +205,7 @@ export function SignInForm({ onSubmit, error, defaultIdentifier = '', busy = fal
             autoComplete="username" autoCapitalize="off" spellCheck={false} />
         </Field>
         <Field label={t.password} error={errors.password || undefined}>
-          <Password ref={refs.password} show={t.show} hide={t.hide} value={password} onChange={(e) => { setPassword(e.target.value); clear('password'); }}
+          <Password ref={refs.password} show={t.show} hide={t.hide} value={password} onChange={(e: any) => { setPassword(e.target.value); clear('password'); }}
             autoComplete="current-password" invalid={!!error || undefined} />
         </Field>
         {keepSignedIn ? <Checkbox label={t.keep} description={keepDescription === undefined ? t.keepDescription : keepDescription} checked={keep} onChange={(e) => setKeep(e.target.checked)} /> : null}
@@ -201,15 +223,15 @@ const SIGN_UP = {
   or: 'or', needName: 'Enter your name.', needEmail: 'Enter your email, like name@example.org.', needPassword: 'Use at least {n} characters.',
   needTerms: 'Agree to the terms to create an account.',
 };
-export function SignUpForm({ onSubmit, errors: server, busy = false, minLength = 12, terms, signIn, sso, strings, className, ...rest }) {
+export function SignUpForm({ onSubmit, errors: server, busy = false, minLength = 12, terms, signIn, sso, strings, className, ...rest }: SignUpFormProps) {
   const t = Object.assign({}, SIGN_UP, strings);
   const [v, setV] = React.useState({ name: '', email: '', password: '', terms: false });
-  const refs = { name: React.useRef(null), email: React.useRef(null), password: React.useRef(null), terms: React.useRef(null) };
+  const refs = { name: React.useRef<any>(null), email: React.useRef<any>(null), password: React.useRef<any>(null), terms: React.useRef<any>(null) };
   const termsError = useUid('plx-auth-terms');
   const [errors, check, clear] = useCheck(refs);
-  const set = (k, x) => { setV(Object.assign({}, v, { [k]: x })); clear(k); };
-  const err = (k) => errors[k] || (server && server[k]) || undefined;
-  const submit = (e) => {
+  const set = (k: any, x: any) => { setV(Object.assign({}, v, { [k]: x })); clear(k); };
+  const err = (k: any) => errors[k] || (server && (server as any)[k]) || undefined;
+  const submit = (e: any) => {
     e.preventDefault();
     const found = {
       name: v.name.trim() ? '' : t.needName, email: EMAIL.test(v.email.trim()) ? '' : t.needEmail,
@@ -224,7 +246,7 @@ export function SignUpForm({ onSubmit, errors: server, busy = false, minLength =
         <Field label={t.name} error={err('name')}><Input ref={refs.name} value={v.name} onChange={(e) => set('name', e.target.value)} autoComplete="name" /></Field>
         <Field label={t.email} error={err('email')}><Input ref={refs.email} type="email" value={v.email} onChange={(e) => set('email', e.target.value)} autoComplete="email" /></Field>
         <Field label={t.password} description={dataPhrase(t.rule, { n: minLength })} error={err('password')}>
-          <Password ref={refs.password} show={t.show} hide={t.hide} value={v.password} onChange={(e) => set('password', e.target.value)} autoComplete="new-password" />
+          <Password ref={refs.password} show={t.show} hide={t.hide} value={v.password} onChange={(e: any) => set('password', e.target.value)} autoComplete="new-password" />
         </Field>
         {terms ? (
           <div className="plx-auth__consent">
@@ -250,23 +272,23 @@ const RESET = {
   needEmail: 'Enter your email, like name@example.org.', needPassword: 'Use at least {n} characters.', expires: '30 minutes',
 };
 export function PasswordResetForm({ step, defaultStep = 'request', onRequest, onResend, onReset, expires, minLength = 12, error, busy = false, signIn,
-  strings, className, ...rest }) {
-  const t = Object.assign({}, RESET, strings);
+  strings, className, ...rest }: PasswordResetFormProps) {
+  const t: any = Object.assign({}, RESET, strings);
   const [own, setOwn] = React.useState(defaultStep);
   const now = step || own;
-  const move = (s) => { if (!step) setOwn(s); };
+  const move = (s: any) => { if (!step) setOwn(s); };
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const refs = { email: React.useRef(null), password: React.useRef(null) };
+  const refs = { email: React.useRef<any>(null), password: React.useRef<any>(null) };
   const [errors, check, clear] = useCheck(refs);
   React.useEffect(() => { if (now === 'sent' || now === 'done') announce(now === 'sent' ? fill(t.sent, { email: email || '…', expires: expires || t.expires }) : t.done); }, [now]);
-  const request = (e) => {
+  const request = (e: any) => {
     e.preventDefault();
     if (!check({ email: EMAIL.test(email.trim()) ? '' : t.needEmail })) return;
     if (onRequest) onRequest(email.trim());
     move('sent');
   };
-  const reset = (e) => {
+  const reset = (e: any) => {
     e.preventDefault();
     if (!check({ password: password.length >= minLength ? '' : fill(t.needPassword, { n: minLength }) })) return;
     if (onReset) onReset(password);
@@ -285,7 +307,7 @@ export function PasswordResetForm({ step, defaultStep = 'request', onRequest, on
       <Form label={t.label} noValidate onSubmit={reset} className="plx-auth__form" {...rest}>
         {error ? <Notice tone="danger">{error}</Notice> : null}
         <Field label={t.newPassword} description={dataPhrase(t.rule, { n: minLength })} error={errors.password || undefined}>
-          <Password ref={refs.password} show={t.show} hide={t.hide} value={password} onChange={(e) => { setPassword(e.target.value); clear('password'); }} autoComplete="new-password" />
+          <Password ref={refs.password} show={t.show} hide={t.hide} value={password} onChange={(e: any) => { setPassword(e.target.value); clear('password'); }} autoComplete="new-password" />
         </Field>
         <p className="plx-auth__note">{t.others}</p>
         <Submit busy={busy}>{t.save}</Submit>
@@ -328,8 +350,8 @@ const MFA = {
   recovery: 'Use a recovery code', needCode: 'Enter all {n} characters of the code.',
 };
 export function MfaChallenge({ methods = [{ id: 'app', kind: 'app', label: 'Authenticator app' }], defaultMethod, onVerify, onResend, resendAfter = 30,
-  remember: showRemember = true, length = 6, error, busy = false, recovery, autoFocus = false, strings, className, ...rest }) {
-  const t = Object.assign({}, MFA, strings);
+  remember: showRemember = true, length = 6, error, busy = false, recovery, autoFocus = false, strings, className, ...rest }: MfaChallengeProps) {
+  const t: any = Object.assign({}, MFA, strings);
   const [methodId, setMethodId] = React.useState(defaultMethod || (methods[0] && methods[0].id));
   const [choosing, setChoosing] = React.useState(false);
   const [pick, setPick] = React.useState(methodId);
@@ -337,8 +359,8 @@ export function MfaChallenge({ methods = [{ id: 'app', kind: 'app', label: 'Auth
   const [remember, setRemember] = React.useState(false);
   const [wait, setWait] = React.useState(resendAfter);
   const [own, setOwn] = React.useState('');
-  const first = React.useRef(null);
-  const method = methods.find((m) => m.id === methodId) || methods[0] || { kind: 'app' };
+  const first = React.useRef<any>(null);
+  const method = methods.find((m: any) => m.id === methodId) || methods[0] || { kind: 'app' };
   const sends = method.kind === 'sms' || method.kind === 'email';
   const changed = React.useRef(false);
   React.useEffect(() => {
@@ -352,17 +374,17 @@ export function MfaChallenge({ methods = [{ id: 'app', kind: 'app', label: 'Auth
     const id = setTimeout(() => setWait(wait - 1), 1000);
     return () => clearTimeout(id);
   }, [wait, sends]);
-  const verify = (c) => {
+  const verify = (c: any) => {
     if (method.kind !== 'key' && String(c || '').length < length) { setOwn(fill(t.needCode, { n: length })); return; }
     setOwn('');
     if (onVerify) onVerify(method.kind === 'key' ? null : c, { method: method.id, remember });
   };
-  const submit = (e) => { e.preventDefault(); verify(code); };
+  const submit = (e: any) => { e.preventDefault(); verify(code); };
   if (choosing) {
     return (
       <div className={cx('plx-auth__flow', className)}>
         <Form label={t.methods} noValidate className="plx-auth__form" onSubmit={(e) => { e.preventDefault(); setMethodId(pick); setChoosing(false); }}>
-          <RadioGroup label={t.methods} value={pick} onChange={setPick} options={methods.map((m) => ({ value: m.id, label: m.label, description: m.detail }))} />
+          <RadioGroup label={t.methods} value={pick} onChange={(v: any) => setPick(v)} options={methods.map((m: any) => ({ value: m.id, label: m.label, description: m.detail }))} />
           <Submit>{t.choose}</Submit>
         </Form>
       </div>
@@ -398,11 +420,11 @@ const SSO = {
   emailHint: 'We’ll find your organization’s sign-in from it.', next: 'Continue', redirecting: 'Taking you to {name}…',
   needEmail: 'Enter your work email, like name@example.org.', back: 'Back',
 };
-export function SsoButtons({ providers = [], onProvider, organization = false, onOrganization, redirecting, error, strings, className, ...rest }) {
-  const t = Object.assign({}, SSO, strings);
+export function SsoButtons({ providers = [], onProvider, organization = false, onOrganization, redirecting, error, strings, className, ...rest }: SsoButtonsProps) {
+  const t: any = Object.assign({}, SSO, strings);
   const [asking, setAsking] = React.useState(false);
   const [email, setEmail] = React.useState('');
-  const refs = { email: React.useRef(null) };
+  const refs = { email: React.useRef<any>(null) };
   const [errors, check, clear] = useCheck(refs);
   React.useEffect(() => { if (redirecting) announce(fill(t.redirecting, { name: redirecting })); }, [redirecting]);
   if (redirecting) {
@@ -432,7 +454,7 @@ export function SsoButtons({ providers = [], onProvider, organization = false, o
   return (
     <div className={cx('plx-auth__sso', className)} role="group" aria-label={t.label} {...rest}>
       {error ? <Notice tone="danger">{error}</Notice> : null}
-      {providers.map((p) => <Button key={p.id} icon={p.icon} className="plx-auth__submit" onClick={() => onProvider && onProvider(p)}>{fill(t.provider, { name: p.label })}</Button>)}
+      {providers.map((p: any) => <Button key={p.id} icon={p.icon} className="plx-auth__submit" onClick={() => onProvider && onProvider(p)}>{fill(t.provider, { name: p.label })}</Button>)}
       {organization ? <Button icon={LockIcon} className="plx-auth__submit" onClick={() => setAsking(true)}>{t.organization}</Button> : null}
     </div>
   );
@@ -449,17 +471,17 @@ const RECOVERY = {
   done: 'You’re back in. We emailed every address on your account to say a backup code was used.', setUp: 'Set up a new sign-in method',
   back: 'Back to sign in', otherWays: 'Other ways to get back in',
 };
-export function AccountRecovery({ step, defaultStep = 'choose', onCode, onFactor, admin, onSetUp, error, busy = false, back, strings, className, ...rest }) {
-  const t = Object.assign({}, RECOVERY, strings);
+export function AccountRecovery({ step, defaultStep = 'choose', onCode, onFactor, admin, onSetUp, error, busy = false, back, strings, className, ...rest }: AccountRecoveryProps) {
+  const t: any = Object.assign({}, RECOVERY, strings);
   const [own, setOwn] = React.useState(defaultStep);
   const now = step || own;
-  const move = (s) => { if (!step) setOwn(s); };
+  const move = (s: any) => { if (!step) setOwn(s); };
   const options = [{ value: 'code', label: t.code, description: t.codeHint }];
   if (onFactor) options.push({ value: 'factor', label: t.factor, description: t.factorHint });
   options.push({ value: 'help', label: t.help, description: t.helpHint });
   const [pick, setPick] = React.useState('code');
   const [code, setCode] = React.useState('');
-  const refs = { code: React.useRef(null) };
+  const refs = { code: React.useRef<any>(null) };
   const [errors, check, clear] = useCheck(refs);
   // a step people moved to: focus its field (not on the first render: the page decides where focus starts)
   const moved = React.useRef(false);
@@ -493,7 +515,7 @@ export function AccountRecovery({ step, defaultStep = 'choose', onCode, onFactor
   } else {
     body = (
       <Form label={t.label} noValidate className="plx-auth__form" onSubmit={(e) => { e.preventDefault(); if (pick === 'factor') { if (onFactor) onFactor(); } else move(pick); }} {...rest}>
-        <RadioGroup label={t.how} value={pick} onChange={setPick} options={options} />
+        <RadioGroup label={t.how} value={pick} onChange={(v: any) => setPick(v)} options={options} />
         <Submit>{t.next}</Submit>
       </Form>
     );
