@@ -318,5 +318,15 @@
     "loading": "n/a(the people list shows the EntityPicker's busy row; stories arrive with Storybook, P0-11)",
     "selected": "n/a(a mention is inserted as text; nothing stays selected)",
     "error": "n/a(a mention input has no value to validate; stories arrive with Storybook, P0-11)"
+  },
+  "Tag": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(stories arrive with Storybook, P0-11)",
+    "loading": "n/a(a tag has no loading state)",
+    "selected": "n/a(stories arrive with Storybook, P0-11)",
+    "error": "n/a(a tag has no error state)"
   }
 }
