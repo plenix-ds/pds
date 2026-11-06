@@ -1637,5 +1637,41 @@
       }
     ],
     "why": ".plx-gantt__milestone, the diamond (a data color replaces the default fill when the item has one)"
+  },
+  "form-section--layout-one-column-default": {
+    "sets": [
+      {
+        "property": "row-gap",
+        "part": "block",
+        "token": "--plx-comp-form-section-gap"
+      }
+    ],
+    "why": ".plx-form-section in form.css: its fields stack in one column with a gap"
+  },
+  "form-section--parts-titled-section": {
+    "sets": [
+      {
+        "property": "row-gap",
+        "part": "header",
+        "token": "--plx-comp-form-section-header-gap"
+      }
+    ],
+    "why": ".plx-form-section__header, the title and description above the fields"
+  },
+  "group-panel--bar-button-group-not-grouped": {
+    "sets": [],
+    "why": "markup only: the Group button with the group-by icon when no group level is set"
+  },
+  "group-panel--panel-a-group-and-a-subgroup": {
+    "sets": [],
+    "why": "markup only: the panel lists each group level with its field, order and menu, and Add subgroup"
+  },
+  "geo-map--variant-regions": {
+    "sets": [],
+    "why": "markup only: draws the supplied GeoJSON regions, outlined or shaded by a measure"
+  },
+  "geo-map--variant-markers": {
+    "sets": [],
+    "why": "markup only: draws markers at the supplied longitude and latitude places"
   }
 }
