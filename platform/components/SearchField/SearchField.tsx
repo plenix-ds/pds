@@ -275,5 +275,7 @@ function CollapsedSearch({ value, label, onKeyDown, onBlur, className, open: ope
 const Collapsed = React.forwardRef(CollapsedSearch);
 
 export const SearchField = React.forwardRef(function SearchField({ collapsed = false, ...props }: SearchFieldProps, ref: React.ForwardedRef<HTMLElement>) {
-  return collapsed ? <Collapsed ref={ref} {...props} /> : <SearchInput ref={ref as React.Ref<HTMLInputElement>} {...props} />;
+  // open and onOpenChange belong to the collapsed button only (#813): the wide field must not pass them on to its <input>
+  const { open: _open, onOpenChange: _onOpenChange, ...wide } = props;
+  return collapsed ? <Collapsed ref={ref} {...props} /> : <SearchInput ref={ref as React.Ref<HTMLInputElement>} {...wide} />;
 });
