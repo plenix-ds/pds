@@ -388,5 +388,15 @@
     "loading": "n/a(the app gives the media; a slow image is the browser's)",
     "selected": "n/a(the shown item is the current one, not a selection)",
     "error": "n/a(the viewer has no value to validate)"
+  },
+  "Table": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(stories arrive with Storybook, P0-11)",
+    "loading": "n/a(stories arrive with Storybook, P0-11)",
+    "selected": "n/a(stories arrive with Storybook, P0-11)",
+    "error": "n/a(a stylesheet-only change here; error states live in the part's own rules)"
   }
 }
