@@ -97,7 +97,7 @@ DSParts.records.push(function (H) {
     return frame('popup', box(360, h(P.Field, { label: props.multiple ? 'Offices' : 'Office', error: props.error }, h(P.Cascader, c))));
   };
   var cascader = { id: 'cascader', lab: true, icon: 'list-lines', sec: 'forms', sub: 'Select and lookup', leaf: 'Cascader', title: 'Cascader',
-    plenix: 'Cascader', src: 'components/Cascader/Cascader.jsx', level: 'Component', interaction: 'Selection',
+    plenix: 'Cascader', src: 'components/Cascader/Cascader.tsx', level: 'Component', interaction: 'Selection',
     aliases: ['Cascading select', 'Hierarchical select', 'Nested select', 'Drill-down select'],
     text: 'A form field whose value is a leaf of a hierarchy (region, country, city), chosen level by level in columns that open under the field; the field shows the whole path, “Europe / France / Paris”. The columns are MillerColumns: parents open on a click (or as the pointer rests on them, expandTrigger="hover"), a leaf is the value. Search finds leaves at every level by name and lists them with their paths; multiple checks several leaves, shown as tags.',
     use: ['Hierarchies of two to four levels where only the last level is a valid answer', 'Each level short enough to scan (up to about 15 items)', 'Search when people know the name but not where it sits'],

@@ -2,7 +2,7 @@
 // RelativeDateInput, LoadMore, and the patterns ImageUpload (with ImageCrop) and AvatarUpload; useBranchLoader, the branch
 // that loads when first opened, shared by Tree, TreeSelect and Cascader (issue 814).
 export { MillerColumns } from '../components/MillerColumns/MillerColumns.tsx';
-export { Cascader } from '../components/Cascader/Cascader.jsx';
+export { Cascader } from '../components/Cascader/Cascader.tsx';
 export { useBranchLoader, BranchStatus } from '../hooks/useBranchLoader.ts';
 export { EntityPicker } from '../components/EntityPicker/EntityPicker.jsx';
 export { TimePicker } from '../components/TimePicker/TimePicker.tsx';
