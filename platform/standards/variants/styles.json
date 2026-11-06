@@ -2448,6 +2448,66 @@
     ],
     "why": ".plx-count--pill in count.css: a small soft pill with a border (the tone sets its colors)"
   },
+  "confidence-indicator--variant-high": {
+    "sets": [],
+    "why": "markup only: the same neutral role with the word for high confidence beside the sparkle icon; the level changes the text, not the style"
+  },
+  "confidence-indicator--variant-medium": {
+    "sets": [],
+    "why": "markup only: the same neutral role with the word for medium confidence beside the sparkle icon; the level changes the text, not the style"
+  },
+  "confidence-indicator--variant-low": {
+    "sets": [],
+    "why": "markup only: the same neutral role with the word for low confidence beside the sparkle icon; the level changes the text, not the style"
+  },
+  "confidence-indicator--variant-numeric": {
+    "sets": [],
+    "why": "markup only: shows the supplied value (0 to 1) in the data font, or Unknown when it is absent or invalid"
+  },
+  "citation--variant-inline-marker": {
+    "sets": [],
+    "why": "markup only: a numbered marker button that discloses one source (variant inline)"
+  },
+  "citation--variant-source-card": {
+    "sets": [],
+    "why": "markup only: one source as a card with its title, author and excerpt (variant card)"
+  },
+  "citation--variant-source-list": {
+    "sets": [],
+    "why": "markup only: a list of sources, each a real link (variant list)"
+  },
+  "checklist--variant-collapsible": {
+    "sets": [],
+    "why": "markup only: wraps the tasks in a CollapsibleSection (collapsible); collapsing keeps the state"
+  },
+  "checklist--variant-dismissible": {
+    "sets": [],
+    "why": "markup only: adds a dismiss action that calls onDismiss"
+  },
+  "checklist--variant-with-progress": {
+    "sets": [],
+    "why": "markup only: shows the completion progress above the tasks (progress, default true)"
+  },
+  "chip--selection-selected-toggle-it": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-chip-selected-background"
+      },
+      {
+        "property": "border-color",
+        "part": "block",
+        "token": "--plx-comp-chip-selected-border-color"
+      },
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-comp-chip-selected-text"
+      }
+    ],
+    "why": ".plx-tag--chip.plx-tag--selected in tag.css (the record is Chip, the component Tag)"
+  },
   "chart-accessibility--rule-data-grid-fallback": {
     "sets": [],
     "why": "guidance: the rule is a behavior of the chart (a data table, keyboard point navigation, a text summary, patterns), not a style the variation sets"

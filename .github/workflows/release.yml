@@ -97,6 +97,13 @@ jobs:
       - name: Bundle-size budgets
         run: node check-bundle.js
 
+      - name: Vendored engine budget, ECharts at most 230 KB gzipped (past it, split into a shared core plus kind files; #106)
+        run: |
+          f=platform/vendor/echarts/echarts.min.js
+          gz=$(gzip -9 -c "$f" | wc -c)
+          echo "echarts.min.js: $(wc -c < "$f") bytes, $gz gzipped (budget 235520)"
+          [ "$gz" -le 235520 ] || { echo "VENDOR_BUDGET_FAIL: echarts.min.js is $gz bytes gzipped, over 230 KB: split it into a shared core plus kind files (esbuild ESM splitting; #106)"; exit 1; }
+
       - name: Per-part styles on the CDN and in the archive, equal to @plenix-ds/styles (#151)
         env:
           DRY: ${{ steps.v.outputs.dry }}

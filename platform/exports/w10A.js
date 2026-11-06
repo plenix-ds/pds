@@ -4,4 +4,4 @@ export { useSortable, useDraggable, useDropTarget, useReposition, useDndSession,
 export { DragHandle } from '../components/DragHandle/DragHandle.tsx';
 export { SortableList } from '../patterns/SortableList/SortableList.jsx';
 export { Resizable, PanelSplitter } from '../components/Resizable/Resizable.tsx';
-export { RenameAction, baseNameEnd } from '../patterns/RenameAction/RenameAction.jsx';
+export { RenameAction, baseNameEnd } from '../patterns/RenameAction/RenameAction.tsx';

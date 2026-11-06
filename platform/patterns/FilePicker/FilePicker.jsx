@@ -15,7 +15,7 @@ import { Text } from '../../components/Text/Text.tsx';
 import { cx } from '../../utils/cx.ts';
 import { Dialog } from '../../components/Dialog/Dialog.tsx';
 import { Tree } from '../../components/Tree/Tree.tsx';
-import { FileRow,FileRowList } from '../../components/FileRow/FileRow.jsx';
+import { FileRow,FileRowList } from '../../components/FileRow/FileRow.tsx';
 import { SearchField } from '../../components/SearchField/SearchField.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 export function FilePicker({open=false,onClose,items=[],folders=[],mode='files',multiple=false,initialSelected=[],onPick,strings,className}){
