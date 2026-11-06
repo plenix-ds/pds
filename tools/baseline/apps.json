@@ -40,11 +40,11 @@
     {
       "name": "redsave",
       "title": "RedSave (browser extension)",
-      "repository": null,
-      "channel": "pinned CDN version, self-hosted from the archive",
+      "repository": "LighthouseCollection/RedSave",
+      "channel": "pinned CDN version (0.69.4 when last seen), self-hosted from the archive; it changes only when its owner moves the pin",
       "owner": "its owner's sessions",
       "scan": false,
-      "reason": "its repository is not reachable from here; its sessions run tools/baseline/scan.js"
+      "reason": "the repository is private, so CI can't clone it; before a release that removes classes, the Release Architect runs tools/publish/removed-in-apps.mjs's scan on it from the agent host (#125; 2026-11-06: none of the 311 used)"
     }
   ]
 }
