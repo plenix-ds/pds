@@ -3132,8 +3132,19 @@
     "why": "markup only: the variation is the value, bounds, unit or format (currency, percent, quantity) and whether stepper buttons show; the stylesheet has no modifier for it"
   },
   "number-input--variant-invalid": {
-    "sets": [],
-    "why": "markup only: the variation is the value, bounds, unit or format (currency, percent, quantity) and whether stepper buttons show; the stylesheet has no modifier for it"
+    "sets": [
+      {
+        "property": "border-color",
+        "part": "block",
+        "token": "--plx-comp-input-invalid-border-color"
+      },
+      {
+        "property": "box-shadow",
+        "part": "block",
+        "token": "--plx-comp-input-invalid-inner-width"
+      }
+    ],
+    "why": ".plx-input[aria-invalid=\"true\"] in input.css draws the invalid look: the danger border and the inset line inside it; the variation sets aria-invalid on the field"
   },
   "number-input--variant-min-and-max": {
     "sets": [],
