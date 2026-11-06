@@ -5212,7 +5212,7 @@
         "token": "--plx-comp-retry-status-margin-block-start"
       }
     ],
-    "why": "retry.css: .plx-retry__status holds the countdown (\"Retrying in \u2026\") while the next attempt waits"
+    "why": "retry.css: .plx-retry__status holds the countdown (\"Retrying in …\") while the next attempt waits"
   },
   "retry-pattern--kind-retry-count": {
     "sets": [
@@ -5424,5 +5424,80 @@
       }
     ],
     "why": ".plx-details and .plx-details__summary in details.css: the base look, one block of detail behind a summary line"
+  },
+  "media-card--variants-square": {
+    "sets": [
+      {
+        "property": "aspect-ratio",
+        "part": "media",
+        "token": "--plx-comp-media-card-aspect-1-1"
+      }
+    ],
+    "why": "card.css: .plx-media-card__media[data-plx-aspect=\"1/1\"]"
+  },
+  "media-card--variants-selected": {
+    "sets": [
+      {
+        "property": "border-color",
+        "part": "block",
+        "token": "--plx-comp-card-selected-border-color"
+      }
+    ],
+    "why": "card.css: .plx-media-card.is-selected also keeps the corner checkbox visible (opacity 1, a keyword with no token)"
+  },
+  "chart-grid-line--direction-horizontal-default": {
+    "sets": [
+      {
+        "property": "stroke",
+        "part": "line",
+        "token": "--plx-comp-chart-grid-line-color"
+      },
+      {
+        "property": "stroke-width",
+        "part": "line",
+        "token": "--plx-comp-chart-grid-line-width"
+      }
+    ],
+    "why": "charts.css: .plx-chart__grid-line, the same stroke for both directions; the direction is the lines' geometry (horizontal lines across at a vertical scale's ticks), which the chart draws"
+  },
+  "chart-grid-line--direction-vertical": {
+    "sets": [
+      {
+        "property": "stroke",
+        "part": "line",
+        "token": "--plx-comp-chart-grid-line-color"
+      },
+      {
+        "property": "stroke-width",
+        "part": "line",
+        "token": "--plx-comp-chart-grid-line-width"
+      }
+    ],
+    "why": "charts.css: .plx-chart__grid-line, the same stroke for both directions; the direction is the lines' geometry (vertical lines up at a horizontal scale's ticks), which the chart draws"
+  },
+  "gantt-chart--variant-today-line": {
+    "sets": [
+      {
+        "property": "stroke",
+        "part": "reference-line",
+        "token": "--plx-comp-chart-reference-line-color"
+      },
+      {
+        "property": "stroke-dasharray",
+        "part": "reference-line",
+        "token": "--plx-comp-chart-reference-line-dash"
+      },
+      {
+        "property": "stroke-dasharray",
+        "part": "reference-line",
+        "token": "--plx-comp-chart-reference-line-gap"
+      },
+      {
+        "property": "stroke-width",
+        "part": "reference-line",
+        "token": "--plx-comp-chart-reference-line-width"
+      }
+    ],
+    "why": "the today line is a ReferenceLine on the x axis (kind reference): .plx-chart-reference__line, a dashed line in the subtle color, with its label in the reference label role"
   }
 }
