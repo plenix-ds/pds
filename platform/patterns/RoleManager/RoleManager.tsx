@@ -64,7 +64,7 @@ import { Input, Textarea } from '../../components/Input/Input.tsx';
 import { Notice } from '../../components/Notice/Notice.tsx';
 import { RoleLabel } from '../../components/RoleLabel/RoleLabel.tsx';
 import { Text } from '../../components/Text/Text.tsx';
-import { ResourceList } from '../ResourceList/ResourceList.jsx';
+import { ResourceList } from '../ResourceList/ResourceList.tsx';
 import { PermissionSummary } from '../PermissionSummary/PermissionSummary.tsx';
 import { AssignControl } from '../AssignControl/AssignControl.tsx';
 import { DuplicateAction } from '../DuplicateAction/DuplicateAction.tsx';
@@ -81,55 +81,80 @@ import TrashIcon from 'plenix-platform/icons/plenix/trash';
 import VisibilityIcon from 'plenix-platform/icons/plenix/visibility';
 import { fill } from '../../utils/fill.ts';
 
-const ROLE_ICONS = { owner: SettingsPermissionsIcon, editor: PencilIcon, viewer: VisibilityIcon };
-const H = React.forwardRef(function H({ level, ...props }, ref) { return React.createElement('h' + Math.min(6, Math.max(2, level)), Object.assign({ ref }, props)); });
+const ROLE_ICONS: Record<string, any> = { owner: SettingsPermissionsIcon, editor: PencilIcon, viewer: VisibilityIcon };
+const H: any = React.forwardRef(function H({ level, ...props }: any, ref: any) { return React.createElement('h' + Math.min(6, Math.max(2, level)), Object.assign({ ref }, props)); });
 
-function groupsOf(permissions) {
-  const order = [];
-  const by = {};
-  permissions.forEach((p) => { const g = p.group || ''; if (!by[g]) { by[g] = []; order.push(g); } by[g].push(p); });
+function groupsOf(permissions: any) {
+  const order: any[] = [];
+  const by: any = {};
+  permissions.forEach((p: any) => { const g = p.group || ''; if (!by[g]) { by[g] = []; order.push(g); } by[g].push(p); });
   return order.map((g) => [g, by[g]]);
 }
 
-export function RoleManager({ roles = [], permissions = [], people = [], onChange, view, roleId, onViewChange, defaultView = 'list',
-  defaultRoleId, readOnly = false, label, headingLevel = 2, strings, className, ...rest }) {
-  const t = useStrings('roleManager', strings);
+/** @public a role */
+export type Role = { id: string | number; name: string; description?: string; builtIn?: 'owner' | 'editor' | 'viewer'; category?: string; permissions?: (string | number)[]; members?: string[]; required?: boolean };
+/** @public a permission */
+export type RolePermission = { id: string | number; label: string; group?: string; description?: string };
+/** @public what changed in the roles */
+export type RoleChange = { type: 'create' | 'duplicate' | 'delete' | 'permissions' | 'add-member' | 'remove-member'; role?: Role; person?: string };
+/** @public the prop type (ADR 0011) */
+export type RoleManagerProps = Omit<React.HTMLAttributes<HTMLElement>, 'onChange'> & {
+  roles?: Role[];
+  permissions?: RolePermission[];
+  /** EntityPicker's options */
+  people?: { value: string; label: string; description?: string; src?: string }[];
+  onChange?(roles: Role[], change: RoleChange): void;
+  view?: 'list' | 'detail';
+  roleId?: string | number;
+  onViewChange?(view: 'list' | 'detail', roleId?: string | number): void;
+  defaultView?: 'list' | 'detail';
+  defaultRoleId?: string | number;
+  readOnly?: boolean;
+  label?: string;
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function RoleManager(props: RoleManagerProps) {
+  const { roles = [], permissions = [], people = [], onChange, view, roleId, onViewChange, defaultView = 'list',
+  defaultRoleId, readOnly = false, label, headingLevel = 2, strings, className, ...rest } = props as any;
+  const t: any = useStrings('roleManager', strings);
   const [ownView, setOwnView] = React.useState(defaultView);
   const [ownId, setOwnId] = React.useState(defaultRoleId || (roles[0] && roles[0].id));
   const shown = view || ownView;
   const id = roleId !== undefined ? roleId : ownId;
-  const role = roles.find((r) => r.id === id);
-  const back = React.useRef(null);   // the role whose name to focus when the list returns
-  const go = (v, rid) => {
+  const role = roles.find((r: any) => r.id === id);
+  const back = React.useRef<any>(null);   // the role whose name to focus when the list returns
+  const go = (v: any, rid?: any) => {
     if (v === 'list') back.current = id;
     if (view === undefined) setOwnView(v);
     if (roleId === undefined && rid !== undefined) setOwnId(rid);
     if (onViewChange) onViewChange(v, rid);
   };
-  const change = (next, c) => { if (onChange) onChange(next, c); };
+  const change = (next: any, c: any) => { if (onChange) onChange(next, c); };
   const editable = !readOnly && !!onChange;
   return (
     <div className={cx('plx-role-manager', 'plx-role-manager--' + (shown === 'detail' && role ? 'detail' : 'list'), className)} {...rest}>
       {shown === 'detail' && role
         ? <RoleDetail role={role} roles={roles} permissions={permissions} people={people} t={t} editable={editable} headingLevel={headingLevel}
-          onBack={() => go('list')} change={change} onOpen={(rid) => go('detail', rid)} />
-        : <RoleList roles={roles} t={t} label={label} editable={editable} focusId={back} change={change} permissions={permissions} onOpen={(rid) => go('detail', rid)} />}
+          onBack={() => go('list')} change={change} onOpen={(rid: any) => go('detail', rid)} />
+        : <RoleList roles={roles} t={t} label={label} editable={editable} focusId={back} change={change} permissions={permissions} onOpen={(rid: any) => go('detail', rid)} />}
     </div>
   );
 }
 
-function RoleList({ roles, t, label, editable, focusId, change, onOpen }) {
-  const box = React.useRef(null);
+function RoleList({ roles, t, label, editable, focusId, change, onOpen }: any) {
+  const box = React.useRef<any>(null);
   const [creating, setCreating] = React.useState(false);
   React.useEffect(() => {
     // back from a detail: focus the name of the role that was open
     if (!focusId.current || !box.current) return;
-    const i = roles.findIndex((r) => r.id === focusId.current);
+    const i = roles.findIndex((r: any) => r.id === focusId.current);
     const names = box.current.querySelectorAll('.plx-resource-list__opener');
     if (names[i] && names[i].focus) names[i].focus();
     focusId.current = null;
   }, []);
-  const items = roles.map((r) => {
+  const items = roles.map((r: any) => {
     const n = (r.members || []).length;
     return {
       id: r.id, name: r.name, description: r.description, onOpen: () => onOpen(r.id),
@@ -143,27 +168,27 @@ function RoleList({ roles, t, label, editable, focusId, change, onOpen }) {
       {editable ? <div className="plx-role-manager__bar"><Button icon={PlusIcon} onClick={() => setCreating(true)}>{t.create}</Button></div> : null}
       <ResourceList label={label || t.roles} noun={t.role} items={items} />
       {editable ? <CreateRole open={creating} roles={roles} t={t} onClose={() => setCreating(false)}
-        onCreate={(r) => { setCreating(false); change(roles.concat(r), { type: 'create', role: r }); announce(fill(t.created, { name: r.name })); onOpen(r.id); }} /> : null}
+        onCreate={(r: any) => { setCreating(false); change(roles.concat(r), { type: 'create', role: r }); announce(fill(t.created, { name: r.name })); onOpen(r.id); }} /> : null}
     </div>
   );
 }
 
 // a new custom role: its name, a sentence, and the role whose permissions it starts with
-function CreateRole({ open, roles, t, onClose, onCreate }) {
+function CreateRole({ open, roles, t, onClose, onCreate }: any) {
   const [name, setName] = React.useState('');
   const [about, setAbout] = React.useState('');
   const [from, setFrom] = React.useState('');
   const [error, setError] = React.useState('');
-  const field = React.useRef(null);
+  const field = React.useRef<any>(null);
   const formId = useUid('plx-role-manager-create');
   React.useEffect(() => { if (open) { setName(''); setAbout(''); setFrom(roles[roles.length > 1 ? 1 : 0] ? roles[roles.length > 1 ? 1 : 0].id : ''); setError(''); } }, [open]);
-  const submit = (e) => {
+  const submit = (e: any) => {
     e.preventDefault();
     const n = name.trim();
-    const problem = !n ? t.empty : roles.some((r) => r.name.toLowerCase() === n.toLowerCase()) ? fill(t.taken, { name: '“' + n + '”' }) : '';
+    const problem = !n ? t.empty : roles.some((r: any) => r.name.toLowerCase() === n.toLowerCase()) ? fill(t.taken, { name: '“' + n + '”' }) : '';
     setError(problem);
     if (problem) { if (field.current) field.current.focus(); return; }
-    const base = roles.find((r) => r.id === from);
+    const base = roles.find((r: any) => r.id === from);
     onCreate({ id: 'role-' + Date.now().toString(36), name: n, description: about.trim(), permissions: base ? (base.permissions || []).slice() : [], members: [] });
   };
   return (
@@ -172,34 +197,34 @@ function CreateRole({ open, roles, t, onClose, onCreate }) {
       <form id={formId} noValidate onSubmit={submit} className="plx-role-manager__form">
         <Field label={t.name} required error={error || undefined}><Input ref={field} value={name} onChange={(e) => { setName(e.target.value); if (error) setError(''); }} /></Field>
         <Field label={t.description} description={t.descriptionHint}><Textarea rows={2} value={about} onChange={(e) => setAbout(e.target.value)} /></Field>
-        <RadioGroup label={t.startFrom} value={from} onChange={setFrom}
-          options={roles.map((r) => ({ value: r.id, label: r.name, description: r.description }))} />
+        <RadioGroup label={t.startFrom} value={from} onChange={(v: any) => setFrom(v)}
+          options={roles.map((r: any) => ({ value: r.id, label: r.name, description: r.description }))} />
       </form>
     </Dialog>
   );
 }
 
-function RoleDetail({ role, roles, permissions, people, t, editable, headingLevel, onBack, change, onOpen }) {
-  const title = React.useRef(null);
+function RoleDetail({ role, roles, permissions, people, t, editable, headingLevel, onBack, change, onOpen }: any) {
+  const title = React.useRef<any>(null);
   const [warning, setWarning] = React.useState('');
   React.useEffect(() => { if (title.current) title.current.focus(); setWarning(''); }, [role.id]);
   const members = role.members || [];
   const custom = !role.builtIn;
-  const update = (patch, c) => change(roles.map((r) => (r.id === role.id ? Object.assign({}, r, patch) : r)), Object.assign({ role: role.id }, c));
-  const person = (v) => people.find((p) => p.value === v) || { value: v, label: v };
-  const toggle = (p, on) => {
-    const next = on ? (role.permissions || []).concat(p.id) : (role.permissions || []).filter((x) => x !== p.id);
+  const update = (patch: any, c: any) => change(roles.map((r: any) => (r.id === role.id ? Object.assign({}, r, patch) : r)), Object.assign({ role: role.id }, c));
+  const person = (v: any) => people.find((p: any) => p.value === v) || { value: v, label: v };
+  const toggle = (p: any, on: any) => {
+    const next = on ? (role.permissions || []).concat(p.id) : (role.permissions || []).filter((x: any) => x !== p.id);
     update({ permissions: next }, { type: 'permissions', permission: p.id, allowed: on });
     announce(fill(on ? t.allowed : t.denied, { permission: p.label, role: role.name }));
   };
-  const add = (v) => {
+  const add = (v: any) => {
     if (!v || members.includes(v)) return;
     setWarning('');
     update({ members: members.concat(v) }, { type: 'add-member', person: v });   // AssignControl announces it (strings.assigned)
   };
-  const remove = (v) => {
+  const remove = (v: any) => {
     if (role.required && members.length <= 1) { setWarning(fill(t.lastMember, { role: role.name })); return; }
-    update({ members: members.filter((m) => m !== v) }, { type: 'remove-member', person: v });
+    update({ members: members.filter((m: any) => m !== v) }, { type: 'remove-member', person: v });
     announce(fill(t.removed, { name: person(v).label, role: role.name }));
   };
   const allowed = new Set(role.permissions || []);
@@ -214,7 +239,7 @@ function RoleDetail({ role, roles, permissions, people, t, editable, headingLeve
         </div>
         {editable ? (
           <div className="plx-role-manager__actions">
-            <DuplicateAction variant="rename" name={role.name} noun={t.role} taken={roles.map((r) => r.name)} size="sm"
+            <DuplicateAction variant="rename" name={role.name} noun={t.role} taken={roles.map((r: any) => r.name)} size="sm"
               options={[{ id: 'members', label: t.members }]}
               onDuplicate={(n, chosen) => {
                 const copy = { id: 'role-' + Date.now().toString(36), name: n, description: role.description, permissions: (role.permissions || []).slice(),
@@ -222,7 +247,7 @@ function RoleDetail({ role, roles, permissions, people, t, editable, headingLeve
                 change(roles.concat(copy), { type: 'duplicate', role: copy, from: role.id }); onOpen(copy.id);
               }} />
             {custom ? <DeleteFlow items={[{ id: role.id, label: role.name }]} noun={t.role}
-              onDelete={() => { change(roles.filter((r) => r.id !== role.id), { type: 'delete', role: role.id }); onBack(); }}
+              onDelete={() => { change(roles.filter((r: any) => r.id !== role.id), { type: 'delete', role: role.id }); onBack(); }}
               trigger={<Button size="sm" variant="danger-secondary" icon={TrashIcon}>{t.delete}</Button>} /> : null}
           </div>
         ) : null}
@@ -235,14 +260,14 @@ function RoleDetail({ role, roles, permissions, people, t, editable, headingLeve
           <div className="plx-role-manager__groups">
             {groupsOf(permissions).map(([g, list]) => (
               <Fieldset key={g || 'all'} legend={g || t.permissions} hideLegend={!g}>
-                {list.map((p) => <Checkbox key={p.id} label={p.label} description={p.description} checked={allowed.has(p.id)} onChange={(e) => toggle(p, e.target.checked)} />)}
+                {list.map((p: any) => <Checkbox key={p.id} label={p.label} description={p.description} checked={allowed.has(p.id)} onChange={(e) => toggle(p, e.target.checked)} />)}
               </Fieldset>
             ))}
           </div>
         ) : (
           <>
             <PermissionSummary icon={SettingsUsersIcon} access={fill(t.access, { role: role.name })} detail={fill(members.length === 1 ? t.peopleOne : t.people, { n: formatNumber(members.length) })}
-              can={permissions.filter((p) => allowed.has(p.id)).map((p) => p.label)} cannot={permissions.filter((p) => !allowed.has(p.id)).map((p) => p.label)} />
+              can={permissions.filter((p: any) => allowed.has(p.id)).map((p: any) => p.label)} cannot={permissions.filter((p: any) => !allowed.has(p.id)).map((p: any) => p.label)} />
             {editable && !custom ? <p className="plx-role-manager__note">{t.builtInNote}</p> : null}
           </>
         )}
@@ -254,7 +279,7 @@ function RoleDetail({ role, roles, permissions, people, t, editable, headingLeve
         </H>
         {warning ? <Notice tone="warning" onDismiss={() => setWarning('')}>{warning}</Notice> : null}
         {members.length ? (
-          <ResourceList label={t.members} noun={t.member} items={members.map((v) => {
+          <ResourceList label={t.members} noun={t.member} items={members.map((v: any) => {
             const p = person(v);
             return { id: v, name: p.label, description: p.description, avatar: { name: p.label, src: p.src },
               meta: <RoleLabel role={role.builtIn || 'custom'} label={role.builtIn ? undefined : role.name} category={role.category} />,
@@ -263,7 +288,7 @@ function RoleDetail({ role, roles, permissions, people, t, editable, headingLeve
         ) : <p className="plx-role-manager__note">{t.noMembers}</p>}
         {editable ? (
           <div className="plx-role-manager__add">
-            <AssignControl label={t.addMember} people={people.filter((p) => !members.includes(p.value))} value={null} clearable={false} onChange={(v) => add(v)}
+            <AssignControl label={t.addMember} people={people.filter((p: any) => !members.includes(p.value))} value={null} clearable={false} onChange={(v) => add(v)}
               strings={{ assigned: fill(t.added, { name: '{name}', role: role.name }) }} />
           </div>
         ) : null}

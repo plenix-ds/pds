@@ -1,0 +1,1 @@
+patterns-ts-753-c: OK

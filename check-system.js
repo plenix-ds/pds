@@ -44,6 +44,8 @@
 //               marked web only ($extensions["com.plenix"].webOnly, for a CSS value DTCG has no type for)
 //   vendor-types (check-system.rules/vendor-types.js, docs/adr/0011, D-0067) a type-only devDependency for a vendored engine
 //               (@tiptap/*) is exactly the vendored version, never a runtime dependency, and imported only with import type
+//   js-source   (check-system.rules/js-source.js, docs/adr/0011, D-0089) a .js/.jsx under platform/ is listed in
+//               platform/standards/js-source.json (allowed, with its reason, or pending conversion); every other source is TypeScript
 //   style-dictionary (#372 steps 5 to 10, slice 101) Style Dictionary writes every token's own value, and the stylesheets
 //               written with its values equal the ones with the JSON's own, byte for byte: npm run tokens:sd:check
 //               (style-dictionary/build.mjs --sets, --bytes)

@@ -109,7 +109,7 @@ DSParts.records.push(function (H) {
     return surface(360, r.status === 'running' ? h(P.EmptyState, { icon: h(P.Spinner, { label: 'Loading' }) }, 'Loading the assets…')
       : h(P.EmptyState, { tone: 'error', title: 'The assets could not load', action: h(P.Button, { icon: 'refresh', onClick: r.retry }, 'Retry') }, 'The server did not answer.'));
   };
-  var retryPattern = { id: 'retry-pattern', lab: true, icon: 'refresh', sec: 'feedback', sub: 'Empty, failure, and recovery', leaf: 'Retry pattern', title: 'Retry', plenix: 'useRetry, RetryNotice', src: 'patterns/Retry/Retry.jsx',
+  var retryPattern = { id: 'retry-pattern', lab: true, icon: 'refresh', sec: 'feedback', sub: 'Empty, failure, and recovery', leaf: 'Retry pattern', title: 'Retry', plenix: 'useRetry, RetryNotice', src: 'patterns/Retry/Retry.tsx',
     css: ['patterns/Retry/retry.css'], variantClasses: [], level: 'Pattern', interaction: 'Feedback',
     aliases: ['Retry', 'Try again', 'Automatic retry', 'Exponential backoff', 'Reconnect'],
     text: 'How Plenix recovers from a load or a save that failed. useRetry runs the task and counts its attempts; with auto, it tries again by itself after a wait that doubles each time (2, 4, 8 seconds, up to 30). RetryNotice is the danger section message beside the content that is still there: what failed, the countdown to the next attempt, which attempt it is, and Retry (Retry now while waiting). A whole region that failed uses the error empty state with the same retry.',

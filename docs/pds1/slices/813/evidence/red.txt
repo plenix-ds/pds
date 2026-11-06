@@ -1,0 +1,21 @@
+AssertionError [ERR_ASSERTION]: no console warnings: Warning: Unknown event handler property `%s`. It will be ignored.%s onOpenChange 
++ actual - expected
+
++ [
++   'Warning: Unknown event handler property `%s`. It will be ignored.%s onOpenChange \n' +
++     '    at input\n' +
++     '    at span\n' +
++     '    at Tooltip (http://127.0.0.1:9813/Plenix/platform/dist/platform.js:6948:22)\n' +
++     '    at div\n' +
++     '    at SearchInput2 (http://127.0.0.1:9813/Plenix/platform/dist/platform.js:24064:5)\n' +
++     '    at SearchField2 (http://127.0.0.1:9813/Plenix/platform/dist/platform.js:24332:65)\n' +
++     '    at div\n' +
++     '    at div'
++ ]
+- []
+
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [Array],
+  expected: [],
+  operator: 'deepStrictEqual',

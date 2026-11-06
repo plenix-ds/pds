@@ -4,5 +4,5 @@ export { VirtualList } from '../components/VirtualList/VirtualList.tsx';
 export { Carousel } from '../components/Carousel/Carousel.tsx';
 export { PeopleGroup } from '../patterns/PeopleGroup/PeopleGroup.tsx';
 export { PermissionSummary } from '../patterns/PermissionSummary/PermissionSummary.tsx';
-export { QueryBuilder } from '../patterns/QueryBuilder/QueryBuilder.jsx';
-export { formatQuery } from '../patterns/QueryBuilder/QueryBuilder.jsx';
+export { QueryBuilder } from '../patterns/QueryBuilder/QueryBuilder.tsx';
+export { formatQuery } from '../patterns/QueryBuilder/QueryBuilder.tsx';

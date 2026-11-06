@@ -25,15 +25,15 @@ import { CommandBar as CommandBarJs, CommandBarSearch as CommandBarSearchJs } fr
 const CommandBar: any = CommandBarJs;
 const CommandBarSearch: any = CommandBarSearchJs;
 import { FilterPanel } from '../../patterns/FilterPanel/FilterPanel.tsx';
-import { QuickFilter as QuickFilterJs } from '../../patterns/QuickFilter/QuickFilter.jsx';
+import { QuickFilter as QuickFilterJs } from '../../patterns/QuickFilter/QuickFilter.tsx';
 const QuickFilter: any = QuickFilterJs;
 import { EntityHeader as EntityHeaderJs } from '../../patterns/EntityHeader/EntityHeader.jsx';
 const EntityHeader: any = EntityHeaderJs;
 import { PropertyList as PropertyListJs } from '../../patterns/PropertyList/PropertyList.tsx';
 const PropertyList: any = PropertyListJs;
-import { Wizard as WizardJs } from '../../patterns/Wizard/Wizard.jsx';
+import { Wizard as WizardJs } from '../../patterns/Wizard/Wizard.tsx';
 const Wizard: any = WizardJs;
-import { SettingsSection as SettingsSectionJs } from '../../patterns/SettingsLayout/SettingsLayout.jsx';
+import { SettingsSection as SettingsSectionJs } from '../../patterns/SettingsLayout/SettingsLayout.tsx';
 const SettingsSection: any = SettingsSectionJs;
 import { DataGrid } from '../../components/DataGrid/DataGrid.tsx';
 import { Badge } from '../../components/Badge/Badge.tsx';
