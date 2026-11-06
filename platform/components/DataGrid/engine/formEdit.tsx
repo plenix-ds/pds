@@ -133,7 +133,7 @@ export default function FormEdit({ record, rowKey, columns, isEditable, name, ty
     setRefusal(null);
     try {
       if (onRecordEdit) {
-        await onRecordEdit(record, changes);
+        await onRecordEdit(record, changes, { source: 'edit' });
         recordEdited?.(rowKey, changes);   // the saved record is one undo step (editing.undo, ADR 0021)
       } else if (commitCells) commitCells(rowKey, changes);   // one step, one onCellEdit call per changed field
       else for (const [field, v] of Object.entries(changes)) commitEdit(rowKey, field, v);

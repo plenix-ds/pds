@@ -1,6 +1,6 @@
 /* Plenix tests · DataGrid undo of a saved row form (issue 3, ADR 0021, part 4): with editing.undo a saved Form Edit is one undo step, whatever
    number of fields it changed. Without onRecordEdit the changed fields reach onCellEdit once each (source 'edit') and one Ctrl+Z restores them all
-   (source 'undo'); with onRecordEdit the application saved the record itself, and one Ctrl+Z reaches it as one cell edit per changed field.
+   (source 'undo'); with onRecordEdit the save, the undo and the redo all go through onRecordEdit(record, changes, { source }) (G3 rule, ADR 0021 addendum).
    In left to right and right to left. Usage: node tests/data-grid-form-undo-3.test.js */
 const assert = require('assert/strict'), { serve, launch } = require('./lib');
 require('./limit.js');
@@ -25,7 +25,7 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
           const apply = (id, changes) => setData((rows) => rows.map((r) => (r.id === id ? Object.assign({}, r, changes) : r)));
           return h(Plenix.ToastProvider, null, h('div', { style: { height: 400 } }, h(Plenix.DataGrid, Object.assign({ label: 'People', data, columns, viewMenu: true, editModes: ['inline', 'form'], editMode: 'form', editing: { undo: true },
             onCellEdit: (r, e) => { window.__cells.push(r.id + '.' + e.field + '=' + e.value + ':' + e.source); apply(r.id, { [e.field]: e.value }); } },
-            recordLevel ? { onRecordEdit: (r, changes) => { window.__cells.push('record:' + r.id + ':' + JSON.stringify(changes)); apply(r.id, changes); } } : {}))));
+            recordLevel ? { onRecordEdit: (r, changes, info) => { window.__cells.push('record:' + r.id + ':' + JSON.stringify(changes) + ':' + (info && info.source)); apply(r.id, changes); } } : {}))));
         };
         window.__root = ReactDOM.createRoot(document.getElementById('c')); window.__root.render(h(App));
         await new Promise((r) => setTimeout(r, 1000));
@@ -53,7 +53,9 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
       assert.equal(await text(0, 'name'), 'Ann');
       await focus(0, 'name'); await key('z', ['Control']);
       assert.equal(await text(0, 'name'), 'Alma', T + 'with onRecordEdit one Ctrl+Z restores the record'); assert.equal(await text(0, 'role'), 'Cook');
-      assert.deepEqual((await cells()).filter((c) => c.endsWith(':undo')), ['r1.name=Alma:undo', 'r1.role=Cook:undo'], T + 'each field reaches onCellEdit with source undo');
+      assert.deepEqual(await cells(), ['record:r1:{"name":"Ann","role":"Chef"}:edit', 'record:r1:{"name":"Alma","role":"Cook"}:undo'], T + 'the save and the undo both go through onRecordEdit (the undo with the previous values), never onCellEdit');
+      await key('y', ['Control']);
+      assert.equal(await text(0, 'name'), 'Ann'); assert.equal((await cells())[2], 'record:r1:{"name":"Ann","role":"Chef"}:redo', T + 'redo calls it with the saved values');
     }
     assert.deepEqual(problems, [], 'no script errors');
     console.log('data-grid-form-undo-3: OK');
