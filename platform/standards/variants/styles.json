@@ -3945,5 +3945,64 @@
   "chart-legend--behavior-interactive": {
     "sets": [],
     "why": "markup only: each entry is a toggle that shows or hides its series (interactive, onToggle)"
+  },
+  "switch--values-on": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "track",
+        "token": "--plx-comp-switch-input-checked-track-background"
+      },
+      {
+        "property": "transform",
+        "part": "track-after",
+        "token": "--plx-comp-switch-input-checked-track-after-transform"
+      },
+      {
+        "property": "transform",
+        "part": "track-after",
+        "token": "--plx-comp-switch-input-checked-track-rtl-after-transform"
+      }
+    ],
+    "why": "checkbox.css: .plx-switch__input:checked + .plx-switch__track fills the track and moves the knob (the third row is the same in right-to-left)"
+  },
+  "switch--values-off": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "track",
+        "token": "--plx-comp-switch-track-background"
+      },
+      {
+        "property": "background-color",
+        "part": "track-after",
+        "token": "--plx-comp-switch-track-after-background"
+      }
+    ],
+    "why": "checkbox.css: the base .plx-switch__track and its knob; off is the unchecked rest state"
+  },
+  "switch--values-disabled": {
+    "sets": [
+      {
+        "property": "opacity",
+        "part": "track",
+        "token": "--plx-comp-switch-input-disabled-track-opacity"
+      }
+    ],
+    "why": "checkbox.css: .plx-switch__input:disabled + .plx-switch__track"
+  },
+  "radio-group--layout-row": {
+    "sets": [
+      {
+        "property": "column-gap",
+        "part": "block",
+        "token": "--plx-comp-radio-group-row-gap"
+      }
+    ],
+    "why": ".plx-radio-group--row also sets flex-wrap: wrap, a keyword with no token"
+  },
+  "radio-group--layout-column-default": {
+    "sets": [],
+    "why": ".plx-radio-group--column sets flex-direction: column, a keyword with no token"
   }
 }
