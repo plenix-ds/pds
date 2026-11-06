@@ -39,7 +39,7 @@ onCellEdit?(record, change: { field, value, previous, row, source?: 'edit' | 'pa
   - Each value goes through the column's `validate`. Cells that aren't editable, or that `validate` refuses, are skipped.
   - One announcement (catalog, the i18n Engineer's words) gives how many cells were pasted and how many skipped.
   - A paste past the last row or column stops at the edge; it adds no rows.
-- **Fill:** Ctrl+D copies the selected block's top row down through it. The fill handle (on the block's end corner, logical: the bottom inline-end) drags down or toward the inline-end. No fill-right key: Ctrl+R reloads the page in a browser.
+- **Fill** works on a selected block, so it needs `cellSelection` (as built in #635). Ctrl+D copies the selected block's top row down through it. The fill handle (on the block's end corner, logical: the bottom inline-end) drags down or toward the inline-end. No fill-right key: Ctrl+R reloads the page in a browser.
 - **Undo:**
   - One undo step is one user action (a typed edit, one paste, one fill). Each step undoes its cells together, by calling `onCellEdit` with the previous values (`source: 'undo'`), and redo the same way (`source: 'redo'`).
   - The history is per grid and holds the last 100 steps. A step whose cells no longer hold the values it left them with (the data changed from outside) ends the history there, so a refetch with the same values keeps it (as built in #612).
