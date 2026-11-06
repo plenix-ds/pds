@@ -215,8 +215,8 @@ t('chart-parts', 'foundation', 'L', 7, 'B', ['ChartKit'], ['Axis (bottom, left, 
 /* ───────── wave 8: charts 1 ───────── */
 t('chart-a11y', 'foundation', 'M', 8, 'A', ['chart-parts'], ['data grid fallback', 'keyboard point navigation', 'summary text', 'patterns'], 'platform/charts/a11y.ts', ['platform/charts/a11y.ts']);
 t('chart-interaction', 'foundation', 'M', 8, 'A', ['chart-parts'], ['hover crosshair', 'brush/zoom', 'legend toggle', 'click a point'], 'platform/charts/interaction.ts', ['platform/charts/interaction.ts']);
-t('LineChart', 'component', 'M', 8, 'A', ['chart-parts'], ['line', 'step', 'multi-series', 'points'], 'platform/charts/LineChart.jsx', ['platform/charts/LineChart.jsx']);
-t('AreaChart', 'component', 'S', 8, 'A', ['LineChart'], ['area', 'stacked', 'percent'], '', ['platform/charts/AreaChart.jsx']);
+t('LineChart', 'component', 'M', 8, 'A', ['chart-parts'], ['line', 'step', 'multi-series', 'points'], 'platform/charts/LineChart.tsx', ['platform/charts/LineChart.tsx']);
+t('AreaChart', 'component', 'S', 8, 'A', ['LineChart'], ['area', 'stacked', 'percent'], '', ['platform/charts/AreaChart.tsx']);
 t('BarChart', 'component', 'M', 8, 'B', ['chart-parts'], ['bar (horizontal)', 'column (vertical)', 'grouped', 'stacked', 'percent', 'histogram (binned)'], '', ['platform/charts/BarChart.jsx']);
 t('ComboChart', 'component', 'S', 8, 'B', ['BarChart'], ['bar + line', 'two axes'], '', ['platform/charts/ComboChart.jsx']);
 t('LollipopChart', 'component', 'S', 8, 'B', ['chart-parts'], ['horizontal', 'vertical'], '', ['platform/charts/LollipopChart.jsx']);

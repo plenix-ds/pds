@@ -37,8 +37,8 @@ function lazyChart(name: any, load: any, fallback: any) {
   return LazyChart;
 }
 
-export const LineChart = lazyChart('LineChart', () => import('./LineChart.jsx'), caption);
-export const AreaChart = lazyChart('AreaChart', () => import('./AreaChart.jsx'), caption);
+export const LineChart = lazyChart('LineChart', () => import('./LineChart.tsx'), caption);
+export const AreaChart = lazyChart('AreaChart', () => import('./AreaChart.tsx'), caption);
 export const BarChart = lazyChart('BarChart', () => import('./BarChart.jsx'), caption);
 export const PieChart = lazyChart('PieChart', () => import('./PieChart.jsx'), caption);
 export const TreeChart = lazyChart('TreeChart', () => import('./TreeChart.jsx'), caption);
