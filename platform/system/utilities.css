@@ -74,6 +74,7 @@
 .plx-u-p-12px{padding-block-end:var(--plx-ref-space-3u);padding-block-start:var(--plx-ref-space-3u);padding-inline-end:var(--plx-ref-space-3u);padding-inline-start:var(--plx-ref-space-3u);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
 .plx-u-pl-12px{padding-left:var(--plx-ref-space-3u);}
+/* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
 .plx-u-pl-16px{padding-left:var(--plx-ref-space-4u);}
 .plx-u-ps-12px{padding-inline-start:var(--plx-ref-space-3u);}
 /* stylelint-disable-next-line plenix/logical-properties, declaration-property-value-disallowed-list -- deprecated physical utility (docs/adr/0006), removed in 2.0.0 */
