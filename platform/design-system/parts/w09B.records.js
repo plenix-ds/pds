@@ -133,7 +133,7 @@ DSParts.records.push(function (H) {
     { id: 'brand', label: 'Brand', values: [2, 3, 3, 4, 5, 5, 6, 7, 8, 9, 21] }, { id: 'web', label: 'Web', values: [5, 6, 6, 7, 8, 9, 9, 10, 11, 12] }];
   var boxPlot = function (o) { return h(P.BoxPlot, Object.assign({ title: 'Review time by team', description: 'Legal reviews are steady; Design varies most, with two very long reviews. Whiskers reach 1.5 × the box.', groups: REVIEWS, valueLabel: 'Hours' }, o)); };
   var boxPlotRec = { id: 'box-plot', lab: true, icon: 'chart', sec: 'data-display', sub: 'Charts', leaf: 'Box plot', title: 'Box plot',
-    plenix: 'BoxPlot, boxStats', src: 'charts/BoxPlot.jsx', also: ['charts/chart-kit.ts'], css: CSS('box-plot.css'), blocks: ['plx-box-plot'],
+    plenix: 'BoxPlot, boxStats', src: 'charts/BoxPlot.tsx', also: ['charts/chart-kit.ts'], css: CSS('box-plot.css'), blocks: ['plx-box-plot'],
     level: 'Component', interaction: 'Display',
     aliases: ['Box and whisker plot', 'Boxplot', 'Five-number summary'],
     text: 'Distributions compared by their summaries. For each group: a box from the first to the third quartile (the middle half of its values), a line at the median, whiskers to the lowest and highest values within 1.5 times the box’s length, and the values beyond them as outlier points. Groups share one value axis. The tooltip gives the five numbers; the data table gives them all, with the outliers and the count. It takes raw values (and computes the summary) or a summary already made.',

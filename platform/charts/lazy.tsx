@@ -48,7 +48,7 @@ export const ScatterChart = lazyChart('ScatterChart', () => import('./ScatterCha
 export const LollipopChart = lazyChart('LollipopChart', () => import('./LollipopChart.tsx'), caption);
 export const BulletChart = lazyChart('BulletChart', () => import('./BulletChart.tsx'), caption);
 export const FunnelChart = lazyChart('FunnelChart', () => import('./FunnelChart.tsx'), caption);
-export const BoxPlot = lazyChart('BoxPlot', () => import('./BoxPlot.jsx'), caption);
+export const BoxPlot = lazyChart('BoxPlot', () => import('./BoxPlot.tsx'), caption);
 export const RadarChart = lazyChart('RadarChart', () => import('./RadarChart.jsx'), caption);
 export const Treemap = lazyChart('Treemap', () => import('./Treemap.jsx'), caption);
 export const HeatMap = lazyChart('HeatMap', () => import('./HeatMap.jsx'), caption);

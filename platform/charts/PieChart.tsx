@@ -41,10 +41,10 @@
        No style is written here.
 */
 import React from 'react';
-import type { ChartMargin } from './chart-types.ts';
 import { cx } from '../utils/cx.ts';
 import { formatNumber, formatPercent } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.tsx';
+import type { ChartFrameProps } from './ChartFrame.tsx';
 import { seriesColor } from './scales.ts';
 import { ChartLegend } from './parts/ChartLegend.tsx';
 import { ChartTooltip, chartTooltipText } from './parts/ChartTooltip.tsx';
@@ -68,29 +68,23 @@ const at = (cx0: any, cy0: any, r: any, a: any) => [cx0 + r * Math.sin(a), cy0 -
 
 export { pieSlices } from './chart-helpers.ts';
 
-/** @public one part of a pie chart */
-export type PieChartDatum = { id?: string | number; label: string; value: number; /** a data-viz step */ color?: string };
-/** @public */
-export type PieChartProps = {
-  title: string;
-  description?: string;
-  hideCaption?: boolean;
-  size?: 'sm' | 'md' | 'lg';
-  data?: PieChartDatum[];
+/** @public one part of the whole: its value above zero and an optional data-viz step (default by its order) */
+export type PieSlice = { id?: string | number; label: string; value: number; color?: string };
+/** @public the prop type (ADR 0011) */
+export type PieChartProps = Omit<Pick<ChartFrameProps, 'title' | 'description' | 'hideCaption' | 'size' | 'margin' | 'legend' | 'legendPosition' | 'className'>, 'legend'> & {
+  data?: PieSlice[];
   variant?: 'pie' | 'donut' | 'half';
-  centerValue?: string | number;
+  centerValue?: React.ReactNode;
   centerLabel?: string;
   sort?: boolean;
   maxSlices?: number;
   format?(value: number): string;
   showValues?: boolean;
+  /** false hides the legend (default shown) */
   legend?: boolean;
-  legendPosition?: 'bottom' | 'top' | 'end';
   tooltip?: boolean;
   interactive?: boolean;
-  margin?: ChartMargin;
   strings?: Record<string, string>;
-  className?: string;
 };
 export function PieChart({ title, description, hideCaption, size, data = [], variant = 'pie', centerValue, centerLabel, sort = true, maxSlices = 6,
   format, showValues = false, legend, legendPosition, tooltip = true, interactive = true, margin, strings, className }: PieChartProps) {
@@ -118,7 +112,7 @@ export function PieChart({ title, description, hideCaption, size, data = [], var
 
   // the ring's geometry in the plot (the same as before ECharts: the frame's plot less the ring's margin)
   const m: any = {};
-  Object.keys(RING_MARGIN).forEach((k) => { m[k] = snapToGrid(margin && (margin as any)[k] !== undefined ? (margin as any)[k] : (RING_MARGIN as any)[k]); });
+  (Object.keys(RING_MARGIN) as (keyof typeof RING_MARGIN)[]).forEach((k) => { m[k] = snapToGrid(margin && margin[k] !== undefined ? margin[k] : RING_MARGIN[k]); });
   const ring = (dims: any) => {
     const w = Math.max(0, dims.width - m.start - m.end), h = Math.max(0, dims.height - m.top - m.bottom);
     const r1 = Math.max(0, half ? Math.min(w / 2, h) : Math.min(w, h) / 2);
@@ -167,7 +161,7 @@ export function PieChart({ title, description, hideCaption, size, data = [], var
     if (!plot.chart) return layer;
     const inner = { width: G.w, height: G.h };
     const a = ia.active && slices[ia.active.c] ? ia.active.c : null;
-    let tip: any = null;
+    let tip = null;
     if (tooltip && a !== null) {
       const [px, py] = at(G.cx0, G.cy0, (G.r0 + G.r1) / 2, (A[a][0] + A[a][1]) / 2), tp = tipOf(a);
       tip = <ChartTooltip x={px} y={py} inner={inner} title={tp.title} items={tp.items} />;

@@ -31,7 +31,6 @@
        stacked or grouped values.
 */
 import React from 'react';
-import type { ChartMargin } from './chart-types.ts';
 import { cx } from '../utils/cx.ts';
 import { formatNumber } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.tsx';
@@ -47,16 +46,16 @@ const NO_MARGIN = Object.freeze({ top: 0, end: 0, bottom: 0, start: 0 });
 // the ring around the active dot (SVG geometry, the 4px grid): its radius, and the dot's room at a value's end
 const RING = 8;
 
-/** @public one category of a lollipop chart */
-export type LollipopDatum = { label: string; value: number };
-/** @public */
+/** @public one category: its name and value */
+export type LollipopPoint = { label: string; value: number };
+/** @public the prop type (ADR 0011) */
 export type LollipopChartProps = {
   title: string;
   description?: string;
-  data?: LollipopDatum[];
+  data?: LollipopPoint[];
   orientation?: 'horizontal' | 'vertical';
   sort?: 'none' | 'desc' | 'asc';
-  /** a data-viz step */
+  /** the data-viz step of the marks ("categorical-1" by default) */
   color?: string;
   showValues?: boolean;
   format?(value: number): string;

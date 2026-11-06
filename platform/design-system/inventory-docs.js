@@ -3372,7 +3372,7 @@ window.DSDocs = {
    "labels": "Name the main region's page with one h1. Keep landmark labels short nouns (\"Settings sections\", \"Details\").",
    "actions": "Not applicable: the shell holds no actions; the AppHeader action and the page's own buttons do.",
    "errors": "Not applicable: the shell has no error text.",
-   "localization": "The skip link text \"Skip to main content\" is fixed in code and needs translating. The layout uses logical properties; the splitter's arrow keys follow physical Left and Right, which should be checked in right-to-left."
+   "localization": "The skip link text \"Skip to main content\" comes from the `strings` prop and the catalog, so it is translated like every word. The layout uses logical properties; the splitters follow the writing direction: in right-to-left their edges are mirrored, and Arrow Left and Arrow Right move them the way the edge moves."
   }
  },
  "secondary-pane": {

@@ -29,7 +29,6 @@
        diagram when items can skip or repeat stages, a bar chart for categories that are not steps.
 */
 import React from 'react';
-import type { ChartMargin } from './chart-types.ts';
 import { cx } from '../utils/cx.ts';
 import { formatNumber, formatPercent } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.tsx';
@@ -57,15 +56,15 @@ const twoLines = (s: any) => {
   return [w.slice(0, best).join(' '), w.slice(best).join(' ')];
 };
 
-/** @public one stage of a funnel */
-export type FunnelDatum = { label: string; value: number };
-/** @public */
+/** @public one stage of the process: its name and how many reached it */
+export type FunnelStage = { label: string; value: number };
+/** @public the prop type (ADR 0011) */
 export type FunnelChartProps = {
   title: string;
   description?: string;
-  data?: FunnelDatum[];
+  data?: FunnelStage[];
   orientation?: 'vertical' | 'horizontal';
-  /** a data-viz step */
+  /** the data-viz step of the bars ("categorical-1" by default) */
   color?: string;
   format?(value: number): string;
   valueTitle?: string;
@@ -77,7 +76,7 @@ export function FunnelChart({ title, description, data = [], orientation = 'vert
   const t: any = useStrings('chart.funnelChart', strings);
   const o = orientation === 'horizontal' ? 'horizontal' : 'vertical';
   const vertical = o === 'vertical';
-  const rows: Array<{ id: number; label: string; value: number; kept?: number | null; share?: number | null }> = data.map((d, i) => ({ id: i + 1, label: String(d.label), value: Math.max(0, Number(d.value) || 0) }));
+  const rows: any[] = data.map((d, i) => ({ id: i + 1, label: String(d.label), value: Math.max(0, Number(d.value) || 0) }));
   const first = rows.length ? rows[0].value : 0;
   rows.forEach((r, i) => { r.kept = i && rows[i - 1].value ? r.value / rows[i - 1].value : null; r.share = first ? r.value / first : null; });
   const fmt = (v: any) => (typeof format === 'function' ? format(v) : formatNumber(v));
@@ -135,7 +134,7 @@ export function FunnelChart({ title, description, data = [], orientation = 'vert
         })}
         {a !== null ? (() => { const b = bar(a); return <rect className="plx-chart-keys__ring" x={b.x - RING} y={b.y - RING} width={b.width + 2 * RING} height={b.height + 2 * RING} />; })() : null}
         {a !== null ? (() => { const e = px(a, rows[a].value); return <ChartTooltip x={e.x} y={e.y} inner={inner} title={rows[a].label}
-          items={([{ label: valueTitle || t.value, value: fmt(rows[a].value), color: mark }] as any[]).concat(rows[a].kept !== null ? [{ label: t.kept, value: pct(rows[a].kept) }, { label: t.ofFirst, value: pct(rows[a].share) }] : [])} />; })() : null}
+          items={[{ label: valueTitle || t.value, value: fmt(rows[a].value), color: mark } as any].concat(rows[a].kept !== null ? [{ label: t.kept, value: pct(rows[a].kept) }, { label: t.ofFirst, value: pct(rows[a].share) }] : [])} />; })() : null}
       </g>
     )];
   };

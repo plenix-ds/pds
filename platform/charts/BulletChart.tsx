@@ -28,10 +28,10 @@
        a line across and the ranges are named in the tooltip and the table.
 */
 import React from 'react';
-import type { ChartMargin } from './chart-types.ts';
 import { cx } from '../utils/cx.ts';
 import { formatNumber } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.tsx';
+import type { ChartFrameProps } from './ChartFrame.tsx';
 import { ChartTooltip } from './parts/ChartTooltip.tsx';
 import { useChartHover, finite } from './chart-kit.ts';
 import { useEChartsPlot, plotGrid } from './echarts/EChartsPlot.tsx';
@@ -44,25 +44,17 @@ const BAND = 1 / 1.4;   // a measure's band as a share of its row (the room betw
 const BAR = 1 / 3;      // the value bar's thickness, a share of the band
 const TARGET = 2 / 3;   // the target line's length, a share of the band
 
-/** @public one measure of a bullet chart; `ranges` are the upper ends of up to three bands, lowest first */
-export type BulletItem = { id: string; label: string; value: number; target?: number; ranges?: number[] };
-/** @public */
-export type BulletChartProps = {
-  title: string;
-  description?: string;
-  hideCaption?: boolean;
-  size?: 'sm' | 'md' | 'lg';
+/** @public one measure: its value, an optional target, and the upper ends of up to three bands (poor, fair, good) */
+export type BulletItem = { id?: string | number; label: string; value: number; target?: number; ranges?: number[] };
+/** @public the prop type (ADR 0011) */
+export type BulletChartProps = Pick<ChartFrameProps, 'title' | 'description' | 'hideCaption' | 'size' | 'margin' | 'legend' | 'legendPosition' | 'className'> & {
   items?: BulletItem[];
   orientation?: 'horizontal' | 'vertical';
   max?: number;
   valueLabel?: string;
   format?(value: number): string;
   tooltip?: boolean;
-  legend?: boolean;
-  legendPosition?: 'bottom' | 'top' | 'end';
-  margin?: ChartMargin;
   strings?: Record<string, string>;
-  className?: string;
 };
 export function BulletChart({ title, description, hideCaption, size, items = [], orientation = 'horizontal', max, valueLabel, format, tooltip = true,
   legend, legendPosition, margin, strings, className }: BulletChartProps) {
@@ -99,7 +91,7 @@ export function BulletChart({ title, description, hideCaption, size, items = [],
     const fill = (i: any, n: any) => tk.bullet.ranges[i + (3 - n)];
     // the bands, widest first (so the narrower sit in front of them), all on one row; then the value bar, narrower, on a second (hidden) category axis so it
     // sits centred on the same row. The target mark is the frame's overlay (it needs the row's exact size)
-    const series: any = [];
+    const series = [];
     [2, 1, 0].forEach((r) => series.push({ type: 'bar', id: 'r' + r, silent: true, barGap: '-100%', barWidth: pct(1), z: 1 + (2 - r) * 0.1, emphasis: { disabled: true },
       data: list.map((it) => (it.ranges[r] === undefined ? null : { value: it.ranges[r], itemStyle: { color: fill(r, it.ranges.length) } })) }));
     series.push({ type: 'bar', id: 'value', silent: true, barWidth: pct(BAR), z: 3, itemStyle: { color: tk.color('categorical-1') }, emphasis: { disabled: true }, data: list.map((it) => finite(it.value)),
@@ -121,7 +113,7 @@ export function BulletChart({ title, description, hideCaption, size, items = [],
     const at = (i: any, v: any) => { const p = c.convertToPixel({ xAxisIndex: 0, yAxisIndex: 0 }, across ? [v, i] : [i, v]); return { x: p[0] - g.x, y: p[1] - g.y }; };
     const inner = { width: g.width, height: g.height };
     const ai = active === null ? -1 : list.findIndex((x) => x.id === active);
-    let tip: any = null;
+    let tip = null;
     if (tooltip && ai >= 0) {
       const it = list[ai], end = at(ai, finite(it.value));
       const shown = fmt(finite(it.value)) + (it.target === undefined || it.target === null ? '' : ' \u00b7 ' + t.target + ' ' + fmt(it.target));

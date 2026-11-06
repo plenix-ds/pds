@@ -229,7 +229,7 @@ t('BulletChart', 'component', 'S', 8, 'B', ['chart-parts'], ['horizontal', 'vert
 
 /* ───────── wave 9: charts 2 and visualizations ───────── */
 t('HeatMap', 'component', 'M', 9, 'A', ['chart-parts'], ['matrix', 'calendar heat map'], '', ['platform/charts/HeatMap.jsx']);
-t('BoxPlot', 'component', 'M', 9, 'A', ['chart-parts'], ['vertical', 'horizontal', 'with outliers'], '', ['platform/charts/BoxPlot.jsx']);
+t('BoxPlot', 'component', 'M', 9, 'A', ['chart-parts'], ['vertical', 'horizontal', 'with outliers'], '', ['platform/charts/BoxPlot.tsx']);
 t('FunnelChart', 'component', 'S', 9, 'A', ['chart-parts'], ['vertical', 'horizontal'], '', ['platform/charts/FunnelChart.tsx']);
 t('WaterfallChart', 'component', 'S', 9, 'A', ['chart-parts'], ['with totals'], '', ['platform/charts/WaterfallChart.tsx']);
 t('RadarChart', 'component', 'S', 9, 'A', ['chart-parts'], ['single', 'compare'], '', ['platform/charts/RadarChart.jsx']);
