@@ -2667,5 +2667,80 @@
   "connected-accounts--status-error": {
     "sets": [],
     "why": "markup only: the service shows a Connection error Badge, says why, and offers Reconnect"
+  },
+  "code-editor--height-height-sm": {
+    "sets": [
+      {
+        "property": "min-block-size",
+        "part": "scroller",
+        "token": "--plx-comp-code-editor-height-sm-min-height"
+      }
+    ],
+    "why": ".plx-code-editor--height-sm>.plx-code-editor__scroller in code-editor.css"
+  },
+  "code-editor--height-height-md-default": {
+    "sets": [
+      {
+        "property": "min-block-size",
+        "part": "scroller",
+        "token": "--plx-comp-code-editor-height-md-min-height"
+      }
+    ],
+    "why": ".plx-code-editor--height-md>.plx-code-editor__scroller in code-editor.css"
+  },
+  "code-editor--height-height-lg": {
+    "sets": [
+      {
+        "property": "min-block-size",
+        "part": "scroller",
+        "token": "--plx-comp-code-editor-height-lg-min-height"
+      }
+    ],
+    "why": ".plx-code-editor--height-lg>.plx-code-editor__scroller in code-editor.css"
+  },
+  "code-editor--variant-with-line-numbers": {
+    "sets": [
+      {
+        "property": "border-inline-end-color",
+        "part": "gutter",
+        "token": "--plx-comp-code-editor-gutter-border-color"
+      },
+      {
+        "property": "border-inline-end-width",
+        "part": "gutter",
+        "token": "--plx-comp-code-editor-border-width"
+      },
+      {
+        "property": "color",
+        "part": "gutter",
+        "token": "--plx-comp-code-editor-gutter-text"
+      },
+      {
+        "property": "padding-inline",
+        "part": "gutter",
+        "token": "--plx-comp-code-editor-gutter-padding-inline"
+      }
+    ],
+    "why": ".plx-code-editor__gutter, the column of line numbers beside the code"
+  },
+  "code-editor--variant-plain": {
+    "sets": [],
+    "why": "markup only: the code without line numbers"
+  },
+  "code-editor--language-jsx": {
+    "sets": [],
+    "why": "markup only: colors the code as JSX as it is typed, with the CodeBlock's colors"
+  },
+  "code-editor--language-css": {
+    "sets": [],
+    "why": "markup only: colors the code as CSS as it is typed, with the CodeBlock's colors"
+  },
+  "code-editor--language-html": {
+    "sets": [],
+    "why": "markup only: colors the code as HTML as it is typed, with the CodeBlock's colors"
+  },
+  "code-editor--language-text": {
+    "sets": [],
+    "why": "markup only: colors the code as plain text as it is typed, with the CodeBlock's colors; plain text has no colored tokens"
   }
 }
