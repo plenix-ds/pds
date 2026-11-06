@@ -378,5 +378,15 @@
     "loading": "n/a(the value and trend are given; a trend line draws after its chart module loads; stories arrive with Storybook, P0-11)",
     "selected": "n/a(a metric is not selectable)",
     "error": "n/a(a metric has no value to validate)"
+  },
+  "MediaViewer": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(the viewer shows media; its controls are plain buttons)",
+    "loading": "n/a(the app gives the media; a slow image is the browser's)",
+    "selected": "n/a(the shown item is the current one, not a selection)",
+    "error": "n/a(the viewer has no value to validate)"
   }
 }

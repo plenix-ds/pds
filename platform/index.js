@@ -268,7 +268,7 @@ export { TimelineChart } from './charts/TimelineChart.jsx';
 export { ComparisonView } from './patterns/ComparisonView/ComparisonView.jsx';
 export { summarizeSeries, CHART_PATTERNS, chartPattern, patternFill, ChartPatterns, useChartPoints } from './charts/a11y.js';
 export { Sparkline } from './charts/lazy.jsx';
-export { LollipopChart } from './charts/LollipopChart.jsx';
+export { LollipopChart } from './charts/lazy.jsx';
 export { ScatterChart } from './charts/lazy.jsx';
 export { FunnelChart } from './charts/FunnelChart.jsx';
 export { Treemap } from './charts/Treemap.jsx';

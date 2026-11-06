@@ -112,6 +112,8 @@ export function chartTokens(where) {
     // a scatter plot's look (ScatterChart): a point's radius, its fill opacity (a bubble's own), its outline, and the trend line's width and dashes
     scatter: { r: len(prop('--plx-comp-scatter-point-radius')), pointOpacity: num(prop('--plx-comp-scatter-point-opacity')), bubbleOpacity: num(prop('--plx-comp-scatter-bubble-opacity')),
       outline: len(prop('--plx-comp-scatter-point-outline-width')), trend: { width: len(prop('--plx-comp-scatter-trend-width')), dash: len(prop('--plx-comp-scatter-trend-dash')), gap: len(prop('--plx-comp-scatter-trend-gap')) } },
+    // a lollipop's look (LollipopChart): the stem's width, the dot's radius and its outline
+    lollipop: { stem: len(prop('--plx-comp-lollipop-stem-width')), r: len(prop('--plx-comp-lollipop-dot-radius')), outline: prop('--plx-comp-lollipop-dot-outline'), outlineWidth: len(prop('--plx-comp-lollipop-dot-outline-width')) },
     // a waterfall's connector between one step's end and the next step's start, and the outline of the selected step
     waterfall: { color: cs(conn).stroke, width: num(cs(conn).strokeWidth), dash: num(cs(conn).strokeDasharray.split(/[ ,]+/)[0]) },
     selected: { color: cs(selected).stroke, width: num(cs(selected).strokeWidth) },
