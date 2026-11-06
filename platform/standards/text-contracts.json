@@ -2278,12 +2278,12 @@
    ]
   },
   "plx-popover": {
-   "contract": "adjusts",
-   "props": [
-    "font-family",
+   "contract": "establishes",
+   "role": "body",
+   "font": "sans",
+   "adjusts": [
     "font-size",
-    "line-height",
-    "word-spacing"
+    "line-height"
    ]
   },
   "plx-popover__title": {
@@ -2869,8 +2869,13 @@
    ]
   },
   "plx-session-timeout__inline-time": {
-   "contract": "follows",
-   "font": "mono"
+   "contract": "establishes",
+   "role": "body",
+   "font": "mono",
+   "adjusts": [
+    "font-size",
+    "line-height"
+   ]
   },
   "plx-session-timeout__text": {
    "contract": "adjusts",
@@ -2880,11 +2885,13 @@
    ]
   },
   "plx-session-timeout__time": {
-   "contract": "adjusts",
-   "props": [
-    "font-family",
+   "contract": "establishes",
+   "role": "body",
+   "font": "mono",
+   "adjusts": [
+    "font-size",
     "font-weight",
-    "word-spacing"
+    "line-height"
    ]
   },
   "plx-session-timeout__title": {

@@ -399,6 +399,16 @@
     "selected": "n/a(stories arrive with Storybook, P0-11)",
     "error": "n/a(a stylesheet-only change here; error states live in the part's own rules)"
   },
+  "Popover": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(a popover opens or does not; its trigger is the control that is disabled)",
+    "loading": "n/a(the content is the application's; an async body is its own loading state)",
+    "selected": "n/a(a popover has no selection)",
+    "error": "n/a(a popover has no value to validate)"
+  },
   "Brand": {
     "default": "n/a(stories arrive with Storybook, P0-11)",
     "hover": "n/a(stories arrive with Storybook, P0-11)",
