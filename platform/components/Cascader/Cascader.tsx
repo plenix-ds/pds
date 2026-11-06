@@ -70,6 +70,7 @@ import { useReadOnly } from '../../providers/ReadOnly.tsx';
 import { Tag } from '../Tag/Tag.tsx';
 import { MillerColumns } from '../MillerColumns/MillerColumns.tsx';
 import { useBranchLoader } from '../../hooks/useBranchLoader.ts';
+import type { BranchNode, LoadChildren } from '../../hooks/useBranchLoader.ts';
 import { announce } from '../../utils/announce.tsx';
 import { useFloating, TOP_LAYER } from '../../utils/floating.ts';
 
@@ -78,6 +79,7 @@ import { Spinner } from '../Loading/Loading.tsx';
 import { fill } from '../../utils/fill.ts';
 import { dataPhrase } from '../../utils/dataText.tsx';
 import { useStrings, useLocale } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import { formatNumber } from '../../utils/format.ts';
 import { Icon } from '../Icon/Icon.tsx';
 import SelectChevronIcon from 'plenix-platform/icons/plenix/select-chevron';
@@ -88,21 +90,60 @@ import SelectChevronIcon from 'plenix-platform/icons/plenix/select-chevron';
 const NARROW = [1, 1, 1, 1, 1, 1];
 // every choosable item of the hierarchy with its path of items: the leaves, and the parents that are choosable (a parent is listed before its children)
 // (a parent still to load, pending: issue 814, is neither: it has no leaves yet and is never chosen itself until it loads)
-const leavesOf = (items, trail = [], choosable = () => false, pending = () => false) => items.reduce((all, it) => {
+type Id = string | number;
+type CascaderItem = BranchNode & { choosable?: boolean; disabled?: boolean; self?: Id; children?: CascaderItem[] | null };
+type Leaf = { item: CascaderItem; trail: CascaderItem[] };
+type Words = Record<string, string>;
+const leavesOf = (items: CascaderItem[], trail: CascaderItem[] = [], choosable: (it: CascaderItem) => boolean = () => false, pending: (it: CascaderItem) => boolean = () => false): Leaf[] => items.reduce<Leaf[]>((all, it) => {
   const here = trail.concat([it]);
   if (!Array.isArray(it.children)) return pending(it) ? all : all.concat([{ item: it, trail: here }]);
   return all.concat(choosable(it) ? [{ item: it, trail: here }] : [], leavesOf(it.children, here, choosable, pending));
 }, []);
 // a choosable parent lists "All of …" first among its children: an ordinary row for the columns (its id is the parent's, marked)
 const SELF = '__plx-self:';
-const withSelf = (items, choosable, label) => items.map((it) => (Array.isArray(it.children)
-  ? Object.assign({}, it, { children: (choosable(it) ? [{ id: SELF + it.id, self: it.id, label: label(it), disabled: it.disabled }] : []).concat(withSelf(it.children, choosable, label)) }) : it));
+const withSelf = (items: CascaderItem[], choosable: (it: CascaderItem) => boolean, label: (it: CascaderItem) => string): CascaderItem[] => items.map((it) => (Array.isArray(it.children)
+  ? Object.assign({}, it, { children: (choosable(it) ? [{ id: SELF + it.id, self: it.id, label: label(it), disabled: it.disabled } as CascaderItem] : []).concat(withSelf(it.children, choosable, label)) }) : it));
 
-const EMPTY = [];
+const EMPTY: CascaderItem[] = [];
 
-export const Cascader = React.forwardRef(function Cascader({ options: given = EMPTY, loadChildren, value, values, onChange, multiple = false, expandTrigger = 'click', searchable = false,
+/** @public the prop type (ADR 0011) */
+export type CascaderProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'value' | 'onChange' | 'placeholder'> & {
+  /** the hierarchy: { id, label, disabled, choosable, children } */
+  options?: CascaderItem[];
+  /** loads a parent's children when it is first opened */
+  loadChildren?: LoadChildren<CascaderItem>;
+  /** the chosen id (single) */
+  value?: Id | null;
+  /** the chosen ids (multiple) */
+  values?: Id[];
+  /** the chosen id and its path of ids (single), or the chosen ids (multiple) */
+  onChange?: (value: Id | Id[], path?: Id[]) => void;
+  multiple?: boolean;
+  /** "click" (default) | "hover" */
+  expandTrigger?: 'click' | 'hover';
+  searchable?: boolean;
+  /** a parent can be the answer ("All of …" first among its children) */
+  choosableParents?: boolean;
+  /** show the first maxTags chips, then "+N" (0: all) */
+  maxTags?: number;
+  /** the most values that can be chosen (multiple) */
+  maxChoices?: number;
+  /** a server search: returns [{ id, label, path, disabled }] for a query */
+  loadOptions?: (query: string) => unknown;
+  loadDelay?: number;
+  minChars?: number;
+  placeholder?: string;
+  label?: string;
+  invalid?: boolean;
+  warning?: string | boolean;
+  readOnly?: boolean;
+  strings?: Catalog | null;
+  className?: string;
+};
+
+export const Cascader = React.forwardRef<HTMLButtonElement | null, CascaderProps>(function Cascader({ options: given = EMPTY, loadChildren, value, values, onChange, multiple = false, expandTrigger = 'click', searchable = false,
   choosableParents = false, maxTags = 0, maxChoices, loadOptions, loadDelay = 300, minChars = 0, placeholder, label, invalid, warning, disabled, readOnly: readOnlyOwn, id, strings, className, 'aria-describedby': describedBy, ...rest }, ref) {
-  const t = useStrings('cascader', strings);
+  const t = useStrings('cascader', strings) as unknown as Words;
   const branches = useBranchLoader(loadChildren);   // a parent with hasChildren loads its children when first opened (issue 814), shared with the columns
   const options = branches.merge(given);
   const loc = useLocale();
@@ -111,27 +152,27 @@ export const Cascader = React.forwardRef(function Cascader({ options: given = EM
   const [open, setOpen] = React.useState(false);
   const [text, setText] = React.useState('');
   const [active, setActive] = React.useState(0);
-  const [browse, setBrowse] = React.useState([]);
+  const [browse, setBrowse] = React.useState<Id[]>([]);
   const [limitShown, setLimitShown] = React.useState(false);
   // server search: the matches of the last load, the loads in flight (only the newest counts) and every match seen (they name a chosen value later)
-  const [loaded, setLoaded] = React.useState([]);
+  const [loaded, setLoaded] = React.useState<Leaf[]>([]);
   const [busy, setBusy] = React.useState(false);
   const [failed, setFailed] = React.useState(false);
-  const loader = React.useRef(loadOptions), request = React.useRef(0), seen = React.useRef(new Map());
+  const loader = React.useRef(loadOptions), request = React.useRef(0), seen = React.useRef(new Map<Id, Leaf>());
   loader.current = loadOptions;
   const remote = !!loadOptions && searchable;
-  const wrap = React.useRef(null), button = React.useRef(null), search = React.useRef(null), cols = React.useRef(null), popup = React.useRef(null);
+  const wrap = React.useRef<HTMLDivElement | null>(null), button = React.useRef<HTMLButtonElement | null>(null), search = React.useRef<HTMLInputElement | null>(null), cols = React.useRef<HTMLDivElement | null>(null), popup = React.useRef<HTMLDivElement | null>(null);
   // the popup opens in the top layer, placed against the field by the floating layer (flips up near an edge, follows scroll and resize): no dialog, drawer or scroll area clips it
   useFloating(wrap, popup, { open, placement: 'bottom-start' });
   React.useLayoutEffect(() => { const el = popup.current; if (open && TOP_LAYER && el && el.showPopover && !el.matches(':popover-open')) el.showPopover(); }, [open]);
-  React.useImperativeHandle(ref, () => button.current);
-  const chosen = multiple ? (values || []) : (value !== undefined && value !== null && value !== '' ? [value] : []);
-  const pathLabel = (trail) => trail.map((x) => x.label).join(t.separator);
+  React.useImperativeHandle(ref, () => button.current as HTMLButtonElement);
+  const chosen: Id[] = multiple ? (values || []) : (value !== undefined && value !== null && value !== '' ? [value] : []);
+  const pathLabel = (trail: CascaderItem[]) => trail.map((x) => x.label).join(t.separator);
   // which parents can be the answer, the choosable items and the columns' items ("All of …" first in a choosable parent)
-  const choosable = (it) => Array.isArray(it.children) && (it.choosable !== undefined ? !!it.choosable : choosableParents);
+  const choosable = (it: CascaderItem) => Array.isArray(it.children) && (it.choosable !== undefined ? !!it.choosable : choosableParents);
   const leaves = React.useMemo(() => leavesOf(options, [], choosable, branches.needs), [options, choosableParents, !!loadChildren]);   // eslint-disable-line react-hooks/exhaustive-deps
   const columnsItems = React.useMemo(() => withSelf(options, choosable, (it) => fill(t.allOf, { label: it.label })), [options, choosableParents, t.allOf]);   // eslint-disable-line react-hooks/exhaustive-deps
-  const pathFor = (v) => { const hit = leaves.find((l) => l.item.id === v) || seen.current.get(v); return hit ? hit.trail : null; };
+  const pathFor = (v: Id) => { const hit = leaves.find((l) => l.item.id === v) || seen.current.get(v); return hit ? hit.trail : null; };
   const checkedIds = chosen.map((v) => (leaves.some((l) => l.item.id === v && Array.isArray(l.item.children)) ? SELF + v : v));
   const current = !multiple && chosen.length ? pathFor(chosen[0]) : null;
 
@@ -141,22 +182,22 @@ export const Cascader = React.forwardRef(function Cascader({ options: given = EM
     setBrowse(current ? current.map((x) => x.id) : []);
     setText(''); setLimitShown(false); setOpen(true);
   };
-  const close = (refocus) => { setOpen(false); setText(''); setLimitShown(false); if (refocus && button.current) button.current.focus(); };
+  const close = (refocus?: boolean) => { setOpen(false); setText(''); setLimitShown(false); if (refocus && button.current) button.current.focus(); };
   // focus moves into the list when it opens: the search field, or the first column
   React.useEffect(() => {
     if (!open) return;
     const target = searchable ? search.current : cols.current && cols.current.querySelector('.plx-miller-columns__list');
-    if (target) target.focus();
+    if (target) (target as HTMLElement).focus();
   }, [open]);
   React.useEffect(() => {
     if (!open) return undefined;
-    const off = (e) => { if (wrap.current && !wrap.current.contains(e.target)) close(false); };
+    const off = (e: MouseEvent) => { if (wrap.current && !wrap.current.contains(e.target as Node)) close(false); };
     document.addEventListener('mousedown', off);
     return () => document.removeEventListener('mousedown', off);
   }, [open]);
 
   const q = text.trim().toLowerCase();
-  const said = (n) => announce(typeof t.results === 'function' ? t.results(n) : loc.t('cascader.results', { count: n, n: formatNumber(n) }));
+  const said = (n: number) => announce(typeof (t.results as unknown) === 'function' ? (t.results as unknown as (n: number) => string)(n) : loc.t('cascader.results', { count: n, n: formatNumber(n) }));
   // with a server search, fewer letters than minChars show the columns; the matches are the server's (nothing filters them here)
   const searching = !!q && (!remote || q.length >= minChars);
   const matches = !searching ? [] : remote ? loaded : leaves.filter((l) => !l.item.disabled && matchesText(l.item.label, text));
@@ -168,10 +209,10 @@ export const Cascader = React.forwardRef(function Cascader({ options: given = EM
     const n = ++request.current;
     setBusy(true); setFailed(false);
     const timer = setTimeout(() => {
-      Promise.resolve().then(() => loader.current(query)).then((list) => {
+      Promise.resolve().then(() => (loader.current as (q: string) => unknown)(query)).then((list) => {
         if (n !== request.current) return;
-        const got = (Array.isArray(list) ? list : []).map((r) => {
-          const ups = (r.path || []).map((x) => (typeof x === 'string' ? { label: x } : { id: x.id, label: x.label }));
+        const got = (Array.isArray(list) ? list : []).map((r: { id: Id; label: string; disabled?: boolean; path?: Array<string | { id: Id; label: string }> }): Leaf => {
+          const ups = (r.path || []).map((x) => (typeof x === 'string' ? { label: x } : { id: x.id, label: x.label })) as CascaderItem[];
           return { item: { id: r.id, label: r.label, disabled: r.disabled }, trail: ups.concat([{ id: r.id, label: r.label }]) };
         });
         got.forEach((m) => seen.current.set(m.item.id, m));
@@ -181,36 +222,36 @@ export const Cascader = React.forwardRef(function Cascader({ options: given = EM
     return () => clearTimeout(timer);
   }, [remote, open, text, minChars, loadDelay]);   // eslint-disable-line react-hooks/exhaustive-deps
 
-  const pick = (item, trail) => {
+  const pick = (item: CascaderItem, trail: CascaderItem[]) => {
     if (locked) return;
     if (multiple) {
       const on = chosen.indexOf(item.id) >= 0;
       // past the limit nothing is chosen: the list says so, and a screen reader hears it
       if (!on && maxChoices && chosen.length >= maxChoices) { setLimitShown(true); announce(fill(t.limit, { n: formatNumber(maxChoices) })); return; }
       setLimitShown(false);
-      onChange(on ? chosen.filter((x) => x !== item.id) : chosen.concat([item.id]));
-    } else { onChange(item.id, trail.map((x) => x.id).filter((x) => x !== undefined)); close(true); }
+      (onChange as (v: Id[]) => void)(on ? chosen.filter((x) => x !== item.id) : chosen.concat([item.id]));
+    } else { if (onChange) onChange(item.id, trail.map((x) => x.id).filter((x): x is Id => x !== undefined)); close(true); }
   };
-  const onListKey = (e) => { if (open && e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); close(true); } };
-  const onSearchKey = (e) => {
+  const onListKey = (e: React.KeyboardEvent) => { if (open && e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); close(true); } };
+  const onSearchKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (!searching) {
-      if (e.key === 'ArrowDown') { e.preventDefault(); const l = cols.current && cols.current.querySelector('.plx-miller-columns__list'); if (l) l.focus(); }
+      if (e.key === 'ArrowDown') { e.preventDefault(); const l = cols.current && cols.current.querySelector<HTMLElement>('.plx-miller-columns__list'); if (l) l.focus(); }
       return;
     }
     if (e.key === 'ArrowDown') { e.preventDefault(); setActive((a) => Math.min(matches.length - 1, a + 1)); }
     else if (e.key === 'ArrowUp') { e.preventDefault(); setActive((a) => Math.max(0, a - 1)); }
     else if (e.key === 'Enter') { if (matches[active] && !busy) { e.preventDefault(); pick(matches[active].item, matches[active].trail); } }
   };
-  const optId = (i) => auto + '-m' + i;
+  const optId = (i: number) => auto + '-m' + i;
   const shown = multiple ? null : current ? pathLabel(current) : null;
   // the tags the field draws: the first maxTags (0: every one), then "+N" for the rest
-  const nameOf = (v) => { const trail = pathFor(v); return trail ? trail[trail.length - 1].label : String(v); };
+  const nameOf = (v: Id) => { const trail = pathFor(v); return trail ? trail[trail.length - 1].label : String(v); };
   const capped = maxTags > 0 ? maxTags : chosen.length, shownTags = chosen.slice(0, capped), hiddenTags = chosen.slice(capped);
 
   return (
     <div ref={wrap} className={cx('plx-cascader', multiple && 'plx-cascader--multiple', open && 'is-open', disabled && 'is-disabled', className)} onKeyDown={onListKey}>
       <div className="plx-cascader__field plx-input" aria-invalid={invalid || undefined} data-plx-warning={warning || undefined}>
-        {multiple ? shownTags.map((v) => <Tag key={v} onRemove={disabled || locked ? undefined : () => { setLimitShown(false); onChange(chosen.filter((x) => x !== v)); }} removeLabel={t.remove.replace('{label}', nameOf(v))}>{nameOf(v)}</Tag>) : null}
+        {multiple ? shownTags.map((v) => <Tag key={v} onRemove={disabled || locked ? undefined : () => { setLimitShown(false); if (onChange) onChange(chosen.filter((x) => x !== v)); }} removeLabel={t.remove.replace('{label}', nameOf(v) as string)}>{nameOf(v)}</Tag>) : null}
         {multiple && hiddenTags.length ? (
           <Tooltip content={hiddenTags.map(nameOf).join(', ')} placement="bottom" className="plx-cascader__more-tip">
             <Tag className="plx-cascader__more" tabIndex={0} role="button" aria-label={fill(t.moreLabel, { n: formatNumber(hiddenTags.length) })}
