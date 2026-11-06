@@ -32,7 +32,7 @@ import React from 'react';
 import { useLocale } from '../../../providers/LocaleProvider.tsx';
 import { announce } from '../../../utils/announce.tsx';
 import { formatNumber } from '../../../utils/format.ts';
-import { valueAt } from '../state.js';
+import { valueAt } from '../state.ts';
 import { valueText } from '../cells.jsx';
 
 // the operations, loaded on first use (a block can only exist once they are loaded, so everything but the first extend finds them ready)

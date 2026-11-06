@@ -1,9 +1,10 @@
 // Task 165: calendar, numeric and multi-value grouping preserve canonical records.
-const fs=require('fs'),path=require('path'),assert=require('assert/strict');
+const fs=require('fs'),path=require('path'),assert=require('assert/strict'),esbuild=require('esbuild');
+const ts=file=>esbuild.transformSync(fs.readFileSync(path.join(__dirname,'../platform/components/DataGrid/'+file),'utf8'),{loader:'ts',format:'esm',target:'es2020'}).code;   // state and records are TypeScript
 (async()=>{
  const uri=source=>'data:text/javascript;base64,'+Buffer.from(source).toString('base64');
- const state=uri(fs.readFileSync(path.join(__dirname,'../platform/components/DataGrid/state.js'),'utf8'));
- const source=fs.readFileSync(path.join(__dirname,'../platform/components/DataGrid/records.js'),'utf8').replace("'./state.js'",JSON.stringify(state));
+ const state=uri(ts('state.ts'));
+ const source=ts('records.ts').replace(/(['"])\.\/state\.ts\1/,JSON.stringify(state));
  const {groupedRows,groupValue}=await import(uri(source)),{opening}=await import(state);
  const rows=[{id:'a',original:{text:'One',number:-1,date:'2026-01-01T23:00:00Z',flag:true,tags:['x','x','y']}},{id:'b',original:{text:'Two',number:9,date:'2026-01-02T01:00:00Z',flag:false,tags:['y']}}];
  assert.equal(groupedRows(rows,['text'],[]).length,2);

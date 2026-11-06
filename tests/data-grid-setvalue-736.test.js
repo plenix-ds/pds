@@ -17,11 +17,12 @@ const ROOT = path.join(__dirname, '..');
 const load = (file, requires) => {
   const src = fs.readFileSync(path.join(ROOT, 'platform', 'components', 'DataGrid', file), 'utf8');
   const mod = { exports: {} };
-  new Function('exports', 'module', 'require', Babel.transform(src, { presets: ['env'], sourceType: 'module' }).code)(mod.exports, mod, (name) => requires[name]);
+  const plain = /\.ts$/.test(file) ? require('esbuild').transformSync(src, { loader: 'ts', format: 'esm', target: 'es2020' }).code : src;   // state is TypeScript
+  new Function('exports', 'module', 'require', Babel.transform(plain, { presets: ['env'], sourceType: 'module' }).code)(mod.exports, mod, (name) => requires[name]);
   return mod.exports;
 };
-const state = load('state.js', {});
-const adapter = load('adapter.js', { './state.js': state, './cells.jsx': { valueText: String } });
+const state = load('state.ts', {});
+const adapter = load('adapter.js', { './state.ts': state, './cells.jsx': { valueText: String } });
 const { recordKey } = state;
 
 const records = [{ id: 'r10', name: 'Ten' }, { id: 3, name: 'Three' }];

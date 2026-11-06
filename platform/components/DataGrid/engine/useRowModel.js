@@ -15,8 +15,8 @@
 */
 import React from 'react';
 import { EMPTY_ROWS } from './helpers.jsx';
-import { valueAt } from '../state.js';
-import { groupValue, valueKey, groupDisplay } from '../records.js';
+import { valueAt } from '../state.ts';
+import { groupValue, valueKey, groupDisplay } from '../records.ts';
 import { aggregationFns, useReactTable, getCoreRowModel, getGroupedRowModel } from '@tanstack/react-table';
 
 export function useRowModel({ mode, remoteMode, allRows, loaded, groupBy, columns, printing, collapsed, props }) {

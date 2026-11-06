@@ -20,8 +20,8 @@
      is documented in DataGridEngine.jsx.
 */
 import React from 'react';
-import { recordKey, valueAt } from '../state.js';
-import { setField, changeRecord } from '../records.js';
+import { recordKey, valueAt } from '../state.ts';
+import { setField, changeRecord } from '../records.ts';
 import { announce } from '../../../utils/announce.tsx';
 import { development } from '../../../utils/devWarn.ts';
 
