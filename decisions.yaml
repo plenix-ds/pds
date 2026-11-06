@@ -530,3 +530,13 @@
   options: [default true, false turns it off (chosen, A), default false as the ADR first said (B)]
   status: active
   check: tests/data-grid-editing-options-84.test.js (the defaults cases) and G3 review of #456
+
+- id: D-0062
+  date: 2026-11-06
+  area: process
+  decided_by: agent (pds1-ds-architect), owner may switch
+  decision: 'Gate G3 has a real block, as G2 has (D-0056): a `g3-changes-requested` label fails the required "CI result" check and the merge queue until the DS Architect removes it. Only the DS Architect adds or removes it, on a PR whose public API or token change doesn''t match its ADR yet.'
+  why: 'Agents share one GitHub account, so a review can''t request changes; #436 and #443 merged with open G3 points and needed follow-ups (#442, #448).'
+  options: [label that fails CI result, sharing the G2 check (chosen), dequeue by hand only]
+  status: active
+  check: tools/ci/check-g2.mjs (g3-changes-requested; #449, #450)
