@@ -1,15 +1,6 @@
 /* Shadows: one class per shadow token. An element's resting shadow is one of
    these classes in the markup. Each product imports this file where its own cascade needs it (see its entry file). */
-.plx-shadow-sm{box-shadow:var(--plx-sys-shadow-sm);}
-.plx-shadow-md{box-shadow:var(--plx-sys-shadow-md);}
-.plx-shadow-lg{box-shadow:var(--plx-sys-shadow-lg);}
 .plx-shadow-card{box-shadow:var(--plx-sys-shadow-card);}
-.plx-shadow-raised{box-shadow:var(--plx-sys-shadow-raised);}
-.plx-shadow-menu{box-shadow:var(--plx-sys-shadow-menu);}
-.plx-shadow-ring{box-shadow:var(--plx-sys-shadow-ring);}
-.plx-shadow-ring-subtle{box-shadow:var(--plx-sys-shadow-ring-subtle);}
-.plx-shadow-underline-focus{box-shadow:var(--plx-sys-shadow-underline-focus);}
-.plx-shadow-modal{box-shadow:var(--plx-sys-shadow-modal);}
 /* a card that is a drop target; cards that lift on hover (moved from the dashboard's own sheet, batch 113) */
 .plx-shadow-card-ring{box-shadow:var(--plx-sys-shadow-ring),var(--plx-sys-shadow-card);}
 .plx-hover-shadow-card:hover{box-shadow:var(--plx-sys-shadow-card);}
