@@ -152,7 +152,15 @@ export function useGridMetrics({
         : 0; // the icon only where the pill has one
       source.forEach((record) => {
         const value = valueAt(record, c.field);
-        width = Math.max(width, ctx.measureText(valueText(value)).width * scale + chrome);
+        // a tags cell is a row of Tags: each tag's text plus its own padding and border, with the gap between them (issue 477, so the column fits its tags)
+        const tagged = k.includes('tags') && !pill ? [].concat(value ?? []).map((tag) => (typeof tag === 'object' ? tag.label : String(tag))) : null;
+        width = Math.max(
+          width,
+          tagged
+            ? tagged.reduce((sum, text) => sum + ctx.measureText(text).width + 2 * (tokenPx('--plx-comp-tag-padding-inline') + tokenPx('--plx-comp-tag-border-width')), 0) +
+                tokenPx('--plx-comp-data-grid-cell-rich-gap') * Math.max(0, tagged.length - 1)
+            : ctx.measureText(valueText(value)).width * scale + chrome
+        );
       });
       const content = width + metrics.space * 2;
       // a fixed table or a list (narrow="table" | "list") keeps its set widths as before; the default grid sizes to content

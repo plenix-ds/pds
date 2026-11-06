@@ -48,7 +48,7 @@ export function CellValue({ column, value, strings, record, pill = false, pillFi
   if (column.type === 'bytes') return <span className={own}>{formatBytes(Number(value))}</span>;
   if (kinds.includes('deleted')) return <span className={`${own} ${block}__deleted`}>{valueText(value)}</span>;
   if (kinds.includes('avatar-name')) { const person = typeof value === 'object' ? value : { name: String(value) }, name=person.name||person.label||''; return <span className={`${block}__rich`}><Avatar name={name} src={person.src} size="2xs" aria-hidden="true" /><span className={own}>{name}</span></span>; }
-  if (kinds.includes('tags')) return <span className={`${block}__rich`}>{[].concat(value).map((tag, i) => <Tag key={i} category={typeof tag === 'object' ? tag.category : undefined}>{typeof tag === 'object' ? tag.label : String(tag)}</Tag>)}</span>;
+  if (kinds.includes('tags')) return <TagsCell tags={[].concat(value)} block={block} />;
   if (kinds.includes('badge')) { const badge = typeof value === 'object' ? value : { label: String(value) }; return <Badge tone={badge.tone} icon={badge.icon||CircleInfoIcon}>{badge.label}</Badge>; }
   // the full text on hover, only when the cell cuts it off with an ellipsis (owner, 2026-10-22)
   // a technical value keeps its own direction inside a right-to-left table (owner, ctm-needs-34): emails, URLs, phone
@@ -57,6 +57,44 @@ export function CellValue({ column, value, strings, record, pill = false, pillFi
   const island=ISLANDS.find(k=>kinds.includes(k));
   if (island) return <span className={own} onMouseEnter={fullText}><Isolate dir={island==='data'?'auto':island==='id'?undefined:'ltr'} kind={island==='email'||island==='url'||island==='id'?island:undefined}>{valueText(value)}</Isolate></span>;
   return <span className={own} onMouseEnter={fullText}>{localDigits(valueText(value))}</span>;
+}
+
+// A tags cell: the tags that fit, then one "+N" Tag for the rest (design 84-cell-editors §2 and §3, issue 477). A hidden copy of the whole row is measured
+// (aria-hidden, never drawn); the shown row is as many tags as fit beside the "+N". The "+N" Tag is named by the hidden tags for a screen reader.
+function TagsCell({ tags, block }) {
+  const box = React.useRef(null), probe = React.useRef(null), [fit, setFit] = React.useState(tags.length);
+  const label = (tag) => (typeof tag === 'object' ? tag.label : String(tag));
+  React.useLayoutEffect(() => {
+    const el = box.current, row = probe.current;
+    if (!el || !row) return undefined;
+    const measure = () => {
+      const cell = el.closest('[role="gridcell"]') || el.parentElement, cs = getComputedStyle(cell),
+        kids = [...row.children], more = kids.pop(), gap = parseFloat(getComputedStyle(row).columnGap) || 0,
+        room = cell.clientWidth - (parseFloat(cs.paddingLeft) || 0) - (parseFloat(cs.paddingRight) || 0);
+      const widths = kids.map((k) => k.getBoundingClientRect().width), all = widths.reduce((sum, w) => sum + w, 0) + gap * Math.max(0, widths.length - 1);
+      if (all <= room) return setFit(tags.length);
+      const reserve = (more ? more.getBoundingClientRect().width : 0) + gap;
+      let used = reserve, k = 0;
+      while (k < widths.length && used + widths[k] + (k ? gap : 0) <= room) { used += widths[k] + (k ? gap : 0); k++; }
+      setFit(Math.max(1, k));
+    };
+    measure();
+    const ro = typeof ResizeObserver === 'function' ? new ResizeObserver(measure) : null;
+    const host = el.closest('[role="gridcell"]') || el.parentElement;
+    if (ro && host) ro.observe(host);
+    return () => ro && ro.disconnect();
+  }, [tags.length, tags.map(label).join('|')]);
+  const hidden = tags.slice(fit);
+  return (
+    <span ref={box} className={`${block}__rich ${block}__rich--tags`}>
+      {tags.slice(0, fit).map((tag, i) => <Tag key={i} category={typeof tag === 'object' ? tag.category : undefined}>{label(tag)}</Tag>)}
+      {hidden.length ? <Tag title={hidden.map(label).join(', ')} aria-label={hidden.map(label).join(', ')}>{'+' + hidden.length}</Tag> : null}
+      <span ref={probe} className={`${block}__rich ${block}__rich--probe`} aria-hidden="true">
+        {tags.map((tag, i) => <Tag key={i} category={typeof tag === 'object' ? tag.category : undefined}>{label(tag)}</Tag>)}
+        <Tag>{'+' + tags.length}</Tag>
+      </span>
+    </span>
+  );
 }
 const ISLANDS=['id','email','url','phone','code','data'];
 function fullText(event) { const el = event.currentTarget; if (el.scrollWidth > el.clientWidth) el.title = el.textContent; else el.removeAttribute('title'); }
