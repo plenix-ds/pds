@@ -26,6 +26,7 @@ type:                            # D-0006
     body:      { size: 13, weight: 400, line: 1.5 }
     heading:   { size: 13, weight: 600, line: 1.5 }
     lead:      { size: 15, weight: 400, line: 1.7 }
+    surface-title: { size: 15, weight: 700, line: 1.5 }  # dialog and sheet titles, as drawn today (#122)
     title:     { size: 20, weight: 700, line: 1.5 }
     display:   { size: 20, weight: 600, line: 1.3, tracking: tight }
   allowed_sizes_px: [12, 13, 14, 15, 18, 20, 24, 28, 36]
@@ -104,6 +105,7 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 - **Reddit Mono** (`plx-sys.font-data`) is for numbers in data: grid and table cells, metrics, counts in data views, codes and IDs. It is also used for code.
 - **Never mono in prose.** "7 events" in a sentence, a heading or a button stays in DM Sans. Numbers there use `font-variant-numeric: tabular-nums` only when they need to line up.
 - Sizes come only from the type roles in the front matter (check 3). No numeric `font-size` in CSS. Nothing below 12px. `font-size-09`, `-10` and `-11` are retired (section 12).
+- **surface-title** (15px, 700) is the title of a dialog or a sheet, recorded as Plenix draws it today (#122). Page and section titles use **title** (20px).
 - Body and heading are both 13px. Hierarchy comes from weight (400 → 600) and from title or display (20px). That is the existing language, recorded as is.
 
 ## 4. Shape (D-0005)

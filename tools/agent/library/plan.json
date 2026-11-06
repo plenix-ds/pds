@@ -1536,7 +1536,7 @@
       "platform/design-system/parts/w07B.{records,labs,docs}.js + .css",
       "platform/exports/w07B.{js,css}",
       "platform/standards/web-native-map.d/w07B.json",
-      "platform/components/Cascader/Cascader.jsx",
+      "platform/components/Cascader/Cascader.tsx",
       "platform/components/Cascader/cascader.css",
       "platform/tokens/components/cascader.tokens.json",
       "platform/components/EntityPicker/EntityPicker.jsx",
@@ -5426,7 +5426,7 @@
    "wave": 7,
    "lane": "B",
    "files": [
-    "platform/components/Cascader/Cascader.jsx",
+    "platform/components/Cascader/Cascader.tsx",
     "platform/components/Cascader/cascader.css",
     "platform/tokens/components/cascader.tokens.json"
    ],
@@ -13080,7 +13080,7 @@
    "target": "Cascader",
    "targetKind": "component",
    "files": [
-    "platform/components/Cascader/Cascader.jsx",
+    "platform/components/Cascader/Cascader.tsx",
     "platform/components/Cascader/cascader.css",
     "platform/tokens/components/cascader.tokens.json"
    ],

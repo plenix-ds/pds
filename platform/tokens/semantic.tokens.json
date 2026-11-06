@@ -693,18 +693,22 @@
     },
     "print-sheet-inline-size": {
       "$value": "{plx-ref.paper-a4-inline-size}",
+      "$extensions": { "com.plenix": { "webOnly": true } },
       "$description": "PrintDocument: the sheet's width, on screen and paper (docs/adr/0014)."
     },
     "print-sheet-block-size": {
       "$value": "{plx-ref.paper-a4-block-size}",
+      "$extensions": { "com.plenix": { "webOnly": true } },
       "$description": "PrintDocument: the sheet's minimum height on screen; it grows with its content (docs/adr/0014)."
     },
     "print-document-margin": {
       "$value": "{plx-ref.paper-margin-md}",
+      "$extensions": { "com.plenix": { "webOnly": true } },
       "$description": "PrintDocument: the page margin on paper (@page plx-document) and the sheet's padding on screen (docs/adr/0014)."
     },
     "print-sheet-padding": {
       "$value": "{plx-sys.print-document-margin}",
+      "$extensions": { "com.plenix": { "webOnly": true } },
       "$description": "PrintDocument: the sheet's padding on screen; 0 on paper, where the page carries the margin (docs/adr/0014; #348)."
     },
     "print-sheet-border-width": {

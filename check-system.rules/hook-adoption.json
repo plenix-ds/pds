@@ -18,12 +18,12 @@
     "platform/components/CodeEditor/CodeEditor.tsx",
     "platform/components/MentionInput/MentionInput.jsx",
     "platform/components/TimePicker/TimePicker.tsx",
-    "platform/components/Cascader/Cascader.jsx"
+    "platform/components/Cascader/Cascader.tsx"
   ],
   "useDescribedBy": [
     "platform/components/Tooltip/Tooltip.tsx",
     "platform/components/Field/Field.tsx",
-    "platform/components/Cascader/Cascader.jsx",
+    "platform/components/Cascader/Cascader.tsx",
     "platform/components/CodeEditor/CodeEditor.tsx",
     "platform/components/FileInput/FileInput.tsx",
     "platform/components/InputGroup/InputGroup.tsx",
@@ -50,7 +50,7 @@
     "platform/components/Tooltip/Tooltip.tsx",
     "platform/components/Popover/Popover.tsx",
     "platform/components/Combobox/Combobox.tsx",
-    "platform/components/Cascader/Cascader.jsx",
+    "platform/components/Cascader/Cascader.tsx",
     "platform/components/TimePicker/TimePicker.tsx"
   ],
   "dataWhenText": [

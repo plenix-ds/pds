@@ -46,7 +46,12 @@ async function get(url, etagKey) {
 }
 
 const agentRoles = (labels = []) => labels.map((l) => (/^agent:pds1-(.+)$/.exec(l.name || l) || [])[1]).filter(Boolean);
-const named = (text = '') => [...text.matchAll(/(?:^|[^\w-])@?pds1-([a-z0-9]+(?:-[a-z0-9]+)*)/gi)].map((m) => m[1].toLowerCase());
+// the PDS1 roles (CLAUDE.md "The team"): only these count as a mention, so the service name "pds1-pickup" is not a role
+const ROLES = new Set(['product-lead', 'delivery-lead', 'design-director', 'ds-architect', 'component-engineer', 'i18n-engineer',
+  'technical-writer', 'release-architect', 'code-reviewer', 'design-critic', 'a11y-rtl-auditor', 'qa-engineer', 'security-reviewer',
+  'debugger', 'db-optimizer', 'simulated-user-tester', 'drift-auditor', 'mobile-app-builder']);
+const named = (text = '') => [...text.matchAll(/(?:^|[^\w-])@?pds1-([a-z0-9]+(?:-[a-z0-9]+)*)/gi)].map((m) => m[1].toLowerCase())
+  .filter((r) => ROLES.has(r.replace(/-\d+$/, '')));
 // "— PDS1-Component-Engineer-1" signs for component-engineer: the instance number is not part of the role
 const signer = (text = '') => ((/—\s*PDS1-([A-Za-z0-9]+(?:-[A-Za-z0-9]+)*)/.exec(text) || [])[1] || '').toLowerCase().replace(/-\d+$/, '');
 const short = (s = '') => s.replace(/\s+/g, ' ').slice(0, 70);
@@ -124,7 +129,11 @@ async function round() {
     events.sort((a, b) => a.created_at.localeCompare(b.created_at) || a.id.localeCompare(b.id));
     const seen = new Set(state.seen || []);
     const first = !state.seen && !DRY;
-    const fresh = events.filter((e) => DRY || !seen.has(e.id));
+    // GitHub's feed sometimes lists an old event again under a new id (#220: a 22:46 comment on #431 came back at 02:59),
+    // so an event created more than 30 minutes ago is not news; the 10-minute nudge covers anything truly that late
+    const STALE_MS = 30 * 60 * 1000;
+    const fresh = events.filter((e) => DRY || (!seen.has(e.id) && Date.now() - Date.parse(e.created_at) < STALE_MS));
+    for (const e of events) if (!DRY && !seen.has(e.id) && Date.now() - Date.parse(e.created_at) >= STALE_MS) log(`stale event ignored: ${e.type} ${e.created_at} (id ${e.id})`);
     if (first) log(`first run: ${events.length} existing events marked as seen (not replayed)`);
     else for (const ev of DRY ? fresh.slice(-15) : fresh) {
       const r = await route(ev);
@@ -140,6 +149,10 @@ async function round() {
   if (runs) {
     for (const run of runs.workflow_runs.filter((x) => DRY || x.id > (state.lastRunId || 0)).reverse().slice(DRY ? -3 : 0)) {
       if (!state.lastRunId && !DRY) continue;
+      // a failed G2 run is the gate working as designed: it fails while g2-/g3-changes-requested is on the PR and re-runs
+      // on every label change, so routing it woke the reviewer who set the label, again and again (#491). The label and
+      // the review comment already tell the builder.
+      if (run.name === 'G2') { if (DRY) console.log(`${run.created_at} G2 failed on ${run.head_branch} -> (gate working as designed: ignored)`); continue; }
       const n = run.pull_requests?.[0]?.number || Number((/\/pr-(\d+)-/.exec(run.head_branch) || [])[1]);
       if (!n) continue;
       const pr = (await get(`/repos/${REPO}/pulls/${n}`)).data;
