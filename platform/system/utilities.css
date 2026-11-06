@@ -114,7 +114,7 @@
 .plx-u-bg-data{background-color:var(--plx-comp-data-color);}
 /* an icon at its container's icon size (batch 267: replaces the -var pair, whose value came in a style attribute) */
 
-/* Deprecated, kept for CTM until it moves off them (#723, #732): they go no earlier than the next minor after CTM has. Use the
+/* Deprecated, kept for CTM until it moves off them (#723, #735): they go no earlier than the next minor after CTM has. Use the
    replacements in 0.90.0's Deprecated notes (a layout part such as Stack, Inline or Center, or a token on the app's own class). */
 .plx-u-absolute{position:absolute;}
 .plx-u-bg-transparent{background-color:transparent;}
