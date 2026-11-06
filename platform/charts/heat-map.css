@@ -1,4 +1,4 @@
-/* Plenix · HeatMap (platform/charts/heat-map.css; the code is HeatMap.jsx): the cells, colored by their data-viz step
+/* Plenix · HeatMap (platform/charts/heat-map.css; the code is HeatMap.tsx): the cells, colored by their data-viz step
    (data-plx-dataviz: sequential or diverging), the empty cell of a missing value, the cell in focus, and the color scale
    legend under the plot. Every value is a --plx-comp-heat-map-* token. */
 .plx-heat-map__cell{--plx-comp-heat-map-cell-color:var(--plx-comp-heat-map-empty-background);fill:var(--plx-comp-heat-map-cell-color);rx:var(--plx-comp-heat-map-cell-radius);stroke:transparent;stroke-width:var(--plx-comp-heat-map-cell-border-width);}

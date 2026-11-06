@@ -293,7 +293,7 @@ DSParts.records.push(function (H) {
 
   /* ── 07 Data Display › Charts › Treemap: Treemap ── */
   var treemap = { id: 'treemap', lab: true, icon: 'grid-2x2', sec: 'data-display', sub: 'Charts', leaf: 'Treemap', title: 'Treemap',
-    plenix: 'Treemap', src: 'charts/Treemap.jsx', css: ['charts/treemap.css'], blocks: ['plx-treemap'], level: 'Component', interaction: 'Display',
+    plenix: 'Treemap', src: 'charts/Treemap.tsx', css: ['charts/treemap.css'], blocks: ['plx-treemap'], level: 'Component', interaction: 'Display',
     aliases: ['Tree map', 'Space-filling chart', 'Mosaic'],
     text: 'The parts of a whole as rectangles whose areas are their sizes, laid out by the squarified algorithm, largest first from the top start corner: many parts in little room. Flat: every tile in one color. Nested: each group framed and named, its tiles in the group’s color. Names and values show on tiles big enough for them, on a halo in the surface color; the tooltip and the table always have them.',
     use: ['Many parts of a whole: storage by folder, budget by team', 'Two levels: groups and their parts (nested)', 'A description that names the largest parts'],
