@@ -6,5 +6,6 @@
 // Built by build-packages.js (vite.packages.config.mjs, build "ar") into release/cdn/<version>/plenix-ar.js.
 import arabic from './ar.js';
 
-if (!window.Plenix || typeof window.Plenix.addLanguage !== 'function') throw new Error('Plenix: plenix.js is not loaded before plenix-ar.js');
-window.Plenix.addLanguage('ar', arabic);
+const Plenix = (window as unknown as { Plenix?: { addLanguage?(code: string, catalog: unknown): void } }).Plenix;
+if (!Plenix || typeof Plenix.addLanguage !== 'function') throw new Error('Plenix: plenix.js is not loaded before plenix-ar.js');
+Plenix.addLanguage('ar', arabic);

@@ -60,7 +60,7 @@
     "platform/components/Metric/Metric.tsx",
     "platform/charts/ChartFrame.tsx",
     "platform/charts/Gauge.tsx",
-    "platform/patterns/RecordPage/RecordPage.jsx",
+    "platform/patterns/RecordPage/RecordPage.tsx",
     "platform/patterns/ActivityList/ActivityList.tsx",
     "platform/components/DataGrid/engine/parts.tsx",
     "platform/patterns/SettingsLayout/SettingsLayout.tsx"

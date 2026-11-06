@@ -2,7 +2,7 @@
    at the end, the human-review notice, the reviewers (a Persona and their decision badge, or Waiting), the comment field
    and the decisions (Reject, Request changes, Approve last), then the history (an ActivityList). No frame of its own: it
    sits in a side panel, a card or a page section. ReviewQueue: the command bar over the DataGrid. Anatomy and API:
-   ReviewFlow.jsx. */
+   ReviewFlow.tsx. */
 .plx-review-flow{display:flex;flex-direction:column;min-inline-size:0;row-gap:var(--plx-comp-review-flow-gap);}
 .plx-review-flow__head{align-items:flex-start;column-gap:var(--plx-comp-review-flow-head-gap);display:flex;justify-content:space-between;}
 .plx-review-flow__heading{display:flex;flex-direction:column;min-inline-size:0;}

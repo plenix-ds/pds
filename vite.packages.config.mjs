@@ -55,7 +55,7 @@ const STAND_INS = [
 function partEntries() {
   const entries = { index: path.join(P, 'index.js') };
   for (const m of fs.readFileSync(path.join(P, 'index.js'), 'utf8').matchAll(/from '\.\/([^']+)'/g)) entries[m[1].replace(/\.[jt]sx?$/, '')] = path.join(P, m[1]);
-  entries['i18n/ar'] = path.join(P, 'i18n', 'ar.optin.js');
+  entries['i18n/ar'] = path.join(P, 'i18n', 'ar.optin.ts');
   return entries;
 }
 
@@ -90,7 +90,7 @@ const BUILDS = {
   cjs: { entry: () => path.join(P, 'index.js'), outDir: path.join(ROOT, 'release', 'packages', 'react', 'dist'), format: 'cjs', file: 'index.cjs' },
   cdn: { entry: () => path.join(P, 'index.js'), outDir: path.join(ROOT, 'release', 'cdn', VERSION), format: 'es', file: 'plenix.esm.js', banner: BANNER + '\nconst __plenixModuleUrl = import.meta.url;' },
   // the CDN's plenix-ar.js (issue 882): the built-in Arabic words, for an Arabic page that loads the CDN's plenix.js
-  ar: { entry: () => path.join(P, 'i18n', 'ar.global.js'), outDir: path.join(ROOT, 'release', 'cdn', VERSION), format: 'iife', file: 'plenix-ar.js', banner: '/* ' + SCOPE + ' ' + VERSION + ' · plenix-ar.js: Plenix\'s built-in Arabic words, after plenix.js (generated) */' },
+  ar: { entry: () => path.join(P, 'i18n', 'ar.global.ts'), outDir: path.join(ROOT, 'release', 'cdn', VERSION), format: 'iife', file: 'plenix-ar.js', banner: '/* ' + SCOPE + ' ' + VERSION + ' · plenix-ar.js: Plenix\'s built-in Arabic words, after plenix.js (generated) */' },
 };
 
 export function packageConfig(name, overrides = {}) {

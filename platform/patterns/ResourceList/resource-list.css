@@ -1,4 +1,4 @@
-/* Plenix · ResourceList (platform/patterns/ResourceList). Anatomy and API: ResourceList.jsx. The bar is the CommandBar, the
+/* Plenix · ResourceList (platform/patterns/ResourceList). Anatomy and API: ResourceList.tsx. The bar is the CommandBar, the
    checkboxes, pictures and headings are Checkbox, Thumbnail, Avatar and SectionHeading on their own tokens; this lays out
    the header (select all and the count), the groups and the rows: checkbox, picture, name over its line, details,
    actions. A row's content starts at the list's edges (ActivityList's rule): a row that opens keeps a small inset for its

@@ -15,10 +15,15 @@ import { Stack } from '../../components/Stack/Stack.tsx';
 import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 
-export function RelatedAssets({ items = [], variant = 'strip', label, onOpen, strings, className }) {
+/** @public one related asset */
+export type RelatedAsset = { id: string | number; src: string; alt?: string; title?: string; meta?: React.ReactNode; href?: string };
+/** @public the prop type (ADR 0011) */
+export type RelatedAssetsProps = { items?: RelatedAsset[]; variant?: 'strip' | 'grid'; label?: string; onOpen?(item: RelatedAsset): void; strings?: Record<string, string>; className?: string };
+export function RelatedAssets(props: RelatedAssetsProps) {
+  const { items = [], variant = 'strip', label, onOpen, strings, className } = props as any;
   devWarn('RelatedAssets', { variant }, { variant: ['strip','grid'] });
-  const t = useStrings('relatedAssets', strings);
-  const cards = items.map((a) => <MediaCard key={a.id} src={a.src} alt={a.alt} title={a.title} meta={a.meta} href={a.href} onOpen={!a.href && onOpen ? () => onOpen(a) : undefined} />);
+  const t: any = useStrings('relatedAssets', strings);
+  const cards = items.map((a: any) => <MediaCard key={a.id} src={a.src} alt={a.alt} title={a.title} meta={a.meta} href={a.href} onOpen={!a.href && onOpen ? () => onOpen(a) : undefined} />);
   return <Stack className={cx('plx-related-assets', className)}>{!items.length ? <EmptyState title={t.empty} /> : variant === 'grid'
     ? <ContentGrid label={label}>{cards}</ContentGrid> : <Carousel label={label} perView={2} strings={strings}>{cards}</Carousel>}</Stack>;
 }

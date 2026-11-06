@@ -328,7 +328,7 @@ DSParts.records.push(function (H) {
 
     /* ── Roles: RoleManager ── */
     { id: 'role-manager', lab: true, icon: 'settings-users', sec: 'patterns', sub: AUTH, leaf: 'Roles', title: 'Roles',
-      plenix: 'RoleManager', src: 'patterns/RoleManager/RoleManager.jsx', level: 'Pattern', interaction: 'Editing', statesFrom: ['resource-list', 'checkbox', 'button'],
+      plenix: 'RoleManager', src: 'patterns/RoleManager/RoleManager.tsx', level: 'Pattern', interaction: 'Editing', statesFrom: ['resource-list', 'checkbox', 'button'],
       aliases: ['Role management', 'Access roles', 'User roles', 'RBAC', 'Custom roles'],
       text: 'Shows a workspace’s roles and what each allows, in two views. The list shows each role’s name, a sentence of what it can do, how many people hold it and whether it is built in, with Create role. The detail shows the role with its RoleLabel and description; its permissions (for a built-in role, what it can and cannot do; for a custom role, checkboxes by group that save at once); and its members, with Add a member, Remove, Duplicate and, for a custom role, Delete. The owner role cannot lose its last member.',
       use: ['A few roles that match real jobs: Viewer, Editor, Owner', 'Custom roles only when an organization needs them, started from a built-in one', 'One sentence per role of what it can do', 'onChange’s change for the audit log'],

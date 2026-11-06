@@ -26,9 +26,22 @@ import { devWarn } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
 import { dataWhenText } from '../../utils/dataText.tsx';
 
-function Header({ title, description, meta, media, actions, size = 'lg', surface = 'none', headingLevel = 1, className }) {
+/** @public the prop type of RecordPage.Header (ADR 0011) */
+export type RecordPageHeaderProps = {
+  title: React.ReactNode;
+  description?: React.ReactNode;
+  meta?: React.ReactNode;
+  media?: React.ReactNode;
+  actions?: React.ReactNode;
+  size?: 'lg' | 'md';
+  surface?: 'none' | 'card';
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+  className?: string;
+};
+function Header(props: RecordPageHeaderProps) {
+  const { title, description, meta, media, actions, size = 'lg', surface = 'none', headingLevel = 1, className } = props as any;
   devWarn('RecordPage.Header', { size }, { size: ['lg','md'] });
-  const H = 'h' + headingLevel;
+  const H = ('h' + headingLevel) as React.ElementType;
   return (
     <div className={cx('plx-record-page__header', 'plx-record-page__header--' + size, surface === 'card' && 'plx-record-page__header--card', className)}>
       {media ? <div className="plx-record-page__media">{media}</div> : null}
@@ -42,7 +55,10 @@ function Header({ title, description, meta, media, actions, size = 'lg', surface
   );
 }
 
-export function RecordPage({ header, aside, className, children }) {
+/** @public the prop type of RecordPage (ADR 0011) */
+export type RecordPageProps = { header?: React.ReactNode; aside?: React.ReactNode; className?: string; children?: React.ReactNode };
+export function RecordPage(props: RecordPageProps) {
+  const { header, aside, className, children } = props as any;
   return (
     <div className={cx('plx-record-page', className)}>
       {header}

@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: ltr: AC-1: after a double-click "Abandonment" shows whole
+
+4 !== 0
+
+    at /home/cc/pds1/work/component-engineer-1/tests/data-grid-column-autofit-815.test.js:38:14 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 4,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
