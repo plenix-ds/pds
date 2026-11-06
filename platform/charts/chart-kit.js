@@ -13,7 +13,6 @@
        offset and a gap), plus extra (an axis title's room); snapped to the 4px grid by ChartFrame
      halfRoom(text): the room after the plot for a tick label centered on the plot's end (the last tick of a value axis
        along the bottom)
-     AXIS_TITLE_ROOM: the room an axis title's line takes beside the tick labels
      withColors(series): the series with an id and a data-viz step each (seriesColor by their order in the data)
      legendItems(series, value?): the ChartLegend items of the series; value(s, i) adds a figure after a name
    Behavior:
@@ -30,7 +29,6 @@ import { seriesColor } from './scales.js';
 const CHAR = 7;
 // px: the tick offset (8px, --plx-comp-chart-axis-tick-offset) and a 4px gap before the frame's edge
 const TICK_ROOM = 12;
-export const AXIS_TITLE_ROOM = 16;
 
 export function useChartHover() {
   const [active, setActive] = React.useState(null);

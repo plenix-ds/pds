@@ -65,3 +65,19 @@ export function waterfallSteps(data = [], endLabel) {
   if (endLabel !== false && (!out.length || out[out.length - 1].kind !== 'total')) out.push({ label: endLabel, kind: 'total', from: 0, to: run, change: null, end: true });
   return out;
 }
+
+// a quantile of sorted values, interpolated between the two nearest
+function quantile(sorted, p) {
+  if (!sorted.length) return 0;
+  const i = (sorted.length - 1) * p, lo = Math.floor(i), hi = Math.ceil(i);
+  return sorted[lo] + (sorted[hi] - sorted[lo]) * (i - lo);
+}
+
+// the five-number summary with Tukey's whiskers: { min, q1, median, q3, max, outliers, n }
+export function boxStats(values) {
+  const v = (values || []).map(Number).filter((x) => isFinite(x)).sort((a, b) => a - b);
+  if (!v.length) return null;
+  const q1 = quantile(v, 0.25), median = quantile(v, 0.5), q3 = quantile(v, 0.75), fence = (q3 - q1) * 1.5;
+  const inside = v.filter((x) => x >= q1 - fence && x <= q3 + fence);
+  return { min: inside[0], q1, median, q3, max: inside[inside.length - 1], outliers: v.filter((x) => x < q1 - fence || x > q3 + fence), n: v.length };
+}
