@@ -289,12 +289,11 @@
    ]
   },
   "plx-bottom-sheet-nav__tile-label": {
-   "contract": "adjusts",
-   "props": [
-    "font-family",
-    "font-size",
-    "line-height",
-    "word-spacing"
+   "contract": "establishes",
+   "role": "secondary",
+   "font": "sans",
+   "adjusts": [
+    "font-size"
    ]
   },
   "plx-brand-lockup--size-lg": {
@@ -3129,12 +3128,12 @@
    "font": "mono"
   },
   "plx-time-picker__option": {
-   "contract": "adjusts",
-   "props": [
-    "font-family",
+   "contract": "establishes",
+   "role": "body",
+   "font": "mono",
+   "adjusts": [
     "font-size",
-    "font-weight",
-    "word-spacing"
+    "font-weight"
    ]
   },
   "plx-time-zone-select__field-offset": {

@@ -1924,5 +1924,203 @@
   "heat-map--variant-calendar": {
     "sets": [],
     "why": "markup only: one cell per day laid out in weeks, colored by the same scale"
+  },
+  "logo--tone-brand-default": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-comp-brand-name-color"
+      },
+      {
+        "property": "color",
+        "part": "mark",
+        "token": "--plx-comp-brand-mark-color"
+      },
+      {
+        "property": "background-color",
+        "part": "tile",
+        "token": "--plx-comp-brand-tile-background"
+      },
+      {
+        "property": "color",
+        "part": "tile",
+        "token": "--plx-comp-brand-tile-icon"
+      }
+    ],
+    "why": ".plx-brand-lockup--tone-brand in brand-lockup.css (the tool reads the block as brand-mark)"
+  },
+  "logo--tone-on-accent": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-comp-brand-on-accent-color"
+      },
+      {
+        "property": "background-color",
+        "part": "tile",
+        "token": "--plx-comp-brand-on-accent-tile-background"
+      },
+      {
+        "property": "color",
+        "part": "tile",
+        "token": "--plx-comp-brand-on-accent-tile-icon"
+      }
+    ],
+    "why": ".plx-brand-lockup--tone-on-accent in brand-lockup.css (the tool reads the block as brand-mark)"
+  },
+  "logo--tone-one-color": {
+    "sets": [
+      {
+        "property": "border-width",
+        "part": "tile",
+        "token": "--plx-comp-brand-mono-tile-border-width"
+      }
+    ],
+    "why": ".plx-brand-lockup--tone-mono: the tile is an outline in the current text color (the color itself is currentcolor, no token)"
+  },
+  "logo--clear-space-with-clear-space": {
+    "sets": [
+      {
+        "property": "padding-block",
+        "part": "block",
+        "token": "--plx-comp-brand-md-clear-space"
+      },
+      {
+        "property": "padding-inline",
+        "part": "block",
+        "token": "--plx-comp-brand-md-clear-space"
+      }
+    ],
+    "why": ".plx-brand-lockup--clear with the size's clear-space token (shown for the default size, md)"
+  },
+  "link--state-visited": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-comp-link-visited-text"
+      }
+    ],
+    "why": ".plx-link--inline:visited and .is-visited in link.css"
+  },
+  "link--kind-external": {
+    "sets": [],
+    "why": "markup only: opens in a new tab and shows the open icon after the text (external)"
+  },
+  "link--kind-back": {
+    "sets": [],
+    "why": "markup only: a leading chevron that points back, drawn as a standalone link (back)"
+  },
+  "list--variants-do-success-marks": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "icon",
+        "token": "--plx-comp-list-item-success-icon-text"
+      }
+    ],
+    "why": ".plx-list__item--success .plx-list__icon in list.css"
+  },
+  "list--variants-don-t-danger-marks": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "icon",
+        "token": "--plx-comp-list-item-danger-icon-text"
+      }
+    ],
+    "why": ".plx-list__item--danger .plx-list__icon in list.css"
+  },
+  "keyboard-hint--surface-on-the-accent-header": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-kbd-on-accent-background"
+      },
+      {
+        "property": "border-color",
+        "part": "block",
+        "token": "--plx-comp-kbd-on-accent-border-color"
+      },
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-comp-kbd-on-accent-text"
+      }
+    ],
+    "why": ".plx-kbd--on-accent in kbd.css, for a key hint on the accent header"
+  },
+  "keyboard-hint--surface-on-the-page-default": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-kbd-background"
+      },
+      {
+        "property": "border-color",
+        "part": "block",
+        "token": "--plx-comp-kbd-border-color"
+      },
+      {
+        "property": "border-width",
+        "part": "block",
+        "token": "--plx-comp-kbd-border-width"
+      },
+      {
+        "property": "border-radius",
+        "part": "block",
+        "token": "--plx-comp-kbd-radius"
+      }
+    ],
+    "why": ".plx-kbd in kbd.css, the base rule on the page surface"
+  },
+  "loading-overlay--coverage-region-default": {
+    "sets": [
+      {
+        "property": "padding-block",
+        "part": "status",
+        "token": "--plx-comp-loading-overlay-padding"
+      },
+      {
+        "property": "padding-inline",
+        "part": "status",
+        "token": "--plx-comp-loading-overlay-padding"
+      }
+    ],
+    "why": ".plx-loading-overlay__status covers the region (inset 0, no token) with this padding"
+  },
+  "loading-overlay--indicator-with-message": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "message",
+        "token": "--plx-comp-loading-overlay-message-color"
+      },
+      {
+        "property": "font-size",
+        "part": "message",
+        "token": "--plx-comp-loading-overlay-message-font-size"
+      },
+      {
+        "property": "font-weight",
+        "part": "message",
+        "token": "--plx-comp-loading-overlay-message-font-weight"
+      }
+    ],
+    "why": ".plx-loading-overlay__message, the text under the indicator"
+  },
+  "loading-overlay--indicator-with-progress": {
+    "sets": [
+      {
+        "property": "max-inline-size",
+        "part": "progress",
+        "token": "--plx-comp-loading-overlay-progress-max-width"
+      }
+    ],
+    "why": ".plx-loading-overlay__progress, the progress bar under the indicator"
   }
 }
