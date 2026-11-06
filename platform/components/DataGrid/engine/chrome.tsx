@@ -5,7 +5,7 @@
      row of a fill grid, and the footers of the paged and load-more modes (range, page size, pagination, Load more). Render
      functions over the engine's state, not components: one element tree, no extra React layer.
    Usage:
-     import { failureState, manageFailed, viewMenu, emptyRow, moreRow, pagesFooter, loadMoreFooter } from './engine/chrome.jsx';
+     import { failureState, manageFailed, viewMenu, emptyRow, moreRow, pagesFooter, loadMoreFooter } from './engine/chrome.tsx';
      {viewMenu({ props, B, S, effectiveStep, effectiveWrap, setRowHeight, setWrapHeaders })}
    Props:
      Each function takes the engine's values it draws from (the block class B, the strings S, props, the table, the model, the paging
@@ -28,7 +28,7 @@ import { Text } from '../../Text/Text.tsx';
 import { Select } from '../../Input/Input.tsx';
 import { Pagination } from '../../Pagination/Pagination.tsx';
 
-export function failureState({ failed, B, S, onRetry, remoteError, setRetry }) {
+export function failureState({ failed, B, S, onRetry, remoteError, setRetry }: any) {
   return failed ? (
     <EmptyState
       className={B + '__error'}
@@ -39,7 +39,7 @@ export function failureState({ failed, B, S, onRetry, remoteError, setRetry }) {
           <Button
             size="sm"
             onClick={() => {
-              setRetry((n) => n + 1);
+              setRetry((n: any) => n + 1);
               onRetry?.();
             }}
           >
@@ -55,7 +55,7 @@ export function failureState({ failed, B, S, onRetry, remoteError, setRetry }) {
 
 // drawn in place of the manage-columns dialog when its file could not load (issue 807): Retry loads it again, Close ends the request
 // and returns focus to where "Manage columns" was chosen (the header menu's trigger or the column header), or to the grid if that is gone
-export function manageFailed({ B, S, retry, close, from, frame }) {
+export function manageFailed({ B, S, retry, close, from, frame }: any) {
   const closeAndReturn = () => {
     const back =
       from && from !== document.body && from.isConnected
@@ -77,7 +77,7 @@ export function manageFailed({ B, S, retry, close, from, frame }) {
   );
 }
 
-export function viewMenu({ props, B, S, effectiveStep, setRowHeight, effectiveWrap, setWrapHeaders, editMenu }) {
+export function viewMenu({ props, B, S, effectiveStep, setRowHeight, effectiveWrap, setWrapHeaders, editMenu }: any) {
   return props.viewMenu ? (
     <div className={`${B}__grid-col ${B}__w-view`} role="columnheader">
       <Menu
@@ -110,7 +110,7 @@ export function viewMenu({ props, B, S, effectiveStep, setRowHeight, effectiveWr
   ) : null;
 }
 
-export function emptyRow({ model, B, isStatic, ordered, remoteMode, remoteBusy, S, empty }) {
+export function emptyRow({ model, B, isStatic, ordered, remoteMode, remoteBusy, S, empty }: any) {
   return !model.length ? (
     <div className={cx(`${B}__grid-placeholder`, isStatic && B + '__grid-placeholder--static')} role="row">
       <div
@@ -124,14 +124,14 @@ export function emptyRow({ model, B, isStatic, ordered, remoteMode, remoteBusy, 
   ) : null;
 }
 
-export function moreRow({ scrollFill, model, remoteBusy, moreFailed, B, semanticRows, ordered, S, setRetry }) {
+export function moreRow({ scrollFill, model, remoteBusy, moreFailed, B, semanticRows, ordered, S, setRetry }: any) {
   return scrollFill && model.length && (remoteBusy || moreFailed) ? (
     <div className={`${B}__grid-placeholder`} role="row" aria-rowindex={semanticRows.length + 2}>
       <div className={`${B}__grid-placeholder-contents`} role="gridcell" aria-colspan={Math.max(1, ordered.length)}>
         {moreFailed ? (
           <Inline gap="sm" align="center">
             <span className={B + '__empty'}>{S.failed}</span>
-            <Button size="sm" onClick={() => setRetry((n) => n + 1)}>
+            <Button size="sm" onClick={() => setRetry((n: any) => n + 1)}>
               {S.retry}
             </Button>
           </Inline>
@@ -157,7 +157,7 @@ export function pagesFooter({
   setPage,
   setPageSize,
   label,
-}) {
+}: any) {
   return mode === 'pages' && !failed ? (
     <div className={B + '__footer'}>
       <Text variant="data" className={B + '__range'}>
@@ -171,7 +171,7 @@ export function pagesFooter({
         <span>{S.perPage}</span>
         <Select
           value={String(pageSize)}
-          options={(props.pageSizes || [25, 50, 100]).map((n) => ({ value: String(n), label: String(n) }))}
+          options={(props.pageSizes || [25, 50, 100]).map((n: any) => ({ value: String(n), label: String(n) }))}
           onChange={(e) => {
             setPage(0);
             setPageSize(+e.target.value);
@@ -203,7 +203,7 @@ export function loadMoreFooter({
   setLoaded,
   allRows,
   pageSize,
-}) {
+}: any) {
   return mode === 'load-more' && !failed ? (
     <div className={B + '__footer'}>
       <Text variant="data" className={B + '__range'}>
@@ -218,9 +218,9 @@ export function loadMoreFooter({
             if (remoteMode) {
               if (!fetching.current) {
                 fetching.current = true;
-                setPage((n) => n + 1);
+                setPage((n: any) => n + 1);
               }
-            } else setLoaded((n) => Math.min(allRows.length, n + pageSize));
+            } else setLoaded((n: any) => Math.min(allRows.length, n + pageSize));
           }}
         >
           {S.loadMore}

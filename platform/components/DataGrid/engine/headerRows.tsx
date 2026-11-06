@@ -4,7 +4,7 @@
      filter field, the resize handle (mouse, touch and keyboard) and the drag handle that reorders. Render functions over the engine's
      state, not components: one element tree, no extra React layer.
    Usage:
-     import { headerRows } from './engine/headerRows.jsx';
+     import { headerRows } from './engine/headerRows.tsx';
      const { headerCell, chooserColumns } = headerRows({ B, S, props, table, columnDnd, startResize, ... });
    Props:
      The engine's values (the block class B, the strings S, props, the table, the columns and their order, the grouping, the sort and
@@ -31,6 +31,7 @@ import { Popover } from '../../Popover/Popover.tsx';
 import { Select, Input } from '../../Input/Input.tsx';
 import { Button } from '../../Button/Button.tsx';
 import ChevronDownIcon from 'plenix-platform/icons/plenix/chevron-down';
+import FilterIcon from 'plenix-platform/icons/plenix/filter';
 
 export function headerRows({
   groupBy,
@@ -64,11 +65,11 @@ export function headerRows({
   headerMenu,
   startResize,
   resize,
-}) {
+}: any) {
   // the column menu (owner, 2026-10-23, Windows Explorer and Airtable): the application's field actions (columnMenu: duplicate,
   // insert, link, description, permissions), then sort in the type's words, filter, and group by this field. Width, order
   // and visibility live in the header's right-click menu (columnChooser); a click on the title sorts.
-  const headerItems = (column) => (
+  const headerItems = (column: any) => (
     <Rare
       part="columnMenuItems"
       args={{ column, columnMenu, S, menuItems, api, props, setFilterField, changeGroups, wrapOf, changeWrap, wrapColumns, groupBy }}
@@ -82,24 +83,24 @@ export function headerRows({
   );
   // the header's right-click menu (Windows Explorer): size this column or every column to fit, every column with a check
   // (TanStack's visibility; a pinned column stays shown) and More… for the columns dialog (order, find, show all, hide all)
-  const columnChooser = (column) => (
+  const columnChooser = (column: any) => (
     <>
       <MenuItem onSelect={() => fit(column.id)}>{S.sizeToFit}</MenuItem>
-      <MenuItem onSelect={() => table.getVisibleLeafColumns().forEach((col) => fit(col.id))}>{S.sizeAllToFit}</MenuItem>
+      <MenuItem onSelect={() => table.getVisibleLeafColumns().forEach((col: any) => fit(col.id))}>{S.sizeAllToFit}</MenuItem>
       {(() => {
         const cols = table
             .getVisibleLeafColumns()
-            .map((col) => col.columnDef.meta)
-            .filter((m) => m && m.field && !kinds(m).includes('icon')),
+            .map((col: any) => col.columnDef.meta)
+            .filter((m: any) => m && m.field && !kinds(m).includes('icon')),
           all = cols.length > 0 && cols.every(wrapOf);
         return (
-          <MenuItem checked={all} onSelect={() => changeWrap(Object.fromEntries(cols.map((m) => [m.field, !all])))}>
+          <MenuItem checked={all} onSelect={() => changeWrap(Object.fromEntries(cols.map((m: any) => [m.field, !all])))}>
             {S.wrapAll}
           </MenuItem>
         );
       })()}
       <MenuDivider />
-      {chooserColumns().map((col) => (
+      {chooserColumns().map((col: any) => (
         <MenuItem
           key={col.id}
           checked={col.getIsVisible()}
@@ -116,10 +117,10 @@ export function headerRows({
   const chooserColumns = () => {
     const all = table
       .getAllLeafColumns()
-      .filter((col) => !kinds(col.columnDef.meta).some((k) => ['icon', 'actions'].includes(k)));
-    return all.slice().sort((x, y) => orderAt(x.id) - orderAt(y.id));
+      .filter((col: any) => !kinds(col.columnDef.meta).some((k) => ['icon', 'actions'].includes(k)));
+    return all.slice().sort((x: any, y: any) => orderAt(x.id) - orderAt(y.id));
   };
-  const headerCell = (column) => {
+  const headerCell = (column: any) => {
     const c = column.columnDef.meta,
       pinned = column.getIsPinned() === 'left',
       filtered = column.getIsFiltered(),
@@ -130,7 +131,7 @@ export function headerRows({
       <Width
         key={c.field}
         {...columnDnd.itemProps(ordered.indexOf(column))}
-        onAttach={(node) => {
+        onAttach={(node: any) => {
           if (node) headerElements.current.set(c.field, node);
           else headerElements.current.delete(c.field);
         }}
@@ -154,11 +155,11 @@ export function headerRows({
           kinds(c).includes('icon') && B + '__w-lead',
           column.getIsFiltered() && B + '__filtered',
           pinned && '' + B + '__grid-frozen',
-          [].concat(groupBy || []).some((level) => (typeof level === 'object' ? level.field : level) === c.field) &&
+          ([] as any[]).concat(groupBy || []).some((level) => (typeof level === 'object' ? level.field : level) === c.field) &&
             B + '__cell--grouped'
         )}
         data-plx-sticky={pinned && offset ? offset + 'px' : undefined}
-        onClick={(e) => {
+        onClick={(e: any) => {
           if (!e.target.closest(interactive) && column.getCanSort()) column.toggleSorting();
         }}
         onKeyDown={headerKeys({ column })}
@@ -192,7 +193,7 @@ export function headerRows({
                   ) : null}
                   {showTypes ? (
                     <span className={B + '__type-icon'}>
-                      <Icon name={typeIcons[typeOf(c)] || EdTextIcon} />
+                      <Icon name={typeIcons[typeOf(c) as keyof typeof typeIcons] || EdTextIcon} />
                     </span>
                   ) : null}
                   <span className={cx(B + '__title-text', effectiveWrap && B + '__title-text--wrap')}>
@@ -209,7 +210,7 @@ export function headerRows({
                   title={S.filter + ' ' + c.title}
                   size="sm"
                   trigger={
-                    <PressTrigger className={B + '__title-filter-button'} aria-label={S.filter + ' ' + c.title}>
+                    <PressTrigger {...({} as any)} className={B + '__title-filter-button'} aria-label={S.filter + ' ' + c.title}>
                       <Icon name={FilterIcon} />
                     </PressTrigger>
                   }
@@ -249,7 +250,7 @@ export function headerRows({
               <Menu
                 label={S.columnActions.replace('{title}', c.title)}
                 trigger={
-                  <PressTrigger
+                  <PressTrigger {...({} as any)}
                     className={B + '__menu-chevron'}
                     aria-label={S.columnActions.replace('{title}', c.title)}
                     onPointerEnter={preloadRare}

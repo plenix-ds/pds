@@ -55,13 +55,13 @@ import { useCellRange } from './engine/useCellRange.ts';
 import { usePillWidths } from './engine/usePillWidths.ts';
 import { useGridMetrics } from './engine/useGridMetrics.ts';
 import { gridFrame } from './engine/gridFrame.jsx';
-const LazyFormEdit = React.lazy(() => import('./engine/formEdit.jsx'));
+const LazyFormEdit = React.lazy(() => import('./engine/formEdit.tsx'));
 import { columnSizing } from './engine/columnSizing.ts';
 import { syncLive } from './engine/liveState.ts';
 import { useRemoteRows } from './engine/useRemoteRows.ts';
 import { useTableModel } from './engine/useTableModel.ts';
 import { bodyRows } from './engine/bodyRows.jsx';
-import { headerRows } from './engine/headerRows.jsx';
+import { headerRows } from './engine/headerRows.tsx';
 
 import { makeFocusCell } from './engine/keys.ts';
 import { MemoGridRow, PixelGap } from './engine/parts.jsx';
