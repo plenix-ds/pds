@@ -134,7 +134,7 @@ export const rowKeys =
   };
 
 export const cellKeys =
-  ({ isStatic, value, canEdit, enterEdits, typeToReplace, toggle, setEditing, row, c, model, ordered, column, frame, focusCell, cellRange, kept, cardList }) =>
+  ({ isStatic, value, canEdit, enterEdits, typeToReplace, formMode, toggle, setEditing, row, c, model, ordered, column, frame, focusCell, cellRange, kept, cardList }) =>
   (event) => {
     if (isStatic || event.target !== event.currentTarget) return;
     // a checkbox cell (the option editing.types): Space toggles it and saves at once (ADR 0016)
@@ -173,7 +173,8 @@ export const cellKeys =
       navigator.clipboard.writeText(valueText(value));
       return;
     }
-    if (event.key === 'Enter' && canEdit && enterEdits !== false) {
+    // in Form Edit Enter keeps its meaning of opening the record (not an edit): the form opens with F2, a double click or the row's action (ADR 0016, design §12)
+    if (event.key === 'Enter' && canEdit && enterEdits !== false && !formMode) {
       event.preventDefault();
       if (cellRange) cellRange.collapse();
       setEditing({ key: row.id, field: c.field, value });
@@ -183,7 +184,7 @@ export const cellKeys =
     // Neither in a cell that cannot be edited, nor during IME composition, nor with Ctrl, Alt or Meta held (a shortcut). Space keeps choosing the row;
     // a number column takes only a character a number has.
     if (canEdit && !event.ctrlKey && !event.altKey && !event.metaKey && !event.nativeEvent?.isComposing && event.keyCode !== 229) {
-      const typed = typeToReplace !== false && event.key.length === 1 && event.key !== ' ' && (c.editor !== 'number' || /[0-9.\-]/.test(event.key));
+      const typed = typeToReplace !== false && !formMode && event.key.length === 1 && event.key !== ' ' && (c.editor !== 'number' || /[0-9.\-]/.test(event.key));
       if (event.key === 'F2' || typed) {
         event.preventDefault();
         if (cellRange) cellRange.collapse();

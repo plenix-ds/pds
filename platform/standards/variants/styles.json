@@ -1297,5 +1297,61 @@
       }
     ],
     "why": ".plx-cascader__search, the search field at the top of the list"
+  },
+  "dialog--size-sm": {
+    "sets": [
+      {
+        "property": "max-inline-size",
+        "part": "block",
+        "token": "--plx-comp-dialog-sm-max-width"
+      }
+    ],
+    "why": ".plx-dialog--sm in dialog.css"
+  },
+  "dialog--size-md-default": {
+    "sets": [
+      {
+        "property": "max-inline-size",
+        "part": "block",
+        "token": "--plx-comp-dialog-md-max-width"
+      }
+    ],
+    "why": ".plx-dialog--md in dialog.css"
+  },
+  "dialog--size-lg": {
+    "sets": [
+      {
+        "property": "max-inline-size",
+        "part": "block",
+        "token": "--plx-comp-dialog-lg-max-width"
+      }
+    ],
+    "why": ".plx-dialog--lg in dialog.css"
+  },
+  "dialog--size-xl": {
+    "sets": [
+      {
+        "property": "max-inline-size",
+        "part": "block",
+        "token": "--plx-comp-dialog-xl-max-width"
+      }
+    ],
+    "why": ".plx-dialog--xl in dialog.css"
+  },
+  "dialog--size-full": {
+    "sets": [],
+    "why": ".plx-dialog--full sets block-size and max-block-size to 100% and drops the maximum width, none of them tokens"
+  },
+  "delete-flow--form-confirm-default": {
+    "sets": [],
+    "why": "markup only: asks first in a Dialog with the count in the question; focus is on Cancel and the action is a danger Button"
+  },
+  "delete-flow--form-move-to-trash": {
+    "sets": [],
+    "why": "markup only: moves the items to the trash at once and shows a Toast with Undo"
+  },
+  "delete-flow--form-undo": {
+    "sets": [],
+    "why": "markup only: deletes at once and shows a Toast with Undo; the deletion is final when the Toast leaves"
   }
 }

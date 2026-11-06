@@ -196,7 +196,7 @@ export { Calendar } from './components/Calendar/Calendar.tsx';
 export { DatePicker } from './components/DatePicker/DatePicker.jsx';
 export { CountrySelect } from './components/CountrySelect/CountrySelect.tsx';
 export { ProgressSteps } from './components/ProgressSteps/ProgressSteps.tsx';
-export { MillerColumns } from './components/MillerColumns/MillerColumns.jsx';
+export { MillerColumns } from './components/MillerColumns/MillerColumns.tsx';
 export { Cascader } from './components/Cascader/Cascader.jsx';
 export { useBranchLoader, BranchStatus } from './hooks/useBranchLoader.ts';
 export { EntityPicker } from './components/EntityPicker/EntityPicker.jsx';

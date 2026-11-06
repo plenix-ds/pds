@@ -1554,7 +1554,7 @@
       "platform/patterns/AvatarUpload/AvatarUpload.jsx",
       "platform/patterns/AvatarUpload/avatar-upload.css",
       "platform/tokens/components/avatar-upload.tokens.json",
-      "platform/components/MillerColumns/MillerColumns.jsx",
+      "platform/components/MillerColumns/MillerColumns.tsx",
       "platform/components/MillerColumns/miller-columns.css",
       "platform/tokens/components/miller-columns.tokens.json",
       "platform/components/LoadMore/LoadMore.jsx",
@@ -5451,7 +5451,7 @@
    "wave": 7,
    "lane": "B",
    "files": [
-    "platform/components/MillerColumns/MillerColumns.jsx",
+    "platform/components/MillerColumns/MillerColumns.tsx",
     "platform/components/MillerColumns/miller-columns.css",
     "platform/tokens/components/miller-columns.tokens.json"
    ],
@@ -13891,7 +13891,7 @@
    "target": "MillerColumns",
    "targetKind": "component",
    "files": [
-    "platform/components/MillerColumns/MillerColumns.jsx",
+    "platform/components/MillerColumns/MillerColumns.tsx",
     "platform/components/MillerColumns/miller-columns.css",
     "platform/tokens/components/miller-columns.tokens.json"
    ],

@@ -31,6 +31,7 @@ import { gridPx } from '../../utils/grid.ts';
 import { MenuItem, MenuDivider } from '../Menu/Menu.tsx';
 
 import { opening, recordKey, valueAt } from './state.js';
+import { valueText } from './cells.jsx';
 import { createAdapter } from './adapter.js';
 
 import { recordsOf } from './records.js';
@@ -54,6 +55,7 @@ import { useCellRange } from './engine/useCellRange.js';
 import { usePillWidths } from './engine/usePillWidths.js';
 import { useGridMetrics } from './engine/useGridMetrics.js';
 import { gridFrame } from './engine/gridFrame.jsx';
+const LazyFormEdit = React.lazy(() => import('./engine/formEdit.jsx'));
 import { columnSizing } from './engine/columnSizing.js';
 import { syncLive } from './engine/liveState.js';
 import { useRemoteRows } from './engine/useRemoteRows.js';
@@ -200,6 +202,9 @@ function NextEngine(rawProps) {
     canChoose = editModes.length > 1 && props.columns.some((c) => c.editor),
     editMode = editModes.includes(editModeChoice) ? editModeChoice : editModes.includes(props.editMode ?? settings.editMode) ? props.editMode ?? settings.editMode : editModes[0] || 'inline',
     editMenu = { mode: editMode, modes: editModes, show: canChoose, set: setEditMode };
+  // Form Edit (ADR 0016, #84 F2): in this mode an edit asked for on a cell opens the record in a form instead of the inline editor
+  const [formKey, setFormKey] = React.useState(null),
+    beginEdit = (next) => (next && editMode === 'form' && canChoose ? setFormKey(next.key) : setEditing(next));
 
   const deferredFilter = React.useDeferredValue(props.filter);
 
@@ -902,7 +907,8 @@ function NextEngine(rawProps) {
     setCellStatus,
     cells,
     showTypes,
-    setEditing,
+    setEditing: beginEdit,
+    formMode: editMode === 'form' && canChoose,
     frame,
     pinnedAt,
     groupBy,
@@ -984,7 +990,7 @@ function NextEngine(rawProps) {
           return String(form).replace(/\{n\}/g, values.n);
         })()
       : null;
-  return gridFrame({
+  const frameNode = gridFrame({
     cardBar,
     widthPixels,
     headerMenu,
@@ -1065,6 +1071,30 @@ function NextEngine(rawProps) {
     setPageSize,
     loadedRows
   });
+  const formRecord = formKey != null ? recordsByKey.get(formKey) : null;
+  if (!formRecord) return frameNode;
+  const formColumns = ordered.map((column) => column.columnDef.meta),
+    nameColumn = formColumns.find((c) => c.kind === 'name') || formColumns[0];
+  return (
+    <>
+      {frameNode}
+      <React.Suspense fallback={null}>
+        <LazyFormEdit
+          record={formRecord}
+          rowKey={formKey}
+          columns={formColumns}
+          isEditable={(c) => (typeof c.editable === 'function' ? c.editable(api.cell(formKey, c.field)) : c.editable !== false)}
+          name={valueText(valueAt(formRecord, nameColumn.field))}
+          types={props.editing?.types ?? settings.editing?.types}
+          surface={props.formSurface}
+          onRecordEdit={props.onRecordEdit}
+          commitEdit={commitEdit}
+          onClose={() => setFormKey(null)}
+          S={S}
+        />
+      </React.Suspense>
+    </>
+  );
 }
 
 export function DataGridEngine(props) {
