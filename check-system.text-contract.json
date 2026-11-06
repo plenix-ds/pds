@@ -1,11 +1,7 @@
 {
  "$description": "The Phase 4 migration list (Plenix Styling Standard, section 6): parts that change the font family without the whole text role. It only shrinks: node check-system.rules/text-contract.js --shrink.",
  "parts": {
-  "plx-brand-lockup__app": "changes the font family without the whole role (missing font-size, letter-spacing)",
-  "plx-brand-lockup__name": "changes the font family without the whole role (missing font-size)",
   "plx-data-pill--data": "changes the font family without the whole role (missing font-size, letter-spacing)",
-  "plx-image-editor__text": "changes the font family without the whole role (missing letter-spacing, line-height)",
-  "plx-image-editor__text--bold": "changes the font family without the whole role (missing letter-spacing, line-height)",
   "plx-inline-edit__read": "changes the font family without the whole role (its font and word spacing are not one switch)",
   "plx-input-group__affix": "changes the font family without the whole role (its font and word spacing are not one switch)",
   "plx-link": "changes the font family without the whole role (missing font-size, letter-spacing, line-height)",

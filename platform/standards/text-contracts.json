@@ -321,22 +321,23 @@
    ]
   },
   "plx-brand-lockup__app": {
-   "contract": "adjusts",
-   "props": [
-    "font-family",
+   "contract": "establishes",
+   "role": "body",
+   "font": "sans",
+   "adjusts": [
+    "font-size",
     "font-weight",
-    "line-height",
-    "word-spacing"
+    "line-height"
    ]
   },
   "plx-brand-lockup__name": {
-   "contract": "adjusts",
-   "props": [
-    "font-family",
-    "font-weight",
+   "contract": "establishes",
+   "role": "heading",
+   "font": "sans",
+   "adjusts": [
+    "font-size",
     "letter-spacing",
-    "line-height",
-    "word-spacing"
+    "line-height"
    ]
   },
   "plx-breadcrumbs__list": {
@@ -1667,17 +1668,19 @@
    ]
   },
   "plx-image-editor__text": {
-   "contract": "adjusts",
-   "props": [
-    "font-family",
+   "contract": "establishes",
+   "role": "body",
+   "font": "sans",
+   "adjusts": [
     "font-size",
-    "font-weight",
-    "word-spacing"
+    "font-weight"
    ]
   },
   "plx-image-editor__text--bold": {
-   "contract": "adjusts",
-   "props": [
+   "contract": "establishes",
+   "role": "body",
+   "font": "sans",
+   "adjusts": [
     "font-weight"
    ]
   },
