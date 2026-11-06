@@ -1,0 +1,3 @@
+platform/components/Dialog/dialog.css:24  plx-dialog__title changes the font family without the whole role (missing letter-spacing, line-height) (Styling Standard 6, the boundary rule)
+platform/components/Sheet/sheet.css:18  plx-sheet__title changes the font family without the whole role (missing letter-spacing, line-height) (Styling Standard 6, the boundary rule)
+2 finding(s)

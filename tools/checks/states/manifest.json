@@ -248,5 +248,25 @@
     "loading": "n/a(loadOptions shows its loading row in the list; stories arrive with Storybook, P0-11)",
     "selected": "n/a(stories arrive with Storybook, P0-11)",
     "error": "n/a(invalid is the is-invalid state set by its Field; a failed load shows its error row; stories arrive with Storybook, P0-11)"
+  },
+  "Dialog": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(a dialog is open or closed; its buttons carry their own disabled state)",
+    "loading": "n/a(a dialog's content is the caller's; a busy button is the Button's loading state)",
+    "selected": "n/a(a dialog is not selectable)",
+    "error": "n/a(an error shows in the content or an alert dialog; stories arrive with Storybook, P0-11)"
+  },
+  "Sheet": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(a sheet is open or closed; its buttons carry their own disabled state)",
+    "loading": "n/a(a sheet's content is the caller's)",
+    "selected": "n/a(a sheet is not selectable)",
+    "error": "n/a(an error shows in the content; stories arrive with Storybook, P0-11)"
   }
 }

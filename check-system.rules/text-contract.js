@@ -60,14 +60,14 @@ function roleOf(idx) {
   const by = Object.fromEntries(idx.map((t) => [t.name, t])), memo = {};
   const find = (name, seen) => {
     if (memo[name] !== undefined) return memo[name];
-    const m = name.match(/^--plx-sys-text-([a-z]+)-(font-family|font-size|font-weight|letter-spacing|line-height|word-spacing)$/);
+    const m = name.match(/^--plx-sys-text-([a-z]+(?:-[a-z]+)*)-(font-family|font-size|font-weight|letter-spacing|line-height|word-spacing)$/);
     if (m) return (memo[name] = m[1]);
     const t = by[name]; if (!t || seen.has(name)) return (memo[name] = null);
     seen.add(name); const r = (t.refs || []).map((x) => find(x, seen)).find(Boolean) || null;
     return (memo[name] = r);
   };
   // a keyword (normal) is no token: it matches every role whose value for that property is the same keyword
-  const roles = {}; for (const t of idx) { const m = t.name.match(/^--plx-sys-text-([a-z]+)-(letter-spacing|word-spacing)$/); if (m) (roles[m[2]] = roles[m[2]] || {})[m[1]] = String(Object.values(t.resolved)[0]); }
+  const roles = {}; for (const t of idx) { const m = t.name.match(/^--plx-sys-text-([a-z]+(?:-[a-z]+)*)-(letter-spacing|word-spacing)$/); if (m) (roles[m[2]] = roles[m[2]] || {})[m[1]] = String(Object.values(t.resolved)[0]); }
   return (value, prop) => {
     const m = /var\((--plx-[a-z0-9-]+)/.exec(value || ''); if (m) return find(m[1], new Set());
     const same = Object.entries(roles[prop] || {}).filter(([, v]) => v === String(value).trim()).map(([r]) => r);
