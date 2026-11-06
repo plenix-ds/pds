@@ -2166,5 +2166,23 @@
   "media-player--variant-picture-in-picture": {
     "sets": [],
     "why": "markup only: offers the browser's picture in picture (pictureInPicture, default true)"
+  },
+  "line-chart--variant-with-points": {
+    "sets": [
+      {
+        "property": "r",
+        "part": "point",
+        "token": "--plx-comp-line-chart-point-radius"
+      }
+    ],
+    "why": ".plx-line-chart__point, the marker on each value when there are few of them"
+  },
+  "line-chart--variant-line": {
+    "sets": [],
+    "why": "markup only: one line through the values, drawn by the chart engine in the Plenix theme"
+  },
+  "line-chart--variant-multiple-series": {
+    "sets": [],
+    "why": "markup only: one line per series; the legend shows and hides series"
   }
 }
