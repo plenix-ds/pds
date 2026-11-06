@@ -1,5 +1,5 @@
 {
-  "$description": "Diagram (platform/charts/Diagram.jsx, diagram.css; library wave 9, lane A): its component tokens. Neutral roles only: no color carries meaning in a diagram, the shapes and the labels do.",
+  "$description": "Diagram (platform/charts/Diagram.tsx, diagram.css; library wave 9, lane A): its component tokens. Neutral roles only: no color carries meaning in a diagram, the shapes and the labels do.",
   "plx-comp": {
     "diagram-shape-background": { "$value": "{plx-sys.surface-raised}", "$type": "color", "$description": "Diagram: the inside of a shape." },
     "diagram-shape-border-color": { "$value": "{plx-sys.border-strong}", "$type": "color", "$description": "Diagram: a shape's outline." },

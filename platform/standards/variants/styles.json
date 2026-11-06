@@ -5212,7 +5212,7 @@
         "token": "--plx-comp-retry-status-margin-block-start"
       }
     ],
-    "why": "retry.css: .plx-retry__status holds the countdown (\"Retrying in …\") while the next attempt waits"
+    "why": "retry.css: .plx-retry__status holds the countdown (\"Retrying in \u2026\") while the next attempt waits"
   },
   "retry-pattern--kind-retry-count": {
     "sets": [
@@ -5342,5 +5342,221 @@
       }
     ],
     "why": "avatar-group.css: .plx-avatar-group__more, the \"+N\" avatar that stands for the people past the maximum (with --stack it has the same ring as the avatars); as a button it shows the rest in a popover"
+  },
+  "ai-button--variant-trigger": {
+    "sets": [],
+    "why": "markup only: a Button with the sparkle icon and the action label, which runs onAction only when pressed (mode trigger)"
+  },
+  "ai-button--variant-icon-only": {
+    "sets": [],
+    "why": "markup only: the sparkle icon alone; the action name is its accessible name (mode icon)"
+  },
+  "ai-button--variant-with-menu-of-ai-actions": {
+    "sets": [],
+    "why": "markup only: a button that opens a Menu of named AI actions, each run once (mode menu)"
+  },
+  "ai-thinking--variant-thinking": {
+    "sets": [],
+    "why": "markup only: a Chat.Typing indicator that says the assistant is working, with a label (variant thinking)"
+  },
+  "ai-thinking--variant-with-steps": {
+    "sets": [],
+    "why": "markup only: a Chat.Typing indicator with the steps listed and the current step marked (variant steps)"
+  },
+  "combobox--groups-options-under-group-headings": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "group",
+        "token": "--plx-comp-combobox-group-text"
+      },
+      {
+        "property": "font-family",
+        "part": "group",
+        "token": "--plx-comp-combobox-group-font-family"
+      },
+      {
+        "property": "font-size",
+        "part": "group",
+        "token": "--plx-comp-combobox-group-font-size"
+      }
+    ],
+    "why": ".plx-combobox__group in combobox.css: the heading above each group of options (options[].group)"
+  },
+  "combobox--selection-one-choice-default": {
+    "sets": [],
+    "why": "markup only: one value is chosen and shown in the field; multiple turns the chosen values into tags"
+  },
+  "entity-picker--choice-single": {
+    "sets": [],
+    "why": "markup only: one record is chosen; with multiple the chosen records are listed instead"
+  },
+  "full-screen-dialog--size-full-screen": {
+    "sets": [],
+    "why": ".plx-dialog--full sets block-size and max-block-size to 100% and drops the maximum width, none of them tokens; the modal layer keeps the layout inset on every side"
+  },
+  "details--variant-default": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-comp-details-text"
+      },
+      {
+        "property": "font-family",
+        "part": "block",
+        "token": "--plx-comp-details-font-family"
+      },
+      {
+        "property": "font-size",
+        "part": "block",
+        "token": "--plx-comp-details-font-size"
+      },
+      {
+        "property": "color",
+        "part": "summary",
+        "token": "--plx-comp-details-summary-text"
+      },
+      {
+        "property": "column-gap",
+        "part": "summary",
+        "token": "--plx-comp-details-summary-gap"
+      }
+    ],
+    "why": ".plx-details and .plx-details__summary in details.css: the base look, one block of detail behind a summary line"
+  },
+  "media-card--variants-square": {
+    "sets": [
+      {
+        "property": "aspect-ratio",
+        "part": "media",
+        "token": "--plx-comp-media-card-aspect-1-1"
+      }
+    ],
+    "why": "card.css: .plx-media-card__media[data-plx-aspect=\"1/1\"]"
+  },
+  "media-card--variants-selected": {
+    "sets": [
+      {
+        "property": "border-color",
+        "part": "block",
+        "token": "--plx-comp-card-selected-border-color"
+      }
+    ],
+    "why": "card.css: .plx-media-card.is-selected also keeps the corner checkbox visible (opacity 1, a keyword with no token)"
+  },
+  "chart-grid-line--direction-horizontal-default": {
+    "sets": [
+      {
+        "property": "stroke",
+        "part": "line",
+        "token": "--plx-comp-chart-grid-line-color"
+      },
+      {
+        "property": "stroke-width",
+        "part": "line",
+        "token": "--plx-comp-chart-grid-line-width"
+      }
+    ],
+    "why": "charts.css: .plx-chart__grid-line, the same stroke for both directions; the direction is the lines' geometry (horizontal lines across at a vertical scale's ticks), which the chart draws"
+  },
+  "chart-grid-line--direction-vertical": {
+    "sets": [
+      {
+        "property": "stroke",
+        "part": "line",
+        "token": "--plx-comp-chart-grid-line-color"
+      },
+      {
+        "property": "stroke-width",
+        "part": "line",
+        "token": "--plx-comp-chart-grid-line-width"
+      }
+    ],
+    "why": "charts.css: .plx-chart__grid-line, the same stroke for both directions; the direction is the lines' geometry (vertical lines up at a horizontal scale's ticks), which the chart draws"
+  },
+  "gantt-chart--variant-today-line": {
+    "sets": [
+      {
+        "property": "stroke",
+        "part": "reference-line",
+        "token": "--plx-comp-chart-reference-line-color"
+      },
+      {
+        "property": "stroke-dasharray",
+        "part": "reference-line",
+        "token": "--plx-comp-chart-reference-line-dash"
+      },
+      {
+        "property": "stroke-dasharray",
+        "part": "reference-line",
+        "token": "--plx-comp-chart-reference-line-gap"
+      },
+      {
+        "property": "stroke-width",
+        "part": "reference-line",
+        "token": "--plx-comp-chart-reference-line-width"
+      }
+    ],
+    "why": "the today line is a ReferenceLine on the x axis (kind reference): .plx-chart-reference__line, a dashed line in the subtle color, with its label in the reference label role"
+  },
+  "data-grid--grouping-airtable-style-options-groupby-grouped": {
+    "sets": [
+      {
+        "property": "block-size",
+        "part": "group-header",
+        "token": "--plx-comp-data-grid-group-header-height"
+      },
+      {
+        "property": "background-color",
+        "part": "group-header",
+        "token": "--plx-comp-data-grid-group-background"
+      },
+      {
+        "property": "padding-block",
+        "part": "group-gap",
+        "token": "--plx-comp-data-grid-group-gap"
+      },
+      {
+        "property": "background-color",
+        "part": "grouped-column",
+        "token": "--plx-comp-data-grid-grouped-column-background"
+      }
+    ],
+    "why": "the group header row, the gap between groups and the grouped-by column in data-grid.css"
+  },
+  "data-grid--grouping-airtable-style-options-groupby-nested-groups": {
+    "sets": [
+      {
+        "property": "padding-inline-start",
+        "part": "group-header",
+        "token": "--plx-comp-data-grid-group-indent"
+      }
+    ],
+    "why": "each nested level's header is indented one step (group-indent) and sticks under its parent's"
+  },
+  "data-grid--grouping-airtable-style-options-groupby-summaries-and-add-rows": {
+    "sets": [],
+    "why": "markup only: a column summary in each group header and a + add row at the end of each group (onAddToGroup); both are off by default"
+  },
+  "data-grid--many-rows-fill-pages-load-more-the-mode-prop-fill-default": {
+    "sets": [],
+    "why": "markup only: the grid fills the room left on screen and scrolls its rows inside it, drawing only the rows in view (mode fill)"
+  },
+  "data-grid--many-rows-fill-pages-load-more-the-mode-prop-pages": {
+    "sets": [],
+    "why": "markup only: pages of rows with a footer: the range, the rows-per-page choice and Pagination (mode pages)"
+  },
+  "data-grid--many-rows-fill-pages-load-more-the-mode-prop-load-more": {
+    "sets": [],
+    "why": "markup only: the first rows, then more when the last row comes into view or Load more is pressed, with the count in the footer (mode load-more)"
+  },
+  "data-grid--column-headers-type-icons-wrap-headers-the-column-menu-column-menu": {
+    "sets": [],
+    "why": "markup only: a menu from the options button or a right click on a header: the application's field actions, sort, filter and group"
+  },
+  "data-grid--column-headers-type-icons-wrap-headers-the-column-menu-wrap-headers": {
+    "sets": [],
+    "why": "markup only: wrapHeaders lets a long column name wrap onto more lines instead of being cut with an ellipsis (off by default)"
   }
 }

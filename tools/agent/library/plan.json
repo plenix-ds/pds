@@ -1781,13 +1781,13 @@
       "platform/standards/web-native-map.d/w09A.json",
       "platform/charts/LineChart.jsx",
       "platform/charts/AreaChart.jsx",
-      "platform/charts/HeatMap.jsx",
+      "platform/charts/HeatMap.tsx",
       "platform/charts/Gauge.tsx",
       "platform/charts/WaterfallChart.tsx",
-      "platform/charts/WordCloud.jsx",
+      "platform/charts/WordCloud.tsx",
       "platform/charts/interaction.js",
-      "platform/charts/NetworkGraph.jsx",
-      "platform/charts/Diagram.jsx"
+      "platform/charts/NetworkGraph.tsx",
+      "platform/charts/Diagram.tsx"
      ],
      "targets": [
       "LineChart (component, M)",
@@ -1825,10 +1825,10 @@
       "platform/charts/PieChart.tsx",
       "platform/charts/BoxPlot.tsx",
       "platform/charts/BulletChart.tsx",
-      "platform/charts/SankeyDiagram.jsx",
-      "platform/charts/RadarChart.jsx",
+      "platform/charts/SankeyDiagram.tsx",
+      "platform/charts/RadarChart.tsx",
       "platform/charts/ComboChart.tsx",
-      "platform/charts/TimelineChart.jsx",
+      "platform/charts/TimelineChart.tsx",
       "platform/patterns/ComparisonView/ComparisonView.jsx",
       "platform/patterns/ComparisonView/comparison-view.css",
       "platform/tokens/components/comparison-view.tokens.json"
@@ -1875,10 +1875,10 @@
       "platform/charts/FunnelChart.tsx",
       "platform/charts/Sparkline.tsx",
       "platform/charts/a11y.js",
-      "platform/charts/Treemap.jsx",
+      "platform/charts/Treemap.tsx",
       "platform/charts/LollipopChart.tsx",
-      "platform/charts/GanttChart.jsx",
-      "platform/charts/GeoMap.jsx",
+      "platform/charts/GanttChart.tsx",
+      "platform/charts/GeoMap.tsx",
       "platform/vendor/geo/"
      ],
      "targets": [
@@ -6131,7 +6131,7 @@
    "wave": 9,
    "lane": "A",
    "files": [
-    "platform/charts/HeatMap.jsx"
+    "platform/charts/HeatMap.tsx"
    ],
    "dependsOn": [
     "chart-parts"
@@ -6172,7 +6172,7 @@
    "wave": 9,
    "lane": "A",
    "files": [
-    "platform/charts/WordCloud.jsx"
+    "platform/charts/WordCloud.tsx"
    ],
    "dependsOn": [
     "ChartKit"
@@ -6193,7 +6193,7 @@
    "wave": 9,
    "lane": "A",
    "files": [
-    "platform/charts/NetworkGraph.jsx"
+    "platform/charts/NetworkGraph.tsx"
    ],
    "dependsOn": [
     "ChartKit"
@@ -6215,7 +6215,7 @@
    "wave": 9,
    "lane": "A",
    "files": [
-    "platform/charts/Diagram.jsx"
+    "platform/charts/Diagram.tsx"
    ],
    "dependsOn": [
     "NetworkGraph"
@@ -6353,7 +6353,7 @@
    "wave": 9,
    "lane": "B",
    "files": [
-    "platform/charts/RadarChart.jsx"
+    "platform/charts/RadarChart.tsx"
    ],
    "dependsOn": [
     "chart-parts"
@@ -6374,7 +6374,7 @@
    "wave": 9,
    "lane": "B",
    "files": [
-    "platform/charts/SankeyDiagram.jsx"
+    "platform/charts/SankeyDiagram.tsx"
    ],
    "dependsOn": [
     "ChartKit"
@@ -6394,7 +6394,7 @@
    "wave": 9,
    "lane": "B",
    "files": [
-    "platform/charts/TimelineChart.jsx"
+    "platform/charts/TimelineChart.tsx"
    ],
    "dependsOn": [
     "chart-parts"
@@ -6572,7 +6572,7 @@
    "wave": 9,
    "lane": "C",
    "files": [
-    "platform/charts/Treemap.jsx"
+    "platform/charts/Treemap.tsx"
    ],
    "dependsOn": [
     "ChartKit"
@@ -6593,7 +6593,7 @@
    "wave": 9,
    "lane": "C",
    "files": [
-    "platform/charts/GanttChart.jsx"
+    "platform/charts/GanttChart.tsx"
    ],
    "dependsOn": [
     "chart-parts"
@@ -6616,7 +6616,7 @@
    "wave": 9,
    "lane": "C",
    "files": [
-    "platform/charts/GeoMap.jsx",
+    "platform/charts/GeoMap.tsx",
     "platform/vendor/geo/"
    ],
    "dependsOn": [
@@ -15319,7 +15319,7 @@
    "target": "HeatMap",
    "targetKind": "component",
    "files": [
-    "platform/charts/HeatMap.jsx"
+    "platform/charts/HeatMap.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09A.records.js",
@@ -15520,7 +15520,7 @@
    "target": "SankeyDiagram",
    "targetKind": "component",
    "files": [
-    "platform/charts/SankeyDiagram.jsx"
+    "platform/charts/SankeyDiagram.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09B.records.js",
@@ -15549,7 +15549,7 @@
    "target": "RadarChart",
    "targetKind": "component",
    "files": [
-    "platform/charts/RadarChart.jsx"
+    "platform/charts/RadarChart.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09B.records.js",
@@ -15641,7 +15641,7 @@
    "target": "Treemap",
    "targetKind": "component",
    "files": [
-    "platform/charts/Treemap.jsx"
+    "platform/charts/Treemap.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09C.records.js",
@@ -15756,7 +15756,7 @@
    "target": "WordCloud",
    "targetKind": "component",
    "files": [
-    "platform/charts/WordCloud.jsx"
+    "platform/charts/WordCloud.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09A.records.js",
@@ -15785,7 +15785,7 @@
    "target": "GanttChart",
    "targetKind": "component",
    "files": [
-    "platform/charts/GanttChart.jsx"
+    "platform/charts/GanttChart.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09C.records.js",
@@ -15816,7 +15816,7 @@
    "target": "GeoMap",
    "targetKind": "component",
    "files": [
-    "platform/charts/GeoMap.jsx",
+    "platform/charts/GeoMap.tsx",
     "platform/vendor/geo/"
    ],
    "laneFiles": [
@@ -15909,7 +15909,7 @@
    "target": "GeoMap",
    "targetKind": "component",
    "files": [
-    "platform/charts/GeoMap.jsx",
+    "platform/charts/GeoMap.tsx",
     "platform/vendor/geo/"
    ],
    "laneFiles": [
@@ -15943,7 +15943,7 @@
    "target": "NetworkGraph",
    "targetKind": "component",
    "files": [
-    "platform/charts/NetworkGraph.jsx"
+    "platform/charts/NetworkGraph.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09A.records.js",
@@ -15973,7 +15973,7 @@
    "target": "Diagram",
    "targetKind": "component",
    "files": [
-    "platform/charts/Diagram.jsx"
+    "platform/charts/Diagram.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09A.records.js",
@@ -16003,7 +16003,7 @@
    "target": "TimelineChart",
    "targetKind": "component",
    "files": [
-    "platform/charts/TimelineChart.jsx"
+    "platform/charts/TimelineChart.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09B.records.js",

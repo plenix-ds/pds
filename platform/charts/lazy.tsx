@@ -41,7 +41,7 @@ export const LineChart = lazyChart('LineChart', () => import('./LineChart.tsx'),
 export const AreaChart = lazyChart('AreaChart', () => import('./AreaChart.tsx'), caption);
 export const BarChart = lazyChart('BarChart', () => import('./BarChart.tsx'), caption);
 export const PieChart = lazyChart('PieChart', () => import('./PieChart.tsx'), caption);
-export const TreeChart = lazyChart('TreeChart', () => import('./TreeChart.jsx'), caption);
+export const TreeChart = lazyChart('TreeChart', () => import('./TreeChart.tsx'), caption);
 export const WaterfallChart = lazyChart('WaterfallChart', () => import('./WaterfallChart.tsx'), caption);
 export const ComboChart = lazyChart('ComboChart', () => import('./ComboChart.tsx'), caption);
 export const ScatterChart = lazyChart('ScatterChart', () => import('./ScatterChart.tsx'), caption);
@@ -49,7 +49,7 @@ export const LollipopChart = lazyChart('LollipopChart', () => import('./Lollipop
 export const BulletChart = lazyChart('BulletChart', () => import('./BulletChart.tsx'), caption);
 export const FunnelChart = lazyChart('FunnelChart', () => import('./FunnelChart.tsx'), caption);
 export const BoxPlot = lazyChart('BoxPlot', () => import('./BoxPlot.tsx'), caption);
-export const RadarChart = lazyChart('RadarChart', () => import('./RadarChart.jsx'), caption);
-export const Treemap = lazyChart('Treemap', () => import('./Treemap.jsx'), caption);
-export const HeatMap = lazyChart('HeatMap', () => import('./HeatMap.jsx'), caption);
+export const RadarChart = lazyChart('RadarChart', () => import('./RadarChart.tsx'), caption);
+export const Treemap = lazyChart('Treemap', () => import('./Treemap.tsx'), caption);
+export const HeatMap = lazyChart('HeatMap', () => import('./HeatMap.tsx'), caption);
 export const Sparkline = lazyChart('Sparkline', () => import('./Sparkline.tsx'), sparkBox);

@@ -37,7 +37,7 @@ type PdfTask = { promise: Promise<unknown>; cancel(): void };
 type PdfViewport = { width: number; height: number };
 type PdfPage = { getViewport(o: { scale: number }): PdfViewport; render(o: { canvasContext: CanvasRenderingContext2D | null; viewport: PdfViewport }): PdfTask; getTextContent(): Promise<{ items: { str?: string }[] }> };
 type PdfDocument = { numPages: number; getPage(n: number): Promise<PdfPage>; destroy(): void };
-type PdfEngine = { GlobalWorkerOptions: { workerSrc: string }; getDocument(src: { url: string } | { data: Uint8Array }): { promise: Promise<PdfDocument>; destroy(): void } };
+type PdfEngine = { GlobalWorkerOptions: { workerSrc: string }; getDocument(src: ({ url: string } | { data: Uint8Array }) & { wasmUrl?: string }): { promise: Promise<PdfDocument>; destroy(): void } };
 // one page of an images document
 export type DocumentPage = { id?: string | number; src: string; alt?: string; thumbnail?: string };
 // why a document failed: the engine did not load, the address, the content, a page's drawing
@@ -73,8 +73,8 @@ export function DocumentViewer({kind='text',src,pages=[],text='',label,thumbnail
  React.useEffect(()=>{let live=true,task: ReturnType<PdfEngine['getDocument']> | undefined,doc: PdfDocument | undefined;setPdf(null);setPage(initialPage);setAccessible('');setError('');setZoom(ZOOMS.includes(initialZoom)?initialZoom:100);
   if(kind!=='pdf'||!src){setLoading(false);return;}
   setLoading(true);
-  (async()=>{let engine: PdfEngine;try{let worker;if(pdfModuleUrl){engine=await import(pdfModuleUrl);worker=new URL('pdf.worker.js',pdfModuleUrl).href;}else{const e=await pdfEngine();engine=e.module;worker=e.worker;}if(!live)return;engine.GlobalWorkerOptions.workerSrc=pdfWorkerUrl||worker;}catch(e){if(live)fail('engine',e);return;}
-   try{task=engine.getDocument(typeof src==='string'?{url:src}:{data:src.slice()});doc=await task.promise;if(live){setPdf(doc);setLoading(false);}else doc.destroy();}catch(e){if(live)fail(reasonOf(e as Error),e);}})();
+  (async()=>{let engine: PdfEngine,wasmUrl: string|undefined;try{let worker;if(pdfModuleUrl){engine=await import(pdfModuleUrl);worker=new URL('pdf.worker.js',pdfModuleUrl).href;}else{const e=await pdfEngine();engine=e.module;worker=e.worker;}if(!live)return;engine.GlobalWorkerOptions.workerSrc=pdfWorkerUrl||worker;wasmUrl=new URL('wasm/',pdfWorkerUrl||worker).href;}catch(e){if(live)fail('engine',e);return;}
+   try{task=engine.getDocument(typeof src==='string'?{url:src,wasmUrl}:{data:src.slice(),wasmUrl});doc=await task.promise;if(live){setPdf(doc);setLoading(false);}else doc.destroy();}catch(e){if(live)fail(reasonOf(e as Error),e);}})();
   return()=>{live=false;if(task)task.destroy();else if(doc)doc.destroy();};
  },[kind,src,attempt,pdfModuleUrl,pdfWorkerUrl]);
  const count=kind==='pdf'?(pdf?.numPages||0):kind==='images'?pages.length:text?1:0;

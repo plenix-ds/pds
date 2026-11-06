@@ -6,11 +6,8 @@
    Preview, MediaCard and Image adopt the scale in their own tasks; this file never styles them. */
 .plx-ratio-1-1{aspect-ratio:var(--plx-ref-ratio-1-1);}
 .plx-ratio-4-3{aspect-ratio:var(--plx-ref-ratio-4-3);}
-.plx-ratio-3-2{aspect-ratio:var(--plx-ref-ratio-3-2);}
 .plx-ratio-16-9{aspect-ratio:var(--plx-ref-ratio-16-9);}
 .plx-ratio-21-9{aspect-ratio:var(--plx-ref-ratio-21-9);}
-.plx-ratio-3-4{aspect-ratio:var(--plx-ref-ratio-3-4);}
-.plx-ratio-9-16{aspect-ratio:var(--plx-ref-ratio-9-16);}
 /* the media inside a ratio frame: it fills the frame and is cropped to it (cover); contain shows the whole asset */
 .plx-ratio-media{block-size:100%;display:block;inline-size:100%;object-fit:cover;}
 .plx-ratio-media--contain{object-fit:contain;}

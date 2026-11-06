@@ -161,7 +161,7 @@ DSParts.records.push(function (H) {
   var BANNER = { id: 'banner', label: 'Banner', values: { res: 6, color: 7, meta: 9, size: 8, rights: 5, alt: 9 } };
   var radar = function (o) { return h(P.RadarChart, Object.assign({ title: 'Asset quality', description: 'The hero image scores high on all but file size.', axes: AXES, series: [HERO], max: 10 }, o)); };
   var radarChart = { id: 'radar-chart', lab: true, icon: 'chart', sec: 'data-display', sub: 'Charts', leaf: 'Radar chart', title: 'Radar chart',
-    plenix: 'RadarChart', src: 'charts/RadarChart.jsx', also: ['charts/chart-kit.ts'], css: CSS('radar-chart.css'), blocks: ['plx-radar-chart'],
+    plenix: 'RadarChart', src: 'charts/RadarChart.tsx', also: ['charts/chart-kit.ts'], css: CSS('radar-chart.css'), blocks: ['plx-radar-chart'],
     level: 'Component', interaction: 'Display',
     aliases: ['Spider chart', 'Web chart', 'Star chart', 'Polar chart'],
     text: 'The profile of one item, or two or three compared, across several measures on one scale. A spoke per measure runs from the center (zero) to the scale’s end, with rings at the scale’s round ticks. Each item is a closed shape through its values, outlined in its color with its area lightly filled so overlapping shapes stay visible. Measure names sit off the spokes’ ends; ring values are in the data font.',
@@ -184,7 +184,7 @@ DSParts.records.push(function (H) {
   var FLOW_LINKS = [{ source: 'web', target: 'review', value: 520 }, { source: 'web', target: 'auto', value: 100 }, { source: 'app', target: 'review', value: 300 }, { source: 'app', target: 'auto', value: 80 },
     { source: 'api', target: 'auto', value: 240 }, { source: 'review', target: 'ok', value: 560 }, { source: 'review', target: 'no', value: 160 }, { source: 'review', target: 'wait', value: 100 }, { source: 'auto', target: 'ok', value: 420 }];
   var sankeyDiagram = { id: 'sankey-diagram', lab: true, icon: 'merge', sec: 'data-display', sub: 'Charts', leaf: 'Sankey diagram', title: 'Sankey diagram',
-    plenix: 'SankeyDiagram, sankeyLayout', src: 'charts/SankeyDiagram.jsx', also: ['charts/chart-kit.ts'], css: CSS('sankey-diagram.css'), blocks: ['plx-sankey-diagram'],
+    plenix: 'SankeyDiagram, sankeyLayout', src: 'charts/SankeyDiagram.tsx', also: ['charts/chart-kit.ts'], css: CSS('sankey-diagram.css'), blocks: ['plx-sankey-diagram'],
     level: 'Component', interaction: 'Display',
     aliases: ['Flow diagram', 'Alluvial diagram', 'Flow chart (quantities)'],
     text: 'How a quantity flows, splits and merges through stages: a bar per node (a source, a stage, an outcome) in columns from left to right, with bands between them as wide as the amounts that move. It has its own layout, without a dependency: columns by the longest path, nodes ordered to keep bands from crossing, outcomes in the last column. A band takes its source’s color at a low opacity and darkens with its node under the pointer; names and totals sit beside the nodes.',
@@ -210,7 +210,7 @@ DSParts.records.push(function (H) {
   var EVENTS = [{ id: 'a', label: 'Brief', start: '2026-09-01' }, { id: 'b', label: 'First cut', start: '2026-09-14' }, { id: 'c', label: 'Review', start: '2026-09-21' }, { id: 'd', label: 'Approved', start: '2026-10-02' }];
   var timeline = function (o) { return h(P.TimelineChart, Object.assign({ title: 'Campaign assets', description: 'The video ran two weeks past its shoot; the banners shipped first.', lanes: LANES, items: ITEMS, today: '2026-10-05' }, o)); };
   var timelineChart = { id: 'timeline-chart', lab: true, icon: 'schedule', sec: 'data-display', sub: 'Specialized displays', leaf: 'Timeline visualization', title: 'Timeline visualization',
-    plenix: 'TimelineChart', src: 'charts/TimelineChart.jsx', also: ['charts/chart-kit.ts'], css: CSS('timeline-chart.css'), blocks: ['plx-timeline-chart'],
+    plenix: 'TimelineChart', src: 'charts/TimelineChart.tsx', also: ['charts/chart-kit.ts'], css: CSS('timeline-chart.css'), blocks: ['plx-timeline-chart'],
     level: 'Component', interaction: 'Display',
     aliases: ['Timeline chart', 'Time chart', 'Event timeline', 'Swimlane timeline'],
     text: 'When things happened and how long they lasted, on one time axis in calendar steps. Events are points at their date; periods are bars from start to end. They sit on one track or on lanes (one per asset, team or category, each in its own data-viz color), each item with its short name above its mark, plus an optional today line. The tooltip gives an item’s full dates; the data table lists every item with its lane and dates.',

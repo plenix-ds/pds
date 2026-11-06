@@ -12,6 +12,12 @@
 //                                                                         (semantic/typography.tokens.json, through the part's
 //                                                                         own tokens or directly)
 //                    { "contract": "adjusts", "props": ["font-size"] }   only these properties; the rest it inherits
+//                    { "contract": "context-sized", "role": "body", "font": "sans", "inherits": ["font-size", ...] }
+//                                                                         a part that sets its family and weight from one role and writes an explicit
+//                                                                         `inherit` for the rest of font-size, letter-spacing, line-height and word-spacing
+//                                                                         (its size is its context's, on purpose: #122). unset, initial, revert and a missing
+//                                                                         declaration are findings; family and weight are never excused by inherit
+//                  A rule on descendants a part does not name (.plx-rich-text :where(code)) styles those elements, not the part.
 //                  A part whose rules declare other properties than its contract says fails, so a change of contract is a
 //                  change of the declaration, made on purpose. Over platform/** (components, patterns, system, charts),
 //                  not the design-system site, the token sheets or the vendor files.
@@ -31,6 +37,8 @@ const REGISTRY = path.join(ROOT, 'platform', 'standards', 'text-contracts.json')
 const BACKLOG = path.join(ROOT, 'check-system.text-contract.json');
 const PROPS = ['font-family', 'font-size', 'font-weight', 'letter-spacing', 'line-height', 'word-spacing'];
 const MONO_DECL = 'word-spacing:var(--plx-sys-font-data-word-spacing)', SANS_DECL = 'word-spacing:normal';
+// the properties a part may follow from its context with an explicit `inherit` (not unset, initial or revert; never font-family or font-weight)
+const CONTEXT = ['font-size', 'letter-spacing', 'line-height', 'word-spacing'];
 const SKIP_ALL = /[\\/](font-study|system[\\/]tokens|system[\\/]themes|node_modules|dist|vendor|release)[\\/]/;
 const SKIP_CONTRACT = /[\\/](design-system|icons)[\\/]|[\\/]docs[\\/]/;
 
@@ -76,6 +84,9 @@ function roleOf(idx) {
 }
 // the part a selector alternative styles: the first Plenix class of its last compound, without its modifier
 function partOf(sel) {
+  // a rule on descendants the part does not name (.plx-rich-text :where(code)) styles those elements, not the part (#122)
+  const compounds = []; { let depth = 0, cur = ''; for (const c of sel.trim()) { if (c === '(' || c === '[') depth++; else if (c === ')' || c === ']') depth--; if (!depth && /[\s>+~]/.test(c)) { if (cur) compounds.push(cur); cur = ''; } else cur += c; } if (cur) compounds.push(cur); }
+  if (compounds.length > 1 && /^:(?:where|is)\(/.test(compounds[compounds.length - 1])) return null;
   const last = sel.replace(/:(?:not|is|where|has)\((?:[^()]|\([^()]*\))*\)/g, '').trim().split(/\s+|>|\+|~/).filter(Boolean).pop() || '';
   const m = last.match(/\.(plx-[a-z0-9]+(?:-[a-z0-9]+)*(?:__[a-z0-9]+(?:-[a-z0-9]+)*)?)/);
   if (m) { const mod = last.match(new RegExp('\\.(' + m[1].replace(/--[a-z0-9-]+$/, '') + '--[a-z0-9]+(?:-[a-z0-9]+)*)')); return mod ? mod[1] : m[1]; }
@@ -97,7 +108,7 @@ function rules(text, file) {
   return out;
 }
 // the declarations and findings as the stylesheets are
-function measure() {
+function measure(opts = {}) {
   const idx = index(), FONTS = fontTokens(idx), ROLE = roleOf(idx);
   // the font switch a family or word spacing belongs to: sans (DM Sans, normal spacing) or mono (Reddit Mono, the fitted spacing)
   const MONO_WS = String(Object.values((idx.find((t) => t.name === '--plx-sys-font-data-word-spacing') || { resolved: {} }).resolved)[0]);
@@ -109,17 +120,22 @@ function measure() {
     if (!m) return 'other'; const r = resolvedOf(m[1]); return r === MONO_WS ? 'mono' : r === 'normal' ? 'sans' : 'other';
   };
   const boundary = [], parts = {};
-  for (const f of cssFiles()) {
-    const file = rel(f), contract = !SKIP_CONTRACT.test(f);
-    for (const r of rules(fs.readFileSync(f, 'utf8'), file)) {
+  // opts.files: [{ file, text }] instead of the repository's stylesheets (the rule's own test)
+  const sources = opts.files ? opts.files.map((x) => ({ file: x.file, path: x.file, text: x.text })) : cssFiles().map((f) => ({ file: rel(f), path: f, text: null }));
+  for (const src of sources) {
+    const file = src.file, contract = !SKIP_CONTRACT.test(src.path);
+    for (const r of rules(src.text !== null ? src.text : fs.readFileSync(src.path, 'utf8'), file)) {
       const ff = /var\((--plx-[a-z0-9-]+)\)/.exec(r.decl['font-family'] || '');
       if (ff && FONTS[ff[1]] && r.decl['word-spacing'] === undefined) boundary.push({ file, line: r.line, text: 'sets a font without its word spacing: add ' + (FONTS[ff[1]] === 'mono' ? MONO_DECL : SANS_DECL) + ' (Reddit Mono fitted to DM Sans, docs/font-study/playground)' });
       if (!contract || !Object.values(r.decl).some((v) => !/^inherit$/.test(v))) continue;
       for (const p of r.parts) {
-        const x = parts[p] = parts[p] || { props: new Set(), byProp: {}, family: false, where: file + ':' + r.line };
+        const x = parts[p] = parts[p] || { props: new Set(), byProp: {}, inh: new Set(), family: false, where: file + ':' + r.line };
         // inherit is following the context for that property, not a value of the part's own
         for (const [k, v] of Object.entries(r.decl)) {
-          if (/^inherit$/.test(v)) continue; x.props.add(k);
+          // an explicit inherit of size, spacing or line height says on purpose that the part follows its context (#122, G3 A); family and weight always come from a role
+          if (/^inherit$/.test(v)) { if (CONTEXT.includes(k)) x.inh.add(k); continue; }
+          if (/^(unset|initial|revert|revert-layer)$/.test(v)) continue;   // not the context and not a role: the property stays missing
+          x.props.add(k);
           // the font and its word spacing are the font switch (DM Sans, or Mono fitted to it), not the role's
           if (k === 'font-family' || k === 'word-spacing') { (x.font = x.font || new Set()).add(FONT(v, k)); continue; }
           const s = x.byProp[k] = x.byProp[k] || new Set(); const role = ROLE(v, k); if (Array.isArray(role)) s.add('any:' + role.join(',')); else s.add(role || 'none');
@@ -135,7 +151,7 @@ function measure() {
   const declared = {}, incomplete = {};
   for (const [p, x] of Object.entries(parts).sort()) {
     const base = p.includes('--') ? parts[p.replace(/--[a-z0-9-]+$/, '')] : null;
-    const eff = { props: new Set([...x.props, ...(base ? base.props : [])]), byProp: {}, font: new Set(x.font && x.font.size ? x.font : ((base && base.font) || [])) }; // a variant's own font replaces its part's
+    const eff = { props: new Set([...x.props, ...(base ? base.props : [])]), inh: new Set([...x.inh, ...(base ? base.inh : [])]), byProp: {}, font: new Set(x.font && x.font.size ? x.font : ((base && base.font) || [])) }; // a variant's own font replaces its part's
     for (const src of [base, x]) if (src) for (const [k, set] of Object.entries(src.byProp)) { eff.byProp[k] = eff.byProp[k] || new Set(); for (const r of set) eff.byProp[k].add(r); }
     // a part whose every variant sets what the part leaves out (a heading's size, from its size variant) is complete through them
     if (!base) {
@@ -155,7 +171,12 @@ function measure() {
     const followsIn = font && eff.props.has('font-family') && eff.props.has('word-spacing') && !['font-weight', 'letter-spacing', 'line-height'].some((k) => eff.props.has(k));
     declared[p] = all.length === PROPS.length && role && font ? Object.assign({ contract: 'establishes', role, font }, adj.length ? { adjusts: adj } : {})
       : followsIn ? Object.assign({ contract: 'follows', font }, eff.props.has('font-size') ? { size: true } : {}) : { contract: 'adjusts', props: own };
-    if ((x.family || (base && base.family)) && declared[p].contract === 'adjusts') incomplete[p] = 'changes the font family without the whole role (' + (all.length < PROPS.length ? 'missing ' + PROPS.filter((k) => !eff.props.has(k)).join(', ') : !role ? 'no metric from a text role' : 'its font and word spacing are not one switch') + ')';
+    // changes the font family, and every property it does not set from a role is an explicit inherit: complete, and recorded as context-sized
+    if ((x.family || (base && base.family)) && declared[p].contract === 'adjusts' && role && font && eff.inh.size && PROPS.every((k) => eff.props.has(k) || eff.inh.has(k))) {
+      declared[p] = { contract: 'context-sized', role, font, inherits: PROPS.filter((k) => !eff.props.has(k)) };
+      continue;
+    }
+    if ((x.family || (base && base.family)) && declared[p].contract === 'adjusts') incomplete[p] = 'changes the font family without the whole role (' + (PROPS.filter((k) => !eff.props.has(k) && !eff.inh.has(k)).length ? 'missing ' + PROPS.filter((k) => !eff.props.has(k) && !eff.inh.has(k)).join(', ') : !role ? 'no metric from a text role' : 'its font and word spacing are not one switch') + ')';
   }
   return { boundary, declared, incomplete, where: Object.fromEntries(Object.entries(parts).map(([p, x]) => [p, x.where])) };
 }

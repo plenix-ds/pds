@@ -1,5 +1,5 @@
 {
-  "$description": "HeatMap (platform/charts/HeatMap.jsx, heat-map.css; library wave 9, lane A): its component tokens. Cell colors are the data-viz sequential and diverging scales (data-plx-dataviz); everything else is an existing role.",
+  "$description": "HeatMap (platform/charts/HeatMap.tsx, heat-map.css; library wave 9, lane A): its component tokens. Cell colors are the data-viz sequential and diverging scales (data-plx-dataviz); everything else is an existing role.",
   "plx-comp": {
     "heat-map-cell-radius": { "$value": "{plx-sys.shape-2xs}", "$type": "dimension", "$description": "Heat map: the corners of a cell." },
     "heat-map-cell-border-width": { "$value": "{plx-sys.border-width-thin}", "$type": "dimension", "$description": "Heat map: the width of a cell's edge (an empty cell's dashed edge)." },

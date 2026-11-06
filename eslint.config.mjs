@@ -15,7 +15,7 @@ const sources = ['platform/**/*.{js,jsx,mjs,ts,tsx}', 'suite/**/*.{js,jsx}', 'da
 export default [
   {
     // generated files, vendored libraries and the design spec (its own repository)
-    ignores: ['platform/dist/**', 'platform/vendor/**', 'platform/design-system/**', 'platform/mobile/**',
+    ignores: ['archive/**', 'platform/dist/**', 'platform/vendor/**', 'platform/design-system/**', 'platform/mobile/**',
       '*/app.js', 'dam/app/assets.js', 'platform/components/Icon/glyphs.js', '**/*.d.ts'],
   },
   {

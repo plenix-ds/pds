@@ -2445,7 +2445,7 @@ window.DSGuidance = {
   ],
   "behavior": [
    "Describe the purpose for functional images and the content for informative ones.",
-   "Provide data grids or summaries for charts."
+   "Provide a data table or a summary for charts."
   ],
   "accessibility": [
    "Meet WCAG 1.1.1 for all non-text content.",
@@ -8074,7 +8074,7 @@ window.DSGuidance = {
   "purpose": "Gives quick, always-visible access to the most used areas.",
   "use": [
    "Three to five equally important destinations.",
-   "At the bottom on compact screens; as a rail on wider ones."
+   "At the bottom on compact screens; on wider screens use the side navigation or the Navigation rail."
   ],
   "avoid": [
    "One or two destinations, or more than five.",
@@ -8424,7 +8424,7 @@ window.DSGuidance = {
    "Position — optional, such as \"3 of 20\"."
   ],
   "behavior": [
-   "Disable or hide the control at the start and end.",
+   "Hide the control at the start and end: a link cannot be disabled.",
    "Show item titles when they help people decide."
   ],
   "accessibility": [

@@ -27,7 +27,7 @@ DSParts.records.push(function (H) {
     use: ['Inside DatePicker, where people choose a date near today', 'On its own where the date is chosen while its week is in view: a booking, a schedule', 'min and max (or isDateDisabled) whenever some dates cannot be chosen; say why in help text', 'Two months for a range that crosses a month’s end'],
     avoid: ['Dates far from today that people know (a birth date): type them in a field', 'Showing events: use the time grid (TimeGrid)', 'Color alone to mark a day that cannot be chosen: it is also announced as unavailable'],
     related: ['date-picker', 'date-range-picker', 'time-grid', 'date-and-time-formats'],
-    map: [[CAR, 'Date picker (calendar)', 'Partial'], [ATL, 'Calendar', 'Direct'], [MAT, 'Date pickers (calendar)', 'Partial'], [FLU, 'Calendar', 'Direct'], [POL, 'Date picker', 'Partial'], [SPE, 'Calendar, Range calendar', 'Direct'], [ANT, 'Calendar', 'Direct']],
+    map: [[CAR, 'Date picker (calendar)', 'Partial'], [ATL, 'Calendar', 'Direct'], [MAT, 'Date pickers (calendar)', 'Partial'], [FLU, 'Calendar', 'Direct'], [POL, 'Date picker', 'Partial'], [SPE, 'Calendar, Range calendar', 'Direct'], [ANT, 'Calendar', 'Direct'], ['Frappe', 'Calendar view', 'Partial']],
     variantPages: [
       vp('Month calendar', 'Variant', 'Month (default)', { variant: 'month' }, 'One month: its header with the arrows and the month’s name, the weekday row, and the days of the weeks around it in the muted color.', 'A single date near today', 'A range over a month’s end: show two months'),
       vp('Two-month calendar', 'Variant', 'Two months', { variant: 'two' }, 'Two months side by side, the arrows at the outer ends; each shows only its own days. They stack on a narrow window.', 'Ranges, and dates people compare across a month’s end', 'A small popover on a phone: one month is enough'),
@@ -214,7 +214,7 @@ DSParts.records.push(function (H) {
     use: ['Every application: AppHeader across the top and NavPane at the start, through AppShell', 'Short nouns for the pane’s rows; groups for more than about seven'],
     avoid: ['Links to other applications in the pane: they are in the header and the switcher', 'More than two levels in the pane: use a tree or drill down'],
     related: ['application-header', 'side-navigation', 'product-switcher', 'mobile-app-bar'],
-    map: [[CAR, 'UI shell (header and side nav)', 'Direct'], [ATL, 'Navigation system', 'Direct'], [MAT, 'Navigation drawer and top app bar', 'Partial'], [FLU, 'Nav', 'Partial']],
+    map: [[CAR, 'UI shell (header and side nav)', 'Direct'], [ATL, 'Navigation system', 'Direct'], [MAT, 'Navigation drawer and top app bar', 'Partial'], [FLU, 'Nav', 'Partial'], ['Frappe', 'Desk sidebar', 'Partial']],
     examples: [['The header and the pane of an application', function () {
       var s = use('notes'), sec = use('all');
       return box(640, h('div', { className: 'ds-w07a-product' },

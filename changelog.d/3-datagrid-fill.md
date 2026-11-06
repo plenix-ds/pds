@@ -1,3 +1,0 @@
-### Added
-
-- DataGrid: `editing.fill` turns on Ctrl+D and the fill handle (#3, ADR 0021, part 3; it needs `cellSelection`). Ctrl+D copies the selected block's top row down through the block. A small square on the block's bottom inline-end corner repeats the block when dragged down or toward the inline end (it follows the reading direction); the block then covers what it filled. Each cell goes through the column's rules and `validate`, reaches `onCellEdit` once with `source: "fill"`, the counts are announced, and with `editing.undo` a fill is one undo step. Off by default. New words: cells filled (Arabic to follow from the i18n Engineer).
