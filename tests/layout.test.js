@@ -86,6 +86,8 @@ child({ units: ['patterns/NavPane', 'patterns/SecondaryPane', 'patterns/SidePane
 // SplitWorkspace passes its list's DataGrid options (issue 681): when the grid's units or the test's own file changed; a
 // change under templates/ is not a unit in changed.js and reaches the slice, which starts it too
 child({ units: ['components/DataGrid', 'patterns/SplitView', 'patterns/ReadingPane'] }, 'splitworkspace-grid-681.test.js');
+// the page templates read their words from the catalog, so an Arabic page shows them in Arabic (issue 642); templates/ reaches the slice
+child({ units: ['components/EmptyState', 'providers/LocaleProvider.tsx'] }, 'templates-words-642.test.js');
 child({ units: ['components/Banner', 'components/Field', 'components/Checkbox', 'utils/dataText.tsx'] }, 'data-phrase-260b-feedback.test.js');   // a count in a banner, hint or check description is in the data font (issue 260)
 child({ units: ['patterns/SettingsLayout'] }, 'data-phrase-260b-settings.test.js');   // a count in a settings description is in the data font (issue 260)
 child({ units: ['components/Metric', 'charts', 'patterns/RecordPage', 'patterns/ActivityList', 'components/DataGrid', 'components/Table'] }, 'data-phrase-260b-data.test.js');   // a count in a metric, chart, record header, activity row or table value is in the data font (issue 260)
