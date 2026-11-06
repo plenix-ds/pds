@@ -10,7 +10,7 @@
 @property --plx-state-focus-order-number-fill{syntax:"*";inherits:false;}
 .plx-focus-order__outline{fill:none;stroke:var(--plx-state-focus-order-outline-stroke,var(--plx-sys-focus-order-color));stroke-width:var(--plx-state-focus-order-outline-stroke-width,var(--plx-sys-focus-order-stroke-width));}
 .plx-focus-order__badge{fill:var(--plx-state-focus-order-badge-fill,var(--plx-sys-focus-order-color));r:var(--plx-sys-focus-order-badge-size);}
-.plx-focus-order__number{fill:var(--plx-state-focus-order-number-fill,var(--plx-sys-focus-order-on-color));font-family:var(--plx-sys-focus-order-font-family);font-size:var(--plx-sys-focus-order-font-size);font-variant-numeric:tabular-nums;font-weight:var(--plx-sys-focus-order-font-weight);word-spacing:normal;}
+.plx-focus-order__number{fill:var(--plx-state-focus-order-number-fill,var(--plx-sys-focus-order-on-color));font-family:var(--plx-sys-focus-order-font-family);font-size:var(--plx-sys-focus-order-font-size);font-variant-numeric:tabular-nums;font-weight:var(--plx-sys-focus-order-font-weight);letter-spacing:var(--plx-sys-focus-order-letter-spacing);line-height:var(--plx-sys-focus-order-line-height);word-spacing:normal;}
 .plx-focus-order__outline--warning{--plx-state-focus-order-outline-stroke:var(--plx-sys-focus-order-warning-color);}
 .plx-focus-order__badge--warning{--plx-state-focus-order-badge-fill:var(--plx-sys-focus-order-warning-color);}
 .plx-focus-order__number--warning{--plx-state-focus-order-number-fill:var(--plx-sys-focus-order-warning-on-color);}
