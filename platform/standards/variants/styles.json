@@ -3896,6 +3896,56 @@
     "sets": [],
     "why": "markup only: the kind picks which controls the filter renders; the pattern has no stylesheet"
   },
+  "chart-threshold--level-critical": {
+    "sets": [
+      {
+        "property": "stroke-width",
+        "part": "line",
+        "token": "--plx-comp-chart-threshold-line-width"
+      },
+      {
+        "property": "stroke",
+        "part": "line",
+        "token": "--plx-comp-data-color"
+      }
+    ],
+    "why": ".plx-chart-reference--threshold in chart-parts.css: a thicker line; the level sets the data-viz color to alert-critical (data-plx-dataviz)"
+  },
+  "chart-threshold--level-warning-default": {
+    "sets": [
+      {
+        "property": "stroke-width",
+        "part": "line",
+        "token": "--plx-comp-chart-threshold-line-width"
+      },
+      {
+        "property": "stroke",
+        "part": "line",
+        "token": "--plx-comp-data-color"
+      }
+    ],
+    "why": ".plx-chart-reference--threshold in chart-parts.css: a thicker line; the level sets the data-viz color to alert-warning (data-plx-dataviz)"
+  },
+  "combo-chart--variant-bar-line": {
+    "sets": [],
+    "why": "markup only: columns for the primary measure and a line with points for the second, on one shared value axis, drawn by the chart engine"
+  },
+  "combo-chart--variant-two-axes": {
+    "sets": [],
+    "why": "markup only: the same columns and line on two value axes, the columns' on the start side and the line's on the end side"
+  },
+  "chart-legend--placement-under-the-plot-default": {
+    "sets": [],
+    "why": "markup only: the legend sits under the plot (the frame's legend position)"
+  },
+  "chart-legend--placement-beside-the-plot": {
+    "sets": [],
+    "why": "markup only: the legend sits beside the plot, as a vertical list (legendPosition end)"
+  },
+  "chart-legend--behavior-interactive": {
+    "sets": [],
+    "why": "markup only: each entry is a toggle that shows or hides its series (interactive, onToggle)"
+  },
   "side-drawer--size-sm": {
     "sets": [
       {

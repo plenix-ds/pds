@@ -32,30 +32,16 @@ import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatNumber } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.jsx';
-import { scaleBand, scaleLinear, niceTicks } from './scales.js';
-import { Axis } from './parts/Axis.jsx';
-import { GridLines } from './parts/GridLines.jsx';
+import { niceTicks } from './scales.js';
 import { ChartTooltip } from './parts/ChartTooltip.jsx';
-import { useChartHover, labelRoom, halfRoom, AXIS_TITLE_ROOM } from './chart-kit.js';
+import { useChartHover } from './chart-kit.js';
+import { useEChartsPlot, plotGrid } from './echarts/EChartsPlot.jsx';
+import { gridRoom, boxStats } from './chart-helpers.js';
+import { snapToGrid } from '../utils/grid.ts';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 
-const CAP = 0.5;   // a whisker's cap, a share of the box's thickness
-
-// a quantile of sorted values, interpolated between the two nearest
-function quantile(sorted, p) {
-  if (!sorted.length) return 0;
-  const i = (sorted.length - 1) * p, lo = Math.floor(i), hi = Math.ceil(i);
-  return sorted[lo] + (sorted[hi] - sorted[lo]) * (i - lo);
-}
-
-// the five-number summary with Tukey's whiskers: { min, q1, median, q3, max, outliers, n }
-export function boxStats(values) {
-  const v = (values || []).map(Number).filter((x) => isFinite(x)).sort((a, b) => a - b);
-  if (!v.length) return null;
-  const q1 = quantile(v, 0.25), median = quantile(v, 0.5), q3 = quantile(v, 0.75), fence = (q3 - q1) * 1.5;
-  const inside = v.filter((x) => x >= q1 - fence && x <= q3 + fence);
-  return { min: inside[0], q1, median, q3, max: inside[inside.length - 1], outliers: v.filter((x) => x < q1 - fence || x > q3 + fence), n: v.length };
-}
+const NO_MARGIN = Object.freeze({ top: 0, end: 0, bottom: 0, start: 0 });
+const BAND = 1 / 1.4;   // a box's thickness as a share of its group's row (the room between groups is 40% of a box)
 
 export function BoxPlot({ title, description, hideCaption, size, groups = [], orientation = 'vertical', showOutliers = true, valueLabel, categoryLabel, format,
   tooltip = true, legend, legendPosition, margin, strings, className }) {
@@ -69,12 +55,6 @@ export function BoxPlot({ title, description, hideCaption, size, groups = [], or
   list.forEach((g) => { [g.s.min, g.s.max].concat(showOutliers ? g.s.outliers : []).forEach((v) => { lo = Math.min(lo, v); hi = Math.max(hi, v); }); });
   if (!isFinite(lo)) { lo = 0; hi = 1; }
   if (lo > 0 && lo < (hi - lo)) lo = 0;   // from zero when zero is near the data
-  const tickTexts = niceTicks(lo, hi, 5).ticks.map(fmt);
-  const auto = across
-    ? { start: labelRoom(list.map((g) => g.label), categoryLabel ? AXIS_TITLE_ROOM : 0), bottom: valueLabel ? 24 + AXIS_TITLE_ROOM : undefined, end: halfRoom(tickTexts[tickTexts.length - 1]) }
-    : { start: labelRoom(tickTexts, valueLabel ? AXIS_TITLE_ROOM : 0), bottom: categoryLabel ? 24 + AXIS_TITLE_ROOM : undefined };
-  const m = Object.assign({}, auto, margin);
-  Object.keys(m).forEach((k) => { if (m[k] === undefined) delete m[k]; });
   const table = {
     columns: [{ title: categoryLabel || t.group, field: 'group', kind: 'name', rowLabel: true }]
       .concat(['min', 'q1', 'median', 'q3', 'max'].map((k) => ({ title: t[k], field: k, kind: 'data', align: 'right' })))
@@ -82,53 +62,68 @@ export function BoxPlot({ title, description, hideCaption, size, groups = [], or
     data: list.map((g, i) => ({ id: i + 1, group: g.label, min: fmt(g.s.min), q1: fmt(g.s.q1), median: fmt(g.s.median), q3: fmt(g.s.q3), max: fmt(g.s.max),
       outliers: (g.s.outliers || []).map(fmt).join(', '), n: g.s.n === undefined ? '' : fmt(g.s.n) }))
   };
+  // the format the drawing calls, kept current without redrawing (a format written inline is a new function each render)
+  const fmts = React.useRef(null); fmts.current = { fmt };
+
+  const plot = useEChartsPlot();
+  const dataKey = JSON.stringify(list.map((g) => [g.id, g.label, g.s])) + '|' + o + '|' + showOutliers + '|' + valueLabel + '|' + categoryLabel + '|' + (margin ? [margin.top, margin.end, margin.bottom, margin.start].join(':') : '');
+  const option = React.useCallback((tk) => {
+    const room = gridRoom(margin, 0);
+    // under the plot: the vertical chart's group names; the horizontal chart's value labels and title are laid out by ECharts
+    if (!across) room.bottom = Math.max(room.bottom, snapToGrid(tk.tickOffset + tk.tick.fontSize + (categoryLabel ? tk.tickOffset * 2 + tk.title.fontSize : 0), { round: 'up' }));
+    const named = { nameLocation: 'middle', nameMoveOverlap: true };
+    const nameRoom = tk.tickOffset * 2 + tk.tick.fontSize;
+    const valAxis = Object.assign({ type: 'value', min: niceTicks(lo, hi, 5).ticks[0], max: niceTicks(lo, hi, 5).ticks.slice(-1)[0], name: valueLabel, nameGap: across ? nameRoom : 0, inverse: across && tk.rtl, axisLabel: { formatter: (v) => fmts.current.fmt(v) },
+      axisLine: { show: across, lineStyle: { color: tk.axis.color, width: tk.axis.width } } }, named);
+    const catAxis = Object.assign({ type: 'category', data: list.map((g) => g.label), inverse: across, position: across ? (tk.rtl ? 'right' : 'left') : 'bottom', boundaryGap: true, name: categoryLabel, nameGap: across ? 0 : nameRoom,
+      axisLine: { show: !across, lineStyle: { color: tk.axis.color, width: tk.axis.width } } }, named);
+    const w = (Math.round(BAND * 10000) / 100) + '%';
+    return {
+      animationDuration: tk.motion, animationDurationUpdate: tk.motion,
+      grid: Object.assign(room, { outerBoundsMode: 'same', outerBoundsContain: 'all' }),
+      xAxis: across ? valAxis : catAxis, yAxis: across ? catAxis : valAxis,
+      series: [
+        // the box (the data color), the whiskers and their caps (the whisker token); the median is the frame's overlay in its own token
+        { type: 'boxplot', id: 'box', silent: true, boxWidth: [w, w], z: 2, itemStyle: { color: tk.color('categorical-1'), borderColor: tk.boxplot.whisker.color, borderWidth: tk.boxplot.whisker.width }, emphasis: { disabled: true },
+          data: list.map((g) => [g.s.min, g.s.q1, g.s.median, g.s.q3, g.s.max]) },
+      ].concat(showOutliers ? [{ type: 'scatter', id: 'outliers', silent: true, symbolSize: tk.boxplot.outlier.r * 2, z: 3, itemStyle: { color: tk.boxplot.outlier.fill, borderColor: tk.boxplot.outlier.outline, borderWidth: tk.boxplot.outlier.outlineWidth }, emphasis: { disabled: true },
+        data: list.flatMap((g, i) => (g.s.outliers || []).map((v) => (across ? [v, i] : [i, v]))) }] : []),
+    };
+  }, [dataKey]);   // eslint-disable-line react-hooks/exhaustive-deps
+
+  const draw = (dims) => {
+    const layer = plot.layer(dims, option);
+    const c = plot.chart;
+    const g = c ? plotGrid(c) : null;
+    if (!g || !list.length) return layer;
+    const step = (across ? g.height : g.width) / list.length, thick = step * BAND;
+    const at = (i, v) => { const p = c.convertToPixel({ xAxisIndex: 0, yAxisIndex: 0 }, across ? [v, i] : [i, v]); return { x: p[0] - g.x, y: p[1] - g.y }; };
+    const inner = { width: g.width, height: g.height };
+    const ai = active === null ? -1 : list.findIndex((x) => x.id === active);
+    let tip = null;
+    if (tooltip && ai >= 0) {
+      const gr = list[ai], end = at(ai, gr.s.max);
+      tip = <ChartTooltip x={end.x} y={end.y} inner={inner} title={gr.label} items={['max', 'q3', 'median', 'q1', 'min'].map((k) => ({ label: t[k], value: fmt(gr.s[k]), color: 'categorical-1' }))} />;
+    }
+    return [layer, (
+      <g key="plx-chart-overlay" transform={'translate(' + g.x + ',' + g.y + ')'}>
+        {list.map((gr, i) => { const p = at(i, gr.s.median); return across
+          ? <line key={'m' + gr.id} className="plx-box-plot__median" x1={p.x} x2={p.x} y1={p.y - thick / 2} y2={p.y + thick / 2} />
+          : <line key={'m' + gr.id} className="plx-box-plot__median" x1={p.x - thick / 2} x2={p.x + thick / 2} y1={p.y} y2={p.y} />; })}
+        {tooltip ? list.map((gr, i) => { const p = at(i, gr.s.median); return across
+          ? <rect key={'h' + gr.id} className="plx-box-plot__group" fill="none" pointerEvents="all" x={0} y={p.y - step / 2} width={g.width} height={step} {...hover(gr.id)} />
+          : <rect key={'h' + gr.id} className="plx-box-plot__group" fill="none" pointerEvents="all" x={p.x - step / 2} y={0} width={step} height={g.height} {...hover(gr.id)} />; }) : null}
+        {tip}
+      </g>
+    )];
+  };
+
   return (
-    <ChartFrame title={title} description={description} hideCaption={hideCaption} size={size} margin={m} legend={legend} legendPosition={legendPosition}
+    <ChartFrame title={title} description={description} hideCaption={hideCaption} size={size} margin={NO_MARGIN} legend={legend} legendPosition={legendPosition}
       table={table} strings={strings} className={cx('plx-box-plot', 'plx-box-plot--' + o, className)}>
-      {({ inner, margin: fm }) => {
-        const L = across ? inner.height : inner.width, V = across ? inner.width : inner.height;
-        const band = scaleBand({ domain: list.map((g) => g.id), range: [0, L], paddingInner: 0.4, paddingOuter: 0.2 });
-        const vs = scaleLinear({ domain: [lo, hi], range: across ? [0, V] : [V, 0], nice: true });
-        // a line along the value axis (a = b: across it) at position p of the category axis
-        const seg = (p0, p1, a, b) => (across ? { x1: vs(a), x2: vs(b), y1: p0, y2: p1 } : { x1: p0, x2: p1, y1: vs(a), y2: vs(b) });
-        let tip = null;
-        if (tooltip && active !== null) {
-          const g = list.filter((x) => x.id === active)[0];
-          if (g) {
-            const mid = band(g.id) + band.bandwidth() / 2, end = vs(g.s.max);
-            tip = <ChartTooltip x={across ? end : mid} y={across ? mid : end} inner={inner} title={g.label}
-              items={['max', 'q3', 'median', 'q1', 'min'].map((k) => ({ label: t[k], value: fmt(g.s[k]), color: 'categorical-1' }))} />;
-          }
-        }
-        return (
-          <g>
-            <GridLines scale={vs} direction={across ? 'vertical' : 'horizontal'} inner={inner} />
-            {list.map((g) => {
-              const start = band(g.id), thick = band.bandwidth(), mid = start + thick / 2, cap = thick * CAP;
-              const b0 = vs(g.s.q1), b1 = vs(g.s.q3);
-              const boxAttrs = across ? { x: Math.min(b0, b1), y: start, width: Math.abs(b1 - b0), height: thick } : { x: start, y: Math.min(b0, b1), width: thick, height: Math.abs(b1 - b0) };
-              const along = (a, b) => (across ? { x1: vs(a), x2: vs(b), y1: mid, y2: mid } : { x1: mid, x2: mid, y1: vs(a), y2: vs(b) });
-              return (
-                <g key={g.id} className="plx-box-plot__group" {...(tooltip ? hover(g.id) : {})}>
-                  <line className="plx-box-plot__whisker" {...along(g.s.min, g.s.q1)} />
-                  <line className="plx-box-plot__whisker" {...along(g.s.q3, g.s.max)} />
-                  <line className="plx-box-plot__whisker plx-box-plot__cap" {...seg(mid - cap / 2, mid + cap / 2, g.s.min, g.s.min)} />
-                  <line className="plx-box-plot__whisker plx-box-plot__cap" {...seg(mid - cap / 2, mid + cap / 2, g.s.max, g.s.max)} />
-                  <rect className="plx-chart__mark plx-box-plot__box" {...boxAttrs} />
-                  <line className="plx-box-plot__median" {...seg(start, start + thick, g.s.median, g.s.median)} />
-                  {showOutliers ? (g.s.outliers || []).map((v, i) => (
-                    <circle key={i} className="plx-chart__point plx-box-plot__outlier" cx={across ? vs(v) : mid} cy={across ? mid : vs(v)} />
-                  )) : null}
-                </g>
-              );
-            })}
-            <Axis scale={vs} orient={across ? 'bottom' : 'left'} inner={inner} margin={fm} format={fmt} label={valueLabel} line={across} />
-            <Axis scale={band} orient={across ? 'left' : 'bottom'} inner={inner} margin={fm} line={!across} label={categoryLabel}
-              format={(id) => (list.filter((x) => x.id === id)[0] || {}).label} />
-            {tip}
-          </g>
-        );
-      }}
+      {draw}
     </ChartFrame>
   );
 }
+// boxStats stays in the first load (chart-helpers.js); BoxPlot re-exports it
+export { boxStats } from './chart-helpers.js';
