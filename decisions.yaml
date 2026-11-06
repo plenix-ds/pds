@@ -630,3 +630,13 @@
   options: [count plus getItem (chosen, A), renderItem(index) (B), document cheap items only (C)]
   status: active
   check: G3 review of the #142 build PR and its behavior test (getItem called only for the shown index and its neighbors)
+
+- id: D-0072
+  date: 2026-11-06
+  area: components
+  decided_by: agent (pds1-component-engineer) on #106, owner may switch
+  decision: 'Of the nine charts not yet on ECharts, Radar, HeatMap, Treemap, Sankey and NetworkGraph move (they have native series); TimelineChart, GanttChart, WordCloud and GeoMap stay Plenix SVG drawings until the owner says otherwise, as moving them needs custom series, an extra package or map data and shows the owner nothing. An exception to the 2026-10-26 "everything on one engine" for those four.'
+  why: 'Moving them means hand-written drawing code inside ECharts (Timeline, Gantt), a word-cloud package (WordCloud) or per-region map data (GeoMap), for no visible gain.'
+  options: [move five, keep four as SVG (chosen, A), move all nine through custom series and extra packages (B)]
+  status: active
+  check: planned:behavior tests on each remaining chart PR (#106); the owner's reply on #106 switches to B
