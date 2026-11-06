@@ -1,0 +1,75 @@
+
+ RUN  v5.1.0 /home/cc/pds1/work/component-engineer-1
+
+ ❯ tools/checks/text-contract-inherit-122.test.mjs (4 tests | 4 failed) 773ms
+   ❯ #122 context-sized parts (4)
+     × explicit inherits for size, spacing and line height complete the part: context-sized, not on the backlog 233ms
+     × a missing declaration is still a finding (a forgotten property cannot pass as deliberate) 188ms
+     × unset, initial and revert do not count as following the context 169ms
+     × font-family and font-weight are never excused by inherit 182ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tools/checks/text-contract-inherit-122.test.mjs > #122 context-sized parts > explicit inherits for size, spacing and line height complete the part: context-sized, not on the backlog
+AssertionError: expected undefined to match object { contract: 'context-sized' }
+
+- Expected:
+{
+  "contract": "context-sized",
+}
+
++ Received:
+undefined
+
+ ❯ tools/checks/text-contract-inherit-122.test.mjs:15:33
+     13|     const m = css('.plx-x{' + FAMILY + WEIGHT + 'font-size:inherit;let…
+     14|     expect(m.incomplete['plx-x']).toBeUndefined();
+     15|     expect(m.declared['plx-x']).toMatchObject({ contract: 'context-siz…
+       |                                 ^
+     16|     expect(m.declared['plx-x'].inherits).toEqual(['font-size', 'letter…
+     17|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  tools/checks/text-contract-inherit-122.test.mjs > #122 context-sized parts > a missing declaration is still a finding (a forgotten property cannot pass as deliberate)
+TypeError: .toMatch() expects to receive a string, but got undefined
+ ❯ tools/checks/text-contract-inherit-122.test.mjs:20:35
+     18|   it('a missing declaration is still a finding (a forgotten property c…
+     19|     const m = css('.plx-x{' + FAMILY + WEIGHT + 'font-size:inherit;let…
+     20|     expect(m.incomplete['plx-x']).toMatch(/missing line-height/);
+       |                                   ^
+     21|   });
+     22|   it('unset, initial and revert do not count as following the context'…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  tools/checks/text-contract-inherit-122.test.mjs > #122 context-sized parts > unset, initial and revert do not count as following the context
+AssertionError: unset: expected undefined to be defined
+ ❯ tools/checks/text-contract-inherit-122.test.mjs:25:40
+     23|     for (const v of ['unset', 'initial', 'revert']) {
+     24|       const m = css('.plx-x{' + FAMILY + WEIGHT + 'font-size:' + v + '…
+     25|       expect(m.incomplete['plx-x'], v).toBeDefined();
+       |                                        ^
+     26|     }
+     27|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  tools/checks/text-contract-inherit-122.test.mjs > #122 context-sized parts > font-family and font-weight are never excused by inherit
+TypeError: .toMatch() expects to receive a string, but got undefined
+ ❯ tools/checks/text-contract-inherit-122.test.mjs:30:35
+     28|   it('font-family and font-weight are never excused by inherit', () =>…
+     29|     const m = css('.plx-x{' + FAMILY + 'font-weight:inherit;font-size:…
+     30|     expect(m.incomplete['plx-x']).toMatch(/missing font-weight/);
+       |                                   ^
+     31|   });
+     32| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed (4)
+   Start at  17:49:45
+   Duration  896ms (tests 97%, transform 2%, import 1%)
+

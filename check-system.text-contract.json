@@ -11,9 +11,6 @@
   "plx-link": "changes the font family without the whole role (missing font-size, letter-spacing, line-height)",
   "plx-link--standalone": "changes the font family without the whole role (missing font-size, letter-spacing, line-height)",
   "plx-popover": "changes the font family without the whole role (missing font-weight, letter-spacing)",
-  "plx-rich-text": "changes the font family without the whole role (its font and word spacing are not one switch)",
-  "plx-rich-text--article": "changes the font family without the whole role (its font and word spacing are not one switch)",
-  "plx-rich-text--compact": "changes the font family without the whole role (its font and word spacing are not one switch)",
   "plx-session-timeout__time": "changes the font family without the whole role (missing font-size, letter-spacing, line-height)"
  }
 }
