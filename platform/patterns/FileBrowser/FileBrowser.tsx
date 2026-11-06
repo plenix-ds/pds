@@ -75,7 +75,7 @@ import { Resizable } from '../../components/Resizable/Resizable.tsx';
 import { PromptDialog } from '../../components/Dialog/Dialog.tsx';
 import { CommandBar, CommandBarSearch } from '../CommandBar/CommandBar.jsx';
 import { SortPanel } from '../SortPanel/SortPanel.tsx';
-import { ViewMenu } from '../ViewMenu/ViewMenu.jsx';
+import { ViewMenu } from '../ViewMenu/ViewMenu.tsx';
 import { ContentGrid } from '../ContentGrid/ContentGrid.tsx';
 import { DeleteFlow } from '../DeleteFlow/DeleteFlow.tsx';
 import { FileList, sortFiles } from '../FileList/FileList.tsx';

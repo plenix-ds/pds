@@ -3,7 +3,7 @@
 1. Drag alternatives (2.5.7), PARTLY: every drag has keys; almost none has a single-pointer (click or menu) path.
    - PanelSplitter (platform/patterns/AppShell/AppShell.tsx:154-178; used by NavPane, SidePanel, SecondaryPane) has
      arrows, Home/End and Enter, plus a collapse button. There is no click way to change the width.
-   - WidgetGrid (platform/patterns/WidgetGrid/WidgetGrid.jsx:59-65) handle takes arrows only.
+   - WidgetGrid (platform/patterns/WidgetGrid/WidgetGrid.tsx:59-65) handle takes arrows only.
    - DataGrid row move, wireRows (DataGrid.tsx:380-401), is native drag only (used in dam BrowseDialogs.jsx:204, 243).
    - Column move is drag only. The resize grip is aria-hidden and pointer only; the header menu has "Fit to content".
    - OK: the upload dialogs (Browse button), Slider (a native range), and the image editor (buttons).

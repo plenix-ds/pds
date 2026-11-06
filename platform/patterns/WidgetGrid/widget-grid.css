@@ -1,4 +1,4 @@
-/* Plenix · WidgetGrid (platform/patterns/WidgetGrid). Anatomy and API: WidgetGrid.jsx. */
+/* Plenix · WidgetGrid (platform/patterns/WidgetGrid). Anatomy and API: WidgetGrid.tsx. */
 .plx-widget-grid{column-gap:var(--plx-comp-widget-grid-gap);display:grid;grid-template-columns:var(--plx-comp-widget-grid-grid-template-columns);row-gap:var(--plx-comp-widget-grid-row-gap);}
 .plx-widget-grid--2{grid-template-columns:repeat(2, minmax(0, 1fr));}
 .plx-widget-grid--3{grid-template-columns:repeat(3, minmax(0, 1fr));}

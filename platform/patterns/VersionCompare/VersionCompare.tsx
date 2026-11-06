@@ -72,10 +72,10 @@ import { dataPhrase } from '../../utils/dataText.tsx';
 import { fill } from '../../utils/fill.ts';
 
 // the lines of two texts, compared: [{ kind: "same" | "add" | "del", text, a (the line number before), b (after) }]
-export function diffLines(before, after) {
+export function diffLines(before: any, after: any) {
   const A = String(before || '').split('\n'), B = String(after || '').split('\n');
   const n = A.length, m = B.length;
-  const out = [];
+  const out: any[] = [];
   if (n * m > 4000000) {   // too large to compare line by line: everything before removed, everything after added
     A.forEach((text, i) => out.push({ kind: 'del', text, a: i + 1 }));
     B.forEach((text, j) => out.push({ kind: 'add', text, b: j + 1 }));
@@ -95,17 +95,17 @@ export function diffLines(before, after) {
   return out;
 }
 
-function TextDiff({ base, target, context, t, uid }) {
+function TextDiff({ base, target, context, t, uid }: any) {
   const lines = React.useMemo(() => diffLines(base.text, target.text), [base.text, target.text]);
-  const [shown, setShown] = React.useState({});   // the folded runs people opened, by their first index
+  const [shown, setShown] = React.useState<any>({});   // the folded runs people opened, by their first index
   const [at, setAt] = React.useState(-1);
-  const refs = React.useRef({});
-  const bar = React.useRef(null);
+  const refs = React.useRef<any>({});
+  const bar = React.useRef<any>(null);
   // the bar of the summary and the step buttons: when they do not fit one row the buttons keep their icons and lose their labels (fit-and-overflow §2)
   const iconsOnly = useBarFit(bar, t.previous + '|' + t.next + '|' + base.id + '|' + target.id, 1, 0, ':self') > 0;
   React.useEffect(() => { setShown({}); setAt(-1); }, [base.id, target.id]);
   const added = lines.filter((x) => x.kind === 'add').length, removed = lines.filter((x) => x.kind === 'del').length;
-  const count = (k) => (k === 1 ? t.line : fill(t.lines, { n: formatNumber(k) }));
+  const count = (k: any) => (k === 1 ? t.line : fill(t.lines, { n: formatNumber(k) }));
   // where each change starts (a run of added and removed lines)
   const starts = lines.reduce((a, x, i) => (x.kind !== 'same' && (i === 0 || lines[i - 1].kind === 'same') ? a.concat(i) : a), []);
   // the rows: unchanged runs longer than the context on both sides fold
@@ -122,7 +122,7 @@ function TextDiff({ base, target, context, t, uid }) {
     } else for (let x = k; x < e; x++) rows.push({ line: lines[x], i: x });
     k = e;
   }
-  const go = (step) => {
+  const go = (step: any) => {
     if (!starts.length) return;
     const next = at < 0 ? (step > 0 ? 0 : starts.length - 1) : (at + step + starts.length) % starts.length;
     setAt(next);
@@ -152,7 +152,7 @@ function TextDiff({ base, target, context, t, uid }) {
             }
             const x = r.line, isStart = starts.indexOf(r.i) >= 0;
             return (
-              <li key={r.i} id={uid + '-l' + r.i} ref={isStart ? (el) => { refs.current[r.i] = el; } : undefined} tabIndex={isStart ? -1 : undefined}
+              <li key={r.i} id={uid + '-l' + r.i} ref={isStart ? (el) => { refs.current[r.i as number] = el; } : undefined} tabIndex={isStart ? -1 : undefined}
                 className={cx('plx-version-compare__line', x.kind === 'add' && 'plx-version-compare__line--added', x.kind === 'del' && 'plx-version-compare__line--removed')}>
                 <span className="plx-version-compare__number" aria-hidden="true">{x.a || ''}</span>
                 <span className="plx-version-compare__number" aria-hidden="true">{x.b || ''}</span>
@@ -167,25 +167,48 @@ function TextDiff({ base, target, context, t, uid }) {
   );
 }
 
-export function VersionCompare({ versions = [], attributes = [], base, defaultBase, target, defaultTarget, onChange, mode, defaultMode = 'columns', onModeChange, modes, context = 3,
-  ratio = '16-9', scroll = false, label, strings, className }) {
-  const t = useStrings('versionCompare', strings);
+/** @public a version to compare; values holds the attributes by key, text the content for the text diff */
+export type CompareVersion = { id: string; label: string; date?: string | Date; author?: string; image?: { src: string; alt?: string }; media?: React.ReactNode; values?: Record<string, React.ReactNode>; text?: string };
+/** @public the prop type (ADR 0011) */
+export type VersionCompareProps = {
+  versions: CompareVersion[];
+  attributes?: { key: string; label: string; kind?: 'data' }[];
+  base?: string;
+  defaultBase?: string;
+  target?: string;
+  defaultTarget?: string;
+  onChange?(pair: { base: string; target: string }): void;
+  mode?: 'columns' | 'slider' | 'text';
+  defaultMode?: 'columns' | 'slider' | 'text';
+  onModeChange?(mode: 'columns' | 'slider' | 'text'): void;
+  modes?: ('columns' | 'slider' | 'text')[];
+  context?: number;
+  ratio?: '16-9' | '4-3' | '3-2' | '1-1';
+  scroll?: boolean;
+  label?: string;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function VersionCompare(props: VersionCompareProps) {
+  const { versions = [], attributes = [], base, defaultBase, target, defaultTarget, onChange, mode, defaultMode = 'columns', onModeChange, modes, context = 3,
+  ratio = '16-9', scroll = false, label, strings, className } = props as any;
+  const t: any = useStrings('versionCompare', strings);
   const uid = useUid('plx-version-compare');
-  const ids = versions.map((v) => v.id);
+  const ids = versions.map((v: any) => v.id);
   const [own, setOwn] = React.useState({ base: defaultBase !== undefined ? defaultBase : ids[ids.length - 2], target: defaultTarget !== undefined ? defaultTarget : ids[ids.length - 1] });
-  const pair = { base: base !== undefined ? base : own.base, target: target !== undefined ? target : own.target };
-  const setPair = (next) => { if (base === undefined && target === undefined) setOwn(next); if (onChange) onChange(next); };
-  const a = versions.find((v) => v.id === pair.base), b = versions.find((v) => v.id === pair.target);
+  const pair: any = { base: base !== undefined ? base : own.base, target: target !== undefined ? target : own.target };
+  const setPair = (next: any) => { if (base === undefined && target === undefined) setOwn(next); if (onChange) onChange(next); };
+  const a = versions.find((v: any) => v.id === pair.base), b = versions.find((v: any) => v.id === pair.target);
   const all = ['columns'].concat(a && b && a.image && b.image ? ['slider'] : [], a && b && typeof a.text === 'string' && typeof b.text === 'string' ? ['text'] : []);
-  const choices = (modes && modes.length ? modes : all).filter((m) => ['columns', 'slider', 'text'].indexOf(m) >= 0);
+  const choices = (modes && modes.length ? modes : all).filter((m: any) => ['columns', 'slider', 'text'].indexOf(m) >= 0);
   const [ownMode, setOwnMode] = React.useState(defaultMode);
   const want = mode !== undefined ? mode : ownMode;
   const current = choices.indexOf(want) >= 0 ? want : choices[0] || 'columns';
-  const setMode = (m) => { if (mode === undefined) setOwnMode(m); if (onModeChange) onModeChange(m); };
-  const metaOf = (v) => [v.date ? formatDate(v.date, { dateStyle: 'medium' }) : null, v.author ? fill(t.by, { author: v.author }) : null].filter(Boolean).join(' · ');
-  const optionLabel = (v) => [v.label, v.date ? formatDate(v.date, { dateStyle: 'medium' }) : null].filter(Boolean).join(' · ');
-  const pick = (which, other) => versions.filter((v) => v.id !== pair[other]).map((v) => ({ value: v.id, label: optionLabel(v) }));
-  const item = (v) => ({ id: v.id, title: v.label, meta: metaOf(v), image: v.image, media: v.media, values: v.values || {} });
+  const setMode = (m: any) => { if (mode === undefined) setOwnMode(m); if (onModeChange) onModeChange(m); };
+  const metaOf = (v: any) => [v.date ? formatDate(v.date, { dateStyle: 'medium' }) : null, v.author ? fill(t.by, { author: v.author }) : null].filter(Boolean).join(' · ');
+  const optionLabel = (v: any) => [v.label, v.date ? formatDate(v.date, { dateStyle: 'medium' }) : null].filter(Boolean).join(' · ');
+  const pick = (which: any, other: any) => versions.filter((v: any) => v.id !== pair[other]).map((v: any) => ({ value: v.id, label: optionLabel(v) }));
+  const item = (v: any) => ({ id: v.id, title: v.label, meta: metaOf(v), image: v.image, media: v.media, values: v.values || {} });
 
   const body = !a || !b ? <EmptyState icon={DocSearchIcon} title={t.empty} />
     : current === 'text' ? <TextDiff base={a} target={b} context={context} t={t} uid={uid} />
@@ -202,7 +225,7 @@ export function VersionCompare({ versions = [], attributes = [], base, defaultBa
         </Field>
         {choices.length > 1 ? (
           <SegmentedControl className="plx-version-compare__modes" label={t.view} size="sm" value={current} onChange={setMode}
-            options={choices.map((m) => ({ value: m, label: t[m] }))} />
+            options={choices.map((m: any) => ({ value: m, label: t[m] }))} />
         ) : null}
       </div>
       {body}

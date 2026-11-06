@@ -10,4 +10,4 @@ export { DataLabel } from '../charts/parts/DataLabel.tsx';
 export { ReferenceLine } from '../charts/parts/ReferenceLine.tsx';
 export { ChartAnnotation } from '../charts/parts/ChartAnnotation.tsx';
 export { FeatureCard } from '../patterns/FeatureCard/FeatureCard.tsx';
-export { UserCard } from '../patterns/UserCard/UserCard.jsx';
+export { UserCard } from '../patterns/UserCard/UserCard.tsx';

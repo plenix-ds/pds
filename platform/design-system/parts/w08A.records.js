@@ -287,7 +287,7 @@ DSParts.records.push(function (H) {
   var acts = function () { return [h(P.Button, { key: 'm', icon: 'message' }, 'Message'), h(P.Button, { key: 'c', variant: 'ghost', icon: 'phone' }, 'Call')]; };
   var person = function (o) { return h(P.UserCard, Object.assign({}, MAYA, o)); };
   var userCard = { id: 'user-card', lab: true, icon: 'person', sec: 'content', sub: 'Identity', leaf: 'User card', title: 'User card',
-    plenix: 'UserCard', src: 'patterns/UserCard/UserCard.jsx', level: 'Pattern', interaction: 'Display',
+    plenix: 'UserCard', src: 'patterns/UserCard/UserCard.tsx', level: 'Pattern', interaction: 'Display',
     aliases: ['Profile card', 'Person card', 'Contact card', 'People card', 'Member card'],
     covers: [],
     text: 'A person on a Card: the avatar, the name as the heading (a link to the profile with href), a line with their title or team, a role badge, their presence (the avatar’s dot, and words after the name for assistive technology), a few ways to reach them in an icon list (phone numbers and times in the data font), and the actions for this person. A cover picture can head the card, with the avatar overlapping its edge. Compact is one row for lists and side panels.',
@@ -312,7 +312,7 @@ DSParts.records.push(function (H) {
 
   /* ── 07 Data Display › Cards and objects › Profile card: the same UserCard (duplicate leaf) ── */
   var profileCard = { id: 'profile-card', icon: 'person', sec: 'data-display', sub: 'Cards and objects', leaf: 'Profile card', title: 'Profile card',
-    plenix: 'UserCard', src: 'patterns/UserCard/UserCard.jsx', level: 'Pattern', interaction: 'Display', variantClasses: [], docsFrom: 'user-card',
+    plenix: 'UserCard', src: 'patterns/UserCard/UserCard.tsx', level: 'Pattern', interaction: 'Display', variantClasses: [], docsFrom: 'user-card',
     aliases: ['Person card', 'People card'],
     text: 'The profile card is the user card (UserCard): one person with their avatar, name, title, role, presence, ways to reach them and the actions that concern them.',
     use: ['People directories and team pages: UserCard in a ContentGrid'], avoid: ['A preview on hover: the hover card'],

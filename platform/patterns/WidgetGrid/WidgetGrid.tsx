@@ -38,11 +38,11 @@ import { useStrings } from '../../providers/LocaleProvider.tsx';
 import DragIcon from 'plenix-platform/icons/plenix/drag';
 import { fill } from '../../utils/fill.ts';
 
-const move = (ids, from, to) => { const next = ids.slice(); const [x] = next.splice(from, 1); next.splice(to, 0, x); return next; };
+const move = (ids: any, from: any, to: any) => { const next = ids.slice(); const [x] = next.splice(from, 1); next.splice(to, 0, x); return next; };
 
 // the handle: a menu button (Menu gives it the click, Enter and Space) whose arrow keys move the widget instead of
 // opening the menu, so the keys keep their meaning on the handle
-const Handle = React.forwardRef(function Handle({ onStep, onKeyDown, expanded, ...rest }, ref) {
+const Handle = React.forwardRef(function Handle({ onStep, onKeyDown, expanded, ...rest }: any, ref: any) {
   return <button ref={ref} type="button" {...rest} onKeyDown={(e) => {
     const step = arrowStep(e, e.currentTarget);
     if (step) { e.preventDefault(); onStep(step); return; }
@@ -50,13 +50,28 @@ const Handle = React.forwardRef(function Handle({ onStep, onKeyDown, expanded, .
   }} />;
 });
 
-export function WidgetGrid({ items = [], renderItem, onReorder, label, columns = 'auto', strings, className, ...rest }) {
-  const t = useStrings('widgetGrid', strings);
-  const [dragging, setDragging] = React.useState(null);
-  const [over, setOver] = React.useState(null);
+/** @public one widget; span is the number of columns it takes */
+export type Widget = { id: string | number; title?: string; span?: '1' | '2' };
+/** @public the prop type (ADR 0011) */
+export type WidgetGridProps<T extends Widget = Widget> = Omit<React.HTMLAttributes<HTMLElement>, 'children'> & {
+  items: T[];
+  /** a renderer that takes the handle places it itself */
+  renderItem(item: T, handle?: React.ReactNode): React.ReactNode;
+  /** without it the grid cannot be reordered */
+  onReorder?(ids: (string | number)[]): void;
+  label?: string;
+  columns?: 'auto' | 2 | 3 | 4;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function WidgetGrid<T extends Widget = Widget>(props: WidgetGridProps<T>) {
+  const { items = [], renderItem, onReorder, label, columns = 'auto', strings, className, ...rest } = props as any;
+  const t: any = useStrings('widgetGrid', strings);
+  const [dragging, setDragging] = React.useState<any>(null);
+  const [over, setOver] = React.useState<any>(null);
   const [said, setSaid] = React.useState('');
-  const ids = items.map((i) => i.id);
-  const place = (from, to) => {
+  const ids = items.map((i: any) => i.id);
+  const place = (from: any, to: any) => {
     if (!onReorder || to < 0 || to >= ids.length || from === to) return;
     onReorder(move(ids, from, to));
     const it = items[from]; setSaid(fill(t.position, { title: it.title || t.widget, index: to + 1, total: ids.length }));
@@ -64,19 +79,19 @@ export function WidgetGrid({ items = [], renderItem, onReorder, label, columns =
   return (
     <>
     <div className={cx('plx-widget-grid', 'plx-widget-grid--' + columns, className)} role="list" aria-label={label} {...rest}>
-      {items.map((it, i) => (
+      {items.map((it: any, i: any) => (
         <div key={it.id} role="listitem" className={cx('plx-widget-grid__item', it.span === '2' && 'plx-widget-grid__item--wide', dragging === it.id && 'is-dragging', over === it.id && dragging !== it.id && 'is-drop-target')}
           onDragOver={onReorder ? (e) => { e.preventDefault(); setOver(it.id); } : undefined}
-          onDragLeave={onReorder ? () => setOver((o) => (o === it.id ? null : o)) : undefined}
+          onDragLeave={onReorder ? () => setOver((o: any) => (o === it.id ? null : o)) : undefined}
           onDrop={onReorder ? (e) => { e.preventDefault(); const from = ids.indexOf(dragging); setOver(null); setDragging(null); place(from, i); } : undefined}>
           {(() => { const handle = onReorder ? (
             <Menu label={fill(t.move, { title: it.title || t.widgetLower })} placement="bottom-end"
               className={cx('plx-widget-grid__menu', renderItem && renderItem.length > 1 && 'plx-widget-grid__menu--inline')}
               trigger={
                 <Handle className={cx('plx-widget-grid__handle', renderItem && renderItem.length > 1 && 'plx-widget-grid__handle--inline')} draggable aria-label={fill(t.move, { title: it.title || t.widgetLower })}
-                  onDragStart={(e) => { setDragging(it.id); e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', String(it.id)); }}
+                  onDragStart={(e: any) => { setDragging(it.id); e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', String(it.id)); }}
                   onDragEnd={() => { setDragging(null); setOver(null); }}
-                  onStep={(step) => place(i, i + step)}>
+                  onStep={(step: any) => place(i, i + step)}>
                   <Icon name={DragIcon} size="md" />
                 </Handle>
               }>
