@@ -2184,5 +2184,61 @@
   "line-chart--variant-multiple-series": {
     "sets": [],
     "why": "markup only: one line per series; the legend shows and hides series"
+  },
+  "text-field--width-xs": {
+    "sets": [
+      {
+        "property": "inline-size",
+        "part": "block",
+        "token": "--plx-comp-input-width-xs-width"
+      }
+    ],
+    "why": ".plx-input--width-xs in input.css; the Text field is the Input, and the lab value is named width-xs"
+  },
+  "text-field--width-md": {
+    "sets": [
+      {
+        "property": "inline-size",
+        "part": "block",
+        "token": "--plx-comp-input-width-md-width"
+      }
+    ],
+    "why": ".plx-input--width-md in input.css; the Text field is the Input, and the lab value is named width-md"
+  },
+  "text-field--states-enabled-empty-editable": {
+    "sets": [],
+    "why": "markup only: an empty, editable field is the default; the variation sets no style of its own"
+  },
+  "text-field--states-filled": {
+    "sets": [],
+    "why": "markup only: a filled field only has a value; the variation sets no style of its own"
+  },
+  "text-field--states-read-only": {
+    "sets": [],
+    "why": "markup only: read-only is the readOnly attribute, drawn by the Input's own read-only state rule; the variation sets no style of its own"
+  },
+  "text-field--states-required": {
+    "sets": [],
+    "why": "markup only: required is the required attribute and the Field label's mark; the variation sets no style of its own"
+  },
+  "tree-select--choice-one-choice-default": {
+    "sets": [],
+    "why": "markup only: one choice is the default mode; the Tree's own rows and the popup carry the styles"
+  },
+  "tree-select--choice-several-with-checkboxes": {
+    "sets": [],
+    "why": "markup only: several choices (multiple) draw a checkbox on each row; the Tree's own rows and the popup carry the styles"
+  },
+  "tree-select--choice-with-search": {
+    "sets": [],
+    "why": "markup only: search adds the search field to the popup; the Tree's own rows and the popup carry the styles"
+  },
+  "virtual-list--rows-fixed-rows-default": {
+    "sets": [],
+    "why": "markup only: fixed rows are the default measure; the rows use the list's own classes"
+  },
+  "virtual-list--rows-with-groups": {
+    "sets": [],
+    "why": "markup only: groups add header rows; the rows use the list's own classes"
   }
 }
