@@ -120,6 +120,9 @@ jobs:
         run: node tools/checks/states/states.mjs "$(git merge-base "$BASE_SHA" HEAD)"
       - name: Check 10, numeric columns
         run: node tools/checks/numeric/numeric.mjs
+      - name: Locale checks (diff-aware; G6; only findings the PR adds fail, missing Arabic is reported and never blocks)
+        shell: bash
+        run: node tools/checks/locale/locale.mjs "$(git merge-base "$BASE_SHA" HEAD)"
       - name: The checks' own unit tests (Vitest)
         run: npx --no-install vitest run tools/checks
       - name: Check 11, pill height (Playwright, the runner's Chrome; a missing browser fails)
