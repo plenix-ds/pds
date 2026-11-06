@@ -5,11 +5,6 @@
   "plx-brand-lockup__app": "changes the font family without the whole role (missing font-size, letter-spacing)",
   "plx-brand-lockup__name": "changes the font family without the whole role (missing font-size)",
   "plx-data-pill--data": "changes the font family without the whole role (missing font-size, letter-spacing)",
-<<<<<<< HEAD
-  "plx-dialog__title": "changes the font family without the whole role (missing letter-spacing, line-height)",
-=======
-  "plx-focus-order__number": "changes the font family without the whole role (missing letter-spacing, line-height)",
->>>>>>> origin/main
   "plx-image-editor__text": "changes the font family without the whole role (missing letter-spacing, line-height)",
   "plx-image-editor__text--bold": "changes the font family without the whole role (missing letter-spacing, line-height)",
   "plx-inline-edit__read": "changes the font family without the whole role (its font and word spacing are not one switch)",
