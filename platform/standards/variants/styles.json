@@ -5070,7 +5070,7 @@
       {
         "property": "background-color",
         "part": "block",
-        "token": "--plx-comp-color-swatch-value"
+        "token": "--plx-comp-data-color"
       },
       {
         "property": "border-color",
@@ -5088,7 +5088,7 @@
         "token": "--plx-comp-color-swatch-radius"
       }
     ],
-    "why": "color-swatch.css: the base .plx-color-swatch is the square with the standard corner; --round is the other shape"
+    "why": "color-swatch.css: the base .plx-color-swatch is the square with the standard corner; --round is the other shape. The fill is the swatch's own value: its data color (data-plx-color or a category), or the accent, surface or frost role"
   },
   "swatch--label-with-label": {
     "sets": [],
