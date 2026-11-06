@@ -182,8 +182,11 @@
   syntax: "*";
   inherits: false;
 }
-.plx-button {
+/* the state layer's color has one source per button: the default here, the primary's and the danger's in their own rules (zero overlap, #644) */
+.plx-button:where(:not(.plx-button--danger)):where(:not(.plx-button--primary:not(.plx-button--on-inverse))) {
   --plx-state-button-layer-color: var(--plx-comp-button-state-layer-color);
+}
+.plx-button {
   align-items: center;
   appearance: none;
   background-color: var(--plx-state-button-background);
