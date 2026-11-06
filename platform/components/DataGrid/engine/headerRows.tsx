@@ -30,8 +30,32 @@ import EdTextIcon from 'plenix-platform/icons/plenix/ed-text';
 import { Popover } from '../../Popover/Popover.tsx';
 import { Select, Input } from '../../Input/Input.tsx';
 import { Button } from '../../Button/Button.tsx';
+import { Tooltip } from '../../Tooltip/Tooltip.tsx';
+import { useTruncated } from '../../../utils/overflow.ts';
 import ChevronDownIcon from 'plenix-platform/icons/plenix/chevron-down';
 import FilterIcon from 'plenix-platform/icons/plenix/filter';
+
+// a header's title: the Plenix Tooltip shows the whole title while it is cut (an ellipsis), on hover, on the keyboard focus of the header cell and with a long press on
+// touch (#794, fit-and-overflow §5); never a bare title attribute. The header's accessible name already holds the whole title, so the Tooltip does not describe it
+function HeaderTitle({ text, className, children }: { text: string; className: string; children: (textRef: React.RefObject<HTMLSpanElement | null>) => React.ReactNode }) {
+  const textRef = React.useRef<HTMLSpanElement | null>(null), box = React.useRef<HTMLDivElement | null>(null);
+  const cut = useTruncated(textRef, text);
+  // the header cell is the one Tab stop: while it has the focus, the Tooltip is told as a focus on the title would tell it
+  React.useEffect(() => {
+    const cell = box.current && box.current.closest('[role="columnheader"]');
+    if (!cell || !cut) return undefined;
+    const tell = (type: string) => (event: Event) => { if (event.target === cell && box.current) box.current.dispatchEvent(new FocusEvent(type, { bubbles: true, relatedTarget: null })); };
+    const on = tell('focusin'), off = tell('focusout');
+    cell.addEventListener('focusin', on); cell.addEventListener('focusout', off);
+    if (document.activeElement === cell && box.current) box.current.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
+    return () => { cell.removeEventListener('focusin', on); cell.removeEventListener('focusout', off); };
+  }, [cut]);
+  return (
+    <Tooltip content={text} disabled={!cut || !text} describe={false} className="plx-data-grid__title-tip">
+      <div ref={box} className={className}>{children(textRef)}</div>
+    </Tooltip>
+  );
+}
 
 export function headerRows({
   groupBy,
@@ -173,16 +197,16 @@ export function headerRows({
           )}
         >
           <div className={cx(B + '__grid-col-title-holder', icon && B + '__grid-col-title-holder--flush')}>
-            <div
+            <HeaderTitle
+              text={String(c.title || c.field || '')}
               className={cx(
                 B + '__grid-col-title',
                 isStatic && B + '__grid-col-title--static',
                 titleFixed && B + '__grid-col-title--' + titleFixed,
                 icon && B + '__grid-col-title--icon'
               )}
-              title={c.title}
             >
-              {kinds(c).includes('icon') ? (
+              {(textRef: React.RefObject<HTMLSpanElement | null>) => kinds(c).includes('icon') ? (
                 <span className={B + '__header-icon'}>
                   <Icon name={c.icon || CircleInfoIcon} label={c.title} />
                 </span>
@@ -196,12 +220,12 @@ export function headerRows({
                       <Icon name={typeIcons[typeOf(c) as keyof typeof typeIcons] || EdTextIcon} />
                     </span>
                   ) : null}
-                  <span className={cx(B + '__title-text', effectiveWrap && B + '__title-text--wrap')}>
+                  <span ref={textRef as any} className={cx(B + '__title-text', effectiveWrap && B + '__title-text--wrap')}>
                     {c.title || c.field}
                   </span>
                 </span>
               )}
-            </div>
+            </HeaderTitle>
             {filtered || filterField === c.field ? (
               <span className={cx(B + '__title-filter', filtered && B + '__title-filter--on')}>
                 <Popover
