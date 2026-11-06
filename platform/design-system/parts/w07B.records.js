@@ -156,7 +156,7 @@ DSParts.records.push(function (H) {
     text: 'The people picker is EntityPicker with kind="people": people search by name or email, and each suggestion shows the person’s avatar (with their presence), name and email, so two people with the same name can be told apart. It takes one person, or several as removable tags. A large directory loads as people type (loadOptions), and the number of people found is announced.',
     use: ['Assigning, sharing with, mentioning or inviting people', 'Always the email (or a role) as the second line', 'loadOptions for a directory too large to list'],
     avoid: ['Teams or records: use the entity picker with their kind', 'A handful of known people: use a select'],
-    map: [[FLU, 'People picker', 'Direct'], [ATL, 'User picker', 'Direct']],
+    map: [[FLU, 'People picker', 'Direct'], [ATL, 'User picker', 'Direct'], ['Frappe', 'Link control (User)', 'Direct']],
     examples: [['People', [['One person', function () { return h(Pick, { label: 'Owner', start: 'mc', e: { kind: 'people', options: PEOPLE } }); }, null, 'kind=' + q('people')],
       ['Several people', function () { return h(Pick, { label: 'Reviewers', multiple: true, start: ['ak', 'rm'], e: { kind: 'people', options: PEOPLE } }); }, null, 'kind=' + q('people') + ' multiple']]]] };
 

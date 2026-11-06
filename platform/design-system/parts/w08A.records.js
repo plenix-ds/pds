@@ -61,7 +61,7 @@ DSParts.records.push(function (H) {
     avoid: ['A legend for a single series: the title names it', 'A legend when the lines or bars can be labeled directly (DataLabel at the line ends)',
       'Color as the only link between a name and its marks when two colors are close: label directly or add markers', 'Names cut short: they wrap'],
     related: ['chart-foundations', 'chart-tooltip', 'dataviz-colors', 'use-of-color'],
-    map: [[CAR, 'Legends', 'Direct'], [FLU, 'Legends', 'Direct'], [SPE, 'Legend', 'Direct'], [POL, 'Legend', 'Direct'], [HIG, 'Charts (legend)', 'Partial']],
+    map: [[CAR, 'Legends', 'Direct'], [FLU, 'Legends', 'Direct'], [SPE, 'Legend', 'Direct'], [POL, 'Legend', 'Direct'], [HIG, 'Charts (legend)', 'Partial'], ['Frappe', 'Frappe Charts legend', 'Direct']],
     variantPages: [
       vp('Legend under the chart', 'Placement', 'Under the plot (default)', { variant: 'horizontal' }, 'The series in a row under the plot that wraps when the frame is narrow.', 'Most charts: people read the chart, then the key', 'Long lists of series: filter or group them'),
       vp('Legend beside the chart', 'Placement', 'Beside the plot', { variant: 'vertical' }, 'One series per line after the plot (legendPosition="end", orientation="vertical"); the plot keeps the rest of the width.', 'Wide frames and long series names', 'Narrow cards: the plot gets too small'),
@@ -92,7 +92,7 @@ DSParts.records.push(function (H) {
       'The axis’s format with full precision (formatNumber, formatDate); titleKind="data" when the heading is a date or a number'],
     avoid: ['Information that exists only in the tooltip: the data table and the description carry it too', 'Actions or links in a chart tooltip: it does not take the pointer', 'A tooltip that covers the mark it describes'],
     related: ['chart-foundations', 'chart-legend', 'tooltip', 'popover'],
-    map: [[CAR, 'Tooltip (charts)', 'Direct'], [FLU, 'Charts callout', 'Direct'], [SPE, 'Chart tooltip', 'Direct'], [POL, 'Tooltip (viz)', 'Direct'], [HIG, 'Charts (selection)', 'Partial']],
+    map: [[CAR, 'Tooltip (charts)', 'Direct'], [FLU, 'Charts callout', 'Direct'], [SPE, 'Chart tooltip', 'Direct'], [POL, 'Tooltip (viz)', 'Direct'], [HIG, 'Charts (selection)', 'Partial'], ['Frappe', 'Frappe Charts tooltip', 'Direct']],
     variantPages: [
       vp('Single-point tooltip', 'Variant', 'Single', { variant: 'single' }, 'The value of one point, above it (under it near the top of the plot), with the series’ swatch and name.', 'Columns, bars and points: one value at a time', 'Several series at one x: the shared tooltip'),
       vp('Shared tooltip', 'Variant', 'Shared', { variant: 'shared' }, 'Every series at one x position, listed in the legend’s order, with a crosshair line down the plot.', 'Line and area charts with several series', 'A single series: the single tooltip is enough')
@@ -123,7 +123,7 @@ DSParts.records.push(function (H) {
     use: ['Bar and column charts with few marks where the exact values matter', 'The values people compare: the last, the highest, the target, rather than every mark', 'The axis’s format and precision'],
     avoid: ['Labels on every point of a dense line or scatter chart: the tooltip gives them on demand', 'Labels that overlap: drop the less important ones', 'Labels as the only source of the values: the data table keeps them'],
     related: ['chart-foundations', 'chart-tooltip', 'chart-axis'],
-    map: [[CAR, 'Axes and labels', 'Partial'], [SPE, 'Data label', 'Partial'], [FLU, 'Charts', 'Partial'], [HIG, 'Charts (annotations)', 'Partial']],
+    map: [[CAR, 'Axes and labels', 'Partial'], [SPE, 'Data label', 'Partial'], [FLU, 'Charts', 'Partial'], [HIG, 'Charts (annotations)', 'Partial'], ['Frappe', 'Frappe Charts value labels', 'Partial']],
     variantPages: [
       vp('Data label on top', 'Position', 'Top (columns)', { variant: 'top' }, 'Above the column, centered on it.', 'Column charts', 'Bars: the label goes after their end'),
       vp('Data label at the end', 'Position', 'End (bars)', { variant: 'end' }, 'After the end of the bar, centered on its height.', 'Bar charts: values read along the bars', 'Columns: the label goes on top'),
@@ -145,7 +145,7 @@ DSParts.records.push(function (H) {
       'An axis title with the unit when the chart’s title does not say it: “Uploads”, “Size (MB)”; give the frame margin room for it', 'ticks to thin the labels of a narrow chart; never uneven steps'],
     avoid: ['Axes on pies, donuts, treemaps and sparklines', 'Two value axes for one unit; two units on one chart: prefer two charts', 'Rotated or cut tick labels: fewer ticks, or a band scale with shorter names'],
     related: ['chart-foundations', 'chart-grid-line', 'numbers-and-units'],
-    map: [[CAR, 'Axes and labels', 'Direct'], [SPE, 'Axis', 'Direct'], [FLU, 'Charts axis', 'Partial'], [HIG, 'Charts (axes)', 'Direct']],
+    map: [[CAR, 'Axes and labels', 'Direct'], [SPE, 'Axis', 'Direct'], [FLU, 'Charts axis', 'Partial'], [HIG, 'Charts (axes)', 'Direct'], ['Frappe', 'Frappe Charts axis', 'Direct']],
     variantPages: [
       vp('Bottom axis', 'Side', 'Bottom (default)', { variant: 'bottom' }, 'Under the plot: the axis line and the labels centered under their ticks.', 'Categories and time across the chart', 'Bars, whose categories run down the left'),
       vp('Left axis', 'Side', 'Left', { variant: 'left' }, 'Before the plot: the labels end before it; no line by default (the grid lines carry the values).', 'The value axis of columns and lines; the categories of bars', 'A second unit: the right axis'),
@@ -209,7 +209,7 @@ DSParts.records.push(function (H) {
     use: ['Averages, medians, targets and prior-period values; a key date on a time axis', 'A name that says what it is (“Average”, “Target”) and the axis’s format for its value', 'The reference in the chart’s description too, and in the table when it is not derived from it'],
     avoid: ['More than two reference lines on one chart', 'A limit that calls for action: that is a threshold (kind="threshold")', 'A value outside the axis: widen the scale’s domain so the line shows'],
     related: ['chart-threshold', 'chart-grid-line', 'chart-annotation'],
-    map: [[SPE, 'Reference line', 'Direct'], [CAR, 'Thresholds (charts)', 'Partial'], [HIG, 'Charts (rule marks)', 'Direct']],
+    map: [[SPE, 'Reference line', 'Direct'], [CAR, 'Thresholds (charts)', 'Partial'], [HIG, 'Charts (rule marks)', 'Direct'], ['Frappe', 'Frappe Charts markers', 'Partial']],
     variantPages: [
       vp('Horizontal reference line', 'Axis', 'Horizontal (a value)', { variant: 'y' }, 'Across the plot at a value of the vertical scale, its name and value above its end.', 'Targets, averages, prior periods', 'Dates: the vertical line'),
       vp('Vertical reference line', 'Axis', 'Vertical (a date)', { variant: 'x' }, 'Up the plot at a value of the horizontal scale, its name at the top after it.', 'A release, a launch, a change in how data is counted', 'A span of time: the range annotation')
@@ -226,7 +226,7 @@ DSParts.records.push(function (H) {
     use: ['Service levels, budgets, quotas and alert limits', 'level="critical" for the hard limit, "warning" for the early one; at most two per chart', 'The axis range kept wide enough to show the limit even when the data stays far from it'],
     avoid: ['Neutral context such as an average: a reference line', 'Status colors on ordinary series', 'A threshold without its name and value'],
     related: ['chart-reference-line', 'dataviz-colors', 'use-of-color'],
-    map: [[CAR, 'Thresholds (charts)', 'Direct'], [SPE, 'Reference line', 'Partial'], [HIG, 'Charts (rule marks)', 'Partial']],
+    map: [[CAR, 'Thresholds (charts)', 'Direct'], [SPE, 'Reference line', 'Partial'], [HIG, 'Charts (rule marks)', 'Partial'], ['Frappe', 'Frappe Charts markers', 'Partial']],
     variantPages: [
       vp('Warning threshold', 'Level', 'Warning (default)', { variant: 'warning' }, 'The early limit, in the alert warning color.', 'A limit to watch before it is reached', 'The hard limit: critical'),
       vp('Critical threshold', 'Level', 'Critical', { variant: 'critical' }, 'The hard limit, in the alert critical color.', 'A limit that must not be crossed', 'More than one critical line on a chart')
