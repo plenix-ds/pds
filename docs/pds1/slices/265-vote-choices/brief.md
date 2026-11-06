@@ -10,7 +10,7 @@ An app can use the same member list as the vote for other per-member choices, st
 
 | | What |
 |---|---|
-| Known | `VoteTally` has been in Plenix since 0.74.0 and is in 0.86.0 (`platform/components/VoteTally/VoteTally.jsx`). Its choices are fixed: approve, deny, abstain (labels can change through `settings.labels`). CTM 3.0 (PLX-009) needs Present / Absent per member, with totals, for hearings. Until then it uses `Table` + `ButtonGroup` + `Badge`. |
+| Known | `VoteTally` has been in Plenix since 0.74.0 and is in 0.86.0 (`platform/components/VoteTally/VoteTally.tsx`). Its choices are fixed: approve, deny, abstain (labels can change through `settings.labels`). CTM 3.0 (PLX-009) needs Present / Absent per member, with totals, for hearings. Until then it uses `Table` + `ButtonGroup` + `Badge`. |
 | Inferred | Attendance needs no quorum or result, just the counts per choice and "not recorded". |
 | Unknown | None that blocks the build. |
 
@@ -48,7 +48,7 @@ An app can use the same member list as the vote for other per-member choices, st
 
 ## Already implemented
 
-`platform/components/VoteTally/VoteTally.jsx` (the list, toggle groups, the totals live region, turned-off members) and `vote-kit/` (schema, counting, contract).
+`platform/components/VoteTally/VoteTally.tsx` (the list, toggle groups, the totals live region, turned-off members) and `vote-kit/` (schema, counting, contract).
 
 ## Anything unclear
 

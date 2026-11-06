@@ -6,7 +6,7 @@ export { VisuallyHidden } from './components/VisuallyHidden/VisuallyHidden.tsx';
 export { Isolate } from './components/Isolate/Isolate.tsx';
 export { AnswerLines } from './components/AnswerLines/AnswerLines.tsx';
 export { PageBreak } from './components/PageBreak/PageBreak.tsx';
-export { VoteTally } from './components/VoteTally/VoteTally.jsx';
+export { VoteTally } from './components/VoteTally/VoteTally.tsx';
 export { Count } from './components/Count/Count.tsx';
 export { Metric } from './components/Metric/Metric.tsx';
 export { MetricCard } from './components/MetricCard/MetricCard.jsx';
