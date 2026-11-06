@@ -4262,5 +4262,49 @@
   "stack--gap-stack-none": {
     "sets": [],
     "why": ".plx-stack--gap-none sets column-gap and row-gap to 0, a value with no token"
+  },
+  "rating--modes-editable": {
+    "sets": [
+      {
+        "property": "min-block-size",
+        "part": "star",
+        "token": "--plx-comp-rating-star-min-height"
+      },
+      {
+        "property": "min-inline-size",
+        "part": "star",
+        "token": "--plx-comp-rating-star-min-width"
+      }
+    ],
+    "why": "rating.css: button.plx-rating__star, the stars are buttons; it also sets cursor: pointer, a keyword with no token"
+  },
+  "rating--modes-read-only": {
+    "sets": [],
+    "why": "markup only: the stars are plain spans in a role=img group with .plx-rating--read-only, which has no rule; they have no button size or pointer cursor"
+  },
+  "progress-bar--amount-unknown-indeterminate": {
+    "sets": [
+      {
+        "property": "animation-duration",
+        "part": "fill",
+        "token": "--plx-comp-progress-bar-indeterminate-fill-animation-duration"
+      },
+      {
+        "property": "animation-timing-function",
+        "part": "fill",
+        "token": "--plx-comp-progress-bar-indeterminate-fill-animation-timing-function"
+      }
+    ],
+    "why": "progress-bar.css: .plx-progress-bar.is-indeterminate .plx-progress-bar__fill runs a third-width bar from start to end (animation name and 33% width have no token); still under reduced motion"
+  },
+  "progress-bar--size-medium-default": {
+    "sets": [
+      {
+        "property": "block-size",
+        "part": "track",
+        "token": "--plx-comp-progress-bar-track-height"
+      }
+    ],
+    "why": "progress-bar.css: the base .plx-progress-bar__track; the small size (--sm) uses the sm track height"
   }
 }
