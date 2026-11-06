@@ -3103,155 +3103,6 @@
     "sets": [],
     "why": "markup only: the places as a NavList (groups, icons, counts) in the Sheet; .plx-bottom-sheet-nav__list sets only a zero minimum width"
   },
-  "bulk-action-bar--selection-something-selected": {
-    "sets": [
-      {
-        "property": "background-color",
-        "part": "block",
-        "token": "--plx-comp-bulk-actions-background"
-      },
-      {
-        "property": "border-block-end-color",
-        "part": "block",
-        "token": "--plx-comp-bulk-actions-border-color"
-      }
-    ],
-    "why": ".plx-bulk-actions in bulk-actions.css (the record is Bulk action bar, the component BulkActions, deprecated for the command bar's selection state)"
-  },
-  "bulk-action-bar--selection-nothing-selected-always-shown-actions-disabled": {
-    "sets": [
-      {
-        "property": "background-color",
-        "part": "block",
-        "token": "--plx-comp-bulk-actions-empty-background"
-      },
-      {
-        "property": "border-block-end-color",
-        "part": "block",
-        "token": "--plx-comp-bulk-actions-empty-border-color"
-      }
-    ],
-    "why": ".plx-bulk-actions--empty: the bar stays shown with its actions disabled until something is selected"
-  },
-  "bar-chart--layout-grouped": {
-    "sets": [],
-    "why": "markup only: several series side by side for each category, drawn by the chart engine (layout grouped)"
-  },
-  "bar-chart--layout-stacked": {
-    "sets": [],
-    "why": "markup only: the series stacked into each category's total (layout stacked)"
-  },
-  "bar-chart--layout-percent": {
-    "sets": [],
-    "why": "markup only: each series as a share of its category's total (layout percent)"
-  },
-  "bar-chart--layout-histogram-binned": {
-    "sets": [
-      {
-        "property": "stroke",
-        "part": "bar",
-        "token": "--plx-comp-bar-chart-separator-color"
-      },
-      {
-        "property": "stroke-width",
-        "part": "bar",
-        "token": "--plx-comp-bar-chart-separator-width"
-      }
-    ],
-    "why": ".plx-bar-chart__bar--joined: touching columns, each set apart by a thin separator, that count the values in each range"
-  },
-  "bar-chart--orientation-bar-horizontal": {
-    "sets": [],
-    "why": "markup only: horizontal bars, for long names and rankings, drawn by the chart engine"
-  },
-  "bar-chart--orientation-column-vertical": {
-    "sets": [],
-    "why": "markup only: vertical columns, for periods, drawn by the chart engine (orientation vertical)"
-  },
-  "asset--kind-asset": {
-    "sets": [],
-    "why": "markup only: the kind picks the icon and wording of the item; asset has no stylesheet of its own"
-  },
-  "asset--kind-collection": {
-    "sets": [],
-    "why": "markup only: the kind picks the icon and wording of the item; asset has no stylesheet of its own"
-  },
-  "asset-gallery--variant-justified": {
-    "sets": [],
-    "why": "markup only: the layout is passed to ContentGrid, which draws it; asset-gallery.css has no modifier for it"
-  },
-  "asset-gallery--variant-masonry": {
-    "sets": [],
-    "why": "markup only: the layout is passed to ContentGrid, which draws it; asset-gallery.css has no modifier for it"
-  },
-  "box-plot--orientation-horizontal": {
-    "sets": [],
-    "why": "markup only: the orientation is the drawn geometry, computed in the component; box-plot.css has no modifier for it"
-  },
-  "box-plot--orientation-vertical": {
-    "sets": [],
-    "why": "markup only: the orientation is the drawn geometry, computed in the component; box-plot.css has no modifier for it"
-  },
-  "bullet-chart--orientation-horizontal": {
-    "sets": [],
-    "why": "markup only: the orientation is the drawn geometry, computed in the component; bullet-chart.css has no modifier for it"
-  },
-  "bullet-chart--orientation-vertical": {
-    "sets": [],
-    "why": "markup only: the orientation is the drawn geometry, computed in the component; bullet-chart.css has no modifier for it"
-  },
-  "columns-menu--form-the-columns-dropdown": {
-    "sets": [],
-    "why": "markup only: the form chooses a dropdown or a dialog, both drawn by other components; the pattern has no stylesheet"
-  },
-  "columns-menu--form-the-manage-columns-dialog": {
-    "sets": [],
-    "why": "markup only: the form chooses a dropdown or a dialog, both drawn by other components; the pattern has no stylesheet"
-  },
-  "confirmation-dialog--intent-confirm-default": {
-    "sets": [],
-    "why": "markup only: the intent picks the confirm button's intent and the wording; the Dialog and Button draw it"
-  },
-  "confirmation-dialog--intent-destructive": {
-    "sets": [],
-    "why": "markup only: the intent picks the confirm button's intent and the wording; the Dialog and Button draw it"
-  },
-  "context-menu--items-submenu-menusub": {
-    "sets": [],
-    "why": "markup only: how the menu opens and whether items have a submenu are behavior and parts of Menu; the pattern has no stylesheet for them"
-  },
-  "context-menu--opening-at-the-pointer-right-click-long-press": {
-    "sets": [],
-    "why": "markup only: how the menu opens and whether items have a submenu are behavior and parts of Menu; the pattern has no stylesheet for them"
-  },
-  "context-menu--opening-at-the-target-shift-f10-menu-key": {
-    "sets": [],
-    "why": "markup only: how the menu opens and whether items have a submenu are behavior and parts of Menu; the pattern has no stylesheet for them"
-  },
-  "onboarding--variant-setup-checklist": {
-    "sets": [],
-    "why": "markup only: the variation arranges other components (checklist, welcome dialog); onboarding.css has no modifier for it"
-  },
-  "onboarding--variant-welcome-dialog": {
-    "sets": [],
-    "why": "markup only: the variation arranges other components (checklist, welcome dialog); onboarding.css has no modifier for it"
-  },
-  "popconfirm--tone-default": {
-    "sets": [],
-    "why": "markup only: the tone picks the confirm button's intent, drawn by Button; popconfirm.css styles only the description"
-  },
-  "popconfirm--tone-destructive": {
-    "sets": [],
-    "why": "markup only: the tone picks the confirm button's intent, drawn by Button; popconfirm.css styles only the description"
-  },
-  "quick-filter--kind-presets-and-a-range-date": {
-    "sets": [],
-    "why": "markup only: the kind picks which controls the filter renders; the pattern has no stylesheet"
-  },
-  "quick-filter--kind-searchable-checklist-tags-category-type": {
-    "sets": [],
-    "why": "markup only: the kind picks which controls the filter renders; the pattern has no stylesheet"
-  },
   "landing-page--page-authentication": {
     "sets": [],
     "why": "markup only: the page type arranges other components (cards, forms, panes); the stylesheet has no modifier for it"
@@ -3394,6 +3245,71 @@
     "sets": [],
     "why": "markup only: the kind picks the icon and the content adds a path or highlight mark; the stylesheet has no modifier for them"
   },
+  "bulk-action-bar--selection-something-selected": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-bulk-actions-background"
+      },
+      {
+        "property": "border-block-end-color",
+        "part": "block",
+        "token": "--plx-comp-bulk-actions-border-color"
+      }
+    ],
+    "why": ".plx-bulk-actions in bulk-actions.css (the record is Bulk action bar, the component BulkActions, deprecated for the command bar's selection state)"
+  },
+  "bulk-action-bar--selection-nothing-selected-always-shown-actions-disabled": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-bulk-actions-empty-background"
+      },
+      {
+        "property": "border-block-end-color",
+        "part": "block",
+        "token": "--plx-comp-bulk-actions-empty-border-color"
+      }
+    ],
+    "why": ".plx-bulk-actions--empty: the bar stays shown with its actions disabled until something is selected"
+  },
+  "bar-chart--layout-grouped": {
+    "sets": [],
+    "why": "markup only: several series side by side for each category, drawn by the chart engine (layout grouped)"
+  },
+  "bar-chart--layout-stacked": {
+    "sets": [],
+    "why": "markup only: the series stacked into each category's total (layout stacked)"
+  },
+  "bar-chart--layout-percent": {
+    "sets": [],
+    "why": "markup only: each series as a share of its category's total (layout percent)"
+  },
+  "bar-chart--layout-histogram-binned": {
+    "sets": [
+      {
+        "property": "stroke",
+        "part": "bar",
+        "token": "--plx-comp-bar-chart-separator-color"
+      },
+      {
+        "property": "stroke-width",
+        "part": "bar",
+        "token": "--plx-comp-bar-chart-separator-width"
+      }
+    ],
+    "why": ".plx-bar-chart__bar--joined: touching columns, each set apart by a thin separator, that count the values in each range"
+  },
+  "bar-chart--orientation-bar-horizontal": {
+    "sets": [],
+    "why": "markup only: horizontal bars, for long names and rankings, drawn by the chart engine"
+  },
+  "bar-chart--orientation-column-vertical": {
+    "sets": [],
+    "why": "markup only: vertical columns, for periods, drawn by the chart engine (orientation vertical)"
+  },
   "chart-axis--side-bottom-default": {
     "sets": [
       {
@@ -3503,6 +3419,152 @@
       }
     ],
     "why": ".plx-chart-tooltip: one point's value in a small framed box beside the point"
+  },
+  "download-manager--variant-panel": {
+    "sets": [],
+    "why": "markup only: the panel, progress and ready are which parts render; download-manager.css styles only the root"
+  },
+  "download-manager--variant-progress": {
+    "sets": [],
+    "why": "markup only: the panel, progress and ready are which parts render; download-manager.css styles only the root"
+  },
+  "download-manager--variant-ready": {
+    "sets": [],
+    "why": "markup only: the panel, progress and ready are which parts render; download-manager.css styles only the root"
+  },
+  "drop-target--state-accepts-or-rejects": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-sys-dnd-target-background"
+      },
+      {
+        "property": "outline-color",
+        "part": "block",
+        "token": "--plx-sys-dnd-target-outline-color"
+      },
+      {
+        "property": "outline-color",
+        "part": "block",
+        "token": "--plx-sys-dnd-target-reject-outline-color"
+      },
+      {
+        "property": "outline-offset",
+        "part": "block",
+        "token": "--plx-sys-dnd-target-outline-offset"
+      },
+      {
+        "property": "outline-width",
+        "part": "block",
+        "token": "--plx-sys-dnd-target-outline-width"
+      }
+    ],
+    "why": "system/dnd.css: .plx-dnd-target[data-plx-drop-state=\"over\"] draws a dashed outline (outline-color) on the target fill (background-color); [data-plx-drop-state=\"reject\"] draws the same dashed outline in the reject color (outline-color, second row) with the not-allowed cursor; both use the outline offset and width"
+  },
+  "drop-target--variant-data-drop-target": {
+    "sets": [],
+    "why": "markup only: whether it accepts or rejects and the data attribute are behavior; it has no stylesheet"
+  },
+  "otp-input--kind-alphanumeric": {
+    "sets": [],
+    "why": "markup only: the kind and length change the cells and the characters allowed; otp-input.css has no modifier for them (the invalid and warning looks are separate states)"
+  },
+  "otp-input--kind-masked": {
+    "sets": [],
+    "why": "markup only: the kind and length change the cells and the characters allowed; otp-input.css has no modifier for them (the invalid and warning looks are separate states)"
+  },
+  "otp-input--length-4-characters-a-pin": {
+    "sets": [],
+    "why": "markup only: the kind and length change the cells and the characters allowed; otp-input.css has no modifier for them (the invalid and warning looks are separate states)"
+  },
+  "otp-input--length-6-characters-default": {
+    "sets": [],
+    "why": "markup only: the kind and length change the cells and the characters allowed; otp-input.css has no modifier for them (the invalid and warning looks are separate states)"
+  },
+  "permissions-editor--variant-per-person": {
+    "sets": [],
+    "why": "markup only: per-person or roles-and-capabilities changes the rows it renders; permissions-editor.css styles only the root"
+  },
+  "permissions-editor--variant-roles-and-capabilities": {
+    "sets": [],
+    "why": "markup only: per-person or roles-and-capabilities changes the rows it renders; permissions-editor.css styles only the root"
+  },
+  "presence-bar--variant-cursors-list": {
+    "sets": [],
+    "why": "markup only: which people it lists (viewers, editors, cursors) changes the content; presence-bar.css styles only the root"
+  },
+  "presence-bar--variant-editors": {
+    "sets": [],
+    "why": "markup only: which people it lists (viewers, editors, cursors) changes the content; presence-bar.css styles only the root"
+  },
+  "presence-bar--variant-viewers": {
+    "sets": [],
+    "why": "markup only: which people it lists (viewers, editors, cursors) changes the content; presence-bar.css styles only the root"
+  },
+  "prompt-history--variant-list": {
+    "sets": [],
+    "why": "markup only: list or search changes which parts render; prompt-history.css styles only the root"
+  },
+  "prompt-history--variant-search": {
+    "sets": [],
+    "why": "markup only: list or search changes which parts render; prompt-history.css styles only the root"
+  },
+  "prompt-suggestions--variant-cards": {
+    "sets": [],
+    "why": "markup only: cards or chips are the Card or Chip parts it renders; prompt-suggestions.css styles only the root"
+  },
+  "prompt-suggestions--variant-chips": {
+    "sets": [],
+    "why": "markup only: cards or chips are the Card or Chip parts it renders; prompt-suggestions.css styles only the root"
+  },
+  "recent-searches--list-recent-searches": {
+    "sets": [],
+    "why": "markup only: the list and its clear action are parts it renders; it has no stylesheet"
+  },
+  "recent-searches--list-recent-searches-with-clear": {
+    "sets": [],
+    "why": "markup only: the list and its clear action are parts it renders; it has no stylesheet"
+  },
+  "recommendation--variant-row": {
+    "sets": [],
+    "why": "markup only: the row layout and the reason are parts it renders; recommendation.css styles only the root"
+  },
+  "recommendation--variant-with-reason": {
+    "sets": [],
+    "why": "markup only: the row layout and the reason are parts it renders; recommendation.css styles only the root"
+  },
+  "related-assets--variant-grid": {
+    "sets": [],
+    "why": "markup only: grid or strip is the layout passed to the grid part; related-assets.css styles only the root"
+  },
+  "related-assets--variant-strip": {
+    "sets": [],
+    "why": "markup only: grid or strip is the layout passed to the grid part; related-assets.css styles only the root"
+  },
+  "search-result-group--footer-a-link-to-all-default": {
+    "sets": [],
+    "why": "markup only: the footer (link, heading, show more) is a part it renders; it has no stylesheet"
+  },
+  "search-result-group--footer-heading-only": {
+    "sets": [],
+    "why": "markup only: the footer (link, heading, show more) is a part it renders; it has no stylesheet"
+  },
+  "search-result-group--footer-show-more-in-place": {
+    "sets": [],
+    "why": "markup only: the footer (link, heading, show more) is a part it renders; it has no stylesheet"
+  },
+  "search-suggestions--list-suggestions": {
+    "sets": [],
+    "why": "markup only: the suggestion list is the part it renders; it has no stylesheet"
+  },
+  "suggested-action--variant-card": {
+    "sets": [],
+    "why": "markup only: card or chip is the part it renders; suggested-action.css styles only the root"
+  },
+  "suggested-action--variant-chip": {
+    "sets": [],
+    "why": "markup only: card or chip is the part it renders; suggested-action.css styles only the root"
   },
   "error-state--kind-completion": {
     "sets": [],
@@ -3739,5 +3801,99 @@
       }
     ],
     "why": ".plx-chart-reference--x: the line up the plot at a date, its label beside the line at the top"
+  },
+  "box-plot--outliers-with-outliers": {
+    "sets": [
+      {
+        "property": "r",
+        "part": "outlier",
+        "token": "--plx-comp-box-plot-outlier-radius"
+      }
+    ],
+    "why": ".plx-box-plot__outlier, the points beyond the whiskers (1.5 times the box's length)"
+  },
+  "box-plot--orientation-vertical": {
+    "sets": [],
+    "why": "markup only: groups along the bottom, each a box from the first to the third quartile with a median line, drawn by the chart engine"
+  },
+  "box-plot--orientation-horizontal": {
+    "sets": [],
+    "why": "markup only: the same boxes in rows, with the value axis along the bottom"
+  },
+  "bullet-chart--orientation-horizontal": {
+    "sets": [],
+    "why": "markup only: one row per measure, a value bar over its ranges with a target line (horizontal)"
+  },
+  "bullet-chart--orientation-vertical": {
+    "sets": [],
+    "why": "markup only: one column per measure, a value bar over its ranges with a target line (vertical)"
+  },
+  "asset--kind-asset": {
+    "sets": [],
+    "why": "markup only: the kind picks the icon and wording of the item; asset has no stylesheet of its own"
+  },
+  "asset--kind-collection": {
+    "sets": [],
+    "why": "markup only: the kind picks the icon and wording of the item; asset has no stylesheet of its own"
+  },
+  "asset-gallery--variant-justified": {
+    "sets": [],
+    "why": "markup only: the layout is passed to ContentGrid, which draws it; asset-gallery.css has no modifier for it"
+  },
+  "asset-gallery--variant-masonry": {
+    "sets": [],
+    "why": "markup only: the layout is passed to ContentGrid, which draws it; asset-gallery.css has no modifier for it"
+  },
+  "columns-menu--form-the-columns-dropdown": {
+    "sets": [],
+    "why": "markup only: the form chooses a dropdown or a dialog, both drawn by other components; the pattern has no stylesheet"
+  },
+  "columns-menu--form-the-manage-columns-dialog": {
+    "sets": [],
+    "why": "markup only: the form chooses a dropdown or a dialog, both drawn by other components; the pattern has no stylesheet"
+  },
+  "confirmation-dialog--intent-confirm-default": {
+    "sets": [],
+    "why": "markup only: the intent picks the confirm button's intent and the wording; the Dialog and Button draw it"
+  },
+  "confirmation-dialog--intent-destructive": {
+    "sets": [],
+    "why": "markup only: the intent picks the confirm button's intent and the wording; the Dialog and Button draw it"
+  },
+  "context-menu--items-submenu-menusub": {
+    "sets": [],
+    "why": "markup only: how the menu opens and whether items have a submenu are behavior and parts of Menu; the pattern has no stylesheet for them"
+  },
+  "context-menu--opening-at-the-pointer-right-click-long-press": {
+    "sets": [],
+    "why": "markup only: how the menu opens and whether items have a submenu are behavior and parts of Menu; the pattern has no stylesheet for them"
+  },
+  "context-menu--opening-at-the-target-shift-f10-menu-key": {
+    "sets": [],
+    "why": "markup only: how the menu opens and whether items have a submenu are behavior and parts of Menu; the pattern has no stylesheet for them"
+  },
+  "onboarding--variant-setup-checklist": {
+    "sets": [],
+    "why": "markup only: the variation arranges other components (checklist, welcome dialog); onboarding.css has no modifier for it"
+  },
+  "onboarding--variant-welcome-dialog": {
+    "sets": [],
+    "why": "markup only: the variation arranges other components (checklist, welcome dialog); onboarding.css has no modifier for it"
+  },
+  "popconfirm--tone-default": {
+    "sets": [],
+    "why": "markup only: the tone picks the confirm button's intent, drawn by Button; popconfirm.css styles only the description"
+  },
+  "popconfirm--tone-destructive": {
+    "sets": [],
+    "why": "markup only: the tone picks the confirm button's intent, drawn by Button; popconfirm.css styles only the description"
+  },
+  "quick-filter--kind-presets-and-a-range-date": {
+    "sets": [],
+    "why": "markup only: the kind picks which controls the filter renders; the pattern has no stylesheet"
+  },
+  "quick-filter--kind-searchable-checklist-tags-category-type": {
+    "sets": [],
+    "why": "markup only: the kind picks which controls the filter renders; the pattern has no stylesheet"
   }
 }
