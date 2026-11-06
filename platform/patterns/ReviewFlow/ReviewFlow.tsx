@@ -52,6 +52,7 @@
      Decisions are final for the reviewer; to change one, decide again (the history keeps both).
 */
 import React from 'react';
+import type { IconValue } from '../../components/Icon/Icon.tsx';
 import { devWarn } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
 import { announce } from '../../utils/announce.tsx';
@@ -85,7 +86,8 @@ import { fill } from '../../utils/fill.ts';
 // the workflow statuses: a Badge variant by meaning, and its icon (owner, 2026-10-15)
 // the labels are the catalog's (reviewFlow.statuses): this constant keeps its shape and its English labels for apps that read it
 const STATUS_LABELS = english.reviewFlow.statuses;
-export const WORKFLOW_STATUSES: Record<string, any> = {
+type WorkflowStatusEntry = { tone: string; icon: IconValue; label: string };
+export const WORKFLOW_STATUSES: Record<string, WorkflowStatusEntry> = {
   draft: { tone: 'neutral', icon: PencilIcon, label: STATUS_LABELS.draft },
   'in-review': { tone: 'active', icon: DocSearchIcon, label: STATUS_LABELS['in-review'] },
   approved: { tone: 'success', icon: CircleCheckIcon, label: STATUS_LABELS.approved },

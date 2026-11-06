@@ -73,12 +73,12 @@ export type QuickFilterProps = {
   options?: QuickFilterOption[];
   /** (list, single) the chosen values; (date) the range */
   value?: string[] | QuickFilterDate;
-  onChange?(value: any): void;
+  onChange?(value: string[] | QuickFilterDate): void;
   /** option value to faceted count (a Map or an object) */
   counts?: Map<string, number> | Record<string, number>;
   required?: boolean;
   inline?: boolean;
-  strings?: Record<string, any>;
+  strings?: Record<string, string>;
 };
 export function QuickFilter(props: QuickFilterProps) {
   const { kind = 'list', label, icon, noun = 'value', options, value, onChange, counts, required = false, inline = false, strings } = props as any;

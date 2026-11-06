@@ -126,7 +126,7 @@ export function useRetry<T = unknown>(task: () => T | Promise<T>, { attempts = 3
 
 /** @public the prop type of RetryNotice (ADR 0011) */
 export type RetryNoticeProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & {
-  retry: RetryState<any>;
+  retry: RetryState<unknown>;
   title?: string;
   tone?: 'danger' | 'warning';
   showCount?: boolean;

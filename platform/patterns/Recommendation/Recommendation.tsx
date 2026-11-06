@@ -32,7 +32,8 @@ export type RecommendationProps = {
   perView?: number;
   /** for items without a navigation href */
   onSelect?(item: RecommendationItem): unknown;
-  strings?: Record<string, any>;
+  /** label, open, why, empty, action ({ failed, pending }); plus the Carousel strings */
+  strings?: { label?: string; open?: string; why?: string; empty?: string; action?: { failed?: string; pending?: string } } & Record<string, unknown>;
   className?: string;
 };
 export function Recommendation({items=[],variant='row',perView=3,onSelect,strings,className}: RecommendationProps){

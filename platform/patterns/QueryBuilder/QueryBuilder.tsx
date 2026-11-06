@@ -42,7 +42,7 @@ import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { announce } from '../../utils/announce.tsx';
 import { formatNumber } from '../../utils/format.ts';
-import type { Field, Filter } from '../../utils/fields.ts';
+import type { Field, Filter, ConditionGroup } from '../../utils/fields.ts';
 import { WITHIN, fieldOf, kindOf, optionsOf, newCondition, nextId, fieldWords, blank } from '../../utils/fields.ts';
 import { Button } from '../../components/Button/Button.tsx';
 import { Input, Select } from '../../components/Input/Input.tsx';
@@ -63,7 +63,7 @@ const NO_VALUE: Record<string, boolean> = { empty: true, nempty: true };
 const quote = (s: any) => '“' + s + '”';
 
 // the query as one sentence: rules in the field type's words, groups in parentheses; unfinished rules left out
-export function formatQuery(node: any, fields: Field[] = [], strings?: any) {
+export function formatQuery(node: Filter | ConditionGroup | null | undefined, fields: Field[] = [], strings?: Record<string, string>): string {
   const t = Object.assign({}, createTranslator(formatLocale()).section('queryBuilder'), strings);   // a plain function: no hook
   const fw = createTranslator(formatLocale()).section('fields');   // a plain function: no hook
   const words = (f: any, op: any) => (fieldWords.operators(fw, kindOf(f)).find((o) => o[0] === op) || [op, op])[1];
@@ -86,7 +86,7 @@ export function formatQuery(node: any, fields: Field[] = [], strings?: any) {
     const s = parts.join(' ' + (g.join === 'or' ? t.orWord : t.andWord) + ' ');
     return top || parts.length < 2 ? s : '(' + s + ')';
   };
-  return group(node || { items: [] }, true) || t.everything;
+  return (group(node || { items: [] }, true) || t.everything) as string;
 }
 
 function Count({ n, t }: any) {
