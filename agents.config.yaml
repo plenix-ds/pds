@@ -20,3 +20,172 @@ memory:
   # Memory sets the real limit, not the agent count (VM 131 has 15 GB).
   per_agent_limit_gb: 2.5      # each session's own limit (systemd MemoryMax)
   start_new_below_free_gb: 2   # new small tasks wait while free memory is below this
+
+# The role registry (template v2.4 §5.1, D-0084; #768): the one list of roles. team.sh, the scheduler, pickup and CI
+# (checks 13 and 15) read it, nothing else lists roles. Keys: id, title (the session name "PDS1 - <title>"), kind
+# (lane | task), label (the work-item label), instances, parked (never started), boot (started by team.sh start-core),
+# definition (the agent file), wakes_on (issue_opened | issue_labeled | comment_mention | ci_failed | heartbeat) and an
+# optional memory_limit_gb (default: memory.per_agent_limit_gb). The Delivery Lead fixes the keys as a decision.
+roles:
+  - id: product-lead
+    title: "Product Lead"
+    kind: lane
+    label: "agent:pds1-product-lead"
+    instances: 1
+    parked: false
+    boot: true
+    definition: .claude/agents/pds1-product-lead.md
+    wakes_on: [issue_opened, issue_labeled, comment_mention, ci_failed, heartbeat]
+  - id: delivery-lead
+    title: "Delivery Lead"
+    kind: lane
+    label: "agent:pds1-delivery-lead"
+    instances: 1
+    parked: false
+    boot: true
+    definition: .claude/agents/pds1-delivery-lead.md
+    wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
+  - id: design-director
+    title: "Design Director"
+    kind: lane
+    label: "agent:pds1-design-director"
+    instances: 1
+    parked: false
+    boot: true
+    definition: .claude/agents/pds1-design-director.md
+    wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
+  - id: ds-architect
+    title: "DS Architect"
+    kind: lane
+    label: "agent:pds1-ds-architect"
+    instances: 1
+    parked: false
+    boot: true
+    definition: .claude/agents/pds1-ds-architect.md
+    wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
+  - id: release-architect
+    title: "Backend & Release Architect"
+    kind: lane
+    label: "agent:pds1-release-architect"
+    instances: 1
+    parked: false
+    boot: true
+    definition: .claude/agents/pds1-release-architect.md
+    wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
+  - id: component-engineer
+    title: "Component Engineer"
+    kind: lane
+    label: "agent:pds1-component-engineer"
+    instances: 2
+    parked: false
+    boot: false
+    definition: .claude/agents/pds1-component-engineer.md
+    wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
+  - id: i18n-engineer
+    title: "i18n Engineer"
+    kind: lane
+    label: "agent:pds1-i18n-engineer"
+    instances: 1
+    parked: false
+    boot: false
+    definition: .claude/agents/pds1-i18n-engineer.md
+    wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
+  - id: technical-writer
+    title: "Technical Writer"
+    kind: lane
+    label: "agent:pds1-technical-writer"
+    instances: 1
+    parked: false
+    boot: false
+    definition: .claude/agents/pds1-technical-writer.md
+    wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
+  - id: qa-engineer
+    title: "QA Engineer"
+    kind: task
+    label: "agent:pds1-qa-engineer"
+    instances: 1
+    parked: false
+    boot: false
+    definition: .claude/agents/pds1-qa-engineer.md
+    wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
+  - id: code-reviewer
+    title: "Code Reviewer"
+    kind: task
+    label: "agent:pds1-code-reviewer"
+    instances: 1
+    parked: false
+    boot: false
+    definition: .claude/agents/pds1-code-reviewer.md
+    wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
+  - id: design-critic
+    title: "Design Critic"
+    kind: task
+    label: "agent:pds1-design-critic"
+    instances: 1
+    parked: false
+    boot: false
+    definition: .claude/agents/pds1-design-critic.md
+    wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
+  - id: a11y-rtl-auditor
+    title: "A11y & RTL Auditor"
+    kind: task
+    label: "agent:pds1-a11y-rtl-auditor"
+    instances: 1
+    parked: false
+    boot: false
+    definition: .claude/agents/pds1-a11y-rtl-auditor.md
+    wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
+  - id: security-reviewer
+    title: "Security Reviewer"
+    kind: task
+    label: "agent:pds1-security-reviewer"
+    instances: 1
+    parked: false
+    boot: false
+    definition: .claude/agents/pds1-security-reviewer.md
+    wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
+  - id: debugger
+    title: "Debugger"
+    kind: task
+    label: "agent:pds1-debugger"
+    instances: 1
+    parked: false
+    boot: false
+    definition: .claude/agents/pds1-debugger.md
+    wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
+  - id: db-optimizer
+    title: "DB Optimizer"
+    kind: task
+    label: "agent:pds1-db-optimizer"
+    instances: 1
+    parked: false
+    boot: false
+    definition: .claude/agents/pds1-db-optimizer.md
+    wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
+  - id: simulated-user-tester
+    title: "Simulated User Tester"
+    kind: task
+    label: "agent:pds1-simulated-user-tester"
+    instances: 1
+    parked: false
+    boot: false
+    definition: .claude/agents/pds1-simulated-user-tester.md
+    wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
+  - id: drift-auditor
+    title: "Drift Auditor"
+    kind: task
+    label: "agent:pds1-drift-auditor"
+    instances: 1
+    parked: false
+    boot: false
+    definition: .claude/agents/pds1-drift-auditor.md
+    wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
+  - id: mobile-app-builder
+    title: "Mobile App Builder"
+    kind: task
+    label: "agent:pds1-mobile-app-builder"
+    instances: 1
+    parked: true   # D-0013: mobile is parked
+    boot: false
+    definition: .claude/agents/pds1-mobile-app-builder.md
+    wakes_on: [issue_labeled]

@@ -103,6 +103,7 @@ import { createPortal } from 'react-dom';
 import { cx } from '../../utils/cx.ts';
 import { Tooltip } from '../../components/Tooltip/Tooltip.tsx';
 import { Icon, stateIcon, asIcon as iconElement } from '../../components/Icon/Icon.tsx';
+import type { IconValue } from '../../components/Icon/Icon.tsx';
 import { SurfaceContext } from '../../providers/Surface.tsx';
 import { BrandMark } from '../../components/Brand/Brand.tsx';
 import { Count } from '../../components/Count/Count.tsx';
@@ -112,6 +113,7 @@ import { Button } from '../../components/Button/Button.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { useSession } from '../../providers/SessionProvider.tsx';
 import { PLENIX_APPS, appById, appHref, appIcon } from '../../providers/apps.ts';
+import type { PlenixApp } from '../../providers/apps.ts';
 import { useLayer, useUid } from '../../utils/layer.ts';
 import { useDensity } from '../../hooks/useDensity.ts';
 import { useMedia, below, tokenPx } from '../AppShell/AppShell.tsx';
@@ -131,19 +133,52 @@ import DensityStandardIcon from 'plenix-platform/icons/plenix/density-standard';
 import DensityComfortableIcon from 'plenix-platform/icons/plenix/density-comfortable';
 import { fill } from '../../utils/fill.ts';
 
+/** @public a place the account menu links to: a link (href) or an action (onSelect) */
+export type AppHeaderLink = { href?: string; onSelect?: () => void };
+/** @public the Back item first in the header, for a screen inside the application */
+export type AppHeaderBack = { href?: string; onClick?: React.MouseEventHandler<HTMLElement>; label?: string };
+/** @public what onOpenApp receives; return true when the page opens the application itself */
+export type AppHeaderOpenApp = (app: PlenixApp) => boolean | void;
+export type AppHeaderProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & {
+  tone?: 'accent' | 'frost' | 'plain'; appName?: string; brand?: React.ReactNode; brandHref?: string;
+  /** the open application's id (PLENIX_APPS), or null on a screen that is not an application */
+  currentApp?: string | null; appsRoot?: string; onOpenApp?: AppHeaderOpenApp;
+  nav?: React.ReactNode; navLabel?: string; action?: React.ReactNode; search?: React.ReactNode;
+  searchSuggestions?: React.ReactNode; searchResults?: React.ReactNode; searchScope?: string;
+  actions?: React.ReactNode; account?: React.ReactNode; switcher?: boolean; back?: AppHeaderBack; title?: React.ReactNode; className?: string;
+};
+export type AppHeaderItemProps = Omit<React.HTMLAttributes<HTMLElement>, 'onClick'> & {
+  icon?: IconValue | React.ReactNode; label?: string; current?: boolean; count?: number; href?: string;
+  onClick?: React.MouseEventHandler<HTMLElement>; tooltip?: boolean; className?: string;
+};
+/** @public the account menu's words (appHeader.account in the catalog) */
+export type AppHeaderAccountStrings = Partial<Record<'trigger' | 'menu' | 'myAccount' | 'settings' | 'appSettings' | 'app' | 'density' | 'compact' | 'standard' | 'comfortable' | 'signOut', string>>;
+export type AppHeaderAccountProps = {
+  name?: string; email?: string; src?: string; placement?: 'header' | 'pane'; current?: 'account' | 'settings' | 'app-settings';
+  myAccount?: AppHeaderLink; settings?: AppHeaderLink; appSettings?: AppHeaderLink & { app?: string; icon?: IconValue };
+  signOut?: AppHeaderLink; density?: boolean; extra?: React.ReactNode; strings?: AppHeaderAccountStrings;
+};
+export type AppHeaderActionProps = Omit<AppHeaderItemProps, 'icon' | 'label' | 'children'> & {
+  icon?: IconValue | React.ReactNode; children?: React.ReactNode; label?: string;
+  /** @deprecated no longer used: the action is an icon item (batch 272) */
+  variant?: string;
+};
+export type AppHeaderSwitcherProps = { currentApp?: string | null; appsRoot?: string; onOpenApp?: AppHeaderOpenApp; apps?: PlenixApp[]; brand?: React.ReactNode };
+type Words = Record<string, string>;
+
 export function AppHeader({ tone = 'accent', appName, brand, brandHref, currentApp, appsRoot = '', onOpenApp, nav, navLabel,
-  action, search, searchSuggestions, searchResults, searchScope, actions, account, switcher, back, title, className, ...rest }) {
+  action, search, searchSuggestions, searchResults, searchScope, actions, account, switcher, back, title, className, ...rest }: AppHeaderProps) {
   devWarn('AppHeader', { tone }, { tone: ['accent','frost','plain'] });
-  const tw = useStrings('appHeader');
+  const tw = useStrings('appHeader') as Words;
   if (navLabel === undefined) navLabel = tw.navLabel;
   const { pinnedApps } = useSession();
   const [searching, setSearching] = React.useState(false);
-  const panel = React.useRef(null), toggle = React.useRef(null), view = React.useRef(null);
+  const panel = React.useRef<HTMLDivElement>(null), toggle = React.useRef<HTMLButtonElement>(null), view = React.useRef<HTMLDivElement>(null);
   const refocus = React.useRef(false);
   const searchId = useUid('plx-header-search');
   const narrow = useMedia(below('--plx-sys-shell-phone-below'));
   // the header's own width decides whether its links fit (measured before paint, so nothing jumps)
-  const root = React.useRef(null);
+  const root = React.useRef<HTMLElement>(null);
   const [compact, setCompact] = React.useState(false);
   React.useLayoutEffect(() => {
     const el = root.current, limit = tokenPx('--plx-sys-shell-rail-below');
@@ -165,7 +200,7 @@ export function AppHeader({ tone = 'accent', appName, brand, brandHref, currentA
     return () => window.removeEventListener('popstate', pop);
   }, [fullScreen]);
   const cancel = () => { if (window.history.state && window.history.state.plxSearch === searchId) window.history.back(); else close(); };
-  useLayer(view, fullScreen, { modal: true, onEscape: cancel, initialFocus: () => view.current && view.current.querySelector('input') });
+  useLayer(view, fullScreen, { modal: true, onEscape: cancel, initialFocus: () => (view.current && view.current.querySelector('input')) || null });
   React.useEffect(() => {
     if (!searching) {
       // the search button is hidden while the field is open; give it focus back once it shows again
@@ -177,20 +212,20 @@ export function AppHeader({ tone = 'accent', appName, brand, brandHref, currentA
     if (narrow) return undefined;   // the full-screen view is a modal layer: it takes focus and Escape itself
     const input = panel.current && panel.current.querySelector('input');
     if (input) input.focus();
-    const esc = (e) => { if (e.key === 'Escape') close(); };
+    const esc = (e: KeyboardEvent) => { if (e.key === 'Escape') close(); };
     document.addEventListener('keydown', esc);
     return () => document.removeEventListener('keydown', esc);
   }, [searching, narrow]);
   // Ctrl K (Cmd K) opens search from anywhere on the page
   React.useEffect(() => {
     if (!search) return undefined;
-    const key = (e) => { if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) { e.preventDefault(); setSearching(true); } };
+    const key = (e: KeyboardEvent) => { if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) { e.preventDefault(); setSearching(true); } };
     document.addEventListener('keydown', key);
     return () => document.removeEventListener('keydown', key);
   }, [search]);
   // an empty field closes when focus leaves it
-  const onPanelBlur = (e) => {
-    if (panel.current && panel.current.contains(e.relatedTarget)) return;
+  const onPanelBlur = (e: React.FocusEvent<HTMLDivElement>) => {
+    if (panel.current && panel.current.contains(e.relatedTarget as Node | null)) return;
     const input = panel.current && panel.current.querySelector('input');
     if (!input || !input.value) setSearching(false);
   };
@@ -200,18 +235,18 @@ export function AppHeader({ tone = 'accent', appName, brand, brandHref, currentA
   // the name's parts in the switch button give way (--switch: they shrink and end in an ellipsis)
   const sw = (switcher !== undefined ? switcher : currentApp !== undefined) && !title;
   const brandEl = brand || (name ? <><BrandMark /><span className={cx('plx-app-header__name', sw && 'plx-app-header__name--switch')}><span className={cx('plx-app-header__product', sw && 'plx-app-header__product--switch')}>Plenix</span><span className={cx('plx-app-header__app', sw && 'plx-app-header__app--switch')}>{name}</span></span></> : <><BrandMark />Plenix</>);
-  const open = (a) => (e) => { if (onOpenApp && onOpenApp(a) === true) e.preventDefault(); };
+  const open = (a: PlenixApp) => (e: React.MouseEvent<HTMLElement>) => { if (onOpenApp && onOpenApp(a) === true) e.preventDefault(); };
   const pinned = nav || (inApps ? PLENIX_APPS.filter((a) => pinnedApps.indexOf(a.id) >= 0).map((a) => (
-    <AppHeader.Item key={a.id} icon={<Icon name={appIcon(a)} />} label={a.label} current={a.id === currentApp} href={appHref(a, appsRoot)} onClick={open(a)} />
+    <AppHeader.Item key={a.id} icon={<Icon name={appIcon(a) as IconValue} />} label={a.label} current={a.id === currentApp} href={appHref(a, appsRoot)} onClick={open(a)} />
   )) : null);
   const showSwitcher = switcher !== undefined ? switcher : inApps;
   // Enter in the view's field: without results of its own the view closes, so the page's results show
-  const onViewKey = (e) => { if (e.key === 'Enter' && !searchResults && !e.defaultPrevented && e.target.tagName === 'INPUT') cancel(); };
+  const onViewKey = (e: React.KeyboardEvent<HTMLDivElement>) => { if (e.key === 'Enter' && !searchResults && !e.defaultPrevented && (e.target as HTMLElement).tagName === 'INPUT') cancel(); };
   const scope = searchScope !== undefined ? searchScope : name;
   const searchView = fullScreen ? createPortal(
     <div ref={view} id={searchId} className="plx-search-view" role="dialog" aria-modal="true" aria-label={tw.search} onKeyDown={onViewKey}>
       <div className="plx-search-view__bar">
-        <div className="plx-search-view__field">{React.isValidElement(search) ? React.cloneElement(search, { onAccent: false }) : search}</div>
+        <div className="plx-search-view__field">{React.isValidElement(search) ? React.cloneElement(search as React.ReactElement<{ onAccent?: boolean }>, { onAccent: false }) : search}</div>
         <Button variant="ghost" className="plx-search-view__cancel" onClick={cancel}>{tw.cancel}</Button>
       </div>
       {scope ? <Text variant="secondary" as="p" className="plx-search-view__scope">{tw.scope.replace('{scope}', scope)}</Text> : null}
@@ -257,7 +292,7 @@ export function AppHeader({ tone = 'accent', appName, brand, brandHref, currentA
   );
 }
 
-AppHeader.Item = React.forwardRef(function AppHeaderItem({ icon: iconProp, label, current = false, count, href, onClick, tooltip = true, className, ...rest }, ref) {
+AppHeader.Item = React.forwardRef<HTMLElement, AppHeaderItemProps>(function AppHeaderItem({ icon: iconProp, label, current = false, count, href, onClick, tooltip = true, className, ...rest }, ref) {
   // the header's icon size is the icon's own prop (lg, 24px; owner 2026-10-18), unless the icon names one
   // an icon without a size is drawn at lg; the current item's icon is filled (the item owns its state)
   const icon = stateIcon(iconProp, current, { size: 'lg' });
@@ -268,17 +303,17 @@ AppHeader.Item = React.forwardRef(function AppHeaderItem({ icon: iconProp, label
       {count ? <span className="plx-app-header__count" aria-hidden="true"><Count value={count} variant="pill" max={99} /></span> : null}
     </>
   );
-  const el = href ? <a href={href} {...props}>{content}</a> : <button type="button" {...props}>{content}</button>;
+  const el = href ? <a href={href} {...(props as React.ComponentPropsWithRef<'a'>)}>{content}</a> : <button type="button" {...(props as React.ComponentPropsWithRef<'button'>)}>{content}</button>;
   return tooltip ? <Tooltip content={label}>{el}</Tooltip> : el;
 });
 
 // the sign-in proxy's sign-out (Authentik's forward-auth outpost on every Plenix host): ends the session, then signs in again
 const SIGN_OUT = '/outpost.goauthentik.io/sign_out';
-AppHeader.Account = function AppHeaderAccount({ name: nameProp, email: emailProp, src: srcProp, placement = 'header', current, myAccount = {}, settings = {}, appSettings = {}, signOut = { href: SIGN_OUT }, density = false, extra, strings }) {
+AppHeader.Account = function AppHeaderAccount({ name: nameProp, email: emailProp, src: srcProp, placement = 'header', current, myAccount = {}, settings = {}, appSettings = {}, signOut = { href: SIGN_OUT }, density = false, extra, strings }: AppHeaderAccountProps) {
   // the account menu's words come from the catalog (appHeader.account), so an Arabic page shows them in Arabic; strings wins (#671)
-  const t = useStrings('appHeader.account', strings);
+  const t = useStrings('appHeader.account', strings) as Words;
   const { account } = useSession();   // who is signed in: the session, unless the application names someone
-  const name = nameProp || account.name, email = emailProp || account.email, src = srcProp || account.src;
+  const name = nameProp || account?.name, email = emailProp || account?.email, src = srcProp || account?.src;
   const [dens, setDens] = useDensity();
   const inPane = placement === 'pane';
   const label = fill(t.trigger, { name });
@@ -286,8 +321,9 @@ AppHeader.Account = function AppHeaderAccount({ name: nameProp, email: emailProp
   const trigger = inPane
     ? <Button size="sm" variant="ghost" caret labelRow className="plx-app-header__account-row" aria-label={label}><Avatar name={name} src={src} size="2xs" />{name}</Button>
     : <AppHeader.Item icon={<Avatar name={name} src={src} size="md" />} label={label} current={!!current} tooltip={false} className="plx-app-header__item--account" />;
-  const has = (o) => !!(o.href || o.onSelect);
-  const choices = typeof window !== 'undefined' && window.PlenixWorkspace ? window.PlenixWorkspace.densities() : DENSITY_CHOICES;
+  const has = (o: AppHeaderLink) => !!(o.href || o.onSelect);
+  const ws = typeof window !== 'undefined' ? (window as unknown as { PlenixWorkspace?: { densities(): { value: string; label: string }[] } }).PlenixWorkspace : undefined;
+  const choices = ws ? ws.densities() : DENSITY_CHOICES;
   return (
     <Menu label={t.menu} placement={inPane ? 'top-start' : 'bottom-end'} trigger={trigger}>
       <MenuGroup label={email ? <>{name}<br />{email}</> : name}>
@@ -297,7 +333,7 @@ AppHeader.Account = function AppHeaderAccount({ name: nameProp, email: emailProp
         {has(appSettings) ? <MenuItem icon={appSettings.icon || SettingsCustomizeIcon} href={appSettings.href} onSelect={appSettings.onSelect} aria-current={current === 'app-settings' ? 'page' : undefined}>{fill(t.appSettings, { app: appSettings.app || t.app })}</MenuItem> : null}
       </MenuGroup>
       {density ? <><MenuDivider /><MenuGroup label={t.density}>
-        {choices.map((d) => <MenuItem key={d.value} role="menuitemradio" icon={DENSITY_ICONS[d.value] || 'density-' + d.value /* plx-icons: density-compact density-standard density-comfortable */} checked={dens === d.value} onSelect={() => setDens(d.value)}>{t[d.value] || d.label}</MenuItem>)}
+        {choices.map((d) => <MenuItem key={d.value} role="menuitemradio" icon={DENSITY_ICONS[d.value] || 'density-' + d.value /* plx-icons: density-compact density-standard density-comfortable */} checked={dens === d.value} onSelect={() => setDens?.(d.value)}>{t[d.value] || d.label}</MenuItem>)}
       </MenuGroup></> : null}
       {extra ? <><MenuDivider />{extra}</> : null}
       {has(signOut) ? <><MenuDivider /><MenuItem icon={SignOutIcon} href={signOut.href} onSelect={signOut.onSelect}>{t.signOut}</MenuItem></> : null}
@@ -306,27 +342,27 @@ AppHeader.Account = function AppHeaderAccount({ name: nameProp, email: emailProp
 };
 // the density choices when the workspace script is not on the page
 // the density menu's icons (#280): a workspace's own density without one here keeps its name (density-<value>)
-const DENSITY_ICONS = { compact: DensityCompactIcon, standard: DensityStandardIcon, comfortable: DensityComfortableIcon };
+const DENSITY_ICONS: Record<string, IconValue> = { compact: DensityCompactIcon, standard: DensityStandardIcon, comfortable: DensityComfortableIcon };
 const DENSITY_CHOICES = [{ value: 'compact', label: 'Compact' }, { value: 'standard', label: 'Standard' }, { value: 'comfortable', label: 'Comfortable' }];
 
 // the application's action is an icon item like the header's others: its label is the tooltip and the accessible name
 // (owner, batch 272: "just an icon with tooltip"); a variant the application passes is no longer used
-AppHeader.Action = function AppHeaderAction({ icon, children, label, variant, ...rest }) {
+AppHeader.Action = function AppHeaderAction({ icon, children, label, variant: _variant, ...rest }: AppHeaderActionProps) {
   return <AppHeader.Item icon={iconElement(icon)} label={label || (typeof children === 'string' ? children : undefined)} {...rest} />;
 };
 
 
-AppHeader.Switcher = function AppHeaderSwitcher({ currentApp, appsRoot = '', onOpenApp, apps = PLENIX_APPS, brand }) {
+AppHeader.Switcher = function AppHeaderSwitcher({ currentApp, appsRoot = '', onOpenApp, apps = PLENIX_APPS, brand }: AppHeaderSwitcherProps) {
   const { pinnedApps, setPinnedApps } = useSession();
-  const tw = useStrings('appHeader');
+  const tw = useStrings('appHeader') as Words;
   const [open, setOpen] = React.useState(false);
-  const wrap = React.useRef(null), panel = React.useRef(null), trigger = React.useRef(null);
+  const wrap = React.useRef<HTMLDivElement>(null), panel = React.useRef<HTMLDivElement>(null), trigger = React.useRef<HTMLElement>(null);
   const id = useUid('plx-switcher');
-  const close = (refocus) => { setOpen(false); if (refocus && trigger.current) trigger.current.focus(); };
+  const close = (refocus?: boolean) => { setOpen(false); if (refocus && trigger.current) trigger.current.focus(); };
   useLayer(panel, open, { onEscape: () => close(true) });
   React.useEffect(() => {
     if (!open) return undefined;
-    const out = (e) => { if (wrap.current && !wrap.current.contains(e.target)) setOpen(false); };
+    const out = (e: Event) => { if (wrap.current && !wrap.current.contains(e.target as Node | null)) setOpen(false); };
     document.addEventListener('mousedown', out);
     // focus leaving it (Tab past the last application) closes it too: it never stays open behind the page (batch 213)
     document.addEventListener('focusin', out);
@@ -335,14 +371,14 @@ AppHeader.Switcher = function AppHeaderSwitcher({ currentApp, appsRoot = '', onO
     return () => { document.removeEventListener('mousedown', out); document.removeEventListener('focusin', out); };
   }, [open]);
   const pinnedList = apps.filter((a) => pinnedApps.indexOf(a.id) >= 0);
-  const pin = (a) => setPinnedApps((prev) => (prev.indexOf(a.id) >= 0 ? prev.filter((x) => x !== a.id) : prev.concat([a.id])));
-  const tile = (a) => {
+  const pin = (a: PlenixApp) => setPinnedApps((prev: string[]) => (prev.indexOf(a.id) >= 0 ? prev.filter((x) => x !== a.id) : prev.concat([a.id])));
+  const tile = (a: PlenixApp) => {
     const on = pinnedApps.indexOf(a.id) >= 0;
     return (
       <li key={a.id} className={cx('plx-app-switcher__tile', on && 'is-pinned', a.id === currentApp && 'is-current')}>
         <a className={cx('plx-app-switcher__open', a.id === currentApp && 'is-current')} href={appHref(a, appsRoot)} aria-current={a.id === currentApp ? 'page' : undefined}
           onClick={(e) => { if (onOpenApp && onOpenApp(a) === true) e.preventDefault(); setOpen(false); }}>
-          <span className="plx-app-switcher__icon" aria-hidden="true"><Icon name={appIcon(a)} /></span>
+          <span className="plx-app-switcher__icon" aria-hidden="true"><Icon name={appIcon(a) as IconValue} /></span>
           <span className="plx-app-switcher__label">{a.label}</span>
         </a>
         <button type="button" className={cx('plx-app-switcher__pin', on && 'is-pinned')} aria-pressed={on} aria-label={(on ? tw.unpin : tw.pin).replace('{app}', a.label)}
@@ -353,8 +389,8 @@ AppHeader.Switcher = function AppHeaderSwitcher({ currentApp, appsRoot = '', onO
   return (
     <div ref={wrap} className={cx('plx-app-switcher', brand && 'plx-app-switcher--brand')}>
       {brand ? (
-        <button ref={trigger} type="button" className="plx-app-header__brand plx-app-header__brand--switch" aria-haspopup="dialog" aria-expanded={open} aria-controls={id}
-          aria-label={tw.switchApp.replace('{app}', typeof brand === 'string' ? brand : 'Plenix' + (currentApp && appById(currentApp) ? ' ' + appById(currentApp).label : ''))}
+        <button ref={trigger as React.RefObject<HTMLButtonElement>} type="button" className="plx-app-header__brand plx-app-header__brand--switch" aria-haspopup="dialog" aria-expanded={open} aria-controls={id}
+          aria-label={tw.switchApp.replace('{app}', typeof brand === 'string' ? brand : 'Plenix' + (currentApp && appById(currentApp) ? ' ' + appById(currentApp)!.label : ''))}
           onClick={() => setOpen(!open)}>
           {brand}<Icon name={ChevronDownIcon} className="plx-app-header__switch-chevron" />
         </button>

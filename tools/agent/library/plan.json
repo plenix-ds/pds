@@ -1496,7 +1496,7 @@
       "platform/components/DatePicker/DatePicker.tsx",
       "platform/components/DatePicker/date-picker.css",
       "platform/tokens/components/date-picker.tokens.json",
-      "platform/patterns/AppHeader/AppHeader.jsx",
+      "platform/patterns/AppHeader/AppHeader.tsx",
       "platform/patterns/AppHeader/app-header.css",
       "platform/components/ProgressSteps/ProgressSteps.jsx",
       "platform/components/ProgressSteps/progress-steps.css",
@@ -5327,7 +5327,7 @@
    "wave": 7,
    "lane": "A",
    "files": [
-    "platform/patterns/AppHeader/AppHeader.jsx",
+    "platform/patterns/AppHeader/AppHeader.tsx",
     "platform/patterns/AppHeader/app-header.css"
    ],
    "dependsOn": [],
@@ -13832,7 +13832,7 @@
    "target": "AppHeader",
    "targetKind": "extend",
    "files": [
-    "platform/patterns/AppHeader/AppHeader.jsx",
+    "platform/patterns/AppHeader/AppHeader.tsx",
     "platform/patterns/AppHeader/app-header.css"
    ],
    "laneFiles": [
@@ -14068,7 +14068,7 @@
    "target": "AppHeader",
    "targetKind": "extend",
    "files": [
-    "platform/patterns/AppHeader/AppHeader.jsx",
+    "platform/patterns/AppHeader/AppHeader.tsx",
     "platform/patterns/AppHeader/app-header.css"
    ],
    "laneFiles": [
