@@ -2077,5 +2077,50 @@
       }
     ],
     "why": ".plx-kbd in kbd.css, the base rule on the page surface"
+  },
+  "loading-overlay--coverage-region-default": {
+    "sets": [
+      {
+        "property": "padding-block",
+        "part": "status",
+        "token": "--plx-comp-loading-overlay-padding"
+      },
+      {
+        "property": "padding-inline",
+        "part": "status",
+        "token": "--plx-comp-loading-overlay-padding"
+      }
+    ],
+    "why": ".plx-loading-overlay__status covers the region (inset 0, no token) with this padding"
+  },
+  "loading-overlay--indicator-with-message": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "message",
+        "token": "--plx-comp-loading-overlay-message-color"
+      },
+      {
+        "property": "font-size",
+        "part": "message",
+        "token": "--plx-comp-loading-overlay-message-font-size"
+      },
+      {
+        "property": "font-weight",
+        "part": "message",
+        "token": "--plx-comp-loading-overlay-message-font-weight"
+      }
+    ],
+    "why": ".plx-loading-overlay__message, the text under the indicator"
+  },
+  "loading-overlay--indicator-with-progress": {
+    "sets": [
+      {
+        "property": "max-inline-size",
+        "part": "progress",
+        "token": "--plx-comp-loading-overlay-progress-max-width"
+      }
+    ],
+    "why": ".plx-loading-overlay__progress, the progress bar under the indicator"
   }
 }
