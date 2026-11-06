@@ -260,7 +260,7 @@ export { binValues } from './charts/chart-helpers.js';
 export { ComboChart } from './charts/lazy.jsx';
 export { PieChart } from './charts/lazy.jsx';
 export { pieSlices } from './charts/chart-helpers.js';
-export { BulletChart } from './charts/BulletChart.jsx';
+export { BulletChart } from './charts/lazy.jsx';
 export { BoxPlot, boxStats } from './charts/BoxPlot.jsx';
 export { RadarChart } from './charts/RadarChart.jsx';
 export { SankeyDiagram, sankeyLayout } from './charts/SankeyDiagram.jsx';
