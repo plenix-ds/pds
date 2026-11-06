@@ -7,31 +7,31 @@ slices, in an ECharts theme read from the Platform's chart tokens (`platform/cha
 
 | File | Package | Version | License | SHA-256 |
 |---|---|---|---|---|
-| `echarts.min.js` | echarts (with zrender 6.1.0, tslib 2.3.0) | 6.1.0 | Apache-2.0 (zrender BSD-3-Clause, tslib 0BSD) | `e96812fb92b1e29db06a664f9f7186c4d60b42f2958d5b41a19f9f9a5bfb1431` |
+| `echarts.min.js` | echarts (with zrender 6.1.0, tslib 2.3.0) | 6.1.0 | Apache-2.0 (zrender BSD-3-Clause, tslib 0BSD) | `1fd92b4ac49e931cf9d5028750e83016bcbd80b20d002d249d0eacdf83d66fa6` |
 | `LICENSE`, `NOTICE` | echarts | 6.1.0 | Apache-2.0 | `634293835b43a6dd2094fa39182a3d9a6b9ca43b7fdb9ac354e8037af2a3093a`, `d491d358344f842685c1b1585970999db65fe30ecf7ef3867af8814f4016c016` |
 | `LICENSE-zrender` | zrender | 6.1.0 | BSD-3-Clause | `a681e9d183c72b4af4856935893805eb48c08f0f5a3f260203db7444c20fb98a` |
 | `LICENSE-tslib` | tslib | 2.3.0 | 0BSD | `0e8d2550baea17eb3072c4f919b36fbf9852bb49dba948549872e713863c0834` |
 
-Built on 2026-11-06: 588,119 bytes, 201,869 bytes gzipped (gzip -9); the radar chart (with the radar component) added 11,219 bytes (3,298 gzipped) to the box plot build (576,900 bytes, 198,571 gzipped),
+Built on 2026-11-06: 617,864 bytes, 212,292 bytes gzipped (gzip -9); the treemap chart added 29,745 bytes (10,423 gzipped) to the radar build (588,119 bytes, 201,869 gzipped),
 which this recipe rebuilds byte for byte (checked 2026-11-06). All of ECharts (`dist/echarts.min.js`) is 360 KB
 gzipped: this file holds only what the Platform's charts use ("ship only what is used", #277).
 
 ## What it holds
 
 The modular build: ECharts' core, the SVG renderer (marks stay vector, crisp at every zoom and in print), the line, bar,
-pie, tree, scatter, gauge, box plot and radar charts, the cartesian grid and the radar component. `window.PlenixECharts` exposes `init` and `version` only. The entry file:
+pie, tree, scatter, gauge, box plot, radar and treemap charts, the cartesian grid and the radar component. `window.PlenixECharts` exposes `init` and `version` only. The entry file:
 
 ```js
 import { use, init, version } from 'echarts/core';
 import { SVGRenderer } from 'echarts/renderers';
-import { LineChart, BarChart, PieChart, TreeChart, ScatterChart, GaugeChart, BoxplotChart, RadarChart } from 'echarts/charts';
+import { LineChart, BarChart, PieChart, TreeChart, ScatterChart, GaugeChart, BoxplotChart, RadarChart, TreemapChart } from 'echarts/charts';
 import { GridComponent, RadarComponent } from 'echarts/components';
-use([SVGRenderer, LineChart, BarChart, PieChart, TreeChart, ScatterChart, GaugeChart, BoxplotChart, RadarChart, GridComponent, RadarComponent]);
+use([SVGRenderer, LineChart, BarChart, PieChart, TreeChart, ScatterChart, GaugeChart, BoxplotChart, RadarChart, TreemapChart, GridComponent, RadarComponent]);
 export { init, version };
 ```
 
 The charts that use it: LineChart, AreaChart and Sparkline (line; Sparkline's bars: bar), BarChart (bar), PieChart (pie),
-TreeChart (tree; owner, 2026-10-26, charts-tree-26), ScatterChart (scatter, with its trend lines drawn as line series; #106, 2026-11-06), Gauge (gauge, a track and a progress arc; #106, 2026-11-06), BoxPlot (boxplot, with its outliers drawn as a scatter series; #106, 2026-11-06), RadarChart (radar and its component; #106, 2026-11-06). ECharts' own legend, tooltip,
+TreeChart (tree; owner, 2026-10-26, charts-tree-26), ScatterChart (scatter, with its trend lines drawn as line series; #106, 2026-11-06), Gauge (gauge, a track and a progress arc; #106, 2026-11-06), BoxPlot (boxplot, with its outliers drawn as a scatter series; #106, 2026-11-06), RadarChart (radar and its component; #106, 2026-11-06), Treemap (treemap; #106, 2026-11-06). ECharts' own legend, tooltip,
 title, data zoom, toolbox and aria parts are not included: the Platform draws those. Later chart types add their
 ECharts chart (and only the parts they need) to the entry file.
 

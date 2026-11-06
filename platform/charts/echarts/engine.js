@@ -81,6 +81,7 @@ export function chartTokens(where) {
   const gau = [mk('path', 'plx-gauge__track'), mk('path', 'plx-gauge__band')];
   const box = [mk('line', 'plx-box-plot__whisker'), mk('line', 'plx-box-plot__median'), mk('circle', 'plx-chart__point plx-box-plot__outlier')];
   const rad = mk('text', 'plx-radar-chart__axis-label');
+  const tm = [mk('rect', 'plx-chart__mark plx-treemap__tile'), mk('text', 'plx-treemap__label'), mk('text', 'plx-treemap__value'), mk('rect', 'plx-treemap__group-frame'), mk('text', 'plx-treemap__group-label')];
   where.appendChild(svg);
   const cs = (e) => win.getComputedStyle(e);
   const font = (e) => { const s = cs(e); return { color: s.fill, fontFamily: s.fontFamily, fontSize: num(s.fontSize), fontWeight: s.fontWeight }; };
@@ -132,6 +133,8 @@ export function chartTokens(where) {
     boxplot: { whisker: { color: cs(box[0]).stroke, width: num(cs(box[0]).strokeWidth) }, median: { color: cs(box[1]).stroke, width: num(cs(box[1]).strokeWidth) }, outlier: { r: num(cs(box[2]).r), fill: cs(box[2]).fill, outline: cs(box[2]).stroke, outlineWidth: num(cs(box[2]).strokeWidth) } },
     // a radar's look (RadarChart): the area's opacity, the point's radius, the measures' names
     radar: { area: num(prop('--plx-comp-radar-chart-area-opacity')), point: num(prop('--plx-comp-radar-chart-point-radius')), label: font(rad) },
+    // a treemap's look (Treemap): the gap between tiles, the names and values on their halo, the groups' frame and name
+    treemap: { gap: { color: cs(tm[0]).stroke, width: num(cs(tm[0]).strokeWidth) }, label: Object.assign(font(tm[1]), { halo: cs(tm[1]).stroke, haloWidth: num(cs(tm[1]).strokeWidth) }), value: font(tm[2]), group: { color: cs(tm[3]).stroke, width: num(cs(tm[3]).strokeWidth), label: font(tm[4]) } },
     // the values not in focus dim to the interaction's token; the drawing's animation is the motion token (reduced motion: 0)
     dim: num(prop('--plx-comp-chart-interaction-dim-opacity')) || 1,
     motion: ms(prop('--plx-sys-motion-duration-slow')),
