@@ -167,20 +167,6 @@
   "network-graph--behavior-zoom-and-pan",
   "network-graph--layout-force",
   "network-graph--layout-hierarchical",
-<<<<<<< HEAD
-  "offboarding--variant-cancel-subscription",
-  "offboarding--variant-delete-account",
-  "offboarding--variant-export-data",
-=======
-  "number-input--variant-currency",
-  "number-input--variant-invalid",
-  "number-input--variant-min-and-max",
-  "number-input--variant-percentage",
-  "number-input--variant-plain",
-  "number-input--variant-quantity-1",
-  "number-input--variant-stepper-buttons",
-  "number-input--variant-with-unit",
->>>>>>> origin/main
   "onboarding--variant-setup-checklist",
   "onboarding--variant-welcome-dialog",
   "ordered-list--variant-nested",
@@ -249,18 +235,6 @@
   "prompt-input--variant-stop",
   "prompt-suggestions--variant-cards",
   "prompt-suggestions--variant-chips",
-<<<<<<< HEAD
-  "publish--state-publish-now-default",
-  "publish--state-schedule",
-  "publish--state-status-only",
-  "publish--state-unpublish",
-=======
-  "qr-code--caption-with-caption-and-value",
-  "qr-code--error-correction-h-30",
-  "qr-code--error-correction-l-7",
-  "qr-code--error-correction-q-25",
-  "qr-code--logo-space-with-logo-space",
->>>>>>> origin/main
   "query-builder--structure-group-and-or",
   "query-builder--structure-nested-groups",
   "query-builder--structure-rule",
