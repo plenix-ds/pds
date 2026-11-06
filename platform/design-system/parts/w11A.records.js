@@ -209,7 +209,7 @@ DSParts.records.push(function (H) {
 
     /* ── 10 Patterns › Authentication and permissions › Sign in: Auth and SignInForm ── */
     { id: 'sign-in', lab: true, icon: 'lock', sec: 'patterns', sub: AUTH, leaf: 'Sign in', title: 'Sign in',
-      plenix: 'Auth, SignInForm', src: 'patterns/Auth/Auth.jsx', level: 'Pattern', interaction: 'Input', statesFrom: ['text-field', 'checkbox', 'button'],
+      plenix: 'Auth, SignInForm', src: 'patterns/Auth/Auth.tsx', level: 'Pattern', interaction: 'Input', statesFrom: ['text-field', 'checkbox', 'button'],
       aliases: ['Log in', 'Login', 'Sign-in page', 'Authentication', 'Credentials'],
       text: 'Gets people into their account in the fewest steps. The sign-in form sits in the Auth frame: a centered card as wide as a small dialog, or one column from the top without the frame on narrow windows (the Plenix login’s layout). The form has an email or user name, a password with Show, Keep me signed in, and Sign in as wide as the card. Single sign-on comes first where the organization uses it. A failed sign-in keeps what was typed and shows one general error, never which part was wrong.',
       use: ['The entry to every signed-in area: a page of its own (page) under the application header', 'forgot and signUp as links to their pages, or as buttons to the next step of the same card', 'sso above the form, then “or”', 'One general error after a failure: Email or password is incorrect.'],
@@ -233,7 +233,7 @@ DSParts.records.push(function (H) {
 
     /* ── Sign up: SignUpForm ── */
     { id: 'sign-up', icon: 'person', sec: 'patterns', sub: AUTH, leaf: 'Sign up', title: 'Sign up',
-      plenix: 'Auth, SignUpForm', src: 'patterns/Auth/Auth.jsx', level: 'Pattern', interaction: 'Input', variantClasses: [], statesFrom: ['text-field', 'checkbox', 'button'],
+      plenix: 'Auth, SignUpForm', src: 'patterns/Auth/Auth.tsx', level: 'Pattern', interaction: 'Input', variantClasses: [], statesFrom: ['text-field', 'checkbox', 'button'],
       aliases: ['Create account', 'Register', 'Registration', 'Join'],
       text: 'Creates an account with only what is needed now: the name, the email, a password whose rule shows before people type, and the terms when the law asks for them. Pressing Create account shows each problem under its field; nothing is asked twice. Afterward, the email is confirmed with a link.',
       use: ['Self-service products and invited people setting up their access', 'The password rule in the field’s description, before typing', 'terms with a link to the text; it must be checked', 'Single sign-on above the form where the organization manages identity'],
@@ -247,7 +247,7 @@ DSParts.records.push(function (H) {
 
     /* ── Password reset: PasswordResetForm ── */
     { id: 'password-reset', icon: 'refresh', sec: 'patterns', sub: AUTH, leaf: 'Password reset', title: 'Password reset',
-      plenix: 'Auth, PasswordResetForm', src: 'patterns/Auth/Auth.jsx', level: 'Pattern', interaction: 'Input', variantClasses: [], statesFrom: ['text-field', 'button'],
+      plenix: 'Auth, PasswordResetForm', src: 'patterns/Auth/Auth.tsx', level: 'Pattern', interaction: 'Input', variantClasses: [], statesFrom: ['text-field', 'button'],
       aliases: ['Forgot password', 'Reset password', 'Change password', 'Password recovery'],
       text: 'Sets a new password without help, in four steps on one card: request (the email); sent (the same neutral message whether or not the email has an account; the link works once, for a short time); new (the new password with its rule, reached from the link); and done (Sign in). A reset signs out other sessions.',
       use: ['From Forgot your password? on the sign-in card', 'When an administrator makes someone change their password (start at new)', 'The link’s lifetime in the sent message (expires)'],
@@ -261,7 +261,7 @@ DSParts.records.push(function (H) {
 
     /* ── Multi-factor authentication: MfaChallenge ── */
     { id: 'multi-factor-authentication', icon: 'settings-permissions', sec: 'patterns', sub: AUTH, leaf: 'Multi-factor authentication', title: 'Multi-factor authentication',
-      plenix: 'Auth, MfaChallenge', src: 'patterns/Auth/Auth.jsx', level: 'Pattern', interaction: 'Input', variantClasses: [], statesFrom: ['otp-input', 'checkbox', 'button'],
+      plenix: 'Auth, MfaChallenge', src: 'patterns/Auth/Auth.tsx', level: 'Pattern', interaction: 'Input', variantClasses: [], statesFrom: ['otp-input', 'checkbox', 'button'],
       aliases: ['MFA', 'Two-step verification', '2FA', 'Two-factor authentication', 'One-time code', 'Verification code'],
       text: 'The second proof after the password. People enter the code from their chosen method in the code boxes (OtpInput): a pasted or autofilled code fills every box, and filling the last box verifies at once. The step says in words where the code was sent, and offers Remember this device, a new code after a short wait (text and email), a security key instead of a code, Use another method and Use a recovery code.',
       use: ['Accounts that reach sensitive data or administration', 'Passkeys and security keys first where people have them', 'Saying where the code went: “to the phone ending 42”', 'A recovery code as the way out'],
@@ -275,7 +275,7 @@ DSParts.records.push(function (H) {
 
     /* ── Single sign-on: SsoButtons ── */
     { id: 'single-sign-on', icon: 'link', sec: 'patterns', sub: AUTH, leaf: 'Single sign-on', title: 'Single sign-on',
-      plenix: 'SsoButtons', src: 'patterns/Auth/Auth.jsx', level: 'Pattern', interaction: 'Action', variantClasses: [], statesFrom: ['button'],
+      plenix: 'SsoButtons', src: 'patterns/Auth/Auth.tsx', level: 'Pattern', interaction: 'Action', variantClasses: [], statesFrom: ['button'],
       aliases: ['SSO', 'Continue with Google', 'Identity provider', 'SAML', 'OpenID Connect', 'Social sign-in'],
       text: 'Signs people in through the organization’s identity provider instead of another password. Each provider has one button, named in words (Continue with Google); Continue with single sign-on asks for the work email and finds the organization’s provider. While the provider opens, a status line with a spinner says where people are going. A refusal says why and who to ask.',
       use: ['Above the sign-in or sign-up form, then “or”', 'Provider buttons named in words', 'The work-email step for organizations with their own provider', 'redirecting while handing over; error when the provider refuses'],
@@ -289,7 +289,7 @@ DSParts.records.push(function (H) {
 
     /* ── Account recovery: AccountRecovery ── */
     { id: 'account-recovery', icon: 'refresh', sec: 'patterns', sub: AUTH, leaf: 'Account recovery', title: 'Account recovery',
-      plenix: 'Auth, AccountRecovery', src: 'patterns/Auth/Auth.jsx', level: 'Pattern', interaction: 'Input', variantClasses: [], statesFrom: ['text-field', 'radio-group', 'button'],
+      plenix: 'Auth, AccountRecovery', src: 'patterns/Auth/Auth.tsx', level: 'Pattern', interaction: 'Input', variantClasses: [], statesFrom: ['text-field', 'radio-group', 'button'],
       aliases: ['Lost device', 'Backup codes', 'Recovery codes', 'Locked out'],
       text: 'Gets people back in when their second step is lost. First a choice: a saved backup code (listed first), another sign-in method, or the administrator’s help. Then the code (pasted, in the data font) or the words for the administrator. Last, a notice that every address on the account was told, with Set up a new sign-in method.',
       use: ['From Use a recovery code on the two-step card', 'Backup codes first, then other methods, then a person', 'Telling the owner on every recovery', 'Setting up a new method right after'],

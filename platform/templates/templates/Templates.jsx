@@ -33,7 +33,7 @@ import { RecordPage } from '../../patterns/RecordPage/RecordPage.tsx';
 import { SecondaryPane } from '../../patterns/SecondaryPane/SecondaryPane.jsx';
 import { FeatureCard } from '../../patterns/FeatureCard/FeatureCard.tsx';
 import { FormFlow } from '../../patterns/FormFlow/FormFlow.tsx';
-import { Auth } from '../../patterns/Auth/Auth.jsx';
+import { Auth } from '../../patterns/Auth/Auth.tsx';
 import { SearchWorkspace } from '../../patterns/SearchWorkspace/SearchWorkspace.tsx';
 import { Stack } from '../../components/Stack/Stack.tsx';
 import { ContentGrid } from '../../patterns/ContentGrid/ContentGrid.tsx';

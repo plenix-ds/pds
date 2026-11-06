@@ -2076,7 +2076,7 @@
       "platform/design-system/parts/w11A.{records,labs,docs}.js + .css",
       "platform/exports/w11A.{js,css}",
       "platform/standards/web-native-map.d/w11A.json",
-      "platform/patterns/Auth/Auth.jsx",
+      "platform/patterns/Auth/Auth.tsx",
       "platform/patterns/Auth/auth.css",
       "platform/tokens/components/auth.tokens.json",
       "platform/patterns/RoleManager/RoleManager.tsx",
@@ -7112,7 +7112,7 @@
    "wave": 11,
    "lane": "A",
    "files": [
-    "platform/patterns/Auth/Auth.jsx",
+    "platform/patterns/Auth/Auth.tsx",
     "platform/patterns/Auth/auth.css",
     "platform/tokens/components/auth.tokens.json"
    ],
@@ -18770,7 +18770,7 @@
    "target": "Auth",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/Auth/Auth.jsx",
+    "platform/patterns/Auth/Auth.tsx",
     "platform/patterns/Auth/auth.css",
     "platform/tokens/components/auth.tokens.json"
    ],
@@ -18807,7 +18807,7 @@
    "target": "Auth",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/Auth/Auth.jsx",
+    "platform/patterns/Auth/Auth.tsx",
     "platform/patterns/Auth/auth.css",
     "platform/tokens/components/auth.tokens.json"
    ],
@@ -18836,7 +18836,7 @@
    "target": "Auth",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/Auth/Auth.jsx",
+    "platform/patterns/Auth/Auth.tsx",
     "platform/patterns/Auth/auth.css",
     "platform/tokens/components/auth.tokens.json"
    ],
@@ -18865,7 +18865,7 @@
    "target": "Auth",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/Auth/Auth.jsx",
+    "platform/patterns/Auth/Auth.tsx",
     "platform/patterns/Auth/auth.css",
     "platform/tokens/components/auth.tokens.json"
    ],
@@ -18894,7 +18894,7 @@
    "target": "Auth",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/Auth/Auth.jsx",
+    "platform/patterns/Auth/Auth.tsx",
     "platform/patterns/Auth/auth.css",
     "platform/tokens/components/auth.tokens.json"
    ],
@@ -18923,7 +18923,7 @@
    "target": "Auth",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/Auth/Auth.jsx",
+    "platform/patterns/Auth/Auth.tsx",
     "platform/patterns/Auth/auth.css",
     "platform/tokens/components/auth.tokens.json"
    ],
