@@ -5263,5 +5263,166 @@
       }
     ],
     "why": ".plx-tag__remove in tag.css: the remove button at the end of the chip, with its hover color"
+  },
+  "code-block--height-none-default-as-tall-as-its-code": {
+    "sets": [],
+    "why": "markup only: with no height the block is as tall as its code (no max-block-size); .plx-code-block--tall is the capped variation"
+  },
+  "pictogram--tone-outline-default": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-pictogram-background"
+      },
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-comp-pictogram-text"
+      },
+      {
+        "property": "border-radius",
+        "part": "block",
+        "token": "--plx-comp-pictogram-radius"
+      }
+    ],
+    "why": "pictogram.css: the base .plx-pictogram; --two-tone is the other tone, with its own fill and color"
+  },
+  "drag-handle--orientation-vertical-default": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-drag-handle-background"
+      },
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-comp-drag-handle-text"
+      },
+      {
+        "property": "block-size",
+        "part": "block",
+        "token": "--plx-comp-drag-handle-size"
+      },
+      {
+        "property": "inline-size",
+        "part": "block",
+        "token": "--plx-comp-drag-handle-size"
+      },
+      {
+        "property": "border-radius",
+        "part": "block",
+        "token": "--plx-comp-drag-handle-radius"
+      },
+      {
+        "property": "--plx-comp-icon-size",
+        "part": "block",
+        "token": "--plx-comp-drag-handle-icon-size"
+      }
+    ],
+    "why": "drag-handle.css: the base .plx-drag-handle (grip icon upright); --horizontal turns the icon a quarter turn"
+  },
+  "avatar-group--overflow-max-and-n": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "more",
+        "token": "--plx-comp-avatar-group-more-background"
+      },
+      {
+        "property": "color",
+        "part": "more",
+        "token": "--plx-comp-avatar-group-more-text"
+      },
+      {
+        "property": "font-family",
+        "part": "more",
+        "token": "--plx-comp-avatar-group-more-font-family"
+      }
+    ],
+    "why": "avatar-group.css: .plx-avatar-group__more, the \"+N\" avatar that stands for the people past the maximum (with --stack it has the same ring as the avatars); as a button it shows the rest in a popover"
+  },
+  "ai-button--variant-trigger": {
+    "sets": [],
+    "why": "markup only: a Button with the sparkle icon and the action label, which runs onAction only when pressed (mode trigger)"
+  },
+  "ai-button--variant-icon-only": {
+    "sets": [],
+    "why": "markup only: the sparkle icon alone; the action name is its accessible name (mode icon)"
+  },
+  "ai-button--variant-with-menu-of-ai-actions": {
+    "sets": [],
+    "why": "markup only: a button that opens a Menu of named AI actions, each run once (mode menu)"
+  },
+  "ai-thinking--variant-thinking": {
+    "sets": [],
+    "why": "markup only: a Chat.Typing indicator that says the assistant is working, with a label (variant thinking)"
+  },
+  "ai-thinking--variant-with-steps": {
+    "sets": [],
+    "why": "markup only: a Chat.Typing indicator with the steps listed and the current step marked (variant steps)"
+  },
+  "combobox--groups-options-under-group-headings": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "group",
+        "token": "--plx-comp-combobox-group-text"
+      },
+      {
+        "property": "font-family",
+        "part": "group",
+        "token": "--plx-comp-combobox-group-font-family"
+      },
+      {
+        "property": "font-size",
+        "part": "group",
+        "token": "--plx-comp-combobox-group-font-size"
+      }
+    ],
+    "why": ".plx-combobox__group in combobox.css: the heading above each group of options (options[].group)"
+  },
+  "combobox--selection-one-choice-default": {
+    "sets": [],
+    "why": "markup only: one value is chosen and shown in the field; multiple turns the chosen values into tags"
+  },
+  "entity-picker--choice-single": {
+    "sets": [],
+    "why": "markup only: one record is chosen; with multiple the chosen records are listed instead"
+  },
+  "full-screen-dialog--size-full-screen": {
+    "sets": [],
+    "why": ".plx-dialog--full sets block-size and max-block-size to 100% and drops the maximum width, none of them tokens; the modal layer keeps the layout inset on every side"
+  },
+  "details--variant-default": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-comp-details-text"
+      },
+      {
+        "property": "font-family",
+        "part": "block",
+        "token": "--plx-comp-details-font-family"
+      },
+      {
+        "property": "font-size",
+        "part": "block",
+        "token": "--plx-comp-details-font-size"
+      },
+      {
+        "property": "color",
+        "part": "summary",
+        "token": "--plx-comp-details-summary-text"
+      },
+      {
+        "property": "column-gap",
+        "part": "summary",
+        "token": "--plx-comp-details-summary-gap"
+      }
+    ],
+    "why": ".plx-details and .plx-details__summary in details.css: the base look, one block of detail behind a summary line"
   }
 }

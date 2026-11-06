@@ -1,5 +1,5 @@
 {
-  "$description": "NetworkGraph (platform/charts/NetworkGraph.jsx, network-graph.css; library wave 9, lane A): its component tokens. Node colors are the categorical data-viz steps by group (data-plx-dataviz); everything else is an existing role.",
+  "$description": "NetworkGraph (platform/charts/NetworkGraph.tsx, network-graph.css; library wave 9, lane A): its component tokens. Node colors are the categorical data-viz steps by group (data-plx-dataviz); everything else is an existing role.",
   "plx-comp": {
     "network-graph-node-size": { "$value": "{plx-ref.size-3u}", "$type": "dimension", "$description": "Network graph: the size of a node's dot, given as its radius (SVG r; 24px across). A size, not a corner (owner, dot-radius-names-34)." },
     "network-graph-node-outline": { "$value": "{plx-sys.surface-default}", "$type": "color", "$description": "Network graph: the ring of the surface around a node, so edges stop short of it." },
