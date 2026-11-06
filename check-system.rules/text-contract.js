@@ -87,6 +87,8 @@ function partOf(sel) {
   // a rule on descendants the part does not name (.plx-rich-text :where(code)) styles those elements, not the part (#122)
   const compounds = []; { let depth = 0, cur = ''; for (const c of sel.trim()) { if (c === '(' || c === '[') depth++; else if (c === ')' || c === ']') depth--; if (!depth && /[\s>+~]/.test(c)) { if (cur) compounds.push(cur); cur = ''; } else cur += c; } if (cur) compounds.push(cur); }
   if (compounds.length > 1 && /^:(?:where|is)\(/.test(compounds[compounds.length - 1])) return null;
+  // a pseudo-element (::before, ::after) is a generated box of its own: its typography is not the part's (the print-only address after a link, #122)
+  if (compounds.length && /::(?:before|after)\b/.test(compounds[compounds.length - 1])) return null;
   const last = sel.replace(/:(?:not|is|where|has)\((?:[^()]|\([^()]*\))*\)/g, '').trim().split(/\s+|>|\+|~/).filter(Boolean).pop() || '';
   const m = last.match(/\.(plx-[a-z0-9]+(?:-[a-z0-9]+)*(?:__[a-z0-9]+(?:-[a-z0-9]+)*)?)/);
   if (m) { const mod = last.match(new RegExp('\\.(' + m[1].replace(/--[a-z0-9-]+$/, '') + '--[a-z0-9]+(?:-[a-z0-9]+)*)')); return mod ? mod[1] : m[1]; }

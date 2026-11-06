@@ -1,10 +1,6 @@
 {
  "$description": "The text contract of every part that declares typography (the Plenix Styling Standard, section 6; checked by check-system.rules/text-contract.js). establishes: the part applies one whole text role (platform/tokens/semantic/typography.tokens.json). adjusts: the part sets only these properties and inherits the rest. A part that is not listed declares no typography: it follows its context.",
  "parts": {
-  "<a>": {
-   "contract": "follows",
-   "font": "mono"
-  },
   "<body>": {
    "contract": "establishes",
    "role": "body",
@@ -971,11 +967,6 @@
     "line-height"
    ]
   },
-  "plx-data-grid__grid-cell--narrow": {
-   "contract": "establishes",
-   "role": "body",
-   "font": "sans"
-  },
   "plx-data-grid__grid-cell--data": {
    "contract": "establishes",
    "role": "body",
@@ -1774,13 +1765,9 @@
    ]
   },
   "plx-link": {
-   "contract": "context-sized",
-   "role": "body",
-   "font": "mono",
-   "inherits": [
-    "font-size",
-    "letter-spacing",
-    "line-height"
+   "contract": "adjusts",
+   "props": [
+    "font-weight"
    ]
   },
   "plx-link--standalone": {
@@ -1793,7 +1780,6 @@
    "contract": "adjusts",
    "props": [
     "font-size",
-    "font-weight",
     "line-height"
    ]
   },
