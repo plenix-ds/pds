@@ -5638,7 +5638,7 @@
       {
         "property": "fill",
         "part": "area",
-        "token": "--plx-comp-chart-mark-color"
+        "token": "--plx-comp-chart-mark-default-color"
       },
       {
         "property": "fill-opacity",
@@ -5651,14 +5651,14 @@
         "token": "--plx-comp-radar-chart-point-radius"
       }
     ],
-    "why": "radar-chart.css: the filled area and the points of the one item (the chart engine reads these tokens to draw it in ECharts)"
+    "why": "radar-chart.css: the filled area and the points of the one item; the area takes its series' data color when it has one (data-plx-dataviz), otherwise the default mark color (the chart engine reads these tokens to draw it in ECharts)"
   },
   "radar-chart--variant-compare": {
     "sets": [
       {
         "property": "fill",
         "part": "area",
-        "token": "--plx-comp-chart-mark-color"
+        "token": "--plx-comp-chart-mark-default-color"
       },
       {
         "property": "fill-opacity",
@@ -5671,7 +5671,7 @@
         "token": "--plx-comp-radar-chart-point-radius"
       }
     ],
-    "why": "radar-chart.css: the same area and points for each item, in the item's color; the legend tells them apart (the chart engine reads these tokens to draw it in ECharts)"
+    "why": "radar-chart.css: the same area and points for each item, in the item's color; the legend tells them apart; the area takes its series' data color when it has one (data-plx-dataviz), otherwise the default mark color (the chart engine reads these tokens to draw it in ECharts)"
   },
   "waterfall-chart--variant-start-to-end": {
     "sets": [
