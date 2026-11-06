@@ -1774,11 +1774,13 @@
    ]
   },
   "plx-link": {
-   "contract": "adjusts",
-   "props": [
-    "font-family",
-    "font-weight",
-    "word-spacing"
+   "contract": "context-sized",
+   "role": "body",
+   "font": "mono",
+   "inherits": [
+    "font-size",
+    "letter-spacing",
+    "line-height"
    ]
   },
   "plx-link--standalone": {

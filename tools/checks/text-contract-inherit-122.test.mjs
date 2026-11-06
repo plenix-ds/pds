@@ -29,4 +29,8 @@ describe('#122 context-sized parts', () => {
     const m = css('.plx-x{' + FAMILY + 'font-weight:inherit;font-size:inherit;letter-spacing:inherit;line-height:inherit;}');
     expect(m.declared['plx-x'].contract).toBe('follows');
   });
+  it('a weight of its own that no text role has (500) keeps the part on the backlog, however many inherits it writes (plx-link--standalone)', () => {
+    const m = css('.plx-x{' + FAMILY + 'font-weight:500;font-size:inherit;letter-spacing:inherit;line-height:inherit;}');
+    expect(m.declared['plx-x'].contract).not.toBe('context-sized');
+  });
 });
