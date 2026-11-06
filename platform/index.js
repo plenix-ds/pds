@@ -329,7 +329,7 @@ export { Comment } from './components/Comment/Comment.tsx';
 export { CommentThread } from './patterns/CommentThread/CommentThread.jsx';
 export { ImageAnnotation } from './patterns/ImageAnnotation/ImageAnnotation.jsx';
 export { PresenceBar } from './patterns/PresenceBar/PresenceBar.jsx';
-export { MentionInput } from './components/MentionInput/MentionInput.jsx';
+export { MentionInput } from './components/MentionInput/MentionInput.tsx';
 export { Announcement } from './components/Announcement/Announcement.tsx';
 export { AuditLog } from './patterns/AuditLog/AuditLog.jsx';
 export { ApprovalWorkflow } from './patterns/ApprovalWorkflow/ApprovalWorkflow.jsx';

@@ -16,7 +16,7 @@
     "platform/components/InlineEdit/InlineEdit.tsx",
     "platform/components/RichTextEditor/RichTextEditor.jsx",
     "platform/components/CodeEditor/CodeEditor.tsx",
-    "platform/components/MentionInput/MentionInput.jsx",
+    "platform/components/MentionInput/MentionInput.tsx",
     "platform/components/TimePicker/TimePicker.tsx",
     "platform/components/Cascader/Cascader.tsx"
   ],

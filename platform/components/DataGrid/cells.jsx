@@ -13,10 +13,13 @@ import React from 'react';
 import { Avatar } from '../Avatar/Avatar.tsx';
 import { Badge } from '../Badge/Badge.tsx';
 import { Tag } from '../Tag/Tag.tsx';
+import { Tooltip } from '../Tooltip/Tooltip.tsx';
+import { useStrings } from '../../providers/LocaleProvider.tsx';
 import { DataPill } from '../DataPill/DataPill.tsx';
 import { formatBytes, formatDate, parseDate } from '../../utils/format.ts';
 import { Isolate } from '../Isolate/Isolate.tsx';
 import { localDigits } from '../../utils/digits.ts';
+import { useBarFit } from '../../utils/barFit.ts';
 import CircleInfoIcon from 'plenix-platform/icons/plenix/circle-info';
 export const valueText=value=>value==null?'':Array.isArray(value)?value.map(valueText).join(', '):typeof value==='object'?String(value.label??value.name??''):String(value);
 export function textFilter(row,field,search) {return valueText(row.getValue(field)).toLocaleLowerCase().includes(String(search??'').toLocaleLowerCase());}
@@ -67,7 +70,7 @@ export function CellValue({ column, value: given, strings, record, pill = false,
   if (column.type === 'date' && parseDate(value)) return <span className={own}>{localDigits(formatDate(value))}</span>;
   if (kinds.includes('deleted')) return <span className={`${own} ${block}__deleted`}>{valueText(value)}</span>;
   if (kinds.includes('avatar-name')) { const person = typeof value === 'object' ? value : { name: String(value) }, name=person.name||person.label||''; return <span className={`${block}__rich`}><Avatar name={name} src={person.src} size="2xs" aria-hidden="true" /><span className={own}>{name}</span></span>; }
-  if (kinds.includes('tags')) return <span className={`${block}__rich`}>{[].concat(value).map((tag, i) => <Tag key={i} category={typeof tag === 'object' ? tag.category : undefined}>{typeof tag === 'object' ? tag.label : String(tag)}</Tag>)}</span>;
+  if (kinds.includes('tags')) return <TagsCell tags={[].concat(value)} block={block} />;
   if (kinds.includes('badge')) { const badge = typeof value === 'object' ? value : { label: String(value) }; return <Badge tone={badge.tone} icon={badge.icon||CircleInfoIcon}>{badge.label}</Badge>; }
   // the full text on hover, only when the cell cuts it off with an ellipsis (owner, 2026-10-22)
   // a technical value keeps its own direction inside a right-to-left table (owner, ctm-needs-34): emails, URLs, phone
@@ -76,6 +79,40 @@ export function CellValue({ column, value: given, strings, record, pill = false,
   const island=ISLANDS.find(k=>kinds.includes(k));
   if (island) return <span className={own} onMouseEnter={fullText}><Isolate dir={island==='data'?'auto':island==='id'?undefined:'ltr'} kind={island==='email'||island==='url'||island==='id'?island:undefined}>{valueText(value)}</Isolate></span>;
   return <span className={own} onMouseEnter={fullText}>{localDigits(valueText(value))}</span>;
+}
+
+// A tags cell: the tags that fit, then one "+N" Tag for the rest (design 84-cell-editors §2 and §3, issue 477). The fit is useBarFit's (the same step
+// ladder as the command bar and the tags editor): the row starts with every tag, and each step hides one more from the end until the row fits on one line.
+// The "+N" Tag is named "{count} more" (the same words as the tags editor's) and the hidden tags show in a Tooltip on hover and keyboard focus (D-0065).
+function TagsCell({ tags, block }) {
+  const more = useStrings('combobox').moreChips, box = React.useRef(null), label = (tag) => (typeof tag === 'object' ? tag.label : String(tag)), names = tags.map(label);
+  const step = useBarFit(box, names.join('|'), Math.max(0, tags.length - 1), 0, ':self');
+  const hidden = tags.slice(tags.length - step), listed = hidden.map(label).join(', '), descId = React.useId();
+  // the table keeps one Tab stop (owner answer 7): the "+N" Tag is not a stop of its own. Its Tooltip shows while its cell is the active cell (the cell has the focus: the Tag is told, as a
+  // focus on it would be), and the hidden names are the cell's description for a screen reader.
+  React.useEffect(() => {
+    const cell = box.current && box.current.closest('[data-plx-field]'), tag = box.current && box.current.querySelector('[data-plx-more]');
+    if (!cell || !listed) return undefined;
+    const tell = (type) => (event) => { if (event.target === cell && tag) tag.dispatchEvent(new FocusEvent(type, { bubbles: true, relatedTarget: null })); };
+    const on = tell('focusin'), off = tell('focusout');
+    cell.addEventListener('focusin', on); cell.addEventListener('focusout', off);
+    const before = cell.getAttribute('aria-describedby'); cell.setAttribute('aria-describedby', (before ? before + ' ' : '') + descId);
+    if (document.activeElement === cell) tag && tag.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
+    return () => { cell.removeEventListener('focusin', on); cell.removeEventListener('focusout', off); if (before) cell.setAttribute('aria-describedby', before); else cell.removeAttribute('aria-describedby'); };
+  }, [listed, descId]);
+  return (
+    <span ref={box} className={`${block}__rich ${block}__rich--tags`}>
+      {tags.slice(0, tags.length - step).map((tag, i) => <Tag key={i} category={typeof tag === 'object' ? tag.category : undefined}>{label(tag)}</Tag>)}
+      {hidden.length ? (
+        <>
+          <Tooltip content={listed} describe={false}>
+            <Tag tabIndex={-1} data-plx-more="" aria-label={more.replace('{count}', String(hidden.length))}>{'+' + hidden.length}</Tag>
+          </Tooltip>
+          <span id={descId} className="plx-visually-hidden">{listed}</span>
+        </>
+      ) : null}
+    </span>
+  );
 }
 const ISLANDS=['id','email','url','phone','code','data'];
 function fullText(event) { const el = event.currentTarget; if (el.scrollWidth > el.clientWidth) el.title = el.textContent; else el.removeAttribute('title'); }
