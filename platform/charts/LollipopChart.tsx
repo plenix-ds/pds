@@ -31,6 +31,7 @@
        stacked or grouped values.
 */
 import React from 'react';
+import type { ChartMargin } from './chart-types.ts';
 import { cx } from '../utils/cx.ts';
 import { formatNumber } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.tsx';
@@ -46,9 +47,28 @@ const NO_MARGIN = Object.freeze({ top: 0, end: 0, bottom: 0, start: 0 });
 // the ring around the active dot (SVG geometry, the 4px grid): its radius, and the dot's room at a value's end
 const RING = 8;
 
+/** @public one category of a lollipop chart */
+export type LollipopDatum = { label: string; value: number };
+/** @public */
+export type LollipopChartProps = {
+  title: string;
+  description?: string;
+  data?: LollipopDatum[];
+  orientation?: 'horizontal' | 'vertical';
+  sort?: 'none' | 'desc' | 'asc';
+  /** a data-viz step */
+  color?: string;
+  showValues?: boolean;
+  format?(value: number): string;
+  categoryTitle?: string;
+  valueTitle?: string;
+  size?: 'sm' | 'md' | 'lg';
+  strings?: Record<string, string>;
+  className?: string;
+};
 export function LollipopChart({ title, description, data = [], orientation = 'horizontal', sort = 'none', color, showValues = false, format,
-  categoryTitle, valueTitle, size = 'md', strings, className }) {
-  const t = useStrings('chart.lollipopChart', strings);
+  categoryTitle, valueTitle, size = 'md', strings, className }: LollipopChartProps) {
+  const t: any = useStrings('chart.lollipopChart', strings);
   const o = orientation === 'vertical' ? 'vertical' : 'horizontal';
   const across = o === 'horizontal';
   const rows = React.useMemo(() => {
@@ -57,22 +77,22 @@ export function LollipopChart({ title, description, data = [], orientation = 'ho
     if (sort === 'asc') r.sort((a, b) => a.value - b.value);
     return r;
   }, [data, sort]);
-  const fmt = (v) => (typeof format === 'function' ? format(v) : formatNumber(v));
+  const fmt = (v: any) => (typeof format === 'function' ? format(v) : formatNumber(v));
   const keys = useChartPoints({ count: rows.length, describe: (i) => rows[i].label + ', ' + fmt(rows[i].value) });
   const mark = color || seriesColor(0);
-  const table = { columns: [{ title: categoryTitle || t.category, field: 'label', kind: 'name', rowLabel: true }, { title: valueTitle || t.value, field: 'shown', kind: 'data', align: 'right' }],
+  const table: any = { columns: [{ title: categoryTitle || t.category, field: 'label', kind: 'name', rowLabel: true }, { title: valueTitle || t.value, field: 'shown', kind: 'data', align: 'right' }],
     data: rows.map((r) => ({ id: r.id, label: r.label, shown: fmt(r.value) })) };
   // the format the drawing calls, kept current without redrawing (a format written inline is a new function each render)
-  const fmts = React.useRef(null); fmts.current = { fmt };
+  const fmts = React.useRef<any>(null); fmts.current = { fmt };
 
   const plot = useEChartsPlot();
   const dataKey = JSON.stringify(rows.map((r) => [r.label, r.value])) + '|' + o + '|' + mark + '|' + (showValues ? 1 : 0);
-  const option = React.useCallback((tk) => {
+  const option = React.useCallback((tk: any) => {
     // room for the dots' rings at a value's end and for the values written there
     const room = gridRoom(NO_MARGIN, across ? 0 : tk.top);
     if (showValues) { if (across) room.right = Math.max(room.right, 48); else room.top = Math.max(room.top, Math.ceil(tk.tick.fontSize + tk.tickOffset * 2 + RING)); }
     const named = { nameLocation: 'middle', nameMoveOverlap: true };
-    const valAxis = Object.assign({ type: 'value', nameGap: 0, inverse: across && tk.rtl, axisLabel: { formatter: (v) => fmts.current.fmt(v) }, axisLine: { show: false } }, named);
+    const valAxis = Object.assign({ type: 'value', nameGap: 0, inverse: across && tk.rtl, axisLabel: { formatter: (v: any) => fmts.current.fmt(v) }, axisLine: { show: false } }, named);
     const catAxis = Object.assign({ type: 'category', data: rows.map((r) => r.label), inverse: across, position: across ? (tk.rtl ? 'right' : 'left') : 'bottom', boundaryGap: true,
       axisLine: { show: true, lineStyle: { color: tk.axis.color, width: tk.axis.width } } }, named);
     const color = tk.color(mark), r = tk.lollipop.r;
@@ -90,12 +110,12 @@ export function LollipopChart({ title, description, data = [], orientation = 'ho
     };
   }, [dataKey]);   // eslint-disable-line react-hooks/exhaustive-deps
 
-  const draw = (dims) => {
+  const draw = (dims: any) => {
     const layer = plot.layer(dims, option);
     const c = plot.chart;
     const g = c ? plotGrid(c) : null;
     if (!g || !rows.length) return layer;
-    const at = (r, i) => { const p = c.convertToPixel({ xAxisIndex: 0, yAxisIndex: 0 }, across ? [r.value, i] : [i, r.value]); return { x: p[0] - g.x, y: p[1] - g.y }; };
+    const at = (r: any, i: any) => { const p = c.convertToPixel({ xAxisIndex: 0, yAxisIndex: 0 }, across ? [r.value, i] : [i, r.value]); return { x: p[0] - g.x, y: p[1] - g.y }; };
     const step = (across ? g.height : g.width) / rows.length;
     const inner = { width: g.width, height: g.height };
     const a = keys.index !== null && keys.index !== undefined && rows[keys.index] ? keys.index : null;

@@ -82,7 +82,7 @@ DSParts.records.push(function (H) {
   var MANY = PARTS.concat([{ id: 'font', label: 'Fonts', value: 12 }, { id: 'arch', label: 'Archives', value: 18 }, { id: 'code', label: 'Code', value: 6 }]);
   var pie = function (o) { return h(P.PieChart, Object.assign({ title: 'Storage by file type', description: 'Videos take more than half of the storage.', data: PARTS, format: function (v) { return P.formatNumber(v) + ' GB'; }, legendPosition: 'end' }, o)); };
   var pieChart = { id: 'pie-chart', lab: true, icon: 'chart', sec: 'data-display', sub: 'Charts', leaf: 'Pie chart', title: 'Pie chart',
-    plenix: 'PieChart, pieSlices', src: 'charts/PieChart.jsx', also: ['charts/chart-kit.ts'], css: CSS('pie-chart.css'), blocks: ['plx-pie-chart'],
+    plenix: 'PieChart, pieSlices', src: 'charts/PieChart.tsx', also: ['charts/chart-kit.ts'], css: CSS('pie-chart.css'), blocks: ['plx-pie-chart'],
     level: 'Component', interaction: 'Display',
     aliases: ['Donut chart', 'Doughnut chart', 'Ring chart', 'Half donut', 'Semicircle chart'],
     covers: ['Donut chart'],
