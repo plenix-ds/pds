@@ -210,7 +210,7 @@ DSParts.records.push(function (H) {
   var EVENTS = [{ id: 'a', label: 'Brief', start: '2026-09-01' }, { id: 'b', label: 'First cut', start: '2026-09-14' }, { id: 'c', label: 'Review', start: '2026-09-21' }, { id: 'd', label: 'Approved', start: '2026-10-02' }];
   var timeline = function (o) { return h(P.TimelineChart, Object.assign({ title: 'Campaign assets', description: 'The video ran two weeks past its shoot; the banners shipped first.', lanes: LANES, items: ITEMS, today: '2026-10-05' }, o)); };
   var timelineChart = { id: 'timeline-chart', lab: true, icon: 'schedule', sec: 'data-display', sub: 'Specialized displays', leaf: 'Timeline visualization', title: 'Timeline visualization',
-    plenix: 'TimelineChart', src: 'charts/TimelineChart.jsx', also: ['charts/chart-kit.ts'], css: CSS('timeline-chart.css'), blocks: ['plx-timeline-chart'],
+    plenix: 'TimelineChart', src: 'charts/TimelineChart.tsx', also: ['charts/chart-kit.ts'], css: CSS('timeline-chart.css'), blocks: ['plx-timeline-chart'],
     level: 'Component', interaction: 'Display',
     aliases: ['Timeline chart', 'Time chart', 'Event timeline', 'Swimlane timeline'],
     text: 'When things happened and how long they lasted, on one time axis in calendar steps. Events are points at their date; periods are bars from start to end. They sit on one track or on lanes (one per asset, team or category, each in its own data-viz color), each item with its short name above its mark, plus an optional today line. The tooltip gives an item’s full dates; the data table lists every item with its lane and dates.',

@@ -33,6 +33,7 @@
        short activity log, the Timeline list.
 */
 import React from 'react';
+import type { ChartMargin } from './chart-types.ts';
 import { cx } from '../utils/cx.ts';
 import { formatDate as fmtDate } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.tsx';
@@ -46,28 +47,51 @@ import { useStrings } from '../providers/LocaleProvider.tsx';
 
 const MARK = 0.4;   // a period's bar thickness, a share of its lane
 // a date-only string (2026-09-10) is that day in local time, as people read it; anything else as Date reads it
-const toTime = (v) => { if (v instanceof Date) return v.getTime(); const d = typeof v === 'string' && /^(\d{4})-(\d{2})-(\d{2})$/.exec(v); return d ? new Date(+d[1], +d[2] - 1, +d[3]).getTime() : new Date(v).getTime(); };
+const toTime = (v: any) => { if (v instanceof Date) return v.getTime(); const d = typeof v === 'string' && /^(\d{4})-(\d{2})-(\d{2})$/.exec(v); return d ? new Date(+d[1], +d[2] - 1, +d[3]).getTime() : new Date(v).getTime(); };
 
+/** @public a date: a Date, a timestamp, or anything Date accepts (a date-only string is that day in local time) */
+export type ChartDate = Date | string | number;
+/** @public one item: with an end a period (a bar), without one an event (a point) */
+export type TimelineItem = { id: string; lane?: string; label: string; start: ChartDate; end?: ChartDate; /** a data-viz step */ color?: string };
+/** @public */
+export type TimelineChartProps = {
+  title: string;
+  description?: string;
+  hideCaption?: boolean;
+  size?: 'sm' | 'md' | 'lg';
+  items?: TimelineItem[];
+  lanes?: Array<{ id: string; label: string }>;
+  domain?: [ChartDate, ChartDate];
+  today?: ChartDate | boolean;
+  labels?: boolean;
+  formatDate?(date: Date): string;
+  tooltip?: boolean;
+  legend?: boolean;
+  legendPosition?: 'bottom' | 'top' | 'end';
+  margin?: ChartMargin;
+  strings?: Record<string, string>;
+  className?: string;
+};
 export function TimelineChart({ title, description, hideCaption, size, items = [], lanes, domain, today, labels = true, formatDate, tooltip = true,
-  legend, legendPosition, margin, strings, className }) {
-  const t = useStrings('chart.timelineChart', strings);
-  const fd = (d) => (typeof formatDate === 'function' ? formatDate(new Date(toTime(d))) : fmtDate(new Date(toTime(d))));
+  legend, legendPosition, margin, strings, className }: TimelineChartProps) {
+  const t: any = useStrings('chart.timelineChart', strings);
+  const fd = (d: any) => (typeof formatDate === 'function' ? formatDate(new Date(toTime(d))) : fmtDate(new Date(toTime(d))));
   const [active, hover] = useChartHover();
-  const tracks = lanes && lanes.length ? lanes.map((l, i) => ({ id: l.id === undefined ? String(i) : l.id, label: l.label, color: l.color || seriesColor(i) }))
+  const tracks = lanes && lanes.length ? lanes.map((l: any, i: any) => ({ id: l.id === undefined ? String(i) : l.id, label: l.label, color: l.color || seriesColor(i) }))
     : [{ id: '__one', label: '', color: seriesColor(0) }];
   const one = !(lanes && lanes.length);
-  const laneOf = {};
-  tracks.forEach((l) => { laneOf[l.id] = l; });
-  const list = items.map((it, i) => Object.assign({}, it, { id: it.id === undefined ? String(i) : it.id, lane: one ? '__one' : it.lane, t0: toTime(it.start), t1: it.end === undefined || it.end === null ? null : toTime(it.end) }))
+  const laneOf: any = {};
+  tracks.forEach((l: any) => { laneOf[l.id] = l; });
+  const list: any[] = items.map((it: any, i: number) => Object.assign({}, it, { id: it.id === undefined ? String(i) : it.id, lane: one ? '__one' : it.lane, t0: toTime(it.start), t1: it.end === undefined || it.end === null ? null : toTime(it.end) }))
     .filter((it) => isFinite(it.t0) && laneOf[it.lane]);
   const now = today === true ? Date.now() : today ? toTime(today) : null;
   let lo = Infinity, hi = -Infinity;
   list.forEach((it) => { lo = Math.min(lo, it.t0); hi = Math.max(hi, it.t1 === null ? it.t0 : it.t1); });
   if (now !== null && isFinite(lo)) { lo = Math.min(lo, now); hi = Math.max(hi, now); }
   const dom = domain ? [toTime(domain[0]), toTime(domain[1])] : isFinite(lo) ? [lo, hi] : [Date.now() - 864e5 * 15, Date.now() + 864e5 * 15];
-  const m = Object.assign({ end: halfRoom('00000000') }, one ? { start: halfRoom('00000000') } : { start: labelRoom(tracks.map((l) => l.label)) }, margin);
-  const table = {
-    columns: [{ title: t.item, field: 'item', kind: 'name', rowLabel: true }].concat(one ? [] : [{ title: t.lane, field: 'lane', kind: 'name' }])
+  const m = Object.assign({ end: halfRoom('00000000') }, one ? { start: halfRoom('00000000') } : { start: labelRoom(tracks.map((l: any) => l.label)) }, margin);
+  const table: any = {
+    columns: ([{ title: t.item, field: "item", kind: "name", rowLabel: true }] as any[]).concat(one ? [] : [{ title: t.lane, field: 'lane', kind: 'name' }])
       .concat([{ title: t.start, field: 'start', kind: 'data' }, { title: t.end, field: 'end', kind: 'data' }]),
     data: list.map((it, i) => ({ id: i + 1, item: it.label, lane: laneOf[it.lane].label, start: fd(it.t0), end: it.t1 === null ? '' : fd(it.t1) }))
   };
@@ -76,13 +100,13 @@ export function TimelineChart({ title, description, hideCaption, size, items = [
       table={table} strings={strings} className={cx('plx-timeline-chart', one && 'plx-timeline-chart--single', className)}>
       {({ inner, margin: fm }) => {
         // items dated by day get day ticks or coarser, never hours (issue 593); today's marker does not count
-        const x = scaleTime({ domain: dom, range: [0, inner.width], nice: !domain, unit: wholeDays(list.map((it) => it.t0).concat(list.filter((it) => it.t1 !== null).map((it) => it.t1))) ? 'day' : undefined });
-        const y = scaleBand({ domain: tracks.map((l) => l.id), range: [0, inner.height], paddingInner: 0, paddingOuter: 0 });
+        const x: any = scaleTime({ domain: dom, range: [0, inner.width], nice: !domain, unit: wholeDays(list.map((it) => it.t0).concat(list.filter((it) => it.t1 !== null).map((it) => it.t1))) ? 'day' : undefined });
+        const y: any = scaleBand({ domain: tracks.map((l: any) => l.id), range: [0, inner.height], paddingInner: 0, paddingOuter: 0 });
         const thick = y.bandwidth();
         // a mark sits in the lower part of its lane; its name above it
-        const markY = (lane) => y(lane) + thick * (1 - MARK) * 0.75;
+        const markY = (lane: any) => y(lane) + thick * (1 - MARK) * 0.75;
         const bar = thick * MARK;
-        let tip = null;
+        let tip: any = null;
         if (tooltip && active !== null) {
           const it = list.filter((i) => String(i.id) === String(active))[0];
           if (it) {
@@ -94,7 +118,7 @@ export function TimelineChart({ title, description, hideCaption, size, items = [
         return (
           <g>
             <GridLines scale={x} direction="vertical" inner={inner} />
-            {tracks.slice(1).map((l) => <line key={l.id} className="plx-chart__grid-line plx-timeline-chart__lane-line" x1={0} x2={inner.width} y1={y(l.id)} y2={y(l.id)} />)}
+            {tracks.slice(1).map((l: any) => <line key={l.id} className="plx-chart__grid-line plx-timeline-chart__lane-line" x1={0} x2={inner.width} y1={y(l.id)} y2={y(l.id)} />)}
             {list.map((it) => {
               const color = it.color || laneOf[it.lane].color, top = markY(it.lane);
               const h = tooltip ? hover(String(it.id)) : {};
@@ -105,7 +129,7 @@ export function TimelineChart({ title, description, hideCaption, size, items = [
             {labels ? list.map((it) => <text key={'l' + it.id} className={cx('plx-timeline-chart__label', it.t1 === null && 'plx-timeline-chart__label--event')} x={x(it.t0)} y={markY(it.lane)}>{it.label}</text>) : null}
             {now !== null ? <ReferenceLine axis="x" scale={x} value={new Date(now)} inner={inner} label={t.today} showValue={false} /> : null}
             <Axis scale={x} orient="bottom" inner={inner} margin={fm} />
-            {one ? null : <Axis scale={y} orient="left" inner={inner} margin={fm} line={false} format={(id) => laneOf[id].label} />}
+            {one ? null : <Axis scale={y} orient="left" inner={inner} margin={fm} line={false} format={(id: any) => laneOf[id].label} />}
             {tip}
           </g>
         );

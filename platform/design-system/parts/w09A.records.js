@@ -225,7 +225,7 @@ DSParts.records.push(function (H) {
 
   /* ── 07 Data Display › Charts › Word cloud: WordCloud ── */
   var wordCloud = { id: 'word-cloud', lab: true, icon: 'text-card', sec: 'data-display', sub: 'Charts', leaf: 'Word cloud', title: 'Word cloud',
-    plenix: 'WordCloud, wordCloudLayout', src: 'charts/WordCloud.jsx', css: ['charts/word-cloud.css'], blocks: ['plx-word-cloud'], level: 'Component', interaction: 'Navigation', statesFrom: ['chart-interaction'],
+    plenix: 'WordCloud, wordCloudLayout', src: 'charts/WordCloud.tsx', css: ['charts/word-cloud.css'], blocks: ['plx-word-cloud'], level: 'Component', interaction: 'Navigation', statesFrom: ['chart-interaction'],
     aliases: ['Tag cloud', 'Term cloud', 'Text cloud'],
     text: 'The main terms of a body of text, each sized by how often it appears (five steps of the type scale) and placed around the middle, largest first, on a round or a square spiral. Words stay horizontal; groups such as praise and requests take the categorical colors, with a legend. A first impression only: the table under it lists every term and its count, sorted, and onSelect lets a word filter a list.',
     use: ['A first look at free text: feedback, search terms, tags', 'The top 50 terms or fewer', 'onSelect to open the items that use a word'],
