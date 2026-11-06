@@ -9,7 +9,7 @@
 */
 import React from 'react';
 import { useUndo, useToast } from '../Toast/Toast.tsx';
-export function useDataGridActions(actions, selection, strings) {
+export function useDataGridActions(actions: any, selection: any, strings: any) {
   const undoable = useUndo(),
     toast = useToast(),
     pending = React.useRef(new Set()),
@@ -20,9 +20,9 @@ export function useDataGridActions(actions, selection, strings) {
       undoFailed: 'Could not undo the action. Try again.',
       ...strings
     };
-  const wrap = action => {
+  const wrap = (action: any) => {
     if (!action || action.separator || typeof action.undo !== 'function') return action;
-    const invoke = async (...given) => {
+    const invoke = async (...given: any[]) => {
       const id = action.id || action.label;
       if (pending.current.has(id)) return;
       pending.current.add(id);
@@ -71,5 +71,5 @@ export function useDataGridActions(actions, selection, strings) {
       action: invoke
     };
   };
-  return typeof actions === 'function' ? (...args) => (actions(...args) || []).map(wrap) : Array.isArray(actions) ? actions.map(wrap) : actions;
+  return typeof actions === 'function' ? (...args: any[]) => (actions(...args) || []).map(wrap) : Array.isArray(actions) ? actions.map(wrap) : actions;
 }
