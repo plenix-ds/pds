@@ -3167,5 +3167,115 @@
   "bar-chart--orientation-column-vertical": {
     "sets": [],
     "why": "markup only: vertical columns, for periods, drawn by the chart engine (orientation vertical)"
+  },
+  "chart-axis--side-bottom-default": {
+    "sets": [
+      {
+        "property": "transform",
+        "part": "tick",
+        "token": "--plx-comp-chart-axis-tick-offset"
+      }
+    ],
+    "why": ".plx-chart-axis--bottom .plx-chart-axis__tick in chart-parts.css: the tick labels sit this far from the axis line, on the bottom side"
+  },
+  "chart-axis--side-top": {
+    "sets": [
+      {
+        "property": "transform",
+        "part": "tick",
+        "token": "--plx-comp-chart-axis-tick-offset"
+      }
+    ],
+    "why": ".plx-chart-axis--top .plx-chart-axis__tick in chart-parts.css: the tick labels sit this far from the axis line, on the top side"
+  },
+  "chart-axis--side-left": {
+    "sets": [
+      {
+        "property": "transform",
+        "part": "tick",
+        "token": "--plx-comp-chart-axis-tick-offset"
+      }
+    ],
+    "why": ".plx-chart-axis--left .plx-chart-axis__tick in chart-parts.css: the tick labels sit this far from the axis line, on the left side"
+  },
+  "chart-axis--side-right": {
+    "sets": [
+      {
+        "property": "transform",
+        "part": "tick",
+        "token": "--plx-comp-chart-axis-tick-offset"
+      }
+    ],
+    "why": ".plx-chart-axis--right .plx-chart-axis__tick in chart-parts.css: the tick labels sit this far from the axis line, on the right side"
+  },
+  "chart-data-label--position-top-columns": {
+    "sets": [
+      {
+        "property": "transform",
+        "part": "label",
+        "token": "--plx-comp-chart-data-label-offset"
+      }
+    ],
+    "why": ".plx-chart-data-label--top: the label sits above the column"
+  },
+  "chart-data-label--position-end-bars": {
+    "sets": [
+      {
+        "property": "transform",
+        "part": "label",
+        "token": "--plx-comp-chart-data-label-offset"
+      }
+    ],
+    "why": ".plx-chart-data-label--end: the label sits at the end of the bar"
+  },
+  "chart-data-label--position-center-points": {
+    "sets": [
+      {
+        "property": "stroke",
+        "part": "label",
+        "token": "--plx-comp-chart-data-label-halo-color"
+      },
+      {
+        "property": "stroke-width",
+        "part": "label",
+        "token": "--plx-comp-chart-data-label-halo-width"
+      }
+    ],
+    "why": ".plx-chart-data-label--center: centered on the point, with a halo so it stays readable"
+  },
+  "chart-tooltip--variant-shared": {
+    "sets": [
+      {
+        "property": "stroke",
+        "part": "crosshair",
+        "token": "--plx-comp-chart-tooltip-crosshair-color"
+      },
+      {
+        "property": "stroke-width",
+        "part": "crosshair",
+        "token": "--plx-comp-chart-tooltip-crosshair-width"
+      }
+    ],
+    "why": ".plx-chart-tooltip__crosshair: the line at one x position, with every series' value in the tooltip"
+  },
+  "chart-tooltip--variant-single": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-chart-tooltip-background"
+      },
+      {
+        "property": "border-color",
+        "part": "block",
+        "token": "--plx-comp-chart-tooltip-border-color"
+      },
+      {
+        "property": "border-width",
+        "part": "block",
+        "token": "--plx-comp-chart-tooltip-border-width"
+      }
+    ],
+    "why": ".plx-chart-tooltip: one point's value in a small framed box beside the point"
   }
 }
