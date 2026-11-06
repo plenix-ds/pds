@@ -41,7 +41,7 @@ import { Avatar } from '../../components/Avatar/Avatar.tsx';
 import { FileInput } from '../../components/FileInput/FileInput.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Notice } from '../../components/Notice/Notice.tsx';
-import { ImageCrop } from '../ImageUpload/ImageUpload.jsx';
+import { ImageCrop } from '../ImageUpload/ImageUpload.tsx';
 import { formatBytes } from '../../utils/format.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import TrashIcon from 'plenix-platform/icons/plenix/trash';

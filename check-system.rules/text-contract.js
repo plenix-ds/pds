@@ -102,7 +102,17 @@ function rules(text, file) {
   while ((m = re.exec(clean))) {
     const sel = m[1].trim(); if (!sel || sel.startsWith('@')) continue;
     const decl = {}; for (const d of m[2].split(';')) { const i = d.indexOf(':'); if (i < 0) continue; const p = d.slice(0, i).trim(); if (PROPS.includes(p)) decl[p] = d.slice(i + 1).trim(); }
-    out.push({ file, line: clean.slice(0, m.index + m[0].indexOf('{')).split('\n').length, sel, parts: [...new Set(splitList(sel).map(partOf).filter(Boolean))], decl });
+    // an older form of a part's own modifier: a selector list that names the modifier (plx-x__read--data) and, beside it, the same modifier on the
+    // block in front of the part (plx-x--data plx-x__read) is the modifier's rule. The older form stays so a page written in plain HTML keeps working
+    // (VERSIONING.md); it is not the base part's. A base part named on its own (.plx-x__read, .plx-x__read--data{...}) is still the base part's rule.
+    const alts = splitList(sel).map((a) => ({ a, part: partOf(a) })).filter((x) => x.part);
+    const aliases = new Set();
+    for (const mod of alts.filter((x) => x.part.includes('__') && /--[a-z0-9-]+$/.test(x.part))) {
+      const base = mod.part.replace(/--([a-z0-9-]+)$/, ''), variant = mod.part.match(/--([a-z0-9-]+)$/)[1], block = base.split('__')[0];
+      for (const x of alts) if (x.part === base && new RegExp('\\.' + block + '--' + variant + '(?![\\w-])[^,]*\\.' + base + '(?![\\w-])').test(x.a)) aliases.add(x.a);
+    }
+    const named = [...new Set(alts.filter((x) => !aliases.has(x.a)).map((x) => x.part))];
+    out.push({ file, line: clean.slice(0, m.index + m[0].indexOf('{')).split('\n').length, sel, parts: named, decl });
   }
   return out;
 }

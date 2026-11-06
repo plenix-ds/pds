@@ -1712,15 +1712,17 @@
    ]
   },
   "plx-inline-edit__read": {
-   "contract": "adjusts",
-   "props": [
-    "font-family",
-    "font-size",
-    "font-weight",
-    "letter-spacing",
-    "line-height",
-    "word-spacing"
+   "contract": "establishes",
+   "role": "secondary",
+   "font": "sans",
+   "adjusts": [
+    "line-height"
    ]
+  },
+  "plx-inline-edit__read--data": {
+   "contract": "establishes",
+   "role": "secondary",
+   "font": "mono"
   },
   "plx-input": {
    "contract": "establishes",
@@ -1749,15 +1751,17 @@
    ]
   },
   "plx-input-group__affix": {
-   "contract": "adjusts",
-   "props": [
-    "font-family",
-    "font-size",
-    "font-weight",
-    "letter-spacing",
-    "line-height",
-    "word-spacing"
+   "contract": "establishes",
+   "role": "secondary",
+   "font": "sans",
+   "adjusts": [
+    "line-height"
    ]
+  },
+  "plx-input-group__affix--data": {
+   "contract": "establishes",
+   "role": "secondary",
+   "font": "mono"
   },
   "plx-kbd": {
    "contract": "establishes",

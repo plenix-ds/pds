@@ -12,8 +12,9 @@
      Parsing and import storage belong to the caller. Reopening starts a new import; late read results are ignored.
 */
 import React from 'react';
-import { ImportDialog } from '../ImportDialog/ImportDialog.jsx';
-import { Wizard } from '../Wizard/Wizard.jsx';
+import { ImportDialog } from '../ImportDialog/ImportDialog.tsx';
+import { Wizard as WizardJs } from '../Wizard/Wizard.jsx';
+const Wizard: any = WizardJs;
 import { Dialog } from '../../components/Dialog/Dialog.tsx';
 import { Stack } from '../../components/Stack/Stack.tsx';
 import { Field } from '../../components/Field/Field.tsx';
@@ -27,21 +28,36 @@ import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import CheckIcon from 'plenix-platform/icons/plenix/check';
 
-export function ImportWizard({ open, title, onClose, fields = [], onRead, onImport, strings, className }) {
-  const t = useStrings('importWizard', strings);
-  const [data, setData] = React.useState(null), [source, setSource] = React.useState(null), [mapping, setMapping] = React.useState({}), [complete, setComplete] = React.useState(false);
+/** @public a field the columns are mapped to */
+export type ImportField = { id: string; label: string; required?: boolean };
+/** @public what onRead resolves: the columns found and the rows as objects */
+export type ImportRead = { columns: { id: string; label: string }[]; rows: Record<string, unknown>[] };
+/** @public the prop type (ADR 0011) */
+export type ImportWizardProps = {
+  open?: boolean;
+  title?: string;
+  onClose?(): void;
+  fields?: ImportField[];
+  onRead(source: unknown): ImportRead | Promise<ImportRead>;
+  onImport(result: { source: unknown; mapping: Record<string, string>; rows: Record<string, unknown>[] }): unknown;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function ImportWizard({ open, title, onClose, fields = [], onRead, onImport, strings, className }: ImportWizardProps) {
+  const t: any = useStrings('importWizard', strings);
+  const [data, setData] = React.useState<any>(null), [source, setSource] = React.useState<any>(null), [mapping, setMapping] = React.useState<Record<string, string>>({}), [complete, setComplete] = React.useState(false);
   const epoch = React.useRef(0), lock = React.useRef(false), loaded = React.useRef(false);
   const [busy, setBusy] = React.useState(false);
   React.useEffect(() => { epoch.current++; setData(null); setSource(null); setMapping({}); setComplete(false); setBusy(false); loaded.current = false; lock.current = false; return () => { epoch.current++; }; }, [open]);
   const guard = useUnsavedGuard(open && !!data && !complete, t.unsaved);
   const close = guard(() => { if (!lock.current && onClose) onClose(); });
-  const read = async (input) => {
+  const read = async (input: any) => {
     const at = epoch.current, parsed = await onRead(input);
     if (at !== epoch.current) return;
     if (!parsed || !Array.isArray(parsed.columns) || !parsed.columns.length || !Array.isArray(parsed.rows)) throw new Error(t.invalid);
     loaded.current = true; setSource(input); setData(parsed); setMapping({});
   };
-  const mapped = data ? data.rows.map((row, i) => fields.reduce((out, f) => ({ ...out, [f.id]: mapping[f.id] ? row[mapping[f.id]] : '' }), { _plxRow: i })) : [];
+  const mapped: any[] = data ? data.rows.map((row: any, i: any) => fields.reduce((out, f) => ({ ...out, [f.id]: mapping[f.id] ? row[mapping[f.id]] : '' }), { _plxRow: i })) : [];
   const validate = () => fields.some((f) => f.required && !mapping[f.id]) ? t.missing : '';
   const finish = async () => {
     if (lock.current) return; const at = epoch.current; lock.current = true; setBusy(true);
@@ -55,10 +71,10 @@ export function ImportWizard({ open, title, onClose, fields = [], onRead, onImpo
         <Text variant="data">{mapped.length}</Text><Button variant="primary" onClick={onClose}>{t.done}</Button></>
         : <Wizard label={title || t.title} strings={strings} onCancel={close} onComplete={finish} steps={[
           { id: 'mapping', label: t.mapping, validate, content: <Stack>{fields.map((f) => <Field key={f.id} label={f.label} required={f.required}>
-            <Select value={mapping[f.id] || ''} options={[{ value: '', label: t.choose }].concat(data.columns.map((c) => ({ value: c.id, label: c.label })))}
+            <Select value={mapping[f.id] || ''} options={[{ value: '', label: t.choose }].concat(data.columns.map((c: any) => ({ value: c.id, label: c.label })))}
               onChange={(e) => setMapping({ ...mapping, [f.id]: e.target.value })} /></Field>)}</Stack> },
           { id: 'review', label: t.review, content: <DataGrid label={t.review} index="_plxRow" data={mapped}
-            columns={fields.map((f) => ({ field: f.id, title: f.label, kind: 'wrap' }))} headerMenu={false} /> }
+            columns={fields.map((f): any => ({ field: f.id, title: f.label, kind: 'wrap' }))} headerMenu={false} /> }
         ]} />}
     </Stack>
   </Dialog>;

@@ -1548,7 +1548,7 @@
       "platform/components/RelativeDateInput/RelativeDateInput.jsx",
       "platform/components/RelativeDateInput/relative-date-input.css",
       "platform/tokens/components/relative-date-input.tokens.json",
-      "platform/patterns/ImageUpload/ImageUpload.jsx",
+      "platform/patterns/ImageUpload/ImageUpload.tsx",
       "platform/patterns/ImageUpload/image-upload.css",
       "platform/tokens/components/image-upload.tokens.json",
       "platform/patterns/AvatarUpload/AvatarUpload.tsx",
@@ -1591,7 +1591,7 @@
       "platform/design-system/parts/w07C.{records,labs,docs}.js + .css",
       "platform/exports/w07C.{js,css}",
       "platform/standards/web-native-map.d/w07C.json",
-      "platform/patterns/NavPane/NavPane.jsx",
+      "platform/patterns/NavPane/NavPane.tsx",
       "platform/patterns/NavPane/nav-pane.css",
       "platform/components/TreeSelect/TreeSelect.tsx",
       "platform/components/TreeSelect/tree-select.css",
@@ -2019,7 +2019,7 @@
       "platform/patterns/GroupBy/GroupBy.jsx",
       "platform/patterns/GroupBy/group-by.css",
       "platform/tokens/components/group-by.tokens.json",
-      "platform/patterns/FormFlow/FormFlow.jsx",
+      "platform/patterns/FormFlow/FormFlow.tsx",
       "platform/patterns/FormFlow/form-flow.css",
       "platform/tokens/components/form-flow.tokens.json",
       "platform/patterns/Wizard/Wizard.jsx",
@@ -2130,7 +2130,7 @@
       "platform/patterns/ShareDialog/ShareDialog.jsx",
       "platform/patterns/ShareDialog/share-dialog.css",
       "platform/tokens/components/share-dialog.tokens.json",
-      "platform/patterns/HelpPanel/HelpPanel.jsx",
+      "platform/patterns/HelpPanel/HelpPanel.tsx",
       "platform/patterns/HelpPanel/help-panel.css",
       "platform/tokens/components/help-panel.tokens.json",
       "platform/patterns/Onboarding/Onboarding.jsx",
@@ -2181,13 +2181,13 @@
       "platform/patterns/ExportDialog/ExportDialog.tsx",
       "platform/patterns/ExportDialog/export-dialog.css",
       "platform/tokens/components/export-dialog.tokens.json",
-      "platform/patterns/ImportDialog/ImportDialog.jsx",
+      "platform/patterns/ImportDialog/ImportDialog.tsx",
       "platform/patterns/ImportDialog/import-dialog.css",
       "platform/tokens/components/import-dialog.tokens.json",
       "platform/patterns/AccessRequest/AccessRequest.tsx",
       "platform/patterns/AccessRequest/access-request.css",
       "platform/tokens/components/access-request.tokens.json",
-      "platform/patterns/ImportWizard/ImportWizard.jsx",
+      "platform/patterns/ImportWizard/ImportWizard.tsx",
       "platform/patterns/ImportWizard/import-wizard.css",
       "platform/tokens/components/import-wizard.tokens.json",
       "platform/patterns/TrialUpgrade/TrialUpgrade.jsx",
@@ -2288,7 +2288,7 @@
       "platform/patterns/DownloadManager/DownloadManager.tsx",
       "platform/patterns/DownloadManager/download-manager.css",
       "platform/tokens/components/download-manager.tokens.json",
-      "platform/patterns/MetadataEditor/MetadataEditor.jsx",
+      "platform/patterns/MetadataEditor/MetadataEditor.tsx",
       "platform/patterns/MetadataEditor/metadata-editor.css",
       "platform/tokens/components/metadata-editor.tokens.json",
       "platform/patterns/RelatedAssets/RelatedAssets.jsx",
@@ -2415,7 +2415,7 @@
       "platform/patterns/CommentThread/CommentThread.tsx",
       "platform/patterns/CommentThread/comment-thread.css",
       "platform/tokens/components/comment-thread.tokens.json",
-      "platform/patterns/ImageAnnotation/ImageAnnotation.jsx",
+      "platform/patterns/ImageAnnotation/ImageAnnotation.tsx",
       "platform/patterns/ImageAnnotation/image-annotation.css",
       "platform/tokens/components/image-annotation.tokens.json",
       "platform/patterns/PresenceBar/PresenceBar.jsx",
@@ -5473,7 +5473,7 @@
    "wave": 7,
    "lane": "B",
    "files": [
-    "platform/patterns/ImageUpload/ImageUpload.jsx",
+    "platform/patterns/ImageUpload/ImageUpload.tsx",
     "platform/patterns/ImageUpload/image-upload.css",
     "platform/tokens/components/image-upload.tokens.json"
    ],
@@ -5644,7 +5644,7 @@
    "wave": 7,
    "lane": "C",
    "files": [
-    "platform/patterns/NavPane/NavPane.jsx",
+    "platform/patterns/NavPane/NavPane.tsx",
     "platform/patterns/NavPane/nav-pane.css"
    ],
    "dependsOn": [],
@@ -6967,7 +6967,7 @@
    "wave": 10,
    "lane": "C",
    "files": [
-    "platform/patterns/FormFlow/FormFlow.jsx",
+    "platform/patterns/FormFlow/FormFlow.tsx",
     "platform/patterns/FormFlow/form-flow.css",
     "platform/tokens/components/form-flow.tokens.json"
    ],
@@ -7410,7 +7410,7 @@
    "wave": 11,
    "lane": "B",
    "files": [
-    "platform/patterns/HelpPanel/HelpPanel.jsx",
+    "platform/patterns/HelpPanel/HelpPanel.tsx",
     "platform/patterns/HelpPanel/help-panel.css",
     "platform/tokens/components/help-panel.tokens.json"
    ],
@@ -7432,7 +7432,7 @@
    "wave": 11,
    "lane": "C",
    "files": [
-    "platform/patterns/ImportDialog/ImportDialog.jsx",
+    "platform/patterns/ImportDialog/ImportDialog.tsx",
     "platform/patterns/ImportDialog/import-dialog.css",
     "platform/tokens/components/import-dialog.tokens.json"
    ],
@@ -7458,7 +7458,7 @@
    "wave": 11,
    "lane": "C",
    "files": [
-    "platform/patterns/ImportWizard/ImportWizard.jsx",
+    "platform/patterns/ImportWizard/ImportWizard.tsx",
     "platform/patterns/ImportWizard/import-wizard.css",
     "platform/tokens/components/import-wizard.tokens.json"
    ],
@@ -7803,7 +7803,7 @@
    "wave": 12,
    "lane": "B",
    "files": [
-    "platform/patterns/MetadataEditor/MetadataEditor.jsx",
+    "platform/patterns/MetadataEditor/MetadataEditor.tsx",
     "platform/patterns/MetadataEditor/metadata-editor.css",
     "platform/tokens/components/metadata-editor.tokens.json"
    ],
@@ -8112,7 +8112,7 @@
    "wave": 13,
    "lane": "B",
    "files": [
-    "platform/patterns/ImageAnnotation/ImageAnnotation.jsx",
+    "platform/patterns/ImageAnnotation/ImageAnnotation.tsx",
     "platform/patterns/ImageAnnotation/image-annotation.css",
     "platform/tokens/components/image-annotation.tokens.json"
    ],
@@ -10952,7 +10952,7 @@
    "target": "NavPane",
    "targetKind": "extend",
    "files": [
-    "platform/patterns/NavPane/NavPane.jsx",
+    "platform/patterns/NavPane/NavPane.tsx",
     "platform/patterns/NavPane/nav-pane.css"
    ],
    "laneFiles": [
@@ -12336,7 +12336,7 @@
    "target": "ImportDialog",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/ImportDialog/ImportDialog.jsx",
+    "platform/patterns/ImportDialog/ImportDialog.tsx",
     "platform/patterns/ImportDialog/import-dialog.css",
     "platform/tokens/components/import-dialog.tokens.json"
    ],
@@ -13707,7 +13707,7 @@
    "target": "ImageUpload",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/ImageUpload/ImageUpload.jsx",
+    "platform/patterns/ImageUpload/ImageUpload.tsx",
     "platform/patterns/ImageUpload/image-upload.css",
     "platform/tokens/components/image-upload.tokens.json"
    ],
@@ -14038,7 +14038,7 @@
    "target": "NavPane",
    "targetKind": "extend",
    "files": [
-    "platform/patterns/NavPane/NavPane.jsx",
+    "platform/patterns/NavPane/NavPane.tsx",
     "platform/patterns/NavPane/nav-pane.css"
    ],
    "laneFiles": [
@@ -14097,7 +14097,7 @@
    "target": "NavPane",
    "targetKind": "extend",
    "files": [
-    "platform/patterns/NavPane/NavPane.jsx",
+    "platform/patterns/NavPane/NavPane.tsx",
     "platform/patterns/NavPane/nav-pane.css"
    ],
    "laneFiles": [
@@ -14125,7 +14125,7 @@
    "targetKind": "extend",
    "duplicateOf": "navigation/Bottom navigation",
    "files": [
-    "platform/patterns/NavPane/NavPane.jsx",
+    "platform/patterns/NavPane/NavPane.tsx",
     "platform/patterns/NavPane/nav-pane.css"
    ],
    "laneFiles": [
@@ -14183,7 +14183,7 @@
    "targetKind": "extend",
    "duplicateOf": "navigation/Bottom navigation",
    "files": [
-    "platform/patterns/NavPane/NavPane.jsx",
+    "platform/patterns/NavPane/NavPane.tsx",
     "platform/patterns/NavPane/nav-pane.css"
    ],
    "laneFiles": [
@@ -16858,7 +16858,7 @@
    "target": "NavPane",
    "targetKind": "extend",
    "files": [
-    "platform/patterns/NavPane/NavPane.jsx",
+    "platform/patterns/NavPane/NavPane.tsx",
     "platform/patterns/NavPane/nav-pane.css"
    ],
    "laneFiles": [
@@ -16927,7 +16927,7 @@
    "target": "HelpPanel",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/HelpPanel/HelpPanel.jsx",
+    "platform/patterns/HelpPanel/HelpPanel.tsx",
     "platform/patterns/HelpPanel/help-panel.css",
     "platform/tokens/components/help-panel.tokens.json"
    ],
@@ -17848,7 +17848,7 @@
    "target": "FormFlow",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/FormFlow/FormFlow.jsx",
+    "platform/patterns/FormFlow/FormFlow.tsx",
     "platform/patterns/FormFlow/form-flow.css",
     "platform/tokens/components/form-flow.tokens.json"
    ],
@@ -17883,7 +17883,7 @@
    "target": "FormFlow",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/FormFlow/FormFlow.jsx",
+    "platform/patterns/FormFlow/FormFlow.tsx",
     "platform/patterns/FormFlow/form-flow.css",
     "platform/tokens/components/form-flow.tokens.json"
    ],
@@ -18131,7 +18131,7 @@
    "targetKind": "pattern",
    "duplicateOf": "actions/Import",
    "files": [
-    "platform/patterns/ImportDialog/ImportDialog.jsx",
+    "platform/patterns/ImportDialog/ImportDialog.tsx",
     "platform/patterns/ImportDialog/import-dialog.css",
     "platform/tokens/components/import-dialog.tokens.json"
    ],
@@ -19107,7 +19107,7 @@
    "target": "ImportWizard",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/ImportWizard/ImportWizard.jsx",
+    "platform/patterns/ImportWizard/ImportWizard.tsx",
     "platform/patterns/ImportWizard/import-wizard.css",
     "platform/tokens/components/import-wizard.tokens.json"
    ],
@@ -20297,7 +20297,7 @@
    "target": "MetadataEditor",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/MetadataEditor/MetadataEditor.jsx",
+    "platform/patterns/MetadataEditor/MetadataEditor.tsx",
     "platform/patterns/MetadataEditor/metadata-editor.css",
     "platform/tokens/components/metadata-editor.tokens.json"
    ],
@@ -20585,7 +20585,7 @@
    "target": "ImageAnnotation",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/ImageAnnotation/ImageAnnotation.jsx",
+    "platform/patterns/ImageAnnotation/ImageAnnotation.tsx",
     "platform/patterns/ImageAnnotation/image-annotation.css",
     "platform/tokens/components/image-annotation.tokens.json"
    ],

@@ -106,9 +106,9 @@ export function InputGroup({ prefix, suffix, icon, start, end, width, compact = 
       <div className={cx('plx-input-group__box', starts.length && 'plx-input-group__box--joined-start', ends.length && 'plx-input-group__box--joined-end',
         isInvalid && 'is-invalid', isDisabled && 'is-disabled', isReadOnly && 'is-readonly')} data-plx-warning={isWarning || undefined} onMouseDown={focusField}>
         {icon ? <span className="plx-input-group__icon" aria-hidden="true"><Icon name={icon} /></span> : null}
-        {prefix != null ? <span className="plx-input-group__affix plx-input-group__affix--prefix" id={preId}>{prefix}</span> : null}
+        {prefix != null ? <span className={cx('plx-input-group__affix plx-input-group__affix--prefix', data && 'plx-input-group__affix--data')} id={preId}>{prefix}</span> : null}
         {React.cloneElement(child, pass as GroupedFieldProps)}
-        {suffix != null ? <span className="plx-input-group__affix plx-input-group__affix--suffix" id={sufId}>{suffix}</span> : null}
+        {suffix != null ? <span className={cx('plx-input-group__affix plx-input-group__affix--suffix', data && 'plx-input-group__affix--data')} id={sufId}>{suffix}</span> : null}
       </div>
       {ends.map((el, i) => attach(el, i, ends, 'end'))}
     </div>

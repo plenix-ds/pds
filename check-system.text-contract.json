@@ -1,8 +1,6 @@
 {
  "$description": "The Phase 4 migration list (Plenix Styling Standard, section 6): parts that change the font family without the whole text role. It only shrinks: node check-system.rules/text-contract.js --shrink.",
  "parts": {
-  "plx-data-pill--data": "its weight and line height come from component tokens that reach no text role (the pill's line height 1.3 equals the display role's, but a pill is not display text); it stays on the backlog by ruling (DS Architect on #122: no value changes to fit)",
-  "plx-inline-edit__read": "changes the font family without the whole role (its font and word spacing are not one switch)",
-  "plx-input-group__affix": "changes the font family without the whole role (its font and word spacing are not one switch)"
+  "plx-data-pill--data": "its weight and line height come from component tokens that reach no text role (the pill's line height 1.3 equals the display role's, but a pill is not display text); it stays on the backlog by ruling (DS Architect on #122: no value changes to fit)"
  }
 }

@@ -116,7 +116,7 @@ export function InlineEdit({ label, value = '', onConfirm, onCancel, type = 'tex
   if (!editing) {
     return (
       <div ref={root} className={cx('plx-inline-edit', 'plx-inline-edit--' + type, data && 'plx-inline-edit--data', className)} {...rest}>
-        <button ref={read} type="button" className={cx('plx-inline-edit__read', empty && 'is-empty')} onClick={open} disabled={disabled}>
+        <button ref={read} type="button" className={cx('plx-inline-edit__read', data && 'plx-inline-edit__read--data', empty && 'is-empty')} onClick={open} disabled={disabled}>
           <VisuallyHidden>{label + ', '}</VisuallyHidden>
           <span className="plx-inline-edit__value">{empty ? hint : (readView ? readView(value) : shownValue)}</span>
           {disabled || locked ? null : <VisuallyHidden>{', ' + t.edit}</VisuallyHidden>}

@@ -236,7 +236,7 @@ DSParts.records.push(function (H) {
   };
   var Crop = function () { var done = use(''); return box(360, h(P.Stack, { gap: 'sm' }, h(P.ImageCrop, { src: ART('14'), ratio: '16-9', onApply: function () { done[1]('Applied'); }, onCancel: noop }), done[0] ? h(P.Text, { as: 'p', variant: 'secondary' }, done[0]) : null)); };
   var imageUpload = { id: 'image-upload', lab: true, icon: 'ed-image', sec: 'forms', sub: 'File and media input', leaf: 'Image upload', title: 'Image upload',
-    plenix: 'ImageUpload, ImageCrop', src: 'patterns/ImageUpload/ImageUpload.jsx', level: 'Pattern', interaction: 'Input',
+    plenix: 'ImageUpload, ImageCrop', src: 'patterns/ImageUpload/ImageUpload.tsx', level: 'Pattern', interaction: 'Input',
     aliases: ['Image uploader', 'Photo upload', 'Image picker', 'Picture input'],
     text: 'Adds images and shows a preview of each before they are saved, built from Platform components. A DropZone takes the images, with a Choose button (the browser’s file input) as the keyboard way in. Each image then shows as a preview (Image) with its name and size in the data font, Replace and Remove, and a Description field for its alt text when others will see it. A fixed ratio keeps every preview in one shape (aspect locked). With crop, ImageCrop opens before an image is kept: people zoom and move the picture in the frame, and the cropped picture is what is saved.',
     use: ['Covers, product photos and attachments where the look matters', 'A ratio (and crop) wherever the picture is shown in a fixed shape', 'The formats and the size people should use in the description', 'Alt text for images other people will see'],

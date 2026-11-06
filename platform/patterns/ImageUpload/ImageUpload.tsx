@@ -68,13 +68,19 @@ const RATIOS = { '1-1': 1, '4-3': 4 / 3, '3-2': 3 / 2, '16-9': 16 / 9, '21-9': 2
 let seq = 0;
 
 /* ImageCrop: the picture drawn in the frame's ratio on a canvas off the page; the frame shows the result as an Image */
-export function ImageCrop({ src, ratio = '1-1', output = 1200, onApply, onCancel, strings, className }) {
-  const t = useStrings('imageUpload.crop', strings);
+/** @public the shapes the previews and the crop keep */
+export type ImageRatio = 'auto' | '1-1' | '4-3' | '3-2' | '16-9' | '3-4' | '9-16';
+/** @public what ImageCrop hands back */
+export type ImageCropResult = { url: string; blob: Blob; width: number; height: number };
+/** @public the prop type of ImageCrop (ADR 0011) */
+export type ImageCropProps = { src: string; ratio?: Exclude<ImageRatio, 'auto'>; output?: number; onApply(result: ImageCropResult): void; onCancel?(): void; strings?: Record<string, string>; className?: string };
+export function ImageCrop({ src, ratio = '1-1', output = 1200, onApply, onCancel, strings, className }: ImageCropProps) {
+  const t: any = useStrings('imageUpload.crop', strings);
   const r = RATIOS[ratio] || 1;
   const [zoom, setZoom] = React.useState(100);
   const [pos, setPos] = React.useState({ x: 0, y: 0 });   // the picture's offset, -1 to 1 of the room it has to move
   const [url, setUrl] = React.useState('');
-  const img = React.useRef(null), canvas = React.useRef(null), drag = React.useRef(null);
+  const img = React.useRef<any>(null), canvas = React.useRef<any>(null), drag = React.useRef<any>(null);
   const outW = output, outH = Math.round(output / r);
   React.useEffect(() => {
     const im = new window.Image();
@@ -95,28 +101,28 @@ export function ImageCrop({ src, ratio = '1-1', output = 1200, onApply, onCancel
     try { setUrl(c.toDataURL('image/png')); } catch (e) { setUrl(src); }
   };
   React.useEffect(() => { const id = requestAnimationFrame(draw); return () => cancelAnimationFrame(id); }, [zoom, pos.x, pos.y]);
-  const clamp = (v) => Math.max(-1, Math.min(1, v));
-  const nudge = (dx, dy) => setPos((p) => ({ x: clamp(p.x + dx), y: clamp(p.y + dy) }));
-  const onKey = (e) => {
+  const clamp = (v: any) => Math.max(-1, Math.min(1, v));
+  const nudge = (dx: any, dy: any) => setPos((p) => ({ x: clamp(p.x + dx), y: clamp(p.y + dy) }));
+  const onKey = (e: any) => {
     const s = e.shiftKey ? 0.25 : 0.05;
-    const map = { ArrowLeft: [s, 0], ArrowRight: [-s, 0], ArrowUp: [0, s], ArrowDown: [0, -s] };
+    const map: Record<string, number[]> = { ArrowLeft: [s, 0], ArrowRight: [-s, 0], ArrowUp: [0, s], ArrowDown: [0, -s] };
     if (map[e.key]) { e.preventDefault(); nudge(map[e.key][0], map[e.key][1]); }
     else if (e.key === 'Home') { e.preventDefault(); setPos({ x: 0, y: 0 }); }
   };
-  const onDown = (e) => {
+  const onDown = (e: any) => {
     if (e.button !== 0) return;
     const box = e.currentTarget.getBoundingClientRect();
     drag.current = { x: e.clientX, y: e.clientY, from: pos, w: box.width, h: box.height };
     e.currentTarget.setPointerCapture(e.pointerId);
   };
-  const onMove = (e) => {
+  const onMove = (e: any) => {
     const d = drag.current; if (!d) return;
     setPos({ x: clamp(d.from.x - 2 * (e.clientX - d.x) / d.w), y: clamp(d.from.y - 2 * (e.clientY - d.y) / d.h) });
   };
   const apply = () => {
     const c = canvas.current;
     if (!c || !onApply) return;
-    const done = (blob) => onApply({ url: blob && typeof URL !== 'undefined' ? URL.createObjectURL(blob) : url, blob: blob || null, width: outW, height: outH });
+    const done = (blob: any) => onApply({ url: blob && typeof URL !== 'undefined' ? URL.createObjectURL(blob) : url, blob: blob || null, width: outW, height: outH });
     if (c.toBlob) c.toBlob(done, 'image/png'); else done(null);
   };
   return (
@@ -125,7 +131,7 @@ export function ImageCrop({ src, ratio = '1-1', output = 1200, onApply, onCancel
         onPointerDown={onDown} onPointerMove={onMove} onPointerUp={() => { drag.current = null; }} onPointerCancel={() => { drag.current = null; }}>
         {url ? <Image src={url} alt="" ratio={ratio} placeholder="none" loading="eager" /> : <Image src={src} alt="" ratio={ratio} loading="eager" />}
       </div>
-      <Slider className="plx-image-crop__zoom" label={t.zoom} min={100} max={300} step={10} unit="%" value={zoom} onChange={setZoom} />
+      <Slider className="plx-image-crop__zoom" label={t.zoom} min={100} max={300} step={10} unit="%" value={zoom} onChange={(v: any) => setZoom(v)} />
       <div className="plx-image-crop__actions">
         {onCancel ? <Button onClick={onCancel}>{t.cancel}</Button> : null}
         <Button variant="primary" icon={EdCropIcon} onClick={apply}>{t.apply}</Button>
@@ -134,22 +140,43 @@ export function ImageCrop({ src, ratio = '1-1', output = 1200, onApply, onCancel
   );
 }
 
+/** @public one image of the upload: url shows the preview, blob is the cropped picture when cropped */
+export type UploadedImage = { id?: string | number; url: string; name?: string; size?: number; alt?: string; file?: File; blob?: Blob };
+/** @public the prop type (ADR 0011) */
+export type ImageUploadProps = {
+  value?: UploadedImage[];
+  onChange?(images: UploadedImage[]): void;
+  multiple?: boolean;
+  max?: number;
+  ratio?: ImageRatio;
+  crop?: boolean;
+  accept?: string;
+  maxSize?: number;
+  altText?: boolean;
+  description?: string;
+  label?: string;
+  disabled?: boolean;
+  strings?: Record<string, unknown>;
+  className?: string;
+  id?: string;
+  'aria-describedby'?: string;
+};
 export function ImageUpload({ value = [], onChange, multiple = false, max, ratio = 'auto', crop = false, accept = 'image/png,image/jpeg,image/webp,image/gif',
-  maxSize, altText = false, description, label, disabled = false, strings, className, id, 'aria-describedby': describedBy }) {
-  const t = useStrings('imageUpload', strings);
+  maxSize, altText = false, description, label, disabled = false, strings, className, id, 'aria-describedby': describedBy }: ImageUploadProps) {
+  const t: any = useStrings('imageUpload', strings);
   const loc = useLocale();
   // "N images added": a plural message in the catalog (Arabic has six forms); an app's own function in strings still wins
-  const addedText = (n) => (typeof t.added === 'function' ? t.added(n) : loc.t('imageUpload.added', { count: n, n: formatNumber(n) }));
+  const addedText = (n: any) => (typeof t.added === 'function' ? t.added(n) : loc.t('imageUpload.added', { count: n, n: formatNumber(n) }));
   const images = value || [];
   const [over, setOver] = React.useState(false);
-  const [errors, setErrors] = React.useState([]);
-  const [cropping, setCropping] = React.useState(null);   // the image waiting for its crop
-  const zone = React.useRef(null), removes = React.useRef({});
+  const [errors, setErrors] = React.useState<string[]>([]);
+  const [cropping, setCropping] = React.useState<any>(null);   // the image waiting for its crop
+  const zone = React.useRef<any>(null), removes = React.useRef<Record<string, HTMLElement | null>>({});
   const shape = crop && ratio === 'auto' ? '1-1' : ratio;
   const full = multiple ? (max && images.length >= max) : false;
-  const add = (files) => {
-    const bad = [], ok = [];
-    files.forEach((f) => {
+  const add = (files: any) => {
+    const bad: string[] = [], ok: File[] = [];
+    files.forEach((f: any) => {
       if (!/^image\//.test(f.type)) bad.push(fill(t.notImage, { name: f.name }));
       else if (maxSize && f.size > maxSize) bad.push(fill(t.tooLarge, { name: f.name, max: formatBytes(maxSize) }));
       else ok.push(f);
@@ -161,11 +188,11 @@ export function ImageUpload({ value = [], onChange, multiple = false, max, ratio
     if (crop) { setCropping({ queue: take }); return; }
     commit(take);
   };
-  const commit = (take) => {
-    onChange(multiple ? images.concat(take) : take.slice(0, 1));
+  const commit = (take: any) => {
+    onChange!(multiple ? images.concat(take) : take.slice(0, 1));
     announce(addedText(take.length));
   };
-  const onCropped = (res) => {
+  const onCropped = (res: any) => {
     const [first, ...rest] = cropping.queue;
     const done = Object.assign({}, first, { url: res.url, blob: res.blob });
     if (rest.length) { setCropping({ queue: rest, done: (cropping.done || []).concat([done]) }); return; }
@@ -178,30 +205,30 @@ export function ImageUpload({ value = [], onChange, multiple = false, max, ratio
     if (rest.length) { setCropping({ queue: rest, done: all }); return; }
     setCropping(null); commit(all);
   };
-  const remove = (i) => {
+  const remove = (i: any) => {
     const gone = images[i];
     const next = images.filter((_, j) => j !== i);
-    onChange(next);
+    onChange!(next);
     announce(fill(t.removed, { name: gone.name }));
     // focus: the next preview's Remove, or the Choose button
     setTimeout(() => {
       const after = next[Math.min(i, next.length - 1)];
-      const el = after && removes.current[after.id];
+      const el = after && removes.current[after.id as string];
       if (el) el.focus(); else if (zone.current) { const inp = zone.current.querySelector('input[type="file"]'); if (inp) inp.focus(); }
     }, 0);
   };
-  const setAlt = (i, alt) => onChange(images.map((im, j) => (j === i ? Object.assign({}, im, { alt }) : im)));
+  const setAlt = (i: any, alt: any) => onChange!(images.map((im, j) => (j === i ? Object.assign({}, im, { alt }) : im)));
   const dropProps = disabled ? {} : {
-    onDragOver: (e) => { e.preventDefault(); setOver(true); },
+    onDragOver: (e: any) => { e.preventDefault(); setOver(true); },
     onDragLeave: () => setOver(false),
-    onDrop: (e) => { e.preventDefault(); setOver(false); add(Array.from((e.dataTransfer && e.dataTransfer.files) || [])); },
+    onDrop: (e: any) => { e.preventDefault(); setOver(false); add(Array.from((e.dataTransfer && e.dataTransfer.files) || [])); },
   };
-  const picker = (word) => <FileInput hideSummary accept={accept} multiple={multiple} disabled={disabled} id={id} aria-describedby={describedBy}
+  const picker = (word: any) => <FileInput hideSummary accept={accept} multiple={multiple} disabled={disabled} id={id} aria-describedby={describedBy}
     label={label ? label + ', ' + word : word} strings={{ choose: word, chooseMany: word }} onChange={(files) => add(files)} />;
   const showZone = !cropping && !full && (multiple || !images.length);
   return (
     <div className={cx('plx-image-upload', multiple && 'plx-image-upload--multiple', shape !== 'auto' && 'plx-image-upload--locked', className)} role="group" aria-label={label} ref={zone}>
-      {cropping ? <ImageCrop key={cropping.queue[0].id} src={cropping.queue[0].url} ratio={shape} onApply={onCropped} onCancel={onCropCancel} strings={t.crop} /> : null}
+      {cropping ? <ImageCrop key={cropping.queue[0].id} src={cropping.queue[0].url} ratio={shape as Exclude<ImageRatio, 'auto'>} onApply={onCropped} onCancel={onCropCancel} strings={t.crop} /> : null}
       {images.length && !cropping ? (
         <ul className="plx-image-upload__list">
           {images.map((im, i) => (
@@ -215,7 +242,7 @@ export function ImageUpload({ value = [], onChange, multiple = false, max, ratio
               </div>
               <div className="plx-image-upload__actions">
                 {!multiple && !disabled ? picker(t.replace) : null}
-                <Button ref={(el) => { removes.current[im.id] = el; }} variant="ghost" size="xs" icon={TrashIcon} disabled={disabled} label={fill(t.remove, { name: im.name })}
+                <Button ref={(el) => { removes.current[im.id as string] = el; }} variant="ghost" size="xs" icon={TrashIcon} disabled={disabled} label={fill(t.remove, { name: im.name })}
                   iconOnly={multiple} onClick={() => remove(i)}>{multiple ? undefined : fill(t.remove, { name: '' }).trim()}</Button>
               </div>
               {altText ? <Field className="plx-image-upload__alt" label={t.alt} description={t.altHint}>

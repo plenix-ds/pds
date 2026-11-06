@@ -17,8 +17,9 @@ import { snapToGrid } from '../../utils/grid.ts';
 import { Image } from '../../components/Image/Image.tsx';
 import { Input, Select } from '../../components/Input/Input.tsx';
 import { CommentThread } from '../CommentThread/CommentThread.tsx';
+import type { ThreadComment } from '../CommentThread/CommentThread.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
-function AnnotationMark({ annotation, index, active, onSelect, strings }) {
+function AnnotationMark({ annotation, index, active, onSelect, strings }: { annotation: Annotation; index: number; active: boolean; onSelect: () => void; strings: any }) {
   const position = { x: snapToGrid(Number(annotation.x) || 0), y: snapToGrid(Number(annotation.y) || 0) };
   const move = useReposition({ name: annotation.label || annotation.location, position, disabled: true });
   return (
@@ -40,6 +41,22 @@ function AnnotationMark({ annotation, index, active, onSelect, strings }) {
     </Button>
   );
 }
+/** @public one comment in a thread */
+export type AnnotationComment = ThreadComment;
+/** @public one annotation: a pin or a region, named by its location */
+export type Annotation = { id: string | number; label?: string; kind?: 'pin' | 'region'; location?: string; x?: number; y?: number; comments?: AnnotationComment[] };
+/** @public the prop type (ADR 0011) */
+export type ImageAnnotationProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> & {
+  src: string;
+  alt?: string;
+  annotations?: Annotation[];
+  selectedId?: string | number | null;
+  onSelectionChange?(id: string | number | null): void;
+  onAdd?(annotation: { kind: 'pin' | 'region'; location: string; text: string; x?: number; y?: number }): unknown;
+  onReply?(id: string | number, text: string): unknown;
+  strings?: Record<string, string>;
+  className?: string;
+};
 export function ImageAnnotation({
   src,
   alt,
@@ -51,10 +68,10 @@ export function ImageAnnotation({
   strings,
   className,
   ...rest
-}) {
-  const t = useStrings('imageAnnotation', strings);
-  const [own, setOwn] = React.useState(null),
-    [kind, setKind] = React.useState('pin'),
+}: ImageAnnotationProps) {
+  const t: any = useStrings('imageAnnotation', strings);
+  const [own, setOwn] = React.useState<any>(null),
+    [kind, setKind] = React.useState<'pin' | 'region'>('pin'),
     [location, setLocation] = React.useState(''),
     [text, setText] = React.useState(''),
     [error, setError] = React.useState(''),
@@ -69,7 +86,7 @@ export function ImageAnnotation({
   }, []);
   const id = selectedId === undefined ? own : selectedId,
     active = annotations.find((a) => a.id === id);
-  async function add(e) {
+  async function add(e: any) {
     e.preventDefault();
     if (lock.current || !onAdd) return;
     if (!location.trim() || !text.trim()) {
@@ -133,7 +150,7 @@ export function ImageAnnotation({
           title={active.label || active.location}
           comments={active.comments || []}
           strings={strings}
-          onReply={onReply ? (value) => onReply(active.id, value) : undefined}
+          onReply={onReply ? async (value: string) => { await onReply(active.id, value); } : undefined}
         />
       ) : null}
       {onAdd ? (
@@ -142,7 +159,7 @@ export function ImageAnnotation({
             <Select
               disabled={busy}
               value={kind}
-              onChange={(e) => setKind(e.target.value)}
+              onChange={(e) => setKind(e.target.value as 'pin' | 'region')}
               options={[
                 { value: 'pin', label: t.pin },
                 { value: 'region', label: t.region }

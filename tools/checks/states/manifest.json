@@ -418,5 +418,25 @@
     "loading": "n/a(a logo does not load)",
     "selected": "n/a(a logo has no selection)",
     "error": "n/a(a logo has no value to validate)"
+  },
+  "InlineEdit": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(a disabled inline edit shows its text and cannot open; the read view is the disabled button)",
+    "loading": "n/a(the value is the application's; saving is the application's)",
+    "selected": "n/a(an inline edit has no selection)",
+    "error": "n/a(validation is the field's: the editing Input shows the error)"
+  },
+  "InputGroup": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(the group follows its field's disabled state)",
+    "loading": "n/a(a group has no loading state)",
+    "selected": "n/a(a group has no selection)",
+    "error": "n/a(the group follows its field's invalid state)"
   }
 }

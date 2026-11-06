@@ -31,14 +31,29 @@ import { EmptyState } from '../../components/EmptyState/EmptyState.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 
 
-export function NotificationList({ items, onChange, onOpen, onViewAll, limit, label, footer = true, strings, className }) {
-  const t = useStrings('notificationList', strings);
+/** @public one notification */
+export type NotificationItem = { id: string | number; text: string; time?: string; unread?: boolean };
+/** @public the prop type (ADR 0011) */
+export type NotificationListProps = {
+  /** default: the session's notifications */
+  items?: NotificationItem[];
+  onChange?(next: NotificationItem[]): void;
+  onOpen?(notification: NotificationItem): void;
+  onViewAll?(): void;
+  limit?: number;
+  label?: string;
+  footer?: boolean;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function NotificationList({ items, onChange, onOpen, onViewAll, limit, label, footer = true, strings, className }: NotificationListProps) {
+  const t: any = useStrings('notificationList', strings);
   const session = useSession();
   const own = items || session.notifications;
   const unread = own.filter((n) => n.unread).length;
-  const save = (next) => { if (!items) session.setNotifications(next); if (onChange) onChange(next); };
+  const save = (next: any) => { if (!items) session.setNotifications(next); if (onChange) onChange(next); };
   const markAll = () => save(own.map((n) => Object.assign({}, n, { unread: false })));
-  const open = (n) => { if (n.unread) save(own.map((x) => (x.id === n.id ? Object.assign({}, x, { unread: false }) : x))); if (onOpen) onOpen(n); };
+  const open = (n: any) => { if (n.unread) save(own.map((x) => (x.id === n.id ? Object.assign({}, x, { unread: false }) : x))); if (onOpen) onOpen(n); };
   const shown = limit ? own.slice(0, limit) : own;
   return (
     <div className={cx('plx-notification-list', className)}>
