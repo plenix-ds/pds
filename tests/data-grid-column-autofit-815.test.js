@@ -67,6 +67,16 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
       assert.ok(picked, T + 'AC-5: the column menu offers "Size all columns to fit"');
       assert.equal(await colw('Reason'), reasonFit, T + 'AC-5: the menu gives the same width as the double-click');
       assert.ok((await colw('Husband')) < wBoth[1] && (await cutIn('Husband')) === 0, T + 'AC-5: every column is fitted, none cut');
+      // AC-7: fitting a column of a 10,000-row grid takes under 50ms
+      await page.evaluate(async () => {
+        const h = React.createElement, P = window.Plenix; document.querySelector('main').innerHTML = '<div id="big" style="inline-size:900px;block-size:400px;display:grid"></div>';
+        const rows = Array.from({ length: 10000 }, (_, i) => ({ id: 'R' + i, name: 'Name ' + 'x'.repeat(i % 30) }));
+        ReactDOM.createRoot(document.getElementById('big')).render(h(P.DataGrid, { label: 'Big', data: rows, columns: [{ title: 'Id', field: 'id' }, { title: 'Name', field: 'name' }], index: 'id' }));
+        await new Promise((r) => setTimeout(r, 1500));
+      });
+      const ms = await page.evaluate(() => { const hd = [...document.querySelectorAll('#big [role=columnheader]')].find((x) => x.textContent.trim().startsWith('Name')), hl = hd.querySelector('.plx-data-grid__grid-col-resize-handle'); hl.focus(); document.body.offsetHeight; document.body.offsetHeight;
+        const t = performance.now(); hl.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true })); return performance.now() - t; });
+      assert.ok(ms < 50, T + 'AC-7: the fit of a 10,000-row column took ' + Math.round(ms) + 'ms');
       await page.close();
     }
     assert.deepEqual(errors, [], 'no script errors');

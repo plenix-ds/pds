@@ -75,7 +75,11 @@ export function columnSizing({ columns, frame, source, resize, metrics, table, B
         ctx.font = cs.getPropertyValue('--plx-comp-data-grid-font-size') + ' ' + cs.getPropertyValue(data ? '--plx-comp-data-grid-data-font-family' : '--plx-comp-data-grid-font-family');
         ctx.wordSpacing = data ? cs.getPropertyValue('--plx-sys-font-data-word-spacing').trim() || '0px' : '0px';
         // only the longest texts can be the widest: measure a bounded number of them
-        const texts = source.map((r) => valueText(valueAt(r, field))).sort((a, b) => b.length - a.length).slice(0, 24);
+        const texts: string[] = [];   // the 24 longest, kept in one pass
+        for (const r of source) {
+          const t = valueText(valueAt(r, field));
+          if (texts.length < 24 || t.length > texts[texts.length - 1].length) { texts.push(t); texts.sort((a, b) => b.length - a.length); if (texts.length > 24) texts.pop(); }
+        }
         width = Math.max(width, ...texts.map((t) => ctx.measureText(t).width + chrome));
       }
     }
