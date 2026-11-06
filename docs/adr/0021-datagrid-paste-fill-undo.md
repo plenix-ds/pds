@@ -42,7 +42,7 @@ onCellEdit?(record, change: { field, value, previous, row, source?: 'edit' | 'pa
 - **Fill:** Ctrl+D copies the selected block's top row down through it. The fill handle (on the block's end corner, logical: the bottom inline-end) drags down or toward the inline-end. No fill-right key: Ctrl+R reloads the page in a browser.
 - **Undo:**
   - One undo step is one user action (a typed edit, one paste, one fill). Each step undoes its cells together, by calling `onCellEdit` with the previous values (`source: 'undo'`), and redo the same way (`source: 'redo'`).
-  - The history is per grid, cleared when `data` changes identity from outside, and holds the last 100 steps.
+  - The history is per grid and holds the last 100 steps. A step whose cells no longer hold the values it left them with (the data changed from outside) ends the history there, so a refetch with the same values keeps it (as built in #612).
 - **Every change goes through `onCellEdit`,** once per cell, with `source` saying why. The async rules of ADR 0016 hold per cell: a spinner, and a rejected promise puts the old value back.
   - A paste or fill whose cells partly reject keeps the accepted ones and announces the rejected count.
   - `source` is `'edit'` for a typed edit, so existing apps that ignore it see no change.
