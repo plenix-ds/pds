@@ -86,6 +86,14 @@
       "$type": "fontWeight",
       "$description": "Recent searches heading: its weight."
     },
+    "search-popup-title-letter-spacing": {
+      "$value": "{plx-sys.text-label-letter-spacing}",
+      "$description": "search-popup-title letter spacing: the label role's (docs/pds1 text roles; #122)."
+    },
+    "search-popup-title-line-height": {
+      "$value": "{plx-sys.text-label-line-height}",
+      "$description": "search-popup-title line height: the label role's (docs/pds1 text roles; #122)."
+    },
     "search-list-max-height": {
       "$value": "{plx-ref.size-55u}",
       "$type": "dimension",

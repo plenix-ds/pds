@@ -70,6 +70,14 @@
       "$type": "fontWeight",
       "$description": "Focus order overlay: the weight of the numbers."
     },
+    "focus-order-letter-spacing": {
+      "$value": "{plx-sys.text-label-letter-spacing}",
+      "$description": "focus-order letter spacing: the label role's (docs/pds1 text roles; #122)."
+    },
+    "focus-order-line-height": {
+      "$value": "{plx-sys.text-label-line-height}",
+      "$description": "focus-order line height: the label role's (docs/pds1 text roles; #122)."
+    },
     "focus-order-path-opacity": {
       "$value": "{plx-sys.opacity-mid}",
       "$type": "number",
