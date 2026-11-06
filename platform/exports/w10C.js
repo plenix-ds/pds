@@ -4,4 +4,4 @@ export { FormFlow } from '../patterns/FormFlow/FormFlow.tsx';
 export { Autosave, SaveStatus, useAutosave } from '../patterns/Autosave/Autosave.jsx';
 export { DraftState } from '../patterns/DraftState/DraftState.jsx';
 export { SaveAs } from '../patterns/SaveAs/SaveAs.jsx';
-export { ArchiveRestore } from '../patterns/ArchiveRestore/ArchiveRestore.jsx';
+export { ArchiveRestore } from '../patterns/ArchiveRestore/ArchiveRestore.tsx';

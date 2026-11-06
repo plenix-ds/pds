@@ -15,7 +15,7 @@ import { cx } from '../../utils/cx.ts';
 import { SidePanel } from '../SidePanel/SidePanel.jsx';
 import { Sheet } from '../../components/Sheet/Sheet.tsx';
 import { Stack } from '../../components/Stack/Stack.tsx';
-import { AIChat } from '../AIChat/AIChat.jsx';
+import { AIChat } from '../AIChat/AIChat.tsx';
 import SparkleIcon from 'plenix-platform/icons/plenix/sparkle';
 export function AssistantPanel({open=true,onOpenChange,variant='inspector',title,context,chat={},strings,className,...rest}){
  const t={title:'AI assistant',close:'Close AI assistant',...strings},name=title||t.title,body=<Stack className="plx-assistant-panel__body">{context}<AIChat {...chat} {...rest} title={name} strings={t.chat||chat.strings}/></Stack>;

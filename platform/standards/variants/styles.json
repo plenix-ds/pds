@@ -5750,5 +5750,106 @@
   "navigation-menu--layout-with-featured": {
     "sets": [],
     "why": "markup only: a featured area for one current highlight beside the columns; mega-menu.css has no rule specific to it"
+  },
+  "query-builder--structure-nested-groups": {
+    "sets": [
+      {
+        "property": "border-inline-start-color",
+        "part": "group",
+        "token": "--plx-comp-query-builder-rail-color"
+      },
+      {
+        "property": "border-inline-start-width",
+        "part": "group",
+        "token": "--plx-comp-query-builder-rail-width"
+      },
+      {
+        "property": "padding-inline-start",
+        "part": "group",
+        "token": "--plx-comp-query-builder-rail-padding"
+      }
+    ],
+    "why": "query-builder.css: .plx-query-builder__group[data-plx-depth=\"1\"] and [data-plx-depth=\"2\"], a rail at the group's start edge (border-inline-start-style: solid has no token)"
+  },
+  "query-builder--structure-group-and-or": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "join",
+        "token": "--plx-comp-query-builder-join-text"
+      },
+      {
+        "property": "font-size",
+        "part": "join",
+        "token": "--plx-comp-query-builder-join-font-size"
+      },
+      {
+        "property": "inline-size",
+        "part": "join",
+        "token": "--plx-comp-query-builder-join-width"
+      },
+      {
+        "property": "min-block-size",
+        "part": "join",
+        "token": "--plx-comp-query-builder-join-height"
+      },
+      {
+        "property": "column-gap",
+        "part": "group-head",
+        "token": "--plx-comp-query-builder-head-gap"
+      }
+    ],
+    "why": "query-builder.css: .plx-query-builder__join, the AND or OR between a group's rules, and .plx-query-builder__group-head, the row with the choice and its actions"
+  },
+  "query-builder--structure-rule": {
+    "sets": [
+      {
+        "property": "column-gap",
+        "part": "item",
+        "token": "--plx-comp-query-builder-item-gap"
+      }
+    ],
+    "why": "query-builder.css: .plx-query-builder__item, a rule's field, operator and value in a row (align-items: flex-start has no token)"
+  },
+  "icon-tile--icon-filled": {
+    "sets": [],
+    "why": "markup only: filled swaps the icon for its filled version; icon-tile.css has no modifier for it"
+  },
+  "color-swatch--shape-square-default-2px-corners": {
+    "sets": [
+      {
+        "property": "border-radius",
+        "part": "block",
+        "token": "--plx-comp-color-swatch-radius"
+      },
+      {
+        "property": "border-color",
+        "part": "block",
+        "token": "--plx-comp-color-swatch-border-color"
+      },
+      {
+        "property": "border-width",
+        "part": "block",
+        "token": "--plx-comp-color-swatch-border-width"
+      },
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-color-swatch-value"
+      }
+    ],
+    "why": ".plx-color-swatch in color-swatch.css: the square chip filled with the data color, with the default border"
+  },
+  "network-graph--layout-force": {
+    "sets": [],
+    "why": "markup only: a force simulation: connected nodes pull together and all nodes push apart (layout force)"
+  },
+  "network-graph--layout-hierarchical": {
+    "sets": [],
+    "why": "markup only: nodes in layers from the roots (layout hierarchical)"
+  },
+  "network-graph--behavior-zoom-and-pan": {
+    "sets": [],
+    "why": "markup only: zoom and pan with the buttons above the plot, the keys or a drag"
   }
 }

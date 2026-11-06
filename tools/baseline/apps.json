@@ -6,7 +6,8 @@
       "title": "CTM",
       "repository": "LighthouseCollection/CTM",
       "branch": "main",
-      "channel": "cdn/latest.json (held by pins.ctm when set; checks every 30 minutes)",
+      "channel": "cdn/latest.json (held by pins.ctm when set; checks every 30 minutes, and at once on the plenix-release event)",
+      "notify": { "event_type": "plenix-release", "decision": "D-0083, #750: sent after the live check by tools/publish/notify-apps.mjs" },
       "owner": "the CTM team",
       "scan": true
     },
