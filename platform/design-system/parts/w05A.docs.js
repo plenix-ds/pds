@@ -1,8 +1,9 @@
 /* Plenix design system · library part w05A: the written sections of the contextual overlays (Popover, ContextualHelp,
    TeachingBubble, Popconfirm, MegaMenu), moved from the common-ground guidance into Plenix's words. Popup, Inline dialog
    and Hover card show Popover's (docsFrom), Coach mark TeachingBubble's, Contextual education ContextualHelp's. */
+var W05A_POPOVER;
 DSParts.docs.push({
-  'popover': {
+  'popover': W05A_POPOVER = {
     purpose: 'Shows related content or a few controls next to what they belong to, without leaving the page or blocking it with a dialog.',
     anatomy: ['Trigger — the button (or link) it is anchored to (required)', 'Surface — the overlay surface with the menu’s border, radius and shadow (required)', 'Header — a title that names it and an optional Close (optional: title, closeButton)', 'Body — text, controls or a short form (required)', 'Footer — its actions at the end edge (optional: footer)', 'Arrow — a caret on the edge that faces the trigger (optional: arrow)'],
     behavior: { pointer: 'A click on the trigger opens and closes it; a click outside closes it. A hover card opens after a short rest of the pointer and stays while the pointer is in it.', keyboard: 'Enter or Space on the trigger opens it and moves focus in; Tab moves through its controls; Escape closes it and returns focus to the trigger; Tab past its last control closes it.', focus: 'Focus moves to initialFocus, else its first control, else the popover itself (whose border then turns the focus color); it returns to the trigger when it closes from inside.', responsive: 'It flips and shifts to stay in the window and is never wider than the window less its margins; at the Narrow window class a click popover is a bottom sheet.', motion: 'None: it appears in place.', loading: 'Content that loads shows its own loading state inside the body.', error: 'Errors stay on the fields inside it; it does not close on a failed action.' },
@@ -31,3 +32,17 @@ DSParts.docs.push({
     content: { labels: 'A direct question: “Remove this tag?”', actions: 'The confirm button says the verb (Remove, Publish), never “Yes”; Cancel says Cancel.', errors: 'Not applicable to the question itself.', localization: 'Cancel comes from strings; the question, description and verb are the caller’s.' }
   }
 });
+/* Hover card: the Popover's write-up with its own pointer, keyboard and focus rows (the hover card opens on hover and on
+   focus and takes no focus into itself); the rest is the Popover's (#120 batch 7). */
+(function () {
+  var p = W05A_POPOVER;
+  DSParts.docs.push({
+    'hover-card': Object.assign({}, p, {
+      behavior: Object.assign({}, p.behavior, {
+        pointer: 'It opens after a short rest of the pointer on its name, avatar or link, stays open while the pointer moves into it, and closes a moment after the pointer leaves both. Touch has no hover: a tap follows the link.',
+        keyboard: 'Keyboard focus on the trigger opens it at once, without moving focus into it; Escape closes it without moving focus.'
+      }),
+      a11y: Object.assign({}, p.a11y, { focus: 'Focus stays on the trigger; the card is not entered or trapped, and Escape closes it.' })
+    })
+  });
+})();

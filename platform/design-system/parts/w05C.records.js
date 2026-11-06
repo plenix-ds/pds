@@ -200,9 +200,9 @@ DSParts.records.push(function (H) {
       vp('Text-only rich tooltip', 'Content', 'Text only', { variant: 'text' }, 'A few sentences on the popover surface, shown on hover and focus.', 'A short explanation of a control', 'One word: use the plain tooltip'),
       vp('Rich tooltip with a title', 'Content', 'Title and text', { variant: 'title' }, 'A short title over the sentences.', 'A term that needs its name repeated', 'A title that repeats the trigger label word for word'),
       vp('Rich tooltip with an action', 'Content', 'With an action', { variant: 'action' }, 'A toggletip: opened by a click, with one link or button under the text.', 'A link to the help page', 'More than one action: use a Popover'),
-      vp('Tooltip below', 'Placement', 'Bottom (default)', { size: 'bottom' }, 'Under the trigger, the arrow pointing up.', 'Most controls', 'Controls at the bottom of the window'),
-      vp('Tooltip above', 'Placement', 'Top', { size: 'top' }, 'Over the trigger, the arrow pointing down.', 'Controls near the bottom edge', 'Controls under a header that would cover it'),
-      vp('Tooltip at the start', 'Placement', 'Start', { size: 'start' }, 'Before the trigger in the reading direction, the arrow pointing at it.', 'Controls at the end edge', 'Controls at the start edge'),
+      vp('Tooltip below', 'Placement', 'Bottom (default)', { size: 'bottom' }, 'Under the trigger, the default; it flips to stay in the window.', 'Most controls', 'Controls at the bottom of the window'),
+      vp('Tooltip above', 'Placement', 'Top', { size: 'top' }, 'Over the trigger; it flips to stay in the window.', 'Controls near the bottom edge', 'Controls under a header that would cover it'),
+      vp('Tooltip at the start', 'Placement', 'Start', { size: 'start' }, 'Before the trigger in the reading direction; it flips to stay in the window.', 'Controls at the end edge', 'Controls at the start edge'),
       vp('Tooltip at the end', 'Placement', 'End', { size: 'end' }, 'After the trigger in the reading direction (a tool rail).', 'Vertical rails of icon buttons', 'Controls at the end edge')
     ],
     examples: [
