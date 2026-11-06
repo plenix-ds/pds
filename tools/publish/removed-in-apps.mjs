@@ -7,7 +7,7 @@
 // Removed classes: those on platform/standards/deprecated-classes.json at the previous release that are not on it now
 // (VERSIONING.md: a class is removed only after it was deprecated, so the list is the one record of removals).
 // Each app with "scan": true in the registry is cloned (depth 1, its branch) and searched, as whole class names, in its
-// source files; node_modules, build output, vendored copies and copied Plenix stylesheets are skipped.
+// source files; node_modules, build output, vendored copies, copied Plenix stylesheets and tests are skipped.
 // Fails when an app uses a removed class, and when an app can't be fetched while the release removes classes (an app
 // that can't be checked is not proven safe). With no removed class it passes without fetching anything.
 import { execFileSync } from 'node:child_process';
@@ -18,8 +18,10 @@ import { fileURLToPath } from 'node:url';
 
 const LIST = 'platform/standards/deprecated-classes.json';
 const SOURCE = /\.(jsx?|tsx?|mjs|cjs|vue|svelte|html?|css|scss|less)$/;
-const SKIP_DIR = new Set(['node_modules', '.git', 'dist', 'build', 'out', 'coverage', 'vendor', '.next']);
-const SKIP_FILE = /(^|\/)plenix[^/]*\.css$|\.min\.(js|css)$/;
+const SKIP_DIR = new Set(['node_modules', '.git', 'dist', 'build', 'out', 'coverage', 'vendor', '.next', 'test', 'tests', '__tests__', 'e2e']);
+// copied Plenix stylesheets, minified bundles and tests: tests never reach users, and an app's guard test lists the
+// removed names on purpose (CTM's tests/frontend/plenix-deprecated-classes.test.cjs asserts it uses none of them)
+const SKIP_FILE = /(^|\/)plenix[^/]*\.css$|\.min\.(js|css)$|\.(test|spec)\.[cm]?[jt]sx?$/;
 
 export function removedClasses(previous, current) {
   const keep = new Set(current);
