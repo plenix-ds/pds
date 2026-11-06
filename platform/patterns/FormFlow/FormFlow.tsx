@@ -51,7 +51,7 @@ export type FormFlowProps<V = unknown> = {
   strings?: Record<string, string>;
   className?: string;
 };
-export function FormFlow<V = any>({ mode = 'create', surface = 'page', open = true, title, initialValue, defaultValue, sessionKey, validate, onSubmit, onSuccess, onCancel, children, strings, className }: FormFlowProps<V>) {
+export function FormFlow<V = unknown>({ mode = 'create', surface = 'page', open = true, title, initialValue, defaultValue, sessionKey, validate, onSubmit, onSuccess, onCancel, children, strings, className }: FormFlowProps<V>) {
   const t: any = useStrings('formFlow', strings);
   const [value, setValue] = React.useState<any>(defaultValue ?? initialValue), [saved, setSaved] = React.useState<any>(initialValue);
   const [busy, setBusy] = React.useState(false), [error, setError] = React.useState('');
