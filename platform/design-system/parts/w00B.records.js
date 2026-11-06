@@ -782,7 +782,7 @@ DSParts.records.push(function (H) {
 
     /* ── 10 Patterns ── */
     T('bulk-selection', { sec: 'patterns', sub: 'Selection and organization', leaf: 'Multi-selection',
-      text: 'Multi-selection lets people pick several items and act on them together: the checkboxes of a selectable DataGrid or the selection boxes of MediaCards, with BulkActions above the results showing how many are selected and what can be done.',
+      text: 'Multi-selection lets people pick several items and act on them together: the checkboxes of a selectable DataGrid or the selection boxes of MediaCards, with the selection’s commands in the command bar (or in the Bulk action bar on a page without one), showing how many are selected and what can be done.',
       use: ['Lists and grids whose items are moved, tagged or deleted in groups'], avoid: ['Selection that disappears when the person scrolls or changes a filter without saying so'],
       examples: [exOf('bulk-selection', 'Select rows')] }),
     T('bulk-selection', { sec: 'patterns', sub: 'Selection and organization', leaf: 'Select all', purpose: 'Selects every record in the list, including those on other pages, in one step.',
