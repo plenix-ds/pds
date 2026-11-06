@@ -1,0 +1,9 @@
+AssertionError [ERR_ASSERTION]: the JPEG 2000 squares show in red and blue, not a blank page: {"canvas":true,"red":0,"blue":0,"white":40000,"total":40000}
+    at /home/cc/pds1/work/component-engineer-1/tests/document-viewer-jpx-384.test.js:32:12 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}

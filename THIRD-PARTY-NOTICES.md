@@ -17,6 +17,10 @@ Plenix ships the third-party software below, either copied into `platform/vendor
 | ZRender (inside ECharts) | 6.1.0 | BSD-3-Clause | `platform/vendor/echarts/echarts.min.js` | below, and `platform/vendor/echarts/LICENSE-zrender` |
 | tslib (inside ECharts) | 2.3.0 | 0BSD | `platform/vendor/echarts/echarts.min.js` | below, and `platform/vendor/echarts/LICENSE-tslib` |
 | PDF.js | 6.5.438 | Apache-2.0 | `platform/vendor/pdfjs/` | `platform/vendor/pdfjs/LICENSE` |
+| OpenJPEG (inside PDF.js's `wasm/openjpeg.wasm`, JPEG 2000) | as built by PDF.js 6.5.438 | BSD-2-Clause | `platform/vendor/pdfjs/wasm/` | `platform/vendor/pdfjs/wasm/LICENSE_OPENJPEG`, `LICENSE_PDFJS_OPENJPEG` |
+| JBIG2 decoder (PDFium, inside `wasm/jbig2.wasm`) | as built by PDF.js 6.5.438 | BSD-3-Clause | `platform/vendor/pdfjs/wasm/` | `LICENSE_JBIG2`, `LICENSE_PDFJS_JBIG2` |
+| qcms (Mozilla, inside `wasm/qcms_bg.wasm`, ICC colors) | as built by PDF.js 6.5.438 | MIT | `platform/vendor/pdfjs/wasm/` | `LICENSE_QCMS`, `LICENSE_PDFJS_QCMS` |
+| QuickJS (inside `wasm/quickjs-eval.wasm`, PDF scripting) | as built by PDF.js 6.5.438 | MIT | `platform/vendor/pdfjs/wasm/` | `LICENSE_QUICKJS`, `LICENSE_PDFJS_QUICKJS` |
 | Tiptap, ProseMirror and their dependencies (46 packages) | Tiptap 3.31.3 | MIT | `platform/vendor/tiptap/tiptap.min.js` | `platform/vendor/tiptap/LICENSES.txt` (each package's own text) |
 | DM Sans | variable | SIL Open Font License 1.1 | `platform/fonts/dm-sans-*.woff2` | `platform/fonts/OFL-DMSans.txt` |
 | Reddit Mono | variable | SIL Open Font License 1.1 | `platform/fonts/reddit-mono-*.woff2` | `platform/fonts/OFL-RedditMono.txt` |
