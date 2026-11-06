@@ -1106,6 +1106,28 @@
         }
       }
     },
+    "status-tile-border": {
+      "$value": "{plx-ref.color-gray-350}",
+      "$type": "color",
+      "$description": "A status tile's 1px border in every tone: gray-350 (owner, 2026-11-06, #838); the tone stays in the fill, icon and text.",
+      "$extensions": {
+        "plenix": {
+          "group": "status",
+          "purpose": "A status tile (EntityHeader): its 1px border, the same in every tone."
+        }
+      }
+    },
+    "status-tile-background": {
+      "$value": "{plx-ref.color-blue-100}",
+      "$type": "color",
+      "$description": "A status tile's fill in every tone: blue-100 (owner, 2026-11-06, #838). Each tone's text and icon on it is 5.91:1 or more (check 8).",
+      "$extensions": {
+        "plenix": {
+          "group": "status",
+          "purpose": "A status tile (EntityHeader): its fill, the same in every tone; the tone is in its text and icon."
+        }
+      }
+    },
     "status-pill-negative-text": {
       "$value": "{plx-ref.color-red-800}",
       "$type": "color",
