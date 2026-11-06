@@ -520,3 +520,13 @@
   options: [explicit fields plus catalog-built words (chosen), only title / body / confirmLabel as ADR 0004 first said]
   status: active
   check: review-only (G3 on #424) and tests/command-confirm-109.test.js
+
+- id: D-0061
+  date: 2026-11-05
+  area: api
+  decided_by: agent (pds1-ds-architect) on the Component Engineer's ruling (#456), owner may switch
+  decision: 'DataGrid editing.typeToReplace defaults to true (unset = today''s behavior since #737: a typed character starts an edit in place of the value); typeToReplace false turns it off. ADR 0016''s "default false" was a mistake about today''s behavior (docs/adr/0016 addendum).'
+  why: 'A false default would stop typing-to-edit in every existing table until the application sets the option, a silent break.'
+  options: [default true, false turns it off (chosen, A), default false as the ADR first said (B)]
+  status: active
+  check: tests/data-grid-editing-options-84.test.js (the defaults cases) and G3 review of #456
