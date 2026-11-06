@@ -7,9 +7,9 @@
      (__thumb--x, --y) and its size (data-plx-thumb) itself, so its rules need no track above it. */
 import React from 'react';
 import { isRtl } from '../../utils/direction.ts';
-export function Scrollbars({ holder, viewportId, hideX = false }) {
-  const thumbs = React.useRef({});
-  const [sizes, setSizes] = React.useState({}),
+export function Scrollbars({ holder, viewportId, hideX = false }: { holder: any; viewportId: any; hideX?: boolean }) {
+  const thumbs = React.useRef<Record<string, any>>({});
+  const [sizes, setSizes] = React.useState<any>({}),
     [drag, setDrag] = React.useState(null);
   React.useLayoutEffect(() => {
     const el = holder.current;
@@ -17,11 +17,11 @@ export function Scrollbars({ holder, viewportId, hideX = false }) {
     let frame = 0;
     const read = () => {
       frame = 0;
-      const ratio = (size, total) =>
+      const ratio = (size: any, total: any) =>
         total > size ? Math.max(10, Math.min(95, Math.round((size / total) * 20) * 5)) : null;
       // the sideways bar floats on the bottom edge: the scroll body keeps its room clear while it scrolls sideways (issue 272)
       el.toggleAttribute('data-plx-scroll-x', el.scrollWidth > el.clientWidth);
-      setSizes((old) => {
+      setSizes((old: any) => {
         const next = { x: ratio(el.clientWidth, el.scrollWidth), y: ratio(el.clientHeight, el.scrollHeight) };
         return next.x === old.x && next.y === old.y ? old : next;
       });
@@ -50,7 +50,7 @@ export function Scrollbars({ holder, viewportId, hideX = false }) {
       if (frame) cancelAnimationFrame(frame);
     };
   }, [holder]);
-  const start = (event, axis) => {
+  const start = (event: any, axis: any) => {
     if (event.button !== 0) return;
     const el = holder.current,
       track = event.currentTarget.classList.contains('plx-data-grid__thumb')
@@ -81,7 +81,7 @@ export function Scrollbars({ holder, viewportId, hideX = false }) {
     event.currentTarget.setPointerCapture(pointer);
     setDrag(axis);
     const node = event.currentTarget;
-    const move = (e) => {
+    const move = (e: any) => {
       const value = Math.max(
         0,
         Math.min(

@@ -186,7 +186,7 @@
 import React from 'react';
 import { DataGridEngine } from './DataGridEngine.jsx';
 import { useRowTemplate } from './engine/rowTemplate.ts';
-import { useDataGridActions } from './actions.jsx';
+import { useDataGridActions } from './actions.tsx';
 import { unreadCommands } from './unread-commands.ts';
 import { ToastProvider, useOptionalToast } from '../Toast/Toast.tsx';
 

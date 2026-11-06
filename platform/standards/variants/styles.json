@@ -4307,6 +4307,50 @@
     ],
     "why": "progress-bar.css: the base .plx-progress-bar__track; the small size (--sm) uses the sm track height"
   },
+  "field-group--layout-stacked-default": {
+    "sets": [],
+    "why": "markup only: the controls under each other (layout stack, the default)"
+  },
+  "field-group--legend-legend-visible": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "legend",
+        "token": "--plx-comp-fieldset-legend-text"
+      },
+      {
+        "property": "font-size",
+        "part": "legend",
+        "token": "--plx-comp-fieldset-legend-font-size"
+      },
+      {
+        "property": "margin-block-end",
+        "part": "legend",
+        "token": "--plx-comp-fieldset-legend-margin-block-end"
+      }
+    ],
+    "why": ".plx-fieldset__legend: the group's title as secondary text above the controls"
+  },
+  "field-group--legend-legend-hidden": {
+    "sets": [],
+    "why": "markup only: the legend is hidden from sight but still read by assistive technology (hideLegend)"
+  },
+  "funnel-chart--orientation-vertical-default": {
+    "sets": [],
+    "why": "markup only: stages from top to bottom, one bar per stage on a zero baseline, drawn by the chart engine"
+  },
+  "funnel-chart--orientation-horizontal": {
+    "sets": [],
+    "why": "markup only: stages from left to right (orientation horizontal)"
+  },
+  "gauge--variant-semicircle": {
+    "sets": [],
+    "why": "markup only: one value inside a known range on a semicircle track, with the value in the middle and the minimum and maximum at the ends"
+  },
+  "gauge--variant-with-thresholds": {
+    "sets": [],
+    "why": "markup only: warning and critical ranges along the outside of the track, and a status badge that names the range the value is in (thresholds)"
+  },
   "wordmark--tone-on-accent": {
     "sets": [
       {
