@@ -4,7 +4,7 @@
 export { MillerColumns } from '../components/MillerColumns/MillerColumns.tsx';
 export { Cascader } from '../components/Cascader/Cascader.tsx';
 export { useBranchLoader, BranchStatus } from '../hooks/useBranchLoader.ts';
-export { EntityPicker } from '../components/EntityPicker/EntityPicker.jsx';
+export { EntityPicker } from '../components/EntityPicker/EntityPicker.tsx';
 export { TimePicker } from '../components/TimePicker/TimePicker.tsx';
 export { parseTime } from '../components/TimePicker/TimePicker.tsx';
 export { RelativeDateInput } from '../components/RelativeDateInput/RelativeDateInput.tsx';

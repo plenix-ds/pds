@@ -24,7 +24,7 @@ import { NumberInput } from '../../NumberInput/NumberInput.tsx';
 import { DatePicker } from '../../DatePicker/DatePicker.tsx';
 import { Checkbox } from '../../Checkbox/Checkbox.tsx';
 import { Combobox } from '../../Combobox/Combobox.tsx';
-import { EntityPicker } from '../../EntityPicker/EntityPicker.jsx';
+import { EntityPicker } from '../../EntityPicker/EntityPicker.tsx';
 import { ErrorSummary } from '../../ErrorSummary/ErrorSummary.tsx';
 import { Text } from '../../Text/Text.tsx';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden.tsx';

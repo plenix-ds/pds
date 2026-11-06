@@ -52,31 +52,54 @@ import { SearchField } from '../SearchField/SearchField.tsx';
 import ArrowLeftIcon from 'plenix-platform/icons/plenix/arrow-left';
 import ChevronRightIcon from 'plenix-platform/icons/plenix/chevron-right';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
+import type { IconValue } from '../Icon/Icon.tsx';
 import { dataPhrase } from '../../utils/dataText.tsx';
 
 // how well an item matches the text: 4 the label starts with it, 3 a word of the label does, 2 the label contains it,
 // 1 the keywords, description or group do, 0 no match
-function score(item, q) {
+/** @public a command: { id, label, description, keywords, group, icon, shortcut, disabled, onSelect, items (a page of commands) } (ADR 0011) */
+export type CommandMenuItem = { id?: string | number; label?: string; description?: string; keywords?: string[]; group?: string; icon?: IconValue; shortcut?: string; disabled?: boolean; onSelect?: (item: CommandMenuItem) => void; items?: CommandMenuItem[]; placeholder?: string };
+function score(item: CommandMenuItem, q: string) {
   if (!q) return 1;
   const label = String(item.label || '').toLowerCase();
   if (label.indexOf(q) === 0) return 4;
   if (label.split(/[\s\-_/]+/).some((w) => w.indexOf(q) === 0)) return 3;
   if (label.indexOf(q) >= 0) return 2;
-  const more = [].concat(item.keywords || [], item.description || '', item.group || '').join(' ').toLowerCase();
+  const more = ([] as string[]).concat(item.keywords || [], item.description || '', item.group || '').join(' ').toLowerCase();
   return more.indexOf(q) >= 0 ? 1 : 0;
 }
 
-export const CommandMenu = React.forwardRef(function CommandMenu({ items = [], label, placeholder, query: queryProp, onQueryChange, filter = true,
+/** @public the prop type (ADR 0011) */
+export type CommandMenuProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> & {
+  items?: CommandMenuItem[];
+  /** the accessible name */
+  label?: string;
+  placeholder?: string;
+  /** the search text (controlled) */
+  query?: string;
+  onQueryChange?: (query: string) => void;
+  /** filter and rank the items by the text (default true); false when the app filters */
+  filter?: boolean;
+  loading?: boolean;
+  /** a command chosen */
+  onSelect?: (item: CommandMenuItem) => void;
+  autoFocus?: boolean;
+  strings?: Catalog | null;
+  className?: string;
+};
+
+export const CommandMenu = React.forwardRef<HTMLInputElement | null, CommandMenuProps>(function CommandMenu({ items = [], label, placeholder, query: queryProp, onQueryChange, filter = true,
   loading = false, onSelect, autoFocus = false, strings, className, ...rest }, ref) {
-  const t = useStrings('commandMenu', strings);
+  const t = useStrings('commandMenu', strings) as Record<string, string>;
   const id = useUid('plx-cmd');
-  const input = React.useRef(null);
-  React.useImperativeHandle(ref, () => input.current);
-  const list = React.useRef(null);
+  const input = React.useRef<HTMLInputElement | null>(null);
+  React.useImperativeHandle(ref, () => input.current as HTMLInputElement);
+  const list = React.useRef<HTMLDivElement | null>(null);
   const [own, setOwn] = React.useState('');
   const query = queryProp !== undefined ? queryProp : own;
-  const setQuery = (v) => { if (queryProp === undefined) setOwn(v); if (onQueryChange) onQueryChange(v); };
-  const [pages, setPages] = React.useState([]);          // the pages opened from the first one: [item, …]
+  const setQuery = (v: string) => { if (queryProp === undefined) setOwn(v); if (onQueryChange) onQueryChange(v); };
+  const [pages, setPages] = React.useState<CommandMenuItem[]>([]);          // the pages opened from the first one: [item, …]
   const [active, setActive] = React.useState(0);
   const page = pages.length ? pages[pages.length - 1] : null;
   const source = page ? page.items || [] : items;
@@ -86,9 +109,9 @@ export const CommandMenu = React.forwardRef(function CommandMenu({ items = [], l
   const ranked = filter
     ? source.map((it, i) => ({ it, s: score(it, q), i })).filter((x) => x.s > 0).sort((a, b) => b.s - a.s || a.i - b.i).map((x) => x.it)
     : source.slice();
-  const groups = [];
+  const groups: string[] = [];
   ranked.forEach((it) => { if (groups.indexOf(it.group || '') < 0) groups.push(it.group || ''); });
-  const shown = groups.reduce((all, g) => all.concat(ranked.filter((it) => (it.group || '') === g)), []);
+  const shown = groups.reduce<CommandMenuItem[]>((all, g) => all.concat(ranked.filter((it) => (it.group || '') === g)), []);
 
   React.useEffect(() => { setActive(0); }, [q, pages.length, shown.length]);
   React.useEffect(() => { if (autoFocus && input.current) input.current.focus({ preventScroll: true }); }, []);
@@ -102,16 +125,16 @@ export const CommandMenu = React.forwardRef(function CommandMenu({ items = [], l
     else if (er.bottom > lr.bottom) L.scrollTop += er.bottom - lr.bottom;
   }, [active]);
 
-  const open = (item) => { setPages(pages.concat([item])); setQuery(''); if (input.current) input.current.focus(); };
+  const open = (item: CommandMenuItem) => { setPages(pages.concat([item])); setQuery(''); if (input.current) input.current.focus(); };
   const back = () => { setPages(pages.slice(0, -1)); setQuery(''); if (input.current) input.current.focus(); };
-  const run = (item) => {
+  const run = (item?: CommandMenuItem) => {
     if (!item || item.disabled) return;
     if (item.items) { open(item); return; }
     if (item.onSelect) item.onSelect(item);
     if (onSelect) onSelect(item);
   };
-  const move = (d) => { if (!shown.length) return; setActive((a) => (a + d + shown.length) % shown.length); };
-  const onKeyDown = (e) => {
+  const move = (d: number) => { if (!shown.length) return; setActive((a) => (a + d + shown.length) % shown.length); };
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'ArrowDown') { e.preventDefault(); move(1); }
     else if (e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
     else if (e.key === 'Enter') { if (shown[active]) { e.preventDefault(); run(shown[active]); } }
@@ -122,7 +145,7 @@ export const CommandMenu = React.forwardRef(function CommandMenu({ items = [], l
   };
 
   const listId = id + '-list';
-  const optId = (i) => id + '-o' + i;
+  const optId = (i: number) => id + '-o' + i;
   const name = label || t.label;
   const count = loading && !shown.length ? '' : q && !shown.length ? t.empty.replace('{query}', query.trim()) : t.results.replace('{count}', String(shown.length));
   let n = -1;
