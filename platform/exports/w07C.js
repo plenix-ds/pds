@@ -4,6 +4,6 @@
 export { niceTicks, scaleLinear, scaleLog, scaleBand, scaleTime, seriesColor } from '../charts/scales.js';
 export { ChartFrame } from '../charts/ChartFrame.jsx';
 export { TimeZoneSelect, timeZoneOptions } from '../components/TimeZoneSelect/TimeZoneSelect.tsx';
-export { TreeSelect } from '../components/TreeSelect/TreeSelect.jsx';
+export { TreeSelect } from '../components/TreeSelect/TreeSelect.tsx';
 export { TransferList } from '../components/TransferList/TransferList.tsx';
 export { BottomSheetNav } from '../patterns/BottomSheetNav/BottomSheetNav.jsx';

@@ -14,7 +14,7 @@ import React from 'react';
 import { Form, FormActions } from '../Form/Form.jsx';
 import { Field } from '../../components/Field/Field.tsx';
 import { Input, Select } from '../../components/Input/Input.tsx';
-import { TreeSelect } from '../../components/TreeSelect/TreeSelect.jsx';
+import { TreeSelect } from '../../components/TreeSelect/TreeSelect.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Notice } from '../../components/Notice/Notice.tsx';
 import { useUnsavedGuard } from '../../providers/UnsavedGuard.tsx';

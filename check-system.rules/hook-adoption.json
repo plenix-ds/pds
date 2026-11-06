@@ -11,7 +11,7 @@
     "platform/components/NumberInput/NumberInput.tsx",
     "platform/components/DatePicker/DatePicker.tsx",
     "platform/components/Combobox/Combobox.tsx",
-    "platform/components/TreeSelect/TreeSelect.jsx",
+    "platform/components/TreeSelect/TreeSelect.tsx",
     "platform/components/TransferList/TransferList.tsx",
     "platform/components/InlineEdit/InlineEdit.tsx",
     "platform/components/RichTextEditor/RichTextEditor.jsx",
