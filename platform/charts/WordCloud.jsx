@@ -32,7 +32,7 @@
 import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatNumber } from '../utils/format.ts';
-import { ChartFrame } from './ChartFrame.jsx';
+import { ChartFrame } from './ChartFrame.tsx';
 import { seriesColor } from './scales.ts';
 import { ChartLegend } from './parts/ChartLegend.tsx';
 import { ChartTooltip, chartTooltipText } from './parts/ChartTooltip.tsx';

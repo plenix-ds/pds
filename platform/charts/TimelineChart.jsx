@@ -35,7 +35,7 @@
 import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatDate as fmtDate } from '../utils/format.ts';
-import { ChartFrame } from './ChartFrame.jsx';
+import { ChartFrame } from './ChartFrame.tsx';
 import { scaleBand, scaleTime, seriesColor, wholeDays } from './scales.ts';
 import { Axis } from './parts/Axis.tsx';
 import { GridLines } from './parts/GridLines.tsx';

@@ -40,9 +40,9 @@
 import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { snapToGrid } from '../utils/grid.ts';
-import { ChartFrame } from './ChartFrame.jsx';
+import { ChartFrame } from './ChartFrame.tsx';
 import { useChartInteraction } from './interaction.ts';
-import { useEChartsPlot, NO_MARGIN } from './echarts/EChartsPlot.jsx';
+import { useEChartsPlot, NO_MARGIN } from './echarts/EChartsPlot.tsx';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 
 const INTERACTION = { hint: 'Use the arrow keys to move through the tree.', hintSelect: ' Enter folds or opens a branch.', selected: '{text}' };

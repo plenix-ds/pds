@@ -52,7 +52,7 @@ DSParts.records.push(function (H) {
       frame: { legend: h(P.ChartLegend, { items: legendItems(), shape: 'line', interactive: true, hidden: s[0], onToggle: function (id, visible) { s[1](visible ? s[0].filter(function (x) { return x !== id; }) : s[0].concat([id])); } }) } }));
   };
   var chartLegend = { id: 'chart-legend', lab: true, icon: 'list-bullets', sec: 'data-display', sub: 'Charts', leaf: 'Chart legend', title: 'Chart legend',
-    plenix: 'ChartLegend, ChartFrame legend', src: 'charts/parts/ChartLegend.tsx', also: ['charts/ChartFrame.jsx'], css: CSS, blocks: ['plx-chart-legend'],
+    plenix: 'ChartLegend, ChartFrame legend', src: 'charts/parts/ChartLegend.tsx', also: ['charts/ChartFrame.tsx'], css: CSS, blocks: ['plx-chart-legend'],
     level: 'Foundation', interaction: 'Selection',
     aliases: ['Legend', 'Key', 'Series key', 'Color key', 'Interactive legend'],
     text: 'The key to a chart’s series: each series’ swatch in its data-viz color, its name and, when it helps, its value (a total, a share) in the data font. It is real text in the frame, so assistive technology reads the series names (ChartFrame legend: under the plot by default, above it in a tight card, beside it with legendPosition="end"). When interactive, each item is a toggle button (aria-pressed) that shows or hides its series; a hidden series keeps its place with a hollow swatch, and the last one shown cannot be hidden.',

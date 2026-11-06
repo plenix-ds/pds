@@ -43,7 +43,7 @@
 import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatNumber, formatPercent } from '../utils/format.ts';
-import { ChartFrame } from './ChartFrame.jsx';
+import { ChartFrame } from './ChartFrame.tsx';
 import { seriesColor } from './scales.ts';
 import { ChartLegend } from './parts/ChartLegend.tsx';
 import { ChartTooltip, chartTooltipText } from './parts/ChartTooltip.tsx';
@@ -51,7 +51,7 @@ import { DataLabel } from './parts/DataLabel.tsx';
 import { useChartInteraction } from './interaction.ts';
 import { legendItems, finite } from './chart-kit.ts';
 import { pieSlices } from './chart-helpers.ts';
-import { useEChartsPlot, NO_MARGIN } from './echarts/EChartsPlot.jsx';
+import { useEChartsPlot, NO_MARGIN } from './echarts/EChartsPlot.tsx';
 import { snapToGrid } from '../utils/grid.ts';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 

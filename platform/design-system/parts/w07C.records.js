@@ -76,7 +76,7 @@ DSParts.records.push(function (H) {
       columns: [{ title: 'Data from … to', field: 'data', kind: 'data', width: '--plx-ref-size-40u' }, { title: 'Step', field: 'step', kind: 'data', width: '--plx-ref-size-25u' }, { title: 'Ticks (niceTicks)', field: 'ticks', kind: 'data' }] });
   };
   var chartFoundations = { id: 'chart-foundations', lab: true, icon: 'chart', sec: 'data-display', sub: 'Charts', leaf: 'Chart foundations', title: 'Chart foundations',
-    plenix: 'ChartFrame, scaleLinear, scaleLog, scaleBand, scaleTime, niceTicks, seriesColor', src: 'charts/ChartFrame.jsx', also: ['charts/scales.ts'], css: ['system/charts.css'],
+    plenix: 'ChartFrame, scaleLinear, scaleLog, scaleBand, scaleTime, niceTicks, seriesColor', src: 'charts/ChartFrame.tsx', also: ['charts/scales.ts'], css: ['system/charts.css'],
     level: 'Foundation', interaction: 'Static', variantClasses: [],
     aliases: ['Chart frame', 'Scales', 'Axes math', 'Chart kit', 'Chart primitives'],
     text: 'The base of every Plenix chart (platform/charts, no dependency). ChartFrame is the figure: the title and description (the chart’s name and takeaway); a plot that fills its container’s width and measures itself, with margins for the axes (tokens); and the data as a table one click away. Scales turn values into positions: linear and log for amounts, band for categories, time for dates. niceTicks puts the ticks on round numbers and calendar steps, and each scale formats its tick labels in the reader’s locale. Marks take their colors from the data-viz scales (seriesColor(i) with data-plx-dataviz); lines, grid lines and tick labels take theirs from the frame’s classes. A chart writes only geometry.',

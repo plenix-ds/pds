@@ -32,11 +32,11 @@
 import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatNumber, formatPercent } from '../utils/format.ts';
-import { ChartFrame } from './ChartFrame.jsx';
+import { ChartFrame } from './ChartFrame.tsx';
 import { seriesColor } from './scales.ts';
 import { ChartTooltip } from './parts/ChartTooltip.tsx';
 import { useChartPoints } from './a11y.ts';
-import { useEChartsPlot } from './echarts/EChartsPlot.jsx';
+import { useEChartsPlot } from './echarts/EChartsPlot.tsx';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 
 // the group's name row, the ring's room (the 4px grid)

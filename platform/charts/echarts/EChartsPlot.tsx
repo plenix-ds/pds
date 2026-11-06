@@ -1,4 +1,4 @@
-/* Plenix · EChartsPlot (platform/charts/echarts/EChartsPlot.jsx)
+/* Plenix · EChartsPlot (platform/charts/echarts/EChartsPlot.tsx)
    Summary: The ECharts drawing inside a chart's ChartFrame (issue 353): one ECharts instance per chart, drawn as SVG in the
      frame's plot, under the chart's own Plenix layer (focus marks, crosshair, tooltip, labels: the frame's SVG on top).
      Internal: used by the chart components, not public.
@@ -30,15 +30,15 @@
        are the chart tokens. */
 
 import React from 'react';
-import { loadECharts, chartTokens, plenixTheme } from './engine.js';
+import { loadECharts, chartTokens, plenixTheme } from './engine.ts';
 
 export const NO_MARGIN = Object.freeze({ top: 0, end: 0, bottom: 0, start: 0 });
 const LOOK = ['data-plx-mode', 'data-plx-theme', 'data-plx-density'];
 
-export function EChartsHost({ width, height, option, onDraw }) {
-  const ref = React.useRef(null), inst = React.useRef(null), tk = React.useRef(null);
-  const [E, setE] = React.useState(() => (typeof window !== 'undefined' && window.PlenixECharts) || null);
-  const [look, setLook] = React.useState(0);
+export function EChartsHost({ width, height, option, onDraw }: any) {
+  const ref = React.useRef<any>(null), inst = React.useRef<any>(null), tk = React.useRef<any>(null);
+  const [E, setE] = React.useState(() => (typeof window !== 'undefined' && (window as any).PlenixECharts) || null);
+  const [look, setLook] = React.useState<any>(0);
   React.useEffect(() => {
     if (E) return undefined;
     let live = true;
@@ -47,7 +47,7 @@ export function EChartsHost({ width, height, option, onDraw }) {
   }, [E]);
   React.useEffect(() => {
     if (typeof MutationObserver === 'undefined') return undefined;
-    const mo = new MutationObserver(() => setLook((n) => n + 1));
+    const mo = new MutationObserver(() => setLook((n: any) => n + 1));
     mo.observe(document.documentElement, { attributes: true, attributeFilter: LOOK });
     return () => mo.disconnect();
   }, []);
@@ -70,13 +70,13 @@ export function EChartsHost({ width, height, option, onDraw }) {
 
 export function useEChartsPlot() {
   const [, redraw] = React.useReducer((n) => n + 1, 0);
-  const drawn = React.useRef({ chart: null, tokens: null });
-  const onDraw = React.useCallback((c, t) => { drawn.current = { chart: c, tokens: t }; redraw(); }, []);
+  const drawn = React.useRef<any>({ chart: null, tokens: null });
+  const onDraw = React.useCallback((c: any, t: any) => { drawn.current = { chart: c, tokens: t }; redraw(); }, []);
   const live = drawn.current.chart && !drawn.current.chart.isDisposed();
   return {
     chart: live ? drawn.current.chart : null,
     tokens: live ? drawn.current.tokens : null,
-    layer: (dims, option) => (
+    layer: (dims: any, option: any) => (
       <foreignObject key="plx-chart-engine" x={0} y={0} width={dims.width} height={dims.height}>
         <EChartsHost width={dims.width} height={dims.height} option={option} onDraw={onDraw} />
       </foreignObject>
@@ -84,7 +84,7 @@ export function useEChartsPlot() {
   };
 }
 
-export function plotGrid(chart) {
+export function plotGrid(chart: any) {
   const grid = chart.getModel().getComponent('grid');
   return grid && grid.coordinateSystem ? grid.coordinateSystem.getRect() : null;
 }

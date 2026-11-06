@@ -42,7 +42,7 @@ import { devWarn } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
 import { dataWhenText } from '../../utils/dataText.tsx';
 import { Card } from '../Card/Card.tsx';
-import { Sparkline } from '../../charts/lazy.jsx';
+import { Sparkline } from '../../charts/lazy.tsx';
 
 type MetricProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & {
   /** the figure */

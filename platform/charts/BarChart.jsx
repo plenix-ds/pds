@@ -52,14 +52,14 @@
 import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatNumber, formatPercent } from '../utils/format.ts';
-import { ChartFrame } from './ChartFrame.jsx';
+import { ChartFrame } from './ChartFrame.tsx';
 import { ChartLegend } from './parts/ChartLegend.tsx';
 import { ChartTooltip, chartTooltipText } from './parts/ChartTooltip.tsx';
 import { DataLabel } from './parts/DataLabel.tsx';
 import { useChartInteraction } from './interaction.ts';
 import { labelRoom, withColors, legendItems } from './chart-kit.ts';
-import { useEChartsPlot, plotGrid, NO_MARGIN } from './echarts/EChartsPlot.jsx';
-import { tickLineHeight } from './echarts/engine.js';
+import { useEChartsPlot, plotGrid, NO_MARGIN } from './echarts/EChartsPlot.tsx';
+import { tickLineHeight } from './echarts/engine.ts';
 import { gridRoom, binValues } from './chart-helpers.ts';
 import { snapToGrid } from '../utils/grid.ts';
 import { useStrings } from '../providers/LocaleProvider.tsx';

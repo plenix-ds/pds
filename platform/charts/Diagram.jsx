@@ -42,7 +42,7 @@
 import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatList } from '../utils/format.ts';
-import { ChartFrame } from './ChartFrame.jsx';
+import { ChartFrame } from './ChartFrame.tsx';
 import { ChartTooltip, chartTooltipText } from './parts/ChartTooltip.tsx';
 import { useChartInteraction } from './interaction.ts';
 import { graphLayers, graphNeighbors, useGraphView, directionalMove } from './NetworkGraph.jsx';

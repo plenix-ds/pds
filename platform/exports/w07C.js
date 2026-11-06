@@ -2,7 +2,7 @@
 // TreeSelect, TransferList (Transfer list, Dual listbox) and BottomSheetNav. NavPane's mobile forms (the bottom bar, the
 // overlay and the screen) are already public: its leaves are records only.
 export { niceTicks, scaleLinear, scaleLog, scaleBand, scaleTime, seriesColor } from '../charts/scales.ts';
-export { ChartFrame } from '../charts/ChartFrame.jsx';
+export { ChartFrame } from '../charts/ChartFrame.tsx';
 export { TimeZoneSelect, timeZoneOptions } from '../components/TimeZoneSelect/TimeZoneSelect.tsx';
 export { TreeSelect } from '../components/TreeSelect/TreeSelect.tsx';
 export { TransferList } from '../components/TransferList/TransferList.tsx';

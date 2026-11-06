@@ -39,7 +39,7 @@ import { Details } from '../components/Details/Details.tsx';
 import { Table } from '../components/Table/Table.tsx';
 import { Badge } from '../components/Badge/Badge.tsx';
 import { seriesColor } from './scales.ts';
-import { EChartsHost } from './echarts/EChartsPlot.jsx';
+import { EChartsHost } from './echarts/EChartsPlot.tsx';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 import AlertIcon from 'plenix-platform/icons/plenix/alert';
 import CircleCheckIcon from 'plenix-platform/icons/plenix/circle-check';

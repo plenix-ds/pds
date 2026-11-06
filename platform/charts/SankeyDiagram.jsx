@@ -30,7 +30,7 @@
 import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatNumber } from '../utils/format.ts';
-import { ChartFrame } from './ChartFrame.jsx';
+import { ChartFrame } from './ChartFrame.tsx';
 import { seriesColor } from './scales.ts';
 import { ChartTooltip } from './parts/ChartTooltip.tsx';
 import { useChartHover, finite } from './chart-kit.ts';

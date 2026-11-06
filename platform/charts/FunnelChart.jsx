@@ -31,12 +31,12 @@
 import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatNumber, formatPercent } from '../utils/format.ts';
-import { ChartFrame } from './ChartFrame.jsx';
+import { ChartFrame } from './ChartFrame.tsx';
 import { seriesColor, niceTicks } from './scales.ts';
 import { DataLabel } from './parts/DataLabel.tsx';
 import { ChartTooltip } from './parts/ChartTooltip.tsx';
 import { useChartPoints } from './a11y.ts';
-import { useEChartsPlot, plotGrid } from './echarts/EChartsPlot.jsx';
+import { useEChartsPlot, plotGrid } from './echarts/EChartsPlot.tsx';
 import { gridRoom } from './chart-helpers.ts';
 import { labelRoom } from './chart-kit.ts';
 import { snapToGrid } from '../utils/grid.ts';

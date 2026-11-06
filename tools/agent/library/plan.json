@@ -1603,7 +1603,7 @@
       "platform/patterns/BottomSheetNav/bottom-sheet-nav.css",
       "platform/tokens/components/bottom-sheet-nav.tokens.json",
       "platform/charts/scales.js",
-      "platform/charts/ChartFrame.jsx",
+      "platform/charts/ChartFrame.tsx",
       "platform/charts/charts.css",
       "platform/components/TransferList/TransferList.tsx",
       "platform/components/TransferList/transfer-list.css",
@@ -5619,7 +5619,7 @@
    "lane": "C",
    "files": [
     "platform/charts/scales.js",
-    "platform/charts/ChartFrame.jsx",
+    "platform/charts/ChartFrame.tsx",
     "platform/charts/charts.css"
    ],
    "dependsOn": [
@@ -14805,7 +14805,7 @@
    "targetKind": "foundation",
    "files": [
     "platform/charts/scales.js",
-    "platform/charts/ChartFrame.jsx",
+    "platform/charts/ChartFrame.tsx",
     "platform/charts/charts.css"
    ],
    "laneFiles": [

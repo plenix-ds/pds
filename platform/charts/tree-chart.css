@@ -1,5 +1,5 @@
 /* Plenix · TreeChart (platform/charts/TreeChart.jsx). Apache ECharts draws the tree; these classes are the look it reads
-   (echarts/engine.js chartTokens: tree, from hidden probe elements): the lines, a node's ring and fill (filled when its
+   (echarts/engine.ts chartTokens: tree, from hidden probe elements): the lines, a node's ring and fill (filled when its
    branch is folded), the node in keyboard focus, the name and the detail under it. Every value is a
    --plx-comp-tree-chart-* token. */
 .plx-tree-chart__link{fill:none;stroke:var(--plx-comp-tree-chart-link-color);stroke-width:var(--plx-comp-tree-chart-link-width);}

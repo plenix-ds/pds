@@ -187,7 +187,7 @@ t('MillerColumns', 'component', 'L', 6, 'C', [], ['with preview column', 'keyboa
 t('ImageUpload', 'pattern', 'M', 6, 'B', ['Image'], ['single', 'multiple', 'with crop', 'aspect locked'], '');
 t('AvatarUpload', 'pattern', 'S', 6, 'B', ['ImageUpload'], ['circle', 'square', 'remove'], '');
 t('ChartKit', 'foundation', 'L', 6, 'C', ['dataviz-colors', 'format'], ['linear, band, time, log scales', 'nice ticks', 'responsive frame', 'margins'],
-  'platform/charts/: scales, ticks, ChartFrame (SVG, ResizeObserver), series color; no dependency', ['platform/charts/scales.ts', 'platform/charts/ChartFrame.jsx', 'platform/charts/charts.css']);
+  'platform/charts/: scales, ticks, ChartFrame (SVG, ResizeObserver), series color; no dependency', ['platform/charts/scales.ts', 'platform/charts/ChartFrame.tsx', 'platform/charts/charts.css']);
 
 /* ───────── wave 7: navigation, lists, chart parts ───────── */
 t('ProgressSteps', 'component', 'M', 7, 'A', [], ['horizontal', 'vertical', 'clickable', 'with status (complete, current, error)', 'compact'], 'step indicator: navigation stepper = progress tracker = step progress');

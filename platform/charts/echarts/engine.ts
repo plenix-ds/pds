@@ -1,4 +1,4 @@
-/* Plenix · Chart engine (platform/charts/echarts/engine.js)
+/* Plenix · Chart engine (platform/charts/echarts/engine.ts)
    Summary: How a Plenix chart draws with Apache ECharts (issue 353, owner 2026-10-26): loads the vendored engine
      (platform/vendor/echarts/echarts.min.js, window.PlenixECharts), reads the chart tokens where the chart is, and builds
      the ECharts theme from them. The chart components keep their names, props and Plenix layer (ChartFrame, the
@@ -26,7 +26,7 @@
 
 import { engine } from '../../utils/engines.ts';
 
-export function loadECharts(win) {
+export function loadECharts(win?: any) {
   const w = win || (typeof window !== 'undefined' ? window : null);
   if (!w) return Promise.reject(new Error('ECharts needs a browser'));
   if (w.PlenixECharts) return Promise.resolve(w.PlenixECharts);
@@ -34,16 +34,16 @@ export function loadECharts(win) {
 }
 
 const NS = 'http://www.w3.org/2000/svg';
-const num = (v) => parseFloat(v) || 0;
+const num = (v: any) => parseFloat(v) || 0;
 // a duration token in milliseconds ("200ms" or "0.2s")
-const ms = (v) => { const s = String(v).trim(); return /ms$/.test(s) ? num(s) : /s$/.test(s) ? num(s) * 1000 : num(s); };
+const ms = (v: any) => { const s = String(v).trim(); return /ms$/.test(s) ? num(s) : /s$/.test(s) ? num(s) * 1000 : num(s); };
 
 // a tick label's line height (owner, arabic-font-35; issue 413): the font size, unless a label is in a script whose letters
 // reach below it (Arabic); then the deepest such label, measured, so ECharts keeps room for it under the axis. Latin labels
 // are never measured, so their charts do not change.
 const DEEP_SCRIPT = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/;
-export function tickLineHeight(t, texts) {
-  const size = t.tick.fontSize, deep = (texts || []).map(String).filter((x) => DEEP_SCRIPT.test(x));
+export function tickLineHeight(t: any, texts: any) {
+  const size = t.tick.fontSize, deep = (texts || []).map(String).filter((x: any) => DEEP_SCRIPT.test(x));
   if (!deep.length || typeof document === 'undefined') return size;
   const ctx = document.createElement('canvas').getContext('2d');
   if (!ctx) return size;
@@ -53,17 +53,17 @@ export function tickLineHeight(t, texts) {
   return h;
 }
 // the color the chart sits on: the nearest background that is not transparent (a gap drawn in it reads as a gap)
-function surfaceOf(el) {
+function surfaceOf(el: any) {
   const win = el.ownerDocument.defaultView;
   for (let e = el; e; e = e.parentElement) { const c = win.getComputedStyle(e).backgroundColor; if (c && !/rgba\(0, 0, 0, 0\)|transparent/.test(c)) return c; }
   return win.getComputedStyle(el.ownerDocument.documentElement).backgroundColor;
 }
-export function chartTokens(where) {
+export function chartTokens(where: any) {
   const doc = where.ownerDocument, win = doc.defaultView;
   const svg = doc.createElementNS(NS, 'svg');
   svg.setAttribute('class', 'plx-visually-hidden');
   svg.setAttribute('aria-hidden', 'true');
-  const mk = (tag, cls, attrs) => {
+  const mk = (tag: any, cls: any, attrs?: any) => {
     const e = doc.createElementNS(NS, tag);
     e.setAttribute('class', cls);
     Object.keys(attrs || {}).forEach((k) => e.setAttribute(k, attrs[k]));
@@ -90,14 +90,14 @@ export function chartTokens(where) {
   const tm = [mk('rect', 'plx-chart__mark plx-treemap__tile'), mk('text', 'plx-treemap__label'), mk('text', 'plx-treemap__value'), mk('rect', 'plx-treemap__group-frame'), mk('text', 'plx-treemap__group-label')];
   const hm = [mk('rect', 'plx-heat-map__cell'), mk('rect', 'plx-heat-map__cell plx-heat-map__cell--empty')];
   where.appendChild(svg);
-  const cs = (e) => win.getComputedStyle(e);
-  const font = (e) => { const s = cs(e); return { color: s.fill, fontFamily: s.fontFamily, fontSize: num(s.fontSize), fontWeight: s.fontWeight }; };
+  const cs = (e: any) => win.getComputedStyle(e);
+  const font = (e: any) => { const s = cs(e); return { color: s.fill, fontFamily: s.fontFamily, fontSize: num(s.fontSize), fontWeight: s.fontWeight }; };
   const host = cs(where);
-  const prop = (name) => host.getPropertyValue(name).trim();
+  const prop = (name: any) => host.getPropertyValue(name).trim();
   // a length token in pixels (px, or rem on the root's font size)
-  const len = (v) => (/rem$/.test(v) ? num(v) * num(win.getComputedStyle(doc.documentElement).fontSize) : num(v));
-  const colorCache = {};
-  const t = {
+  const len = (v: any) => (/rem$/.test(v) ? num(v) * num(win.getComputedStyle(doc.documentElement).fontSize) : num(v));
+  const colorCache: any = {};
+  const t: any = {
     lineWidth: num(cs(line).strokeWidth),
     tick: font(tick), title: font(title),
     axis: { color: cs(axis).stroke, width: num(cs(axis).strokeWidth) },
@@ -149,7 +149,7 @@ export function chartTokens(where) {
     motion: ms(prop('--plx-sys-motion-duration-slow')),
   };
   // a data-viz step ("categorical-3", "sequential-5") as the color it is here
-  t.color = (step) => {
+  t.color = (step: any) => {
     if (!step) step = 'categorical-1';
     if (!(step in colorCache)) {
       swatch.setAttribute('data-plx-dataviz', step);
@@ -165,7 +165,7 @@ export function chartTokens(where) {
   return t;
 }
 
-export function plenixTheme(t) {
+export function plenixTheme(t: any) {
   const label = { color: t.tick.color, fontFamily: t.tick.fontFamily, fontSize: t.tick.fontSize, margin: t.tickOffset, hideOverlap: true };
   const name = { color: t.title.color, fontFamily: t.title.fontFamily, fontSize: t.title.fontSize, fontWeight: t.title.fontWeight };
   const base = { axisLabel: label, nameTextStyle: name, axisTick: { show: false } };
