@@ -305,7 +305,7 @@ The word-spacing leak happened exactly there.
 - sets `font-family` and `font-weight` from a role (or its own named modifier, such as the standalone link's data font);
 - writes **`inherit`**, on purpose, for each of `font-size`, `letter-spacing`, `line-height` and `word-spacing` it doesn't take from that role.
 
-Only an explicit `inherit` counts as "follows the context". A missing declaration, or `unset`, `initial` or `revert`, is still a finding, so a forgotten property can't pass as deliberate. A part that would inherit all six properties isn't a text part; it declares no contract. The context-sized parts are listed as `context-sized` in `text-contracts.json`, so the list stays visible (#122).
+Only an explicit `inherit` counts as "follows the context". A missing declaration, or `unset`, `initial` or `revert`, is still a finding, so a forgotten property can't pass as deliberate. A part that would inherit all six properties isn't a text part; it declares no contract. The context-sized parts are listed as `context-sized` in `text-contracts.json`, so the list stays visible.
 
 **Declared contracts.** `platform/standards/text-contracts.json` declares the contract of every part that sets
 typography (by its class, a variant by its modifier class): `establishes` with its role and font (sans or mono), `follows` in
