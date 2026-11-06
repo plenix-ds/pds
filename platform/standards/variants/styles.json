@@ -1353,5 +1353,37 @@
   "delete-flow--form-undo": {
     "sets": [],
     "why": "markup only: deletes at once and shows a Toast with Undo; the deletion is final when the Toast leaves"
+  },
+  "draft-state--variant-draft-badge": {
+    "sets": [],
+    "why": "markup only: shows the Draft icon Badge with the optional version"
+  },
+  "draft-state--variant-resume-draft": {
+    "sets": [],
+    "why": "markup only: shows the Resume action, which calls onResume once at a time"
+  },
+  "draft-state--variant-discard-draft": {
+    "sets": [],
+    "why": "markup only: shows the Discard action, which asks for confirmation before onDiscard runs"
+  },
+  "export-dialog--variant-format": {
+    "sets": [],
+    "why": "markup only: offers the formats the caller supplies; an empty list is rejected"
+  },
+  "export-dialog--variant-selection-or-all-records": {
+    "sets": [],
+    "why": "markup only: offers the scope choice of the selected records or all records; the selection is unavailable when nothing is selected"
+  },
+  "export-dialog--variant-background-export": {
+    "sets": [],
+    "why": "markup only: adds the background option; a queued Badge and a download Link show when the export is ready"
+  },
+  "feature-intro--variant-new-badge": {
+    "sets": [],
+    "why": "markup only: shows a New Badge on the feature label"
+  },
+  "feature-intro--variant-what-is-new-dialog": {
+    "sets": [],
+    "why": "markup only: opens the what-is-new dialog, only on request"
   }
 }
