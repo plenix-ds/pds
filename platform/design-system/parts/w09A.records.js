@@ -184,7 +184,7 @@ DSParts.records.push(function (H) {
 
   /* ── 07 Data Display › Charts › Heat map: HeatMap ── */
   var heatMap = { id: 'heat-map', lab: true, icon: 'grid-3x2', sec: 'data-display', sub: 'Charts', leaf: 'Heat map', title: 'Heat map',
-    plenix: 'HeatMap', src: 'charts/HeatMap.jsx', css: ['charts/heat-map.css'], blocks: ['plx-heat-map', 'plx-heat-map-scale'], level: 'Component', interaction: 'Navigation', statesFrom: ['chart-interaction'],
+    plenix: 'HeatMap', src: 'charts/HeatMap.tsx', css: ['charts/heat-map.css'], blocks: ['plx-heat-map', 'plx-heat-map-scale'], level: 'Component', interaction: 'Navigation', statesFrom: ['chart-interaction'],
     aliases: ['Heatmap', 'Matrix chart', 'Calendar heat map', 'Contribution graph', 'Punch card'],
     text: 'A grid of cells colored by value: where a row and a column meet (matrix), or one cell per day laid out in weeks (calendar). The colors come from the sequential data-viz scale, or the diverging one around a midpoint. A missing value is an empty cell with a dashed edge, never the lowest color. The color scale under the plot shows the seven steps from the lowest value to the highest. The arrow keys move from cell to cell; the tooltip shows each cell’s value and the live region says it.',
     use: ['Patterns across two dimensions: hour by weekday, team by month', 'The calendar for activity over days and weeks', 'The diverging scale around a meaningful midpoint (change, difference from a target)'],
@@ -206,7 +206,7 @@ DSParts.records.push(function (H) {
 
   /* ── 07 Data Display › Charts › Waterfall: WaterfallChart ── */
   var waterfall = { id: 'waterfall-chart', lab: true, icon: 'chart', sec: 'data-display', sub: 'Charts', leaf: 'Waterfall', title: 'Waterfall',
-    plenix: 'WaterfallChart, waterfallSteps', src: 'charts/WaterfallChart.jsx', css: ['charts/waterfall-chart.css'], blocks: ['plx-waterfall-chart'], level: 'Component', interaction: 'Navigation', statesFrom: ['chart-interaction'],
+    plenix: 'WaterfallChart, waterfallSteps', src: 'charts/WaterfallChart.tsx', css: ['charts/waterfall-chart.css'], blocks: ['plx-waterfall-chart'], level: 'Component', interaction: 'Navigation', statesFrom: ['chart-interaction'],
     variantClasses: ['plx-waterfall-chart--subtotals'],
     aliases: ['Waterfall chart', 'Bridge chart', 'Variance chart', 'Cascade chart'],
     text: 'How a starting total becomes an end total through increases and decreases. Totals are columns from zero; each change floats from the running total before it, with its signed value above it (+240, −110) and a dashed connector to the next. Increases, decreases and totals each have their own color, named in the legend. With totals, subtotal columns show the running total part way.',

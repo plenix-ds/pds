@@ -161,7 +161,7 @@ DSParts.records.push(function (H) {
   var BANNER = { id: 'banner', label: 'Banner', values: { res: 6, color: 7, meta: 9, size: 8, rights: 5, alt: 9 } };
   var radar = function (o) { return h(P.RadarChart, Object.assign({ title: 'Asset quality', description: 'The hero image scores high on all but file size.', axes: AXES, series: [HERO], max: 10 }, o)); };
   var radarChart = { id: 'radar-chart', lab: true, icon: 'chart', sec: 'data-display', sub: 'Charts', leaf: 'Radar chart', title: 'Radar chart',
-    plenix: 'RadarChart', src: 'charts/RadarChart.jsx', also: ['charts/chart-kit.ts'], css: CSS('radar-chart.css'), blocks: ['plx-radar-chart'],
+    plenix: 'RadarChart', src: 'charts/RadarChart.tsx', also: ['charts/chart-kit.ts'], css: CSS('radar-chart.css'), blocks: ['plx-radar-chart'],
     level: 'Component', interaction: 'Display',
     aliases: ['Spider chart', 'Web chart', 'Star chart', 'Polar chart'],
     text: 'The profile of one item, or two or three compared, across several measures on one scale. A spoke per measure runs from the center (zero) to the scale’s end, with rings at the scale’s round ticks. Each item is a closed shape through its values, outlined in its color with its area lightly filled so overlapping shapes stay visible. Measure names sit off the spokes’ ends; ring values are in the data font.',

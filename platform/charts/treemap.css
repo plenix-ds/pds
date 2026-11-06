@@ -1,4 +1,4 @@
-/* Plenix · Treemap (platform/charts/Treemap.jsx), drawn in ChartFrame (system/charts.css). Tiles are the frame's marks
+/* Plenix · Treemap (platform/charts/Treemap.tsx), drawn in ChartFrame (system/charts.css). Tiles are the frame's marks
    (plx-chart__mark, the data-viz color) with gaps in the surface color; names (the UI font) and values (the data font)
    sit on a halo in the surface color so they read on any data color; a nested treemap frames and names each group. Every
    value is a --plx-comp-treemap-* token. */

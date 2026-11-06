@@ -1781,9 +1781,9 @@
       "platform/standards/web-native-map.d/w09A.json",
       "platform/charts/LineChart.jsx",
       "platform/charts/AreaChart.jsx",
-      "platform/charts/HeatMap.jsx",
+      "platform/charts/HeatMap.tsx",
       "platform/charts/Gauge.tsx",
-      "platform/charts/WaterfallChart.jsx",
+      "platform/charts/WaterfallChart.tsx",
       "platform/charts/WordCloud.jsx",
       "platform/charts/interaction.js",
       "platform/charts/NetworkGraph.jsx",
@@ -1826,7 +1826,7 @@
       "platform/charts/BoxPlot.tsx",
       "platform/charts/BulletChart.tsx",
       "platform/charts/SankeyDiagram.jsx",
-      "platform/charts/RadarChart.jsx",
+      "platform/charts/RadarChart.tsx",
       "platform/charts/ComboChart.jsx",
       "platform/charts/TimelineChart.jsx",
       "platform/patterns/ComparisonView/ComparisonView.jsx",
@@ -1871,11 +1871,11 @@
       "platform/standards/web-native-map.d/w09C.json",
       "platform/components/Metric/Metric.tsx",
       "platform/components/Metric/metric.css",
-      "platform/charts/ScatterChart.jsx",
+      "platform/charts/ScatterChart.tsx",
       "platform/charts/FunnelChart.tsx",
       "platform/charts/Sparkline.tsx",
       "platform/charts/a11y.js",
-      "platform/charts/Treemap.jsx",
+      "platform/charts/Treemap.tsx",
       "platform/charts/LollipopChart.tsx",
       "platform/charts/GanttChart.jsx",
       "platform/charts/GeoMap.jsx",
@@ -6131,7 +6131,7 @@
    "wave": 9,
    "lane": "A",
    "files": [
-    "platform/charts/HeatMap.jsx"
+    "platform/charts/HeatMap.tsx"
    ],
    "dependsOn": [
     "chart-parts"
@@ -6152,7 +6152,7 @@
    "wave": 9,
    "lane": "A",
    "files": [
-    "platform/charts/WaterfallChart.jsx"
+    "platform/charts/WaterfallChart.tsx"
    ],
    "dependsOn": [
     "chart-parts"
@@ -6353,7 +6353,7 @@
    "wave": 9,
    "lane": "B",
    "files": [
-    "platform/charts/RadarChart.jsx"
+    "platform/charts/RadarChart.tsx"
    ],
    "dependsOn": [
     "chart-parts"
@@ -6528,7 +6528,7 @@
    "wave": 9,
    "lane": "C",
    "files": [
-    "platform/charts/ScatterChart.jsx"
+    "platform/charts/ScatterChart.tsx"
    ],
    "dependsOn": [
     "chart-parts"
@@ -6572,7 +6572,7 @@
    "wave": 9,
    "lane": "C",
    "files": [
-    "platform/charts/Treemap.jsx"
+    "platform/charts/Treemap.tsx"
    ],
    "dependsOn": [
     "ChartKit"
@@ -15263,7 +15263,7 @@
    "target": "ScatterChart",
    "targetKind": "component",
    "files": [
-    "platform/charts/ScatterChart.jsx"
+    "platform/charts/ScatterChart.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09C.records.js",
@@ -15293,7 +15293,7 @@
    "target": "ScatterChart",
    "targetKind": "component",
    "files": [
-    "platform/charts/ScatterChart.jsx"
+    "platform/charts/ScatterChart.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09C.records.js",
@@ -15319,7 +15319,7 @@
    "target": "HeatMap",
    "targetKind": "component",
    "files": [
-    "platform/charts/HeatMap.jsx"
+    "platform/charts/HeatMap.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09A.records.js",
@@ -15492,7 +15492,7 @@
    "target": "WaterfallChart",
    "targetKind": "component",
    "files": [
-    "platform/charts/WaterfallChart.jsx"
+    "platform/charts/WaterfallChart.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09A.records.js",
@@ -15549,7 +15549,7 @@
    "target": "RadarChart",
    "targetKind": "component",
    "files": [
-    "platform/charts/RadarChart.jsx"
+    "platform/charts/RadarChart.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09B.records.js",
@@ -15641,7 +15641,7 @@
    "target": "Treemap",
    "targetKind": "component",
    "files": [
-    "platform/charts/Treemap.jsx"
+    "platform/charts/Treemap.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09C.records.js",

@@ -239,7 +239,7 @@ DSParts.records.push(function (H) {
 
   /* ── 07 Data Display › Charts › Scatter plot and Bubble chart: ScatterChart ── */
   var scatter = { id: 'scatter-chart', lab: true, icon: 'chart', sec: 'data-display', sub: 'Charts', leaf: 'Scatter plot', title: 'Scatter plot',
-    plenix: 'ScatterChart', src: 'charts/ScatterChart.jsx', css: ['charts/scatter-chart.css'], blocks: ['plx-scatter'], level: 'Component', interaction: 'Display',
+    plenix: 'ScatterChart', src: 'charts/ScatterChart.tsx', css: ['charts/scatter-chart.css'], blocks: ['plx-scatter'], level: 'Component', interaction: 'Display',
     aliases: ['Scatter chart', 'XY chart', 'Point chart', 'Correlation chart'],
     text: 'Items plotted as points by two measures, to show how they relate: a correlation, clusters, the outliers. Both axes fit the data and name their measures with units; points are a little transparent so overlaps show; groups take the categorical colors with a legend; a dashed trend line can show each group’s fit. Every point is read with the keyboard and listed in the table.',
     use: ['The relation between two measures over many items', 'Clusters and outliers', 'trend for the direction of a relation; the description says how strong it is'],
@@ -257,7 +257,7 @@ DSParts.records.push(function (H) {
         ['With trend line', function () { return box(560, h(P.ScatterChart, { trend: true, title: 'Size and downloads of images', description: 'The larger an image, the fewer downloads: about 40 fewer per megabyte.', xTitle: 'Size (MB)', yTitle: 'Downloads', series: SIZES })); }, 'plx-scatter__trend', 'trend'],
         ['Bubble (size)', function () { return box(560, h(P.ScatterChart, { variant: 'bubble', title: 'Assets, downloads and storage by team', description: 'Design has the most assets, the most downloads per asset and the most storage.', xTitle: 'Assets', yTitle: 'Downloads per asset', sizeTitle: 'Storage (GB)', series: BUBBLES })); }, 'plx-scatter--bubble', 'variant=' + q('bubble')]], { prop: 'variant' }]] };
   var bubble = { id: 'bubble-chart', lab: true, icon: 'chart', sec: 'data-display', sub: 'Charts', leaf: 'Bubble chart', title: 'Bubble chart',
-    plenix: 'ScatterChart variant="bubble"', src: 'charts/ScatterChart.jsx', css: ['charts/scatter-chart.css'], blocks: ['plx-scatter'], variantClasses: ['plx-scatter--bubble'], level: 'Component', interaction: 'Display',
+    plenix: 'ScatterChart variant="bubble"', src: 'charts/ScatterChart.tsx', css: ['charts/scatter-chart.css'], blocks: ['plx-scatter'], variantClasses: ['plx-scatter--bubble'], level: 'Component', interaction: 'Display',
     aliases: ['Bubble plot', 'Proportional point chart'],
     text: 'A scatter plot with a third measure as bubble area: each bubble sits at its two measures and its area (not its radius) follows the third; the largest bubble is 48px wide (a 24px radius). Smaller bubbles are drawn on top of larger ones, and every bubble is half transparent so overlaps stay visible; the tooltip and the table give the three values.',
     use: ['Three related measures per item, such as assets, downloads and storage', 'A moderate number of items that do not overlap heavily', 'sizeTitle with its unit, so the tooltip and the table name the third measure'],
@@ -293,7 +293,7 @@ DSParts.records.push(function (H) {
 
   /* ── 07 Data Display › Charts › Treemap: Treemap ── */
   var treemap = { id: 'treemap', lab: true, icon: 'grid-2x2', sec: 'data-display', sub: 'Charts', leaf: 'Treemap', title: 'Treemap',
-    plenix: 'Treemap', src: 'charts/Treemap.jsx', css: ['charts/treemap.css'], blocks: ['plx-treemap'], level: 'Component', interaction: 'Display',
+    plenix: 'Treemap', src: 'charts/Treemap.tsx', css: ['charts/treemap.css'], blocks: ['plx-treemap'], level: 'Component', interaction: 'Display',
     aliases: ['Tree map', 'Space-filling chart', 'Mosaic'],
     text: 'The parts of a whole as rectangles whose areas are their sizes, laid out by the squarified algorithm, largest first from the top start corner: many parts in little room. Flat: every tile in one color. Nested: each group framed and named, its tiles in the group’s color. Names and values show on tiles big enough for them, on a halo in the surface color; the tooltip and the table always have them.',
     use: ['Many parts of a whole: storage by folder, budget by team', 'Two levels: groups and their parts (nested)', 'A description that names the largest parts'],

@@ -1,0 +1,14 @@
+== heat-map-echarts-106
+HEAT_MAP_ECHARTS_106_OK
+== radar-chart-echarts-106
+RADAR_CHART_ECHARTS_106_OK
+== scatter-chart-echarts-106
+SCATTER_CHART_ECHARTS_106_OK
+== treemap-echarts-106
+TREEMAP_ECHARTS_106_OK
+== waterfall-chart-echarts-106
+WATERFALL_CHART_ECHARTS_106_OK
+== charts-lazy-106
+CHARTS_LAZY_106_OK
+== charts-echarts-353
+CHARTS_ECHARTS_353_OK four charts on ECharts, engine loaded once, Bar and Pie on the keyboard, no style findin

@@ -1,5 +1,5 @@
 {
-  "$description": "ScatterChart (platform/charts/ScatterChart.jsx; library wave 9, lane C): its component tokens. Points and trend lines take their series' data-viz color (data-plx-dataviz); everything else is an existing role.",
+  "$description": "ScatterChart (platform/charts/ScatterChart.tsx; library wave 9, lane C): its component tokens. Points and trend lines take their series' data-viz color (data-plx-dataviz); everything else is an existing role.",
   "plx-comp": {
     "scatter-default-color": { "$value": "{plx-sys.dataviz-categorical-1}", "$type": "color", "$description": "Scatter chart: a point's color without data-plx-dataviz (the first categorical color)." },
     "scatter-margin-block-start": { "$value": "{plx-ref.size-2u}", "$type": "dimension", "$description": "Scatter chart: the room above the plot." },
