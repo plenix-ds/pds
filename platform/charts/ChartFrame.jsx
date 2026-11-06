@@ -69,6 +69,8 @@ export function ChartFrame({ title, description, hideCaption = false, size = 'md
   const t = useStrings('chart.chartFrame', strings);
   const uid = 'plx-chart' + React.useId().replace(/[^a-zA-Z0-9]/g, '');
   const frame = React.useRef(null), plot = React.useRef(null);
+  // the data grid is drawn the first time "Show the data" opens (and kept): a closed chart carries no second grid; opened by a click, it mounts in one pass
+  const [dataOpened, setDataOpened] = React.useState(false);
   const [box, setBox] = React.useState({ width: 0, height: 0, rtl: false, tokens: null });
   React.useLayoutEffect(() => {
     const el = plot.current;
@@ -146,8 +148,8 @@ export function ChartFrame({ title, description, hideCaption = false, size = 'md
       {lp === 'end' && key ? <div className="plx-chart__body">{plotArea}{key}</div> : plotArea}
       {lp === 'bottom' ? key : null}
       {table && table.data ? (
-        <Details summary={t.showData} variant="inline" className="plx-chart__data">
-          <Table label={t.table.replace('{title}', title || '')} columns={table.columns} data={table.data} index={table.index} />
+        <Details summary={t.showData} variant="inline" className="plx-chart__data" onToggle={(open) => { if (open) setDataOpened(true); }}>
+          {dataOpened ? <Table label={t.table.replace('{title}', title || '')} columns={table.columns} data={table.data} index={table.index} /> : null}
         </Details>
       ) : null}
     </figure>

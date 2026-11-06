@@ -3,7 +3,7 @@
 // RadarChart, SankeyDiagram (with sankeyLayout) and TimelineChart, and the pattern ComparisonView (Compare).
 export { BarChart } from '../charts/lazy.jsx';
 export { binValues } from '../charts/chart-helpers.js';
-export { ComboChart } from '../charts/ComboChart.jsx';
+export { ComboChart } from '../charts/lazy.jsx';
 export { PieChart } from '../charts/lazy.jsx';
 export { pieSlices } from '../charts/chart-helpers.js';
 export { BulletChart } from '../charts/BulletChart.jsx';
