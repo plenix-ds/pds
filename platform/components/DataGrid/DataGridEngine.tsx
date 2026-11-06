@@ -913,6 +913,11 @@ function NextEngine(rawProps: any) {
     const ops = await import('./engine/pasteOps.ts');
     await fillPairs(ops.fillDown({ rect: cellRange.rect, rows: model, columns: ordered }));
   };
+  const fillRight = async () => {
+    if (!cellRange.rect) return;
+    const ops = await import('./engine/pasteOps.ts');
+    await fillPairs(ops.fillRight({ rect: cellRange.rect, rows: model, columns: ordered }));
+  };
   // the handle on the block's bottom inline-end corner: dragged to a cell, it repeats the block down or toward the inline end, then the block covers what it filled
   const startFill = (event: any) => {
     const rect = cellRange.rect;
@@ -1003,7 +1008,7 @@ function NextEngine(rawProps: any) {
     commitEdit,
     undoRedo: props.editing?.undo ? { undo, redo } : null,
     pasteBlock: props.editing?.paste ? pasteBlock : null,
-    fill: props.editing?.fill && cellRange.enabled ? { down: fillDown, start: startFill } : null,
+    fill: props.editing?.fill && cellRange.enabled ? { down: fillDown, right: fillRight, start: startFill } : null,
     canonical,
     cutAt,
     rowMenu,
