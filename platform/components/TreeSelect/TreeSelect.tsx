@@ -131,7 +131,8 @@ export type TreeSelectProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>
   label?: string;
   /** the branches open at first (ids) */
   defaultExpanded?: Id[];
-  width?: string;
+  /** "xs" | "sm" | "md" | "lg" (the field-width scale) | "fill" */
+  width?: 'xs' | 'sm' | 'md' | 'lg' | 'fill';
   invalid?: boolean;
   warning?: string | boolean;
   readOnly?: boolean;
