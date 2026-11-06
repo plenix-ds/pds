@@ -108,7 +108,7 @@ function ConditionRows({ fields, node, setNode, nested, t }: any) {
 }
 
 /** @public a field the collection can be filtered by (utils/fields.ts) */
-export type FilterField = { value: string; label: string; kind?: 'text' | 'select' | 'multi' | 'number' | 'date'; options?: Array<{ value: string | number; label: string }>; get?(record: any): unknown };
+export type FilterField = { value: string; label: string; kind?: 'text' | 'select' | 'multi' | 'number' | 'date'; options?: Array<{ value: string | number; label: string }>; get?(record: unknown): unknown };
 /** @public a filter condition */
 export type FilterCondition = { id: string; field: string; op: string; value?: unknown };
 /** @public a group of conditions */
