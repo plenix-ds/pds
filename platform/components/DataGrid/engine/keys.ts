@@ -36,8 +36,10 @@ export const headerKeys =
   };
 
 export const resizeKeys =
-  ({ resize, c, column }: any) =>
+  ({ resize, c, column, fit }: any) =>
   (e: any) => {
+    // Enter fits the column to what is drawn, as a double-click on the border does (#815)
+    if (e.key === 'Enter' && fit) { e.preventDefault(); e.stopPropagation(); fit(c.field); return; }
     if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) {
       e.preventDefault();
       resize(
