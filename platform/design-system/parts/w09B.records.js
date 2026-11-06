@@ -184,7 +184,7 @@ DSParts.records.push(function (H) {
   var FLOW_LINKS = [{ source: 'web', target: 'review', value: 520 }, { source: 'web', target: 'auto', value: 100 }, { source: 'app', target: 'review', value: 300 }, { source: 'app', target: 'auto', value: 80 },
     { source: 'api', target: 'auto', value: 240 }, { source: 'review', target: 'ok', value: 560 }, { source: 'review', target: 'no', value: 160 }, { source: 'review', target: 'wait', value: 100 }, { source: 'auto', target: 'ok', value: 420 }];
   var sankeyDiagram = { id: 'sankey-diagram', lab: true, icon: 'merge', sec: 'data-display', sub: 'Charts', leaf: 'Sankey diagram', title: 'Sankey diagram',
-    plenix: 'SankeyDiagram, sankeyLayout', src: 'charts/SankeyDiagram.jsx', also: ['charts/chart-kit.ts'], css: CSS('sankey-diagram.css'), blocks: ['plx-sankey-diagram'],
+    plenix: 'SankeyDiagram, sankeyLayout', src: 'charts/SankeyDiagram.tsx', also: ['charts/chart-kit.ts'], css: CSS('sankey-diagram.css'), blocks: ['plx-sankey-diagram'],
     level: 'Component', interaction: 'Display',
     aliases: ['Flow diagram', 'Alluvial diagram', 'Flow chart (quantities)'],
     text: 'How a quantity flows, splits and merges through stages: a bar per node (a source, a stage, an outcome) in columns from left to right, with bands between them as wide as the amounts that move. It has its own layout, without a dependency: columns by the longest path, nodes ordered to keep bands from crossing, outcomes in the last column. A band takes its source’s color at a low opacity and darkens with its node under the pointer; names and totals sit beside the nodes.',

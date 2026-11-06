@@ -234,14 +234,14 @@ t('FunnelChart', 'component', 'S', 9, 'A', ['chart-parts'], ['vertical', 'horizo
 t('WaterfallChart', 'component', 'S', 9, 'A', ['chart-parts'], ['with totals'], '', ['platform/charts/WaterfallChart.jsx']);
 t('RadarChart', 'component', 'S', 9, 'A', ['chart-parts'], ['single', 'compare'], '', ['platform/charts/RadarChart.jsx']);
 t('Treemap', 'component', 'M', 9, 'B', ['ChartKit'], ['flat', 'nested'], 'squarify layout', ['platform/charts/Treemap.jsx']);
-t('SankeyDiagram', 'component', 'L', 9, 'B', ['ChartKit'], ['horizontal'], 'own layout (no d3)', ['platform/charts/SankeyDiagram.jsx']);
+t('SankeyDiagram', 'component', 'L', 9, 'B', ['ChartKit'], ['horizontal'], 'own layout (no d3)', ['platform/charts/SankeyDiagram.tsx']);
 t('WordCloud', 'component', 'M', 9, 'B', ['ChartKit'], ['spiral', 'rectangular'], '', ['platform/charts/WordCloud.jsx']);
 t('GanttChart', 'component', 'L', 9, 'B', ['chart-parts'], ['tasks', 'dependencies', 'milestones', 'today line'], '', ['platform/charts/GanttChart.jsx']);
 t('TimelineChart', 'component', 'M', 9, 'B', ['chart-parts'], ['events', 'ranges', 'lanes'], '', ['platform/charts/TimelineChart.jsx']);
 t('GeoMap', 'component', 'L', 9, 'C', ['ChartKit'], ['world', 'country', 'markers', 'choropleth', 'tile layer adapter (optional)'],
   'SVG maps from vendored TopoJSON (platform/vendor/geo/), no tile service needed; Map and Choropleth map', ['platform/charts/GeoMap.jsx', 'platform/vendor/geo/']);
-t('NetworkGraph', 'component', 'L', 9, 'C', ['ChartKit'], ['force layout', 'hierarchical', 'zoom/pan'], '', ['platform/charts/NetworkGraph.jsx']);
-t('Diagram', 'component', 'L', 9, 'C', ['NetworkGraph'], ['flowchart', 'boxes and arrows', 'read-only'], '', ['platform/charts/Diagram.jsx']);
+t('NetworkGraph', 'component', 'L', 9, 'C', ['ChartKit'], ['force layout', 'hierarchical', 'zoom/pan'], '', ['platform/charts/NetworkGraph.tsx']);
+t('Diagram', 'component', 'L', 9, 'C', ['NetworkGraph'], ['flowchart', 'boxes and arrows', 'read-only'], '', ['platform/charts/Diagram.tsx']);
 t('ComparisonView', 'pattern', 'M', 9, 'C', [], ['side by side columns', 'feature matrix', 'image slider (before/after)', 'highlight differences'], 'Comparison view = Compare (patterns)');
 
 /* ───────── wave 10: workflows 1 ───────── */

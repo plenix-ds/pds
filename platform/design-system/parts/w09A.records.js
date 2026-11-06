@@ -243,7 +243,7 @@ DSParts.records.push(function (H) {
 
   /* ── 07 Data Display › Specialized displays › Graph / network: NetworkGraph ── */
   var networkGraph = { id: 'network-graph', lab: true, icon: 'share', sec: 'data-display', sub: 'Specialized displays', leaf: 'Graph / network', title: 'Graph / network',
-    plenix: 'NetworkGraph, forceLayout, layeredLayout, graphLayers, graphNeighbors, useGraphView', src: 'charts/NetworkGraph.jsx', css: ['charts/network-graph.css'], blocks: ['plx-network-graph'], level: 'Component', interaction: 'Navigation', statesFrom: ['chart-interaction'],
+    plenix: 'NetworkGraph, forceLayout, layeredLayout, graphLayers, graphNeighbors, useGraphView', src: 'charts/NetworkGraph.tsx', css: ['charts/network-graph.css'], blocks: ['plx-network-graph'], level: 'Component', interaction: 'Navigation', statesFrom: ['chart-interaction'],
     aliases: ['Network diagram', 'Node-link diagram', 'Relationship graph', 'Dependency graph', 'Lineage graph'],
     text: 'Nodes joined by edges, to show how items connect: dependencies, lineage, the campaigns that use an asset. A force layout lets the structure find its shape; the hierarchical layout arranges it in layers from the roots. Edges can be directed (an arrowhead), labeled, and dashed for a second kind of link. Zoom in, Zoom out and Fit sit above the plot (+ − 0 on the keyboard); dragging the background pans. One Tab stop: the arrow keys follow the edges. The node in focus and its neighbors stand out while the rest step back, and the live region says the node and what it is connected to.',
     use: ['Exploring relationships, dependencies and lineage', 'Groups in the categorical colors, with a legend', 'The table of nodes and connections as the graph’s text alternative'],
@@ -264,7 +264,7 @@ DSParts.records.push(function (H) {
 
   /* ── 07 Data Display › Specialized displays › Diagram: Diagram ── */
   var diagram = { id: 'diagram', lab: true, icon: 'merge', sec: 'data-display', sub: 'Specialized displays', leaf: 'Diagram', title: 'Diagram',
-    plenix: 'Diagram', src: 'charts/Diagram.jsx', css: ['charts/diagram.css'], blocks: ['plx-diagram'], level: 'Component', interaction: 'Navigation', statesFrom: ['chart-interaction'],
+    plenix: 'Diagram', src: 'charts/Diagram.tsx', css: ['charts/diagram.css'], blocks: ['plx-diagram'], level: 'Component', interaction: 'Navigation', statesFrom: ['chart-interaction'],
     aliases: ['Flowchart', 'Flow diagram', 'Boxes and arrows', 'Process diagram', 'Architecture diagram'],
     text: 'Shapes joined by connectors that explain a process, a system or a structure. Flowchart: a step is a box, a decision a diamond with labeled branches, the start and end are pills, data is a slanted box. Boxes and arrows: every node is a box with a title and a line, inside its group. Laid out in layers in one reading direction, drawn at its own size (smaller only in a narrow container). Interactive: the arrow keys walk the flow and the live region says each step and where it leads. Read-only: a picture with its steps as a table.',
     use: ['Workflows, approval paths, architectures', 'Labels that start with a verb; the same shape for the same meaning', 'The table of steps as the diagram’s text alternative'],

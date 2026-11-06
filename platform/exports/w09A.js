@@ -10,5 +10,5 @@ export { HeatMap } from '../charts/lazy.tsx';
 export { WaterfallChart } from '../charts/lazy.tsx';
 export { waterfallSteps } from '../charts/chart-helpers.ts';
 export { WordCloud, wordCloudLayout } from '../charts/WordCloud.jsx';
-export { NetworkGraph, forceLayout, layeredLayout, graphLayers, graphNeighbors, useGraphView } from '../charts/NetworkGraph.jsx';
-export { Diagram } from '../charts/Diagram.jsx';
+export { NetworkGraph, forceLayout, layeredLayout, graphLayers, graphNeighbors, useGraphView } from '../charts/NetworkGraph.tsx';
+export { Diagram } from '../charts/Diagram.tsx';

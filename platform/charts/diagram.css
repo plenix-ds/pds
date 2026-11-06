@@ -1,4 +1,4 @@
-/* Plenix · Diagram (platform/charts/diagram.css; the code is Diagram.jsx): shapes (a box, a diamond, a pill, a slanted
+/* Plenix · Diagram (platform/charts/diagram.css; the code is Diagram.tsx): shapes (a box, a diamond, a pill, a slanted
    box), their wrapped labels, the elbow connectors with their arrowheads and branch labels, group containers, the shape
    in focus, and the plot that clips the zoomed diagram. Every value is a --plx-comp-diagram-* token; no color carries
    meaning (the shapes and the labels do). */
