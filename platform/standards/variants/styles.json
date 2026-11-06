@@ -4611,6 +4611,46 @@
     ],
     "why": "the base .plx-thumbnail: the picture fills the box (object-fit: cover); the icon content is --icon"
   },
+  "commerce--template-product-discovery": {
+    "sets": [],
+    "why": "markup only: a shop page that discovers products by category and recommendation (page kind workspace); built only from Platform components and patterns"
+  },
+  "commerce--template-product-listing": {
+    "sets": [],
+    "why": "markup only: a shop page that lists one category of products (page kind workspace); built only from Platform components and patterns"
+  },
+  "commerce--template-product-detail": {
+    "sets": [],
+    "why": "markup only: a product page with its choices, quantity and Add to cart (page kind detail); built only from Platform components and patterns"
+  },
+  "commerce--template-cart": {
+    "sets": [],
+    "why": "markup only: the cart: quantities, remove and restore, a promo code and the way to checkout (page kind workspace); built only from Platform components and patterns"
+  },
+  "commerce--template-checkout": {
+    "sets": [],
+    "why": "markup only: the checkout form, with delivery options and saved methods, that places the order through a handler (page kind form); built only from Platform components and patterns"
+  },
+  "commerce--template-payment": {
+    "sets": [],
+    "why": "markup only: the payment form UI only; the page hands the fields to its payment provider and nothing is charged, sent or kept (page kind form); built only from Platform components and patterns"
+  },
+  "commerce--template-order-confirmation": {
+    "sets": [],
+    "why": "markup only: the order confirmation with the order number, the next steps and the links on (page kind detail); built only from Platform components and patterns"
+  },
+  "commerce--template-order-management": {
+    "sets": [],
+    "why": "markup only: the orders as a DataGrid workspace, with the order's own page as a detail (page kind workspace); built only from Platform components and patterns"
+  },
+  "commerce--template-subscription-management": {
+    "sets": [],
+    "why": "markup only: the subscription settings page (page kind settings); built only from Platform components and patterns"
+  },
+  "commerce--template-returns": {
+    "sets": [],
+    "why": "markup only: the returns form (page kind form); built only from Platform components and patterns"
+  },
   "popover--size-sm-240px": {
     "sets": [
       {
