@@ -53,7 +53,7 @@ export function withColors(series: any) {
   return (series || []).map((s: any, i: any) => Object.assign({}, s, { id: s.id === undefined ? String(i) : s.id, color: s.color || seriesColor(i) }));
 }
 
-export function legendItems(series: any, value: any) {
+export function legendItems(series: any, value?: any) {
   return (series || []).map((s: any, i: any) => ({ id: s.id, label: s.label, color: s.color, value: value ? value(s, i) : undefined }));
 }
 

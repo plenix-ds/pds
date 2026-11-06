@@ -1821,13 +1821,13 @@
       "platform/design-system/parts/w09B.{records,labs,docs}.js + .css",
       "platform/exports/w09B.{js,css}",
       "platform/standards/web-native-map.d/w09B.json",
-      "platform/charts/BarChart.jsx",
+      "platform/charts/BarChart.tsx",
       "platform/charts/PieChart.jsx",
       "platform/charts/BoxPlot.jsx",
       "platform/charts/BulletChart.jsx",
       "platform/charts/SankeyDiagram.jsx",
       "platform/charts/RadarChart.jsx",
-      "platform/charts/ComboChart.jsx",
+      "platform/charts/ComboChart.tsx",
       "platform/charts/TimelineChart.jsx",
       "platform/patterns/ComparisonView/ComparisonView.jsx",
       "platform/patterns/ComparisonView/comparison-view.css",
@@ -6237,7 +6237,7 @@
    "wave": 9,
    "lane": "B",
    "files": [
-    "platform/charts/BarChart.jsx"
+    "platform/charts/BarChart.tsx"
    ],
    "dependsOn": [
     "chart-parts"
@@ -6265,7 +6265,7 @@
    "wave": 9,
    "lane": "B",
    "files": [
-    "platform/charts/ComboChart.jsx"
+    "platform/charts/ComboChart.tsx"
    ],
    "dependsOn": [
     "BarChart"
@@ -15120,7 +15120,7 @@
    "target": "BarChart",
    "targetKind": "component",
    "files": [
-    "platform/charts/BarChart.jsx"
+    "platform/charts/BarChart.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09B.records.js",
@@ -15153,7 +15153,7 @@
    "target": "BarChart",
    "targetKind": "component",
    "files": [
-    "platform/charts/BarChart.jsx"
+    "platform/charts/BarChart.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09B.records.js",
@@ -15180,7 +15180,7 @@
    "target": "BarChart",
    "targetKind": "component",
    "files": [
-    "platform/charts/BarChart.jsx"
+    "platform/charts/BarChart.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09B.records.js",
@@ -15348,7 +15348,7 @@
    "target": "BarChart",
    "targetKind": "component",
    "files": [
-    "platform/charts/BarChart.jsx"
+    "platform/charts/BarChart.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09B.records.js",
@@ -15671,7 +15671,7 @@
    "target": "ComboChart",
    "targetKind": "component",
    "files": [
-    "platform/charts/ComboChart.jsx"
+    "platform/charts/ComboChart.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09B.records.js",

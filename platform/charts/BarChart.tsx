@@ -50,6 +50,7 @@
        through the ECharts theme (echarts/engine.js). The plot is drawn by Apache ECharts (issue 353); no style is written here.
 */
 import React from 'react';
+import type { ChartMargin } from './chart-types.ts';
 import { cx } from '../utils/cx.ts';
 import { formatNumber, formatPercent } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.tsx';
@@ -69,32 +70,57 @@ const LAYOUTS = ['grouped', 'stacked', 'percent'];
 const INSIDE_LABEL_MIN = 32;
 // the gaps between bars, as shares of a category's band (geometry: the old scaleBand's paddings)
 // an empty list that stays the same between renders (the drawing redraws when its data changes)
-const NONE = Object.freeze([]);
+const NONE: any[] = Object.freeze([]) as any;
 const CATEGORY_GAP = '20%', SERIES_GAP = '10%';
 
 // a bar's box in plot pixels, whatever way ECharts measured it (a negative width or height for bars that go back)
-const boxOf = (l) => (l && isFinite(l.x) && isFinite(l.width) ? { x: Math.min(l.x, l.x + l.width), y: Math.min(l.y, l.y + l.height), width: Math.abs(l.width), height: Math.abs(l.height) } : null);
+const boxOf = (l: any) => (l && isFinite(l.x) && isFinite(l.width) ? { x: Math.min(l.x, l.x + l.width), y: Math.min(l.y, l.y + l.height), width: Math.abs(l.width), height: Math.abs(l.height) } : null);
 
 export { binValues } from './chart-helpers.ts';
 
+/** @public one series of a bar chart: a value per category (null draws nothing) */
+export type BarSeries = { id: string; label: string; values: Array<number | null>; /** a data-viz step */ color?: string };
+/** @public */
+export type BarChartProps = {
+  title: string;
+  description?: string;
+  hideCaption?: boolean;
+  size?: 'sm' | 'md' | 'lg';
+  categories?: string[];
+  series?: BarSeries[];
+  orientation?: 'horizontal' | 'vertical';
+  layout?: 'grouped' | 'stacked' | 'percent';
+  /** a histogram instead of categories and series */
+  histogram?: { values: number[]; bins?: number; domain?: [number, number]; format?(edge: number): string };
+  valueLabel?: string;
+  categoryLabel?: string;
+  format?(value: number): string;
+  showValues?: boolean;
+  legend?: boolean;
+  legendPosition?: 'bottom' | 'top' | 'end';
+  tooltip?: boolean;
+  margin?: ChartMargin;
+  strings?: Record<string, string>;
+  className?: string;
+};
 export function BarChart({ title, description, hideCaption, size, categories = NONE, series = NONE, orientation = 'horizontal', layout = 'grouped',
-  histogram, valueLabel, categoryLabel, format, showValues = false, legend, legendPosition, tooltip = true, margin, strings, className }) {
-  const t = useStrings('chart.barChart', strings);
+  histogram, valueLabel, categoryLabel, format, showValues = false, legend, legendPosition, tooltip = true, margin, strings, className }: BarChartProps) {
+  const t: any = useStrings('chart.barChart', strings);
   const o = orientation === 'vertical' ? 'vertical' : 'horizontal';
   const across = o === 'horizontal';
   const bins = histogram && Array.isArray(histogram.values) ? binValues(histogram.values, histogram) : null;
   const mode = bins ? 'histogram' : LAYOUTS.indexOf(layout) >= 0 ? layout : 'grouped';
   const joined = mode !== 'grouped';
-  const fmt = (v) => (typeof format === 'function' ? format(v) : formatNumber(v));
-  const edgeFmt = (v) => (bins && typeof histogram.format === 'function' ? histogram.format(v) : formatNumber(v));
-  const fmts = React.useRef(null);
+  const fmt = (v: any) => (typeof format === 'function' ? format(v) : formatNumber(v));
+  const edgeFmt = (v: any) => (bins && typeof histogram?.format === 'function' ? histogram.format(v) : formatNumber(v));
+  const fmts = React.useRef<any>(null);
   fmts.current = { fmt, edgeFmt };
 
-  const list = bins ? withColors([{ id: 'count', label: valueLabel || t.count, values: bins.map((b) => b.count) }]) : withColors(series);
-  const cats = bins ? bins.map((b, i) => i) : categories;
-  const val = (si, ci) => { const x = Number(list[si].values[ci]); return list[si].values[ci] !== null && list[si].values[ci] !== undefined && isFinite(x) ? x : null; };
-  const rangeText = (b) => edgeFmt(b.x0) + '–' + edgeFmt(b.x1);
-  const catName = (ci) => (bins ? rangeText(bins[ci]) : String(cats[ci]));
+  const list = bins ? withColors([{ id: 'count', label: valueLabel || t.count, values: bins.map((b: any) => b.count) }]) : withColors(series);
+  const cats = bins ? bins.map((b: any, i: any) => i) : categories;
+  const val = (si: any, ci: any) => { const x = Number(list[si].values[ci]); return list[si].values[ci] !== null && list[si].values[ci] !== undefined && isFinite(x) ? x : null; };
+  const rangeText = (b: any) => edgeFmt(b.x0) + '–' + edgeFmt(b.x1);
+  const catName = (ci: any) => (bins ? rangeText(bins[ci]) : String(cats[ci]));
 
   // the series shown (the legend's toggles), and each category's total of the shown series' positive values
   const showLegend = legend === undefined ? !bins && list.length > 1 : !!legend && !bins;
@@ -103,11 +129,11 @@ export function BarChart({ title, description, hideCaption, size, categories = N
     move: (cur, k) => step(cur, k), labelOf: (ci) => catName(ci),
     describe: (cell) => chartTooltipText(tip(cell.c, cell.r)),
   });
-  const shown = (si) => ia.visible(list[si].id);
-  const total = (ci) => list.reduce((a, s, si) => a + (shown(si) ? Math.max(0, val(si, ci) || 0) : 0), 0);
-  const share = (si, ci) => (total(ci) ? Math.max(0, val(si, ci) || 0) / total(ci) : 0);
+  const shown = (si: any) => ia.visible(list[si].id);
+  const total = (ci: any) => list.reduce((a: any, s: any, si: any) => a + (shown(si) ? Math.max(0, val(si, ci) || 0) : 0), 0);
+  const share = (si: any, ci: any) => (total(ci) ? Math.max(0, val(si, ci) || 0) / total(ci) : 0);
   // the keyboard: along the categories and across the series, in the directions they are drawn
-  function step(cur, k) {
+  function step(cur: any, k: any) {
     const n = cats.length;
     const alongPrev = across ? 'ArrowUp' : 'ArrowLeft', alongNext = across ? 'ArrowDown' : 'ArrowRight';
     if (k === alongPrev) return { r: cur.r, c: Math.max(0, cur.c - 1) };
@@ -120,67 +146,67 @@ export function BarChart({ title, description, hideCaption, size, categories = N
     return cur;
   }
   // what the tooltip shows (and the live region says) for a bar: { title, items }
-  function tip(ci, si) {
+  function tip(ci: any, si: any) {
     if (bins) return { title: rangeText(bins[ci]), titleKind: 'data', items: [{ label: valueLabel || t.count, value: fmt(bins[ci].count), color: list[0].color }] };
     if (mode === 'grouped') return { title: String(cats[ci]), items: [{ label: list[si].label, value: val(si, ci) === null ? '–' : fmt(val(si, ci)), color: list[si].color }] };
-    const items = [];
-    list.forEach((s, i) => { if (!shown(i)) return; const v = val(i, ci); items.push({ label: s.label, value: v === null ? '–' : mode === 'percent' && total(ci) ? formatPercent(share(i, ci)) : fmt(v), color: s.color, i }); });
-    items.sort((a, b) => (a.i === si ? -1 : b.i === si ? 1 : 0));
+    const items: any = [];
+    list.forEach((s: any, i: any) => { if (!shown(i)) return; const v = val(i, ci); items.push({ label: s.label, value: v === null ? '–' : mode === 'percent' && total(ci) ? formatPercent(share(i, ci)) : fmt(v), color: s.color, i }); });
+    items.sort((a: any, b: any) => (a.i === si ? -1 : b.i === si ? 1 : 0));
     return { title: String(cats[ci]) + ' · ' + fmt(total(ci)), items };
   }
 
   const table = bins
     ? { columns: [{ title: categoryLabel || t.range, field: 'range', kind: 'data', rowLabel: true }, { title: valueLabel || t.count, field: 'count', kind: 'data', align: 'right' }],
-      data: bins.map((b, i) => ({ id: i + 1, range: rangeText(b), count: fmt(b.count) })) }
-    : { columns: [{ title: categoryLabel || t.category, field: 'category', kind: 'name', rowLabel: true }]
-      .concat(list.map((s, si) => ({ title: s.label, field: 's' + si, kind: 'data', align: 'right' })))
+      data: bins.map((b: any, i: any) => ({ id: i + 1, range: rangeText(b), count: fmt(b.count) })) }
+    : { columns: ([{ title: categoryLabel || t.category, field: 'category', kind: 'name', rowLabel: true }] as any[])
+      .concat(list.map((s: any, si: any) => ({ title: s.label, field: 's' + si, kind: 'data', align: 'right' })))
       .concat(mode !== 'grouped' && list.length > 1 ? [{ title: t.total, field: 'total', kind: 'data', align: 'right' }] : []),
-    data: cats.map((c, ci) => {
-      const all = list.reduce((a, s, si) => a + Math.max(0, val(si, ci) || 0), 0);
-      const row = { id: ci + 1, category: String(c) };
-      list.forEach((s, si) => { const v = val(si, ci); row['s' + si] = v === null ? '' : mode === 'percent' && all ? fmt(v) + ' (' + formatPercent(Math.max(0, v) / all) + ')' : fmt(v); });
+    data: cats.map((c: any, ci: any) => {
+      const all = list.reduce((a: any, s: any, si: any) => a + Math.max(0, val(si, ci) || 0), 0);
+      const row: Record<string, any> = { id: ci + 1, category: String(c) };
+      list.forEach((s: any, si: any) => { const v = val(si, ci); row['s' + si] = v === null ? '' : mode === 'percent' && all ? fmt(v) + ' (' + formatPercent(Math.max(0, v) / all) + ')' : fmt(v); });
       row.total = fmt(all);
       return row;
     }) };
-  const key = showLegend ? <ChartLegend items={legendItems(list)} orientation={legendPosition === 'end' ? 'vertical' : 'horizontal'} {...ia.legendProps} /> : null;
+  const key = showLegend ? <ChartLegend items={legendItems(list)} orientation={legendPosition === 'end' ? 'vertical' : 'horizontal'} {...(ia.legendProps as any)} /> : null;
 
   // the drawing
   const plot = useEChartsPlot();
-  const shownKey = list.map((s, si) => (shown(si) ? '1' : '0')).join('');
+  const shownKey = list.map((s: any, si: any) => (shown(si) ? '1' : '0')).join('');
   const marginKey = margin ? [margin.top, margin.end, margin.bottom, margin.start].join(':') : '';
-  const value = (si, ci) => (mode === 'percent' ? (val(si, ci) === null ? null : share(si, ci)) : val(si, ci));
-  const option = React.useCallback((tk) => {
+  const value = (si: any, ci: any) => (mode === 'percent' ? (val(si, ci) === null ? null : share(si, ci)) : val(si, ci));
+  const option = React.useCallback((tk: any) => {
     // room for the values written at the bars' ends (across: after the longest; columns: a label's line above)
     const room = gridRoom(margin, across ? 0 : tk.top);
     if (showValues && mode !== 'percent') {
-      const ends = mode === 'stacked' ? cats.map((c, ci) => fmts.current.fmt(total(ci))) : list.reduce((a, s, si) => a.concat(cats.map((c, ci) => (val(si, ci) === null ? '' : fmts.current.fmt(val(si, ci))))), []);
+      const ends = mode === 'stacked' ? cats.map((c: any, ci: any) => fmts.current.fmt(total(ci))) : list.reduce((a: any, s: any, si: any) => a.concat(cats.map((c: any, ci: any) => (val(si, ci) === null ? '' : fmts.current.fmt(val(si, ci))))), []);
       if (across) room.right = Math.max(room.right, labelRoom(ends));
       else room.top = Math.max(room.top, snapToGrid(tk.tick.fontSize + tk.tickOffset * 2, { round: 'up' }));
     }
     const named = { nameLocation: 'middle', nameMoveOverlap: true };
     const valAxis = Object.assign({ type: 'value', name: valueLabel, nameGap: across ? (tk.tickOffset * 2 + tk.tick.fontSize) : 0, inverse: across && tk.rtl,
-      axisLabel: { formatter: (v) => (mode === 'percent' ? formatPercent(v) : fmts.current.fmt(v)) } }, named, mode === 'percent' ? { min: 0, max: 1 } : {});
+      axisLabel: { formatter: (v: any) => (mode === 'percent' ? formatPercent(v) : fmts.current.fmt(v)) } }, named, mode === 'percent' ? { min: 0, max: 1 } : {});
     // the category labels' line height under columns: the font size, or more for Arabic labels (tickLineHeight)
     const catLine = across || bins ? tk.tick.fontSize : tickLineHeight(tk, cats.map(String));
-    const catAxis = Object.assign({ type: 'category', data: cats.map((c, ci) => (bins ? String(ci) : String(c))), inverse: across, name: bins ? undefined : categoryLabel,
+    const catAxis = Object.assign({ type: 'category', data: cats.map((c: any, ci: any) => (bins ? String(ci) : String(c))), inverse: across, name: bins ? undefined : categoryLabel,
       nameGap: across ? 0 : tk.tickOffset * 2 + catLine, position: across ? (tk.rtl ? 'right' : 'left') : 'bottom',
       axisLabel: bins ? { show: false } : catLine > tk.tick.fontSize ? { lineHeight: catLine } : {} }, named);
     // a histogram's range axis: the bins' edges on a number axis laid over the bins
     const edges = bins ? Object.assign({ type: 'value', min: bins[0].x0, max: bins[bins.length - 1].x1, interval: bins.length <= 12 ? bins[0].x1 - bins[0].x0 : undefined,
       inverse: across, position: across ? (tk.rtl ? 'right' : 'left') : 'bottom', name: categoryLabel, nameGap: across ? 0 : tk.tickOffset * 2 + tk.tick.fontSize,
-      axisLine: { show: false }, splitLine: { show: false }, axisLabel: { formatter: (v) => fmts.current.edgeFmt(v) } }, named) : null;
+      axisLine: { show: false }, splitLine: { show: false }, axisLabel: { formatter: (v: any) => fmts.current.edgeFmt(v) } }, named) : null;
     const cat = bins ? [catAxis, edges] : catAxis;
     const sep = joined ? { borderColor: tk.separator.color, borderWidth: tk.separator.width } : {};
     return {
       animationDuration: tk.motion, animationDurationUpdate: tk.motion,
       grid: Object.assign(room, { outerBoundsMode: 'same', outerBoundsContain: 'all' }),
       xAxis: across ? valAxis : cat, yAxis: across ? cat : valAxis,
-      series: list.map((s, si) => ({
+      series: list.map((s: any, si: any) => ({
         type: 'bar', id: String(s.id), name: s.label, silent: true, stack: mode === 'stacked' || mode === 'percent' ? 'total' : undefined,
         barCategoryGap: bins ? '0%' : CATEGORY_GAP, barGap: SERIES_GAP,
         itemStyle: Object.assign({ color: tk.color(s.color) }, sep),
         emphasis: { focus: 'self', blurScope: 'coordinateSystem', itemStyle: { color: tk.color(s.color) } }, blur: { itemStyle: { opacity: tk.dim } },
-        data: shownKey[si] === '1' ? cats.map((c, ci) => value(si, ci)) : [],
+        data: shownKey[si] === '1' ? cats.map((c: any, ci: any) => value(si, ci)) : [],
       })),
     };
   }, [categories, series, histogram, mode, o, showValues, valueLabel, categoryLabel, shownKey, marginKey]);
@@ -194,19 +220,19 @@ export function BarChart({ title, description, hideCaption, size, categories = N
     if (ia.active) c.dispatchAction({ type: 'highlight', seriesIndex: ia.active.r, dataIndex: ia.active.c });
   }, [activeKey, plot.chart]);
 
-  const draw = (dims) => {
+  const draw = (dims: any) => {
     const layer = plot.layer(dims, option);
     const c = plot.chart;
     const g = c ? plotGrid(c) : null;
     if (!g) return layer;
-    const bar = (si, ci) => { if (!shown(si) || value(si, ci) === null) return null; const d = c.getModel().getSeriesByIndex(si); return d ? boxOf(d.getData().getItemLayout(ci)) : null; };
+    const bar = (si: any, ci: any) => { if (!shown(si) || value(si, ci) === null) return null; const d = c.getModel().getSeriesByIndex(si); return d ? boxOf(d.getData().getItemLayout(ci)) : null; };
     // the pointer: the category under it, then the bar nearest to it across the category
     ia.register({
-      nearest: (px, py) => {
+      nearest: (px: any, py: any) => {
         const at = c.convertFromPixel({ gridIndex: 0 }, [px, py]);
         const ci = Math.max(0, Math.min(cats.length - 1, Math.round(at ? at[across ? 1 : 0] : 0)));
         let best = null, d = Infinity;
-        list.forEach((s, si) => {
+        list.forEach((s: any, si: any) => {
           const b = bar(si, ci); if (!b) return;
           const dist = mode === 'grouped' || bins ? Math.abs((across ? b.y + b.height / 2 : b.x + b.width / 2) - (across ? py : px))
             : (across ? (px < b.x ? b.x - px : px > b.x + b.width ? px - b.x - b.width : 0) : (py < b.y ? b.y - py : py > b.y + b.height ? py - b.y - b.height : 0));
@@ -217,18 +243,18 @@ export function BarChart({ title, description, hideCaption, size, categories = N
     });
     const inner = { width: g.width, height: g.height };
     // a bar's end: the middle of its thickness at its far end (from zero), in the grid's coordinates
-    const endOf = (b, negative) => (across ? { x: (negative ? b.x : b.x + b.width) - g.x, y: b.y + b.height / 2 - g.y } : { x: b.x + b.width / 2 - g.x, y: (negative ? b.y + b.height : b.y) - g.y });
-    const labels = [];
-    if (showValues) cats.forEach((cname, ci) => {
+    const endOf = (b: any, negative: any) => (across ? { x: (negative ? b.x : b.x + b.width) - g.x, y: b.y + b.height / 2 - g.y } : { x: b.x + b.width / 2 - g.x, y: (negative ? b.y + b.height : b.y) - g.y });
+    const labels: any = [];
+    if (showValues) cats.forEach((cname: any, ci: any) => {
       if (mode === 'stacked') {
-        const tops = list.map((s, si) => (val(si, ci) !== null && val(si, ci) >= 0 ? bar(si, ci) : null)).filter(Boolean);
+        const tops = list.map((s: any, si: any) => (val(si, ci) !== null && (val(si, ci) as number) >= 0 ? bar(si, ci) : null)).filter(Boolean);
         if (!tops.length) return;
-        const b = tops.reduce((a, x) => (across ? (x.x + x.width > a.x + a.width ? x : a) : (x.y < a.y ? x : a)));
+        const b = tops.reduce((a: any, x: any) => (across ? (x.x + x.width > a.x + a.width ? x : a) : (x.y < a.y ? x : a)));
         const e = endOf(b, false);
         labels.push(<DataLabel key={'t' + ci} x={e.x} y={e.y} value={fmt(total(ci))} position={across ? 'end' : 'top'} />);
         return;
       }
-      list.forEach((s, si) => {
+      list.forEach((s: any, si: any) => {
         const b = bar(si, ci); if (!b) return;
         if (mode === 'percent') {
           if ((across ? b.width : b.height) < INSIDE_LABEL_MIN) return;
@@ -241,13 +267,13 @@ export function BarChart({ title, description, hideCaption, size, categories = N
         labels.push(<DataLabel key={'l' + ci + ':' + si} x={e.x} y={e.y} value={fmt(val(si, ci))} position={across ? 'end' : 'top'} />);
       });
     });
-    let tipNode = null;
+    let tipNode: any = null;
     const a = ia.active;
     if (tooltip && a && cats[a.c] !== undefined && shown(a.r)) {
-      const b = mode === 'grouped' || bins ? bar(a.r, a.c) : list.map((s, si) => bar(si, a.c)).filter(Boolean).reduce((x, y) => (!x ? y : across ? (y.x + y.width > x.x + x.width ? y : x) : (y.y < x.y ? y : x)), null);
+      const b = mode === 'grouped' || bins ? bar(a.r, a.c) : list.map((s: any, si: any) => bar(si, a.c)).filter(Boolean).reduce((x: any, y: any) => (!x ? y : across ? (y.x + y.width > x.x + x.width ? y : x) : (y.y < x.y ? y : x)), null);
       if (b) {
         const e = endOf(b, false), tp = tip(a.c, a.r);
-        tipNode = <ChartTooltip x={e.x} y={e.y} inner={inner} title={tp.title} titleKind={tp.titleKind || 'text'} items={tp.items} />;
+        tipNode = <ChartTooltip x={e.x} y={e.y} inner={inner} title={tp.title} titleKind={(tp.titleKind || 'text') as 'text' | 'data'} items={tp.items} />;
       }
     }
     return [layer, <g key="plx-chart-overlay" transform={'translate(' + g.x + ',' + g.y + ')'}>{labels}{tipNode}</g>];

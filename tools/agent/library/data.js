@@ -217,8 +217,8 @@ t('chart-a11y', 'foundation', 'M', 8, 'A', ['chart-parts'], ['data grid fallback
 t('chart-interaction', 'foundation', 'M', 8, 'A', ['chart-parts'], ['hover crosshair', 'brush/zoom', 'legend toggle', 'click a point'], 'platform/charts/interaction.ts', ['platform/charts/interaction.ts']);
 t('LineChart', 'component', 'M', 8, 'A', ['chart-parts'], ['line', 'step', 'multi-series', 'points'], 'platform/charts/LineChart.tsx', ['platform/charts/LineChart.tsx']);
 t('AreaChart', 'component', 'S', 8, 'A', ['LineChart'], ['area', 'stacked', 'percent'], '', ['platform/charts/AreaChart.tsx']);
-t('BarChart', 'component', 'M', 8, 'B', ['chart-parts'], ['bar (horizontal)', 'column (vertical)', 'grouped', 'stacked', 'percent', 'histogram (binned)'], '', ['platform/charts/BarChart.jsx']);
-t('ComboChart', 'component', 'S', 8, 'B', ['BarChart'], ['bar + line', 'two axes'], '', ['platform/charts/ComboChart.jsx']);
+t('BarChart', 'component', 'M', 8, 'B', ['chart-parts'], ['bar (horizontal)', 'column (vertical)', 'grouped', 'stacked', 'percent', 'histogram (binned)'], '', ['platform/charts/BarChart.tsx']);
+t('ComboChart', 'component', 'S', 8, 'B', ['BarChart'], ['bar + line', 'two axes'], '', ['platform/charts/ComboChart.tsx']);
 t('LollipopChart', 'component', 'S', 8, 'B', ['chart-parts'], ['horizontal', 'vertical'], '', ['platform/charts/LollipopChart.jsx']);
 t('Sparkline', 'component', 'S', 8, 'C', ['ChartKit'], ['line', 'area', 'bar', 'with last point'], '', ['platform/charts/Sparkline.tsx']);
 t('Metric', 'extend', 'S', 8, 'C', ['Sparkline'], ['card with trend'], 'Metric card = Card + Metric + Sparkline', EX.Metric);
