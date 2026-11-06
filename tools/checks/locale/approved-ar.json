@@ -2874,7 +2874,7 @@
    }
   },
   {
-   "source": "D-0078 (owner, chat, 2026-11-06, recorded on #476: standards accepted by default, Microsoft first). Microsoft Arabic terms: Cancel = إلغاء (named as Microsoft's in docs/i18n/arabic.md), Create = إنشاء (Microsoft terminology, Office). confirmAction.confirm is {verb} only, no Arabic. #629 rows 8, 9 and 11.",
+   "source": "D-0078 (owner, chat, 2026-11-06, recorded on #476: standards accepted by default, Microsoft first). Microsoft Arabic terms: Cancel = إلغاء (named as Microsoft's in docs/i18n/arabic.md), Create = إنشاء (Microsoft Terminology Collection, ARABIC.tbx, checked 2026-11-06). confirmAction.confirm is {verb} only, no Arabic. #629 rows 8, 9 and 11.",
    "date": "2026-11-06",
    "strings": {
     "confirmAction": {
@@ -2883,6 +2883,20 @@
     },
     "combobox": {
      "create": "إنشاء “{text}”"
+    }
+   }
+  },
+  {
+   "source": "#629 rows 4 to 7. Rows 4 and 7 reuse the owner-approved Arabic for the same English (docs/i18n/arabic.md: one English word = one Arabic word; avatarGroup.moreLabel \"{n} more\" = {n} إضافية, deleteFlow.permanent \"This cannot be undone.\" = لا يمكن التراجع عن هذا.). Rows 5 and 6 hold only placeholders and the Arabic question mark U+061F (ISO/IEC 10646, D-0078).",
+   "date": "2026-11-06",
+   "strings": {
+    "combobox": {
+     "moreChips": "{count} إضافية"
+    },
+    "confirmAction": {
+     "title": "{verb} {name}؟",
+     "titleMany": "{verb} {count} {plural}؟",
+     "permanent": "لا يمكن التراجع عن هذا."
     }
    }
   }
