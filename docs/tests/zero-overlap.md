@@ -29,7 +29,7 @@ Each part of the Plenix interface gets each style from exactly one rule, so chan
 
 ## When it runs
 - AUTOMATIC group in `tests/run.js`, so `npm test` and `npm run test:full` run it. It has no changed-mode filter: it always runs its checks when started.
-- CI: the "Zero overlap" job of `ci.yml`, part of the required "CI result" check (#46). It is diff-aware: it runs only when `platform/`, `build-app.js`, this test, `tests/clash-audit.js`, `tests/lib.js`, the fixtures or the snapshot changed; otherwise it passes without running. A missing Chrome fails it.
+- CI: the "Zero overlap" job of `ci.yml`, part of the required "CI result" check (#46). It is diff-aware: it runs only when `platform/`, `build-app.js`, `ci.yml`, this test, `tests/clash-audit.js`, `tests/lib.js`, the fixtures or the snapshot changed; otherwise it passes without running. A missing Chrome fails it.
 - By hand: `node tests/zero-overlap.test.js`.
 
 ## What it needs

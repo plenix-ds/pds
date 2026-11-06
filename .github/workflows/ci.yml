@@ -268,7 +268,7 @@ jobs:
       - name: Did anything the test reads change?
         id: scope
         run: |
-          if git diff --quiet "$(git merge-base "$BASE_SHA" HEAD)" HEAD -- platform build-app.js tests/zero-overlap.test.js tests/clash-audit.js tests/lib.js tests/fixtures/zero-overlap tests/baselines/pilot-computed.json; then
+          if git diff --quiet "$(git merge-base "$BASE_SHA" HEAD)" HEAD -- platform build-app.js .github/workflows/ci.yml tests/zero-overlap.test.js tests/clash-audit.js tests/lib.js tests/fixtures/zero-overlap tests/baselines/pilot-computed.json; then
             echo "run=no" >> "$GITHUB_OUTPUT"
             echo "styling, test, fixtures and snapshot unchanged: not run for this PR"
           else
