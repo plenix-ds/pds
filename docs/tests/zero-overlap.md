@@ -29,7 +29,7 @@ Each part of the Plenix interface gets each style from exactly one rule, so chan
 
 ## When it runs
 - AUTOMATIC group in `tests/run.js`, so `npm test` and `npm run test:full` run it. It has no changed-mode filter: it always runs its checks when started.
-- Not in CI: it fails against a stale snapshot, decision pending in #763. It is in neither the `ci.yml` browser matrix nor `full.yml`.
+- Not in CI yet: the snapshot was refreshed (#46, owner yes in #45), which cleared the 1,243 findings. One real overlap remains: `--plx-state-button-layer-color` is set by the base Button rule and again by the primary and danger rules (`platform/components/Button/button.css:186, 489, 505`). It is tracked in its own issue; wire the test into CI when that is fixed.
 - By hand: `node tests/zero-overlap.test.js`.
 
 ## What it needs
