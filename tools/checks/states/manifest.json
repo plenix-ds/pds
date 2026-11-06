@@ -268,5 +268,15 @@
     "loading": "n/a(a sheet's content is the caller's)",
     "selected": "n/a(a sheet is not selectable)",
     "error": "n/a(an error shows in the content; stories arrive with Storybook, P0-11)"
+  },
+  "EntityPicker": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(stories arrive with Storybook, P0-11)",
+    "loading": "n/a(loadOptions shows its own spinner row in the list; stories arrive with Storybook, P0-11)",
+    "selected": "n/a(stories arrive with Storybook, P0-11)",
+    "error": "n/a(stories arrive with Storybook, P0-11)"
   }
 }

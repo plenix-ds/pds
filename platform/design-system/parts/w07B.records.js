@@ -127,7 +127,7 @@ DSParts.records.push(function (H) {
     return frame('popup', box(400, h(P.Field, { label: props.label, error: props.error }, h(P.EntityPicker, e))));
   };
   var entityPicker = { id: 'entity-picker', lab: true, icon: 'doc-search', sec: 'forms', sub: 'Select and lookup', leaf: 'Entity picker', title: 'Entity picker',
-    plenix: 'EntityPicker', src: 'components/EntityPicker/EntityPicker.jsx', level: 'Component', interaction: 'Selection',
+    plenix: 'EntityPicker', src: 'components/EntityPicker/EntityPicker.tsx', level: 'Component', interaction: 'Selection',
     aliases: ['Record picker', 'Lookup field', 'Reference field', 'Relation picker', 'Object picker'],
     text: 'A search-and-choose field that links a record to other records of one kind: projects, assets, teams or people. Each suggestion shows enough to tell similar records apart: the record’s icon tile (or a person’s avatar), its name, a detail line and a technical value such as an ID in the data font. It is the WAI-ARIA combobox: results filter as people type (or come from loadOptions for a large directory), their number is announced, and Browse all opens a dialog when search alone is not enough.',
     use: ['Linking a record to another: a task to its project, an asset to its campaign', 'Collections too large to list: search by name or ID', 'kind="people" for people (the people picker), kind="teams" for teams'],
@@ -151,7 +151,7 @@ DSParts.records.push(function (H) {
         ['Disabled', function () { return h(Pick, { label: 'Project', start: 'p1042', e: { entityName: 'projects', options: PROJECTS, disabled: true } }); }, null, 'disabled'],
         ['Loading from a directory', function () { return h(Pick, { label: 'Owner', e: { kind: 'people', loadOptions: function (t) { return new Promise(function (r) { setTimeout(function () { r(PEOPLE.filter(function (p) { return (p.label + ' ' + p.description).toLowerCase().indexOf(t.toLowerCase()) >= 0; })); }, 600); }); } } }); }, null, 'loadOptions']]]] };
   var peoplePicker = { id: 'people-picker', icon: 'person', sec: 'forms', sub: 'Select and lookup', leaf: 'People picker', title: 'People picker',
-    plenix: 'EntityPicker kind="people"', src: 'components/EntityPicker/EntityPicker.jsx', level: 'Component', interaction: 'Selection', statesFrom: ['entity-picker'], variantClasses: [], docsFrom: 'entity-picker',
+    plenix: 'EntityPicker kind="people"', src: 'components/EntityPicker/EntityPicker.tsx', level: 'Component', interaction: 'Selection', statesFrom: ['entity-picker'], variantClasses: [], docsFrom: 'entity-picker',
     aliases: ['User picker', 'Person picker', 'Assignee picker', 'Member picker'], related: ['entity-picker', 'profile-summary', 'avatar'],
     text: 'The people picker is EntityPicker with kind="people": people search by name or email, and each suggestion shows the person’s avatar (with their presence), name and email, so two people with the same name can be told apart. It takes one person, or several as removable tags. A large directory loads as people type (loadOptions), and the number of people found is announced.',
     use: ['Assigning, sharing with, mentioning or inviting people', 'Always the email (or a role) as the second line', 'loadOptions for a directory too large to list'],

@@ -48,8 +48,8 @@
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { Tag } from '../Tag/Tag.tsx';
-import { Avatar } from '../Avatar/Avatar.tsx';
-import { Icon } from '../Icon/Icon.tsx';
+import { Avatar, type AvatarPresence } from '../Avatar/Avatar.tsx';
+import { Icon, type IconValue } from '../Icon/Icon.tsx';
 import { Spinner } from '../Loading/Loading.tsx';
 import { announce } from '../../utils/announce.tsx';
 import { useFloating, TOP_LAYER } from '../../utils/floating.ts';
@@ -63,10 +63,44 @@ import SearchIcon from 'plenix-platform/icons/plenix/search';
 import SettingsUsersIcon from 'plenix-platform/icons/plenix/settings-users';
 import { fill } from '../../utils/fill.ts';
 
-const NAMES = { people: 'people', teams: 'teams', records: 'records' };
-export const EntityPicker = React.forwardRef(function EntityPicker({ kind = 'records', options = [], value, values, onChange, multiple = false,
-  loadOptions, loadDelay = 300, minChars = 1, entityName, placeholder, onBrowse, label, invalid, warning, disabled, id, strings, className, ...rest }, ref) {
-  const t = useStrings('entityPicker', strings);
+/** @public a record's value (ADR 0011) */
+export type EntityPickerValue = string | number;
+/** @public a record: { value, label, description, meta, icon, src, color, presence, disabled } */
+export type EntityPickerOption = { value: EntityPickerValue; label: string; description?: React.ReactNode; meta?: React.ReactNode; icon?: IconValue; src?: string; color?: string; presence?: AvatarPresence; disabled?: boolean };
+type PickerCommon = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange' | 'className' | 'id' | 'placeholder' | 'disabled' | 'multiple'> & {
+  kind?: 'records' | 'people' | 'teams';
+  options?: EntityPickerOption[];
+  loadOptions?: (text: string) => EntityPickerOption[] | Promise<EntityPickerOption[]>;
+  loadDelay?: number;
+  minChars?: number;
+  entityName?: string;
+  placeholder?: string;
+  onBrowse?: () => void;
+  /** the accessible name when there is no Field */
+  label?: string;
+  invalid?: boolean;
+  warning?: boolean;
+  disabled?: boolean;
+  id?: string;
+  strings?: Record<string, unknown> | null;
+  className?: string;
+  /** "fill": as wide as its container (a data-grid cell) */
+  width?: string;
+};
+/** @public one choice: value, and onChange(value, option) */
+export type EntityPickerSingleProps = PickerCommon & { multiple?: false; value?: EntityPickerValue | null; values?: undefined; onChange?: (value: EntityPickerValue, option: EntityPickerOption) => void };
+/** @public several choices, shown as tags: values, and onChange(values) */
+export type EntityPickerMultipleProps = PickerCommon & { multiple: true; values?: EntityPickerValue[]; value?: undefined; onChange?: (values: EntityPickerValue[]) => void };
+/** @public the prop type (ADR 0011) */
+export type EntityPickerProps = EntityPickerSingleProps | EntityPickerMultipleProps;
+type PickerItem = { kind: 'option'; o: EntityPickerOption } | { kind: 'browse' };
+const NAMES: Record<string, string> = { people: 'people', teams: 'teams', records: 'records' };
+export const EntityPicker = React.forwardRef<HTMLInputElement, EntityPickerProps>(function EntityPicker(props, ref) {
+  const { kind = 'records', options = [], value, values, multiple = false,
+    loadOptions, loadDelay = 300, minChars = 1, entityName, placeholder, onBrowse, label, invalid, warning, disabled, id, strings, className, onChange: _onChange, ...rest } = props;
+  // one callback in two shapes (single: value and option; multiple: the new array): the union above keeps callers right, here it is called by the mode
+  const onChange = _onChange as (value: unknown, option?: EntityPickerOption) => void;
+  const t = useStrings('entityPicker', strings) as Record<string, any>;   // the catalog's words; results is also an app's function (n) => text
   const loc = useLocale();
   const noun = entityName || NAMES[kind] || NAMES.records;
   const auto = 'plx-ep' + React.useId().replace(/[^a-zA-Z0-9]/g, '');
@@ -74,12 +108,12 @@ export const EntityPicker = React.forwardRef(function EntityPicker({ kind = 'rec
   const [open, setOpen] = React.useState(false);
   const [text, setText] = React.useState('');
   const [active, setActive] = React.useState(0);
-  const wrap = React.useRef(null), input = React.useRef(null), list = React.useRef(null);
-  React.useImperativeHandle(ref, () => input.current);
-  const [loaded, setLoaded] = React.useState([]);
+  const wrap = React.useRef<HTMLDivElement>(null), input = React.useRef<HTMLInputElement>(null), list = React.useRef<HTMLUListElement>(null);
+  React.useImperativeHandle(ref, () => input.current as HTMLInputElement);
+  const [loaded, setLoaded] = React.useState<EntityPickerOption[]>([]);
   const [busy, setBusy] = React.useState(false);
   const [failed, setFailed] = React.useState(false);
-  const loader = React.useRef(loadOptions), request = React.useRef(0), seen = React.useRef(new Map());
+  const loader = React.useRef(loadOptions), request = React.useRef(0), seen = React.useRef(new Map<EntityPickerValue, EntityPickerOption>());
   loader.current = loadOptions;
   const async = !!loadOptions;
   const query = text.trim();
@@ -89,7 +123,7 @@ export const EntityPicker = React.forwardRef(function EntityPicker({ kind = 'rec
     const n = ++request.current;
     setBusy(true); setFailed(false);
     const timer = setTimeout(() => {
-      Promise.resolve().then(() => loader.current(query)).then((list) => {
+      Promise.resolve().then(() => (loader.current as NonNullable<typeof loader.current>)(query)).then((list) => {
         if (n !== request.current) return;
         const got = Array.isArray(list) ? list : [];
         got.forEach((o) => seen.current.set(o.value, o));
@@ -98,13 +132,13 @@ export const EntityPicker = React.forwardRef(function EntityPicker({ kind = 'rec
     }, loadDelay);
     return () => clearTimeout(timer);
   }, [async, open, query, minChars, loadDelay]);
-  const optionOf = (v) => options.find((x) => x.value === v) || loaded.find((x) => x.value === v) || seen.current.get(v);
-  const chosen = multiple ? (values || []) : (value !== undefined && value !== null && value !== '' ? [value] : []);
+  const optionOf = (v: EntityPickerValue) => options.find((x) => x.value === v) || loaded.find((x) => x.value === v) || seen.current.get(v);
+  const chosen: EntityPickerValue[] = multiple ? (values || []) : (value !== undefined && value !== null && value !== '' ? [value] : []);
   const current = !multiple && chosen.length ? optionOf(chosen[0]) || null : null;
   const q = query.toLowerCase();
-  const hit = (o) => [o.label, o.description, o.meta].some((x) => x !== undefined && x !== null && String(x).toLowerCase().indexOf(q) >= 0);
+  const hit = (o: EntityPickerOption) => [o.label, o.description, o.meta].some((x) => x !== undefined && x !== null && String(x).toLowerCase().indexOf(q) >= 0);
   const results = busy || failed ? [] : async ? loaded : options.filter((o) => !q || hit(o));
-  const items = results.map((o) => ({ kind: 'option', o })).concat(onBrowse && !busy ? [{ kind: 'browse' }] : []);
+  const items: PickerItem[] = results.map((o): PickerItem => ({ kind: 'option', o })).concat(onBrowse && !busy ? [{ kind: 'browse' } as PickerItem] : []);
   // the number of results, once typing pauses (the async loader announces its own)
   React.useEffect(() => {
     if (async || !open || !q) return undefined;
@@ -113,32 +147,32 @@ export const EntityPicker = React.forwardRef(function EntityPicker({ kind = 'rec
   }, [q, open]);
   React.useEffect(() => {
     if (!open) return undefined;
-    const off = (e) => { if (wrap.current && !wrap.current.contains(e.target)) setOpen(false); };
+    const off = (e: MouseEvent) => { if (wrap.current && !wrap.current.contains(e.target as Node)) setOpen(false); };
     document.addEventListener('mousedown', off);
     return () => document.removeEventListener('mousedown', off);
   }, [open]);
   React.useEffect(() => { setActive(0); }, [q, open]);
-  const choose = (item) => {
+  const choose = (item: PickerItem | undefined) => {
     if (!item) return;
-    if (item.kind === 'browse') { setOpen(false); onBrowse(); return; }
+    if (item.kind === 'browse') { setOpen(false); onBrowse?.(); return; }
     const o = item.o;
     if (o.disabled) return;
     if (multiple) { onChange(chosen.indexOf(o.value) >= 0 ? chosen.filter((x) => x !== o.value) : chosen.concat([o.value])); setText(''); }
     else { onChange(o.value, o); setText(''); setOpen(false); }
   };
-  const onKey = (e) => {
+  const onKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'ArrowDown') { e.preventDefault(); if (!open) setOpen(true); else setActive((a) => Math.min(items.length - 1, a + 1)); }
     else if (e.key === 'ArrowUp') { e.preventDefault(); setActive((a) => Math.max(0, a - 1)); }
     else if (e.key === 'Enter') { if (open && items[active]) { e.preventDefault(); choose(items[active]); } }
     else if (e.key === 'Escape') { if (open) { e.preventDefault(); setOpen(false); } }
     else if (e.key === 'Backspace' && multiple && !text && chosen.length) { onChange(chosen.slice(0, -1)); }
   };
-  const visual = (o, size) => {
+  const visual = (o: EntityPickerOption, size?: string) => {
     if (kind === 'people') return <Avatar name={o.label} src={o.src} color={o.color} presence={o.presence} size={size === 'field' ? 'xs' : 'sm'} />;
     const name = o.icon || (kind === 'teams' ? SettingsUsersIcon : DocumentIcon);
     return size === 'field' ? <Icon name={name} /> : <Icon name={name} size="sm" className="plx-entity-picker__icon" />;
   };
-  const optId = (i) => auto + '-o' + i;
+  const optId = (i: number) => auto + '-o' + i;
   const hint = placeholder || (kind === 'people' && !entityName ? t.placeholderPeople : fill(t.placeholder, { entityName: noun }));
   const showList = open && (items.length || busy || failed || q);
   // the list opens in the top layer, placed against the field by the floating layer (flips up near an edge, follows scroll and resize): no dialog, drawer or scroll area clips it
