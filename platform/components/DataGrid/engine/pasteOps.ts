@@ -90,6 +90,18 @@ export function fillDown({ rect, rows, columns }: { rect: Rect; rows: { original
   return out;
 }
 
+/** Fill right: the selected block's first column copied across toward the inline end through the block (the reading direction: columns are in order) */
+export function fillRight({ rect, rows, columns }: { rect: Rect; rows: { original?: unknown }[]; columns: unknown[] }): FillPair[] {
+  const out: FillPair[] = [];
+  const first = columns[rect.c0];
+  if (!first) return out;
+  for (let r = rect.r0; r <= rect.r1; r += 1) {
+    if (!rows[r]?.original) continue;
+    for (let c = rect.c0 + 1; c <= rect.c1; c += 1) if (columns[c]) out.push({ from: { row: rows[r], column: first }, to: { row: rows[r], column: columns[c] } });
+  }
+  return out;
+}
+
 /** the fill handle: the block repeated down to the cell the handle was dropped on, or across toward the inline end (whichever the pointer
     went further past the block); nothing when it was dropped inside the block or before it */
 export function fillTo({ rect, drop, rows, columns }: { rect: Rect; drop: { r: number; c: number }; rows: { original?: unknown }[]; columns: unknown[] }): { pairs: FillPair[]; reach: Rect | null } {

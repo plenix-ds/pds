@@ -77,7 +77,9 @@
        editing: { fill: true }: needs cellSelection. Ctrl+D (Cmd+D) copies the selected block's top row down through the block; a small square, the fill
          handle, on the block's bottom inline-end corner repeats the block when dragged down or toward the inline end (it follows the reading
          direction), and the block then covers what it filled. Each target goes through the column's rules (can it be edited, validate); the rest are
-         skipped. Every cell reaches onCellEdit once (source "fill"); the counts are announced; with editing.undo a fill is one undo step. Default false
+         skipped. Every cell reaches onCellEdit once (source "fill"); the counts are announced; with editing.undo a fill is one undo step. With a block
+         selected the right-click menu has Fill down and Fill right (toward the inline end), the single-pointer alternative to the drag (WCAG 2.5.7); the
+         row menu's items follow them. Default false
      openKey: a string, a number or null: the key of the record whose details show (the open row); default the row last opened by a click or Enter
        (with onRowClick); null: none. The open row is aria-current="true"; in a grid without selection it takes the
        selected look (the fill and the start bar); with selection, opening a row selects only it, so it is marked too

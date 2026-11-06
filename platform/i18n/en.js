@@ -887,6 +887,9 @@ export default {
     "formSaveRefused": "Couldn’t save {name}. Check the values and try again.",
     "saved": "Saved",
     "saveRefused": "Couldn’t save. The previous value is back.",
+    "fillDown": "Fill down",
+    "fillRight": "Fill right",
+    "fillMenu": "Fill",
     "undone": "Edit undone",
     "redone": "Edit redone"
   },
