@@ -1,0 +1,14 @@
+AssertionError [ERR_ASSERTION]: plx-popover is off the text-role backlog
++ actual - expected
+
++ 'changes the font family without the whole role (missing font-weight, letter-spacing)'
+- undefined
+
+    at /home/cc/pds1/work/component-engineer-2/tests/text-contract-122-b.test.js:47:38 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'changes the font family without the whole role (missing font-weight, letter-spacing)',
+  expected: undefined,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

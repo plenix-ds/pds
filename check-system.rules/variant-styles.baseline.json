@@ -39,10 +39,6 @@
   "people-group--count-with-member-count",
   "people-group--kind-team",
   "permission-summary--form-can-and-cannot-lists-default",
-  "pie-chart--variant-donut",
-  "pie-chart--variant-half",
-  "pie-chart--variant-pie",
-  "pie-chart--variant-with-center-value",
   "platform-implementation--guidance-desktop",
   "platform-implementation--guidance-mobile-web",
   "platform-implementation--guidance-native-implementation",
@@ -71,8 +67,6 @@
   "query-builder--structure-nested-groups",
   "query-builder--structure-rule",
   "query-builder--view-text-view",
-  "radar-chart--variant-compare",
-  "radar-chart--variant-single",
   "range-slider--kind-range-two-thumbs",
   "range-slider--kind-with-marks",
   "record-page--entity-header-a-person-the-avatar-status-at-the-upper-right-icon-actions-key-facts",
@@ -110,10 +104,6 @@
   "section-message--parts-dismissible",
   "section-message--parts-with-actions",
   "section-message--parts-with-title",
-  "sparkline--variant-area",
-  "sparkline--variant-bar",
-  "sparkline--variant-line-default",
-  "sparkline--variant-with-last-point",
   "step-chart--variant-step-after-default",
   "step-chart--variant-step-before",
   "tag--editing-renamable-click-the-text-type-enter",
@@ -127,8 +117,6 @@
   "toggle-button--variant-secondary-default",
   "type-styles--overflow-expandable",
   "typing-indicator--message-mine",
-  "typing-indicator--message-theirs-default",
-  "waterfall-chart--variant-start-to-end",
-  "waterfall-chart--variant-with-totals"
+  "typing-indicator--message-theirs-default"
  ]
 }

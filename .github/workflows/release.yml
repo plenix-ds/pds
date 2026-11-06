@@ -12,7 +12,8 @@
 #   -> next latest.json with every field and the pins kept (tools/publish/latest.mjs, against the live file)
 #   -> npm publish --dry-run of the four packages -> negative proof: the current version is refused as already published
 #   -> the live CDN check (tools/check-live-cdn.js, sampled) still works against the live release
-#   -> the connected apps' drift report (tools/baseline/drift.mjs, read-only; never fails the release; #114).
+#   -> the connected apps' drift report (tools/baseline/drift.mjs, read-only; never fails the release; #114)
+#   -> no class removed since the live release is still used in a connected app's main (tools/publish/removed-in-apps.mjs).
 name: Release (dry run)
 
 on:
@@ -153,6 +154,14 @@ jobs:
       - name: Connected apps against this build (read-only drift report; never fails the release; #114)
         run: node tools/baseline/drift.mjs --out "$RUNNER_TEMP/drift"
 
+      # #125 release check: a class this release removes must not be in use in a connected app's main (CTM auto-upgrades)
+      - name: Removed classes are unused in the connected apps (the live release is the base)
+        run: |
+          node tools/publish/removed-in-apps.test.mjs
+          prev=$(curl -fsS "${CDN}latest.json" | node -p 'JSON.parse(require("fs").readFileSync(0)).latest')
+          git fetch -q --depth=1 origin tag "v$prev"
+          node tools/publish/removed-in-apps.mjs "v$prev"
+
       - name: Negative proof, the live latest version is refused as already published
         run: |
           live=$(curl -fsS "${CDN}latest.json" | node -e 'console.log(JSON.parse(require("fs").readFileSync(0)).latest)')
@@ -210,7 +219,9 @@ jobs:
         run: |
           v=$(node -p "require('./package.json').version")
           [ "v$v" = "$TAG" ] || { echo "Tag $TAG does not match package.json $v"; exit 1; }
-          git merge-base --is-ancestor HEAD origin/main || { echo "$TAG is not on main"; exit 1; }
+          # on main, or for a patch of an older minor on its release branch (release/X.Y.x, cut from vX.Y.0; 0.90.1)
+          rel="origin/release/$(echo "$v" | cut -d. -f1,2).x"
+          git merge-base --is-ancestor HEAD origin/main || { git rev-parse -q --verify "$rel" >/dev/null && git merge-base --is-ancestor HEAD "$rel"; } || { echo "$TAG is not on main or $rel"; exit 1; }
           echo "VERSION=$v" >> "$GITHUB_ENV"
 
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
