@@ -67,6 +67,21 @@ RichTextEditor drives Tiptap, which ships only as the vendored bundle (`platform
   - (c) leaving RichTextEditor in JavaScript until wave 5: it blocks wave 1 for no gain.
 - Enforced by: the check-system rule `vendor-types` (`check-system.rules/vendor-types.js`). Every `@tiptap/*` devDependency equals the version in `platform/vendor/tiptap/README.md`; none is a runtime dependency; and nothing in `platform/` imports `@tiptap/*` except with `import type`. Plus G3 review of the RichTextEditor PR (no Tiptap type in its public props).
 
+## Addendum (2026-11-06, #61): wave 5a, the published types come from the TypeScript sources (D-0081)
+
+The waves typed 193 sources, with every public props type reviewed at G3, but `index.d.ts` still came only from the header comments (`build-types.js`), so consumers never saw those types (334 of 2,437 published props were `any`).
+
+- **`build-types.js` now runs `tsc --emitDeclarationOnly`** into `types/` beside the index (the same `tsconfig.json`; `allowJs` gives the JavaScript files declarations too, so imports resolve).
+  - The emitted import paths keep their `.ts` / `.tsx` / `.jsx` endings, which a consumer's TypeScript can't resolve. TS 5.6 has no rewrite, so they become `.js`, which TypeScript maps to the `.d.ts`.
+- **For every `platform/index.js` export whose source is `.ts` / `.tsx`, `index.d.ts` re-exports it from `./types/…`** (`export { A, B as C } from "./types/…js"`), plus `export type * from` that file (its props, items and values types, once per file).
+  - The JavaScript sources keep the header reading until they convert.
+  - The coverage gate accepts both forms, so an unpublished export still fails the build.
+- **Shipping:** npm's `@plenix-ds/react` has no `files` list, so `types/` ships beside `index.d.ts`. The CDN copies `types/` beside `plenix.d.ts` (`build-packages.js`).
+- **Result:** 248 exports and 214 source files' types come from TypeScript. The published `any` props fall from 334 to 131, all of them in JavaScript sources.
+- **Semver: PATCH.** The types get closer to the documented API. A consumer that passed a value the docs never allowed may now see a type error, which is the point of #61.
+- **Wave 5 proper** (index.ts, retiring `build-types.js`) follows when the last JavaScript source converts.
+- Enforced by: `build-types.js`'s coverage gate. A consumer compile of `index.d.ts`: `Button`, `DataGrid<Row>` with `DataGridColumn<Row>`, and a wrong `variant` caught. G3 on every converted source's props (no `any` in public props). `PLENIX_TYPES_STRICT=1` makes any tsc error fail the build (for CI, where every dependency is installed).
+
 ## Consequences
 
 - Owners: the Component Engineers convert (each wave is long work, within `agents.config.yaml` limits). pds1-ds-architect reviews each wave's `index.d.ts` diff (G3). QA reviews behavior.
