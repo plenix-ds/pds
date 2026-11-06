@@ -160,7 +160,7 @@ DSParts.records.push(function (H) {
   /* ── 06 Navigation › Search, filter, and discovery › Sort control: SortPanel ── */
   var SortDemo = function (props) { var s = use(props.value || []); return h(P.SortPanel, { fields: ASSET_FIELDS, value: s[0], onChange: s[1], grouped: props.grouped, inline: props.inline }); };
   var sortPanel = { id: 'sort-panel', lab: true, icon: 'sort', sec: 'navigation', sub: 'Search, filter, and discovery', leaf: 'Sort control', title: 'Sort control',
-    plenix: 'SortPanel, compareLevels', src: 'patterns/SortPanel/SortPanel.jsx', also: ['utils/fields.ts'], css: ['patterns/CommandBar/find-panel.css'], blocks: ['plx-find-panel'], level: 'Composite', interaction: 'Filter', statesFrom: ['button', 'action-menu'],
+    plenix: 'SortPanel, compareLevels', src: 'patterns/SortPanel/SortPanel.tsx', also: ['utils/fields.ts'], css: ['patterns/CommandBar/find-panel.css'], blocks: ['plx-find-panel'], level: 'Composite', interaction: 'Filter', statesFrom: ['button', 'action-menu'],
     aliases: ['Sort', 'Sort by', 'Multi-sort', 'Order by'],
     text: 'The command bar’s Sort, in the Airtable style: a Sort button that opens the sort levels, plus Add another sort. Each level has a field with its type icon, a direction in the field type’s words (A → Z, 1 → 9, Oldest → newest), remove and a handle. While the collection is grouped, the panel reads "Sort within groups by".',
     use: ['Ordering a collection by one field or several', 'The button shows the sort in force (a pop-up button): Sort while there is none, "Sort: Updated" with one level, "Sort: Updated +1" with more, tinted', 'Reordering levels by drag, the handle’s Move up and Move down, or Alt + Arrow Up / Down'],

@@ -35,6 +35,7 @@
      Without onOpenChange it cannot close, so at Narrow it stays the overlay rather than a sheet nobody can dismiss.
 */
 import React from 'react';
+import type { IconValue } from '../../components/Icon/Icon.tsx';
 import { cx } from '../../utils/cx.ts';
 import { useLayer } from '../../utils/layer.ts';
 import { Button } from '../../components/Button/Button.tsx';
@@ -52,12 +53,29 @@ import PanelRightOpenIcon from 'plenix-platform/icons/plenix/panel-right-open';
 
 const WIDTH_KEY = 'plenix.sidePanelWidth';
 
-export function SidePanel({ title, label, icon, open = true, onOpenChange, actions, footer, collapseLabel, resizable = false, resizeLabel, className, children }) {
-  const tw = useStrings('sidePanel');
+/** @public the prop type (ADR 0011) */
+export type SidePanelProps = {
+  title?: React.ReactNode;
+  label?: string;
+  icon?: string | IconValue;
+  open?: boolean;
+  /** without it there is no Collapse button and no rail */
+  onOpenChange?(open: boolean): void;
+  actions?: React.ReactNode;
+  footer?: React.ReactNode;
+  collapseLabel?: string;
+  resizable?: boolean;
+  resizeLabel?: string;
+  className?: string;
+  children?: React.ReactNode;
+};
+export function SidePanel(props: SidePanelProps) {
+  const { title, label, icon, open = true, onOpenChange, actions, footer, collapseLabel, resizable = false, resizeLabel, className, children } = props as any;
+  const tw: any = useStrings('sidePanel');
   const small = useMedia(below('--plx-sys-shell-inspector-overlay-below'));
   const narrow = useMedia(below('--plx-sys-shell-phone-below'));
-  const ref = React.useRef(null);
-  const set = (next) => { if (onOpenChange) onOpenChange(next); };
+  const ref = React.useRef<any>(null);
+  const set = (next: any) => { if (onOpenChange) onOpenChange(next); };
   // at Narrow the panel is a bottom sheet (when it can be closed): the Sheet is the layer then
   const sheet = narrow && !!onOpenChange;
   useLayer(ref, open && small && !sheet, { onEscape: () => set(false) });

@@ -11,7 +11,7 @@
      Supply article content from a trusted renderer. The inspector owns responsive placement and scrolling.
 */
 import React from 'react';
-import { SidePanel as SidePanelJs } from '../SidePanel/SidePanel.jsx';
+import { SidePanel as SidePanelJs } from '../SidePanel/SidePanel.tsx';
 const SidePanel: any = SidePanelJs;
 import { Stack } from '../../components/Stack/Stack.tsx';
 import { SearchField } from '../../components/SearchField/SearchField.tsx';

@@ -12,7 +12,7 @@
 */
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
-import { SidePanel } from '../SidePanel/SidePanel.jsx';
+import { SidePanel } from '../SidePanel/SidePanel.tsx';
 import { Sheet } from '../../components/Sheet/Sheet.tsx';
 import { Stack } from '../../components/Stack/Stack.tsx';
 import { AIChat } from '../AIChat/AIChat.tsx';

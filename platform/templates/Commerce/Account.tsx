@@ -33,7 +33,7 @@ import { PropertyList as PropertyListJs } from '../../patterns/PropertyList/Prop
 const PropertyList: any = PropertyListJs;
 import { Wizard as WizardJs } from '../../patterns/Wizard/Wizard.jsx';
 const Wizard: any = WizardJs;
-import { SettingsSection as SettingsSectionJs } from '../../patterns/SettingsLayout/SettingsLayout.jsx';
+import { SettingsSection as SettingsSectionJs } from '../../patterns/SettingsLayout/SettingsLayout.tsx';
 const SettingsSection: any = SettingsSectionJs;
 import { DataGrid } from '../../components/DataGrid/DataGrid.tsx';
 import { Badge } from '../../components/Badge/Badge.tsx';

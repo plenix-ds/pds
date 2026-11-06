@@ -1,0 +1,17 @@
+secondaryPane {"text":"Folders New List body","buttons":2,"inputs":0,"links":0,"roles":"tooltip","names":"Folders|Collapse Folders"}
+secondaryPaneFolded {"text":"","buttons":1,"inputs":0,"links":0,"roles":"toolbar,tooltip","names":"Folders|Expand Folders"}
+sessionActive {"text":"","buttons":0,"inputs":0,"links":0,"roles":"","names":""}
+sessionWarning {"text":"Your session is about to end You’ll be signed out in 1:30 because you haven’t been active. Your changes are saved. Sign out Stay signed in","buttons":2,"inputs":0,"links":0,"roles":"timer","names":""}
+sessionSignedOut {"text":"You were signed out For your security, you were signed out after 30 minutes without activity. Your changes are saved. Sign in again","buttons":1,"inputs":0,"links":0,"roles":"","names":""}
+settings {"text":"General Profile Your details Name Shown to others","buttons":1,"inputs":1,"links":1,"roles":"","names":"Settings"}
+shareDialog {"text":"Share Report People Link Person Role Viewer Editor Viewer Add person Cancel Save access","buttons":6,"inputs":2,"links":0,"roles":"combobox,dialog,tab,tablist,tabpanel,tooltip","names":"Close|Share Report"}
+shortcuts {"text":"Keyboard shortcuts No matching shortcuts Close","buttons":2,"inputs":1,"links":0,"roles":"dialog,search,tooltip","names":"Close|Search shortcuts"}
+sidePanel {"text":"Details Panel body Foot","buttons":2,"inputs":0,"links":0,"roles":"toolbar,tooltip","names":"Details pane|Expand panel|Details|Collapse panel"}
+sidePanelClosed {"text":"","buttons":1,"inputs":0,"links":0,"roles":"toolbar,tooltip","names":"Details pane|Expand panel"}
+sortPanel {"text":"Sort by Name A → Z Add another sort","buttons":6,"inputs":0,"links":0,"roles":"status,tooltip","names":"Sort by|Name, 1 of 1. Alt + Arrow Up or Down moves it|Field: Name|Direction: A → Z|Remove the sort by Name|Reorder Name"}
+sortableList {"text":"One Two Three Press Space or Enter to pick it up. The arrow keys move it, Space or Enter drops it, Escape puts it back.","buttons":9,"inputs":0,"links":0,"roles":"tooltip","names":"Order|Move One|Move One up|Move One down|Move Two|Move Two up|Move Two down|Move Three|Move Three up|Move Three down"}
+sortableGrid {"text":"A B Press Space or Enter to pick it up. The arrow keys move it, Space or Enter drops it, Escape puts it back.","buttons":2,"inputs":0,"links":0,"roles":"","names":"Tiles|Move A|Move B"}
+splitSide {"text":"First Second Press Space or Enter to pick it up. The arrow keys move it, Space or Enter drops it, Escape puts it back.","buttons":0,"inputs":0,"links":0,"roles":"group,separator,status","names":"Split|First panel height"}
+splitStacked {"text":"First Nothing selected Press Space or Enter to pick it up. The arrow keys move it, Space or Enter drops it, Escape puts it back.","buttons":0,"inputs":0,"links":0,"roles":"group,separator,status","names":"Split|First panel height|Reading"}
+statusBar {"text":"Ready 3 items Press Space or Enter to pick it up. The arrow keys move it, Space or Enter drops it, Escape puts it back.","buttons":0,"inputs":0,"links":0,"roles":"","names":""}
+timeGrid {"text":"MON 3 TUE 4 Today 8:00 9:00 10:00 11:00 9:00 Standup Press Space or Enter to pick it up. The arrow keys move it, Space or Enter drops it, Escape puts it back.","buttons":0,"inputs":0,"links":0,"roles":"group","names":"Week|Mon 3|Tue 4"}

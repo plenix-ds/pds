@@ -28,11 +28,11 @@
 */
 import React from 'react';
 import { AppShell, PageContent } from '../../patterns/AppShell/AppShell.tsx';
-import { SidePanel as SidePanelJs } from '../../patterns/SidePanel/SidePanel.jsx';
+import { SidePanel as SidePanelJs } from '../../patterns/SidePanel/SidePanel.tsx';
 const SidePanel: any = SidePanelJs;
 import { RecordPage as RecordPageJs } from '../../patterns/RecordPage/RecordPage.tsx';
 const RecordPage: any = RecordPageJs;
-import { SecondaryPane as SecondaryPaneJs } from '../../patterns/SecondaryPane/SecondaryPane.jsx';
+import { SecondaryPane as SecondaryPaneJs } from '../../patterns/SecondaryPane/SecondaryPane.tsx';
 const SecondaryPane: any = SecondaryPaneJs;
 import { FeatureCard } from '../../patterns/FeatureCard/FeatureCard.tsx';
 import { FormFlow } from '../../patterns/FormFlow/FormFlow.tsx';
@@ -48,7 +48,7 @@ import { EmptyState } from '../../components/EmptyState/EmptyState.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Link } from '../../components/Link/Link.tsx';
 import { Panel } from '../../components/Card/Card.tsx';
-import { SplitView as SplitViewJs, ReadingPane as ReadingPaneJs } from '../../patterns/SplitView/SplitView.jsx';
+import { SplitView as SplitViewJs, ReadingPane as ReadingPaneJs } from '../../patterns/SplitView/SplitView.tsx';
 const SplitView: any = SplitViewJs;
 const ReadingPane: any = ReadingPaneJs;
 import { useStrings } from '../../providers/LocaleProvider.tsx';

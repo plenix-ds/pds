@@ -6321,5 +6321,105 @@
   "timeline-chart--variant-lanes": {
     "sets": [],
     "why": "markup only: one lane per asset or team, events and ranges together, with the names on the start side"
+  },
+  "rich-tooltip--content-text-only": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "bubble",
+        "token": "--plx-comp-tooltip-rich-background"
+      },
+      {
+        "property": "border-color",
+        "part": "bubble",
+        "token": "--plx-comp-tooltip-rich-border-color"
+      },
+      {
+        "property": "row-gap",
+        "part": "content",
+        "token": "--plx-comp-tooltip-rich-gap"
+      }
+    ],
+    "why": ".plx-tooltip__bubble--rich and .plx-tooltip__content in tooltip.css: a few sentences on the popover surface"
+  },
+  "rich-tooltip--content-title-and-text": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "title",
+        "token": "--plx-comp-tooltip-rich-title-text"
+      },
+      {
+        "property": "font-family",
+        "part": "title",
+        "token": "--plx-comp-tooltip-rich-title-font-family"
+      },
+      {
+        "property": "font-weight",
+        "part": "title",
+        "token": "--plx-comp-tooltip-rich-title-font-weight"
+      },
+      {
+        "property": "row-gap",
+        "part": "content",
+        "token": "--plx-comp-tooltip-rich-gap"
+      }
+    ],
+    "why": ".plx-tooltip__title in tooltip.css: a short title over the sentences"
+  },
+  "rich-tooltip--content-with-an-action": {
+    "sets": [
+      {
+        "property": "margin-block-start",
+        "part": "action",
+        "token": "--plx-comp-tooltip-rich-action-margin-block-start"
+      }
+    ],
+    "why": ".plx-tooltip__action in tooltip.css: one link or button under the text; the tooltip opens by a click (a toggletip)"
+  },
+  "section-message--parts-with-title": {
+    "sets": [
+      {
+        "property": "font-weight",
+        "part": "title",
+        "token": "--plx-comp-notice-title-font-weight"
+      }
+    ],
+    "why": ".plx-notice__title in notice.css: a title in the tone's content color, semibold, above the text"
+  },
+  "section-message--parts-with-actions": {
+    "sets": [
+      {
+        "property": "column-gap",
+        "part": "actions",
+        "token": "--plx-comp-notice-actions-gap"
+      },
+      {
+        "property": "margin-block-start",
+        "part": "actions",
+        "token": "--plx-comp-notice-actions-margin-block-start"
+      }
+    ],
+    "why": ".plx-notice__actions in notice.css: one or two extra-small buttons under the text"
+  },
+  "section-message--parts-dismissible": {
+    "sets": [],
+    "why": "markup only: a dismiss button at the end (.plx-notice__dismiss only keeps it from shrinking); the page hides the message and keeps it hidden"
+  },
+  "prompt-dialog--content-prompt-one-field": {
+    "sets": [],
+    "why": "markup only: the title, a sentence, one labeled field, and the verb with Cancel, in a Dialog"
+  },
+  "prompt-dialog--content-with-an-error": {
+    "sets": [],
+    "why": "markup only: after a submit that failed validation, the message under the field is announced and the dialog stays open"
+  },
+  "rendition-list--variant-table": {
+    "sets": [],
+    "why": "markup only: every rendition with its format and size in a Table, for comparing"
+  },
+  "rendition-list--variant-menu": {
+    "sets": [],
+    "why": "markup only: a Download menu that lists the renditions, where space is short"
   }
 }

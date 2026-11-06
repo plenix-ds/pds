@@ -27,7 +27,7 @@ import { CommandBar as CommandBarJs, CommandBarSearch as CommandBarSearchJs } fr
 const CommandBar: any = CommandBarJs;
 const CommandBarSearch: any = CommandBarSearchJs;
 import { FilterPanel } from '../../patterns/FilterPanel/FilterPanel.tsx';
-import { SortPanel as SortPanelJs } from '../../patterns/SortPanel/SortPanel.jsx';
+import { SortPanel as SortPanelJs } from '../../patterns/SortPanel/SortPanel.tsx';
 const SortPanel: any = SortPanelJs;
 import { ViewMenu as ViewMenuJs } from '../../patterns/ViewMenu/ViewMenu.jsx';
 const ViewMenu: any = ViewMenuJs;

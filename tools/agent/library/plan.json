@@ -1923,7 +1923,7 @@
       "platform/patterns/RenameAction/RenameAction.jsx",
       "platform/patterns/RenameAction/rename-action.css",
       "platform/tokens/components/rename-action.tokens.json",
-      "platform/patterns/SortableList/SortableList.jsx",
+      "platform/patterns/SortableList/SortableList.tsx",
       "platform/patterns/SortableList/sortable-list.css",
       "platform/tokens/components/sortable-list.tokens.json",
       "platform/utils/dnd.js",
@@ -2085,7 +2085,7 @@
       "platform/patterns/ConnectedAccounts/ConnectedAccounts.tsx",
       "platform/patterns/ConnectedAccounts/connected-accounts.css",
       "platform/tokens/components/connected-accounts.tokens.json",
-      "platform/patterns/SessionTimeout/SessionTimeout.jsx",
+      "platform/patterns/SessionTimeout/SessionTimeout.tsx",
       "platform/patterns/SessionTimeout/session-timeout.css",
       "platform/tokens/components/session-timeout.tokens.json",
       "platform/components/File/File.jsx",
@@ -2127,7 +2127,7 @@
       "platform/design-system/parts/w11B.{records,labs,docs}.js + .css",
       "platform/exports/w11B.{js,css}",
       "platform/standards/web-native-map.d/w11B.json",
-      "platform/patterns/ShareDialog/ShareDialog.jsx",
+      "platform/patterns/ShareDialog/ShareDialog.tsx",
       "platform/patterns/ShareDialog/share-dialog.css",
       "platform/tokens/components/share-dialog.tokens.json",
       "platform/patterns/HelpPanel/HelpPanel.tsx",
@@ -2196,7 +2196,7 @@
       "platform/patterns/Offboarding/Offboarding.tsx",
       "platform/patterns/Offboarding/offboarding.css",
       "platform/tokens/components/offboarding.tokens.json",
-      "platform/patterns/ShortcutsDialog/ShortcutsDialog.jsx",
+      "platform/patterns/ShortcutsDialog/ShortcutsDialog.tsx",
       "platform/patterns/ShortcutsDialog/shortcuts-dialog.css",
       "platform/tokens/components/shortcuts-dialog.tokens.json"
      ],
@@ -6694,7 +6694,7 @@
    "wave": 10,
    "lane": "A",
    "files": [
-    "platform/patterns/SortableList/SortableList.jsx",
+    "platform/patterns/SortableList/SortableList.tsx",
     "platform/patterns/SortableList/sortable-list.css",
     "platform/tokens/components/sortable-list.tokens.json"
    ],
@@ -7145,7 +7145,7 @@
    "wave": 11,
    "lane": "A",
    "files": [
-    "platform/patterns/SessionTimeout/SessionTimeout.jsx",
+    "platform/patterns/SessionTimeout/SessionTimeout.tsx",
     "platform/patterns/SessionTimeout/session-timeout.css",
     "platform/tokens/components/session-timeout.tokens.json"
    ],
@@ -7264,7 +7264,7 @@
    "wave": 11,
    "lane": "B",
    "files": [
-    "platform/patterns/ShareDialog/ShareDialog.jsx",
+    "platform/patterns/ShareDialog/ShareDialog.tsx",
     "platform/patterns/ShareDialog/share-dialog.css",
     "platform/tokens/components/share-dialog.tokens.json"
    ],
@@ -7581,7 +7581,7 @@
    "wave": 11,
    "lane": "C",
    "files": [
-    "platform/patterns/ShortcutsDialog/ShortcutsDialog.jsx",
+    "platform/patterns/ShortcutsDialog/ShortcutsDialog.tsx",
     "platform/patterns/ShortcutsDialog/shortcuts-dialog.css",
     "platform/tokens/components/shortcuts-dialog.tokens.json"
    ],
@@ -12400,7 +12400,7 @@
    "target": "ShareDialog",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/ShareDialog/ShareDialog.jsx",
+    "platform/patterns/ShareDialog/ShareDialog.tsx",
     "platform/patterns/ShareDialog/share-dialog.css",
     "platform/tokens/components/share-dialog.tokens.json"
    ],
@@ -17665,7 +17665,7 @@
    "targetKind": "pattern",
    "duplicateOf": "patterns/Sortable list",
    "files": [
-    "platform/patterns/SortableList/SortableList.jsx",
+    "platform/patterns/SortableList/SortableList.tsx",
     "platform/patterns/SortableList/sortable-list.css",
     "platform/tokens/components/sortable-list.tokens.json"
    ],
@@ -17722,7 +17722,7 @@
    "target": "SortableList",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/SortableList/SortableList.jsx",
+    "platform/patterns/SortableList/SortableList.tsx",
     "platform/patterns/SortableList/sortable-list.css",
     "platform/tokens/components/sortable-list.tokens.json"
    ],
@@ -19076,7 +19076,7 @@
    "target": "SessionTimeout",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/SessionTimeout/SessionTimeout.jsx",
+    "platform/patterns/SessionTimeout/SessionTimeout.tsx",
     "platform/patterns/SessionTimeout/session-timeout.css",
     "platform/tokens/components/session-timeout.tokens.json"
    ],
@@ -20743,7 +20743,7 @@
    "target": "ShareDialog",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/ShareDialog/ShareDialog.jsx",
+    "platform/patterns/ShareDialog/ShareDialog.tsx",
     "platform/patterns/ShareDialog/share-dialog.css",
     "platform/tokens/components/share-dialog.tokens.json"
    ],
@@ -21984,7 +21984,7 @@
    "target": "ShortcutsDialog",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/ShortcutsDialog/ShortcutsDialog.jsx",
+    "platform/patterns/ShortcutsDialog/ShortcutsDialog.tsx",
     "platform/patterns/ShortcutsDialog/shortcuts-dialog.css",
     "platform/tokens/components/shortcuts-dialog.tokens.json"
    ],

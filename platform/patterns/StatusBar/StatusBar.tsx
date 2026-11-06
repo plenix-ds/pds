@@ -12,7 +12,10 @@
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
 
-export function StatusBar({ start, end, className }) {
+/** @public the prop type (ADR 0011) */
+export type StatusBarProps = { start?: React.ReactNode; end?: React.ReactNode; className?: string };
+export function StatusBar(props: StatusBarProps) {
+  const { start, end, className } = props as any;
   return (
     <footer className={cx('plx-status-bar', className)}>
       <span className="plx-status-bar__start">{start}</span>
