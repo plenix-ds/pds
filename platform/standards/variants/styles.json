@@ -2319,5 +2319,23 @@
   "virtual-list--rows-with-groups": {
     "sets": [],
     "why": "markup only: groups add header rows; the rows use the list's own classes"
+  },
+  "metric--size-medium-default": {
+    "sets": [
+      {
+        "property": "font-size",
+        "part": "value",
+        "token": "--plx-comp-metric-value-font-size"
+      }
+    ],
+    "why": ".plx-metric__value, the base size of the figure"
+  },
+  "lollipop-chart--orientation-horizontal-default": {
+    "sets": [],
+    "why": "markup only: categories down the side, drawn by the chart engine (orientation horizontal)"
+  },
+  "lollipop-chart--orientation-vertical": {
+    "sets": [],
+    "why": "markup only: categories along the bottom, drawn by the chart engine (orientation vertical)"
   }
 }
