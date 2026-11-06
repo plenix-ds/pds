@@ -41,7 +41,7 @@
        every row matters, unless the page offers its own search. Tables are the DataGrid, which has its own rendering.
 */
 import React from 'react';
-import { useUnread } from '../DataGrid/unread.js';
+import { useUnread } from '../DataGrid/unread.ts';
 import { cx } from '../../utils/cx.ts';
 import { Icon, type IconValue } from '../Icon/Icon.tsx';
 import { Spinner } from '../Loading/Loading.tsx';

@@ -187,7 +187,7 @@ import React from 'react';
 import { DataGridEngine } from './DataGridEngine.jsx';
 import { useRowTemplate } from './engine/rowTemplate.ts';
 import { useDataGridActions } from './actions.jsx';
-import { unreadCommands } from './unread-commands.js';
+import { unreadCommands } from './unread-commands.ts';
 import { ToastProvider, useOptionalToast } from '../Toast/Toast.tsx';
 
 // a toast when the page has a ToastProvider; nothing otherwise. Toast's own hook, not ReviewFlow's: ReviewFlow would pull the command bar, the quick filter, the avatar and a dialog into every grid (issue 807)

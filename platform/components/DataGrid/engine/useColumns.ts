@@ -19,7 +19,7 @@
 */
 import React from 'react';
 import { visibilityOf } from '../state.ts';
-import { tokenPixels } from '../environment.js';
+import { tokenPixels } from '../environment.ts';
 import { SIZE_STEPS, snapSize } from '../../../utils/sizeSteps.js';
 import { shareOf } from '../../../utils/paneLimit.ts';
 import { snapToGrid } from '../../../utils/grid.ts';

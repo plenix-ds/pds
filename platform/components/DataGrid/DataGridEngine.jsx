@@ -20,8 +20,8 @@
      __grid-cell--data, the data role in Mono. Table (isStatic) marks its parts --static: the root, grid, header, headers, columns, their
      contents and titles, the body, the table, rows, cells, values and the placeholder. */
 import React from 'react';
-import { useUnread } from './unread.js';
-import { GridPane } from './room.js';
+import { useUnread } from './unread.ts';
+import { GridPane } from './room.ts';
 import { flushSync } from 'react-dom';
 
 import { useSortable } from '../../utils/dnd.ts';
