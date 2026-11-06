@@ -161,7 +161,8 @@
   area: release
   decided_by: agent (pds1 setup), owner may switch
   decision: The instant plenix-release signal to CTM needs Contents write on CTM, so it is not used; CTM relies on its own schedule. Recommended - CTM checks every 5 minutes. Reply to switch to granting Contents write.
-  status: active
+  status: superseded
+  superseded_by: D-0083
   check: review-only (pending owner reply)
 
 - id: D-0021
@@ -730,3 +731,23 @@
   options: ['keep probes and keep spec tools (chosen)', 'move the probe tests that can run on a site page', 'move every test onto the site']
   status: active
   check: tests/site-coverage.test.js (the site uses every Platform name); review-only for where a new test runs
+
+- id: D-0082
+  date: 2026-11-06
+  area: release
+  decided_by: agent (pds1-ds-architect) on #706, owner may switch (decision card on #706)
+  decision: 'The root build-*.js and check-*.js scripts stay at the repository root for now; they are not moved into tools/. The #706 cleanup archives only what nothing reads (vote-kit/, docs/handoff and finished briefs) and keeps deploy.sh at the root (release review).'
+  why: 'The scripts require each other and check-common.js, and the docs, CI, CLAUDE.md and every agent run them by their root paths; moving them now breaks those callers for no consumer gain. No new tooling (#712).'
+  options: ['A - keep them at the root (chosen)', 'B - move them into tools/build/ and tools/check/ with every caller updated']
+  status: active
+  check: docs/pds1/slices/706-repo-cleanup/inventory.md (one verdict per root item); review-only for a later move
+
+- id: D-0083
+  date: 2026-11-06
+  area: release
+  decided_by: agent (pds1-product-lead) on CTM's request (plenix-ds/pds#750), owner may switch
+  decision: 'After a release passes its live CDN check, the release step sends CTM the plenix-release event (repository_dispatch, client_payload.version), from the agent host where the release already runs, signed in as the account that owns CTM, so no new token or secret is stored. CTM''s own schedule stays as the fallback. When the PDS GitHub App exists (D-0019), the event moves to its token.'
+  why: 'GitHub ran CTM''s */30 schedule only three times on 2026-11-06, so 0.89.0 and 0.90.1 waited hours. D-0020 avoided the signal only because it needs Contents write on CTM, which the release host already has through the owner account.'
+  options: ['send plenix-release from the release host now, App token later (chosen)', 'wait for the PDS GitHub App (owner step D-0019)', 'keep the schedule only (D-0020)']
+  status: active
+  check: 'planned:release-ctm-dispatch (the release log shows the dispatch, and CTM''s Plenix CDN auto-upgrade run starts within minutes; #750)'

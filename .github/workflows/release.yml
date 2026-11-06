@@ -155,12 +155,14 @@ jobs:
         run: node tools/baseline/drift.mjs --out "$RUNNER_TEMP/drift"
 
       # #125 release check: a class this release removes must not be in use in a connected app's main (CTM auto-upgrades)
-      - name: Removed classes are unused in the connected apps (the live release is the base)
+      - name: Connected apps, removed classes unused (the live release is the base) and the plenix-release plan (#750)
         run: |
           node tools/publish/removed-in-apps.test.mjs
+          node tools/publish/notify-apps.test.mjs
           prev=$(curl -fsS "${CDN}latest.json" | node -p 'JSON.parse(require("fs").readFileSync(0)).latest')
           git fetch -q --depth=1 origin tag "v$prev"
           node tools/publish/removed-in-apps.mjs "v$prev"
+          node tools/publish/notify-apps.mjs "$prev" --dry-run   # the plenix-release step (D-0082), not sent here
 
       - name: Negative proof, the live latest version is refused as already published
         run: |
@@ -284,3 +286,24 @@ jobs:
           latest=$(curl -fsS "${CDN}latest.json" | node -p 'JSON.parse(require("fs").readFileSync(0)).latest')
           [ "$latest" = "$VERSION" ] && echo "latest.json: $latest" || echo "::warning::latest.json is $latest (a pinned or older release can be latest on purpose)"
           [ "$fail" = 0 ] && echo "G8_OK $VERSION" || { echo "G8_FAIL $VERSION"; exit 1; }
+
+      # Tell the apps that auto-upgrade (CTM today) that this version is live, so they upgrade within
+      # minutes instead of waiting for their own cron, which GitHub runs only every few hours
+      # (LighthouseCollection/CTM plenix-upgrade.yml listens for repository_dispatch "plenix-release").
+      # The token is a fine-grained token limited to those repositories (Contents: read and write is what
+      # repository_dispatch needs). Without it this step only says so; the release itself is unaffected.
+      - name: Notify apps that auto-upgrade
+        env:
+          DISPATCH_TOKEN: ${{ secrets.APP_DISPATCH_TOKEN }}
+          APPS: LighthouseCollection/CTM
+        run: |
+          if [ -z "$DISPATCH_TOKEN" ]; then echo "::notice::APP_DISPATCH_TOKEN is not set: apps will pick up $VERSION on their own schedule"; exit 0; fi
+          for repo in $APPS; do
+            if curl -fsS -X POST -H "Authorization: Bearer $DISPATCH_TOKEN" -H "Accept: application/vnd.github+json" \
+                "https://api.github.com/repos/$repo/dispatches" \
+                -d "{\"event_type\":\"plenix-release\",\"client_payload\":{\"version\":\"$VERSION\"}}"; then
+              echo "notified $repo of $VERSION"
+            else
+              echo "::warning::could not notify $repo of $VERSION; it will upgrade on its own schedule"
+            fi
+          done

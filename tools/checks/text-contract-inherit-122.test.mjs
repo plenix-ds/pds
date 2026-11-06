@@ -38,6 +38,12 @@ describe('#122 context-sized parts', () => {
     expect(m.declared['plx-x']).toEqual({ contract: 'adjusts', props: ['font-weight'] });
     expect(m.incomplete['plx-x']).toBeUndefined();
   });
+  it('a ::before or ::after rule that switches the font family without that font\'s word spacing is a boundary finding (#745)', () => {
+    const bad = css('.plx-x[href]::after{font-family:var(--plx-sys-font-data);}');
+    expect(bad.boundary.map((b) => b.text).join()).toMatch(/sets a font without its word spacing: add word-spacing:var\(--plx-sys-font-data-word-spacing\)/);
+    const good = css('.plx-x[href]::after{font-family:var(--plx-sys-font-data);word-spacing:var(--plx-sys-font-data-word-spacing);}');
+    expect(good.boundary).toEqual([]);
+  });
 });
 // #122 batch A (G3): a part's older block form beside its own modifier is the modifier's rule; a base part named on its own is still the base part's
 describe('#122 the data modifier of a part and its older block form', () => {
