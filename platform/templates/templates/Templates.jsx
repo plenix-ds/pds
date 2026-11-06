@@ -28,9 +28,9 @@
 */
 import React from 'react';
 import { AppShell, PageContent } from '../../patterns/AppShell/AppShell.tsx';
-import { SidePanel } from '../../patterns/SidePanel/SidePanel.jsx';
+import { SidePanel } from '../../patterns/SidePanel/SidePanel.tsx';
 import { RecordPage } from '../../patterns/RecordPage/RecordPage.jsx';
-import { SecondaryPane } from '../../patterns/SecondaryPane/SecondaryPane.jsx';
+import { SecondaryPane } from '../../patterns/SecondaryPane/SecondaryPane.tsx';
 import { FeatureCard } from '../../patterns/FeatureCard/FeatureCard.tsx';
 import { FormFlow } from '../../patterns/FormFlow/FormFlow.tsx';
 import { Auth } from '../../patterns/Auth/Auth.jsx';
@@ -42,7 +42,7 @@ import { EmptyState } from '../../components/EmptyState/EmptyState.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Link } from '../../components/Link/Link.tsx';
 import { Panel } from '../../components/Card/Card.tsx';
-import { SplitView, ReadingPane } from '../../patterns/SplitView/SplitView.jsx';
+import { SplitView, ReadingPane } from '../../patterns/SplitView/SplitView.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import FolderIcon from 'plenix-platform/icons/plenix/folder';
 // the templates' words come from the catalog (templates.templates.Templates in platform/i18n), so an Arabic page shows them in

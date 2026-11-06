@@ -1,1 +1,1 @@
-export { SplitView, ReadingPane } from '../patterns/SplitView/SplitView.jsx';
+export { SplitView, ReadingPane } from '../patterns/SplitView/SplitView.tsx';

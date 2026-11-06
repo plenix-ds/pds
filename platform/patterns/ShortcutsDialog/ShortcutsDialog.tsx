@@ -22,8 +22,11 @@ import { useHotkeyList, hotkeyLabel } from '../../utils/hotkey.ts';
 import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 
-export function ShortcutsDialog({ open, onClose, searchable = true, strings, className }) {
-  const t = useStrings('shortcutsDialog', strings);
+/** @public the prop type (ADR 0011) */
+export type ShortcutsDialogProps = { open?: boolean; onClose?(): void; searchable?: boolean; strings?: Record<string, string>; className?: string };
+export function ShortcutsDialog(props: ShortcutsDialogProps) {
+  const { open, onClose, searchable = true, strings, className } = props as any;
+  const t: any = useStrings('shortcutsDialog', strings);
   const all = useHotkeyList(), [query, setQuery] = React.useState('');
   React.useEffect(() => { if (!open) setQuery(''); }, [open]);
   const filtered = all.filter((v) => v.enabled !== false && (v.label + ' ' + v.group + ' ' + hotkeyLabel(v.binding)).toLowerCase().includes(query.trim().toLowerCase()));

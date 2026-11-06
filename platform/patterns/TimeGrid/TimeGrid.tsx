@@ -26,20 +26,35 @@ import { cx } from '../../utils/cx.ts';
 import { DateBadge } from '../../components/DateBadge/DateBadge.tsx';
 import { EventChip } from '../../components/EventChip/EventChip.tsx';
 
-const hourText = (h) => h + ':00';
+const hourText = (h: any) => h + ':00';
 
-export function TimeGrid({ days = [], startHour = 8, endHour = 18, events = [], hourLabel = hourText, label, className, ...rest }) {
-  const hours = [];
+/** @public a day column */
+export type TimeGridDay = { key: string; weekday: string; day: string; dateTime?: string; today?: boolean };
+/** @public an event on the grid: day is a day key; start and end are hours (9.5 is 9:30) */
+export type TimeGridEvent = { id: string | number; day: string; start: number; end: number; title: string; time?: string; color?: string; onClick?(): void };
+/** @public the prop type (ADR 0011) */
+export type TimeGridProps = Omit<React.HTMLAttributes<HTMLElement>, 'children'> & {
+  days?: TimeGridDay[];
+  startHour?: number;
+  endHour?: number;
+  events?: TimeGridEvent[];
+  hourLabel?(hour: number): string;
+  label?: string;
+  className?: string;
+};
+export function TimeGrid(props: TimeGridProps) {
+  const { days = [], startHour = 8, endHour = 18, events = [], hourLabel = hourText, label, className, ...rest } = props as any;
+  const hours: any[] = [];
   for (let h = startHour; h < endHour; h++) hours.push(h);
   return (
     <div className={cx('plx-time-grid', className)} role="group" aria-label={label} data-plx-hours={endHour - startHour} data-plx-days={days.length} {...rest}>
       <div className="plx-time-grid__corner" aria-hidden="true" />
-      {days.map((d) => <div key={d.key} className={cx('plx-time-grid__head', d.today && 'is-today')}><DateBadge day={d.day} weekday={d.weekday} today={d.today} dateTime={d.dateTime} /></div>)}
+      {days.map((d: any) => <div key={d.key} className={cx('plx-time-grid__head', d.today && 'is-today')}><DateBadge day={d.day} weekday={d.weekday} today={d.today} dateTime={d.dateTime} /></div>)}
       <div className="plx-time-grid__hours" aria-hidden="true">{hours.map((h) => <div key={h} className="plx-time-grid__hour">{hourLabel(h)}</div>)}</div>
-      {days.map((d) => (
+      {days.map((d: any) => (
         <div key={d.key} className={cx('plx-time-grid__day', d.today && 'is-today')} role="group" aria-label={[d.weekday, d.day].filter(Boolean).join(' ')}>
           {hours.map((h) => <div key={h} className="plx-time-grid__slot" aria-hidden="true" />)}
-          {events.filter((e) => e.day === d.key).map((e) => (
+          {events.filter((e: any) => e.day === d.key).map((e: any) => (
             <div key={e.id} className="plx-time-grid__event" data-plx-start={Math.max(0, Math.round((e.start - startHour) * 4))} data-plx-span={Math.max(2, Math.round((e.end - e.start) * 4))}>
               <EventChip fill title={e.title} time={e.time} color={e.color} onClick={e.onClick} />
             </div>

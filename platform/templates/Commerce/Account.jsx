@@ -27,7 +27,7 @@ import { QuickFilter } from '../../patterns/QuickFilter/QuickFilter.jsx';
 import { EntityHeader } from '../../patterns/EntityHeader/EntityHeader.jsx';
 import { PropertyList } from '../../patterns/PropertyList/PropertyList.jsx';
 import { Wizard } from '../../patterns/Wizard/Wizard.jsx';
-import { SettingsSection } from '../../patterns/SettingsLayout/SettingsLayout.jsx';
+import { SettingsSection } from '../../patterns/SettingsLayout/SettingsLayout.tsx';
 import { DataGrid } from '../../components/DataGrid/DataGrid.tsx';
 import { Badge } from '../../components/Badge/Badge.tsx';
 import { Button } from '../../components/Button/Button.tsx';
