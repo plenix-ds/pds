@@ -81,7 +81,7 @@ import { cx } from '../../utils/cx.ts';
 import { devWarn } from '../../utils/devWarn.ts';
 import { useUid } from '../../utils/layer.ts';
 import { formatPercent } from '../../utils/format.ts';
-import { Icon, asIcon as iconElement, isIconModule } from '../Icon/Icon.tsx';
+import { Icon, asIcon as iconElement, isIconModule, type IconValue } from '../Icon/Icon.tsx';
 import { Badge } from '../Badge/Badge.tsx';
 import { Avatar } from '../Avatar/Avatar.tsx';
 import { Count } from '../Count/Count.tsx';
@@ -106,21 +106,95 @@ import RefreshIcon from 'plenix-platform/icons/plenix/refresh';
 import { dataPhrase } from '../../utils/dataText.tsx';
 import { fill } from '../../utils/fill.ts';
 
+type Tone = 'good' | 'bad' | 'neutral';
+/** @public a status badge: { tone, icon, label } */
+export type MetricStatus = { tone?: React.ComponentProps<typeof Badge>['tone']; icon?: IconValue; label: React.ReactNode };
+/** @public the change since the last period */
+export type MetricChange = { amount?: React.ReactNode; direction?: 'up' | 'down'; versus?: React.ReactNode };
+/** @public a progress row: { id, label, detail, value, max, tone } */
+export type MetricRow = { id?: string | number; label: string; detail?: React.ReactNode; value: number; max: number; tone?: Tone };
+/** @public a part of a breakdown: { id, label, value, color, detail, display } */
+export type MetricPart = { id?: string | number; label: string; value: number; color?: string; detail?: React.ReactNode; display?: React.ReactNode };
+/** @public one side of a comparison */
+export type MetricSide = { label: string; value: React.ReactNode; amount?: number; color?: string };
+/** @public a list row: { id, label, value, amount, icon, color, person, status, href } */
+export type MetricItem = { id?: string | number; label: string; value?: React.ReactNode; amount?: number; icon?: IconValue; color?: string; person?: { name: string; src?: string; gender?: string }; status?: MetricStatus; href?: string };
+/** @public a figure of a summary */
+export type MetricFigure = { id?: string | number; value?: React.ReactNode; unit?: React.ReactNode; label: React.ReactNode };
+/** @public the person of a person card */
+export type MetricPerson = { name: string; role?: string; src?: string; gender?: string };
+/** @public a month: a level 0 to 3 per working day so far */
+export type MetricMonth = { year: number; month: number; levels?: number[]; today?: number };
+/** @public the prop type (ADR 0011) */
+export type MetricCardProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & {
+  type?: 'value' | 'trend' | 'progress' | 'gauge' | 'breakdown' | 'comparison' | 'list' | 'summary' | 'person' | 'week' | 'month' | 'table';
+  layout?: 'stacked' | 'beside' | 'inline' | 'tile' | 'icon-start';
+  appearance?: 'plain' | 'edge' | 'soft' | 'filled' | 'gradient';
+  color?: 'blue' | 'green' | 'purple' | 'red' | 'brown' | 'gray';
+  gradientTo?: string;
+  size?: 'sm' | 'md' | 'lg';
+  icon?: IconValue | React.ReactNode;
+  title?: React.ReactNode;
+  context?: React.ReactNode;
+  /** how the figure is calculated: an info button after the title */
+  info?: React.ReactNode;
+  filter?: React.ReactNode;
+  /** MenuItems for the More menu */
+  menu?: React.ReactNode;
+  href?: string;
+  headingLevel?: number;
+  value?: React.ReactNode;
+  unit?: React.ReactNode;
+  target?: React.ReactNode;
+  status?: MetricStatus;
+  change?: MetricChange;
+  goodWhen?: 'up' | 'down' | 'none';
+  footer?: React.ReactNode;
+  state?: 'ready' | 'loading' | 'empty' | 'error' | 'stale';
+  emptyText?: string;
+  errorText?: string;
+  onRetry?: () => void;
+  trend?: number[];
+  trendVariant?: 'line' | 'area' | 'bar';
+  trendLabel?: string;
+  progress?: { value: number; max: number; tone?: string };
+  rows?: MetricRow[];
+  /** Gauge's props: { value, min, max, format, label, thresholds } */
+  gauge?: Record<string, unknown>;
+  parts?: MetricPart[];
+  breakdown?: 'bar' | 'donut' | 'ranges';
+  compare?: MetricSide[];
+  items?: MetricItem[];
+  list?: 'ranked' | 'bars' | 'records';
+  metrics?: MetricFigure[];
+  person?: MetricPerson;
+  /** seven values, Monday first: numbers for bars, true or false for marks, null for days to come */
+  days?: Array<number | boolean | null>;
+  week?: 'bars' | 'marks';
+  weekMax?: number;
+  month?: MetricMonth;
+  /** Table's props: { label, columns, data } */
+  table?: { label?: string; columns: unknown[]; data: unknown[] };
+  strings?: Record<string, unknown> | null;
+  className?: string;
+};
+type Words = Record<string, any>;   // the catalog's words: strings, arrays of names and a few phrases
+
 const TYPES = ['value', 'trend', 'progress', 'gauge', 'breakdown', 'comparison', 'list', 'summary', 'person', 'week', 'month', 'table'];
 const LAYOUTS = ['stacked', 'beside', 'inline', 'tile', 'icon-start'];
 const APPEARANCES = ['plain', 'edge', 'soft', 'filled', 'gradient'];
 const HUES = ['blue', 'green', 'purple', 'red', 'brown', 'gray'];
 // a plain icon (no tile, #882) takes its data color from one of these hues; gray, or none, is the muted icon color
-const iconHue = (c) => (c && c !== 'gray' && HUES.indexOf(c) >= 0 ? c : undefined);
+const iconHue = (c?: string) => (c && c !== 'gray' && HUES.indexOf(c) >= 0 ? c : undefined);
 const ORDER = ['blue', 'purple', 'brown', 'green', 'red', 'gray'];   // breakdown parts without a color, by their order
 
-function toneOf(change, goodWhen) {
+function toneOf(change: MetricChange | undefined, goodWhen?: string): Tone {
   if (!change || goodWhen === 'none' || !goodWhen) return 'neutral';
   return change.direction === goodWhen ? 'good' : 'bad';
 }
 
 // the change: arrow + amount in the good, bad or neutral color, then what it is compared with
-function Change({ change, goodWhen, t }) {
+function Change({ change, goodWhen, t }: { change?: MetricChange; goodWhen?: string; t: Words }) {
   if (!change) return null;
   const tone = toneOf(change, goodWhen);
   const down = change.direction === 'down';
@@ -137,7 +211,7 @@ function Change({ change, goodWhen, t }) {
 }
 
 // the figure: value · unit · / target, with the status badge at the end of the row
-function Figure({ value, unit, target, status, inlineContext, empty }) {
+function Figure({ value, unit, target, status, inlineContext, empty }: { value?: React.ReactNode; unit?: React.ReactNode; target?: React.ReactNode; status?: MetricStatus; inlineContext?: React.ReactNode; empty?: boolean }) {
   const none = empty || value === undefined || value === null || value === '';
   return (
     <div className="plx-metric-card__figure">
@@ -151,8 +225,8 @@ function Figure({ value, unit, target, status, inlineContext, empty }) {
 }
 
 // a split bar: SVG geometry only (the parts' widths come from the data), each part in its data color
-function SplitBar({ parts, label }) {
-  const total = parts.reduce((s, p) => s + (p.value > 0 ? p.value : 0), 0) || 1;
+function SplitBar({ parts, label }: { parts: Array<{ id?: string | number; value: number; color?: string }>; label: string }) {
+  const total = parts.reduce((s: number, p) => s + (p.value > 0 ? p.value : 0), 0) || 1;
   let x = 0;
   return (
     <svg className="plx-metric-card__split" viewBox="0 0 100 8" preserveAspectRatio="none" role="img" aria-label={label}>
@@ -166,7 +240,7 @@ function SplitBar({ parts, label }) {
   );
 }
 
-function Legend({ parts, total }) {
+function Legend({ parts, total }: { parts: MetricPart[]; total: number }) {
   return (
     <ul className="plx-metric-card__legend">
       {parts.map((p) => (
@@ -181,7 +255,7 @@ function Legend({ parts, total }) {
   );
 }
 
-function ProgressRows({ rows }) {
+function ProgressRows({ rows }: { rows: MetricRow[] }) {
   return (
     <div className="plx-metric-card__rows">
       {rows.map((r) => {
@@ -203,7 +277,7 @@ function ProgressRows({ rows }) {
   );
 }
 
-function ListVisual({ items = [], variant, t }) {
+function ListVisual({ items = [], variant, t }: { items?: MetricItem[]; variant?: string; t: Words }) {
   if (variant === 'bars') {
     const max = Math.max(1, ...items.map((i) => i.amount !== undefined ? i.amount : Number(i.value) || 0));
     return (
@@ -228,7 +302,7 @@ function ListVisual({ items = [], variant, t }) {
             {variant === 'records' ? null : (i.person ? <Avatar name={i.person.name} src={i.person.src} gender={i.person.gender} size="sm" />
               : i.icon ? <Icon name={i.icon} size="sm" className="plx-metric-card__row-icon" data-plx-color={iconHue(i.color)} /> : <span />)}
             <span className="plx-metric-card__row-label">{label}</span>
-            {i.status ? <Badge tone={i.status.tone} icon={i.status.icon}>{i.status.label}</Badge> : <Count variant="pill" tone="neutral" value={i.value} />}
+            {i.status ? <Badge tone={i.status.tone} icon={i.status.icon}>{i.status.label}</Badge> : <Count variant="pill" tone="neutral" value={i.value as string | number} />}
           </li>
         );
       })}
@@ -236,7 +310,7 @@ function ListVisual({ items = [], variant, t }) {
   );
 }
 
-function Summary({ metrics = [] }) {
+function Summary({ metrics = [] }: { metrics?: MetricFigure[] }) {
   return (
     <ul className="plx-metric-card__summary">
       {metrics.map((m, i) => (
@@ -252,12 +326,12 @@ function Summary({ metrics = [] }) {
   );
 }
 
-function Week({ days = [], variant, max, t }) {
+function Week({ days = [], variant, max, t }: { days?: Array<number | boolean | null>; variant?: string; max?: number; t: Words }) {
   const top = max || Math.max(1, ...days.filter((d) => typeof d === 'number'));
-  const said = days.map((d, i) => t.weekdayNames[i] + ' ' + (d === null || d === undefined ? t.toCome : d === true ? t.hit : d === false ? t.missed : d)).join(', ');
+  const said = days.map((d: number | boolean | null | undefined, i: number) => t.weekdayNames[i] + ' ' + (d === null || d === undefined ? t.toCome : d === true ? t.hit : d === false ? t.missed : d)).join(', ');
   return (
     <div className="plx-metric-card__week" role="img" aria-label={said}>
-      {days.map((d, i) => (
+      {days.map((d: number | boolean | null | undefined, i: number) => (
         <span key={i} className="plx-metric-card__day-cell">
           {variant === 'marks'
             ? (d === null || d === undefined ? <span className="plx-metric-card__mark plx-metric-card__mark--none">{'–'}</span>
@@ -273,7 +347,7 @@ function Week({ days = [], variant, max, t }) {
   );
 }
 
-function Month({ month, t }) {
+function Month({ month, t }: { month?: MetricMonth; t: Words }) {
   if (!month) return null;
   const first = new Date(month.year, month.month - 1, 1);
   const start = (first.getDay() + 6) % 7;                                      // Monday first
@@ -281,7 +355,7 @@ function Month({ month, t }) {
   const levels = month.levels || [];
   const cells = [];
   let work = 0, done = 0;
-  t.weekdays.forEach((d, i) => cells.push(<span key={'h' + i} className="plx-metric-card__day-letter" aria-hidden="true">{d}</span>));
+  t.weekdays.forEach((d: string, i: number) => cells.push(<span key={'h' + i} className="plx-metric-card__day-letter" aria-hidden="true">{d}</span>));
   for (let i = 0; i < start; i++) cells.push(<span key={'e' + i} aria-hidden="true" />);
   for (let d = 1; d <= days; d++) {
     const weekend = (start + d - 1) % 7 > 4;
@@ -306,16 +380,16 @@ function Loading() {
 export function MetricCard({ type = 'value', layout = 'stacked', appearance = 'plain', color = 'blue', gradientTo = 'purple', size = 'md',
   icon, title, context, info, filter, menu, href, headingLevel = 3, value, unit, target, status, change, goodWhen = 'none', footer,
   state = 'ready', emptyText, errorText, onRetry, trend, trendVariant = 'area', trendLabel, progress, rows, gauge, parts, breakdown = 'bar',
-  compare, items, list = 'ranked', metrics, person, days, week = 'bars', weekMax, month, table, strings, className, ...rest }) {
+  compare, items, list = 'ranked', metrics, person, days, week = 'bars', weekMax, month, table, strings, className, ...rest }: MetricCardProps) {
   devWarn('MetricCard', { type, layout, appearance, size }, { type: TYPES, layout: LAYOUTS, appearance: APPEARANCES, size: ['sm', 'md', 'lg'] });
   if ((appearance === 'filled' || appearance === 'gradient') && type !== 'value' && type !== 'summary') devWarn('MetricCard', { appearance: appearance + ' with type ' + type }, { appearance: ['plain', 'edge', 'soft'] });
-  const t = useStrings('metricCard', strings);
+  const t = useStrings('metricCard', strings) as Words;
   const id = useUid('plx-metric-card');
-  const H = 'h' + Math.min(6, Math.max(2, headingLevel));
+  const H = ('h' + Math.min(6, Math.max(2, headingLevel))) as 'h2';   // h2 to h6
   const name = type === 'person' && person ? (title || person.name) : title;
   const line = type === 'person' && person && context === undefined ? person.role : context;
   const empty = state === 'empty';
-  const shownStatus = state === 'stale' && !status ? { tone: 'waiting', icon: ClockIcon, label: t.stale } : status;
+  const shownStatus = state === 'stale' && !status ? { tone: 'waiting', icon: ClockIcon, label: t.stale } as MetricStatus : status;
   const hue = HUES.indexOf(color) >= 0 ? color : 'blue';
 
   const titleText = href ? <a className="plx-metric-card__link" href={href}>{name}</a> : name;
@@ -352,15 +426,15 @@ export function MetricCard({ type = 'value', layout = 'stacked', appearance = 'p
   let visual = null;
   let showFigure = type !== 'gauge' && type !== 'comparison' && type !== 'summary' && !(type === 'list' && value === undefined) && !(type === 'breakdown' && (breakdown === 'donut' || value === undefined));
   if (state === 'ready' || state === 'stale') {
-    if (type === 'trend' && trend && trend.length) visual = <Sparkline values={trend} variant={trendVariant} size="fill" showLast={trendVariant !== 'bar'} label={trendLabel || (typeof name === 'string' ? name : '')} />;
+    if (type === 'trend' && trend && trend.length) visual = <Sparkline {...({ values: trend, variant: trendVariant, size: 'fill', showLast: trendVariant !== 'bar', label: trendLabel || (typeof name === 'string' ? name : '') } as React.ComponentProps<typeof Sparkline>)} />;   // the charts are still JS (wave 2): their props infer as required
     if (type === 'progress' && rows) visual = <ProgressRows rows={rows} />;
-    else if ((type === 'progress' || type === 'person') && progress) visual = <ProgressBar value={progress.value} max={progress.max} tone={progress.tone} size={type === 'person' ? 'sm' : 'md'} label={typeof name === 'string' ? name : ''} labelHidden />;
+    else if ((type === 'progress' || type === 'person') && progress) visual = <ProgressBar value={progress.value} max={progress.max} tone={progress.tone as React.ComponentProps<typeof ProgressBar>['tone']} size={type === 'person' ? 'sm' : 'md'} label={typeof name === 'string' ? name : ''} labelHidden />;
     if (type === 'progress' && rows && value === undefined) showFigure = false;
-    if (type === 'gauge' && gauge) visual = <Gauge title={typeof name === 'string' ? name : ''} hideCaption size="sm" {...gauge} />;
+    if (type === 'gauge' && gauge) visual = <Gauge {...({ title: typeof name === 'string' ? name : '', hideCaption: true, size: 'sm', ...gauge } as React.ComponentProps<typeof Gauge>)} />;
     if (type === 'breakdown' && parts) {
       const coloured = parts.map((p, i) => Object.assign({}, p, { color: p.color || ORDER[i % ORDER.length] }));
       const total = coloured.reduce((s, p) => s + (p.value > 0 ? p.value : 0), 0);
-      if (breakdown === 'donut') visual = <PieChart variant="donut" hideCaption size="sm" title={typeof name === 'string' ? name : ''} data={parts.map((p) => ({ id: p.id, label: p.label, value: p.value }))} centerValue={value} centerLabel={unit} />;
+      if (breakdown === 'donut') visual = <PieChart {...({ variant: 'donut', hideCaption: true, size: 'sm', title: typeof name === 'string' ? name : '', data: parts.map((p) => ({ id: p.id, label: p.label, value: p.value })), centerValue: value, centerLabel: unit } as React.ComponentProps<typeof PieChart>)} />;
       else if (breakdown === 'ranges') visual = <ProgressRows rows={parts.map((p) => ({ id: p.id, label: p.label, detail: p.detail, value: p.value, max: total, tone: 'neutral' }))} />;
       else visual = <>{<SplitBar parts={coloured} label={coloured.map((p) => fill(t.parts, { label: p.label, share: formatPercent(total ? p.value / total : 0) })).join(', ')} />}<Legend parts={coloured} total={total} /></>;
       if (breakdown === 'donut') showFigure = false;
@@ -383,7 +457,7 @@ export function MetricCard({ type = 'value', layout = 'stacked', appearance = 'p
     if (type === 'summary') visual = <Summary metrics={metrics} />;
     if (type === 'week') visual = <Week days={days} variant={week} max={weekMax} t={t} />;
     if (type === 'month') visual = <Month month={month} t={t} />;
-    if (type === 'table' && table) visual = <Table label={table.label || (typeof name === 'string' ? name : '')} columns={table.columns} data={table.data} />;
+    if (type === 'table' && table) visual = <Table label={table.label || (typeof name === 'string' ? name : '')} columns={table.columns as React.ComponentProps<typeof Table>['columns']} data={table.data as React.ComponentProps<typeof Table>['data']} />;
   }
 
   let body;

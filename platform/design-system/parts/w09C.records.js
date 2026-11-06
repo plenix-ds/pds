@@ -153,7 +153,7 @@ DSParts.records.push(function (H) {
   var mcYear = function () { return h(P.Select, { size: 'sm', 'aria-label': 'Year', defaultValue: '2025', options: [{ value: '2025', label: '2025' }, { value: '2024', label: '2024' }] }); };
   var mcSales = function (extra) { return Object.assign({ icon: 'field-currency', title: 'Sales revenue', context: 'This month', menu: mcMore(), value: '$1.77M', change: mcUp('15%', 'vs last month'), goodWhen: 'up' }, extra); };
   var metricCard = { id: 'metric-card', icon: 'chart', sec: 'data-display', sub: 'Cards and objects', leaf: 'Metric card', title: 'Metric card',
-    plenix: 'MetricCard', src: 'components/MetricCard/MetricCard.jsx', css: ['components/MetricCard/metric-card.css'], blocks: ['plx-metric-card'],
+    plenix: 'MetricCard', src: 'components/MetricCard/MetricCard.tsx', css: ['components/MetricCard/metric-card.css'], blocks: ['plx-metric-card'],
     level: 'Component', interaction: 'Display',
     aliases: ['KPI card', 'Stat card', 'Big number card', 'Scorecard', 'Tile', 'Dashboard card'],
     text: 'One key figure in a card, with one anatomy for every kind of data: the header names what is measured (icon, title, info, the period filter, More, then a context line with the scope or the period); the body shows the value with its unit or target, a status, the change and the one visual its type draws; a footer note closes it. The type follows the shape of the data (12 types), the layout where the card sits (5), the style how strongly it stands out (5; the `appearance` setting). Every value is a Plenix token: the frame is Panel\u2019s, the colors are the data colors, the value uses the display sizes 24, 28 and 36.',
