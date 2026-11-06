@@ -197,7 +197,6 @@
   "scatter-chart--variant-bubble-size",
   "scatter-chart--variant-points-default",
   "scatter-chart--variant-with-trend-line",
-  "scrim--variant-modal-default",
   "search-input--variants-on-the-accent-header",
   "search-input--variants-on-the-page",
   "secondary-pane--orientation-side-by-side-default",
@@ -211,10 +210,6 @@
   "sparkline--variant-bar",
   "sparkline--variant-line-default",
   "sparkline--variant-with-last-point",
-  "spotlight--region-contained",
-  "spotlight--variant-element-cut-out-default",
-  "spotlight--variant-pulse-beacon",
-  "spotlight--variant-with-teachingbubble",
   "step-chart--variant-step-after-default",
   "step-chart--variant-step-before",
   "suggested-edit--variant-accept",
@@ -243,9 +238,6 @@
   "user-card--variant-default",
   "user-card--variant-with-actions",
   "waterfall-chart--variant-start-to-end",
-  "waterfall-chart--variant-with-totals",
-  "wizard-dialog--variant-full-screen",
-  "wizard-dialog--variant-large",
-  "wizard-dialog--variant-medium"
+  "waterfall-chart--variant-with-totals"
  ]
 }
