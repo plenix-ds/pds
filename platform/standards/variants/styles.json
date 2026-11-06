@@ -5105,5 +5105,39 @@
   "swatch-picker--palette-data-palette-default": {
     "sets": [],
     "why": "markup only: the palette is the list of colors given to the picker, each drawn by ColorSwatch; color-swatch.css styles the picker's row (.plx-color-picker gap, slots) the same for every palette"
+  },
+  "data-grid--row-height-short-medium-tall-extra-tall-the-rowheight-prop-and-the-view-menu-medium": {
+    "sets": [
+      {
+        "property": "--plx-comp-data-grid-record-height",
+        "part": "block",
+        "token": "--plx-comp-data-grid-row-height-medium"
+      }
+    ],
+    "why": ".plx-data-grid[data-plx-row-height=\"medium\"] in data-grid.css: the record height the rowHeight prop and the view menu choose"
+  },
+  "data-grid--row-height-short-medium-tall-extra-tall-the-rowheight-prop-and-the-view-menu-tall": {
+    "sets": [
+      {
+        "property": "--plx-comp-data-grid-record-height",
+        "part": "block",
+        "token": "--plx-comp-data-grid-row-height-tall"
+      }
+    ],
+    "why": ".plx-data-grid[data-plx-row-height=\"tall\"] in data-grid.css: the record height the rowHeight prop and the view menu choose"
+  },
+  "data-grid--row-height-short-medium-tall-extra-tall-the-rowheight-prop-and-the-view-menu-extra-tall": {
+    "sets": [
+      {
+        "property": "--plx-comp-data-grid-record-height",
+        "part": "block",
+        "token": "--plx-comp-data-grid-row-height-extra-tall"
+      }
+    ],
+    "why": ".plx-data-grid[data-plx-row-height=\"extra-tall\"] in data-grid.css: the record height the rowHeight prop and the view menu choose"
+  },
+  "data-grid--row-height-short-medium-tall-extra-tall-the-rowheight-prop-and-the-view-menu-short-default": {
+    "sets": [],
+    "why": "the default: data-plx-row-height is not set, so none of the medium, tall or extra-tall rules apply"
   }
 }
