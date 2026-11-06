@@ -229,6 +229,16 @@
     "selected": "n/a(stories arrive with Storybook, P0-11)",
     "error": "n/a(invalid is the is-invalid state set by its Field; stories arrive with Storybook, P0-11)"
   },
+  "TimePicker": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(a list time's highlighted look is its hover and active-descendant state)",
+    "disabled": "n/a(stories arrive with Storybook, P0-11)",
+    "loading": "n/a(the times are computed; nothing loads)",
+    "selected": "n/a(stories arrive with Storybook, P0-11)",
+    "error": "n/a(invalid is the is-invalid state set by its Field; stories arrive with Storybook, P0-11)"
+  },
   "Combobox": {
     "default": "n/a(stories arrive with Storybook, P0-11)",
     "hover": "n/a(stories arrive with Storybook, P0-11)",

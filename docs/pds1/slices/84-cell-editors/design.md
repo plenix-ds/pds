@@ -96,8 +96,8 @@
 - **3x English:** column names in "Editing <column>" may be long; the live region reads them in full. Popover lists wrap as in §3. Cells never grow while editing.
 - **Empty values:** see §3.
 - **10,000 rows:**
-  - The editing row stays rendered while it's open (pinned in the virtual window), so scrolling never saves or cancels an edit.
-  - An open popover closes when its cell scrolls out of view; the edit stays open, and the popover reopens when the cell is back or the person types.
+  - Scrolling never saves, cancels or loses an edit. The editing cell's typed text is kept while its row is out of the virtual window: the editor leaves with its row and comes back with the same text when the row is back in view (#474). Pinning the row isn't needed.
+  - An open popover leaves with its row and opens again when the person types or moves back to it.
   - Lists over 200 options use the control's existing virtual list.
 - **Narrow grid (320px):** the popovers keep the cell's width as the minimum and cap at the viewport's width, so they don't spill off-screen.
 

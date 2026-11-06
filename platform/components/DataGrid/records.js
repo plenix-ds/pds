@@ -33,10 +33,12 @@ export function groupValue(value, level, column = {}) {
   const interval = config.interval || (column.type === 'date' ? 'day' : undefined);
   if (['day', 'week', 'month', 'year'].includes(interval)) {
     const date = new Date(value); if (!Number.isFinite(date.getTime())) return null;
-    const year = date.getUTCFullYear(), month = date.getUTCMonth();
+    // a bare "YYYY-MM-DD" is its own calendar day (read as UTC, so its UTC parts are the day); a Date or a timestamp is the viewer's local day (issue 161)
+    const local = typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value);
+    const year = local ? date.getFullYear() : date.getUTCFullYear(), month = local ? date.getMonth() : date.getUTCMonth(), dayOfMonth = local ? date.getDate() : date.getUTCDate();
     if (interval === 'year') return String(year);
-    if (interval === 'month') return date.toISOString().slice(0, 7);
-    const day = new Date(Date.UTC(year, month, date.getUTCDate()));
+    if (interval === 'month') return new Date(Date.UTC(year, month, 1)).toISOString().slice(0, 7);
+    const day = new Date(Date.UTC(year, month, dayOfMonth));
     if (interval === 'week') day.setUTCDate(day.getUTCDate() - (day.getUTCDay() + 6) % 7);
     return day.toISOString().slice(0, 10);
   }
