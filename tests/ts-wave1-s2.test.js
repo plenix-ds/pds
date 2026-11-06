@@ -1,7 +1,7 @@
 /* Plenix tests · TypeScript wave 1, batch S (issue 292, ADR 0011): EntityPicker and MentionInput converted to TSX still behave the same.
    EntityPicker: typing filters, Enter chooses (onChange gets the value and its option), multiple adds a tag and its remove button removes it, loadOptions loads the typed text,
    a disabled option is not chosen. MentionInput: typing "@ma" opens the picker, a choice replaces the trigger with "@Name " and calls onMention.
-   Run on the code before and after the rename: same result.   Usage: node tests/ts-wave1-s.test.js */
+   Run on the code before and after the rename: same result.   Usage: node tests/ts-wave1-s2.test.js */
 const assert = require('assert/strict'), { serve, launch } = require('./lib');
 (async () => {
   const PORT = +process.env.TEST_PORT || 9675, server = await serve(PORT); let browser;
@@ -45,6 +45,6 @@ const assert = require('assert/strict'), { serve, launch } = require('./lib');
     assert.deepEqual(await page.evaluate(() => window.mentions), ['u1'], 'onMention gets the option');
     const bad = problems.filter((p) => !/Failed to load resource|net::|was fetched at run time/.test(p)); if (bad.length) console.log(bad);
     assert.deepEqual(bad, [], 'no errors or warnings');
-    console.log('ts-wave1-s: OK');
+    console.log('ts-wave1-s2: OK');
   } finally { if (browser) await browser.close(); server.close(); }
 })().catch((e) => { console.error(e); process.exit(1); });
