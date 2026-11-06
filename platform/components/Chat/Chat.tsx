@@ -147,7 +147,11 @@ import SendIcon from 'plenix-platform/icons/material/send';
 import GraphicEqIcon from 'plenix-platform/icons/material/graphic-eq';
 
 type Words = Record<string, string>;
-type ChatStatus = 'sending' | 'sent' | 'delivered' | 'read';
+/** @public a message's delivery status (ADR 0011) */
+export type ChatMessageStatus = 'sending' | 'sent' | 'delivered' | 'read';
+/** @public a reaction under a message: { emoji, count, mine, label } (ADR 0011) */
+export type ChatReaction = { emoji: string; count: number; mine?: boolean; label?: string };
+type ChatStatus = ChatMessageStatus;
 /** @public a file in the composer's strip: { id, name, size, status, progress, error, previewUrl } (ADR 0011) */
 export type ChatFile = { id: string | number; name?: string; size?: number; status?: 'uploading' | 'ready' | 'error'; progress?: number; error?: string; previewUrl?: string };
 /** @public Chat.Typing: "typing" (default) | "thinking" | "steps" (ADR 0011) */
@@ -159,7 +163,7 @@ export type ChatThreadProps = React.HTMLAttributes<HTMLDivElement> & { label?: s
 /** @public Chat.Message (ADR 0011) */
 export type ChatMessageProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & {
   mine?: boolean; author?: React.ReactNode; time?: string; dateTime?: string; status?: ChatStatus; readTime?: string; readDateTime?: string; avatar?: React.ReactNode;
-  quote?: { author?: React.ReactNode; text?: React.ReactNode }; reactions?: Array<{ emoji: string; count: number; mine?: boolean; label?: string }>; edited?: boolean; deleted?: boolean;
+  quote?: { author?: React.ReactNode; text?: React.ReactNode }; reactions?: ChatReaction[]; edited?: boolean; deleted?: boolean;
   onReact?: (emoji: string) => void; onReply?: () => void; onQuote?: () => void; onCopy?: () => void; onForward?: () => void; onEdit?: () => void; onDelete?: () => void;
   strings?: Catalog | null; children?: React.ReactNode;
 };
