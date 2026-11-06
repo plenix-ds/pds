@@ -114,19 +114,22 @@ import { Button } from '../Button/Button.tsx';
 import { Icon } from '../Icon/Icon.tsx';
 import { Spinner } from '../Loading/Loading.tsx';
 import { ProgressSteps } from '../ProgressSteps/ProgressSteps.tsx';
+import type { ProgressStep } from '../ProgressSteps/ProgressSteps.tsx';
 import { Text } from '../Text/Text.tsx';
 import { Textarea } from '../Input/Input.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
+import type { IconValue } from '../Icon/Icon.tsx';
 import { Badge } from '../Badge/Badge.tsx';
 import { Popover } from '../Popover/Popover.tsx';
 import { Tooltip } from '../Tooltip/Tooltip.tsx';
-import { Attachment, Attachments, Voice, FileIcon } from './ChatMedia.jsx';
+import { Attachment, Attachments, Voice, FileIcon } from './ChatMedia.tsx';
 import { fill } from '../../utils/fill.ts';
 import { ProgressBar } from '../ProgressBar/ProgressBar.tsx';
 import { announce } from '../../utils/announce.tsx';
 import { formatBytes } from '../../utils/format.ts';
 import { copyText } from '../../utils/clipboard.ts';
-import { MessageActions, Reactions, Quote, ReplyPreview } from './ChatActions.jsx';
+import { MessageActions, Reactions, Quote, ReplyPreview } from './ChatActions.tsx';
 import SparkleIcon from 'plenix-platform/icons/plenix/sparkle';
 import ClockIcon from 'plenix-platform/icons/plenix/clock';
 import DoneIcon from 'plenix-platform/icons/material/done';
@@ -143,9 +146,38 @@ import MoodIcon from 'plenix-platform/icons/material/mood';
 import SendIcon from 'plenix-platform/icons/material/send';
 import GraphicEqIcon from 'plenix-platform/icons/material/graphic-eq';
 
-function Typing({ label, variant = 'typing', steps = [], current = 0, strings, className, ...rest }) {
+type Words = Record<string, string>;
+type ChatStatus = 'sending' | 'sent' | 'delivered' | 'read';
+/** @public a file in the composer's strip: { id, name, size, status, progress, error, previewUrl } (ADR 0011) */
+export type ChatFile = { id: string | number; name?: string; size?: number; status?: 'uploading' | 'ready' | 'error'; progress?: number; error?: string; previewUrl?: string };
+/** @public Chat.Typing: "typing" (default) | "thinking" | "steps" (ADR 0011) */
+export type ChatTypingProps = Omit<React.HTMLAttributes<HTMLElement>, 'children'> & { label?: string; variant?: 'typing' | 'thinking' | 'steps'; steps?: ProgressStep[]; current?: number; strings?: Catalog | null };
+/** @public Chat.Header (ADR 0011) */
+export type ChatHeaderProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> & { title?: React.ReactNode; meta?: React.ReactNode; avatar?: React.ReactNode; actions?: React.ReactNode };
+/** @public Chat.Thread: follow keeps the newest message in view (ADR 0011) */
+export type ChatThreadProps = React.HTMLAttributes<HTMLDivElement> & { label?: string; follow?: boolean };
+/** @public Chat.Message (ADR 0011) */
+export type ChatMessageProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & {
+  mine?: boolean; author?: React.ReactNode; time?: string; dateTime?: string; status?: ChatStatus; readTime?: string; readDateTime?: string; avatar?: React.ReactNode;
+  quote?: { author?: React.ReactNode; text?: React.ReactNode }; reactions?: Array<{ emoji: string; count: number; mine?: boolean; label?: string }>; edited?: boolean; deleted?: boolean;
+  onReact?: (emoji: string) => void; onReply?: () => void; onQuote?: () => void; onCopy?: () => void; onForward?: () => void; onEdit?: () => void; onDelete?: () => void;
+  strings?: Catalog | null; children?: React.ReactNode;
+};
+/** @public Chat.Group: a run of messages from one sender (ADR 0011) */
+export type ChatGroupProps = React.HTMLAttributes<HTMLDivElement> & { mine?: boolean; author?: React.ReactNode; avatar?: React.ReactNode };
+/** @public Chat.Divider: a line across the thread (ADR 0011) */
+export type ChatDividerProps = React.HTMLAttributes<HTMLDivElement> & { unread?: boolean };
+/** @public Chat.Composer (ADR 0011) */
+export type ChatComposerProps = Omit<React.FormHTMLAttributes<HTMLFormElement>, 'onChange'> & {
+  value?: string; onChange?: (text: string) => void; onSend?: (text: string, files: ChatFile[]) => void; placeholder?: string; label?: string; sendLabel?: string; disabled?: boolean;
+  attachments?: ChatFile[]; onAttach?: (files: File[]) => void; onRemoveAttachment?: (file: ChatFile) => void; onRetryAttachment?: (file: ChatFile) => void; onCancelAttachment?: (file: ChatFile) => void;
+  accept?: string; imageAccept?: string; emoji?: boolean | ((insert: (text: string) => void) => React.ReactNode); voice?: boolean; lang?: string; sendOn?: 'enter' | 'mod-enter';
+  replyTo?: { author: string; text?: React.ReactNode }; onCancelReply?: () => void; strings?: Catalog | null;
+};
+
+function Typing({ label, variant = 'typing', steps = [], current = 0, strings, className, ...rest }: ChatTypingProps) {
   devWarn('Chat.Typing', { variant }, { variant: ['typing','thinking','steps'] });
-  const t = useStrings('chat', strings);
+  const t = useStrings('chat', strings) as unknown as Words;
   if (variant === 'thinking' || variant === 'steps') return <div className={cx('plx-chat__thinking', className)} role="status" {...rest}>
     <div className="plx-chat__thinking-label"><Spinner size="sm" aria-hidden="true" role="presentation" label="" /><Icon name={SparkleIcon}/><Text>{label || t.thinking}</Text></div>
     {variant === 'steps' && steps.length ? <ProgressSteps label={label || t.thinking} steps={steps} current={current} strings={strings} /> : null}
@@ -159,7 +191,7 @@ function Typing({ label, variant = 'typing', steps = [], current = 0, strings, c
   );
 }
 
-function Header({ title, meta, avatar, actions, className, ...rest }) {
+function Header({ title, meta, avatar, actions, className, ...rest }: ChatHeaderProps) {
   return (
     <div className={cx('plx-chat__header', className)} {...rest}>
       {avatar ? <span className="plx-chat__header-avatar">{avatar}</span> : null}
@@ -169,23 +201,23 @@ function Header({ title, meta, avatar, actions, className, ...rest }) {
   );
 }
 
-function Thread({ label, follow = true, className, children, ...rest }) {
-  const t = useStrings('chat');
+function Thread({ label, follow = true, className, children, ...rest }: ChatThreadProps) {
+  const t = useStrings('chat') as unknown as Words;
   label = label ?? t.conversation;
   // it opens at the newest message and follows new ones, unless the person has scrolled up to read (batch 215)
-  const ref = React.useRef(null), atEnd = React.useRef(true);
+  const ref = React.useRef<HTMLDivElement | null>(null), atEnd = React.useRef(true);
   const count = React.Children.count(children);
   React.useLayoutEffect(() => { const el = ref.current; if (follow && el && atEnd.current) el.scrollTop = el.scrollHeight; }, [count, follow]);
-  const onScroll = (e) => { const el = e.currentTarget; atEnd.current = el.scrollHeight - el.scrollTop - el.clientHeight <= el.clientHeight / 4; if (rest.onScroll) rest.onScroll(e); };
+  const onScroll = (e: React.UIEvent<HTMLDivElement>) => { const el = e.currentTarget; atEnd.current = el.scrollHeight - el.scrollTop - el.clientHeight <= el.clientHeight / 4; if (rest.onScroll) rest.onScroll(e); };
   // it scrolls, so it is in the Tab order: the keyboard can scroll it too
   return <div ref={ref} className={cx('plx-chat__thread', className)} role="log" aria-live="polite" aria-label={label} tabIndex={0} {...rest} onScroll={onScroll}>{children}</div>;
 }
 
 // the status mark: sending a clock, sent one check, delivered two, read two in green (the owner, issue 637); it is named
 // for assistive technology only when no visible word already says the state
-const STATUS_ICON = { sending: ClockIcon, sent: DoneIcon, delivered: DoneAllIcon, read: DoneAllIcon };
+const STATUS_ICON: Record<string, IconValue> = { sending: ClockIcon, sent: DoneIcon, delivered: DoneAllIcon, read: DoneAllIcon };
 
-function Footer({ status, time, dateTime, readTime, readDateTime, edited, t }) {
+function Footer({ status, time, dateTime, readTime, readDateTime, edited, t }: { status?: string; time?: string; dateTime?: string; readTime?: string; readDateTime?: string; edited?: boolean; t: Words }) {
   const sending = status === 'sending', read = status === 'read' && readTime;
   const said = sending || (status === 'sent' && time) || read;
   return (
@@ -193,16 +225,16 @@ function Footer({ status, time, dateTime, readTime, readDateTime, edited, t }) {
       {sending ? <span>{t.sending}</span> : time ? <span>{t.sent} <time className="plx-chat__time" dateTime={dateTime}>{time}</time></span> : null}
       {edited ? <><span aria-hidden="true">·</span><span>{t.edited}</span></> : null}
       {read ? <><span aria-hidden="true">|</span><span>{t.read} <time className="plx-chat__time" dateTime={readDateTime}>{readTime}</time></span></> : null}
-      {STATUS_ICON[status] ? <span className={cx('plx-chat__status', status === 'read' && 'plx-chat__status--read')}><Icon name={STATUS_ICON[status]} size="xs" label={said ? undefined : t[status]} /></span> : null}
+      {status && STATUS_ICON[status] ? <span className={cx('plx-chat__status', status === 'read' && 'plx-chat__status--read')}><Icon name={STATUS_ICON[status]} size="xs" label={said ? undefined : t[status]} /></span> : null}
     </div>
   );
 }
 
 function Message({ mine = false, author, time, dateTime, status, readTime, readDateTime, avatar, quote, reactions, edited = false, deleted = false,
-  onReact, onReply, onQuote, onCopy, onForward, onEdit, onDelete, strings, className, children, onMouseEnter, onMouseLeave, onFocus, onBlur, onPointerDown, onPointerUp, onPointerCancel, ...rest }) {
+  onReact, onReply, onQuote, onCopy, onForward, onEdit, onDelete, strings, className, children, onMouseEnter, onMouseLeave, onFocus, onBlur, onPointerDown, onPointerUp, onPointerCancel, ...rest }: ChatMessageProps) {
   devWarn('Chat.Message', { status }, { status: [undefined, 'sending', 'sent', 'delivered', 'read'] });
-  const t = useStrings('chat', strings);
-  const root = React.useRef(null), body = React.useRef(null), press = React.useRef(0);
+  const t = useStrings('chat', strings) as unknown as Words;
+  const root = React.useRef<HTMLDivElement | null>(null), body = React.useRef<HTMLDivElement | null>(null), press = React.useRef<ReturnType<typeof setTimeout> | 0>(0);
   // the action bar shows on hover, on keyboard focus inside the message (a Tab into the bar reveals it, as a skip link) and on a long press
   const [shown, setShown] = React.useState(false);
   React.useEffect(() => () => clearTimeout(press.current), []);
@@ -210,13 +242,13 @@ function Message({ mine = false, author, time, dateTime, status, readTime, readD
   const keep = () => !!root.current && root.current.contains(document.activeElement);
   const copy = () => { if (onCopy) onCopy(); else if (body.current) copyText(body.current.innerText); };
   const events = hasActions ? {
-    onMouseEnter: (e) => { setShown(true); if (onMouseEnter) onMouseEnter(e); },
-    onMouseLeave: (e) => { if (!keep()) setShown(false); if (onMouseLeave) onMouseLeave(e); },
-    onFocus: (e) => { setShown(true); if (onFocus) onFocus(e); },
-    onBlur: (e) => { if (!e.currentTarget.contains(e.relatedTarget)) setShown(false); if (onBlur) onBlur(e); },
-    onPointerDown: (e) => { if (e.pointerType === 'touch') { clearTimeout(press.current); press.current = setTimeout(() => setShown(true), LONG_PRESS); } if (onPointerDown) onPointerDown(e); },
-    onPointerUp: (e) => { clearTimeout(press.current); if (onPointerUp) onPointerUp(e); },
-    onPointerCancel: (e) => { clearTimeout(press.current); if (onPointerCancel) onPointerCancel(e); },
+    onMouseEnter: (e: React.MouseEvent<HTMLDivElement>) => { setShown(true); if (onMouseEnter) onMouseEnter(e); },
+    onMouseLeave: (e: React.MouseEvent<HTMLDivElement>) => { if (!keep()) setShown(false); if (onMouseLeave) onMouseLeave(e); },
+    onFocus: (e: React.FocusEvent<HTMLDivElement>) => { setShown(true); if (onFocus) onFocus(e); },
+    onBlur: (e: React.FocusEvent<HTMLDivElement>) => { if (!e.currentTarget.contains(e.relatedTarget)) setShown(false); if (onBlur) onBlur(e); },
+    onPointerDown: (e: React.PointerEvent<HTMLDivElement>) => { if (e.pointerType === 'touch') { clearTimeout(press.current); press.current = setTimeout(() => setShown(true), LONG_PRESS); } if (onPointerDown) onPointerDown(e); },
+    onPointerUp: (e: React.PointerEvent<HTMLDivElement>) => { clearTimeout(press.current); if (onPointerUp) onPointerUp(e); },
+    onPointerCancel: (e: React.PointerEvent<HTMLDivElement>) => { clearTimeout(press.current); if (onPointerCancel) onPointerCancel(e); },
   } : { onMouseEnter, onMouseLeave, onFocus, onBlur, onPointerDown, onPointerUp, onPointerCancel };
   return (
     <div ref={root} className={cx('plx-chat__message', mine && 'plx-chat__message--mine', avatar && 'plx-chat__message--avatar', className)} {...rest} {...events}>
@@ -236,7 +268,7 @@ const LONG_PRESS = 500;   // ms a finger rests on a message before its action ba
 
 // a run of messages from one sender: the photo and the name on the first message only, the run closer together; only the
 // Chat.Message children take mine, author and avatar (anything else, a Divider, stays as given)
-function Group({ mine = false, author, avatar, className, children, ...rest }) {
+function Group({ mine = false, author, avatar, className, children, ...rest }: ChatGroupProps) {
   let first = true;
   const items = React.Children.map(children, (child) => {
     if (!React.isValidElement(child) || child.type !== Message) return child;
@@ -248,8 +280,8 @@ function Group({ mine = false, author, avatar, className, children, ...rest }) {
 }
 
 // a line across the thread: a date, or "New messages" (unread) above the first unread message
-function Divider({ unread = false, className, children, ...rest }) {
-  const t = useStrings('chat');
+function Divider({ unread = false, className, children, ...rest }: ChatDividerProps) {
+  const t = useStrings('chat') as unknown as Words;
   return (
     <div className={cx('plx-chat__divider', unread && 'plx-chat__divider--unread', className)} {...rest}>
       <span className="plx-chat__divider-line" aria-hidden="true" />
@@ -260,17 +292,19 @@ function Divider({ unread = false, className, children, ...rest }) {
 }
 
 // the speech recognition the browser offers (Chrome and Safari today), looked for each time a composer mounts, so a browser that adds it later shows the microphone with no change here
-const speechConstructor = () => (typeof window === 'undefined' ? null : window.SpeechRecognition || window.webkitSpeechRecognition || null);
+type SpeechResult = { isFinal: boolean; 0: { transcript: string } };
+type Recognition = { lang: string; continuous: boolean; interimResults: boolean; start(): void; stop(): void; abort(): void; onresult: ((e: { results: ArrayLike<SpeechResult> }) => void) | null; onerror: ((e: { error: string }) => void) | null; onend: (() => void) | null };
+const speechConstructor = (): (new () => Recognition) | null => { if (typeof window === 'undefined') return null; const w = window as unknown as { SpeechRecognition?: new () => Recognition; webkitSpeechRecognition?: new () => Recognition }; return w.SpeechRecognition || w.webkitSpeechRecognition || null; };
 // the page's language for dictation: Arabic is ar-EG, English en-US, any other the page's own tag
-function speechLanguage(lang) {
+function speechLanguage(lang?: string) {
   const tag = lang || (typeof document !== 'undefined' && document.documentElement.lang) || (typeof navigator !== 'undefined' && navigator.language) || 'en-US';
   if (/^ar(-|$)/i.test(tag)) return /^ar-/i.test(tag) ? tag : 'ar-EG';
   return /^en$/i.test(tag) ? 'en-US' : tag;
 }
-const joinSpoken = (base, spoken) => (base && spoken ? base + (/\s$/.test(base) ? '' : ' ') + spoken.trim() : base || spoken.trim());
+const joinSpoken = (base: string, spoken: string) => (base && spoken ? base + (/\s$/.test(base) ? '' : ' ') + spoken.trim() : base || spoken.trim());
 
 // one file waiting to be sent: its picture or icon, its name, its state (a progress bar, ready, or an error with Retry) and a button to cancel or remove it
-function ComposerFile({ file, t, onRemove, onRetry, onCancel }) {
+function ComposerFile({ file, t, onRemove, onRetry, onCancel }: { file: ChatFile; t: Words; onRemove?: (f: ChatFile) => void; onRetry?: (f: ChatFile) => void; onCancel?: (f: ChatFile) => void }) {
   const status = file.status || 'ready';
   return (
     <li className="plx-chat__attachment" data-plx-status={status}>
@@ -291,11 +325,11 @@ function ComposerFile({ file, t, onRemove, onRetry, onCancel }) {
 }
 
 function Composer({ value = '', onChange, onSend, placeholder, label, sendLabel, disabled = false, attachments = [], onAttach, onRemoveAttachment, onRetryAttachment, onCancelAttachment,
-  accept, imageAccept = 'image/*', emoji = true, voice = true, lang, sendOn = 'enter', replyTo, onCancelReply, strings, className, ...rest }) {
-  const t = useStrings('chat', strings);
+  accept, imageAccept = 'image/*', emoji = true, voice = true, lang, sendOn = 'enter', replyTo, onCancelReply, strings, className, ...rest }: ChatComposerProps) {
+  const t = useStrings('chat', strings) as unknown as Words;
   placeholder = placeholder ?? t.placeholder; label = label ?? t.message; sendLabel = sendLabel ?? t.send;
   const [dragging, setDragging] = React.useState(false), [listening, setListening] = React.useState(false), [speech, setSpeech] = React.useState(false), [problem, setProblem] = React.useState('');
-  const fileInput = React.useRef(null), imageInput = React.useRef(null), recognition = React.useRef(null), spoken = React.useRef({ base: '' }), latest = React.useRef(onChange);
+  const fileInput = React.useRef<HTMLInputElement | null>(null), imageInput = React.useRef<HTMLInputElement | null>(null), recognition = React.useRef<Recognition | null>(null), spoken = React.useRef<{ base: string; open?: boolean }>({ base: '' }), latest = React.useRef(onChange);
   latest.current = onChange;
   React.useEffect(() => { setSpeech(!!speechConstructor()); }, []);
   React.useEffect(() => () => { if (recognition.current) recognition.current.abort(); }, []);
@@ -303,7 +337,7 @@ function Composer({ value = '', onChange, onSend, placeholder, label, sendLabel,
   const canSend = !disabled && !uploading && !!sendable;
   const stopListening = () => { if (recognition.current) recognition.current.stop(); };
   const send = () => { if (!canSend) return; spoken.current.open = false; stopListening(); if (onSend) onSend(value, attachments.filter((a) => (a.status || 'ready') === 'ready')); };
-  const attach = (files) => { const list = Array.prototype.slice.call(files || []); if (list.length && onAttach) onAttach(list); };
+  const attach = (files?: ArrayLike<File> | null) => { const list = Array.prototype.slice.call(files || []); if (list.length && onAttach) onAttach(list); };
   const listen = () => {
     const Recognition = speechConstructor();
     if (!Recognition || recognition.current) return;
@@ -311,26 +345,26 @@ function Composer({ value = '', onChange, onSend, placeholder, label, sendLabel,
     r.lang = speechLanguage(lang); r.continuous = true; r.interimResults = true;
     const session = { base: String(value), open: true };
     spoken.current = session;
-    r.onresult = (e) => {
+    r.onresult = (e: { results: ArrayLike<SpeechResult> }) => {
       if (!session.open) return;
       let done = '', interim = '';
       for (let i = 0; i < e.results.length; i++) { if (e.results[i].isFinal) done += e.results[i][0].transcript; else interim += e.results[i][0].transcript; }
       if (latest.current) latest.current(joinSpoken(spoken.current.base, done + interim));
     };
-    r.onerror = (e) => { const blocked = e.error === 'not-allowed' || e.error === 'service-not-allowed'; setProblem(blocked ? t.micBlocked : t.micStopped); announce(blocked ? t.micBlocked : t.micStopped, { politeness: 'assertive' }); };
+    r.onerror = (e: { error: string }) => { const blocked = e.error === 'not-allowed' || e.error === 'service-not-allowed'; setProblem(blocked ? t.micBlocked : t.micStopped); announce(blocked ? t.micBlocked : t.micStopped, { politeness: 'assertive' }); };
     r.onend = () => { session.open = false; if (recognition.current === r) recognition.current = null; setListening(false); };
     recognition.current = r; setProblem('');
     try { r.start(); setListening(true); announce(t.listening); } catch (err) { session.open = false; recognition.current = null; setProblem(t.micStopped); announce(t.micStopped, { politeness: 'assertive' }); }
   };
   // typing while dictating ends the dictation and keeps the text as typed: a later speech result would otherwise write the starting text plus the speech over it
-  const typed = (text) => { if (recognition.current) { spoken.current.open = false; stopListening(); } if (onChange) onChange(text); };
+  const typed = (text: string) => { if (recognition.current) { spoken.current.open = false; stopListening(); } if (onChange) onChange(text); };
   const emojiPanel = typeof emoji === 'function' ? emoji((text) => { if (onChange) onChange(String(value) + text); }) : <Text variant="secondary">{t.emojiSoon}</Text>;
   const hasFiles = !!onAttach, dropping = dragging && hasFiles;
   return (
     <form className={cx('plx-chat__composer', className)} onSubmit={(e) => { e.preventDefault(); send(); }} {...rest}>
       <div className={cx('plx-chat__box', dropping && 'plx-chat__box--drop')}
         onDragOver={hasFiles ? (e) => { if (Array.prototype.indexOf.call(e.dataTransfer.types || [], 'Files') >= 0) { e.preventDefault(); setDragging(true); } } : undefined}
-        onDragLeave={hasFiles ? (e) => { if (!e.currentTarget.contains(e.relatedTarget)) setDragging(false); } : undefined}
+        onDragLeave={hasFiles ? (e) => { if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setDragging(false); } : undefined}
         onDrop={hasFiles ? (e) => { e.preventDefault(); setDragging(false); attach(e.dataTransfer.files); } : undefined}>
         {dropping ? <div className="plx-chat__drop" role="status">{t.dropFiles}</div> : null}
         {replyTo ? <ReplyPreview author={replyTo.author} text={replyTo.text} onCancel={onCancelReply} t={t} /> : null}
