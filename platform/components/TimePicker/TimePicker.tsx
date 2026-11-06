@@ -64,21 +64,23 @@ import { useDigits, useTimeZone } from '../../providers/LocaleProvider.tsx';
 import { validZone, wallOf, isInstant, instantIso } from '../../utils/zone.ts';
 
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
+import type { FieldWidth } from '../Input/Input.tsx';
 import { Icon } from '../Icon/Icon.tsx';
 import { Tooltip } from '../Tooltip/Tooltip.tsx';
 import { useTruncated } from '../../utils/overflow.ts';
 import { useReadOnly } from '../../providers/ReadOnly.tsx';
 import ScheduleIcon from 'plenix-platform/icons/plenix/schedule';
 
-const pad = (n) => String(n).padStart(2, '0');
-const toMin = (v) => { const m = /^(\d{1,2}):(\d{2})$/.exec(v || ''); return m ? (+m[1]) * 60 + (+m[2]) : null; };
-const fromMin = (n) => pad(Math.floor(n / 60) % 24) + ':' + pad(n % 60);
+const pad = (n: number) => String(n).padStart(2, '0');
+const toMin = (v: unknown): number | null => { const m = /^(\d{1,2}):(\d{2})$/.exec(String(v || '')); return m ? (+m[1]) * 60 + (+m[2]) : null; };
+const fromMin = (n: number) => pad(Math.floor(n / 60) % 24) + ':' + pad(n % 60);
 const localeCycle = () => {
   try { const o = new Intl.DateTimeFormat(formatLocale(), { hour: 'numeric' }).resolvedOptions(); return o.hourCycle === 'h11' || o.hourCycle === 'h12' || o.hour12 ? '12' : '24'; }
   catch (e) { return '12'; }
 };
 // "2", "2pm", "2:30 pm", "14:30", "1430", "230p" → minutes after midnight, or null
-export const parseTime = (text, cycle) => {
+export const parseTime = (text: unknown, cycle: string): number | null => {
   const s = toLatinDigits(String(text || '')).trim().toLowerCase().replace(/\./g, '');   // what a person typed in Arabic-Indic digits reads the same
   if (!s) return null;
   const m = /^(\d{1,2})(?::?(\d{2}))?\s*(a|am|p|pm)?$/.exec(s);
@@ -90,16 +92,46 @@ export const parseTime = (text, cycle) => {
   else if (cycle === '12' && h >= 1 && h <= 6 && !m[2]) h += 12;   // "2" on a 12-hour clock means the afternoon
   return h * 60 + min;
 };
-const show = (mins, cycle, t, digits) => {
+type Words = Record<'am' | 'pm' | 'hour' | 'minute' | 'period' | 'empty' | 'times', string>;
+const show = (mins: number | null, cycle: string, t: Words, digits: ReturnType<typeof useDigits>): string => {
   if (mins === null) return '';
   const h = Math.floor(mins / 60), m = mins % 60;
   return localDigits(cycle === '12' ? ((h % 12) || 12) + ':' + pad(m) + ' ' + (h < 12 ? t.am : t.pm) : pad(h) + ':' + pad(m), { digits });   // the page's digits (Arabic-Indic in Arabic)
 };
 
-export const TimePicker = React.forwardRef(function TimePicker({ value, defaultValue = '', onChange, variant = 'list', hourCycle, step, min, max, label, width,
+/** @public the prop type (ADR 0011) */
+export type TimePickerProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'defaultValue' | 'onChange' | 'width' | 'step' | 'min' | 'max'> & {
+  /** "HH:MM" (24-hour), or a UTC instant when a time zone is set */
+  value?: string;
+  defaultValue?: string;
+  onChange?: (value: string) => void;
+  /** "list" (default) | "segments" */
+  variant?: 'list' | 'segments';
+  /** "12" | "24" (default the locale's) */
+  hourCycle?: '12' | '24' | 12 | 24;
+  /** minutes between the list's times (default 15) or a segment's minute step (default 1) */
+  step?: number;
+  /** the earliest and latest time, "HH:MM" */
+  min?: string;
+  max?: string;
+  label?: string;
+  width?: FieldWidth;
+  invalid?: boolean;
+  warning?: string | boolean;
+  readOnly?: boolean;
+  name?: string;
+  /** an IANA zone: a moment value shows its time there */
+  timeZone?: string;
+  strings?: Catalog | null;
+  className?: string;
+};
+type Inner = { t: Words; cycle: string; step: number; current: string; commit: (mins: number | null) => void; lo: number; hi: number; label?: string; invalid?: boolean; warning?: string | boolean;
+  disabled?: boolean; locked: boolean; id?: string; cls: string; hidden: React.ReactNode; rest: Record<string, unknown> };
+
+export const TimePicker = React.forwardRef<HTMLElement | null, TimePickerProps>(function TimePicker({ value, defaultValue = '', onChange, variant = 'list', hourCycle, step, min, max, label, width,
   invalid, warning, disabled, readOnly: readOnlyOwn, id, name, timeZone: zoneProp, strings, className, ...rest }, ref) {
   devWarn('TimePicker', { variant }, { variant: ['list','segments'] });
-  const t = useStrings('timePicker', strings);
+  const t = useStrings('timePicker', strings) as unknown as Words;
   const cycle = hourCycle ? String(hourCycle) : localeCycle();
   const locked = useReadOnly(readOnlyOwn);   // its own readOnly, else the nearest ReadOnly region's: the time shows and nothing changes it (the list does not open)
   const [own, setOwn] = React.useState(defaultValue);
@@ -107,42 +139,44 @@ export const TimePicker = React.forwardRef(function TimePicker({ value, defaultV
   // the time zone (issue 813): its own, else LocaleProvider's; a moment value shows its time in the zone, on its day there
   const providerZone = useTimeZone();
   const zone = validZone(zoneProp !== undefined ? zoneProp : providerZone);
-  const wall = zone && isInstant(value0) ? wallOf(Date.parse(value0), zone) : null;
+  const wall = zone && isInstant(value0) ? wallOf(Date.parse(value0 as string), zone) : null;
   const current = wall ? wall.time : value0;   // the "HH:MM" shown
-  const lo = toMin(min) !== null ? toMin(min) : 0, hi = toMin(max) !== null ? toMin(max) : 24 * 60 - 1;
-  const clamp = (n) => Math.min(hi, Math.max(lo, n));
-  const commit = (mins) => {
+  const lo = (toMin(min) !== null ? toMin(min) : 0) as number, hi = (toMin(max) !== null ? toMin(max) : 24 * 60 - 1) as number;
+  const clamp = (n: number) => Math.min(hi, Math.max(lo, n));
+  const commit = (mins: number | null) => {
     if (locked) return;
     const v = mins === null ? '' : fromMin(clamp(mins));
-    const out = wall && v ? instantIso(wall.date, v, zone) : v;   // a moment value stays a moment, on the same day in the zone
-    if (value === undefined) setOwn(out);
-    if (onChange && v !== current) onChange(out);
+    const out = wall && v ? instantIso(wall.date, v, zone as string) : v;   // a moment value stays a moment, on the same day in the zone
+    if (value === undefined) setOwn(out as string);
+    if (onChange && v !== current) onChange(out as string);
   };
   const cls = cx('plx-time-picker', 'plx-time-picker--' + variant, width && 'plx-time-picker--width-' + width, disabled && 'is-disabled', className);
   const hidden = name ? <input type="hidden" name={name} value={value0 || ''} /> : null;
-  if (variant === 'segments') return <Segments ref={ref} {...{ t, cycle, step: step || 1, current, commit, lo, hi, label, invalid, warning, disabled, locked, id, cls, hidden, rest }} />;
-  return <ListPicker ref={ref} {...{ t, cycle, step: step || 15, current, commit, lo, hi, label, invalid, warning, disabled, locked, id, cls, hidden, rest }} />;
+  if (variant === 'segments') return <Segments ref={ref as React.Ref<HTMLSpanElement>} {...{ t, cycle, step: step || 1, current, commit, lo, hi, label, invalid, warning, disabled, locked, id, cls, hidden, rest }} />;
+  return <ListPicker ref={ref as React.Ref<HTMLInputElement>} {...{ t, cycle, step: step || 15, current, commit, lo, hi, label, invalid, warning, disabled, locked, id, cls, hidden, rest }} />;
 });
 
-const ListPicker = React.forwardRef(function ListPicker({ t, cycle, step, current, commit, lo, hi, label, invalid, warning, disabled, locked, id, cls, hidden, rest }, ref) {
+type Seg = 'h' | 'm' | 'p';
+type Parts = { h: number | null; m: number | null; p: 'am' | 'pm' | null };
+const ListPicker = React.forwardRef<HTMLInputElement | null, Inner>(function ListPicker({ t, cycle, step, current, commit, lo, hi, label, invalid, warning, disabled, locked, id, cls, hidden, rest }, ref) {
   const digits = useDigits();
   const auto = 'plx-tp' + React.useId().replace(/[^a-zA-Z0-9]/g, '');
   const [open, setOpen] = React.useState(false);
-  const [text, setText] = React.useState(null);   // the text while typing; null shows the value
+  const [text, setText] = React.useState<string | null>(null);   // the text while typing; null shows the value
   const [active, setActive] = React.useState(0);
-  const wrap = React.useRef(null), input = React.useRef(null), list = React.useRef(null);
+  const wrap = React.useRef<HTMLDivElement | null>(null), input = React.useRef<HTMLInputElement | null>(null), list = React.useRef<HTMLUListElement | null>(null);
   // the list opens in the top layer, placed against the field by the floating layer (flips up near an edge, follows scroll and resize): no dialog, drawer or scroll area clips it
   useFloating(wrap, list, { open, placement: 'bottom-start', matchWidth: true });
   React.useLayoutEffect(() => { const el = list.current; if (open && TOP_LAYER && el && el.showPopover && !el.matches(':popover-open')) el.showPopover(); }, [open]);
-  React.useImperativeHandle(ref, () => input.current);
-  const times = [];
+  React.useImperativeHandle(ref, () => input.current as HTMLInputElement);
+  const times: number[] = [];
   for (let n = Math.ceil(lo / step) * step; n <= hi; n += step) times.push(n);
   const mins = toMin(current);
-  const nearest = (n) => { if (n === null || !times.length) return 0; let best = 0; times.forEach((x, i) => { if (Math.abs(x - n) < Math.abs(times[best] - n)) best = i; }); return best; };
-  const openAt = (n) => { if (locked) return; setActive(nearest(n)); setOpen(true); };
+  const nearest = (n: number | null) => { if (n === null || !times.length) return 0; let best = 0; times.forEach((x, i) => { if (Math.abs(x - n) < Math.abs(times[best] - n)) best = i; }); return best; };
+  const openAt = (n: number | null) => { if (locked) return; setActive(nearest(n)); setOpen(true); };
   React.useEffect(() => {
     if (!open) return undefined;
-    const off = (e) => { if (wrap.current && !wrap.current.contains(e.target)) setOpen(false); };
+    const off = (e: MouseEvent) => { if (wrap.current && !wrap.current.contains(e.target as Node)) setOpen(false); };
     document.addEventListener('mousedown', off);
     return () => document.removeEventListener('mousedown', off);
   }, [open]);
@@ -157,8 +191,8 @@ const ListPicker = React.forwardRef(function ListPicker({ t, cycle, step, curren
     if (n !== null || !text.trim()) commit(n);
     setText(null);
   };
-  const choose = (i) => { commit(times[i]); setText(null); setOpen(false); };
-  const onKey = (e) => {
+  const choose = (i: number) => { commit(times[i]); setText(null); setOpen(false); };
+  const onKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const perHour = Math.max(1, Math.round(60 / step));
     if (e.key === 'ArrowDown') { e.preventDefault(); if (!open) openAt(text !== null ? parseTime(text, cycle) : mins); else setActive((a) => Math.min(times.length - 1, a + 1)); }
     else if (e.key === 'ArrowUp') { e.preventDefault(); if (!open) openAt(mins); else setActive((a) => Math.max(0, a - 1)); }
@@ -167,7 +201,7 @@ const ListPicker = React.forwardRef(function ListPicker({ t, cycle, step, curren
     else if (e.key === 'Enter') { if (open && text === null && times[active] !== undefined) { e.preventDefault(); choose(active); } else { settle(); setOpen(false); } }
     else if (e.key === 'Escape') { if (open) { e.preventDefault(); setOpen(false); } else if (text !== null) { e.preventDefault(); setText(null); } }
   };
-  const optId = (i) => auto + '-o' + i;
+  const optId = (i: number) => auto + '-o' + i;
   const shownText = text !== null ? text : show(mins, cycle, t, digits);
   const cut = useTruncated(input, shownText);   // the time is cut (issue 558): its full text goes in a Tooltip on hover and focus
   return (
@@ -196,31 +230,31 @@ const ListPicker = React.forwardRef(function ListPicker({ t, cycle, step, curren
   );
 });
 
-const Segments = React.forwardRef(function Segments({ t, cycle, step, current, commit, lo, hi, label, invalid, warning, disabled, locked, id, cls, hidden, rest }, ref) {
+const Segments = React.forwardRef<HTMLSpanElement | null, Inner>(function Segments({ t, cycle, step, current, commit, lo, hi, label, invalid, warning, disabled, locked, id, cls, hidden, rest }, ref) {
   const digits = useDigits();
   const mins = toMin(current);
   // the parts being edited: hour on the clock shown (1–12 or 0–23), minute, period ('am' | 'pm'); null = empty
-  const fromValue = () => (mins === null ? { h: null, m: null, p: null }
+  const fromValue = (): Parts => (mins === null ? { h: null, m: null, p: null }
     : { h: cycle === '12' ? (Math.floor(mins / 60) % 12) || 12 : Math.floor(mins / 60), m: mins % 60, p: Math.floor(mins / 60) < 12 ? 'am' : 'pm' });
-  const [parts, setParts] = React.useState(fromValue);
+  const [parts, setParts] = React.useState<Parts>(fromValue);
   const typed = React.useRef('');
   React.useEffect(() => { setParts(fromValue()); }, [current, cycle]);
-  const refs = [React.useRef(null), React.useRef(null), React.useRef(null)];
-  React.useImperativeHandle(ref, () => refs[0].current);
-  const segs = cycle === '12' ? ['h', 'm', 'p'] : ['h', 'm'];
-  const update = (next) => {
+  const refs = [React.useRef<HTMLSpanElement | null>(null), React.useRef<HTMLSpanElement | null>(null), React.useRef<HTMLSpanElement | null>(null)];
+  React.useImperativeHandle(ref, () => refs[0].current as HTMLSpanElement);
+  const segs: Seg[] = cycle === '12' ? ['h', 'm', 'p'] : ['h', 'm'];
+  const update = (next: Parts) => {
     setParts(next);
     const full = next.h !== null && next.m !== null && (cycle !== '12' || next.p !== null);
-    if (full) { const h24 = cycle === '12' ? (next.h % 12) + (next.p === 'pm' ? 12 : 0) : next.h; commit(h24 * 60 + next.m); }
+    if (full) { const h24 = cycle === '12' ? ((next.h as number) % 12) + (next.p === 'pm' ? 12 : 0) : (next.h as number); commit(h24 * 60 + (next.m as number)); }
     else if (next.h === null && next.m === null && (cycle !== '12' || next.p === null)) commit(null);
   };
-  const range = { h: cycle === '12' ? [1, 12] : [0, 23], m: [0, 59] };
-  const move = (i) => { const el = refs[Math.max(0, Math.min(segs.length - 1, i))].current; if (el) el.focus(); };
-  const onKey = (k, i) => (e) => {
+  const range: Record<'h' | 'm', [number, number]> = { h: cycle === '12' ? [1, 12] : [0, 23], m: [0, 59] };
+  const move = (i: number) => { const el = refs[Math.max(0, Math.min(segs.length - 1, i))].current; if (el) el.focus(); };
+  const onKey = (k: Seg, i: number) => (e: React.KeyboardEvent<HTMLSpanElement>) => {
     if (disabled) return;
     const n = Object.assign({}, parts);
     if (locked && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') { if (/^(ArrowUp|ArrowDown|Home|End|Backspace|Delete|\d|[apAP])$/.test(e.key)) e.preventDefault(); return; }
-    const wrapAround = (v, d, a, b, s) => { const span = b - a + 1; return ((((v === null ? (d > 0 ? a - s : b + 1) : v) - a + d * s) % span) + span) % span + a; };
+    const wrapAround = (v: number | null, d: number, a: number, b: number, s: number) => { const span = b - a + 1; return ((((v === null ? (d > 0 ? a - s : b + 1) : v) - a + d * s) % span) + span) % span + a; };
     if (e.key === 'ArrowLeft') { e.preventDefault(); move(i - 1); return; }
     if (e.key === 'ArrowRight') { e.preventDefault(); move(i + 1); return; }
     if (k === 'p') {
@@ -230,7 +264,7 @@ const Segments = React.forwardRef(function Segments({ t, cycle, step, current, c
       return;
     }
     const [a, b] = range[k], s = k === 'm' ? step : 1;
-    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') { e.preventDefault(); typed.current = ''; n[k] = wrapAround(n[k], e.key === 'ArrowUp' ? 1 : -1, a, b, s); if (k === 'm') n.m = Math.floor(n.m / s) * s; update(n); }
+    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') { e.preventDefault(); typed.current = ''; n[k] = wrapAround(n[k], e.key === 'ArrowUp' ? 1 : -1, a, b, s); if (k === 'm') n.m = Math.floor((n.m as number) / s) * s; update(n); }
     else if (e.key === 'Home') { e.preventDefault(); n[k] = a; update(n); }
     else if (e.key === 'End') { e.preventDefault(); n[k] = k === 'm' ? Math.floor(b / s) * s : b; update(n); }
     else if (e.key === 'Backspace' || e.key === 'Delete') { e.preventDefault(); typed.current = ''; n[k] = null; update(n); }
@@ -243,8 +277,8 @@ const Segments = React.forwardRef(function Segments({ t, cycle, step, current, c
       if (typed.current.length >= 2 || v * 10 > b) { typed.current = ''; move(i + 1); }
     }
   };
-  const lbl = { h: t.hour, m: t.minute, p: t.period };
-  const text = (k) => (parts[k] === null ? t.empty : k === 'p' ? (parts.p === 'am' ? t.am : t.pm) : localDigits(k === 'h' && cycle === '12' ? String(parts.h) : pad(parts[k]), { digits }));
+  const lbl: Record<Seg, string> = { h: t.hour, m: t.minute, p: t.period };
+  const text = (k: Seg) => (parts[k] === null ? t.empty : k === 'p' ? (parts.p === 'am' ? t.am : t.pm) : localDigits(k === 'h' && cycle === '12' ? String(parts.h) : pad(parts[k]), { digits }));
   return (
     <div className={cls}>
       <div role="group" aria-label={label} className="plx-time-picker__field plx-time-picker__segments plx-input" aria-invalid={invalid || undefined} data-plx-warning={warning || undefined} {...rest}>

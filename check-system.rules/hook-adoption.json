@@ -17,7 +17,7 @@
     "platform/components/RichTextEditor/RichTextEditor.jsx",
     "platform/components/CodeEditor/CodeEditor.tsx",
     "platform/components/MentionInput/MentionInput.jsx",
-    "platform/components/TimePicker/TimePicker.jsx",
+    "platform/components/TimePicker/TimePicker.tsx",
     "platform/components/Cascader/Cascader.jsx"
   ],
   "useDescribedBy": [
@@ -51,7 +51,7 @@
     "platform/components/Popover/Popover.tsx",
     "platform/components/Combobox/Combobox.tsx",
     "platform/components/Cascader/Cascader.jsx",
-    "platform/components/TimePicker/TimePicker.jsx"
+    "platform/components/TimePicker/TimePicker.tsx"
   ],
   "dataWhenText": [
     "platform/components/Banner/Banner.tsx",
