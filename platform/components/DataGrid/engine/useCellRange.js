@@ -23,7 +23,7 @@
      left the arrows are mirrored, and so are the block's start and end edges (they are logical).
      The count is announced politely once the arrow keys pause (400 ms), never once per key press while Shift and an arrow repeat.
    Notes:
-     The rules of moving the block, the copy's text, the counts and the announcements are in cellRangeOps.js, loaded with one dynamic import the first
+     The rules of moving the block, the copy's text, the counts and the announcements are in cellRangeOps.ts, loaded with one dynamic import the first
        time a block is extended (the npm package splits it into a chunk, so a grid without the option does not carry it; the iife builds inline it).
      Moved to its own file with the other concerns of the engine (issue 714); the rule that nothing changes for a grid without the option is
      proved by the engine's differential probe, run with the option off.
@@ -37,7 +37,7 @@ import { valueText } from '../cells.jsx';
 
 // the operations, loaded on first use (a block can only exist once they are loaded, so everything but the first extend finds them ready)
 let ops = null, loading = null;
-const load = () => loading || (loading = import('./cellRangeOps.js').then((m) => { m.use({ cellText: (record, id) => valueText(valueAt(record, id)), announce, formatNumber }); return (ops = m); }));
+const load = () => loading || (loading = import('./cellRangeOps.ts').then((m) => { m.use({ cellText: (record, id) => valueText(valueAt(record, id)), announce, formatNumber }); return (ops = m); }));
 const run = (fn) => (ops ? fn(ops) : load().then(fn));   // in order: presses before the load finishes are applied one after another
 
 export function useCellRange({ enabled, model, ordered, index, onChange, frame, scroller }) {
@@ -87,7 +87,7 @@ export function useCellRange({ enabled, model, ordered, index, onChange, frame, 
     ops.said(loc, 'dataGrid.cellsCopied', ops.countOf(rect, model));
     return true;
   };
-  // Shift with an arrow, Home or End (the rules are in cellRangeOps.js). The press is always taken; the block moves once the operations are loaded,
+  // Shift with an arrow, Home or End (the rules are in cellRangeOps.ts). The press is always taken; the block moves once the operations are loaded,
   // from the block's own latest range (so keys that repeat before a frame has drawn still start from where the last one ended)
   const extend = ({ row, c, key, rtl, focusCell }) => {
     run((o) => {
@@ -101,7 +101,7 @@ export function useCellRange({ enabled, model, ordered, index, onChange, frame, 
     return true;
   };
   // a press on a cell (the option cellSelection): Shift with a click makes the block from where it began (or the cell that has focus) to this cell; a plain
-  // press ends the block and, as the pointer moves over other cells with the button down, starts a new one from this cell (the rules are in cellRangeOps.js)
+  // press ends the block and, as the pointer moves over other cells with the button down, starts a new one from this cell (the rules are in cellRangeOps.ts)
   const press = ({ e, row, c, focusCell }) => {
     if (e.button !== 0) return;
     const cell = { key: row.id, field: c.field };
