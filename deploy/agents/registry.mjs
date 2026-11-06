@@ -10,6 +10,7 @@ import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { PRIORITY } from './capacity.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 export const DEFAULT_FILE = path.resolve(here, '../../agents.config.yaml');
@@ -47,6 +48,8 @@ export function checkRoles(reg, env) {
     if (r.label !== `agent:pds1-${id}`) add(id, 'label', `label must be "agent:pds1-${id}"`);
     if (!Number.isInteger(r.instances) || r.instances < 1) add(id, 'instances', 'instances must be a whole number, 1 or more');
     if (!r.definition || !env.exists(r.definition)) add(id, 'definition', `no definition file ${r.definition || '(none named)'}`);
+    if (r.priority !== undefined && !PRIORITY.includes(r.priority)) add(id, 'priority', `priority must be one of ${PRIORITY.join(', ')}`);
+    if (r.gate !== undefined && typeof r.gate !== 'boolean') add(id, 'gate', 'gate must be true or false');
     if (r.parked === true) continue; // a parked role needs only its entry and its definition (§5.1 rule 6)
     const w = Array.isArray(r.wakes_on) ? r.wakes_on : [];
     if (!w.length) add(id, 'wakes_on', 'an active role needs at least one trigger in wakes_on');
