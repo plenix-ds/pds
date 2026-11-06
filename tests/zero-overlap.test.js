@@ -9,13 +9,15 @@ const fs = require('fs'), path = require('path');
 const { serve, launch, sleep } = require('./lib.js');
 const { audit } = require('./clash-audit.js');
 
-// Properties left out of the computed-style snapshot (#359), exactly these five. They differ between Chrome versions and
+// Properties left out of the computed-style snapshot (#359), these (the first five from #359). They differ between Chrome versions and
 // between Windows and Linux fonts, and the test's aim is that the styling rules did not change:
 //   text-decoration-skip-spaces  Chrome 156 no longer lists it (the baseline, made with an older Chrome, has it everywhere)
 //   width, inline-size           measured sizes (a text field's default width, text widths) change with the platform's fonts
 //   transform-origin, perspective-origin   derived from the measured size
+//   text-decoration-inset, position-visibility   the CI runner's Chrome lists the first on no element and spells the second
+//     anchors-visible, where the Chrome that took the snapshot has 0px and anchor-visible (found on #782, issue 46)
 // Precedent: the Visual test (tests/visual.test.js) leaves out measured widths for the same reason. Not a general escape hatch.
-const SKIP = ['text-decoration-skip-spaces', 'width', 'inline-size', 'transform-origin', 'perspective-origin'];
+const SKIP = ['text-decoration-skip-spaces', 'width', 'inline-size', 'transform-origin', 'perspective-origin', 'text-decoration-inset', 'position-visibility'];
 const without = (style) => style.split(';').filter((x) => !SKIP.includes(x.slice(0, x.indexOf(':')))).join(';');
 
 // forces the pseudo-classes named in data-force (hover, active, focus, focus-visible, focus-within) on their elements

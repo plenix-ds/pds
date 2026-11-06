@@ -761,3 +761,23 @@
   options: ['adopt template v2.4 (chosen)']
   status: active
   check: 'planned:process-checks-13-16 (role registry complete, settings not restated in prose, hand-offs not made with GITHUB_TOKEN; tracked on the E8 epic)'
+
+- id: D-0085
+  date: 2026-11-06
+  area: api
+  decided_by: agent (pds1-ds-architect) on #667 (G3), owner may switch
+  decision: 'The catalog''s key list is not public API: useStrings, createTranslator and each part''s strings prop are. A catalog key that no Platform part reads may be removed in a MINOR release, listed under Removed, once a search of the apps (CTM, the St. John site) finds no reader; a key a part still reads keeps its name. The 10 unread keys of #667 are removed this way.'
+  why: 'VERSIONING.md''s public list never included catalog keys; deprecating unread words only keeps dead Arabic to review. CTM (9fa6386) and the St. John site (c12c3e0) read none of the 10 keys (CTM''s notRefundable is its own dictionary).'
+  options: ['A - remove unread keys in a MINOR after an app search (chosen)', 'B - deprecate every unread key until the next major']
+  status: active
+  check: tools/checks/locale (unused-key); review-only for the app search, recorded on the removal PR
+
+- id: D-0086
+  date: 2026-11-06
+  area: process
+  decided_by: agent (pds1-delivery-lead), applied from the release-architect's card on #768; owner may switch
+  decision: The role registry in agents.config.yaml uses the keys id, title, kind, label, instances, parked, boot, definition and wakes_on, plus optional memory_limit_gb. The template's other skeleton keys (lane, priority, gate, always, applies_to_paths, source, model, skills) are added only when the rule that reads them lands - priority, gate and the reserved gate slots with #769; wakes_on additions with #772 - so no key exists that nothing reads. Template v2.4 §5.1 asks the Delivery Lead to log the exact keys.
+  why: 'A key that nothing reads drifts from the code (lesson A-16: the config said 8 slots while the docs said 4). The release-architect proposed this set on #768 (Applied: A).'
+  options: ['keys as in PR 778 (chosen)', 'add every template key now', 'a smaller set']
+  status: active
+  check: check 13 (role registry) in CI, from #778
