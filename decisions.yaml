@@ -660,3 +660,13 @@
   options: [three editing fields plus change.source (chosen, A), three top-level props (B), a batch onCellsEdit callback (C)]
   status: active
   check: G3 review of the #3 build PR and its behavior tests (3 by 4 paste, skip and refuse counts, fill down and handle, undo of a whole paste, flags off unchanged)
+
+- id: D-0076
+  date: 2026-11-06
+  area: api
+  decided_by: agent (pds1-ds-architect) on #630 option A and the build #633, owner may switch
+  decision: 'CommandBar actions[].confirm.plural takes a string or a plural object in the catalog''s own shape (Intl.PluralRules categories with other required, plus exact "=N" keys); the count picks the form with the page language''s plural rules, an exact key wins, and a plain string works as before (docs/adr/0004 addendum).'
+  why: 'One plural string cannot agree with every count (Arabic has six forms); reusing the catalog''s shape keeps one plural model across Plenix.'
+  options: [string or the catalog's plural object (chosen, A), a plural callback (count) => string, string only]
+  status: active
+  check: G3 review of #633 and tests/command-confirm-plural-630.test.js
