@@ -9,7 +9,7 @@
     "platform/components/PromptInput/PromptInput.tsx",
     "platform/components/TimeZoneSelect/TimeZoneSelect.tsx",
     "platform/components/NumberInput/NumberInput.tsx",
-    "platform/components/DatePicker/DatePicker.jsx",
+    "platform/components/DatePicker/DatePicker.tsx",
     "platform/components/Combobox/Combobox.tsx",
     "platform/components/TreeSelect/TreeSelect.jsx",
     "platform/components/TransferList/TransferList.tsx",

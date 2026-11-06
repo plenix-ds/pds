@@ -81,69 +81,106 @@ import { Popover } from '../Popover/Popover.tsx';
 import { Tooltip } from '../Tooltip/Tooltip.tsx';
 import { useTruncated } from '../../utils/overflow.ts';
 import { Calendar, parseIsoDate, addDays, addMonths, todayIso } from '../Calendar/Calendar.tsx';
+import type { CalendarRange } from '../Calendar/Calendar.tsx';
 import CalendarIcon from 'plenix-platform/icons/plenix/calendar';
 import { useStrings, useTimeZone } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import { useReadOnly } from '../../providers/ReadOnly.tsx';
 import { validZone, wallOf, isInstant, instantIso, instantOf, todayIn, zoneName } from '../../utils/zone.ts';
 
 const DASH = ' – ';
 
 // the locale's numeric date: its parts in order ("month", "day", "year") and the form people read ("MM/DD/YYYY")
-function numericForm(locale) {
+function numericForm(locale: string) {
   const f = new Intl.DateTimeFormat(locale, { year: 'numeric', month: '2-digit', day: '2-digit' });
   const parts = f.formatToParts(new Date(2026, 9, 15, 12));
   return {
-    format: (iso) => { const d = parseIsoDate(iso); return d ? f.format(d) : ''; },
+    format: (iso: unknown) => { const d = parseIsoDate(iso); return d ? f.format(d) : ''; },
     order: parts.filter((p) => p.type === 'day' || p.type === 'month' || p.type === 'year').map((p) => p.type),
     hint: parts.map((p) => (p.type === 'day' ? 'DD' : p.type === 'month' ? 'MM' : p.type === 'year' ? 'YYYY' : p.value)).join(''),
   };
 }
 // typed text to "YYYY-MM-DD" (or null): the locale's numeric order, or year first (2026-10-15)
-function readDate(text, order) {
+function readDate(text: unknown, order: string[]): string | null {
   const n = String(text || '').match(/\d+/g);
   if (!n || n.length !== 3) return null;
-  let y, m, d;
+  let y: number, m: number, d: number;
   if (n[0].length === 4) { y = +n[0]; m = +n[1]; d = +n[2]; }
-  else { const at = {}; order.forEach((k, i) => { at[k] = +n[i]; }); y = at.year; m = at.month; d = at.day; }
+  else { const at: Record<string, number> = {}; order.forEach((k, i) => { at[k] = +n[i]; }); y = at.year; m = at.month; d = at.day; }
   if (y < 100) y += 2000;
   const iso = String(y).padStart(4, '0') + '-' + String(m).padStart(2, '0') + '-' + String(d).padStart(2, '0');
   return parseIsoDate(iso) ? iso : null;
 }
-const monthBounds = (iso, n) => { const first = addMonths(iso.slice(0, 7) + '-01', n); return { start: first, end: addDays(addMonths(first, 1), -1) }; };
+const monthBounds = (iso: string, n: number) => { const first = addMonths(iso.slice(0, 7) + '-01', n); return { start: first, end: addDays(addMonths(first, 1), -1) }; };
 
-export const DatePicker = React.forwardRef(function DatePicker({ mode = 'single', value, defaultValue, onChange, presets, months, min, max, width,
+type DateRange = CalendarRange;
+type Words = Record<'last7' | 'last30' | 'thisMonth' | 'lastMonth' | 'today' | 'tomorrow' | 'nextWeek' | 'open' | 'time' | 'dialog' | 'presets', string> & { calendar?: Catalog };
+type DateValue = string | null | DateRange;
+type DatePreset = { label: string; value: DateValue };
+/** @public the prop type (ADR 0011) */
+export type DatePickerProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'defaultValue' | 'onChange' | 'width'> & {
+  /** "single" (default) | "range" | "date-time" */
+  mode?: 'single' | 'range' | 'date-time';
+  /** "YYYY-MM-DD", { start, end } (range) or "YYYY-MM-DDTHH:MM" / a UTC instant (date-time) */
+  value?: DateValue;
+  defaultValue?: DateValue;
+  onChange?: (value: DateValue) => void;
+  /** true: the built-in presets; or your own [{ label, value }] */
+  presets?: boolean | DatePreset[];
+  /** months shown in the calendar (default 1; 2 for a range) */
+  months?: 1 | 2;
+  min?: string;
+  max?: string;
+  width?: string;
+  isDateDisabled?: (iso: string) => boolean;
+  weekNumbers?: boolean;
+  /** the time a date-time takes when only a date is picked (default "09:00") */
+  defaultTime?: string;
+  /** the zone name's style (default "short"); empty hides it */
+  timeZoneName?: Intl.DateTimeFormatOptions['timeZoneName'] | '';
+  invalid?: boolean;
+  warning?: string | boolean;
+  readOnly?: boolean;
+  locale?: string;
+  /** an IANA zone: a date-time value is a moment shown there */
+  timeZone?: string;
+  strings?: Catalog | null;
+  className?: string;
+};
+
+const DatePickerBase = React.forwardRef<HTMLInputElement | null, DatePickerProps>(function DatePicker({ mode = 'single', value, defaultValue, onChange, presets, months, min, max, width,
   isDateDisabled, weekNumbers = false, defaultTime = '09:00', timeZoneName = 'short', invalid, warning, disabled, readOnly: readOnlyOwn, required, id,
   'aria-describedby': describedBy, locale: localeProp, timeZone: zoneProp, strings, className, ...rest }, ref) {
   const locked = useReadOnly(readOnlyOwn);   // its own readOnly, else the nearest ReadOnly region's: the value shows and nothing changes it (no calendar button)
-  const t = useStrings('datePicker', strings);   // the locale's words (platform/i18n), with the strings prop on top
+  const t = useStrings('datePicker', strings) as unknown as Words;   // the locale's words (platform/i18n), with the strings prop on top
   const locale = numeralLocale(localeProp || formatLocale());
   const form = numericForm(locale);
   const range = mode === 'range', dateTime = mode === 'date-time';
   const [own, setOwn] = React.useState(defaultValue !== undefined ? defaultValue : null);
   const current = value !== undefined ? value : own;
-  const commit = (v) => { if (locked) return; if (value === undefined) setOwn(v); if (onChange) onChange(v); };
+  const commit = (v: DateValue) => { if (locked) return; if (value === undefined) setOwn(v); if (onChange) onChange(v); };
   // the time zone (issue 813): its own, else LocaleProvider's; none (or one the browser does not know) is the computer's
   const providerZone = useTimeZone();
   const zone = validZone(zoneProp !== undefined ? zoneProp : providerZone);
   // a date-time value that names a moment, shown in the zone: its wall clock there
-  const wall = dateTime && zone && current && isInstant(current) ? wallOf(Date.parse(current), zone) : null;
+  const wall = dateTime && zone && current && isInstant(current as string) ? wallOf(Date.parse(current as string), zone) : null;
   // the parts of the value: the date (or range) and the time
   const datePart = dateTime ? (wall ? wall.date : current ? String(current).slice(0, 10) : null) : current;
   const timePart = wall ? wall.time : dateTime && current ? String(current).slice(11, 16) : '';
   // a date and a time as the value: with a zone, the moment they are there (in UTC); without, the wall clock as before
-  const moment = (date, time) => (zone ? instantIso(date, time, zone) : date + 'T' + time);
-  const show = (v) => (range ? (v && v.start ? form.format(v.start) + (v.end ? DASH + form.format(v.end) : '') : '') : form.format(v));
+  const moment = (date: string, time: string) => (zone ? instantIso(date, time, zone) : date + 'T' + time);
+  const show = (v: DateValue | undefined): string => { if (!range) return form.format(v); const r = v as DateRange | null | undefined; return r && r.start ? form.format(r.start) + (r.end ? DASH + form.format(r.end) : '') : ''; };
   const [text, setText] = React.useState(show(datePart));
   const [bad, setBad] = React.useState(false);
   const typing = React.useRef(false);
   React.useEffect(() => { if (!typing.current) { setText(show(datePart)); setBad(false); } }, [range ? JSON.stringify(datePart) : datePart, locale]);
   const [open, setOpen] = React.useState(false);
-  const [draft, setDraft] = React.useState(null);   // a range while its end is still open
-  const root = React.useRef(null), input = React.useRef(null), day = React.useRef(null);
-  React.useImperativeHandle(ref, () => input.current);
-  const allowed = (iso) => !((min && iso < min) || (max && iso > max) || (isDateDisabled && isDateDisabled(iso)));
-  const withTime = (iso) => (iso ? moment(iso, timePart || defaultTime) : null);
-  const setDate = (d) => commit(dateTime ? withTime(d) : d);
+  const [draft, setDraft] = React.useState<DateRange | null>(null);   // a range while its end is still open
+  const root = React.useRef<HTMLDivElement | null>(null), input = React.useRef<HTMLInputElement | null>(null), day = React.useRef<HTMLButtonElement | null>(null);
+  React.useImperativeHandle(ref, () => input.current as HTMLInputElement);
+  const allowed = (iso: string) => !((min && iso < min) || (max && iso > max) || (isDateDisabled && isDateDisabled(iso)));
+  const withTime = (iso: string | null) => (iso ? moment(iso, timePart || defaultTime) : null);
+  const setDate = (d: string | null) => commit(dateTime ? withTime(d) : d);
 
   // typed text, read when the field is left or Enter is pressed
   const read = () => {
@@ -163,24 +200,25 @@ export const DatePicker = React.forwardRef(function DatePicker({ mode = 'single'
     if (!iso || !allowed(iso)) { setBad(true); return; }
     setBad(false); setText(form.format(iso)); setDate(iso);
   };
-  const close = (refocus) => { setOpen(false); setDraft(null); if (refocus && input.current) input.current.focus(); };
-  const toggle = () => { if (open) close(true); else { setDraft(range ? (datePart || { start: null, end: null }) : null); setOpen(true); } };
+  const close = (refocus?: boolean) => { setOpen(false); setDraft(null); if (refocus && input.current) input.current.focus(); };
+  const toggle = () => { if (open) close(true); else { setDraft(range ? ((datePart as DateRange | null) || { start: null, end: null }) : null); setOpen(true); } };
   // a press outside, or focus leaving the field and its calendar, closes the calendar
   React.useEffect(() => {
     if (!open) return undefined;
-    const outside = (e) => { if (root.current && !root.current.contains(e.target)) close(false); };
+    const outside = (e: MouseEvent) => { if (root.current && !root.current.contains(e.target as Node)) close(false); };
     document.addEventListener('mousedown', outside);
     return () => document.removeEventListener('mousedown', outside);
   }, [open]);
-  const onBlur = (e) => { if (open && e.relatedTarget && root.current && !root.current.contains(e.relatedTarget)) close(false); };
+  const onBlur = (e: React.FocusEvent<HTMLDivElement>) => { if (open && e.relatedTarget && root.current && !root.current.contains(e.relatedTarget)) close(false); };
 
-  const choose = (v) => {
+  const choose = (v: string | DateRange) => {
     if (range) {
-      setDraft(v);
-      if (v.start && v.end) { commit(v); setText(show(v)); setBad(false); close(true); }
+      const r = v as DateRange;
+      setDraft(r);
+      if (r.start && r.end) { commit(r); setText(show(r)); setBad(false); close(true); }
       return;
     }
-    setDate(v); setText(form.format(v)); setBad(false); close(true);
+    setDate(v as string); setText(form.format(v)); setBad(false); close(true);
   };
   const today = zone ? todayIn(zone) : todayIso();   // the zone's today: near midnight it may be another day than the computer's
   const builtIn = range
@@ -188,22 +226,22 @@ export const DatePicker = React.forwardRef(function DatePicker({ mode = 'single'
       { label: t.thisMonth, value: monthBounds(today, 0) }, { label: t.lastMonth, value: monthBounds(today, -1) }]
     : [{ label: t.today, value: today }, { label: t.tomorrow, value: addDays(today, 1) }, { label: t.nextWeek, value: addDays(today, 7) }];
   const presetList = presets === true ? builtIn : Array.isArray(presets) ? presets : null;
-  const pick = (p) => {
+  const pick = (p: DatePreset) => {
     const v = dateTime && typeof p.value === 'string' ? (zone && isInstant(p.value) ? wallOf(Date.parse(p.value), zone).date : p.value.slice(0, 10)) : p.value;
-    if (range) { commit(v); setText(show(v)); } else { setDate(v); setText(form.format(v)); }
+    if (range) { commit(v); setText(show(v)); } else { setDate(v as string | null); setText(form.format(v)); }
     setBad(false); close(true);
   };
 
   // the zone's name: with a zone, for the value's moment (EST or EDT); otherwise for now, as before
-  const at = zone && dateTime && datePart ? instantOf(datePart, timePart || defaultTime, zone) : NaN;
+  const at = zone && dateTime && datePart ? instantOf(datePart as string, timePart || defaultTime, zone) : NaN;
   const zoneLabel = dateTime && timeZoneName ? zoneName(locale, timeZoneName, zone, Number.isNaN(at) ? Date.now() : at) : '';
   const shown = range ? (draft || datePart || { start: null, end: null }) : datePart;
-  const firstMonth = (range ? (shown && shown.start) : shown) || undefined;
+  const firstMonth = ((range ? (shown && (shown as DateRange).start) : shown) || undefined) as string | undefined;
   const cut = useTruncated(input, text);   // the date (or range) is cut (issue 558): its full text goes in a Tooltip on hover and focus
   const field = (
     <div className="plx-date-picker__field">
       <div className={cx('plx-date-picker__date', range && 'plx-date-picker__date--range', 'plx-input', 'plx-input--data', disabled && 'is-disabled')} aria-invalid={(invalid || bad) || undefined} data-plx-warning={warning || undefined}
-        onMouseDown={(e) => { if (!disabled && input.current && e.target !== input.current && !e.target.closest('button')) { e.preventDefault(); input.current.focus(); } }}>
+        onMouseDown={(e) => { if (!disabled && input.current && e.target !== input.current && !(e.target as HTMLElement).closest('button')) { e.preventDefault(); input.current.focus(); } }}>
         <Tooltip content={text} disabled={!cut || !text || open} describe={false} className="plx-date-picker__tip">
           <input ref={input} id={id} type="text" className="plx-date-picker__input" value={text} placeholder={range ? form.hint + DASH + form.hint : form.hint} required={required}
             aria-describedby={describedBy} aria-invalid={(invalid || bad) || undefined} data-plx-warning={warning || undefined} disabled={disabled} readOnly={locked || undefined} autoComplete="off"
@@ -217,9 +255,9 @@ export const DatePicker = React.forwardRef(function DatePicker({ mode = 'single'
         {locked ? null : <Button variant="ghost" size="2xs" iconOnly icon={CalendarIcon} className="plx-date-picker__button" label={t.open} expanded={open} aria-haspopup="dialog" disabled={disabled} onClick={toggle} />}
       </div>
       {dateTime ? (
-        <InputGroup data suffix={zoneLabel || undefined} disabled={disabled} invalid={invalid} warning={warning} className="plx-date-picker__time">
+        <InputGroup data suffix={zoneLabel || undefined} disabled={disabled} invalid={invalid} warning={!!warning || undefined} className="plx-date-picker__time">
           <Input type="time" data aria-label={t.time} value={timePart} disabled={disabled} readOnly={locked || undefined}
-            onChange={(e) => { const v = e.target.value; if (datePart) commit(moment(datePart, v || defaultTime)); }} />
+            onChange={(e) => { const v = e.target.value; if (datePart) commit(moment(datePart as string, v || defaultTime)); }} />
         </InputGroup>
       ) : null}
     </div>
@@ -243,4 +281,4 @@ export const DatePicker = React.forwardRef(function DatePicker({ mode = 'single'
 });
 
 // the locale's numeric date form ("MM/DD/YYYY"), for a Field's description
-DatePicker.formatHint = (locale) => numericForm(locale || formatLocale()).hint;
+export const DatePicker = Object.assign(DatePickerBase, { formatHint: (locale?: string) => numericForm(locale || formatLocale()).hint });

@@ -48,7 +48,7 @@ import { formatDateTime } from '../../utils/format.ts';
 import { Button } from '../../components/Button/Button.tsx';
 import { ConfirmDialog, Dialog } from '../../components/Dialog/Dialog.tsx';
 import { Field } from '../../components/Field/Field.tsx';
-import { DatePicker } from '../../components/DatePicker/DatePicker.jsx';
+import { DatePicker } from '../../components/DatePicker/DatePicker.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { WorkflowStatus } from '../ReviewFlow/ReviewFlow.jsx';
 import { useOptionalToast } from '../../components/Toast/Toast.tsx';

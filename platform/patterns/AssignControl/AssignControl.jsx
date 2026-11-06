@@ -47,7 +47,7 @@ import { Button } from '../../components/Button/Button.tsx';
 import { Dialog } from '../../components/Dialog/Dialog.tsx';
 import { Field } from '../../components/Field/Field.tsx';
 import { Textarea } from '../../components/Input/Input.tsx';
-import { DatePicker } from '../../components/DatePicker/DatePicker.jsx';
+import { DatePicker } from '../../components/DatePicker/DatePicker.tsx';
 import { EntityPicker } from '../../components/EntityPicker/EntityPicker.jsx';
 import { Persona } from '../../components/Persona/Persona.tsx';
 import { Text } from '../../components/Text/Text.tsx';

@@ -14,7 +14,7 @@ import React from 'react';
 import { useFloating } from '../../../utils/floating.ts';
 import { Select } from '../../Input/Input.tsx';
 import { useDirection } from '../../../providers/DirectionProvider.tsx';
-import { DatePicker } from '../../DatePicker/DatePicker.jsx';
+import { DatePicker } from '../../DatePicker/DatePicker.tsx';
 import { Combobox } from '../../Combobox/Combobox.tsx';
 import { EntityPicker } from '../../EntityPicker/EntityPicker.jsx';
 import { Avatar } from '../../Avatar/Avatar.tsx';

@@ -1493,7 +1493,7 @@
       "platform/components/Calendar/Calendar.tsx",
       "platform/components/Calendar/calendar.css",
       "platform/tokens/components/calendar.tokens.json",
-      "platform/components/DatePicker/DatePicker.jsx",
+      "platform/components/DatePicker/DatePicker.tsx",
       "platform/components/DatePicker/date-picker.css",
       "platform/tokens/components/date-picker.tokens.json",
       "platform/patterns/AppHeader/AppHeader.jsx",
@@ -5229,7 +5229,7 @@
    "wave": 7,
    "lane": "A",
    "files": [
-    "platform/components/DatePicker/DatePicker.jsx",
+    "platform/components/DatePicker/DatePicker.tsx",
     "platform/components/DatePicker/date-picker.css",
     "platform/tokens/components/date-picker.tokens.json"
    ],
@@ -13277,7 +13277,7 @@
    "target": "DatePicker",
    "targetKind": "component",
    "files": [
-    "platform/components/DatePicker/DatePicker.jsx",
+    "platform/components/DatePicker/DatePicker.tsx",
     "platform/components/DatePicker/date-picker.css",
     "platform/tokens/components/date-picker.tokens.json"
    ],
@@ -13311,7 +13311,7 @@
    "target": "DatePicker",
    "targetKind": "component",
    "files": [
-    "platform/components/DatePicker/DatePicker.jsx",
+    "platform/components/DatePicker/DatePicker.tsx",
     "platform/components/DatePicker/date-picker.css",
     "platform/tokens/components/date-picker.tokens.json"
    ],
@@ -13373,7 +13373,7 @@
    "target": "DatePicker",
    "targetKind": "component",
    "files": [
-    "platform/components/DatePicker/DatePicker.jsx",
+    "platform/components/DatePicker/DatePicker.tsx",
     "platform/components/DatePicker/date-picker.css",
     "platform/tokens/components/date-picker.tokens.json"
    ],

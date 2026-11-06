@@ -21,7 +21,7 @@ import { FormFlow } from '../../../patterns/FormFlow/FormFlow.jsx';
 import { Field } from '../../Field/Field.tsx';
 import { Input, Select, Textarea } from '../../Input/Input.tsx';
 import { NumberInput } from '../../NumberInput/NumberInput.tsx';
-import { DatePicker } from '../../DatePicker/DatePicker.jsx';
+import { DatePicker } from '../../DatePicker/DatePicker.tsx';
 import { Checkbox } from '../../Checkbox/Checkbox.tsx';
 import { Combobox } from '../../Combobox/Combobox.tsx';
 import { EntityPicker } from '../../EntityPicker/EntityPicker.jsx';

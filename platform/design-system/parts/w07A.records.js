@@ -56,7 +56,7 @@ DSParts.records.push(function (H) {
   var DATETIME = { mode: 'date-time', label: 'Starts', description: 'MM/DD/YYYY and a time', start: '2026-10-20T14:30' };
   var PRESETS = { presets: true, start: '2026-10-20' };
   var datePicker = { id: 'date-picker', lab: true, icon: 'calendar', sec: 'forms', sub: 'Date, time, and color', leaf: 'Date picker', title: 'Date picker',
-    plenix: 'DatePicker', src: 'components/DatePicker/DatePicker.jsx', level: 'Component', interaction: 'Input', statesFrom: ['text-field'],
+    plenix: 'DatePicker', src: 'components/DatePicker/DatePicker.tsx', level: 'Component', interaction: 'Input', statesFrom: ['text-field'],
     aliases: ['Date input', 'Date field', 'Calendar input'],
     text: 'A field for a date that people type or choose. It takes the reader’s numeric date (10/15/2026 in the United States, 15.10.2026 in Germany) and YYYY-MM-DD, and reads it when the field is left or Enter is pressed; its placeholder shows the form. The calendar button joined at its end (or Alt+Arrow Down) opens the Calendar in a popover with focus on the chosen day; choosing a day closes it and returns focus to the field. Presets choose a common date in one press. The date is in the data font.',
     use: ['Dates near today: due dates, deadlines, appointments', 'The form in the Field’s description as well as in the placeholder (MM/DD/YYYY)', 'min, max or isDateDisabled when some dates cannot be chosen, with the reason in the description'],
@@ -74,7 +74,7 @@ DSParts.records.push(function (H) {
       ['Date and time', picker(DATETIME), 'plx-date-picker--date-time', 'mode="date-time"'], ['With presets', picker(PRESETS), null, 'presets']]],
       ['State', [['Invalid', picker({ start: '2026-10-20', invalid: true, error: 'Enter a date after October 15, 2026' }), null, 'invalid'], ['Disabled', picker({ start: '2026-10-20', disabled: true }), null, 'disabled']]]] };
   var dateRange = { id: 'date-range-picker', icon: 'calendar', sec: 'forms', sub: 'Date, time, and color', leaf: 'Date range picker', title: 'Date range picker', purpose: 'Takes a period, a start date and an end date, typed in people’s own form or chosen from a calendar next to the field.',
-    plenix: 'DatePicker mode="range"', src: 'components/DatePicker/DatePicker.jsx', level: 'Component', interaction: 'Input', variantClasses: [], statesFrom: ['date-picker'],
+    plenix: 'DatePicker mode="range"', src: 'components/DatePicker/DatePicker.tsx', level: 'Component', interaction: 'Input', variantClasses: [], statesFrom: ['date-picker'],
     aliases: ['Range picker', 'Period picker', 'Date range input'],
     text: 'DatePicker with mode="range": the start and the end in one field with a dash between them (typed, or chosen in a two-month Calendar). The first day chosen is the start, the second the end; until the end is chosen, the days between are shown as the range as the pointer or the keys move. An end before the start becomes the start. Presets (Last 7 days, Last 30 days, This month, Last month) set both ends in one press.',
     use: ['Reporting periods, filters by date, bookings', 'Presets for the periods people pick most', 'The whole range in the field (10/01/2026 – 10/14/2026)'],
@@ -83,7 +83,7 @@ DSParts.records.push(function (H) {
     map: [[CAR, 'Date picker (range)', 'Direct'], [MAT, 'Date range picker', 'Direct'], [SPE, 'Date range picker', 'Direct'], [ANT, 'RangePicker', 'Direct'], [POL, 'Date picker (allowRange)', 'Partial'], ['Frappe', 'Date Range control', 'Direct']],
     examples: [['A reporting period with presets', picker(Object.assign({}, RANGE, { presets: true }))], ['A range in one month', picker(RANGE)]] };
   var dateTime = { id: 'date-time-picker', icon: 'clock', sec: 'forms', sub: 'Date, time, and color', leaf: 'Date-time picker', title: 'Date-time picker', purpose: 'Takes a moment, a date and a time, typed in people’s own form or chosen from a calendar and a time list next to the field.',
-    plenix: 'DatePicker mode="date-time"', src: 'components/DatePicker/DatePicker.jsx', level: 'Component', interaction: 'Input', variantClasses: [], statesFrom: ['date-picker'],
+    plenix: 'DatePicker mode="date-time"', src: 'components/DatePicker/DatePicker.tsx', level: 'Component', interaction: 'Input', variantClasses: [], statesFrom: ['date-picker'],
     aliases: ['Date and time picker', 'Timestamp picker', 'Moment picker'],
     text: 'DatePicker with mode="date-time": the date field with its calendar and the browser’s own time field beside it, the time zone after the time (EDT). The value is one moment, YYYY-MM-DDTHH:MM in local wall-clock time; with a time zone (LocaleProvider timeZone or its own timeZone), an ISO moment in UTC (2026-10-20T05:30:00.000Z) shown and saved in that zone, so people in several countries see the same. Choosing a date keeps the time, or takes defaultTime (09:00) when there is none; one error covers the pair (Choose a time in the future).',
     use: ['Scheduling: meetings, publishing, reminders', 'The time zone shown whenever people may be in different zones', 'A timeZone on LocaleProvider when a team works across countries: every picker shows and saves the moment in it', 'min with today when the moment must be in the future'],
