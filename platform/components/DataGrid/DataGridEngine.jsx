@@ -54,17 +54,17 @@ import { useViewSync } from './engine/useViewSync.ts';
 import { useCellRange } from './engine/useCellRange.ts';
 import { usePillWidths } from './engine/usePillWidths.ts';
 import { useGridMetrics } from './engine/useGridMetrics.ts';
-import { gridFrame } from './engine/gridFrame.jsx';
+import { gridFrame } from './engine/gridFrame.tsx';
 const LazyFormEdit = React.lazy(() => import('./engine/formEdit.tsx'));
 import { columnSizing } from './engine/columnSizing.ts';
 import { syncLive } from './engine/liveState.ts';
 import { useRemoteRows } from './engine/useRemoteRows.ts';
 import { useTableModel } from './engine/useTableModel.ts';
-import { bodyRows } from './engine/bodyRows.jsx';
+import { bodyRows } from './engine/bodyRows.tsx';
 import { headerRows } from './engine/headerRows.tsx';
 
 import { makeFocusCell } from './engine/keys.ts';
-import { MemoGridRow, PixelGap } from './engine/parts.jsx';
+import { MemoGridRow, PixelGap } from './engine/parts.tsx';
 // a card list of more cards than this draws only the cards near the view (issue 809)
 const CARD_ALL = 100;
 // the cards drawn beyond each edge of the view in the long card list (issue 809)

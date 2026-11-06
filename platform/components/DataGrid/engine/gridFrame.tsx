@@ -4,7 +4,7 @@
      its rows, the empty and more rows), the scrollbars and the footers of the paged and load-more modes. A render function over the
      engine's state, not a component: one element tree, no extra React layer between the engine and the rows.
    Usage:
-     import { gridFrame } from './engine/gridFrame.jsx';
+     import { gridFrame } from './engine/gridFrame.tsx';
      return gridFrame({ B, S, props, frame, table, model, shown, ordered, ... });
    Props:
      The engine's values (the block class B, the strings S, props, refs, the table and the rows to draw, the selection, the metrics, the
@@ -19,7 +19,7 @@ import { cx } from '../../../utils/cx.ts';
 import { lengthName } from './helpers.tsx';
 import { tableKeys } from './keys.ts';
 import { tokenPixels } from '../environment.ts';
-import { WidthPixels, Check, Width, RowGap, PixelGap } from './parts.jsx';
+import { WidthPixels, Check, Width, RowGap, PixelGap } from './parts.tsx';
 import { Scrollbars } from '../scrollbars.tsx';
 import { Rare } from './rare.tsx';
 
@@ -103,14 +103,14 @@ export function gridFrame({
   page,
   setPageSize,
   loadedRows,
-}) {
+}: any) {
   return (
     <WidthPixels.Provider value={widthPixels}>
       {headerMenu && !isStatic && managing ? (
         <Rare
           part="manageDialog"
           args={{ headerMenu, isStatic, managing, setManaging, chooserColumns, changeOrder, changeVisibility }}
-          fallback={(retry, from) => manageFailed({ B, S, retry, close: () => setManaging(false), from, frame })}
+          fallback={(retry: any, from: any) => manageFailed({ B, S, retry, close: () => setManaging(false), from, frame })}
         />
       ) : null}
       <div
@@ -189,7 +189,7 @@ export function gridFrame({
                         card={cardBar != null}
                         checked={allVisible}
                         mixed={selectedVisible.length > 0 && !allVisible}
-                        onChange={(e) => selectAll(e.target.checked)}
+                        onChange={(e: any) => selectAll(e.target.checked)}
                       />
                     </div>
                   </div>
@@ -231,8 +231,8 @@ export function gridFrame({
               ) {
                 if (remoteMode && !fetching.current && source.length < (remote?.total || 0)) {
                   fetching.current = true;
-                  setPage((n) => n + 1);
-                } else if (!remoteMode) setLoaded((n) => Math.min(allRows.length, n + pageSize));
+                  setPage((n: any) => n + 1);
+                } else if (!remoteMode) setLoaded((n: any) => Math.min(allRows.length, n + pageSize));
               }
             }}
           >
@@ -248,8 +248,8 @@ export function gridFrame({
               role="presentation"
             >
               {stickyGroups.length ? (
-                <div className={B + '__sticky-groups'} aria-hidden="true" inert="">
-                  {stickyGroups.map((group) =>
+                <div className={B + '__sticky-groups'} aria-hidden="true" {...({ inert: "" } as any)}>
+                  {stickyGroups.map((group: any) =>
                     React.cloneElement(groupNode(group, true), {
                       key: 'sticky:' + group.id,
                       className: B + '__sticky-group ' + B + '__grid-group-level-' + group.depth,
@@ -265,7 +265,7 @@ export function gridFrame({
               ) : null}
               <RowGap rows={model.slice(0, first)} />
               {cardsVirtual
-                ? shown.map((row) => (
+                ? shown.map((row: any) => (
                     <React.Fragment key={row.displayKey || row.id}>
                       <PixelGap px={cardGaps.get(row.displayKey || row.id)} />
                       {renderRow(row)}
