@@ -40,7 +40,7 @@ import { datavizStep, DATAVIZ_SCALES } from '../utils/dataviz.ts';
 import { ChartFrame } from './ChartFrame.jsx';
 import { useEChartsPlot } from './echarts/EChartsPlot.jsx';
 import { ChartTooltip, chartTooltipText } from './parts/ChartTooltip.tsx';
-import { useChartInteraction } from './interaction.js';
+import { useChartInteraction } from './interaction.ts';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 
 const DAY = 24 * 60 * 60 * 1000;

@@ -36,12 +36,12 @@ import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatDate as fmtDate } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.jsx';
-import { scaleBand, scaleTime, seriesColor, wholeDays } from './scales.js';
+import { scaleBand, scaleTime, seriesColor, wholeDays } from './scales.ts';
 import { Axis } from './parts/Axis.tsx';
 import { GridLines } from './parts/GridLines.tsx';
 import { ChartTooltip } from './parts/ChartTooltip.tsx';
 import { ReferenceLine } from './parts/ReferenceLine.tsx';
-import { useChartHover, labelRoom, halfRoom } from './chart-kit.js';
+import { useChartHover, labelRoom, halfRoom } from './chart-kit.ts';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 
 const MARK = 0.4;   // a period's bar thickness, a share of its lane

@@ -56,11 +56,11 @@ import { ChartFrame } from './ChartFrame.jsx';
 import { ChartLegend } from './parts/ChartLegend.tsx';
 import { ChartTooltip, chartTooltipText } from './parts/ChartTooltip.tsx';
 import { DataLabel } from './parts/DataLabel.tsx';
-import { useChartInteraction } from './interaction.js';
-import { labelRoom, withColors, legendItems } from './chart-kit.js';
+import { useChartInteraction } from './interaction.ts';
+import { labelRoom, withColors, legendItems } from './chart-kit.ts';
 import { useEChartsPlot, plotGrid, NO_MARGIN } from './echarts/EChartsPlot.jsx';
 import { tickLineHeight } from './echarts/engine.js';
-import { gridRoom, binValues } from './chart-helpers.js';
+import { gridRoom, binValues } from './chart-helpers.ts';
 import { snapToGrid } from '../utils/grid.ts';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 
@@ -75,7 +75,7 @@ const CATEGORY_GAP = '20%', SERIES_GAP = '10%';
 // a bar's box in plot pixels, whatever way ECharts measured it (a negative width or height for bars that go back)
 const boxOf = (l) => (l && isFinite(l.x) && isFinite(l.width) ? { x: Math.min(l.x, l.x + l.width), y: Math.min(l.y, l.y + l.height), width: Math.abs(l.width), height: Math.abs(l.height) } : null);
 
-export { binValues } from './chart-helpers.js';
+export { binValues } from './chart-helpers.ts';
 
 export function BarChart({ title, description, hideCaption, size, categories = NONE, series = NONE, orientation = 'horizontal', layout = 'grouped',
   histogram, valueLabel, categoryLabel, format, showValues = false, legend, legendPosition, tooltip = true, margin, strings, className }) {
