@@ -5212,7 +5212,7 @@
         "token": "--plx-comp-retry-status-margin-block-start"
       }
     ],
-    "why": "retry.css: .plx-retry__status holds the countdown (\"Retrying in …\") while the next attempt waits"
+    "why": "retry.css: .plx-retry__status holds the countdown (\"Retrying in \u2026\") while the next attempt waits"
   },
   "retry-pattern--kind-retry-count": {
     "sets": [
@@ -5966,5 +5966,64 @@
       }
     ],
     "why": "date-badge.css: .plx-date-badge.is-today, the day number on a filled background, in its own text color and weight, and the weekday in its own color"
+  },
+  "calendar-view--event-in-a-list-default": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-event-chip-background"
+      },
+      {
+        "property": "border-inline-start-width",
+        "part": "block",
+        "token": "--plx-comp-event-chip-border-inline-start-width"
+      },
+      {
+        "property": "border-radius",
+        "part": "block",
+        "token": "--plx-comp-event-chip-radius"
+      },
+      {
+        "property": "color",
+        "part": "time",
+        "token": "--plx-comp-event-chip-time-text"
+      },
+      {
+        "property": "font-weight",
+        "part": "title",
+        "token": "--plx-comp-event-chip-title-font-weight"
+      }
+    ],
+    "why": ".plx-event-chip in event-chip.css: one line, the time before the title, the edge in the event's color"
+  },
+  "calendar-view--event-fills-its-box-in-the-grid": {
+    "sets": [],
+    "why": ".plx-event-chip--fill sets the chip to the size of its box (100%) and stacks the time above the title (flex direction column), none of them tokens"
+  },
+  "calendar-view--event-opens-a-button": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-event-chip-interactive-hover-background"
+      },
+      {
+        "property": "outline-color",
+        "part": "block",
+        "token": "--plx-comp-event-chip-interactive-focus-outline-color"
+      },
+      {
+        "property": "outline-width",
+        "part": "block",
+        "token": "--plx-comp-event-chip-interactive-focus-outline-width"
+      },
+      {
+        "property": "outline-offset",
+        "part": "block",
+        "token": "--plx-comp-event-chip-interactive-focus-outline-offset"
+      }
+    ],
+    "why": ".plx-event-chip--interactive in event-chip.css: a hover fill and a focus ring on an event that opens"
   }
 }
