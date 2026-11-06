@@ -89,7 +89,7 @@ export type ListingPageProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> 
   grid?: Record<string, unknown>;
   detail?: React.ReactNode;
   detailTitle?: React.ReactNode;
-  onDetailClose?: (...args: never[]) => unknown;
+  onDetailClose?: () => void;
 };
 export function ListingPage({ rows = [], columns = [], empty, strings, children, label, toolbar, grid, detail, detailTitle, onDetailClose, ...rest }: ListingPageProps) {
   const id = React.useId();
@@ -106,7 +106,7 @@ export function ListingPage({ rows = [], columns = [], empty, strings, children,
 /** @public the prop type of ContentManagementPage (ADR 0011) */
 export type ContentManagementPageProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & FrameProps & {
   items?: unknown[];
-  onOpen?: (...args: never[]) => unknown;
+  onOpen?: (item: unknown) => void;
   empty?: React.ReactNode;
   strings?: Record<string, string>;
   children?: React.ReactNode;
@@ -115,7 +115,7 @@ export function ContentManagementPage({ items = [], onOpen, empty, strings, chil
 /** @public the prop type of LandingPage (ADR 0011) */
 export type LandingPageProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & FrameProps & {
   items?: unknown[];
-  onOpen?: (...args: never[]) => unknown;
+  onOpen?: (item: unknown) => void;
   children?: React.ReactNode;
 };
 export function LandingPage({ items = [], onOpen, children, ...rest }: LandingPageProps) { return <Frame {...rest}><Stack gap="lg">{children}<Cards items={items} onOpen={onOpen} /></Stack></Frame>; }
@@ -126,10 +126,10 @@ export type FormPageProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & F
   fields?: unknown[];
   initialValue?: Record<string, unknown>;
   sessionKey?: string;
-  validate?: (...args: never[]) => unknown;
-  onSubmit?: (...args: never[]) => unknown;
-  onSuccess?: (...args: never[]) => unknown;
-  onCancel?: (...args: never[]) => unknown;
+  validate?: (values: Record<string, unknown>) => unknown;
+  onSubmit?: (values: Record<string, unknown>) => unknown;
+  onSuccess?: (result?: unknown) => void;
+  onCancel?: () => void;
   strings?: Record<string, string>;
   children?: React.ReactNode;
 };
@@ -146,7 +146,7 @@ export type MasterDetailPageProps = {
   pane?: React.ReactNode;
   paneTitle?: React.ReactNode;
   detailOpen?: boolean;
-  onBack?: (...args: never[]) => unknown;
+  onBack?: () => void;
   strings?: Record<string, string>;
   children?: React.ReactNode;
   header?: React.ReactNode;
@@ -173,7 +173,7 @@ export type SplitWorkspaceProps = {
   orientation?: unknown;
   defaultSize?: unknown;
   size?: unknown;
-  onSizeChange?: (...args: never[]) => unknown;
+  onSizeChange?: (size: number) => void;
   strings?: Record<string, string>;
   children?: React.ReactNode;
   header?: React.ReactNode;
@@ -232,7 +232,7 @@ export function DetailPage({ sections = [], strings, children, title, descriptio
 /** @public the prop type of SearchResultsPage (ADR 0011) */
 export type SearchResultsPageProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & FrameProps & {
   query?: string;
-  onQueryChange?: (...args: never[]) => unknown;
+  onQueryChange?: (query: string) => void;
   rows?: Record<string, unknown>[];
   columns?: DataGridColumn[];
   strings?: Record<string, string>;
@@ -256,7 +256,7 @@ export function AuthenticationPage({ auth, form, children, header, footer, mainI
 /** @public the prop type of ErrorPage (ADR 0011) */
 export type ErrorPageProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & FrameProps & {
   error?: number;
-  onRetry?: (...args: never[]) => unknown;
+  onRetry?: () => void;
   homeHref?: string;
   strings?: Record<string, string>;
 };

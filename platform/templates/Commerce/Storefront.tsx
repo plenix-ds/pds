@@ -84,6 +84,8 @@ export function productFields(categories: { value: string; label: string }[] = [
 
 const SIZES: Record<string, string> = { s: 'sm', m: 'md', l: 'lg' };
 
+/** @public a product: id and title, plus whatever the app keeps */
+export type Product = { id: string | number; title?: string; [key: string]: unknown };
 /** @public the prop type of ProductListing (ADR 0011) */
 export type ProductListingProps = {
   products?: unknown[];
@@ -91,12 +93,12 @@ export type ProductListingProps = {
   title?: React.ReactNode;
   description?: React.ReactNode;
   headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
-  hrefFor?: (...args: never[]) => unknown;
-  onOpen?: (...args: never[]) => unknown;
-  onAddToCart?: (...args: never[]) => unknown;
+  hrefFor?: (product: Product) => string;
+  onOpen?: (product: Product) => void;
+  onAddToCart?: (product: Product) => void;
   pageSize?: number;
   query?: unknown;
-  onQueryChange?: (...args: never[]) => unknown;
+  onQueryChange?: (query: string) => void;
   defaultView?: unknown;
   search?: boolean;
   strings?: Record<string, string>;
@@ -156,9 +158,9 @@ export type ProductDiscoveryProps = {
   recommended?: unknown[];
   title?: React.ReactNode;
   headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
-  hrefFor?: (...args: never[]) => unknown;
-  onOpen?: (...args: never[]) => unknown;
-  onAddToCart?: (...args: never[]) => unknown;
+  hrefFor?: (product: Product) => string;
+  onOpen?: (product: Product) => void;
+  onAddToCart?: (product: Product) => void;
   suggestions?: unknown;
   pageSize?: number;
   strings?: Record<string, string>;
@@ -237,14 +239,14 @@ export type ProductDetailProps = {
   product?: unknown;
   value?: unknown;
   defaultValue?: unknown;
-  onChange?: (...args: never[]) => unknown;
+  onChange?: (value: Record<string, unknown>) => void;
   quantity?: unknown;
-  onQuantityChange?: (...args: never[]) => unknown;
-  onAddToCart?: (...args: never[]) => unknown;
+  onQuantityChange?: (quantity: number) => void;
+  onAddToCart?: (product: Product, choice: Record<string, unknown>, quantity: number) => void;
   cartHref?: string;
   related?: unknown[];
-  hrefFor?: (...args: never[]) => unknown;
-  onOpen?: (...args: never[]) => unknown;
+  hrefFor?: (product: Product) => string;
+  onOpen?: (product: Product) => void;
   headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
   maxQuantity?: unknown;
   strings?: Record<string, string>;

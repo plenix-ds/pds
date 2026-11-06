@@ -96,10 +96,10 @@ export function OrderStatus(props: OrderStatusProps) {
 export type OrderManagementProps = {
   orders?: unknown[];
   currency?: string;
-  onOpen?: (...args: never[]) => unknown;
-  onFulfill?: (...args: never[]) => unknown;
-  onCancel?: (...args: never[]) => unknown;
-  onRefund?: (...args: never[]) => unknown;
+  onOpen?: (order: unknown) => void;
+  onFulfill?: (orders: unknown[]) => unknown;
+  onCancel?: (orders: unknown[]) => unknown;
+  onRefund?: (order: unknown) => unknown;
   statuses?: unknown;
   strings?: Record<string, string>;
   className?: string;
@@ -165,10 +165,10 @@ export type OrderDetailProps = {
   order?: unknown;
   currency?: string;
   backHref?: string;
-  onFulfill?: (...args: never[]) => unknown;
-  onRefund?: (...args: never[]) => unknown;
-  onCancel?: (...args: never[]) => unknown;
-  onReturn?: (...args: never[]) => unknown;
+  onFulfill?: (order: unknown) => unknown;
+  onRefund?: (order: unknown) => unknown;
+  onCancel?: (order: unknown) => unknown;
+  onReturn?: (order: unknown) => unknown;
   statuses?: unknown;
   headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
   strings?: Record<string, string>;
@@ -235,11 +235,11 @@ export type SubscriptionManagementProps = {
   plans?: unknown[];
   history?: unknown[];
   currency?: string;
-  onChangePlan?: (...args: never[]) => unknown;
-  onPause?: (...args: never[]) => unknown;
-  onResume?: (...args: never[]) => unknown;
-  onCancel?: (...args: never[]) => unknown;
-  onUpdatePayment?: (...args: never[]) => unknown;
+  onChangePlan?: (plan: unknown) => unknown;
+  onPause?: () => unknown;
+  onResume?: () => unknown;
+  onCancel?: () => unknown;
+  onUpdatePayment?: () => unknown;
   strings?: Record<string, string>;
   className?: string;
 };
@@ -339,8 +339,8 @@ export type ReturnsProps = {
   methods?: unknown[];
   currency?: string;
   status?: unknown;
-  onSubmit?: (...args: never[]) => unknown;
-  onCancel?: (...args: never[]) => unknown;
+  onSubmit?: (request: Record<string, unknown>) => unknown;
+  onCancel?: () => void;
   headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
   strings?: Record<string, string>;
   className?: string;

@@ -86,7 +86,7 @@ export function orderTotals(items: CommerceItem[] = [], o: OrderTotalsOptions = 
 export type CommerceLineProps = {
   item?: unknown;
   currency?: string;
-  onQuantityChange?: (...args: never[]) => unknown;
+  onQuantityChange?: (quantity: number) => void;
   remove?: unknown;
   strings?: Record<string, string>;
   className?: string;

@@ -16,6 +16,7 @@
      See Commerce.tsx.
 */
 import React from 'react';
+import type { CommerceItem } from './shared.tsx';
 import { cx } from '../../utils/cx.ts';
 import { useUid } from '../../utils/layer.ts';
 import { announce } from '../../utils/announce.tsx';
@@ -53,15 +54,15 @@ import TrashIcon from 'plenix-platform/icons/plenix/trash';
 export type CartProps = {
   items?: unknown[];
   currency?: string;
-  onQuantityChange?: (...args: never[]) => unknown;
-  onRemove?: (...args: never[]) => unknown;
-  onRestore?: (...args: never[]) => unknown;
-  onCheckout?: (...args: never[]) => unknown;
+  onQuantityChange?: (item: CommerceItem, quantity: number) => void;
+  onRemove?: (item: CommerceItem) => void;
+  onRestore?: (item: CommerceItem) => void;
+  onCheckout?: () => void;
   continueHref?: string;
   shipping?: unknown;
   taxRate?: unknown;
   discount?: unknown;
-  onApplyPromo?: (...args: never[]) => unknown;
+  onApplyPromo?: (code: string) => unknown;
   title?: React.ReactNode;
   headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
   strings?: Record<string, string>;
@@ -159,7 +160,7 @@ const formatExpiry = (v: any) => { const d = String(v || '').replace(/\D/g, '').
 /** @public the prop type of PaymentFields (ADR 0011) */
 export type PaymentFieldsProps = {
   value?: Record<string, unknown>;
-  onChange?: (...args: never[]) => unknown;
+  onChange?: (value: Record<string, unknown>) => void;
   savedMethods?: unknown[];
   amount?: unknown;
   currency?: string;
@@ -224,8 +225,8 @@ export type PaymentProps = {
   currency?: string;
   savedMethods?: unknown;
   defaultValue?: unknown;
-  onPay?: (...args: never[]) => unknown;
-  onCancel?: (...args: never[]) => unknown;
+  onPay?: (details: Record<string, unknown>) => unknown;
+  onCancel?: () => void;
   title?: React.ReactNode;
   strings?: Record<string, string>;
   className?: string;
@@ -272,8 +273,8 @@ export type CheckoutProps = {
   savedMethods?: unknown;
   taxRate?: unknown;
   discount?: unknown;
-  onPlaceOrder?: (...args: never[]) => unknown;
-  onCancel?: (...args: never[]) => unknown;
+  onPlaceOrder?: (details: Record<string, unknown>) => unknown;
+  onCancel?: () => void;
   signInHref?: string;
   strings?: Record<string, string>;
   className?: string;
