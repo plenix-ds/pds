@@ -3102,5 +3102,141 @@
   "bottom-sheet-navigation--layout-list-default": {
     "sets": [],
     "why": "markup only: the places as a NavList (groups, icons, counts) in the Sheet; .plx-bottom-sheet-nav__list sets only a zero minimum width"
+  },
+  "landing-page--page-authentication": {
+    "sets": [],
+    "why": "markup only: the page type arranges other components (cards, forms, panes); the stylesheet has no modifier for it"
+  },
+  "landing-page--page-authentication-template": {
+    "sets": [],
+    "why": "markup only: the page type arranges other components (cards, forms, panes); the stylesheet has no modifier for it"
+  },
+  "landing-page--page-not-found": {
+    "sets": [],
+    "why": "markup only: the page type arranges other components (cards, forms, panes); the stylesheet has no modifier for it"
+  },
+  "landing-page--page-split-workspace": {
+    "sets": [],
+    "why": "markup only: the page type arranges other components (cards, forms, panes); the stylesheet has no modifier for it"
+  },
+  "offboarding--variant-cancel-subscription": {
+    "sets": [],
+    "why": "markup only: the flow changes the wording, the confirmation and the actions; the stylesheet has no modifier for it"
+  },
+  "offboarding--variant-delete-account": {
+    "sets": [],
+    "why": "markup only: the flow changes the wording, the confirmation and the actions; the stylesheet has no modifier for it"
+  },
+  "offboarding--variant-export-data": {
+    "sets": [],
+    "why": "markup only: the flow changes the wording, the confirmation and the actions; the stylesheet has no modifier for it"
+  },
+  "profile-summary--content-name-and-detail": {
+    "sets": [],
+    "why": "markup only: name, detail, role and presence are parts that render or not; the stylesheet has no modifier for them"
+  },
+  "profile-summary--content-name-only": {
+    "sets": [],
+    "why": "markup only: name, detail, role and presence are parts that render or not; the stylesheet has no modifier for them"
+  },
+  "profile-summary--content-with-presence": {
+    "sets": [],
+    "why": "markup only: name, detail, role and presence are parts that render or not; the stylesheet has no modifier for them"
+  },
+  "profile-summary--content-with-role": {
+    "sets": [],
+    "why": "markup only: name, detail, role and presence are parts that render or not; the stylesheet has no modifier for them"
+  },
+  "publish--state-publish-now-default": {
+    "sets": [],
+    "why": "markup only: the state decides which actions and fields render; the stylesheet has no modifier for it"
+  },
+  "publish--state-schedule": {
+    "sets": [],
+    "why": "markup only: the state decides which actions and fields render; the stylesheet has no modifier for it"
+  },
+  "publish--state-status-only": {
+    "sets": [],
+    "why": "markup only: the state decides which actions and fields render; the stylesheet has no modifier for it"
+  },
+  "publish--state-unpublish": {
+    "sets": [],
+    "why": "markup only: the state decides which actions and fields render; the stylesheet has no modifier for it"
+  },
+  "refine-menu--variant-custom-prompt": {
+    "sets": [],
+    "why": "markup only: the variation is which menu items and fields the menu lists; the stylesheet has no modifier for it"
+  },
+  "refine-menu--variant-longer": {
+    "sets": [],
+    "why": "markup only: the variation is which menu items and fields the menu lists; the stylesheet has no modifier for it"
+  },
+  "refine-menu--variant-shorter": {
+    "sets": [],
+    "why": "markup only: the variation is which menu items and fields the menu lists; the stylesheet has no modifier for it"
+  },
+  "refine-menu--variant-tone": {
+    "sets": [],
+    "why": "markup only: the variation is which menu items and fields the menu lists; the stylesheet has no modifier for it"
+  },
+  "resource-list--variant-avatar": {
+    "sets": [],
+    "why": "markup only: avatars, thumbnails, grouping, selection and row actions are parts and attributes the list renders; the stylesheet has no modifier for them"
+  },
+  "resource-list--variant-grouped": {
+    "sets": [],
+    "why": "markup only: avatars, thumbnails, grouping, selection and row actions are parts and attributes the list renders; the stylesheet has no modifier for them"
+  },
+  "resource-list--variant-media-thumbnails": {
+    "sets": [],
+    "why": "markup only: avatars, thumbnails, grouping, selection and row actions are parts and attributes the list renders; the stylesheet has no modifier for them"
+  },
+  "resource-list--variant-selectable": {
+    "sets": [],
+    "why": "markup only: avatars, thumbnails, grouping, selection and row actions are parts and attributes the list renders; the stylesheet has no modifier for them"
+  },
+  "resource-list--variant-with-actions": {
+    "sets": [],
+    "why": "markup only: avatars, thumbnails, grouping, selection and row actions are parts and attributes the list renders; the stylesheet has no modifier for them"
+  },
+  "review-flow--decision-approve": {
+    "sets": [],
+    "why": "markup only: the decision and the form are which parts and fields render (reason box, review panel); the stylesheet has no modifier for them"
+  },
+  "review-flow--decision-reject-with-reason": {
+    "sets": [],
+    "why": "markup only: the decision and the form are which parts and fields render (reason box, review panel); the stylesheet has no modifier for them"
+  },
+  "review-flow--decision-request-changes": {
+    "sets": [],
+    "why": "markup only: the decision and the form are which parts and fields render (reason box, review panel); the stylesheet has no modifier for them"
+  },
+  "review-flow--form-human-review": {
+    "sets": [],
+    "why": "markup only: the decision and the form are which parts and fields render (reason box, review panel); the stylesheet has no modifier for them"
+  },
+  "review-flow--form-review-panel-default": {
+    "sets": [],
+    "why": "markup only: the decision and the form are which parts and fields render (reason box, review panel); the stylesheet has no modifier for them"
+  },
+  "search-result--content-with-highlight": {
+    "sets": [],
+    "why": "markup only: the kind picks the icon and the content adds a path or highlight mark; the stylesheet has no modifier for them"
+  },
+  "search-result--content-with-path": {
+    "sets": [],
+    "why": "markup only: the kind picks the icon and the content adds a path or highlight mark; the stylesheet has no modifier for them"
+  },
+  "search-result--kind-file": {
+    "sets": [],
+    "why": "markup only: the kind picks the icon and the content adds a path or highlight mark; the stylesheet has no modifier for them"
+  },
+  "search-result--kind-page-default": {
+    "sets": [],
+    "why": "markup only: the kind picks the icon and the content adds a path or highlight mark; the stylesheet has no modifier for them"
+  },
+  "search-result--kind-person": {
+    "sets": [],
+    "why": "markup only: the kind picks the icon and the content adds a path or highlight mark; the stylesheet has no modifier for them"
   }
 }
