@@ -1,2 +1,3 @@
 /* Plenix · AI identification: existing icon, readable text, existing semantic spacing; no AI color. */
 .plx-ai{column-gap:var(--plx-sys-ai-gap);}
+.plx-ai__mark{display:inline-flex;}

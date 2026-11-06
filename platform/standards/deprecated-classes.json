@@ -2,6 +2,7 @@
  "$description": "Classes going away (VERSIONING.md, Deprecation; issue 882): no page, application, the design spec, the St. John site, CTM, a test or a tool uses them. They keep working until they are removed, no earlier than the next minor release. Check-style fails on a new use (rule deprecated-classes). The tokens going away carry $deprecated in their token file instead.",
  "issue": "882",
  "classes": [
+  "plx-ai__mark",
   "plx-control-dialog",
   "plx-control-standard",
   "plx-control-toolbar",
