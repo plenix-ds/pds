@@ -5,6 +5,7 @@
      {managing ? <Rare part="manageDialog" args={{ ... }} fallback={(retry, from) => manageFailed({ B, S, retry, close, from, frame })} /> : null}
    Props:
      part: the name of the function in chromeRare.jsx ("manageDialog"); args: the object it takes;
+     pending: what to draw while the file is on its way (a menu: a busy row, never an empty panel)
      fallback(retry, from): what to draw when the file could not load; retry asks for it again, from is the element that had focus when
        Rare mounted (where the part was asked for). Without a fallback nothing is drawn.
    Behavior:
@@ -21,7 +22,10 @@ function load() {
   ));
 }
 
-export function Rare({ part, args, fallback }) {
+// starts the download without drawing anything (a trigger calls it on hover, focus and touch so the part is ready by the click)
+export function preloadRare() { load().catch(() => {}); }
+
+export function Rare({ part, args, fallback, pending }) {
   const [failed, setFailed] = React.useState(false), [, again] = React.useState(0), from = React.useRef(null);
   const attempt = React.useCallback(() => {
     setFailed(false);
@@ -30,5 +34,5 @@ export function Rare({ part, args, fallback }) {
   // where focus was when the part was asked for (a menu has already handed focus back to its trigger), so the fallback can return it there
   React.useEffect(() => { from.current = document.activeElement; if (!loaded) attempt(); }, [attempt]);
   if (loaded) return loaded[part](args);
-  return failed && fallback ? fallback(attempt, from.current) : null;
+  return failed && fallback ? fallback(attempt, from.current) : failed ? null : pending || null;
 }

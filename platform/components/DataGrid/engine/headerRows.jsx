@@ -18,11 +18,9 @@
 import React from 'react';
 import { typeOf, kinds, interactive, typeIcons } from './helpers.jsx';
 import { MenuDivider, MenuItem, Menu, ContextMenu } from '../../Menu/Menu.tsx';
-import SortAscendingIcon from 'plenix-platform/icons/plenix/sort-ascending';
-import SortDescendingIcon from 'plenix-platform/icons/plenix/sort-descending';
-import FilterIcon from 'plenix-platform/icons/plenix/filter';
-import GroupByIcon from 'plenix-platform/icons/plenix/group-by';
 import { Width, PressTrigger } from '../engine/parts.jsx';
+import { Rare, preloadRare } from './rare.jsx';
+import { Spinner } from '../../Loading/Loading.tsx';
 import { cx } from '../../../utils/cx.ts';
 import { headerKeys, resizeKeys } from '../engine/keys.js';
 import { Icon } from '../../Icon/Icon.tsx';
@@ -70,58 +68,18 @@ export function headerRows({
   // the column menu (owner, 2026-10-23, Windows Explorer and Airtable): the application's field actions (columnMenu: duplicate,
   // insert, link, description, permissions), then sort in the type's words, filter, and group by this field. Width, order
   // and visibility live in the header's right-click menu (columnChooser); a click on the title sorts.
-  const groupedBy = (field) =>
-    [].concat(groupBy || []).some((level) => (typeof level === 'object' ? level.field : level) === field);
-  const headerItems = (column) => {
-    const c = column.columnDef.meta,
-      custom = typeof columnMenu === 'function' ? columnMenu(c) : columnMenu || [];
-    const direction =
-      typeOf(c) === 'number' || typeOf(c) === 'currency' || typeOf(c) === 'bytes'
-        ? S.sortNumber
-        : typeOf(c) === 'date'
-          ? S.sortDate
-          : typeOf(c) === 'checkbox'
-            ? S.sortCheck
-            : S.sortText;
-    const grouped = groupedBy(c.field),
-      others = []
-        .concat(groupBy || [])
-        .filter((level) => (typeof level === 'object' ? level.field : level) !== c.field);
-    return (
-      <>
-        {menuItems(custom, c, api.column(c.field))}
-        {custom.length ? <MenuDivider /> : null}
-        <MenuItem icon={SortAscendingIcon} disabled={!column.getCanSort()} onSelect={() => column.toggleSorting(false)}>
-          {direction[0]}
+  const headerItems = (column) => (
+    <Rare
+      part="columnMenuItems"
+      args={{ column, columnMenu, S, menuItems, api, props, setFilterField, changeGroups, wrapOf, changeWrap, wrapColumns, groupBy }}
+      pending={
+        <MenuItem disabled aria-busy="true">
+          <Spinner size="sm" label={S.columnActions.replace('{title}', column.columnDef.meta.title)} />
         </MenuItem>
-        <MenuItem icon={SortDescendingIcon} disabled={!column.getCanSort()} onSelect={() => column.toggleSorting(true)}>
-          {direction[1]}
-        </MenuItem>
-        <MenuDivider />
-        <MenuItem
-          icon={FilterIcon}
-          disabled={!column.getCanFilter()}
-          onSelect={() => (props.onFilterField ? props.onFilterField(c.field) : setFilterField(c.field))}
-        >
-          {S.filterBy}
-        </MenuItem>
-        <MenuItem
-          icon={GroupByIcon}
-          disabled={!grouped && c.groupable === false}
-          onSelect={() => changeGroups(grouped ? (others.length ? others : false) : c.field)}
-        >
-          {grouped ? S.noGroup : S.group}
-        </MenuItem>
-        <MenuDivider />
-        <MenuItem
-          checked={!!wrapOf(c)}
-          onSelect={() => changeWrap({ ...(props.wrapColumns || wrapColumns), [c.field]: !wrapOf(c) })}
-        >
-          {S.wrapText}
-        </MenuItem>
-      </>
-    );
-  };
+      }
+      fallback={() => null}
+    />
+  );
   // the header's right-click menu (Windows Explorer): size this column or every column to fit, every column with a check
   // (TanStack's visibility; a pinned column stays shown) and More… for the columns dialog (order, find, show all, hide all)
   const columnChooser = (column) => (
@@ -294,6 +252,9 @@ export function headerRows({
                   <PressTrigger
                     className={B + '__menu-chevron'}
                     aria-label={S.columnActions.replace('{title}', c.title)}
+                    onPointerEnter={preloadRare}
+                    onFocus={preloadRare}
+                    onPointerDown={preloadRare}
                   >
                     <Icon name={ChevronDownIcon} />
                   </PressTrigger>
