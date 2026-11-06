@@ -4847,5 +4847,59 @@
   "legend--legend-hidden-read-by-screen-readers": {
     "sets": [],
     "why": "markup only: the legend kept for assistive technology only, off the screen (hideLegend), when a heading above already says it"
+  },
+  "prompt-input--variant-single-line": {
+    "sets": [],
+    "why": "markup only: single-line or multi-line (Input or Textarea), attachments, the model chip and Stop are parts and components it renders; prompt-input.css styles only the root"
+  },
+  "relative-date-input--direction-future-presets": {
+    "sets": [],
+    "why": "markup only: past or future changes the presets and the unit options; relative-date-input.css has no modifier for it (its --custom is another variation)"
+  },
+  "relative-date-input--direction-past-presets-default": {
+    "sets": [],
+    "why": "markup only: past or future changes the presets and the unit options; relative-date-input.css has no modifier for it (its --custom is another variation)"
+  },
+  "rename-action--variant-dialog": {
+    "sets": [
+      {
+        "property": "row-gap",
+        "part": "form",
+        "token": "--plx-comp-rename-action-form-gap"
+      }
+    ],
+    "why": "rename-action.css: .plx-rename-action__form, the field and its actions stacked in the dialog's body (flex-direction: column has no token); the inline variation is --inline, with its width"
+  },
+  "prompt-input--variant-stop": {
+    "sets": [],
+    "why": "markup only: single-line or multi-line (Input or Textarea), attachments, the model chip and Stop are parts and components it renders; prompt-input.css styles only the root"
+  },
+  "suggested-edit--variant-accept": {
+    "sets": [],
+    "why": "markup only: accept, reject, accept all and the inline diff are the buttons and before/after parts it renders; suggested-edit.css sets only the root gap and wrapping on the before and after text (a length and keywords, one token: the gap, which every variation shares)"
+  },
+  "suggested-edit--variant-inline-diff": {
+    "sets": [],
+    "why": "markup only: accept, reject, accept all and the inline diff are the buttons and before/after parts it renders; suggested-edit.css sets only the root gap and wrapping on the before and after text (a length and keywords, one token: the gap, which every variation shares)"
+  },
+  "suggested-edit--variant-reject": {
+    "sets": [],
+    "why": "markup only: accept, reject, accept all and the inline diff are the buttons and before/after parts it renders; suggested-edit.css sets only the root gap and wrapping on the before and after text (a length and keywords, one token: the gap, which every variation shares)"
+  },
+  "prompt-input--variant-multi-line": {
+    "sets": [],
+    "why": "markup only: single-line or multi-line (Input or Textarea), attachments, the model chip and Stop are parts and components it renders; prompt-input.css styles only the root"
+  },
+  "suggested-edit--variant-accept-all": {
+    "sets": [],
+    "why": "markup only: accept, reject, accept all and the inline diff are the buttons and before/after parts it renders; suggested-edit.css sets only the root gap and wrapping on the before and after text (a length and keywords, one token: the gap, which every variation shares)"
+  },
+  "prompt-input--variant-model-chip": {
+    "sets": [],
+    "why": "markup only: single-line or multi-line (Input or Textarea), attachments, the model chip and Stop are parts and components it renders; prompt-input.css styles only the root"
+  },
+  "prompt-input--variant-attachments": {
+    "sets": [],
+    "why": "markup only: single-line or multi-line (Input or Textarea), attachments, the model chip and Stop are parts and components it renders; prompt-input.css styles only the root"
   }
 }
