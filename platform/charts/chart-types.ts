@@ -7,7 +7,7 @@
 
 import type React from 'react';
 
-/** @public a scale from platform/charts/scales.ts: a function from a value to a pixel position, with the methods the parts read */
+/** @public a scale from platform/charts/scales.js: a function from a value to a pixel position, with the methods the parts read */
 export type ChartScale = {
   (value: any): number | undefined;
   domain?(): any[];

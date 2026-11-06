@@ -97,6 +97,7 @@ export function bodyRows({
   keys,
   commitEdit,
   undoRedo,
+  pasteBlock,
   canonical,
   cutAt,
   rowMenu,
@@ -426,6 +427,18 @@ export function bodyRows({
               onDoubleClick={() => {
                 if (canEdit) setEditing({ key: row.id, field: c.field, value });
               }}
+              onPaste={
+                pasteBlock
+                  ? (event: any) => {
+                      // a pasted block on the cell itself (not text going into an open editor); the clipboard's text is what Excel and Sheets write
+                      if (event.target !== event.currentTarget || isStatic) return;
+                      const text = event.clipboardData?.getData('text/plain');
+                      if (!text) return;
+                      event.preventDefault();
+                      pasteBlock(text, row.id, c.field);
+                    }
+                  : undefined
+              }
               onKeyDown={cellKeys({
                 isStatic,
                 value,

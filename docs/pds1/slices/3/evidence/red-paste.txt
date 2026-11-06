@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: ltr: a 2 by 2 block lands at the active cell
+
+'Alma' !== 'Ann'
+
+    at /home/cc/pds1/work/component-engineer-2/tests/data-grid-paste-3.test.js:44:14 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'Alma',
+  expected: 'Ann',
+  operator: 'strictEqual',
+  diff: 'simple'
+}

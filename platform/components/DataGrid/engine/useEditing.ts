@@ -103,7 +103,7 @@ export function editActions({
         }
       );
     }
-    return { key, field, before: previous, after: value } as EditedCell;
+    return { cell: { key, field, before: previous, after: value } as EditedCell, answer };
   };
   const undoOn = () => !!props.editing?.undo;
   const remember = (cells: EditedCell[]) => {
@@ -113,7 +113,7 @@ export function editActions({
     history.current.redo = [];
   };
   const commitEdit = (key: any, field: any, value: any) => {
-    remember([applyCell(key, field, value, 'edit')]);
+    remember([applyCell(key, field, value, 'edit').cell]);
   };
   // Ctrl+Z and Ctrl+Y: one step each. A step whose cells no longer hold what it left (the data was replaced from outside) ends the history.
   const walk = (from: EditedCell[][], to: EditedCell[][], back: boolean) => {
@@ -132,9 +132,22 @@ export function editActions({
     announce(back ? S.undone : S.redone);
     return true;
   };
+  // several cells at once (a paste or a fill): each reaches onCellEdit once, with its source, and the cells are one undo step. The promise
+  // resolves, once every answer has come, with how many the caller refused; those cells have their old value back and leave the step.
+  const changeCells = (cells: { key: any; field: any; value: any }[], changeSource: ChangeSource) => {
+    const made = cells.map((c) => applyCell(c.key, c.field, c.value, changeSource));
+    const step = made.map((m) => m.cell);
+    remember(step);
+    const rejected: EditedCell[] = [];
+    return Promise.all(made.map((m) => (m.answer && typeof m.answer.then === 'function' ? m.answer.then(() => null, () => { rejected.push(m.cell); }) : null))).then(() => {
+      for (const cell of rejected) { const at = step.indexOf(cell); if (at >= 0) step.splice(at, 1); }
+      if (!step.length) for (const list of [history.current.undo, history.current.redo]) { const at = list.indexOf(step); if (at >= 0) list.splice(at, 1); }
+      return rejected.length;
+    });
+  };
   const undo = () => walk(history.current.undo, history.current.redo, true);
   const redo = () => walk(history.current.redo, history.current.undo, false);
-  return { replaceData, updateRecord, commitEdit, undo, redo };
+  return { replaceData, updateRecord, commitEdit, changeCells, undo, redo };
 }
 
 export function useEditEffect({ source, mutations, pendingEdit, emit, api }: any) {
