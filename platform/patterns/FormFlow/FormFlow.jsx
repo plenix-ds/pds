@@ -3,7 +3,8 @@
    Usage: <FormFlow title="Create record" initialValue={{name: ''}} onSubmit={save}>{({value, setValue}) => fields}</FormFlow>
    Props:
      mode: "create" (default) or "edit"; surface: "page", "inline", "dialog" or "drawer".
-     open: active (default true); title: form name; initialValue: immutable record; sessionKey: record identity.
+     open: active (default true); title: form name; initialValue: immutable record, the saved baseline (dirty compares with it); sessionKey: record identity.
+     defaultValue: the draft the form starts from (default initialValue); a draft that differs from the baseline starts dirty (#465).
      validate(value): error string or false; onSubmit(value): promise; onSuccess(result): after persistence.
      onCancel(): exit after confirmation; children({ value, setValue, busy }): Platform fields.
      strings: { create, save, cancel, failed, invalid, saved, unsaved, close }; className: extra classes.
@@ -26,15 +27,16 @@ import { useUnsavedGuard } from '../../providers/UnsavedGuard.tsx';
 import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 
-export function FormFlow({ mode = 'create', surface = 'page', open = true, title, initialValue, sessionKey, validate, onSubmit, onSuccess, onCancel, children, strings, className }) {
+export function FormFlow({ mode = 'create', surface = 'page', open = true, title, initialValue, defaultValue, sessionKey, validate, onSubmit, onSuccess, onCancel, children, strings, className }) {
   const t = useStrings('formFlow', strings);
-  const [value, setValue] = React.useState(initialValue), [saved, setSaved] = React.useState(initialValue);
+  const [value, setValue] = React.useState(defaultValue ?? initialValue), [saved, setSaved] = React.useState(initialValue);
   const [busy, setBusy] = React.useState(false), [error, setError] = React.useState('');
   const lock = React.useRef(false), generation = React.useRef(0), alive = React.useRef(false);
   const initial = React.useRef(initialValue); initial.current = initialValue;
+  const draft = React.useRef(defaultValue); draft.current = defaultValue;
   const toast = useToast();
   React.useEffect(() => { alive.current = true; return () => { alive.current = false; generation.current++; }; }, []);
-  React.useEffect(() => { generation.current++; lock.current = false; setBusy(false); setValue(initial.current); setSaved(initial.current); setError(''); }, [open, sessionKey]);
+  React.useEffect(() => { generation.current++; lock.current = false; setBusy(false); setValue(draft.current ?? initial.current); setSaved(initial.current); setError(''); }, [open, sessionKey]);
   const guard = useUnsavedGuard(open && !Object.is(value, saved), t.unsaved);
   const cancel = guard(() => { if (!lock.current && onCancel) onCancel(); });
   const submit = async (e) => {
