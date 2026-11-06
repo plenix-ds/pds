@@ -16,8 +16,8 @@ import { useReposition } from '../../utils/dnd.ts';
 import { snapToGrid } from '../../utils/grid.ts';
 import { Image } from '../../components/Image/Image.tsx';
 import { Input, Select } from '../../components/Input/Input.tsx';
-import { CommentThread as CommentThreadJs } from '../CommentThread/CommentThread.jsx';
-const CommentThread: any = CommentThreadJs;
+import { CommentThread } from '../CommentThread/CommentThread.tsx';
+import type { ThreadComment } from '../CommentThread/CommentThread.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 function AnnotationMark({ annotation, index, active, onSelect, strings }: { annotation: Annotation; index: number; active: boolean; onSelect: () => void; strings: any }) {
   const position = { x: snapToGrid(Number(annotation.x) || 0), y: snapToGrid(Number(annotation.y) || 0) };
@@ -42,7 +42,7 @@ function AnnotationMark({ annotation, index, active, onSelect, strings }: { anno
   );
 }
 /** @public one comment in a thread */
-export type AnnotationComment = { id?: string | number; text: string; author?: string; time?: string };
+export type AnnotationComment = ThreadComment;
 /** @public one annotation: a pin or a region, named by its location */
 export type Annotation = { id: string | number; label?: string; kind?: 'pin' | 'region'; location?: string; x?: number; y?: number; comments?: AnnotationComment[] };
 /** @public the prop type (ADR 0011) */
@@ -150,7 +150,7 @@ export function ImageAnnotation({
           title={active.label || active.location}
           comments={active.comments || []}
           strings={strings}
-          onReply={onReply ? (value: any) => onReply(active.id, value) : undefined}
+          onReply={onReply ? async (value: string) => { await onReply(active.id, value); } : undefined}
         />
       ) : null}
       {onAdd ? (

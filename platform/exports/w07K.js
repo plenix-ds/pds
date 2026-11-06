@@ -5,7 +5,7 @@ export { CommandBar, CommandBarButton, CommandBarSearch, useCommandBar } from '.
 export { FilterPanel } from '../patterns/FilterPanel/FilterPanel.jsx';
 export { SortPanel } from '../patterns/SortPanel/SortPanel.jsx';
 export { GroupPanel } from '../patterns/GroupPanel/GroupPanel.tsx';
-export { ColumnsMenu, ManageColumnsDialog } from '../patterns/ColumnsMenu/ColumnsMenu.jsx';
+export { ColumnsMenu, ManageColumnsDialog } from '../patterns/ColumnsMenu/ColumnsMenu.tsx';
 export { ViewMenu } from '../patterns/ViewMenu/ViewMenu.jsx';
 export { QuickFilter } from '../patterns/QuickFilter/QuickFilter.jsx';
 export { matchesFilter, matchesDate, compareLevels, conditionsOf } from '../utils/fields.ts';

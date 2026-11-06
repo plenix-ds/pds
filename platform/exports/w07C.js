@@ -6,4 +6,4 @@ export { ChartFrame } from '../charts/ChartFrame.tsx';
 export { TimeZoneSelect, timeZoneOptions } from '../components/TimeZoneSelect/TimeZoneSelect.tsx';
 export { TreeSelect } from '../components/TreeSelect/TreeSelect.tsx';
 export { TransferList } from '../components/TransferList/TransferList.tsx';
-export { BottomSheetNav } from '../patterns/BottomSheetNav/BottomSheetNav.jsx';
+export { BottomSheetNav } from '../patterns/BottomSheetNav/BottomSheetNav.tsx';

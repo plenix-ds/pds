@@ -64,7 +64,7 @@ DSParts.records.push(function (H) {
       h(P.CommandPalette, { items: EDIT, scope: ref, hotkey: 'Mod+Shift+P', title: 'Editor commands', open: o[0], onOpenChange: o[1], trigger: h(P.Button, { icon: 'pencil' }, 'Editor commands') }));
   };
   var commandPalette = { id: 'command-palette', lab: true, icon: 'search', sec: 'actions', sub: 'Menus and commands', leaf: 'Command palette', title: 'Command palette',
-    plenix: 'CommandPalette', src: 'patterns/CommandPalette/CommandPalette.jsx', level: 'Pattern', interaction: 'Search', statesFrom: ['command-menu'],
+    plenix: 'CommandPalette', src: 'patterns/CommandPalette/CommandPalette.tsx', level: 'Pattern', interaction: 'Search', statesFrom: ['command-menu'],
     aliases: ['Quick open', 'Go to anything', 'Spotlight search', 'Ctrl K menu'],
     text: 'The command menu in a dialog at the top of the window, opened with Ctrl K (⌘ K on a Mac) or from a visible control. Type a few letters of a command or a place and press Enter: the palette closes, runs it and returns focus to where it was. Scoped, it opens only while focus is in one region (an editor), with that region’s commands and its own shortcut.',
     use: ['Apps with many commands and people who work from the keyboard', 'A faster way to commands that are also in the menus and toolbars, with the same names', 'scope for a region with its own commands (an editor), with a shortcut of its own'],

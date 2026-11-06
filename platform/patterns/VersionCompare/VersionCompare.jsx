@@ -61,7 +61,7 @@ import { Button } from '../../components/Button/Button.tsx';
 import { SegmentedControl } from '../../components/SegmentedControl/SegmentedControl.tsx';
 import { VisuallyHidden } from '../../components/VisuallyHidden/VisuallyHidden.tsx';
 import { EmptyState } from '../../components/EmptyState/EmptyState.tsx';
-import { ComparisonView } from '../ComparisonView/ComparisonView.jsx';
+import { ComparisonView } from '../ComparisonView/ComparisonView.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import { useBarFit } from '../../utils/barFit.ts';
 import ChevronDownIcon from 'plenix-platform/icons/plenix/chevron-down';

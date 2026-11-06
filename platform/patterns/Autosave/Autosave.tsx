@@ -29,22 +29,28 @@ import RefreshIcon from 'plenix-platform/icons/plenix/refresh';
 
 const STATES = { saving: ['active', RefreshIcon], saved: ['success', CheckIcon], offline: ['waiting', CloudOffIcon], failed: ['negative', AlertIcon] };
 const WORDS = { saving: 'Saving', saved: 'Saved', offline: 'Offline', failed: 'Save failed', retry: 'Retry' };
-export function SaveStatus({ state = 'saved', strings, className }) {
-  const t = Object.assign({}, WORDS, strings), key = STATES[state] ? state : 'saved', s = STATES[key];
-  return <Badge tone={s[0]} icon={s[1]} role={key === 'failed' ? 'alert' : 'status'} className={cx('plx-autosave__status', className)}>{t[key]}</Badge>;
+/** @public the autosave states */
+export type SaveState = 'saving' | 'saved' | 'offline' | 'failed';
+/** @public */
+export type SaveStatusProps = { state?: SaveState; strings?: Record<string, string>; className?: string };
+export function SaveStatus({ state = 'saved', strings, className }: SaveStatusProps) {
+  const t: any = Object.assign({}, WORDS, strings), key = STATES[state] ? state : 'saved', s = STATES[key];
+  return <Badge tone={s[0] as any} icon={s[1] as any} role={key === 'failed' ? 'alert' : 'status'} className={cx('plx-autosave__status', className)}>{t[key]}</Badge>;
 }
-export function Autosave({ state = 'saved', onRetry, strings, className }) {
-  const t = Object.assign({}, WORDS, strings);
+/** @public */
+export type AutosaveProps = SaveStatusProps & { onRetry?(): void };
+export function Autosave({ state = 'saved', onRetry, strings, className }: AutosaveProps) {
+  const t: any = Object.assign({}, WORDS, strings);
   return <Inline className={cx('plx-autosave', className)} wrap><SaveStatus state={state} strings={strings} />
     {state === 'failed' && onRetry ? <Button size="sm" onClick={onRetry}>{t.retry}</Button> : null}</Inline>;
 }
-export function useAutosave(value, onSave, { delay = 600, enabled = true, unsavedMessage } = {}) {
-  const words = useStrings('autosave');
-  const [snapshot, setSnapshot] = React.useState({ state: 'saved', error: null, dirty: false });
+export function useAutosave(value: any, onSave: any, { delay = 600, enabled = true, unsavedMessage }: { delay?: number; enabled?: boolean; unsavedMessage?: string } = {}) {
+  const words: any = useStrings('autosave');
+  const [snapshot, setSnapshot] = React.useState<any>({ state: 'saved', error: null, dirty: false });
   useUnsavedGuard(snapshot.dirty, unsavedMessage ?? words.unsaved);
-  const ref = React.useRef({ value, saved: value, onSave, enabled, alive: false, timer: null, running: null, online: typeof navigator === 'undefined' || navigator.onLine !== false });
+  const ref = React.useRef<any>({ value, saved: value, onSave, enabled, alive: false, timer: null, running: null, online: typeof navigator === 'undefined' || navigator.onLine !== false });
   const r = ref.current; r.onSave = onSave; r.enabled = enabled;
-  const publish = (state, error = null) => { if (r.alive) setSnapshot({ state, error, dirty: !Object.is(r.value, r.saved) }); };
+  const publish = (state: any, error: any = null) => { if (r.alive) setSnapshot({ state, error, dirty: !Object.is(r.value, r.saved) }); };
   const flush = React.useCallback(async () => {
     clearTimeout(r.timer);
     if (r.running) { try { await r.running; } catch (e) { return false; } if (!r.alive) return false; return flush(); }

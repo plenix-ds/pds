@@ -11,7 +11,7 @@
 */
 import React from 'react';
 import { devWarn } from '../../utils/devWarn.ts';
-import { ContentGrid } from '../ContentGrid/ContentGrid.jsx';
+import { ContentGrid } from '../ContentGrid/ContentGrid.tsx';
 import { MediaCard } from '../../components/Card/Card.tsx';
 import { MediaViewer } from '../../components/MediaViewer/MediaViewer.tsx';
 import { EmptyState } from '../../components/EmptyState/EmptyState.tsx';

@@ -21,7 +21,7 @@ Search workspace still uses it (`dam/app/pages/home/HomePage.jsx`, `assetBulk`; 
 ### Files you own
 
 - platform/patterns/SearchWorkspace/
-- platform/patterns/BulkActions/BulkActions.jsx (the header comment only)
+- platform/patterns/BulkActions/BulkActions.tsx (the header comment only)
 - dam/app/pages/home/HomePage.jsx (the Search workspace only)
 - lanes/bulk/design-system/parts/wBLK.records.js (new: the deprecation note on the bulk-actions record through H.record)
 

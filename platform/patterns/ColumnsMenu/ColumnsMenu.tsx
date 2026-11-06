@@ -5,7 +5,7 @@
      ManageColumnsDialog is the same list, larger, with a find field, Show all, Hide all and the First column select,
      applied with Apply.
    Usage:
-     const [columns, setColumns] = React.useState({ order: ['name', 'type', 'size'], hidden: [] });
+     const [columns, setColumns] = React.useState<any>({ order: ['name', 'type', 'size'], hidden: [] });
      <ColumnsMenu fields={fields} value={columns} onChange={setColumns} />
      <ManageColumnsDialog fields={fields} value={columns} onChange={setColumns} />
      <DataGrid … columnOrder={columns.order} hiddenColumns={columns.hidden} />      (or useCollectionView)
@@ -55,49 +55,49 @@ import PinFilledIcon from 'plenix-platform/icons/plenix/pin-filled';
 import VisibilityIcon from 'plenix-platform/icons/plenix/visibility';
 import VisibilityOffIcon from 'plenix-platform/icons/plenix/visibility-off';
 
-const moveTo = (order, f, i) => { const rest = order.filter((x) => x !== f); rest.splice(i, 0, f); return rest; };
+const moveTo = (order: any, f: any, i: any): any[] => { const rest = order.filter((x: any) => x !== f); rest.splice(i, 0, f); return rest; };
 // a row's controls in order: the row, its Move handle, its checkbox (when it can be used)
-const controlsOf = (row) => [row, row.querySelector('.plx-columns-list__handle'), row.querySelector('input[type="checkbox"]:not(:disabled)')].filter(Boolean);
-const nameIn = (fields) => (f) => { const x = fields.find((y) => y.value === f); return x ? x.label : f; };
+const controlsOf = (row: any) => [row, row.querySelector('.plx-columns-list__handle'), row.querySelector('input[type="checkbox"]:not(:disabled)')].filter(Boolean);
+const nameIn = (fields: any) => (f: any) => { const x = fields.find((y: any) => y.value === f); return x ? x.label : f; };
 
 // the list: one row per column
-function ColumnsList({ fields, value, onChange, filter = '', t }) {
-  const [msg, setMsg] = React.useState('');
-  const [drag, setDrag] = React.useState(null);
-  const box = React.useRef(null);
+function ColumnsList({ fields, value, onChange, filter = '', t }: any) {
+  const [msg, setMsg] = React.useState<any>('');
+  const [drag, setDrag] = React.useState<any>(null);
+  const box = React.useRef<any>(null);
   const name = nameIn(fields);
   const order = value.order, hidden = value.hidden || [];
-  const put = (o, h, words, focus) => {
+  const put = (o: any, h: any, words: any, focus?: any) => {
     onChange({ order: o, hidden: h });
     setMsg(words);
     if (focus) setTimeout(() => { const el = box.current && box.current.querySelector('[data-plx-field="' + focus + '"]'); if (el) el.focus(); }, 0);
   };
-  const move = (f, to, focus) => {
+  const move = (f: any, to: any, focus?: any) => {
     if (to < 0 || to >= order.length) return;
-    put(moveTo(order, f, to), to === 0 ? hidden.filter((x) => x !== f) : hidden,
+    put(moveTo(order, f, to), to === 0 ? hidden.filter((x: any) => x !== f) : hidden,
       to === 0 ? fill(t.isFirst, { name: name(f) }) : fill(t.moved, { name: name(f), position: to + 1, total: order.length }), focus ? f : null);
   };
   const q = filter.trim().toLowerCase();
-  const shown = order.filter((f) => !q || name(f).toLowerCase().indexOf(q) >= 0);
+  const shown = order.filter((f: any) => !q || name(f).toLowerCase().indexOf(q) >= 0);
   // one Tab stop for the whole list (issue 79): the control last focused keeps tabindex 0, the others -1
-  const [stop, setStop] = React.useState(null);
+  const [stop, setStop] = React.useState<any>(null);
   React.useLayoutEffect(() => {
     const el = box.current; if (!el) return;
     const rows = [...el.querySelectorAll('.plx-columns-list__row')];
     const current = stop && el.contains(stop) ? stop : rows[0];
     rows.forEach((row) => controlsOf(row).forEach((c) => c.setAttribute('tabindex', c === current ? '0' : '-1')));
   });
-  const onFocus = (e) => { const row = e.target.closest && e.target.closest('.plx-columns-list__row'); if (row && controlsOf(row).includes(e.target)) setStop(e.target); };
+  const onFocus = (e: any) => { const row = e.target.closest && e.target.closest('.plx-columns-list__row'); if (row && controlsOf(row).includes(e.target)) setStop(e.target); };
   // arrows across the grid; a key from a menu opened by a handle (a portal) is not the list's
-  const onKeys = (e) => {
+  const onKeys = (e: any) => {
     if (e.altKey || e.metaKey || e.shiftKey) return;
     const row = e.target.closest && e.target.closest('.plx-columns-list__row');
     if (!row || !box.current.contains(row)) return;
     const cells = controlsOf(row), at = cells.indexOf(e.target);
     if (at < 0) return;
     const rtl = getComputedStyle(row).direction === 'rtl', rows = [...box.current.querySelectorAll('.plx-columns-list__row')], r = rows.indexOf(row);
-    let next = null;
-    const rowAt = (i) => { const target = rows[Math.max(0, Math.min(rows.length - 1, i))]; const c = controlsOf(target); return c[Math.min(at, c.length - 1)]; };
+    let next: any = null;
+    const rowAt = (i: any) => { const target = rows[Math.max(0, Math.min(rows.length - 1, i))]; const c = controlsOf(target); return c[Math.min(at, c.length - 1)]; };
     if (e.key === 'ArrowDown') next = rowAt(r + 1);
     else if (e.key === 'ArrowUp') next = rowAt(r - 1);
     else if (e.key === (rtl ? 'ArrowLeft' : 'ArrowRight')) next = cells[Math.min(at + 1, cells.length - 1)];
@@ -111,7 +111,7 @@ function ColumnsList({ fields, value, onChange, filter = '', t }) {
   return (
     <div className="plx-columns-list" ref={box} onFocus={onFocus} onKeyDown={onKeys}>
       {shown.length ? null : <Text variant="secondary">{t.none}</Text>}
-      {shown.map((f) => {
+      {shown.map((f: any) => {
         const i = order.indexOf(f);
         return (
           <div key={f} data-plx-field={f} draggable aria-label={fill(t.row, { name: name(f), first: i === 0 ? t.firstMark : '' })} aria-keyshortcuts="Alt+ArrowUp Alt+ArrowDown"
@@ -135,37 +135,45 @@ function ColumnsList({ fields, value, onChange, filter = '', t }) {
   );
 }
 
-export function ColumnsMenu({ fields = [], value, onChange, inline = false, strings }) {
-  const t = useStrings('columnsMenu', strings);
+/** @public a column the collection offers */
+export type ColumnField = { value: string; label: string };
+/** @public the order and the hidden columns */
+export type ColumnsValue = { order: string[]; hidden: string[] };
+/** @public */
+export type ColumnsMenuProps = { fields?: ColumnField[]; value?: ColumnsValue; onChange?(value: ColumnsValue): void; inline?: boolean; strings?: Record<string, string> };
+export function ColumnsMenu({ fields = [], value, onChange, inline = false, strings }: ColumnsMenuProps) {
+  const t: any = useStrings('columnsMenu', strings);
   const v = value || { order: fields.map((f) => f.value), hidden: [] };
   const name = nameIn(fields);
   const first = <Field label={t.first}><Select value={v.order[0]} options={v.order.map((f) => ({ value: f, label: name(f) }))}
-    onChange={(e) => onChange({ order: moveTo(v.order, e.target.value, 0), hidden: (v.hidden || []).filter((x) => x !== e.target.value) })} /></Field>;
+    onChange={(e) => onChange!({ order: moveTo(v.order, e.target.value, 0), hidden: (v.hidden || []).filter((x: any) => x !== e.target.value) })} /></Field>;
   const list = <div className="plx-find-panel plx-find-panel--columns">{first}<ColumnsList fields={fields} value={v} onChange={onChange} t={t} /></div>;
-  return <PanelTrigger icon={FieldsIcon} label={t.label} title={t.label} count={(v.hidden || []).length} caret size="lg" inline={inline}>{list}</PanelTrigger>;
+  return <PanelTrigger {...({} as any)} icon={FieldsIcon} label={t.label} title={t.label} count={(v.hidden || []).length} caret size="lg" inline={inline}>{list}</PanelTrigger>;
 }
 
-export function ManageColumnsDialog({ fields = [], value, onChange, strings, trigger, open: openProp, onOpenChange }) {
-  const t = useStrings('columnsMenu', strings);
+/** @public */
+export type ManageColumnsDialogProps = Omit<ColumnsMenuProps, 'inline'> & { trigger?: React.ReactNode; open?: boolean; onOpenChange?(open: boolean): void };
+export function ManageColumnsDialog({ fields = [], value, onChange, strings, trigger, open: openProp, onOpenChange }: ManageColumnsDialogProps) {
+  const t: any = useStrings('columnsMenu', strings);
   const v = value || { order: fields.map((f) => f.value), hidden: [] };
   const controlled = openProp !== undefined;
-  const [own, setOwn] = React.useState(false), open = controlled ? !!openProp : own;
-  const setOpen = (next) => { if (!controlled) setOwn(next); if (onOpenChange) onOpenChange(next); };
-  const [draft, setDraft] = React.useState(v);
-  const [q, setQ] = React.useState('');
+  const [own, setOwn] = React.useState<any>(false), open = controlled ? !!openProp : own;
+  const setOpen = (next: any) => { if (!controlled) setOwn(next); if (onOpenChange) onOpenChange(next); };
+  const [draft, setDraft] = React.useState<any>(v);
+  const [q, setQ] = React.useState<any>('');
   const name = nameIn(fields);
   // opened by its owner: start from the current columns, as the button does
   React.useEffect(() => { if (controlled && openProp) { setDraft(v); setQ(''); } }, [controlled, openProp]);
   const start = () => { setDraft(v); setQ(''); setOpen(true); };
-  const button = trigger === null ? null : trigger ? React.cloneElement(trigger, { onClick: start }) : <Button size="sm" variant="ghost" icon={FieldsIcon} onClick={start}>{t.manage}</Button>;
+  const button = trigger === null ? null : trigger ? React.cloneElement(trigger as any, { onClick: start }) : <Button size="sm" variant="ghost" icon={FieldsIcon} onClick={start}>{t.manage}</Button>;
   return (
     <>
       {button}
       <Dialog open={open} onClose={() => setOpen(false)} title={t.manage} icon={FieldsIcon} size="md"
-        footer={<><Button onClick={() => setOpen(false)}>{t.cancel}</Button><Button variant="primary" onClick={() => { onChange(draft); setOpen(false); }}>{t.apply}</Button></>}>
+        footer={<><Button onClick={() => setOpen(false)}>{t.cancel}</Button><Button variant="primary" onClick={() => { onChange!(draft); setOpen(false); }}>{t.apply}</Button></>}>
         <div className="plx-find-panel plx-find-panel--dialog">
-          <Field label={t.first}><Select value={draft.order[0]} options={draft.order.map((f) => ({ value: f, label: name(f) }))}
-            onChange={(e) => setDraft({ order: moveTo(draft.order, e.target.value, 0), hidden: (draft.hidden || []).filter((x) => x !== e.target.value) })} /></Field>
+          <Field label={t.first}><Select value={draft.order[0]} options={draft.order.map((f: any) => ({ value: f, label: name(f) }))}
+            onChange={(e) => setDraft({ order: moveTo(draft.order, e.target.value, 0), hidden: (draft.hidden || []).filter((x: any) => x !== e.target.value) })} /></Field>
           <SearchField width="fill" value={q} onChange={(e) => setQ(e.target.value)} onClear={() => setQ('')} placeholder={t.find} label={t.find} />
           <div className="plx-find-panel__add">
             <Button size="sm" variant="ghost" icon={VisibilityIcon} onClick={() => setDraft({ order: draft.order, hidden: [] })}>{t.showAll}</Button>

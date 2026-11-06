@@ -349,7 +349,7 @@ DSParts.records.push(function (H) {
 
     /* ── Account connection: ConnectedAccounts ── */
     { id: 'connected-accounts', lab: true, icon: 'link', sec: 'patterns', sub: AUTH, leaf: 'Account connection', title: 'Account connection',
-      plenix: 'ConnectedAccounts, ConnectedAccount', src: 'patterns/ConnectedAccounts/ConnectedAccounts.jsx', level: 'Pattern', interaction: 'Action', statesFrom: ['button', 'confirmation-dialog'],
+      plenix: 'ConnectedAccounts, ConnectedAccount', src: 'patterns/ConnectedAccounts/ConnectedAccounts.tsx', level: 'Pattern', interaction: 'Action', statesFrom: ['button', 'confirmation-dialog'],
       aliases: ['Connected accounts', 'Integrations', 'Linked accounts', 'Connect an app', 'OAuth connection'],
       text: 'Lists the accounts on other services that Plenix is linked to, one row each: the service’s icon and name, what it is for, its status as a Badge with its icon (Not connected, Connected, Connection error), the linked account and date in the data font, and its action. Connect first lists what Plenix will be able to do there, then hands over to the service’s own sign-in. Disconnect asks first and says what stops working. A failed connection says why and offers Reconnect.',
       use: ['Storage, publishing and mailing services, one row each', 'scopes in plain words before the hand-over', 'loses: what stops working, in the Disconnect question', 'Reconnect without a question: the person already agreed'],

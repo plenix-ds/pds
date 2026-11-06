@@ -262,7 +262,7 @@ DSParts.records.push(function (H) {
     return box(400, h(P.Field, { label: props.label || 'Profile photo' }, h(P.AvatarUpload, Object.assign({ name: props.name || 'Maya Chen', src: s[0], description: 'At least 200 × 200 pixels', onChange: function (p) { s[1](p ? p.url : undefined); } }, props.a))));
   };
   var avatarUpload = { id: 'avatar-upload', lab: true, icon: 'person', sec: 'forms', sub: 'File and media input', leaf: 'Avatar upload', title: 'Avatar upload',
-    plenix: 'AvatarUpload', src: 'patterns/AvatarUpload/AvatarUpload.jsx', level: 'Pattern', interaction: 'Input', statesFrom: ['button', 'file-input'],
+    plenix: 'AvatarUpload', src: 'patterns/AvatarUpload/AvatarUpload.tsx', level: 'Pattern', interaction: 'Input', statesFrom: ['button', 'file-input'],
     aliases: ['Profile photo', 'Profile picture upload', 'Change avatar', 'Account picture'],
     text: 'Sets a person’s (or a team’s) picture, built from Platform components. The Avatar shows it as it will look (the picture, or the initials without one), with Change photo (the browser’s file input drawn as a secondary button) and Remove photo, which goes back to the initials. A square crop step (ImageCrop) comes before the new picture is kept. The Avatar keeps Plenix’s rounded square in every size.',
     use: ['Profile and account settings', 'Team, workspace and app pictures', 'The smallest useful size in the hint (“At least 200 × 200 pixels”)'],

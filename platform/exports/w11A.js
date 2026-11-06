@@ -6,4 +6,4 @@ export { FileRow, FileRowList } from '../components/FileRow/FileRow.tsx';
 export { Auth, SignInForm, SignUpForm, PasswordResetForm, MfaChallenge, SsoButtons, AccountRecovery } from '../patterns/Auth/Auth.jsx';
 export { SessionTimeout, useSessionTimeout } from '../patterns/SessionTimeout/SessionTimeout.jsx';
 export { RoleManager } from '../patterns/RoleManager/RoleManager.jsx';
-export { ConnectedAccounts, ConnectedAccount } from '../patterns/ConnectedAccounts/ConnectedAccounts.jsx';
+export { ConnectedAccounts, ConnectedAccount } from '../patterns/ConnectedAccounts/ConnectedAccounts.tsx';

@@ -19,21 +19,33 @@ import { Stack } from '../../components/Stack/Stack.tsx';
 import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 
-const display = (v) => v == null ? '' : typeof v === 'object' ? JSON.stringify(v) : String(v);
-export function AuditLog({ entries = [], variant = 'table', label, strings, className }) {
+const display = (v: any) => v == null ? '' : typeof v === 'object' ? JSON.stringify(v) : String(v);
+/** @public one change in an audit entry */
+export type AuditChange = { field: string; before?: unknown; after?: unknown };
+/** @public one audit event */
+export type AuditEntry = { id: string | number; actor: { name: string; src?: string }; at: string | number | Date; action: string; target?: string; changes?: AuditChange[] };
+/** @public */
+export type AuditLogProps = {
+  entries?: AuditEntry[];
+  variant?: 'table' | 'diff';
+  label?: string;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function AuditLog({ entries = [], variant = 'table', label, strings, className }: AuditLogProps) {
   devWarn('AuditLog', { variant }, { variant: ['table','diff'] });
-  const t = useStrings('auditLog', strings);
-  const [active, setActive] = React.useState(null), entry = entries.find((a) => a.id === active);
-  const columns = [
-    { field: 'actor', title: t.actor, type: 'person', render: (a) => <Persona name={a.actor?.name || ''} src={a.actor?.src} size="xs" /> },
-    { field: 'at', title: t.at, kind: 'data', type: 'date', render: (a) => <Time value={a.at} /> },
+  const t: any = useStrings('auditLog', strings);
+  const [active, setActive] = React.useState<any>(null), entry = entries.find((a) => a.id === active);
+  const columns: any[] = [
+    { field: 'actor', title: t.actor, type: 'person', render: (a: any) => <Persona name={a.actor?.name || ''} src={a.actor?.src} size="xs" /> },
+    { field: 'at', title: t.at, kind: 'data', type: 'date', render: (a: any) => <Time value={a.at} /> },
     { field: 'action', title: t.action, kind: 'wrap' }, { field: 'target', title: t.target, kind: 'wrap' }
   ];
   if (variant === 'diff') columns.push({ field: 'changes', title: t.changes, kind: 'center', sortable: false,
-    render: (a) => a.changes?.length ? <Button size="xs" onClick={() => setActive(a.id)}>{t.view}</Button> : null });
-  const changes = (entry?.changes || []).map((a, i) => ({ id: i, field: a.field, before: display(a.before), after: display(a.after) }));
+    render: (a: any): any => a.changes?.length ? <Button size="xs" onClick={() => setActive(a.id)}>{t.view}</Button> : null });
+  const changes = (entry?.changes || []).map((a: any, i: any) => ({ id: i, field: a.field, before: display(a.before), after: display(a.after) }));
   return <Stack className={cx('plx-audit-log', className)}>
-    <DataGrid label={label} data={entries} columns={columns} headerMenu={false} />
+    <DataGrid label={label as string} data={entries} columns={columns as any} headerMenu={false} />
     <Dialog open={!!entry} title={t.changes} onClose={() => setActive(null)} size="lg" footer={<Button onClick={() => setActive(null)}>{t.close}</Button>}>
       <DataGrid label={t.changes} data={changes} headerMenu={false} columns={[{ field: 'field', title: t.field }, { field: 'before', title: t.before, kind: 'wrap' }, { field: 'after', title: t.after, kind: 'wrap' }]} />
     </Dialog>

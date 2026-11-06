@@ -16,16 +16,26 @@ import { Button } from '../../components/Button/Button.tsx';
 import { Dialog } from '../../components/Dialog/Dialog.tsx';
 import { Notice } from '../../components/Notice/Notice.tsx';
 import { Stack, Inline } from '../../components/Stack/Stack.tsx';
-import { SaveStatus } from '../Autosave/Autosave.jsx';
+import { SaveStatus } from '../Autosave/Autosave.tsx';
 import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import PencilIcon from 'plenix-platform/icons/plenix/pencil';
 
-export function DraftState({ version, saveState, onResume, onDiscard, strings, className }) {
-  const t = useStrings('draftState', strings);
-  const [confirm, setConfirm] = React.useState(false), [busy, setBusy] = React.useState(false), [error, setError] = React.useState('');
-  const lock = React.useRef(false), cancel = React.useRef(null);
-  const run = async (fn) => {
+/** @public */
+export type DraftStateProps = {
+  version?: string | number;
+  /** an Autosave state */
+  saveState?: 'saving' | 'saved' | 'offline' | 'failed';
+  onResume?(): void | Promise<void>;
+  onDiscard?(): void | Promise<void>;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function DraftState({ version, saveState, onResume, onDiscard, strings, className }: DraftStateProps) {
+  const t: any = useStrings('draftState', strings);
+  const [confirm, setConfirm] = React.useState<any>(false), [busy, setBusy] = React.useState<any>(false), [error, setError] = React.useState<any>('');
+  const lock = React.useRef<any>(false), cancel = React.useRef<any>(null);
+  const run = async (fn: any) => {
     if (lock.current) return; lock.current = true; setBusy(true); setError('');
     try { await fn(); setConfirm(false); } catch (e) { setError(t.failed); }
     finally { lock.current = false; setBusy(false); }
