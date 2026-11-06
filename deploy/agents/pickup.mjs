@@ -20,6 +20,7 @@ import http from 'node:http';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import { load, roles } from './registry.mjs';
 
 const REPO = 'plenix-ds/pds';
 const API = 'https://api.github.com';
@@ -47,10 +48,13 @@ async function get(url, etagKey) {
 }
 
 const agentRoles = (labels = []) => labels.map((l) => (/^agent:pds1-(.+)$/.exec(l.name || l) || [])[1]).filter(Boolean);
-// the PDS1 roles (CLAUDE.md "The team"): only these count as a mention, so the service name "pds1-pickup" is not a role
-const ROLES = new Set(['product-lead', 'delivery-lead', 'design-director', 'ds-architect', 'component-engineer', 'i18n-engineer',
-  'technical-writer', 'release-architect', 'code-reviewer', 'design-critic', 'a11y-rtl-auditor', 'qa-engineer', 'security-reviewer',
-  'debugger', 'db-optimizer', 'simulated-user-tester', 'drift-auditor', 'mobile-app-builder']);
+// the PDS1 roles, from the role registry (agents.config.yaml roles:, #768): only these count as a mention, so the service
+// name "pds1-pickup" is not a role. Intake (a new issue, or a comment, with no agent label and no named role) goes to the
+// role whose wakes_on has issue_opened. Read at start; the service restarts after a registry change (team.sh update).
+const REGISTRY = roles(load(process.env.PDS1_CFG || path.join(ROOT, 'work', 'pds', 'agents.config.yaml')));
+const ROLES = new Set(REGISTRY.map((r) => r.id));
+const INTAKE = (REGISTRY.find((r) => (r.wakes_on || []).includes('issue_opened')) || {}).id;
+if (!INTAKE) throw new Error('agents.config.yaml: no role wakes on issue_opened, so nobody takes intake');
 const named = (text = '') => [...text.matchAll(/(?:^|[^\w-])@?pds1-([a-z0-9]+(?:-[a-z0-9]+)*)/gi)].map((m) => m[1].toLowerCase())
   .filter((r) => ROLES.has(r.replace(/-\d+$/, '')));
 // "— PDS1-Component-Engineer-1" signs for component-engineer: the instance number is not part of the role
@@ -72,7 +76,7 @@ async function route(ev) {
       if (!['opened', 'reopened', 'labeled', 'assigned'].includes(p.action)) return null;
       if (p.action === 'labeled') roles = agentRoles([p.label]);
       what = `${kind} ${p.action}${p.action === 'labeled' ? ' ' + p.label.name : ''}`;
-      if (!roles.length && p.action === 'opened') roles = ['product-lead'];
+      if (!roles.length && p.action === 'opened') roles = [INTAKE];
       break;
     case 'IssueCommentEvent':
     case 'PullRequestReviewCommentEvent':
@@ -83,7 +87,7 @@ async function route(ev) {
       const mentioned = named(body.replace(/—\s*PDS1-[A-Za-z0-9-]+/g, ''));
       roles = [...new Set([...roles, ...mentioned])].filter((r) => r.replace(/-\d+$/, '') !== signer(body));
       if (mentioned.length) mention = true;
-      if (!roles.length && !signer(body)) roles = ['product-lead'];
+      if (!roles.length && !signer(body)) roles = [INTAKE];
       what = (mention ? 'you are named in a ' : '') + (ev.type === 'IssueCommentEvent' ? `${mention ? 'comment' : 'new comment'} on ${kind}` : `review on PR`);
       break;
     }

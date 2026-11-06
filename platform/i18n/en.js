@@ -798,13 +798,9 @@ export default {
     "rowActions": "Row actions",
     "clearSort": "Clear sort",
     "hide": "Hide field",
-    "showAll": "Show all fields",
-    "narrower": "Narrower",
     "wider": "Wider",
     "fit": "Fit to content",
     "deleted": "Deleted",
-    "moveLeft": "Move left",
-    "moveRight": "Move right",
     "perPage": "Rows per page",
     "view": "View options",
     "wrapHeaders": "Wrap headers",
@@ -821,7 +817,6 @@ export default {
     "filter": "Filter",
     "clearFilter": "Clear filter",
     "groupBy": "Group by this field",
-    "ungroup": "Ungroup",
     "noGroup": "Don’t group by this field",
     "sizeToFit": "Size column to fit",
     "sizeAllToFit": "Size all columns to fit",
@@ -1489,11 +1484,6 @@ export default {
       "message": "Your changes will be lost.",
       "leave": "Leave",
       "stay": "Keep editing"
-    },
-    "theme-boot": {
-      "compact": "Compact",
-      "standard": "Standard",
-      "comfortable": "Comfortable"
     }
   },
   "publish": {
@@ -2168,8 +2158,7 @@ export default {
   },
   "utils": {
     "clipboard": {
-      "copied": "Copied",
-      "failed": "Couldn’t copy. Select the text and copy it by hand."
+      "copied": "Copied"
     }
   },
   "versionCompare": {
@@ -2389,7 +2378,6 @@ export default {
       "keep": "Keep the order",
       "notFulfillable": "Only unfulfilled orders can be fulfilled",
       "notCancelable": "Only unfulfilled orders can be canceled",
-      "notRefundable": "Only shipped or delivered orders can be refunded",
       "fulfilled": "{what} marked as shipped",
       "canceled": "{what} canceled"
     },
