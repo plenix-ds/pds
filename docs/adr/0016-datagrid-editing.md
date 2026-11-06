@@ -59,8 +59,8 @@ editing?: {
 };
 editMode?: 'inline' | 'form';    // default 'inline'
 editModes?: ('inline' | 'form')[];   // one mode hides the menu item
-formSurface?: 'drawer' | 'dialog' | 'openPanel';   // default 'drawer'
-renderForm?(record: unknown): React.ReactNode;
+formSurface?: 'drawer' | 'dialog' | { panel: React.RefObject<HTMLElement | null> };   // default 'drawer'; addendum F3
+renderForm?(record: unknown, form: FormEditState): React.ReactNode;   // addendum F3
 onRecordEdit?(record: unknown, changes: Record<string, unknown>): void | Promise<void>;   // a rejected promise: the form stays open with its message
 onCellEdit?(record, change: { field, value, previous, row }): void | Promise<void>;   // may now answer later: a spinner, then the old value back if it rejects; row is the record before the edit (#354)
 
@@ -103,6 +103,38 @@ onCellEdit?(record, change: { field, value, previous, row }): void | Promise<voi
 - `editing` also comes from a `TableSettings` above; the table's own options win (the ADR's precedence).
 - **Semver: MINOR**, no break: every table that works today works the same.
 - Enforced by: G3 review of #456; `tests/data-grid-editing-options-84.test.js` (the defaults cases).
+
+## Addendum (2026-11-06, #84 F3): `renderForm`'s values and the application's panel (D-0063)
+
+The one-line signatures left two gaps: how an application's own form reports its values, and how the grid draws into a panel it doesn't own.
+
+**`renderForm(record, form)`:** the record stays the first argument, as the ADR wrote it. The second is the form's state, the shape FormFlow's own children get:
+
+```ts
+type FormEditState = {
+  value: Record<string, unknown>;                 // the draft: the record's editable fields, edited
+  setValue(next: Record<string, unknown>): void;  // the application's fields call it
+  errors: Record<string, string>;                 // field -> the message from the column's validate, after Save
+  busy: boolean;                                  // true while onRecordEdit's promise runs
+};
+```
+
+- Save validates the draft with each column's `validate`, then sends `onRecordEdit(record, changes)` with only the fields that differ from the record (as F2 does).
+- The grid keeps the header, the footer (Save, Cancel) and the ErrorSummary. The application draws only the body.
+
+**`formSurface: { panel: ref }`** (replaces the ADR's `'openPanel'` string, which was never built):
+
+- While the form is open, the grid renders its form (header, body, footer) into `panel.current` through a portal. It sets `data-plx-form-open` on that element, so the application's CSS hides its details there (`[data-plx-form-open] > .my-details { display: none }`). The attribute is removed when the form closes. The grid changes nothing else in the application's DOM.
+- A `panel` whose `current` is null at open falls back to the drawer, with one development warning.
+- The record shown is the one being edited. The application keeps it open (`openKey`) as usual.
+- **One title (G2):** while `data-plx-form-open` is set, the grid's form takes the panel's whole content area, and the application hides its own details and its panel header there.
+- **The application's close button acts as Cancel, with no new prop:** closing the open row (`openKey` moves away from the edited record) while the form is in the panel cancels it.
+  - With unsaved changes, FormFlow's unsaved-changes question comes first. If the person keeps editing, the form moves to the drawer with its draft (the panel is gone), so nothing typed is lost.
+  - On close, focus returns to the edited row.
+
+- **No new prop:** `renderForm` gains an argument (no one calls it yet), and `formSurface` replaces an unbuilt value.
+- **Semver: MINOR**, within this ADR's release.
+- Enforced by: G3 review of the F3 PR; its behavior tests (`renderForm` values reach `onRecordEdit` as changes; `errors` after a refused `validate`; the panel portal and `data-plx-form-open`; the null-panel fallback).
 
 ## Enforced by
 
