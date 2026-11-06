@@ -1542,7 +1542,7 @@
       "platform/components/EntityPicker/EntityPicker.jsx",
       "platform/components/EntityPicker/entity-picker.css",
       "platform/tokens/components/entity-picker.tokens.json",
-      "platform/components/TimePicker/TimePicker.jsx",
+      "platform/components/TimePicker/TimePicker.tsx",
       "platform/components/TimePicker/time-picker.css",
       "platform/tokens/components/time-picker.tokens.json",
       "platform/components/RelativeDateInput/RelativeDateInput.jsx",
@@ -5350,7 +5350,7 @@
    "wave": 7,
    "lane": "B",
    "files": [
-    "platform/components/TimePicker/TimePicker.jsx",
+    "platform/components/TimePicker/TimePicker.tsx",
     "platform/components/TimePicker/time-picker.css",
     "platform/tokens/components/time-picker.tokens.json"
    ],
@@ -13340,7 +13340,7 @@
    "target": "TimePicker",
    "targetKind": "component",
    "files": [
-    "platform/components/TimePicker/TimePicker.jsx",
+    "platform/components/TimePicker/TimePicker.tsx",
     "platform/components/TimePicker/time-picker.css",
     "platform/tokens/components/time-picker.tokens.json"
    ],
