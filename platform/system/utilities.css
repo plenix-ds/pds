@@ -119,12 +119,3 @@
 .plx-u-z-raised{z-index:var(--plx-sys-layer-raised);}
 .plx-u-bg-data{background-color:var(--plx-comp-data-color);}
 /* an icon at its container's icon size (batch 267: replaces the -var pair, whose value came in a style attribute) */
-/* kept for CTM (#125): the connected application still uses these ten, so the release that removed the others keeps them; they go when CTM has moved off them (platform/standards/deprecated-classes.json) */
-.plx-u-absolute{position:absolute;}
-.plx-u-bg-transparent{background-color:transparent;}
-.plx-u-justify-center{justify-content:center;}
-.plx-u-text-center{text-align:center;}
-.plx-u-top-0{top:0;}
-.plx-u-w-100px{width:var(--plx-ref-size-25u);}
-.plx-u-w-36px{width:var(--plx-ref-size-9u);}
-.plx-u-w-72px{width:var(--plx-ref-size-18u);}
