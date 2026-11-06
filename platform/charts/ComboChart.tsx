@@ -32,6 +32,7 @@
      Points are the frame's point marks; their radius is a combo-chart token.
 */
 import React from 'react';
+import type { ChartMargin } from './chart-types.ts';
 import { cx } from '../utils/cx.ts';
 import { formatNumber } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.tsx';
@@ -44,23 +45,48 @@ import { gridRoom } from './chart-helpers.ts';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 
 const NO_MARGIN = Object.freeze({ top: 0, end: 0, bottom: 0, start: 0 });
-const isNum = (v) => v !== null && v !== undefined && isFinite(Number(v));
+const isNum = (v: any) => v !== null && v !== undefined && isFinite(Number(v));
 
+/** @public one series of a combo chart */
+export type ComboSeries = { id: string; label: string; values: Array<number | null>; /** a data-viz step */ color?: string };
+/** @public */
+export type ComboChartProps = {
+  title: string;
+  description?: string;
+  hideCaption?: boolean;
+  size?: 'sm' | 'md' | 'lg';
+  categories?: string[];
+  bars?: ComboSeries[];
+  lines?: ComboSeries[];
+  axis?: 'shared' | 'dual';
+  barLabel?: string;
+  lineLabel?: string;
+  categoryLabel?: string;
+  formatBar?(value: number): string;
+  formatLine?(value: number): string;
+  showPoints?: boolean;
+  legend?: boolean;
+  legendPosition?: 'bottom' | 'top' | 'end';
+  tooltip?: boolean;
+  margin?: ChartMargin;
+  strings?: Record<string, string>;
+  className?: string;
+};
 export function ComboChart({ title, description, hideCaption, size, categories = [], bars = [], lines = [], axis = 'shared', barLabel, lineLabel, categoryLabel,
-  formatBar, formatLine, showPoints = true, legend, legendPosition, tooltip = true, margin, strings, className }) {
-  const t = useStrings('chart.comboChart', strings);
+  formatBar, formatLine, showPoints = true, legend, legendPosition, tooltip = true, margin, strings, className }: ComboChartProps) {
+  const t: any = useStrings('chart.comboChart', strings);
   const dual = axis === 'dual';
-  const fb = (v) => (typeof formatBar === 'function' ? formatBar(v) : formatNumber(v));
-  const fl = (v) => (typeof formatLine === 'function' ? formatLine(v) : formatNumber(v));
+  const fb = (v: any) => (typeof formatBar === 'function' ? formatBar(v) : formatNumber(v));
+  const fl = (v: any) => (typeof formatLine === 'function' ? formatLine(v) : formatNumber(v));
   const [active, hover] = useChartHover();
   const cols = bars.map((s, i) => Object.assign({}, s, { id: s.id === undefined ? 'b' + i : s.id, color: s.color || seriesColor(i) }));
   const lns = lines.map((s, i) => Object.assign({}, s, { id: s.id === undefined ? 'l' + i : s.id, color: s.color || seriesColor(cols.length + i) }));
   const table = {
-    columns: [{ title: categoryLabel || t.category, field: 'category', kind: 'name', rowLabel: true }]
+    columns: ([{ title: categoryLabel || t.category, field: 'category', kind: 'name', rowLabel: true }] as any[])
       .concat(cols.map((s, i) => ({ title: s.label, field: 'b' + i, kind: 'data', align: 'right' })))
       .concat(lns.map((s, i) => ({ title: s.label, field: 'l' + i, kind: 'data', align: 'right' }))),
     data: categories.map((c, ci) => {
-      const row = { id: ci + 1, category: String(c) };
+      const row: Record<string, any> = { id: ci + 1, category: String(c) };
       cols.forEach((s, i) => { const v = s.values[ci]; row['b' + i] = v === null || v === undefined ? '' : fb(v); });
       lns.forEach((s, i) => { const v = s.values[ci]; row['l' + i] = v === null || v === undefined ? '' : fl(v); });
       return row;
@@ -73,39 +99,39 @@ export function ComboChart({ title, description, hideCaption, size, categories =
     </div>
   );
   // the formats the drawing calls, kept current without redrawing (a format written inline is a new function each render)
-  const fmts = React.useRef(null); fmts.current = { fb, fl };
+  const fmts = React.useRef<any>(null); fmts.current = { fb, fl };
 
   const plot = useEChartsPlot();
   const dataKey = JSON.stringify([categories, cols.map((s) => [s.id, s.values, s.color]), lns.map((s) => [s.id, s.values, s.color]), dual, showPoints, barLabel, lineLabel, categoryLabel,
     margin ? [margin.top, margin.end, margin.bottom, margin.start] : null]);
-  const option = React.useCallback((tk) => {
+  const option = React.useCallback((tk: any) => {
     const room = gridRoom(margin, tk.top);
     const named = { nameLocation: 'middle', nameMoveOverlap: true };
-    const valueAxis = (name, position, format, extra) => Object.assign({ type: 'value', name, nameGap: 0, position, axisLabel: { formatter: (v) => format(v) } }, named, extra);
+    const valueAxis = (name: any, position: any, format: any, extra: any) => Object.assign({ type: 'value', name, nameGap: 0, position, axisLabel: { formatter: (v: any) => format(v) } }, named, extra);
     return {
       animationDuration: tk.motion, animationDurationUpdate: tk.motion,
       grid: Object.assign(room, { outerBoundsMode: 'same', outerBoundsContain: 'all' }),
       xAxis: Object.assign({ type: 'category', data: categories.map(String), boundaryGap: true, name: categoryLabel, nameGap: tk.tickOffset * 2 + tk.tick.fontSize, inverse: false,
         axisLine: { show: true, lineStyle: { color: tk.axis.color, width: tk.axis.width } } }, named),
       // the columns' axis starts at zero; with dual axes the lines have their own, fitted to their values
-      yAxis: dual ? [valueAxis(barLabel, 'left', (v) => fmts.current.fb(v), { min: 0 }), valueAxis(lineLabel, 'right', (v) => fmts.current.fl(v), { scale: true, splitLine: { show: false } })]
-        : [valueAxis(barLabel, 'left', (v) => fmts.current.fb(v), { min: Math.min(0, ...cols.concat(lns).flatMap((s) => s.values.filter(isNum).map(Number))) })],
-      series: cols.map((s) => ({ type: 'bar', id: 'b' + s.id, name: s.label, silent: true, emphasis: { disabled: true }, barCategoryGap: '25%', barGap: '10%', itemStyle: { color: tk.color(s.color) },
-        data: s.values.map((v) => (isNum(v) ? Number(v) : null)) }))
-        .concat(lns.map((s) => ({ type: 'line', id: 'l' + s.id, name: s.label, silent: true, emphasis: { disabled: true }, yAxisIndex: dual ? 1 : 0, showSymbol: !!showPoints, connectNulls: false,
-          lineStyle: { color: tk.color(s.color) }, itemStyle: { color: tk.color(s.color) }, z: 3, data: s.values.map((v) => (isNum(v) ? Number(v) : null)) }))),
+      yAxis: dual ? [valueAxis(barLabel, 'left', (v: any) => fmts.current.fb(v), { min: 0 }), valueAxis(lineLabel, 'right', (v: any) => fmts.current.fl(v), { scale: true, splitLine: { show: false } })]
+        : [valueAxis(barLabel, 'left', (v: any) => fmts.current.fb(v), { min: Math.min(0, ...cols.concat(lns).flatMap((s) => s.values.filter(isNum).map(Number))) })],
+      series: (cols as any[]).map<any>((s) => ({ type: 'bar', id: 'b' + s.id, name: s.label, silent: true, emphasis: { disabled: true }, barCategoryGap: '25%', barGap: '10%', itemStyle: { color: tk.color(s.color) },
+        data: s.values.map((v: any) => (isNum(v) ? Number(v) : null)) }))
+        .concat((lns as any[]).map((s) => ({ type: 'line', id: 'l' + s.id, name: s.label, silent: true, emphasis: { disabled: true }, yAxisIndex: dual ? 1 : 0, showSymbol: !!showPoints, connectNulls: false,
+          lineStyle: { color: tk.color(s.color) }, itemStyle: { color: tk.color(s.color) }, z: 3, data: s.values.map((v: any) => (isNum(v) ? Number(v) : null)) }))),
     };
   }, [dataKey]);   // eslint-disable-line react-hooks/exhaustive-deps
 
-  const draw = (dims) => {
+  const draw = (dims: any) => {
     const layer = plot.layer(dims, option);
     const c = plot.chart;
     const g = c ? plotGrid(c) : null;
     if (!g) return layer;
     const step = categories.length ? g.width / categories.length : 0;
-    const at = (ci) => c.convertToPixel({ xAxisIndex: 0 }, ci) - g.x;
+    const at = (ci: any) => c.convertToPixel({ xAxisIndex: 0 }, ci) - g.x;
     const inner = { width: g.width, height: g.height };
-    let tip = null;
+    let tip: any = null;
     if (tooltip && active !== null && categories[active] !== undefined) {
       const ci = Number(active);
       tip = <ChartTooltip variant="shared" x={at(ci)} inner={inner} title={String(categories[ci])}

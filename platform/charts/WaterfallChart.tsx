@@ -29,6 +29,8 @@
        connector and the value axis are tokens (--plx-comp-waterfall-chart-*). Up to about ten steps: group the small ones.
 */
 import React from 'react';
+import type { WaterfallDatum } from './chart-helpers.ts';
+import type { ChartMargin } from './chart-types.ts';
 import { cx } from '../utils/cx.ts';
 import { formatNumber } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.tsx';
@@ -46,32 +48,51 @@ import { useStrings } from '../providers/LocaleProvider.tsx';
 const NO_MARGIN = Object.freeze({ top: 0, end: 0, bottom: 0, start: 0 });
 const GAP = '30%';   // the room between the columns, as a share of a column
 
-const COLORS = { up: 'status-positive', down: 'status-negative', total: seriesColor(0) };
+const COLORS: Record<string, string> = { up: 'status-positive', down: 'status-negative', total: seriesColor(0) };
 
+/** @public */
+export type WaterfallChartProps = {
+  title: string;
+  description?: string;
+  /** the steps in order; a total (total: true) is a column from zero */
+  data?: WaterfallDatum[];
+  endLabel?: string | false;
+  format?(value: number): string;
+  yLabel?: string;
+  size?: 'sm' | 'md' | 'lg';
+  margin?: ChartMargin;
+  legend?: boolean;
+  interactive?: boolean;
+  onSelect?(selection: { c: number; step: { label: string; kind: string; from: number; to: number; change: number | null } }): void;
+  strings?: Record<string, string>;
+  frameStrings?: Record<string, string>;
+  interactionStrings?: Record<string, string>;
+  className?: string;
+};
 export function WaterfallChart({ title, description, data = [], endLabel, format, yLabel, size = 'md', margin, legend = true, interactive = true, onSelect,
-  strings, frameStrings, interactionStrings, className }) {
-  const t = useStrings('chart.waterfallChart', strings);
-  const fmt = typeof format === 'function' ? format : (v) => formatNumber(v);
-  const signed = (v) => (v > 0 ? '+' + fmt(v) : v < 0 ? '\u2212' + fmt(-v) : fmt(0));
+  strings, frameStrings, interactionStrings, className }: WaterfallChartProps) {
+  const t: any = useStrings('chart.waterfallChart', strings);
+  const fmt = typeof format === 'function' ? format : (v: any) => formatNumber(v);
+  const signed = (v: any) => (v > 0 ? '+' + fmt(v) : v < 0 ? '\u2212' + fmt(-v) : fmt(0));
   const bars = waterfallSteps(data, endLabel === undefined ? t.end : endLabel);
-  const items = (b) => (b.kind === 'total' ? [{ label: t.total, value: fmt(b.to), color: COLORS.total }]
+  const items = (b: any) => (b.kind === 'total' ? [{ label: t.total, value: fmt(b.to), color: COLORS.total }]
     : [{ label: t.change, value: signed(b.change), color: COLORS[b.kind] }, { label: t.running, value: fmt(b.to) }]);
   const ia = useChartInteraction({
     rows: 1, columns: bars.length, mode: 'point', select: typeof onSelect === 'function', strings: interactionStrings,
     onSelect: (cell) => onSelect && onSelect(Object.assign({ step: bars[cell.c] }, cell)),
     describe: (cell) => chartTooltipText({ title: bars[cell.c].label, items: items(bars[cell.c]) }),
   });
-  const table = {
+  const table: any = {
     columns: [{ title: t.step, field: 's', kind: 'name', rowLabel: true }, { title: t.change, field: 'c', kind: 'data', align: 'right' }, { title: t.running, field: 'r', kind: 'data', align: 'right' }],
     data: bars.map((b, i) => ({ id: i + 1, s: b.label, c: b.kind === 'total' ? t.total : signed(b.change), r: fmt(b.to) })),
   };
   const legendNode = legend ? <ChartLegend items={[{ id: 'up', label: t.increase, color: COLORS.up }, { id: 'down', label: t.decrease, color: COLORS.down }, { id: 'total', label: t.total, color: COLORS.total }]} /> : null;
   // the formats the drawing calls, kept current without redrawing (a format written inline is a new function each render)
-  const fmts = React.useRef(null); fmts.current = { fmt };
+  const fmts = React.useRef<any>(null); fmts.current = { fmt };
 
   const plot = useEChartsPlot();
   const dataKey = JSON.stringify(bars.map((b) => [b.label, b.kind, b.from, b.to])) + '|' + yLabel + '|' + (margin ? [margin.top, margin.end, margin.bottom, margin.start].join(':') : '');
-  const option = React.useCallback((tk) => {
+  const option = React.useCallback((tk: any) => {
     // the room above the plot for the signed values written at the bars' tops
     const room = gridRoom(margin, tk.top);
     room.top = Math.max(room.top, Math.ceil(tk.tick.fontSize + tk.tickOffset * 2));
@@ -79,19 +100,19 @@ export function WaterfallChart({ title, description, data = [], endLabel, format
     room.bottom = Math.max(room.bottom, snapToGrid(tk.tickOffset + tickLineHeight(tk, bars.map((b) => String(b.label))), { round: 'up' }));
     const named = { nameLocation: 'middle', nameMoveOverlap: true };
     // a step floats from the running total before it to the one after: a transparent base, then the step in its color; a step across zero is two parts, up and down from the baseline
-    const lo = (b) => Math.min(b.from, b.to), hi = (b) => Math.max(b.from, b.to);
+    const lo = (b: any) => Math.min(b.from, b.to), hi = (b: any) => Math.max(b.from, b.to);
     const base = bars.map((b) => (lo(b) >= 0 ? lo(b) : hi(b) <= 0 ? hi(b) : 0));
     const up = bars.map((b) => (lo(b) >= 0 ? hi(b) - lo(b) : hi(b) > 0 ? hi(b) : 0));
     const down = bars.map((b) => (hi(b) <= 0 ? lo(b) - hi(b) : lo(b) < 0 ? lo(b) : 0));
-    const paint = (list) => list.map((v, i) => ({ value: v, itemStyle: { color: tk.color(COLORS[bars[i].kind]) } }));
-    const part = (id, list) => ({ type: 'bar', id, stack: 'step', silent: true, barCategoryGap: GAP, z: 2, emphasis: { focus: 'self', blurScope: 'coordinateSystem', itemStyle: {} }, blur: { itemStyle: { opacity: tk.dim } }, data: paint(list) });
+    const paint = (list: any) => list.map((v: any, i: any) => ({ value: v, itemStyle: { color: tk.color(COLORS[bars[i].kind]) } }));
+    const part = (id: any, list: any) => ({ type: 'bar', id, stack: 'step', silent: true, barCategoryGap: GAP, z: 2, emphasis: { focus: 'self', blurScope: 'coordinateSystem', itemStyle: {} }, blur: { itemStyle: { opacity: tk.dim } }, data: paint(list) });
     return {
       animationDuration: tk.motion, animationDurationUpdate: tk.motion,
       grid: Object.assign(room, { outerBoundsMode: 'same', outerBoundsContain: 'all' }),
       xAxis: Object.assign({ type: 'category', data: bars.map((b) => String(b.label)), boundaryGap: true, inverse: false, axisLine: { show: true, lineStyle: { color: tk.axis.color, width: tk.axis.width } } }, named),
-      yAxis: Object.assign({ type: 'value', name: yLabel, nameGap: 0, position: 'left', axisLabel: { formatter: (v) => fmts.current.fmt(v) } }, named),
-      series: [{ type: 'bar', id: 'base', stack: 'step', silent: true, barCategoryGap: GAP, itemStyle: { color: 'transparent', borderWidth: 0 }, emphasis: { disabled: true }, blur: { itemStyle: { opacity: 1 } }, z: 2, data: base },
-        part('up', up), part('down', down)]
+      yAxis: Object.assign({ type: 'value', name: yLabel, nameGap: 0, position: 'left', axisLabel: { formatter: (v: any) => fmts.current.fmt(v) } }, named),
+      series: ([{ type: 'bar', id: 'base', stack: 'step', silent: true, barCategoryGap: GAP, itemStyle: { color: 'transparent', borderWidth: 0 }, emphasis: { disabled: true }, blur: { itemStyle: { opacity: 1 } }, z: 2, data: base },
+        part('up', up), part('down', down)] as any[])
         // the connector from one step's end to the next step's start: a dashed level between the two columns
         .concat(bars.slice(1).map((b, i) => ({ type: 'line', id: 'c' + i, silent: true, showSymbol: false, emphasis: { disabled: true }, z: 1, lineStyle: { color: tk.waterfall.color, width: tk.waterfall.width, type: [tk.waterfall.dash, tk.waterfall.dash] },
           data: bars.map((x, k) => (k === i || k === i + 1 ? bars[i].to : null)) }))),
@@ -110,17 +131,17 @@ export function WaterfallChart({ title, description, data = [], endLabel, format
     }
   }, [activeKey, plot.chart]);   // eslint-disable-line react-hooks/exhaustive-deps
 
-  const draw = (dims) => {
+  const draw = (dims: any) => {
     const layer = plot.layer(dims, option);
     const c = plot.chart;
     const g = c ? plotGrid(c) : null;
     if (!g || !bars.length) return layer;
     const step = g.width / bars.length;
-    const at = (i) => c.convertToPixel({ xAxisIndex: 0 }, i);
-    const yAt = (v) => c.convertToPixel({ yAxisIndex: 0 }, v);
-    ia.register({ columnAt: (px) => Math.min(bars.length - 1, Math.max(0, Math.floor((px - g.x) / step))), nearest: (px) => (px < g.x || px > g.x + g.width ? null : { r: 0, c: Math.min(bars.length - 1, Math.max(0, Math.floor((px - g.x) / step))) }) });
+    const at = (i: any) => c.convertToPixel({ xAxisIndex: 0 }, i);
+    const yAt = (v: any) => c.convertToPixel({ yAxisIndex: 0 }, v);
+    ia.register({ columnAt: (px: any) => Math.min(bars.length - 1, Math.max(0, Math.floor((px - g.x) / step))), nearest: (px: any) => (px < g.x || px > g.x + g.width ? null : { r: 0, c: Math.min(bars.length - 1, Math.max(0, Math.floor((px - g.x) / step))) }) });
     const inner = { width: g.width, height: g.height };
-    const top = (b) => yAt(Math.max(b.from, b.to)) - g.y;
+    const top = (b: any) => yAt(Math.max(b.from, b.to)) - g.y;
     const a = ia.active, sel = ia.selected;
     // a column's width: the step less the gap between columns
     const bw = step / (1 + parseFloat(GAP) / 100);

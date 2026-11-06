@@ -23,7 +23,7 @@ DSParts.records.push(function (H) {
   /* ── 07 Data Display › Charts › Bar chart (and Column chart, Stacked bar chart, Histogram): BarChart ── */
   var bar = function (o) { return h(P.BarChart, Object.assign({ title: 'Storage by team', description: 'Design uses the most storage, four times what Support uses.', categories: TEAMS, series: STORAGE, valueLabel: 'Storage (GB)' }, o)); };
   var barChart = { id: 'bar-chart', lab: true, icon: 'chart', sec: 'data-display', sub: 'Charts', leaf: 'Bar chart', title: 'Bar chart',
-    plenix: 'BarChart, binValues', src: 'charts/BarChart.jsx', also: ['charts/chart-kit.ts'], css: CSS('bar-chart.css'), blocks: ['plx-bar-chart'],
+    plenix: 'BarChart, binValues', src: 'charts/BarChart.tsx', also: ['charts/chart-kit.ts'], css: CSS('bar-chart.css'), blocks: ['plx-bar-chart'],
     level: 'Component', interaction: 'Display',
     aliases: ['Horizontal bar chart', 'Column chart', 'Vertical bar chart', 'Grouped bar chart', 'Stacked bar chart', '100% stacked bar chart', 'Histogram'],
     covers: ['Column chart', 'Stacked bar chart', 'Histogram'],
@@ -59,7 +59,7 @@ DSParts.records.push(function (H) {
   var RATE = [{ id: 'rate', label: 'Approval rate', values: [0.86, 0.88, 0.91, 0.89, 0.92, 0.9] }];
   var combo = function (o) { return h(P.ComboChart, Object.assign({ title: 'Uploads and approval rate', description: 'Uploads grew by 60% while the approval rate held near 90%.', categories: MONTHS, bars: UPLOADS.slice(0, 1), lines: RATE, axis: 'dual', barLabel: 'Uploads', lineLabel: 'Approval rate', formatLine: function (v) { return P.formatPercent(v); } }, o)); };
   var comboChart = { id: 'combo-chart', lab: true, icon: 'chart', sec: 'data-display', sub: 'Charts', leaf: 'Combo chart', title: 'Combo chart',
-    plenix: 'ComboChart', src: 'charts/ComboChart.jsx', also: ['charts/chart-kit.ts'], css: CSS('combo-chart.css'), blocks: ['plx-combo-chart'],
+    plenix: 'ComboChart', src: 'charts/ComboChart.tsx', also: ['charts/chart-kit.ts'], css: CSS('combo-chart.css'), blocks: ['plx-combo-chart'],
     level: 'Component', interaction: 'Display',
     aliases: ['Bar and line chart', 'Dual-axis chart', 'Column and line chart', 'Mixed chart'],
     text: 'Two related measures on one category axis: columns for the main amount, and a line with points for the second (a rate, a target, a running figure). Both share one value axis when they have the same unit, or each has its own (axis="dual": the columns’ axis on the start side, the line’s on the end side, each titled with its unit). The legends name each series and its kind (square swatches for columns, line swatches for lines); one tooltip per category gives every value.',

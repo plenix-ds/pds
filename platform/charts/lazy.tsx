@@ -39,12 +39,12 @@ function lazyChart(name: any, load: any, fallback: any) {
 
 export const LineChart = lazyChart('LineChart', () => import('./LineChart.tsx'), caption);
 export const AreaChart = lazyChart('AreaChart', () => import('./AreaChart.tsx'), caption);
-export const BarChart = lazyChart('BarChart', () => import('./BarChart.jsx'), caption);
+export const BarChart = lazyChart('BarChart', () => import('./BarChart.tsx'), caption);
 export const PieChart = lazyChart('PieChart', () => import('./PieChart.tsx'), caption);
 export const TreeChart = lazyChart('TreeChart', () => import('./TreeChart.jsx'), caption);
-export const WaterfallChart = lazyChart('WaterfallChart', () => import('./WaterfallChart.jsx'), caption);
-export const ComboChart = lazyChart('ComboChart', () => import('./ComboChart.jsx'), caption);
-export const ScatterChart = lazyChart('ScatterChart', () => import('./ScatterChart.jsx'), caption);
+export const WaterfallChart = lazyChart('WaterfallChart', () => import('./WaterfallChart.tsx'), caption);
+export const ComboChart = lazyChart('ComboChart', () => import('./ComboChart.tsx'), caption);
+export const ScatterChart = lazyChart('ScatterChart', () => import('./ScatterChart.tsx'), caption);
 export const LollipopChart = lazyChart('LollipopChart', () => import('./LollipopChart.tsx'), caption);
 export const BulletChart = lazyChart('BulletChart', () => import('./BulletChart.tsx'), caption);
 export const FunnelChart = lazyChart('FunnelChart', () => import('./FunnelChart.tsx'), caption);
