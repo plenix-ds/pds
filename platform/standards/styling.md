@@ -290,6 +290,7 @@ height, the focus border, a font family, internal paddings. Plenix's own applica
 | Follows surrounding typography | Inherits its text style and declares none of it | An inline link in a sentence |
 | Inherits with a documented adjustment | Inherits the role and sets only the documented properties | Emphasized text that changes weight only |
 | Establishes a role | Applies a complete role | A heading; a label; a DM Sans badge inside a Reddit Mono data cell; a code value |
+| Context-sized | Takes its family and weight from a role (or its own named modifier), and its size, letter spacing, line height and word spacing from the text around it, each written as an explicit `inherit` | A data pill at the size of its sentence; a link; rich text in a card or an article |
 
 **The boundary rule.** When a component changes text role, it must set every property that would otherwise carry
 across incompatibly. This applies most of all between ordinary and technical text: family and word spacing at least.
@@ -298,6 +299,15 @@ The word-spacing leak happened exactly there.
 - A parent sets only its own text context. It never targets a child's class to change its text.
 - A word spacing written in em turns into pixels where it is declared, and descendants inherit those pixels. A role
   applied at its own size reads the token again, at its own size.
+
+**Context-sized parts.** Some parts must take their size from the text around them, or they break what they're for: a data pill at the size of its sentence, a link, rich text. Such a part:
+
+- sets `font-family` and `font-weight` from a role (or its own named modifier, such as the standalone link's data font);
+- writes **`inherit`**, on purpose, for each of `font-size`, `letter-spacing`, `line-height` and `word-spacing` it doesn't take from that role.
+
+Only an explicit `inherit` counts as "follows the context". A missing declaration, or `unset`, `initial` or `revert`, is still a finding, so a forgotten property can't pass as deliberate. A part that would inherit all six properties isn't a text part; it declares no contract. The context-sized parts are listed as `context-sized` in `text-contracts.json`, so the list stays visible.
+
+A part's rule that styles a **descendant it doesn't name** (for example the data font on `code` inside rich text, `.plx-rich-text :where(code)`) is that descendant's typography, not the part's contract.
 
 **Declared contracts.** `platform/standards/text-contracts.json` declares the contract of every part that sets
 typography (by its class, a variant by its modifier class): `establishes` with its role and font (sans or mono), `follows` in
