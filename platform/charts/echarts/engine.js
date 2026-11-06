@@ -108,6 +108,9 @@ export function chartTokens(where) {
       folded: cs(tree.folded).fill, focus: { color: cs(tree.focus).stroke, width: num(cs(tree.focus).strokeWidth) },
       name: font(tree.name), nameFocus: font(tree.nameFocus), detail: font(tree.detail),
       gap: len(prop('--plx-comp-tree-chart-label-gap')), leaf: len(prop('--plx-comp-tree-chart-leaf-spacing')), level: len(prop('--plx-comp-tree-chart-level-spacing')) },
+    // a scatter plot's look (ScatterChart): a point's radius, its fill opacity (a bubble's own), its outline, and the trend line's width and dashes
+    scatter: { r: len(prop('--plx-comp-scatter-point-radius')), pointOpacity: num(prop('--plx-comp-scatter-point-opacity')), bubbleOpacity: num(prop('--plx-comp-scatter-bubble-opacity')),
+      outline: len(prop('--plx-comp-scatter-point-outline-width')), trend: { width: len(prop('--plx-comp-scatter-trend-width')), dash: len(prop('--plx-comp-scatter-trend-dash')), gap: len(prop('--plx-comp-scatter-trend-gap')) } },
     // the values not in focus dim to the interaction's token; the drawing's animation is the motion token (reduced motion: 0)
     dim: num(prop('--plx-comp-chart-interaction-dim-opacity')) || 1,
     motion: ms(prop('--plx-sys-motion-duration-slow')),
