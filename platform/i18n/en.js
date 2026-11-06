@@ -775,6 +775,10 @@ export default {
       "one": "{n} cell pasted",
       "other": "{n} cells pasted"
     },
+    "cellsFilled": {
+      "one": "{n} cell filled",
+      "other": "{n} cells filled"
+    },
     "cellsSkipped": {
       "one": "{n} cell skipped",
       "other": "{n} cells skipped"

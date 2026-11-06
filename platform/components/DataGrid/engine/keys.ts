@@ -134,7 +134,7 @@ export const rowKeys =
   };
 
 export const cellKeys =
-  ({ isStatic, value, canEdit, enterEdits, typeToReplace, formMode, toggle, setEditing, row, c, model, ordered, column, frame, focusCell, cellRange, undoRedo, kept, cardList }: any) =>
+  ({ isStatic, value, canEdit, enterEdits, typeToReplace, formMode, toggle, setEditing, row, c, model, ordered, column, frame, focusCell, cellRange, undoRedo, fillDown, kept, cardList }: any) =>
   (event: any) => {
     if (isStatic || event.target !== event.currentTarget) return;
     // a checkbox cell (the option editing.types): Space toggles it and saves at once (ADR 0016)
@@ -166,6 +166,13 @@ export const cellKeys =
         cellRange.copy();
         return;
       }
+    }
+    // fill down (the option editing.fill, ADR 0021): Ctrl or Command with D copies the selected block's top row down through it; with no block it
+    // does nothing (and leaves the browser's own key alone)
+    if (fillDown && cellRange?.rect && (event.ctrlKey || event.metaKey) && !event.altKey && !event.shiftKey && event.key.toLowerCase() === 'd') {
+      event.preventDefault();
+      fillDown();
+      return;
     }
     // undo and redo of cell edits (the option editing.undo, ADR 0021): Ctrl or Command with Z undoes, with Shift or with Y redoes; only
     // inside this table. Without the option the keys are the browser's.
