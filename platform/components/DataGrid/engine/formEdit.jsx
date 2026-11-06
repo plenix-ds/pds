@@ -29,7 +29,7 @@ import { ErrorSummary } from '../../ErrorSummary/ErrorSummary.tsx';
 import { Text } from '../../Text/Text.tsx';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden.tsx';
 import { useDirection } from '../../../providers/DirectionProvider.tsx';
-import { valueText } from '../cells.jsx';
+import { valueText } from '../cells.tsx';
 import { valueAt } from '../state.ts';
 
 const BUILT_IN = ['select', 'combobox', 'tags', 'date', 'checkbox', 'textarea', 'person'];

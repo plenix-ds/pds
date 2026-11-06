@@ -10,7 +10,7 @@
      Moved out of DataGridEngine.jsx without any change to the code (issue 688). The engine is documented in DataGridEngine.jsx.
 */
 import React from 'react';
-import { valueText } from '../cells.jsx';
+import { valueText } from '../cells.tsx';
 import type { GridColumn } from '../types.ts';
 import AttachmentIcon from 'plenix-platform/icons/plenix/attachment';
 import CalendarIcon from 'plenix-platform/icons/plenix/calendar';

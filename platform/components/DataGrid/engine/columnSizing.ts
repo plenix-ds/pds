@@ -14,7 +14,7 @@
 */
 import type React from 'react';
 import { kinds } from './helpers.tsx';
-import { valueText } from '../cells.jsx';
+import { valueText } from '../cells.tsx';
 import { valueAt } from '../state.ts';
 import type { Table, Column } from '@tanstack/react-table';
 import type { GridColumn, DataRecord } from '../types.ts';

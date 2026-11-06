@@ -20,7 +20,7 @@ import { tokenPixels } from '../environment.ts';
 import { gridStep, snapToGrid } from '../../../utils/grid.ts';
 import { kinds, typeOf } from './helpers.tsx';
 import { valueAt } from '../state.ts';
-import { valueText } from '../cells.jsx';
+import { valueText } from '../cells.tsx';
 import type { GridColumn } from '../types.ts';
 
 type PillRow = { original?: Record<string, unknown> };
