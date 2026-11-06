@@ -189,6 +189,7 @@ import { useRowTemplate } from './engine/rowTemplate.ts';
 import { useDataGridActions } from './actions.tsx';
 import { unreadCommands } from './unread-commands.ts';
 import { ToastProvider, useOptionalToast } from '../Toast/Toast.tsx';
+import type { IconValue } from '../Icon/Icon.tsx';
 
 /* The public types (issue 292, ADR 0011, G3 ruling on #292; ADR 0016 for the editing props). Written from the Props block above.
    Records are R; what a column holds is unknown unless its type narrows it; callbacks get R. */
@@ -254,7 +255,7 @@ export type DataGridColumn<R = Record<string, unknown>> = {
   /** one kind, or several that combine as a list */
   kind?: DataGridColumnKind | DataGridColumnKind[];
   type?: DataGridColumnType;
-  icon?: unknown;
+  icon?: IconValue | React.ReactNode;
   groupable?: boolean;
   groupRange?: number;
   groupBucket?(value: unknown): string;
@@ -278,7 +279,7 @@ export type DataGridColumn<R = Record<string, unknown>> = {
   wrap?: boolean;
   rowHandle?: boolean;
   /** a technical or custom pill for the pill view; false keeps the plain value */
-  pill?: false | ((value: unknown, record: R) => { tone?: string; icon?: unknown; variant?: string; data?: boolean; gender?: string; fill?: boolean } | void);
+  pill?: false | ((value: unknown, record: R) => { tone?: string; icon?: IconValue | React.ReactNode; variant?: string; data?: boolean; gender?: string; fill?: boolean } | void);
   /** ADR 0016 */
   editor?: EditorType | { component: React.ComponentType<CellEditorProps>; props?: object };
   editorProps?: {
@@ -294,11 +295,13 @@ export type DataGridColumn<R = Record<string, unknown>> = {
 };
 
 /** @public */
-export type DataGridMenuAction<R> = { label?: string; icon?: unknown; onSelect?(record: R): void; danger?: boolean; disabled?: boolean; separator?: boolean };
+export type DataGridMenuAction<R> = { label?: string; icon?: IconValue | React.ReactNode; onSelect?(record: R): void; danger?: boolean; disabled?: boolean; separator?: boolean };
 /** @public */
-export type DataGridColumnMenuAction = { label?: string; icon?: unknown; onSelect?(column: DataGridColumn<any>): void; danger?: boolean; disabled?: boolean; separator?: boolean };
+export type DataGridColumnMenuAction<R = Record<string, unknown>> = { label?: string; icon?: IconValue | React.ReactNode; onSelect?(column: DataGridColumn<R>): void; danger?: boolean; disabled?: boolean; separator?: boolean };
+/** @public a row's key: the value of its `index` field */
+export type DataGridKey = string | number;
 /** @public */
-export type DataGridCellPoint = { rowId: unknown; field: string };
+export type DataGridCellPoint = { rowId: DataGridKey; field: string };
 /** @public */
 export type DataGridRowTemplate = { title?: string; subtitle?: string; date?: string; primary?: string; secondary?: string; tertiary?: string };
 /** @public */
@@ -316,14 +319,14 @@ export type DataGridProps<R = Record<string, unknown>> = {
   index?: keyof R & string;
   columns: DataGridColumn<R>[];
   selectable?: boolean;
-  selected?: unknown[];
-  onSelectionChange?(keys: unknown[], info: { count: number; hidden: number }): void;
+  selected?: DataGridKey[];
+  onSelectionChange?(keys: DataGridKey[], info: { count: number; hidden: number }): void;
   keepHiddenSelection?: boolean;
   cellSelection?: boolean;
   onCellSelectionChange?(change: { from: DataGridCellPoint; to: DataGridCellPoint; cellCount: number; rowCount: number; columnCount: number; fields: string[] } | null): void;
   unread?(record: R): boolean;
-  unreadKeys?: unknown[];
-  onUnreadChange?(keys: unknown[], info: { unreadCount: number }): void;
+  unreadKeys?: DataGridKey[];
+  onUnreadChange?(keys: DataGridKey[], info: { unreadCount: number }): void;
   markReadOnOpen?: boolean;
   readDelay?: number;
   unreadOnly?: boolean;
@@ -345,7 +348,7 @@ export type DataGridProps<R = Record<string, unknown>> = {
   uniformPillWidths?: boolean;
   typeIcons?: boolean;
   headerMenu?: boolean;
-  columnMenu?: DataGridColumnMenuAction[];
+  columnMenu?: DataGridColumnMenuAction<R>[];
   rowMenu?: DataGridMenuAction<R>[] | ((record: R) => DataGridMenuAction<R>[]);
   rowMenuButton?: boolean;
   /** the page's view */
@@ -395,7 +398,7 @@ export type DataGridProps<R = Record<string, unknown>> = {
 // a toast when the page has a ToastProvider; nothing otherwise. Toast's own hook, not ReviewFlow's: ReviewFlow would pull the command bar, the quick filter, the avatar and a dialog into every grid (issue 807)
 
 // the row menu's actions with Undo, as the CommandBar's selection commands
-function ActionTable(props: any) { const rowMenu = useDataGridActions(props.rowMenu, undefined, props.strings), shaped = useRowTemplate(props); return <DataGridEngine {...shaped} rowMenu={rowMenu} />; }
+function ActionTable(props: DataGridProps<any>) { const rowMenu = useDataGridActions(props.rowMenu, undefined, props.strings), shaped = useRowTemplate(props); return <DataGridEngine {...shaped} rowMenu={rowMenu} />; }
 
 export function DataGrid<R = Record<string, unknown>>(props: DataGridProps<R>) { const toast = useOptionalToast(); return toast ? <ActionTable {...props} /> : <ToastProvider><ActionTable {...props} /></ToastProvider>; }
 DataGrid.useActions = useDataGridActions;

@@ -13,7 +13,7 @@ export type GridColumn = {
   type?: string;
   /** "data", "id", "email", "tags", "actions", "wrap" … one name or several */
   kind?: string | string[];
-  sorter?: string;
+  sorter?: string | ((...args: any[]) => number);
   rowHandle?: boolean;
   [key: string]: unknown;
 };
