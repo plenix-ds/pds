@@ -16,14 +16,23 @@
    Notes: The row menu offers the same two commands for one row; the grid keeps unread rows bold with the start bar. */
 import MailIcon from 'plenix-platform/icons/plenix/mail';
 import MarkUnreadIcon from 'plenix-platform/icons/plenix/mark-unread';
-export function unreadCommands({ unreadKeys = [], onUnreadChange, selected = [], unreadOnly = false, onUnreadOnlyChange, strings } = {}) {
+type UnreadKey = string | number;
+export interface UnreadCommandsOptions {
+  unreadKeys?: UnreadKey[];
+  onUnreadChange?: (keys: string[], info: { unreadCount: number }) => void;
+  selected?: UnreadKey[];
+  unreadOnly?: boolean;
+  onUnreadOnlyChange?: (next: boolean) => void;
+  strings?: { unread?: string; markRead?: string; markUnread?: string };
+}
+export function unreadCommands({ unreadKeys = [], onUnreadChange, selected = [], unreadOnly = false, onUnreadOnlyChange, strings }: UnreadCommandsOptions = {}) {
   const t = Object.assign({ unread: 'Unread ({count})', markRead: 'Mark as read', markUnread: 'Mark as unread' }, strings);
   const keys = new Set(unreadKeys.map(String)), picked = selected.map(String);
-  const change = (next) => { const list = [...next]; onUnreadChange && onUnreadChange(list, { unreadCount: list.length }); };
+  const change = (next: Iterable<string>) => { const list = [...next]; onUnreadChange && onUnreadChange(list, { unreadCount: list.length }); };
   const anyUnread = picked.some((k) => keys.has(k)), anyRead = picked.some((k) => !keys.has(k));
   return {
     filter: { id: 'unread', label: t.unread.replace('{count}', String(keys.size)), icon: MarkUnreadIcon, toggle: true, pressed: !!unreadOnly,
-      onSelect: (next) => onUnreadOnlyChange && onUnreadOnlyChange(typeof next === 'boolean' ? next : !unreadOnly) },
+      onSelect: (next?: unknown) => onUnreadOnlyChange && onUnreadOnlyChange(typeof next === 'boolean' ? next : !unreadOnly) },
     selection: [
       { id: 'mark-read', label: t.markRead, icon: MailIcon, disabled: !anyUnread, onSelect: () => change([...keys].filter((k) => !picked.includes(k))) },
       { id: 'mark-unread', label: t.markUnread, icon: MarkUnreadIcon, disabled: !anyRead, onSelect: () => change(new Set([...keys, ...picked])) },

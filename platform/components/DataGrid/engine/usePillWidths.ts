@@ -16,7 +16,7 @@
 */
 import React from 'react';
 import { pillSheet, pillFont } from '../engine/pill.js';
-import { tokenPixels } from '../environment.js';
+import { tokenPixels } from '../environment.ts';
 import { gridStep, snapToGrid } from '../../../utils/grid.ts';
 import { kinds, typeOf } from './helpers.tsx';
 import { valueAt } from '../state.ts';

@@ -18,7 +18,7 @@ import { failureState, manageFailed, viewMenu, emptyRow, moreRow, pagesFooter, l
 import { cx } from '../../../utils/cx.ts';
 import { lengthName } from './helpers.tsx';
 import { tableKeys } from './keys.js';
-import { tokenPixels } from '../environment.js';
+import { tokenPixels } from '../environment.ts';
 import { WidthPixels, Check, Width, RowGap, PixelGap } from './parts.jsx';
 import { Scrollbars } from '../scrollbars.jsx';
 import { Rare } from './rare.jsx';

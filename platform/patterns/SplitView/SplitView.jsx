@@ -70,7 +70,7 @@
      data grid's (data-grid-border, shape-md, border-width-thin).
 */
 import React from 'react';
-import { GridPane } from '../../components/DataGrid/room.js';
+import { GridPane } from '../../components/DataGrid/room.ts';
 import { useAppLayout } from '../AppShell/AppShell.tsx';
 import { cx } from '../../utils/cx.ts';
 import { Resizable } from '../../components/Resizable/Resizable.tsx';
