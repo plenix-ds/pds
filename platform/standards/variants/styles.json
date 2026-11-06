@@ -4194,5 +4194,73 @@
   "diagram--variant-read-only": {
     "sets": [],
     "why": "markup only: a picture with its steps as a table; no one Tab stop walks the flow"
+  },
+  "sparkline--size-inline-default": {
+    "sets": [
+      {
+        "property": "block-size",
+        "part": "block",
+        "token": "--plx-comp-sparkline-inline-height"
+      },
+      {
+        "property": "inline-size",
+        "part": "block",
+        "token": "--plx-comp-sparkline-inline-width"
+      }
+    ],
+    "why": ".plx-sparkline--inline"
+  },
+  "sparkline--size-fill": {
+    "sets": [
+      {
+        "property": "block-size",
+        "part": "block",
+        "token": "--plx-comp-sparkline-fill-height"
+      }
+    ],
+    "why": ".plx-sparkline--fill also sets display: block and inline-size: 100% (a keyword and a percentage, no token)"
+  },
+  "timeline--variant-with-icons": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "marker",
+        "token": "--plx-comp-timeline-icon-marker-background"
+      },
+      {
+        "property": "border-color",
+        "part": "marker",
+        "token": "--plx-comp-timeline-icon-marker-border-color"
+      },
+      {
+        "property": "border-width",
+        "part": "marker",
+        "token": "--plx-comp-timeline-icon-marker-border-width"
+      },
+      {
+        "property": "border-radius",
+        "part": "marker",
+        "token": "--plx-comp-timeline-marker-radius"
+      },
+      {
+        "property": "color",
+        "part": "marker",
+        "token": "--plx-comp-timeline-icon-color"
+      },
+      {
+        "property": "--plx-comp-icon-size",
+        "part": "marker",
+        "token": "--plx-comp-timeline-icon-size"
+      }
+    ],
+    "why": ".plx-timeline__marker--icon: the marker holds an icon, in a ring"
+  },
+  "timeline--variant-vertical-default": {
+    "sets": [],
+    "why": "markup only: vertical is the base layout; .plx-timeline--horizontal is the other variation"
+  },
+  "stack--gap-stack-none": {
+    "sets": [],
+    "why": ".plx-stack--gap-none sets column-gap and row-gap to 0, a value with no token"
   }
 }
