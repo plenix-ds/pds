@@ -178,7 +178,7 @@ export default function FormEdit({ record, rowKey, columns, isEditable, name, ty
                   {empty ? (
                     <>
                       <span aria-hidden="true">{S.emptyValue}</span>
-                      <VisuallyHidden>{S.noValue}</VisuallyHidden>
+                      <VisuallyHidden>{S.formNoValue}</VisuallyHidden>
                     </>
                   ) : (
                     valueText(shown)

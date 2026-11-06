@@ -17,13 +17,14 @@ const PORT = +process.env.TEST_PORT || 8878;
       return { out, folded: !!(find && find.querySelector('button[aria-label="Find and view"]')), field: !!(find && find.querySelector('input')) };
     });
     await page.goto('http://localhost:' + PORT + '/Plenix/tests/fixtures/stages/commandbar-find-fold.html?find=more', { waitUntil: 'domcontentloaded' });
-    await page.waitForSelector('.plx-command-bar'); await new Promise((r) => setTimeout(r, 600));
+    await page.waitForSelector('.plx-command-bar'); await page.evaluate(() => document.fonts.ready); await new Promise((r) => setTimeout(r, 600));
+    // the bar fits again when the fonts finish loading (useBarFit), so measure only after they have (issue 42)
     let s = await state();
     assert.equal(s.folded, false, 'wide: the find side is in the bar'); assert.equal(s.out, false);
     await page.evaluate(() => document.getElementById('stage').classList.add('rv-tiny'));
-    await page.waitForFunction(() => !!document.querySelector('.plx-command-bar__find button[aria-label="Find and view"]'), { timeout: 10000 }).catch(() => {});
+    await page.waitForFunction(() => !!document.querySelector('.plx-command-bar__find button[aria-label="Find and view"]'), { timeout: 20000 }).catch(() => {});
     s = await state();
-    assert.equal(s.folded, true, 'narrow: Find and view ' + JSON.stringify(s)); assert.equal(s.out, false, 'nothing past the bar');
+    assert.equal(s.folded, true, 'narrow: Find and view ' + JSON.stringify(Object.assign(s, { fonts: await page.evaluate(() => document.fonts.status), bar: await page.evaluate(() => document.querySelector('.plx-command-bar__row').getBoundingClientRect().width) }))); assert.equal(s.out, false, 'nothing past the bar');
     await page.click('.plx-command-bar__find button[aria-label="Find and view"]');
     await page.waitForSelector('[role="dialog"] input', { timeout: 5000 });
     await page.type('[role="dialog"] input', 'maya');

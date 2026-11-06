@@ -155,7 +155,7 @@ DSParts.records.push(function (H) {
     use: ['Content and assets that others see: pages, assets in a shared library, announcements', 'Schedule when the release time matters', 'The audience in the question: “It becomes visible to everyone in the library.”', 'Status only for people who cannot publish'],
     avoid: ['Publishing on save: publishing is its own action', 'Publish for a private save: that is Save', 'Approval itself: an item waiting for sign-off is in a review flow'],
     related: ['unpublish', 'review-flow', 'confirmation-dialog', 'date-picker'],
-    map: [[POL, 'Publishing (visibility card)', 'Partial'], [ATL, 'Lozenge with publish button', 'Partial'], [CAR, 'Tag status with a primary action', 'Partial']],
+    map: [[POL, 'Publishing (visibility card)', 'Partial'], [ATL, 'Lozenge with publish button', 'Partial'], [CAR, 'Tag status with a primary action', 'Partial'], ['Frappe', 'Web Page and Website Item (published)', 'Partial']],
     variantPages: [
       vp('Publish now', 'State', 'Publish now (default)', { variant: 'draft' }, 'A draft: the neutral Draft badge with its pencil, “Not published”, then Schedule and Publish; Publish asks first, naming the audience.', 'Items ready to go live now', 'Items that still need sign-off'),
       vp('Scheduled publishing', 'State', 'Schedule', { variant: 'scheduled' }, 'The Scheduled badge with its clock and the time in the data font, then Cancel schedule and Publish now; Schedule asks for a date and time in the future.', 'Releases tied to a date: services, campaigns, notices', 'Times people cannot see in their own time zone'),

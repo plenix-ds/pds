@@ -1,6 +1,6 @@
 // Unit tests for the locale checks (#192). Each check: a case that passes and a case that fails.
 import { describe, it, expect } from 'vitest';
-import { checkCatalogs, checkJsx, checkUnused, newFindings, approvedMap, parseCatalogModule, entries } from './locale.mjs';
+import { checkCatalogs, checkJsx, checkUnused, newFindings, approvedMap, parseCatalogModule, entries, duplicateKeys } from './locale.mjs';
 import { pseudoString, pseudoCatalog } from './pseudo.mjs';
 import { formatNumber, formatDate } from '../../../platform/utils/format.ts';
 
@@ -100,6 +100,19 @@ describe('only new problems block', () => {
   });
   it('reports a new missing Arabic key without blocking (the word waits for the owner)', () => {
     expect(newFindings([], [{ rule: 'missing-ar', file: 'platform/i18n/ar.js', message: 'x.y: no Arabic' }])).toEqual([]);
+  });
+});
+
+describe('duplicate keys (#720)', () => {
+  it('finds a key written twice in one object, with its path', () => {
+    const text = '{\n "dataGrid": {\n  "noValue": "(Empty)",\n  "x": { "noValue": "ok" },\n  "noValue": "No value"\n }\n}';
+    expect(duplicateKeys(text)).toEqual([{ path: 'dataGrid.noValue', line: 5 }]);
+  });
+  it('passes the same key in different objects, and keys inside strings', () => {
+    expect(duplicateKeys('{ "a": { "k": "1" }, "b": { "k": "\\"k\\": 2" } }')).toEqual([]);
+  });
+  it('reads an export-default module too', () => {
+    expect(duplicateKeys('// c\nexport default {\n "a": "1",\n "a": "2"\n};\n')).toEqual([{ path: 'a', line: 4 }]);
   });
 });
 

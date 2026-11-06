@@ -7,5 +7,5 @@ export { LollipopChart } from '../charts/lazy.tsx';
 export { ScatterChart } from '../charts/lazy.tsx';
 export { FunnelChart } from '../charts/lazy.tsx';
 export { Treemap } from '../charts/lazy.tsx';
-export { GanttChart } from '../charts/GanttChart.jsx';
-export { GeoMap } from '../charts/GeoMap.jsx';
+export { GanttChart } from '../charts/GanttChart.tsx';
+export { GeoMap } from '../charts/GeoMap.tsx';
