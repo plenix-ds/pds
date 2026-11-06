@@ -25,8 +25,10 @@ export type ChartScale = {
 export type ChartInner = { width: number; height: number };
 /** @public the frame's margins in pixels */
 export type ChartMargin = { top?: number; end?: number; bottom?: number; start?: number };
+/** @public a value on a chart axis: a number, a category or a date */
+export type ChartValue = string | number | Date;
 /** @public the ticks of an axis or its grid lines: how many to aim for, or the values */
-export type ChartTicks = number | Array<string | number | Date>;
+export type ChartTicks = number | ChartValue[];
 /** @public one value in a tooltip */
 export type ChartTooltipItem = { label?: string; value?: React.ReactNode; color?: string };
 /** @public one series in a legend */

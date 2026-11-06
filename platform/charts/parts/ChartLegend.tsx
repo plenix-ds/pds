@@ -57,7 +57,7 @@ export function ChartLegend({ items = [], orientation = 'horizontal', shape = 's
   const off = hidden === undefined ? own : hidden;
   const o = orientation === 'vertical' ? 'vertical' : 'horizontal';
   const s = shape === 'line' ? 'line' : 'square';
-  const toggle = (id: any) => {
+  const toggle = (id: string | number) => {
     const visible = off.indexOf(id) >= 0;
     // the last series shown stays shown: a chart never goes empty from its legend
     if (!visible && items.length - off.length <= 1) return;
