@@ -206,7 +206,7 @@ DSParts.records.push(function (H) {
 
   /* ── 07 Data Display › Charts › Waterfall: WaterfallChart ── */
   var waterfall = { id: 'waterfall-chart', lab: true, icon: 'chart', sec: 'data-display', sub: 'Charts', leaf: 'Waterfall', title: 'Waterfall',
-    plenix: 'WaterfallChart, waterfallSteps', src: 'charts/WaterfallChart.tsx', css: ['charts/waterfall-chart.css'], blocks: ['plx-waterfall-chart'], level: 'Component', interaction: 'Navigation', statesFrom: ['chart-interaction'],
+    plenix: 'WaterfallChart, waterfallSteps', src: 'charts/WaterfallChart.jsx', css: ['charts/waterfall-chart.css'], blocks: ['plx-waterfall-chart'], level: 'Component', interaction: 'Navigation', statesFrom: ['chart-interaction'],
     variantClasses: ['plx-waterfall-chart--subtotals'],
     aliases: ['Waterfall chart', 'Bridge chart', 'Variance chart', 'Cascade chart'],
     text: 'How a starting total becomes an end total through increases and decreases. Totals are columns from zero; each change floats from the running total before it, with its signed value above it (+240, −110) and a dashed connector to the next. Increases, decreases and totals each have their own color, named in the legend. With totals, subtotal columns show the running total part way.',

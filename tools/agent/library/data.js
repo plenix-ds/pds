@@ -223,7 +223,7 @@ t('LollipopChart', 'component', 'S', 8, 'B', ['chart-parts'], ['horizontal', 've
 t('Sparkline', 'component', 'S', 8, 'C', ['ChartKit'], ['line', 'area', 'bar', 'with last point'], '', ['platform/charts/Sparkline.tsx']);
 t('Metric', 'extend', 'S', 8, 'C', ['Sparkline'], ['card with trend'], 'Metric card = Card + Metric + Sparkline', EX.Metric);
 t('PieChart', 'component', 'M', 8, 'C', ['chart-parts'], ['pie', 'donut', 'with center value', 'half'], '', ['platform/charts/PieChart.tsx']);
-t('ScatterChart', 'component', 'M', 8, 'C', ['chart-parts'], ['scatter', 'bubble (size)', 'with trend line'], '', ['platform/charts/ScatterChart.tsx']);
+t('ScatterChart', 'component', 'M', 8, 'C', ['chart-parts'], ['scatter', 'bubble (size)', 'with trend line'], '', ['platform/charts/ScatterChart.jsx']);
 t('Gauge', 'component', 'S', 8, 'B', ['ChartKit'], ['semicircle', 'with thresholds'], '', ['platform/charts/Gauge.tsx']);
 t('BulletChart', 'component', 'S', 8, 'B', ['chart-parts'], ['horizontal', 'vertical'], '', ['platform/charts/BulletChart.tsx']);
 
@@ -231,7 +231,7 @@ t('BulletChart', 'component', 'S', 8, 'B', ['chart-parts'], ['horizontal', 'vert
 t('HeatMap', 'component', 'M', 9, 'A', ['chart-parts'], ['matrix', 'calendar heat map'], '', ['platform/charts/HeatMap.tsx']);
 t('BoxPlot', 'component', 'M', 9, 'A', ['chart-parts'], ['vertical', 'horizontal', 'with outliers'], '', ['platform/charts/BoxPlot.tsx']);
 t('FunnelChart', 'component', 'S', 9, 'A', ['chart-parts'], ['vertical', 'horizontal'], '', ['platform/charts/FunnelChart.tsx']);
-t('WaterfallChart', 'component', 'S', 9, 'A', ['chart-parts'], ['with totals'], '', ['platform/charts/WaterfallChart.tsx']);
+t('WaterfallChart', 'component', 'S', 9, 'A', ['chart-parts'], ['with totals'], '', ['platform/charts/WaterfallChart.jsx']);
 t('RadarChart', 'component', 'S', 9, 'A', ['chart-parts'], ['single', 'compare'], '', ['platform/charts/RadarChart.tsx']);
 t('Treemap', 'component', 'M', 9, 'B', ['ChartKit'], ['flat', 'nested'], 'squarify layout', ['platform/charts/Treemap.tsx']);
 t('SankeyDiagram', 'component', 'L', 9, 'B', ['ChartKit'], ['horizontal'], 'own layout (no d3)', ['platform/charts/SankeyDiagram.jsx']);

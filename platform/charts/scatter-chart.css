@@ -1,4 +1,4 @@
-/* Plenix · ScatterChart (platform/charts/ScatterChart.tsx), drawn in ChartFrame (system/charts.css) with the chart parts.
+/* Plenix · ScatterChart (platform/charts/ScatterChart.jsx), drawn in ChartFrame (system/charts.css) with the chart parts.
    Points take their series' data-viz color (data-plx-dataviz) and are a little transparent so overlaps show; the frame
    keeps room for both axis titles (its margin tokens, set here). Every value is a --plx-comp-scatter-* token. */
 .plx-scatter{--plx-comp-chart-margin-block-end:var(--plx-comp-scatter-margin-block-end);--plx-comp-chart-margin-inline-start:var(--plx-comp-scatter-margin-inline-start);--plx-comp-chart-margin-block-start:var(--plx-comp-scatter-margin-block-start);--plx-comp-chart-margin-inline-end:var(--plx-comp-scatter-margin-inline-end);}

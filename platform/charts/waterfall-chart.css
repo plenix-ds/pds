@@ -1,4 +1,4 @@
-/* Plenix · WaterfallChart (platform/charts/waterfall-chart.css; the code is WaterfallChart.tsx): the connector between
+/* Plenix · WaterfallChart (platform/charts/waterfall-chart.css; the code is WaterfallChart.jsx): the connector between
    one step's end and the next step's start. The columns are the frame's marks (plx-chart__mark) in their data-viz steps;
    their labels are DataLabels. Every value is a --plx-comp-waterfall-chart-* token. */
 .plx-waterfall-chart__connector{fill:none;pointer-events:none;stroke:var(--plx-comp-waterfall-chart-connector-color);stroke-dasharray:var(--plx-comp-waterfall-chart-connector-dash) var(--plx-comp-waterfall-chart-connector-dash);stroke-width:var(--plx-comp-waterfall-chart-connector-width);}
