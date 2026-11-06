@@ -3419,5 +3419,125 @@
       }
     ],
     "why": ".plx-chart-tooltip: one point's value in a small framed box beside the point"
+  },
+  "download-manager--variant-panel": {
+    "sets": [],
+    "why": "markup only: the panel, progress and ready are which parts render; download-manager.css styles only the root"
+  },
+  "download-manager--variant-progress": {
+    "sets": [],
+    "why": "markup only: the panel, progress and ready are which parts render; download-manager.css styles only the root"
+  },
+  "download-manager--variant-ready": {
+    "sets": [],
+    "why": "markup only: the panel, progress and ready are which parts render; download-manager.css styles only the root"
+  },
+  "drop-target--state-accepts-or-rejects": {
+    "sets": [],
+    "why": "markup only: whether it accepts or rejects and the data attribute are behavior; it has no stylesheet"
+  },
+  "drop-target--variant-data-drop-target": {
+    "sets": [],
+    "why": "markup only: whether it accepts or rejects and the data attribute are behavior; it has no stylesheet"
+  },
+  "otp-input--kind-alphanumeric": {
+    "sets": [],
+    "why": "markup only: the kind and length change the cells and the characters allowed; otp-input.css has no modifier for them (the invalid and warning looks are separate states)"
+  },
+  "otp-input--kind-masked": {
+    "sets": [],
+    "why": "markup only: the kind and length change the cells and the characters allowed; otp-input.css has no modifier for them (the invalid and warning looks are separate states)"
+  },
+  "otp-input--length-4-characters-a-pin": {
+    "sets": [],
+    "why": "markup only: the kind and length change the cells and the characters allowed; otp-input.css has no modifier for them (the invalid and warning looks are separate states)"
+  },
+  "otp-input--length-6-characters-default": {
+    "sets": [],
+    "why": "markup only: the kind and length change the cells and the characters allowed; otp-input.css has no modifier for them (the invalid and warning looks are separate states)"
+  },
+  "permissions-editor--variant-per-person": {
+    "sets": [],
+    "why": "markup only: per-person or roles-and-capabilities changes the rows it renders; permissions-editor.css styles only the root"
+  },
+  "permissions-editor--variant-roles-and-capabilities": {
+    "sets": [],
+    "why": "markup only: per-person or roles-and-capabilities changes the rows it renders; permissions-editor.css styles only the root"
+  },
+  "presence-bar--variant-cursors-list": {
+    "sets": [],
+    "why": "markup only: which people it lists (viewers, editors, cursors) changes the content; presence-bar.css styles only the root"
+  },
+  "presence-bar--variant-editors": {
+    "sets": [],
+    "why": "markup only: which people it lists (viewers, editors, cursors) changes the content; presence-bar.css styles only the root"
+  },
+  "presence-bar--variant-viewers": {
+    "sets": [],
+    "why": "markup only: which people it lists (viewers, editors, cursors) changes the content; presence-bar.css styles only the root"
+  },
+  "prompt-history--variant-list": {
+    "sets": [],
+    "why": "markup only: list or search changes which parts render; prompt-history.css styles only the root"
+  },
+  "prompt-history--variant-search": {
+    "sets": [],
+    "why": "markup only: list or search changes which parts render; prompt-history.css styles only the root"
+  },
+  "prompt-suggestions--variant-cards": {
+    "sets": [],
+    "why": "markup only: cards or chips are the Card or Chip parts it renders; prompt-suggestions.css styles only the root"
+  },
+  "prompt-suggestions--variant-chips": {
+    "sets": [],
+    "why": "markup only: cards or chips are the Card or Chip parts it renders; prompt-suggestions.css styles only the root"
+  },
+  "recent-searches--list-recent-searches": {
+    "sets": [],
+    "why": "markup only: the list and its clear action are parts it renders; it has no stylesheet"
+  },
+  "recent-searches--list-recent-searches-with-clear": {
+    "sets": [],
+    "why": "markup only: the list and its clear action are parts it renders; it has no stylesheet"
+  },
+  "recommendation--variant-row": {
+    "sets": [],
+    "why": "markup only: the row layout and the reason are parts it renders; recommendation.css styles only the root"
+  },
+  "recommendation--variant-with-reason": {
+    "sets": [],
+    "why": "markup only: the row layout and the reason are parts it renders; recommendation.css styles only the root"
+  },
+  "related-assets--variant-grid": {
+    "sets": [],
+    "why": "markup only: grid or strip is the layout passed to the grid part; related-assets.css styles only the root"
+  },
+  "related-assets--variant-strip": {
+    "sets": [],
+    "why": "markup only: grid or strip is the layout passed to the grid part; related-assets.css styles only the root"
+  },
+  "search-result-group--footer-a-link-to-all-default": {
+    "sets": [],
+    "why": "markup only: the footer (link, heading, show more) is a part it renders; it has no stylesheet"
+  },
+  "search-result-group--footer-heading-only": {
+    "sets": [],
+    "why": "markup only: the footer (link, heading, show more) is a part it renders; it has no stylesheet"
+  },
+  "search-result-group--footer-show-more-in-place": {
+    "sets": [],
+    "why": "markup only: the footer (link, heading, show more) is a part it renders; it has no stylesheet"
+  },
+  "search-suggestions--list-suggestions": {
+    "sets": [],
+    "why": "markup only: the suggestion list is the part it renders; it has no stylesheet"
+  },
+  "suggested-action--variant-card": {
+    "sets": [],
+    "why": "markup only: card or chip is the part it renders; suggested-action.css styles only the root"
+  },
+  "suggested-action--variant-chip": {
+    "sets": [],
+    "why": "markup only: card or chip is the part it renders; suggested-action.css styles only the root"
   }
 }
