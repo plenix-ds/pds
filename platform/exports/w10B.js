@@ -3,6 +3,6 @@
 // Data review workflow, Human review) and AssignControl (Assign, Delegate).
 export { WorkflowStatus, WORKFLOW_STATUSES, ReviewFlow, ReviewQueue } from '../patterns/ReviewFlow/ReviewFlow.jsx';
 export { DeleteFlow } from '../patterns/DeleteFlow/DeleteFlow.tsx';
-export { DuplicateAction, copyName } from '../patterns/DuplicateAction/DuplicateAction.jsx';
+export { DuplicateAction, copyName } from '../patterns/DuplicateAction/DuplicateAction.tsx';
 export { Publish } from '../patterns/Publish/Publish.jsx';
 export { AssignControl } from '../patterns/AssignControl/AssignControl.tsx';

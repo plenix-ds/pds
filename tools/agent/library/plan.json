@@ -1007,7 +1007,7 @@
       "platform/standards/themes.json",
       "platform/tokens/semantic/ai.tokens.json",
       "platform/system/ai.css",
-      "platform/patterns/ContentGrid/ContentGrid.jsx",
+      "platform/patterns/ContentGrid/ContentGrid.tsx",
       "platform/patterns/ContentGrid/content-grid.css",
       "platform/components/Columns/Columns.jsx",
       "platform/components/Columns/columns.css",
@@ -1300,7 +1300,7 @@
       "platform/components/CommandMenu/CommandMenu.tsx",
       "platform/components/CommandMenu/command-menu.css",
       "platform/tokens/components/command-menu.tokens.json",
-      "platform/patterns/CommandPalette/CommandPalette.jsx",
+      "platform/patterns/CommandPalette/CommandPalette.tsx",
       "platform/patterns/CommandPalette/command-palette.css",
       "platform/tokens/components/command-palette.tokens.json",
       "platform/components/Tooltip/Tooltip.jsx",
@@ -1829,7 +1829,7 @@
       "platform/charts/RadarChart.tsx",
       "platform/charts/ComboChart.tsx",
       "platform/charts/TimelineChart.tsx",
-      "platform/patterns/ComparisonView/ComparisonView.jsx",
+      "platform/patterns/ComparisonView/ComparisonView.tsx",
       "platform/patterns/ComparisonView/comparison-view.css",
       "platform/tokens/components/comparison-view.tokens.json"
      ],
@@ -1966,7 +1966,7 @@
       "platform/design-system/parts/w10B.{records,labs,docs}.js + .css",
       "platform/exports/w10B.{js,css}",
       "platform/standards/web-native-map.d/w10B.json",
-      "platform/patterns/DuplicateAction/DuplicateAction.jsx",
+      "platform/patterns/DuplicateAction/DuplicateAction.tsx",
       "platform/patterns/DuplicateAction/duplicate-action.css",
       "platform/tokens/components/duplicate-action.tokens.json",
       "platform/patterns/DeleteFlow/DeleteFlow.jsx",
@@ -2028,7 +2028,7 @@
       "platform/patterns/Autosave/Autosave.tsx",
       "platform/patterns/Autosave/autosave.css",
       "platform/tokens/components/autosave.tokens.json",
-      "platform/patterns/DraftState/DraftState.jsx",
+      "platform/patterns/DraftState/DraftState.tsx",
       "platform/patterns/DraftState/draft-state.css",
       "platform/tokens/components/draft-state.tokens.json",
       "platform/patterns/SaveAs/SaveAs.jsx",
@@ -2082,7 +2082,7 @@
       "platform/patterns/RoleManager/RoleManager.jsx",
       "platform/patterns/RoleManager/role-manager.css",
       "platform/tokens/components/role-manager.tokens.json",
-      "platform/patterns/ConnectedAccounts/ConnectedAccounts.jsx",
+      "platform/patterns/ConnectedAccounts/ConnectedAccounts.tsx",
       "platform/patterns/ConnectedAccounts/connected-accounts.css",
       "platform/tokens/components/connected-accounts.tokens.json",
       "platform/patterns/SessionTimeout/SessionTimeout.jsx",
@@ -2285,7 +2285,7 @@
       "platform/components/MediaPlayer/MediaPlayer.jsx",
       "platform/components/MediaPlayer/media-player.css",
       "platform/tokens/components/media-player.tokens.json",
-      "platform/patterns/DownloadManager/DownloadManager.jsx",
+      "platform/patterns/DownloadManager/DownloadManager.tsx",
       "platform/patterns/DownloadManager/download-manager.css",
       "platform/tokens/components/download-manager.tokens.json",
       "platform/patterns/MetadataEditor/MetadataEditor.jsx",
@@ -2412,7 +2412,7 @@
       "platform/components/Comment/Comment.tsx",
       "platform/components/Comment/comment.css",
       "platform/tokens/components/comment.tokens.json",
-      "platform/patterns/CommentThread/CommentThread.jsx",
+      "platform/patterns/CommentThread/CommentThread.tsx",
       "platform/patterns/CommentThread/comment-thread.css",
       "platform/tokens/components/comment-thread.tokens.json",
       "platform/patterns/ImageAnnotation/ImageAnnotation.jsx",
@@ -3794,7 +3794,7 @@
    "wave": 3,
    "lane": "C",
    "files": [
-    "platform/patterns/ContentGrid/ContentGrid.jsx",
+    "platform/patterns/ContentGrid/ContentGrid.tsx",
     "platform/patterns/ContentGrid/content-grid.css"
    ],
    "dependsOn": [],
@@ -4757,7 +4757,7 @@
    "wave": 5,
    "lane": "C",
    "files": [
-    "platform/patterns/CommandPalette/CommandPalette.jsx",
+    "platform/patterns/CommandPalette/CommandPalette.tsx",
     "platform/patterns/CommandPalette/command-palette.css",
     "platform/tokens/components/command-palette.tokens.json"
    ],
@@ -6416,7 +6416,7 @@
    "wave": 9,
    "lane": "B",
    "files": [
-    "platform/patterns/ComparisonView/ComparisonView.jsx",
+    "platform/patterns/ComparisonView/ComparisonView.tsx",
     "platform/patterns/ComparisonView/comparison-view.css",
     "platform/tokens/components/comparison-view.tokens.json"
    ],
@@ -6815,7 +6815,7 @@
    "wave": 10,
    "lane": "B",
    "files": [
-    "platform/patterns/DuplicateAction/DuplicateAction.jsx",
+    "platform/patterns/DuplicateAction/DuplicateAction.tsx",
     "platform/patterns/DuplicateAction/duplicate-action.css",
     "platform/tokens/components/duplicate-action.tokens.json"
    ],
@@ -7017,7 +7017,7 @@
    "wave": 10,
    "lane": "C",
    "files": [
-    "platform/patterns/DraftState/DraftState.jsx",
+    "platform/patterns/DraftState/DraftState.tsx",
     "platform/patterns/DraftState/draft-state.css",
     "platform/tokens/components/draft-state.tokens.json"
    ],
@@ -7191,7 +7191,7 @@
    "wave": 11,
    "lane": "A",
    "files": [
-    "platform/patterns/ConnectedAccounts/ConnectedAccounts.jsx",
+    "platform/patterns/ConnectedAccounts/ConnectedAccounts.tsx",
     "platform/patterns/ConnectedAccounts/connected-accounts.css",
     "platform/tokens/components/connected-accounts.tokens.json"
    ],
@@ -7750,7 +7750,7 @@
    "wave": 12,
    "lane": "B",
    "files": [
-    "platform/patterns/DownloadManager/DownloadManager.jsx",
+    "platform/patterns/DownloadManager/DownloadManager.tsx",
     "platform/patterns/DownloadManager/download-manager.css",
     "platform/tokens/components/download-manager.tokens.json"
    ],
@@ -8087,7 +8087,7 @@
    "wave": 13,
    "lane": "B",
    "files": [
-    "platform/patterns/CommentThread/CommentThread.jsx",
+    "platform/patterns/CommentThread/CommentThread.tsx",
     "platform/patterns/CommentThread/comment-thread.css",
     "platform/tokens/components/comment-thread.tokens.json"
    ],
@@ -10762,7 +10762,7 @@
    "target": "ContentGrid",
    "targetKind": "extend",
    "files": [
-    "platform/patterns/ContentGrid/ContentGrid.jsx",
+    "platform/patterns/ContentGrid/ContentGrid.tsx",
     "platform/patterns/ContentGrid/content-grid.css"
    ],
    "laneFiles": [
@@ -12137,7 +12137,7 @@
    "target": "CommandPalette",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/CommandPalette/CommandPalette.jsx",
+    "platform/patterns/CommandPalette/CommandPalette.tsx",
     "platform/patterns/CommandPalette/command-palette.css",
     "platform/tokens/components/command-palette.tokens.json"
    ],
@@ -12431,7 +12431,7 @@
    "target": "DuplicateAction",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/DuplicateAction/DuplicateAction.jsx",
+    "platform/patterns/DuplicateAction/DuplicateAction.tsx",
     "platform/patterns/DuplicateAction/duplicate-action.css",
     "platform/tokens/components/duplicate-action.tokens.json"
    ],
@@ -16033,7 +16033,7 @@
    "target": "ComparisonView",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/ComparisonView/ComparisonView.jsx",
+    "platform/patterns/ComparisonView/ComparisonView.tsx",
     "platform/patterns/ComparisonView/comparison-view.css",
     "platform/tokens/components/comparison-view.tokens.json"
    ],
@@ -18037,7 +18037,7 @@
    "target": "DraftState",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/DraftState/DraftState.jsx",
+    "platform/patterns/DraftState/DraftState.tsx",
     "platform/patterns/DraftState/draft-state.css",
     "platform/tokens/components/draft-state.tokens.json"
    ],
@@ -18102,7 +18102,7 @@
    "targetKind": "pattern",
    "duplicateOf": "actions/Duplicate",
    "files": [
-    "platform/patterns/DuplicateAction/DuplicateAction.jsx",
+    "platform/patterns/DuplicateAction/DuplicateAction.tsx",
     "platform/patterns/DuplicateAction/duplicate-action.css",
     "platform/tokens/components/duplicate-action.tokens.json"
    ],
@@ -18258,7 +18258,7 @@
    "targetKind": "pattern",
    "duplicateOf": "data-display/Comparison view",
    "files": [
-    "platform/patterns/ComparisonView/ComparisonView.jsx",
+    "platform/patterns/ComparisonView/ComparisonView.tsx",
     "platform/patterns/ComparisonView/comparison-view.css",
     "platform/tokens/components/comparison-view.tokens.json"
    ],
@@ -19046,7 +19046,7 @@
    "target": "ConnectedAccounts",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/ConnectedAccounts/ConnectedAccounts.jsx",
+    "platform/patterns/ConnectedAccounts/ConnectedAccounts.tsx",
     "platform/patterns/ConnectedAccounts/connected-accounts.css",
     "platform/tokens/components/connected-accounts.tokens.json"
    ],
@@ -20206,7 +20206,7 @@
    "target": "DownloadManager",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/DownloadManager/DownloadManager.jsx",
+    "platform/patterns/DownloadManager/DownloadManager.tsx",
     "platform/patterns/DownloadManager/download-manager.css",
     "platform/tokens/components/download-manager.tokens.json"
    ],
@@ -20492,7 +20492,7 @@
    "target": "CommentThread",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/CommentThread/CommentThread.jsx",
+    "platform/patterns/CommentThread/CommentThread.tsx",
     "platform/patterns/CommentThread/comment-thread.css",
     "platform/tokens/components/comment-thread.tokens.json"
    ],
@@ -20525,7 +20525,7 @@
    "target": "CommentThread",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/CommentThread/CommentThread.jsx",
+    "platform/patterns/CommentThread/CommentThread.tsx",
     "platform/patterns/CommentThread/comment-thread.css",
     "platform/tokens/components/comment-thread.tokens.json"
    ],

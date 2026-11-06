@@ -20,7 +20,7 @@ import { Dialog } from '../../components/Dialog/Dialog.tsx';
 import { Field } from '../../components/Field/Field.tsx';
 import { Select } from '../../components/Input/Input.tsx';
 import { Notice } from '../../components/Notice/Notice.tsx';
-import { ComparisonView } from '../ComparisonView/ComparisonView.jsx';
+import { ComparisonView } from '../ComparisonView/ComparisonView.tsx';
 import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import CheckIcon from 'plenix-platform/icons/plenix/check';

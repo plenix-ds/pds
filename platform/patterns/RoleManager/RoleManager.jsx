@@ -67,7 +67,7 @@ import { Text } from '../../components/Text/Text.tsx';
 import { ResourceList } from '../ResourceList/ResourceList.jsx';
 import { PermissionSummary } from '../PermissionSummary/PermissionSummary.jsx';
 import { AssignControl } from '../AssignControl/AssignControl.tsx';
-import { DuplicateAction } from '../DuplicateAction/DuplicateAction.jsx';
+import { DuplicateAction } from '../DuplicateAction/DuplicateAction.tsx';
 import { DeleteFlow } from '../DeleteFlow/DeleteFlow.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import ArrowLeftIcon from 'plenix-platform/icons/plenix/arrow-left';

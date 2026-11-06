@@ -49,7 +49,7 @@ DSParts.records.push(function (H) {
           ['None', function () { return box(320, zone({ mode: 'dark', surface: 'none' }, h(P.Text, null, 'No fill of its own'))); }, null, 'surface="none"']]]] },
 
     /* ── 02 Layout & Composition ── */
-    { id: 'masonry-layout', lab: true, sec: 'layout', sub: 'Layout arrangements', leaf: 'Masonry layout', title: 'Masonry layout', plenix: 'ContentGrid layout="masonry" | "justified"', src: 'patterns/ContentGrid/ContentGrid.jsx',
+    { id: 'masonry-layout', lab: true, sec: 'layout', sub: 'Layout arrangements', leaf: 'Masonry layout', title: 'Masonry layout', plenix: 'ContentGrid layout="masonry" | "justified"', src: 'patterns/ContentGrid/ContentGrid.tsx',
       blocks: ['plx-content-grid'], variantClasses: ['plx-content-grid--masonry', 'plx-content-grid--justified'], level: 'Composite', interaction: 'Display', icon: 'grid-3x2',
       aliases: ['Masonry grid', 'Pinterest layout', 'Justified gallery', 'Image list (masonry)', 'Grid lanes'],
       text: 'The content grid for pictures of mixed shapes, in two forms. Masonry: columns of the card width, each picture at its own height, filled from the top of each column; nothing is cropped. Justified rows: rows of one height that fill the width, each picture as wide as its ratio; a few pixels are cropped to fill a row. Both keep the markup order.',

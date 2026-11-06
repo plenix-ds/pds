@@ -61,7 +61,7 @@ check('parseDate: a date-only value stays its calendar day in a US time zone #34
 check('parseDate: the parts that show dates read them through it, never on their own #342', () => {
   // the parts known to show dates: no new Date(<a name>) of their own (Time's bug was new Date(v))
   const NAMED = /new Date\(\s*[A-Za-z_$][\w$.]*\s*\)/;
-  for (const f of ['components/Time/Time.tsx', 'components/File/File.tsx', 'components/FileRow/FileRow.tsx', 'patterns/ConnectedAccounts/ConnectedAccounts.jsx',
+  for (const f of ['components/Time/Time.tsx', 'components/File/File.tsx', 'components/FileRow/FileRow.tsx', 'patterns/ConnectedAccounts/ConnectedAccounts.tsx',
     'patterns/VersionCompare/VersionCompare.jsx', 'patterns/FileList/FileList.jsx', 'patterns/ReviewFlow/ReviewFlow.jsx', 'patterns/AssignControl/AssignControl.tsx']) {
     assert.ok(!NAMED.test(fs.readFileSync(path.join(ROOT, 'platform', f), 'utf8')), f + ' builds a Date from a value itself: read it with parseDate (utils/format.ts), or add a reasoned exception here');
   }

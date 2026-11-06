@@ -36,7 +36,7 @@ import { FormFlow } from '../../patterns/FormFlow/FormFlow.jsx';
 import { Auth } from '../../patterns/Auth/Auth.jsx';
 import { SearchWorkspace } from '../../patterns/SearchWorkspace/SearchWorkspace.jsx';
 import { Stack } from '../../components/Stack/Stack.tsx';
-import { ContentGrid } from '../../patterns/ContentGrid/ContentGrid.jsx';
+import { ContentGrid } from '../../patterns/ContentGrid/ContentGrid.tsx';
 import { DataGrid } from '../../components/DataGrid/DataGrid.tsx';
 import { EmptyState } from '../../components/EmptyState/EmptyState.tsx';
 import { Button } from '../../components/Button/Button.tsx';

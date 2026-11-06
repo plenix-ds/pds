@@ -37,7 +37,17 @@ import { useVirtualizer, VirtualGap, VirtualProbe } from '../../hooks/useVirtual
 
 const RATIOS = ['1-1', '4-3', '3-2', '16-9', '21-9', '3-4', '9-16'];
 
-export function ContentGrid({ size = 'md', layout = 'grid', virtualized = false, label, className, children }) {
+/** @public */
+export type ContentGridProps = {
+  size?: 'xs' | 'sm' | 'md' | 'lg';
+  layout?: 'grid' | 'masonry' | 'justified';
+  /** draws only the card rows in view (ADR 0019); layout "grid" */
+  virtualized?: boolean;
+  label?: string;
+  className?: string;
+  children?: React.ReactNode;
+};
+export function ContentGrid({ size = 'md', layout = 'grid', virtualized = false, label, className, children }: ContentGridProps) {
   devWarn('ContentGrid', { size }, { size: ['xs','sm','md','lg'] });
   if (virtualized && layout !== 'grid') devWarn('ContentGrid', { virtualized: 'with layout ' + layout }, { virtualized: ['with layout grid (masonry and justified draw every card)'] });
   if (virtualized && layout === 'grid') return <VirtualGrid size={size} label={label} className={className}>{children}</VirtualGrid>;
@@ -46,7 +56,7 @@ export function ContentGrid({ size = 'md', layout = 'grid', virtualized = false,
     <ul aria-label={label} className={cx('plx-content-grid', 'plx-content-grid--' + size, layout !== 'grid' ? 'plx-content-grid--' + layout : null, className)}>
       {React.Children.map(children, (c) => {
         if (c === null || c === undefined || c === false) return null;
-        const ratio = justified ? (c.props && RATIOS.indexOf(c.props.ratio) >= 0 ? c.props.ratio : '4-3') : undefined;
+        const ratio = justified ? ((c as any).props && RATIOS.indexOf((c as any).props.ratio) >= 0 ? (c as any).props.ratio : '4-3') : undefined;
         return <li className="plx-content-grid__item" data-plx-ratio={ratio}>{c}</li>;
       })}
     </ul>
@@ -54,11 +64,11 @@ export function ContentGrid({ size = 'md', layout = 'grid', virtualized = false,
 }
 
 // the virtualized grid (ADR 0019): the same list, a scroll area at its container's height, only the rows in view drawn
-function VirtualGrid({ size, label, className, children }) {
-  const cards = React.Children.toArray(children).filter((c) => c !== null && c !== undefined && c !== false);
+function VirtualGrid({ size, label, className, children }: any) {
+  const cards: any[] = React.Children.toArray(children).filter((c: any) => c !== null && c !== undefined && c !== false);
   const v = useVirtualizer({ count: cards.length, grid: true, mode: 'measured' });
   return (
-    <ul ref={v.viewportRef} aria-label={label} className={cx('plx-content-grid', 'plx-content-grid--' + size, 'plx-content-grid--virtual', className)}>
+    <ul ref={v.viewportRef as any} aria-label={label} className={cx('plx-content-grid', 'plx-content-grid--' + size, 'plx-content-grid--virtual', className)}>
       {cards.length ? <VirtualProbe /> : null}
       {v.segments.map((s) => (s.gap ? <VirtualGap key={s.key} count={s.count} /> : <li key={s.key} className="plx-content-grid__item" {...v.itemProps(s.index)}>{cards[s.index]}</li>))}
     </ul>

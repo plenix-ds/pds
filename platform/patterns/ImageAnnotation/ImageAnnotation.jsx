@@ -16,7 +16,7 @@ import { useReposition } from '../../utils/dnd.ts';
 import { snapToGrid } from '../../utils/grid.ts';
 import { Image } from '../../components/Image/Image.tsx';
 import { Input, Select } from '../../components/Input/Input.tsx';
-import { CommentThread } from '../CommentThread/CommentThread.jsx';
+import { CommentThread } from '../CommentThread/CommentThread.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 function AnnotationMark({ annotation, index, active, onSelect, strings }) {
   const position = { x: snapToGrid(Number(annotation.x) || 0), y: snapToGrid(Number(annotation.y) || 0) };

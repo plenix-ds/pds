@@ -107,7 +107,7 @@ DSParts.records.push(function (H) {
   };
   var OPTIONS = [{ id: 'tags', label: 'Tags', defaultChecked: true }, { id: 'comments', label: 'Comments' }, { id: 'sharing', label: 'Sharing and members' }];
   var duplicateAction = { id: 'duplicate-action', lab: true, icon: 'ed-copy', sec: 'actions', sub: 'Common actions', leaf: 'Duplicate', title: 'Duplicate',
-    plenix: 'DuplicateAction, copyName', src: 'patterns/DuplicateAction/DuplicateAction.jsx', level: 'Pattern', interaction: 'Action', statesFrom: ['button'],
+    plenix: 'DuplicateAction, copyName', src: 'patterns/DuplicateAction/DuplicateAction.tsx', level: 'Pattern', interaction: 'Action', statesFrom: ['button'],
     aliases: ['Copy item', 'Make a copy', 'Clone'],
     text: 'Copies one item and puts the copy next to the original. Copy of the name duplicates at once: the copy is “Copy of Easter banner”, then “Copy of Easter banner (2)”, and a toast gives its name with Undo. Then rename asks first: a small dialog with the copy’s name selected, a line saying what is copied, and checkboxes for what else comes along.',
     use: ['Items people make in similar forms: boards, templates, rules, assets', 'Copy of the name for a quick copy people rename later', 'Then rename when the copy needs its own name now, or a choice of what to copy', 'Comments, members and sharing left out unless people choose them'],
@@ -133,7 +133,7 @@ DSParts.records.push(function (H) {
       }]
     ] };
   var duplicatePattern = { id: 'duplicate-pattern', icon: 'ed-copy', sec: 'patterns', sub: 'Creation and editing', leaf: 'Duplicate', title: 'Duplicate (pattern)',
-    plenix: 'DuplicateAction, copyName', src: 'patterns/DuplicateAction/DuplicateAction.jsx', level: 'Pattern', interaction: 'Action', statesFrom: ['duplicate-action'],
+    plenix: 'DuplicateAction, copyName', src: 'patterns/DuplicateAction/DuplicateAction.tsx', level: 'Pattern', interaction: 'Action', statesFrom: ['duplicate-action'],
     variantClasses: [], docsFrom: 'duplicate-action', aliases: ['Copy flow', 'Clone flow'],
     text: 'The duplicate workflow is the Duplicate action: a copy named “Copy of …” next to the original, with Undo in the toast, or a rename dialog first. Its page is in Actions › Common actions › Duplicate.',
     use: ['Starting a new item from an existing one, in the item’s menu or as a bulk action', 'Saying in the toast what the copy is called'],

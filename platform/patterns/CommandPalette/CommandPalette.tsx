@@ -39,30 +39,53 @@ import { useStrings } from '../../providers/LocaleProvider.tsx';
 
 
 // a one-step binding as aria-keyshortcuts writes it (Mod+K: Control+K, or Meta+K on a Mac)
-const keyshortcut = (b) => (/\s/.test(String(b).trim()) ? undefined : String(b).trim().split('+').map((k) => (/^mod$/i.test(k) ? (isMac() ? 'Meta' : 'Control') : /^ctrl$/i.test(k) ? 'Control' : k)).join('+'));
+const keyshortcut = (b: any) => (/\s/.test(String(b).trim()) ? undefined : String(b).trim().split('+').map((k) => (/^mod$/i.test(k) ? (isMac() ? 'Meta' : 'Control') : /^ctrl$/i.test(k) ? 'Control' : k)).join('+'));
 
+/** @public */
+export type CommandPaletteProps = {
+  /** the commands, as CommandMenu.items */
+  items?: unknown[];
+  /** the binding that opens it (default "Mod+K"); null for none */
+  hotkey?: string | null;
+  /** a ref to the region the hotkey belongs to */
+  scope?: React.RefObject<HTMLElement | null>;
+  /** a control that opens it (one element) */
+  trigger?: React.ReactElement;
+  open?: boolean;
+  defaultOpen?: boolean;
+  onOpenChange?(open: boolean): void;
+  title?: string;
+  placeholder?: string;
+  loading?: boolean;
+  query?: string;
+  onQueryChange?(query: string): void;
+  filter?(item: unknown, query: string): boolean;
+  onSelect?(item: unknown): void;
+  strings?: Record<string, unknown>;
+  className?: string;
+};
 export function CommandPalette({ items = [], hotkey = 'Mod+K', scope, trigger, open: openProp, defaultOpen = false, onOpenChange, title, placeholder,
-  loading, query, onQueryChange, filter, onSelect, strings, className }) {
-  const t = useStrings('commandPalette', strings);
+  loading, query, onQueryChange, filter, onSelect, strings, className }: CommandPaletteProps) {
+  const t: any = useStrings('commandPalette', strings);
   const controlled = openProp !== undefined;
-  const [own, setOwn] = React.useState(!!defaultOpen);
+  const [own, setOwn] = React.useState<any>(!!defaultOpen);
   const open = controlled ? !!openProp : own;
-  const setOpen = (v) => { if (!controlled) setOwn(v); if (onOpenChange) onOpenChange(v); };
-  const field = React.useRef(null);
+  const setOpen = (v: any) => { if (!controlled) setOwn(v); if (onOpenChange) onOpenChange(v); };
+  const field = React.useRef<any>(null);
   const name = title || t.title;
   useHotkey(hotkey, () => setOpen(!open), { scope, allowInFields: true, label: name, group: 'General', enabled: !!hotkey });
-  const chosen = (item) => { setOpen(false); if (onSelect) onSelect(item); };
+  const chosen = (item: any) => { setOpen(false); if (onSelect) onSelect(item); };
   const opener = trigger ? React.cloneElement(React.Children.only(trigger), {
     'aria-haspopup': 'dialog', 'aria-keyshortcuts': hotkey ? keyshortcut(hotkey) : undefined,
-    onClick: (e) => { if (trigger.props.onClick) trigger.props.onClick(e); setOpen(true); },
+    onClick: (e: any) => { if (trigger.props.onClick) trigger.props.onClick(e); setOpen(true); },
   }) : null;
   return (
     <>
       {opener}
       <Dialog open={open} onClose={() => setOpen(false)} title={name} size="md" initialFocus={field} closeLabel={t.close}
         className={cx('plx-command-palette', className)}>
-        {open ? <CommandMenu ref={field} items={items} label={name} placeholder={placeholder} loading={loading} query={query} onQueryChange={onQueryChange}
-          filter={filter} onSelect={chosen} strings={strings} className="plx-command-palette__menu" /> : null}
+        {open ? <CommandMenu ref={field} items={items as any} label={name} placeholder={placeholder} loading={loading} query={query} onQueryChange={onQueryChange}
+          filter={filter as any} onSelect={chosen} strings={strings} className="plx-command-palette__menu" /> : null}
       </Dialog>
     </>
   );
