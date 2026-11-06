@@ -53,7 +53,6 @@ import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatNumber, formatPercent } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.jsx';
-import { niceTicks } from './scales.js';
 import { ChartLegend } from './parts/ChartLegend.jsx';
 import { ChartTooltip, chartTooltipText } from './parts/ChartTooltip.jsx';
 import { DataLabel } from './parts/DataLabel.jsx';
@@ -61,7 +60,7 @@ import { useChartInteraction } from './interaction.js';
 import { labelRoom, withColors, legendItems } from './chart-kit.js';
 import { useEChartsPlot, plotGrid, NO_MARGIN } from './echarts/EChartsPlot.jsx';
 import { tickLineHeight } from './echarts/engine.js';
-import { gridRoom } from './LineChart.jsx';
+import { gridRoom, binValues } from './chart-helpers.js';
 import { snapToGrid } from '../utils/grid.ts';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 
@@ -76,23 +75,7 @@ const CATEGORY_GAP = '20%', SERIES_GAP = '10%';
 // a bar's box in plot pixels, whatever way ECharts measured it (a negative width or height for bars that go back)
 const boxOf = (l) => (l && isFinite(l.x) && isFinite(l.width) ? { x: Math.min(l.x, l.x + l.width), y: Math.min(l.y, l.y + l.height), width: Math.abs(l.width), height: Math.abs(l.height) } : null);
 
-export function binValues(values, { bins, domain } = {}) {
-  const v = (values || []).map(Number).filter((x) => isFinite(x));
-  if (!v.length) return [];
-  const lo = domain ? Number(domain[0]) : Math.min.apply(null, v);
-  const hi = domain ? Number(domain[1]) : Math.max.apply(null, v);
-  const n = Math.max(1, Math.round(bins || Math.ceil(Math.log2(v.length) + 1)));
-  const t = niceTicks(lo, hi, n);
-  let edges = t.ticks;
-  if (edges.length < 2) edges = [t.start, t.start + t.step];
-  const out = edges.slice(0, -1).map((x0, i) => ({ x0, x1: edges[i + 1], count: 0 }));
-  v.forEach((x) => {
-    if (x < edges[0] || x > edges[edges.length - 1]) return;
-    const i = Math.min(out.length - 1, Math.floor((x - edges[0]) / t.step));
-    if (i >= 0) out[i].count += 1;
-  });
-  return out;
-}
+export { binValues } from './chart-helpers.js';
 
 export function BarChart({ title, description, hideCaption, size, categories = NONE, series = NONE, orientation = 'horizontal', layout = 'grouped',
   histogram, valueLabel, categoryLabel, format, showValues = false, legend, legendPosition, tooltip = true, margin, strings, className }) {

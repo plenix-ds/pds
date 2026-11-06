@@ -1,0 +1,5 @@
+        { Button }       94.1 KB    33.2 KB gzipped   limit 105 KB   (esbuild 499.4 KB, cross-check)
+        { Badge }        16.5 KB     6.7 KB gzipped   limit 30 KB   (esbuild 499.4 KB, cross-check)
+        { DataGrid }    429.3 KB   141.2 KB gzipped   limit 450 KB   (esbuild 508.5 KB, cross-check)
+        * as P         1445.2 KB   460.3 KB gzipped   limit 1450 KB   (esbuild 1458.4 KB, cross-check)
+BUNDLE_OK

@@ -50,6 +50,7 @@ import { ChartTooltip, chartTooltipText } from './parts/ChartTooltip.jsx';
 import { DataLabel } from './parts/DataLabel.jsx';
 import { useChartInteraction } from './interaction.js';
 import { legendItems, finite } from './chart-kit.js';
+import { pieSlices } from './chart-helpers.js';
 import { useEChartsPlot, NO_MARGIN } from './echarts/EChartsPlot.jsx';
 import { snapToGrid } from '../utils/grid.ts';
 import { useStrings } from '../providers/LocaleProvider.tsx';
@@ -57,7 +58,6 @@ import { useStrings } from '../providers/LocaleProvider.tsx';
 const VARIANTS = ['pie', 'donut', 'half'];
 const HOLE = 0.6;            // the hollow center's radius, a share of the ring's radius
 const LABEL_MIN = 0.08;      // the least share written on its slice
-const OTHER_COLOR = 'categorical-6';
 // px: a margin that keeps the ring off the frame's edges (on the 4px grid)
 const RING_MARGIN = { top: 8, end: 8, bottom: 8, start: 8 };
 const TURN = Math.PI * 2;
@@ -65,22 +65,7 @@ const TURN = Math.PI * 2;
 // the point at an angle (0 = 12 o'clock, clockwise) and a radius from the center
 const at = (cx0, cy0, r, a) => [cx0 + r * Math.sin(a), cy0 - r * Math.cos(a)];
 
-// the parts to draw: colors by the data's order, the smallest beyond maxSlices grouped into Other, sorted by size
-export function pieSlices(data, { sort = true, maxSlices = 6, other = 'Other' } = {}) {
-  const parts = (data || []).map((d, i) => ({ id: d.id === undefined ? String(i) : d.id, label: d.label, value: Math.max(0, finite(d.value)), color: d.color, index: i }))
-    .filter((d) => d.value > 0);
-  let kept = parts, rest = [];
-  if (parts.length > maxSlices) {
-    const bySize = parts.slice().sort((a, b) => b.value - a.value);
-    const keep = new Set(bySize.slice(0, Math.max(1, maxSlices - 1)).map((d) => d.id));
-    kept = parts.filter((d) => keep.has(d.id)); rest = parts.filter((d) => !keep.has(d.id));
-  }
-  kept = kept.map((d, i) => Object.assign({}, d, { color: d.color || seriesColor(i) }));
-  if (sort) kept.sort((a, b) => b.value - a.value);
-  if (rest.length) kept.push({ id: '__other', label: other, value: rest.reduce((a, d) => a + d.value, 0), color: OTHER_COLOR, index: -1, parts: rest });
-  const total = kept.reduce((a, d) => a + d.value, 0);
-  return kept.map((d) => Object.assign(d, { share: total ? d.value / total : 0 }));
-}
+export { pieSlices } from './chart-helpers.js';
 
 export function PieChart({ title, description, hideCaption, size, data = [], variant = 'pie', centerValue, centerLabel, sort = true, maxSlices = 6,
   format, showValues = false, legend, legendPosition, tooltip = true, interactive = true, margin, strings, className }) {
