@@ -12,15 +12,18 @@
 // - Starts only while long-work windows (everything but product-lead and delivery-lead) are below
 //   long_work.max_running and free memory stays at or above start_new_below_free_gb after each start
 //   (each start is counted at memory.per_agent_limit_gb).
-// - Order: highest severity of the role's issues (sev:S1 first), then its oldest issue.
+// - Order (#769): the role's priority (release > integrate > verify > build > design > spec > evergreen), then the highest
+//   severity of its issues (sev:S1 first), then its oldest issue. long_work.reserved_gate_slots are kept for gate roles.
 // - Parked roles (agents.config.yaml roles: parked: true, for example mobile-app-builder, D-0013) are never started.
-// - Stop: a long-work window that is idle (no "esc to interrupt", unchanged for 30 minutes), whose role has no waiting
+// - Stop: a long-work window idle for long_work.idle_exit_min (from its activity record, .claude/hooks/activity.cjs; a
+//   window without a record falls back to the screen: no "esc to interrupt" and unchanged), whose role has no waiting
 //   issue, no open PR labeled for it and no open PR from the branch checked out in its worktree.
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { load, roles, setting } from './registry.mjs';
+import { idleFor, admit } from './capacity.mjs';
 
 const REPO = 'plenix-ds/pds';
 const SESSION = process.env.PDS1_SESSION || 'pds1';
@@ -32,7 +35,7 @@ const ROLES = roles(REG);
 const COORDINATORS = setting(REG, 'coordinators.roles').map((r) => r.replace(/^pds1-/, ''));
 const PARKED = ROLES.filter((r) => r.parked === true).map((r) => r.id);
 const INSTANCES = new Map(ROLES.map((r) => [r.id, r.instances || 1]));
-const IDLE_STOP_S = Number(process.env.NUDGE_STOP_IDLE_S || 1800);
+const BY_ID = new Map(ROLES.map((r) => [r.id, r]));
 const startable = process.argv.slice(2).filter((r) => !COORDINATORS.includes(r) && !PARKED.includes(r));
 
 const run = (cmd, args) => execFileSync(cmd, args, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64 * 1024 * 1024 });
@@ -42,6 +45,8 @@ const gh = (...args) => JSON.parse(run('gh', args));
 const maxLong = Number(process.env.NUDGE_MAX_LONG || setting(REG, 'long_work.max_running'));
 const minFreeGb = Number(setting(REG, 'memory.start_new_below_free_gb'));
 const perAgentGb = Number(setting(REG, 'memory.per_agent_limit_gb'));
+const IDLE_STOP_S = Number(process.env.NUDGE_STOP_IDLE_S || setting(REG, 'long_work.idle_exit_min') * 60);
+const reserved = Number(setting(REG, 'long_work.reserved_gate_slots'));
 const freeGb = Number(process.env.NUDGE_FREE_GB || (() => {
   const m = fs.readFileSync('/proc/meminfo', 'utf8').match(/^MemAvailable:\s+(\d+) kB/m);
   return m ? Number(m[1]) / 1048576 : 0;
@@ -73,10 +78,15 @@ try {
     .map((l) => { const [name, act] = l.split(' '); return { name, act: Number(act) }; }).filter((w) => w.name !== 'shell');
 } catch { console.log('note team session not running: nothing to start or stop'); process.exit(0); }
 const roleOf = (win) => win.replace(/-\d+$/, '');
-const busy = (win) => { try { return /esc to interrupt/.test(run('tmux', ['capture-pane', '-p', '-t', `${SESSION}:${win}`]).split('\n').slice(-12).join('\n')); } catch { return false; } };
+const screenBusy = (win) => { try { return /esc to interrupt/.test(run('tmux', ['capture-pane', '-p', '-t', `${SESSION}:${win}`]).split('\n').slice(-12).join('\n')); } catch { return false; } };
 const running = new Set(windows.map((w) => w.name));
 const long = windows.filter((w) => !COORDINATORS.includes(roleOf(w.name)));
 const now = Math.floor(Date.now() / 1000);
+// activity (#769): the record .claude/hooks/activity.cjs writes; a window without one falls back to the screen and tmux
+const ACTIVITY = path.join(ROOT, '.activity');
+const record = (win) => { try { return JSON.parse(fs.readFileSync(path.join(ACTIVITY, `${win}.json`), 'utf8')); } catch { return null; } };
+const idleSeconds = (w) => { const s = idleFor(record(w.name), now); return s === null ? (screenBusy(w.name) ? 0 : now - w.act) : s; };
+const busy = (win) => idleSeconds(windows.find((w) => w.name === win) || { name: win, act: now }) === 0;
 
 // stops first: a freed slot can go to a waiting role in the same run
 const stops = [];
@@ -86,13 +96,13 @@ for (const w of long) {
   // instance k of a multi-instance role may stop when its role has fewer than k waiting issues
   const k = Number((/-(\d+)$/.exec(w.name) || [])[1] || 1);
   if (waiting && !(INSTANCES.get(role) > 1 && k > 1 && waiting.count < k)) continue;
-  if (now - w.act < IDLE_STOP_S || busy(w.name)) continue;
+  if (idleSeconds(w) < IDLE_STOP_S) continue;
   if (prLabeled(role)) continue;
   let branch = '';
   try { branch = run('git', ['-C', path.join(ROOT, 'work', w.name), 'rev-parse', '--abbrev-ref', 'HEAD']).trim(); } catch { continue; }
   if (prHeads.has(branch)) continue;
   stops.push(w.name);
-  console.log(`stop ${w.name} | no waiting issue, no open PR, idle ${Math.round((now - w.act) / 60)} min`);
+  console.log(`stop ${w.name} | no waiting issue, no open PR, idle ${Math.round(idleSeconds(w) / 60)} min (long_work.idle_exit_min)`);
 }
 
 // starts: waiting roles without a window, by severity then oldest issue
@@ -112,14 +122,16 @@ for (const role of startable) {
     candidates.push({ role, n: '', ...r });
   }
 }
-candidates.sort((a, b) => a.sev - b.sev || a.oldest.localeCompare(b.oldest));
-let slots = maxLong - (long.length - stops.length);
-let mem = freeGb + stops.length * perAgentGb;
-for (const c of candidates) {
+// reserved gate slots (#769): gate windows still running use them first
+const gateRunning = long.filter((w) => !stops.includes(w.name) && BY_ID.get(roleOf(w.name))?.gate === true).length;
+const budget = { slots: maxLong - (long.length - stops.length), reservedLeft: Math.max(0, reserved - gateRunning),
+  mem: freeGb + stops.length * perAgentGb, perAgentGb, minFreeGb };
+const withRole = candidates.map((c) => ({ ...c, priority: BY_ID.get(c.role)?.priority, gate: BY_ID.get(c.role)?.gate === true }));
+for (const c of admit(withRole, budget)) {
   const what = `${c.role}${c.n ? ' ' + c.n : ''}`;
-  const why = `${c.count} waiting issue${c.count > 1 ? 's' : ''} (${c.sev < 5 ? 'S' + c.sev : 'no severity'}, oldest ${c.oldest.slice(0, 10)}, e.g. #${c.numbers.slice(0, 3).join(', #')})`;
-  if (slots <= 0) { console.log(`note waiting ${what}: no long-work slot (${long.length - stops.length}/${maxLong}) | ${why}`); continue; }
-  if (mem - perAgentGb < minFreeGb) { console.log(`note waiting ${what}: memory ${mem.toFixed(1)} GB free, needs ${minFreeGb} GB after a ${perAgentGb} GB session | ${why}`); continue; }
-  console.log(`start ${c.role}${c.n ? ' ' + c.n : ''} | ${why}`);
-  slots--; mem -= perAgentGb;
+  const why = `${c.count} waiting issue${c.count > 1 ? 's' : ''} (${c.priority || 'no priority'}, ${c.sev < 5 ? 'S' + c.sev : 'no severity'}, oldest ${c.oldest.slice(0, 10)}, e.g. #${c.numbers.slice(0, 3).join(', #')})`;
+  if (c.verdict === 'no-slot') console.log(`note waiting ${what}: no long-work slot (${long.length - stops.length}/${maxLong}) | ${why}`);
+  else if (c.verdict === 'reserved') console.log(`note waiting ${what}: the free slots are reserved for gate roles (long_work.reserved_gate_slots) | ${why}`);
+  else if (c.verdict === 'memory') console.log(`note waiting ${what}: memory ${c.mem.toFixed(1)} GB free, needs ${minFreeGb} GB after a ${perAgentGb} GB session | ${why}`);
+  else console.log(`start ${what} | ${why}`);
 }
