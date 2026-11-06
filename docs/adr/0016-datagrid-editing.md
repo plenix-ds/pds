@@ -136,6 +136,16 @@ type FormEditState = {
 - **Semver: MINOR**, within this ADR's release.
 - Enforced by: G3 review of the F3 PR; its behavior tests (`renderForm` values reach `onRecordEdit` as changes; `errors` after a refused `validate`; the panel portal and `data-plx-form-open`; the null-panel fallback).
 
+## Addendum (2026-11-06, #465): FormFlow `defaultValue`, so the draft survives a surface change (D-0064)
+
+- **FormFlow gains `defaultValue?: object`:** the draft it starts from (default `initialValue`). `initialValue` stays the baseline: dirty and the unsaved-changes question compare with it.
+- **Form Edit uses it** for the F3 edge: the person closes the application's panel, then chooses to keep editing.
+  - The grid keeps the latest draft (from FormFlow's `children({ value })`).
+  - It remounts FormFlow in the drawer with `defaultValue={draft}` and the same `initialValue` and `sessionKey`, so nothing typed is lost and the question still asks.
+- **Rejected:** a controlled FormFlow (`value` + `onChange`): more API, and every caller would own the state.
+- **Semver: MINOR** (an additive optional prop on a public pattern).
+- Enforced by: G3 review of the #465 PR; a behavior check (changes, close the panel, keep editing -> the drawer with the same values, and the question still asks on Cancel).
+
 ## Enforced by
 
 - G3 review of each phase's API diff against this ADR.
