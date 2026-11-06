@@ -123,6 +123,7 @@ child({ units: ['components/CollapsibleSection', 'components/NavList', 'componen
 // a date with no time is that calendar day in every time zone (issue 342)
 child({ units: ['components/DatePicker', 'components/Time', 'utils/format.ts'] }, 'date-only.test.js');
 child({ units: ['components/Time'] }, 'time-hook-order-885.test.js');   // Time keeps its hooks in order when its value comes and goes (issue 885)
+child({ units: ['components/Dialog'] }, 'unsaved-guard-words-668.test.js');   // the unsaved-changes dialog's words from the catalog (issue 668); providers/ reaches the slice
 // DatePicker and TimePicker follow LocaleProvider's time zone (issue 813)
 child({ units: ['components/DatePicker', 'components/TimePicker', 'components/Calendar', 'utils/zone.ts'] }, 'picker-timezone-813.test.js');
 // a branch loads only when it is first opened: Tree, TreeSelect, Cascader through MillerColumns (issue 814)
