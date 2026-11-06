@@ -883,7 +883,7 @@ export default {
     "editModeForm": "Form Edit",
     "formTitle": "Edit {name}",
     "emptyValue": "—",
-    "noValue": "No value",
+    "formNoValue": "No value",
     "formSaved": "Saved {name}",
     "formSaveRefused": "Couldn’t save {name}. Check the values and try again.",
     "saved": "Saved",
