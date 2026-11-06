@@ -5212,7 +5212,7 @@
         "token": "--plx-comp-retry-status-margin-block-start"
       }
     ],
-    "why": "retry.css: .plx-retry__status holds the countdown (\"Retrying in …\") while the next attempt waits"
+    "why": "retry.css: .plx-retry__status holds the countdown (\"Retrying in \u2026\") while the next attempt waits"
   },
   "retry-pattern--kind-retry-count": {
     "sets": [
@@ -5232,5 +5232,36 @@
   "retry-pattern--kind-inline-retry-manual": {
     "sets": [],
     "why": "markup only: the notice with the Retry button and no status line (no countdown, no count); retry.css styles only the status line"
+  },
+  "choropleth-map--scale-sequential-default": {
+    "sets": [],
+    "why": "markup only: shades each region by its value on the sequential data-viz scale, low to high (scale sequential)"
+  },
+  "choropleth-map--scale-diverging": {
+    "sets": [],
+    "why": "markup only: shades each region on the diverging scale around the middle of the range, for a change or a difference (scale diverging)"
+  },
+  "bubble-chart--variant-bubble-default": {
+    "sets": [],
+    "why": "markup only: each bubble sits at its two measures and its area follows a third; smaller bubbles are drawn on top of larger ones"
+  },
+  "bubble-chart--variant-in-groups": {
+    "sets": [],
+    "why": "markup only: one series per group, each in its own color, with the bubbles of every group on the same axes"
+  },
+  "chip--content-removable": {
+    "sets": [
+      {
+        "property": "block-size",
+        "part": "remove",
+        "token": "--plx-comp-tag-remove-height"
+      },
+      {
+        "property": "color",
+        "part": "remove-hover",
+        "token": "--plx-comp-tag-remove-hover-text"
+      }
+    ],
+    "why": ".plx-tag__remove in tag.css: the remove button at the end of the chip, with its hover color"
   }
 }
