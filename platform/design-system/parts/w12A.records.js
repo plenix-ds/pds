@@ -141,7 +141,7 @@ DSParts.records.push(function (H) {
 
     /* ── 12 Specialized › Files, assets, and DAM › File list: FileList ── */
     { id: 'file-list', lab: true, icon: 'list-lines', sec: 'specialized', sub: FILES, leaf: 'File list', title: 'File list',
-      plenix: 'FileList, sortFiles', src: 'patterns/FileList/FileList.jsx', level: 'Pattern', interaction: 'Selection',
+      plenix: 'FileList, sortFiles', src: 'patterns/FileList/FileList.tsx', level: 'Pattern', interaction: 'Selection',
       aliases: ['Files list', 'Document list', 'File table', 'Folder contents'],
       text: 'Many files and folders at once, each in the same row, in one of three forms: the list of FileRows (list) for files people open one at a time; the DataGrid (table) where they compare, sort and filter by column, with the size and the date in the data font and the status as a Badge; or the list with its own Sort menu above the rows, by name, size, date or owner, folders first (sortable). Every row selects, opens, downloads, renames and deletes the same way. Files drag onto folders; Move to does the same without dragging.',
       use: ['A folder’s content, uploads, attachments and search results that are files', 'table where people compare files by size, date, owner or status', 'sortable for a list people order without a table', 'dragType and onMove where files move between folders'],
@@ -169,7 +169,7 @@ DSParts.records.push(function (H) {
 
     /* ── 12 Specialized › Files, assets, and DAM › File browser: FileBrowser ── */
     { id: 'file-browser', lab: true, icon: 'folder-open', sec: 'specialized', sub: FILES, leaf: 'File browser', title: 'File browser',
-      plenix: 'FileBrowser', src: 'patterns/FileBrowser/FileBrowser.jsx', level: 'Pattern', interaction: 'Navigation',
+      plenix: 'FileBrowser', src: 'patterns/FileBrowser/FileBrowser.tsx', level: 'Pattern', interaction: 'Navigation',
       aliases: ['File manager', 'File explorer', 'Folder view', 'Document library'],
       text: 'Finding and organizing files by place: the location as breadcrumbs, the command bar over the open folder (New folder and Upload; the search; Sort and View; the count; with items selected, Download, Move to and Delete), the folder tree at the start (tree), and the folder’s content as a file list (list) or a grid of asset cards (grid). Files drag onto folders in the list, the grid and the tree; files dropped from the computer upload into the open folder.',
       use: ['The main workspace for a library people explore by folder', 'tree for deep hierarchies on wide windows', 'grid where pictures matter; list where names, sizes and dates do', 'Every change through the handlers; the page keeps the items'],

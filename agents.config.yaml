@@ -5,6 +5,11 @@
 long_work:
   # Building a component, a design, a migration, a release.
   max_running: 8
+  # A long-work session idle this long (minutes, from its activity record) whose lane is empty is stopped; it starts
+  # again when work arrives. Below the nudge interval, or the nudge's wake-up would keep every session alive (#769).
+  idle_exit_min: 5
+  # Of max_running, this many are kept for roles with gate: true (verify, locale, docs, release); others never take them.
+  reserved_gate_slots: 2
 
 coordinators:
   # Always running; they don't use long-work slots.
@@ -25,10 +30,13 @@ memory:
 # (checks 13 and 15) read it, nothing else lists roles. Keys: id, title (the session name "PDS1 - <title>"), kind
 # (lane | task), label (the work-item label), instances, parked (never started), boot (started by team.sh start-core),
 # definition (the agent file), wakes_on (issue_opened | issue_labeled | comment_mention | ci_failed | heartbeat) and an
-# optional memory_limit_gb (default: memory.per_agent_limit_gb). The Delivery Lead fixes the keys as a decision.
+# optional memory_limit_gb (default: memory.per_agent_limit_gb), priority (release > integrate > verify > build > design
+# > spec > evergreen; the start order when slots are scarce) and gate (may use long_work.reserved_gate_slots; #769). The Delivery Lead fixes the keys as a decision.
 roles:
   - id: product-lead
     title: "Product Lead"
+    priority: spec
+    gate: false
     kind: lane
     label: "agent:pds1-product-lead"
     instances: 1
@@ -38,6 +46,8 @@ roles:
     wakes_on: [issue_opened, issue_labeled, comment_mention, ci_failed, heartbeat]
   - id: delivery-lead
     title: "Delivery Lead"
+    priority: integrate
+    gate: false
     kind: lane
     label: "agent:pds1-delivery-lead"
     instances: 1
@@ -47,6 +57,8 @@ roles:
     wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
   - id: design-director
     title: "Design Director"
+    priority: design
+    gate: false
     kind: lane
     label: "agent:pds1-design-director"
     instances: 1
@@ -56,6 +68,8 @@ roles:
     wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
   - id: ds-architect
     title: "DS Architect"
+    priority: design
+    gate: false
     kind: lane
     label: "agent:pds1-ds-architect"
     instances: 1
@@ -65,6 +79,8 @@ roles:
     wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
   - id: release-architect
     title: "Backend & Release Architect"
+    priority: release
+    gate: true
     kind: lane
     label: "agent:pds1-release-architect"
     instances: 1
@@ -74,6 +90,8 @@ roles:
     wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
   - id: component-engineer
     title: "Component Engineer"
+    priority: build
+    gate: false
     kind: lane
     label: "agent:pds1-component-engineer"
     instances: 2
@@ -83,6 +101,8 @@ roles:
     wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
   - id: i18n-engineer
     title: "i18n Engineer"
+    priority: verify
+    gate: true
     kind: lane
     label: "agent:pds1-i18n-engineer"
     instances: 1
@@ -92,6 +112,8 @@ roles:
     wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
   - id: technical-writer
     title: "Technical Writer"
+    priority: verify
+    gate: true
     kind: lane
     label: "agent:pds1-technical-writer"
     instances: 1
@@ -101,6 +123,8 @@ roles:
     wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
   - id: qa-engineer
     title: "QA Engineer"
+    priority: verify
+    gate: true
     kind: task
     label: "agent:pds1-qa-engineer"
     instances: 1
@@ -110,6 +134,8 @@ roles:
     wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
   - id: code-reviewer
     title: "Code Reviewer"
+    priority: verify
+    gate: true
     kind: task
     label: "agent:pds1-code-reviewer"
     instances: 1
@@ -119,6 +145,8 @@ roles:
     wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
   - id: design-critic
     title: "Design Critic"
+    priority: verify
+    gate: true
     kind: task
     label: "agent:pds1-design-critic"
     instances: 1
@@ -128,6 +156,8 @@ roles:
     wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
   - id: a11y-rtl-auditor
     title: "A11y & RTL Auditor"
+    priority: verify
+    gate: true
     kind: task
     label: "agent:pds1-a11y-rtl-auditor"
     instances: 1
@@ -137,6 +167,8 @@ roles:
     wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
   - id: security-reviewer
     title: "Security Reviewer"
+    priority: verify
+    gate: true
     kind: task
     label: "agent:pds1-security-reviewer"
     instances: 1
@@ -146,6 +178,8 @@ roles:
     wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
   - id: debugger
     title: "Debugger"
+    priority: build
+    gate: false
     kind: task
     label: "agent:pds1-debugger"
     instances: 1
@@ -155,6 +189,8 @@ roles:
     wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
   - id: db-optimizer
     title: "DB Optimizer"
+    priority: build
+    gate: false
     kind: task
     label: "agent:pds1-db-optimizer"
     instances: 1
@@ -164,6 +200,8 @@ roles:
     wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
   - id: simulated-user-tester
     title: "Simulated User Tester"
+    priority: verify
+    gate: false
     kind: task
     label: "agent:pds1-simulated-user-tester"
     instances: 1
@@ -173,6 +211,8 @@ roles:
     wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
   - id: drift-auditor
     title: "Drift Auditor"
+    priority: evergreen
+    gate: false
     kind: task
     label: "agent:pds1-drift-auditor"
     instances: 1
@@ -182,6 +222,8 @@ roles:
     wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
   - id: mobile-app-builder
     title: "Mobile App Builder"
+    priority: build
+    gate: false
     kind: task
     label: "agent:pds1-mobile-app-builder"
     instances: 1

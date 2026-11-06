@@ -22,6 +22,8 @@
     "services/auth/*.mjs",
     // run by deploy/agents/team.sh (schedule, #246)
     "deploy/agents/*.mjs",
+    // Claude Code hooks, run from .claude/settings.json (the guard, session start, the activity record #769)
+    ".claude/hooks/*.cjs",
     // the release tools, run by hand at a release or by release.yml (#194, #312)
     "tools/publish/*.mjs",
     // run by npm run tokens:sd:check (slice 101, #372 steps 5 to 7)
