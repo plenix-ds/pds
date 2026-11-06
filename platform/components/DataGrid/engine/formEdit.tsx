@@ -17,7 +17,7 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
 import { development } from '../../../utils/devWarn.ts';
-import { FormFlow } from '../../../patterns/FormFlow/FormFlow.jsx';
+import { FormFlow } from '../../../patterns/FormFlow/FormFlow.tsx';
 import { Field } from '../../Field/Field.tsx';
 import { Input, Select, Textarea } from '../../Input/Input.tsx';
 import { NumberInput } from '../../NumberInput/NumberInput.tsx';

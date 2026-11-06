@@ -16,7 +16,8 @@
      Use immutable updates and a stable sessionKey per record. Never nest another Form in children.
 */
 import React from 'react';
-import { Form, FormActions } from '../Form/Form.jsx';
+import { Form, FormActions as FormActionsJs } from '../Form/Form.jsx';
+const FormActions: any = FormActionsJs;
 import { Dialog, Drawer } from '../../components/Dialog/Dialog.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Notice } from '../../components/Notice/Notice.tsx';
@@ -27,19 +28,42 @@ import { useUnsavedGuard } from '../../providers/UnsavedGuard.tsx';
 import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 
-export function FormFlow({ mode = 'create', surface = 'page', open = true, title, initialValue, defaultValue, sessionKey, validate, onSubmit, onSuccess, onCancel, children, strings, className }) {
-  const t = useStrings('formFlow', strings);
-  const [value, setValue] = React.useState(defaultValue ?? initialValue), [saved, setSaved] = React.useState(initialValue);
+/** @public what the fields render: the draft, its setter and whether a save is running */
+export type FormFlowState<V = unknown> = { value: V; setValue: (value: V) => void; busy: boolean };
+/** @public the prop type (ADR 0011) */
+export type FormFlowProps<V = unknown> = {
+  mode?: 'create' | 'edit';
+  surface?: 'page' | 'inline' | 'dialog' | 'drawer';
+  open?: boolean;
+  title?: string;
+  /** the saved baseline; dirty compares with it */
+  initialValue?: V;
+  /** the draft the form starts from (default initialValue) */
+  defaultValue?: V;
+  /** the record's identity */
+  sessionKey?: string | number;
+  /** an error text, or false for the generic one; '' passes */
+  validate?(value: V): string | false | void | Promise<string | false | void>;
+  onSubmit(value: V): unknown;
+  onSuccess?(result: unknown): void;
+  onCancel?(): void;
+  children: (state: FormFlowState<V>) => React.ReactNode;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function FormFlow<V = any>({ mode = 'create', surface = 'page', open = true, title, initialValue, defaultValue, sessionKey, validate, onSubmit, onSuccess, onCancel, children, strings, className }: FormFlowProps<V>) {
+  const t: any = useStrings('formFlow', strings);
+  const [value, setValue] = React.useState<any>(defaultValue ?? initialValue), [saved, setSaved] = React.useState<any>(initialValue);
   const [busy, setBusy] = React.useState(false), [error, setError] = React.useState('');
   const lock = React.useRef(false), generation = React.useRef(0), alive = React.useRef(false);
-  const initial = React.useRef(initialValue); initial.current = initialValue;
-  const draft = React.useRef(defaultValue); draft.current = defaultValue;
+  const initial = React.useRef<any>(initialValue); initial.current = initialValue;
+  const draft = React.useRef<any>(defaultValue); draft.current = defaultValue;
   const toast = useToast();
   React.useEffect(() => { alive.current = true; return () => { alive.current = false; generation.current++; }; }, []);
   React.useEffect(() => { generation.current++; lock.current = false; setBusy(false); setValue(draft.current ?? initial.current); setSaved(initial.current); setError(''); }, [open, sessionKey]);
   const guard = useUnsavedGuard(open && !Object.is(value, saved), t.unsaved);
   const cancel = guard(() => { if (!lock.current && onCancel) onCancel(); });
-  const submit = async (e) => {
+  const submit = async (e: any) => {
     e.preventDefault(); if (lock.current) return;
     lock.current = true; setBusy(true); setError('');
     const run = generation.current;

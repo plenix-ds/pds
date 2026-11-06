@@ -258,7 +258,7 @@ DSParts.records.push(function (H) {
         h('div', { className: 'plx-nav-pane__body' }, paneBody())) : null), props.mode !== 'overlay' ? h(Bar, { browse: props.mode === 'screen' }) : null);
   };
   var bottomNav = { id: 'bottom-navigation', lab: true, icon: 'app-switcher', sec: 'navigation', sub: 'Mobile navigation', leaf: 'Bottom navigation', title: 'Bottom navigation',
-    plenix: 'NavPane', src: 'patterns/NavPane/NavPane.jsx', blocks: ['plx-nav-bar'], level: 'Composite', interaction: 'Navigation', statesFrom: ['navigation-rail'],
+    plenix: 'NavPane', src: 'patterns/NavPane/NavPane.tsx', blocks: ['plx-nav-bar'], level: 'Composite', interaction: 'Navigation', statesFrom: ['navigation-rail'],
     covers: ['Mobile tab bar', 'Mobile navigation drawer', 'Mobile menu', 'layout/Adaptive navigation', 'overlays/Navigation drawer'],
     aliases: ['Bottom navigation bar', 'Tab bar', 'Mobile tab bar', 'Navigation bar (Material)', 'Mobile navigation drawer', 'Mobile menu', 'Adaptive navigation', 'Navigation drawer'],
     text: 'One navigation pane, its form chosen by the window class (Platforms Standard 3.3, 4.1): the page gives NavPane its content and rail items once, and the shell picks the form. Wide (840px and up): the pane beside the main region, or collapsed to a rail. Medium (600–839px): the rail; its Expand opens the expanded rail over the main region with a scrim, as wide as the pane and never the whole window; Escape or a click on the scrim closes it. Narrow (under 600px): never a drawer. With two or more rail items, the page’s top-level destinations form a bar along the bottom: up to four, then Browse, which opens the pane as a screen of its own with every other place in it (the pane’s title, groups and footer); with fewer, a parent row at the top opens it. Each destination shows its icon and its label and is at least the touch target; the current one is in the selected color with its icon filled. Choosing a place in the screen closes it. A second set of places can open in a bottom sheet (BottomSheetNav).',
@@ -280,7 +280,7 @@ DSParts.records.push(function (H) {
       ['Forms by window class', function () { return row(box(360, h(Phone, { mode: 'bar' })), box(360, h(Phone, { mode: 'overlay' })), box(360, h(Phone, { mode: 'screen' }))); }]], also: [] };
   // the leaves NavPane answers with these forms: thin records pointing at it
   var thin = function (r) {
-    return Object.assign({ plenix: 'NavPane', src: 'patterns/NavPane/NavPane.jsx', level: 'Composite', interaction: 'Navigation', statesFrom: ['navigation-rail'], variantClasses: [], docsFrom: 'bottom-navigation',
+    return Object.assign({ plenix: 'NavPane', src: 'patterns/NavPane/NavPane.tsx', level: 'Composite', interaction: 'Navigation', statesFrom: ['navigation-rail'], variantClasses: [], docsFrom: 'bottom-navigation',
       related: ['bottom-navigation', 'side-navigation'] }, r);
   };
   return [chartFoundations, timeZone, treeSelect, transferList, dualListbox, bottomSheetNav, bottomNav, ];

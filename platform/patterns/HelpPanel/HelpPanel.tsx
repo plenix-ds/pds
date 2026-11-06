@@ -11,7 +11,8 @@
      Supply article content from a trusted renderer. The inspector owns responsive placement and scrolling.
 */
 import React from 'react';
-import { SidePanel } from '../SidePanel/SidePanel.jsx';
+import { SidePanel as SidePanelJs } from '../SidePanel/SidePanel.jsx';
+const SidePanel: any = SidePanelJs;
 import { Stack } from '../../components/Stack/Stack.tsx';
 import { SearchField } from '../../components/SearchField/SearchField.tsx';
 import { Button } from '../../components/Button/Button.tsx';
@@ -21,9 +22,20 @@ import { EmptyState } from '../../components/EmptyState/EmptyState.tsx';
 import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 
-export function HelpPanel({ articles = [], open = true, onOpenChange, title, strings, className }) {
-  const t = useStrings('helpPanel', strings);
-  const [query, setQuery] = React.useState(''), [selected, setSelected] = React.useState(null);
+/** @public one article: its content is a node, its href an optional full-article URL */
+export type HelpArticle = { id: string | number; title: string; summary?: string; content?: React.ReactNode; href?: string };
+/** @public the prop type (ADR 0011) */
+export type HelpPanelProps = {
+  articles?: HelpArticle[];
+  open?: boolean;
+  onOpenChange?(open: boolean): void;
+  title?: string;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function HelpPanel({ articles = [], open = true, onOpenChange, title, strings, className }: HelpPanelProps) {
+  const t: any = useStrings('helpPanel', strings);
+  const [query, setQuery] = React.useState(''), [selected, setSelected] = React.useState<any>(null);
   const article = articles.find((a) => a.id === selected);
   const matches = articles.filter((a) => (a.title + ' ' + (a.summary || '')).toLowerCase().includes(query.trim().toLowerCase()));
   return <SidePanel title={title || t.title} open={open} onOpenChange={onOpenChange} collapseLabel={t.close} className={cx('plx-help-panel', className)}>
