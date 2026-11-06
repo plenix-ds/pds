@@ -141,7 +141,7 @@ DSParts.records.push(function (H) {
       : h(P.TreeSelect, Object.assign({ nodes: FOLDERS, value: one[0], onChange: one[1] }, props.select))));
   };
   var treeSelect = { id: 'tree-select', lab: true, icon: 'folder', sec: 'forms', sub: 'Select and lookup', leaf: 'Tree select', title: 'Tree select',
-    plenix: 'TreeSelect', src: 'components/TreeSelect/TreeSelect.jsx', level: 'Component', interaction: 'Selection', statesFrom: ['text-field', 'tree-view'],
+    plenix: 'TreeSelect', src: 'components/TreeSelect/TreeSelect.tsx', level: 'Component', interaction: 'Selection', statesFrom: ['text-field', 'tree-view'],
     aliases: ['Tree picker', 'Hierarchical select', 'Folder picker', 'Tree dropdown', 'Cascading tree select'],
     text: 'A field whose choices are a hierarchy. It shows the chosen item (or the first two and how many more) and opens a Popover with the tree, drawn and driven like the Tree: one Tab stop, with the arrows to move, open and close. With one choice, choosing an item closes the popover. With several, each row has a checkbox; a parent checks or clears everything under it and shows mixed when only part of it is checked. A search field keeps the matching items and the items above them, opened. At a phone width the popover is a bottom sheet.',
     use: ['Choosing a folder, a category or an organization unit from a hierarchy people know', 'Multiple with checkboxes for filters over branches (a whole branch at once)', 'Search when the tree is more than about two levels or thirty items'],

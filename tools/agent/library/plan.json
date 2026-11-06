@@ -1593,7 +1593,7 @@
       "platform/standards/web-native-map.d/w07C.json",
       "platform/patterns/NavPane/NavPane.jsx",
       "platform/patterns/NavPane/nav-pane.css",
-      "platform/components/TreeSelect/TreeSelect.jsx",
+      "platform/components/TreeSelect/TreeSelect.tsx",
       "platform/components/TreeSelect/tree-select.css",
       "platform/tokens/components/tree-select.tokens.json",
       "platform/components/TimeZoneSelect/TimeZoneSelect.tsx",
@@ -5571,7 +5571,7 @@
    "wave": 7,
    "lane": "C",
    "files": [
-    "platform/components/TreeSelect/TreeSelect.jsx",
+    "platform/components/TreeSelect/TreeSelect.tsx",
     "platform/components/TreeSelect/tree-select.css",
     "platform/tokens/components/tree-select.tokens.json"
    ],
@@ -13113,7 +13113,7 @@
    "target": "TreeSelect",
    "targetKind": "component",
    "files": [
-    "platform/components/TreeSelect/TreeSelect.jsx",
+    "platform/components/TreeSelect/TreeSelect.tsx",
     "platform/components/TreeSelect/tree-select.css",
     "platform/tokens/components/tree-select.tokens.json"
    ],

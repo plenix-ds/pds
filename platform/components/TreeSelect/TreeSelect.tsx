@@ -65,93 +65,128 @@ import { Tooltip } from '../Tooltip/Tooltip.tsx';
 import { useTruncated } from '../../utils/overflow.ts';
 import { SearchField } from '../SearchField/SearchField.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import { useReadOnly } from '../../providers/ReadOnly.tsx';
 import { useBranchLoader, BranchStatus } from '../../hooks/useBranchLoader.ts';
+import type { LoadChildren } from '../../hooks/useBranchLoader.ts';
 import { useVirtualizer, VirtualGap, VirtualProbe } from '../../hooks/useVirtualizer.ts';
 import { TREE_AUTO_VIRTUAL } from '../Tree/Tree.tsx';
+import type { TreeId, TreeNode } from '../Tree/Tree.tsx';
 import FolderOpenIcon from 'plenix-platform/icons/plenix/folder-open';
 import SelectChevronIcon from 'plenix-platform/icons/plenix/select-chevron';
 import SquarePlusIcon from 'plenix-platform/icons/plenix/square-plus';
 import SquareMinusIcon from 'plenix-platform/icons/plenix/square-minus';
 
-const OPEN_ICONS = { folder: FolderOpenIcon };
-const iconOf = (n, isOpen) => (isOpen ? n.openIcon || OPEN_ICONS[iconKey(n.icon)] || n.icon : n.icon);
-const kidsOf = (n) => (n.children && n.children.length ? n.children : null);
+type Id = TreeId;
+type Node = TreeNode;
+type Entry = { node: Node; parent: Id | null };
+const OPEN_ICONS: Record<string, unknown> = { folder: FolderOpenIcon };
+const iconOf = (n: Node, isOpen: boolean): unknown => (isOpen ? n.openIcon || OPEN_ICONS[String(iconKey(n.icon))] || n.icon : n.icon);
+const kidsOf = (n: Node): Node[] | null => (n.children && n.children.length ? n.children : null);
 // every node by id, with its parent and the leaves under it (a branch still to load has none yet: pending)
-function index(nodes, pending) {
-  const byId = new Map();
-  const walk = (list, parent) => list.forEach((n) => {
+function index(nodes: Node[], pending: (n: Node) => boolean) {
+  const byId = new Map<Id, Entry>();
+  const walk = (list: Node[], parent: Id | null): void => list.forEach((n) => {
     byId.set(n.id, { node: n, parent });
-    if (kidsOf(n)) walk(n.children, n.id);
+    if (kidsOf(n)) walk(n.children as Node[], n.id);
   });
   walk(nodes, null);
-  const leaves = (n) => (kidsOf(n) ? n.children.reduce((all, c) => all.concat(leaves(c)), []) : pending(n) ? [] : [n.id]);
+  const leaves = (n: Node): Id[] => (kidsOf(n) ? (n.children as Node[]).reduce<Id[]>((all, c) => all.concat(leaves(c)), []) : pending(n) ? [] : [n.id]);
   return { byId, leaves };
 }
-const ancestors = (byId, id) => { const out = []; let at = byId.get(id); while (at && at.parent !== null) { out.push(at.parent); at = byId.get(at.parent); } return out; };
+const ancestors = (byId: Map<Id, Entry>, id: Id) => { const out: Id[] = []; let at = byId.get(id); while (at && at.parent !== null) { out.push(at.parent); at = byId.get(at.parent); } return out; };
 // the nodes that match the text, with the nodes above them (only their matching branches)
-function filterNodes(nodes, q) {
-  return nodes.reduce((out, n) => {
+function filterNodes(nodes: Node[], q: string): Node[] {
+  return nodes.reduce<Node[]>((out, n) => {
     const own = matchesText(n.label, q);
-    const kids = kidsOf(n) ? filterNodes(n.children, q) : [];
+    const kids = kidsOf(n) ? filterNodes(n.children as Node[], q) : [];
     if (own || kids.length) out.push(Object.assign({}, n, { children: own && !kids.length ? n.children : kids }));
     return out;
   }, []);
 }
-function flatten(nodes, open, parent, out) {
-  nodes.forEach((n) => { out.push({ node: n, parent }); if (kidsOf(n) && open.has(n.id)) flatten(n.children, open, n.id, out); });
+function flatten(nodes: Node[], open: Set<Id>, parent: Id | null, out: Entry[]): Entry[] {
+  nodes.forEach((n) => { out.push({ node: n, parent }); if (kidsOf(n) && open.has(n.id)) flatten(n.children as Node[], open, n.id, out); });
   return out;
 }
 
-const EMPTY = [];
+const EMPTY: Node[] = [];
+
+/** @public the prop type (ADR 0011) */
+export type TreeSelectProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'value' | 'onChange'> & {
+  /** the tree: { id, label, icon, openIcon, children } (TreeNode) */
+  nodes?: TreeNode[];
+  /** loads a branch's children when it opens */
+  loadChildren?: LoadChildren<TreeNode>;
+  /** draw only the rows in view (default: above 200 rows) */
+  virtualized?: boolean;
+  /** the chosen id (single) */
+  value?: Id | null;
+  /** the chosen ids (multiple) */
+  values?: Id[];
+  /** the chosen id (single) or ids (multiple) */
+  onChange?: (next: Id | Id[]) => void;
+  multiple?: boolean;
+  search?: boolean;
+  placeholder?: string;
+  label?: string;
+  /** the branches open at first (ids) */
+  defaultExpanded?: Id[];
+  width?: string;
+  invalid?: boolean;
+  warning?: string | boolean;
+  readOnly?: boolean;
+  required?: boolean;
+  strings?: Catalog | null;
+  className?: string;
+};
 
 export function TreeSelect({ nodes: given = EMPTY, loadChildren, virtualized, value, values, onChange, multiple = false, search = false, placeholder, label, defaultExpanded, width,
-  invalid, warning, disabled, readOnly: readOnlyOwn, required, strings, id, className, ...rest }) {
+  invalid, warning, disabled, readOnly: readOnlyOwn, required, strings, id, className, ...rest }: TreeSelectProps) {
   const locked = useReadOnly(readOnlyOwn);   // its own readOnly, else the nearest ReadOnly region's: the choice shows and the tree does not open
-  const t = useStrings('treeSelect', strings);
+  const t = useStrings('treeSelect', strings) as Record<string, string>;
   const base = 'plx-ts' + React.useId().replace(/[^a-zA-Z0-9]/g, '');
   const loader = useBranchLoader(loadChildren);
   const nodes = loader.merge(given);   // each loaded branch's children in place (issue 814)
   const { byId, leaves } = React.useMemo(() => index(nodes, loader.needs), [nodes, !!loadChildren]);
-  const chosen = multiple ? (values || []) : (value !== undefined && value !== null && value !== '' ? [value] : []);
+  const chosen: Id[] = multiple ? (values || []) : (value !== undefined && value !== null && value !== '' ? [value] : []);
   const chosenRef = React.useRef(chosen); chosenRef.current = chosen;
   const [open, setOpen] = React.useState(false);
-  const valueRef = React.useRef(null), cut = useTruncated(valueRef);   // the chosen text is cut: its full text goes in a Tooltip
+  const valueRef = React.useRef<HTMLSpanElement | null>(null), cut = useTruncated(valueRef);   // the chosen text is cut: its full text goes in a Tooltip
   const [text, setText] = React.useState('');
-  const [expanded, setExpanded] = React.useState(() => {
+  const [expanded, setExpanded] = React.useState<Id[]>(() => {
     if (defaultExpanded) return defaultExpanded;
-    const out = new Set(); chosen.forEach((c) => ancestors(byId, c).forEach((a) => out.add(a))); return Array.from(out);
+    const out = new Set<Id>(); chosen.forEach((c) => ancestors(byId, c).forEach((a) => out.add(a))); return Array.from(out);
   });
-  const [focusId, setFocusId] = React.useState(null);
-  const [ringId, setRingId] = React.useState(null);
-  const refs = React.useRef({}), searchRef = React.useRef(null), firstRef = React.useRef(null);
+  const [focusId, setFocusId] = React.useState<Id | null>(null);
+  const [ringId, setRingId] = React.useState<Id | null>(null);
+  const refs = React.useRef<Record<string, HTMLLIElement | null>>({}), searchRef = React.useRef<HTMLInputElement | null>(null), firstRef = React.useRef<{ readonly current: HTMLLIElement | null } | null>(null);
   const q = text.trim().toLowerCase();
   const shownNodes = q ? filterNodes(nodes, q) : nodes;
   // while searching every branch that holds a match is open
-  const openSet = q ? new Set(Array.from(byId.keys())) : new Set(expanded);
+  const openSet = q ? new Set<Id>(Array.from(byId.keys())) : new Set<Id>(expanded);
   const flat = flatten(shownNodes, openSet, null, []);
   // each open branch that has not loaded asks once (never while searching: search does not load branches by itself)
   React.useEffect(() => { if (open && !q) loader.ensure(flat.filter((v) => openSet.has(v.node.id)).map((v) => v.node)); });
   const active = flat.some((v) => v.node.id === focusId) ? focusId : (flat.find((v) => chosen.indexOf(v.node.id) >= 0) || flat[0] || { node: {} }).node.id;
   // the popover focuses the active item when it opens (read after the tree is drawn)
-  const activeRef = React.useRef(active); activeRef.current = active;
-  if (!firstRef.current) firstRef.current = { get current() { return refs.current[activeRef.current] || null; } };
+  const activeRef = React.useRef<Id | null | undefined>(active); activeRef.current = active;
+  if (!firstRef.current) firstRef.current = { get current() { return refs.current[String(activeRef.current)] || null; } };
 
   // the state of a row: one choice, or its checkbox (a parent's from its leaves)
-  const stateOf = (n) => {
+  const stateOf = (n: Node) => {
     if (!multiple) return chosen.indexOf(n.id) >= 0 ? 'true' : 'false';
     const ls = leaves(n), on = ls.filter((l) => chosen.indexOf(l) >= 0).length;
     return on === 0 ? 'false' : on === ls.length ? 'true' : 'mixed';
   };
-  const toggleOpen = (nid) => { if (q) return; const next = new Set(expanded); if (next.has(nid)) next.delete(nid); else next.add(nid); setExpanded(Array.from(next)); };
-  const focusNext = React.useRef(null);   // a row the keys moved to before it was drawn (virtualized): focused once it is
+  const toggleOpen = (nid: Id) => { if (q) return; const next = new Set(expanded); if (next.has(nid)) next.delete(nid); else next.add(nid); setExpanded(Array.from(next)); };
+  const focusNext = React.useRef<Id | null>(null);   // a row the keys moved to before it was drawn (virtualized): focused once it is
   React.useEffect(() => { const nid = focusNext.current; if (nid !== null && refs.current[nid]) { focusNext.current = null; refs.current[nid].focus(); } });
-  const moveTo = (nid) => {
+  const moveTo = (nid: Id) => {
     setFocusId(nid);
     if (virtual) { const i = rows.findIndex((r) => r.node && r.node.id === nid); if (i >= 0) v.scrollToIndex(i, { align: 'nearest' }); }
     if (refs.current[nid] && refs.current[nid].isConnected) refs.current[nid].focus(); else focusNext.current = nid;
   };
-  const choose = (n) => {
+  const choose = (n: Node) => {
     if (!onChange) return;
     if (!multiple) { onChange(n.id); setOpen(false); setText(''); return; }
     // a branch not loaded yet: load it, then check everything under it (its leaves are known only then)
@@ -166,7 +201,7 @@ export function TreeSelect({ nodes: given = EMPTY, loadChildren, virtualized, va
     const ls = leaves(n), all = ls.every((l) => chosen.indexOf(l) >= 0);
     onChange(all ? chosen.filter((c) => ls.indexOf(c) < 0) : chosen.concat(ls.filter((l) => chosen.indexOf(l) < 0)));
   };
-  const onKeyDown = (e) => {
+  const onKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
     const at = flat.findIndex((v) => v.node.id === active), cur = flat[at];
     if (!cur) return;
     const pending = !q && loader.needs(cur.node), kids = !!kidsOf(cur.node) || pending, isOpen = kids && openSet.has(cur.node.id);
@@ -178,7 +213,7 @@ export function TreeSelect({ nodes: given = EMPTY, loadChildren, virtualized, va
     else if (e.key === (rtl ? 'ArrowLeft' : 'ArrowRight')) {
       if (kids && !isOpen) toggleOpen(cur.node.id);
       else if (pending) { if (loader.statusOf(cur.node) === 'failed') loader.retry(cur.node); }   // an open branch that failed asks again
-      else if (kids) moveTo(cur.node.children[0].id);
+      else if (kids) moveTo((cur.node.children as Node[])[0].id);
     }
     else if (e.key === (rtl ? 'ArrowRight' : 'ArrowLeft')) { if (kids && isOpen && !q) toggleOpen(cur.node.id); else if (cur.parent !== null) moveTo(cur.parent); }
     else if (e.key === 'Enter' || e.key === ' ') choose(cur.node);
@@ -187,7 +222,7 @@ export function TreeSelect({ nodes: given = EMPTY, loadChildren, virtualized, va
   };
   // one item; flatRow (a virtualized tree, issue 815): drawn alone, its children as rows after it, with its place among its
   // siblings and the virtual index
-  const renderNode = (n, level, flatRow) => {
+  const renderNode = (n: Node, level: number, flatRow?: { pos: number; setsize: number; vprops: Record<string, unknown> }): React.ReactNode => {
     const pending = !q && loader.needs(n), kids = !!kidsOf(n) || pending, isOpen = kids && openSet.has(n.id), state = stateOf(n);
     return (
       <li key={n.id} ref={(el) => { refs.current[n.id] = el; }} id={base + '-' + n.id} role="treeitem" aria-level={level}
@@ -197,11 +232,11 @@ export function TreeSelect({ nodes: given = EMPTY, loadChildren, virtualized, va
         tabIndex={n.id === active ? 0 : -1} className={cx('plx-tree__item', !multiple && state === 'true' && 'is-selected')}
         onFocus={(e) => { if (e.target === e.currentTarget) { setFocusId(n.id); setRingId(e.currentTarget.matches(':focus-visible') ? n.id : null); } }}
         onBlur={(e) => { if (e.target === e.currentTarget) setRingId(null); }}
-        onClick={(e) => { if (e.target.closest('[role="treeitem"]') !== e.currentTarget || e.target.closest('.plx-tree__row--status')) return; moveTo(n.id); choose(n); }}>
+        onClick={(e) => { if ((e.target as HTMLElement).closest('[role="treeitem"]') !== e.currentTarget || (e.target as HTMLElement).closest('.plx-tree__row--status')) return; moveTo(n.id); choose(n); }}>
         <div className={cx('plx-tree__row', flatRow && 'plx-tree__row--fixed', !multiple && state === 'true' && 'is-selected', n.id === ringId && 'is-focus-visible')} data-plx-level={Math.min(level, 12)}>
           <span className={cx('plx-tree__toggle', isOpen && 'is-open', !kids && 'is-leaf')} aria-hidden="true"
             onClick={kids ? (e) => { e.stopPropagation(); toggleOpen(n.id); moveTo(n.id); } : undefined}>{kids ? <Icon icon={isOpen ? SquareMinusIcon : SquarePlusIcon} filled={false} /> : null}</span>
-          {multiple ? <input type="checkbox" className="plx-check__input plx-tree-select__mark" tabIndex={-1} aria-hidden="true" inert="" readOnly checked={state === 'true'}
+          {multiple ? <input type="checkbox" className="plx-check__input plx-tree-select__mark" tabIndex={-1} aria-hidden="true" {...{ inert: "" }} readOnly checked={state === 'true'}
             ref={(el) => { if (el) el.indeterminate = state === 'mixed'; }} /> : null}
           {n.icon ? <span className="plx-tree__icon">{asIcon(iconOf(n, isOpen || state === 'true'))}</span> : null}
           <span className="plx-tree__label">{q ? highlightMatch(n.label, q) : n.label}</span>
@@ -210,33 +245,33 @@ export function TreeSelect({ nodes: given = EMPTY, loadChildren, virtualized, va
           <ul role="group" className="plx-tree__group">
             <li role="none" className="plx-tree__item">{statusRow(n, level + 1)}</li>
           </ul>
-        ) : isOpen ? <ul role="group" className="plx-tree__group">{renderNodes(n.children, level + 1)}</ul> : null}
+        ) : isOpen ? <ul role="group" className="plx-tree__group">{renderNodes(n.children as Node[], level + 1)}</ul> : null}
       </li>
     );
   };
-  const renderNodes = (list, level) => list.map((n) => renderNode(n, level));
+  const renderNodes = (list: Node[], level: number): React.ReactNode[] => list.map((n) => renderNode(n, level));
   // the row under a branch that is loading its children, or failed to (issue 814)
-  const statusRow = (n, level, fixed) => (
+  const statusRow = (n: Node, level: number, fixed?: boolean) => (
     <div className={cx('plx-tree__row', 'plx-tree__row--status', fixed && 'plx-tree__row--fixed')} data-plx-level={Math.min(level, 12)}>
       <span className="plx-tree__toggle is-leaf" aria-hidden="true" /><BranchStatus loader={loader} node={n} className="plx-tree__status" />
     </div>
   );
   // a virtualized tree (issue 815): every row in order, each item with its level and place among its siblings, and the
   // status row under an open branch still loading
-  const rows = [];
-  const addRows = (list, level) => list.forEach((n, i) => {
+  const rows: Array<{ node?: Node; level: number; pos?: number; setsize?: number; status?: Node }> = [];
+  const addRows = (list: Node[], level: number): void => list.forEach((n, i) => {
     rows.push({ node: n, level, pos: i + 1, setsize: list.length });
     if (!openSet.has(n.id)) return;
     if (!q && loader.needs(n)) rows.push({ status: n, level: level + 1 });
-    else if (kidsOf(n)) addRows(n.children, level + 1);
+    else if (kidsOf(n)) addRows(n.children as Node[], level + 1);
   });
   addRows(shownNodes, 1);
   const virtual = virtualized !== undefined ? !!virtualized : rows.length > TREE_AUTO_VIRTUAL;
   const v = useVirtualizer({ count: virtual ? rows.length : 0 });
 
   // what the field shows: the chosen labels, the first two and how many more
-  const names = chosen.map((c) => (byId.get(c) ? byId.get(c).node.label : c));
-  const summary = names.length > 2 ? t.more.replace('{list}', names.slice(0, 2).join(', ')).replace('{n}', names.length - 2) : names.join(', ');
+  const names = chosen.map((c) => { const e = byId.get(c); return e ? e.node.label : c; });
+  const summary = names.length > 2 ? t.more.replace('{list}', names.slice(0, 2).join(', ')).replace('{n}', String(names.length - 2)) : names.join(', ');
   const name = label || t.choose;
   const trigger = (
     <button type="button" id={id} role="combobox" aria-label={label} aria-invalid={invalid || undefined} data-plx-warning={warning || undefined} aria-required={required || undefined} aria-readonly={locked || undefined} disabled={disabled}
@@ -255,14 +290,14 @@ export function TreeSelect({ nodes: given = EMPTY, loadChildren, virtualized, va
           <div className={cx('plx-tree-select__scroll', virtual && flat.length && 'plx-tree-select__scroll--virtual')}>
             {!flat.length ? <p className="plx-tree-select__empty" role="status">{t.empty}</p>
               : virtual ? (
-                <ul ref={v.viewportRef} role="tree" aria-label={name} aria-multiselectable={multiple || undefined} className="plx-tree plx-tree--virtual plx-tree-select__tree plx-tree-select__tree--virtual" onKeyDown={onKeyDown}>
+                <ul ref={v.viewportRef as React.RefObject<HTMLUListElement>} role="tree" aria-label={name} aria-multiselectable={multiple || undefined} className="plx-tree plx-tree--virtual plx-tree-select__tree plx-tree-select__tree--virtual" onKeyDown={onKeyDown}>
                   <VirtualProbe />
                   {v.segments.map((s) => {
                     if (s.gap) return <VirtualGap key={s.key} count={s.count} />;
                     const r = rows[s.index];
                     return r.status
                       ? <li key={'status-' + r.status.id} role="none" className="plx-tree__item" {...v.itemProps(s.index)} aria-posinset={undefined} aria-setsize={undefined}>{statusRow(r.status, r.level, true)}</li>
-                      : renderNode(r.node, r.level, { pos: r.pos, setsize: r.setsize, vprops: v.itemProps(s.index) });
+                      : renderNode(r.node as Node, r.level, { pos: r.pos as number, setsize: r.setsize as number, vprops: v.itemProps(s.index) });
                   })}
                 </ul>
               ) : <ul role="tree" aria-label={name} aria-multiselectable={multiple || undefined} className="plx-tree plx-tree-select__tree" onKeyDown={onKeyDown}>{renderNodes(shownNodes, 1)}</ul>}
