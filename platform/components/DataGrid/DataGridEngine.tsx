@@ -269,7 +269,7 @@ function NextEngine(rawProps: any) {
     () => new Map(canonical.map((record) => [recordKey(record[index]), record])),
     [canonical, index]
   );
-  const { replaceData, updateRecord, commitEdit, changeCells, undo, redo } = editActions({
+  const { replaceData, updateRecord, commitEdit, changeCells, commitCells, recordEdited, undo, redo } = editActions({
     incoming,
     source,
     canonical,
@@ -1181,6 +1181,8 @@ function NextEngine(rawProps: any) {
           openKey={props.openKey === undefined ? undefined : props.openKey == null ? null : recordKey(props.openKey)}
           onRecordEdit={props.onRecordEdit}
           commitEdit={commitEdit}
+          commitCells={commitCells}
+          recordEdited={recordEdited}
           onClose={() => {
             // focus goes back to the cell the edit began in (a drawer or dialog does it itself; the application's panel does not)
             const from = formFrom.current;
