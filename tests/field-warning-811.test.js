@@ -36,7 +36,7 @@ check('every control that sets aria-invalid marks data-plx-warning beside it', (
 }));
 check('the controls that draw their own box take warning too', () => {
   assert.ok(/data-plx-warning=\{warning \|\| undefined\}>/.test(read('components/CodeEditor/CodeEditor.tsx')), 'CodeEditor');
-  assert.ok(/data-plx-warning=\{warning \|\| undefined\} \{\.\.\.rest\}/.test(read('components/RichTextEditor/RichTextEditor.jsx')), 'RichTextEditor');
+  assert.ok(/data-plx-warning=\{warning \|\| undefined\} \{\.\.\.rest\}/.test(read('components/RichTextEditor/RichTextEditor.tsx')), 'RichTextEditor');
   assert.ok(/data-plx-warning=\{isWarning \|\| undefined\}/.test(read('components/InputGroup/InputGroup.tsx')), 'InputGroup');
   assert.ok(/warning=\{warning\}/.test(read('components/NumberInput/NumberInput.tsx')), 'NumberInput passes it to its group');
   assert.ok(/warning=\{warning\}/.test(read('components/RelativeDateInput/RelativeDateInput.tsx')), 'RelativeDateInput passes it on');

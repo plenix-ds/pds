@@ -17,7 +17,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const ROOT = path.join(__dirname, '..');
 
 // the source: the check is the cleaner's export, imported, not a regex of the editor's own
-const editor = fs.readFileSync(path.join(ROOT, 'platform/components/RichTextEditor/RichTextEditor.jsx'), 'utf8');
+const editor = fs.readFileSync(path.join(ROOT, 'platform/components/RichTextEditor/RichTextEditor.tsx'), 'utf8');
 const cleaner = fs.readFileSync(path.join(ROOT, 'platform/utils/richTextClean.ts'), 'utf8');
 assert.ok(/export const SAFE_SRC\b/.test(cleaner), 'richTextClean.ts exports SAFE_SRC');
 assert.ok(/import \{[^}]*\bSAFE_SRC\b[^}]*\} from '\.\.\/\.\.\/utils\/richTextClean\.ts'/.test(editor), 'RichTextEditor imports SAFE_SRC from the cleaner');

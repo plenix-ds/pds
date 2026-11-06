@@ -96,9 +96,14 @@ import { Menu, MenuItem, MenuGroup, MenuDivider, MenuRadioGroup, MenuSub } from 
 import { ColorSwatch } from '../ColorSwatch/ColorSwatch.tsx';
 import { CATEGORY_COLORS } from '../ColorSwatch/categoryColors.js';
 import { hotkeyLabel, isMac } from '../../utils/hotkey.ts';
-import { loadTiptap } from './tiptap.js';
+import { loadTiptap } from './tiptap.ts';
+import type { Editor, ChainedCommands } from '@tiptap/core';
+import type { Node as PMNode } from '@tiptap/pm/model';
+import type { TiptapEngine } from './tiptap.ts';
 import { cleanRichText, RICH_TEXT_STYLE_PROPERTIES, SAFE_HREF, SAFE_SRC } from '../../utils/richTextClean.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
+import type { IconModule } from '../Icon/Icon.tsx';
 import { useReadOnly } from '../../providers/ReadOnly.tsx';
 import { formatNumber } from '../../utils/format.ts';
 import AddColumnLeftIcon from 'plenix-platform/icons/plenix/add-column-left';
@@ -136,20 +141,20 @@ export { cleanRichText, RICH_TEXT_STYLE_PROPERTIES };
 
 
 // the toolbar's icons (Material Symbols Sharp, platform/icons/map.json)
-const ICONS = { bold: FormatBoldIcon, italic: FormatItalicIcon, underline: FormatUnderlinedIcon, strike: FormatStrikethroughIcon, code: CodeIcon,
+const ICONS: Record<string, IconModule> = { bold: FormatBoldIcon, italic: FormatItalicIcon, underline: FormatUnderlinedIcon, strike: FormatStrikethroughIcon, code: CodeIcon,
   subscript: SubscriptIcon, superscript: SuperscriptIcon, link: LinkIcon, bulleted: ListBulletsIcon, numbered: FormatListNumberedIcon, tasks: ChecklistIcon,
   quote: FormatQuoteIcon, codeBlock: CodeBlocksIcon, rule: HorizontalRuleIcon, image: EdImageIcon, table: TableIcon, color: FormatColorTextIcon,
   highlight: InkHighlighterIcon, alignLeft: EdAlignLeftIcon, alignCenter: EdAlignCenterIcon, alignRight: EdAlignRightIcon,
   alignJustify: EdAlignJustifyIcon, clear: FormatClearIcon, undo: EdUndoIcon, redo: EdRedoIcon,
   rowBefore: AddRowAboveIcon, rowAfter: AddRowBelowIcon, columnBefore: AddColumnLeftIcon, columnAfter: AddColumnRightIcon, deleteTable: TrashIcon };
 // each shortcut as a binding (Tiptap's defaults, and Plenix's Ctrl+K): shown as people read it and named for aria-keyshortcuts
-const KEYS = { bold: 'Mod+B', italic: 'Mod+I', underline: 'Mod+U', strike: 'Mod+Shift+S', code: 'Mod+E', subscript: 'Mod+,', superscript: 'Mod+.',
+const KEYS: Record<string, string | (() => string)> = { bold: 'Mod+B', italic: 'Mod+I', underline: 'Mod+U', strike: 'Mod+Shift+S', code: 'Mod+E', subscript: 'Mod+,', superscript: 'Mod+.',
   highlight: 'Mod+Shift+H', link: 'Mod+K', bulleted: 'Mod+Shift+8', numbered: 'Mod+Shift+7', tasks: 'Mod+Shift+9', quote: 'Mod+Shift+B',
   codeBlock: 'Mod+Alt+C', alignLeft: 'Mod+Shift+L', alignCenter: 'Mod+Shift+E', alignRight: 'Mod+Shift+R', alignJustify: 'Mod+Shift+J',
   undo: 'Mod+Z', redo: () => (isMac() ? 'Mod+Shift+Z' : 'Mod+Y'), paragraph: 'Mod+Alt+0', h1: 'Mod+Alt+1', h2: 'Mod+Alt+2', h3: 'Mod+Alt+3',
   h4: 'Mod+Alt+4', h5: 'Mod+Alt+5', h6: 'Mod+Alt+6' };
-const keysOf = (name) => (typeof KEYS[name] === 'function' ? KEYS[name]() : KEYS[name]);
-const keysAria = (binding) => binding.replace('Mod', isMac() ? 'Meta' : 'Control');
+const keysOf = (name: string): string | undefined => { const k = KEYS[name]; return typeof k === 'function' ? k() : k; };
+const keysAria = (binding: string) => binding.replace('Mod', isMac() ? 'Meta' : 'Control');
 
 // the person's fonts and sizes to choose from (content, not interface: any family or size can be typed in too)
 const RICH_TEXT_FONTS = [['DM Sans', '"DM Sans", sans-serif'], ['Reddit Mono', '"Reddit Mono", monospace'], ['Arial', 'Arial, sans-serif'],
@@ -163,11 +168,12 @@ const CHECK_CLASS = 'plx-check__input';
 const USER_CONTENT = 'plx-user-content';
 
 // what the toolbar shows for the text at the caret, read from the editor
-const MARKS = { bold: 'bold', italic: 'italic', underline: 'underline', strike: 'strike', code: 'code', subscript: 'subscript', superscript: 'superscript',
+const MARKS: Record<string, string> = { bold: 'bold', italic: 'italic', underline: 'underline', strike: 'strike', code: 'code', subscript: 'subscript', superscript: 'superscript',
   link: 'link', highlight: 'highlight', bulleted: 'bulletList', numbered: 'orderedList', tasks: 'taskList', quote: 'blockquote', codeBlock: 'codeBlock' };
-const ALIGNS = { alignLeft: 'left', alignCenter: 'center', alignRight: 'right', alignJustify: 'justify' };
-function readState(ed) {
-  const f = {};
+const ALIGNS: Record<string, string> = { alignLeft: 'left', alignCenter: 'center', alignRight: 'right', alignJustify: 'justify' };
+type Formats = { block: string; font: string; size: string; textColor: string; table: boolean; headerRow: boolean; undo: boolean; redo: boolean; [mark: string]: string | boolean };
+function readState(ed: Editor): Formats {
+  const f = {} as Formats;
   Object.keys(MARKS).forEach((k) => { f[k] = ed.isActive(MARKS[k]); });
   Object.keys(ALIGNS).forEach((k) => { f[k] = ed.isActive({ textAlign: ALIGNS[k] }); });
   f.block = 'paragraph';
@@ -186,7 +192,7 @@ function readState(ed) {
 }
 
 // a computed color (rgb() or rgba()) as a hex value, for the person's content
-const toHex = (rgb) => {
+const toHex = (rgb: unknown) => {
   if (/^#[0-9a-f]{3,6}$/i.test(String(rgb))) return String(rgb);
   const m = String(rgb).match(/\d+(\.\d+)?/g);
   if (!m || m.length < 3) return '';
@@ -197,14 +203,24 @@ const HEX = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i;
 // the engine set up for this editor: the starter kit with every format, the official free extensions, a table without
 // its column group, a task item with the Platform checkbox, the mention node (its suggestion list only when the editor
 // has a mentions slot), Plenix's Ctrl+K and the announcements of the format shortcuts
-function makeEditor(T, el, o) {
+type Words = Record<string, string>;
+type MentionItem = { value: string | number; label: string; description?: string };
+type SuggestProps = { items?: MentionItem[]; clientRect?: (() => DOMRect | null) | null; command?: (attrs: { id: string | number; label: string }) => void } | null;
+type MentionState = { items: MentionItem[]; active: number; x: number; y: number; command?: (attrs: { id: string | number; label: string }) => void };
+type EditorOptions = {
+  content: string; editable: boolean; markdown: boolean; attributes: Record<string, string>; trigger: string; mentions: boolean;
+  strings: () => Words; apply: (name: string, fromKeys?: boolean) => void; search: (q: string) => MentionItem[] | Promise<MentionItem[]>;
+  suggest: (p: SuggestProps) => void; suggestKey: (p: { event: KeyboardEvent }) => boolean;
+  keydown: (view: unknown, e: KeyboardEvent) => boolean; paste: (view: { pasteText: (t: string, e: ClipboardEvent) => void }, e: ClipboardEvent) => boolean;
+};
+function makeEditor(T: TiptapEngine, el: HTMLElement, o: EditorOptions): Editor {
   const trigger = o.trigger;
   const PlenixKeys = T.Extension.create({
     name: 'plenixKeys',
     priority: 1000,
     addKeyboardShortcuts() {
-      const key = (name) => () => { o.apply(name, true); return true; };
-      const out = { 'Mod-k': key('link') };
+      const key = (name: string) => () => { o.apply(name, true); return true; };
+      const out: Record<string, () => boolean> = { 'Mod-k': key('link') };
       // Tiptap's own shortcuts, run through the same commands so a format turned on or off is announced
       [['Mod-b', 'bold'], ['Mod-i', 'italic'], ['Mod-u', 'underline'], ['Mod-Shift-s', 'strike'], ['Mod-e', 'code'], ['Mod-,', 'subscript'],
         ['Mod-.', 'superscript'], ['Mod-Shift-h', 'highlight'], ['Mod-Shift-7', 'numbered'], ['Mod-Shift-8', 'bulleted'], ['Mod-Shift-9', 'tasks']]
@@ -221,7 +237,7 @@ function makeEditor(T, el, o) {
         mentionSuggestionChar: { default: trigger, parseHTML: () => trigger, renderHTML: () => ({}) }
       };
     },
-    addProseMirrorPlugins() { return o.mentions ? this.parent() : []; }
+    addProseMirrorPlugins() { return o.mentions ? (this.parent?.() ?? []) : []; }
   }).configure({
     deleteTriggerWithBackspace: true,
     HTMLAttributes: { class: MENTION_CLASS, contenteditable: 'false' },
@@ -229,12 +245,12 @@ function makeEditor(T, el, o) {
       char: trigger,
       decorationClass: 'plx-rich-text-editor__mention-query',
       items: ({ query }) => Promise.resolve(o.search(query)).then((items) => (Array.isArray(items) ? items : []), () => []),
-      render: () => ({ onStart: o.suggest, onUpdate: o.suggest, onKeyDown: o.suggestKey, onExit: () => o.suggest(null) })
+      render: () => ({ onStart: o.suggest as (p: unknown) => void, onUpdate: o.suggest as (p: unknown) => void, onKeyDown: o.suggestKey, onExit: () => o.suggest(null) })
     }
   });
   // a table without the engine's column group and widths (no column resizing): nothing written inline
   const PlenixTable = T.Table.extend({ renderHTML({ HTMLAttributes }) { return ['table', HTMLAttributes, ['tbody', 0]]; } }).configure({ View: null, resizable: false });
-  const noWidth = (Cell) => Cell.extend({ addAttributes() { const a = Object.assign({}, this.parent()); delete a.colwidth; return a; } });
+  const noWidth = <C extends typeof T.TableCell | typeof T.TableHeader>(Cell: C): C => Cell.extend({ addAttributes() { const a: Record<string, unknown> = Object.assign({}, this.parent?.()); delete a.colwidth; return a; } }) as C;
   // a task item whose checkbox is the Platform checkbox (named by its text), in place of the engine's view
   const PlenixTaskItem = T.TaskItem.extend({
     addNodeView() {
@@ -242,7 +258,7 @@ function makeEditor(T, el, o) {
         const doc = el.ownerDocument;
         const item = doc.createElement('li'), label = doc.createElement('label'), box = doc.createElement('input'), content = doc.createElement('div');
         label.contentEditable = 'false'; box.type = 'checkbox'; box.className = CHECK_CLASS;
-        const show = (n) => { item.setAttribute('data-type', 'taskItem'); item.setAttribute('data-checked', n.attrs.checked ? 'true' : 'false'); box.checked = !!n.attrs.checked; box.setAttribute('aria-label', n.textContent || o.strings().tasks); };
+        const show = (n: PMNode) => { item.setAttribute('data-type', 'taskItem'); item.setAttribute('data-checked', n.attrs.checked ? 'true' : 'false'); box.checked = !!n.attrs.checked; box.setAttribute('aria-label', n.textContent || o.strings().tasks); };
         show(node);
         box.addEventListener('mousedown', (e) => e.preventDefault());
         box.addEventListener('change', () => {
@@ -275,35 +291,59 @@ function makeEditor(T, el, o) {
       T.TextAlign.configure({ types: ['heading', 'paragraph'] }), T.Subscript, T.Superscript,
       T.Image.configure({ inline: false, allowBase64: false }), o.markdown ? T.Typography : null,
       PlenixMention, PlenixKeys
-    ].filter(Boolean),
+    ].filter((x): x is NonNullable<typeof x> => !!x),
     editorProps: { attributes: o.attributes, handlePaste: o.paste, handleDOMEvents: { keydown: o.keydown } }
   });
 }
 
+/** @public the prop type (ADR 0011) */
+export type RichTextEditorProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> & {
+  /** the editing area's accessible name */
+  label?: string;
+  /** the starting content, as HTML (it is cleaned) */
+  defaultValue?: string;
+  /** runs with the cleaned HTML ('' when empty) */
+  onChange?: (html: string) => void;
+  /** "basic" (default) | "full" | false/"" for no toolbar */
+  toolbar?: 'basic' | 'full' | false | '';
+  /** typing Markdown shortcuts formats (default true) */
+  markdownShortcuts?: boolean;
+  /** an @-mention list: { trigger, search(query) } */
+  mentions?: { trigger?: string; search?: (query: string) => MentionItem[] | Promise<MentionItem[]>; renderOption?: (option: MentionItem) => React.ReactNode };
+  placeholder?: string;
+  readOnly?: boolean;
+  invalid?: boolean;
+  warning?: string | boolean;
+  disabled?: boolean;
+  strings?: Catalog | null;
+  className?: string;
+  id?: string;
+};
+
 export function RichTextEditor({ label, defaultValue = '', onChange, toolbar = 'basic', markdownShortcuts = true, mentions, placeholder, readOnly: readOnlyOwn,
-  invalid, warning, disabled = false, strings, className, id, ...rest }) {
+  invalid, warning, disabled = false, strings, className, id, ...rest }: RichTextEditorProps) {
   const readOnly = useReadOnly(readOnlyOwn);   // its own readOnly, else the nearest ReadOnly region's
-  const t = useStrings('richTextEditor', strings);
+  const t = useStrings('richTextEditor', strings) as unknown as Words;
   // heading and tip are messages with {n}, {name} and {keys}; an app's own function in strings still works
-  const headingText = (n) => (typeof t.heading === 'function' ? t.heading(n) : String(t.heading).replace('{n}', () => formatNumber(n)));
-  const tipText = (name, keys) => (typeof t.tip === 'function' ? t.tip(name, keys) : String(t.tip).replace('{name}', () => name).replace('{keys}', () => keys));
+  const headingText = (n: number): string => (typeof (t.heading as unknown) === 'function' ? (t.heading as unknown as (n: number) => string)(n) : String(t.heading).replace('{n}', () => formatNumber(n)));
+  const tipText = (name: string, keys: string): string => (typeof (t.tip as unknown) === 'function' ? (t.tip as unknown as (a: string, b: string) => string)(name, keys) : String(t.tip).replace('{name}', () => name).replace('{keys}', () => keys));
   const auto = useUid('plx-rte');
   const areaId = id || auto + '-area';
-  const area = React.useRef(null), list = React.useRef(null), firstField = React.useRef(null), groupsRef = React.useRef(null), picker = React.useRef(null);
-  const editorRef = React.useRef(null), saved = React.useRef(null), pasting = React.useRef(false), escaped = React.useRef(false);
+  const area = React.useRef<HTMLDivElement | null>(null), list = React.useRef<HTMLUListElement | null>(null), firstField = React.useRef<HTMLInputElement | null>(null), groupsRef = React.useRef<HTMLDivElement | null>(null), picker = React.useRef<HTMLInputElement | null>(null);
+  const editorRef = React.useRef<Editor | null>(null), saved = React.useRef<{ from: number; to: number } | null>(null), pasting = React.useRef(false), escaped = React.useRef(false);
   const [ready, setReady] = React.useState(false);
-  const [formats, setFormats] = React.useState({});
+  const [formats, setFormats] = React.useState<Formats>({} as Formats);
   const [empty, setEmpty] = React.useState(() => !String(defaultValue || '').replace(/<[^>]*>/g, '').trim());
-  const [bar, setBar] = React.useState(null);           // the field under the toolbar: { kind: link | image | font | size | color | highlight }
-  const [values, setValues] = React.useState({});       // its fields' values
-  const [mention, setMention] = React.useState(null);   // { items, active, x, y, command }
+  const [bar, setBar] = React.useState<{ kind: string } | null>(null);           // the field under the toolbar: { kind: link | image | font | size | color | highlight }
+  const [values, setValues] = React.useState<{ main?: string; alt?: string }>({});       // its fields' values
+  const [mention, setMention] = React.useState<MentionState | null>(null);   // { items, active, x, y, command }
   const editable = !readOnly && !disabled;
-  const live = React.useRef({}); live.current = { onChange, editable, mentions, mention, t };
+  const live = React.useRef<{ onChange?: (html: string) => void; editable: boolean; mentions?: RichTextEditorProps['mentions']; mention: MentionState | null; t: Words }>({ editable, mention: null, t }); live.current = { onChange, editable, mentions, mention, t };
 
   const mentionOpen = !!(mention && mention.items.length);
   // the editing area's attributes: ProseMirror owns the element, so they go through the engine (and onto the element
   // itself until the engine has loaded)
-  const attributes = { id: areaId, class: cx('plx-rich-text', 'plx-rich-text--compact', 'plx-rich-text-editor__area', USER_CONTENT, empty && 'is-empty'),
+  const attributes: Record<string, string | null | false | undefined> = { id: areaId, class: cx('plx-rich-text', 'plx-rich-text--compact', 'plx-rich-text-editor__area', USER_CONTENT, empty && 'is-empty'),
     role: 'textbox', 'aria-multiline': 'true', 'aria-label': label, 'aria-description': editable ? t.hint : null, 'aria-readonly': readOnly ? 'true' : null,
     'aria-disabled': disabled ? 'true' : null, 'aria-invalid': invalid ? 'true' : null, 'aria-placeholder': placeholder || null,
     'data-placeholder': placeholder || null, tabindex: disabled ? '-1' : '0',
@@ -314,10 +354,10 @@ export function RichTextEditor({ label, defaultValue = '', onChange, toolbar = '
   const shown = React.useRef({});
   React.useLayoutEffect(() => {
     const ed = editorRef.current, el = area.current;
-    if (ed && !ed.isDestroyed) { ed.view.setProps({ attributes }); return; }
+    if (ed && !ed.isDestroyed) { ed.view.setProps({ attributes: attributes as Record<string, string> }); return; }
     if (!el) return;
     Object.keys(shown.current).forEach((k) => { if (!(k in attributes)) el.removeAttribute(k); });
-    Object.keys(attributes).forEach((k) => el.setAttribute(k, attributes[k]));
+    Object.keys(attributes).forEach((k) => el.setAttribute(k, attributes[k] as string));
     shown.current = attributes;
   }, [attrKey, ready]);   // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -330,7 +370,7 @@ export function RichTextEditor({ label, defaultValue = '', onChange, toolbar = '
     loadTiptap(el.ownerDocument.defaultView).then((T) => {
       if (gone) return;
       const ed = makeEditor(T, el, {
-        content, editable: live.current.editable, markdown: markdownShortcuts, attributes,
+        content, editable: live.current.editable, markdown: markdownShortcuts, attributes: attributes as Record<string, string>,
         trigger: (mentions && mentions.trigger) || '@', mentions: !!mentions, strings: () => live.current.t,
         apply: (name, fromKeys) => apply(name, fromKeys),
         search: (q) => { const m = live.current.mentions; return m && m.search ? m.search(q) : []; },
@@ -385,9 +425,9 @@ export function RichTextEditor({ label, defaultValue = '', onChange, toolbar = '
 
   React.useEffect(() => { const ed = editorRef.current; if (ed && !ed.isDestroyed && ed.isEditable !== editable) ed.setEditable(editable); }, [editable, ready]);
 
-  const pick = (m, o) => { if (m && m.command && o) m.command({ id: o.value, label: o.label }); setMention(null); };
+  const pick = (m: MentionState | null, o?: MentionItem) => { if (m && m.command && o) m.command({ id: o.value, label: o.label }); setMention(null); };
 
-  const COMMANDS = {
+  const COMMANDS: Record<string, (c: ChainedCommands) => ChainedCommands> = {
     bold: (c) => c.toggleBold(), italic: (c) => c.toggleItalic(), underline: (c) => c.toggleUnderline(), strike: (c) => c.toggleStrike(),
     code: (c) => c.toggleCode(), subscript: (c) => c.toggleSubscript(), superscript: (c) => c.toggleSuperscript(), highlight: (c) => c.toggleHighlight(),
     bulleted: (c) => c.toggleBulletList(), numbered: (c) => c.toggleOrderedList(), tasks: (c) => c.toggleTaskList(),
@@ -402,7 +442,7 @@ export function RichTextEditor({ label, defaultValue = '', onChange, toolbar = '
     clear: (c) => c.unsetAllMarks().clearNodes().unsetTextAlign(), undo: (c) => c.undo(), redo: (c) => c.redo()
   };
   // a format from the toolbar, a menu or the keyboard; from the keyboard it is announced
-  function apply(name, fromKeys) {
+  function apply(name: string, fromKeys?: boolean) {
     const ed = editorRef.current, L = live.current;
     if (!ed || !L.editable) return;
     if (name === 'link') { openLink(); return; }
@@ -418,13 +458,13 @@ export function RichTextEditor({ label, defaultValue = '', onChange, toolbar = '
     if (name === 'image' || name === 'color' || name === 'highlight' && !fromKeys || name === 'customFont' || name === 'customSize') { openBar(name); return; }
     const was = MARKS[name] ? ed.isActive(MARKS[name]) : false;
     COMMANDS[name](ed.chain().focus()).run();
-    if (fromKeys && MARKS[name]) announce(was ? L.t.off(L.t[name]) : L.t.on(L.t[name]));
+    if (fromKeys && MARKS[name]) announce(was ? (L.t.off as unknown as (n: string) => string)(L.t[name]) : (L.t.on as unknown as (n: string) => string)(L.t[name]));
   }
   // after a menu choice the menu gives the focus to its button; it goes back to the area
-  const fromMenu = (fn) => () => { fn(); setTimeout(() => { const ed = editorRef.current; if (ed && !ed.isDestroyed) ed.commands.focus(); }, 0); };
+  const fromMenu = (fn: () => void) => () => { fn(); setTimeout(() => { const ed = editorRef.current; if (ed && !ed.isDestroyed) ed.commands.focus(); }, 0); };
 
   // the field under the toolbar (link, image, color, highlight, custom font or size), for the selection kept in saved
-  function openBar(kind, start) {
+  function openBar(kind: string, start?: { main?: string; alt?: string }) {
     const ed = editorRef.current; if (!ed) return;
     const { from, to } = ed.state.selection;
     saved.current = { from, to };
@@ -447,7 +487,7 @@ export function RichTextEditor({ label, defaultValue = '', onChange, toolbar = '
     const s = saved.current;
     if (s) ed.chain().focus().setTextSelection(s).run(); else ed.commands.focus();
   };
-  const submitBar = (value) => {
+  const submitBar = (value?: unknown) => {
     const kind = bar && bar.kind, v = String(value != null ? value : values.main || '').trim(), alt = String(values.alt || '').trim();
     closeBar();
     const ed = editorRef.current;
@@ -474,9 +514,9 @@ export function RichTextEditor({ label, defaultValue = '', onChange, toolbar = '
     if (kind === 'color') ed.chain().focus().unsetColor().run(); else ed.chain().focus().unsetHighlight().run();
   };
   // a suggested swatch: its color as the stylesheet shows it now, kept on the content as a hex value
-  const swatchPick = (e) => {
+  const swatchPick = (e: React.MouseEvent<HTMLElement>) => {
     const chip = e.currentTarget, win = chip.ownerDocument.defaultView;
-    submitBar(toHex(win.getComputedStyle(chip).backgroundColor));
+    submitBar(toHex((win as Window).getComputedStyle(chip).backgroundColor));
   };
 
   useFloating(area, list, { open: mentionOpen, placement: 'bottom-start', virtual: mentionOpen ? { x: mention.x, y: mention.y } : null });
@@ -484,9 +524,9 @@ export function RichTextEditor({ label, defaultValue = '', onChange, toolbar = '
 
   const usable = editable && ready;
   const PLAIN = ['undo', 'redo', 'clear', 'rule', 'image', 'color'];
-  const pressedOf = (name) => (PLAIN.indexOf(name) >= 0 ? undefined : name === 'highlight' ? !!formats.highlight : !!formats[name]);
+  const pressedOf = (name: string) => (PLAIN.indexOf(name) >= 0 ? undefined : name === 'highlight' ? !!formats.highlight : !!formats[name]);
   // an icon-only ghost button named by its word, with a tooltip of the word and its shortcut
-  const toolButton = (name) => {
+  const toolButton = (name: string) => {
     const keys = keysOf(name), off = !usable || (name === 'undo' && !formats.undo) || (name === 'redo' && !formats.redo);
     return (
       <Tooltip key={name} content={keys ? tipText(t[name], hotkeyLabel(keys)) : t[name]} disabled={off}>
@@ -496,12 +536,12 @@ export function RichTextEditor({ label, defaultValue = '', onChange, toolbar = '
       </Tooltip>
     );
   };
-  const blockName = (b) => (!b || b === 'paragraph' ? t.paragraph : headingText(Number(b.slice(1))));
-  const fontName = (f) => { const hit = RICH_TEXT_FONTS.find((x) => x[1] === f); return f ? (hit ? hit[0] : f.replace(/["']/g, '').split(',')[0]) : t.font; };
+  const blockName = (b?: string | boolean) => (!b || b === 'paragraph' ? t.paragraph : headingText(Number(String(b).slice(1))));
+  const fontName = (f?: string | boolean) => { f = f ? String(f) : ''; const hit = RICH_TEXT_FONTS.find((x) => x[1] === f); return f ? (hit ? hit[0] : f.replace(/["']/g, '').split(',')[0]) : t.font; };
   // the menus' items, the same in the toolbar's menus and in the More menu's submenus
   const blockItems = () => (
-    <MenuRadioGroup label={t.textStyle} value={formats.block || 'paragraph'} onChange={(v) => fromMenu(() => apply(v === 'paragraph' ? 'paragraph' : v))()}>
-      {['paragraph', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'].map((b) => <MenuItem key={b} value={b} aria-keyshortcuts={keysAria(keysOf(b))}>{blockName(b)}</MenuItem>)}
+    <MenuRadioGroup label={t.textStyle} value={formats.block || 'paragraph'} onChange={(v) => fromMenu(() => apply(v === 'paragraph' ? 'paragraph' : String(v)))()}>
+      {['paragraph', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'].map((b) => <MenuItem key={b} value={b} aria-keyshortcuts={keysAria(keysOf(b) as string)}>{blockName(b)}</MenuItem>)}
     </MenuRadioGroup>
   );
   const fontItems = () => [
@@ -515,7 +555,7 @@ export function RichTextEditor({ label, defaultValue = '', onChange, toolbar = '
     <MenuDivider key="div" />, <MenuItem key="c" onSelect={() => setTimeout(() => apply('customSize'), 0)}>{t.custom}</MenuItem>
   ];
   const tableItems = () => [
-    <MenuItem key="i" icon={ICONS.table} disabled={!usable || formats.table} onSelect={fromMenu(() => apply('insertTable'))}>{t.insertTable}</MenuItem>,
+    <MenuItem key="i" icon={ICONS.table} disabled={!usable || !!formats.table} onSelect={fromMenu(() => apply('insertTable'))}>{t.insertTable}</MenuItem>,
     <MenuDivider key="d1" />,
     ...['rowBefore', 'rowAfter', 'columnBefore', 'columnAfter', 'deleteRow', 'deleteColumn'].map((n) => (
       <MenuItem key={n} icon={ICONS[n]} disabled={!usable || !formats.table} onSelect={fromMenu(() => apply(n))}>{t[n]}</MenuItem>)),
@@ -523,14 +563,15 @@ export function RichTextEditor({ label, defaultValue = '', onChange, toolbar = '
     <MenuDivider key="d2" />,
     <MenuItem key="x" icon={ICONS.deleteTable} danger disabled={!usable || !formats.table} onSelect={fromMenu(() => apply('deleteTable'))}>{t.deleteTable}</MenuItem>
   ];
-  const menuButton = (name, text, items, icon) => (
+  const menuButton = (name: string, text: string | null, items: () => React.ReactNode, icon?: IconModule) => (
     <Menu key={name} label={t[name]} trigger={<Button variant="ghost" size="sm" caret icon={icon} iconOnly={!!icon} label={icon ? t[name] : t[name] + ': ' + text} disabled={!usable} onMouseDown={(e) => e.preventDefault()}>{text}</Button>}>
       {items()}
     </Menu>
   );
 
   // the full toolbar's groups, in order; each is one overflow item (the last ones move into More formatting first)
-  const GROUPS = toolbar === 'full' ? [
+  type Group = { id: string; label: string; buttons?: string[]; menus?: Array<[string, (() => string) | null, () => React.ReactNode, IconModule?]>; after?: string[] };
+  const GROUPS: Group[] = toolbar === 'full' ? [
     { id: 'block', label: t.textStyle, menus: [['textStyle', () => blockName(formats.block), blockItems]] },
     { id: 'font', label: t.font, menus: [['font', () => fontName(formats.font), fontItems], ['size', () => formats.size || t.size, sizeItems]] },
     { id: 'marks', label: t.groupMarks, buttons: ['bold', 'italic', 'underline', 'strike', 'code', 'subscript', 'superscript'] },
@@ -541,7 +582,7 @@ export function RichTextEditor({ label, defaultValue = '', onChange, toolbar = '
     { id: 'history', label: t.groupHistory, buttons: ['undo', 'redo', 'clear'] }
   ] : [{ id: 'marks', label: t.groupMarks, buttons: ['bold', 'italic', 'link'] }, { id: 'lists', label: t.groupLists, buttons: ['bulleted', 'numbered'] }];
   const fit = useOverflow(groupsRef, GROUPS.length, toolbar + JSON.stringify([formats.block, formats.font, formats.size]));
-  const groupEl = (g) => (
+  const groupEl = (g: Group) => (
     <span key={g.id} data-plx-overflow-item="" className="plx-rich-text-editor__slot">
       <Toolbar.Group>
         {(g.buttons || []).map(toolButton)}
@@ -551,9 +592,9 @@ export function RichTextEditor({ label, defaultValue = '', onChange, toolbar = '
     </span>
   );
   // a hidden group in the More menu: its buttons as items (a format as a checkbox item), its menus as submenus
-  const menuEntry = (name) => (
+  const menuEntry = (name: string) => (
     <MenuItem key={name} icon={ICONS[name]} checked={pressedOf(name)} disabled={!usable || (name === 'undo' && !formats.undo) || (name === 'redo' && !formats.redo)}
-      aria-keyshortcuts={keysOf(name) ? keysAria(keysOf(name)) : undefined}
+      aria-keyshortcuts={keysOf(name) ? keysAria(keysOf(name) as string) : undefined}
       onSelect={['image', 'color', 'highlight', 'link'].indexOf(name) >= 0 ? () => setTimeout(() => apply(name), 0) : fromMenu(() => apply(name))}>{t[name]}</MenuItem>
   );
   const hidden = GROUPS.slice(fit);
@@ -572,8 +613,8 @@ export function RichTextEditor({ label, defaultValue = '', onChange, toolbar = '
   ) : null;
 
   const showToolbar = toolbar && !readOnly;
-  const field = (props) => <Input ref={firstField} {...props} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); submitBar(); } else if (e.key === 'Escape') { e.preventDefault(); closeBar(); } }} />;
-  const setMain = (e) => setValues(Object.assign({}, values, { main: e.target.value }));
+  const field = (props: React.ComponentProps<typeof Input> & { key?: string }) => <Input ref={firstField} {...props} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); submitBar(); } else if (e.key === 'Escape') { e.preventDefault(); closeBar(); } }} />;
+  const setMain = (e: React.ChangeEvent<HTMLInputElement>) => setValues(Object.assign({}, values, { main: e.target.value }));
   let barContent = null;
   if (bar) {
     const k = bar.kind;

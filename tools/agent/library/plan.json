@@ -1442,7 +1442,7 @@
       "platform/design-system/parts/w06C.{records,labs,docs}.js + .css",
       "platform/exports/w06C.{js,css}",
       "platform/standards/web-native-map.d/w06C.json",
-      "platform/components/RichTextEditor/RichTextEditor.jsx",
+      "platform/components/RichTextEditor/RichTextEditor.tsx",
       "platform/components/RichTextEditor/rich-text-editor.css",
       "platform/tokens/components/rich-text-editor.tokens.json",
       "platform/components/InlineEdit/InlineEdit.jsx",
@@ -5176,7 +5176,7 @@
    "wave": 6,
    "lane": "C",
    "files": [
-    "platform/components/RichTextEditor/RichTextEditor.jsx",
+    "platform/components/RichTextEditor/RichTextEditor.tsx",
     "platform/components/RichTextEditor/rich-text-editor.css",
     "platform/tokens/components/rich-text-editor.tokens.json"
    ],
@@ -12839,7 +12839,7 @@
    "target": "RichTextEditor",
    "targetKind": "component",
    "files": [
-    "platform/components/RichTextEditor/RichTextEditor.jsx",
+    "platform/components/RichTextEditor/RichTextEditor.tsx",
     "platform/components/RichTextEditor/rich-text-editor.css",
     "platform/tokens/components/rich-text-editor.tokens.json"
    ],
