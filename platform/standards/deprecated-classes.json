@@ -1,5 +1,5 @@
 {
- "$description": "Classes going away (VERSIONING.md, Deprecation; issue 882): no page, application in this repository, the design spec, the St. John site, a test or a tool uses them. They keep working until they are removed, no earlier than the next minor release. Check-style fails on a new use (rule deprecated-classes). The tokens going away carry $deprecated in their token file instead. The release that removed 321 of these (issue 125) kept ten that CTM still uses (plx-u-absolute, -bg-transparent, -justify-center, -left-0, -right-0, -text-center, -top-0, -w-100px, -w-36px, -w-72px); they are removed when CTM has moved off them. Three more are kept because the 0.84 changelog promised them until 2.0.0 (plx-u-ml-auto, plx-u-pl-12px, plx-u-pl-16px; #125).",
+ "$description": "Classes going away (VERSIONING.md, Deprecation; issue 882). They keep working until they are removed, no earlier than the next minor release, with one exception: the five listed under `until` are promised until 2.0.0 (the 0.84 changelog) and are not removed before it. Eight others (plx-u-absolute, -bg-transparent, -justify-center, -text-center, -top-0, -w-100px, -w-36px, -w-72px) are removed once the connected application CTM has moved off them (CTM#144, PDS#735); the removal reads this file, so it takes only `classes` that are not under `until`. Check-style fails on a new use of any listed class (rule deprecated-classes). The tokens going away carry $deprecated in their token file instead. The 308 classes listed here before the release after 0.90.0 were removed in #723 (issue 125; the list is in the changelog's Removed section).",
  "issue": "882",
  "classes": [
   "plx-u-absolute",
@@ -15,5 +15,14 @@
   "plx-u-w-100px",
   "plx-u-w-36px",
   "plx-u-w-72px"
- ]
+ ],
+ "until": {
+  "2.0.0": [
+   "plx-u-left-0",
+   "plx-u-ml-auto",
+   "plx-u-pl-12px",
+   "plx-u-pl-16px",
+   "plx-u-right-0"
+  ]
+ }
 }

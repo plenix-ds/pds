@@ -16,6 +16,10 @@ for (const c of removed) {
 assert.deepEqual(still, [], 'no removed class is still defined (' + still.length + ' left)');
 // the ten classes CTM still uses (the 0.91.0 release check): kept, still defined, listed as going away until CTM has moved off them
 assert.deepEqual(JSON.parse(fs.readFileSync(path.join(ROOT, 'platform/standards/deprecated-classes.json'), 'utf8')).classes.slice().sort(), kept.slice().sort(), 'the going-away list is the ten kept classes');
+// five of the kept are promised until 2.0.0 (the 0.84 changelog): the file says so structurally, for the removal that reads it (G3 on #738)
+const list = JSON.parse(fs.readFileSync(path.join(ROOT, 'platform/standards/deprecated-classes.json'), 'utf8'));
+assert.deepEqual(list.until['2.0.0'], ['plx-u-left-0', 'plx-u-ml-auto', 'plx-u-pl-12px', 'plx-u-pl-16px', 'plx-u-right-0'], 'the five promised until 2.0.0');
+for (const c of list.until['2.0.0']) assert.ok(list.classes.includes(c), c + ' is still a going-away class');
 for (const c of kept) assert.ok(text.some(([, s]) => new RegExp('\\.' + escape(c) + '(?![\\w-])').test(s)), c + ' is still defined (CTM uses it)');
 // the classes that stay: a sample from each stylesheet the removal touched
 const stay = { 'platform/system/utilities.css': ['plx-u-w-100p', 'plx-u-z-raised', 'plx-u-bg-data', 'plx-u-ws-nowrap'], 'platform/system/grid.css': ['plx-span-1', 'plx-span-4', 'plx-span-12'] };
