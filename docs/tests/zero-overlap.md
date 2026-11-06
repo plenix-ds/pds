@@ -9,13 +9,13 @@ Each part of the Plenix interface gets each style from exactly one rule, so chan
 - The pilot page (Button, Input, a navigation list, open popovers and icons, in every state):
   - Every element has zero overlap, at standard and comfortable density, with and without reduced motion.
   - Under reduced motion, no animation or transition lasts longer than 0 seconds.
-  - Under reduced motion, every element's computed style is the same as in the recorded snapshot. Five properties are left out because they differ between Chrome versions and fonts: `text-decoration-skip-spaces`, `width`, `inline-size`, `transform-origin`, `perspective-origin`.
+  - Under reduced motion, every element's computed style is the same as in the recorded snapshot. Seven properties are left out because they differ between Chrome versions and fonts: `text-decoration-skip-spaces`, `width`, `inline-size`, `transform-origin`, `perspective-origin`, `text-decoration-inset`, `position-visibility`.
 - Prints the conditions the pilot ran in (its coverage).
 
 ## Why it exists
 - Zero overlap at run time: the Plenix Styling Standard, section 3.5 (in the file header).
 - Added in commit 0b2fa81c "Zero overlap: the Standard, the selector-kinds check, the strict audit, fixtures and backlogs".
-- The five left-out properties: issue #359 ("zero-overlap: 1230 text-decoration-skip-spaces findings on cc-server Chrome (baseline mismatch)"). The file header gives the reasons: Chrome 156 no longer lists one of them, and measured widths change with each computer's fonts.
+- The left-out properties: issue #359 (the first five) and #46 (the CI runner's Chrome, the last two) ("zero-overlap: 1230 text-decoration-skip-spaces findings on cc-server Chrome (baseline mismatch)"). The file header gives the reasons: Chrome 156 no longer lists one of them, and measured widths change with each computer's fonts.
 
 ## How it checks
 - Serves `tests/fixtures/zero-overlap/audit.html` and `tests/fixtures/zero-overlap/pilot.html` (with `pilot.js`) from the local test server and opens them in Chrome at 1440 × 1000.
@@ -29,7 +29,7 @@ Each part of the Plenix interface gets each style from exactly one rule, so chan
 
 ## When it runs
 - AUTOMATIC group in `tests/run.js`, so `npm test` and `npm run test:full` run it. It has no changed-mode filter: it always runs its checks when started.
-- Not in CI yet: the snapshot was refreshed (#46, owner yes in #45), which cleared the 1,243 findings. One real overlap remains: `--plx-state-button-layer-color` is set by the base Button rule and again by the primary and danger rules (`platform/components/Button/button.css:186, 489, 505`). It is tracked in its own issue; wire the test into CI when that is fixed.
+- CI: the "Zero overlap" job of `ci.yml`, part of the required "CI result" check (#46). It is diff-aware: it runs only when `platform/`, `build-app.js`, `ci.yml`, this test, `tests/clash-audit.js`, `tests/lib.js`, the fixtures or the snapshot changed; otherwise it passes without running. A missing Chrome fails it.
 - By hand: `node tests/zero-overlap.test.js`.
 
 ## What it needs
