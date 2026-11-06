@@ -365,8 +365,8 @@
     "focus": "n/a(stories arrive with Storybook, P0-11)",
     "active": "n/a(stories arrive with Storybook, P0-11)",
     "disabled": "n/a(stories arrive with Storybook, P0-11)",
-    "loading": "n/a(a transfer under way shows its progress bar; stories arrive with Storybook, P0-11)",
+    "loading": "n/a(stories arrive with Storybook, P0-11)",
     "selected": "n/a(stories arrive with Storybook, P0-11)",
-    "error": "n/a(error=\"…\" shows the reason and Try again; stories arrive with Storybook, P0-11)"
+    "error": "n/a(stories arrive with Storybook, P0-11)"
   }
 }

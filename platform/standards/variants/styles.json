@@ -2337,5 +2337,115 @@
   "lollipop-chart--orientation-vertical": {
     "sets": [],
     "why": "markup only: categories along the bottom, drawn by the chart engine (orientation vertical)"
+  },
+  "counter--tone-pill-danger-default": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-count-pill-danger-background"
+      },
+      {
+        "property": "border-color",
+        "part": "block",
+        "token": "--plx-comp-count-pill-danger-border"
+      },
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-comp-count-pill-danger-text"
+      }
+    ],
+    "why": ".plx-count--pill.plx-count--danger in count.css (the record is Counter, the component Count)"
+  },
+  "counter--tone-pill-neutral": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-count-pill-neutral-background"
+      },
+      {
+        "property": "border-color",
+        "part": "block",
+        "token": "--plx-comp-count-pill-neutral-border"
+      },
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-comp-count-pill-neutral-text"
+      }
+    ],
+    "why": ".plx-count--pill.plx-count--neutral in count.css (the record is Counter, the component Count)"
+  },
+  "counter--tone-pill-info": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-count-pill-info-background"
+      },
+      {
+        "property": "border-color",
+        "part": "block",
+        "token": "--plx-comp-count-pill-info-border"
+      },
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-comp-count-pill-info-text"
+      }
+    ],
+    "why": ".plx-count--pill.plx-count--info in count.css (the record is Counter, the component Count)"
+  },
+  "counter--tone-pill-success": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-count-pill-success-background"
+      },
+      {
+        "property": "border-color",
+        "part": "block",
+        "token": "--plx-comp-count-pill-success-border"
+      },
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-comp-count-pill-success-text"
+      }
+    ],
+    "why": ".plx-count--pill.plx-count--success in count.css (the record is Counter, the component Count)"
+  },
+  "counter--tone-pill-warning": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-count-pill-warning-background"
+      },
+      {
+        "property": "border-color",
+        "part": "block",
+        "token": "--plx-comp-count-pill-warning-border"
+      },
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-comp-count-pill-warning-text"
+      }
+    ],
+    "why": ".plx-count--pill.plx-count--warning in count.css (the record is Counter, the component Count)"
+  },
+  "counter--shape-pill": {
+    "sets": [
+      {
+        "property": "border-width",
+        "part": "block",
+        "token": "--plx-comp-count-pill-border-width"
+      }
+    ],
+    "why": ".plx-count--pill in count.css: a small soft pill with a border (the tone sets its colors)"
   }
 }
