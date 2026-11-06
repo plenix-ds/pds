@@ -1,4 +1,4 @@
-/* Plenix · Sparkline (platform/charts/Sparkline.jsx). A word-sized box (inline) or the container's width (fill); the line,
+/* Plenix · Sparkline (platform/charts/Sparkline.tsx). A word-sized box (inline) or the container's width (fill); the line,
    area, bars and the latest dot take the sparkline's data-viz color (data-plx-dataviz on the root, the first categorical
    color without one). Every value is a --plx-comp-sparkline-* token. */
 .plx-sparkline{--plx-comp-sparkline-color:var(--plx-comp-sparkline-default-color);display:inline-block;vertical-align:middle;}

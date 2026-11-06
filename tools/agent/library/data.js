@@ -220,11 +220,11 @@ t('AreaChart', 'component', 'S', 8, 'A', ['LineChart'], ['area', 'stacked', 'per
 t('BarChart', 'component', 'M', 8, 'B', ['chart-parts'], ['bar (horizontal)', 'column (vertical)', 'grouped', 'stacked', 'percent', 'histogram (binned)'], '', ['platform/charts/BarChart.jsx']);
 t('ComboChart', 'component', 'S', 8, 'B', ['BarChart'], ['bar + line', 'two axes'], '', ['platform/charts/ComboChart.jsx']);
 t('LollipopChart', 'component', 'S', 8, 'B', ['chart-parts'], ['horizontal', 'vertical'], '', ['platform/charts/LollipopChart.jsx']);
-t('Sparkline', 'component', 'S', 8, 'C', ['ChartKit'], ['line', 'area', 'bar', 'with last point'], '', ['platform/charts/Sparkline.jsx']);
+t('Sparkline', 'component', 'S', 8, 'C', ['ChartKit'], ['line', 'area', 'bar', 'with last point'], '', ['platform/charts/Sparkline.tsx']);
 t('Metric', 'extend', 'S', 8, 'C', ['Sparkline'], ['card with trend'], 'Metric card = Card + Metric + Sparkline', EX.Metric);
 t('PieChart', 'component', 'M', 8, 'C', ['chart-parts'], ['pie', 'donut', 'with center value', 'half'], '', ['platform/charts/PieChart.jsx']);
 t('ScatterChart', 'component', 'M', 8, 'C', ['chart-parts'], ['scatter', 'bubble (size)', 'with trend line'], '', ['platform/charts/ScatterChart.jsx']);
-t('Gauge', 'component', 'S', 8, 'B', ['ChartKit'], ['semicircle', 'with thresholds'], '', ['platform/charts/Gauge.jsx']);
+t('Gauge', 'component', 'S', 8, 'B', ['ChartKit'], ['semicircle', 'with thresholds'], '', ['platform/charts/Gauge.tsx']);
 t('BulletChart', 'component', 'S', 8, 'B', ['chart-parts'], ['horizontal', 'vertical'], '', ['platform/charts/BulletChart.jsx']);
 
 /* ───────── wave 9: charts 2 and visualizations ───────── */

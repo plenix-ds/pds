@@ -5,7 +5,7 @@ export { useChartInteraction, ChartFocusMark, ChartBrush, chartAnnounce, CHART_I
 export { chartTooltipText } from '../charts/parts/ChartTooltip.tsx';
 export { LineChart } from '../charts/lazy.tsx';
 export { AreaChart } from '../charts/lazy.tsx';
-export { Gauge } from '../charts/Gauge.jsx';
+export { Gauge } from '../charts/Gauge.tsx';
 export { HeatMap } from '../charts/lazy.tsx';
 export { WaterfallChart } from '../charts/lazy.tsx';
 export { waterfallSteps } from '../charts/chart-helpers.ts';

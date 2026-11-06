@@ -52,8 +52,8 @@ const LEVELS = { warning: { tone: 'waiting', icon: WarningIcon }, critical: { to
 const VB_W = 160, VB_H = 88, CX = 80, CY = 80, R = 60, RB = 74;
 
 // the dial: ECharts draws the track, the fill (its progress arc) and the threshold bands as two gauge series on the 160-wide dial's geometry, scaled to the width
-function Dial({ fraction, bands, frac, mark }) {
-  const ref = React.useRef(null);
+function Dial({ fraction, bands, frac, mark }: any) {
+  const ref = React.useRef<any>(null);
   const [width, setWidth] = React.useState(0);
   React.useLayoutEffect(() => {
     const el = ref.current;
@@ -65,13 +65,13 @@ function Dial({ fraction, bands, frac, mark }) {
     ro.observe(el);
     return () => ro.disconnect();
   }, []);
-  const key = fraction + '|' + bands.map((b) => frac(b.value) + b.level).join(',') + '|' + mark;
-  const option = React.useCallback((tk, size) => {
+  const key = fraction + '|' + bands.map((b: any) => frac(b.value) + b.level).join(',') + '|' + mark;
+  const option = React.useCallback((tk: any, size: any) => {
     const k = size.width / VB_W, quiet = { show: false };
     const off = { pointer: quiet, axisTick: quiet, splitLine: quiet, axisLabel: quiet, anchor: quiet, title: quiet, detail: quiet };
     const dial = { type: 'gauge', min: 0, max: 1, startAngle: 180, endAngle: 0, center: [CX * k, CY * k], silent: true, animation: false };
     // the bands: transparent up to the first threshold, then each threshold's alert color to the next threshold or the end
-    const stops = bands.length ? [[frac(bands[0].value), 'transparent']].concat(bands.map((b, i) => [i + 1 < bands.length ? frac(bands[i + 1].value) : 1, tk.color('alert-' + b.level)])) : [];
+    const stops = bands.length ? [[frac(bands[0].value), 'transparent']].concat(bands.map((b: any, i: any) => [i + 1 < bands.length ? frac(bands[i + 1].value) : 1, tk.color('alert-' + b.level)])) : [];
     return {
       animationDuration: 0, animationDurationUpdate: 0,
       series: (bands.length ? [Object.assign({ id: 'bands', radius: (RB + tk.gauge.bandWidth / 2) * k, axisLine: { lineStyle: { width: tk.gauge.bandWidth * k, color: stops } } }, dial, off)] : []).concat([
@@ -82,12 +82,29 @@ function Dial({ fraction, bands, frac, mark }) {
   return <div ref={ref} className="plx-gauge__svg" aria-hidden="true">{width ? <EChartsHost width={width} height={Math.round(width * VB_H / VB_W)} option={option} /> : null}</div>;
 }
 
-export function Gauge({ title, description, value, min = 0, max = 100, format, label, thresholds = [], size = 'md', hideCaption = false, strings, className }) {
-  const t = useStrings('chart.gauge', strings);
+/** @public a range that calls for attention */
+export type GaugeThreshold = { value: number; level: 'warning' | 'critical'; label?: string };
+/** @public */
+export type GaugeProps = {
+  title: string;
+  description?: string;
+  value: number;
+  min?: number;
+  max?: number;
+  format?(value: number): string;
+  label?: string;
+  thresholds?: GaugeThreshold[];
+  size?: 'sm' | 'md' | 'lg';
+  hideCaption?: boolean;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function Gauge({ title, description, value, min = 0, max = 100, format, label, thresholds = [], size = 'md', hideCaption = false, strings, className }: GaugeProps) {
+  const t: any = useStrings('chart.gauge', strings);
   const uid = 'plx-gauge' + React.useId().replace(/[^a-zA-Z0-9]/g, '');
-  const fmt = typeof format === 'function' ? format : (v) => formatNumber(v);
+  const fmt = typeof format === 'function' ? format : (v: any) => formatNumber(v);
   const span = max - min || 1;
-  const frac = (v) => Math.min(1, Math.max(0, (Number(v) - min) / span));
+  const frac = (v: any) => Math.min(1, Math.max(0, (Number(v) - min) / span));
   const v = Number(value);
   const bands = thresholds.filter((x) => x && LEVELS[x.level]).slice().sort((a, b) => a.value - b.value);
   const now = bands.filter((b) => v >= b.value).pop();
@@ -95,7 +112,7 @@ export function Gauge({ title, description, value, min = 0, max = 100, format, l
   const valueText = [fmt(v), label, status && status.label].filter(Boolean).join(', ');
   const s = SIZES.indexOf(size) >= 0 ? size : 'md';
   const table = {
-    columns: [{ title: t.measure, field: 'm', kind: 'name', rowLabel: true }, { title: t.value, field: 'v', kind: 'data', align: 'right' }],
+    columns: [{ title: t.measure, field: 'm', kind: 'name', rowLabel: true }, { title: t.value, field: 'v', kind: 'data', align: 'right' as const }],
     data: [{ id: 1, m: t.value, v: fmt(v) }, { id: 2, m: t.min, v: fmt(min) }, { id: 3, m: t.max, v: fmt(max) }]
       .concat(bands.map((b, i) => ({ id: 4 + i, m: b.label || b.level, v: fmt(b.value) }))),
   };
@@ -118,7 +135,7 @@ export function Gauge({ title, description, value, min = 0, max = 100, format, l
           <span className="plx-gauge__end">{fmt(min)}</span>
           <span className="plx-gauge__end">{fmt(max)}</span>
         </div>
-        {status ? <Badge className="plx-gauge__status" tone={status.tone} icon={status.icon}>{status.label}</Badge> : null}
+        {status ? <Badge className="plx-gauge__status" tone={status.tone as any} icon={status.icon}>{status.label}</Badge> : null}
       </div>
       <Details summary={t.showData} variant="inline" className="plx-chart__data">
         <Table label={t.table.replace('{title}', title || '')} columns={table.columns} data={table.data} />

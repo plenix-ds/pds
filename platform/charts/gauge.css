@@ -1,4 +1,4 @@
-/* Plenix · Gauge (platform/charts/gauge.css; the code is Gauge.jsx): the dial (an SVG scaled to the size's width), the
+/* Plenix · Gauge (platform/charts/gauge.css; the code is Gauge.tsx): the dial (an SVG scaled to the size's width), the
    readout over its middle, the range under its ends and the status badge. Every value is a --plx-comp-gauge-* token; the
    fill and the threshold bands take their data-viz steps (data-plx-dataviz). */
 .plx-gauge__meter{align-items:center;display:flex;flex-direction:column;inline-size:var(--plx-comp-gauge-width-md);max-inline-size:100%;row-gap:var(--plx-comp-gauge-gap);}

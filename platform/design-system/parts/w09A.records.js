@@ -159,7 +159,7 @@ DSParts.records.push(function (H) {
   var pct = function (v) { return v + '%'; };
   var THRESH = [{ value: 80, level: 'warning', label: 'Nearly full' }, { value: 95, level: 'critical', label: 'Full' }];
   var gauge = { id: 'gauge', lab: true, icon: 'progress', sec: 'data-display', sub: 'Charts', leaf: 'Gauge', title: 'Gauge',
-    plenix: 'Gauge', src: 'charts/Gauge.jsx', css: ['charts/gauge.css'], blocks: ['plx-gauge'], level: 'Component', interaction: 'Static',
+    plenix: 'Gauge', src: 'charts/Gauge.tsx', css: ['charts/gauge.css'], blocks: ['plx-gauge'], level: 'Component', interaction: 'Static',
     aliases: ['Meter', 'Dial', 'Radial gauge', 'Speedometer'],
     text: 'One value inside a known range: a semicircle track filled up to the value, with the minimum and maximum at the ends. The value sits in the middle in the data font, with a few words under it. With thresholds, the warning and critical ranges run along the outside of the track in the data-viz alert colors, and a status badge names the range the value is in. Assistive technology reads it as a meter (role meter): its value text says the value, its label and the range.',
     use: ['One value with a known minimum and maximum: storage, a quota, a score', 'A headline indicator, one or two on a dashboard', 'Thresholds with names, so the badge says what the color means'],
