@@ -16,6 +16,7 @@
 // Delivery: `team.sh wake <window> <text> 20` (only when the session is idle); a busy session keeps its events and gets
 // them in one message when it is next idle. A role with no window triggers `team.sh schedule` (#246) once per round.
 import { execFileSync } from 'node:child_process';
+import http from 'node:http';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -122,6 +123,32 @@ function deliver() {
   }
 }
 
+// delivered once (#220): a webhook and the feed both report the same event; the first one delivers it. Keys are the ids
+// the two share (comment, review, workflow run) or the issue action itself; entries older than 2 hours are dropped
+const delivered = new Map();
+function once(key) {
+  const now = Date.now();
+  for (const [k, t] of delivered) if (now - t > 2 * 3600 * 1000) delivered.delete(k);
+  if (!key || delivered.has(key)) return !key ? true : false;
+  delivered.set(key, now);
+  return true;
+}
+const eventKey = (type, p = {}) => p.comment ? `c:${p.comment.id}` : p.review ? `r:${p.review.id}`
+  : p.issue ? `i:${p.action}:${p.issue.number}:${(p.label && p.label.name) || ''}` : '';
+
+// a failed run of a PR (or its merge-queue entry) -> the PR's roles; a failed G2 run is the gate working as designed (#491)
+async function routeRun(run) {
+  if (run.name === 'G2') { if (DRY) console.log(`${run.created_at} G2 failed on ${run.head_branch} -> (gate working as designed: ignored)`); return; }
+  if (!once(`run:${run.id}`)) return;
+  const n = run.pull_requests?.[0]?.number || Number((/\/pr-(\d+)-/.exec(run.head_branch) || [])[1]);
+  if (!n) return;
+  const pr = (await get(`/repos/${REPO}/pulls/${n}`)).data;
+  const roles = agentRoles(pr.labels);
+  const line = `${run.name} failed on PR #${n} "${short(pr.title)}" ${run.html_url}`;
+  if (DRY) console.log(`${run.created_at} run failed -> ${roles.join(', ') || '(no agent label: ignored)'}  ${line}`);
+  for (const role of roles) queue(role, line);
+}
+
 async function round() {
   const { data: events, poll } = await get(`/repos/${REPO}/events?per_page=100`, 'events');
   if (events) {
@@ -133,12 +160,12 @@ async function round() {
     // so an event created more than 30 minutes ago is not news; the 10-minute nudge covers anything truly that late
     const STALE_MS = 30 * 60 * 1000;
     const fresh = events.filter((e) => DRY || (!seen.has(e.id) && Date.now() - Date.parse(e.created_at) < STALE_MS));
-    for (const e of events) if (!DRY && !seen.has(e.id) && Date.now() - Date.parse(e.created_at) >= STALE_MS) log(`stale event ignored: ${e.type} ${e.created_at} (id ${e.id})`);
+    if (state.seen) for (const e of events) if (!DRY && !seen.has(e.id) && Date.now() - Date.parse(e.created_at) >= STALE_MS) log(`stale event ignored: ${e.type} ${e.created_at} (id ${e.id})`);
     if (first) log(`first run: ${events.length} existing events marked as seen (not replayed)`);
     else for (const ev of DRY ? fresh.slice(-15) : fresh) {
       const r = await route(ev);
       if (DRY) { const it = ev.payload?.issue || ev.payload?.pull_request; console.log(`${ev.created_at} ${ev.type}${ev.payload?.action ? '/' + ev.payload.action : ''} #${it?.number ?? '-'} -> ${r ? r.roles.join(', ') : '(ignored)'}${r ? '  ' + r.line : ''}`); }
-      if (r) for (const role of r.roles) queue(role, r.line);
+      if (r && once(eventKey(ev.type, ev.payload))) for (const role of r.roles) queue(role, r.line);
     }
     // remember exactly the ids of the current feed: an event that leaves the feed never returns, and a capped list
     // that drops its oldest entries forgot events still in the feed, so they were delivered again and again (#220:
@@ -149,17 +176,7 @@ async function round() {
   if (runs) {
     for (const run of runs.workflow_runs.filter((x) => DRY || x.id > (state.lastRunId || 0)).reverse().slice(DRY ? -3 : 0)) {
       if (!state.lastRunId && !DRY) continue;
-      // a failed G2 run is the gate working as designed: it fails while g2-/g3-changes-requested is on the PR and re-runs
-      // on every label change, so routing it woke the reviewer who set the label, again and again (#491). The label and
-      // the review comment already tell the builder.
-      if (run.name === 'G2') { if (DRY) console.log(`${run.created_at} G2 failed on ${run.head_branch} -> (gate working as designed: ignored)`); continue; }
-      const n = run.pull_requests?.[0]?.number || Number((/\/pr-(\d+)-/.exec(run.head_branch) || [])[1]);
-      if (!n) continue;
-      const pr = (await get(`/repos/${REPO}/pulls/${n}`)).data;
-      const roles = agentRoles(pr.labels);
-      const line = `${run.name} failed on PR #${n} "${short(pr.title)}" ${run.html_url}`;
-      if (DRY) console.log(`${run.created_at} run failed -> ${roles.join(', ') || '(no agent label: ignored)'}  ${line}`);
-      for (const role of roles) queue(role, line);
+      await routeRun(run);
     }
     if (runs.workflow_runs[0]) state.lastRunId = Math.max(state.lastRunId || 0, runs.workflow_runs[0].id);
   }
@@ -169,6 +186,33 @@ async function round() {
 }
 
 if (DRY) { await round(); process.exit(0); }
+
+// GitHub webhooks (#220): `gh webhook forward` (pds1-webhook.service) posts each delivery here, so the session it is for
+// is woken within seconds; the 60-second feed above stays as the fallback, and `once()` keeps the two from doubling up
+const WEBHOOK_PORT = Number(process.env.PICKUP_WEBHOOK_PORT || 0);
+const TYPES = { issues: 'IssuesEvent', issue_comment: 'IssueCommentEvent', pull_request_review: 'PullRequestReviewEvent',
+  pull_request_review_comment: 'PullRequestReviewCommentEvent' };
+if (WEBHOOK_PORT) {
+  http.createServer((req, res) => {
+    let body = '';
+    req.on('data', (c) => { body += c; if (body.length > 25e6) req.destroy(); });
+    req.on('end', async () => {
+      res.writeHead(200).end('ok');
+      try {
+        const kind = req.headers['x-github-event'];
+        const payload = JSON.parse(body || '{}');
+        if (kind === 'workflow_run') {
+          if (payload.action === 'completed' && payload.workflow_run?.conclusion === 'failure') await routeRun(payload.workflow_run);
+        } else if (TYPES[kind]) {
+          const ev = { type: TYPES[kind], payload };
+          const r = await route(ev);
+          if (r && once(eventKey(ev.type, payload))) for (const role of r.roles) queue(role, r.line);
+        }
+        deliver();
+      } catch (e) { log(`webhook failed: ${e.message}`); }
+    });
+  }).listen(WEBHOOK_PORT, '127.0.0.1', () => log(`webhook listener on 127.0.0.1:${WEBHOOK_PORT}`));
+}
 log('started');
 for (;;) {
   let wait = 60;
