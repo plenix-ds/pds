@@ -1,5 +1,16 @@
 {
- "$description": "Classes going away (VERSIONING.md, Deprecation; issue 882): no page, application, the design spec, the St. John site, CTM, a test or a tool uses them. They keep working until they are removed, no earlier than the next minor release. Check-style fails on a new use (rule deprecated-classes). The tokens going away carry $deprecated in their token file instead. Empty since the release after 0.90.0 removed the 321 classes listed here (issue 125; the list is in the changelog's Removed section).",
+ "$description": "Classes going away (VERSIONING.md, Deprecation; issue 882): no page, application in this repository, the design spec, the St. John site, a test or a tool uses them. They keep working until they are removed, no earlier than the next minor release. Check-style fails on a new use (rule deprecated-classes). The tokens going away carry $deprecated in their token file instead. The release that removed 321 of these (issue 125) kept ten that CTM still uses (plx-u-absolute, -bg-transparent, -justify-center, -left-0, -right-0, -text-center, -top-0, -w-100px, -w-36px, -w-72px); they are removed when CTM has moved off them.",
  "issue": "882",
- "classes": []
+ "classes": [
+  "plx-u-absolute",
+  "plx-u-bg-transparent",
+  "plx-u-justify-center",
+  "plx-u-left-0",
+  "plx-u-right-0",
+  "plx-u-text-center",
+  "plx-u-top-0",
+  "plx-u-w-100px",
+  "plx-u-w-36px",
+  "plx-u-w-72px"
+ ]
 }
