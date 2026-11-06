@@ -9,7 +9,7 @@ export { PageBreak } from './components/PageBreak/PageBreak.tsx';
 export { VoteTally } from './components/VoteTally/VoteTally.tsx';
 export { Count } from './components/Count/Count.tsx';
 export { Metric } from './components/Metric/Metric.tsx';
-export { MetricCard } from './components/MetricCard/MetricCard.jsx';
+export { MetricCard } from './components/MetricCard/MetricCard.tsx';
 export { ProgressBar } from './components/ProgressBar/ProgressBar.tsx';
 export { DateBadge } from './components/DateBadge/DateBadge.tsx';
 export { EventChip } from './components/EventChip/EventChip.tsx';

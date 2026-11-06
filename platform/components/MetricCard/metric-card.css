@@ -1,4 +1,4 @@
-/* Plenix · MetricCard (platform/components/MetricCard): one key figure in a card. Anatomy and API: MetricCard.jsx.
+/* Plenix · MetricCard (platform/components/MetricCard): one key figure in a card. Anatomy and API: MetricCard.tsx.
    .plx-metric-card                  the card: Panel's frame values; no outer margin
    .plx-metric-card--edge|soft|filled|gradient   the styles, from the data color on [data-plx-color]
    .plx-metric-card--sm|md|lg        the value's display size
