@@ -3103,6 +3103,202 @@
     "sets": [],
     "why": "markup only: the places as a NavList (groups, icons, counts) in the Sheet; .plx-bottom-sheet-nav__list sets only a zero minimum width"
   },
+  "error-state--kind-completion": {
+    "sets": [],
+    "why": "markup only: the kind of error picks the icon, title and message; the layout is the same for every kind and the stylesheet has no modifier for it"
+  },
+  "error-state--kind-degraded": {
+    "sets": [],
+    "why": "markup only: the kind of error picks the icon, title and message; the layout is the same for every kind and the stylesheet has no modifier for it"
+  },
+  "error-state--kind-maintenance": {
+    "sets": [],
+    "why": "markup only: the kind of error picks the icon, title and message; the layout is the same for every kind and the stylesheet has no modifier for it"
+  },
+  "error-state--kind-not-found": {
+    "sets": [],
+    "why": "markup only: the kind of error picks the icon, title and message; the layout is the same for every kind and the stylesheet has no modifier for it"
+  },
+  "error-state--kind-offline": {
+    "sets": [],
+    "why": "markup only: the kind of error picks the icon, title and message; the layout is the same for every kind and the stylesheet has no modifier for it"
+  },
+  "error-state--kind-permission-denied": {
+    "sets": [],
+    "why": "markup only: the kind of error picks the icon, title and message; the layout is the same for every kind and the stylesheet has no modifier for it"
+  },
+  "number-input--variant-currency": {
+    "sets": [],
+    "why": "markup only: the variation is the value, bounds, unit or format (currency, percent, quantity) and whether stepper buttons show; the stylesheet has no modifier for it"
+  },
+  "number-input--variant-invalid": {
+    "sets": [
+      {
+        "property": "border-color",
+        "part": "block",
+        "token": "--plx-comp-input-invalid-border-color"
+      },
+      {
+        "property": "box-shadow",
+        "part": "block",
+        "token": "--plx-comp-input-invalid-inner-width"
+      }
+    ],
+    "why": ".plx-input[aria-invalid=\"true\"] in input.css draws the invalid look: the danger border and the inset line inside it; the variation sets aria-invalid on the field"
+  },
+  "number-input--variant-min-and-max": {
+    "sets": [],
+    "why": "markup only: the variation is the value, bounds, unit or format (currency, percent, quantity) and whether stepper buttons show; the stylesheet has no modifier for it"
+  },
+  "number-input--variant-percentage": {
+    "sets": [],
+    "why": "markup only: the variation is the value, bounds, unit or format (currency, percent, quantity) and whether stepper buttons show; the stylesheet has no modifier for it"
+  },
+  "number-input--variant-plain": {
+    "sets": [],
+    "why": "markup only: the variation is the value, bounds, unit or format (currency, percent, quantity) and whether stepper buttons show; the stylesheet has no modifier for it"
+  },
+  "number-input--variant-quantity-1": {
+    "sets": [],
+    "why": "markup only: the variation is the value, bounds, unit or format (currency, percent, quantity) and whether stepper buttons show; the stylesheet has no modifier for it"
+  },
+  "number-input--variant-stepper-buttons": {
+    "sets": [],
+    "why": "markup only: the variation is the value, bounds, unit or format (currency, percent, quantity) and whether stepper buttons show; the stylesheet has no modifier for it"
+  },
+  "number-input--variant-with-unit": {
+    "sets": [],
+    "why": "markup only: the variation is the value, bounds, unit or format (currency, percent, quantity) and whether stepper buttons show; the stylesheet has no modifier for it"
+  },
+  "pagination--mode-button-default": {
+    "sets": [],
+    "why": "markup only: the variation is the mode and the loading or end-of-list state, shown by which parts render; the stylesheet has no modifier for it"
+  },
+  "pagination--mode-infinite-sentinel": {
+    "sets": [],
+    "why": "markup only: the variation is the mode and the loading or end-of-list state, shown by which parts render; the stylesheet has no modifier for it"
+  },
+  "pagination--state-end-of-list": {
+    "sets": [],
+    "why": "markup only: the variation is the mode and the loading or end-of-list state, shown by which parts render; the stylesheet has no modifier for it"
+  },
+  "pagination--state-loading": {
+    "sets": [],
+    "why": "markup only: the variation is the mode and the loading or end-of-list state, shown by which parts render; the stylesheet has no modifier for it"
+  },
+  "qr-code--caption-with-caption-and-value": {
+    "sets": [],
+    "why": "markup only: the variation is the error-correction level, the caption and the logo space, which change the code drawn and the parts shown; the stylesheet has no modifier for them"
+  },
+  "qr-code--error-correction-h-30": {
+    "sets": [],
+    "why": "markup only: the variation is the error-correction level, the caption and the logo space, which change the code drawn and the parts shown; the stylesheet has no modifier for them"
+  },
+  "qr-code--error-correction-l-7": {
+    "sets": [],
+    "why": "markup only: the variation is the error-correction level, the caption and the logo space, which change the code drawn and the parts shown; the stylesheet has no modifier for them"
+  },
+  "qr-code--error-correction-q-25": {
+    "sets": [],
+    "why": "markup only: the variation is the error-correction level, the caption and the logo space, which change the code drawn and the parts shown; the stylesheet has no modifier for them"
+  },
+  "qr-code--logo-space-with-logo-space": {
+    "sets": [],
+    "why": "markup only: the variation is the error-correction level, the caption and the logo space, which change the code drawn and the parts shown; the stylesheet has no modifier for them"
+  },
+  "teaching-bubble--content-primary-and-secondary-actions": {
+    "sets": [],
+    "why": "markup only: the variation is the content (title, text, picture, steps, actions), the spotlight, or the wide width, which the Popover's lg size draws; the stylesheet has no modifier for it"
+  },
+  "teaching-bubble--content-title-and-text-default": {
+    "sets": [],
+    "why": "markup only: the variation is the content (title, text, picture, steps, actions), the spotlight, or the wide width, which the Popover's lg size draws; the stylesheet has no modifier for it"
+  },
+  "teaching-bubble--content-with-picture": {
+    "sets": [],
+    "why": "markup only: the variation is the content (title, text, picture, steps, actions), the spotlight, or the wide width, which the Popover's lg size draws; the stylesheet has no modifier for it"
+  },
+  "teaching-bubble--content-with-steps-2-of-3": {
+    "sets": [],
+    "why": "markup only: the variation is the content (title, text, picture, steps, actions), the spotlight, or the wide width, which the Popover's lg size draws; the stylesheet has no modifier for it"
+  },
+  "teaching-bubble--spotlight-with-spotlight-default": {
+    "sets": [],
+    "why": "markup only: the variation is the content (title, text, picture, steps, actions), the spotlight, or the wide width, which the Popover's lg size draws; the stylesheet has no modifier for it"
+  },
+  "teaching-bubble--spotlight-without-spotlight": {
+    "sets": [],
+    "why": "markup only: the variation is the content (title, text, picture, steps, actions), the spotlight, or the wide width, which the Popover's lg size draws; the stylesheet has no modifier for it"
+  },
+  "teaching-bubble--width-wide-400px": {
+    "sets": [],
+    "why": "markup only: the variation is the content (title, text, picture, steps, actions), the spotlight, or the wide width, which the Popover's lg size draws; the stylesheet has no modifier for it"
+  },
+  "bulk-action-bar--selection-something-selected": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-bulk-actions-background"
+      },
+      {
+        "property": "border-block-end-color",
+        "part": "block",
+        "token": "--plx-comp-bulk-actions-border-color"
+      }
+    ],
+    "why": ".plx-bulk-actions in bulk-actions.css (the record is Bulk action bar, the component BulkActions, deprecated for the command bar's selection state)"
+  },
+  "bulk-action-bar--selection-nothing-selected-always-shown-actions-disabled": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-bulk-actions-empty-background"
+      },
+      {
+        "property": "border-block-end-color",
+        "part": "block",
+        "token": "--plx-comp-bulk-actions-empty-border-color"
+      }
+    ],
+    "why": ".plx-bulk-actions--empty: the bar stays shown with its actions disabled until something is selected"
+  },
+  "bar-chart--layout-grouped": {
+    "sets": [],
+    "why": "markup only: several series side by side for each category, drawn by the chart engine (layout grouped)"
+  },
+  "bar-chart--layout-stacked": {
+    "sets": [],
+    "why": "markup only: the series stacked into each category's total (layout stacked)"
+  },
+  "bar-chart--layout-percent": {
+    "sets": [],
+    "why": "markup only: each series as a share of its category's total (layout percent)"
+  },
+  "bar-chart--layout-histogram-binned": {
+    "sets": [
+      {
+        "property": "stroke",
+        "part": "bar",
+        "token": "--plx-comp-bar-chart-separator-color"
+      },
+      {
+        "property": "stroke-width",
+        "part": "bar",
+        "token": "--plx-comp-bar-chart-separator-width"
+      }
+    ],
+    "why": ".plx-bar-chart__bar--joined: touching columns, each set apart by a thin separator, that count the values in each range"
+  },
+  "bar-chart--orientation-bar-horizontal": {
+    "sets": [],
+    "why": "markup only: horizontal bars, for long names and rankings, drawn by the chart engine"
+  },
+  "bar-chart--orientation-column-vertical": {
+    "sets": [],
+    "why": "markup only: vertical columns, for periods, drawn by the chart engine (orientation vertical)"
+  },
   "landing-page--page-authentication": {
     "sets": [],
     "why": "markup only: the page type arranges other components (cards, forms, panes); the stylesheet has no modifier for it"
@@ -3244,71 +3440,6 @@
   "search-result--kind-person": {
     "sets": [],
     "why": "markup only: the kind picks the icon and the content adds a path or highlight mark; the stylesheet has no modifier for them"
-  },
-  "bulk-action-bar--selection-something-selected": {
-    "sets": [
-      {
-        "property": "background-color",
-        "part": "block",
-        "token": "--plx-comp-bulk-actions-background"
-      },
-      {
-        "property": "border-block-end-color",
-        "part": "block",
-        "token": "--plx-comp-bulk-actions-border-color"
-      }
-    ],
-    "why": ".plx-bulk-actions in bulk-actions.css (the record is Bulk action bar, the component BulkActions, deprecated for the command bar's selection state)"
-  },
-  "bulk-action-bar--selection-nothing-selected-always-shown-actions-disabled": {
-    "sets": [
-      {
-        "property": "background-color",
-        "part": "block",
-        "token": "--plx-comp-bulk-actions-empty-background"
-      },
-      {
-        "property": "border-block-end-color",
-        "part": "block",
-        "token": "--plx-comp-bulk-actions-empty-border-color"
-      }
-    ],
-    "why": ".plx-bulk-actions--empty: the bar stays shown with its actions disabled until something is selected"
-  },
-  "bar-chart--layout-grouped": {
-    "sets": [],
-    "why": "markup only: several series side by side for each category, drawn by the chart engine (layout grouped)"
-  },
-  "bar-chart--layout-stacked": {
-    "sets": [],
-    "why": "markup only: the series stacked into each category's total (layout stacked)"
-  },
-  "bar-chart--layout-percent": {
-    "sets": [],
-    "why": "markup only: each series as a share of its category's total (layout percent)"
-  },
-  "bar-chart--layout-histogram-binned": {
-    "sets": [
-      {
-        "property": "stroke",
-        "part": "bar",
-        "token": "--plx-comp-bar-chart-separator-color"
-      },
-      {
-        "property": "stroke-width",
-        "part": "bar",
-        "token": "--plx-comp-bar-chart-separator-width"
-      }
-    ],
-    "why": ".plx-bar-chart__bar--joined: touching columns, each set apart by a thin separator, that count the values in each range"
-  },
-  "bar-chart--orientation-bar-horizontal": {
-    "sets": [],
-    "why": "markup only: horizontal bars, for long names and rankings, drawn by the chart engine"
-  },
-  "bar-chart--orientation-column-vertical": {
-    "sets": [],
-    "why": "markup only: vertical columns, for periods, drawn by the chart engine (orientation vertical)"
   },
   "chart-axis--side-bottom-default": {
     "sets": [
