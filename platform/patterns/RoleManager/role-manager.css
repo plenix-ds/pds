@@ -2,7 +2,7 @@
    a bar with Create role; each row's details are the member count (the data font) and Built-in or Custom. The detail
    view stacks the way back, the header (the title with its RoleLabel, the actions, the description) and two sections,
    Permissions and Members, separated by space only, so the manager stays two frames deep inside a page or a card.
-   Anatomy and API: RoleManager.jsx. */
+   Anatomy and API: RoleManager.tsx. */
 .plx-role-manager{display:flex;flex-direction:column;min-inline-size:0;}
 .plx-role-manager--list{row-gap:var(--plx-comp-role-manager-list-gap);}
 .plx-role-manager--detail{row-gap:var(--plx-comp-role-manager-section-gap);}

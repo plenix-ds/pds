@@ -2,7 +2,7 @@
    Builder and Text switch with the match count, then the query's group. A group is its And or Or switch with the words it
    means, its rules (a join word in a fixed column, then field, operator, value and remove, wrapping when narrow) and its
    add buttons; a nested group is drawn with a rail at its start instead of a frame, so groups never nest frames.
-   Anatomy and API: QueryBuilder.jsx. */
+   Anatomy and API: QueryBuilder.tsx. */
 .plx-query-builder{display:flex;flex-direction:column;min-inline-size:0;row-gap:var(--plx-comp-query-builder-gap);}
 .plx-query-builder__bar{align-items:center;column-gap:var(--plx-comp-query-builder-bar-gap);display:flex;flex-wrap:wrap;justify-content:space-between;row-gap:var(--plx-comp-query-builder-bar-gap);}
 .plx-query-builder__matches{color:var(--plx-comp-query-builder-matches-text);font-size:var(--plx-comp-query-builder-matches-font-size);}

@@ -39,7 +39,7 @@ const EX = {   // existing Platform code (for extend targets)
   ActionBar: ['platform/patterns/ActionBar/ActionBar.tsx', 'platform/patterns/ActionBar/action-bar.css'],
   Chat: ['platform/components/Chat/Chat.tsx', 'platform/components/Chat/chat.css'],
   ThemeProvider: ['platform/providers/ThemeProvider.jsx', 'platform/providers/themes.js', 'platform/standards/themes.json'],
-  SearchWorkspace: ['platform/patterns/SearchWorkspace/SearchWorkspace.jsx', 'platform/patterns/SearchWorkspace/search-workspace.css'],
+  SearchWorkspace: ['platform/patterns/SearchWorkspace/SearchWorkspace.tsx', 'platform/patterns/SearchWorkspace/search-workspace.css'],
   ColorPicker: ['platform/components/ColorSwatch/ColorSwatch.tsx', 'platform/components/ColorSwatch/color-swatch.css'],
   CollapsibleSection: ['platform/components/CollapsibleSection/CollapsibleSection.tsx']
 };
