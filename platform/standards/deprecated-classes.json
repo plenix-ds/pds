@@ -1,5 +1,11 @@
 {
- "$description": "Classes going away (VERSIONING.md, Deprecation; issue 882): no page, application, the design spec, the St. John site, CTM, a test or a tool uses them. They keep working until they are removed, no earlier than the next minor release. Check-style fails on a new use (rule deprecated-classes). The tokens going away carry $deprecated in their token file instead. Empty since the release after 0.90.0 removed the 321 classes listed here (issue 125; the list is in the changelog's Removed section).",
+ "$description": "Classes going away (VERSIONING.md, Deprecation; issue 882): they keep working until they are removed, no earlier than 2.0.0 for these five (the 0.84 changelog promised it; CTM still uses plx-u-left-0 and plx-u-right-0, CTM#144). Use plx-u-ms-auto, plx-u-ps-12px, plx-u-ps-16px or a logical inset. Check-style fails on a new use (rule deprecated-classes). The tokens going away carry $deprecated in their token file instead. The 321 classes listed here before the release after 0.90.0 were removed in #723 (issue 125, the changelog's Removed section); these five were removed with them by mistake and restored (#125).",
  "issue": "882",
- "classes": []
+ "classes": [
+  "plx-u-left-0",
+  "plx-u-ml-auto",
+  "plx-u-pl-12px",
+  "plx-u-pl-16px",
+  "plx-u-right-0"
+ ]
 }

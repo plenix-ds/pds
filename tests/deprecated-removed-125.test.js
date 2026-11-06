@@ -1,6 +1,6 @@
 /* Plenix tests · the deprecated classes are removed (issue 125; VERSIONING.md, Deprecation): every class listed in
    tests/fixtures/removed-classes-125.json (the 321 that platform/standards/deprecated-classes.json marked going away: nothing in the repository
-   uses them) is gone from every Platform stylesheet, the going-away list is empty, the unused-classes rule still passes, and the classes that stay
+   uses them) is gone from every Platform stylesheet, the going-away list holds only the five classes promised until 2.0.0, the unused-classes rule still passes, and the classes that stay
    are still defined (a sample of every file the removal touched, so a too-wide cut shows). Usage: node tests/deprecated-removed-125.test.js */
 const assert = require('assert/strict'), fs = require('fs'), path = require('path'), { execFileSync } = require('child_process');
 const ROOT = path.join(__dirname, '..');
@@ -14,9 +14,10 @@ for (const c of removed) {
   for (const [f, s] of text) if (re.test(s)) still.push(c + ' in ' + f);
 }
 assert.deepEqual(still, [], 'no removed class is still defined (' + still.length + ' left)');
-assert.deepEqual(JSON.parse(fs.readFileSync(path.join(ROOT, 'platform/standards/deprecated-classes.json'), 'utf8')).classes, [], 'the going-away list is empty');
+// five classes were promised until 2.0.0 (the 0.84 changelog) and are restored: the only classes still going away
+assert.deepEqual(JSON.parse(fs.readFileSync(path.join(ROOT, 'platform/standards/deprecated-classes.json'), 'utf8')).classes, ['plx-u-left-0', 'plx-u-ml-auto', 'plx-u-pl-12px', 'plx-u-pl-16px', 'plx-u-right-0'], 'the going-away list holds the five classes promised until 2.0.0');
 // the classes that stay: a sample from each stylesheet the removal touched
-const stay = { 'platform/system/utilities.css': ['plx-u-w-100p', 'plx-u-z-raised', 'plx-u-bg-data', 'plx-u-ws-nowrap'], 'platform/system/grid.css': ['plx-span-1', 'plx-span-4', 'plx-span-12'] };
+const stay = { 'platform/system/utilities.css': ['plx-u-w-100p', 'plx-u-z-raised', 'plx-u-bg-data', 'plx-u-ws-nowrap', 'plx-u-left-0', 'plx-u-right-0', 'plx-u-ml-auto', 'plx-u-pl-12px', 'plx-u-pl-16px'], 'platform/system/grid.css': ['plx-span-1', 'plx-span-4', 'plx-span-12'] };
 for (const [f, list] of Object.entries(stay)) {
   const s = fs.readFileSync(path.join(ROOT, f), 'utf8');
   for (const c of list) assert.ok(new RegExp('\\.' + escape(c) + '(?![\\w-])').test(s), c + ' is still defined in ' + f);
