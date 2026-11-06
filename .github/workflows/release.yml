@@ -12,7 +12,8 @@
 #   -> next latest.json with every field and the pins kept (tools/publish/latest.mjs, against the live file)
 #   -> npm publish --dry-run of the four packages -> negative proof: the current version is refused as already published
 #   -> the live CDN check (tools/check-live-cdn.js, sampled) still works against the live release
-#   -> the connected apps' drift report (tools/baseline/drift.mjs, read-only; never fails the release; #114).
+#   -> the connected apps' drift report (tools/baseline/drift.mjs, read-only; never fails the release; #114)
+#   -> no class removed since the live release is still used in a connected app's main (tools/publish/removed-in-apps.mjs).
 name: Release (dry run)
 
 on:
@@ -152,6 +153,14 @@ jobs:
 
       - name: Connected apps against this build (read-only drift report; never fails the release; #114)
         run: node tools/baseline/drift.mjs --out "$RUNNER_TEMP/drift"
+
+      # #125 release check: a class this release removes must not be in use in a connected app's main (CTM auto-upgrades)
+      - name: Removed classes are unused in the connected apps (the live release is the base)
+        run: |
+          node tools/publish/removed-in-apps.test.mjs
+          prev=$(curl -fsS "${CDN}latest.json" | node -p 'JSON.parse(require("fs").readFileSync(0)).latest')
+          git fetch -q --depth=1 origin tag "v$prev"
+          node tools/publish/removed-in-apps.mjs "v$prev"
 
       - name: Negative proof, the live latest version is refused as already published
         run: |
