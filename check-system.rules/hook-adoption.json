@@ -59,7 +59,7 @@
     "platform/components/Checkbox/Checkbox.tsx",
     "platform/components/Metric/Metric.tsx",
     "platform/charts/ChartFrame.tsx",
-    "platform/charts/Gauge.jsx",
+    "platform/charts/Gauge.tsx",
     "platform/patterns/RecordPage/RecordPage.jsx",
     "platform/patterns/ActivityList/ActivityList.jsx",
     "platform/components/DataGrid/engine/parts.tsx",

@@ -42,10 +42,27 @@ const PAD = 4;
 const VARIANTS = ['line', 'area', 'bar'];
 // the gap between bars, a share of each bar's step (geometry: scaleBand's paddingInner)
 const BAR_GAP = 0.2;
-const NONE = Object.freeze([]);
+const NONE = Object.freeze([] as number[]);
 
-export function Sparkline({ values = NONE, variant = 'line', size = 'inline', showLast = false, color, label, labels, format, decorative = false, strings, className, ...rest }) {
-  const ref = React.useRef(null);
+/** @public */
+export type SparklineProps = Omit<React.HTMLAttributes<HTMLSpanElement>, 'color' | 'children'> & {
+  /** the numbers, oldest first */
+  values: number[];
+  variant?: 'line' | 'area' | 'bar';
+  size?: 'inline' | 'fill';
+  showLast?: boolean;
+  /** the data-viz step of its color */
+  color?: string;
+  label?: string;
+  /** the values' labels, for the summary's lowest and highest */
+  labels?: string[];
+  format?(value: number): string;
+  decorative?: boolean;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function Sparkline({ values = NONE as number[], variant = 'line', size = 'inline', showLast = false, color, label, labels, format, decorative = false, strings, className, ...rest }: SparklineProps) {
+  const ref = React.useRef<any>(null);
   const [box, setBox] = React.useState({ width: 0, height: 0 });
   React.useLayoutEffect(() => {
     const el = ref.current;
@@ -71,7 +88,7 @@ export function Sparkline({ values = NONE, variant = 'line', size = 'inline', sh
   // scaleLinear's (a flat run widens to nice ticks, so a flat line keeps its place and an area its band); the line's
   // points run from PAD to the width less PAD (a single value at the start edge); the bars sit where scaleBand put them (no
   // outer gap)
-  const option = React.useCallback((tk, size) => {
+  const option = React.useCallback((tk: any, size: any) => {
     const k = tk.sparkline, last = nums.length - 1, bar = v === 'bar';
     const lo = Math.min.apply(null, nums), hi = Math.max.apply(null, nums);
     if (bar) {

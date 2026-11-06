@@ -94,7 +94,7 @@ import { Skeleton } from '../Loading/Loading.tsx';
 import { Table } from '../Table/Table.tsx';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden.tsx';
 import { Sparkline } from '../../charts/lazy.tsx';
-import { Gauge } from '../../charts/Gauge.jsx';
+import { Gauge } from '../../charts/Gauge.tsx';
 import { PieChart } from '../../charts/lazy.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import ArrowUpIcon from 'plenix-platform/icons/plenix/arrow-up';

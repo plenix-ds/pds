@@ -118,7 +118,7 @@ DSParts.records.push(function (H) {
 
   /* ── 07 Data Display › Charts › Sparkline: Sparkline ── */
   var sparkline = { id: 'sparkline', lab: true, icon: 'chart', sec: 'data-display', sub: 'Charts', leaf: 'Sparkline', title: 'Sparkline',
-    plenix: 'Sparkline', src: 'charts/Sparkline.jsx', css: ['charts/sparkline.css'], blocks: ['plx-sparkline'], level: 'Component', interaction: 'Display',
+    plenix: 'Sparkline', src: 'charts/Sparkline.tsx', css: ['charts/sparkline.css'], blocks: ['plx-sparkline'], level: 'Component', interaction: 'Display',
     aliases: ['Microchart', 'Trend line', 'Inline chart', 'Word-sized chart'],
     text: 'A word-sized chart with no axes that shows the shape of a trend next to the number it describes: a line, a filled area or small columns, and a dot on the latest value. Inline, it is 96 × 24, for a sentence or a table cell; fill takes its container’s width, for a metric card. Assistive technology reads it as one image named by its label and a summary of the trend (or hidden from it when the text beside it says the trend).',
     use: ['Next to a number in a metric card or a table cell, for the trend behind it', 'A column of sparklines over the same period, to compare shapes', 'showLast when the latest value matters; bars for counts per day or week'],

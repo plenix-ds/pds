@@ -52,4 +52,4 @@ export const BoxPlot = lazyChart('BoxPlot', () => import('./BoxPlot.jsx'), capti
 export const RadarChart = lazyChart('RadarChart', () => import('./RadarChart.jsx'), caption);
 export const Treemap = lazyChart('Treemap', () => import('./Treemap.jsx'), caption);
 export const HeatMap = lazyChart('HeatMap', () => import('./HeatMap.jsx'), caption);
-export const Sparkline = lazyChart('Sparkline', () => import('./Sparkline.jsx'), sparkBox);
+export const Sparkline = lazyChart('Sparkline', () => import('./Sparkline.tsx'), sparkBox);
