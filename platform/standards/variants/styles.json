@@ -6102,5 +6102,70 @@
       }
     ],
     "why": ".plx-card__toggle in card.css: the Expand and Collapse button at the end of the header, with its hover fill and focus ring; closed, the card shows the header and meta only"
+  },
+  "drop-zone--placement-in-the-page-default": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-drop-zone-background"
+      },
+      {
+        "property": "border-color",
+        "part": "block",
+        "token": "--plx-comp-drop-zone-border-color"
+      },
+      {
+        "property": "border-width",
+        "part": "block",
+        "token": "--plx-comp-drop-zone-border-width"
+      },
+      {
+        "property": "border-radius",
+        "part": "block",
+        "token": "--plx-comp-drop-zone-radius"
+      }
+    ],
+    "why": ".plx-drop-zone in drop-zone.css: the dashed area in the page"
+  },
+  "dashboard-grid--columns-as-many-as-fit-default": {
+    "sets": [
+      {
+        "property": "grid-template-columns",
+        "part": "block",
+        "token": "--plx-comp-widget-grid-grid-template-columns"
+      },
+      {
+        "property": "column-gap",
+        "part": "block",
+        "token": "--plx-comp-widget-grid-gap"
+      },
+      {
+        "property": "row-gap",
+        "part": "block",
+        "token": "--plx-comp-widget-grid-row-gap"
+      }
+    ],
+    "why": ".plx-widget-grid in widget-grid.css: as many columns as the width allows, each at least 280px; the 2, 3 and 4 column modifiers replace the columns"
+  },
+  "interactive-list--hover-selected-row-default": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-row-button-selected-background"
+      },
+      {
+        "property": "box-shadow",
+        "part": "block",
+        "token": "--plx-comp-row-button-selected-shadow"
+      },
+      {
+        "property": "border-radius",
+        "part": "block",
+        "token": "--plx-comp-row-button-radius"
+      }
+    ],
+    "why": ".plx-row-button.is-selected in row-button.css: the row whose details are open"
   }
 }

@@ -78,9 +78,11 @@ const RATIOS = ['1-1', '4-3', '3-4'];
 
 // the price line: the price now in the data font, and on sale the old price struck through after it ("Now …, was …" to
 // assistive technology); shared with the Commerce templates
-export function ProductPrice({ price, currency = 'USD', compareAtPrice, size = 'md', strings, className }) {
+/** @public the prop type of ProductPrice (ADR 0011) */
+export type ProductPriceProps = { price: number; currency?: string; compareAtPrice?: number; size?: 'md' | 'sm'; strings?: Record<string, string>; className?: string };
+export function ProductPrice({ price, currency = 'USD', compareAtPrice, size = 'md', strings, className }: ProductPriceProps) {
   devWarn('ProductPrice', { size }, { size: ['md','sm'] });
-  const t = useStrings('productCard', strings);
+  const t: any = useStrings('productCard', strings);
   const onSale = typeof compareAtPrice === 'number' && compareAtPrice > price;
   return (
     <span className={cx('plx-product-card__prices', size === 'sm' && 'plx-product-card__prices--sm', className)}>
@@ -90,13 +92,40 @@ export function ProductPrice({ price, currency = 'USD', compareAtPrice, size = '
   );
 }
 
+/** @public the picture of a product card: Image's props */
+export type ProductImage = { src: string; alt?: string; srcSet?: string; sizes?: string };
+/** @public the prop type of ProductCard (ADR 0011) */
+export type ProductCardProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & {
+  title: string;
+  href?: string;
+  onOpen?(): void;
+  image?: ProductImage;
+  ratio?: '1-1' | '4-3' | '3-4';
+  price: number;
+  currency?: string;
+  compareAtPrice?: number;
+  sale?: boolean;
+  outOfStock?: boolean;
+  meta?: string;
+  rating?: number;
+  reviewCount?: number;
+  /** more status Badges after Sale and Out of stock */
+  badges?: React.ReactNode[];
+  onAddToCart?(): void;
+  /** the card's action as an element, instead of onAddToCart */
+  action?: React.ReactNode;
+  layout?: 'grid' | 'list';
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+  strings?: Record<string, string>;
+  className?: string;
+};
 export function ProductCard({ title, href, onOpen, image, ratio = '1-1', price, currency = 'USD', compareAtPrice, sale, outOfStock = false,
-  meta, rating, reviewCount, badges, onAddToCart, action, layout = 'grid', headingLevel = 3, strings, className, ...rest }) {
-  const t = useStrings('productCard', strings);
+  meta, rating, reviewCount, badges, onAddToCart, action, layout = 'grid', headingLevel = 3, strings, className, ...rest }: ProductCardProps) {
+  const t: any = useStrings('productCard', strings);
   const name = typeof title === 'string' ? title : '';
   const onSale = sale !== undefined ? !!sale : typeof compareAtPrice === 'number' && compareAtPrice > price;
   const interactive = !!(href || onOpen);
-  const H = 'h' + Math.min(6, Math.max(2, headingLevel));
+  const H = ('h' + Math.min(6, Math.max(2, headingLevel))) as React.ElementType;
   const opener = href ? <a className="plx-product-card__opener" href={href}>{title}</a>
     : onOpen ? <button type="button" className="plx-product-card__opener" onClick={onOpen}>{title}</button> : title;
   const status = [];
