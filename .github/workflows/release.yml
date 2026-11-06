@@ -291,7 +291,6 @@ jobs:
       # The token is a fine-grained token limited to those repositories (Contents: read and write is what
       # repository_dispatch needs). Without it this step only says so; the release itself is unaffected.
       - name: Notify apps that auto-upgrade
-        if: always() && success()
         env:
           DISPATCH_TOKEN: ${{ secrets.APP_DISPATCH_TOKEN }}
           APPS: LighthouseCollection/CTM
