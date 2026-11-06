@@ -5212,7 +5212,7 @@
         "token": "--plx-comp-retry-status-margin-block-start"
       }
     ],
-    "why": "retry.css: .plx-retry__status holds the countdown (\"Retrying in \u2026\") while the next attempt waits"
+    "why": "retry.css: .plx-retry__status holds the countdown (\"Retrying in …\") while the next attempt waits"
   },
   "retry-pattern--kind-retry-count": {
     "sets": [
@@ -5851,5 +5851,120 @@
   "network-graph--behavior-zoom-and-pan": {
     "sets": [],
     "why": "markup only: zoom and pan with the buttons above the plot, the keys or a drag"
+  },
+  "presence--presence-online": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "dot",
+        "token": "--plx-comp-status-dot-online-background"
+      }
+    ],
+    "why": "status-dot.css: .plx-status-dot--online, the availability dot on the avatar's bottom end corner (the same five states everywhere; from 40px the dot also carries the state's shape)"
+  },
+  "presence--presence-away": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "dot",
+        "token": "--plx-comp-status-dot-away-background"
+      }
+    ],
+    "why": "status-dot.css: .plx-status-dot--away, the availability dot on the avatar's bottom end corner (the same five states everywhere; from 40px the dot also carries the state's shape)"
+  },
+  "presence--presence-busy": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "dot",
+        "token": "--plx-comp-status-dot-busy-background"
+      }
+    ],
+    "why": "status-dot.css: .plx-status-dot--busy, the availability dot on the avatar's bottom end corner (the same five states everywhere; from 40px the dot also carries the state's shape)"
+  },
+  "presence--presence-do-not-disturb": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "dot",
+        "token": "--plx-comp-status-dot-dnd-background"
+      }
+    ],
+    "why": "status-dot.css: .plx-status-dot--dnd, the availability dot on the avatar's bottom end corner (the same five states everywhere; from 40px the dot also carries the state's shape)"
+  },
+  "presence--presence-offline": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "dot",
+        "token": "--plx-comp-status-dot-offline-background"
+      }
+    ],
+    "why": "status-dot.css: .plx-status-dot--offline, the availability dot on the avatar's bottom end corner (the same five states everywhere; from 40px the dot also carries the state's shape)"
+  },
+  "calendar-view--date-a-day": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "day",
+        "token": "--plx-comp-date-badge-day-text"
+      },
+      {
+        "property": "block-size",
+        "part": "day",
+        "token": "--plx-comp-date-badge-day-height"
+      },
+      {
+        "property": "min-inline-size",
+        "part": "day",
+        "token": "--plx-comp-date-badge-day-min-width"
+      },
+      {
+        "property": "font-size",
+        "part": "day",
+        "token": "--plx-comp-date-badge-day-font-size"
+      },
+      {
+        "property": "color",
+        "part": "weekday",
+        "token": "--plx-comp-date-badge-weekday-text"
+      },
+      {
+        "property": "font-size",
+        "part": "weekday",
+        "token": "--plx-comp-date-badge-weekday-font-size"
+      },
+      {
+        "property": "font-weight",
+        "part": "weekday",
+        "token": "--plx-comp-date-badge-weekday-font-weight"
+      }
+    ],
+    "why": "date-badge.css: the base .plx-date-badge, the weekday over the day number"
+  },
+  "calendar-view--date-today": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "day",
+        "token": "--plx-comp-date-badge-today-day-background"
+      },
+      {
+        "property": "color",
+        "part": "day",
+        "token": "--plx-comp-date-badge-today-day-text"
+      },
+      {
+        "property": "font-weight",
+        "part": "day",
+        "token": "--plx-comp-date-badge-today-day-font-weight"
+      },
+      {
+        "property": "color",
+        "part": "weekday",
+        "token": "--plx-comp-date-badge-today-weekday-text"
+      }
+    ],
+    "why": "date-badge.css: .plx-date-badge.is-today, the day number on a filled background, in its own text color and weight, and the weekday in its own color"
   }
 }
