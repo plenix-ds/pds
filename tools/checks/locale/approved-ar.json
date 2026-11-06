@@ -2814,7 +2814,7 @@
    }
   },
   {
-   "source": "Owner, chat, 2026-11-06, relayed by PDS1-Product-Lead on #476: B, all 19 rows of docs/pds1/slices/476-arabic-datagrid/proposal.md approved, row 18 (dataGrid.fillRight) = option B تعبئة لليمين. https://github.com/plenix-ds/pds/issues/476",
+   "source": "Owner, chat, 2026-11-06 ~17:0x UTC, final answer recorded by PDS1-Product-Lead on #476: \"Use b Microsoft's standard.\" All 19 rows of docs/pds1/slices/476-arabic-datagrid/proposal.md approved, row 18 (dataGrid.fillRight) = B, تعبئة لليمين. https://github.com/plenix-ds/pds/issues/476#issuecomment (16:48:21Z). An earlier B (16:45Z) was withdrawn at 16:46Z and replaced by this one.",
    "date": "2026-11-06",
    "strings": {
     "dataGrid": {
