@@ -49,6 +49,39 @@ function reporterFindings(tool, script, okWord, failWord) {
   return list;
 }
 
+// the published TypeScript types of @plenix-ds/react (ADR 0011, #61): build them (build-types.js), then one finding per prop
+// typed `any`, per exported component whose whole props object is `any`, and per callback typed `(...args: never[])`. index.d.ts and the tsc declarations it
+// re-exports are read, so a part converted to TypeScript counts too. A finding names the part and the prop, never a line.
+function typesFindings() {
+  const r = exec('node', ['build-types.js']);
+  if (r.status !== 0) throw new Error(`build-types.js failed (exit ${r.status}):\n${(r.stdout || '').slice(-1500)}\n${r.stderr}`);
+  const dir = path.join(ROOT, 'release', 'packages', 'react');
+  // only what a consumer gets: index.d.ts and the declarations it re-exports (types/ also holds tsc's output for the
+  // JavaScript sources, which nothing points to until the source is TypeScript)
+  const index = path.join(dir, 'index.d.ts');
+  const text = fs.existsSync(index) ? fs.readFileSync(index, 'utf8') : '';
+  const files = [index, ...new Set([...text.matchAll(/from "\.\/(types\/[^"]+)\.js"/g)].map((m) => path.join(dir, m[1] + '.d.ts')))];
+  const out = [];
+  for (const file of files) {
+    if (!fs.existsSync(file)) continue;
+    const name = path.relative(dir, file).split(path.sep).join('/');
+    let owner = '';
+    fs.readFileSync(file, 'utf8').split('\n').forEach((l, i) => {
+      const top = /^export (?:declare )?(?:interface|type|function|const|namespace) ([\w$]+)/.exec(l);
+      if (top) owner = top[1];
+      const prop = /^\s+([\w$]+)\??: any(?:\[\])?;$/.exec(l);
+      if (prop && prop[1] !== 'prop') out.push(['types', name, 'any-prop', `${owner}.${prop[1]} is any`, i + 1]);
+      const whole = /^export declare (?:function|const) ([\w$]+)\s*[:(]\s*(?:\{[^}]*\}|props|_props)\s*:\s*any\b/.exec(l)
+        || (/^\s+var ([\w$]+): \((?:\{[^}]*\}|props)\s*:\s*any\)/.exec(l) && [null, owner + '.' + /^\s+var ([\w$]+)/.exec(l)[1]]);
+      if (whole) out.push(['types', name, 'any-props-object', `${whole[1]}'s props are any`, i + 1]);
+      // a callback typed (...args: never[]) takes any function but gives an inline handler's parameters the type never (#812)
+      const never = /^\s+([\w$]+)\??: \(\.\.\.args: never\[\]\) =>/.exec(l);
+      if (never) out.push(['types', name, 'never-callback', `${owner}.${never[1]} takes (...args: never[]): type its parameters`, i + 1]);
+    });
+  }
+  return out;
+}
+
 const TOOLS = {
   eslint() {
     const r = npx('eslint', '--no-error-on-unmatched-pattern', '-f', 'json', 'platform', 'suite', 'dam/app', 'dashboard', 'projects',
@@ -102,6 +135,7 @@ const TOOLS = {
   },
   system: () => reporterFindings('system', 'check-system.js', 'SYSTEM_OK', 'SYSTEM_FAIL'),
   style: () => reporterFindings('style', 'check-style.js', 'STYLE_OK', 'STYLE_FAIL'),
+  types: () => typesFindings(),
 };
 
 // a finding is [tool, file, rule, message, line?]: the line is only for the annotation, never part of the identity

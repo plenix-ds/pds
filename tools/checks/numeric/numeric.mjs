@@ -1,8 +1,9 @@
-// Check 10 (plan §7): a numeric column has `tabular-nums` and end alignment.
+// Check 10 (plan §7): a numeric column has `tabular-nums`. Alignment is not checked: since D-0087 (#800, owner) grid
+// content is start-aligned, numbers included, so `text-align:end` is no longer required (tabular-nums keeps digits lined up).
 //   node tools/checks/numeric/numeric.mjs [file.css ...]   (default: every stylesheet under platform/)
 // A rule is a numeric column when its selector names `numeric` as a class part (`--numeric`, `__numeric`) or the
 // DataGrid's right-aligned cell (`--align-right`, which holds numbers; its text rule only). It must declare
-// `font-variant-numeric` with tabular-nums and `text-align:end`. Physical left/right is check 4's job.
+// `font-variant-numeric` with tabular-nums. Physical left/right is check 4's job.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -21,7 +22,6 @@ export function checkNumericCss(css, file) {
     const decl = body.replace(/\s+/g, '');
     const where = `${file}:${line} ${sel.trim().slice(0, 60)}`;
     if (!/font-variant-numeric:[^;]*tabular-nums/.test(decl)) out.push(`${where}: numeric column needs font-variant-numeric: tabular-nums`);
-    if (!/(?:^|;)text-align:end(?:;|$)/.test(decl)) out.push(`${where}: numeric column needs text-align:end`);
   }
   return out;
 }

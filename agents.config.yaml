@@ -26,6 +26,13 @@ memory:
   per_agent_limit_gb: 2.5      # each session's own limit (systemd MemoryMax)
   start_new_below_free_gb: 2   # new small tasks wait while free memory is below this
 
+dispatch:
+  # The poller (team.sh nudge, deploy/agents/pds1-nudge.timer) runs every heartbeat_min minutes and rewrites the pinned
+  # heartbeat issue; the daily watchdog (.github/workflows/watchdog.yml) opens a P0 process issue when it is older than
+  # 2 x heartbeat_min (template v2.4 §6.1; #772). Check 15 also compares the timer with heartbeat_min.
+  heartbeat_min: 10
+  heartbeat_issue: 809
+
 # The role registry (template v2.4 §5.1, D-0084; #768): the one list of roles. team.sh, the scheduler, pickup and CI
 # (checks 13 and 15) read it, nothing else lists roles. Keys: id, title (the session name "PDS1 - <title>"), kind
 # (lane | task), label (the work-item label), instances, parked (never started), boot (started by team.sh start-core),
