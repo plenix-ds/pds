@@ -256,7 +256,7 @@ export { NetworkGraph, forceLayout, layeredLayout, graphLayers, graphNeighbors, 
 export { Diagram } from './charts/Diagram.jsx';
 export { BarChart } from './charts/lazy.jsx';
 export { binValues } from './charts/chart-helpers.js';
-export { ComboChart } from './charts/ComboChart.jsx';
+export { ComboChart } from './charts/lazy.jsx';
 export { PieChart } from './charts/lazy.jsx';
 export { pieSlices } from './charts/chart-helpers.js';
 export { BulletChart } from './charts/BulletChart.jsx';
@@ -268,7 +268,7 @@ export { ComparisonView } from './patterns/ComparisonView/ComparisonView.jsx';
 export { summarizeSeries, CHART_PATTERNS, chartPattern, patternFill, ChartPatterns, useChartPoints } from './charts/a11y.js';
 export { Sparkline } from './charts/lazy.jsx';
 export { LollipopChart } from './charts/LollipopChart.jsx';
-export { ScatterChart } from './charts/ScatterChart.jsx';
+export { ScatterChart } from './charts/lazy.jsx';
 export { FunnelChart } from './charts/FunnelChart.jsx';
 export { Treemap } from './charts/Treemap.jsx';
 export { GanttChart } from './charts/GanttChart.jsx';

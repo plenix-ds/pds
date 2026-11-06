@@ -40,7 +40,7 @@ import { ChartLegend } from './parts/ChartLegend.jsx';
 import { ChartTooltip } from './parts/ChartTooltip.jsx';
 import { useChartHover, legendItems } from './chart-kit.js';
 import { useEChartsPlot, plotGrid } from './echarts/EChartsPlot.jsx';
-import { gridRoom } from './LineChart.jsx';
+import { gridRoom } from './chart-helpers.js';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 
 const NO_MARGIN = Object.freeze({ top: 0, end: 0, bottom: 0, start: 0 });

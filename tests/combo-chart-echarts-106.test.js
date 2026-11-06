@@ -52,10 +52,10 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
       for (const [name, props] of [['shared axis', {}], ['dual axes', { axis: 'dual' }], ['no points', { showPoints: false }]]) {
         await mount(props);
-        await page.evaluate(() => { const b = [...document.querySelectorAll('.plx-combo-chart button')].find((x) => /data/i.test(x.textContent)); if (b) b.click(); }); await wait(500);
+        await page.evaluate(() => { const b = [...document.querySelectorAll('.plx-combo-chart summary, .plx-combo-chart button')].find((x) => /data/i.test(x.textContent)); if (b) b.click(); }); await wait(500);
         const rows = await page.evaluate(() => document.querySelectorAll('.plx-combo-chart [role=row][data-plx-record], .plx-combo-chart table tbody tr').length);
         assert.equal(rows, 5, T + name + ': "Show the data" has a row per category (' + rows + ')');
-        await page.evaluate(() => { const b = [...document.querySelectorAll('.plx-combo-chart button')].find((x) => /data/i.test(x.textContent)); if (b) b.click(); }); await wait(300);
+        await page.evaluate(() => { const b = [...document.querySelectorAll('.plx-combo-chart summary, .plx-combo-chart button')].find((x) => /data/i.test(x.textContent)); if (b) b.click(); }); await wait(300);
         const a = await analyse();
         assert.equal(a.cols.length, 5, T + name + ': one column per value on the baseline (' + a.cols.length + ')');
         const ratios = a.cols.map((c, i) => c.h / BARS[i]); assert.ok(Math.max(...ratios) / Math.min(...ratios) < 1.06, T + name + ': column heights are in proportion to the values: ' + ratios.map((r) => r.toFixed(2)));

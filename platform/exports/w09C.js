@@ -4,7 +4,7 @@
 export { summarizeSeries, CHART_PATTERNS, chartPattern, patternFill, ChartPatterns, useChartPoints } from '../charts/a11y.js';
 export { Sparkline } from '../charts/lazy.jsx';
 export { LollipopChart } from '../charts/LollipopChart.jsx';
-export { ScatterChart } from '../charts/ScatterChart.jsx';
+export { ScatterChart } from '../charts/lazy.jsx';
 export { FunnelChart } from '../charts/FunnelChart.jsx';
 export { Treemap } from '../charts/Treemap.jsx';
 export { GanttChart } from '../charts/GanttChart.jsx';
