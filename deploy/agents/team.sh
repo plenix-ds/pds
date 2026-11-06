@@ -61,7 +61,7 @@ start_one() {
   tmux list-windows -t $S -F '#W' | grep -qx "$win" && { echo "$name already running"; return; }
   dir=$(worktree_for "$role" "$n"); mem=$(mem_limit "$role"); trust_dir "$dir"
   tmux new-window -d -t $S -n "$win" -c "$dir" \
-    "systemd-run --user --scope -q -p MemoryMax=${mem}G -- env PDS1_ROLE=pds1-$role claude --agent pds1-$role --name '$name' --remote-control '$name' --permission-mode bypassPermissions 'You are $name. Pull main, read CLAUDE.md, then work your open issues in plenix-ds/pds (gh issue list -R plenix-ds/pds --label agent:pds1-$role --state open), starting with pinned #178 Phase 0 if it names your role. Follow agents.config.yaml.'; echo; echo '$name stopped. Press Enter to close.'; read"
+    "systemd-run --user --scope -q -p MemoryMax=${mem}G -- env PDS1_ROLE=pds1-$role PDS1_WINDOW=$win claude --agent pds1-$role --name '$name' --remote-control '$name' --permission-mode bypassPermissions 'You are $name. Pull main, read CLAUDE.md, then work your open issues in plenix-ds/pds (gh issue list -R plenix-ds/pds --label agent:pds1-$role --state open), starting with pinned #178 Phase 0 if it names your role. Follow agents.config.yaml.'; echo; echo '$name stopped. Press Enter to close.'; read"
   log "start $win ($name) in $dir"; echo "started $name"
 }
 
