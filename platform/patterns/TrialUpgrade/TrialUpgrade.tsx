@@ -12,6 +12,7 @@
      The pattern owns no payment processing or subscription authorization.
 */
 import React from 'react';
+import type { ComparisonItem, ComparisonAttribute } from '../ComparisonView/ComparisonView.tsx';
 import { Stack } from '../../components/Stack/Stack.tsx';
 import { Banner } from '../../components/Banner/Banner.tsx';
 import { Badge } from '../../components/Badge/Badge.tsx';
@@ -25,21 +26,33 @@ import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import CheckIcon from 'plenix-platform/icons/plenix/check';
 
-export function TrialUpgrade({ message, plans = [], attributes = [], onUpgrade, defaultOpen = false, strings, className }) {
-  const t = useStrings('trialUpgrade', strings);
+/** @public the prop type (ADR 0011); plans and attributes are ComparisonView's */
+export type TrialUpgradeProps = {
+  message?: React.ReactNode;
+  plans?: ComparisonItem[];
+  attributes?: ComparisonAttribute[];
+  /** persistence or checkout: a rejection keeps the selection */
+  onUpgrade(planId: string): unknown;
+  defaultOpen?: boolean;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function TrialUpgrade(props: TrialUpgradeProps) {
+  const { message, plans = [], attributes = [], onUpgrade, defaultOpen = false, strings, className } = props as any;
+  const t: any = useStrings('trialUpgrade', strings);
   const [open, setOpen] = React.useState(defaultOpen), [plan, setPlan] = React.useState(plans[0]?.id || ''), [busy, setBusy] = React.useState(false), [error, setError] = React.useState(''), [saved, setSaved] = React.useState(false);
   const lock = React.useRef(false);
   const upgrade = async () => {
-    if (lock.current || !plans.some((p) => p.id === plan)) return; lock.current = true; setBusy(true); setError('');
+    if (lock.current || !plans.some((p: any) => p.id === plan)) return; lock.current = true; setBusy(true); setError('');
     try { await onUpgrade(plan); setSaved(true); setOpen(false); } catch (e) { setError(t.failed); } finally { lock.current = false; setBusy(false); }
   };
   return <Stack className={cx('plx-trial-upgrade', className)}>
     <Banner tone="neutral" title={t.trial} actions={<Button size="sm" onClick={() => setOpen(true)}>{t.compare}</Button>}>{message}</Banner>
     {saved ? <Badge tone="success" icon={CheckIcon} role="status">{t.upgraded}</Badge> : null}
     <Dialog open={open} title={t.title} size="lg" dismissible={!busy} onClose={() => { if (!lock.current) setOpen(false); }}
-      footer={<><Button disabled={busy} onClick={() => setOpen(false)}>{t.cancel}</Button><Button variant="primary" disabled={busy || !onUpgrade || !plans.some((p) => p.id === plan)} onClick={upgrade}>{t.upgrade}</Button></>}>
+      footer={<><Button disabled={busy} onClick={() => setOpen(false)}>{t.cancel}</Button><Button variant="primary" disabled={busy || !onUpgrade || !plans.some((p: any) => p.id === plan)} onClick={upgrade}>{t.upgrade}</Button></>}>
       <ComparisonView items={plans} attributes={attributes} mode="matrix" label={t.compare} strings={strings} />
-      <Field label={t.plan}><Select value={plan} disabled={busy} onChange={(e) => setPlan(e.target.value)} options={plans.map((p) => ({ value: p.id, label: p.title }))} /></Field>
+      <Field label={t.plan}><Select value={plan} disabled={busy} onChange={(e) => setPlan(e.target.value)} options={plans.map((p: any) => ({ value: p.id, label: p.title }))} /></Field>
       {error ? <Notice tone="danger">{error}</Notice> : null}
     </Dialog>
   </Stack>;

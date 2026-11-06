@@ -4,5 +4,5 @@
 // collection parts are in Card.tsx (already public).
 export { FileList, sortFiles } from '../patterns/FileList/FileList.jsx';
 export { FileBrowser } from '../patterns/FileBrowser/FileBrowser.jsx';
-export { UploadManager, useUploadQueue } from '../patterns/UploadManager/UploadManager.jsx';
-export { VersionCompare, diffLines } from '../patterns/VersionCompare/VersionCompare.jsx';
+export { UploadManager, useUploadQueue } from '../patterns/UploadManager/UploadManager.tsx';
+export { VersionCompare, diffLines } from '../patterns/VersionCompare/VersionCompare.tsx';

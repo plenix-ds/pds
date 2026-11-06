@@ -14,13 +14,17 @@
 import React from 'react';
 import { devWarn } from '../../utils/devWarn.ts';
 import { Dialog } from '../../components/Dialog/Dialog.tsx';
-import { Wizard } from '../Wizard/Wizard.jsx';
+import { Wizard } from '../Wizard/Wizard.tsx';
+import type { WizardProps } from '../Wizard/Wizard.tsx';
 import { useUnsavedGuard } from '../../providers/UnsavedGuard.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 
-export function WizardDialog({ open, title, size = 'md', dirty = false, onClose, strings, ...props }) {
+/** @public the prop type (ADR 0011): the Dialog's props, the unsaved guard, and the Wizard's props */
+export type WizardDialogProps = WizardProps & { open?: boolean; title?: string; size?: 'md' | 'lg' | 'full'; dirty?: boolean; onClose?(): void };
+export function WizardDialog(allProps: WizardDialogProps) {
+  const { open, title, size = 'md', dirty = false, onClose, strings, ...props } = allProps as any;
   devWarn('WizardDialog', { size }, { size: ['md','lg','full'] });
-  const t = useStrings('wizardDialog', strings);
+  const t: any = useStrings('wizardDialog', strings);
   const [busy, setBusy] = React.useState(false);
   const guard = useUnsavedGuard(open && dirty, t.unsaved);
   const close = guard(() => { if (!busy && onClose) onClose(); });

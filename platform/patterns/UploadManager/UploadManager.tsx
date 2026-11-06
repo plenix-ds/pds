@@ -92,11 +92,11 @@ import UploadN2Icon from 'plenix-platform/icons/plenix/upload-2';
 import { dataPhrase, dataNumber } from '../../utils/dataText.tsx';
 import { fill } from '../../utils/fill.ts';
 
-const clamp = (n) => Math.max(0, Math.min(100, Number(n) || 0));
-const MOVING = { queued: true, uploading: true };
+const clamp = (n: any) => Math.max(0, Math.min(100, Number(n) || 0));
+const MOVING: Record<string, boolean> = { queued: true, uploading: true };
 
 // does the accept list ("image/*,.pdf") take this file?
-function accepted(accept, file) {
+function accepted(accept: any, file: any) {
   if (!accept) return true;
   const name = String(file.name || '').toLowerCase(), type = String(file.type || '').toLowerCase();
   return String(accept).split(',').map((x) => x.trim().toLowerCase()).filter(Boolean).some((a) => (a.charAt(0) === '.' ? name.endsWith(a)
@@ -104,55 +104,63 @@ function accepted(accept, file) {
 }
 
 // a dropped folder arrives as a directory entry: every file inside joins the queue with its folder path
-function walkEntry(entry, prefix, out) {
-  return new Promise((resolve) => {
-    if (entry.isFile) entry.file((file) => { out.push({ file, path: prefix }); resolve(); }, () => resolve());
+function walkEntry(entry: any, prefix: any, out: any) {
+  return new Promise<void>((resolve) => {
+    if (entry.isFile) entry.file((file: any) => { out.push({ file, path: prefix }); resolve(); }, () => resolve());
     else if (entry.isDirectory) {
-      const reader = entry.createReader(), all = [];
-      const read = () => reader.readEntries((batch) => {
-        if (batch.length) { all.push(...batch); read(); } else Promise.all(all.map((e) => walkEntry(e, prefix + entry.name + '/', out))).then(resolve);
+      const reader = entry.createReader(), all: any[] = [];
+      const read = () => reader.readEntries((batch: any) => {
+        if (batch.length) { all.push(...batch); read(); } else Promise.all(all.map((e: any) => walkEntry(e, prefix + entry.name + "/", out))).then(() => resolve());
       }, () => resolve());
       read();
     } else resolve();
   });
 }
-function droppedFiles(dataTransfer) {
-  const entries = Array.from(dataTransfer.items || []).map((it) => (it.kind === 'file' && it.webkitGetAsEntry ? it.webkitGetAsEntry() : null));
-  if (!entries.length || entries.some((e) => !e)) return Promise.resolve(Array.from(dataTransfer.files || []).map((file) => ({ file, path: '' })));
-  const out = [];
-  return Promise.all(entries.map((e) => walkEntry(e, '', out))).then(() => out);
+function droppedFiles(dataTransfer: any) {
+  const entries = Array.from<any>(dataTransfer.items || []).map((it) => (it.kind === 'file' && it.webkitGetAsEntry ? it.webkitGetAsEntry() : null));
+  if (!entries.length || entries.some((e: any) => !e)) return Promise.resolve(Array.from(dataTransfer.files || []).map((file) => ({ file, path: '' })));
+  const out: any[] = [];
+  return Promise.all(entries.map((e: any) => walkEntry(e, '', out))).then(() => out);
 }
 
 let nextId = 0;
-export function useUploadQueue(options) {
+/** @public one upload row */
+export type UploadItem = { id: string; name: string; size?: number; type?: string; status: 'queued' | 'uploading' | 'done' | 'error' | 'canceled'; progress?: number; error?: string; retry?: boolean };
+/** @public a file the queue runs: reports its progress in percent and stops on the signal */
+export type UploadFn = (file: File, handlers: { onProgress(percent: number): void; signal: AbortSignal }) => Promise<unknown>;
+/** @public the options of useUploadQueue */
+export type UploadQueueOptions = { upload?: UploadFn; accept?: string; maxSize?: number; concurrency?: number; strings?: Record<string, string> };
+/** @public what useUploadQueue returns */
+export type UploadQueue = { items: UploadItem[]; add(files: (File | { file: File; path?: string })[]): void; cancel(id: string): void; retry(id: string): void; remove(id: string): void; cancelAll(): void; clear(): void };
+export function useUploadQueue(options?: UploadQueueOptions): UploadQueue {
   const o = options || {};
-  const t = useStrings('uploadManager', o.strings);
-  const [items, setItems] = React.useState([]);
-  const controllers = React.useRef({});
+  const t: any = useStrings('uploadManager', o.strings);
+  const [items, setItems] = React.useState<any>([]);
+  const controllers = React.useRef<any>({});
   const latest = React.useRef(o); latest.current = o;
-  const update = (id, patch) => setItems((list) => list.map((x) => (x.id === id ? Object.assign({}, x, patch) : x)));
-  const start = (it) => {
+  const update = (id: any, patch: any) => setItems((list: any) => list.map((x: any) => (x.id === id ? Object.assign({}, x, patch) : x)));
+  const start = (it: any) => {
     const ac = typeof AbortController !== 'undefined' ? new AbortController() : { signal: { aborted: false }, abort() { this.signal.aborted = true; } };
     controllers.current[it.id] = ac;
     update(it.id, { status: 'uploading', progress: 0, error: undefined });
     const run = latest.current.upload;
     Promise.resolve()
-      .then(() => (run ? run(it.file || it, { onProgress: (p) => { if (!ac.signal.aborted) update(it.id, { progress: clamp(p) }); }, signal: ac.signal }) : undefined))
+      .then(() => (run ? run(it.file || it, { onProgress: (p) => { if (!ac.signal.aborted) update(it.id, { progress: clamp(p) }); }, signal: ac.signal as AbortSignal }) : undefined))
       .then(() => { if (!ac.signal.aborted) update(it.id, { status: 'done', progress: 100 }); },
         (e) => { if (!ac.signal.aborted) update(it.id, { status: 'error', error: (e && e.message) || t.error, retry: true }); })
       .then(() => { delete controllers.current[it.id]; });
   };
   // the runner: a few at a time (concurrency), the next as one finishes
   React.useEffect(() => {
-    const free = Math.max(0, (latest.current.concurrency || 3) - items.filter((x) => x.status === 'uploading').length);
-    items.filter((x) => x.status === 'queued').slice(0, free).forEach(start);
+    const free = Math.max(0, (latest.current.concurrency || 3) - items.filter((x: any) => x.status === 'uploading').length);
+    items.filter((x: any) => x.status === 'queued').slice(0, free).forEach(start);
   }, [items]);
-  const stop = (id) => { const c = controllers.current[id]; if (c) { c.abort(); delete controllers.current[id]; } };
+  const stop = (id: any) => { const c = controllers.current[id]; if (c) { c.abort(); delete controllers.current[id]; } };
   return {
     items,
     add: (files) => {
       const max = latest.current.maxSize;
-      const added = Array.from(files || []).map((x) => {
+      const added = Array.from<any>(files || []).map((x) => {
         const file = x && x.file ? x.file : x;
         const path = x && x.file ? x.path || '' : '';
         const row = { id: 'upl-' + (++nextId), name: path + file.name, size: file.size, type: file.type, file, status: 'queued', progress: 0 };
@@ -160,20 +168,48 @@ export function useUploadQueue(options) {
         if (max && file.size > max) return Object.assign(row, { status: 'error', error: fill(t.tooLarge, { max: formatBytes(max) }), retry: false });
         return row;
       });
-      setItems((list) => list.concat(added));
+      setItems((list: any) => list.concat(added));
     },
-    cancel: (id) => { stop(id); update(id, { status: 'canceled', progress: 0 }); },
-    retry: (id) => update(id, { status: 'queued', progress: 0, error: undefined }),
-    remove: (id) => { stop(id); setItems((list) => list.filter((x) => x.id !== id)); },
-    cancelAll: () => { setItems((list) => list.map((x) => { if (!MOVING[x.status]) return x; stop(x.id); return Object.assign({}, x, { status: 'canceled', progress: 0 }); })); },
-    clear: () => setItems((list) => list.filter((x) => MOVING[x.status])),
+    cancel: (id: string) => { stop(id); update(id, { status: 'canceled', progress: 0 }); },
+    retry: (id: string) => update(id, { status: 'queued', progress: 0, error: undefined }),
+    remove: (id: string) => { stop(id); setItems((list: any) => list.filter((x: any) => x.id !== id)); },
+    cancelAll: () => { setItems((list: any) => list.map((x: any) => { if (!MOVING[x.status]) return x; stop(x.id); return Object.assign({}, x, { status: 'canceled', progress: 0 }); })); },
+    clear: () => setItems((list: any) => list.filter((x: any) => MOVING[x.status])),
   };
 }
 
-export function UploadManager({ queue, upload, items, onAdd, onCancel, onRetry, onRemove, onCancelAll, onClear, variant = 'panel', docked = false, dropZone, accept, maxSize,
-  concurrency, folders = true, hint, title, open = true, onClose, defaultCollapsed = false, strings, className }) {
+/** @public the prop type (ADR 0011) */
+export type UploadManagerProps = {
+  queue?: UploadQueue;
+  upload?: UploadFn;
+  items?: UploadItem[];
+  onAdd?(files: (File | { file: File; path?: string })[]): void;
+  onCancel?(id: string): void;
+  onRetry?(id: string): void;
+  onRemove?(id: string): void;
+  onCancelAll?(): void;
+  onClear?(): void;
+  variant?: 'panel' | 'dialog';
+  docked?: boolean;
+  dropZone?: boolean;
+  accept?: string;
+  /** bytes */
+  maxSize?: number;
+  concurrency?: number;
+  folders?: boolean;
+  hint?: React.ReactNode;
+  title?: string;
+  open?: boolean;
+  onClose?(): void;
+  defaultCollapsed?: boolean;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function UploadManager(props: UploadManagerProps) {
+  const { queue, upload, items, onAdd, onCancel, onRetry, onRemove, onCancelAll, onClear, variant = 'panel', docked = false, dropZone, accept, maxSize,
+  concurrency, folders = true, hint, title, open = true, onClose, defaultCollapsed = false, strings, className } = props as any;
   devWarn('UploadManager', { variant }, { variant: ['panel','dialog'] });
-  const t = useStrings('uploadManager', strings);
+  const t: any = useStrings('uploadManager', strings);
   const own = useUploadQueue({ upload, accept, maxSize, concurrency, strings });
   const q = queue || (items ? { items, add: onAdd, cancel: onCancel, retry: onRetry, remove: onRemove, cancelAll: onCancelAll, clear: onClear } : own);
   const rows = q.items || [];
@@ -181,35 +217,35 @@ export function UploadManager({ queue, upload, items, onAdd, onCancel, onRetry, 
   const [collapsed, setCollapsed] = React.useState(!!defaultCollapsed);
   const [over, setOver] = React.useState(false);
   const depth = React.useRef(0);
-  const filesInput = React.useRef(null), folderInput = React.useRef(null);
+  const filesInput = React.useRef<any>(null), folderInput = React.useRef<any>(null);
   const dialog = variant === 'dialog';
   const withZone = dropZone === undefined ? dialog : !!dropZone;
 
   // the counts and the overall progress (weighted by size)
-  const n = (s) => rows.filter((x) => x.status === s).length;
-  const moving = rows.filter((x) => MOVING[x.status]).length, done = n('done'), failed = n('error'), total = rows.length;
-  const weight = (x) => (typeof x.size === 'number' && x.size > 0 ? x.size : 1);
-  const live = rows.filter((x) => x.status !== 'canceled' && !(x.status === 'error' && x.retry === false));
-  const sum = live.reduce((a, x) => a + weight(x), 0);
-  const overall = sum ? live.reduce((a, x) => a + weight(x) * (x.status === 'done' ? 100 : x.status === 'error' ? 0 : clamp(x.progress)), 0) / sum : 0;
+  const n = (s: any) => rows.filter((x: any) => x.status === s).length;
+  const moving = rows.filter((x: any) => MOVING[x.status]).length, done = n('done'), failed = n('error'), total = rows.length;
+  const weight = (x: any) => (typeof x.size === 'number' && x.size > 0 ? x.size : 1);
+  const live = rows.filter((x: any) => x.status !== 'canceled' && !(x.status === 'error' && x.retry === false));
+  const sum = live.reduce((a: any, x: any) => a + weight(x), 0);
+  const overall = sum ? live.reduce((a: any, x: any) => a + weight(x) * (x.status === 'done' ? 100 : x.status === 'error' ? 0 : clamp(x.progress)), 0) / sum : 0;
   const headline = moving ? (moving === 1 ? t.uploadingOne : fill(t.uploading, { n: formatNumber(moving) }))
     : failed ? (failed === 1 ? t.failedOne : fill(t.failed, { n: formatNumber(failed) }))
       : done ? (done === 1 ? t.doneOne : fill(t.done, { n: formatNumber(done) })) : t.none;
 
   // what changes is said politely: the start, each failure, the end
-  const was = React.useRef({});
+  const was = React.useRef<any>({});
   React.useEffect(() => {
-    const before = was.current, now = {};
-    rows.forEach((x) => { now[x.id] = x.status; if (x.status === 'error' && before[x.id] !== 'error') announce(fill(t.failedNamed, { name: x.name, reason: x.error || t.error })); });
+    const before = was.current, now: any = {};
+    rows.forEach((x: any) => { now[x.id] = x.status; if (x.status === 'error' && before[x.id] !== 'error') announce(fill(t.failedNamed, { name: x.name, reason: x.error || t.error })); });
     const wasMoving = Object.keys(before).some((k) => MOVING[before[k]]);
     if (!wasMoving && moving) announce(headline);
     if (wasMoving && !moving && total) announce(headline);
     was.current = now;
   });
 
-  const add = (list) => { if (list && list.length && q.add) q.add(list); };
-  const fromInput = (e) => {
-    add(Array.from(e.target.files || []).map((file) => ({ file, path: (file.webkitRelativePath || '').split('/').slice(0, -1).map((p) => p + '/').join('') })));
+  const add = (list: any) => { if (list && list.length && q.add) q.add(list); };
+  const fromInput = (e: any) => {
+    add(Array.from<any>(e.target.files || []).map((file) => ({ file, path: (file.webkitRelativePath || '').split('/').slice(0, -1).map((p: any) => p + '/').join('') })));
     e.target.value = '';
   };
   const zone = withZone ? (
@@ -226,11 +262,11 @@ export function UploadManager({ queue, upload, items, onAdd, onCancel, onRetry, 
         {folders ? <Button size="sm" icon={FolderOpenIcon} onClick={() => folderInput.current && folderInput.current.click()}>{t.chooseFolder}</Button> : null}
       </span>
       <input ref={filesInput} type="file" multiple hidden accept={accept} onChange={fromInput} aria-label={t.chooseFiles} />
-      {folders ? <input ref={folderInput} type="file" multiple hidden webkitdirectory="" directory="" onChange={fromInput} aria-label={t.chooseFolder} /> : null}
+      {folders ? <input {...({ webkitdirectory: "", directory: "" } as any)} ref={folderInput} type="file" multiple hidden onChange={fromInput} aria-label={t.chooseFolder} /> : null}
     </DropZone>
   ) : null;
 
-  const row = (x) => {
+  const row = (x: any) => {
     const file = { id: x.id, name: x.name, size: x.size, type: x.type };
     if (MOVING[x.status]) {
       return <FileRow key={x.id} as="li" file={file} progress={x.status === 'queued' ? 0 : clamp(x.progress)} progressLabel={x.status === 'queued' ? t.waiting : undefined}

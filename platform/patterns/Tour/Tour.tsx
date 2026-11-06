@@ -19,15 +19,32 @@ import { Button } from '../../components/Button/Button.tsx';
 import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 
-export function Tour({ steps = [], open = false, onOpenChange, step, defaultStep = 0, onStepChange, onFinish, spotlight = true, strings, className }) {
-  const t = useStrings('tour', strings);
+/** @public one step of a Tour; target is a Platform control rendered in place */
+export type TourStep = { id: string; target: React.ReactNode; title?: React.ReactNode; content?: React.ReactNode; placement?: string };
+/** @public the prop type (ADR 0011) */
+export type TourProps = {
+  steps: TourStep[];
+  open?: boolean;
+  onOpenChange?(next: boolean): void;
+  /** the controlled step index */
+  step?: number;
+  defaultStep?: number;
+  onStepChange?(index: number): void;
+  onFinish?(reason: 'complete' | 'skip'): void;
+  spotlight?: boolean;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function Tour(props: TourProps) {
+  const { steps = [], open = false, onOpenChange, step, defaultStep = 0, onStepChange, onFinish, spotlight = true, strings, className } = props as any;
+  const t: any = useStrings('tour', strings);
   const [own, setOwn] = React.useState(defaultStep);
   const at = Math.max(0, Math.min(step === undefined ? own : step, steps.length - 1));
-  const move = (n) => { if (step === undefined) setOwn(n); if (onStepChange) onStepChange(n); };
-  const finish = (reason) => { if (onOpenChange) onOpenChange(false); if (onFinish) onFinish(reason); };
+  const move = (n: any) => { if (step === undefined) setOwn(n); if (onStepChange) onStepChange(n); };
+  const finish = (reason: any) => { if (onOpenChange) onOpenChange(false); if (onFinish) onFinish(reason); };
   if (!steps.length) return null;
   return <Inline wrap className={cx('plx-tour', className)}>
-    {steps.map((s, i) => <TeachingBubble key={s.id} target={s.target} open={open && i === at} title={s.title} placement={s.placement}
+    {steps.map((s: any, i: any) => <TeachingBubble key={s.id} target={s.target} open={open && i === at} title={s.title} placement={s.placement}
       spotlight={spotlight} focusOnOpen step={{ current: i + 1, total: steps.length }} strings={t} onDismiss={() => finish('skip')}
       primaryAction={{ label: i === steps.length - 1 ? t.finish : t.next, onClick: () => i === steps.length - 1 ? finish('complete') : move(i + 1) }}
       secondaryAction={i > 0 ? { label: t.back, onClick: () => move(i - 1) } : { label: t.skip, onClick: () => finish('skip') }}>{s.content}</TeachingBubble>)}

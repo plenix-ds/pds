@@ -33,7 +33,7 @@
   "LiveRegion": [
     "platform/components/CodeBlock/CodeBlock.tsx",
     "platform/components/Resizable/Resizable.tsx",
-    "platform/patterns/WidgetGrid/WidgetGrid.jsx",
+    "platform/patterns/WidgetGrid/WidgetGrid.tsx",
     "platform/patterns/ColumnsMenu/ColumnsMenu.tsx",
     "platform/patterns/CommandBar/panel-parts.jsx"
   ],

@@ -26,7 +26,7 @@ import { FilterPanel } from '../../patterns/FilterPanel/FilterPanel.tsx';
 import { QuickFilter } from '../../patterns/QuickFilter/QuickFilter.jsx';
 import { EntityHeader } from '../../patterns/EntityHeader/EntityHeader.jsx';
 import { PropertyList } from '../../patterns/PropertyList/PropertyList.jsx';
-import { Wizard } from '../../patterns/Wizard/Wizard.jsx';
+import { Wizard } from '../../patterns/Wizard/Wizard.tsx';
 import { SettingsSection } from '../../patterns/SettingsLayout/SettingsLayout.jsx';
 import { DataGrid } from '../../components/DataGrid/DataGrid.tsx';
 import { Badge } from '../../components/Badge/Badge.tsx';
