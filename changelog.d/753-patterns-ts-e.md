@@ -1,3 +1,0 @@
-### Changed
-
-- TypeScript wave 3, batch E (#753, ADR 0011): ten patterns are now `.tsx` with exported prop types: `Tour` (`TourProps`, `TourStep`), `TrialUpgrade` (`TrialUpgradeProps`), `UploadManager` (`UploadManagerProps`, `UploadItem`, `UploadFn`; `useUploadQueue` takes `UploadQueueOptions` and returns `UploadQueue`), `UserCard` (`UserCardProps`, `UserCardDetail`), `VersionCompare` (`VersionCompareProps`, `CompareVersion`), `VersionHistory` (`VersionHistoryProps`, `Version`), `ViewMenu` (`ViewMenuProps`, `ViewMenuValue`), `WidgetGrid` (`WidgetGridProps`, `Widget`), `Wizard` (`WizardProps`, `WizardStep`) and `WizardDialog` (`WizardDialogProps`). No `any` in a public prop. No behavior change.
