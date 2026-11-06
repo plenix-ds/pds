@@ -1457,5 +1457,49 @@
   "error-summary--variant-focused-on-submit": {
     "sets": [],
     "why": "markup only: moves focus to the summary when it appears (autoFocus, default true)"
+  },
+  "gauge--size-small": {
+    "sets": [
+      {
+        "property": "inline-size",
+        "part": "meter",
+        "token": "--plx-comp-gauge-width-sm"
+      }
+    ],
+    "why": ".plx-gauge--sm .plx-gauge__meter in gauge.css"
+  },
+  "gauge--size-large": {
+    "sets": [
+      {
+        "property": "inline-size",
+        "part": "meter",
+        "token": "--plx-comp-gauge-width-lg"
+      }
+    ],
+    "why": ".plx-gauge--lg .plx-gauge__meter in gauge.css"
+  },
+  "generated-content--variant-regenerate": {
+    "sets": [],
+    "why": "markup only: adds a Regenerate button that calls onRegenerate; the caller supplies the new version"
+  },
+  "generated-content--variant-versions-pager": {
+    "sets": [],
+    "why": "markup only: pages through the retained versions, oldest first"
+  },
+  "generated-content--variant-with-feedback": {
+    "sets": [],
+    "why": "markup only: adds Helpful and Unhelpful buttons that call onFeedback"
+  },
+  "help-panel--variant-articles": {
+    "sets": [],
+    "why": "markup only: lists the supplied articles; selecting one opens its content and Back restores the list"
+  },
+  "help-panel--variant-search": {
+    "sets": [],
+    "why": "markup only: adds a search field that matches article titles and summaries; empty results are explicit"
+  },
+  "help-panel--variant-in-the-inspector": {
+    "sets": [],
+    "why": "markup only: draws the panel in the inspector SidePanel, which owns placement and scrolling"
   }
 }
