@@ -37,7 +37,7 @@ PDS 1.0 fixes this with five changes:
 | 7 | Rules in prose, not enforced | Radius 2–6 restated by owner, `AGENTS.md` still says "Menus 8px"; pill-size rule spread over 5 PRs; tooltips "light yellow" never applied; "no black" violated 56×; ~23 of ~56 design decisions enforced | Rule = test; `decisions.yaml` where every entry links its check |
 | 8 | Status docs rewritten to fight context loss | HANDOFF.md 38 versions, STATUS.md 24; 94 commits touched only process docs; facts in 4+ places | Status comes only from GitHub; one stable ONBOARDING.md; session notes in PR descriptions |
 | 9 | Releases too fast to consume | 241 versions in 26 days, 85 minor (breaking under 0.x) | 1.0.0 semver, on-demand releases batched with changesets, deprecation window |
-| 10 | Infra and identity | One shared owner GitHub login (715/786 commits under one identity); ~56 agent processes on 15 GB (near-OOM); cron polling; `main` unprotected | GitHub App with bot identity per role; ≤4 long-running agents, plus short-task agents as needed, each with a memory limit; webhooks; branch protection |
+| 10 | Infra and identity | One shared owner GitHub login (715/786 commits under one identity); ~56 agent processes on 15 GB (near-OOM); cron polling; `main` unprotected | GitHub App with bot identity per role; at most `long_work.max_running` long-running agents (`agents.config.yaml`), plus short-task agents as needed, each with a memory limit; webhooks; branch protection |
 
 **Keep from the old PDS (it worked):**
 - Immutable versioned CDN (`/cdn/<version>/`, `index.json`, `SHA256SUMS`)
@@ -92,7 +92,7 @@ Built from superpowers (workflow and gates), agency-agents (roles), MetaGPT (art
 - Every role writes artifacts as files in the repo, not chat.
 - Every role reports evidence as Ran / Skipped / Planned / Manual, with a file path.
 
-### Always-on agents (persistent sessions; at most 4 doing long work at once)
+### Always-on agents (persistent sessions; at most `long_work.max_running` doing long work at once)
 
 | Role | Model | Owns | Hard gate | Borrows from |
 |---|---|---|---|---|
@@ -106,10 +106,10 @@ Built from superpowers (workflow and gates), agency-agents (roles), MetaGPT (art
 | **Technical Writer & Messaging Designer** | mid | Docs site (EN/AR), generated prop/token/API reference, migration guides, changelog; **owns the messaging standard (§7d)**: every error, empty state, confirmation, warning, success and loading message in components and docs | **G7 Docs:** every public API documented, examples compile | agency *technical-writer* |
 
 **How many agents run at once:**
-- **Long work: at most 4 at a time.** Building a component, a design, a migration, a release. The Delivery Lead starts these sessions as work needs them, so the roster can be eight roles.
-- **Small tasks: as many as needed, on top of the 4.** Short jobs that aren't time-consuming: a code review, a lint or typo fix, a single test, triaging an issue, a reply on GitHub, updating the daily summary. Each one is capped at about 15 minutes; if it runs longer, it stops and becomes long work queued behind the 4.
+- **Long work: at most `long_work.max_running` at a time** (`agents.config.yaml`). Building a component, a design, a migration, a release. The Delivery Lead starts these sessions as work needs them, so the roster can be eight roles.
+- **Small tasks: as many as needed, on top of the long-work slots.** Short jobs that aren't time-consuming: a code review, a lint or typo fix, a single test, triaging an issue, a reply on GitHub, updating the daily summary. Each one is capped at `small_tasks.max_minutes`; if it runs longer, it stops and becomes long work queued behind the long-work slots.
 - **Limit by memory, not by count.** Every agent runs with its own memory limit, and new small tasks wait if the server is near its limit. This avoids the old ~56-process near-crash on the 15 GB server.
-- **All of these are settings, not fixed rules.** The long-work limit (4), the small-task time cap (15 min) and the memory limits live in one file, `agents.config.yaml`. The Delivery Lead adjusts them as needed (logged as a `decision` issue, so they show on the dashboard), and the owner can change them any time by commenting on that issue.
+- **All of these are settings, not fixed rules.** The long-work limit, the small-task time cap and the memory limits (`long_work.max_running`, `small_tasks.max_minutes`, `memory.*`) live in one file, `agents.config.yaml`. The Delivery Lead adjusts them as needed (logged as a `decision` issue, so they show on the dashboard), and the owner can change them any time by commenting on that issue.
 
 ### On-demand subagents (spawned for a job, then gone)
 
@@ -159,7 +159,7 @@ Built from superpowers (workflow and gates), agency-agents (roles), MetaGPT (art
 
 | Situation | What the agent does instead of stopping |
 |---|---|
-| Irreversible action | Take a backup or snapshot first (database dump, git tag; CDN versions are immutable), then proceed |
+| Hard-to-reverse action | Anything in the repository: proceed, since git history restores it. Live data: take a backup or snapshot first (database dump, git tag; CDN versions are immutable), then proceed. Only an action that nothing can undo and that the owner has not authorized is parked: report it and continue other work |
 | Security issue | Fix it at once, log a `security` issue, include it in the owner's summary |
 | External side effect | Proceed if it is part of the pipeline; log it |
 | Plan broken beyond a reasonable guess | Re-plan, log a `Ruling: what — why — cost if wrong`, continue |
@@ -167,6 +167,48 @@ Built from superpowers (workflow and gates), agency-agents (roles), MetaGPT (art
 | Database migration | Automatic backup, reversible migration, automatic rollback if it fails |
 | Merge | Self-merge with `gh pr merge --auto` through the merge queue once required checks pass |
 | Live deployment | Health check after deploy; automatic rollback to the previous version if live checks fail |
+| Own lane is empty | Post "lane empty" and exit; the dispatcher restarts the lane when work arrives |
+| Another role is missing or will not start | Open a `process` issue (P0), take the next Ready item; never wait |
+
+**Source and adoption.** This plan follows the owner's project plan template v2.4 (`docs/pds1/template/project-plan-template-v2.4.md`, D-0084). Where this file and the template differ on process, the template wins; where they differ on a PDS-specific fact (packages, CDN, tokens), this file wins. The master plan (milestones, epics, lanes, evergreen backlog) is `docs/MASTER_PLAN.md`.
+
+### 5.1 Gates: PASS, FAIL or N/A
+
+Every gate is recorded as **PASS, FAIL or N/A with a reason** on the PR (the PR template lists them). A gate with no entry is not passed. N/A is allowed only when the gate does not apply to the change, and the reason says why.
+
+| Gate | Passes when | N/A when |
+|---|---|---|
+| G1 spec | P0/P1/P2, non-goals, no open question | BUG or XS item (the issue is the brief) |
+| G2 design | the design fits `DESIGN.md` | no UI change |
+| G3 contract | no new public prop or token tier without an ADR | no API or token-tier change |
+| G4 plan | tasks, owners, files and proof commands; no file with two owners | BUG or XS item |
+| G5a code review | no open Critical or Important finding | never |
+| G5b visual | the Design Critic passes code and screenshots together | no visual change |
+| G5c a11y and RTL | axe, keyboard and contrast pass | no UI change |
+| G5d behaviour | the §7e tests pass | never |
+| G5e security | APPROVE | the change touches none of the security surfaces (§4) |
+| G6 locale | no missing or unapproved AR string | no user-visible string changed |
+| G7 docs | every public API documented; examples compile | no public API change |
+| G8 release | published and verified live | not a release |
+
+### 5.2 Work sizes
+
+Every item carries a size on the board. Size decides how much of the SDLC it needs, so small fixes do not wait on specs.
+
+| Size | Phases | Notes |
+|---|---|---|
+| BUG | Skip phases 1 to 3 | The issue is the brief; a failing test comes first. Treated as S if it needs an API, security or migration decision |
+| XS | Skip phases 1 to 3 | The issue is the brief. Same exception as BUG |
+| S, M | All phases | |
+| L | Split into M items first | Each M item then runs all phases |
+
+### 5.3 Blocking exceptions
+
+Only three things wait for a person, and the agent takes the next Ready item meanwhile: the intake (§5a); a new translated word, until the owner answers (D-0012); and the rare action that nothing can undo and that the owner has not authorized. "Waiting for the owner" is never a reason to stop routine work.
+
+### 5.4 The dispatcher: agents never sit idle
+
+The pull loop: finish the item, hand it off (move it to the next lane's Ready by label and board field), take the next Ready item in your lane, and if there is none post "lane empty" and exit. The dispatcher (event pickup, the scheduler and the nudge timer on the agent host) wakes the lane when work arrives. If the owner has to remind an agent to work while Ready items exist, the dispatcher failed: that is a P0 `process` bug, root cause within 24 hours, with a check or rule added and an entry in `docs/lessons.md`. The target is zero nudges. Detail: template §6.
 
 ## 5a. Owner intake: how you ask for things
 
@@ -461,7 +503,7 @@ The build is still 17 custom `build-*.js` scripts with Vite called from inside t
 |---|---|---|
 | GitHub org | `plenix-ds` | GitHub App with one bot identity per role; fine-grained permissions; also installed on `LighthouseCollection/CTM` for two-way CTM ↔ PDS reporting (§7c); branch protection + required checks + merge queue on `main` |
 | Repo | `plenix-platform` stays as-is for 0.x consumers | **New monorepo `plenix-ds/pds`** (decision 1). Fold the private `plenix-design-system` submodule in |
-| Server | VM 131 (Ubuntu, 8 cores, 15 GB), agent account | Turn on Linger; agents as systemd user services instead of cron/tmux scripts; ≤4 long-running agents plus any number of short-task agents (≈15 min cap; both adjustable in `agents.config.yaml`), each with a memory limit, new ones held back when memory is low; webhooks via proxy instead of 1–2 min polling |
+| Server | VM 131 (Ubuntu, 8 cores, 15 GB), agent account | Turn on Linger; agents as systemd user services instead of cron/tmux scripts; at most `long_work.max_running` long-running agents plus any number of short-task agents (capped at `small_tasks.max_minutes`; both adjustable in `agents.config.yaml`), each with a memory limit, new ones held back when memory is low; webhooks via proxy instead of 1–2 min polling |
 | CDN | `design-system.lighthouseway.org/cdn/<version>/`, `index.json`, `SHA256SUMS`, all old versions immutable | 1.0.0+ published by CI on tag only; publish fails if version exists |
 | API | `/api/v1/` read-only | OpenAPI spec + contract tests + breaking-change diff |
 | Packages | `@plenix-ds/tokens`, `icons`, `styles`, `react` on GitHub Packages | Changesets drive versions; one version across npm/CDN/API; optional `@plenix-ds/locales` |

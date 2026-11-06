@@ -3,5 +3,5 @@ export { PermissionsEditor } from '../patterns/PermissionsEditor/PermissionsEdit
 export { Tour } from '../patterns/Tour/Tour.jsx';
 export { Checklist } from '../components/Checklist/Checklist.tsx';
 export { Onboarding } from '../patterns/Onboarding/Onboarding.tsx';
-export { FeatureIntro } from '../patterns/FeatureIntro/FeatureIntro.jsx';
+export { FeatureIntro } from '../patterns/FeatureIntro/FeatureIntro.tsx';
 export { HelpPanel } from '../patterns/HelpPanel/HelpPanel.tsx';

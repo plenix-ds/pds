@@ -751,3 +751,23 @@
   options: ['send plenix-release from the release host now, App token later (chosen)', 'wait for the PDS GitHub App (owner step D-0019)', 'keep the schedule only (D-0020)']
   status: active
   check: 'planned:release-ctm-dispatch (the release log shows the dispatch, and CTM''s Plenix CDN auto-upgrade run starts within minutes; #750)'
+
+- id: D-0084
+  date: 2026-11-06
+  area: process
+  decided_by: owner (chat, 2026-11-06, uploaded project plan template v2.4 "to update our current environment setup")
+  decision: 'The PDS environment follows the owner''s project plan template v2.4 (docs/pds1/template/project-plan-template-v2.4.md): a master plan (docs/MASTER_PLAN.md), one role registry in agents.config.yaml read by the launcher, the dispatcher and CI, capacity counted by running work with reserved gate slots and an idle exit, a Ready queue on a GitHub Project board, claim-before-building, gates recorded PASS, FAIL or N/A, and process checks 13 to 16. Where plan.md differs, the template wins and plan.md is updated to match.'
+  why: 'The owner improved the instructions from what this project learned (idle agents holding slots, a role with no launcher entry, owner nudges, settings drifting from prose) and asked that the current setup be updated from them.'
+  options: ['adopt template v2.4 (chosen)']
+  status: active
+  check: 'planned:process-checks-13-16 (role registry complete, settings not restated in prose, hand-offs not made with GITHUB_TOKEN; tracked on the E8 epic)'
+
+- id: D-0085
+  date: 2026-11-06
+  area: api
+  decided_by: agent (pds1-ds-architect) on #667 (G3), owner may switch
+  decision: 'The catalog''s key list is not public API: useStrings, createTranslator and each part''s strings prop are. A catalog key that no Platform part reads may be removed in a MINOR release, listed under Removed, once a search of the apps (CTM, the St. John site) finds no reader; a key a part still reads keeps its name. The 10 unread keys of #667 are removed this way.'
+  why: 'VERSIONING.md''s public list never included catalog keys; deprecating unread words only keeps dead Arabic to review. CTM (9fa6386) and the St. John site (c12c3e0) read none of the 10 keys (CTM''s notRefundable is its own dictionary).'
+  options: ['A - remove unread keys in a MINOR after an app search (chosen)', 'B - deprecate every unread key until the next major']
+  status: active
+  check: tools/checks/locale (unused-key); review-only for the app search, recorded on the removal PR

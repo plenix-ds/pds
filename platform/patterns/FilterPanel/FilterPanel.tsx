@@ -4,7 +4,7 @@
      type and a value (the chosen options as pills in their colors), condition groups one level deep. It is never labeled
      "advanced"; quick filters (QuickFilter) are optional shortcuts beside it.
    Usage:
-     const [filter, setFilter] = React.useState({ join: 'and', items: [] });
+     const [filter, setFilter] = React.useState<any>({ join: 'and', items: [] });
      <FilterPanel fields={fields} value={filter} onChange={setFilter} />
      <DataGrid … filter={(row) => matchesFilter(filter, row, fields)} />      (or useCollectionView)
    Props:
@@ -48,41 +48,41 @@ import PlusIcon from 'plenix-platform/icons/plenix/plus';
 import TrashIcon from 'plenix-platform/icons/plenix/trash';
 
 
-function ConditionValue({ c, f, set, t }) {
+function ConditionValue({ c, f, set, t }: any) {
   const fw = useStrings('fields');
   const k = kindOf(f);
   if (c.op === 'empty' || c.op === 'nempty') return <span className="plx-find-pick--value" />;
-  if (k === 'select' || k === 'multi') return <MultiPick label={f.label} options={optionsOf(f)} value={[].concat(c.value || [])} onChange={(v) => set({ value: v })} placeholder={t.choose} />;
-  if (k === 'date' && c.op === 'within') return <Pick label={f.label} size="value" value={c.value || WITHIN[0].value} options={fieldWords.within(fw)} onChange={(v) => set({ value: v })} />;
+  if (k === 'select' || k === 'multi') return <MultiPick label={f.label} options={optionsOf(f)} value={[].concat(c.value || [])} onChange={(v: any) => set({ value: v })} placeholder={t.choose} />;
+  if (k === 'date' && c.op === 'within') return <Pick {...({} as any)} label={f.label} size="value" value={c.value || WITHIN[0].value} options={fieldWords.within(fw)} onChange={(v: any) => set({ value: v })} />;
   if (k === 'date') return <Input type="date" data aria-label={f.label} className="plx-find-pick--value" value={c.value} onChange={(e) => set({ value: e.target.value })} />;
   if (k === 'number') return <Input type="number" data aria-label={f.label} placeholder={t.value} className="plx-find-pick--value" value={c.value} onChange={(e) => set({ value: e.target.value })} />;
   return <Input aria-label={f.label} placeholder={t.value} className="plx-find-pick--value" value={c.value} onChange={(e) => set({ value: e.target.value })} />;
 }
 
-function ConditionRows({ fields, node, setNode, nested, t }) {
+function ConditionRows({ fields, node, setNode, nested, t }: any) {
   const fw = useStrings('fields');
   const items = node.items;
-  const setItems = (list) => setNode(Object.assign({}, node, { items: list }));
-  const nameOf = (x) => (x.group ? t.group : fieldOf(fields, x.field).label);
+  const setItems = (list: any) => setNode(Object.assign({}, node, { items: list }));
+  const nameOf = (x: any) => (x.group ? t.group : fieldOf(fields, x.field).label);
   const ro = useReorder(items, setItems, nameOf, t);
-  const put = (i, ch) => setItems(items.map((x, j) => (j === i ? Object.assign({}, x, ch) : x)));
-  const join = (i) => (i === 0 ? <Text variant="secondary" className="plx-find-panel__join">{t.where}</Text>
-    : i === 1 ? <Pick label={t.join} size="join" value={node.join} options={[{ value: 'and', label: t.and }, { value: 'or', label: t.or }]} onChange={(v) => setNode(Object.assign({}, node, { join: v }))} />
+  const put = (i: any, ch: any) => setItems(items.map((x: any, j: any) => (j === i ? Object.assign({}, x, ch) : x)));
+  const join = (i: any) => (i === 0 ? <Text variant="secondary" className="plx-find-panel__join">{t.where}</Text>
+    : i === 1 ? <Pick {...({} as any)} label={t.join} size="join" value={node.join} options={[{ value: 'and', label: t.and }, { value: 'or', label: t.or }]} onChange={(v: any) => setNode(Object.assign({}, node, { join: v }))} />
     : <Text variant="secondary" className="plx-find-panel__join">{node.join === 'or' ? t.or : t.and}</Text>);
-  const remove = (i, what) => (
-    <Tooltip content={fill(t.remove, { what })}><Button variant="ghost" icon={TrashIcon} iconOnly label={fill(t.remove, { what })} onClick={() => setItems(items.filter((_, j) => j !== i))} /></Tooltip>
+  const remove = (i: any, what: any) => (
+    <Tooltip content={fill(t.remove, { what })}><Button variant="ghost" icon={TrashIcon} iconOnly label={fill(t.remove, { what })} onClick={() => setItems(items.filter((_: any, j: any) => j !== i))} /></Tooltip>
   );
   return (
     <div className={cx('plx-find-panel__rows', 'plx-find-panel__rows--framed', nested && 'plx-find-panel__rows--nested')} ref={ro.box}>
       {items.length ? null : <Text variant="secondary">{t.empty}</Text>}
-      {items.map((x, i) => {
+      {items.map((x: any, i: any) => {
         if (x.group) {
           return (
             <div key={x.id} {...ro.rowProps(i, t.group)}>
               {join(i)}
               <div className="plx-find-panel__group">
-                <ConditionRows fields={fields} node={x} setNode={(n) => put(i, n)} nested t={t} />
-                <div className="plx-find-panel__add"><Button size="sm" variant="ghost" icon={PlusIcon} onClick={() => put(i, { items: x.items.concat(newCondition(fields[0])) })}>{t.addCondition}</Button></div>
+                <ConditionRows fields={fields} node={x} setNode={(n: any) => put(i, n)} nested t={t} />
+                <div className="plx-find-panel__add"><Button size="sm" variant="ghost" icon={PlusIcon} onClick={() => put(i, { items: x.items.concat(newCondition(fields[0] as any)) })}>{t.addCondition}</Button></div>
               </div>
               {remove(i, t.group)}
               {ro.handle(i, t.group)}
@@ -93,10 +93,10 @@ function ConditionRows({ fields, node, setNode, nested, t }) {
         return (
           <div key={x.id} {...ro.rowProps(i, f.label)}>
             {join(i)}
-            <Pick label={t.field} value={x.field} options={fields.map(fieldOption)} onChange={(v) => put(i, newCondition(fieldOf(fields, v)))} />
-            <Pick label={t.operator} size="op" value={x.op} options={fieldWords.operators(fw, kindOf(f)).map(([value, label]) => ({ value, label }))}
-              onChange={(v) => put(i, { op: v, value: v === 'within' ? WITHIN[0].value : x.op === 'within' ? '' : x.value })} />
-            <ConditionValue c={x} f={f} set={(ch) => put(i, ch)} t={t} />
+            <Pick {...({} as any)} label={t.field} value={x.field} options={fields.map(fieldOption)} onChange={(v: any) => put(i, newCondition(fieldOf(fields, v)))} />
+            <Pick {...({} as any)} label={t.operator} size="op" value={x.op} options={fieldWords.operators(fw, kindOf(f)).map(([value, label]) => ({ value, label }))}
+              onChange={(v: any) => put(i, { op: v, value: v === 'within' ? WITHIN[0].value : x.op === 'within' ? '' : x.value })} />
+            <ConditionValue c={x} f={f} set={(ch: any) => put(i, ch)} t={t} />
             {remove(i, t.condition)}
             {ro.handle(i, f.label)}
           </div>
@@ -107,27 +107,46 @@ function ConditionRows({ fields, node, setNode, nested, t }) {
   );
 }
 
-export function FilterPanel({ fields = [], value, onChange, inline = false, strings, open, onOpenChange, request }) {
-  const t = useStrings('filterPanel', strings);
+/** @public a field the collection can be filtered by (utils/fields.ts) */
+export type FilterField = { value: string; label: string; kind?: 'text' | 'select' | 'multi' | 'number' | 'date'; options?: Array<{ value: string | number; label: string }>; get?(record: unknown): unknown };
+/** @public a filter condition */
+export type FilterCondition = { id: string; field: string; op: string; value?: unknown };
+/** @public a group of conditions */
+export type FilterGroup = { group: true; id: string; join: 'and' | 'or'; items: Array<FilterCondition | FilterGroup> };
+/** @public */
+export type FilterValue = { join: 'and' | 'or'; items: Array<FilterCondition | FilterGroup> };
+/** @public */
+export type FilterPanelProps = {
+  fields?: FilterField[];
+  value?: FilterValue;
+  onChange?(value: FilterValue): void;
+  inline?: boolean;
+  open?: boolean;
+  onOpenChange?(open: boolean): void;
+  request?: { field: string; id: number | string };
+  strings?: Record<string, unknown>;
+};
+export function FilterPanel({ fields = [], value, onChange, inline = false, strings, open, onOpenChange, request }: FilterPanelProps) {
+  const t: any = useStrings('filterPanel', strings);
   const node = value || { join: 'and', items: [] };
   const n = conditionsOf(node).length;
-  const add = (x) => onChange(Object.assign({}, node, { items: node.items.concat(x) }));
-  const handled = React.useRef(null);
+  const add = (x: any) => onChange!(Object.assign({}, node, { items: node.items.concat(x) }));
+  const handled = React.useRef<any>(null);
   React.useEffect(() => {
     if (!request || handled.current === request.id) return;
     handled.current = request.id;
     const f = fields.find((x) => x.value === request.field);
-    if (f && !conditionsOf(node).some((c) => c.field === f.value)) add(newCondition(f));
+    if (f && !conditionsOf(node).some((c) => c.field === f.value)) add(newCondition(f as any));
   }, [request]);
   const body = (
     <div className="plx-find-panel plx-find-panel--filter">
-      <PanelHead title={t.label} info={t.info} sub={t.sub} />
+      <PanelHead {...({} as any)} title={t.label} info={t.info} sub={t.sub} />
       <ConditionRows fields={fields} node={node} setNode={onChange} t={t} />
       <div className="plx-find-panel__add">
-        <Button size="sm" variant="ghost" icon={PlusIcon} disabled={!fields.length} onClick={() => add(newCondition(fields[0]))}>{t.addCondition}</Button>
-        <Button size="sm" variant="ghost" icon={PlusIcon} disabled={!fields.length} onClick={() => add({ id: nextId(), group: true, join: 'and', items: [newCondition(fields[0])] })}>{t.addGroup}</Button>
+        <Button size="sm" variant="ghost" icon={PlusIcon} disabled={!fields.length} onClick={() => add(newCondition(fields[0] as any))}>{t.addCondition}</Button>
+        <Button size="sm" variant="ghost" icon={PlusIcon} disabled={!fields.length} onClick={() => add({ id: nextId(), group: true, join: 'and', items: [newCondition(fields[0] as any)] })}>{t.addGroup}</Button>
       </div>
     </div>
   );
-  return <PanelTrigger icon={FilterIcon} label={t.label} count={n} inline={inline} open={open} onOpenChange={onOpenChange}>{body}</PanelTrigger>;
+  return <PanelTrigger {...({} as any)} icon={FilterIcon} label={t.label} count={n} inline={inline} open={open} onOpenChange={onOpenChange}>{body}</PanelTrigger>;
 }

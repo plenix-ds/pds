@@ -1,4 +1,4 @@
 {
   "about": "The count of `any` props in @plenix-ds/react's index.d.ts (tools/agent/types-any.js, #687). It only goes down: lower it with --update in the pull request that types more props.",
-  "any": 108
+  "any": 86
 }

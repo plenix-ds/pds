@@ -1,6 +1,8 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
   "entry": [
+    // compiled by tools/checks/types-consumer-764.test.mjs (what a TypeScript app writes against the published types)
+    "tests/types/*.ts",
     "platform/index.js",
     "*/main.jsx",
     "dam/app/assets.jsx",

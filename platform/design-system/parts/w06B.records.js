@@ -22,7 +22,7 @@ DSParts.records.push(function (H) {
       withActions ? h(P.FormActions, { sticky: sticky !== false }, h(P.Button, { onClick: noop }, 'Cancel'), h(P.Button, { type: 'submit', variant: 'primary' }, 'Save changes')) : null));
   };
   var formSection = { id: 'form-section', lab: true, icon: 'fields', sec: 'forms', sub: 'Form foundations', leaf: 'Form section', title: 'Form',
-    plenix: 'Form, FormSection, FormActions', src: 'patterns/Form/Form.jsx', level: 'Composite', interaction: 'Input', statesFrom: ['field', 'button'],
+    plenix: 'Form, FormSection, FormActions', src: 'patterns/Form/Form.tsx', level: 'Composite', interaction: 'Input', statesFrom: ['field', 'button'],
     aliases: ['Form layout', 'Form group', 'Form block', 'Fieldset section'],
     text: 'Lays out every form the same way: Form holds titled sections (FormSection: a heading, one sentence of why, and its fields in a Stack), then one bar of actions (FormActions). One column puts every label above its control. Two columns, for settings-like forms with many short fields, put the labels beside their controls in one shared label column. Sections are separated by space only, so a form in a card or a dialog stays two frames deep.',
     use: ['A form of more than about six fields that fall into clear topics: one section per topic, in the order people think about the task', 'Two columns for many short fields people scan (settings, properties); one column for everything else and every narrow window', 'One FormActions at the end of the form, the primary action last'],
@@ -44,7 +44,7 @@ DSParts.records.push(function (H) {
   /* ── 05 Forms › Form foundations › Form actions: FormActions ── */
   var actions = function (sticky) { return box(560, h(P.FormActions, { sticky: sticky }, h(P.Button, { variant: 'danger-secondary', onClick: noop }, 'Delete'), h(P.Button, { onClick: noop }, 'Cancel'), h(P.Button, { variant: 'primary', onClick: noop }, 'Save changes'))); };
   var formActions = { id: 'form-actions', icon: 'save', sec: 'forms', sub: 'Form foundations', leaf: 'Form actions', title: 'Form actions',
-    plenix: 'FormActions', src: 'patterns/Form/Form.jsx', blocks: ['plx-form-actions'], level: 'Composite', interaction: 'Action', statesFrom: ['button'],
+    plenix: 'FormActions', src: 'patterns/Form/Form.tsx', blocks: ['plx-form-actions'], level: 'Composite', interaction: 'Action', statesFrom: ['button'],
     aliases: ['Form footer', 'Form buttons', 'Submit bar', 'Save bar'],
     text: 'The one bar of buttons that finishes or leaves a form. FormActions is the form’s ActionBar: the buttons at the end in reading order, the primary last, a destructive action first and away from it. By default (sticky) it stays at the bottom of the scrolling page while the form is longer than the window; with sticky={false} it sits in place under the last section, in a short form or a card.',
     use: ['Every form that changes data: one primary action named by its verb (Save changes, Create asset), Cancel beside it', 'Sticky in long forms on a page or in a panel', 'In place in a short form or a form inside a card'],

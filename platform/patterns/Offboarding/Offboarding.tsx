@@ -19,8 +19,7 @@ import { Button } from '../../components/Button/Button.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { WizardDialog as WizardDialogJs } from '../WizardDialog/WizardDialog.jsx';
 const WizardDialog: any = WizardDialogJs;
-import { ExportDialog as ExportDialogJs } from '../ExportDialog/ExportDialog.jsx';
-const ExportDialog: any = ExportDialogJs;
+import { ExportDialog } from '../ExportDialog/ExportDialog.tsx';
 import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 

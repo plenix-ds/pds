@@ -82,7 +82,7 @@ import { Link } from '../../components/Link/Link.tsx';
 import { Notice } from '../../components/Notice/Notice.tsx';
 import { OtpInput } from '../../components/OtpInput/OtpInput.tsx';
 import { Spinner } from '../../components/Loading/Loading.tsx';
-import { Form } from '../Form/Form.jsx';
+import { Form } from '../Form/Form.tsx';
 import LockIcon from 'plenix-platform/icons/plenix/lock';
 import VisibilityIcon from 'plenix-platform/icons/plenix/visibility';
 import VisibilityOffIcon from 'plenix-platform/icons/plenix/visibility-off';
