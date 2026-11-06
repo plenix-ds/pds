@@ -4388,5 +4388,138 @@
   "product-mark--name-tile-only": {
     "sets": [],
     "why": "markup only: showName=false leaves out the .plx-brand-lockup__app name and labels the tile; brand-lockup.css has no modifier for it"
+  },
+  "scrim--variant-modal-default": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-scrim-background"
+      },
+      {
+        "property": "opacity",
+        "part": "block",
+        "token": "--plx-comp-scrim-opacity"
+      },
+      {
+        "property": "z-index",
+        "part": "block",
+        "token": "--plx-comp-scrim-z-index"
+      },
+      {
+        "property": "animation-duration",
+        "part": "block",
+        "token": "--plx-comp-scrim-animation-duration"
+      },
+      {
+        "property": "animation-timing-function",
+        "part": "block",
+        "token": "--plx-comp-scrim-animation-timing-function"
+      }
+    ],
+    "why": "the base .plx-scrim, fixed over the window (position: fixed and the four insets of 0 have no token); light, inverse and contained are the other variations"
+  },
+  "spotlight--variant-element-cut-out-default": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "dim",
+        "token": "--plx-comp-spotlight-dim-background"
+      },
+      {
+        "property": "opacity",
+        "part": "dim",
+        "token": "--plx-comp-spotlight-dim-opacity"
+      },
+      {
+        "property": "z-index",
+        "part": "dim",
+        "token": "--plx-comp-spotlight-z-index"
+      },
+      {
+        "property": "animation-duration",
+        "part": "dim",
+        "token": "--plx-comp-spotlight-animation-duration"
+      },
+      {
+        "property": "animation-timing-function",
+        "part": "dim",
+        "token": "--plx-comp-spotlight-animation-timing-function"
+      }
+    ],
+    "why": ".plx-spotlight__dim, the dimmed panes around the target (position: fixed has no token)"
+  },
+  "spotlight--variant-pulse-beacon": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "beacon",
+        "token": "--plx-comp-spotlight-beacon-color"
+      },
+      {
+        "property": "block-size",
+        "part": "beacon",
+        "token": "--plx-comp-spotlight-beacon-size"
+      },
+      {
+        "property": "border-color",
+        "part": "beacon",
+        "token": "--plx-comp-spotlight-beacon-ring-color"
+      },
+      {
+        "property": "animation-duration",
+        "part": "beacon",
+        "token": "--plx-comp-spotlight-beacon-duration"
+      },
+      {
+        "property": "z-index",
+        "part": "beacon",
+        "token": "--plx-comp-spotlight-z-index"
+      }
+    ],
+    "why": ".plx-spotlight__beacon, a pulsing dot at the target's corner (still under reduced motion: animation-name none)"
+  },
+  "spotlight--region-contained": {
+    "sets": [
+      {
+        "property": "z-index",
+        "part": "dim",
+        "token": "--plx-comp-spotlight-contained-z-index"
+      },
+      {
+        "property": "z-index",
+        "part": "beacon",
+        "token": "--plx-comp-spotlight-contained-z-index"
+      }
+    ],
+    "why": ".plx-spotlight--contained: the dim and the beacon sit inside the region (position: absolute has no token)"
+  },
+  "spotlight--variant-with-teachingbubble": {
+    "sets": [],
+    "why": "markup only: the TeachingBubble is a separate component drawn next to the spotlight; spotlight.css has no modifier for it"
+  },
+  "wizard-dialog--variant-medium": {
+    "sets": [
+      {
+        "property": "max-inline-size",
+        "part": "block",
+        "token": "--plx-comp-dialog-md-max-width"
+      }
+    ],
+    "why": "WizardDialog passes size md to Dialog: dialog.css .plx-dialog--md"
+  },
+  "wizard-dialog--variant-large": {
+    "sets": [
+      {
+        "property": "max-inline-size",
+        "part": "block",
+        "token": "--plx-comp-dialog-lg-max-width"
+      }
+    ],
+    "why": "WizardDialog passes size lg to Dialog: dialog.css .plx-dialog--lg"
+  },
+  "wizard-dialog--variant-full-screen": {
+    "sets": [],
+    "why": "WizardDialog passes size full to Dialog: dialog.css .plx-dialog--full sets block-size 100%, max-block-size 100% and max-inline-size none, values with no token"
   }
 }
