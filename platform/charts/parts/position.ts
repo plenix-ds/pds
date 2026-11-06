@@ -1,5 +1,5 @@
 /* Plenix · scalePosition (platform/charts/parts/position.js): where a value sits on a scale, for the chart parts.
-   Summary: The position of a value on any Plenix scale (platform/charts/scales.ts): a linear, log or time scale's own
+   Summary: The position of a value on any Plenix scale (platform/charts/scales.js): a linear, log or time scale's own
      position, and the middle of the band for a band scale, so an axis label, a grid line, a data label or a reference
      line lines up with the mark it belongs to.
    Usage:

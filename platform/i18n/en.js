@@ -771,6 +771,18 @@ export default {
       "one": "{n} cell copied",
       "other": "{n} cells copied"
     },
+    "cellsPasted": {
+      "one": "{n} cell pasted",
+      "other": "{n} cells pasted"
+    },
+    "cellsSkipped": {
+      "one": "{n} cell skipped",
+      "other": "{n} cells skipped"
+    },
+    "cellsRefused": {
+      "one": "{n} cell not saved",
+      "other": "{n} cells not saved"
+    },
     "empty": "Nothing to show",
     "failed": "The table could not load",
     "retry": "Retry",

@@ -63,11 +63,17 @@
        puts DataGrid.unreadCommands(...).filter in its CommandBar's quickFilters and .selection among its selection commands. The controller exposes getUnreadCount(), markRead(keys), markUnread(keys).
      onRowClick(record, event), onRowDoubleClick(record, event): with them rows are focusable and Enter clicks;
        onCellEdit(record, { field, value, previous, row, source }) -> void | Promise<void>: a promise shows the busy cell; a rejection brings the
-       old value back with its message (ADR 0016). source: "edit" (typed or chosen; the default), "undo" or "redo" (ADR 0021); once per cell
+       old value back with its message (ADR 0016). source: "edit" (typed or chosen; the default), "paste", "undo" or "redo" (ADR 0021); once per cell
        editing: { types: ["checkbox"] }: the cell editor types the application turns on ("input" and "number" always work)
        editing: { undo: true }: Ctrl+Z undoes and Ctrl+Y (or Cmd+Shift+Z) redoes cell edits, one step per action, inside this table
          only (up to 100 steps; a step whose cells the data no longer holds as it left them ends the history). Each undo reaches
          onCellEdit with the old value (source "undo"); an application that refuses it keeps the value and the grid says why. Default false
+       editing: { paste: true }: Ctrl+V (or Cmd+V) on a cell pastes a copied block (tab-separated rows, as Excel, Google Sheets and the grid's own
+         copy write it). It lands at the active cell, or at the first cell of the selected block (cellSelection); one value with a selected
+         block fills the block. Each value goes through the column's editor rules (a number column takes numbers; checkbox takes true or false)
+         and validate; cells that cannot be edited or fail are skipped; it stops at the last row and column and adds none. Every cell reaches
+         onCellEdit once (source "paste"); the cells the application refuses get their old value back. One announcement gives the pasted and
+         skipped counts, and with editing.undo the paste is one undo step. Default false (Ctrl+V in an open editor pastes text as always)
      openKey: a string, a number or null: the key of the record whose details show (the open row); default the row last opened by a click or Enter
        (with onRowClick); null: none. The open row is aria-current="true"; in a grid without selection it takes the
        selected look (the fill and the start bar); with selection, opening a row selects only it, so it is marked too
@@ -193,6 +199,7 @@ import { useDataGridActions } from './actions.tsx';
 import { unreadCommands } from './unread-commands.ts';
 import { ToastProvider, useOptionalToast } from '../Toast/Toast.tsx';
 import type { IconValue } from '../Icon/Icon.tsx';
+import type { ChangeSource } from './engine/useEditing.ts';
 
 /* The public types (issue 292, ADR 0011, G3 ruling on #292; ADR 0016 for the editing props). Written from the Props block above.
    Records are R; what a column holds is unknown unless its type narrows it; callbacks get R. */
@@ -240,7 +247,14 @@ export type DataGridEditing = {
   enterEdits?: boolean;
   /** dragging across cells selects a range (default false) */
   rangeSelect?: boolean;
+  /** Ctrl+Z undoes and Ctrl+Y or Cmd+Shift+Z redoes cell edits, one step per action (default false; ADR 0021) */
+  undo?: boolean;
+  /** Ctrl+V pastes a copied block at the active cell or the selected block (default false; ADR 0021) */
+  paste?: boolean;
 };
+
+/** @public why a cell changed: typed or chosen (`edit`, the default), `paste`, `fill`, `undo` or `redo` (ADR 0021) */
+export type DataGridChangeSource = ChangeSource;
 
 /** @public */
 export type DataGridColumnType = 'text' | 'number' | 'currency' | 'date' | 'select' | 'checkbox' | 'file' | 'image' | 'link' | 'person' | 'long-text' | 'bytes' | 'multi';
@@ -336,7 +350,7 @@ export type DataGridProps<R = Record<string, unknown>> = {
   onUnreadOnlyChange?(next: boolean): void;
   onRowClick?(record: R, event: React.SyntheticEvent): void;
   onRowDoubleClick?(record: R, event: React.SyntheticEvent): void;
-  onCellEdit?(record: R, change: { field: string; value: unknown; previous: unknown; row: R }): void | Promise<void>;
+  onCellEdit?(record: R, change: { field: string; value: unknown; previous: unknown; row: R; source?: DataGridChangeSource }): void | Promise<void>;
   /** ADR 0016 */
   editing?: DataGridEditing;
   editMode?: 'inline' | 'form';

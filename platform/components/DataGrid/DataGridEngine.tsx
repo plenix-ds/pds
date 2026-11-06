@@ -37,6 +37,7 @@ import { createAdapter } from './adapter.ts';
 import { recordsOf } from './records.ts';
 import { useStrings, useLocale } from '../../providers/LocaleProvider.tsx';
 import { formatNumber } from '../../utils/format.ts';
+import { announce } from '../../utils/announce.tsx';
 import { EMPTY_ROWS, GRID, kinds } from './engine/helpers.tsx';
 
 import { useVirtualizer } from './engine/useVirtualizer.ts';
@@ -268,7 +269,7 @@ function NextEngine(rawProps: any) {
     () => new Map(canonical.map((record) => [recordKey(record[index]), record])),
     [canonical, index]
   );
-  const { replaceData, updateRecord, commitEdit, undo, redo } = editActions({
+  const { replaceData, updateRecord, commitEdit, changeCells, undo, redo } = editActions({
     incoming,
     source,
     canonical,
@@ -867,6 +868,27 @@ function NextEngine(rawProps: any) {
   };
   useEditEffect({ source, mutations, pendingEdit, emit, api });
 
+  // Ctrl+V of a copied block (editing.paste, ADR 0021): the pieces land from the active cell or the selected block; each one goes through its
+  // column's editor rules (can it be edited, is it a value of that type) and validate; the rest are skipped. One announcement gives the counts.
+  const pasteBlock = async (text: string, rowId: any, field: any) => {
+    const ops = await import('./engine/pasteOps.ts');
+    const pieces = ops.plan({ table: ops.parseTable(text), rect: cellRange.rect, at: { r: model.findIndex((m: any) => m.id === rowId), c: ordered.findIndex((o: any) => o.id === field) }, rows: model, columns: ordered });
+    const accepted: any[] = [];
+    let skipped = 0;
+    for (const piece of pieces) {
+      const meta = piece.column.columnDef.meta, record = canonical.find((r: any) => recordKey(r[index]) === piece.row.id);
+      const editable = !!meta.editor && (typeof meta.editable === 'function' ? meta.editable(api.cell(piece.row.id, meta.field)) : meta.editable !== false);
+      const taken = editable && record ? ops.valueFor(meta, piece.text) : null;
+      if (!taken || (meta.validate && (await meta.validate(taken.value, record)))) { skipped += 1; continue; }
+      accepted.push({ key: piece.row.id, field: meta.field, value: taken.value });
+    }
+    const said = (key: string, n: number) => loc.t(key, { count: n, n: formatNumber(n) });
+    if (accepted.length) announce([said('dataGrid.cellsPasted', accepted.length), skipped ? said('dataGrid.cellsSkipped', skipped) : ''].filter(Boolean).join(' '));
+    else if (skipped) announce(said('dataGrid.cellsSkipped', skipped));
+    if (!accepted.length) return;
+    const refused = await changeCells(accepted, 'paste');
+    if (refused) announce(said('dataGrid.cellsRefused', refused), { politeness: 'assertive' });
+  };
   const { groupNode, rowNode } = bodyRows({
     B,
     semanticIndex,
@@ -929,6 +951,7 @@ function NextEngine(rawProps: any) {
     keys,
     commitEdit,
     undoRedo: props.editing?.undo ? { undo, redo } : null,
+    pasteBlock: props.editing?.paste ? pasteBlock : null,
     canonical,
     cutAt,
     rowMenu,

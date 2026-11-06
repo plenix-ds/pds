@@ -4945,5 +4945,165 @@
   "filter-panel--panel-the-panel-with-conditions-and-a-group": {
     "sets": [],
     "why": "markup only: the panel of conditions joined by Where, and and or, with a field, an operator and a value each, and condition groups one level deep"
+  },
+  "resizable--axis-horizontal-default": {
+    "sets": [
+      {
+        "property": "inline-size",
+        "part": "edge-inline",
+        "token": "--plx-comp-resizable-edge-size"
+      },
+      {
+        "property": "z-index",
+        "part": "edge-inline",
+        "token": "--plx-comp-resizable-edge-z-index"
+      },
+      {
+        "property": "inline-size",
+        "part": "edge-inline-line",
+        "token": "--plx-comp-resizable-edge-line-width"
+      },
+      {
+        "property": "inset-inline-start",
+        "part": "edge-inline-line",
+        "token": "--plx-comp-resizable-edge-line-inset"
+      },
+      {
+        "property": "transition-duration",
+        "part": "edge-inline-line",
+        "token": "--plx-comp-resizable-edge-duration"
+      }
+    ],
+    "why": "resizable.css: .plx-resizable__edge--inline, the drag edge on the inline end (cursor col-resize), and its line (::after) that shows on hover and focus"
+  },
+  "resizable--axis-vertical": {
+    "sets": [
+      {
+        "property": "block-size",
+        "part": "edge-block",
+        "token": "--plx-comp-resizable-edge-size"
+      },
+      {
+        "property": "z-index",
+        "part": "edge-block",
+        "token": "--plx-comp-resizable-edge-z-index"
+      },
+      {
+        "property": "block-size",
+        "part": "edge-block-line",
+        "token": "--plx-comp-resizable-edge-line-width"
+      },
+      {
+        "property": "inset-block-start",
+        "part": "edge-block-line",
+        "token": "--plx-comp-resizable-edge-line-inset"
+      },
+      {
+        "property": "transition-duration",
+        "part": "edge-block-line",
+        "token": "--plx-comp-resizable-edge-duration"
+      }
+    ],
+    "why": "resizable.css: .plx-resizable__edge--block, the drag edge on the block end (cursor row-resize), and its line (::after)"
+  },
+  "resizable--axis-both": {
+    "sets": [
+      {
+        "property": "inline-size",
+        "part": "edge-inline",
+        "token": "--plx-comp-resizable-edge-size"
+      },
+      {
+        "property": "z-index",
+        "part": "edge-inline",
+        "token": "--plx-comp-resizable-edge-z-index"
+      },
+      {
+        "property": "inline-size",
+        "part": "edge-inline-line",
+        "token": "--plx-comp-resizable-edge-line-width"
+      },
+      {
+        "property": "inset-inline-start",
+        "part": "edge-inline-line",
+        "token": "--plx-comp-resizable-edge-line-inset"
+      },
+      {
+        "property": "transition-duration",
+        "part": "edge-inline-line",
+        "token": "--plx-comp-resizable-edge-duration"
+      },
+      {
+        "property": "block-size",
+        "part": "edge-block",
+        "token": "--plx-comp-resizable-edge-size"
+      },
+      {
+        "property": "z-index",
+        "part": "edge-block",
+        "token": "--plx-comp-resizable-edge-z-index"
+      },
+      {
+        "property": "block-size",
+        "part": "edge-block-line",
+        "token": "--plx-comp-resizable-edge-line-width"
+      },
+      {
+        "property": "inset-block-start",
+        "part": "edge-block-line",
+        "token": "--plx-comp-resizable-edge-line-inset"
+      },
+      {
+        "property": "transition-duration",
+        "part": "edge-block-line",
+        "token": "--plx-comp-resizable-edge-duration"
+      }
+    ],
+    "why": "resizable.css: both edges, the inline-end one and the block-end one, with their lines"
+  },
+  "resizable--behavior-snapped-to-size-steps": {
+    "sets": [],
+    "why": "markup only: snapping to size steps is behavior of the drag (the sizes the edge moves between); resizable.css has no modifier for it"
+  },
+  "swatch--shape-square-default": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-data-color"
+      },
+      {
+        "property": "border-color",
+        "part": "block",
+        "token": "--plx-comp-color-swatch-border-color"
+      },
+      {
+        "property": "border-width",
+        "part": "block",
+        "token": "--plx-comp-color-swatch-border-width"
+      },
+      {
+        "property": "border-radius",
+        "part": "block",
+        "token": "--plx-comp-color-swatch-radius"
+      }
+    ],
+    "why": "color-swatch.css: the base .plx-color-swatch is the square with the standard corner; --round is the other shape. The fill is the swatch's own value: its data color (data-plx-color or a category), or the accent, surface or frost role"
+  },
+  "swatch--label-with-label": {
+    "sets": [],
+    "why": "markup only: showLabel writes the color's name beside the box; color-swatch.css has no part or modifier for it"
+  },
+  "swatch-picker--palette-category-palette": {
+    "sets": [],
+    "why": "markup only: the palette is the list of colors given to the picker, each drawn by ColorSwatch; color-swatch.css styles the picker's row (.plx-color-picker gap, slots) the same for every palette"
+  },
+  "swatch-picker--palette-custom-swatches": {
+    "sets": [],
+    "why": "markup only: the palette is the list of colors given to the picker, each drawn by ColorSwatch; color-swatch.css styles the picker's row (.plx-color-picker gap, slots) the same for every palette"
+  },
+  "swatch-picker--palette-data-palette-default": {
+    "sets": [],
+    "why": "markup only: the palette is the list of colors given to the picker, each drawn by ColorSwatch; color-swatch.css styles the picker's row (.plx-color-picker gap, slots) the same for every palette"
   }
 }
