@@ -5212,7 +5212,7 @@
         "token": "--plx-comp-retry-status-margin-block-start"
       }
     ],
-    "why": "retry.css: .plx-retry__status holds the countdown (\"Retrying in …\") while the next attempt waits"
+    "why": "retry.css: .plx-retry__status holds the countdown (\"Retrying in \u2026\") while the next attempt waits"
   },
   "retry-pattern--kind-retry-count": {
     "sets": [
@@ -6053,5 +6053,54 @@
   "product-card--variant-grid-default": {
     "sets": [],
     "why": "markup only: grid is the base card (the picture on top); .plx-product-card--list is the other layout"
+  },
+  "mobile-app-bar--variant-narrow-mobile-app-bar": {
+    "sets": [
+      {
+        "property": "inline-size",
+        "part": "switcher-panel",
+        "token": "--plx-comp-app-switcher-panel-width-narrow"
+      }
+    ],
+    "why": "under 840px (--plx-sys-shell-rail-below) the switcher keeps its narrow three-column panel (app-header.css); the header links leave the bar and the name, search and utilities stay"
+  },
+  "mobile-app-bar--variant-with-back": {
+    "sets": [],
+    "why": ".plx-app-header__title shows the screen's title after Back in the header name's type and cuts it short with an ellipsis (display, overflow and text-overflow, none of them tokens)"
+  },
+  "expandable-card--variant-expandable": {
+    "sets": [
+      {
+        "property": "block-size",
+        "part": "toggle",
+        "token": "--plx-comp-card-toggle-height"
+      },
+      {
+        "property": "border-radius",
+        "part": "toggle",
+        "token": "--plx-comp-card-toggle-radius"
+      },
+      {
+        "property": "background-color",
+        "part": "toggle-hover",
+        "token": "--plx-comp-card-toggle-hover-background"
+      },
+      {
+        "property": "color",
+        "part": "toggle-hover",
+        "token": "--plx-comp-card-toggle-hover-text"
+      },
+      {
+        "property": "outline-width",
+        "part": "toggle",
+        "token": "--plx-comp-card-toggle-focus-outline-width"
+      },
+      {
+        "property": "outline-color",
+        "part": "toggle",
+        "token": "--plx-comp-card-toggle-focus-outline-color"
+      }
+    ],
+    "why": ".plx-card__toggle in card.css: the Expand and Collapse button at the end of the header, with its hover fill and focus ring; closed, the card shows the header and meta only"
   }
 }
