@@ -4,7 +4,7 @@
    Props:
      mode: "create" (default) or "edit"; surface: "page", "inline", "dialog" or "drawer".
      open: active (default true); title: form name; initialValue: immutable record, the saved baseline (dirty compares with it); sessionKey: record identity.
-     defaultValue: the draft the form starts from (default initialValue); a draft that differs from the baseline starts dirty (#465).
+     defaultValue: the draft the form starts from (default initialValue); a draft that differs from the baseline starts dirty (issue 465).
      validate(value): error string or false; onSubmit(value): promise; onSuccess(result): after persistence.
      onCancel(): exit after confirmation; children({ value, setValue, busy }): Platform fields.
      strings: { create, save, cancel, failed, invalid, saved, unsaved, close }; className: extra classes.
