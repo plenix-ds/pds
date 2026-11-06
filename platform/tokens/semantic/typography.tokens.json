@@ -193,6 +193,12 @@
       "$description": "The text-title role's word spacing (the companion of the typography token).",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
+    "text-surface-title-font-family": { "$value": "{plx-sys.font-heading}", "$type": "fontFamily", "$description": "The surface-title role (DESIGN.md, #122, #497): a dialog or sheet title, 15px bold, as these titles draw today." },
+    "text-surface-title-font-size": { "$value": "{plx-ref.font-size-400}", "$type": "dimension", "$description": "The surface-title role (DESIGN.md, #122, #497): a dialog or sheet title, 15px bold, as these titles draw today." },
+    "text-surface-title-font-weight": { "$value": "{plx-sys.font-weight-bold}", "$type": "fontWeight", "$description": "The surface-title role (DESIGN.md, #122, #497): a dialog or sheet title, 15px bold, as these titles draw today." },
+    "text-surface-title-letter-spacing": { "$value": "normal", "$type": "dimension", "$extensions": { "com.plenix": { "webOnly": true } }, "$description": "The surface-title role (DESIGN.md, #122, #497): a dialog or sheet title, 15px bold, as these titles draw today." },
+    "text-surface-title-line-height": { "$value": "{plx-ref.line-height-normal}", "$type": "number", "$description": "The surface-title role (DESIGN.md, #122, #497): a dialog or sheet title, 15px bold, as these titles draw today." },
+    "text-surface-title-word-spacing": { "$value": "normal", "$type": "dimension", "$extensions": { "com.plenix": { "webOnly": true } }, "$description": "The surface-title role (DESIGN.md, #122, #497): a dialog or sheet title, 15px bold, as these titles draw today." },
     "text-eyebrow-font-family": {
       "$value": "{plx-sys.font-label}",
       "$type": "fontFamily",
