@@ -2507,5 +2507,105 @@
       }
     ],
     "why": ".plx-tag--chip.plx-tag--selected in tag.css (the record is Chip, the component Tag)"
+  },
+  "chart-accessibility--rule-data-grid-fallback": {
+    "sets": [],
+    "why": "guidance: the rule is a behavior of the chart (a data table, keyboard point navigation, a text summary, patterns), not a style the variation sets"
+  },
+  "chart-accessibility--rule-keyboard-point-navigation": {
+    "sets": [],
+    "why": "guidance: the rule is a behavior of the chart (a data table, keyboard point navigation, a text summary, patterns), not a style the variation sets"
+  },
+  "chart-accessibility--rule-patterns": {
+    "sets": [],
+    "why": "guidance: the rule is a behavior of the chart (a data table, keyboard point navigation, a text summary, patterns), not a style the variation sets"
+  },
+  "chart-accessibility--rule-summary-text": {
+    "sets": [],
+    "why": "guidance: the rule is a behavior of the chart (a data table, keyboard point navigation, a text summary, patterns), not a style the variation sets"
+  },
+  "chart-foundations--scale-band-categories": {
+    "sets": [],
+    "why": "data only: the scale is a chart option (linear, log, time, band) that ECharts draws; no style is set by the variation"
+  },
+  "chart-foundations--scale-linear-amounts": {
+    "sets": [],
+    "why": "data only: the scale is a chart option (linear, log, time, band) that ECharts draws; no style is set by the variation"
+  },
+  "chart-foundations--scale-log-orders-of-magnitude": {
+    "sets": [],
+    "why": "data only: the scale is a chart option (linear, log, time, band) that ECharts draws; no style is set by the variation"
+  },
+  "chart-foundations--scale-time-dates": {
+    "sets": [],
+    "why": "data only: the scale is a chart option (linear, log, time, band) that ECharts draws; no style is set by the variation"
+  },
+  "chart-interaction--behavior-brush-and-zoom": {
+    "sets": [],
+    "why": "behavior only: the interaction is the chart's own event handling (ECharts), not a stylesheet rule the variation sets"
+  },
+  "chart-interaction--behavior-crosshair-and-tooltip": {
+    "sets": [],
+    "why": "behavior only: the interaction is the chart's own event handling (ECharts), not a stylesheet rule the variation sets"
+  },
+  "chart-interaction--behavior-legend-toggles": {
+    "sets": [],
+    "why": "behavior only: the interaction is the chart's own event handling (ECharts), not a stylesheet rule the variation sets"
+  },
+  "chart-interaction--behavior-select-a-value": {
+    "sets": [],
+    "why": "behavior only: the interaction is the chart's own event handling (ECharts), not a stylesheet rule the variation sets"
+  },
+  "content-style--guidance-action-labels": {
+    "sets": [],
+    "why": "guidance, not a styled variation: it is writing guidance for the words, with no component style"
+  },
+  "content-style--guidance-capitalization": {
+    "sets": [],
+    "why": "guidance, not a styled variation: it is writing guidance for the words, with no component style"
+  },
+  "content-style--guidance-inclusive-language": {
+    "sets": [],
+    "why": "guidance, not a styled variation: it is writing guidance for the words, with no component style"
+  },
+  "content-style--guidance-terminology": {
+    "sets": [],
+    "why": "guidance, not a styled variation: it is writing guidance for the words, with no component style"
+  },
+  "content-style--guidance-text-alternatives": {
+    "sets": [],
+    "why": "guidance, not a styled variation: it is writing guidance for the words, with no component style"
+  },
+  "country-select--flags-with-flag-emoji": {
+    "sets": [],
+    "why": "markup only: the type or the flags change the list's data and its labels, not a style"
+  },
+  "country-select--type-country-default": {
+    "sets": [],
+    "why": "markup only: the type or the flags change the list's data and its labels, not a style"
+  },
+  "country-select--type-language": {
+    "sets": [],
+    "why": "markup only: the type or the flags change the list's data and its labels, not a style"
+  },
+  "country-select--type-locale": {
+    "sets": [],
+    "why": "markup only: the type or the flags change the list's data and its labels, not a style"
+  },
+  "design-principles--guidance-empty-state-and-onboarding-copy": {
+    "sets": [],
+    "why": "guidance, not a styled variation: it is writing guidance for messages, with no component style"
+  },
+  "design-principles--guidance-visual-hierarchy": {
+    "sets": [],
+    "why": "guidance, not a styled variation: it is writing guidance for messages, with no component style"
+  },
+  "design-principles--guidance-voice-and-tone": {
+    "sets": [],
+    "why": "guidance, not a styled variation: it is writing guidance for messages, with no component style"
+  },
+  "design-principles--guidance-writing-messages": {
+    "sets": [],
+    "why": "guidance, not a styled variation: it is writing guidance for messages, with no component style"
   }
 }
