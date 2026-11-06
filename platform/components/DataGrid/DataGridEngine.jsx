@@ -39,13 +39,13 @@ import { useStrings, useLocale } from '../../providers/LocaleProvider.tsx';
 import { formatNumber } from '../../utils/format.ts';
 import { EMPTY_ROWS, GRID, kinds } from './engine/helpers.tsx';
 
-import { useVirtualizer } from './engine/useVirtualizer.js';
+import { useVirtualizer } from './engine/useVirtualizer.ts';
 import { observeElementRect, observeElementOffset, elementScroll, observeWindowRect, observeWindowOffset, windowScroll, defaultRangeExtractor } from '@tanstack/react-virtual';
-import { useSelection, selectionActions } from './engine/useSelection.js';
+import { useSelection, selectionActions } from './engine/useSelection.ts';
 import { useColumns } from './engine/useColumns.ts';
 import { useEditedRows, editActions, useEditEffect } from './engine/useEditing.js';
 import { useTableSettings } from '../../providers/TableSettings.tsx';
-import { useSorting } from './engine/useSorting.js';
+import { useSorting } from './engine/useSorting.ts';
 import { sortActions } from './engine/sortActions.js';
 import { useGrouping } from './engine/useGrouping.js';
 import { groupActions } from './engine/groupActions.js';
