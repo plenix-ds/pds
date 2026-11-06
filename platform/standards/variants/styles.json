@@ -1385,5 +1385,25 @@
   "feature-intro--variant-what-is-new-dialog": {
     "sets": [],
     "why": "markup only: opens the what-is-new dialog, only on request"
+  },
+  "duplicate-action--form-copy-of-the-name-default": {
+    "sets": [],
+    "why": "markup only: duplicates at once, names the copy \"Copy of {name}\" and shows a Toast, with Undo when the page can take the copy back"
+  },
+  "duplicate-action--form-then-rename": {
+    "sets": [],
+    "why": "markup only: opens a small dialog first, with the copy's name selected and optional checkboxes for what else comes along"
+  },
+  "entity-picker--kind-records-default": {
+    "sets": [],
+    "why": "markup only: each suggestion shows an icon, the name, a detail line and an ID"
+  },
+  "entity-picker--kind-people": {
+    "sets": [],
+    "why": "markup only: each suggestion shows the Avatar with presence, the name and an email or role"
+  },
+  "entity-picker--kind-teams": {
+    "sets": [],
+    "why": "markup only: each suggestion shows a team icon, the name and the member count"
   }
 }
