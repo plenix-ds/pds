@@ -142,8 +142,6 @@
   "product-card--variant-grid-default",
   "product-card--variant-out-of-stock",
   "product-card--variant-sale",
-  "product-mark--name-tile-only",
-  "product-mark--tone-on-accent",
   "product-options--kind-color-swatches",
   "product-options--kind-quantity",
   "product-options--kind-size-buttons",
@@ -259,8 +257,6 @@
   "waterfall-chart--variant-with-totals",
   "wizard-dialog--variant-full-screen",
   "wizard-dialog--variant-large",
-  "wizard-dialog--variant-medium",
-  "wordmark--tone-on-accent",
-  "wordmark--tone-one-color"
+  "wizard-dialog--variant-medium"
  ]
 }

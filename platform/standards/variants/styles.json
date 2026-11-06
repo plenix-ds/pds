@@ -4262,5 +4262,43 @@
   "stack--gap-stack-none": {
     "sets": [],
     "why": ".plx-stack--gap-none sets column-gap and row-gap to 0, a value with no token"
+  },
+  "wordmark--tone-on-accent": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-comp-brand-on-accent-color"
+      }
+    ],
+    "why": "brand-lockup.css: .plx-brand-lockup--tone-on-accent; a wordmark has no tile, so the tile rules do not apply"
+  },
+  "wordmark--tone-one-color": {
+    "sets": [],
+    "why": "markup only: the one-color (mono) tone only restyles the tile in brand-lockup.css, and a wordmark has none; the name keeps the current text color"
+  },
+  "product-mark--tone-on-accent": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-comp-brand-on-accent-color"
+      },
+      {
+        "property": "background-color",
+        "part": "tile",
+        "token": "--plx-comp-brand-on-accent-tile-background"
+      },
+      {
+        "property": "color",
+        "part": "tile",
+        "token": "--plx-comp-brand-on-accent-tile-icon"
+      }
+    ],
+    "why": "brand-lockup.css: .plx-brand-lockup--tone-on-accent and its tile"
+  },
+  "product-mark--name-tile-only": {
+    "sets": [],
+    "why": "markup only: showName=false leaves out the .plx-brand-lockup__app name and labels the tile; brand-lockup.css has no modifier for it"
   }
 }
