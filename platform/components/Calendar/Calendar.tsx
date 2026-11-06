@@ -116,7 +116,8 @@ function weeksOf(ym: string, first: number) {
   return rows;
 }
 
-type CalendarRange = { start: string | null; end: string | null };
+/** @public a chosen range (ADR 0011) */
+export type CalendarRange = { start: string | null; end: string | null };
 /** @public the prop type (ADR 0011) */
 export type CalendarProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> & {
   /** "single" (default) | "range" */
