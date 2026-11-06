@@ -1,0 +1,110 @@
+{
+ "ltr": {
+  "reads": [
+   {
+    "family": "DM Sans",
+    "size": "12px",
+    "weight": "400",
+    "letterSpacing": "normal",
+    "lineHeight": "15.6px",
+    "wordSpacing": "0px"
+   },
+   {
+    "family": "Reddit Mono",
+    "size": "12px",
+    "weight": "400",
+    "letterSpacing": "normal",
+    "lineHeight": "15.6px",
+    "wordSpacing": "-3.348px"
+   }
+  ],
+  "affixes": [
+   {
+    "family": "DM Sans",
+    "size": "12px",
+    "weight": "400",
+    "letterSpacing": "normal",
+    "lineHeight": "15.6px",
+    "wordSpacing": "0px"
+   },
+   {
+    "family": "DM Sans",
+    "size": "12px",
+    "weight": "400",
+    "letterSpacing": "normal",
+    "lineHeight": "15.6px",
+    "wordSpacing": "0px"
+   },
+   {
+    "family": "Reddit Mono",
+    "size": "12px",
+    "weight": "400",
+    "letterSpacing": "normal",
+    "lineHeight": "15.6px",
+    "wordSpacing": "-3.348px"
+   },
+   {
+    "family": "Reddit Mono",
+    "size": "12px",
+    "weight": "400",
+    "letterSpacing": "normal",
+    "lineHeight": "15.6px",
+    "wordSpacing": "-3.348px"
+   }
+  ]
+ },
+ "rtl": {
+  "reads": [
+   {
+    "family": "DM Sans",
+    "size": "12px",
+    "weight": "400",
+    "letterSpacing": "normal",
+    "lineHeight": "15.6px",
+    "wordSpacing": "0px"
+   },
+   {
+    "family": "Reddit Mono",
+    "size": "12px",
+    "weight": "400",
+    "letterSpacing": "normal",
+    "lineHeight": "15.6px",
+    "wordSpacing": "-3.348px"
+   }
+  ],
+  "affixes": [
+   {
+    "family": "DM Sans",
+    "size": "12px",
+    "weight": "400",
+    "letterSpacing": "normal",
+    "lineHeight": "15.6px",
+    "wordSpacing": "0px"
+   },
+   {
+    "family": "DM Sans",
+    "size": "12px",
+    "weight": "400",
+    "letterSpacing": "normal",
+    "lineHeight": "15.6px",
+    "wordSpacing": "0px"
+   },
+   {
+    "family": "Reddit Mono",
+    "size": "12px",
+    "weight": "400",
+    "letterSpacing": "normal",
+    "lineHeight": "15.6px",
+    "wordSpacing": "-3.348px"
+   },
+   {
+    "family": "Reddit Mono",
+    "size": "12px",
+    "weight": "400",
+    "letterSpacing": "normal",
+    "lineHeight": "15.6px",
+    "wordSpacing": "-3.348px"
+   }
+  ]
+ }
+}

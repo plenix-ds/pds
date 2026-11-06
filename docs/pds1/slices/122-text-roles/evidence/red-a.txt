@@ -1,0 +1,14 @@
+AssertionError [ERR_ASSERTION]: plx-inline-edit__read is off the text-role backlog
++ actual - expected
+
++ 'changes the font family without the whole role (its font and word spacing are not one switch)'
+- undefined
+
+    at /home/cc/pds1/work/component-engineer-2/tests/text-contract-122-a.test.js:40:84 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'changes the font family without the whole role (its font and word spacing are not one switch)',
+  expected: undefined,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
