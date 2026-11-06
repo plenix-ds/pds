@@ -17,6 +17,7 @@ import { DataPill } from '../DataPill/DataPill.tsx';
 import { formatBytes } from '../../utils/format.ts';
 import { Isolate } from '../Isolate/Isolate.tsx';
 import { localDigits } from '../../utils/digits.ts';
+import { useBarFit } from '../../utils/barFit.ts';
 import CircleInfoIcon from 'plenix-platform/icons/plenix/circle-info';
 export const valueText=value=>value==null?'':Array.isArray(value)?value.map(valueText).join(', '):typeof value==='object'?String(value.label??value.name??''):String(value);
 export function textFilter(row,field,search) {return valueText(row.getValue(field)).toLocaleLowerCase().includes(String(search??'').toLocaleLowerCase());}
@@ -59,40 +60,17 @@ export function CellValue({ column, value, strings, record, pill = false, pillFi
   return <span className={own} onMouseEnter={fullText}>{localDigits(valueText(value))}</span>;
 }
 
-// A tags cell: the tags that fit, then one "+N" Tag for the rest (design 84-cell-editors §2 and §3, issue 477). A hidden copy of the whole row is measured
-// (aria-hidden, never drawn); the shown row is as many tags as fit beside the "+N". The "+N" Tag is named by the hidden tags for a screen reader.
+// A tags cell: the tags that fit, then one "+N" Tag for the rest (design 84-cell-editors §2 and §3, issue 477). The fit is useBarFit's (the same step
+// ladder as the command bar and the tags editor): the row starts with every tag, and each step hides one more from the end until the row fits on one line.
+// The "+N" Tag is named by the hidden tags for a screen reader and shows them on hover.
 function TagsCell({ tags, block }) {
-  const box = React.useRef(null), probe = React.useRef(null), [fit, setFit] = React.useState(tags.length);
-  const label = (tag) => (typeof tag === 'object' ? tag.label : String(tag));
-  React.useLayoutEffect(() => {
-    const el = box.current, row = probe.current;
-    if (!el || !row) return undefined;
-    const measure = () => {
-      const cell = el.closest('[role="gridcell"]') || el.parentElement, cs = getComputedStyle(cell),
-        kids = [...row.children], more = kids.pop(), gap = parseFloat(getComputedStyle(row).columnGap) || 0,
-        room = cell.clientWidth - (parseFloat(cs.paddingLeft) || 0) - (parseFloat(cs.paddingRight) || 0);
-      const widths = kids.map((k) => k.getBoundingClientRect().width), all = widths.reduce((sum, w) => sum + w, 0) + gap * Math.max(0, widths.length - 1);
-      if (all <= room) return setFit(tags.length);
-      const reserve = (more ? more.getBoundingClientRect().width : 0) + gap;
-      let used = reserve, k = 0;
-      while (k < widths.length && used + widths[k] + (k ? gap : 0) <= room) { used += widths[k] + (k ? gap : 0); k++; }
-      setFit(Math.max(1, k));
-    };
-    measure();
-    const ro = typeof ResizeObserver === 'function' ? new ResizeObserver(measure) : null;
-    const host = el.closest('[role="gridcell"]') || el.parentElement;
-    if (ro && host) ro.observe(host);
-    return () => ro && ro.disconnect();
-  }, [tags.length, tags.map(label).join('|')]);
-  const hidden = tags.slice(fit);
+  const box = React.useRef(null), label = (tag) => (typeof tag === 'object' ? tag.label : String(tag)), names = tags.map(label);
+  const step = useBarFit(box, names.join('|'), Math.max(0, tags.length - 1), 0, ':self');
+  const hidden = tags.slice(tags.length - step);
   return (
     <span ref={box} className={`${block}__rich ${block}__rich--tags`}>
-      {tags.slice(0, fit).map((tag, i) => <Tag key={i} category={typeof tag === 'object' ? tag.category : undefined}>{label(tag)}</Tag>)}
+      {tags.slice(0, tags.length - step).map((tag, i) => <Tag key={i} category={typeof tag === 'object' ? tag.category : undefined}>{label(tag)}</Tag>)}
       {hidden.length ? <Tag title={hidden.map(label).join(', ')} aria-label={hidden.map(label).join(', ')}>{'+' + hidden.length}</Tag> : null}
-      <span ref={probe} className={`${block}__rich ${block}__rich--probe`} aria-hidden="true">
-        {tags.map((tag, i) => <Tag key={i} category={typeof tag === 'object' ? tag.category : undefined}>{label(tag)}</Tag>)}
-        <Tag>{'+' + tags.length}</Tag>
-      </span>
     </span>
   );
 }
