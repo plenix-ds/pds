@@ -304,7 +304,7 @@ export function headerRows({
             onMouseDown={(e) => startResize(e, column)}
             onTouchStart={(e) => startResize(e, column)}
             onDoubleClick={() => fit(c.field)}
-            onKeyDown={resizeKeys({ resize, c, column })}
+            onKeyDown={resizeKeys({ resize, c, column, fit })}
           />
         ) : null}
       </Width>

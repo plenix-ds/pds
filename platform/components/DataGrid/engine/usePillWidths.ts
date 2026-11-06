@@ -36,6 +36,10 @@ export function usePillWidths({ frame, cells, metrics, columns, allRows, showTyp
   React.useEffect(() => {
     const fonts = frame.current?.ownerDocument.fonts as FontFaceSet | undefined;
     if (fonts && fonts.ready) fonts.ready.then(() => setFontsReady((n) => n + 1));
+    // a face the page loads lazily (first use) may arrive after 'ready' resolved: measure again when it has (#815)
+    const again = () => setFontsReady((n) => n + 1);
+    fonts?.addEventListener?.('loadingdone', again);
+    return () => fonts?.removeEventListener?.('loadingdone', again);
   }, []);
   React.useLayoutEffect(() => {
     const at = frame.current;
