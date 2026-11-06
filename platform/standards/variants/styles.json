@@ -4610,5 +4610,97 @@
       }
     ],
     "why": "the base .plx-thumbnail: the picture fills the box (object-fit: cover); the icon content is --icon"
+  },
+  "popover--size-sm-240px": {
+    "sets": [
+      {
+        "property": "inline-size",
+        "part": "block",
+        "token": "--plx-comp-popover-sm-width"
+      }
+    ],
+    "why": ".plx-popover--sm"
+  },
+  "popover--size-md-320px-default": {
+    "sets": [
+      {
+        "property": "inline-size",
+        "part": "block",
+        "token": "--plx-comp-popover-md-width"
+      }
+    ],
+    "why": ".plx-popover--md"
+  },
+  "popover--size-lg-400px": {
+    "sets": [
+      {
+        "property": "inline-size",
+        "part": "block",
+        "token": "--plx-comp-popover-lg-width"
+      }
+    ],
+    "why": ".plx-popover--lg"
+  },
+  "popover--size-auto-content-width": {
+    "sets": [],
+    "why": ".plx-popover--auto sets inline-size: max-content, a keyword with no token"
+  },
+  "popover--parts-with-arrow": {
+    "sets": [
+      {
+        "property": "border-color",
+        "part": "arrow",
+        "token": "--plx-comp-popover-arrow-border-color"
+      },
+      {
+        "property": "border-width",
+        "part": "arrow",
+        "token": "--plx-comp-popover-arrow-size"
+      },
+      {
+        "property": "border-color",
+        "part": "arrow-fill",
+        "token": "--plx-comp-popover-arrow-fill"
+      }
+    ],
+    "why": "popover.css: .plx-popover__arrow and its ::after (the fill over the border-colored edge), on the side the popover opens from (--top, --bottom, --start, --end)"
+  },
+  "popover--parts-with-header-and-footer": {
+    "sets": [
+      {
+        "property": "column-gap",
+        "part": "header",
+        "token": "--plx-comp-popover-header-gap"
+      },
+      {
+        "property": "margin-block-end",
+        "part": "header",
+        "token": "--plx-comp-popover-header-margin-block-end"
+      },
+      {
+        "property": "min-block-size",
+        "part": "header",
+        "token": "--plx-comp-popover-header-min-height"
+      },
+      {
+        "property": "column-gap",
+        "part": "footer",
+        "token": "--plx-comp-popover-footer-gap"
+      },
+      {
+        "property": "margin-block-start",
+        "part": "footer",
+        "token": "--plx-comp-popover-footer-margin-block-start"
+      }
+    ],
+    "why": "popover.css: .plx-popover__header and .plx-popover__footer (flex rows; the footer wraps and aligns to the end)"
+  },
+  "popover--trigger-click-default": {
+    "sets": [],
+    "why": "markup only: the trigger is behavior (what opens it); popover.css has no modifier for it"
+  },
+  "popover--narrow-sheet-on-narrow-default": {
+    "sets": [],
+    "why": "markup only: on a narrow window the Popover renders a Sheet instead; the Sheet's own stylesheet draws it"
   }
 }
