@@ -20,7 +20,7 @@ import { lengthName } from './helpers.tsx';
 import { tableKeys } from './keys.js';
 import { tokenPixels } from '../environment.ts';
 import { WidthPixels, Check, Width, RowGap, PixelGap } from './parts.jsx';
-import { Scrollbars } from '../scrollbars.jsx';
+import { Scrollbars } from '../scrollbars.tsx';
 import { Rare } from './rare.tsx';
 
 export function gridFrame({
