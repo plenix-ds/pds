@@ -27,6 +27,7 @@
   - **Unset (the default):** the design's rule. The item shows inline when it has an `icon`, isn't `danger`, isn't a `separator`, and is among the first three such items.
   - **`inline: false`:** never inline, always in ⋮.
   - **`inline: true`:** inline when it has an `icon` (an item without an icon can't be icon-only, so it stays in ⋮). It still counts toward the three.
+  - **A `danger` item is never inline, whatever `inline` says.** A destructive action always stays in ⋮, after its divider (hover-actions.md §1, fit-and-overflow §3), so a misclick on a hovered row can't delete. `inline: true` on a `danger` item is ignored, and it warns once in development.
 - No other prop changes.
   - A `kind: "actions"` column keeps its behavior.
   - On touch, the ⋮ always shows instead.
@@ -41,4 +42,4 @@
 ## Check
 
 - G3 on the build PR: the diff adds only `inline?: boolean` to `DataGridMenuAction`, and no other prop or token. CI's `types` check sees no new `any`.
-- The AC-5 behavior tests in `docs/pds1/slices/800-column-fit/brief.md`.
+- The AC-5 behavior tests in `docs/pds1/slices/800-column-fit/brief.md`, including one where a `danger` item with `inline: true` stays in ⋮.
