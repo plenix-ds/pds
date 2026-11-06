@@ -1,4 +1,4 @@
-/* Plenix · LollipopChart (platform/charts/LollipopChart.jsx), drawn in ChartFrame (system/charts.css) with the chart parts.
+/* Plenix · LollipopChart (platform/charts/LollipopChart.tsx), drawn in ChartFrame (system/charts.css) with the chart parts.
    Stems and dots take the chart's data-viz color (data-plx-dataviz); the horizontal chart's names get the room of the
    category column (the frame's start margin token, set here). Every value is a --plx-comp-lollipop-* token. */
 .plx-lollipop--horizontal{--plx-comp-chart-margin-inline-start:var(--plx-comp-lollipop-category-width);}

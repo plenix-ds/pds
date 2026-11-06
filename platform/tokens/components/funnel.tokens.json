@@ -1,5 +1,5 @@
 {
-  "$description": "FunnelChart (platform/charts/FunnelChart.jsx; library wave 9, lane C): its component tokens. The bars are the chart frame's marks (data-viz color); everything else is an existing role.",
+  "$description": "FunnelChart (platform/charts/FunnelChart.tsx; library wave 9, lane C): its component tokens. The bars are the chart frame's marks (data-viz color); everything else is an existing role.",
   "plx-comp": {
     "funnel-stage-width": { "$value": "{plx-ref.size-30u}", "$type": "dimension", "$description": "Funnel chart, vertical: the room before the plot for the stage names (the frame's start margin)." },
     "funnel-label-room": { "$value": "{plx-ref.size-24u}", "$type": "dimension", "$description": "Funnel chart, vertical: the room after the plot for the count and share at the end of the longest bar." },

@@ -32,6 +32,7 @@ import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatNumber } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.tsx';
+import type { ChartFrameProps } from './ChartFrame.tsx';
 import { niceTicks } from './scales.ts';
 import { ChartTooltip } from './parts/ChartTooltip.tsx';
 import { useChartHover } from './chart-kit.ts';
@@ -43,37 +44,52 @@ import { useStrings } from '../providers/LocaleProvider.tsx';
 const NO_MARGIN = Object.freeze({ top: 0, end: 0, bottom: 0, start: 0 });
 const BAND = 1 / 1.4;   // a box's thickness as a share of its group's row (the room between groups is 40% of a box)
 
+/** @public a group's summary, already made: the whiskers' ends, the quartiles, the median and the outliers */
+export type BoxPlotStats = { min: number; q1: number; median: number; q3: number; max: number; outliers?: number[] };
+/** @public one group: its raw values (the summary is computed) or its summary */
+export type BoxPlotGroup = { id?: string | number; label: string; values?: number[]; stats?: BoxPlotStats };
+/** @public the prop type (ADR 0011) */
+export type BoxPlotProps = Pick<ChartFrameProps, 'title' | 'description' | 'hideCaption' | 'size' | 'margin' | 'legend' | 'legendPosition' | 'className'> & {
+  groups?: BoxPlotGroup[];
+  orientation?: 'vertical' | 'horizontal';
+  showOutliers?: boolean;
+  valueLabel?: string;
+  categoryLabel?: string;
+  format?(value: number): string;
+  tooltip?: boolean;
+  strings?: Record<string, string>;
+};
 export function BoxPlot({ title, description, hideCaption, size, groups = [], orientation = 'vertical', showOutliers = true, valueLabel, categoryLabel, format,
-  tooltip = true, legend, legendPosition, margin, strings, className }) {
-  const t = useStrings('chart.boxPlot', strings);
+  tooltip = true, legend, legendPosition, margin, strings, className }: BoxPlotProps) {
+  const t: any = useStrings('chart.boxPlot', strings);
   const o = orientation === 'horizontal' ? 'horizontal' : 'vertical';
   const across = o === 'horizontal';
-  const fmt = (v) => (typeof format === 'function' ? format(v) : formatNumber(v));
+  const fmt = (v: any) => (typeof format === 'function' ? format(v) : formatNumber(v));
   const [active, hover] = useChartHover();
-  const list = groups.map((g, i) => ({ id: g.id === undefined ? String(i) : g.id, label: g.label, s: g.stats ? Object.assign({ outliers: [] }, g.stats) : boxStats(g.values) })).filter((g) => g.s);
+  const list: any[] = groups.map((g, i) => ({ id: g.id === undefined ? String(i) : g.id, label: g.label, s: g.stats ? Object.assign({ outliers: [] }, g.stats) : boxStats(g.values as number[]) })).filter((g) => g.s);
   let lo = Infinity, hi = -Infinity;
   list.forEach((g) => { [g.s.min, g.s.max].concat(showOutliers ? g.s.outliers : []).forEach((v) => { lo = Math.min(lo, v); hi = Math.max(hi, v); }); });
   if (!isFinite(lo)) { lo = 0; hi = 1; }
   if (lo > 0 && lo < (hi - lo)) lo = 0;   // from zero when zero is near the data
-  const table = {
+  const table: any = {
     columns: [{ title: categoryLabel || t.group, field: 'group', kind: 'name', rowLabel: true }]
-      .concat(['min', 'q1', 'median', 'q3', 'max'].map((k) => ({ title: t[k], field: k, kind: 'data', align: 'right' })))
-      .concat([{ title: t.outliers, field: 'outliers', kind: 'data' }, { title: t.n, field: 'n', kind: 'data', align: 'right' }]),
+      .concat(['min', 'q1', 'median', 'q3', 'max'].map((k): any => ({ title: t[k], field: k, kind: 'data', align: 'right' })))
+      .concat([{ title: t.outliers, field: 'outliers', kind: 'data' }, { title: t.n, field: 'n', kind: 'data', align: 'right' }] as any[]),
     data: list.map((g, i) => ({ id: i + 1, group: g.label, min: fmt(g.s.min), q1: fmt(g.s.q1), median: fmt(g.s.median), q3: fmt(g.s.q3), max: fmt(g.s.max),
       outliers: (g.s.outliers || []).map(fmt).join(', '), n: g.s.n === undefined ? '' : fmt(g.s.n) }))
   };
   // the format the drawing calls, kept current without redrawing (a format written inline is a new function each render)
-  const fmts = React.useRef(null); fmts.current = { fmt };
+  const fmts = React.useRef<any>(null); fmts.current = { fmt };
 
   const plot = useEChartsPlot();
   const dataKey = JSON.stringify(list.map((g) => [g.id, g.label, g.s])) + '|' + o + '|' + showOutliers + '|' + valueLabel + '|' + categoryLabel + '|' + (margin ? [margin.top, margin.end, margin.bottom, margin.start].join(':') : '');
-  const option = React.useCallback((tk) => {
+  const option = React.useCallback((tk: any) => {
     const room = gridRoom(margin, 0);
     // under the plot: the vertical chart's group names; the horizontal chart's value labels and title are laid out by ECharts
     if (!across) room.bottom = Math.max(room.bottom, snapToGrid(tk.tickOffset + tk.tick.fontSize + (categoryLabel ? tk.tickOffset * 2 + tk.title.fontSize : 0), { round: 'up' }));
     const named = { nameLocation: 'middle', nameMoveOverlap: true };
     const nameRoom = tk.tickOffset * 2 + tk.tick.fontSize;
-    const valAxis = Object.assign({ type: 'value', min: niceTicks(lo, hi, 5).ticks[0], max: niceTicks(lo, hi, 5).ticks.slice(-1)[0], name: valueLabel, nameGap: across ? nameRoom : 0, inverse: across && tk.rtl, axisLabel: { formatter: (v) => fmts.current.fmt(v) },
+    const valAxis = Object.assign({ type: 'value', min: niceTicks(lo, hi, 5).ticks[0], max: niceTicks(lo, hi, 5).ticks.slice(-1)[0], name: valueLabel, nameGap: across ? nameRoom : 0, inverse: across && tk.rtl, axisLabel: { formatter: (v: any) => fmts.current.fmt(v) },
       axisLine: { show: across, lineStyle: { color: tk.axis.color, width: tk.axis.width } } }, named);
     const catAxis = Object.assign({ type: 'category', data: list.map((g) => g.label), inverse: across, position: across ? (tk.rtl ? 'right' : 'left') : 'bottom', boundaryGap: true, name: categoryLabel, nameGap: across ? 0 : nameRoom,
       axisLine: { show: !across, lineStyle: { color: tk.axis.color, width: tk.axis.width } } }, named);
@@ -82,22 +98,22 @@ export function BoxPlot({ title, description, hideCaption, size, groups = [], or
       animationDuration: tk.motion, animationDurationUpdate: tk.motion,
       grid: Object.assign(room, { outerBoundsMode: 'same', outerBoundsContain: 'all' }),
       xAxis: across ? valAxis : catAxis, yAxis: across ? catAxis : valAxis,
-      series: [
+      series: ([
         // the box (the data color), the whiskers and their caps (the whisker token); the median is the frame's overlay in its own token
         { type: 'boxplot', id: 'box', silent: true, boxWidth: [w, w], z: 2, itemStyle: { color: tk.color('categorical-1'), borderColor: tk.boxplot.whisker.color, borderWidth: tk.boxplot.whisker.width }, emphasis: { disabled: true },
           data: list.map((g) => [g.s.min, g.s.q1, g.s.median, g.s.q3, g.s.max]) },
-      ].concat(showOutliers ? [{ type: 'scatter', id: 'outliers', silent: true, symbolSize: tk.boxplot.outlier.r * 2, z: 3, itemStyle: { color: tk.boxplot.outlier.fill, borderColor: tk.boxplot.outlier.outline, borderWidth: tk.boxplot.outlier.outlineWidth }, emphasis: { disabled: true },
-        data: list.flatMap((g, i) => (g.s.outliers || []).map((v) => (across ? [v, i] : [i, v]))) }] : []),
+      ] as any[]).concat(showOutliers ? [{ type: 'scatter', id: 'outliers', silent: true, symbolSize: tk.boxplot.outlier.r * 2, z: 3, itemStyle: { color: tk.boxplot.outlier.fill, borderColor: tk.boxplot.outlier.outline, borderWidth: tk.boxplot.outlier.outlineWidth }, emphasis: { disabled: true },
+        data: list.flatMap((g, i) => (g.s.outliers || []).map((v: any) => (across ? [v, i] : [i, v]))) }] : []),
     };
   }, [dataKey]);   // eslint-disable-line react-hooks/exhaustive-deps
 
-  const draw = (dims) => {
+  const draw = (dims: any) => {
     const layer = plot.layer(dims, option);
     const c = plot.chart;
     const g = c ? plotGrid(c) : null;
     if (!g || !list.length) return layer;
     const step = (across ? g.height : g.width) / list.length, thick = step * BAND;
-    const at = (i, v) => { const p = c.convertToPixel({ xAxisIndex: 0, yAxisIndex: 0 }, across ? [v, i] : [i, v]); return { x: p[0] - g.x, y: p[1] - g.y }; };
+    const at = (i: any, v: any) => { const p = c.convertToPixel({ xAxisIndex: 0, yAxisIndex: 0 }, across ? [v, i] : [i, v]); return { x: p[0] - g.x, y: p[1] - g.y }; };
     const inner = { width: g.width, height: g.height };
     const ai = active === null ? -1 : list.findIndex((x) => x.id === active);
     let tip = null;

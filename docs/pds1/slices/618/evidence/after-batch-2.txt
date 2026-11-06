@@ -1,0 +1,12 @@
+== box-plot-echarts-106
+BOX_PLOT_ECHARTS_106_OK
+== bullet-chart-echarts-106
+BULLET_CHART_ECHARTS_106_OK
+== funnel-chart-echarts-106
+FUNNEL_CHART_ECHARTS_106_OK
+== lollipop-chart-echarts-106
+LOLLIPOP_CHART_ECHARTS_106_OK
+== charts-echarts-353
+CHARTS_ECHARTS_353_OK four charts on ECharts, engine loaded once, Bar and Pie on the keyboard, no style findin
+== charts-lazy-106
+CHARTS_LAZY_106_OK
