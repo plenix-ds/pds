@@ -125,13 +125,17 @@ export type MetricFigure = { id?: string | number; value?: React.ReactNode; unit
 export type MetricPerson = { name: string; role?: string; src?: string; gender?: string };
 /** @public a month: a level 0 to 3 per working day so far */
 export type MetricMonth = { year: number; month: number; levels?: number[]; today?: number };
+/** @public a data color of the card */
+export type MetricColor = 'blue' | 'green' | 'purple' | 'red' | 'brown' | 'gray';
+/** @public Gauge's props as MetricCard hands them on (Gauge is still JS; this becomes GaugeProps when it converts) */
+export type MetricGauge = { value: number; min?: number; max?: number; format?: (value: number) => string; label?: React.ReactNode; thresholds?: Array<{ value: number; level: 'warning' | 'critical'; label?: string }> };
 /** @public the prop type (ADR 0011) */
 export type MetricCardProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & {
   type?: 'value' | 'trend' | 'progress' | 'gauge' | 'breakdown' | 'comparison' | 'list' | 'summary' | 'person' | 'week' | 'month' | 'table';
   layout?: 'stacked' | 'beside' | 'inline' | 'tile' | 'icon-start';
   appearance?: 'plain' | 'edge' | 'soft' | 'filled' | 'gradient';
-  color?: 'blue' | 'green' | 'purple' | 'red' | 'brown' | 'gray';
-  gradientTo?: string;
+  color?: MetricColor;
+  gradientTo?: MetricColor;
   size?: 'sm' | 'md' | 'lg';
   icon?: IconValue | React.ReactNode;
   title?: React.ReactNode;
@@ -157,10 +161,10 @@ export type MetricCardProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> &
   trend?: number[];
   trendVariant?: 'line' | 'area' | 'bar';
   trendLabel?: string;
-  progress?: { value: number; max: number; tone?: string };
+  progress?: { value: number; max: number; tone?: React.ComponentProps<typeof ProgressBar>['tone'] };
   rows?: MetricRow[];
   /** Gauge's props: { value, min, max, format, label, thresholds } */
-  gauge?: Record<string, unknown>;
+  gauge?: MetricGauge;
   parts?: MetricPart[];
   breakdown?: 'bar' | 'donut' | 'ranges';
   compare?: MetricSide[];
@@ -428,7 +432,7 @@ export function MetricCard({ type = 'value', layout = 'stacked', appearance = 'p
   if (state === 'ready' || state === 'stale') {
     if (type === 'trend' && trend && trend.length) visual = <Sparkline {...({ values: trend, variant: trendVariant, size: 'fill', showLast: trendVariant !== 'bar', label: trendLabel || (typeof name === 'string' ? name : '') } as React.ComponentProps<typeof Sparkline>)} />;   // the charts are still JS (wave 2): their props infer as required
     if (type === 'progress' && rows) visual = <ProgressRows rows={rows} />;
-    else if ((type === 'progress' || type === 'person') && progress) visual = <ProgressBar value={progress.value} max={progress.max} tone={progress.tone as React.ComponentProps<typeof ProgressBar>['tone']} size={type === 'person' ? 'sm' : 'md'} label={typeof name === 'string' ? name : ''} labelHidden />;
+    else if ((type === 'progress' || type === 'person') && progress) visual = <ProgressBar value={progress.value} max={progress.max} tone={progress.tone} size={type === 'person' ? 'sm' : 'md'} label={typeof name === 'string' ? name : ''} labelHidden />;
     if (type === 'progress' && rows && value === undefined) showFigure = false;
     if (type === 'gauge' && gauge) visual = <Gauge {...({ title: typeof name === 'string' ? name : '', hideCaption: true, size: 'sm', ...gauge } as React.ComponentProps<typeof Gauge>)} />;
     if (type === 'breakdown' && parts) {

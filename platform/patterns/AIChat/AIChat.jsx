@@ -16,7 +16,7 @@
 import React from 'react';
 import { LiveRegion } from '../../utils/announce.tsx';
 import { cx } from '../../utils/cx.ts';
-import { Chat } from '../../components/Chat/Chat.jsx';
+import { Chat } from '../../components/Chat/Chat.tsx';
 import { Stack } from '../../components/Stack/Stack.tsx';
 import { VisuallyHidden } from '../../components/VisuallyHidden/VisuallyHidden.tsx';
 import { Text } from '../../components/Text/Text.tsx';

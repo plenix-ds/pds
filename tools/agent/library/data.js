@@ -37,7 +37,7 @@ const EX = {   // existing Platform code (for extend targets)
   Metric: ['platform/components/Metric/Metric.tsx', 'platform/components/Metric/metric.css'],
   DropZone: ['platform/components/DropZone/DropZone.tsx', 'platform/components/DropZone/drop-zone.css'],
   ActionBar: ['platform/patterns/ActionBar/ActionBar.jsx', 'platform/patterns/ActionBar/action-bar.css'],
-  Chat: ['platform/components/Chat/Chat.jsx', 'platform/components/Chat/chat.css'],
+  Chat: ['platform/components/Chat/Chat.tsx', 'platform/components/Chat/chat.css'],
   ThemeProvider: ['platform/providers/ThemeProvider.jsx', 'platform/providers/themes.js', 'platform/standards/themes.json'],
   SearchWorkspace: ['platform/patterns/SearchWorkspace/SearchWorkspace.jsx', 'platform/patterns/SearchWorkspace/search-workspace.css'],
   ColorPicker: ['platform/components/ColorSwatch/ColorSwatch.tsx', 'platform/components/ColorSwatch/color-swatch.css'],

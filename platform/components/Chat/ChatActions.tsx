@@ -29,10 +29,11 @@ import AddReactionIcon from 'plenix-platform/icons/material/add-reaction';
 
 // the quick reactions, in the owner's order, each with its name for assistive technology (the strings' keys)
 const QUICK_REACTIONS = [['👍', 'thumbsUp'], ['❤️', 'heart'], ['😂', 'laugh'], ['😮', 'wow'], ['😢', 'sad'], ['🙏', 'thanks']];
-const nameOf = (emoji, t) => { const q = QUICK_REACTIONS.find((r) => r[0] === emoji); return q ? t[q[1]] : emoji; };
+type Words = Record<string, string>;
+const nameOf = (emoji: string, t: Words) => { const q = QUICK_REACTIONS.find((r) => r[0] === emoji); return q ? t[q[1]] : emoji; };
 
 // React: a panel of the quick reactions and More reactions (a placeholder until the emoji picker, issue 646)
-function ReactionPicker({ onReact, t, trigger }) {
+function ReactionPicker({ onReact, t, trigger }: { onReact?: (emoji: string) => void; t: Words; trigger: React.ReactElement }) {
   const [more, setMore] = React.useState(false);
   return (
     <Popover title={t.addReaction} size="md" placement="bottom-start" trigger={trigger}>
@@ -48,7 +49,7 @@ function ReactionPicker({ onReact, t, trigger }) {
 }
 
 // the action bar beside the bubble: React, Reply and More (Reply, Quote, Copy text, Forward | Edit, Delete on your own messages)
-export function MessageActions({ shown, mine, onReact, onReply, onQuote, onCopy, onForward, onEdit, onDelete, t }) {
+export function MessageActions({ shown, mine, onReact, onReply, onQuote, onCopy, onForward, onEdit, onDelete, t }: { shown?: boolean; mine?: boolean; onReact?: (emoji: string) => void; onReply?: () => void; onQuote?: () => void; onCopy?: () => void; onForward?: () => void; onEdit?: () => void; onDelete?: () => void; t: Words }) {
   const own = mine && (onEdit || onDelete);
   return (
     <div className={cx('plx-chat__actions', mine && 'plx-chat__actions--mine', !shown && 'plx-visually-hidden')} role="group" aria-label={t.messageActions}>
@@ -68,7 +69,7 @@ export function MessageActions({ shown, mine, onReact, onReply, onQuote, onCopy,
 }
 
 // the reactions under the text: a pill each (emoji and count; yours outlined in the action color), then Add reaction
-export function Reactions({ reactions, mine, onReact, t }) {
+export function Reactions({ reactions, mine, onReact, t }: { reactions: Array<{ emoji: string; count: number; mine?: boolean; label?: string }>; mine?: boolean; onReact?: (emoji: string) => void; t: Words }) {
   return (
     <div className={cx('plx-chat__reactions', mine && 'plx-chat__reactions--mine')} role="group" aria-label={t.reactions}>
       {reactions.map((r) => (
@@ -83,7 +84,7 @@ export function Reactions({ reactions, mine, onReact, t }) {
 }
 
 // a quoted or replied-to message inside the bubble: a bar, its author and one line of its text
-export function Quote({ author, text }) {
+export function Quote({ author, text }: { author?: React.ReactNode; text?: React.ReactNode }) {
   return (
     <blockquote className="plx-chat__quote">
       <span className="plx-chat__quote-author">{author}</span>
@@ -93,7 +94,7 @@ export function Quote({ author, text }) {
 }
 
 // the composer's "Replying to <name>" line with the message's first line and a Cancel button
-export function ReplyPreview({ author, text, onCancel, t }) {
+export function ReplyPreview({ author, text, onCancel, t }: { author: string; text?: React.ReactNode; onCancel?: () => void; t: Words }) {
   return (
     <div className="plx-chat__replying">
       <span className="plx-chat__replying-icon"><Icon name={ReplyIcon} size="sm" /></span>
