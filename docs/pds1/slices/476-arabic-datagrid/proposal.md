@@ -43,3 +43,12 @@ Reply on #476 with one of:
 - **Approve all except** a row number, with your word for it.
 
 Only the approved words go into `ar.js`, in one PR that links your reply.
+
+## Added 2026-11-06: fill (#3, editing.fill)
+
+| # | Key | English | Proposed Arabic | Why | Glossary |
+|---|---|---|---|---|---|
+| 16 | `dataGrid.fillMenu` | Fill | تعبئة | Microsoft (Excel): Fill = تعبئة | |
+| 17 | `dataGrid.fillDown` | Fill down | تعبئة لأسفل | Down = لأسفل | `dataGrid.moveDown` (نقل لأسفل) |
+| 18 | `dataGrid.fillRight` | Fill right | تعبئة لليسار | **Choice:** on an Arabic page the grid runs right to left, and this command copies the first column into the next ones, which lie to the **left**. A literal لليمين ("right") would describe the wrong side. Alternative: تعبئة لليمين, as Excel words it. | `dataGrid.moveRight` (نقل إلى اليمين) |
+| 19 | `dataGrid.cellsFilled` | {n} cell filled / {n} cells filled | zero لم تتم تعبئة أي خلية · one تمت تعبئة خلية واحدة · two تمت تعبئة خليتين · few تمت تعبئة {n} خلايا · many تمت تعبئة {n} خلية · other تمت تعبئة {n} خلية | Built like "cells skipped" (row 14) | `loadMore.added` |
