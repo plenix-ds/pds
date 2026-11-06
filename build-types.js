@@ -1,4 +1,5 @@
-// Builds the TypeScript definitions of @plenix-ds/react (release/packages/react/index.d.ts) from the source files' structured header
+// Builds the TypeScript definitions of @plenix-ds/react (release/packages/react/index.d.ts). An export whose source is TypeScript is
+// re-exported from tsc's own declarations in types/ (#61, docs/adr/0011 wave 5a); every other export is typed from its source file's structured header
 // comments (Summary / Usage / Props) and the defaults in their code: the same reading the design system's API tables use.
 //   Prop types: a chain of quoted choices at the prop's own level ("md" (default) | "sm", "h1"–"h4") becomes a union (an
 //   open chain ending "| …" also takes any string); choices inside a shape ([{ kind: "a" | "b" }]) are a field's, so a
@@ -148,15 +149,44 @@ function isComponentIn(src, name) {
 }
 const doc = (t) => '  /** ' + t.replace(/\*\//g, '* /').replace(/\s+/g, ' ').trim() + ' */\n';
 
+// tsc's declarations for every platform source into dir (allowJs gives the JavaScript files theirs too, so a TypeScript file's
+// imports resolve). Import paths keep their .ts/.tsx/.jsx endings in the emitted files, which a consumer's TypeScript cannot
+// resolve, so they become .js (TypeScript maps a .js path to its .d.ts). Returns dir, or null when tsc is not available.
+function emitDeclarations(dir) {
+  const { spawnSync } = require('child_process');
+  fs.rmSync(dir, { recursive: true, force: true });
+  const tsc = path.join(ROOT, 'node_modules', 'typescript', 'bin', 'tsc');
+  if (!fs.existsSync(tsc)) return null;
+  const r = spawnSync(process.execPath, [tsc, '-p', path.join(ROOT, 'tsconfig.json'), '--noEmit', 'false', '--declaration', '--emitDeclarationOnly', '--outDir', dir], { cwd: ROOT, encoding: 'utf8' });
+  if (r.status !== 0 && process.env.PLENIX_TYPES_STRICT) throw new Error('build-types: tsc reported errors:\n' + (r.stdout || '').split('\n').filter((l) => /error TS/.test(l)).slice(0, 20).join('\n'));
+  const walk = (d) => { for (const n of fs.existsSync(d) ? fs.readdirSync(d) : []) { const f = path.join(d, n); if (fs.statSync(f).isDirectory()) walk(f); else if (n.endsWith('.d.ts')) fs.writeFileSync(f, fs.readFileSync(f, 'utf8').replace(/(from\s+|import\()(['"])(\.{1,2}\/[^'"]+?)\.(?:tsx|ts|jsx|js)\2/g, '$1$2$3.js$2')); } };
+  walk(dir);
+  return dir;
+}
+
 module.exports = function buildTypes(outFile, version) {
   const index = fs.readFileSync(path.join(P, 'index.js'), 'utf8');
-  const blocks = [], names = [], typed = {};
+  // the TypeScript sources' own declarations (#61, docs/adr/0011 addendum wave 5a): tsc writes them into types/ beside the
+  // index, and index.d.ts re-exports every name whose source is .ts/.tsx from there; the JavaScript sources keep the header reading
+  const typesDir = emitDeclarations(path.join(path.dirname(outFile), 'types'));
+  const blocks = [], names = [], typed = {}, typeFiles = new Set();
   const published = [...index.matchAll(/export \{([^}]+)\}/g)].map((x) => x[1]).join(',');
   for (const m of index.matchAll(/export \{([^}]+)\} from '([^']+)'/g)) {
     const file = path.join(P, m[2]);
     const src = fs.readFileSync(file, 'utf8');
     const hc = (/^\s*\/\*([\s\S]*?)\*\//.exec(src) || [])[1] || '';
     const head = structured(hc);
+    const dts = typesDir && /\.tsx?$/.test(m[2]) ? path.join(typesDir, m[2].replace(/^\.\//, '').replace(/\.tsx?$/, '.d.ts')) : null;
+    if (dts && fs.existsSync(dts)) {
+      const rel = './types/' + m[2].replace(/^\.\//, '').replace(/\.tsx?$/, '.js');
+      const specs = m[1].split(',').map((x) => x.trim()).filter(Boolean);
+      specs.forEach((sp) => { const as = /^(\w+)\s+as\s+(\w+)$/.exec(sp); names.push(as ? as[2] : sp); });
+      blocks.push('export { ' + specs.join(', ') + ' } from ' + JSON.stringify(rel) + ';');
+      // every type the source exports (its props, items, values), once per file: `export type *` re-exports types only, so the
+      // runtime names stay exactly the ones index.js publishes
+      if (!typeFiles.has(rel)) { typeFiles.add(rel); blocks.push('export type * from ' + JSON.stringify(rel) + ';'); }
+      continue;
+    }
     for (const raw of m[1].split(',').map((x) => x.trim()).filter(Boolean)) {
       // an export renamed in index.js ("PLACEMENTS as FLOATING_PLACEMENTS") is published, and typed, under its public name
       const as = /^(\w+)\s+as\s+(\w+)$/.exec(raw);
@@ -263,6 +293,8 @@ function checkCoverage(index, declarations) {
     for (const item of node.specifiers) names.push(item.exported.name || item.exported.value);
   }
   const declared = new Set([...declarations.matchAll(/export declare (?:const|function|class) ([A-Za-z_$][\w$]*)/g)].map(match => match[1]));
+  // and the names re-exported from the TypeScript sources' own declarations (export { A, B as C } from './types/…')
+  for (const m of declarations.matchAll(/^export \{([^}]+)\} from (['"])[^'"]+\2;$/gm)) m[1].split(',').map((x) => x.trim()).filter(Boolean).forEach((sp) => declared.add((/\bas\s+(\w+)$/.exec(sp) || [, sp])[1]));
   const missing = names.filter(name => !declared.has(name));
   if (missing.length) throw new Error('build-types: missing declarations for ' + missing.join(', '));
   return names;

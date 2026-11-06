@@ -228,12 +228,12 @@ t('Gauge', 'component', 'S', 8, 'B', ['ChartKit'], ['semicircle', 'with threshol
 t('BulletChart', 'component', 'S', 8, 'B', ['chart-parts'], ['horizontal', 'vertical'], '', ['platform/charts/BulletChart.tsx']);
 
 /* ───────── wave 9: charts 2 and visualizations ───────── */
-t('HeatMap', 'component', 'M', 9, 'A', ['chart-parts'], ['matrix', 'calendar heat map'], '', ['platform/charts/HeatMap.jsx']);
+t('HeatMap', 'component', 'M', 9, 'A', ['chart-parts'], ['matrix', 'calendar heat map'], '', ['platform/charts/HeatMap.tsx']);
 t('BoxPlot', 'component', 'M', 9, 'A', ['chart-parts'], ['vertical', 'horizontal', 'with outliers'], '', ['platform/charts/BoxPlot.tsx']);
 t('FunnelChart', 'component', 'S', 9, 'A', ['chart-parts'], ['vertical', 'horizontal'], '', ['platform/charts/FunnelChart.tsx']);
 t('WaterfallChart', 'component', 'S', 9, 'A', ['chart-parts'], ['with totals'], '', ['platform/charts/WaterfallChart.tsx']);
-t('RadarChart', 'component', 'S', 9, 'A', ['chart-parts'], ['single', 'compare'], '', ['platform/charts/RadarChart.jsx']);
-t('Treemap', 'component', 'M', 9, 'B', ['ChartKit'], ['flat', 'nested'], 'squarify layout', ['platform/charts/Treemap.jsx']);
+t('RadarChart', 'component', 'S', 9, 'A', ['chart-parts'], ['single', 'compare'], '', ['platform/charts/RadarChart.tsx']);
+t('Treemap', 'component', 'M', 9, 'B', ['ChartKit'], ['flat', 'nested'], 'squarify layout', ['platform/charts/Treemap.tsx']);
 t('SankeyDiagram', 'component', 'L', 9, 'B', ['ChartKit'], ['horizontal'], 'own layout (no d3)', ['platform/charts/SankeyDiagram.tsx']);
 t('WordCloud', 'component', 'M', 9, 'B', ['ChartKit'], ['spiral', 'rectangular'], '', ['platform/charts/WordCloud.tsx']);
 t('GanttChart', 'component', 'L', 9, 'B', ['chart-parts'], ['tasks', 'dependencies', 'milestones', 'today line'], '', ['platform/charts/GanttChart.tsx']);

@@ -38,6 +38,8 @@ import { cx } from '../utils/cx.ts';
 import { formatNumber, formatDate, formatLocale, numeralLocale, parseDate } from '../utils/format.ts';
 import { datavizStep, DATAVIZ_SCALES } from '../utils/dataviz.ts';
 import { ChartFrame } from './ChartFrame.tsx';
+import type { ChartFrameProps } from './ChartFrame.tsx';
+
 import { useEChartsPlot } from './echarts/EChartsPlot.tsx';
 import { ChartTooltip, chartTooltipText } from './parts/ChartTooltip.tsx';
 import { useChartInteraction } from './interaction.ts';
@@ -45,23 +47,23 @@ import { useStrings } from '../providers/LocaleProvider.tsx';
 
 const DAY = 24 * 60 * 60 * 1000;
 const NO_MARGIN = Object.freeze({ top: 0, end: 0, bottom: 0, start: 0 });
-const cols0 = (n) => { const out = []; for (let c = 0; c < n; c++) out.push(c); return out; };
+const cols0 = (n: any) => { const out = []; for (let c = 0; c < n; c++) out.push(c); return out; };
 // the gap between cells, as a fraction of a cell (band padding: geometry)
 const GAP = 0.1;
 
 // a value's day where the reader is: a date-only "YYYY-MM-DD" through the shared reader (utils/format.ts parseDate, issue 342)
-const dayStart = (d) => { const x = new Date((parseDate(d) || new Date(NaN)).getTime()); x.setHours(0, 0, 0, 0); return x; };
-const keyOf = (d) => d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate();
+const dayStart = (d: any) => { const x = new Date((parseDate(d) || new Date(NaN)).getTime()); x.setHours(0, 0, 0, 0); return x; };
+const keyOf = (d: any) => d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate();
 
 // the calendar's grid: a column per week (Sunday first), a row per weekday, and each cell's date and value
-function calendarGrid(data) {
-  const days = (data || []).filter((d) => d && d.date !== undefined).map((d) => ({ date: dayStart(d.date), value: typeof d.value === 'number' && isFinite(d.value) ? d.value : null }));
+function calendarGrid(data: any) {
+  const days = (data || []).filter((d: any) => d && d.date !== undefined).map((d: any) => ({ date: dayStart(d.date), value: typeof d.value === 'number' && isFinite(d.value) ? d.value : null }));
   if (!days.length) return { weeks: 0, cells: [], first: null, last: null };
-  days.sort((a, b) => a.date - b.date);
+  days.sort((a: any, b: any) => a.date - b.date);
   const first = days[0].date, last = days[days.length - 1].date;
   const start = new Date(first.getTime()); start.setDate(start.getDate() - start.getDay());
-  const byDay = {}; days.forEach((d) => { byDay[keyOf(d.date)] = d.value; });
-  const weeks = Math.floor(Math.round((last - start) / DAY) / 7) + 1;
+  const byDay: any = {}; days.forEach((d: any) => { byDay[keyOf(d.date)] = d.value; });
+  const weeks = Math.floor(Math.round(((last as any) - (start as any)) / DAY) / 7) + 1;
   const cells = [];
   for (let w = 0; w < weeks; w++) for (let r = 0; r < 7; r++) {
     const date = new Date(start.getTime()); date.setDate(start.getDate() + w * 7 + r);
@@ -71,27 +73,51 @@ function calendarGrid(data) {
   return { weeks, cells, first, last, start };
 }
 
+/** @public a day of a calendar heat map */
+export type HeatMapDay = { date: string | number | Date; value: number | null };
+/** @public the prop type (ADR 0011) */
+export type HeatMapProps = Pick<ChartFrameProps, 'title' | 'description' | 'size' | 'margin' | 'className'> & {
+  variant?: 'matrix' | 'calendar';
+  /** the matrix's row and column names */
+  rows?: string[];
+  columns?: string[];
+  /** the matrix's values, values[row][column]; null is a missing value */
+  values?: (number | null)[][];
+  /** the days of a calendar */
+  data?: HeatMapDay[];
+  valueLabel?: string;
+  scale?: 'sequential' | 'diverging';
+  min?: number;
+  max?: number;
+  format?(value: number): string;
+  interactive?: boolean;
+  /** a click or Enter on a cell */
+  onSelect?(cell: { r: number; c: number; value: number | null }): void;
+  strings?: Record<string, string>;
+  frameStrings?: ChartFrameProps['strings'];
+  interactionStrings?: Record<string, string>;
+};
 export function HeatMap({ title, description, variant = 'matrix', rows = [], columns = [], values = [], data, valueLabel, scale = 'sequential', min, max,
-  format, size, margin, interactive = true, onSelect, strings, frameStrings, interactionStrings, className }) {
-  const t = useStrings('chart.heatMap', strings);
+  format, size, margin, interactive = true, onSelect, strings, frameStrings, interactionStrings, className }: HeatMapProps) {
+  const t: any = useStrings('chart.heatMap', strings);
   const calendar = variant === 'calendar';
-  const fmt = typeof format === 'function' ? format : (v) => formatNumber(v);
+  const fmt = typeof format === 'function' ? format : (v: any) => formatNumber(v);
   const vLabel = valueLabel || t.value;
   const locale = numeralLocale(formatLocale());
-  const cal = calendar ? calendarGrid(data) : null;
-  const weekday = (r) => new Intl.DateTimeFormat(locale, { weekday: 'short' }).format(new Date(2026, 0, 4 + r));   // Jan 4 2026 is a Sunday
+  const cal: any = calendar ? calendarGrid(data) : null;
+  const weekday = (r: any) => new Intl.DateTimeFormat(locale, { weekday: 'short' }).format(new Date(2026, 0, 4 + r));   // Jan 4 2026 is a Sunday
   const rowNames = calendar ? [0, 1, 2, 3, 4, 5, 6].map(weekday) : rows;
   const nCols = calendar ? cal.weeks : columns.length;
-  const cellAt = (r, c) => (calendar ? cal.cells[c * 7 + r] : { r, c, inside: true, value: values[r] && typeof values[r][c] === 'number' && isFinite(values[r][c]) ? values[r][c] : null });
-  const all = [];
+  const cellAt = (r: any, c: any) => (calendar ? cal.cells[c * 7 + r] : { r, c, inside: true, value: values[r] && typeof values[r][c] === 'number' && isFinite(values[r][c]) ? values[r][c] : null });
+  const all: any[] = [];
   for (let c = 0; c < nCols; c++) for (let r = 0; r < rowNames.length; r++) { const x = cellAt(r, c); if (x && x.inside && x.value !== null) all.push(x.value); }
   let lo = min !== undefined ? min : all.length ? Math.min.apply(null, all) : 0;
   let hi = max !== undefined ? max : all.length ? Math.max.apply(null, all) : 1;
   if (scale === 'diverging' && min === undefined && max === undefined) { const m = Math.max(Math.abs(lo), Math.abs(hi)); lo = -m; hi = m; }
   const sc = scale === 'diverging' ? 'diverging' : 'sequential';
-  const titleOf = (cell) => (calendar ? formatDate(cell.date) : rowNames[cell.r] + ', ' + columns[cell.c]);
-  const valueOf = (cell) => (cell.value === null ? t.missing : fmt(cell.value));
-  const insideAt = (r, c) => { const x = cellAt(r, c); return !!(x && x.inside); };
+  const titleOf = (cell: any) => (calendar ? formatDate(cell.date) : rowNames[cell.r] + ', ' + columns[cell.c]);
+  const valueOf = (cell: any) => (cell.value === null ? t.missing : fmt(cell.value));
+  const insideAt = (r: any, c: any) => { const x = cellAt(r, c); return !!(x && x.inside); };
 
   const ia = useChartInteraction({
     rows: rowNames.length, columns: nCols, mode: 'point', select: typeof onSelect === 'function', strings: interactionStrings,
@@ -112,12 +138,12 @@ export function HeatMap({ title, description, variant = 'matrix', rows = [], col
     },
   });
 
-  const table = calendar ? {
+  const table: any = calendar ? {
     columns: [{ title: t.date, field: 'd', kind: 'data', rowLabel: true }, { title: vLabel, field: 'v', kind: 'data', align: 'right' }],
-    data: cal.cells.filter((x) => x.inside).map((x, i) => ({ id: i + 1, d: formatDate(x.date), v: valueOf(x) })),
+    data: cal.cells.filter((x: any) => x.inside).map((x: any, i: number) => ({ id: i + 1, d: formatDate(x.date), v: valueOf(x) })),
   } : {
     columns: [{ title: t.row, field: 'r', kind: 'name', rowLabel: true }, { title: t.column, field: 'c', kind: 'name' }, { title: vLabel, field: 'v', kind: 'data', align: 'right' }],
-    data: [].concat.apply([], rowNames.map((rn, r) => columns.map((cn, c) => ({ id: r * columns.length + c + 1, r: rn, c: cn, v: valueOf(cellAt(r, c)) })))),
+    data: ([] as any[]).concat.apply([], rowNames.map((rn, r) => columns.map((cn, c) => ({ id: r * columns.length + c + 1, r: rn, c: cn, v: valueOf(cellAt(r, c)) })))),
   };
   const hasMissing = (() => { for (let c = 0; c < nCols; c++) for (let r = 0; r < rowNames.length; r++) { const x = cellAt(r, c); if (x && x.inside && x.value === null) return true; } return false; })();
   const steps = []; for (let k = 1; k <= DATAVIZ_SCALES[sc]; k++) steps.push(sc + '-' + k);
@@ -134,38 +160,38 @@ export function HeatMap({ title, description, variant = 'matrix', rows = [], col
 
   // the cells ECharts draws, one by one in their data-viz step (a missing value an empty cell with a dashed edge); the frame keeps the keyboard, the ring, the tooltip and the pointer
   const plot = useEChartsPlot();
-  const cellList = [];
+  const cellList: any[] = [];
   for (let c = 0; c < nCols; c++) for (let r = 0; r < rowNames.length; r++) { const x = cellAt(r, c); if (x && x.inside) cellList.push({ r, c, value: x.value }); }
   const dataKey = JSON.stringify([cellList, sc, lo, hi, calendar, rowNames, calendar ? null : columns, nCols, margin]);
-  const room = (tk) => {
+  const room = (tk: any) => {
     // the room beside and above the cells for the row and column names (the old frame's margins)
     const m = Object.assign(calendar ? { top: 24, start: 40 } : {}, margin);
     const left = m.start !== undefined ? m.start : Math.max(32, Math.ceil(rowNames.reduce((n, x) => Math.max(n, String(x).length), 0) * 7 + tk.tickOffset * 2));
     return { left, top: m.top !== undefined ? m.top : 0, right: m.end !== undefined ? m.end : 8, bottom: calendar ? (m.bottom !== undefined ? m.bottom : 24) : (m.bottom !== undefined ? m.bottom : Math.ceil(tk.tick.fontSize + tk.tickOffset * 2)) };
   };
   // the grid in pixels: the calendar's cells are square (the smaller of the two steps)
-  const gridOf = (tk, dims) => {
+  const gridOf = (tk: any, dims: any) => {
     const rm = room(tk), w = Math.max(0, dims.width - rm.left - rm.right), h = Math.max(0, dims.height - rm.top - rm.bottom);
     if (!calendar) return { left: rm.left, top: rm.top, width: w, height: h };
     const st = Math.min(w / Math.max(1, nCols), h / 7);
     return { left: rm.left, top: rm.top, width: st * nCols, height: st * 7 };
   };
-  const option = React.useCallback((tk, dims) => {
+  const option = React.useCallback((tk: any, dims: any) => {
     const g = gridOf(tk, dims);
     const hm = tk.heatmap;
     const thin = Math.max(1, Math.ceil(nCols / Math.max(2, Math.floor(g.width / 48))));
     const monthAt = calendar ? new Set(cols0(nCols).filter((c) => { const d = cal.cells[c * 7].date; const prev = c ? cal.cells[(c - 1) * 7].date : null; return !prev || prev.getMonth() !== d.getMonth(); })) : null;
-    const months = calendar ? [...monthAt].filter((c, k, a) => k === a.length - 1 || a[k + 1] - c >= 3) : [];
+    const months = calendar ? [...(monthAt as Set<number>)].filter((c, k, a) => k === a.length - 1 || a[k + 1] - c >= 3) : [];
     const named = { splitLine: { show: false }, axisTick: { show: false } };
     return {
       animationDuration: 0, animationDurationUpdate: 0,
       grid: { left: g.left, top: g.top, width: g.width, height: g.height, outerBoundsMode: 'none' },
-      xAxis: Object.assign({ type: 'category', data: cols0(nCols).map(String), position: calendar ? 'top' : 'bottom', axisLine: { show: false }, axisLabel: { interval: (i) => (calendar ? months.indexOf(i) >= 0 : i % thin === 0), formatter: (v) => (calendar ? new Intl.DateTimeFormat(locale, { month: 'short' }).format(cal.cells[Number(v) * 7].date) : String(columns[Number(v)])), hideOverlap: false } }, named),
-      yAxis: Object.assign({ type: 'category', data: rowNames.map((x, r) => String(r)), inverse: true, axisLine: { show: false }, axisLabel: { interval: (i) => (calendar ? i === 1 || i === 3 || i === 5 : true), formatter: (v) => String(rowNames[Number(v)]) } }, named),
+      xAxis: Object.assign({ type: 'category', data: cols0(nCols).map(String), position: calendar ? 'top' : 'bottom', axisLine: { show: false }, axisLabel: { interval: (i: any) => (calendar ? months.indexOf(i) >= 0 : i % thin === 0), formatter: (v: any) => (calendar ? new Intl.DateTimeFormat(locale, { month: 'short' }).format(cal.cells[Number(v) * 7].date) : String(columns[Number(v)])), hideOverlap: false } }, named),
+      yAxis: Object.assign({ type: 'category', data: rowNames.map((x, r) => String(r)), inverse: true, axisLine: { show: false }, axisLabel: { interval: (i: any) => (calendar ? i === 1 || i === 3 || i === 5 : true), formatter: (v: any) => String(rowNames[Number(v)]) } }, named),
       // one rounded rectangle per cell, set in by the gap of the old band scale (a gap is a tenth of a step, per axis); a missing value is an empty cell with a dashed edge
       series: [{ type: 'custom', id: 'cells', silent: true, progressive: 0, coordinateSystem: 'none', clip: false,
         data: cellList.map((x) => [x.c, x.r, x.value === null ? 0 : x.value, x.value === null ? 1 : 0]),
-        renderItem: (params, api) => {
+        renderItem: (params: any, api: any) => {
           const c = api.value(0), r = api.value(1), v = api.value(2), mt = api.value(3) === 1;
           const sx = g.width / (nCols - GAP), sy = g.height / (rowNames.length - GAP);
           const shape = { x: g.left + c * sx, y: g.top + r * sy, width: sx * (1 - GAP), height: sy * (1 - GAP), r: hm.radius };
@@ -174,19 +200,19 @@ export function HeatMap({ title, description, variant = 'matrix', rows = [], col
     };
   }, [dataKey]);   // eslint-disable-line react-hooks/exhaustive-deps
 
-  const draw = (dims) => {
+  const draw = (dims: any) => {
     const layer = plot.layer(dims, option);
     const tk = plot.tokens, chart = plot.chart;
     if (!chart || !tk || !nCols || !rowNames.length) return layer;
     const g = gridOf(tk, dims), cw = g.width / nCols, ch = g.height / rowNames.length;
-    const pick = (px, py) => {
+    const pick = (px: any, py: any) => {
       const c = Math.floor((px - g.left) / cw), r = Math.floor((py - g.top) / ch);
       return px < g.left || py < g.top || px > g.left + g.width || py > g.top + g.height || c < 0 || r < 0 || c >= nCols || r >= rowNames.length || !insideAt(r, c) ? null : { r, c };
     };
-    ia.register({ nearest: pick, columnAt: (px) => Math.min(nCols - 1, Math.max(0, Math.floor((px - g.left) / cw))) });
+    ia.register({ nearest: pick, columnAt: (px: any) => Math.min(nCols - 1, Math.max(0, Math.floor((px - g.left) / cw))) });
     const a = ia.active && insideAt(ia.active.r, ia.active.c) ? ia.active : null;
     const sel = ia.selected;
-    const box = (cell) => ({ x: g.left + cell.c * cw, y: g.top + cell.r * ch, width: cw, height: ch });
+    const box = (cell: any) => ({ x: g.left + cell.c * cw, y: g.top + cell.r * ch, width: cw, height: ch });
     const inner = { width: dims.width, height: dims.height };
     return [layer, (
       <g key="plx-chart-overlay" className="plx-heat-map__plot">

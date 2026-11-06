@@ -31,6 +31,8 @@ import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatNumber } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.tsx';
+import type { ChartFrameProps } from './ChartFrame.tsx';
+
 import { niceTicks } from './scales.ts';
 import { ChartLegend } from './parts/ChartLegend.tsx';
 import { ChartTooltip } from './parts/ChartTooltip.tsx';
@@ -43,54 +45,71 @@ const NO_MARGIN = Object.freeze({ top: 0, end: 0, bottom: 0, start: 0 });
 const WEB_MARGIN = { top: 24, bottom: 24 };
 const CHAR = 7;   // px: about one character of the measures' names (the label font at 12px)
 
+/** @public one measure of a radar chart */
+export type RadarAxis = { key: string; label: string };
+/** @public one item: its values by axis key, or in the axes' order, and an optional data-viz step */
+export type RadarSeries = { id?: string | number; label: string; values: Record<string, number> | number[]; color?: string };
+/** @public the prop type (ADR 0011) */
+export type RadarChartProps = Omit<Pick<ChartFrameProps, 'title' | 'description' | 'hideCaption' | 'size' | 'margin' | 'legend' | 'legendPosition' | 'className'>, 'legend'> & {
+  axes?: RadarAxis[];
+  series?: RadarSeries[];
+  max?: number;
+  rings?: number;
+  format?(value: number): string;
+  showPoints?: boolean;
+  /** true or false (default: shown with two items or more) */
+  legend?: boolean;
+  tooltip?: boolean;
+  strings?: Record<string, string>;
+};
 export function RadarChart({ title, description, hideCaption, size = 'lg', axes = [], series = [], max, rings = 4, format, showPoints = true, legend, legendPosition,
-  tooltip = true, margin, strings, className }) {
-  const t = useStrings('chart.radarChart', strings);
-  const fmt = (v) => (typeof format === 'function' ? format(v) : formatNumber(v));
+  tooltip = true, margin, strings, className }: RadarChartProps) {
+  const t: any = useStrings('chart.radarChart', strings);
+  const fmt = (v: any) => (typeof format === 'function' ? format(v) : formatNumber(v));
   const [active, hover] = useChartHover();
   const list = withColors(series);
-  const valueOf = (s, ai) => finite(Array.isArray(s.values) ? s.values[ai] : (s.values || {})[axes[ai].key]);
-  const top = max !== undefined ? Number(max) : list.reduce((a, s) => Math.max(a, Math.max.apply(null, [0].concat(axes.map((x, ai) => valueOf(s, ai))))), 0) || 1;
+  const valueOf = (s: any, ai: any) => finite(Array.isArray(s.values) ? s.values[ai] : (s.values || {})[axes[ai].key]);
+  const top = max !== undefined ? Number(max) : list.reduce((a: any, s: any) => Math.max(a, Math.max.apply(null, [0].concat(axes.map((x, ai) => valueOf(s, ai))))), 0) || 1;
   // the scale's end: the given max, or the round tick above the largest value
-  const scale = niceTicks(0, max !== undefined ? top : top, rings).ticks.filter((v) => v <= (max !== undefined ? top : Infinity));
+  const scale = niceTicks(0, max !== undefined ? top : top, rings).ticks.filter((v: any) => v <= (max !== undefined ? top : Infinity));
   const end = max !== undefined ? top : scale[scale.length - 1];
   // the rings: the scale's round ticks (the outermost is the scale's end), each ring's value written up the first spoke (the outermost left out: the first measure's name sits there)
-  const ringValues = scale.filter((v) => v > 0 && v < end);
+  const ringValues = scale.filter((v: any) => v > 0 && v < end);
   const side = Math.ceil((axes.reduce((n, a) => Math.max(n, String(a.label || '').length), 0) * CHAR + 8) / 4) * 4;
   const m = Object.assign({}, WEB_MARGIN, { start: side, end: side }, margin);
   const table = {
-    columns: [{ title: t.measure, field: 'measure', kind: 'name', rowLabel: true }].concat(list.map((s, si) => ({ title: s.label, field: 's' + si, kind: 'data', align: 'right' }))),
-    data: axes.map((a, ai) => { const row = { id: ai + 1, measure: a.label }; list.forEach((s, si) => { row['s' + si] = fmt(valueOf(s, ai)); }); return row; })
+    columns: [{ title: t.measure, field: 'measure', kind: 'name', rowLabel: true }].concat(list.map((s: any, si: any) => ({ title: s.label, field: 's' + si, kind: 'data', align: 'right' }))),
+    data: axes.map((a, ai) => { const row: any = { id: ai + 1, measure: a.label }; list.forEach((s: any, si: any) => { row['s' + si] = fmt(valueOf(s, ai)); }); return row; })
   };
   const showLegend = legend === undefined ? list.length > 1 : !!legend;
-  const key = showLegend ? <ChartLegend items={legendItems(list)} orientation={legendPosition === 'end' ? 'vertical' : 'horizontal'} /> : null;
+  const key = showLegend ? <ChartLegend items={(legendItems as any)(list)} orientation={legendPosition === 'end' ? 'vertical' : 'horizontal'} /> : null;
   // the format the drawing calls, kept current without redrawing (a format written inline is a new function each render)
-  const fmts = React.useRef(null); fmts.current = { fmt };
+  const fmts = React.useRef<any>(null); fmts.current = { fmt };
 
   const plot = useEChartsPlot();
-  const dataKey = JSON.stringify([axes.map((a) => [a.key, a.label]), list.map((s) => [s.id, s.color, axes.map((a, ai) => valueOf(s, ai))]), end, rings, showPoints, m]);
-  const option = React.useCallback((tk, dims) => {
+  const dataKey = JSON.stringify([axes.map((a) => [a.key, a.label]), list.map((s: any) => [s.id, s.color, axes.map((a, ai) => valueOf(s, ai))]), end, rings, showPoints, m]);
+  const option = React.useCallback((tk: any, dims: any) => {
     // the web fills the plot less the room for the measures' names (the frame's old margin), centered
     const R = Math.max(0, Math.min(dims.width - m.start - m.end, dims.height - m.top - m.bottom) / 2);
     return {
       animationDuration: tk.motion, animationDurationUpdate: tk.motion,
-      radar: { center: ['50%', '50%'], radius: R, startAngle: 90, clockwise: true, splitNumber: Math.max(1, scale.filter((v) => v > 0).length), shape: 'polygon', indicator: axes.map((a) => ({ name: a.label, max: end, min: 0 })),
+      radar: { center: ['50%', '50%'], radius: R, startAngle: 90, clockwise: true, splitNumber: Math.max(1, scale.filter((v: any) => v > 0).length), shape: 'polygon', indicator: axes.map((a) => ({ name: a.label, max: end, min: 0 })),
         axisName: { color: tk.radar.label.color, fontFamily: tk.radar.label.fontFamily, fontSize: tk.radar.label.fontSize, fontWeight: tk.radar.label.fontWeight },
         axisLabel: { show: false },
         axisLine: { lineStyle: { color: tk.grid.color, width: tk.grid.width } }, splitLine: { lineStyle: { color: tk.grid.color, width: tk.grid.width } }, splitArea: { show: false } },
-      series: list.map((s) => ({ type: 'radar', id: String(s.id), name: s.label, silent: true, emphasis: { disabled: true }, symbol: 'circle', symbolSize: showPoints ? tk.radar.point * 2 : 0,
+      series: list.map((s: any) => ({ type: 'radar', id: String(s.id), name: s.label, silent: true, emphasis: { disabled: true }, symbol: 'circle', symbolSize: showPoints ? tk.radar.point * 2 : 0,
         lineStyle: { color: tk.color(s.color), width: tk.lineWidth }, itemStyle: { color: tk.color(s.color), borderColor: tk.point.outline, borderWidth: tk.point.outlineWidth },
         areaStyle: { color: tk.color(s.color), opacity: tk.radar.area }, data: [{ value: axes.map((a, ai) => valueOf(s, ai)), name: s.label }] })),
     };
   }, [dataKey]);   // eslint-disable-line react-hooks/exhaustive-deps
 
-  const draw = (dims) => {
+  const draw = (dims: any) => {
     const layer = plot.layer(dims, option);
     const c = plot.chart;
     const radar = c ? c.getModel().getComponent('radar') : null;
     const cs = radar && radar.coordinateSystem;
     if (!cs) return layer;
-    const at = (v, ai) => { const p = cs.dataToPoint(v, ai); return { x: p[0], y: p[1] }; };
+    const at = (v: any, ai: any) => { const p = cs.dataToPoint(v, ai); return { x: p[0], y: p[1] }; };
     let tip = null;
     if (tooltip && active !== null) {
       const [si, ai] = String(active).split(':').map(Number);
@@ -102,8 +121,8 @@ export function RadarChart({ title, description, hideCaption, size = 'lg', axes 
     // the points are the tooltip's targets: a round hit area over each, in the frame's overlay
     return [layer, (
       <g key="plx-chart-overlay">
-        {ringValues.map((v) => { const p = at(v, 0); return <text key={'v' + v} className="plx-chart__tick-label plx-radar-chart__ring-label" x={p.x} y={p.y}>{fmt(v)}</text>; })}
-        {tooltip ? list.map((s, si) => axes.map((a, ai) => { const p = at(valueOf(s, ai), ai); return <circle key={s.id + a.key} className="plx-radar-chart__hit" fill="none" stroke="none" pointerEvents="all" cx={p.x} cy={p.y} r={Math.max(8, plot.tokens ? plot.tokens.radar.point : 4)} {...hover(si + ':' + ai)} />; })) : null}
+        {ringValues.map((v: any) => { const p = at(v, 0); return <text key={'v' + v} className="plx-chart__tick-label plx-radar-chart__ring-label" x={p.x} y={p.y}>{fmt(v)}</text>; })}
+        {tooltip ? list.map((s: any, si: any) => axes.map((a, ai) => { const p = at(valueOf(s, ai), ai); return <circle key={s.id + a.key} className="plx-radar-chart__hit" fill="none" stroke="none" pointerEvents="all" cx={p.x} cy={p.y} r={Math.max(8, plot.tokens ? plot.tokens.radar.point : 4)} {...hover(si + ':' + ai)} />; })) : null}
         {tip}
       </g>
     )];

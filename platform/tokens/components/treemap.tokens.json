@@ -1,5 +1,5 @@
 {
-  "$description": "Treemap (platform/charts/Treemap.jsx; library wave 9, lane C): its component tokens. Tiles take their data-viz color (data-plx-dataviz); everything else is an existing role.",
+  "$description": "Treemap (platform/charts/Treemap.tsx; library wave 9, lane C): its component tokens. Tiles take their data-viz color (data-plx-dataviz); everything else is an existing role.",
   "plx-comp": {
     "treemap-gap-color": { "$value": "{plx-sys.surface-default}", "$type": "color", "$description": "Treemap: the gap between tiles, in the surface color." },
     "treemap-gap-width": { "$value": "{plx-sys.border-width-medium}", "$type": "dimension", "$description": "Treemap: the gap's width (a stroke around each tile)." },

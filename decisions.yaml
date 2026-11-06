@@ -710,3 +710,13 @@
   options: ['A - ship, carry over the old missing strings and list them (chosen)', 'B - hold every release until no Arabic string is missing']
   status: active
   check: 'tools/checks/locale/locale.mjs <previous tag> in the release readiness report (new findings must be 0; carried-over missing-ar listed)'
+
+- id: D-0081
+  date: 2026-11-06
+  area: api
+  decided_by: agent (pds1-ds-architect) on #61, owner may switch
+  decision: 'The published TypeScript types of @plenix-ds/react come from the TypeScript sources: build-types.js emits tsc declarations into types/ (import paths rewritten to .js) and index.d.ts re-exports each .ts/.tsx-sourced export from there, with export type * per file; JavaScript sources keep the header reading until they convert; npm and the CDN ship types/ beside the index (docs/adr/0011 addendum wave 5a).'
+  why: 'The reviewed TypeScript props never reached consumers; this cuts the published any props from 334 to 131 now, and to none as the last sources convert.'
+  options: [tsc declarations for TS sources, header for the rest (chosen), wait for wave 5 to switch everything at once, a d.ts bundler (new tooling)]
+  status: active
+  check: build-types.js coverage gate; a consumer compile of index.d.ts; G3 on converted sources

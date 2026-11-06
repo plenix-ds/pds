@@ -207,7 +207,7 @@ Every component declares a state manifest (check 9). Each state is a token set o
 | 1 | Dark (listed, fixed after light, D-0025): `content-subtle` (gray-500) | 3.05:1 on #444, 2.22:1 on hover | Point to gray-300, the same as `content-muted`, as light mode already does: 6.31:1 and 4.61:1 |
 | 2 | Dark (listed, D-0025): `feedback-neutral-solid-label` (gray-600) | 1.91:1 on #444 | gray-300: 6.31:1 |
 | 3 | Dark (listed, D-0025): `feedback-success-solid-label` (green-300) | 3.49:1 on #444 | green-200: 5.65:1 |
-| 4 | Caption and eyebrow roles at 11px, among 80 token references to sizes 09/10/11 (focus-order, field, chart, tooltip, calendar, slider and others), plus `.plx-u-fs-09/10/11` | below 12px | Point to `font-size-12`; deprecate refs 09/10/11 (#214) |
+| 4 | Caption and eyebrow roles at 11px, among 80 token references to sizes 09/10/11 (focus-order, field, chart, tooltip, calendar, slider and others), plus `.plx-u-fs-09/10/11` (removed since, #125) | below 12px | Point to `font-size-12`; deprecate refs 09/10/11 (#214) |
 | 5 | DataGrid number cells: end-aligned but without `tabular-nums` | check 10 | Add `font-variant-numeric: tabular-nums` to `cell--align-right` (#214) |
 | 7 | `semantic.density-standard-comfortable` still ships (one token, `radius-control`, shared by standard and comfortable) | D-0007 | Move the token into the standard and comfortable files; remove the set (#214) |
 | 8 | `category-olive-on` (black) on `category-olive` (green-500), light and dark | 3.91:1 | white: 5.37:1, as the other dark category fills (#251) |

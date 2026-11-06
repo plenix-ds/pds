@@ -31,6 +31,7 @@
     "test:density": "node tests/density.test.js",
     "test:component-tokens": "node tests/component-tokens.test.js",
     "test:site-coverage": "node tests/site-coverage.test.js",
+    "test:site-parts": "node tests/site-parts.test.js",
     "test:reflow": "node tests/reflow.test.js",
     "test:typography": "node tests/typography.test.js",
     "test:login": "node tests/login.test.js",
