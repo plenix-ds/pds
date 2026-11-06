@@ -336,7 +336,7 @@ DSParts.records.push(function (H) {
     plenix: 'GeoMap', src: 'charts/GeoMap.jsx', css: ['charts/geo-map.css'], blocks: ['plx-geo-map'], level: 'Component', interaction: 'Display',
     aliases: ['Geographic map', 'Location map', 'Region map', 'Marker map'],
     text: 'A map drawn from the app’s own geography: regions from GeoJSON (fitted to the frame, Mercator or plain longitude and latitude) as land in the sunken surface with outlines, and markers at places in a data-viz color. Zoom buttons and dragging move around; the wheel never zooms, so the page keeps scrolling. No tiles and no network: Plenix ships no geography. The sample regions on this page are a made-up layout, not a real place.',
-    use: ['Where things are when location is the point: sites, assets, deliveries', 'The places also as a table (the frame’s data grid), with names and coordinates', 'Shapes kept with the app: a public-domain source such as Natural Earth, simplified'],
+    use: ['Where things are when location is the point: sites, assets, deliveries', 'The places also as a table (the frame’s data table), with names and coordinates', 'Shapes kept with the app: a public-domain source such as Natural Earth, simplified'],
     avoid: ['Location that is incidental: show the address as text', 'Comparing regional values precisely: a table or bars', 'Capturing the page’s scroll for zoom', 'Markers in more than one color without a legend'],
     related: ['choropleth-map', 'chart-accessibility', 'chart-tooltip'],
     map: [[CAR, 'Spatial charts', 'Partial'], [HIG, 'Maps', 'Partial'], [MAT, 'Maps (Google Maps)', 'Partial']],

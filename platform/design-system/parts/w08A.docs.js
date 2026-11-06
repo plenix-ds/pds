@@ -30,14 +30,14 @@ DSParts.docs.push({
     purpose: 'Gives the exact values at one place on a chart on demand, without crowding the chart with labels.',
     anatomy: ['Heading — the point’s category or date (data font for dates and numbers)', 'Values — swatch, series name and value for each series (required)', 'Crosshair — a line down the plot at the x position (shared)', 'Surface — the popover’s: overlay surface, border, menu radius and shadow'],
     behavior: { pointer: 'Shown where the pointer is; it does not take the pointer, so the marks under it stay reachable.', keyboard: 'Moved by the chart interaction (keyboard focus on the data), with the same values said in a live region.', focus: 'It never takes focus.', responsive: 'It goes after the point in the first half of the plot and before it in the second; above a point, or under it near the top.', motion: 'None: it moves with the pointer at once.', loading: 'Not applicable.', error: 'Not applicable.' },
-    a11y: { name: 'Part of the chart image, hidden from assistive technology with the plot.', announce: 'The chart interaction announces the focused point’s values; the data grid carries every value.', focus: 'Nothing in it is focusable: no actions or links.', contrast: 'Text on the overlay surface at the text contrast; swatches at 3:1.', motion: 'Nothing to reduce.' },
+    a11y: { name: 'Part of the chart image, hidden from assistive technology with the plot.', announce: 'The chart interaction announces the focused point’s values; the data table carries every value.', focus: 'Nothing in it is focusable: no actions or links.', contrast: 'Text on the overlay surface at the text contrast; swatches at 3:1.', motion: 'Nothing to reduce.' },
     content: { labels: 'The axis’s format with full precision; series in the legend’s order.', actions: 'None.', errors: 'Not applicable.', localization: 'Values and dates in the reader’s locale (formatNumber, formatDate).' }
   },
   'chart-data-label': {
     purpose: 'Shows the exact values of the marks people compare, right where they look.',
     anatomy: ['Value — the formatted number, the data font (required)', 'Position — above a column, after a bar, or centered on a point (required)', 'Halo — a stroke in the surface color under centered text'],
     behavior: { pointer: 'None.', keyboard: 'None.', focus: 'None.', responsive: 'On a narrow chart keep fewer labels: the last and the highest.', motion: 'None.', loading: 'Drawn with the marks.', error: 'Not applicable.' },
-    a11y: { name: 'Part of the chart image; the data grid carries the values.', announce: 'Nothing.', focus: 'Not focusable.', contrast: 'Text in the content color on the surface, or on its halo over a mark.', motion: 'Nothing to reduce.' },
+    a11y: { name: 'Part of the chart image; the data table carries the values.', announce: 'Nothing.', focus: 'Not focusable.', contrast: 'Text in the content color on the surface, or on its halo over a mark.', motion: 'Nothing to reduce.' },
     content: { labels: 'The axis’s format and precision; abbreviate large numbers the same way everywhere (formatCompact).', actions: 'None.', errors: 'Not applicable.', localization: 'Numbers in the reader’s locale.' }
   },
   'chart-axis': {
@@ -65,7 +65,7 @@ DSParts.docs.push({
     purpose: 'Explains spikes, dips and events on a chart, so people do not have to guess what happened.',
     anatomy: ['Ring — around the annotated point (point)', 'Leader — a short line from the ring to the note (point)', 'Band — a shaded span of the plot behind the marks (range)', 'Note — a few words, sentence case (required)'],
     behavior: { pointer: 'None.', keyboard: 'None.', focus: 'None.', responsive: 'The note stays at its point or range; keep it short so it fits at a narrow width.', motion: 'None.', loading: 'Drawn with the chart.', error: 'Not applicable.' },
-    a11y: { name: 'Part of the chart image: put the same note in the description or the data grid.', announce: 'Nothing.', focus: 'Not focusable.', contrast: 'The note is text at its contrast; the band is the sunken surface, behind the marks.', motion: 'Nothing to reduce.' },
+    a11y: { name: 'Part of the chart image: put the same note in the description or the data table.', announce: 'Nothing.', focus: 'Not focusable.', contrast: 'The note is text at its contrast; the band is the sunken surface, behind the marks.', motion: 'Nothing to reduce.' },
     content: { labels: 'One short phrase naming the cause (Outage in EU region); the date when the axis does not show it.', actions: 'None.', errors: 'Not applicable.', localization: 'Notes are the caller’s words.' }
   }
 });

@@ -6,16 +6,16 @@
 DSParts.docs.push({
   'bar-chart': {
     purpose: 'Lets people compare and rank amounts across categories at a glance, see totals and their make-up, or see how one measure is distributed.',
-    anatomy: ['Frame — the title, the description and the data grid (ChartFrame) (required)', 'Bars — one per category and series, from the zero line (required)', 'Category axis — the names before the bars, or the periods under the columns (required)',
+    anatomy: ['Frame — the title, the description and the data table (ChartFrame) (required)', 'Bars — one per category and series, from the zero line (required)', 'Category axis — the names before the bars, or the periods under the columns (required)',
       'Value axis — the round ticks from zero, in the data font, with grid lines across (required)', 'Legend — the series in their stacking order (two series or more)', 'Value labels — at the bars’ ends, the stacks’ totals or inside the shares (showValues)',
       'Tooltip — the bar’s or the category’s values under the pointer', 'Bins — touching columns of equal width on round edges (histogram)'],
     behavior: { pointer: 'Hover a bar: the tooltip shows its value; on stacked and percent bars, every series of its category with its share.', keyboard: 'The chart is one image; Tab reaches “Show the data”, whose table lists every value. Interactive legends are toggles in the Tab order.', focus: 'Only the legend’s toggles and the data line take focus.', responsive: 'The plot fills its container’s width; the room for category names and value labels comes from their length.', motion: 'None: the bars are drawn at once.', loading: 'Keep the frame with its title and a Skeleton in the plot until the data arrives.', error: 'Say in the plot’s place that the data could not be loaded, with a way to try again; never an empty axis.' },
-    a11y: { name: 'The title names the chart: it is the image’s accessible name; the description is its description.', announce: 'The marks are hidden from assistive technology; the data grid (one click away) carries every value.', focus: 'Nothing in the plot takes focus.', contrast: 'Bars use the data-viz scales, 3:1 against the surface; the series are named in the legend and the table, so color is not the only cue.', motion: 'Nothing moves.' },
+    a11y: { name: 'The title names the chart: it is the image’s accessible name; the description is its description.', announce: 'The marks are hidden from assistive technology; the data table (one click away) carries every value.', focus: 'Nothing in the plot takes focus.', contrast: 'Bars use the data-viz scales, 3:1 against the surface; the series are named in the legend and the table, so color is not the only cue.', motion: 'Nothing moves.' },
     content: { labels: 'Title the chart with what it answers or shows; label the value axis with the measure and its unit (“Storage (GB)”).', actions: 'None in the chart.', errors: 'Say what could not be loaded.', localization: 'Numbers, percentages and range edges follow the reader’s locale (formatNumber, formatPercent); words come from strings.' }
   },
   'combo-chart': {
     purpose: 'Shows how two related measures move together over the same categories, such as an amount and its rate, or actuals against a target.',
-    anatomy: ['Frame — the title, the description and the data grid (required)', 'Columns — the main measure, from zero (required)', 'Line and points — the second measure (required)',
+    anatomy: ['Frame — the title, the description and the data table (required)', 'Columns — the main measure, from zero (required)', 'Line and points — the second measure (required)',
       'Start axis — the columns’ value axis, titled with its unit (required)', 'End axis — the line’s own axis (axis="dual"), titled with its unit', 'Legends — the columns’ (square swatches) and the lines’ (line swatches)', 'Tooltip — every value at the category under the pointer, with a crosshair'],
     behavior: { pointer: 'Hover anywhere over a category: a crosshair and one tooltip with every series’ value.', keyboard: 'Tab reaches “Show the data”, the table of every value.', focus: 'Nothing in the plot takes focus.', responsive: 'The plot fills its width; both axes keep room for their labels and titles.', motion: 'None.', loading: 'The frame with a Skeleton in the plot.', error: 'Say what could not be loaded, in the plot’s place.' },
     a11y: { name: 'The title is the image’s name; the description says how the two measures relate.', announce: 'The table has a column per series, so both measures are read with their category.', focus: 'Nothing in the plot takes focus.', contrast: 'Columns and the line take different data-viz colors at 3:1; the legends name each with its kind.', motion: 'Nothing moves.' },
@@ -23,7 +23,7 @@ DSParts.docs.push({
   },
   'pie-chart': {
     purpose: 'Shows the share of a few parts in one whole, and with the donut a total or key value beside them.',
-    anatomy: ['Frame — the title, the description and the data grid (required)', 'Slices — one per part from 12 o’clock, largest first, clockwise, parted by a thin line (required)', 'Hole — the donut’s and the half ring’s center',
+    anatomy: ['Frame — the title, the description and the data table (required)', 'Slices — one per part from 12 o’clock, largest first, clockwise, parted by a thin line (required)', 'Hole — the donut’s and the half ring’s center',
       'Center value and label — the total or a key value and its words (donut, half)', 'Legend — each part with its share (required unless every slice is labeled)', 'Share labels — on large slices (showValues)', 'Other — the smallest parts grouped beyond six'],
     behavior: { pointer: 'Hover a slice: the tooltip shows its name, value and share.', keyboard: 'Tab reaches “Show the data”: every part’s value and share.', focus: 'Nothing in the plot takes focus.', responsive: 'The circle takes the plot’s height and stays centered; the legend goes beside it (legendPosition="end") on wide frames, under it on narrow ones.', motion: 'None.', loading: 'The frame with a Skeleton circle.', error: 'Say what could not be loaded, in the plot’s place.' },
     a11y: { name: 'The title is the image’s name; the description gives the main share in words (“Videos take more than half”).', announce: 'The legend is real text with each part’s share; the table lists every value.', focus: 'Nothing in the plot takes focus.', contrast: 'Slices use the data-viz scales and the thin surface line between them; shares are written in the legend, so color is not the only cue.', motion: 'Nothing moves.' },
@@ -31,7 +31,7 @@ DSParts.docs.push({
   },
   'bullet-chart': {
     purpose: 'Shows how key measures stand against their targets and agreed ranges, in far less room than a gauge.',
-    anatomy: ['Frame — the title, the description and the data grid (required)', 'Ranges — up to three neutral bands from zero: poor, fair, good (required)', 'Value bar — the measure’s value, a third of the band (required)',
+    anatomy: ['Frame — the title, the description and the data table (required)', 'Ranges — up to three neutral bands from zero: poor, fair, good (required)', 'Value bar — the measure’s value, a third of the band (required)',
       'Target — a line across the bar', 'Names — the measures before the rows or under the columns (required)', 'Value axis — round ticks from zero, the data font (required)'],
     behavior: { pointer: 'Hover a measure: the tooltip gives its value, its target and the range it is in.', keyboard: 'Tab reaches “Show the data”: value, target and ranges per measure.', focus: 'Nothing in the plot takes focus.', responsive: 'Rows share the plot’s height; give a tall frame (size "lg") for many measures.', motion: 'None.', loading: 'The frame with a Skeleton in the plot.', error: 'Say what could not be loaded, in the plot’s place.' },
     a11y: { name: 'The title is the image’s name; the description says which measures meet their targets.', announce: 'The table names the range each value is in, so the bands’ shades are never the only cue.', focus: 'Nothing in the plot takes focus.', contrast: 'The value bar keeps 3:1 against every range shade; the target is a line in the default content color.', motion: 'Nothing moves.' },
@@ -39,7 +39,7 @@ DSParts.docs.push({
   },
   'box-plot': {
     purpose: 'Compares the center and spread of several distributions compactly, with their outliers.',
-    anatomy: ['Frame — the title, the description (with the whisker rule) and the data grid (required)', 'Box — the first to the third quartile (required)', 'Median — a line across the box (required)',
+    anatomy: ['Frame — the title, the description (with the whisker rule) and the data table (required)', 'Box — the first to the third quartile (required)', 'Median — a line across the box (required)',
       'Whiskers and caps — the lowest and highest values within 1.5 × the box (required)', 'Outliers — the values beyond the whiskers, as points', 'Axes — the groups and the shared value axis (required)'],
     behavior: { pointer: 'Hover a group: the tooltip lists its maximum, quartiles, median and minimum.', keyboard: 'Tab reaches “Show the data”: the five numbers, the outliers and the count per group.', focus: 'Nothing in the plot takes focus.', responsive: 'Groups share the plot’s width (vertical) or height (horizontal).', motion: 'None.', loading: 'The frame with a Skeleton in the plot.', error: 'Say what could not be loaded, in the plot’s place.' },
     a11y: { name: 'The title is the image’s name; the description says what the boxes show and how whiskers are drawn.', announce: 'The table gives every summary in words and numbers.', focus: 'Nothing in the plot takes focus.', contrast: 'The box is a data-viz color at 3:1; the median crosses it in the surface color.', motion: 'Nothing moves.' },
@@ -47,7 +47,7 @@ DSParts.docs.push({
   },
   'radar-chart': {
     purpose: 'Shows the profile of one item, or two or three compared, across several measures on one scale.',
-    anatomy: ['Frame — the title, the description and the data grid (required)', 'Spokes — one per measure, from zero at the center (required)', 'Rings — the scale’s round ticks, with their values (required)',
+    anatomy: ['Frame — the title, the description and the data table (required)', 'Spokes — one per measure, from zero at the center (required)', 'Rings — the scale’s round ticks, with their values (required)',
       'Shapes — each item’s outline and light area (required)', 'Points — each value, the tooltip’s targets', 'Measure names — at the spokes’ ends (required)', 'Legend — the items (compare)'],
     behavior: { pointer: 'Hover a point: the tooltip shows the item and the measure’s value.', keyboard: 'Tab reaches “Show the data”: a row per measure, a column per item.', focus: 'Nothing in the plot takes focus.', responsive: 'The web takes the plot’s height and stays centered; names keep their room at the sides.', motion: 'None.', loading: 'The frame with a Skeleton in the plot.', error: 'Say what could not be loaded, in the plot’s place.' },
     a11y: { name: 'The title is the image’s name; the description names the strongest and weakest measures.', announce: 'The table lists every value by measure and item.', focus: 'Nothing in the plot takes focus.', contrast: 'Outlines take the data-viz colors at 3:1; areas are light so overlaps stay visible; items are named in the legend.', motion: 'Nothing moves.' },
@@ -55,7 +55,7 @@ DSParts.docs.push({
   },
   'sankey-diagram': {
     purpose: 'Shows how a quantity splits and merges as it flows through stages, from where it comes to where it ends up.',
-    anatomy: ['Frame — the title, the description and the data grid of flows (required)', 'Nodes — a bar per source, stage and outcome, in columns (required)', 'Bands — the flows between nodes, their widths the amounts (required)',
+    anatomy: ['Frame — the title, the description and the data table of flows (required)', 'Nodes — a bar per source, stage and outcome, in columns (required)', 'Bands — the flows between nodes, their widths the amounts (required)',
       'Names and totals — beside each node, totals in the data font', 'Tooltip — the flow or node under the pointer'],
     behavior: { pointer: 'Hover a band: it darkens and the tooltip says “Source → Target” with its amount. Hover a node: its bands darken and the tooltip gives its total.', keyboard: 'Tab reaches “Show the data”: every flow with its source, target and value.', focus: 'Nothing in the plot takes focus.', responsive: 'Columns spread over the plot’s width; give it a large frame (size "lg", the default).', motion: 'None.', loading: 'The frame with a Skeleton in the plot.', error: 'Say what could not be loaded, in the plot’s place.' },
     a11y: { name: 'The title is the image’s name; the description gives the main flow in words.', announce: 'The table lists every flow, so the bands’ widths and colors are never the only source.', focus: 'Nothing in the plot takes focus.', contrast: 'Nodes use the data-viz scales at 3:1; names have a halo in the surface color over the bands.', motion: 'Nothing moves.' },
@@ -63,7 +63,7 @@ DSParts.docs.push({
   },
   'timeline-chart': {
     purpose: 'Shows when events happened, how long periods lasted and how they overlap, on one time scale.',
-    anatomy: ['Frame — the title, the description and the data grid (required)', 'Time axis — calendar steps, the data font (required)', 'Lanes — one track per asset, team or category, named on the start side',
+    anatomy: ['Frame — the title, the description and the data table (required)', 'Time axis — calendar steps, the data font (required)', 'Lanes — one track per asset, team or category, named on the start side',
       'Events — points at their dates', 'Periods — bars from start to end', 'Names — above each mark', 'Today — a reference line labeled Today'],
     behavior: { pointer: 'Hover an item: the tooltip gives its name and its full dates.', keyboard: 'Tab reaches “Show the data”: every item with its lane, start and end.', focus: 'Nothing in the plot takes focus.', responsive: 'The time axis fills the plot’s width and picks its calendar step from the span; lanes share the height.', motion: 'None.', loading: 'The frame with a Skeleton in the plot.', error: 'Say what could not be loaded, in the plot’s place.' },
     a11y: { name: 'The title is the image’s name; the description says what the timeline shows.', announce: 'The table carries every date in full.', focus: 'Nothing in the plot takes focus.', contrast: 'Marks use the lanes’ data-viz colors at 3:1; names have a halo.', motion: 'Nothing moves.' },
