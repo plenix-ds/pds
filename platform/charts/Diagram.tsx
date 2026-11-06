@@ -43,36 +43,57 @@ import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatList } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.tsx';
+import type { ChartFrameProps } from './ChartFrame.tsx';
 import { ChartTooltip, chartTooltipText } from './parts/ChartTooltip.tsx';
 import { useChartInteraction } from './interaction.ts';
-import { graphLayers, graphNeighbors, useGraphView, directionalMove } from './NetworkGraph.jsx';
+import { graphLayers, graphNeighbors, useGraphView, directionalMove } from './NetworkGraph.tsx';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 
 const SHAPES = ['process', 'decision', 'terminal', 'data'];
 // SVG geometry, in pixels on the 4px grid: each shape's size, the gaps between layers and across them, a group's padding
-const SIZE = { process: [144, 48], decision: [144, 64], terminal: [128, 40], data: [144, 48], box: [160, 64] };
+const SIZE: any = { process: [144, 48], decision: [144, 64], terminal: [128, 40], data: [144, 48], box: [160, 64] };
 const GAP_ALONG = 48, GAP_ACROSS = 32, GROUP_PAD = 16, GROUP_HEAD = 24, INSET = 16, SLANT = 12;
 
-function outline(shape, w, h) {
+function outline(shape: any, w: any, h: any) {
   const x0 = -w / 2, y0 = -h / 2;
   if (shape === 'decision') return 'M0,' + y0 + 'L' + -x0 + ',0L0,' + -y0 + 'L' + x0 + ',0Z';
   if (shape === 'data') return 'M' + (x0 + SLANT) + ',' + y0 + 'L' + -x0 + ',' + y0 + 'L' + (-x0 - SLANT) + ',' + -y0 + 'L' + x0 + ',' + -y0 + 'Z';
   return null;
 }
 
+/** @public one node: a step, decision, terminal or data shape (flowchart), or a box with a detail line */
+export type DiagramNode = { id: string | number; label: string; shape?: 'process' | 'decision' | 'terminal' | 'data'; detail?: string; group?: string | number };
+/** @public one flow, in its direction; the label names a branch */
+export type DiagramEdge = { source: string | number; target: string | number; label?: string };
+/** @public a container drawn around its nodes (variant boxes) */
+export type DiagramGroup = { id: string | number; label: string };
+/** @public the prop type (ADR 0011) */
+export type DiagramProps = Pick<ChartFrameProps, 'title' | 'description' | 'size' | 'margin' | 'className'> & {
+  nodes?: DiagramNode[];
+  edges?: DiagramEdge[];
+  variant?: 'flowchart' | 'boxes';
+  groups?: DiagramGroup[];
+  direction?: 'down' | 'right';
+  interactive?: boolean;
+  /** a click or Enter on a shape */
+  onSelect?(selection: { c: number; node: DiagramNode }): void;
+  strings?: Record<string, string>;
+  frameStrings?: ChartFrameProps['strings'];
+  interactionStrings?: Record<string, string>;
+};
 export function Diagram({ title, description, nodes = [], edges = [], variant = 'flowchart', groups, direction = 'down', interactive = true, size = 'lg', margin,
-  onSelect, strings, frameStrings, interactionStrings, className }) {
-  const t = useStrings('chart.diagram', strings);
+  onSelect, strings, frameStrings, interactionStrings, className }: DiagramProps) {
+  const t: any = useStrings('chart.diagram', strings);
   const uid = 'plx-diagram' + React.useId().replace(/[^a-zA-Z0-9]/g, '');
   const boxes = variant === 'boxes';
   const right = direction === 'right';
-  const shapeOf = (n) => (boxes ? 'box' : SHAPES.indexOf(n.shape) >= 0 ? n.shape : 'process');
-  const at = {}; nodes.forEach((n, i) => { at[n.id] = i; });
+  const shapeOf = (n: any) => (boxes ? 'box' : SHAPES.indexOf(n.shape) >= 0 ? n.shape : 'process');
+  const at: any = {}; nodes.forEach((n, i) => { at[n.id] = i; });
   const nb = React.useMemo(() => graphNeighbors(nodes, edges), [nodes, edges]);
   const outs = nodes.map((n) => edges.filter((e) => e.source === n.id && at[e.target] !== undefined));
   const ins = nodes.map((n) => edges.filter((e) => e.target === n.id && at[e.source] !== undefined));
-  const nextText = (i) => (outs[i].length ? formatList(outs[i].map((e) => nodes[at[e.target]].label + (e.label ? ' (' + e.label + ')' : ''))) : t.end);
-  const kindOf = (n) => t[shapeOf(n)];
+  const nextText = (i: any) => (outs[i].length ? formatList(outs[i].map((e) => nodes[at[e.target]].label + (e.label ? ' (' + e.label + ')' : ''))) : t.end);
+  const kindOf = (n: any) => t[shapeOf(n)];
 
   // the layout in diagram units: layers along the direction, the nodes of a layer side by side, centered
   const layout = React.useMemo(() => {
@@ -87,7 +108,7 @@ export function Diagram({ title, description, nodes = [], edges = [], variant = 
   }, [nodes, edges, right, boxes, groups]);   // eslint-disable-line react-hooks/exhaustive-deps
 
   const gv = useGraphView({ enabled: interactive, strings });
-  const fitted = React.useRef({ key: '', k: 1, x: 0, y: 0 });
+  const fitted = React.useRef<any>({ key: '', k: 1, x: 0, y: 0 });
   const ia = useChartInteraction({
     rows: 1, columns: nodes.length, mode: 'point', select: typeof onSelect === 'function', strings: interactionStrings,
     onSelect: (cell) => onSelect && onSelect(Object.assign({ node: nodes[cell.c] }, cell)),
@@ -100,30 +121,30 @@ export function Diagram({ title, description, nodes = [], edges = [], variant = 
       return directionalMove(layout.p, nb, a, key);
     },
   });
-  const pos = (i) => { const v = gv.view, f = fitted.current; return { x: f.x + v.x + layout.p[i].x * f.k * v.k, y: f.y + v.y + layout.p[i].y * f.k * v.k }; };
-  const hit = (px, py) => {
+  const pos = (i: any) => { const v = gv.view, f = fitted.current; return { x: f.x + v.x + layout.p[i].x * f.k * v.k, y: f.y + v.y + layout.p[i].y * f.k * v.k }; };
+  const hit = (px: any, py: any) => {
     let best = null;
     nodes.forEach((n, i) => { const c = pos(i), s = SIZE[shapeOf(n)], k = fitted.current.k * gv.view.k; if (Math.abs(px - c.x) <= (s[0] / 2) * k && Math.abs(py - c.y) <= (s[1] / 2) * k) best = i; });
     return best;
   };
-  const iaz = gv.wrap(ia, (px, py) => hit(px, py) !== null);
+  const iaz = gv.wrap(ia, (px: any, py: any) => hit(px, py) !== null);
   const table = {
     columns: [{ title: t.step, field: 's', kind: 'name', rowLabel: true }, { title: t.kind, field: 'k', kind: 'name' }].concat(groups ? [{ title: t.group, field: 'g', kind: 'name' }] : [], [{ title: t.next, field: 'n', kind: 'name' }]),
     data: nodes.map((n, i) => ({ id: i + 1, s: n.label + (n.detail ? ' (' + n.detail + ')' : ''), k: kindOf(n), g: groups ? ((groups.find((g) => g.id === n.group) || {}).label || '') : '', n: nextText(i) })),
   };
 
-  const draw = ({ inner }) => {
+  const draw = ({ inner }: any) => {
     gv.size.current = inner;
     // its own size, smaller only to fit a narrow plot (the plot is as tall as the diagram: fitHeight), centered
     const k = Math.min(1, inner.width / layout.width);
     fitted.current = { k, x: (inner.width - layout.width * k) / 2, y: (inner.height - layout.height * k) / 2 };
-    ia.register({ nearest: (px, py) => { const i = hit(px, py); return i === null ? null : { r: 0, c: i }; } });
+    ia.register({ nearest: (px: any, py: any) => { const i = hit(px, py); return i === null ? null : { r: 0, c: i }; } });
     const P = layout.p;
     const a = ia.active ? ia.active.c : null, sel = ia.selected ? ia.selected.c : null;
-    const near = (i) => a === null || i === a || nb[a].indexOf(i) >= 0;
-    const half = (i) => SIZE[shapeOf(nodes[i])].map((v) => v / 2);
+    const near = (i: any) => a === null || i === a || nb[a].indexOf(i) >= 0;
+    const half = (i: any) => SIZE[shapeOf(nodes[i])].map((v: any) => v / 2);
     const tip = a !== null ? pos(a) : null;
-    const groupBoxes = (groups || []).map((g) => {
+    const groupBoxes: any[] = (groups || []).map((g) => {
       const idx = nodes.map((n, i) => (n.group === g.id ? i : -1)).filter((i) => i >= 0); if (!idx.length) return null;
       let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
       idx.forEach((i) => { const hs = half(i); x0 = Math.min(x0, P[i].x - hs[0]); x1 = Math.max(x1, P[i].x + hs[0]); y0 = Math.min(y0, P[i].y - hs[1]); y1 = Math.max(y1, P[i].y + hs[1]); });

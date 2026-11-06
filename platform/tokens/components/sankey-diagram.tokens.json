@@ -1,5 +1,5 @@
 {
-  "$description": "SankeyDiagram (platform/charts/SankeyDiagram.jsx, library wave 9, lane B): its component tokens. Nodes are the frame's marks (chart-*); a band is its source's data color at an opacity of the theme's scale; names and totals are labels with a halo. No new color: existing roles.",
+  "$description": "SankeyDiagram (platform/charts/SankeyDiagram.tsx, library wave 9, lane B): its component tokens. Nodes are the frame's marks (chart-*); a band is its source's data color at an opacity of the theme's scale; names and totals are labels with a halo. No new color: existing roles.",
   "plx-comp": {
     "sankey-diagram-link-opacity": { "$value": "{plx-sys.opacity-low}", "$type": "number", "$description": "Sankey diagram: a band's opacity at rest, so the bands' crossings stay visible." },
     "sankey-diagram-link-active-opacity": { "$value": "{plx-sys.opacity-mid}", "$type": "number", "$description": "Sankey diagram: a band's opacity when it, or a node it joins, is under the pointer." },
