@@ -208,5 +208,25 @@
     "loading": "n/a(a parent loading its children shows a status row from MillerColumns; stories arrive with Storybook, P0-11)",
     "selected": "n/a(stories arrive with Storybook, P0-11)",
     "error": "n/a(invalid is the is-invalid state set by its Field; stories arrive with Storybook, P0-11)"
+  },
+  "Calendar": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(stories arrive with Storybook, P0-11)",
+    "loading": "n/a(a calendar draws dates; nothing loads)",
+    "selected": "n/a(stories arrive with Storybook, P0-11)",
+    "error": "n/a(a calendar has no value to validate; a refused day is its disabled state)"
+  },
+  "DatePicker": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(stories arrive with Storybook, P0-11)",
+    "loading": "n/a(a date picker has nothing to load)",
+    "selected": "n/a(stories arrive with Storybook, P0-11)",
+    "error": "n/a(invalid is the is-invalid state set by its Field; stories arrive with Storybook, P0-11)"
   }
 }

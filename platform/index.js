@@ -192,7 +192,7 @@ export { useSearchHistory } from './hooks/useSearchHistory.ts';
 export { InlineEdit } from './components/InlineEdit/InlineEdit.tsx';
 export { RichTextEditor } from './components/RichTextEditor/RichTextEditor.jsx';
 export { cleanRichText } from './components/RichTextEditor/RichTextEditor.jsx';
-export { Calendar } from './components/Calendar/Calendar.jsx';
+export { Calendar } from './components/Calendar/Calendar.tsx';
 export { DatePicker } from './components/DatePicker/DatePicker.jsx';
 export { CountrySelect } from './components/CountrySelect/CountrySelect.tsx';
 export { ProgressSteps } from './components/ProgressSteps/ProgressSteps.tsx';

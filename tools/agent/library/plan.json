@@ -1490,7 +1490,7 @@
       "platform/components/CountrySelect/CountrySelect.jsx",
       "platform/components/CountrySelect/country-select.css",
       "platform/tokens/components/country-select.tokens.json",
-      "platform/components/Calendar/Calendar.jsx",
+      "platform/components/Calendar/Calendar.tsx",
       "platform/components/Calendar/calendar.css",
       "platform/tokens/components/calendar.tokens.json",
       "platform/components/DatePicker/DatePicker.jsx",
@@ -5202,7 +5202,7 @@
    "wave": 7,
    "lane": "A",
    "files": [
-    "platform/components/Calendar/Calendar.jsx",
+    "platform/components/Calendar/Calendar.tsx",
     "platform/components/Calendar/calendar.css",
     "platform/tokens/components/calendar.tokens.json"
    ],
@@ -13242,7 +13242,7 @@
    "target": "Calendar",
    "targetKind": "component",
    "files": [
-    "platform/components/Calendar/Calendar.jsx",
+    "platform/components/Calendar/Calendar.tsx",
     "platform/components/Calendar/calendar.css",
     "platform/tokens/components/calendar.tokens.json"
    ],

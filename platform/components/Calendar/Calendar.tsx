@@ -60,89 +60,125 @@ import { Button } from '../Button/Button.tsx';
 import ChevronLeftIcon from 'plenix-platform/icons/plenix/chevron-left';
 import ChevronRightIcon from 'plenix-platform/icons/plenix/chevron-right';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
 
 /* ---- calendar dates: "YYYY-MM-DD" strings; arithmetic on local dates at noon, so no daylight-saving change moves a day */
-const pad = (n, w) => String(n).padStart(w || 2, '0');
-export function parseIsoDate(s) {
+const pad = (n: number, w?: number) => String(n).padStart(w || 2, '0');
+export function parseIsoDate(s: unknown): Date | null {
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(s || ''));
   if (!m) return null;
   const d = new Date(+m[1], +m[2] - 1, +m[3], 12);
   return d.getMonth() === +m[2] - 1 ? d : null;
 }
-function isoDate(d) { return d ? d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) : ''; }
-export function addDays(iso, n) { const d = parseIsoDate(iso); if (!d) return iso; d.setDate(d.getDate() + n); return isoDate(d); }
-export function addMonths(iso, n) {
+function isoDate(d: Date | null) { return d ? d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) : ''; }
+export function addDays(iso: string, n: number): string { const d = parseIsoDate(iso); if (!d) return iso; d.setDate(d.getDate() + n); return isoDate(d); }
+export function addMonths(iso: string, n: number): string {
   const d = parseIsoDate(iso); if (!d) return iso;
   const day = d.getDate(); d.setDate(1); d.setMonth(d.getMonth() + n);
   const last = new Date(d.getFullYear(), d.getMonth() + 1, 0, 12).getDate();
   d.setDate(Math.min(day, last));
   return isoDate(d);
 }
+const dateOf = (s: string): Date => parseIsoDate(s) as Date;
 export function todayIso() { return isoDate(new Date()); }
-const monthOf = (iso) => String(iso).slice(0, 7);
-const monthStart = (ym) => ym + '-01';
-const shiftMonth = (ym, n) => monthOf(addMonths(monthStart(ym), n));
+const monthOf = (iso: string) => String(iso).slice(0, 7);
+const monthStart = (ym: string) => ym + '-01';
+const shiftMonth = (ym: string, n: number) => monthOf(addMonths(monthStart(ym), n));
 // the locale's first day of the week (0 Sunday … 6 Saturday)
-function firstDayOf(locale) {
+function firstDayOf(locale: string) {
   try {
     const l = new Intl.Locale(locale);
-    const info = typeof l.getWeekInfo === 'function' ? l.getWeekInfo() : l.weekInfo;
+    const wl = l as unknown as { getWeekInfo?: () => { firstDay?: number }; weekInfo?: { firstDay?: number } };
+    const info = typeof wl.getWeekInfo === 'function' ? wl.getWeekInfo() : wl.weekInfo;
     if (info && info.firstDay) return info.firstDay % 7;
   } catch (e) { /* an unknown locale */ }
   return /-US$|^en$/i.test(locale) ? 0 : 1;
 }
 // the ISO 8601 week of the week holding this date (the week of its Thursday)
-function isoWeek(d) {
+function isoWeek(d: Date) {
   const t = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 12);
   t.setDate(t.getDate() + 3 - ((t.getDay() + 6) % 7));
   const jan4 = new Date(t.getFullYear(), 0, 4, 12);
-  return 1 + Math.round(((t - jan4) / 86400000 - 3 + ((jan4.getDay() + 6) % 7)) / 7);
+  return 1 + Math.round(((t.getTime() - jan4.getTime()) / 86400000 - 3 + ((jan4.getDay() + 6) % 7)) / 7);
 }
 // the weeks of a month: rows of seven days, from the week holding its first day to the week holding its last
-function weeksOf(ym, first) {
-  const start = parseIsoDate(monthStart(ym));
+function weeksOf(ym: string, first: number) {
+  const start = parseIsoDate(monthStart(ym)) as Date;
   start.setDate(start.getDate() - ((start.getDay() - first + 7) % 7));
-  const lastDay = parseIsoDate(addDays(monthStart(shiftMonth(ym, 1)), -1));
-  const rows = [];
+  const lastDay = parseIsoDate(addDays(monthStart(shiftMonth(ym, 1)), -1)) as Date;
+  const rows: string[][] = [];
   const d = new Date(start);
   do {
-    const week = [];
+    const week: string[] = [];
     for (let i = 0; i < 7; i++) { week.push(isoDate(d)); d.setDate(d.getDate() + 1); }
     rows.push(week);
   } while (d <= lastDay);
   return rows;
 }
 
-export const Calendar = React.forwardRef(function Calendar({ mode = 'single', value, defaultValue, onChange, month, defaultMonth, onMonthChange,
+/** @public a chosen range (ADR 0011) */
+export type CalendarRange = { start: string | null; end: string | null };
+/** @public the prop type (ADR 0011) */
+export type CalendarProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> & {
+  /** "single" (default) | "range" */
+  mode?: 'single' | 'range';
+  /** the chosen day "YYYY-MM-DD" (single) or { start, end } (range), controlled */
+  value?: string | null | CalendarRange;
+  defaultValue?: string | null | CalendarRange;
+  onChange?: (next: string | CalendarRange) => void;
+  /** the month shown "YYYY-MM", controlled */
+  month?: string;
+  defaultMonth?: string;
+  onMonthChange?: (month: string) => void;
+  /** 1 (default) or 2 months side by side */
+  months?: 1 | 2;
+  weekNumbers?: boolean;
+  /** the first and last day that can be chosen, "YYYY-MM-DD" */
+  min?: string;
+  max?: string;
+  isDateDisabled?: (iso: string) => boolean;
+  /** today as "YYYY-MM-DD" (default the real today) */
+  today?: string;
+  /** 0 Sunday … 6 Saturday (default the locale's) */
+  firstDayOfWeek?: number;
+  locale?: string;
+  label?: string;
+  /** receives the day button that has the Tab stop */
+  focusRef?: React.MutableRefObject<HTMLButtonElement | null>;
+  strings?: Catalog | null;
+  className?: string;
+};
+
+export const Calendar = React.forwardRef<HTMLDivElement | null, CalendarProps>(function Calendar({ mode = 'single', value, defaultValue, onChange, month, defaultMonth, onMonthChange,
   months = 1, weekNumbers = false, min, max, isDateDisabled, today: todayProp, firstDayOfWeek, locale: localeProp, label, focusRef,
   strings, className, ...rest }, ref) {
-  const t = useStrings('calendar', strings);
+  const t = useStrings('calendar', strings) as Record<string, string>;
   const locale = numeralLocale(localeProp || formatLocale());
   const today = todayProp || todayIso();
   const range = mode === 'range';
-  const [ownValue, setOwnValue] = React.useState(defaultValue !== undefined ? defaultValue : (range ? { start: null, end: null } : null));
+  const [ownValue, setOwnValue] = React.useState<string | null | CalendarRange>(defaultValue !== undefined ? defaultValue : (range ? { start: null, end: null } : null));
   const current = value !== undefined ? value : ownValue;
-  const sel = range ? (current || { start: null, end: null }) : null;
-  const anchorDate = range ? (sel.start || null) : (current || null);
+  const sel = (range ? (current || { start: null, end: null }) : null) as CalendarRange;
+  const anchorDate = (range ? (sel.start || null) : (current || null)) as string | null;
   const first = firstDayOfWeek !== undefined ? firstDayOfWeek : firstDayOf(locale);
   const count = months === 2 ? 2 : 1;
   const [ownMonth, setOwnMonth] = React.useState(defaultMonth || monthOf(anchorDate || today));
   const shown = month || ownMonth;
-  const setShown = (ym) => { if (month === undefined) setOwnMonth(ym); if (onMonthChange) onMonthChange(ym); };
-  const [focused, setFocused] = React.useState(null);   // the day with the Tab stop once people move in the grid
-  const [hover, setHover] = React.useState(null);       // the pointer's or the focused day, for the open range
+  const setShown = (ym: string) => { if (month === undefined) setOwnMonth(ym); if (onMonthChange) onMonthChange(ym); };
+  const [focused, setFocused] = React.useState<string | null>(null);   // the day with the Tab stop once people move in the grid
+  const [hover, setHover] = React.useState<string | null>(null);       // the pointer's or the focused day, for the open range
   const moveFocus = React.useRef(false);
-  const root = React.useRef(null);
-  React.useImperativeHandle(ref, () => root.current);
+  const root = React.useRef<HTMLDivElement | null>(null);
+  React.useImperativeHandle(ref, () => root.current as HTMLDivElement);
 
-  const off = (iso) => (min && iso < min) || (max && iso > max) || (isDateDisabled ? !!isDateDisabled(iso) : false);
-  const visible = (iso) => { const ym = monthOf(iso); return ym >= shown && ym <= shiftMonth(shown, count - 1); };
+  const off = (iso: string) => (min && iso < min) || (max && iso > max) || (isDateDisabled ? !!isDateDisabled(iso) : false);
+  const visible = (iso: string) => { const ym = monthOf(iso); return ym >= shown && ym <= shiftMonth(shown, count - 1); };
   // the Tab stop: the focused day when it is shown, else the chosen day, else today, else the first day of the month
   const stop = [focused, anchorDate, today].filter((d) => d && visible(d))[0] || monthStart(shown);
 
-  const choose = (iso) => {
+  const choose = (iso: string) => {
     if (off(iso)) return;
-    let next;
+    let next: string | CalendarRange;
     if (!range) next = iso;
     else if (!sel.start || sel.end) next = { start: iso, end: null };
     else if (iso < sel.start) next = { start: iso, end: null };
@@ -152,7 +188,7 @@ export const Calendar = React.forwardRef(function Calendar({ mode = 'single', va
     if (!visible(iso)) setShown(monthOf(iso));
     setFocused(iso);
   };
-  const goTo = (iso) => {
+  const goTo = (iso: string) => {
     if (min && iso < min) iso = min;
     if (max && iso > max) iso = max;
     if (!visible(iso)) setShown(iso < monthStart(shown) ? monthOf(iso) : shiftMonth(monthOf(iso), -(count - 1)));
@@ -163,14 +199,14 @@ export const Calendar = React.forwardRef(function Calendar({ mode = 'single', va
   React.useLayoutEffect(() => {
     if (!moveFocus.current || !root.current) return;
     moveFocus.current = false;
-    const el = root.current.querySelector('[data-plx-date="' + stop + '"]');
+    const el = root.current.querySelector<HTMLElement>('[data-plx-date="' + stop + '"]');
     if (el) el.focus();
   });
-  const onKeyDown = (e) => {
-    const from = e.target && e.target.getAttribute ? e.target.getAttribute('data-plx-date') : null;
+  const onKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
+    const from = e.target && (e.target as HTMLElement).getAttribute ? (e.target as HTMLElement).getAttribute('data-plx-date') : null;
     if (!from) return;
-    const pos = (parseIsoDate(from).getDay() - first + 7) % 7;
-    let next = null;
+    const pos = ((parseIsoDate(from) as Date).getDay() - first + 7) % 7;
+    let next: string;
     if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') next = addDays(from, arrowStep(e, e.currentTarget));
     else if (e.key === 'ArrowUp') next = addDays(from, -7);
     else if (e.key === 'ArrowDown') next = addDays(from, 7);
@@ -195,14 +231,14 @@ export const Calendar = React.forwardRef(function Calendar({ mode = 'single', va
   // the range drawn: the chosen one, or from the start to the pointer while the end is open
   const lo = range ? sel.start : null;
   const hi = range ? (sel.end || (sel.start && hover && hover > sel.start ? hover : null)) : null;
-  const inRange = (iso) => !!(lo && hi && iso > lo && iso < hi);
+  const inRange = (iso: string) => !!(lo && hi && iso > lo && iso < hi);
   const prevOff = min && shiftMonth(shown, -1) < monthOf(min);
   const nextOff = max && shiftMonth(shown, count) > monthOf(max);
   const uid = React.useId().replace(/[^a-zA-Z0-9]/g, '');
   const outside = count === 1;
-  const setRef = (iso) => (el) => { if (iso === stop && focusRef) focusRef.current = el; };
+  const setRef = (iso: string) => (el: HTMLButtonElement | null) => { if (iso === stop && focusRef) focusRef.current = el; };
 
-  const monthGrid = (ym, i) => {
+  const monthGrid = (ym: string, i: number) => {
     const titleId = 'plx-cal' + uid + '-' + i;
     const rows = weeksOf(ym, first);
     return (
@@ -210,7 +246,7 @@ export const Calendar = React.forwardRef(function Calendar({ mode = 'single', va
         <div className="plx-calendar__header">
           {i === 0 ? <Button variant="ghost" size="sm" iconOnly icon={ChevronLeftIcon} label={t.previous} className="plx-calendar__nav plx-calendar__nav--previous"
             disabled={!!prevOff} onClick={() => setShown(shiftMonth(shown, -1))} /> : <span className="plx-calendar__nav-space" aria-hidden="true" />}
-          <div id={titleId} className="plx-calendar__title" aria-live="polite">{monthName.format(parseIsoDate(monthStart(ym)))}</div>
+          <div id={titleId} className="plx-calendar__title" aria-live="polite">{monthName.format(dateOf(monthStart(ym)))}</div>
           {i === count - 1 ? <Button variant="ghost" size="sm" iconOnly icon={ChevronRightIcon} label={t.next} className="plx-calendar__nav plx-calendar__nav--next"
             disabled={!!nextOff} onClick={() => setShown(shiftMonth(shown, 1))} /> : <span className="plx-calendar__nav-space" aria-hidden="true" />}
         </div>
@@ -221,7 +257,7 @@ export const Calendar = React.forwardRef(function Calendar({ mode = 'single', va
           </div>
           {rows.map((row) => (
             <div key={row[0]} role="row" className="plx-calendar__row">
-              {weekNumbers ? <span role="rowheader" className="plx-calendar__week-number" aria-label={t.week + ' ' + weekNumber.format(isoWeek(parseIsoDate(row[3])))}>{weekNumber.format(isoWeek(parseIsoDate(row[3])))}</span> : null}
+              {weekNumbers ? <span role="rowheader" className="plx-calendar__week-number" aria-label={t.week + ' ' + weekNumber.format(isoWeek(dateOf(row[3])))}>{weekNumber.format(isoWeek(dateOf(row[3])))}</span> : null}
               {row.map((iso) => {
                 const own = monthOf(iso) === ym;
                 if (!own && !outside) return <span key={iso} role="gridcell" className="plx-calendar__cell plx-calendar__cell--empty" />;
@@ -234,12 +270,12 @@ export const Calendar = React.forwardRef(function Calendar({ mode = 'single', va
                     className={cx('plx-calendar__cell', own && between && 'is-in-range', own && isStart && hi && 'is-range-start', own && isEnd && 'is-range-end')}>
                     <button ref={setRef(iso)} type="button" data-plx-date={iso} tabIndex={iso === stop ? 0 : -1}
                       className={cx('plx-calendar__day', !own && 'is-outside', iso === today && 'is-today', chosen && 'is-selected', disabled && 'is-disabled')}
-                      aria-label={fullName.format(parseIsoDate(iso)) + (iso === today ? ', ' + t.today : '')} aria-current={iso === today ? 'date' : undefined}
+                      aria-label={fullName.format(dateOf(iso)) + (iso === today ? ', ' + t.today : '')} aria-current={iso === today ? 'date' : undefined}
                       aria-disabled={disabled || undefined}
                       onClick={() => { if (!own) setShown(monthOf(iso)); choose(iso); }}
                       onMouseEnter={() => { if (range && sel.start && !sel.end) setHover(iso); }}
                       onFocus={() => { setFocused(iso); if (range && sel.start && !sel.end) setHover(iso); }}>
-                      {dayNumber.format(parseIsoDate(iso))}
+                      {dayNumber.format(dateOf(iso))}
                     </button>
                   </span>
                 );
