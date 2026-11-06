@@ -51,7 +51,40 @@ import { useStrings, useLocale } from '../../providers/LocaleProvider.tsx';
 
 const HEIGHTS = ['sm', 'md', 'lg', 'fill'];
 
-function Row({ item }) {
+/** @public a ready-made row: { id, label, description, meta, icon } (ADR 0011) */
+export type VirtualListItem = { id?: string | number; label?: React.ReactNode; description?: React.ReactNode; meta?: React.ReactNode; icon?: string; [key: string]: unknown };
+/** @public rows under a header: { id, label, items } */
+export type VirtualListGroup = { id?: string | number; label?: React.ReactNode; items?: VirtualListItem[] };
+/** @public the handle a ref gives: jump to a row, or the scroll area */
+export type VirtualListHandle = { scrollToIndex: (index: number) => void; readonly element: HTMLElement | null };
+type VirtualListRow = { header: true; group: VirtualListGroup; n: number; item?: undefined } | { header?: false; item: VirtualListItem | undefined };
+/** @public the prop type (ADR 0011) */
+export type VirtualListProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & {
+  /** the list's accessible name (required: the scroll area is a Tab stop) */
+  label: string;
+  items?: VirtualListItem[];
+  groups?: VirtualListGroup[];
+  /** instead of items: how many rows there are; renderItem(undefined, index) draws each one */
+  count?: number;
+  renderItem?: (item: VirtualListItem | undefined, index: number) => React.ReactNode;
+  getKey?: (item: VirtualListItem | undefined, index: number) => string | number;
+  mode?: 'fixed' | 'variable';
+  height?: 'sm' | 'md' | 'lg' | 'fill';
+  showCount?: boolean;
+  loading?: boolean;
+  onEndReached?: () => void;
+  overscan?: number;
+  strings?: Record<string, unknown> | null;
+  className?: string;
+  unread?: (item: VirtualListItem | undefined) => boolean;
+  unreadKeys?: Array<string | number>;
+  onUnreadChange?: (keys: Array<string | number>, info: { unreadCount: number }) => void;
+  markReadOnOpen?: boolean;
+  readDelay?: number;
+  onItemOpen?: (item: VirtualListItem | undefined) => void;
+};
+
+function Row({ item }: { item: VirtualListItem | undefined }) {
   if (!item || typeof item !== 'object') return <span className="plx-virtual-list__text"><span className="plx-virtual-list__label">{String(item)}</span></span>;
   return (
     <>
@@ -65,28 +98,29 @@ function Row({ item }) {
   );
 }
 
-export const VirtualList = React.forwardRef(function VirtualList({ label, items, groups, count, renderItem, getKey, mode = 'fixed', height = 'md',
+export const VirtualList = React.forwardRef<VirtualListHandle, VirtualListProps>(function VirtualList({ label, items, groups, count, renderItem, getKey, mode = 'fixed', height = 'md',
   showCount = false, loading = false, onEndReached, overscan, strings, className, unread: unreadPredicate, unreadKeys, onUnreadChange, markReadOnOpen, readDelay, onItemOpen, ...rest }, ref) {
   const t = useStrings('virtualList', strings);
   const loc = useLocale();
   // "N items": plural messages in the catalog; an app's own function in strings still wins
-  const countText = (n) => (typeof t.count === 'function' ? t.count(n) : loc.t('virtualList.count', { count: n, n: formatNumber(n) }));
-  const groupText = (n) => (typeof t.group === 'function' ? t.group(n) : loc.t('virtualList.group', { count: n, n: formatNumber(n) }));
+  const words = t as Record<string, string>;   // the catalog's words (strings, plus two that an app may give as functions)
+  const countText = (n: number): string => (typeof t.count === 'function' ? (t.count as (n: number) => string)(n) : loc.t('virtualList.count', { count: n, n: formatNumber(n) }));
+  const groupText = (n: number): string => (typeof t.group === 'function' ? (t.group as (n: number) => string)(n) : loc.t('virtualList.group', { count: n, n: formatNumber(n) }));
   // the rows in order: a group's header, then its items
-  const rows = React.useMemo(() => {
+  const rows = React.useMemo((): VirtualListRow[] | null => {
     if (groups) {
-      const out = [];
+      const out: VirtualListRow[] = [];
       groups.forEach((g) => { const list = g.items || []; out.push({ header: true, group: g, n: list.length }); list.forEach((it) => out.push({ item: it })); });
       return out;
     }
     return items ? items.map((it) => ({ item: it })) : null;
   }, [items, groups]);
   const unreadRecords=React.useMemo(()=>rows?rows.filter(row=>!row.header).map(row=>row.item):[],[rows]);
-  const unreadKey=React.useCallback(item=>getKey?getKey(item,unreadRecords.indexOf(item)):item?.id??unreadRecords.indexOf(item),[getKey,unreadRecords]);
+  const unreadKey=React.useCallback((item: VirtualListItem | undefined)=>getKey?getKey(item,unreadRecords.indexOf(item)):item?.id??unreadRecords.indexOf(item),[getKey,unreadRecords]);
   const unread=useUnread(unreadRecords,unreadKey,{unread:unreadPredicate,unreadKeys,onUnreadChange,markReadOnOpen,readDelay});
   const total = rows ? rows.length : Math.max(0, count || 0);
-  const itemCount = groups ? groups.reduce((n, g) => n + (g.items || []).length, 0) : total;
-  const sticky = React.useMemo(() => (groups && rows ? rows.reduce((l, r, i) => (r.header ? l.concat(i) : l), []) : undefined), [groups, rows]);
+  const itemCount = groups ? groups.reduce((n: number, g) => n + (g.items || []).length, 0) : total;
+  const sticky = React.useMemo(() => (groups && rows ? rows.reduce<number[]>((l, r, i) => (r.header ? l.concat(i) : l), []) : undefined), [groups, rows]);
   const v = useVirtualizer({ count: total, mode: mode === 'variable' ? 'measured' : 'fixed', overscan, sticky });
   React.useImperativeHandle(ref, () => ({ scrollToIndex: v.scrollToIndex, get element() { return v.viewportRef.current; } }), [v.scrollToIndex]);
 
@@ -97,7 +131,7 @@ export const VirtualList = React.forwardRef(function VirtualList({ label, items,
     if (v.range.end >= total && asked.current !== total) { asked.current = total; onEndReached(); }
   }, [v.range.end, total, loading]);
 
-  const draw = (index) => {
+  const draw = (index: number) => {
     const r = rows ? rows[index] : null;
     if (r && r.header) {
       return (
@@ -110,7 +144,7 @@ export const VirtualList = React.forwardRef(function VirtualList({ label, items,
     const item = r ? r.item : undefined;
     const key = getKey ? getKey(item, index) : item && typeof item === 'object' && item.id !== undefined ? item.id : index;
     return (
-      <div key={key} role="listitem" className="plx-virtual-list__item" data-plx-unread={unread.has(item)||undefined} aria-label={unread.has(item)?t.unreadRow.replace('{label}',String(item?.label??key)):undefined} tabIndex={onItemOpen?0:undefined} onClick={()=>{if(onItemOpen){onItemOpen(item);unread.open(item);}}} onKeyDown={event=>{if(onItemOpen&&event.key==='Enter'&&event.target===event.currentTarget){onItemOpen(item);unread.open(item);}}} {...v.itemProps(index)}>
+      <div key={key} role="listitem" className="plx-virtual-list__item" data-plx-unread={unread.has(item)||undefined} aria-label={unread.has(item)?words.unreadRow.replace('{label}',String(item?.label??key)):undefined} tabIndex={onItemOpen?0:undefined} onClick={()=>{if(onItemOpen){onItemOpen(item);unread.open(item);}}} onKeyDown={event=>{if(onItemOpen&&event.key==='Enter'&&event.target===event.currentTarget){onItemOpen(item);unread.open(item);}}} {...v.itemProps(index)}>
         {renderItem ? renderItem(item, index) : <Row item={item} />}
       </div>
     );
@@ -119,12 +153,12 @@ export const VirtualList = React.forwardRef(function VirtualList({ label, items,
   return (
     <div className={cx('plx-virtual-list', 'plx-virtual-list--' + (mode === 'variable' ? 'variable' : 'fixed'), groups && 'plx-virtual-list--groups', className)} {...rest}>
       {showCount ? <div className="plx-virtual-list__count">{countText(itemCount)}</div> : null}
-      <div ref={v.viewportRef} role={total || loading ? 'list' : undefined} aria-label={label} aria-busy={loading || undefined}
+      <div ref={v.viewportRef as React.RefObject<HTMLDivElement>} role={total || loading ? 'list' : undefined} aria-label={label} aria-busy={loading || undefined}
         className="plx-virtual-list__viewport" data-plx-height={HEIGHTS.indexOf(height) >= 0 ? height : 'md'}>
         {total ? <VirtualProbe /> : null}
         {v.segments.map((s) => (s.gap ? <VirtualGap key={s.key} count={s.count} /> : draw(s.index)))}
-        {loading ? <div role="listitem" className="plx-virtual-list__loading"><Spinner size="sm" label={t.loading} /><span aria-hidden="true">{t.loading}</span></div> : null}
-        {!total && !loading ? <p className="plx-virtual-list__empty">{t.empty}</p> : null}
+        {loading ? <div role="listitem" className="plx-virtual-list__loading"><Spinner size="sm" label={words.loading} /><span aria-hidden="true">{words.loading}</span></div> : null}
+        {!total && !loading ? <p className="plx-virtual-list__empty">{words.empty}</p> : null}
       </div>
     </div>
   );

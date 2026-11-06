@@ -60,31 +60,61 @@ import ScheduleIcon from 'plenix-platform/icons/plenix/schedule';
 import VisibilityOffIcon from 'plenix-platform/icons/plenix/visibility-off';
 import { fill } from '../../utils/fill.ts';
 import { development } from '../../utils/devWarn.ts';
+import type { IconValue } from '../Icon/Icon.tsx';
 
-const OPTIONS = [['approve', 'check', 'success'], ['deny', 'close', 'danger'], ['abstain', 'remove', 'neutral']];
-const BADGE_TONE = { success: 'success', danger: 'negative', neutral: 'neutral' };   // a Button tone's Badge tone (as the default set)
+/** @public a choice's tone (a Button tone) */
+export type VoteTallyTone = 'success' | 'danger' | 'neutral';
+/** @public a custom choice (ADR 0009): { key, label, icon, tone } */
+export type VoteTallyOption = { key: string; label: string; icon: IconValue; tone: VoteTallyTone };
+/** @public a member: the vote kit's shape */
+export type VoteTallyMember = { memberId: string | number; name: string; role?: string; picture?: string | null; disabledReason?: string; vote?: string | null; voteHidden?: boolean };
+/** @public the counting: the kit's outcome */
+export type VoteTallyOutcome = { approve?: number; deny?: number; abstain?: number; notVoted?: number; turnedOff?: number; present?: number; counts?: Record<string, number>; quorum?: { needed?: number; present?: number; met?: boolean }; result?: string };
+/** @public the vote's settings */
+export type VoteTallySettings = { labels?: Record<string, string>; liveVisibility?: 'totals' | 'hidden-until-closed'; changeVote?: 'final' | string };
+/** @public the prop type (ADR 0011) */
+export type VoteTallyProps = {
+  /** the vote's name (the list's accessible name) */
+  label: string;
+  members?: VoteTallyMember[];
+  /** 2 to 5 choices instead of Approve, Deny and Abstain */
+  options?: VoteTallyOption[];
+  outcome?: VoteTallyOutcome;
+  settings?: VoteTallySettings;
+  status?: 'open' | 'closed';
+  readOnly?: boolean;
+  connection?: 'live' | 'reconnecting';
+  /** a choice pressed; option is null when the chosen one is pressed again */
+  onVote?: (memberId: string | number, option: string | null) => void;
+  strings?: Record<string, unknown> | null;
+  className?: string;
+};
+type Choice = [string, IconValue, VoteTallyTone, string];
+
+const OPTIONS: Array<[string, string, VoteTallyTone]> = [['approve', 'check', 'success'], ['deny', 'close', 'danger'], ['abstain', 'remove', 'neutral']];
+const BADGE_TONE: Record<string, 'success' | 'negative' | 'neutral'> = { success: 'success', danger: 'negative', neutral: 'neutral' };   // a Button tone's Badge tone (as the default set)
 // the options prop (ADR 0009): the problem with it, or '' when it is usable
-function optionsProblem(options) {
+function optionsProblem(options: unknown): string {
   if (!Array.isArray(options) || options.length < 2 || options.length > 5) return 'options must have 2 to 5 entries (got ' + (Array.isArray(options) ? options.length : typeof options) + ')';
-  const keys = new Set();
-  for (const o of options) {
+  const keys = new Set<string>();
+  for (const o of options as VoteTallyOption[]) {
     if (!o || typeof o.key !== 'string' || !o.key || keys.has(o.key)) return 'every option needs a unique, non-empty key';
     keys.add(o.key);
     if (!o.label || !o.icon || !BADGE_TONE[o.tone]) return 'option "' + o.key + '" needs a label, an icon and a tone (success, danger or neutral)';
   }
   return '';
 }
-const warned = new Set();
-const RESULT_TONE = { open: 'neutral', passing: 'active', failing: 'action-required', passed: 'success', failed: 'negative', tied: 'waiting', 'no-quorum': 'waiting' };
+const warned = new Set<string>();
+const RESULT_TONE: Record<string, 'neutral' | 'active' | 'action-required' | 'success' | 'negative' | 'waiting'> = { open: 'neutral', passing: 'active', failing: 'action-required', passed: 'success', failed: 'negative', tied: 'waiting', 'no-quorum': 'waiting' };
 // the three counts when the app gives no outcome: only the members who are not turned off
-function countOf(members) {
-  const c = { approve: 0, deny: 0, abstain: 0, notVoted: 0, turnedOff: 0 };
-  members.forEach((m) => { if (m.disabledReason) c.turnedOff += 1; else if (m.vote && c[m.vote] !== undefined) c[m.vote] += 1; else if (!m.voteHidden) c.notVoted += 1; });
+function countOf(members: VoteTallyMember[]): VoteTallyOutcome {
+  const c: Required<Pick<VoteTallyOutcome, 'approve' | 'deny' | 'abstain' | 'notVoted' | 'turnedOff'>> = { approve: 0, deny: 0, abstain: 0, notVoted: 0, turnedOff: 0 };
+  members.forEach((m) => { if (m.disabledReason) c.turnedOff += 1; else if (m.vote && (m.vote === 'approve' || m.vote === 'deny' || m.vote === 'abstain')) c[m.vote] += 1; else if (!m.voteHidden) c.notVoted += 1; });
   return c;
 }
 
-function countOptions(members, choices) {
-  const counts = {}; choices.forEach(([key]) => { counts[key] = 0; });
+function countOptions(members: VoteTallyMember[], choices: Choice[]) {
+  const counts: Record<string, number> = {}; choices.forEach(([key]) => { counts[key] = 0; });
   let notRecorded = 0, turnedOff = 0;
   members.forEach((m) => {
     if (m.disabledReason) turnedOff += 1;
@@ -99,34 +129,35 @@ function countOptions(members, choices) {
   return { counts, notRecorded, turnedOff };
 }
 
-export function VoteTally({ label, members = [], options, outcome, settings = {}, status = 'open', readOnly = false, connection = 'live', onVote, strings, className }) {
+export function VoteTally({ label, members = [], options, outcome, settings = {}, status = 'open', readOnly = false, connection = 'live', onVote, strings, className }: VoteTallyProps) {
   // the words: the locale's voteTally section (platform/i18n), then the strings prop, then the vote's own labels for the choices
   const base = useStrings('voteTally', strings);
   const t = Object.assign({}, base, settings.labels || {});
-  const words = base.result || {};
+  const words = (base.result || {}) as Record<string, string>;
   // a custom choice set (ADR 0009), or the default three when it is missing or unusable (development says why, once)
   const problem = options === undefined ? '' : optionsProblem(options);
   if (problem && development() && !warned.has(problem) && typeof console !== 'undefined') { warned.add(problem); console.warn('[Plenix] VoteTally: ' + problem + '; the default Approve, Deny and Abstain are used'); }
   const custom = options !== undefined && !problem;
-  const choices = custom ? options.map((x) => [x.key, x.icon, x.tone, x.label]) : OPTIONS.map(([k, i, tn]) => [k, i, tn, t[k]]);
+  const choices: Choice[] = custom ? (options as VoteTallyOption[]).map((x): Choice => [x.key, x.icon, x.tone, x.label]) : OPTIONS.map(([k, i, tn]): Choice => [k, i, tn, t[k]]);
   const own = custom ? countOptions(members, choices) : null;
-  const o = custom ? Object.assign({ notVoted: own.notRecorded, turnedOff: own.turnedOff }, outcome, { counts: (outcome && outcome.counts) || own.counts }) : outcome || countOf(members);
+  const o: VoteTallyOutcome = own ? Object.assign({ notVoted: own.notRecorded, turnedOff: own.turnedOff }, outcome, { counts: (outcome && outcome.counts) || own.counts }) : outcome || countOf(members);
   const locked = readOnly || status === 'closed' || connection === 'reconnecting' || typeof onVote !== 'function';
   const hiddenText = settings.liveVisibility === 'totals' ? t.totalsOnly : t.hiddenUntilClosed;
-  const choose = (m, option) => { if (!locked) onVote(m.memberId, m.vote === option && settings.changeVote !== 'final' ? null : option); };
+  const choose = (m: VoteTallyMember, option: string) => { if (!locked) (onVote as NonNullable<typeof onVote>)(m.memberId, m.vote === option && settings.changeVote !== 'final' ? null : option); };
   // a row whose vote changed since the last render flashes once (not on the first render); the class goes when it ends
-  const before = React.useRef(null), [changed, setChanged] = React.useState(() => new Set());
+  const before = React.useRef<Map<string | number, string> | null>(null), [changed, setChanged] = React.useState(() => new Set());
   React.useEffect(() => {
     const now = new Map(members.map((m) => [m.memberId, (m.vote || '') + '|' + (m.disabledReason || '') + '|' + (m.voteHidden ? 1 : 0)]));
-    if (before.current) {
-      const ids = [...now].filter(([id, v]) => before.current.has(id) && before.current.get(id) !== v).map(([id]) => id);
+    const prev = before.current;
+    if (prev) {
+      const ids = [...now].filter(([id, v]) => prev.has(id) && prev.get(id) !== v).map(([id]) => id);
       // under reduced motion there is no flash, so no row is marked (a 0s animation may not report its end)
       const still = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (ids.length && !still) setChanged((s) => new Set([...s, ...ids]));
     }
     before.current = now;
   }, [members]);
-  const settled = (id) => setChanged((s) => { if (!s.has(id)) return s; const n = new Set(s); n.delete(id); return n; });
+  const settled = (id: string | number) => setChanged((s) => { if (!s.has(id)) return s; const n = new Set(s); n.delete(id); return n; });
   return (
     <section className={cx('plx-vote-tally', className)} aria-label={label}>
       <ul className="plx-vote-tally__list">
@@ -150,7 +181,7 @@ export function VoteTally({ label, members = [], options, outcome, settings = {}
       </ul>
       <div className="plx-vote-tally__totals" aria-live="polite">
         {/* only the counts it is given: a vote that holds the choices back sends no approve, deny or abstain */}
-        {custom ? choices.map(([key, icon, tone, name]) => (o.counts[key] !== undefined ? <Badge key={key} tone={BADGE_TONE[tone]} icon={icon}>{name + ' ' + o.counts[key]}</Badge> : null)) : null}
+        {custom ? choices.map(([key, icon, tone, name]) => ((o.counts || {})[key] !== undefined ? <Badge key={key} tone={BADGE_TONE[tone]} icon={icon}>{name + ' ' + (o.counts || {})[key]}</Badge> : null)) : null}
         {!custom && o.approve !== undefined ? <Badge tone="success" icon={CheckIcon}>{t.approve + ' ' + o.approve}</Badge> : null}
         {!custom && o.deny !== undefined ? <Badge tone="negative" icon={CloseIcon}>{t.deny + ' ' + o.deny}</Badge> : null}
         {!custom && o.abstain !== undefined ? <Badge tone="neutral" icon={RemoveIcon}>{t.abstain + ' ' + o.abstain}</Badge> : null}
