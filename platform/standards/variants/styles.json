@@ -5139,5 +5139,98 @@
   "data-grid--row-height-short-medium-tall-extra-tall-the-rowheight-prop-and-the-view-menu-short-default": {
     "sets": [],
     "why": "the default: data-plx-row-height is not set, so none of the medium, tall or extra-tall rules apply"
+  },
+  "sheet--height-medium-about-half-the-window": {
+    "sets": [
+      {
+        "property": "block-size",
+        "part": "block",
+        "token": "--plx-comp-sheet-medium-height"
+      }
+    ],
+    "why": "sheet.css: the base .plx-sheet height; --large is the other"
+  },
+  "sheet--header-close": {
+    "sets": [],
+    "why": ".plx-sheet__cancel, .plx-sheet__done, .plx-sheet__close set only flex-shrink: 0, a keyword with no token; the close is a Button, and the header's own rules are the same for every sheet"
+  },
+  "typing-indicator--variants-typing": {
+    "sets": [
+      {
+        "property": "column-gap",
+        "part": "typing",
+        "token": "--plx-comp-chat-typing-gap"
+      },
+      {
+        "property": "background-color",
+        "part": "typing-dot",
+        "token": "--plx-comp-chat-typing-dot-background"
+      },
+      {
+        "property": "block-size",
+        "part": "typing-dot",
+        "token": "--plx-comp-chat-typing-dot-height"
+      },
+      {
+        "property": "inline-size",
+        "part": "typing-dot",
+        "token": "--plx-comp-chat-typing-dot-width"
+      },
+      {
+        "property": "border-radius",
+        "part": "typing-dot",
+        "token": "--plx-comp-chat-typing-dot-radius"
+      },
+      {
+        "property": "animation-duration",
+        "part": "typing-dot",
+        "token": "--plx-comp-chat-typing-dot-animation-duration"
+      },
+      {
+        "property": "animation-delay",
+        "part": "typing-dot-second",
+        "token": "--plx-comp-chat-typing-second-dot-delay"
+      },
+      {
+        "property": "animation-delay",
+        "part": "typing-dot-third",
+        "token": "--plx-comp-chat-typing-third-dot-delay"
+      }
+    ],
+    "why": "chat.css: .plx-chat__typing, the three dots that pulse in turn (the second and third start later)"
+  },
+  "retry-pattern--kind-automatic-with-backoff": {
+    "sets": [
+      {
+        "property": "column-gap",
+        "part": "status",
+        "token": "--plx-comp-retry-status-gap"
+      },
+      {
+        "property": "margin-block-start",
+        "part": "status",
+        "token": "--plx-comp-retry-status-margin-block-start"
+      }
+    ],
+    "why": "retry.css: .plx-retry__status holds the countdown (\"Retrying in …\") while the next attempt waits"
+  },
+  "retry-pattern--kind-retry-count": {
+    "sets": [
+      {
+        "property": "column-gap",
+        "part": "status",
+        "token": "--plx-comp-retry-status-gap"
+      },
+      {
+        "property": "margin-block-start",
+        "part": "status",
+        "token": "--plx-comp-retry-status-margin-block-start"
+      }
+    ],
+    "why": "retry.css: .plx-retry__status holds the attempt count (showCount: \"Attempt 2 of 3\")"
+  },
+  "retry-pattern--kind-inline-retry-manual": {
+    "sets": [],
+    "why": "markup only: the notice with the Retry button and no status line (no countdown, no count); retry.css styles only the status line"
   }
 }
