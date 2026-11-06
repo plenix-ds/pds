@@ -3433,8 +3433,34 @@
     "why": "markup only: the panel, progress and ready are which parts render; download-manager.css styles only the root"
   },
   "drop-target--state-accepts-or-rejects": {
-    "sets": [],
-    "why": "markup only: whether it accepts or rejects and the data attribute are behavior; it has no stylesheet"
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-sys-dnd-target-background"
+      },
+      {
+        "property": "outline-color",
+        "part": "block",
+        "token": "--plx-sys-dnd-target-outline-color"
+      },
+      {
+        "property": "outline-color",
+        "part": "block",
+        "token": "--plx-sys-dnd-target-reject-outline-color"
+      },
+      {
+        "property": "outline-offset",
+        "part": "block",
+        "token": "--plx-sys-dnd-target-outline-offset"
+      },
+      {
+        "property": "outline-width",
+        "part": "block",
+        "token": "--plx-sys-dnd-target-outline-width"
+      }
+    ],
+    "why": "system/dnd.css: .plx-dnd-target[data-plx-drop-state=\"over\"] draws a dashed outline (outline-color) on the target fill (background-color); [data-plx-drop-state=\"reject\"] draws the same dashed outline in the reject color (outline-color, second row) with the not-allowed cursor; both use the outline offset and width"
   },
   "drop-target--variant-data-drop-target": {
     "sets": [],
@@ -3539,5 +3565,241 @@
   "suggested-action--variant-chip": {
     "sets": [],
     "why": "markup only: card or chip is the part it renders; suggested-action.css styles only the root"
+  },
+  "error-state--kind-completion": {
+    "sets": [],
+    "why": "markup only: the kind of error picks the icon, title and message; the layout is the same for every kind and the stylesheet has no modifier for it"
+  },
+  "error-state--kind-degraded": {
+    "sets": [],
+    "why": "markup only: the kind of error picks the icon, title and message; the layout is the same for every kind and the stylesheet has no modifier for it"
+  },
+  "error-state--kind-maintenance": {
+    "sets": [],
+    "why": "markup only: the kind of error picks the icon, title and message; the layout is the same for every kind and the stylesheet has no modifier for it"
+  },
+  "error-state--kind-not-found": {
+    "sets": [],
+    "why": "markup only: the kind of error picks the icon, title and message; the layout is the same for every kind and the stylesheet has no modifier for it"
+  },
+  "error-state--kind-offline": {
+    "sets": [],
+    "why": "markup only: the kind of error picks the icon, title and message; the layout is the same for every kind and the stylesheet has no modifier for it"
+  },
+  "error-state--kind-permission-denied": {
+    "sets": [],
+    "why": "markup only: the kind of error picks the icon, title and message; the layout is the same for every kind and the stylesheet has no modifier for it"
+  },
+  "number-input--variant-currency": {
+    "sets": [],
+    "why": "markup only: the variation is the value, bounds, unit or format (currency, percent, quantity) and whether stepper buttons show; the stylesheet has no modifier for it"
+  },
+  "number-input--variant-invalid": {
+    "sets": [
+      {
+        "property": "border-color",
+        "part": "block",
+        "token": "--plx-comp-input-invalid-border-color"
+      },
+      {
+        "property": "box-shadow",
+        "part": "block",
+        "token": "--plx-comp-input-invalid-inner-width"
+      }
+    ],
+    "why": ".plx-input[aria-invalid=\"true\"] in input.css draws the invalid look: the danger border and the inset line inside it; the variation sets aria-invalid on the field"
+  },
+  "number-input--variant-min-and-max": {
+    "sets": [],
+    "why": "markup only: the variation is the value, bounds, unit or format (currency, percent, quantity) and whether stepper buttons show; the stylesheet has no modifier for it"
+  },
+  "number-input--variant-percentage": {
+    "sets": [],
+    "why": "markup only: the variation is the value, bounds, unit or format (currency, percent, quantity) and whether stepper buttons show; the stylesheet has no modifier for it"
+  },
+  "number-input--variant-plain": {
+    "sets": [],
+    "why": "markup only: the variation is the value, bounds, unit or format (currency, percent, quantity) and whether stepper buttons show; the stylesheet has no modifier for it"
+  },
+  "number-input--variant-quantity-1": {
+    "sets": [],
+    "why": "markup only: the variation is the value, bounds, unit or format (currency, percent, quantity) and whether stepper buttons show; the stylesheet has no modifier for it"
+  },
+  "number-input--variant-stepper-buttons": {
+    "sets": [],
+    "why": "markup only: the variation is the value, bounds, unit or format (currency, percent, quantity) and whether stepper buttons show; the stylesheet has no modifier for it"
+  },
+  "number-input--variant-with-unit": {
+    "sets": [],
+    "why": "markup only: the variation is the value, bounds, unit or format (currency, percent, quantity) and whether stepper buttons show; the stylesheet has no modifier for it"
+  },
+  "pagination--mode-button-default": {
+    "sets": [],
+    "why": "markup only: the variation is the mode and the loading or end-of-list state, shown by which parts render; the stylesheet has no modifier for it"
+  },
+  "pagination--mode-infinite-sentinel": {
+    "sets": [],
+    "why": "markup only: the variation is the mode and the loading or end-of-list state, shown by which parts render; the stylesheet has no modifier for it"
+  },
+  "pagination--state-end-of-list": {
+    "sets": [],
+    "why": "markup only: the variation is the mode and the loading or end-of-list state, shown by which parts render; the stylesheet has no modifier for it"
+  },
+  "pagination--state-loading": {
+    "sets": [],
+    "why": "markup only: the variation is the mode and the loading or end-of-list state, shown by which parts render; the stylesheet has no modifier for it"
+  },
+  "qr-code--caption-with-caption-and-value": {
+    "sets": [],
+    "why": "markup only: the variation is the error-correction level, the caption and the logo space, which change the code drawn and the parts shown; the stylesheet has no modifier for them"
+  },
+  "qr-code--error-correction-h-30": {
+    "sets": [],
+    "why": "markup only: the variation is the error-correction level, the caption and the logo space, which change the code drawn and the parts shown; the stylesheet has no modifier for them"
+  },
+  "qr-code--error-correction-l-7": {
+    "sets": [],
+    "why": "markup only: the variation is the error-correction level, the caption and the logo space, which change the code drawn and the parts shown; the stylesheet has no modifier for them"
+  },
+  "qr-code--error-correction-q-25": {
+    "sets": [],
+    "why": "markup only: the variation is the error-correction level, the caption and the logo space, which change the code drawn and the parts shown; the stylesheet has no modifier for them"
+  },
+  "qr-code--logo-space-with-logo-space": {
+    "sets": [],
+    "why": "markup only: the variation is the error-correction level, the caption and the logo space, which change the code drawn and the parts shown; the stylesheet has no modifier for them"
+  },
+  "teaching-bubble--content-primary-and-secondary-actions": {
+    "sets": [],
+    "why": "markup only: the variation is the content (title, text, picture, steps, actions), the spotlight, or the wide width, which the Popover's lg size draws; the stylesheet has no modifier for it"
+  },
+  "teaching-bubble--content-title-and-text-default": {
+    "sets": [],
+    "why": "markup only: the variation is the content (title, text, picture, steps, actions), the spotlight, or the wide width, which the Popover's lg size draws; the stylesheet has no modifier for it"
+  },
+  "teaching-bubble--content-with-picture": {
+    "sets": [],
+    "why": "markup only: the variation is the content (title, text, picture, steps, actions), the spotlight, or the wide width, which the Popover's lg size draws; the stylesheet has no modifier for it"
+  },
+  "teaching-bubble--content-with-steps-2-of-3": {
+    "sets": [],
+    "why": "markup only: the variation is the content (title, text, picture, steps, actions), the spotlight, or the wide width, which the Popover's lg size draws; the stylesheet has no modifier for it"
+  },
+  "teaching-bubble--spotlight-with-spotlight-default": {
+    "sets": [],
+    "why": "markup only: the variation is the content (title, text, picture, steps, actions), the spotlight, or the wide width, which the Popover's lg size draws; the stylesheet has no modifier for it"
+  },
+  "teaching-bubble--spotlight-without-spotlight": {
+    "sets": [],
+    "why": "markup only: the variation is the content (title, text, picture, steps, actions), the spotlight, or the wide width, which the Popover's lg size draws; the stylesheet has no modifier for it"
+  },
+  "teaching-bubble--width-wide-400px": {
+    "sets": [],
+    "why": "markup only: the variation is the content (title, text, picture, steps, actions), the spotlight, or the wide width, which the Popover's lg size draws; the stylesheet has no modifier for it"
+  },
+  "chart-annotation--kind-point-above": {
+    "sets": [
+      {
+        "property": "stroke",
+        "part": "ring",
+        "token": "--plx-comp-chart-annotation-ring-color"
+      },
+      {
+        "property": "stroke-width",
+        "part": "ring",
+        "token": "--plx-comp-chart-annotation-ring-width"
+      },
+      {
+        "property": "stroke",
+        "part": "leader",
+        "token": "--plx-comp-chart-annotation-leader-color"
+      },
+      {
+        "property": "stroke-width",
+        "part": "leader",
+        "token": "--plx-comp-chart-annotation-leader-width"
+      },
+      {
+        "property": "transform",
+        "part": "label",
+        "token": "--plx-comp-chart-annotation-label-offset"
+      }
+    ],
+    "why": ".plx-chart-annotation ring and leader, with .plx-chart-annotation--top: the note sits above the point"
+  },
+  "chart-annotation--kind-point-below": {
+    "sets": [
+      {
+        "property": "stroke",
+        "part": "ring",
+        "token": "--plx-comp-chart-annotation-ring-color"
+      },
+      {
+        "property": "stroke-width",
+        "part": "ring",
+        "token": "--plx-comp-chart-annotation-ring-width"
+      },
+      {
+        "property": "stroke",
+        "part": "leader",
+        "token": "--plx-comp-chart-annotation-leader-color"
+      },
+      {
+        "property": "stroke-width",
+        "part": "leader",
+        "token": "--plx-comp-chart-annotation-leader-width"
+      },
+      {
+        "property": "transform",
+        "part": "label",
+        "token": "--plx-comp-chart-annotation-label-offset"
+      }
+    ],
+    "why": ".plx-chart-annotation ring and leader, with .plx-chart-annotation--bottom: the note sits below the point"
+  },
+  "chart-annotation--kind-range": {
+    "sets": [
+      {
+        "property": "fill",
+        "part": "band",
+        "token": "--plx-comp-chart-annotation-band-background"
+      },
+      {
+        "property": "fill",
+        "part": "label",
+        "token": "--plx-comp-chart-annotation-label-text"
+      }
+    ],
+    "why": ".plx-chart-annotation__band, a shaded span of the plot with its name"
+  },
+  "chart-reference-line--axis-horizontal-a-value": {
+    "sets": [
+      {
+        "property": "stroke",
+        "part": "line",
+        "token": "--plx-comp-chart-reference-line-color"
+      },
+      {
+        "property": "transform",
+        "part": "label",
+        "token": "--plx-comp-chart-reference-label-offset"
+      }
+    ],
+    "why": ".plx-chart-reference--y: the line across the plot at a value, its label above the line at the end"
+  },
+  "chart-reference-line--axis-vertical-a-date": {
+    "sets": [
+      {
+        "property": "stroke",
+        "part": "line",
+        "token": "--plx-comp-chart-reference-line-color"
+      },
+      {
+        "property": "transform",
+        "part": "label",
+        "token": "--plx-comp-chart-reference-label-offset"
+      }
+    ],
+    "why": ".plx-chart-reference--x: the line up the plot at a date, its label beside the line at the top"
   }
 }
