@@ -71,7 +71,7 @@ export const CHART_INTERACTION_STRINGS = Object.freeze({
 
 const clamp = (v: any, lo: any, hi: any) => Math.min(hi, Math.max(lo, v));
 
-export function chartAnnounce(text: any) { if (text) announce(text); }
+export function chartAnnounce(text: string) { if (text) announce(text); }
 
 /** @public a value of the chart: row (series) and column (position) */
 export type ChartCell = { r: number; c: number };
@@ -223,12 +223,16 @@ export function useChartInteraction({ rows = 1, columns = 0, mode = 'x', series,
   };
 }
 
-export function ChartFocusMark({ x, y, color, className }: any) {
+/** @public */
+export type ChartFocusMarkProps = { x: number; y: number; color?: string; className?: string };
+export function ChartFocusMark({ x, y, color, className }: ChartFocusMarkProps) {
   if (x === undefined || x === null || y === undefined || y === null || isNaN(x) || isNaN(y)) return null;
   return React.createElement('circle', { className: cx('plx-chart-focus', className), 'data-plx-dataviz': color || undefined, cx: x, cy: y });
 }
 
-export function ChartBrush({ x0, x1, inner, className }: any) {
+/** @public */
+export type ChartBrushProps = { x0: number; x1: number; inner: { width: number; height: number }; className?: string };
+export function ChartBrush({ x0, x1, inner, className }: ChartBrushProps) {
   if (x0 === undefined || x1 === undefined || !inner) return null;
   const a = Math.min(x0, x1), b = Math.max(x0, x1);
   return React.createElement('rect', { className: cx('plx-chart-brush', className), x: a, y: 0, width: Math.max(0, b - a), height: inner.height });
