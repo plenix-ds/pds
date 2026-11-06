@@ -36,51 +36,16 @@ import { ChartFrame } from './ChartFrame.jsx';
 import { seriesColor } from './scales.js';
 import { ChartTooltip } from './parts/ChartTooltip.jsx';
 import { useChartPoints } from './a11y.js';
+import { useEChartsPlot } from './echarts/EChartsPlot.jsx';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 
-// SVG geometry on the 4px grid: a group's name row and inset, the label's inset in a tile, the smallest tile that shows a
-// name (and a value), the ring's room
-const GROUP_HEAD = 20, GROUP_PAD = 4, LABEL_PAD = 4, NAME_W = 40, NAME_H = 20, VALUE_H = 36, RING = 0;
-
-// the squarified layout of values (sorted largest first) in a rectangle: [{ x, y, width, height }] in the values' order
-function squarify(values, x, y, width, height) {
-  const out = [];
-  const total = values.reduce((a, b) => a + b, 0);
-  if (!total || width <= 0 || height <= 0) return values.map(() => ({ x, y, width: 0, height: 0 }));
-  const k = (width * height) / total;
-  const areas = values.map((v) => v * k);
-  let rx = x, ry = y, rw = width, rh = height, i = 0;
-  const worst = (row, side) => {
-    const s = row.reduce((a, b) => a + b, 0), mx = Math.max.apply(null, row), mn = Math.min.apply(null, row);
-    return Math.max((side * side * mx) / (s * s), (s * s) / (side * side * mn));
-  };
-  while (i < areas.length) {
-    const side = Math.min(rw, rh);
-    const row = [areas[i]];
-    let j = i + 1;
-    while (j < areas.length && worst(row.concat([areas[j]]), side) <= worst(row, side)) { row.push(areas[j]); j++; }
-    const s = row.reduce((a, b) => a + b, 0);
-    if (rw >= rh) {   // a column along the start side
-      const w = s / rh;
-      let yy = ry;
-      row.forEach((a) => { const hh = a / w; out.push({ x: rx, y: yy, width: w, height: hh }); yy += hh; });
-      rx += w; rw -= w;
-    } else {          // a row along the top
-      const hh = s / rw;
-      let xx = rx;
-      row.forEach((a) => { const w = a / hh; out.push({ x: xx, y: ry, width: w, height: hh }); xx += w; });
-      ry += hh; rh -= hh;
-    }
-    i = j;
-  }
-  return out;
-}
+// the group's name row, the ring's room (the 4px grid)
+const GROUP_HEAD = 20, RING = 0;
 
 export function Treemap({ title, description, data = [], variant, color, format, valueTitle, size = 'lg', strings, className }) {
   const t = useStrings('chart.treemap', strings);
   const nested = variant ? variant === 'nested' : data.some((d) => Array.isArray(d.children));
   const v = nested ? 'nested' : 'flat';
-  const uid = 'plx-treemap' + React.useId().replace(/[^a-zA-Z0-9]/g, '');
   // the groups (one unnamed group when flat), each with its parts largest first
   const groups = (nested ? data : [{ label: '', children: data }]).map((g, gi) => {
     const parts = (g.children || []).map((c) => ({ label: String(c.label), value: Math.max(0, Number(c.value) || 0) })).filter((c) => c.value > 0).sort((a, b) => b.value - a.value);
@@ -95,45 +60,55 @@ export function Treemap({ title, description, data = [], variant, color, format,
   const table = { columns: [].concat(nested ? [{ title: t.group, field: 'group', kind: 'name' }] : [], [{ title: t.item, field: 'label', kind: 'name', rowLabel: true },
     { title: valueTitle || t.value, field: 'shown', kind: 'data', align: 'right' }, { title: t.share, field: 'share', kind: 'data', align: 'right' }]),
     data: tiles.map((p, i) => ({ id: i + 1, group: p.group.label, label: p.label, shown: fmt(p.value), share: pct(p.share) })) };
+  // the format the drawing calls, kept current without redrawing (a format written inline is a new function each render)
+  const fmts = React.useRef(null); fmts.current = { fmt };
+
+  const plot = useEChartsPlot();
+  const dataKey = JSON.stringify(groups.map((g) => [g.label, g.color, g.parts.map((p) => [p.label, p.value])])) + '|' + v;
+  const option = React.useCallback((tk) => {
+    const k = tk.treemap, label = k.label, value = k.value;
+    const line = label.fontSize + 4, rich = { n: { lineHeight: line, color: label.color, fontFamily: label.fontFamily, fontSize: label.fontSize, fontWeight: label.fontWeight, textBorderColor: label.halo, textBorderWidth: label.haloWidth },
+      v: { lineHeight: line, color: label.color, fontFamily: value.fontFamily, fontSize: value.fontSize, fontWeight: value.fontWeight, textBorderColor: label.halo, textBorderWidth: label.haloWidth } };
+    const leaf = (g) => g.parts.map((p) => ({ name: p.label, value: p.value, itemStyle: { color: tk.color(g.color) } }));
+    return {
+      animationDuration: tk.motion, animationDurationUpdate: tk.motion,
+      series: [{ type: 'treemap', id: 'tiles', silent: true, roam: false, nodeClick: false, breadcrumb: { show: false }, left: 0, top: 0, right: 0, bottom: 0, sort: false, squareRatio: 1.618, visibleMin: 0, animation: false,
+        label: { show: true, position: 'insideTopLeft', overflow: 'truncate', formatter: (p) => '{n|' + p.name + '}\n{v|' + fmts.current.fmt(p.value) + '}', rich },
+        // level 0 is the series' own root (no frame, no name); then the groups (a frame and their name above) when nested; then the tiles (a gap in the surface color)
+        levels: [{ itemStyle: { borderWidth: 0, gapWidth: 0 }, upperLabel: { show: false } }]
+          .concat(nested ? [{ itemStyle: { borderColor: k.gap.color, borderWidth: k.group.width, gapWidth: 0 }, upperLabel: { show: true, height: GROUP_HEAD, formatter: '{b}', color: k.group.label.color, fontFamily: k.group.label.fontFamily, fontSize: k.group.label.fontSize, fontWeight: k.group.label.fontWeight } }] : [])
+          .concat([{ itemStyle: { borderColor: k.gap.color, borderWidth: k.gap.width, gapWidth: 0 }, upperLabel: { show: false } }]),
+        data: nested ? groups.map((g) => ({ name: g.label, itemStyle: { color: 'transparent' }, children: leaf(g) })) : leaf(groups[0] || { parts: [], color: seriesColor(0) }) }],
+    };
+  }, [dataKey]);   // eslint-disable-line react-hooks/exhaustive-deps
+
+  const draw = (dims) => {
+    const layer = plot.layer(dims, option);
+    const c = plot.chart;
+    const seriesModel = c ? c.getModel().getSeriesByIndex(0) : null;
+    const tree = seriesModel && seriesModel.getData() && seriesModel.getData().tree;
+    if (!tree) return layer;
+    // the leaves in the order they were given (by group, largest first): the rectangle ECharts laid each one in
+    const rects = [];
+    // a child's rectangle is relative to its parent's: the leaf's place is the sum along its way down
+    const walk = (node, ox, oy) => { const l = node.getLayout() || { x: 0, y: 0, width: 0, height: 0 }; if (node.children && node.children.length) node.children.forEach((child) => walk(child, ox + l.x, oy + l.y)); else rects.push({ x: ox + l.x, y: oy + l.y, width: l.width, height: l.height }); };
+    tree.root.children.forEach((node) => walk(node, 0, 0));
+    const inner = { width: dims.width, height: dims.height };
+    const a = keys.index !== null && keys.index !== undefined && rects[keys.index] ? keys.index : null;
+    keys.interaction.register({ nearest: (px, py) => { const i = rects.findIndex((r) => px >= r.x && px <= r.x + r.width && py >= r.y && py <= r.y + r.height); return i < 0 ? null : { r: 0, c: i }; } });
+    return [layer, (
+      <g key="plx-chart-overlay">
+        {rects.map((r, i) => <rect key={'h' + i} className="plx-chart-keys__hit" x={r.x} y={r.y} width={r.width} height={r.height} onMouseEnter={() => keys.hover(i)} onMouseLeave={() => keys.hover(null)} />)}
+        {a !== null ? <rect className="plx-chart-keys__ring" x={rects[a].x + RING} y={rects[a].y + RING} width={Math.max(0, rects[a].width - 2 * RING)} height={Math.max(0, rects[a].height - 2 * RING)} /> : null}
+        {a !== null ? <ChartTooltip x={rects[a].x + rects[a].width / 2} y={rects[a].y + rects[a].height / 2} inner={inner} title={(nested ? tiles[a].group.label + ' \u00b7 ' : '') + tiles[a].label}
+          items={[{ label: valueTitle || t.value, value: fmt(tiles[a].value), color: tiles[a].group.color }, { label: t.share, value: pct(tiles[a].share) }]} /> : null}
+      </g>
+    )];
+  };
+
   return (
-      <ChartFrame interaction={keys.interaction} title={title} description={description} size={size} table={table} margin={{ top: 0, end: 0, bottom: 0, start: 0 }} className={cx('plx-treemap', 'plx-treemap--' + v, className)}>
-        {({ inner }) => {
-          // groups first, then the parts inside each group's box (under its name row when nested)
-          const boxes = squarify(groups.map((g) => g.value), 0, 0, inner.width, inner.height);
-          let n = 0;
-          const laid = [];
-          groups.forEach((g, gi) => {
-            const b = boxes[gi];
-            const inside = nested ? { x: b.x + GROUP_PAD, y: b.y + GROUP_HEAD, width: Math.max(0, b.width - 2 * GROUP_PAD), height: Math.max(0, b.height - GROUP_HEAD - GROUP_PAD) } : b;
-            squarify(g.parts.map((p) => p.value), inside.x, inside.y, inside.width, inside.height).forEach((r) => { laid.push({ tile: tiles[n], rect: r, index: n }); n++; });
-          });
-          const a = keys.index !== null && keys.index !== undefined && laid[keys.index] ? laid[keys.index] : null;
-          return (
-            <g>
-              {nested ? groups.map((g, gi) => (
-                <g key={'g' + gi} className="plx-treemap__group">
-                  <rect className="plx-treemap__group-frame" x={boxes[gi].x} y={boxes[gi].y} width={boxes[gi].width} height={boxes[gi].height} />
-                  {boxes[gi].width >= NAME_W ? <text className="plx-treemap__group-label" x={boxes[gi].x + LABEL_PAD} y={boxes[gi].y + GROUP_HEAD / 2} clipPath={'url(#' + uid + '-g' + gi + ')'}>{g.label}</text> : null}
-                  <clipPath id={uid + '-g' + gi}><rect x={boxes[gi].x} y={boxes[gi].y} width={Math.max(0, boxes[gi].width - LABEL_PAD)} height={GROUP_HEAD} /></clipPath>
-                </g>
-              )) : null}
-              {laid.map(({ tile, rect, index }) => {
-                const showName = rect.width >= NAME_W && rect.height >= NAME_H, showValue = rect.width >= NAME_W && rect.height >= VALUE_H;
-                return (
-                  <g key={index} className="plx-treemap__cell" onMouseEnter={() => keys.hover(index)} onMouseLeave={() => keys.hover(null)}>
-                    <rect className="plx-chart__mark plx-treemap__tile" data-plx-dataviz={tile.group.color} x={rect.x} y={rect.y} width={rect.width} height={rect.height} />
-                    {showName ? <clipPath id={uid + '-t' + index}><rect x={rect.x} y={rect.y} width={Math.max(0, rect.width - LABEL_PAD)} height={rect.height} /></clipPath> : null}
-                    {showName ? <text className="plx-treemap__label" x={rect.x + LABEL_PAD} y={rect.y + LABEL_PAD} clipPath={'url(#' + uid + '-t' + index + ')'}>{tile.label}</text> : null}
-                    {showValue ? <text className="plx-treemap__value" x={rect.x + LABEL_PAD} y={rect.y + NAME_H} clipPath={'url(#' + uid + '-t' + index + ')'}>{fmt(tile.value)}</text> : null}
-                  </g>
-                );
-              })}
-              {a ? <rect className="plx-chart-keys__ring" x={a.rect.x + RING} y={a.rect.y + RING} width={Math.max(0, a.rect.width - 2 * RING)} height={Math.max(0, a.rect.height - 2 * RING)} /> : null}
-              {a ? <ChartTooltip x={a.rect.x + a.rect.width / 2} y={a.rect.y + a.rect.height / 2} inner={inner} title={(nested ? a.tile.group.label + ' · ' : '') + a.tile.label}
-                items={[{ label: valueTitle || t.value, value: fmt(a.tile.value), color: a.tile.group.color }, { label: t.share, value: pct(a.tile.share) }]} /> : null}
-            </g>
-          );
-        }}
-      </ChartFrame>
+    <ChartFrame interaction={keys.interaction} title={title} description={description} size={size} table={table} margin={{ top: 0, end: 0, bottom: 0, start: 0 }} className={cx('plx-treemap', 'plx-treemap--' + v, className)}>
+      {draw}
+    </ChartFrame>
   );
 }

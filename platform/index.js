@@ -272,7 +272,7 @@ export { Sparkline } from './charts/lazy.jsx';
 export { LollipopChart } from './charts/lazy.jsx';
 export { ScatterChart } from './charts/lazy.jsx';
 export { FunnelChart } from './charts/lazy.jsx';
-export { Treemap } from './charts/Treemap.jsx';
+export { Treemap } from './charts/lazy.jsx';
 export { GanttChart } from './charts/GanttChart.jsx';
 export { GeoMap } from './charts/GeoMap.jsx';
 export { useSortable, useDraggable, useDropTarget, useReposition, useDndSession, moveItem, transferItem, setDragOffset, clearDragOffset, mergeDndProps, DND_STRINGS } from './utils/dnd.ts';
