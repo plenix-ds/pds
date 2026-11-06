@@ -4,7 +4,7 @@
      Arrow Down and Up move to the next row), a cell (Ctrl or Command with C copies; Enter edits; the arrows move across
      cells, mirrored in right to left), and the table body (Arrow Down enters the first cell).
    Usage:
-     import { rowKeys, cellKeys, makeFocusCell } from './engine/keys.js';
+     import { rowKeys, cellKeys, makeFocusCell } from './engine/keys.ts';
      const focusCell = makeFocusCell({ model, ordered, virtualized, virtual, displayElements });
      <div role="row" onKeyDown={rowKeys({ chooseRow, row, emit, rowApi, props, record, on, unread, setOwnOpen, focusCell, model })} />
    Props:
@@ -27,8 +27,8 @@ import { valueText } from '../cells.tsx';
 import { isRtl } from '../../../utils/direction.ts';
 
 export const headerKeys =
-  ({ column }) =>
-  (e) => {
+  ({ column }: any) =>
+  (e: any) => {
     if ((e.key === 'Enter' || e.key === ' ') && e.target === e.currentTarget) {
       e.preventDefault();
       column.toggleSorting();
@@ -36,8 +36,8 @@ export const headerKeys =
   };
 
 export const resizeKeys =
-  ({ resize, c, column }) =>
-  (e) => {
+  ({ resize, c, column }: any) =>
+  (e: any) => {
     if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) {
       e.preventDefault();
       resize(
@@ -57,8 +57,8 @@ export const resizeKeys =
   };
 
 export const makeFocusCell =
-  ({ model, ordered, virtualized, virtual, displayElements, cards }) =>
-  (rowIndex, columnIndex, step = 1) => {
+  ({ model, ordered, virtualized, virtual, displayElements, cards }: any) =>
+  (rowIndex: any, columnIndex: any, step = 1) => {
     while (model[rowIndex] && !model[rowIndex].original) rowIndex += step;
     const record = model[rowIndex],
       column = ordered[columnIndex];
@@ -80,16 +80,16 @@ export const makeFocusCell =
   };
 
 export const groupKeys =
-  ({ toggleGroup, group, model, virtual, holder, B }) =>
-  (event) => {
+  ({ toggleGroup, group, model, virtual, holder, B }: any) =>
+  (event: any) => {
     if (event.target !== event.currentTarget) return;
     if (['Enter', ' ', 'ArrowRight', 'ArrowLeft'].includes(event.key)) {
       event.preventDefault();
       toggleGroup(group.id, event.key === 'ArrowRight' ? true : event.key === 'ArrowLeft' ? false : undefined);
     } else if (['ArrowDown', 'ArrowUp'].includes(event.key)) {
       event.preventDefault();
-      const headers = model.filter((row) => row.__group),
-        next = headers[headers.findIndex((row) => row.id === group.id) + (event.key === 'ArrowDown' ? 1 : -1)];
+      const headers = model.filter((row: any) => row.__group),
+        next = headers[headers.findIndex((row: any) => row.id === group.id) + (event.key === 'ArrowDown' ? 1 : -1)];
       if (next) {
         virtual.scrollToIndex(model.indexOf(next), { align: 'center' });
         requestAnimationFrame(() =>
@@ -104,8 +104,8 @@ export const groupKeys =
   };
 
 export const rowKeys =
-  ({ chooseRow, row, emit, rowApi, props, record, on, unread, setOwnOpen, focusCell, model, cardList }) =>
-  (e) => {
+  ({ chooseRow, row, emit, rowApi, props, record, on, unread, setOwnOpen, focusCell, model, cardList }: any) =>
+  (e: any) => {
     // the card list (issue 809): End on a card, or Ctrl (Command) with End, draws every card and focuses the last
     if (cardList && e.key === 'End' && !e.defaultPrevented && (e.target === e.currentTarget || e.ctrlKey || e.metaKey)) {
       e.preventDefault();
@@ -134,8 +134,8 @@ export const rowKeys =
   };
 
 export const cellKeys =
-  ({ isStatic, value, canEdit, enterEdits, typeToReplace, formMode, toggle, setEditing, row, c, model, ordered, column, frame, focusCell, cellRange, kept, cardList }) =>
-  (event) => {
+  ({ isStatic, value, canEdit, enterEdits, typeToReplace, formMode, toggle, setEditing, row, c, model, ordered, column, frame, focusCell, cellRange, kept, cardList }: any) =>
+  (event: any) => {
     if (isStatic || event.target !== event.currentTarget) return;
     // a checkbox cell (the option editing.types): Space toggles it and saves at once (ADR 0016)
     if (toggle && event.key === ' ' && !event.ctrlKey && !event.altKey && !event.metaKey) {
@@ -194,7 +194,7 @@ export const cellKeys =
     }
     const index = model.indexOf(row),
       at = ordered.indexOf(column),
-      keys = {
+      keys: Record<string, any[]> = {
         ArrowDown: [index + 1, at],
         ArrowUp: [index - 1, at],
         ArrowLeft: [index, at + (isRtl(frame.current) ? 1 : -1)],
@@ -215,8 +215,8 @@ export const cellKeys =
   };
 
 export const tableKeys =
-  ({ focusCell, first }) =>
-  (event) => {
+  ({ focusCell, first }: any) =>
+  (event: any) => {
     if (event.target === event.currentTarget && event.key === 'ArrowDown') {
       event.preventDefault();
       focusCell(first, 0);

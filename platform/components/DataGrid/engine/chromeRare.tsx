@@ -28,22 +28,22 @@ export function manageDialog({
   chooserColumns,
   changeOrder,
   changeVisibility,
-}) {
+}: any) {
   return headerMenu && !isStatic && managing ? (
     <ManageColumnsDialog
-      trigger={null}
+      trigger={null} strings={undefined as any}
       open={managing}
       onOpenChange={setManaging}
-      fields={chooserColumns().map((col) => ({ value: col.id, label: col.columnDef.meta.title || col.id }))}
+      fields={chooserColumns().map((col: any) => ({ value: col.id, label: col.columnDef.meta.title || col.id }))}
       value={{
-        order: chooserColumns().map((col) => col.id),
+        order: chooserColumns().map((col: any) => col.id),
         hidden: chooserColumns()
-          .filter((col) => !col.getIsVisible())
-          .map((col) => col.id),
+          .filter((col: any) => !col.getIsVisible())
+          .map((col: any) => col.id),
       }}
-      onChange={(next) => {
+      onChange={(next: any) => {
         changeOrder(next.order);
-        changeVisibility(Object.fromEntries((next.hidden || []).map((field) => [field, false])));
+        changeVisibility(Object.fromEntries((next.hidden || []).map((field: any) => [field, false])));
       }}
     />
   ) : null;
@@ -51,11 +51,11 @@ export function manageDialog({
 
 // the items of a column's menu (the application's field actions, sort in the type's words, filter, group by this field, wrap): the panel loads the
 // first time a column menu opens, and the trigger starts the download on hover, focus and touch (rare.jsx preloadRare), so it is normally ready
-export function columnMenuItems({ column, columnMenu, S, menuItems, api, props, setFilterField, changeGroups, wrapOf, changeWrap, wrapColumns, groupBy }) {
+export function columnMenuItems({ column, columnMenu, S, menuItems, api, props, setFilterField, changeGroups, wrapOf, changeWrap, wrapColumns, groupBy }: any) {
   const c = column.columnDef.meta,
     custom = typeof columnMenu === 'function' ? columnMenu(c) : columnMenu || [];
-  const groupedBy = (field) =>
-    [].concat(groupBy || []).some((level) => (typeof level === 'object' ? level.field : level) === field);
+  const groupedBy = (field: any) =>
+    ([] as any[]).concat(groupBy || []).some((level) => (typeof level === 'object' ? level.field : level) === field);
   const direction =
     typeOf(c) === 'number' || typeOf(c) === 'currency' || typeOf(c) === 'bytes'
       ? S.sortNumber
@@ -65,7 +65,7 @@ export function columnMenuItems({ column, columnMenu, S, menuItems, api, props, 
           ? S.sortCheck
           : S.sortText;
   const grouped = groupedBy(c.field),
-    others = []
+    others = ([] as any[])
       .concat(groupBy || [])
       .filter((level) => (typeof level === 'object' ? level.field : level) !== c.field);
   return (
@@ -106,7 +106,7 @@ export function columnMenuItems({ column, columnMenu, S, menuItems, api, props, 
 
 // the items of the grid's view menu (row height, wrap headers, and the Editing choice when the grid offers two modes): loaded the first time the menu
 // opens, started by the view button on hover, focus and touch (rare.jsx preloadRare)
-export function viewMenuItems({ props, S, effectiveStep, setRowHeight, effectiveWrap, setWrapHeaders, editMenu }) {
+export function viewMenuItems({ props, S, effectiveStep, setRowHeight, effectiveWrap, setWrapHeaders, editMenu }: any) {
   return (
     <>
         {['short', 'medium', 'tall', 'extra-tall'].map((step) => (
@@ -142,7 +142,7 @@ export function viewMenuItems({ props, S, effectiveStep, setRowHeight, effective
                 props.onViewChange?.({ editMode: mode });
               }}
             >
-              {editMenu.modes.map((mode) => (
+              {editMenu.modes.map((mode: any) => (
                 <MenuItem key={mode} value={mode}>
                   {mode === 'form' ? S.editModeForm : S.editModeInline}
                 </MenuItem>

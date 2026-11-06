@@ -17,7 +17,7 @@ import React from 'react';
 import { failureState, manageFailed, viewMenu, emptyRow, moreRow, pagesFooter, loadMoreFooter } from './chrome.jsx';
 import { cx } from '../../../utils/cx.ts';
 import { lengthName } from './helpers.tsx';
-import { tableKeys } from './keys.js';
+import { tableKeys } from './keys.ts';
 import { tokenPixels } from '../environment.ts';
 import { WidthPixels, Check, Width, RowGap, PixelGap } from './parts.jsx';
 import { Scrollbars } from '../scrollbars.tsx';

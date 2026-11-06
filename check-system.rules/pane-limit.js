@@ -3,7 +3,7 @@
 // What it rejects:
 //   token    the token is missing, or is not a percentage between 50% and 100%
 //   helper   utils/paneLimit.ts is gone, or no longer reads the token
-//   use      PanelSplitter (Resizable), NavPane, SecondaryPane, SidePanel or the DataGrid's table model (engine/useTableModel.js) no longer ask paneMax / shareOf for their limit
+//   use      PanelSplitter (Resizable), NavPane, SecondaryPane, SidePanel or the DataGrid's table model (engine/useTableModel.ts) no longer ask paneMax / shareOf for their limit
 // Alone: node check-system.rules/pane-limit.js     -> PANE_LIMIT_OK, or the findings and exit 1
 const fs = require('fs');
 const path = require('path');
@@ -16,7 +16,7 @@ const USERS = [
   ['platform/patterns/NavPane/NavPane.jsx', /paneMax\(/],
   ['platform/patterns/SecondaryPane/SecondaryPane.jsx', /paneMax\(/],
   ['platform/patterns/SidePanel/SidePanel.jsx', /paneMax\(/],
-  ['platform/components/DataGrid/engine/useTableModel.js', /shareOf\(/],
+  ['platform/components/DataGrid/engine/useTableModel.ts', /shareOf\(/],
 ];
 
 function check({ add }) {

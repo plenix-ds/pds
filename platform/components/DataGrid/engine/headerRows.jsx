@@ -22,7 +22,7 @@ import { Width, PressTrigger } from '../engine/parts.jsx';
 import { Rare, preloadRare } from './rare.jsx';
 import { Spinner } from '../../Loading/Loading.tsx';
 import { cx } from '../../../utils/cx.ts';
-import { headerKeys, resizeKeys } from '../engine/keys.js';
+import { headerKeys, resizeKeys } from '../engine/keys.ts';
 import { Icon } from '../../Icon/Icon.tsx';
 import CircleInfoIcon from 'plenix-platform/icons/plenix/circle-info';
 import { DragHandle } from '../../DragHandle/DragHandle.tsx';
