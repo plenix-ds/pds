@@ -19,3 +19,5 @@ export type DataRecord = Record<string, unknown>;
 export type RowTemplate = { title?: string; subtitle?: string; date?: string; primary?: string; secondary?: string; tertiary?: string };
 /** a row template resolved against the columns: the layout, which field is in which slot, and which columns the card keeps */
 export type ResolvedTemplate = { layout: string; slots: Partial<Record<keyof RowTemplate, string>>; slotOf: Record<string, keyof RowTemplate>; keep: Set<string>; implicit: boolean };
+/** the engine's live state, read through a ref by the adapter and the hooks: what the grid held at its last render (the fields named here are the ones the typed files read; the rest passes through) */
+export type LiveGrid = { current: { sizing?: Record<string, number>; table: import('@tanstack/react-table').Table<DataRecord>; [key: string]: unknown } };
