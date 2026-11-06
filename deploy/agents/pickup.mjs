@@ -131,7 +131,10 @@ async function round() {
       if (DRY) { const it = ev.payload?.issue || ev.payload?.pull_request; console.log(`${ev.created_at} ${ev.type}${ev.payload?.action ? '/' + ev.payload.action : ''} #${it?.number ?? '-'} -> ${r ? r.roles.join(', ') : '(ignored)'}${r ? '  ' + r.line : ''}`); }
       if (r) for (const role of r.roles) queue(role, r.line);
     }
-    state.seen = [...new Set([...(state.seen || []), ...events.map((e) => e.id)])].slice(-600);
+    // remember exactly the ids of the current feed: an event that leaves the feed never returns, and a capped list
+    // that drops its oldest entries forgot events still in the feed, so they were delivered again and again (#220:
+    // #422's comment woke the Design Director every few minutes for hours)
+    state.seen = events.map((e) => e.id);
   }
   const { data: runs } = await get(`/repos/${REPO}/actions/runs?status=failure&per_page=20`, 'runs');
   if (runs) {

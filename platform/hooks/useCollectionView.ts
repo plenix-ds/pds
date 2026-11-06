@@ -25,7 +25,7 @@
      { search, filter, quick, sort, group, columns, view, reset, setSearch, setFilter, setQuick(key, value), setSort, setGroup,
        setColumns, setView, test(row) (whether a row shows), count(rows) (how many show), table (a ref to the DataGrid's
        table controller), searchProps, filterProps, quickProps(key) (includes counts: Map of option values to faceted record counts), sortProps, groupProps, columnsProps, viewProps,
-       tableProps: { filter, sort, groupBy, columnOrder, hiddenColumns, rowHeight, columnWidths, collapsedGroups, onViewChange, onReady, onFilterField } }
+       tableProps: { filter, sort, groupBy, columnOrder, hiddenColumns, rowHeight, editMode, columnWidths, collapsedGroups, onViewChange, onReady, onFilterField } }
    Notes:
      tableProps delegates header changes back to this hook; a managed grid ignores its own storageKey.
      The groups' order follows their levels: tableProps.sort is the group levels, then the sort levels. "Hide empty groups"
@@ -39,7 +39,7 @@ import type { Field, Filter, FilterItem, SortLevel, DateRange } from '../utils/f
 type Row = Record<string, unknown>;
 export type CollectionLevel = SortLevel & { hideEmpty?: boolean; interval?: string; range?: unknown };
 export type CollectionColumns = { order: string[]; hidden: string[] };
-export type CollectionDisplay = { layout: string; size: string; height: string; wrapHeaders?: boolean; widths?: unknown; collapsed?: unknown };
+export type CollectionDisplay = { layout: string; size: string; height: string; editMode?: 'inline' | 'form'; wrapHeaders?: boolean; widths?: unknown; collapsed?: unknown };
 type QuickKind = 'list' | 'date' | 'single';
 type QuickConfig = { kind?: QuickKind; required?: boolean; options?: Field['options'] };
 // a quick filter's value: the chosen values (list, single) or a date range (date)
@@ -57,7 +57,7 @@ type TableController = { plxData?(): unknown; getData(): unknown; on?(event: str
 // what the grid's header reports back (onViewChange)
 type ViewPatch = {
   sort?: CollectionLevel[]; columnOrder?: string[]; hiddenColumns?: string[]; groupBy?: string | CollectionLevel | (string | CollectionLevel)[] | null | false;
-  rowHeight?: string; wrapHeaders?: boolean; widths?: unknown; collapsed?: unknown;
+  rowHeight?: string; editMode?: 'inline' | 'form'; wrapHeaders?: boolean; widths?: unknown; collapsed?: unknown;
 };
 
 
@@ -158,7 +158,7 @@ export function useCollectionView(fields: Field[], options: CollectionViewOption
     if(patch.sort){const next=patch.sort.filter(item=>known.has(item.field)&&!group.some(level=>level.field===item.field));setSort(old=>same(old,next)?old:next);setGroup(old=>{const next=old.map(level=>{const sorted=patch.sort!.find(item=>item.field===level.field);return sorted?{...level,dir:sorted.dir}:level;});return same(old,next)?old:next;});}
     if(patch.columnOrder||patch.hiddenColumns)setColumns(old=>{const next={order:patch.columnOrder?patch.columnOrder.filter(field=>known.has(field)):old.order,hidden:patch.hiddenColumns?patch.hiddenColumns.filter(field=>known.has(field)):old.hidden};return same(old,next)?old:next;});
     if('groupBy'in patch)setGroup(old=>([] as (string | CollectionLevel)[]).concat(patch.groupBy||[]).map(value=>typeof value==='string'?{field:value}:value).filter(value=>known.has(value.field)).map(value=>({...old.find(level=>level.field===value.field),dir:'asc',...value})));
-    if('rowHeight'in patch||'wrapHeaders'in patch||'widths'in patch||'collapsed'in patch)setView(old=>({...old,...('rowHeight'in patch?{height:patch.rowHeight}:{}),...('wrapHeaders'in patch?{wrapHeaders:patch.wrapHeaders}:{}),...('widths'in patch?{widths:patch.widths}:{}),...('collapsed'in patch?{collapsed:patch.collapsed}:{})}));
+    if('rowHeight'in patch||'editMode'in patch||'wrapHeaders'in patch||'widths'in patch||'collapsed'in patch)setView(old=>({...old,...('rowHeight'in patch?{height:patch.rowHeight}:{}),...('editMode'in patch?{editMode:patch.editMode}:{}),...('wrapHeaders'in patch?{wrapHeaders:patch.wrapHeaders}:{}),...('widths'in patch?{widths:patch.widths}:{}),...('collapsed'in patch?{collapsed:patch.collapsed}:{})}));
   },[fields,group]);
   // the grid's "Filter by this field" opens the command bar's Filter panel on that field (one filter state, shown in one place)
   const [filterOpen, setFilterOpen] = React.useState(false), [filterRequest, setFilterRequest] = React.useState<{ field: string; id: number } | null>(null);
@@ -176,6 +176,6 @@ export function useCollectionView(fields: Field[], options: CollectionViewOption
     columnsProps: { fields, value: columns, onChange: setColumns },
     viewProps: { value: view, onChange: setView, onReset: reset },
     tableProps: { filter: test, sort: sorters, groupBy: group.length ? group.map((g) => ({ ...g, interval: g.interval || (fields.find(f => f.value === g.field)?.kind === 'date' ? 'day' : undefined), range: g.range ?? fields.find(f => f.value === g.field)?.groupRange })) : false, columnOrder: columns.order, hiddenColumns: columns.hidden,
-      rowHeight: view.height, wrapHeaders: !!view.wrapHeaders, columnWidths: view.widths, collapsedGroups: view.collapsed, onViewChange, onReady, onFilterField },
+      rowHeight: view.height, editMode: view.editMode, wrapHeaders: !!view.wrapHeaders, columnWidths: view.widths, collapsedGroups: view.collapsed, onViewChange, onReady, onFilterField },
   };
 }

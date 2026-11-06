@@ -48,3 +48,5 @@
 :where(.plx-combobox__list){transform-origin:top center;}
 /* the width its pattern gives it (layout-modes.css), else its own */
 .plx-combobox:where(:not(.plx-combobox--width-xs, .plx-combobox--width-sm, .plx-combobox--width-md, .plx-combobox--width-lg, .plx-combobox--width-fill)){flex-shrink:var(--plx-comp-field-context-content-flex-shrink,1);inline-size:var(--plx-comp-field-context-content-inline-size,var(--plx-comp-field-context-stretch-inline-size,auto));max-inline-size:min(var(--plx-comp-combobox-max-width),var(--plx-comp-field-context-content-max-inline-size,100%),100%);min-inline-size:var(--plx-comp-field-context-content-min-inline-size,0);}
+/* chipOverflow="count": the chips stay on one line (the fit step folds the rest into a "+N" Tag) */
+.plx-combobox__field--count{flex-wrap:nowrap;}

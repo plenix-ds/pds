@@ -636,6 +636,7 @@ export default {
     "error": "The options could not be loaded",
     "emptyText": "No matches",
     "removeItem": "Remove {label}",
+    "moreChips": "{count} more",
     "clear": "Clear",
     "results": {
       "one": "{n} option",
@@ -2190,6 +2191,9 @@ export default {
     "draft": "Draft"
   },
   "viewMenu": {
+    "editMode": "Editing",
+    "editModeInline": "Inline Edit",
+    "editModeForm": "Form Edit",
     "reset": "Reset view",
     "label": "View",
     "layout": "Layout",

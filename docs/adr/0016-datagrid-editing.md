@@ -167,6 +167,27 @@ chipOverflow?: 'wrap' | 'count';   // Combobox, with multiple; default 'wrap' (t
 - **Semver: MINOR** (an additive optional prop on a public control, and one catalog key).
 - Enforced by: G3 review of the #477 item 1 PR; behavior checks (the chips fit on one line, "+N" counts the hidden ones and is announced, Backspace removes the last value, RTL); the default `'wrap'` is unchanged (a regression check).
 
+## Addendum (2026-11-06, #477 item 2): the Editing choice in the page's ViewMenu (D-0066)
+
+Tables in a ListingPage show their view settings in the page's ViewMenu, not in the grid's own button. The Editing choice goes there through the view state the grid already shares. No new DataGrid prop:
+
+```ts
+// ViewMenu
+editModes?: ('inline' | 'form')[];   // with two ways, the menu ends with an "Editing" group (Inline Edit, Form Edit)
+value: { layout; size; height; editMode?: 'inline' | 'form' };   // the chosen way, in the view value
+
+// useCollectionView: the view and tableProps carry editMode
+view.editMode?: 'inline' | 'form';
+tableProps.editMode;   // handed to DataGrid; onViewChange({ editMode }) writes it back
+```
+
+- **One value:** the page's menu and the grid's own view menu show and change the same `editMode`, remembered with the other view settings.
+- **DataGrid with `onViewChange` follows its `editMode` prop**, as it does `rowHeight`, so the page's choice reaches it. Without `onViewChange`, the person's choice under `storageKey` still wins (F1).
+- Without `editModes` (or with one way), ViewMenu shows no Editing group: today's menus don't change.
+- Catalog: `viewMenu.editMode`, `editModeInline` and `editModeForm` (the same English as `dataGrid.*`; Arabic needs the owner, D-0012).
+- **Semver: MINOR** (an optional ViewMenu prop and an optional field in the view value).
+- Enforced by: G3 review of #489; `tests/view-menu-edit-mode-477.test.js` (the group, one value both ways, no group without `editModes`, RTL).
+
 ## Enforced by
 
 - G3 review of each phase's API diff against this ADR.
