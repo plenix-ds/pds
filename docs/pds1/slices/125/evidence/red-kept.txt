@@ -1,0 +1,49 @@
+node:assert:150
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: the going-away list is the ten kept classes
++ actual - expected
+
++ []
+- [
+-   'plx-u-absolute',
+-   'plx-u-bg-transparent',
+-   'plx-u-justify-center',
+-   'plx-u-left-0',
+-   'plx-u-right-0',
+-   'plx-u-text-center',
+-   'plx-u-top-0',
+-   'plx-u-w-100px',
+-   'plx-u-w-36px',
+-   'plx-u-w-72px'
+- ]
+
+    at Object.<anonymous> (/home/cc/pds1/work/component-engineer-2/tests/deprecated-removed-125.test.js:18:8)
+    at Module._compile (node:internal/modules/cjs/loader:1781:14)
+    at Object..js (node:internal/modules/cjs/loader:1913:10)
+    at Module.load (node:internal/modules/cjs/loader:1505:32)
+    at Function._load (node:internal/modules/cjs/loader:1309:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [],
+  expected: [
+    'plx-u-absolute',
+    'plx-u-bg-transparent',
+    'plx-u-justify-center',
+    'plx-u-left-0',
+    'plx-u-right-0',
+    'plx-u-text-center',
+    'plx-u-top-0',
+    'plx-u-w-100px',
+    'plx-u-w-36px',
+    'plx-u-w-72px'
+  ],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v22.23.4
