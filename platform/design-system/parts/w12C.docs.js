@@ -107,7 +107,7 @@ DSParts.docs.push({
       "focus": "Nothing moves focus; the page area takes focus so it can be scrolled.",
       "responsive": "The toolbar and thumbnails wrap onto more rows; the page scrolls inside its area.",
       "motion": "No motion of its own.",
-      "loading": "A loading indicator shows until the first page is ready. PDF.js loads from the release's vendor folder (vendor/pdfjs/, beside plenix.js on the CDN), and rendering of outdated documents and canvases is cancelled.",
+      "loading": "A loading indicator shows until the first page is ready. PDF.js loads from the release's vendor folder (vendor/pdfjs/, beside plenix.js on the CDN), and rendering of outdated documents and canvases is canceled.",
       "error": "Each failure says what happened and offers Try again: the viewer could not start (engine), the document is missing, denied or blocked (access), the file is not a readable PDF (parse), or a page could not be drawn (render). onError({ reason, cause }) tells the app which. Until a document has pages, the page counter, page buttons and zoom are hidden."
     },
     "a11y": {
