@@ -1405,5 +1405,57 @@
   "entity-picker--kind-teams": {
     "sets": [],
     "why": "markup only: each suggestion shows a team icon, the name and the member count"
+  },
+  "file-input--variant-button-default": {
+    "sets": [],
+    "why": "markup only: the browser's file input drawn as a secondary Button, with a line that says what is chosen"
+  },
+  "file-input--variant-accept-types": {
+    "sets": [],
+    "why": "markup only: limits the file types the picker offers (accept); the Field's description should say them too"
+  },
+  "file-input--variant-multiple": {
+    "sets": [],
+    "why": "markup only: lets the picker choose more than one file at a time"
+  },
+  "file-input--variant-with-file-list": {
+    "sets": [],
+    "why": "markup only: lists the chosen files under the button, each with its size and a Remove button (showList)"
+  },
+  "file-picker--variant-files": {
+    "sets": [],
+    "why": "markup only: picks stored files from a folder tree in a dialog (mode files)"
+  },
+  "file-picker--variant-assets": {
+    "sets": [],
+    "why": "markup only: picks assets from the folder tree (mode assets)"
+  },
+  "file-picker--variant-media-only": {
+    "sets": [],
+    "why": "markup only: offers only media items (mode media)"
+  },
+  "form-flow--variant-create-on-a-page": {
+    "sets": [],
+    "why": "markup only: the form is drawn on a page (surface page, mode create)"
+  },
+  "form-flow--variant-edit-in-place": {
+    "sets": [],
+    "why": "markup only: the form is drawn inline where the record is (surface inline, mode edit)"
+  },
+  "form-flow--variant-create-in-a-dialog": {
+    "sets": [],
+    "why": "markup only: the form is drawn in a Dialog (surface dialog, mode create)"
+  },
+  "form-flow--variant-edit-in-a-drawer": {
+    "sets": [],
+    "why": "markup only: the form is drawn in a drawer (surface drawer, mode edit)"
+  },
+  "error-summary--variant-list-of-errors-with-links": {
+    "sets": [],
+    "why": "markup only: a danger Notice with one link per problem, in the form's order, each taking focus to its field"
+  },
+  "error-summary--variant-focused-on-submit": {
+    "sets": [],
+    "why": "markup only: moves focus to the summary when it appears (autoFocus, default true)"
   }
 }
