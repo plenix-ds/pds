@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: ltr: no header carries a bare title attribute (16)
+
+16 !== 0
+
+    at /home/cc/pds1/work/component-engineer-1/tests/data-grid-header-tooltip-794.test.js:33:14 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 16,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

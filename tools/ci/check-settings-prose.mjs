@@ -18,6 +18,12 @@ files.push(...walk('.rulesync/rules', []), ...walk('.claude/agents', []), ...wal
 let settings;
 try { settings = flattenSettings(load('agents.config.yaml')); } catch (e) { console.log(`SETTINGS_PROSE_FAIL: ${e.message}`); process.exit(1); }
 const found = settingsInProse(Object.fromEntries(files.map((f) => [f, fs.readFileSync(f, 'utf8')])), settings);
+// the poller's timer is the one place that must state a setting as a value (systemd can't read YAML): it must match (#772)
+const TIMER = 'deploy/agents/pds1-nudge.timer';
+const every = /^OnUnitActiveSec=(\d+)min$/m.exec(fs.existsSync(TIMER) ? fs.readFileSync(TIMER, 'utf8') : '');
+if ('dispatch.heartbeat_min' in settings && (!every || Number(every[1]) !== settings['dispatch.heartbeat_min'])) {
+  found.push({ file: TIMER, line: 1, setting: 'dispatch.heartbeat_min', stated: every ? every[1] : '(no OnUnitActiveSec=<n>min)', value: settings['dispatch.heartbeat_min'] });
+}
 for (const m of found) console.log(`::error file=${m.file},line=${m.line}::states ${m.setting} as ${m.stated}; agents.config.yaml says ${m.value}. Name the setting instead of its value (check 15)`);
 if (found.length) { console.log(`SETTINGS_PROSE_FAIL (${found.length})`); process.exit(1); }
 console.log(`SETTINGS_PROSE_OK (${Object.keys(settings).length} settings, ${files.length} documents)`);

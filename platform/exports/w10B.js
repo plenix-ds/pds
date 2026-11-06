@@ -4,5 +4,5 @@
 export { WorkflowStatus, WORKFLOW_STATUSES, ReviewFlow, ReviewQueue } from '../patterns/ReviewFlow/ReviewFlow.tsx';
 export { DeleteFlow } from '../patterns/DeleteFlow/DeleteFlow.tsx';
 export { DuplicateAction, copyName } from '../patterns/DuplicateAction/DuplicateAction.tsx';
-export { Publish } from '../patterns/Publish/Publish.jsx';
+export { Publish } from '../patterns/Publish/Publish.tsx';
 export { AssignControl } from '../patterns/AssignControl/AssignControl.tsx';

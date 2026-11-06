@@ -56,24 +56,43 @@ import { useStrings } from '../../providers/LocaleProvider.tsx';
 import ScheduleIcon from 'plenix-platform/icons/plenix/schedule';
 import { fill } from '../../utils/fill.ts';
 
-const q = (x) => '“' + x + '”';
+const q = (x: any) => '“' + x + '”';
 
 // a status line with its date in the data font: the words around {at} stay in the UI font
-function Line({ text, at }) {
+function Line({ text, at }: { text: any; at: any }) {
   const parts = String(text).split('{at}');
   return <span className="plx-publish__detail">{parts[0]}{parts.length > 1 ? <Text variant="data">{at}</Text> : null}{parts.slice(1).join('')}</span>;
 }
 
+/** @public the prop type (ADR 0011) */
+export type PublishProps = Omit<React.HTMLAttributes<HTMLElement>, 'children'> & {
+  name?: string;
+  status?: 'draft' | 'scheduled' | 'published';
+  audience?: string;
+  /** "YYYY-MM-DDTHH:MM" */
+  publishedAt?: string;
+  scheduledFor?: string;
+  by?: string;
+  onPublish?(): unknown;
+  /** schedules it ("YYYY-MM-DDTHH:MM"); without it there is no Schedule */
+  onSchedule?(at: string): unknown;
+  onCancelSchedule?(): unknown;
+  onUnpublish?(): unknown;
+  confirm?: boolean;
+  readOnly?: boolean;
+  strings?: Record<string, string>;
+  className?: string;
+};
 export function Publish({ name = '', status = 'draft', audience, publishedAt, scheduledFor, by, onPublish, onSchedule, onCancelSchedule,
-  onUnpublish, confirm = true, readOnly = false, strings, className, ...rest }) {
-  const t = useStrings('publish', strings);
+  onUnpublish, confirm = true, readOnly = false, strings, className, ...rest }: PublishProps) {
+  const t: any = useStrings('publish', strings);
   const toast = useOptionalToast();
   const who = audience || t.everyone;
-  const [ask, setAsk] = React.useState(null);   // "publish" | "unpublish" | "schedule"
-  const [when, setWhen] = React.useState(null);
+  const [ask, setAsk] = React.useState<any>(null);   // "publish" | "unpublish" | "schedule"
+  const [when, setWhen] = React.useState<any>(null);
   const [error, setError] = React.useState('');
   const formId = useUid('plx-publish');
-  const say = (text, options) => { if (toast) toast.show(text, options); else announce(text); };
+  const say = (text: any, options: any) => { if (toast) toast.show(text, options); else announce(text); };
   const nameQ = q(name);
 
   const doPublish = () => { setAsk(null); if (onPublish) onPublish(); say(fill(t.published, { name: nameQ }), { tone: 'success' }); };
@@ -81,12 +100,12 @@ export function Publish({ name = '', status = 'draft', audience, publishedAt, sc
     setAsk(null); if (onUnpublish) onUnpublish();
     say(fill(t.unpublished, { name: nameQ }), onPublish ? { action: { label: t.undo, onAction: onPublish } } : undefined);
   };
-  const doSchedule = (e) => {
+  const doSchedule = (e: any) => {
     e.preventDefault();
     const problem = !when ? t.empty : new Date(when).getTime() <= Date.now() ? t.past : '';
     setError(problem);
     if (problem) return;
-    setAsk(null); onSchedule(when);
+    setAsk(null); onSchedule!(when);
     say(fill(t.scheduled, { name: nameQ, at: formatDateTime(when) }), { tone: 'success' });
   };
   const publishPress = () => (confirm ? setAsk('publish') : doPublish());

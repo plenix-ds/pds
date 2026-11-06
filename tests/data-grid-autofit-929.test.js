@@ -72,8 +72,10 @@ const SHAPES = {
       for (const windowWidth of [1024, 1280]) {
         const r = await draw('aiteam', dir, windowWidth);
         assert.ok(r.titleFull, d + 'AITEAM\'s Issues at ' + windowWidth + ': every title reads in full');
-        assert.ok(r.pri <= r.num && r.num <= 120, d + 'AITEAM\'s Issues at ' + windowWidth + ': Number and Priority stay at their headers\' need (' + r.num + ', ' + r.pri + ')');
-        assert.ok(r.labels < 150, d + 'AITEAM\'s Issues at ' + windowWidth + ': Labels sizes to its content, under its set 150 (' + r.labels + ')');
+        // #800 (D-0087): the spare room is shared evenly, so Number and Priority are no longer held at their headers' need; neither takes all of it
+        assert.ok(Math.abs(r.pri - r.num) <= 16 && r.num <= 300, d + 'AITEAM\'s Issues at ' + windowWidth + ': Number and Priority take an equal share (' + r.num + ', ' + r.pri + ')');
+        // #800 (D-0087): an app's set width is a minimum for a compact column, never a cap
+        assert.ok(windowWidth < 1200 ? r.labels >= 96 : r.labels >= 150, d + 'AITEAM\'s Issues at ' + windowWidth + ': Labels keeps its set 150 as a minimum while there is room (' + r.labels + ')');
       }
       const fixed = await draw('aiteam', dir, 1440, 760, { narrow: 'table' });
       assert.equal(fixed.cards, false, d + 'narrow="table": a table in a 760px pane');

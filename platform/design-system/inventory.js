@@ -469,7 +469,7 @@
       variantPages: [
         { leaf: 'Column property list', group: 'Layout', name: 'Columns (default)', lab: { variant: 'columns' }, text: 'Labels in one shared column and values beside them on a shared baseline.', use: ['Details of one item in an inspector or a summary panel'], avoid: ['Reference facts that read as a table: use a table with a header'] },
         { leaf: 'Stacked property list', group: 'Layout', name: 'Stacked', lab: { variant: 'stacked' }, text: 'Each label sits above its value.', use: ['Narrow panes and long values such as descriptions or paths'], avoid: ['Short values in a wide pane, where columns are easier to scan'] }
-      ], sec: 'content', sub: 'Metadata', leaf: 'Property list', plenix: 'PropertyList', src: 'patterns/PropertyList/PropertyList.jsx', level: 'Composite', interaction: 'Display',
+      ], sec: 'content', sub: 'Metadata', leaf: 'Property list', plenix: 'PropertyList', src: 'patterns/PropertyList/PropertyList.tsx', level: 'Composite', interaction: 'Display',
       aliases: ['Description list', 'Key-value list', 'Details list'],
       use: ['Facts about one record: label and value, in columns or stacked', 'data on an item whose value is technical (a size, a date, an ID, a file name): Reddit Mono at the value size, on the same baseline as its label'], avoid: ['Several records: use Data grid', 'data on a name, a description or a status'],
       related: ['inspector-region', 'record-page'], map: [m(C, 'Structured list', 'Partial'), m(D, 'Descriptions'), m(['Django'], 'readonly_fields (admin)', 'Partial')],
