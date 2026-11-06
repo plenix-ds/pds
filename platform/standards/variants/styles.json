@@ -1797,5 +1797,101 @@
       }
     ],
     "why": ".plx-code in code.css, the base rule for code inside a sentence"
+  },
+  "toast--tone-success": {
+    "sets": [
+      {
+        "property": "border-inline-start-color",
+        "part": "block",
+        "token": "--plx-comp-toast-success-border-inline-start-color"
+      }
+    ],
+    "why": ".plx-toast--success in toast.css; the lab value is named tone-success, which the derivation does not map to the modifier"
+  },
+  "toast--tone-warning": {
+    "sets": [
+      {
+        "property": "border-inline-start-color",
+        "part": "block",
+        "token": "--plx-comp-toast-warning-border-inline-start-color"
+      }
+    ],
+    "why": ".plx-toast--warning in toast.css; the lab value is named tone-warning, which the derivation does not map to the modifier"
+  },
+  "toast--tone-danger": {
+    "sets": [
+      {
+        "property": "border-inline-start-color",
+        "part": "block",
+        "token": "--plx-comp-toast-danger-border-inline-start-color"
+      }
+    ],
+    "why": ".plx-toast--danger in toast.css; the lab value is named tone-danger, which the derivation does not map to the modifier"
+  },
+  "toast--tone-info-default": {
+    "sets": [
+      {
+        "property": "border-inline-start-color",
+        "part": "block",
+        "token": "--plx-comp-toast-border-inline-start-color"
+      }
+    ],
+    "why": ".plx-toast in toast.css: info is the default tone, drawn by the base rule"
+  },
+  "timestamp--format-date-label": {
+    "sets": [],
+    "why": "markup only: the format changes the text and the tooltip, no style"
+  },
+  "timestamp--format-date-only": {
+    "sets": [],
+    "why": "markup only: the format changes the text and the tooltip, no style"
+  },
+  "timestamp--format-relative": {
+    "sets": [],
+    "why": "markup only: the format changes the text and the tooltip, no style"
+  },
+  "timestamp--format-time-only": {
+    "sets": [],
+    "why": "markup only: the format changes the text and the tooltip, no style"
+  },
+  "timestamp--format-timestamp-default": {
+    "sets": [],
+    "why": "markup only: the format changes the text and the tooltip, no style"
+  },
+  "timestamp--format-with-absolute-tooltip": {
+    "sets": [],
+    "why": "markup only: the format changes the text and the tooltip, no style"
+  },
+  "time-picker--clock-12-hour-clock": {
+    "sets": [],
+    "why": "markup only: the clock changes the words (AM/PM) and the list, no style"
+  },
+  "time-picker--clock-24-hour-clock": {
+    "sets": [],
+    "why": "markup only: the clock changes the words and the list, no style"
+  },
+  "time-picker--step-every-30-minutes": {
+    "sets": [],
+    "why": "markup only: the step changes which times the list holds, no style"
+  },
+  "time-picker--form-list-default": {
+    "sets": [],
+    "why": "markup only: the list form is the default markup, no style"
+  },
+  "tooltip--placement-bottom-default": {
+    "sets": [],
+    "why": "markup only: the placement is a data attribute read by the floating layer (system/floating.css), which positions it; the tooltip's own styles do not change"
+  },
+  "tooltip--placement-end": {
+    "sets": [],
+    "why": "markup only: the placement is a data attribute read by the floating layer (system/floating.css), which positions it; the tooltip's own styles do not change"
+  },
+  "tooltip--placement-start": {
+    "sets": [],
+    "why": "markup only: the placement is a data attribute read by the floating layer (system/floating.css), which positions it; the tooltip's own styles do not change"
+  },
+  "tooltip--placement-top": {
+    "sets": [],
+    "why": "markup only: the placement is a data attribute read by the floating layer (system/floating.css), which positions it; the tooltip's own styles do not change"
   }
 }
