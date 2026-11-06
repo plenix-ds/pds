@@ -39,7 +39,7 @@
   ],
   "usePressable": [
     "platform/components/RowButton/RowButton.tsx",
-    "platform/components/DataGrid/engine/parts.jsx"
+    "platform/components/DataGrid/engine/parts.tsx"
   ],
   "useFocusGroup": [
     "platform/components/Toolbar/Toolbar.tsx",
@@ -62,7 +62,7 @@
     "platform/charts/Gauge.jsx",
     "platform/patterns/RecordPage/RecordPage.jsx",
     "platform/patterns/ActivityList/ActivityList.jsx",
-    "platform/components/DataGrid/engine/parts.jsx",
+    "platform/components/DataGrid/engine/parts.tsx",
     "platform/patterns/SettingsLayout/SettingsLayout.jsx"
   ],
   "useGesture": [

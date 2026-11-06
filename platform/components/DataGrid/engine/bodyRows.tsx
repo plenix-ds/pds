@@ -4,7 +4,7 @@
      custom cells, the cut-text popover, frozen columns, units and alignment). Render functions over the engine's state, not
      components: one element tree, no extra React layer between the engine and the rows (the row's own memo is MemoGridRow).
    Usage:
-     import { bodyRows } from './engine/bodyRows.jsx';
+     import { bodyRows } from './engine/bodyRows.tsx';
      const { groupNode, rowNode, enterCut, leaveCut, anyWrap } = bodyRows({ B, S, props, columns, ordered, selectable, isNarrow, ... });
    Props:
      The engine's values (the block class B, the strings S, props, the columns and their order, the selection, the editing and cut
@@ -20,7 +20,7 @@ import { words, kinds, interactive, typeOf, typeIcons, cellDirection } from './h
 import { valueText, CellValue } from '../cells.tsx';
 import { groupKeys, rowKeys, cellKeys } from './keys.ts';
 import { Avatar } from '../../Avatar/Avatar.tsx';
-import { Width, RowTarget, Check, CellEditor, CellStatus, CustomCell, RowMenuContent } from './parts.jsx';
+import { Width, RowTarget, Check, CellEditor, CellStatus, CustomCell, RowMenuContent } from './parts.tsx';
 import { Icon } from '../../Icon/Icon.tsx';
 import ChevronRightIcon from 'plenix-platform/icons/plenix/chevron-right';
 import ChevronDownIcon from 'plenix-platform/icons/plenix/chevron-down';
@@ -101,8 +101,8 @@ export function bodyRows({
   rowMenu,
   rowMenuButton,
   menuItems,
-}) {
-  const groupNode = (group, sticky = false) => (
+}: any) {
+  const groupNode = (group: any, sticky = false) => (
     <div
       key={group.id}
       data-plx-group={group.id}
@@ -127,7 +127,7 @@ export function bodyRows({
         className={cx(B + '__group-head', group.separated && !sticky && B + '__group-head--gap')}
         role="presentation"
       >
-        {ordered.map((column, i) => (
+        {ordered.map((column: any, i: any) => (
           <Width
             key={column.id}
             width={widths[column.id] + (i === 0 && selectable ? metrics.lead : 0)}
@@ -152,17 +152,17 @@ export function bodyRows({
                 </span>
                 <div className={B + '__group-text'}>
                   <span dir="auto" className={B + '__group-eyebrow'}>
-                    {columns.find((c) => c.field === group.field)?.title || group.field}
+                    {columns.find((c: any) => c.field === group.field)?.title || group.field}
                   </span>
                   <span
                     className={cx(
                       B + '__group-value',
-                      kinds(columns.find((c) => c.field === group.field) || {}).includes('data') &&
+                      kinds(columns.find((c: any) => c.field === group.field) || {}).includes('data') &&
                         B + '__group-value--data'
                     )}
                     data-plx-text-follow="size"
                     data-plx-kind={
-                      kinds(columns.find((c) => c.field === group.field) || {}).includes('data') ? 'data' : undefined
+                      kinds(columns.find((c: any) => c.field === group.field) || {}).includes('data') ? 'data' : undefined
                     }
                   >
                     {valueText(group.value) || S.noValue}
@@ -174,7 +174,7 @@ export function bodyRows({
               <span className={B + '__group-summary'}>
                 <span className={B + '__group-summary-name'}>
                   {
-                    { sum: S.sum, count: S.countOf, average: S.average, min: S.min, max: S.max }[
+                    ({ sum: S.sum, count: S.countOf, average: S.average, min: S.min, max: S.max } as Record<string, any>)[
                       column.columnDef.meta.summary
                     ]
                   }
@@ -191,19 +191,19 @@ export function bodyRows({
       </div>
     </div>
   );
-  const enterCut = (event, id) => {
+  const enterCut = (event: any, id: any) => {
     if (cutOpen.current) return;
     const v = event.currentTarget.querySelector('.' + B + '__value');
     const cut = !!v && (v.scrollHeight > v.clientHeight + 1 || v.scrollWidth > v.clientWidth + 1);
     setCutAt(cut ? id : null);
   };
-  const leaveCut = (id) => {
-    if (!cutOpen.current) setCutAt((at) => (at === id ? null : at));
+  const leaveCut = (id: any) => {
+    if (!cutOpen.current) setCutAt((at: any) => (at === id ? null : at));
   };
   const anyWrap = table
     .getVisibleLeafColumns()
-    .some((col) => col.columnDef.meta && col.columnDef.meta.field && wrapOf(col.columnDef.meta));
-  const rowNode = (row) => {
+    .some((col: any) => col.columnDef.meta && col.columnDef.meta.field && wrapOf(col.columnDef.meta));
+  const rowNode = (row: any) => {
     if (row.__group) return groupNode(row.__group);
     if (row.__add)
       return (
@@ -241,7 +241,7 @@ export function bodyRows({
     const tpl = props.rowTemplate,
       card = !!tpl && isNarrow && tpl.layout !== 'wide',
       slotted = !!tpl && (card || tpl.layout === 'wide'),
-      cellList = card ? ordered.filter((column) => tpl.keep.has(column.id)) : ordered;
+      cellList = card ? ordered.filter((column: any) => tpl.keep.has(column.id)) : ordered;
     const step = !isStatic && !isNarrow ? effectiveStep : undefined,
       sized = step != null,
       lines = sized && step !== 'short',
@@ -264,7 +264,7 @@ export function bodyRows({
             : undefined
         }
         data-plx-record={row.id}
-        onAttach={(node) => rememberRow(row, node)}
+        onAttach={(node: any) => rememberRow(row, node)}
         role="row"
         aria-rowindex={(mode === 'pages' ? page * pageSize : 0) + (semanticIndex.get(row.displayKey || row.id) || 2)}
         aria-selected={selectable || options.selectableRows ? !!selection[row.id] : undefined}
@@ -285,7 +285,7 @@ export function bodyRows({
           virtualized && B + '__grid-row--virtual',
           row === model[0] && B + '__grid-row--first'
         )}
-        onClick={(e) => {
+        onClick={(e: any) => {
           if (e.target.closest(interactive)) return;
           chooseRow(row, e);
           emit('rowClick', e, rowApi);
@@ -295,7 +295,7 @@ export function bodyRows({
             setOwnOpen(row.id);
           }
         }}
-        onDoubleClick={(e) => {
+        onDoubleClick={(e: any) => {
           if (!e.target.closest(interactive)) {
             props.onRowDoubleClick?.(record, e);
             emit('rowDblClick', e, rowApi);
@@ -318,12 +318,12 @@ export function bodyRows({
               label={S.selectRow + ' ' + record[index]}
               card={card}
               checked={selection[row.id]}
-              onChange={(e) => pickCheckbox(row, e)}
+              onChange={(e: any) => pickCheckbox(row, e)}
             />
           </div>
         ) : null}
-        {cellList.map((column) => {
-          const focusAfterEdit = (from, fromColumn, move) => {
+        {cellList.map((column: any) => {
+          const focusAfterEdit = (from: any, fromColumn: any, move: any) => {
             // the cell keeps the focus after an edit; Tab / Shift+Tab (move = 1 / -1) go on to the next / previous editable cell, row by row
             let r = model.indexOf(from),
               col = ordered.indexOf(fromColumn),
@@ -356,7 +356,7 @@ export function bodyRows({
             canEdit = !checkboxEditor && editable && status?.kind !== 'saving';
           const value = valueAt(record, c.field),
             // the person editor's read cell: the person with a small avatar and the name, found among the column's options (ADR 0016, design §2)
-            personOpt = turnedOn && c.editor === 'person' && !c.render ? (c.editorProps?.options || []).find((o) => String(o.value) === String(value)) : null,
+            personOpt = turnedOn && c.editor === 'person' && !c.render ? (c.editorProps?.options || []).find((o: any) => String(o.value) === String(value)) : null,
             isTree = !!childField && c.field === (props.treeColumn || columns[0]?.field),
             isEditing = editing?.key === row.id && editing.field === c.field,
             handled = c.rowHandle && (recordPositions.get(record) ?? -1) >= 0,
@@ -385,7 +385,7 @@ export function bodyRows({
               record,
               pill: cells === 'pill',
               pillField: c.field,
-              icon: showTypes && typeOf(c) !== 'text' ? typeIcons[typeOf(c)] : undefined,
+              icon: showTypes && typeOf(c) !== 'text' ? typeIcons[typeOf(c) as keyof typeof typeIcons] : undefined,
               mods,
             }); // a pill carries a type icon only when it says something (a date, a number)
           // a cell inside the selected block (the option cellSelection): its place in the block, null outside it or without the option
@@ -398,7 +398,7 @@ export function bodyRows({
             !(pinned && !isStatic) &&
             React.isValidElement(shown) &&
             shown.type === 'span' &&
-            String(shown.props.className)
+            String((shown as any).props.className)
               .split(' ')
               .includes(B + '__value');
           return (
@@ -412,13 +412,13 @@ export function bodyRows({
               data-plx-unread={unread.has(record) || undefined}
               {...(!isStatic && !c.render && !actions && !isEditing
                 ? {
-                    onPointerEnter: (e) => enterCut(e, row.id + '|' + c.field),
-                    onFocus: (e) => enterCut(e, row.id + '|' + c.field),
+                    onPointerEnter: (e: any) => enterCut(e, row.id + '|' + c.field),
+                    onFocus: (e: any) => enterCut(e, row.id + '|' + c.field),
                     onPointerLeave: () => leaveCut(row.id + '|' + c.field),
                   }
                 : null)}
               aria-selected={inRange ? true : undefined}
-              onMouseDown={cellRange.enabled ? (e) => { if (!e.target.closest(interactive)) cellRange.press({ e, row, c, focusCell }); } : undefined}
+              onMouseDown={cellRange.enabled ? (e: any) => { if (!e.target.closest(interactive)) cellRange.press({ e, row, c, focusCell }); } : undefined}
               // a card's lines line up at the card's start edge in both directions (#679), so a card cell takes the grid's
               // direction; a table cell keeps its value's own direction (dir="auto")
               dir={(pinned && !isStatic) || kinds(c).includes('id') || isNarrow ? undefined : 'auto'}
@@ -465,9 +465,9 @@ export function bodyRows({
                   B + '__grid-cell--after-frozen',
                 isTree && row.depth > 0 && B + '__tree-cell--level-' + Math.min(12, row.depth),
                 editing?.key === row.id && editing.field === c.field && '' + B + '__grid-editing',
-                k.map((kind) => B + '__cell--' + kind).join(' '),
+                k.map((kind: any) => B + '__cell--' + kind).join(' '),
                 (k.includes('data') || c.type === 'bytes') && B + '__grid-cell--data',
-                []
+                ([] as any[])
                   .concat(groupBy || [])
                   .some((level) => (typeof level === 'object' ? level.field : level) === c.field) &&
                   B + '__cell--grouped',
@@ -524,10 +524,10 @@ export function bodyRows({
                     date={turnedOn && c.editor === 'date'}
                     custom={!!c.editor && typeof c.editor === 'object' && typeof c.editor.component === 'function'}
                     value={draftStore?.current?.key === row.id && draftStore.current.field === c.field ? draftStore.current.value : editing.value}
-                    onDraft={(draft) => {
+                    onDraft={(draft: any) => {
                       if (draftStore) draftStore.current = { key: row.id, field: c.field, value: draft };
                     }}
-                    onCommit={(next, move) => {
+                    onCommit={(next: any, move: any) => {
                       commitEdit(row.id, c.field, next);
                       focusAfterEdit(row, column, move);
                     }}

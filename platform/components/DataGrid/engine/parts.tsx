@@ -4,7 +4,7 @@
      for a column's cells (Width, WidthPixels), a row's menu (RowMenuContent), the custom cell with the data-font helper
      (CustomCell), the memoized row (MemoGridRow) and the row target (RowTarget).
    Usage:
-     import { RowGap, CellEditor, Check, PressTrigger, Width, RowMenuContent, CustomCell, MemoGridRow, RowTarget } from './engine/parts.jsx';
+     import { RowGap, CellEditor, Check, PressTrigger, Width, RowMenuContent, CustomCell, MemoGridRow, RowTarget } from './engine/parts.tsx';
    Props:
      each part takes the props the engine passes it (for example CellEditor: column, value, onCommit, onCancel; Check:
      checked, mixed, label, onChange); used only by the DataGrid engine (not public exports)
@@ -24,7 +24,7 @@ import { gapPieces } from '../../../hooks/useVirtualizer.ts';
 import { useStrings } from '../../../providers/LocaleProvider.tsx';
 import { GRID } from './helpers.tsx';
 
-function Gap({ count, kind = 'record' }) {
+function Gap({ count, kind = 'record' }: any) {
   return count > 0 ? (
     <div className={'plx-data-grid__gap plx-data-grid__gap--' + kind} aria-hidden="true">
       {gapPieces(count).map((n, i) => (
@@ -35,7 +35,7 @@ function Gap({ count, kind = 'record' }) {
 }
 
 // the space for the cards a long card list does not draw (issue 809): px whole pixels, in pieces of the spacer unit
-export function PixelGap({ px }) {
+export function PixelGap({ px }: any) {
   const n = Math.max(0, Math.round(px || 0));
   return n > 0 ? (
     <div className="plx-data-grid__gap plx-data-grid__gap--px" aria-hidden="true">
@@ -46,9 +46,9 @@ export function PixelGap({ px }) {
   ) : null;
 }
 
-export function RowGap({ rows }) {
+export function RowGap({ rows }: any) {
   const counts = rows.reduce(
-    (all, row) => {
+    (all: any, row: any) => {
       all[
         row.__group
           ? row.__group.separated
@@ -75,9 +75,9 @@ export function RowGap({ rows }) {
 
 // the message under the cell: in the top layer (popover="manual") so the cell's clipping cannot hide it, placed against the
 // cell's block-end edge, aligned to its inline start, at least as wide as the cell (utils/floating.ts)
-export function EditorMessage({ id, anchor, message }) {
-  const cell = React.useRef(null),
-    box = React.useRef(null);
+export function EditorMessage({ id, anchor, message }: any) {
+  const cell = React.useRef<any>(null),
+    box = React.useRef<any>(null);
   React.useLayoutEffect(() => {
     cell.current = anchor.current?.closest('[role="gridcell"]') ?? null;
     const el = box.current;
@@ -92,8 +92,8 @@ export function EditorMessage({ id, anchor, message }) {
 }
 
 // a cell's save status: a small spinner while the caller's answer is awaited; a refusal's message under the cell until the next key or click
-export function CellStatus({ status, onClear }) {
-  const anchor = React.useRef(null);
+export function CellStatus({ status, onClear }: any) {
+  const anchor = React.useRef<any>(null);
   React.useEffect(() => {
     if (status.kind !== 'refused') return undefined;
     const later = setTimeout(() => {
@@ -117,14 +117,14 @@ export function CellStatus({ status, onClear }) {
   );
 }
 
-const LazyEditor = React.lazy(() => import('./editors.jsx'));
+const LazyEditor = React.lazy(() => import('./editors.tsx'));
 
-export function CellEditor({ column, record, value, area, select, date, combobox, person, tags, custom, onDraft, onCommit, onCancel }) {
-  const S = useStrings('dataGrid'),
+export function CellEditor({ column, record, value, area, select, date, combobox, person, tags, custom, onDraft, onCommit, onCancel }: any) {
+  const S: any = useStrings('dataGrid'),
     [draft, setDraft] = React.useState(value ?? ''),
-    [invalid, setInvalid] = React.useState(null),
+    [invalid, setInvalid] = React.useState<any>(null),
     done = React.useRef(false),
-    input = React.useRef(null),
+    input = React.useRef<any>(null),
     messageId = React.useId();
   React.useEffect(() => {
     announce(S.editing.replace('{column}', column.title));
@@ -133,7 +133,7 @@ export function CellEditor({ column, record, value, area, select, date, combobox
   React.useEffect(() => {
     onDraft?.(draft);
   }, [draft]);
-  const finish = async (move = 0, picked) => {
+  const finish = async (move = 0, picked?: any) => {
     if (done.current) return;
     done.current = true;
     const next = picked !== undefined ? picked : column.editor === 'number' ? (draft === '' ? null : Number(draft)) : draft;
@@ -167,7 +167,7 @@ export function CellEditor({ column, record, value, area, select, date, combobox
           cancel={onCancel}
           options={column.editorProps?.options ?? []}
           load={column.editorProps?.loadOptions}
-          remember={(v, option) => rememberPerson(column.field, v, option)}
+          remember={(v: any, option: any) => rememberPerson(column.field, v, option)}
           label={S.editCell.replace('{title}', column.title)}
         />
       </React.Suspense>
@@ -208,8 +208,8 @@ export function CellEditor({ column, record, value, area, select, date, combobox
   );
 }
 
-export function Check({ checked, mixed, label, onChange, card }) {
-  const ref = React.useRef(null);
+export function Check({ checked, mixed, label, onChange, card }: any) {
+  const ref = React.useRef<any>(null);
   React.useLayoutEffect(() => {
     if (ref.current) ref.current.indeterminate = !!mixed;
   }, [mixed]);
@@ -229,7 +229,7 @@ export function Check({ checked, mixed, label, onChange, card }) {
 }
 
 // a header's small trigger (the filter, the column menu): a span, so it takes one press from every input through usePressable (Enter and Space press it, as a button); Popover and Menu hand it onClick and onKeyDown
-export const PressTrigger = React.forwardRef(function PressTrigger({ onClick, onKeyDown, children, ...rest }, ref) {
+export const PressTrigger = React.forwardRef<any, any>(function PressTrigger({ onClick, onKeyDown, children, ...rest }: any, ref: any) {
   const { pressProps } = usePressable({
     onPress: (p) => {
       if (onClick) onClick(p.event);
@@ -243,17 +243,17 @@ export const PressTrigger = React.forwardRef(function PressTrigger({ onClick, on
   );
 });
 
-export const WidthPixels = React.createContext(null);
+export const WidthPixels = React.createContext<any>(null);
 
 // Calculate token widths during React's read-only render, then let React batch all style writes at commit.
 // Reading the grid in a separate layout effect for every new cell alternates reads and writes and forces layout.
-export const Width = React.forwardRef(function Width(
-  { as: Element = 'div', width, frozenOffset, children, onAttach, ...props },
-  forwarded
+export const Width = React.forwardRef<any, any>(function Width(
+  { as: Element = 'div', width, frozenOffset, children, onAttach, ...props }: any,
+  forwarded: any
 ) {
-  const ref = React.useRef(null),
+  const ref = React.useRef<any>(null),
     pixels = React.useContext(WidthPixels),
-    length = (value) => (pixels ? pixels(value) : gridPx(value, { el: ref.current || document.documentElement })),
+    length = (value: any) => (pixels ? pixels(value) : gridPx(value, { el: ref.current || document.documentElement })),
     style =
       width == null
         ? undefined
@@ -262,7 +262,7 @@ export const Width = React.forwardRef(function Width(
     <Element
       {...props}
       style={style}
-      ref={(node) => {
+      ref={(node: any) => {
         ref.current = node;
         onAttach?.(node);
         if (typeof forwarded === 'function') forwarded(node);
@@ -275,24 +275,24 @@ export const Width = React.forwardRef(function Width(
 });
 
 // Compatibility cell adapters read through a live ref; retain custom output until its record, column or row state changes.
-export function RowMenuContent({ build, items, record, rowApi }) {
+export function RowMenuContent({ build, items, record, rowApi }: any) {
   return build(typeof items === 'function' ? items(record) : items || [], record, rowApi);
 }
 
 // a custom cell's own elements (each element of a fragment too) take __cell-content: the grid's class on what it places in the cell
-const ownContent = (node, block) =>
-  !React.isValidElement(node)
+const ownContent = (node: any, block: any): any =>
+  !React.isValidElement<any>(node)
     ? node
     : node.type === React.Fragment
       ? React.cloneElement(
           node,
           {},
-          React.Children.map(node.props.children, (child) => ownContent(child, block))
+          React.Children.map((node.props as any).children, (child: any) => ownContent(child, block))
         )
-      : React.cloneElement(node, { className: cx(node.props.className, block + '__cell-content') });
+      : React.cloneElement(node as any, { className: cx((node.props as any).className, block + '__cell-content') });
 
 export const CustomCell = React.memo(
-  function CustomCell({ column, record, cell, block, mods }) {
+  function CustomCell({ column, record, cell, block, mods }: any) {
     const content = column.render(record, cell);
     return React.isValidElement(content) ? (
       ownContent(content, block)
@@ -300,7 +300,7 @@ export const CustomCell = React.memo(
       <span className={cx(block + '__value', mods)}>{dataWhenText(content)}</span>
     );
   },
-  (a, b) =>
+  (a: any, b: any) =>
     a.column === b.column &&
     a.record === b.record &&
     a.rowId === b.rowId &&
@@ -311,13 +311,13 @@ export const CustomCell = React.memo(
 
 // Window-only updates reuse complete record rows; view, selection and edit changes invalidate their closures.
 export const MemoGridRow = React.memo(
-  function MemoGridRow({ row, render }) {
+  function MemoGridRow({ row, render }: any) {
     return render(row);
   },
-  (a, b) => a.row === b.row && a.version === b.version && a.selected === b.selected
+  (a: any, b: any) => a.row === b.row && a.version === b.version && a.selected === b.selected
 );
 
-export const RowTarget = React.forwardRef(function RowTarget({ onAttach, ...props }, forwarded) {
+export const RowTarget = React.forwardRef<any, any>(function RowTarget({ onAttach, ...props }: any, forwarded: any) {
   return (
     <div
       {...props}

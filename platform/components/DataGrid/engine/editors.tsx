@@ -18,16 +18,16 @@ import { DatePicker } from '../../DatePicker/DatePicker.tsx';
 import { Combobox } from '../../Combobox/Combobox.tsx';
 import { EntityPicker } from '../../EntityPicker/EntityPicker.tsx';
 import { Avatar } from '../../Avatar/Avatar.tsx';
-import { EditorMessage } from './parts.jsx';
+import { EditorMessage } from './parts.tsx';
 
 // the long-text editor (ADR 0016): the cell shows the value's first line; a box over the cell (top layer, placed under the cell,
 // at least as wide as it) holds the text area, which grows to 8 lines and then scrolls. Enter adds a line, Ctrl or Command with
 // Enter saves, Escape cancels, a click outside saves, Tab saves and moves. A refusal's message sits under the text.
 const AREA_LINES = 8;
-function AreaEditor({ draft, setDraft, invalid, setInvalid, messageId, finish, cancel, input, label, done }) {
-  const first = React.useRef(null),
-    cell = React.useRef(null),
-    box = React.useRef(null);
+function AreaEditor({ draft, setDraft, invalid, setInvalid, messageId, finish, cancel, input, label, done }: any) {
+  const first = React.useRef<any>(null),
+    cell = React.useRef<any>(null),
+    box = React.useRef<any>(null);
   React.useLayoutEffect(() => {
     cell.current = first.current?.closest('[role="gridcell"]') ?? null;
     const el = box.current;
@@ -81,8 +81,8 @@ function AreaEditor({ draft, setDraft, invalid, setInvalid, messageId, finish, c
 
 // the select editor (ADR 0016): Plenix's own Select inside the cell, its list open, drawn bare by Input's context hooks (the cell's
 // outline is the frame). Picking an option saves it; with the list closed Enter saves the current choice, Escape cancels, Tab saves and moves.
-function SelectEditor({ draft, setDraft, invalid, messageId, finish, cancel, input, done, options, label }) {
-  const wrap = React.useRef(null);
+function SelectEditor({ draft, setDraft, invalid, messageId, finish, cancel, input, done, options, label }: any) {
+  const wrap = React.useRef<any>(null);
   React.useEffect(() => {
     const field = wrap.current?.querySelector('[role="combobox"]');
     field?.focus();
@@ -106,7 +106,7 @@ function SelectEditor({ draft, setDraft, invalid, messageId, finish, cancel, inp
           }}
           onBlur={() => finish()}
           onKeyDown={(e) => {
-            const open = e.currentTarget?.getAttribute?.('aria-expanded') === 'true' || !!e.target?.closest?.('[aria-expanded="true"]');
+            const open = e.currentTarget?.getAttribute?.('aria-expanded') === 'true' || !!(e.target as any)?.closest?.('[aria-expanded="true"]');
             if (e.key === 'Tab' && !e.altKey && !e.ctrlKey && !e.metaKey) {
               e.preventDefault();
               e.stopPropagation();
@@ -131,8 +131,8 @@ function SelectEditor({ draft, setDraft, invalid, messageId, finish, cancel, inp
 
 // the date editor (ADR 0016): Plenix's DatePicker field inside the cell, drawn bare like the select. A date typed (read when Enter
 // is pressed or the field is left) or chosen in the calendar saves at once; Escape cancels; Tab reads what was typed, saves and moves.
-function DateEditor({ draft, setDraft, invalid, messageId, finish, cancel, input, done, label }) {
-  const wrap = React.useRef(null),
+function DateEditor({ draft, setDraft, invalid, messageId, finish, cancel, input, done, label }: any) {
+  const wrap = React.useRef<any>(null),
     move = React.useRef(0),
     latest = React.useRef(draft);
   React.useEffect(() => {
@@ -149,14 +149,14 @@ function DateEditor({ draft, setDraft, invalid, messageId, finish, cancel, input
           if (!wrap.current?.contains(e.relatedTarget)) setTimeout(() => finish(move.current, latest.current), 0);
         }}
         onKeyDownCapture={(e) => {
-          if (e.key === 'Tab' && !e.altKey && !e.ctrlKey && !e.metaKey && e.target.tagName === 'INPUT') {
+          if (e.key === 'Tab' && !e.altKey && !e.ctrlKey && !e.metaKey && (e.target as any).tagName === 'INPUT') {
             // leave the field so the picker reads the typed text, then save and move
             e.preventDefault();
             e.stopPropagation();
             move.current = e.shiftKey ? -1 : 1;
-            e.target.blur();
+            (e.target as any).blur();
             setTimeout(() => finish(move.current, latest.current), 0);
-          } else if (e.key === 'Enter' && e.target.tagName === 'INPUT') {
+          } else if (e.key === 'Enter' && (e.target as any).tagName === 'INPUT') {
             // the picker reads the typed text on Enter; then the cell saves what it holds
             setTimeout(() => finish(0, latest.current), 0);
           } else if (e.key === 'Escape' && !wrap.current?.querySelector('[aria-expanded="true"]')) {
@@ -190,8 +190,8 @@ function DateEditor({ draft, setDraft, invalid, messageId, finish, cancel, input
 
 // the combobox editor (ADR 0016): Plenix's Combobox inside the cell, bare, its list open as it takes the focus. Typing filters (or loads
 // the options), choosing one saves it at once; with the list closed Enter saves the current value; Escape closes the list, then cancels.
-function ComboboxEditor({ draft, setDraft, invalid, messageId, finish, cancel, input, done, options, load, label }) {
-  const wrap = React.useRef(null);
+function ComboboxEditor({ draft, setDraft, invalid, messageId, finish, cancel, input, done, options, load, label }: any) {
+  const wrap = React.useRef<any>(null);
   React.useEffect(() => {
     wrap.current?.querySelector('input')?.focus();
   }, []);
@@ -203,7 +203,7 @@ function ComboboxEditor({ draft, setDraft, invalid, messageId, finish, cancel, i
         dir="auto"
         onKeyDownCapture={(e) => {
           // before the combobox's own keys: Tab and the closed-list Enter and Escape are the cell's; the rest (arrows, typing, Enter on an open list) are the combobox's
-          const open = e.target.getAttribute?.('aria-expanded') === 'true';
+          const open = (e.target as any).getAttribute?.('aria-expanded') === 'true';
           if (e.key === 'Tab' && !e.altKey && !e.ctrlKey && !e.metaKey) {
             e.preventDefault();
             e.stopPropagation();
@@ -243,8 +243,8 @@ function ComboboxEditor({ draft, setDraft, invalid, messageId, finish, cancel, i
 // an application's own editor (ADR 0016, editor: { component, props }): it gets CellEditorProps inside the same frame and calls
 // onChange(draft), onCommit(value?) (the draft when no value is given) or onCancel(); Tab saves the draft and moves, Escape the
 // component did not handle cancels, and the focus leaving the editor saves the draft.
-function ComponentEditor({ editor, column, record, draft, setDraft, invalid, messageId, finish, cancel, done }) {
-  const wrap = React.useRef(null),
+function ComponentEditor({ editor, column, record, draft, setDraft, invalid, messageId, finish, cancel, done }: any) {
+  const wrap = React.useRef<any>(null),
     latest = React.useRef(draft),
     { dir } = useDirection(),
     Editor = editor.component;
@@ -279,11 +279,11 @@ function ComponentEditor({ editor, column, record, draft, setDraft, invalid, mes
           autoFocus
           invalid={invalid || undefined}
           aria-describedby={invalid ? messageId : undefined}
-          onChange={(v) => {
+          onChange={(v: any) => {
             latest.current = v;
             setDraft(v);
           }}
-          onCommit={(v) => finish(0, v === undefined ? latest.current : v)}
+          onCommit={(v: any) => finish(0, v === undefined ? latest.current : v)}
           onCancel={() => {
             done.current = true;
             cancel();
@@ -299,8 +299,8 @@ function ComponentEditor({ editor, column, record, draft, setDraft, invalid, mes
 // open. Choosing a suggestion adds a tag and the list stays open; a new text and Enter adds it (the Combobox is creatable); Backspace in the empty
 // field removes the last tag. With the list closed Enter saves the array of tags; the first Escape closes the list, the second cancels; Tab saves and
 // moves; the focus leaving the editor (and its chips) saves.
-function TagsEditor({ draft, setDraft, invalid, messageId, finish, cancel, input, done, options, load, label }) {
-  const wrap = React.useRef(null),
+function TagsEditor({ draft, setDraft, invalid, messageId, finish, cancel, input, done, options, load, label }: any) {
+  const wrap = React.useRef<any>(null),
     latest = React.useRef(draft),
     values = Array.isArray(draft) ? draft : draft == null || draft === '' ? [] : [draft];
   React.useEffect(() => {
@@ -316,7 +316,7 @@ function TagsEditor({ draft, setDraft, invalid, messageId, finish, cancel, input
           if (!wrap.current?.contains(e.relatedTarget)) setTimeout(() => finish(0, latest.current), 0);
         }}
         onKeyDownCapture={(e) => {
-          const open = e.target.getAttribute?.('aria-expanded') === 'true';
+          const open = (e.target as any).getAttribute?.('aria-expanded') === 'true';
           if (e.key === 'Tab' && !e.altKey && !e.ctrlKey && !e.metaKey) {
             e.preventDefault();
             e.stopPropagation();
@@ -362,10 +362,10 @@ function TagsEditor({ draft, setDraft, invalid, messageId, finish, cancel, input
 
 // the person editor (ADR 0016): Plenix's EntityPicker (people) inside the cell, bare, its list open as it takes the focus. Typing filters (or loads
 // the options), choosing one saves it at once; with the list closed Enter saves the current value; Escape closes the list, then cancels.
-function PersonEditor({ draft, setDraft, invalid, messageId, finish, cancel, input, done, options, load, label, remember }) {
-  const wrap = React.useRef(null),
+function PersonEditor({ draft, setDraft, invalid, messageId, finish, cancel, input, done, options, load, label, remember }: any) {
+  const wrap = React.useRef<any>(null),
     [typed, setTyped] = React.useState(false),
-    current = options.find((o) => String(o.value) === String(draft));
+    current = options.find((o: any) => String(o.value) === String(draft));
   React.useEffect(() => {
     wrap.current?.querySelector('input')?.focus();
   }, []);
@@ -378,7 +378,7 @@ function PersonEditor({ draft, setDraft, invalid, messageId, finish, cancel, inp
         onInput={() => setTyped(true)}
         onKeyDownCapture={(e) => {
           // before the combobox's own keys: Tab and the closed-list Enter and Escape are the cell's; the rest (arrows, typing, Enter on an open list) are the combobox's
-          const open = e.target.getAttribute?.('aria-expanded') === 'true';
+          const open = (e.target as any).getAttribute?.('aria-expanded') === 'true';
           if (e.key === 'Tab' && !e.altKey && !e.ctrlKey && !e.metaKey) {
             e.preventDefault();
             e.stopPropagation();
@@ -425,7 +425,7 @@ function PersonEditor({ draft, setDraft, invalid, messageId, finish, cancel, inp
 }
 
 // one entry for the lazy import: the editor of a kind, by name
-export default function Editor({ kind, ...props }) {
+export default function Editor({ kind, ...props }: any) {
   switch (kind) {
     case 'area':
       return <AreaEditor {...props} />;
