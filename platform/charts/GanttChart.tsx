@@ -51,27 +51,45 @@ import { useStrings } from '../providers/LocaleProvider.tsx';
 // length, the active ring's room, the task name's distance from the plot
 const DIAMOND = 8, ELBOW = 8, HEAD = 4, RING = 4, NAME_GAP = 8;
 // the shared reader (utils/format.ts parseDate): a date-only "YYYY-MM-DD" is that calendar day where the reader is (issue 342)
-const toDate = (v) => parseDate(v) || new Date(NaN);
+const toDate = (v: any) => parseDate(v) || new Date(NaN);
 
-export function GanttChart({ title, description, tasks = [], today, range, color, size = 'lg', strings, className }) {
-  const t = useStrings('chart.ganttChart', strings);
+/** @public a date: a Date, a timestamp, or anything Date accepts (a date-only string is that day in local time) */
+export type ChartDate = Date | string | number;
+/** @public one row of a Gantt chart */
+export type GanttTask = { id: string; label: string; start: ChartDate; end?: ChartDate; /** 0 to 1 */ progress?: number; /** the ids of the tasks it waits for */ dependsOn?: string[]; /** a single date (start) */ milestone?: boolean; status?: string };
+/** @public */
+export type GanttChartProps = {
+  title: string;
+  description?: string;
+  tasks?: GanttTask[];
+  /** a date for the today line, or true for the current date */
+  today?: ChartDate | boolean;
+  range?: [ChartDate, ChartDate];
+  /** a data-viz step */
+  color?: string;
+  size?: 'sm' | 'md' | 'lg';
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function GanttChart({ title, description, tasks = [], today, range, color, size = 'lg', strings, className }: GanttChartProps) {
+  const t: any = useStrings('chart.ganttChart', strings);
   const uid = 'plx-gantt' + React.useId().replace(/[^a-zA-Z0-9]/g, '');
-  const rows = tasks.map((k, i) => {
+  const rows: any[] = tasks.map((k, i) => {
     const start = toDate(k.start), end = k.milestone ? start : toDate(k.end === undefined ? k.start : k.end);
     return { key: k.id === undefined ? String(i) : String(k.id), label: String(k.label), start, end, milestone: !!k.milestone, status: k.status,
-      progress: k.progress === undefined || k.progress === null ? null : Math.min(1, Math.max(0, Number(k.progress))), dependsOn: [].concat(k.dependsOn || []).map(String), i };
+      progress: k.progress === undefined || k.progress === null ? null : Math.min(1, Math.max(0, Number(k.progress))), dependsOn: ([] as any[]).concat(k.dependsOn || []).map(String), i };
   });
-  const byKey = {};
+  const byKey: any = {};
   rows.forEach((r) => { byKey[r.key] = r; });
   const now = today === true ? new Date() : today ? toDate(today) : null;
   const mark = color || seriesColor(0);
-  const date = (d) => formatDate(d);
-  const waits = (r) => formatList(r.dependsOn.filter((k) => byKey[k]).map((k) => byKey[k].label));
-  const say = (r) => r.label + ': ' + (r.milestone ? t.milestone + ', ' + date(r.start) : date(r.start) + ' – ' + date(r.end))
+  const date = (d: any) => formatDate(d);
+  const waits = (r: any) => formatList(r.dependsOn.filter((k: any) => byKey[k]).map((k: any) => byKey[k].label));
+  const say = (r: any) => r.label + ': ' + (r.milestone ? t.milestone + ', ' + date(r.start) : date(r.start) + ' – ' + date(r.end))
     + (r.progress !== null ? ', ' + formatPercent(r.progress, { decimals: 0 }) + ' ' + t.progress.toLowerCase() : '') + (r.status ? ', ' + r.status : '')
     + (r.dependsOn.length ? ', ' + t.dependsOn.toLowerCase() + ' ' + waits(r) : '');
   const keys = useChartPoints({ count: rows.length, describe: (i) => say(rows[i]) });
-  const table = { columns: [{ title: t.task, field: 'label', kind: 'name', rowLabel: true }, { title: t.start, field: 'start', kind: 'data' }, { title: t.end, field: 'end', kind: 'data' },
+  const table: any = { columns: [{ title: t.task, field: 'label', kind: 'name', rowLabel: true }, { title: t.start, field: 'start', kind: 'data' }, { title: t.end, field: 'end', kind: 'data' },
     { title: t.progress, field: 'progress', kind: 'data', align: 'right' }, { title: t.status, field: 'status', kind: 'name' }, { title: t.dependsOn, field: 'waits', kind: 'name' }],
     data: rows.map((r, i) => ({ id: i + 1, label: r.label, start: date(r.start), end: r.milestone ? '' : date(r.end), progress: r.progress === null ? '' : formatPercent(r.progress, { decimals: 0 }), status: r.status || '', waits: waits(r) })) };
   const lo = range ? toDate(range[0]) : new Date(Math.min.apply(null, rows.map((r) => r.start.getTime()).concat(now ? [now.getTime()] : [])));
@@ -80,17 +98,17 @@ export function GanttChart({ title, description, tasks = [], today, range, color
       <ChartFrame interaction={keys.interaction} title={title} description={description} size={size} table={table} className={cx('plx-gantt', className)}>
         {({ inner, margin }) => {
           // tasks dated by day get day ticks or coarser, never hours (issue 593); today's marker does not count
-          const x = scaleTime({ domain: [lo, hi], range: [0, inner.width], nice: !range, unit: wholeDays(rows.map((r) => r.start).concat(rows.map((r) => r.end))) ? 'day' : undefined });
-          const y = scaleBand({ domain: rows.map((r) => r.key), range: [0, inner.height], paddingInner: 0.4, paddingOuter: 0.2 });
-          const mid = (r) => scalePosition(y, r.key);
+          const x: any = scaleTime({ domain: [lo, hi], range: [0, inner.width], nice: !range, unit: wholeDays(rows.map((r) => r.start).concat(rows.map((r) => r.end))) ? 'day' : undefined });
+          const y: any = scaleBand({ domain: rows.map((r) => r.key), range: [0, inner.height], paddingInner: 0.4, paddingOuter: 0.2 });
+          const mid = (r: any): number => scalePosition(y, r.key) as number;
           const a = keys.index !== null && keys.index !== undefined && rows[keys.index] ? rows[keys.index] : null;
-          const box = (r) => (r.milestone ? { x: x(r.start) - DIAMOND, y: mid(r) - DIAMOND, width: 2 * DIAMOND, height: 2 * DIAMOND } : { x: x(r.start), y: y(r.key), width: Math.max(0, x(r.end) - x(r.start)), height: y.bandwidth() });
+          const box = (r: any) => (r.milestone ? { x: x(r.start) - DIAMOND, y: mid(r) - DIAMOND, width: 2 * DIAMOND, height: 2 * DIAMOND } : { x: x(r.start), y: y(r.key), width: Math.max(0, x(r.end) - x(r.start)), height: y.bandwidth() });
           return (
             <g>
               <ChartPatterns id={uid} />
               <GridLines scale={x} direction="vertical" inner={inner} />
               {rows.map((r) => <text key={'n' + r.key} className="plx-gantt__task" x={-NAME_GAP} y={mid(r)}>{r.label}</text>)}
-              {rows.map((r) => r.dependsOn.filter((k) => byKey[k]).map((k) => {
+              {rows.map((r) => r.dependsOn.filter((k: any) => byKey[k]).map((k: any) => {
                 // out of the bottom (or top) edge of the task waited for, near its end, down (or up) to the waiting row, then across
                 const from = byKey[k], x2 = r.milestone ? x(r.start) - DIAMOND : x(r.start), y2 = mid(r), below = y2 > mid(from);
                 const fromStart = from.milestone ? x(from.start) : x(from.start), fromEnd = from.milestone ? x(from.start) : x(from.end);

@@ -1784,7 +1784,7 @@
       "platform/charts/HeatMap.jsx",
       "platform/charts/Gauge.tsx",
       "platform/charts/WaterfallChart.tsx",
-      "platform/charts/WordCloud.jsx",
+      "platform/charts/WordCloud.tsx",
       "platform/charts/interaction.js",
       "platform/charts/NetworkGraph.tsx",
       "platform/charts/Diagram.tsx"
@@ -1828,7 +1828,7 @@
       "platform/charts/SankeyDiagram.tsx",
       "platform/charts/RadarChart.jsx",
       "platform/charts/ComboChart.tsx",
-      "platform/charts/TimelineChart.jsx",
+      "platform/charts/TimelineChart.tsx",
       "platform/patterns/ComparisonView/ComparisonView.jsx",
       "platform/patterns/ComparisonView/comparison-view.css",
       "platform/tokens/components/comparison-view.tokens.json"
@@ -1877,8 +1877,8 @@
       "platform/charts/a11y.js",
       "platform/charts/Treemap.jsx",
       "platform/charts/LollipopChart.tsx",
-      "platform/charts/GanttChart.jsx",
-      "platform/charts/GeoMap.jsx",
+      "platform/charts/GanttChart.tsx",
+      "platform/charts/GeoMap.tsx",
       "platform/vendor/geo/"
      ],
      "targets": [
@@ -6172,7 +6172,7 @@
    "wave": 9,
    "lane": "A",
    "files": [
-    "platform/charts/WordCloud.jsx"
+    "platform/charts/WordCloud.tsx"
    ],
    "dependsOn": [
     "ChartKit"
@@ -6394,7 +6394,7 @@
    "wave": 9,
    "lane": "B",
    "files": [
-    "platform/charts/TimelineChart.jsx"
+    "platform/charts/TimelineChart.tsx"
    ],
    "dependsOn": [
     "chart-parts"
@@ -6593,7 +6593,7 @@
    "wave": 9,
    "lane": "C",
    "files": [
-    "platform/charts/GanttChart.jsx"
+    "platform/charts/GanttChart.tsx"
    ],
    "dependsOn": [
     "chart-parts"
@@ -6616,7 +6616,7 @@
    "wave": 9,
    "lane": "C",
    "files": [
-    "platform/charts/GeoMap.jsx",
+    "platform/charts/GeoMap.tsx",
     "platform/vendor/geo/"
    ],
    "dependsOn": [
@@ -15756,7 +15756,7 @@
    "target": "WordCloud",
    "targetKind": "component",
    "files": [
-    "platform/charts/WordCloud.jsx"
+    "platform/charts/WordCloud.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09A.records.js",
@@ -15785,7 +15785,7 @@
    "target": "GanttChart",
    "targetKind": "component",
    "files": [
-    "platform/charts/GanttChart.jsx"
+    "platform/charts/GanttChart.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09C.records.js",
@@ -15816,7 +15816,7 @@
    "target": "GeoMap",
    "targetKind": "component",
    "files": [
-    "platform/charts/GeoMap.jsx",
+    "platform/charts/GeoMap.tsx",
     "platform/vendor/geo/"
    ],
    "laneFiles": [
@@ -15909,7 +15909,7 @@
    "target": "GeoMap",
    "targetKind": "component",
    "files": [
-    "platform/charts/GeoMap.jsx",
+    "platform/charts/GeoMap.tsx",
     "platform/vendor/geo/"
    ],
    "laneFiles": [
@@ -16003,7 +16003,7 @@
    "target": "TimelineChart",
    "targetKind": "component",
    "files": [
-    "platform/charts/TimelineChart.jsx"
+    "platform/charts/TimelineChart.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09B.records.js",

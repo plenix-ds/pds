@@ -30,6 +30,7 @@
        color, grouped words the categorical data-viz colors. Never use it to compare values exactly: a sorted bar chart.
 */
 import React from 'react';
+import type { ChartMargin } from './chart-types.ts';
 import { cx } from '../utils/cx.ts';
 import { formatNumber } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.tsx';
@@ -44,14 +45,16 @@ const STEPS = 5;
 const PAD = 4, STEP = 4;
 
 // where each word goes: centers of non-overlapping boxes around the middle, the largest first; null when it does not fit
-export function wordCloudLayout(boxes, width, height, layout = 'spiral') {
-  const placed = [], out = [];
-  const hit = (b) => placed.some((p) => b.x0 < p.x1 && b.x1 > p.x0 && b.y0 < p.y1 && b.y1 > p.y0);
+/** @public where a word goes: the center of its box, or null when it does not fit */
+export type WordCloudPlacement = { x: number; y: number } | null;
+export function wordCloudLayout(boxes: Array<{ width: number; height: number }>, width: number, height: number, layout: 'spiral' | 'rectangular' = 'spiral'): WordCloudPlacement[] {
+  const placed: any[] = [], out: WordCloudPlacement[] = [];
+  const hit = (b: any) => placed.some((p) => b.x0 < p.x1 && b.x1 > p.x0 && b.y0 < p.y1 && b.y1 > p.y0);
   const ratio = width / Math.max(1, height);
   // the candidate offsets from the middle, nearest first: an Archimedean spiral, or the rings of a square spiral; both
   // stretched to the plot's shape
   const reach = Math.max(width / ratio, height) / 2 + STEP * 2;
-  const candidates = [];
+  const candidates: any = [];
   if (layout === 'rectangular') {
     candidates.push([0, 0]);
     for (let r = STEP; r <= reach; r += STEP) {
@@ -65,7 +68,7 @@ export function wordCloudLayout(boxes, width, height, layout = 'spiral') {
   }
   boxes.forEach((s) => {
     const w = s.width + PAD, h = s.height + PAD;
-    let spot = null;
+    let spot: any = null;
     for (let i = 0; i < candidates.length && !spot; i++) {
       const cx0 = width / 2 + candidates[i][0] * ratio, cy0 = height / 2 + candidates[i][1];
       const b = { x0: cx0 - w / 2, x1: cx0 + w / 2, y0: cy0 - h / 2, y1: cy0 + h / 2 };
@@ -77,28 +80,49 @@ export function wordCloudLayout(boxes, width, height, layout = 'spiral') {
   return out;
 }
 
+/** @public one term of a word cloud */
+export type CloudWord = { text: string; value: number; /** the id of one of the groups */ group?: string };
+/** @public */
+export type WordCloudProps = {
+  title: string;
+  description?: string;
+  words?: CloudWord[];
+  layout?: 'spiral' | 'rectangular';
+  groups?: Array<{ id: string; label: string }>;
+  max?: number;
+  valueLabel?: string;
+  format?(value: number): string;
+  size?: 'sm' | 'md' | 'lg';
+  margin?: ChartMargin;
+  interactive?: boolean;
+  onSelect?(selection: { c: number; word: CloudWord }): void;
+  strings?: Record<string, string>;
+  frameStrings?: Record<string, string>;
+  interactionStrings?: Record<string, string>;
+  className?: string;
+};
 export function WordCloud({ title, description, words = [], layout = 'spiral', groups, max = 50, valueLabel, format, size = 'md', margin, interactive = true, onSelect,
-  strings, frameStrings, interactionStrings, className }) {
-  const t = useStrings('chart.wordCloud', strings);
-  const fmt = typeof format === 'function' ? format : (v) => formatNumber(v);
+  strings, frameStrings, interactionStrings, className }: WordCloudProps) {
+  const t: any = useStrings('chart.wordCloud', strings);
+  const fmt = typeof format === 'function' ? format : (v: any) => formatNumber(v);
   const vLabel = valueLabel || t.value;
   const sorted = words.filter((w) => w && w.text).slice().sort((a, b) => b.value - a.value);
   const shown = sorted.slice(0, Math.max(0, max));
   const vals = shown.map((w) => w.value);
   const lo = vals.length ? Math.min.apply(null, vals) : 0, hi = vals.length ? Math.max.apply(null, vals) : 1;
   // the size step: the square root of the value's place in the range, so the largest words do not crowd the rest
-  const stepOf = (v) => (hi === lo ? 3 : Math.min(STEPS, 1 + Math.floor(Math.sqrt((v - lo) / (hi - lo)) * STEPS)));
-  const gIndex = (g) => (groups || []).findIndex((x) => x.id === g);
-  const colorOf = (w) => (w.group !== undefined && gIndex(w.group) >= 0 ? seriesColor(gIndex(w.group)) : undefined);
-  const layer = React.useRef(null);
-  const where = React.useRef([]);
-  const [boxes, setBoxes] = React.useState({ key: '', list: [] });
+  const stepOf = (v: any) => (hi === lo ? 3 : Math.min(STEPS, 1 + Math.floor(Math.sqrt((v - lo) / (hi - lo)) * STEPS)));
+  const gIndex = (g: any) => (groups || []).findIndex((x: any) => x.id === g);
+  const colorOf = (w: any) => (w.group !== undefined && gIndex(w.group) >= 0 ? seriesColor(gIndex(w.group)) : undefined);
+  const layer = React.useRef<any>(null);
+  const where = React.useRef<any[]>([]);
+  const [boxes, setBoxes] = React.useState<{ key: string; list: any[] }>({ key: "", list: [] });
   const [fonts, setFonts] = React.useState(0);
   const key = shown.map((w) => w.text + ':' + stepOf(w.value)).join('|') + '#' + fonts;
   React.useEffect(() => { if (typeof document !== 'undefined' && document.fonts && document.fonts.ready) document.fonts.ready.then(() => setFonts(1)); }, []);
   React.useLayoutEffect(() => {
     if (!layer.current || boxes.key === key) return;
-    const list = Array.from(layer.current.querySelectorAll('.plx-word-cloud__word--measure')).map((el) => { const b = el.getBBox(); return { width: b.width, height: b.height }; });
+    const list = Array.from(layer.current.querySelectorAll('.plx-word-cloud__word--measure')).map((el: any) => { const b = el.getBBox(); return { width: b.width, height: b.height }; });
     if (list.length === shown.length) setBoxes({ key, list });
   });
 
@@ -111,8 +135,8 @@ export function WordCloud({ title, description, words = [], layout = 'spiral', g
       const at = where.current;
       if (k === 'Home' || k === 'End') { const idx = at.map((p, i) => (p ? i : -1)).filter((i) => i >= 0); return idx.length ? { r: 0, c: k === 'Home' ? idx[0] : idx[idx.length - 1] } : a; }
       const p = at[a.c]; if (!p) return a;
-      const d = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] }[k];
-      let best = null, bd = Infinity;
+      const d = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] }[k as 'ArrowLeft'] as number[];
+      let best: any = null, bd = Infinity;
       at.forEach((q, i) => {
         if (!q || i === a.c) return;
         const dx = q.x - p.x, dy = q.y - p.y, along = dx * d[0] + dy * d[1];
@@ -125,19 +149,19 @@ export function WordCloud({ title, description, words = [], layout = 'spiral', g
     first: () => { const i = where.current.findIndex((p) => !!p); return i >= 0 ? { r: 0, c: i } : null; },
   });
 
-  const table = {
-    columns: [{ title: t.word, field: 'w', kind: 'name', rowLabel: true }].concat(groups ? [{ title: t.group, field: 'g', kind: 'name' }] : [], [{ title: vLabel, field: 'v', kind: 'data', align: 'right' }]),
+  const table: any = {
+    columns: ([{ title: t.word, field: 'w', kind: 'name', rowLabel: true }] as any[]).concat(groups ? [{ title: t.group, field: 'g', kind: 'name' }] : [], [{ title: vLabel, field: 'v', kind: 'data', align: 'right' }]),
     data: sorted.map((w, i) => ({ id: i + 1, w: w.text, g: groups && gIndex(w.group) >= 0 ? groups[gIndex(w.group)].label : '', v: fmt(w.value) })),
   };
-  const legendNode = groups && groups.length ? <ChartLegend items={groups.map((g, i) => ({ id: g.id, label: g.label, color: seriesColor(i) }))} /> : null;
+  const legendNode = groups && groups.length ? <ChartLegend items={groups.map((g: any, i: any) => ({ id: g.id, label: g.label, color: seriesColor(i) }))} /> : null;
 
-  const draw = ({ inner }) => {
+  const draw = ({ inner }: any) => {
     const ready = boxes.key === key && boxes.list.length === shown.length;
-    const at = ready ? wordCloudLayout(boxes.list, inner.width, inner.height, layout === 'rectangular' ? 'rectangular' : 'spiral') : [];
+    const at: any[] = ready ? wordCloudLayout(boxes.list, inner.width, inner.height, layout === 'rectangular' ? 'rectangular' : 'spiral') : [];
     where.current = at;
     ia.register({
-      nearest: (px, py) => {
-        let best = null;
+      nearest: (px: any, py: any) => {
+        let best: any = null;
         at.forEach((p, i) => { if (p && boxes.list[i] && Math.abs(px - p.x) <= boxes.list[i].width / 2 && Math.abs(py - p.y) <= boxes.list[i].height / 2) best = i; });
         return best === null ? null : { r: 0, c: best };
       },

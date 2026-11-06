@@ -11,5 +11,5 @@ export { BoxPlot } from '../charts/lazy.tsx';
 export { boxStats } from '../charts/chart-helpers.ts';
 export { RadarChart } from '../charts/lazy.tsx';
 export { SankeyDiagram, sankeyLayout } from '../charts/SankeyDiagram.tsx';
-export { TimelineChart } from '../charts/TimelineChart.jsx';
+export { TimelineChart } from '../charts/TimelineChart.tsx';
 export { ComparisonView } from '../patterns/ComparisonView/ComparisonView.jsx';

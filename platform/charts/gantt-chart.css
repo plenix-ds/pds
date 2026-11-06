@@ -1,4 +1,4 @@
-/* Plenix · GanttChart (platform/charts/GanttChart.jsx), drawn in ChartFrame (system/charts.css) with the chart parts. Bars
+/* Plenix · GanttChart (platform/charts/GanttChart.tsx), drawn in ChartFrame (system/charts.css) with the chart parts. Bars
    are the frame's marks (the data-viz color), the part not done yet textured (ChartPatterns, chart-a11y.css); task names
    (UI text) end before the plot in the room of the task column (the frame's start margin token, set here); dependency
    arrows are in the subtle content color. Every value is a --plx-comp-gantt-* token. */

@@ -58,47 +58,69 @@ const STEPS = 7;
 const MARKER = 4, RING = 4, ZOOM_MIN = 1, ZOOM_MAX = 8;
 const RAD = Math.PI / 180;
 const PROJECTIONS = {
-  mercator: (lon, lat) => { const l = Math.max(-85, Math.min(85, lat)); return [lon * RAD, -Math.log(Math.tan(Math.PI / 4 + (l * RAD) / 2))]; },
-  equirectangular: (lon, lat) => [lon * RAD, -lat * RAD],
+  mercator: (lon: any, lat: any) => { const l = Math.max(-85, Math.min(85, lat)); return [lon * RAD, -Math.log(Math.tan(Math.PI / 4 + (l * RAD) / 2))]; },
+  equirectangular: (lon: any, lat: any) => [lon * RAD, -lat * RAD],
 };
 // the polygons of a geometry, each a list of rings of [lon, lat]
-const polygonsOf = (g) => (!g ? [] : g.type === 'Polygon' ? [g.coordinates] : g.type === 'MultiPolygon' ? g.coordinates : []);
+const polygonsOf = (g: any) => (!g ? [] : g.type === 'Polygon' ? [g.coordinates] : g.type === 'MultiPolygon' ? g.coordinates : []);
 
+/** @public a GeoJSON feature (Polygon or MultiPolygon, longitude and latitude, WGS 84) */
+export type GeoFeature = { type?: 'Feature'; id?: string | number; properties?: Record<string, unknown>; geometry: { type: string; coordinates: unknown } };
+/** @public */
+export type GeoMapProps = {
+  title: string;
+  description?: string;
+  /** a GeoJSON FeatureCollection, or an array of features */
+  features: { features: GeoFeature[] } | GeoFeature[];
+  idKey?: string;
+  nameKey?: string;
+  /** region key -> value: shades each region (a choropleth) */
+  values?: Record<string, number>;
+  scale?: 'sequential' | 'diverging';
+  markers?: Array<{ id: string; label: string; lon: number; lat: number }>;
+  projection?: 'mercator' | 'equirectangular';
+  format?(value: number): string;
+  valueTitle?: string;
+  zoom?: boolean;
+  size?: 'sm' | 'md' | 'lg';
+  strings?: Record<string, string>;
+  className?: string;
+};
 export function GeoMap({ title, description, features, idKey = 'id', nameKey = 'name', values, scale = 'sequential', markers = [], projection = 'mercator',
-  format, valueTitle, zoom = true, size = 'lg', strings, className }) {
-  const t = useStrings('chart.geoMap', strings);
+  format, valueTitle, zoom = true, size = 'lg', strings, className }: GeoMapProps) {
+  const t: any = useStrings('chart.geoMap', strings);
   const uid = 'plx-geo-map' + React.useId().replace(/[^a-zA-Z0-9]/g, '');
   const project = PROJECTIONS[projection] || PROJECTIONS.mercator;
   const list = Array.isArray(features) ? features : (features && features.features) || [];
-  const fmt = (v) => (typeof format === 'function' ? format(v) : formatNumber(v));
+  const fmt = (v: any) => (typeof format === 'function' ? format(v) : formatNumber(v));
   const choropleth = !!values;
-  const regions = list.map((f, i) => {
+  const regions = list.map((f: any, i: any) => {
     const p = f.properties || {};
     const key = String(f.id !== undefined ? f.id : p[idKey] !== undefined ? p[idKey] : i);
     const v = values && values[key] !== undefined && values[key] !== null && isFinite(Number(values[key])) ? Number(values[key]) : null;
-    return { key, name: String(p[nameKey] !== undefined ? p[nameKey] : key), value: v, rings: polygonsOf(f.geometry).map((poly) => poly.map((ring) => ring.map((c) => project(c[0], c[1])))) };
+    return { key, name: String(p[nameKey] !== undefined ? p[nameKey] : key), value: v, rings: polygonsOf(f.geometry).map((poly: any) => poly.map((ring: any) => ring.map((c: any) => project(c[0], c[1])))) };
   });
   const places = markers.map((m, i) => ({ key: String(m.id === undefined ? i : m.id), label: String(m.label), lon: Number(m.lon), lat: Number(m.lat), at: project(Number(m.lon), Number(m.lat)) }));
-  const nums = regions.filter((r) => r.value !== null).map((r) => r.value);
+  const nums = regions.filter((r: any) => r.value !== null).map((r: any) => r.value);
   const lo = nums.length ? Math.min.apply(null, nums) : 0, hi = nums.length ? Math.max.apply(null, nums) : 1;
   const sc = scale === 'diverging' ? 'diverging' : 'sequential';
-  const stepOf = (v) => datavizStep(sc, v, lo, hi);
+  const stepOf = (v: any) => datavizStep(sc, v, lo, hi);
   // the keyboard's order: regions with a value (all regions on an outline map), then the places
-  const items = (choropleth ? regions.filter((r) => r.value !== null) : regions.filter(() => !places.length)).map((r) => ({ kind: 'region', r })).concat(places.map((m) => ({ kind: 'place', m })));
-  const say = (it) => (it.kind === 'region' ? it.r.name + (choropleth ? ': ' + fmt(it.r.value) : '') : it.m.label);
+  const items = (choropleth ? regions.filter((r: any) => r.value !== null) : regions.filter(() => !places.length)).map((r: any) => ({ kind: 'region', r } as any)).concat(places.map((m: any) => ({ kind: 'place', m } as any)));
+  const say = (it: any) => (it.kind === 'region' ? it.r.name + (choropleth ? ': ' + fmt(it.r.value) : '') : it.m.label);
   const keys = useChartPoints({ count: items.length, describe: (i) => say(items[i]) });
   const [view, setView] = React.useState({ z: 1, cx: null, cy: null });
-  const drag = React.useRef(null);
-  const table = choropleth || !places.length
-    ? { columns: [{ title: t.region, field: 'name', kind: 'name', rowLabel: true }].concat(choropleth ? [{ title: valueTitle || t.value, field: 'shown', kind: 'data', align: 'right' }] : []),
-      data: regions.map((r, i) => ({ id: i + 1, name: r.name, shown: r.value === null ? t.noData : fmt(r.value) })) }
+  const drag = React.useRef<any>(null);
+  const table: any = choropleth || !places.length
+    ? { columns: ([{ title: t.region, field: 'name', kind: 'name', rowLabel: true }] as any[]).concat(choropleth ? [{ title: valueTitle || t.value, field: 'shown', kind: 'data', align: 'right' }] : []),
+      data: regions.map((r: any, i: any) => ({ id: i + 1, name: r.name, shown: r.value === null ? t.noData : fmt(r.value) })) }
     : { columns: [{ title: t.place, field: 'label', kind: 'name', rowLabel: true }, { title: t.latitude, field: 'lat', kind: 'data', align: 'right' }, { title: t.longitude, field: 'lon', kind: 'data', align: 'right' }],
       data: places.map((m, i) => ({ id: i + 1, label: m.label, lat: formatNumber(m.lat, { decimals: 4 }), lon: formatNumber(m.lon, { decimals: 4 }) })) };
   // the legend of a choropleth: each step with the range of values it holds (the data font)
   const legend = choropleth && nums.length ? (
     <ChartLegend label={valueTitle || t.value} items={Array.from({ length: STEPS }, (x, k) => ({ id: k, label: '', color: sc + '-' + (k + 1), value: fmt(lo + ((hi - lo) * k) / STEPS) + ' – ' + fmt(lo + ((hi - lo) * (k + 1)) / STEPS) }))} />
   ) : undefined;
-  const zoomBy = (f) => setView((v) => Object.assign({}, v, { z: Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, v.z * f)) }));
+  const zoomBy = (f: any) => setView((v) => Object.assign({}, v, { z: Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, v.z * f)) }));
   return (
     <React.Fragment>
       {zoom ? (
@@ -114,27 +136,27 @@ export function GeoMap({ title, description, features, idKey = 'id', nameKey = '
         {({ inner }) => {
           // fit every shape and place into the plot, centered
           let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
-          const grow = (p) => { if (p[0] < x0) x0 = p[0]; if (p[0] > x1) x1 = p[0]; if (p[1] < y0) y0 = p[1]; if (p[1] > y1) y1 = p[1]; };
-          regions.forEach((r) => r.rings.forEach((poly) => poly.forEach((ring) => ring.forEach(grow))));
+          const grow = (p: any) => { if (p[0] < x0) x0 = p[0]; if (p[0] > x1) x1 = p[0]; if (p[1] < y0) y0 = p[1]; if (p[1] > y1) y1 = p[1]; };
+          regions.forEach((r: any) => r.rings.forEach((poly: any) => poly.forEach((ring: any) => ring.forEach(grow))));
           places.forEach((m) => grow(m.at));
           if (!isFinite(x0)) { x0 = 0; y0 = 0; x1 = 1; y1 = 1; }
           const k = Math.min(inner.width / ((x1 - x0) || 1), inner.height / ((y1 - y0) || 1));
           const ox = (inner.width - (x1 - x0) * k) / 2, oy = (inner.height - (y1 - y0) * k) / 2;
-          const base = (p) => [ox + (p[0] - x0) * k, oy + (p[1] - y0) * k];
+          const base = (p: any) => [ox + (p[0] - x0) * k, oy + (p[1] - y0) * k];
           const cx0 = view.cx === null ? inner.width / 2 : view.cx, cy0 = view.cy === null ? inner.height / 2 : view.cy;
-          const shown = (p) => { const b = base(p); return [(b[0] - cx0) * view.z + inner.width / 2, (b[1] - cy0) * view.z + inner.height / 2]; };
-          const d = (r) => r.rings.map((poly) => poly.map((ring) => ring.map((c, i) => { const b = base(c); return (i ? 'L' : 'M') + b[0] + ',' + b[1]; }).join('') + 'Z').join('')).join('');
-          const middle = (r) => {   // the middle of a region's box, where its tooltip points
+          const shown = (p: any) => { const b = base(p); return [(b[0] - cx0) * view.z + inner.width / 2, (b[1] - cy0) * view.z + inner.height / 2]; };
+          const d = (r: any) => r.rings.map((poly: any) => poly.map((ring: any) => ring.map((c: any, i: any) => { const b = base(c); return (i ? 'L' : 'M') + b[0] + ',' + b[1]; }).join('') + 'Z').join('')).join('');
+          const middle = (r: any) => {   // the middle of a region's box, where its tooltip points
             let a = Infinity, b = Infinity, c = -Infinity, e = -Infinity;
-            r.rings.forEach((poly) => (poly[0] || []).forEach((p) => { if (p[0] < a) a = p[0]; if (p[0] > c) c = p[0]; if (p[1] < b) b = p[1]; if (p[1] > e) e = p[1]; }));
+            r.rings.forEach((poly: any) => (poly[0] || []).forEach((p: any) => { if (p[0] < a) a = p[0]; if (p[0] > c) c = p[0]; if (p[1] < b) b = p[1]; if (p[1] > e) e = p[1]; }));
             return shown([(a + c) / 2, (b + e) / 2]);
           };
           const act = keys.index !== null && keys.index !== undefined && items[keys.index] ? items[keys.index] : null;
-          const indexOf = (it) => items.indexOf(it);
-          const regionItem = {};
-          items.forEach((it) => { if (it.kind === 'region') regionItem[it.r.key] = it; });
-          const onDown = (e) => { if (view.z <= 1 || !e.currentTarget.setPointerCapture) return; e.currentTarget.setPointerCapture(e.pointerId); drag.current = { x: e.clientX, y: e.clientY, cx: cx0, cy: cy0 }; };
-          const onMove = (e) => { const g = drag.current; if (!g) return; setView((v) => Object.assign({}, v, { cx: g.cx - (e.clientX - g.x) / v.z, cy: g.cy - (e.clientY - g.y) / v.z })); };
+          const indexOf = (it: any) => items.indexOf(it);
+          const regionItem: any = {};
+          items.forEach((it: any) => { if (it.kind === 'region') regionItem[it.r.key] = it; });
+          const onDown = (e: any) => { if (view.z <= 1 || !e.currentTarget.setPointerCapture) return; e.currentTarget.setPointerCapture(e.pointerId); drag.current = { x: e.clientX, y: e.clientY, cx: cx0, cy: cy0 }; };
+          const onMove = (e: any) => { const g = drag.current; if (!g) return; setView((v) => Object.assign({}, v, { cx: g.cx - (e.clientX - g.x) / v.z, cy: g.cy - (e.clientY - g.y) / v.z })); };
           const onUp = () => { drag.current = null; };
           const transform = 'translate(' + (inner.width / 2 - cx0 * view.z) + ',' + (inner.height / 2 - cy0 * view.z) + ') scale(' + view.z + ')';
           return (
@@ -144,7 +166,7 @@ export function GeoMap({ title, description, features, idKey = 'id', nameKey = '
               <g clipPath={'url(#' + uid + '-clip)'}>
                 <rect className={cx('plx-geo-map__surface', view.z > 1 && 'plx-geo-map__surface--movable')} x={0} y={0} width={inner.width} height={inner.height} onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onPointerCancel={onUp} />
                 <g className="plx-geo-map__view" transform={transform}>
-                  {regions.map((r) => {
+                  {regions.map((r: any) => {
                     const it = regionItem[r.key];
                     const on = it ? { onMouseEnter: () => keys.hover(indexOf(it)), onMouseLeave: () => keys.hover(null) } : {};
                     return (
@@ -157,7 +179,7 @@ export function GeoMap({ title, description, features, idKey = 'id', nameKey = '
                   })}
                   {act && act.kind === 'region' ? <path className="plx-chart-keys__ring" d={d(act.r)} /> : null}
                 </g>
-                {places.map((m) => { const p = shown(m.at), it = items.find((x) => x.kind === 'place' && x.m === m);
+                {places.map((m) => { const p = shown(m.at), it = items.find((x: any) => x.kind === 'place' && x.m === m);
                   return <circle key={m.key} className="plx-geo-map__marker" data-plx-dataviz={seriesColor(0)} cx={p[0]} cy={p[1]} r={MARKER} onMouseEnter={() => keys.hover(indexOf(it))} onMouseLeave={() => keys.hover(null)} />; })}
                 {act && act.kind === 'place' ? <circle className="plx-chart-keys__ring" cx={shown(act.m.at)[0]} cy={shown(act.m.at)[1]} r={MARKER + RING} /> : null}
               </g>
