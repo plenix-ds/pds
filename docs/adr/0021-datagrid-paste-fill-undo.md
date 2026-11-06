@@ -54,6 +54,18 @@ onCellEdit?(record, change: { field, value, previous, row, source?: 'edit' | 'pa
 - **Semver: MINOR** (three optional fields in `editing`, an optional `source` on the change, new catalog keys). Nothing changes without the flags.
 - The issue's wording (`paste`, `fill`, `undo` as props) is met as `editing.paste`, `editing.fill` and `editing.undo`.
 
+## Addendum (2026-11-06, #647): undoing a saved row form (D-0077)
+
+- With `editing.undo`, a saved Form Edit (ADR 0016) is one undo step.
+- **Undo and redo use the path the save used:**
+  - **Without `onRecordEdit`** (the form saved through `onCellEdit`, once per changed field), undo and redo call `onCellEdit` once per field, with `source: 'undo'` / `'redo'`, as for cell edits.
+  - **With `onRecordEdit`**, undo calls `onRecordEdit(record, previous, { source: 'undo' })`, where `previous` holds the same fields with their values before the save. Redo calls it with the saved values and `{ source: 'redo' }`. The save itself passes `{ source: 'edit' }`.
+- So an application that saves forms only through `onRecordEdit` also receives the undo. Sending it to `onCellEdit` would change the grid and never reach the app's store.
+- **The type:** `onRecordEdit?(record: R, changes: Record<string, unknown>, info?: { source: DataGridChangeSource }): void | Promise<void>`. The third argument is optional and additive, so existing callers are unaffected.
+- A rejected promise on undo or redo keeps the current values and says why, as for cells.
+- **Semver: MINOR** (an optional argument).
+- Enforced by: G3 review of #647; its test (with only `onRecordEdit`, Ctrl+Z after a form save calls `onRecordEdit` with the previous values and `source: 'undo'`).
+
 ## Enforced by
 
 - G3 review of the build PR: the three fields in `editing` (default false), `source` on the change, no new callback.
