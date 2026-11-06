@@ -58,31 +58,50 @@ import PencilIcon from 'plenix-platform/icons/plenix/pencil';
 import PersonIcon from 'plenix-platform/icons/plenix/person';
 import { fill } from '../../utils/fill.ts';
 
+/** @public a person who can be chosen (EntityPicker's people options) */
+export type AssignPerson = { value: string | number; label: string; description?: string; src?: string; color?: string; presence?: string };
+/** @public a delegation (dates are YYYY-MM-DD) */
+export type AssignDelegation = { to: string | number; start?: string; end?: string; note?: string };
+/** @public */
+export type AssignControlProps = Omit<React.HTMLAttributes<HTMLElement>, 'onChange'> & {
+  label: string;
+  people?: AssignPerson[];
+  value?: string | number | null;
+  onChange?(value: string | number | null, person?: AssignPerson | null): void;
+  me?: string | number;
+  clearable?: boolean;
+  variant?: 'assign' | 'delegate';
+  delegation?: AssignDelegation | null;
+  onDelegate?(delegation: AssignDelegation): void | Promise<void>;
+  onEndDelegation?(): void | Promise<void>;
+  strings?: Record<string, string>;
+  className?: string;
+};
 export function AssignControl({ label, people = [], value = null, onChange, me, clearable = true, variant = 'assign',
-  delegation, onDelegate, onEndDelegation, strings, className, ...rest }) {
+  delegation, onDelegate, onEndDelegation, strings, className, ...rest }: AssignControlProps) {
   devWarn('AssignControl', { variant }, { variant: ['assign','delegate'] });
-  const t = useStrings('assignControl', strings);
+  const t: any = useStrings('assignControl', strings);
   label = label ?? t.label;
   const toast = useOptionalToast();
-  const say = (text) => { if (toast) toast.show(text, { tone: 'success' }); else announce(text); };
-  const find = (v) => people.find((p) => p.value === v) || null;
-  const [editing, setEditing] = React.useState(false);
-  const picker = React.useRef(null);
-  const again = React.useRef(null);
-  const back = React.useRef(false);
+  const say = (text: any) => { if (toast) toast.show(text, { tone: 'success' }); else announce(text); };
+  const find = (v: any) => people.find((p) => p.value === v) || null;
+  const [editing, setEditing] = React.useState<any>(false);
+  const picker = React.useRef<any>(null);
+  const again = React.useRef<any>(null);
+  const back = React.useRef<any>(false);
   React.useEffect(() => { if (editing && picker.current) picker.current.focus(); if (!editing && back.current && again.current) { again.current.focus(); back.current = false; } }, [editing]);
 
   // delegate dialog
-  const [open, setOpen] = React.useState(false);
-  const [draft, setDraft] = React.useState({ to: null, range: null, note: '' });
-  const [errors, setErrors] = React.useState({});
+  const [open, setOpen] = React.useState<any>(false);
+  const [draft, setDraft] = React.useState<any>({ to: null, range: null, note: '' });
+  const [errors, setErrors] = React.useState<any>({});
   const formId = useUid('plx-assign');
 
   if (variant === 'delegate') {
     const d = delegation && delegation.to ? delegation : null;
     const person = d ? find(d.to) : null;
     const begin = () => { setDraft({ to: d ? d.to : null, range: d ? { start: d.start, end: d.end } : null, note: d ? d.note || '' : '' }); setErrors({}); setOpen(true); };
-    const save = (e) => {
+    const save = (e: any) => {
       e.preventDefault();
       const next = { to: draft.to ? '' : t.needPerson, range: draft.range && draft.range.start && draft.range.end ? '' : t.needDates };
       setErrors(next);
@@ -95,7 +114,7 @@ export function AssignControl({ label, people = [], value = null, onChange, me, 
       <div className={cx('plx-assign-control', 'plx-assign-control--delegate', className)} role="group" aria-label={label} {...rest}>
         <div className="plx-assign-control__who">
           {person ? <Persona name={person.label} src={person.src} color={person.color} size="sm"
-            secondary={<span className="plx-assign-control__dates"><Text variant="data">{formatRange(d.start, d.end)}</Text></span>} />
+            secondary={<span className="plx-assign-control__dates"><Text variant="data">{formatRange(d!.start, d!.end)}</Text></span>} />
             : <span className="plx-assign-control__empty">{t.notDelegated}</span>}
         </div>
         <div className="plx-assign-control__actions">
@@ -106,13 +125,13 @@ export function AssignControl({ label, people = [], value = null, onChange, me, 
           footer={<><Button onClick={() => setOpen(false)}>{t.cancel}</Button><Button variant="primary" type="submit" form={formId}>{t.delegate}</Button></>}>
           <form id={formId} noValidate onSubmit={save} className="plx-assign-control__form">
             <Field label={t.to} error={errors.to || undefined}>
-              <EntityPicker kind="people" options={people} value={draft.to} onChange={(v) => { setDraft((x) => Object.assign({}, x, { to: v })); setErrors((x) => Object.assign({}, x, { to: '' })); }} />
+              <EntityPicker kind="people" options={people as any} value={draft.to} onChange={(v) => { setDraft((x: any) => Object.assign({}, x, { to: v })); setErrors((x: any) => Object.assign({}, x, { to: '' })); }} />
             </Field>
             <Field label={t.dates} error={errors.range || undefined}>
-              <DatePicker mode="range" value={draft.range} onChange={(v) => { setDraft((x) => Object.assign({}, x, { range: v })); setErrors((x) => Object.assign({}, x, { range: '' })); }} />
+              <DatePicker mode="range" value={draft.range} onChange={(v) => { setDraft((x: any) => Object.assign({}, x, { range: v })); setErrors((x: any) => Object.assign({}, x, { range: '' })); }} />
             </Field>
             <Field label={t.note} description={t.noteHint}>
-              <Textarea rows={2} value={draft.note} onChange={(e) => { const v = e.target.value; setDraft((x) => Object.assign({}, x, { note: v })); }} />
+              <Textarea rows={2} value={draft.note} onChange={(e) => { const v = e.target.value; setDraft((x: any) => Object.assign({}, x, { note: v })); }} />
             </Field>
           </form>
         </Dialog>
@@ -121,7 +140,7 @@ export function AssignControl({ label, people = [], value = null, onChange, me, 
   }
 
   const person = find(value);
-  const choose = (v) => {
+  const choose = (v: any) => {
     setEditing(false);
     back.current = true;
     if (v === value) return;
@@ -135,7 +154,7 @@ export function AssignControl({ label, people = [], value = null, onChange, me, 
       <div className={cx('plx-assign-control', className)} role="group" aria-label={label} {...rest}
         onKeyDown={editing ? (e) => { if (e.key === 'Escape' && !e.defaultPrevented) cancel(); } : undefined}>
         <div className="plx-assign-control__picker">
-          <EntityPicker ref={picker} kind="people" options={people} value={null} label={label} onChange={(v) => { if (v !== null && v !== undefined) choose(v); }} />
+          <EntityPicker ref={picker} kind="people" options={people as any} value={null} label={label} onChange={(v) => { if (v !== null && v !== undefined) choose(v); }} />
         </div>
         <div className="plx-assign-control__actions">
           {editing ? <Button size="sm" variant="ghost" onClick={cancel}>{t.cancel}</Button>
@@ -147,7 +166,7 @@ export function AssignControl({ label, people = [], value = null, onChange, me, 
   return (
     <div className={cx('plx-assign-control', 'plx-assign-control--assigned', className)} role="group" aria-label={label} {...rest}>
       <div className="plx-assign-control__who">
-        <Persona name={person.label} src={person.src} color={person.color} presence={person.presence} secondary={person.description} size="sm" />
+        <Persona name={person.label} src={person.src} color={person.color} presence={person.presence as any} secondary={person.description} size="sm" />
       </div>
       <div className="plx-assign-control__actions">
         <Button ref={again} size="sm" variant="ghost" icon={PersonIcon} onClick={() => setEditing(true)}>{t.reassign}</Button>

@@ -13,4 +13,4 @@ export { RELATIVE_PRESETS } from '../components/RelativeDateInput/RelativeDateIn
 export { LoadMore } from '../components/LoadMore/LoadMore.tsx';
 export { ImageUpload } from '../patterns/ImageUpload/ImageUpload.jsx';
 export { ImageCrop } from '../patterns/ImageUpload/ImageUpload.jsx';
-export { AvatarUpload } from '../patterns/AvatarUpload/AvatarUpload.jsx';
+export { AvatarUpload } from '../patterns/AvatarUpload/AvatarUpload.tsx';

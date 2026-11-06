@@ -28,13 +28,13 @@
     "platform/components/FileInput/FileInput.tsx",
     "platform/components/InputGroup/InputGroup.tsx",
     "platform/components/RelativeDateInput/RelativeDateInput.tsx",
-    "platform/patterns/AvatarUpload/AvatarUpload.jsx"
+    "platform/patterns/AvatarUpload/AvatarUpload.tsx"
   ],
   "LiveRegion": [
     "platform/components/CodeBlock/CodeBlock.tsx",
     "platform/components/Resizable/Resizable.tsx",
     "platform/patterns/WidgetGrid/WidgetGrid.jsx",
-    "platform/patterns/ColumnsMenu/ColumnsMenu.jsx",
+    "platform/patterns/ColumnsMenu/ColumnsMenu.tsx",
     "platform/patterns/CommandBar/panel-parts.jsx"
   ],
   "usePressable": [

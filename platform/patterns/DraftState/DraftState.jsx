@@ -16,7 +16,7 @@ import { Button } from '../../components/Button/Button.tsx';
 import { Dialog } from '../../components/Dialog/Dialog.tsx';
 import { Notice } from '../../components/Notice/Notice.tsx';
 import { Stack, Inline } from '../../components/Stack/Stack.tsx';
-import { SaveStatus } from '../Autosave/Autosave.jsx';
+import { SaveStatus } from '../Autosave/Autosave.tsx';
 import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import PencilIcon from 'plenix-platform/icons/plenix/pencil';

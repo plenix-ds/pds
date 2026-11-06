@@ -268,7 +268,7 @@ DSParts.records.push(function (H) {
       delegation: d[0], onDelegate: d[1], onEndDelegation: function () { d[1](null); } }, props.a)));
   };
   var assignControl = { id: 'assign-control', lab: true, icon: 'person', sec: 'patterns', sub: 'Review and approval', leaf: 'Assign', title: 'Assign',
-    plenix: 'AssignControl', src: 'patterns/AssignControl/AssignControl.jsx', level: 'Pattern', interaction: 'Selection', statesFrom: ['entity-picker', 'button'],
+    plenix: 'AssignControl', src: 'patterns/AssignControl/AssignControl.tsx', level: 'Pattern', interaction: 'Selection', statesFrom: ['entity-picker', 'button'],
     aliases: ['Assignee', 'Owner', 'Reassign', 'Assign to me'],
     text: 'Shows who is responsible for an item, in one row. Unassigned: the people picker, searchable by name and email, with Assign to me beside it. Assigned: the person’s avatar, name and detail, with Reassign and Unassign; Reassign swaps the row to the picker until a person is chosen (Escape puts it back). Each change is announced.',
     use: ['Tasks, reviews and requests that need one owner', 'Assign to me as the shortcut for the person using the page', 'The assignee’s full name with the avatar, never initials alone'],
@@ -287,7 +287,7 @@ DSParts.records.push(function (H) {
       ['Without Assign to me or Unassign', function () { return h(AsDemo, { value: 'pn', a: { me: null, clearable: false, label: 'Reviewer' } }); }]
     ] };
   var delegate = { id: 'delegate', icon: 'forward', sec: 'patterns', sub: 'Review and approval', leaf: 'Delegate', title: 'Delegate',
-    plenix: 'AssignControl variant="delegate"', src: 'patterns/AssignControl/AssignControl.jsx', level: 'Pattern', interaction: 'Selection', statesFrom: ['entity-picker', 'date-picker'],
+    plenix: 'AssignControl variant="delegate"', src: 'patterns/AssignControl/AssignControl.tsx', level: 'Pattern', interaction: 'Selection', statesFrom: ['entity-picker', 'date-picker'],
     variantClasses: [], docsFrom: 'assign-control', aliases: ['Out of office', 'Act on behalf of', 'Hand over'],
     text: 'Lets someone act for a person for a set time. The row shows to whom, and the start and end dates in the data font. Delegate (or Change) opens a dialog with the person, the dates as a range and a note; the person and both dates are checked when Delegate is pressed. End delegation ends it early.',
     use: ['Approvers and reviewers who will be away', 'Always with an end date; it ends by itself', 'Both names on the affected items: “on behalf of”'],

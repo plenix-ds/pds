@@ -222,7 +222,7 @@ DSParts.records.push(function (H) {
         ? { layout: 'grid', title: 'Applications', items: PLACES } : { title: 'Go to', groups: VIEWS })));
   };
   var bottomSheetNav = { id: 'bottom-sheet-navigation', lab: true, icon: 'menu-lines', sec: 'navigation', sub: 'Mobile navigation', leaf: 'Bottom-sheet navigation', title: 'Bottom-sheet navigation',
-    plenix: 'BottomSheetNav', src: 'patterns/BottomSheetNav/BottomSheetNav.jsx', level: 'Pattern', interaction: 'Navigation', statesFrom: ['navigation-menu', 'sheet'],
+    plenix: 'BottomSheetNav', src: 'patterns/BottomSheetNav/BottomSheetNav.tsx', level: 'Pattern', interaction: 'Navigation', statesFrom: ['navigation-menu', 'sheet'],
     aliases: ['Navigation sheet', 'Bottom drawer menu', 'More sheet', 'Action sheet navigation'],
     text: 'Places to go in a sheet that rises from the bottom of a phone: a section’s views as NavList rows (groups, icons, counts), or a few top-level places as a grid of icon tiles. It is the Sheet’s bottom form, so it has the grabber, the medium and large heights, Escape and the scrim; choosing a place closes it and shows that place.',
     use: ['A second set of places on a phone: a section’s views, the other applications', 'The list for more than about eight places or places with counts; the grid for a few places known by their icons', 'Open it from a bar item or a button that names it (Go to, Applications)'],

@@ -40,22 +40,40 @@ import { RowButton } from '../../components/RowButton/RowButton.tsx';
 import { Icon } from '../../components/Icon/Icon.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 
-export function BottomSheetNav({ open, onClose, title, items, groups, value, onSelect, layout = 'list', detent = 'medium', footer, strings, className }) {
-  const t = useStrings('bottomSheetNav', strings);
+/** @public a place in the navigation */
+export type BottomSheetItem = { id: string; label: string; icon?: unknown; count?: number; href?: string };
+/** @public */
+export type BottomSheetNavProps = {
+  open: boolean;
+  onClose?(): void;
+  title?: string;
+  items?: BottomSheetItem[];
+  /** groups (list layout), as NavList takes them */
+  groups?: Array<{ heading?: string; items: BottomSheetItem[] }>;
+  value?: string;
+  onSelect?(id: string): void;
+  layout?: 'list' | 'grid';
+  detent?: 'medium' | 'large';
+  footer?: React.ReactNode;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function BottomSheetNav({ open, onClose, title, items, groups, value, onSelect, layout = 'list', detent = 'medium', footer, strings, className }: BottomSheetNavProps) {
+  const t: any = useStrings('bottomSheetNav', strings);
   const name = title || t.title;
-  const choose = (id) => { if (onSelect) onSelect(id); if (onClose) onClose(); };
+  const choose = (id: any) => { if (onSelect) onSelect(id); if (onClose) onClose(); };
   const body = layout === 'grid' ? (
     <nav aria-label={name} className="plx-bottom-sheet-nav__grid">
       {(items || []).map((it) => (
         <RowButton key={it.id} className="plx-bottom-sheet-nav__tile" current={it.id === value ? 'page' : undefined} selected={it.id === value} onClick={() => choose(it.id)}>
-          <span className="plx-bottom-sheet-nav__tile-icon" aria-hidden="true"><Icon name={it.icon} filled={it.id === value} /></span>
+          <span className="plx-bottom-sheet-nav__tile-icon" aria-hidden="true"><Icon name={it.icon as any} filled={it.id === value} /></span>
           <span className="plx-bottom-sheet-nav__tile-label">{it.label}</span>
         </RowButton>
       ))}
     </nav>
   ) : (
     <div className="plx-bottom-sheet-nav__list">
-      <NavList label={name} items={groups ? undefined : items} groups={groups} value={value} onSelect={choose} />
+      <NavList label={name} items={(groups ? undefined : items) as any} groups={groups as any} value={value} onSelect={choose} />
     </div>
   );
   return (

@@ -1551,7 +1551,7 @@
       "platform/patterns/ImageUpload/ImageUpload.jsx",
       "platform/patterns/ImageUpload/image-upload.css",
       "platform/tokens/components/image-upload.tokens.json",
-      "platform/patterns/AvatarUpload/AvatarUpload.jsx",
+      "platform/patterns/AvatarUpload/AvatarUpload.tsx",
       "platform/patterns/AvatarUpload/avatar-upload.css",
       "platform/tokens/components/avatar-upload.tokens.json",
       "platform/components/MillerColumns/MillerColumns.tsx",
@@ -1599,7 +1599,7 @@
       "platform/components/TimeZoneSelect/TimeZoneSelect.tsx",
       "platform/components/TimeZoneSelect/time-zone-select.css",
       "platform/tokens/components/time-zone-select.tokens.json",
-      "platform/patterns/BottomSheetNav/BottomSheetNav.jsx",
+      "platform/patterns/BottomSheetNav/BottomSheetNav.tsx",
       "platform/patterns/BottomSheetNav/bottom-sheet-nav.css",
       "platform/tokens/components/bottom-sheet-nav.tokens.json",
       "platform/charts/scales.js",
@@ -1975,7 +1975,7 @@
       "platform/patterns/ReviewFlow/ReviewFlow.jsx",
       "platform/patterns/ReviewFlow/review-flow.css",
       "platform/tokens/components/review-flow.tokens.json",
-      "platform/patterns/AssignControl/AssignControl.jsx",
+      "platform/patterns/AssignControl/AssignControl.tsx",
       "platform/patterns/AssignControl/assign-control.css",
       "platform/tokens/components/assign-control.tokens.json",
       "platform/patterns/Publish/Publish.jsx",
@@ -2025,7 +2025,7 @@
       "platform/patterns/Wizard/Wizard.jsx",
       "platform/patterns/Wizard/wizard.css",
       "platform/tokens/components/wizard.tokens.json",
-      "platform/patterns/Autosave/Autosave.jsx",
+      "platform/patterns/Autosave/Autosave.tsx",
       "platform/patterns/Autosave/autosave.css",
       "platform/tokens/components/autosave.tokens.json",
       "platform/patterns/DraftState/DraftState.jsx",
@@ -2324,7 +2324,7 @@
       "platform/design-system/parts/w12C.{records,labs,docs}.js + .css",
       "platform/exports/w12C.{js,css}",
       "platform/standards/web-native-map.d/w12C.json",
-      "platform/patterns/AttachmentPicker/AttachmentPicker.jsx",
+      "platform/patterns/AttachmentPicker/AttachmentPicker.tsx",
       "platform/patterns/AttachmentPicker/attachment-picker.css",
       "platform/tokens/components/attachment-picker.tokens.json",
       "platform/patterns/FilePicker/FilePicker.jsx",
@@ -2451,7 +2451,7 @@
       "platform/components/Announcement/Announcement.jsx",
       "platform/components/Announcement/announcement.css",
       "platform/tokens/components/announcement.tokens.json",
-      "platform/patterns/AuditLog/AuditLog.jsx",
+      "platform/patterns/AuditLog/AuditLog.tsx",
       "platform/patterns/AuditLog/audit-log.css",
       "platform/tokens/components/audit-log.tokens.json",
       "platform/patterns/ApprovalWorkflow/ApprovalWorkflow.tsx",
@@ -2487,7 +2487,7 @@
       "platform/design-system/parts/w14A.{records,labs,docs}.js + .css",
       "platform/exports/w14A.{js,css}",
       "platform/standards/web-native-map.d/w14A.json",
-      "platform/patterns/AssistantPanel/AssistantPanel.jsx",
+      "platform/patterns/AssistantPanel/AssistantPanel.tsx",
       "platform/patterns/AssistantPanel/assistant-panel.css",
       "platform/tokens/components/assistant-panel.tokens.json",
       "platform/patterns/AIChat/AIChat.tsx",
@@ -5498,7 +5498,7 @@
    "wave": 7,
    "lane": "B",
    "files": [
-    "platform/patterns/AvatarUpload/AvatarUpload.jsx",
+    "platform/patterns/AvatarUpload/AvatarUpload.tsx",
     "platform/patterns/AvatarUpload/avatar-upload.css",
     "platform/tokens/components/avatar-upload.tokens.json"
    ],
@@ -5673,7 +5673,7 @@
    "wave": 7,
    "lane": "C",
    "files": [
-    "platform/patterns/BottomSheetNav/BottomSheetNav.jsx",
+    "platform/patterns/BottomSheetNav/BottomSheetNav.tsx",
     "platform/patterns/BottomSheetNav/bottom-sheet-nav.css",
     "platform/tokens/components/bottom-sheet-nav.tokens.json"
    ],
@@ -6891,7 +6891,7 @@
    "wave": 10,
    "lane": "B",
    "files": [
-    "platform/patterns/AssignControl/AssignControl.jsx",
+    "platform/patterns/AssignControl/AssignControl.tsx",
     "platform/patterns/AssignControl/assign-control.css",
     "platform/tokens/components/assign-control.tokens.json"
    ],
@@ -6994,7 +6994,7 @@
    "wave": 10,
    "lane": "C",
    "files": [
-    "platform/patterns/Autosave/Autosave.jsx",
+    "platform/patterns/Autosave/Autosave.tsx",
     "platform/patterns/Autosave/autosave.css",
     "platform/tokens/components/autosave.tokens.json"
    ],
@@ -7850,7 +7850,7 @@
    "wave": 12,
    "lane": "C",
    "files": [
-    "platform/patterns/AttachmentPicker/AttachmentPicker.jsx",
+    "platform/patterns/AttachmentPicker/AttachmentPicker.tsx",
     "platform/patterns/AttachmentPicker/attachment-picker.css",
     "platform/tokens/components/attachment-picker.tokens.json"
    ],
@@ -8206,7 +8206,7 @@
    "wave": 13,
    "lane": "C",
    "files": [
-    "platform/patterns/AuditLog/AuditLog.jsx",
+    "platform/patterns/AuditLog/AuditLog.tsx",
     "platform/patterns/AuditLog/audit-log.css",
     "platform/tokens/components/audit-log.tokens.json"
    ],
@@ -8329,7 +8329,7 @@
    "wave": 14,
    "lane": "A",
    "files": [
-    "platform/patterns/AssistantPanel/AssistantPanel.jsx",
+    "platform/patterns/AssistantPanel/AssistantPanel.tsx",
     "platform/patterns/AssistantPanel/assistant-panel.css",
     "platform/tokens/components/assistant-panel.tokens.json"
    ],
@@ -13740,7 +13740,7 @@
    "target": "AvatarUpload",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/AvatarUpload/AvatarUpload.jsx",
+    "platform/patterns/AvatarUpload/AvatarUpload.tsx",
     "platform/patterns/AvatarUpload/avatar-upload.css",
     "platform/tokens/components/avatar-upload.tokens.json"
    ],
@@ -13772,7 +13772,7 @@
    "target": "AttachmentPicker",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/AttachmentPicker/AttachmentPicker.jsx",
+    "platform/patterns/AttachmentPicker/AttachmentPicker.tsx",
     "platform/patterns/AttachmentPicker/attachment-picker.css",
     "platform/tokens/components/attachment-picker.tokens.json"
    ],
@@ -14152,7 +14152,7 @@
    "target": "BottomSheetNav",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/BottomSheetNav/BottomSheetNav.jsx",
+    "platform/patterns/BottomSheetNav/BottomSheetNav.tsx",
     "platform/patterns/BottomSheetNav/bottom-sheet-nav.css",
     "platform/tokens/components/bottom-sheet-nav.tokens.json"
    ],
@@ -18005,7 +18005,7 @@
    "target": "Autosave",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/Autosave/Autosave.jsx",
+    "platform/patterns/Autosave/Autosave.tsx",
     "platform/patterns/Autosave/autosave.css",
     "platform/tokens/components/autosave.tokens.json"
    ],
@@ -18342,7 +18342,7 @@
    "target": "AssignControl",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/AssignControl/AssignControl.jsx",
+    "platform/patterns/AssignControl/AssignControl.tsx",
     "platform/patterns/AssignControl/assign-control.css",
     "platform/tokens/components/assign-control.tokens.json"
    ],
@@ -18374,7 +18374,7 @@
    "target": "AssignControl",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/AssignControl/AssignControl.jsx",
+    "platform/patterns/AssignControl/AssignControl.tsx",
     "platform/patterns/AssignControl/assign-control.css",
     "platform/tokens/components/assign-control.tokens.json"
    ],
@@ -20711,7 +20711,7 @@
    "target": "AuditLog",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/AuditLog/AuditLog.jsx",
+    "platform/patterns/AuditLog/AuditLog.tsx",
     "platform/patterns/AuditLog/audit-log.css",
     "platform/tokens/components/audit-log.tokens.json"
    ],
@@ -21248,7 +21248,7 @@
    "target": "AssistantPanel",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/AssistantPanel/AssistantPanel.jsx",
+    "platform/patterns/AssistantPanel/AssistantPanel.tsx",
     "platform/patterns/AssistantPanel/assistant-panel.css",
     "platform/tokens/components/assistant-panel.tokens.json"
    ],
