@@ -9,18 +9,18 @@
 .plx-brand-mark.plx-brand-mark--size-xl{--plx-comp-icon-size:var(--plx-comp-brand-xl-mark-size);}
 /* a lockup: the mark (or the product tile) and the name on one line */
 .plx-brand-lockup{align-items:center;display:inline-flex;flex-shrink:0;vertical-align:middle;white-space:nowrap;}
-.plx-brand-lockup__name{font-family:var(--plx-comp-brand-name-font-family);font-weight:var(--plx-comp-brand-name-font-weight);letter-spacing:var(--plx-comp-brand-name-letter-spacing);line-height:var(--plx-comp-brand-name-line-height);word-spacing:normal;}
-.plx-brand-lockup__app{font-family:var(--plx-comp-brand-app-font-family);font-weight:var(--plx-comp-brand-app-font-weight);line-height:var(--plx-comp-brand-name-line-height);word-spacing:normal;}
+.plx-brand-lockup__name{font-family:var(--plx-comp-brand-name-font-family);font-size:var(--plx-comp-brand-font-size);font-weight:var(--plx-comp-brand-name-font-weight);letter-spacing:var(--plx-comp-brand-name-letter-spacing);line-height:var(--plx-comp-brand-name-line-height);word-spacing:normal;}
+.plx-brand-lockup__app{font-family:var(--plx-comp-brand-app-font-family);font-size:var(--plx-comp-brand-font-size);font-weight:var(--plx-comp-brand-app-font-weight);letter-spacing:var(--plx-sys-text-body-letter-spacing);line-height:var(--plx-comp-brand-name-line-height);word-spacing:normal;}
 .plx-brand-lockup__tile{align-items:center;border-bottom-color:transparent;border-bottom-style:solid;border-bottom-width:0;border-left-color:transparent;border-left-style:solid;border-left-width:0;border-right-color:transparent;border-right-style:solid;border-right-width:0;border-top-color:transparent;border-top-style:solid;border-top-width:0;display:inline-flex;flex-shrink:0;justify-content:center;}
 /* the kinds: the wordmark alone, the logo (mark + wordmark), the product mark (tile + application name) */
 .plx-brand-lockup--wordmark{column-gap:0;}
 .plx-brand-lockup--logo .plx-brand-lockup__name,.plx-brand-lockup--wordmark .plx-brand-lockup__name{margin-block-end:0;margin-block-start:0;}
 .plx-brand-lockup--product .plx-brand-lockup__app{margin-block-end:0;margin-block-start:0;}
 /* the sizes: the mark, the tile and its icon, the name (a step of the type scale) and the gap between them */
-.plx-brand-lockup--size-sm{column-gap:var(--plx-comp-brand-sm-gap);font-size:var(--plx-comp-brand-sm-font-size);}
-.plx-brand-lockup--size-md{column-gap:var(--plx-comp-brand-md-gap);font-size:var(--plx-comp-brand-md-font-size);}
-.plx-brand-lockup--size-lg{column-gap:var(--plx-comp-brand-lg-gap);font-size:var(--plx-comp-brand-lg-font-size);}
-.plx-brand-lockup--size-xl{column-gap:var(--plx-comp-brand-xl-gap);font-size:var(--plx-comp-brand-xl-font-size);}
+.plx-brand-lockup--size-sm{--plx-comp-brand-font-size:var(--plx-comp-brand-sm-font-size);column-gap:var(--plx-comp-brand-sm-gap);font-size:var(--plx-comp-brand-sm-font-size);}
+.plx-brand-lockup--size-md{--plx-comp-brand-font-size:var(--plx-comp-brand-md-font-size);column-gap:var(--plx-comp-brand-md-gap);font-size:var(--plx-comp-brand-md-font-size);}
+.plx-brand-lockup--size-lg{--plx-comp-brand-font-size:var(--plx-comp-brand-lg-font-size);column-gap:var(--plx-comp-brand-lg-gap);font-size:var(--plx-comp-brand-lg-font-size);}
+.plx-brand-lockup--size-xl{--plx-comp-brand-font-size:var(--plx-comp-brand-xl-font-size);column-gap:var(--plx-comp-brand-xl-gap);font-size:var(--plx-comp-brand-xl-font-size);}
 .plx-brand-lockup--size-sm .plx-brand-lockup__mark{--plx-comp-icon-size:var(--plx-comp-brand-sm-mark-size);}
 .plx-brand-lockup--size-md .plx-brand-lockup__mark{--plx-comp-icon-size:var(--plx-comp-brand-md-mark-size);}
 .plx-brand-lockup--size-lg .plx-brand-lockup__mark{--plx-comp-icon-size:var(--plx-comp-brand-lg-mark-size);}
