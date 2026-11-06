@@ -23,7 +23,7 @@ import { Rare, preloadRare } from './rare.jsx';
 import { Spinner } from '../../Loading/Loading.tsx';
 import { cx } from '../../../utils/cx.ts';
 import { Inline } from '../../Stack/Stack.tsx';
-import { words } from './helpers.jsx';
+import { words } from './helpers.tsx';
 import { Text } from '../../Text/Text.tsx';
 import { Select } from '../../Input/Input.tsx';
 import { Pagination } from '../../Pagination/Pagination.tsx';

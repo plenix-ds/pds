@@ -14,7 +14,7 @@
      engine function, in the same order with the same values. The engine is documented in DataGridEngine.jsx.
 */
 import React from 'react';
-import { sorted } from './helpers.jsx';
+import { sorted } from './helpers.tsx';
 
 export function useRemoteRows({ props, mode, page, pageSize, sorting, filters }) {
   const fetching = React.useRef(false);

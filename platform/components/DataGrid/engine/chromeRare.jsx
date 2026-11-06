@@ -14,7 +14,7 @@
 import React from 'react';
 import { ManageColumnsDialog } from '../../../patterns/ColumnsMenu/ColumnsMenu.jsx';
 import { MenuDivider, MenuItem, MenuRadioGroup } from '../../Menu/Menu.tsx';
-import { typeOf } from './helpers.jsx';
+import { typeOf } from './helpers.tsx';
 import SortAscendingIcon from 'plenix-platform/icons/plenix/sort-ascending';
 import SortDescendingIcon from 'plenix-platform/icons/plenix/sort-descending';
 import FilterIcon from 'plenix-platform/icons/plenix/filter';

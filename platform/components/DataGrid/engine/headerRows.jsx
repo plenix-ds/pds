@@ -16,7 +16,7 @@
      function, in the same order with the same values. The engine is documented in DataGridEngine.jsx.
 */
 import React from 'react';
-import { typeOf, kinds, interactive, typeIcons } from './helpers.jsx';
+import { typeOf, kinds, interactive, typeIcons } from './helpers.tsx';
 import { MenuDivider, MenuItem, Menu, ContextMenu } from '../../Menu/Menu.tsx';
 import { Width, PressTrigger } from '../engine/parts.jsx';
 import { Rare, preloadRare } from './rare.jsx';
