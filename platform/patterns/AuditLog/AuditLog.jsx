@@ -10,7 +10,7 @@
 */
 import React from 'react';
 import { devWarn } from '../../utils/devWarn.ts';
-import { DataGrid } from '../../components/DataGrid/DataGrid.jsx';
+import { DataGrid } from '../../components/DataGrid/DataGrid.tsx';
 import { Persona } from '../../components/Persona/Persona.tsx';
 import { Time } from '../../components/Time/Time.tsx';
 import { Button } from '../../components/Button/Button.tsx';

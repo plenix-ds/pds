@@ -60,9 +60,9 @@ export { Sheet } from './components/Sheet/Sheet.tsx';
 export { ToastProvider, useToast } from './components/Toast/Toast.tsx';
 export { Tabs, tabsPanelId } from './components/Tabs/Tabs.tsx';
 export { Panel, Card, MediaCard } from './components/Card/Card.tsx';
-export { DataGrid } from './components/DataGrid/DataGrid.jsx';
+export { DataGrid } from './components/DataGrid/DataGrid.tsx';
 // DataTable: the grid's former name (owner, 2026-10-19: Table is static, DataGrid is the grid); kept one release, then removed
-export { DataGrid as DataTable } from './components/DataGrid/DataGrid.jsx';
+export { DataGrid as DataTable } from './components/DataGrid/DataGrid.tsx';
 export { Table } from './components/Table/Table.tsx';
 export { ActionBar } from './patterns/ActionBar/ActionBar.jsx';
 export { NavList } from './components/NavList/NavList.tsx';
