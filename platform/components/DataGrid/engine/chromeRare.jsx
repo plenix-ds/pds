@@ -13,6 +13,12 @@
 */
 import React from 'react';
 import { ManageColumnsDialog } from '../../../patterns/ColumnsMenu/ColumnsMenu.jsx';
+import { MenuDivider, MenuItem } from '../../Menu/Menu.tsx';
+import { typeOf } from './helpers.jsx';
+import SortAscendingIcon from 'plenix-platform/icons/plenix/sort-ascending';
+import SortDescendingIcon from 'plenix-platform/icons/plenix/sort-descending';
+import FilterIcon from 'plenix-platform/icons/plenix/filter';
+import GroupByIcon from 'plenix-platform/icons/plenix/group-by';
 
 export function manageDialog({
   headerMenu,
@@ -41,4 +47,59 @@ export function manageDialog({
       }}
     />
   ) : null;
+}
+
+// the items of a column's menu (the application's field actions, sort in the type's words, filter, group by this field, wrap): the panel loads the
+// first time a column menu opens, and the trigger starts the download on hover, focus and touch (rare.jsx preloadRare), so it is normally ready
+export function columnMenuItems({ column, columnMenu, S, menuItems, api, props, setFilterField, changeGroups, wrapOf, changeWrap, wrapColumns, groupBy }) {
+  const c = column.columnDef.meta,
+    custom = typeof columnMenu === 'function' ? columnMenu(c) : columnMenu || [];
+  const groupedBy = (field) =>
+    [].concat(groupBy || []).some((level) => (typeof level === 'object' ? level.field : level) === field);
+  const direction =
+    typeOf(c) === 'number' || typeOf(c) === 'currency' || typeOf(c) === 'bytes'
+      ? S.sortNumber
+      : typeOf(c) === 'date'
+        ? S.sortDate
+        : typeOf(c) === 'checkbox'
+          ? S.sortCheck
+          : S.sortText;
+  const grouped = groupedBy(c.field),
+    others = []
+      .concat(groupBy || [])
+      .filter((level) => (typeof level === 'object' ? level.field : level) !== c.field);
+  return (
+    <>
+      {menuItems(custom, c, api.column(c.field))}
+      {custom.length ? <MenuDivider /> : null}
+      <MenuItem icon={SortAscendingIcon} disabled={!column.getCanSort()} onSelect={() => column.toggleSorting(false)}>
+        {direction[0]}
+      </MenuItem>
+      <MenuItem icon={SortDescendingIcon} disabled={!column.getCanSort()} onSelect={() => column.toggleSorting(true)}>
+        {direction[1]}
+      </MenuItem>
+      <MenuDivider />
+      <MenuItem
+        icon={FilterIcon}
+        disabled={!column.getCanFilter()}
+        onSelect={() => (props.onFilterField ? props.onFilterField(c.field) : setFilterField(c.field))}
+      >
+        {S.filterBy}
+      </MenuItem>
+      <MenuItem
+        icon={GroupByIcon}
+        disabled={!grouped && c.groupable === false}
+        onSelect={() => changeGroups(grouped ? (others.length ? others : false) : c.field)}
+      >
+        {grouped ? S.noGroup : S.group}
+      </MenuItem>
+      <MenuDivider />
+      <MenuItem
+        checked={!!wrapOf(c)}
+        onSelect={() => changeWrap({ ...(props.wrapColumns || wrapColumns), [c.field]: !wrapOf(c) })}
+      >
+        {S.wrapText}
+      </MenuItem>
+    </>
+  );
 }

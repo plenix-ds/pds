@@ -1,0 +1,2 @@
+before (main): { DataGrid } 427.3 KB 140.4 KB gzipped limit 450 KB (esbuild 508.4 KB, cross-check)
+after (this PR): { DataGrid } 424.7 KB 139.7 KB gzipped limit 450 KB (esbuild 505.3 KB, cross-check)
