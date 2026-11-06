@@ -193,3 +193,9 @@ tableProps.editMode;   // handed to DataGrid; onViewChange({ editMode }) writes 
 - G3 review of each phase's API diff against this ADR.
 - The named behavior tests per phase (#84's build plan) and the acceptance criteria on #84.
 - Locale checks: the new keys in `en.js`; no unapproved Arabic.
+
+## Addendum (2026-11-06, #477): the read cell of a person column
+
+- A person column (`type: 'person'`) draws a stored id as the person's name (and picture). It finds the person in `editorProps.options`, else among the people picked in the editor during this session.
+- A column given only `loadOptions` shows the raw id for a person the grid has not seen. The docs say to give `options` or `render` for the read cell.
+- No new prop. The grid remembers `{ name, src, color, gender }` per column field and value (at most 500).

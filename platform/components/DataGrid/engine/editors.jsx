@@ -362,7 +362,7 @@ function TagsEditor({ draft, setDraft, invalid, messageId, finish, cancel, input
 
 // the person editor (ADR 0016): Plenix's EntityPicker (people) inside the cell, bare, its list open as it takes the focus. Typing filters (or loads
 // the options), choosing one saves it at once; with the list closed Enter saves the current value; Escape closes the list, then cancels.
-function PersonEditor({ draft, setDraft, invalid, messageId, finish, cancel, input, done, options, load, label }) {
+function PersonEditor({ draft, setDraft, invalid, messageId, finish, cancel, input, done, options, load, label, remember }) {
   const wrap = React.useRef(null),
     [typed, setTyped] = React.useState(false),
     current = options.find((o) => String(o.value) === String(draft));
@@ -411,7 +411,8 @@ function PersonEditor({ draft, setDraft, invalid, messageId, finish, cancel, inp
           width="fill"
           {...(load ? { loadOptions: load } : { options })}
           value={draft ?? ''}
-          onChange={(v) => {
+          onChange={(v, option) => {
+            remember?.(v, option);
             setDraft(v);
             finish(0, v);
           }}
