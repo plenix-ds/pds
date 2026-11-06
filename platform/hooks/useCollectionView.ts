@@ -32,7 +32,7 @@
      on a level leaves out the rows whose value for it is empty. Quick counts apply search, advanced filters and every
      other quick filter, excluding only their own selection. Repeated values in one row count that record once. */
 import React from 'react';
-import { singleChoice } from '../patterns/QuickFilter/single-choice.js';
+import { singleChoice } from '../patterns/QuickFilter/single-choice.ts';
 import { matchesFilter, matchesDate, valueOf, fieldOf, DATE_PRESETS, blank } from '../utils/fields.ts';
 import type { Field, Filter, FilterItem, SortLevel, DateRange } from '../utils/fields.ts';
 

@@ -42,6 +42,7 @@ import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { announce } from '../../utils/announce.tsx';
 import { formatNumber } from '../../utils/format.ts';
+import type { Field, Filter } from '../../utils/fields.ts';
 import { WITHIN, fieldOf, kindOf, optionsOf, newCondition, nextId, fieldWords, blank } from '../../utils/fields.ts';
 import { Button } from '../../components/Button/Button.tsx';
 import { Input, Select } from '../../components/Input/Input.tsx';
@@ -58,15 +59,15 @@ import PlusIcon from 'plenix-platform/icons/plenix/plus';
 import TrashIcon from 'plenix-platform/icons/plenix/trash';
 import { fill } from '../../utils/fill.ts';
 
-const NO_VALUE = { empty: true, nempty: true };
-const quote = (s) => '“' + s + '”';
+const NO_VALUE: Record<string, boolean> = { empty: true, nempty: true };
+const quote = (s: any) => '“' + s + '”';
 
 // the query as one sentence: rules in the field type's words, groups in parentheses; unfinished rules left out
-export function formatQuery(node, fields = [], strings) {
+export function formatQuery(node: any, fields: Field[] = [], strings?: any) {
   const t = Object.assign({}, createTranslator(formatLocale()).section('queryBuilder'), strings);   // a plain function: no hook
   const fw = createTranslator(formatLocale()).section('fields');   // a plain function: no hook
-  const words = (f, op) => (fieldWords.operators(fw, kindOf(f)).find((o) => o[0] === op) || [op, op])[1];
-  const rule = (c) => {
+  const words = (f: any, op: any) => (fieldWords.operators(fw, kindOf(f)).find((o) => o[0] === op) || [op, op])[1];
+  const rule = (c: any) => {
     const f = fieldOf(fields, c.field);
     if (!f) return null;
     if (NO_VALUE[c.op]) return f.label + ' ' + words(f, c.op);
@@ -79,8 +80,8 @@ export function formatQuery(node, fields = [], strings) {
     else v = String(c.value);
     return f.label + ' ' + words(f, c.op) + ' ' + v;
   };
-  const group = (g, top) => {
-    const parts = (g.items || []).map((x) => (x.group ? group(x, false) : rule(x))).filter(Boolean);
+  const group = (g: any, top: any) => {
+    const parts = (g.items || []).map((x: any) => (x.group ? group(x, false) : rule(x))).filter(Boolean);
     if (!parts.length) return null;
     const s = parts.join(' ' + (g.join === 'or' ? t.orWord : t.andWord) + ' ');
     return top || parts.length < 2 ? s : '(' + s + ')';
@@ -88,21 +89,21 @@ export function formatQuery(node, fields = [], strings) {
   return group(node || { items: [] }, true) || t.everything;
 }
 
-function Count({ n, t }) {
+function Count({ n, t }: any) {
   const [before, after] = (n === 1 ? t.match : t.matches).split('{n}');
   return <span className="plx-query-builder__matches" aria-live="polite">{before}<span className="plx-query-builder__number">{formatNumber(n)}</span>{after}</span>;
 }
 
 // a form control with its hidden label (the rule's controls sit in a row: their names are read, not shown)
-const Labeled = ({ id, text, children }) => <>{<VisuallyHidden as="label" htmlFor={id}>{text}</VisuallyHidden>}{children}</>;
+const Labeled = ({ id, text, children }: any) => <>{<VisuallyHidden as="label" {...({ htmlFor: id } as any)}>{text}</VisuallyHidden>}{children}</>;
 
-function RuleValue({ c, f, set, id, label }) {
-  const fw = useStrings('fields');
+function RuleValue({ c, f, set, id, label }: any) {
+  const fw: any = useStrings('fields');
   const k = kindOf(f);
   if (NO_VALUE[c.op]) return <span className="plx-query-builder__value plx-query-builder__value--none" />;
   let control;
   if (k === 'select' || k === 'multi') {
-    control = <Combobox id={id} multiple className="plx-query-builder__value" options={optionsOf(f).map((o) => ({ value: o.value, label: o.label }))}
+    control = <Combobox id={id} multiple className="plx-query-builder__value" options={optionsOf(f).map((o: any) => ({ value: o.value, label: o.label })) as any}
       values={[].concat(c.value || [])} onChange={(v) => set({ value: v })} />;
   } else if (k === 'date' && c.op === 'within') {
     control = <Select id={id} className="plx-query-builder__value" value={c.value || WITHIN[0].value} options={fieldWords.within(fw).map((w) => ({ value: w.value, label: w.label }))} onChange={(e) => set({ value: e.target.value })} />;
@@ -116,15 +117,15 @@ function RuleValue({ c, f, set, id, label }) {
   return <Labeled id={id} text={label}>{control}</Labeled>;
 }
 
-function Rule({ c, index, fields, uid, put, remove, t }) {
-  const fw = useStrings('fields');
+function Rule({ c, index, fields, uid, put, remove, t }: any) {
+  const fw: any = useStrings('fields');
   const f = fieldOf(fields, c.field);
   const base = uid + '-' + c.id;
   const name = fill(t.rule, { n: index + 1 });
   return (
     <div className="plx-query-builder__rule" role="group" aria-label={name} data-plx-rule={c.id}>
       <Labeled id={base + '-f'} text={name + ', ' + t.field}>
-        <Select id={base + '-f'} className="plx-query-builder__field" value={c.field} options={fields.map((x) => ({ value: x.value, label: x.label }))}
+        <Select id={base + '-f'} className="plx-query-builder__field" value={c.field} options={fields.map((x: any) => ({ value: x.value, label: x.label }))}
           onChange={(e) => put(newCondition(fieldOf(fields, e.target.value)))} />
       </Labeled>
       <Labeled id={base + '-o'} text={name + ', ' + t.operator}>
@@ -137,13 +138,13 @@ function Rule({ c, index, fields, uid, put, remove, t }) {
   );
 }
 
-function Group({ node, setNode, depth, index, maxDepth, fields, uid, focus, onRemove, t }) {
+function Group({ node, setNode, depth, index, maxDepth, fields, uid, focus, onRemove, t }: any) {
   const items = node.items || [];
-  const setItems = (list) => setNode(Object.assign({}, node, { items: list }));
-  const put = (i, ch) => setItems(items.map((x, j) => (j === i ? Object.assign({}, x, ch) : x)));
+  const setItems = (list: any) => setNode(Object.assign({}, node, { items: list }));
+  const put = (i: any, ch: any) => setItems(items.map((x: any, j: any) => (j === i ? Object.assign({}, x, ch) : x)));
   const addRule = () => { const c = newCondition(fields[0]); setItems(items.concat(c)); focus.current = { rule: c.id }; announce(t.added); };
   const addGroup = () => { const c = newCondition(fields[0]); setItems(items.concat({ id: nextId(), group: true, join: 'and', items: [c] })); focus.current = { rule: c.id }; announce(t.groupAdded); };
-  const removeAt = (i) => { const g = items[i].group; setItems(items.filter((_, j) => j !== i)); focus.current = { add: node.id || 'root' }; announce(g ? t.groupRemoved : t.removed); };
+  const removeAt = (i: any) => { const g = items[i].group; setItems(items.filter((_: any, j: any) => j !== i)); focus.current = { add: node.id || 'root' }; announce(g ? t.groupRemoved : t.removed); };
   const joinWord = node.join === 'or' ? t.orWord : t.andWord;
   const name = depth ? fill(t.group, { n: index + 1 }) : null;
   let groups = 0;
@@ -157,12 +158,12 @@ function Group({ node, setNode, depth, index, maxDepth, fields, uid, focus, onRe
       </div>
       {items.length ? (
         <ul className="plx-query-builder__items">
-          {items.map((x, i) => (
+          {items.map((x: any, i: any) => (
             <li key={x.id} className={cx('plx-query-builder__item', x.group && 'plx-query-builder__item--group')}>
               <span className="plx-query-builder__join" aria-hidden="true">{i === 0 ? t.where : joinWord}</span>
               {x.group
-                ? <Group node={x} setNode={(n) => put(i, n)} depth={depth + 1} index={groups++} maxDepth={maxDepth} fields={fields} uid={uid} focus={focus} onRemove={() => removeAt(i)} t={t} />
-                : <Rule c={x} index={i} fields={fields} uid={uid} put={(ch) => put(i, ch)} remove={() => removeAt(i)} t={t} />}
+                ? <Group node={x} setNode={(n: any) => put(i, n)} depth={depth + 1} index={groups++} maxDepth={maxDepth} fields={fields} uid={uid} focus={focus} onRemove={() => removeAt(i)} t={t} />
+                : <Rule c={x} index={i} fields={fields} uid={uid} put={(ch: any) => put(i, ch)} remove={() => removeAt(i)} t={t} />}
             </li>
           ))}
         </ul>
@@ -175,15 +176,32 @@ function Group({ node, setNode, depth, index, maxDepth, fields, uid, focus, onRe
   );
 }
 
-export function QueryBuilder({ fields = [], value, onChange, label, maxDepth = 3, view: viewProp, onViewChange, views = true, matches, strings, className }) {
-  const t = useStrings('queryBuilder', strings);
+/** @public the prop type (ADR 0011) */
+export type QueryBuilderProps = {
+  fields?: Field[];
+  /** the query: a join of rules and groups to any depth (FilterPanel's filter) */
+  value?: Filter;
+  onChange?(value: Filter): void;
+  label?: string;
+  /** how many levels of groups, the query itself counted: 1, 2 or 3 */
+  maxDepth?: number;
+  view?: 'builder' | 'text';
+  onViewChange?(view: 'builder' | 'text'): void;
+  views?: boolean;
+  matches?: number;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function QueryBuilder(props: QueryBuilderProps) {
+  let { fields = [], value, onChange, label, maxDepth = 3, view: viewProp, onViewChange, views = true, matches, strings, className } = props as any;
+  const t: any = useStrings('queryBuilder', strings);
   label = label ?? t.textTitle;
   const node = value || { join: 'and', items: [] };
   const [own, setOwn] = React.useState('builder');
   const view = viewProp || own;
-  const setView = (v) => { if (!viewProp) setOwn(v); if (onViewChange) onViewChange(v); };
+  const setView = (v: any) => { if (!viewProp) setOwn(v); if (onViewChange) onViewChange(v); };
   const uid = 'plx-qb-' + React.useId().replace(/[^a-zA-Z0-9]/g, '');
-  const root = React.useRef(null), focus = React.useRef(null);
+  const root = React.useRef<any>(null), focus = React.useRef<any>(null);
   // after an add or a remove: the new rule's field, or the group's Add rule
   React.useEffect(() => {
     const want = focus.current, el = root.current;

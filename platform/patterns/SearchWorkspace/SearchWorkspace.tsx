@@ -47,11 +47,14 @@ import { numeralLocale } from '../../utils/format.ts';
 import { cx } from '../../utils/cx.ts';
 import { Button } from '../../components/Button/Button.tsx';
 import { SearchField } from '../../components/SearchField/SearchField.tsx';
-import { CommandBar, CommandBarButton } from '../CommandBar/CommandBar.jsx';
+import { CommandBar as CommandBarJs, CommandBarButton as CommandBarButtonJs } from '../CommandBar/CommandBar.jsx';
+const CommandBar: any = CommandBarJs;
+const CommandBarButton: any = CommandBarButtonJs;
 import { Menu, MenuItem } from '../../components/Menu/Menu.tsx';
 import { Chip } from '../../components/Tag/Tag.tsx';
 import { EmptyState } from '../../components/EmptyState/EmptyState.tsx';
-import { FilterBar } from '../FilterBar/FilterBar.jsx';
+import { FilterBar as FilterBarJs } from '../FilterBar/FilterBar.jsx';
+const FilterBar: any = FilterBarJs;
 import { useUid } from '../../utils/layer.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import ChecklistIcon from 'plenix-platform/icons/plenix/checklist';
@@ -60,18 +63,49 @@ import SortIcon from 'plenix-platform/icons/plenix/sort';
 import ViewTableIcon from 'plenix-platform/icons/plenix/view-table';
 import { fill } from '../../utils/fill.ts';
 
-const label = (f, v) => { const o = (f.options || []).find((x) => x.value === v); return o ? o.label : String(v); };
+const label = (f: any, v: any) => { const o = (f.options || []).find((x: any) => x.value === v); return o ? o.label : String(v); };
 
-export function SearchWorkspace({ title, query = '', onQueryChange, placeholder, filters = [], onFilterChange, onClearAll,
-  count = 0, noun, plural, sort, view, onSave, headStart, headEnd, selection, bulk, locale, strings, className, children }) {
-  const t = useStrings('searchWorkspace', strings);
+/** @public one filter chip group (FilterBar's) */
+export type SearchFilter = { id: string; label: string; options: { value: string; label?: string }[]; value?: unknown; multiple?: boolean };
+/** @public a menu or switch with its options */
+export type SearchChoice = { value: string; options: { value: string; label: string }[]; onChange(value: string): void };
+/** @public the prop type (ADR 0011) */
+export type SearchWorkspaceProps = {
+  title?: string;
+  query?: string;
+  onQueryChange?(next: string): void;
+  placeholder?: string;
+  filters?: SearchFilter[];
+  onFilterChange?(id: string, value: unknown): void;
+  onClearAll?(): void;
+  count?: number;
+  noun?: string;
+  plural?: string;
+  sort?: SearchChoice;
+  view?: SearchChoice;
+  onSave?(): void;
+  headStart?: React.ReactNode;
+  headEnd?: React.ReactNode;
+  /** CommandBar selection state: { count, actions, onClear, noun, label, onSelectAll, total } */
+  selection?: Record<string, unknown>;
+  /** deprecated for one release: selection state or a legacy bar node */
+  bulk?: Record<string, unknown> | React.ReactNode;
+  locale?: string;
+  strings?: Record<string, string>;
+  className?: string;
+  children?: React.ReactNode;
+};
+export function SearchWorkspace(props: SearchWorkspaceProps) {
+  const { title, query = '', onQueryChange, placeholder, filters = [], onFilterChange, onClearAll,
+  count = 0, noun, plural, sort, view, onSave, headStart, headEnd, selection, bulk, locale, strings, className, children } = props as any;
+  const t: any = useStrings('searchWorkspace', strings);
   const loc = numeralLocale(locale || (typeof document !== 'undefined' && document.documentElement.lang) || undefined);
   const id = useUid('plx-search-ws');
-  const field = React.useRef(null);
+  const field = React.useRef<any>(null);
   // the query typed here is applied as the person types; Enter keeps focus in the field
-  const chips = [];
-  filters.forEach((f) => {
-    if (f.multiple) (f.value || []).forEach((v) => chips.push({ f, v, text: fill(t.chip, { label: f.label, value: label(f, v) }), remove: () => onFilterChange(f.id, (f.value || []).filter((x) => x !== v)) }));
+  const chips: any[] = [];
+  filters.forEach((f: any) => {
+    if (f.multiple) (f.value || []).forEach((v: any) => chips.push({ f, v, text: fill(t.chip, { label: f.label, value: label(f, v) }), remove: () => onFilterChange(f.id, (f.value || []).filter((x: any) => x !== v)) }));
     else if (f.value !== null && f.value !== undefined && f.value !== '') chips.push({ f, v: f.value, text: fill(t.chip, { label: f.label, value: label(f, f.value) }), remove: () => onFilterChange(f.id, null) });
   });
   const nouns = count === 1 ? (noun || t.result) : (plural || (noun ? noun + 's' : t.results));
@@ -108,10 +142,10 @@ export function SearchWorkspace({ title, query = '', onQueryChange, placeholder,
       <CommandBar className="plx-search-ws__bar" label={title || t.title} sticky={false} count={counted} actions={selectAll ? [selectAll] : []} selection={selectedBar}
         view={<>
           {view ? <Menu label={t.view} placement="bottom-end" trigger={<CommandBarButton icon={ViewTableIcon} label={t.view} caret />}>
-            {layouts.map((o) => <MenuItem key={o.value} checked={view.value === o.value} onSelect={() => view.onChange(o.value)}>{o.label}</MenuItem>)}
+            {layouts.map((o: any) => <MenuItem key={o.value} checked={view.value === o.value} onSelect={() => view.onChange(o.value)}>{o.label}</MenuItem>)}
           </Menu> : null}
           {sort ? <Menu label={t.sort} placement="bottom-end" trigger={<CommandBarButton icon={SortIcon} aria-label={fill(t.sortValue, { value: sort.value })} label={fill(t.sortValue, { value: sort.value })} caret />}>
-            {sort.options.map((o) => <MenuItem key={o} checked={sort.value === o} onSelect={() => sort.onChange(o)}>{o}</MenuItem>)}
+            {sort.options.map((o: any) => <MenuItem key={o} checked={sort.value === o} onSelect={() => sort.onChange(o)}>{o}</MenuItem>)}
           </Menu> : null}
         </>} />
       {!selected && !legacyState ? bulk : null}

@@ -68,7 +68,8 @@ import { PromptDialog } from '../../components/Dialog/Dialog.tsx';
 import { DataGrid } from '../../components/DataGrid/DataGrid.tsx';
 import { useOptionalToast } from '../../components/Toast/Toast.tsx';
 import { ActivityList } from '../ActivityList/ActivityList.tsx';
-import { CommandBar } from '../CommandBar/CommandBar.jsx';
+import { CommandBar as CommandBarJs } from '../CommandBar/CommandBar.jsx';
+const CommandBar: any = CommandBarJs;
 import { useStrings, useLocale } from '../../providers/LocaleProvider.tsx';
 import english from '../../i18n/en.js';
 import AlertIcon from 'plenix-platform/icons/plenix/alert';
@@ -84,7 +85,7 @@ import { fill } from '../../utils/fill.ts';
 // the workflow statuses: a Badge variant by meaning, and its icon (owner, 2026-10-15)
 // the labels are the catalog's (reviewFlow.statuses): this constant keeps its shape and its English labels for apps that read it
 const STATUS_LABELS = english.reviewFlow.statuses;
-export const WORKFLOW_STATUSES = {
+export const WORKFLOW_STATUSES: Record<string, any> = {
   draft: { tone: 'neutral', icon: PencilIcon, label: STATUS_LABELS.draft },
   'in-review': { tone: 'active', icon: DocSearchIcon, label: STATUS_LABELS['in-review'] },
   approved: { tone: 'success', icon: CircleCheckIcon, label: STATUS_LABELS.approved },
@@ -94,30 +95,58 @@ export const WORKFLOW_STATUSES = {
   scheduled: { tone: 'waiting', icon: ScheduleIcon, label: STATUS_LABELS.scheduled },
 };
 
-export function WorkflowStatus({ status = 'draft', label, size, strings, className, ...rest }) {
+/** @public a workflow status */
+export type WorkflowStatusName = 'draft' | 'in-review' | 'approved' | 'changes-requested' | 'rejected' | 'published' | 'scheduled';
+/** @public a reviewer's decision */
+export type ReviewDecision = 'approved' | 'changes-requested' | 'rejected';
+/** @public the prop type of WorkflowStatus (ADR 0011) */
+export type WorkflowStatusProps = Omit<React.HTMLAttributes<HTMLElement>, 'children'> & { status?: WorkflowStatusName; label?: string; size?: 'md' | 'sm'; strings?: Record<string, string>; className?: string };
+export function WorkflowStatus(props: WorkflowStatusProps) {
+  const { status = 'draft', label, size, strings, className, ...rest } = props as any;
   devWarn('WorkflowStatus', { size }, { size: ['md','sm'] });
   const s = WORKFLOW_STATUSES[status] || WORKFLOW_STATUSES.draft;
-  const names = useStrings('reviewFlow.statuses');
+  const names: any = useStrings('reviewFlow.statuses');
   const words = label || (strings && strings[status]) || names[status] || s.label;
   return <Badge tone={s.tone} icon={s.icon} size={size} className={cx('plx-workflow-status', className)} {...rest}>{words}</Badge>;
 }
 
 
-const VERB = { approved: 'approve', 'changes-requested': 'changes', rejected: 'reject' };
-const LOOK = { approved: 'primary', 'changes-requested': 'secondary', rejected: 'danger-secondary' };
+const VERB: Record<string, any> = { approved: 'approve', 'changes-requested': 'changes', rejected: 'reject' };
+const LOOK: Record<string, any> = { approved: 'primary', 'changes-requested': 'secondary', rejected: 'danger-secondary' };
 
-export function ReviewFlow({ status = 'in-review', title, headingLevel = 3, detail, kind = 'review', reviewers = [], history = [],
+/** @public one reviewer, with their decision (none yet: waiting) */
+export type Reviewer = { id: string | number; name: string; src?: string; color?: string; decision?: ReviewDecision };
+/** @public one decision in the history */
+export type ReviewEntry = Reviewer & { comment?: string; time?: string; dateTime?: string };
+/** @public the prop type of ReviewFlow (ADR 0011) */
+export type ReviewFlowProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & {
+  status?: WorkflowStatusName;
+  title?: string;
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+  detail?: string;
+  kind?: 'review' | 'human';
+  reviewers?: Reviewer[];
+  history?: ReviewEntry[];
+  /** without it the panel is read only */
+  onDecision?(decision: ReviewDecision, comment: string): unknown;
+  decisions?: ReviewDecision[];
+  reasonFor?: ReviewDecision[];
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function ReviewFlow(props: ReviewFlowProps) {
+  const { status = 'in-review', title, headingLevel = 3, detail, kind = 'review', reviewers = [], history = [],
   onDecision, decisions = ['rejected', 'changes-requested', 'approved'], reasonFor = ['rejected', 'changes-requested'],
-  strings, className, ...rest }) {
-  const t = useStrings('reviewFlow.flow', strings);
+  strings, className, ...rest } = props as any;
+  const t: any = useStrings('reviewFlow.flow', strings);
   const toast = useOptionalToast();
   const [comment, setComment] = React.useState('');
   const [error, setError] = React.useState('');
-  const field = React.useRef(null);
-  const H = 'h' + Math.min(6, Math.max(2, headingLevel));
-  const names = useStrings('reviewFlow.statuses');
-  const word = (d) => (t[d] || names[d] || WORKFLOW_STATUSES[d].label);
-  const decide = (d) => {
+  const field = React.useRef<any>(null);
+  const H = ('h' + Math.min(6, Math.max(2, headingLevel))) as React.ElementType;
+  const names: any = useStrings('reviewFlow.statuses');
+  const word = (d: any) => (t[d] || names[d] || WORKFLOW_STATUSES[d].label);
+  const decide = (d: any) => {
     if (reasonFor.indexOf(d) >= 0 && !comment.trim()) { setError(t.needReason); if (field.current) field.current.focus(); return; }
     setError('');
     onDecision(d, comment.trim());
@@ -139,7 +168,7 @@ export function ReviewFlow({ status = 'in-review', title, headingLevel = 3, deta
         <div className="plx-review-flow__section">
           <p className="plx-review-flow__label">{t.reviewers}</p>
           <ul className="plx-review-flow__reviewers">
-            {reviewers.map((r) => (
+            {reviewers.map((r: any) => (
               <li key={r.id || r.name} className="plx-review-flow__reviewer">
                 <Persona name={r.name} src={r.src} color={r.color} size="xs" />
                 {r.decision ? <WorkflowStatus status={r.decision} strings={strings} />
@@ -155,7 +184,7 @@ export function ReviewFlow({ status = 'in-review', title, headingLevel = 3, deta
             <Textarea ref={field} rows={3} value={comment} onChange={(e) => { setComment(e.target.value); if (error) setError(''); }} />
           </Field>
           <div className="plx-review-flow__actions" role="group" aria-label={t.decisions}>
-            {decisions.map((d) => <Button key={d} variant={LOOK[d]} onClick={() => decide(d)}>{t[VERB[d]]}</Button>)}
+            {decisions.map((d: any) => <Button key={d} variant={LOOK[d]} onClick={() => decide(d)}>{t[VERB[d]]}</Button>)}
           </div>
         </div>
       ) : null}
@@ -163,7 +192,7 @@ export function ReviewFlow({ status = 'in-review', title, headingLevel = 3, deta
         <div className="plx-review-flow__section">
           <p className="plx-review-flow__label">{t.history}</p>
           <ActivityList label={t.history} stacked>
-            {history.map((x) => (
+            {history.map((x: any) => (
               <ActivityList.Item key={x.id || x.name + x.time} leading={<Avatar name={x.name} src={x.src} color={x.color} size="xs" />}
                 title={x.name} meta={word(x.decision) + (x.comment ? ': ' + x.comment : '')} time={x.time} dateTime={x.dateTime} />
             ))}
@@ -175,23 +204,38 @@ export function ReviewFlow({ status = 'in-review', title, headingLevel = 3, deta
 }
 
 
-export function ReviewQueue({ items = [], label, noun, plural, onDecision, selected, onSelectionChange,
-  strings, className, ...rest }) {
-  const t = useStrings('reviewFlow.queue', strings);
-  const names = useStrings('reviewFlow.statuses');
+/** @public one item waiting for review (submitted: YYYY-MM-DD) */
+export type ReviewQueueItem = { id: string | number; name: string; type?: string; submittedBy?: string; submitted?: string; status?: WorkflowStatusName };
+/** @public the prop type of ReviewQueue (ADR 0011) */
+export type ReviewQueueProps = Omit<React.HTMLAttributes<HTMLElement>, 'onSelect'> & {
+  items?: ReviewQueueItem[];
+  label?: string;
+  noun?: string;
+  plural?: string;
+  onDecision?(ids: (string | number)[], decision: ReviewDecision, reason: string): unknown;
+  selected?: (string | number)[];
+  onSelectionChange?(ids: (string | number)[]): void;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function ReviewQueue(props: ReviewQueueProps) {
+  let { items = [], label, noun, plural, onDecision, selected, onSelectionChange,
+  strings, className, ...rest } = props as any;
+  const t: any = useStrings('reviewFlow.queue', strings);
+  const names: any = useStrings('reviewFlow.statuses');
   const loc = useLocale();
   const builtIn = !noun && !plural;   // the default words: whole counted phrases with the Arabic plural forms, from the catalog
   const many = plural || (noun ? noun + 's' : t.plural);   // the default words come from the catalog
   noun = noun ?? t.noun;
   label = label ?? t.queueLabel;
-  const counted = (m) => (builtIn ? loc.t('reviewFlow.queue.items', { count: m, n: formatNumber(m) }) : null);
+  const counted = (m: any) => (builtIn ? loc.t('reviewFlow.queue.items', { count: m, n: formatNumber(m) }) : null);
   const toast = useOptionalToast();
   const [own, setOwn] = React.useState([]);
   const sel = selected !== undefined ? selected : own;
-  const setSel = (ids) => { if (selected === undefined) setOwn(ids); if (onSelectionChange) onSelectionChange(ids); };
-  const [ask, setAsk] = React.useState(null);   // "rejected" | "changes-requested" while its dialog is open
-  const what = (n) => counted(n) ?? (n === 1 ? '1 ' + noun : formatNumber(n) + ' ' + many);
-  const run = (decision, reason) => {
+  const setSel = (ids: any) => { if (selected === undefined) setOwn(ids); if (onSelectionChange) onSelectionChange(ids); };
+  const [ask, setAsk] = React.useState<any>(null);   // "rejected" | "changes-requested" while its dialog is open
+  const what = (n: any) => counted(n) ?? (n === 1 ? '1 ' + noun : formatNumber(n) + ' ' + many);
+  const run = (decision: any, reason?: any) => {
     const ids = sel.slice();
     if (onDecision) onDecision(ids, decision, reason || '');
     setSel([]); setAsk(null);
@@ -201,12 +245,12 @@ export function ReviewQueue({ items = [], label, noun, plural, onDecision, selec
       : fill(t.done, { what: what(ids.length), decision: names[decision].toLowerCase() });
     if (toast) toast.show(said, { tone: decision === 'approved' ? 'success' : 'info' }); else announce(said);
   };
-  const columns = [
+  const columns: any[] = [
     { title: t.name, field: 'name', kind: 'name' },
     { title: t.type, field: 'type' },
     { title: t.submittedBy, field: 'submittedBy', type: 'person' },
-    { title: t.submitted, field: 'submitted', kind: 'data', type: 'date', render: (r) => <Text variant="data">{formatDate(r.submitted)}</Text> },
-    { title: t.status, field: 'status', kind: 'center', render: (r) => <WorkflowStatus status={r.status} strings={strings} /> },
+    { title: t.submitted, field: 'submitted', kind: 'data', type: 'date', render: (r: any) => <Text variant="data">{formatDate(r.submitted)}</Text> },
+    { title: t.status, field: 'status', kind: 'center', render: (r: any) => <WorkflowStatus status={r.status} strings={strings} /> },
   ];
   return (
     <div className={cx('plx-review-queue', className)} {...rest}>

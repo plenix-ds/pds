@@ -29,12 +29,12 @@
 import React from 'react';
 import { AppShell, PageContent } from '../../patterns/AppShell/AppShell.tsx';
 import { SidePanel } from '../../patterns/SidePanel/SidePanel.jsx';
-import { RecordPage } from '../../patterns/RecordPage/RecordPage.jsx';
+import { RecordPage } from '../../patterns/RecordPage/RecordPage.tsx';
 import { SecondaryPane } from '../../patterns/SecondaryPane/SecondaryPane.jsx';
 import { FeatureCard } from '../../patterns/FeatureCard/FeatureCard.jsx';
 import { FormFlow } from '../../patterns/FormFlow/FormFlow.tsx';
 import { Auth } from '../../patterns/Auth/Auth.jsx';
-import { SearchWorkspace } from '../../patterns/SearchWorkspace/SearchWorkspace.jsx';
+import { SearchWorkspace } from '../../patterns/SearchWorkspace/SearchWorkspace.tsx';
 import { Stack } from '../../components/Stack/Stack.tsx';
 import { ContentGrid } from '../../patterns/ContentGrid/ContentGrid.tsx';
 import { DataGrid } from '../../components/DataGrid/DataGrid.tsx';

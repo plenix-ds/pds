@@ -23,7 +23,7 @@ import { formatDate, formatNumber } from '../../utils/format.ts';
 import { useCollectionView } from '../../hooks/useCollectionView.ts';
 import { CommandBar, CommandBarSearch } from '../../patterns/CommandBar/CommandBar.jsx';
 import { FilterPanel } from '../../patterns/FilterPanel/FilterPanel.jsx';
-import { QuickFilter } from '../../patterns/QuickFilter/QuickFilter.jsx';
+import { QuickFilter } from '../../patterns/QuickFilter/QuickFilter.tsx';
 import { EntityHeader } from '../../patterns/EntityHeader/EntityHeader.jsx';
 import { PropertyList } from '../../patterns/PropertyList/PropertyList.jsx';
 import { Wizard } from '../../patterns/Wizard/Wizard.jsx';

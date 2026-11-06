@@ -194,7 +194,7 @@ DSParts.records.push(function (H) {
       } }, props.r)));
   };
   var reviewFlow = { id: 'review-flow', lab: true, icon: 'doc-search', sec: 'patterns', sub: 'Review and approval', leaf: 'Review flow', title: 'Review flow',
-    plenix: 'ReviewFlow, WorkflowStatus', src: 'patterns/ReviewFlow/ReviewFlow.jsx', level: 'Pattern', interaction: 'Action', statesFrom: ['button', 'text-area'],
+    plenix: 'ReviewFlow, WorkflowStatus', src: 'patterns/ReviewFlow/ReviewFlow.tsx', level: 'Pattern', interaction: 'Action', statesFrom: ['button', 'text-area'],
     aliases: ['Approval flow', 'Sign-off', 'Review panel', 'Moderation'],
     text: 'Reviews one item in a panel: its title and who submitted it, its status badge with its icon, the reviewers and their decisions, a comment, and the decisions in order (Reject, Request changes, then Approve last). Reject and Request changes need a comment; without one, the field says why and takes focus. The history lists every decision, newest first. The human-review form adds a notice that a person checks generated content before it is used.',
     use: ['Work that needs sign-off before it takes effect: assets for print, pages, policies', 'The status everywhere the item appears, as the same badge', 'A reason with every Reject and Request changes, kept in the history'],
@@ -218,7 +218,7 @@ DSParts.records.push(function (H) {
       ['Read only: the status and the history', function () { return box(560, h(P.ReviewFlow, { title: 'Advent wreath poster', status: 'approved', reviewers: REVIEWERS.slice(0, 1), history: HISTORY })); }]
     ] };
   var approve = { id: 'review-approve', icon: 'circle-check', sec: 'patterns', sub: 'Review and approval', leaf: 'Approve', title: 'Approve',
-    plenix: 'ReviewFlow (onDecision "approved"), WorkflowStatus', src: 'patterns/ReviewFlow/ReviewFlow.jsx', level: 'Pattern', interaction: 'Action', statesFrom: ['button'],
+    plenix: 'ReviewFlow (onDecision "approved"), WorkflowStatus', src: 'patterns/ReviewFlow/ReviewFlow.tsx', level: 'Pattern', interaction: 'Action', statesFrom: ['button'],
     variantClasses: [], docsFrom: 'review-flow', aliases: ['Accept', 'Sign off'],
     text: 'Accepts the work and moves it on. It is the primary button, last among the decisions and apart from Reject. It runs at once, with the comment if there is one; the reviewer’s decision and the item’s badge turn Approved (success, with its check), and the history records who and when.',
     use: ['The primary decision of a review panel', 'A question first only when approving also publishes or spends something'],
@@ -226,7 +226,7 @@ DSParts.records.push(function (H) {
     related: ['review-flow', 'review-reject', 'publish'],
     examples: [['Approve with a comment', function () { return h(RevDemo, { status: 'in-review' }); }]] };
   var reject = { id: 'review-reject', icon: 'close', sec: 'patterns', sub: 'Review and approval', leaf: 'Reject', title: 'Reject',
-    plenix: 'ReviewFlow (onDecision "rejected"), ReviewQueue', src: 'patterns/ReviewFlow/ReviewFlow.jsx', level: 'Pattern', interaction: 'Action', statesFrom: ['button', 'text-area'],
+    plenix: 'ReviewFlow (onDecision "rejected"), ReviewQueue', src: 'patterns/ReviewFlow/ReviewFlow.tsx', level: 'Pattern', interaction: 'Action', statesFrom: ['button', 'text-area'],
     variantClasses: [], docsFrom: 'review-flow', aliases: ['Decline', 'Request changes'],
     text: 'Declines the work, with a reason. It is the danger outline button, first among the decisions. Without a comment it does not run: the field says “Say why, so the author knows what to change.” and takes focus. Request changes is the fixable no, also with a reason. In the review queue, both ask for the reason in a dialog named with the count.',
     use: ['A final no, with the reason the author needs', 'Request changes when the work can be fixed and sent again'],
@@ -241,7 +241,7 @@ DSParts.records.push(function (H) {
       onDecision: function (ids, d) { s[1](s[0].map(function (x) { return ids.indexOf(x.id) >= 0 ? Object.assign({}, x, { status: d }) : x; })); } }));
   };
   var dataReview = { id: 'data-review-workflow', icon: 'checklist', sec: 'patterns', sub: 'Data-management workflows', leaf: 'Data review workflow', title: 'Data review workflow',
-    plenix: 'ReviewQueue, WorkflowStatus', src: 'patterns/ReviewFlow/ReviewFlow.jsx', level: 'Pattern', interaction: 'Action', statesFrom: ['data-grid', 'command-bar'],
+    plenix: 'ReviewQueue, WorkflowStatus', src: 'patterns/ReviewFlow/ReviewFlow.tsx', level: 'Pattern', interaction: 'Action', statesFrom: ['data-grid', 'command-bar'],
     variantClasses: [], docsFrom: 'review-flow', aliases: ['Review queue', 'Moderation queue', 'Approval queue', 'Batch review'],
     text: 'Many items reviewed at once: a DataGrid of what waits for review (name, type, who submitted it, when, in the data font, and the status badge) under a command bar. Selecting rows swaps the bar to Approve, Request changes and Reject (last, in the danger color); the two that need a reason ask for it in a dialog named with the count (“Reject 2 items?”), then the statuses change and a toast says how many. The review panel ends on Approve, the step that moves work forward; the bar ends on Reject, the danger action, as command bars always do.',
     use: ['A batch after an import, a bulk edit or automated tagging', 'Filtering to what needs attention first', 'One reason for a bulk Reject or Request changes, kept with each item'],
@@ -252,7 +252,7 @@ DSParts.records.push(function (H) {
 
   /* ── 12 Specialized › AI and intelligent UI › Human review: ReviewFlow kind="human" ── */
   var humanReview = { id: 'human-review', icon: 'sparkle', sec: 'specialized', sub: 'AI and intelligent UI', leaf: 'Human review', title: 'Human review',
-    plenix: 'ReviewFlow kind="human", ReviewQueue', src: 'patterns/ReviewFlow/ReviewFlow.jsx', level: 'Pattern', interaction: 'Action', statesFrom: ['button', 'text-area'],
+    plenix: 'ReviewFlow kind="human", ReviewQueue', src: 'patterns/ReviewFlow/ReviewFlow.tsx', level: 'Pattern', interaction: 'Action', statesFrom: ['button', 'text-area'],
     variantClasses: [], docsFrom: 'review-flow', aliases: ['Human in the loop', 'AI review', 'Approve generated content'],
     text: 'Generated results wait for a person before they take effect. The review panel’s human form says so in an info notice first, then offers the same decisions as any review: Reject, Request changes, Approve. Many results at once go in the review queue, with the assistant as their submitter.',
     use: ['High-impact or uncertain generated results: alt text, summaries, tags applied to many assets', 'Where policy needs a person to sign off', 'The same decision words as every other review'],

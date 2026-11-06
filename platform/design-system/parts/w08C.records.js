@@ -130,7 +130,7 @@ DSParts.records.push(function (H) {
   };
   var resources = function (kind, extra) { return function () { return h(Resources, Object.assign({ kind: kind }, extra)); }; };
   var resourceList = { id: 'resource-list', lab: true, icon: 'list-bullets', sec: 'data-display', sub: 'Lists and collections', leaf: 'Resource list', title: 'Resource list',
-    plenix: 'ResourceList', src: 'patterns/ResourceList/ResourceList.jsx', level: 'Pattern', interaction: 'Selection', statesFrom: ['checkbox'],
+    plenix: 'ResourceList', src: 'patterns/ResourceList/ResourceList.tsx', level: 'Pattern', interaction: 'Selection', statesFrom: ['checkbox'],
     aliases: ['Object list', 'Record list', 'Item list', 'Entity list', 'Collection list'], covers: [],
     text: 'Records of one kind in a list people scan and open one at a time. Each row has the record’s picture (a thumbnail or an avatar), its name (which opens it and covers the row), a line about it, its details at the end and a few actions. With selectable, a checkbox before each row and a select-all checkbox in the header select records for actions on several at once. The command bar over the list (CommandBar, passed as bar) holds the collection’s commands and swaps to the selection’s while rows are selected. Rows can be grouped under headings, each with its count.',
     use: ['Projects, people, customers, folders: records with a name, a picture and a few details', 'selectable when the collection has actions for several records at once (move, share, delete)', 'The CommandBar as bar for the collection’s commands, search, filters and sort', 'Groups when people think of the records in a few groups (Personal, Work)'],
@@ -157,7 +157,7 @@ DSParts.records.push(function (H) {
       }],
       ['Empty', function () { return box(560, h(P.ResourceList, { label: 'Projects', noun: 'project', items: [], showCount: true, emptyState: h(P.EmptyState, { icon: 'folder', title: 'No projects yet', description: 'Create a project to keep its files together.' }) })); }]] };
   var objectList = { id: 'data-display-object-list', icon: 'list-bullets', sec: 'data-display', sub: 'Lists and collections', leaf: 'Object list', title: 'Object list',
-    plenix: 'ResourceList', src: 'patterns/ResourceList/ResourceList.jsx', level: 'Pattern', interaction: 'Selection', statesFrom: ['resource-list'], variantClasses: [], docsFrom: 'resource-list',
+    plenix: 'ResourceList', src: 'patterns/ResourceList/ResourceList.tsx', level: 'Pattern', interaction: 'Selection', statesFrom: ['resource-list'], variantClasses: [], docsFrom: 'resource-list',
     aliases: ['Entity list', 'Record list'],
     text: 'An object list is Plenix’s resource list (ResourceList): the objects of one kind, each with its picture, its name that opens it, a line about it, its details and actions, selectable for actions on several.',
     use: ['Objects of one kind people scan and open one at a time', 'selectable with the command bar when the collection has actions on several objects'],

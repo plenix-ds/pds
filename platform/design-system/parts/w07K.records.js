@@ -224,7 +224,7 @@ DSParts.records.push(function (H) {
     return h(P.QuickFilter, { kind: props.kind, label: props.kind === 'date' ? 'Date' : 'Tags', icon: props.kind === 'date' ? 'calendar' : 'tags', noun: 'tag', options: TAGS, value: v[0], onChange: v[1], inline: props.inline });
   };
   var quickFilter = { id: 'quick-filter', lab: true, icon: 'tags', sec: 'navigation', sub: 'Search, filter, and discovery', leaf: 'Quick filters', title: 'Quick filters',
-    plenix: 'QuickFilter, matchesDate', src: 'patterns/QuickFilter/QuickFilter.jsx', css: ['patterns/CommandBar/find-panel.css'], blocks: ['plx-find-panel'], level: 'Composite', interaction: 'Filter', statesFrom: ['button', 'checkbox'],
+    plenix: 'QuickFilter, matchesDate', src: 'patterns/QuickFilter/QuickFilter.tsx', css: ['patterns/CommandBar/find-panel.css'], blocks: ['plx-find-panel'], level: 'Composite', interaction: 'Filter', statesFrom: ['button', 'checkbox'],
     aliases: ['Category filter', 'Type filter', 'Tags filter', 'Date filter', 'Date range filter', 'Label filter'],
     text: 'An application’s own shortcuts beside Filter: Category, Type, Tags and Date; an app shows its own Category or Type button only when it has categories or types. The list kind opens a searchable checklist of the field’s values shown as their pills (the GitHub labels style); the date kind opens presets and a date range (the Google Analytics style). The Filter panel still holds every possibility.',
     use: ['The one or two questions an app’s people ask most (Category, Type, Tags, Date)', 'Between Filter and Sort in the bar', 'The find field fills the panel', 'The button shows the choice in force (a pop-up button): "Status: In review", "Tags: Client +2", "Date: Last 7 days"; its name alone while it does not filter'],
