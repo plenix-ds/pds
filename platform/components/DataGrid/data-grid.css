@@ -264,6 +264,8 @@
 .plx-data-grid__value--sized.plx-data-grid__value--wrap:where(:not(.plx-data-grid__value--lines)){line-height:var(--plx-comp-data-grid-line-height);}
 .plx-data-grid__value--lines{--plx-state-data-grid-value-space:normal;-webkit-box-orient:vertical;-webkit-line-clamp:round(down, calc((var(--plx-comp-data-grid-record-height) - var(--plx-comp-data-grid-cell-padding-block) * 2) / var(--plx-comp-data-grid-text-line-height)), 1);display:-webkit-box;line-height:var(--plx-comp-data-grid-text-line-height);max-block-size:calc(var(--plx-comp-data-grid-record-height) - var(--plx-comp-data-grid-cell-padding-block) * 2);overflow-wrap:anywhere;}
 .plx-data-grid__rich{--plx-comp-avatar-context-font-size:var(--plx-comp-data-grid-font-size);align-items:center;column-gap:var(--plx-comp-data-grid-cell-rich-gap);display:inline-flex;}
+/* a tags cell: the first tag never folds (D-0065); one wider than the cell shrinks and its label ends in an ellipsis (Tag's own rule) */
+.plx-data-grid__rich--tags{max-inline-size:100%;min-inline-size:0;}
 .plx-data-grid__deleted{color:var(--plx-comp-data-grid-cell-deleted-text);font-style:italic;}
 /* a custom cell's content is the cell's own flex item, so the cell centers it (owner, 2026-10-21: badges and icons sat 0.5 to
    1.1px low on the wrapper's text line); the row-actions wrapper keeps its box for its fade */
