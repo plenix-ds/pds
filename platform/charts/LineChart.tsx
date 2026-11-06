@@ -55,7 +55,7 @@ import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatNumber, formatDate, formatPercent, parseDate } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.tsx';
-import type { ChartInner, ChartMargin } from './chart-types.ts';
+import type { ChartInner, ChartMargin, ChartValue } from './chart-types.ts';
 import { seriesColor, scaleTime, wholeDays } from './scales.ts';
 import { ChartLegend } from './parts/ChartLegend.tsx';
 import { ChartTooltip, chartTooltipText } from './parts/ChartTooltip.tsx';
@@ -101,7 +101,7 @@ export type LineChartProps = {
   zero?: boolean;
   yDomain?: [number, number];
   format?(value: number): string;
-  formatX?(value: any): string;
+  formatX?(value: ChartValue): string;
   xLabel?: string;
   yLabel?: string;
   size?: 'sm' | 'md' | 'lg';
