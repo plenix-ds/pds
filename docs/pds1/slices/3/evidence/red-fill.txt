@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: ltr: Ctrl+D copies the top row down
+
+'Boris' !== 'Alma'
+
+    at /home/cc/pds1/work/component-engineer-2/tests/data-grid-fill-3.test.js:50:14 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'Boris',
+  expected: 'Alma',
+  operator: 'strictEqual',
+  diff: 'simple'
+}

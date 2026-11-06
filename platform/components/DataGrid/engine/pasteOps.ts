@@ -73,3 +73,41 @@ export function plan({ table, rect, at, rows, columns }: { table: string[][]; re
   }
   return out;
 }
+
+/** one filled cell: the cell whose value is copied and the cell that takes it */
+export type FillPair = { from: { row: any; column: any }; to: { row: any; column: any } };
+type Rect = { r0: number; r1: number; c0: number; c1: number };
+
+/** Ctrl+D: the selected block's top row copied down through the block (group rows have no cells and are passed over) */
+export function fillDown({ rect, rows, columns }: { rect: Rect; rows: { original?: unknown }[]; columns: unknown[] }): FillPair[] {
+  const out: FillPair[] = [];
+  const top = rows[rect.r0];
+  if (!top?.original) return out;
+  for (let r = rect.r0 + 1; r <= rect.r1; r += 1) {
+    if (!rows[r]?.original) continue;
+    for (let c = rect.c0; c <= rect.c1; c += 1) if (columns[c]) out.push({ from: { row: top, column: columns[c] }, to: { row: rows[r], column: columns[c] } });
+  }
+  return out;
+}
+
+/** the fill handle: the block repeated down to the cell the handle was dropped on, or across toward the inline end (whichever the pointer
+    went further past the block); nothing when it was dropped inside the block or before it */
+export function fillTo({ rect, drop, rows, columns }: { rect: Rect; drop: { r: number; c: number }; rows: { original?: unknown }[]; columns: unknown[] }): { pairs: FillPair[]; reach: Rect | null } {
+  const down = drop.r - rect.r1, across = drop.c - rect.c1, height = rect.r1 - rect.r0 + 1, width = rect.c1 - rect.c0 + 1;
+  const pairs: FillPair[] = [];
+  if (down <= 0 && across <= 0) return { pairs, reach: null };
+  if (down >= across) {
+    for (let r = rect.r1 + 1; r <= drop.r; r += 1) {
+      const source = rows[rect.r0 + ((r - rect.r1 - 1) % height)];
+      if (!rows[r]?.original || !source?.original) continue;
+      for (let c = rect.c0; c <= rect.c1; c += 1) if (columns[c]) pairs.push({ from: { row: source, column: columns[c] }, to: { row: rows[r], column: columns[c] } });
+    }
+    return { pairs, reach: { ...rect, r1: drop.r } };
+  }
+  for (let c = rect.c1 + 1; c <= drop.c; c += 1) {
+    const source = columns[rect.c0 + ((c - rect.c1 - 1) % width)];
+    if (!columns[c] || !source) continue;
+    for (let r = rect.r0; r <= rect.r1; r += 1) if (rows[r]?.original) pairs.push({ from: { row: rows[r], column: source }, to: { row: rows[r], column: columns[c] } });
+  }
+  return { pairs, reach: { ...rect, c1: drop.c } };
+}

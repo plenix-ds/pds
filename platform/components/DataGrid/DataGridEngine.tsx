@@ -889,6 +889,57 @@ function NextEngine(rawProps: any) {
     const refused = await changeCells(accepted, 'paste');
     if (refused) announce(said('dataGrid.cellsRefused', refused), { politeness: 'assertive' });
   };
+  // Ctrl+D and the fill handle (editing.fill, ADR 0021): the pairs say which cell's value goes to which cell; each target goes through its column's
+  // rules (can it be edited, validate); the rest are skipped. One announcement gives the counts; the cells are one undo step.
+  const fillPairs = async (pairs: any[]) => {
+    const accepted: any[] = [];
+    let skipped = 0;
+    for (const pair of pairs) {
+      const meta = pair.to.column.columnDef.meta, from = canonical.find((r: any) => recordKey(r[index]) === pair.from.row.id), target = canonical.find((r: any) => recordKey(r[index]) === pair.to.row.id);
+      const editable = !!meta.editor && (typeof meta.editable === 'function' ? meta.editable(api.cell(pair.to.row.id, meta.field)) : meta.editable !== false);
+      const value = from ? valueAt(from, pair.from.column.columnDef.meta.field) : undefined;
+      if (!editable || !target || (meta.validate && (await meta.validate(value, target)))) { skipped += 1; continue; }
+      accepted.push({ key: pair.to.row.id, field: meta.field, value });
+    }
+    const said = (key: string, n: number) => loc.t(key, { count: n, n: formatNumber(n) });
+    if (accepted.length) announce([said('dataGrid.cellsFilled', accepted.length), skipped ? said('dataGrid.cellsSkipped', skipped) : ''].filter(Boolean).join(' '));
+    else if (skipped) announce(said('dataGrid.cellsSkipped', skipped));
+    if (!accepted.length) return;
+    const refused = await changeCells(accepted, 'fill');
+    if (refused) announce(said('dataGrid.cellsRefused', refused), { politeness: 'assertive' });
+  };
+  const fillDown = async () => {
+    if (!cellRange.rect) return;
+    const ops = await import('./engine/pasteOps.ts');
+    await fillPairs(ops.fillDown({ rect: cellRange.rect, rows: model, columns: ordered }));
+  };
+  // the handle on the block's bottom inline-end corner: dragged to a cell, it repeats the block down or toward the inline end, then the block covers what it filled
+  const startFill = (event: any) => {
+    const rect = cellRange.rect;
+    if (!rect || event.button !== 0) return;
+    event.preventDefault();
+    event.stopPropagation();
+    const cellAt = (e: any) => {
+      const cell = document.elementFromPoint(e.clientX, e.clientY)?.closest('[data-plx-field]') as HTMLElement | null, row = cell?.closest('[data-plx-record]') as HTMLElement | null;
+      if (!cell || !row) return null;
+      const r = model.findIndex((m: any) => String(m.id) === row.getAttribute('data-plx-record')), c = ordered.findIndex((o: any) => o.id === cell.getAttribute('data-plx-field'));
+      return r < 0 || c < 0 ? null : { r, c };
+    };
+    let drop: any = null;
+    const move = (e: any) => { drop = cellAt(e) || drop; };
+    const finish = async () => {
+      window.removeEventListener('pointermove', move, true);
+      window.removeEventListener('pointerup', finish, true);
+      if (!drop) return;
+      const ops = await import('./engine/pasteOps.ts');
+      const { pairs, reach } = ops.fillTo({ rect, drop, rows: model, columns: ordered });
+      if (!pairs.length || !reach) return;
+      cellRange.select({ anchor: { key: model[reach.r0].id, field: ordered[reach.c0].id }, focus: { key: model[reach.r1].id, field: ordered[reach.c1].id } });
+      await fillPairs(pairs);
+    };
+    window.addEventListener('pointermove', move, true);
+    window.addEventListener('pointerup', finish, true);
+  };
   const { groupNode, rowNode } = bodyRows({
     B,
     semanticIndex,
@@ -952,6 +1003,7 @@ function NextEngine(rawProps: any) {
     commitEdit,
     undoRedo: props.editing?.undo ? { undo, redo } : null,
     pasteBlock: props.editing?.paste ? pasteBlock : null,
+    fill: props.editing?.fill && cellRange.enabled ? { down: fillDown, start: startFill } : null,
     canonical,
     cutAt,
     rowMenu,
