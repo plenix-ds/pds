@@ -8,6 +8,9 @@
      onClose(): runs from the close button and Escape
      items: [{ src, alt, title, meta, kind: "image" | "video", poster, audio, tracks }]
        Videos use MediaPlayer; audio is a separate sound URL. Leaving or closing an item pauses its playback.
+     count, getItem(index): for a long list, instead of items. getItem builds item i and is called only for the shown item and its
+       previous and next, once each per open (kept until count or getItem changes). It must be cheap and pure: build heavy
+       fields such as formatted meta inside it. Only one of the pair is ignored with a dev warning; with items too, the pair wins.
      items[].meta: an array of short technical values shown under the title
      index: the shown item, when controlled
      defaultIndex: the first shown item, when uncontrolled (default 0)
@@ -49,7 +52,11 @@ export type MediaViewerItem = { src: string; alt?: string; title?: string; meta?
 export type MediaViewerProps = {
   open?: boolean;
   onClose?: () => void;
-  items: MediaViewerItem[];
+  items?: MediaViewerItem[];
+  /** with getItem: how many items there are, for a long list the app does not want to build up front. Both together replace items */
+  count?: number;
+  /** with count: builds item i. Called only for the shown item and its previous and next, once each per open. Must be cheap and pure */
+  getItem?: (index: number) => MediaViewerItem;
   /** the shown item, when controlled */
   index?: number;
   defaultIndex?: number;
@@ -60,19 +67,38 @@ export type MediaViewerProps = {
   strings?: Catalog | null;
   className?: string;
 };
-export function MediaViewer({ open, onClose, items, index, defaultIndex = 0, onIndexChange, label, actions, strings, className }: MediaViewerProps) {
+const NO_ITEMS: MediaViewerItem[] = [];
+export function MediaViewer({ open, onClose, items: itemsProp, count, getItem, index, defaultIndex = 0, onIndexChange, label, actions, strings, className }: MediaViewerProps) {
   const t = useStrings('mediaViewer', strings) as Record<string, string>;
   const ref = React.useRef<HTMLDivElement>(null);
   const id = useUid('plx-mv');
   const [own, setOwn] = React.useState(defaultIndex);
   const at = index !== undefined ? index : own;
   useLayer(ref, open, { modal: true, onEscape: onClose });
-  const go = (n: number) => { const next = (n + items.length) % items.length; if (index === undefined) setOwn(next); if (onIndexChange) onIndexChange(next); };
-  const item = items[at] || items[0];
-  const many = items.length > 1;
+  const lazy = typeof count === 'number' && typeof getItem === 'function';
+  const items = itemsProp || NO_ITEMS;
+  const total = lazy ? count : items.length;
+  const memo = React.useRef<{ get?: typeof getItem; count?: number; open?: boolean; made: Map<number, MediaViewerItem> }>({ made: new Map() });
+  if (memo.current.get !== getItem || memo.current.count !== count || memo.current.open !== !!open) memo.current = { get: getItem, count, open: !!open, made: new Map() };
+  const warned = React.useRef('');
+  React.useEffect(() => {
+    const problem = (count === undefined) !== (getItem === undefined) ? 'count and getItem go together; only one was given, so items is used.'
+      : lazy && itemsProp ? 'count and getItem were given with items; count and getItem win.' : '';
+    if (problem && warned.current !== problem) { warned.current = problem; console.warn('MediaViewer: ' + problem); }
+  }, [count, getItem, itemsProp, lazy]);
+  const build = (i: number): MediaViewerItem | undefined => {
+    if (!lazy || !open || !total) return items[i];
+    const k = ((i % total) + total) % total, made = memo.current.made;
+    if (!made.has(k)) made.set(k, getItem(k));
+    return made.get(k);
+  };
+  if (lazy && open && total) { build(at - 1); build(at + 1); }
+  const go = (n: number) => { const next = (n + total) % total; if (index === undefined) setOwn(next); if (onIndexChange) onIndexChange(next); };
+  const item = build(at) || build(0);
+  const many = total > 1;
   const stage = React.useRef<HTMLDivElement>(null);
   useGesture(stage, { disabled: !open || !many, axis: 'x', onSwipe: gesture => go(at + (gesture.inline === 'start' ? 1 : -1)) });
-  if (!open || !items.length) return null;
+  if (!open || !total || !item) return null;
   const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (!many || e.defaultPrevented || (e.target as Element).closest('video,audio,input,select,textarea,[contenteditable="true"]')) return;
     const step = arrowStep(e, e.currentTarget, { vertical: false });
@@ -81,7 +107,7 @@ export function MediaViewer({ open, onClose, items, index, defaultIndex = 0, onI
   return createPortal(
     <div ref={ref} role="dialog" aria-modal="true" aria-label={label || t.label} aria-describedby={id + 'c'} tabIndex={-1}
       className={cx('plx-media-viewer', className)} onKeyDown={onKeyDown}>
-      <div id={id + 'c'} className="plx-media-viewer__counter">{t.counter.split('{index}').join(String(at + 1)).split('{total}').join(String(items.length))}</div>
+      <div id={id + 'c'} className="plx-media-viewer__counter">{t.counter.split('{index}').join(String(at + 1)).split('{total}').join(String(total))}</div>
       <button type="button" className="plx-media-viewer__control plx-media-viewer__close" aria-label={t.close} onClick={onClose}><Icon name={CloseIcon} size="md" /></button>
       {many ? <button type="button" className="plx-media-viewer__control plx-media-viewer__nav plx-media-viewer__nav--previous" aria-label={t.previous} onClick={() => go(at - 1)}><Icon name={ChevronDownIcon} size="md" /></button> : null}
       <figure className="plx-media-viewer__figure">
