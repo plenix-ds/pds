@@ -8,7 +8,7 @@ const assert = require('assert/strict'), { serve, launch } = require('./lib');
     const page = await browser.newPage();
     page.on('pageerror', (e) => problems.push(e.message));
     page.on('console', (m) => { if ((m.type() === 'warning' || m.type() === 'warn') && /MediaViewer/.test(m.text())) warns.push(m.text()); else if (/error|warn/.test(m.type())) problems.push(m.text()); });
-    await page.goto('http://localhost:' + PORT + '/Plenix/tests/fixtures/platform-host.html', { waitUntil: 'domcontentloaded' });
+    await page.goto('http://localhost:' + PORT + '/Plenix/tests/fixtures/platform-host.html?react=dev', { waitUntil: 'domcontentloaded' });
     await page.waitForFunction(() => window.Plenix && window.ReactDOM, { timeout: 60000 });
     await page.evaluate(() => {
       document.querySelector('main').innerHTML = '<div id="m"></div>';

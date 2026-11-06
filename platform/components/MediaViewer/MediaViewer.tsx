@@ -41,6 +41,7 @@ import type { MediaTrack } from '../MediaPlayer/MediaPlayer.tsx';
 import { useGesture } from '../../hooks/useGesture.ts';
 import { Icon } from '../Icon/Icon.tsx';
 import { arrowStep } from '../../utils/direction.ts';
+import { development } from '../../utils/devWarn.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import ChevronDownIcon from 'plenix-platform/icons/plenix/chevron-down';
@@ -84,7 +85,7 @@ export function MediaViewer({ open, onClose, items: itemsProp, count, getItem, i
   React.useEffect(() => {
     const problem = (count === undefined) !== (getItem === undefined) ? 'count and getItem go together; only one was given, so items is used.'
       : lazy && itemsProp ? 'count and getItem were given with items; count and getItem win.' : '';
-    if (problem && warned.current !== problem) { warned.current = problem; console.warn('MediaViewer: ' + problem); }
+    if (problem && development() && warned.current !== problem) { warned.current = problem; console.warn('MediaViewer: ' + problem); }
   }, [count, getItem, itemsProp, lazy]);
   const build = (i: number): MediaViewerItem | undefined => {
     if (!lazy || !open || !total) return items[i];
