@@ -1,0 +1,2 @@
+  throw new AssertionError(obj);
+AssertionError [ERR_ASSERTION]: tag.css has physical corner radii: border-bottom-left-radius, border-bottom-right-radius, border-top-left-radius, border-top-right-radius, border-bottom-left-radius, border-bottom-right-radius, border-top-left-radius, border-top-right-radius
