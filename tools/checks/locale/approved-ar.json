@@ -2872,6 +2872,19 @@
      "editModeForm": "تعديل في نموذج"
     }
    }
+  },
+  {
+   "source": "D-0078 (owner, chat, 2026-11-06, recorded on #476: standards accepted by default, Microsoft first). Microsoft Arabic terms: Cancel = إلغاء (named as Microsoft's in docs/i18n/arabic.md), Create = إنشاء (Microsoft terminology, Office). confirmAction.confirm is {verb} only, no Arabic. #629 rows 8, 9 and 11.",
+   "date": "2026-11-06",
+   "strings": {
+    "confirmAction": {
+     "confirm": "{verb}",
+     "cancel": "إلغاء"
+    },
+    "combobox": {
+     "create": "إنشاء “{text}”"
+    }
+   }
   }
  ]
 }

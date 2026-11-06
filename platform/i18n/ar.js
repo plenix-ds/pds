@@ -287,6 +287,7 @@ export default {
     "emptyText": "لا توجد نتائج مطابقة",
     "removeItem": "إزالة {label}",
     "clear": "مسح",
+    "create": "إنشاء “{text}”",
     "results": {
       "zero": "لا توجد خيارات",
       "one": "خيار واحد",
@@ -498,6 +499,10 @@ export default {
     "last30": "آخر 30 يومًا",
     "thisMonth": "هذا الشهر",
     "lastMonth": "الشهر الماضي"
+  },
+  "confirmAction": {
+    "confirm": "{verb}",
+    "cancel": "إلغاء"
   },
   "documentViewer": {
     "document": "المستند",
