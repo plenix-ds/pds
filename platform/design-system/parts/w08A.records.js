@@ -90,7 +90,7 @@ DSParts.records.push(function (H) {
     text: 'Shows the exact values at one place on a chart, where the pointer or the keyboard is: one point’s value (single), or every series’ value at one x position with a crosshair line down the plot (shared). It sits beside the point on the side with room, on the popover’s surface. Its heading is the point’s category or date; each value follows its series’ swatch and name, in the data font. It does not take the pointer, so the marks stay reachable as the pointer moves along the chart.',
     use: ['Every interactive chart, for the exact values the axes only approximate', 'shared on line and area charts with several series: one tooltip lists them all at that x, in the legend’s order',
       'The axis’s format with full precision (formatNumber, formatDate); titleKind="data" when the heading is a date or a number'],
-    avoid: ['Information that exists only in the tooltip: the data grid and the description carry it too', 'Actions or links in a chart tooltip: it does not take the pointer', 'A tooltip that covers the mark it describes'],
+    avoid: ['Information that exists only in the tooltip: the data table and the description carry it too', 'Actions or links in a chart tooltip: it does not take the pointer', 'A tooltip that covers the mark it describes'],
     related: ['chart-foundations', 'chart-legend', 'tooltip', 'popover'],
     map: [[CAR, 'Tooltip (charts)', 'Direct'], [FLU, 'Charts callout', 'Direct'], [SPE, 'Chart tooltip', 'Direct'], [POL, 'Tooltip (viz)', 'Direct'], [HIG, 'Charts (selection)', 'Partial']],
     variantPages: [
@@ -121,7 +121,7 @@ DSParts.records.push(function (H) {
     aliases: ['Value label', 'Direct label', 'Mark label'],
     text: 'A value written on the chart beside its mark, in the data font: above a column (top), after the end of a bar (end), or centered on a point or a slice with a halo in the surface color (center), so it stays readable over a line or a mark. A number is formatted in the reader’s locale; a string is shown as it is.',
     use: ['Bar and column charts with few marks where the exact values matter', 'The values people compare: the last, the highest, the target, rather than every mark', 'The axis’s format and precision'],
-    avoid: ['Labels on every point of a dense line or scatter chart: the tooltip gives them on demand', 'Labels that overlap: drop the less important ones', 'Labels as the only source of the values: the data grid keeps them'],
+    avoid: ['Labels on every point of a dense line or scatter chart: the tooltip gives them on demand', 'Labels that overlap: drop the less important ones', 'Labels as the only source of the values: the data table keeps them'],
     related: ['chart-foundations', 'chart-tooltip', 'chart-axis'],
     map: [[CAR, 'Axes and labels', 'Partial'], [SPE, 'Data label', 'Partial'], [FLU, 'Charts', 'Partial'], [HIG, 'Charts (annotations)', 'Partial']],
     variantPages: [
@@ -242,7 +242,7 @@ DSParts.records.push(function (H) {
     plenix: 'ChartAnnotation', src: 'charts/parts/ChartAnnotation.tsx', css: CSS, blocks: ['plx-chart-annotation'], level: 'Foundation', interaction: 'Static',
     aliases: ['Chart note', 'Callout', 'Event marker', 'Highlighted range'],
     text: 'A short note on a chart that explains what happened: a ring on one data point with a leader line to its note (above it, or under it when the point is high), or a shaded span of the plot behind the marks with its name at its top (a sale, an outage). It is not a comment thread: that is Collaboration › Annotation.',
-    use: ['Outliers, outages, launches and changes in how data is counted', 'One or two notes per chart, a few words each, sentence case', 'The same note in the chart’s description or the data grid'],
+    use: ['Outliers, outages, launches and changes in how data is counted', 'One or two notes per chart, a few words each, sentence case', 'The same note in the chart’s description or the data table'],
     avoid: ['Notes on every point', 'Values as notes: that is a data label', 'A note that covers the data: place it under the point (placement="bottom") or use a range'],
     related: ['chart-reference-line', 'chart-data-label', 'chart-foundations'],
     map: [[SPE, 'Annotation', 'Partial'], [CAR, 'Charts (annotations)', 'Partial'], [HIG, 'Charts (annotations)', 'Partial']],

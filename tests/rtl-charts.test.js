@@ -30,14 +30,26 @@ const assert = require('assert/strict'), { serve, launch } = require('./lib');
         h('div', { id: 'gantt' }, h(P.GanttChart, { title: 'الخطة', tasks: [{ id: 'a', label: 'التصميم', start: '2026-10-01', end: '2026-10-05' }, { id: 'b', label: 'البناء', start: '2026-10-06', end: '2026-10-12' }] })),
         h('div', { id: 'heat' }, h(P.HeatMap, { variant: 'calendar', title: 'التعديلات اليومية', valueLabel: 'التعديلات', data: Array.from({ length: 42 }, (x, i) => { const d = new Date(2026, 8, 1 + i), p = (n) => String(n).padStart(2, '0'); return { date: d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()), value: (i * 7) % 11 }; }) })),
         h('div', { id: 'bar' }, h(P.BarChart, { title: 'التخزين حسب الفريق', categories: ['التصميم', 'التسويق', 'المبيعات'], series: [{ id: 'gb', label: 'التخزين', values: [420, 310, 120] }] }))));
-      await new Promise((r) => setTimeout(r, 3000));
     }, MONTHS);
+    // fonts (issue 25): ECharts hides overlapping tick labels by their measured width, so labels drawn before the web fonts
+    // arrived keep the fallback font's widths. Wait for the fonts, then nudge the viewport so every chart redraws with them
+    await page.evaluate(() => document.fonts.ready);
+    await page.setViewport({ width: 901, height: 1400 }); await page.setViewport({ width: 900, height: 1400 });
+    await page.evaluate(() => { window.__plxSettle = null; });
+    // settle (issue 25): the charts redraw when their plot is resized, so a fixed wait can read a drawing made at one width
+    // against a scale built at another. Wait until every plot's width and every label have held for 10 frames in a row
+    await page.waitForFunction(() => {
+      const w = window.__plxSettle || (window.__plxSettle = { sig: '', n: 0 }), plots = [...document.querySelectorAll('#c .plx-chart__plot')];
+      const sig = plots.length + '|' + plots.map((p) => Math.round(p.getBoundingClientRect().width * 10)).join(',') + '|' + document.getElementById('c').textContent.length;
+      if (plots.length >= 4 && sig === w.sig) w.n++; else { w.sig = sig; w.n = 0; }
+      return w.n >= 10;
+    }, { polling: 'raf', timeout: 30000 });
     // every label drawn in a chart, in drawing order, with its left edge; and the plot's middle
     const read = (id) => page.evaluate((id) => {
       const texts = [...document.querySelectorAll('#' + id + ' .plx-chart__engine svg text, #' + id + ' .plx-chart__svg text')].filter((t) => t.getClientRects().length)
         .map((t) => ({ t: t.textContent.trim(), x: t.getBoundingClientRect().left }));
       const p = document.querySelector('#' + id + ' .plx-chart__plot').getBoundingClientRect();
-      return { texts, left: p.left, mid: p.left + p.width / 2 };
+      return { texts, left: p.left, width: p.width, mid: p.left + p.width / 2 };
     }, id);
     const digits = /^[٠-٩]+$/, increasing = (xs) => xs.length > 1 && xs.every((x, i) => i === 0 || x > xs[i - 1]);
 
@@ -54,17 +66,24 @@ const assert = require('assert/strict'), { serve, launch } = require('./lib');
     const sunday = (s, dir) => { const [y, m, d] = ymd(s), t = new Date(Date.UTC(y, m - 1, d)); t.setUTCDate(d + (dir > 0 ? (7 - t.getUTCDay()) % 7 : -t.getUTCDay())); return iso(t); };
     const want = { first: sunday(MONTHS[0], 1), last: sunday(MONTHS[MONTHS.length - 1], -1) };
     // the Platform's own scale over the same data, at the drawn plot's width: its step, its end ticks and their labels
-    const scale = await page.evaluate((months, room) => {
+    const scale = await page.evaluate((months, room, drawnWidth) => {
       const P = window.Plenix, day = (s) => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
-      const width = document.querySelector('#line .plx-chart__plot').getBoundingClientRect().width, count = Math.max(2, Math.floor(width / room));
+      const width = drawnWidth, count = Math.max(2, Math.floor(width / room));
       const ts = P.scaleTime({ domain: [day(months[0]), day(months[months.length - 1])], range: [0, width], unit: 'day' }), ticks = ts.ticks(count);
       const local = (d) => [d.getFullYear(), String(d.getMonth() + 1).padStart(2, '0'), String(d.getDate()).padStart(2, '0')].join('-');
-      return { width, count, step: ts.step(count).slice(0, 2), first: local(ticks[0]), last: local(ticks[ticks.length - 1]), firstText: ts.format(ticks[0], count), lastText: ts.format(ticks[ticks.length - 1], count) };
-    }, MONTHS, 64);
+      return { width, count, step: ts.step(count).slice(0, 2), first: local(ticks[0]), last: local(ticks[ticks.length - 1]), texts: ticks.map((d) => ts.format(d, count)), firstText: ts.format(ticks[0], count), lastText: ts.format(ticks[ticks.length - 1], count) };
+    }, MONTHS, 64, line.width);
     assert.deepEqual(scale.step, ['week', 1], 'LineChart (time): date-only values over five months take week ticks (#593: days or coarser): ' + JSON.stringify(scale));
     assert.deepEqual({ first: scale.first, last: scale.last }, want, 'LineChart (time): the ticks run from the first Sunday in the data to the last: ' + JSON.stringify({ scale, want }));
     assert.equal(dates[0].t, scale.firstText, 'LineChart (time): the first tick, at the left, is ' + want.first + ': ' + JSON.stringify(dates));
-    assert.equal(dates[dates.length - 1].t, scale.lastText, 'LineChart (time): the last tick, at the right, is ' + want.last + ': ' + JSON.stringify(dates));
+    // the engine hides tick labels that would overlap, by their measured width (hideOverlap), so how many of the scale's ticks
+    // are drawn depends on the font. Whatever the font: the drawn labels are the scale's ticks, in order, at an even stride;
+    // when every tick is drawn the last one is the scale's last, and when some are hidden no hidden tick could still have been
+    // drawn after the last one shown (the gap to the end is less than one stride)
+    const at = dates.map((l) => scale.texts.indexOf(l.t)), stride = at.length > 1 ? at[1] - at[0] : 1;
+    assert.ok(at.every((i, k) => i >= 0 && (k === 0 || i - at[k - 1] === stride)), 'LineChart (time): the drawn labels are the scale\'s ticks at an even stride: ' + JSON.stringify({ dates, texts: scale.texts }));
+    assert.ok(scale.texts.length - 1 - at[at.length - 1] < stride, 'LineChart (time): the labels run to the end of the scale: ' + JSON.stringify({ dates, texts: scale.texts }));
+    if (stride === 1) assert.equal(dates[dates.length - 1].t, scale.lastText, 'LineChart (time): the last tick, at the right, is ' + want.last + ': ' + JSON.stringify(dates));
     assert.ok(/يناير/.test(dates[0].t) && /يونيو/.test(dates[dates.length - 1].t), 'LineChart (time): January first (left), June last (right): ' + JSON.stringify(dates));
     assert.ok(values.length > 1 && values.every((l) => l.x < line.mid), 'LineChart (time): the value axis is at the left: ' + JSON.stringify(values));
     assert.ok(dates.every((l) => /[٠-٩]/.test(l.t) && !/[0-9]/.test(l.t)), 'LineChart (time): the dates keep their Arabic-Indic digits: ' + JSON.stringify(dates));
@@ -81,12 +100,15 @@ const assert = require('assert/strict'), { serve, launch } = require('./lib');
     assert.equal(tasks.length, 2, 'GanttChart: both task labels drawn');
     assert.ok(tasks.every((l) => l.x >= gantt.left && l.x < days[0].x), 'GanttChart: the task labels sit whole at the left of the bars: ' + JSON.stringify({ tasks, left: gantt.left, first: days[0] }));
 
+    // since #593 the engine draws the heat map: the cells are its 42 paths and the weekday labels its text
     // HeatMap, calendar: the cells (drawn week by week, Sunday to Saturday) and the weekday labels (Monday, Wednesday, Friday)
     const heat = await page.evaluate(() => {
       const box = (e) => { const r = e.getBoundingClientRect(); return { l: r.left, r: r.right, t: r.top, b: r.bottom }; };
+      // the weekday labels are the text beside the cells; the month names above them are not
+      const cells = [...document.querySelectorAll('#heat .plx-chart__engine svg path')].map(box), top = Math.min.apply(null, cells.map((c) => c.t));
       return {
-        cells: [...document.querySelectorAll('#heat .plx-heat-map__cell')].map(box),
-        days: [...document.querySelectorAll('#heat .plx-chart-axis--left .plx-chart-axis__tick')].map((t) => Object.assign({ t: t.textContent.trim() }, box(t))),
+        cells: [...document.querySelectorAll('#heat .plx-chart__engine svg path')].map(box),
+        days: [...document.querySelectorAll('#heat .plx-chart__engine svg text')].filter((t) => box(t).t >= top - 1).map((t) => Object.assign({ t: t.textContent.trim() }, box(t))),
         plot: box(document.querySelector('#heat .plx-chart__plot')),
       };
     });
