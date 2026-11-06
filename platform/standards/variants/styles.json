@@ -1745,5 +1745,153 @@
   "image-annotation--variant-regions": {
     "sets": [],
     "why": "markup only: annotations of kind region: a named area on the image, listed beside it"
+  },
+  "inline-edit--view-read-view": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "read",
+        "token": "--plx-comp-inline-edit-read-background"
+      },
+      {
+        "property": "border-color",
+        "part": "read",
+        "token": "--plx-comp-inline-edit-read-border-color"
+      },
+      {
+        "property": "background-color",
+        "part": "read-hover",
+        "token": "--plx-comp-inline-edit-read-hover-background"
+      },
+      {
+        "property": "color",
+        "part": "read-empty",
+        "token": "--plx-comp-inline-edit-read-empty-text"
+      }
+    ],
+    "why": ".plx-inline-edit__read, the button that shows the value (hover and empty states included)"
+  },
+  "inline-edit--field-text-default": {
+    "sets": [],
+    "why": "markup only: swaps the read view for a text field with the value; Enter saves, Escape puts it back"
+  },
+  "inline-edit--field-select": {
+    "sets": [],
+    "why": "markup only: swaps the read view for a select with the value (type select)"
+  },
+  "inline-edit--field-with-confirm-buttons": {
+    "sets": [],
+    "why": "markup only: adds a check button and a cancel button beside the field (confirmButtons)"
+  },
+  "inline-code--variant-default": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-code-background"
+      },
+      {
+        "property": "border-radius",
+        "part": "block",
+        "token": "--plx-comp-code-radius"
+      }
+    ],
+    "why": ".plx-code in code.css, the base rule for code inside a sentence"
+  },
+  "toast--tone-success": {
+    "sets": [
+      {
+        "property": "border-inline-start-color",
+        "part": "block",
+        "token": "--plx-comp-toast-success-border-inline-start-color"
+      }
+    ],
+    "why": ".plx-toast--success in toast.css; the lab value is named tone-success, which the derivation does not map to the modifier"
+  },
+  "toast--tone-warning": {
+    "sets": [
+      {
+        "property": "border-inline-start-color",
+        "part": "block",
+        "token": "--plx-comp-toast-warning-border-inline-start-color"
+      }
+    ],
+    "why": ".plx-toast--warning in toast.css; the lab value is named tone-warning, which the derivation does not map to the modifier"
+  },
+  "toast--tone-danger": {
+    "sets": [
+      {
+        "property": "border-inline-start-color",
+        "part": "block",
+        "token": "--plx-comp-toast-danger-border-inline-start-color"
+      }
+    ],
+    "why": ".plx-toast--danger in toast.css; the lab value is named tone-danger, which the derivation does not map to the modifier"
+  },
+  "toast--tone-info-default": {
+    "sets": [
+      {
+        "property": "border-inline-start-color",
+        "part": "block",
+        "token": "--plx-comp-toast-border-inline-start-color"
+      }
+    ],
+    "why": ".plx-toast in toast.css: info is the default tone, drawn by the base rule"
+  },
+  "timestamp--format-date-label": {
+    "sets": [],
+    "why": "markup only: the format changes the text and the tooltip, no style"
+  },
+  "timestamp--format-date-only": {
+    "sets": [],
+    "why": "markup only: the format changes the text and the tooltip, no style"
+  },
+  "timestamp--format-relative": {
+    "sets": [],
+    "why": "markup only: the format changes the text and the tooltip, no style"
+  },
+  "timestamp--format-time-only": {
+    "sets": [],
+    "why": "markup only: the format changes the text and the tooltip, no style"
+  },
+  "timestamp--format-timestamp-default": {
+    "sets": [],
+    "why": "markup only: the format changes the text and the tooltip, no style"
+  },
+  "timestamp--format-with-absolute-tooltip": {
+    "sets": [],
+    "why": "markup only: the format changes the text and the tooltip, no style"
+  },
+  "time-picker--clock-12-hour-clock": {
+    "sets": [],
+    "why": "markup only: the clock changes the words (AM/PM) and the list, no style"
+  },
+  "time-picker--clock-24-hour-clock": {
+    "sets": [],
+    "why": "markup only: the clock changes the words and the list, no style"
+  },
+  "time-picker--step-every-30-minutes": {
+    "sets": [],
+    "why": "markup only: the step changes which times the list holds, no style"
+  },
+  "time-picker--form-list-default": {
+    "sets": [],
+    "why": "markup only: the list form is the default markup, no style"
+  },
+  "tooltip--placement-bottom-default": {
+    "sets": [],
+    "why": "markup only: the placement is a data attribute read by the floating layer (system/floating.css), which positions it; the tooltip's own styles do not change"
+  },
+  "tooltip--placement-end": {
+    "sets": [],
+    "why": "markup only: the placement is a data attribute read by the floating layer (system/floating.css), which positions it; the tooltip's own styles do not change"
+  },
+  "tooltip--placement-start": {
+    "sets": [],
+    "why": "markup only: the placement is a data attribute read by the floating layer (system/floating.css), which positions it; the tooltip's own styles do not change"
+  },
+  "tooltip--placement-top": {
+    "sets": [],
+    "why": "markup only: the placement is a data attribute read by the floating layer (system/floating.css), which positions it; the tooltip's own styles do not change"
   }
 }

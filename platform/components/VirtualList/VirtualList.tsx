@@ -43,7 +43,7 @@
 import React from 'react';
 import { useUnread } from '../DataGrid/unread.js';
 import { cx } from '../../utils/cx.ts';
-import { Icon } from '../Icon/Icon.tsx';
+import { Icon, type IconValue } from '../Icon/Icon.tsx';
 import { Spinner } from '../Loading/Loading.tsx';
 import { formatNumber } from '../../utils/format.ts';
 import { useVirtualizer, VirtualGap, VirtualProbe, VIRTUAL_STICKY_CLASS } from '../../hooks/useVirtualizer.ts';
@@ -52,7 +52,7 @@ import { useStrings, useLocale } from '../../providers/LocaleProvider.tsx';
 const HEIGHTS = ['sm', 'md', 'lg', 'fill'];
 
 /** @public a ready-made row: { id, label, description, meta, icon } (ADR 0011) */
-export type VirtualListItem = { id?: string | number; label?: React.ReactNode; description?: React.ReactNode; meta?: React.ReactNode; icon?: string; [key: string]: unknown };
+export type VirtualListItem = { id?: string | number; label?: React.ReactNode; description?: React.ReactNode; meta?: React.ReactNode; icon?: IconValue; [key: string]: unknown };
 /** @public rows under a header: { id, label, items } */
 export type VirtualListGroup = { id?: string | number; label?: React.ReactNode; items?: VirtualListItem[] };
 /** @public the handle a ref gives: jump to a row, or the scroll area */

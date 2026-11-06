@@ -71,7 +71,7 @@ export type VoteTallyMember = { memberId: string | number; name: string; role?: 
 /** @public the counting: the kit's outcome */
 export type VoteTallyOutcome = { approve?: number; deny?: number; abstain?: number; notVoted?: number; turnedOff?: number; present?: number; counts?: Record<string, number>; quorum?: { needed?: number; present?: number; met?: boolean }; result?: string };
 /** @public the vote's settings */
-export type VoteTallySettings = { labels?: Record<string, string>; liveVisibility?: 'totals' | 'hidden-until-closed'; changeVote?: 'final' | string };
+export type VoteTallySettings = { labels?: Record<string, string>; liveVisibility?: 'totals' | 'hidden-until-closed'; changeVote?: 'final' };
 /** @public the prop type (ADR 0011) */
 export type VoteTallyProps = {
   /** the vote's name (the list's accessible name) */
