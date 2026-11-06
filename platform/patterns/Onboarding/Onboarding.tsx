@@ -17,12 +17,32 @@ import { Stack } from '../../components/Stack/Stack.tsx';
 import { Dialog } from '../../components/Dialog/Dialog.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Checklist } from '../../components/Checklist/Checklist.tsx';
-import { Tour } from '../Tour/Tour.jsx';
+import { Tour as TourJs } from '../Tour/Tour.jsx';
+const Tour: any = TourJs;
 import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 
-export function Onboarding({ title, children, welcome = true, tasks = [], completed = [], onChange, steps = [], onDismiss, onWelcomeDismiss, onTourStep, onTourFinish, strings, className }) {
-  const t = useStrings('onboarding', strings);
+/** @public the prop type (ADR 0011) */
+export type OnboardingProps = {
+  title?: string;
+  /** the welcome content */
+  children?: React.ReactNode;
+  welcome?: boolean;
+  /** the Checklist data */
+  tasks?: { id: string | number; label: string; [key: string]: unknown }[];
+  completed?: (string | number)[];
+  onChange?(completed: (string | number)[]): void;
+  /** the Tour steps */
+  steps?: unknown[];
+  onDismiss?(): void;
+  onWelcomeDismiss?(): void;
+  onTourStep?(index: number): void;
+  onTourFinish?(reason: string): void;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function Onboarding({ title, children, welcome = true, tasks = [], completed = [], onChange, steps = [], onDismiss, onWelcomeDismiss, onTourStep, onTourFinish, strings, className }: OnboardingProps) {
+  const t: any = useStrings('onboarding', strings);
   const [shown, setShown] = React.useState(welcome), [tour, setTour] = React.useState(false);
   const close = () => { setShown(false); if (onWelcomeDismiss) onWelcomeDismiss(); };
   return <Stack className={cx('plx-onboarding', className)}>
@@ -30,6 +50,6 @@ export function Onboarding({ title, children, welcome = true, tasks = [], comple
       footer={<><Button onClick={close}>{t.skip}</Button><Button variant="primary" onClick={close}>{t.start}</Button></>}>{children}</Dialog>
     <Checklist title={t.checklist} items={tasks} completed={completed} onChange={onChange} onDismiss={onDismiss} strings={strings} />
     {steps.length ? <><Button onClick={() => setTour(true)}>{t.tour}</Button>
-      <Tour open={tour && !shown} onOpenChange={setTour} steps={steps} onStepChange={onTourStep} onFinish={onTourFinish} strings={strings} /></> : null}
+      <Tour open={tour && !shown} onOpenChange={setTour} steps={steps as any} onStepChange={onTourStep} onFinish={onTourFinish} strings={strings} /></> : null}
   </Stack>;
 }

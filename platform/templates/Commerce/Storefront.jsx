@@ -28,7 +28,7 @@ import { SortPanel } from '../../patterns/SortPanel/SortPanel.tsx';
 import { ViewMenu } from '../../patterns/ViewMenu/ViewMenu.jsx';
 import { QuickFilter } from '../../patterns/QuickFilter/QuickFilter.jsx';
 import { ContentGrid } from '../../patterns/ContentGrid/ContentGrid.tsx';
-import { ProductCard, ProductPrice } from '../../patterns/ProductCard/ProductCard.jsx';
+import { ProductCard, ProductPrice } from '../../patterns/ProductCard/ProductCard.tsx';
 import { ProductOptions } from '../../components/ProductOptions/ProductOptions.tsx';
 import { Pagination } from '../../components/Pagination/Pagination.tsx';
 import { EmptyState } from '../../components/EmptyState/EmptyState.tsx';

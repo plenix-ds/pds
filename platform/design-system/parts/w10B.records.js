@@ -149,7 +149,7 @@ DSParts.records.push(function (H) {
       onCancelSchedule: function () { s[1]('draft'); }, onUnpublish: function () { s[1]('draft'); } }, props.p)));
   };
   var publish = { id: 'publish', lab: true, icon: 'visibility', sec: 'patterns', sub: 'Review and approval', leaf: 'Publish', title: 'Publish',
-    plenix: 'Publish, WorkflowStatus', src: 'patterns/Publish/Publish.jsx', level: 'Pattern', interaction: 'Action', statesFrom: ['button', 'confirmation-dialog'],
+    plenix: 'Publish, WorkflowStatus', src: 'patterns/Publish/Publish.tsx', level: 'Pattern', interaction: 'Action', statesFrom: ['button', 'confirmation-dialog'],
     aliases: ['Go live', 'Release', 'Schedule publishing', 'Make visible'],
     text: 'An item’s publishing state and the actions that change it, in one row: the status badge with its icon (Draft, Scheduled, Published), a line saying when and by whom with the time in the data font, then the actions for that state. Publish asks first and says who will see it; Schedule asks for a date and time; a scheduled item offers Cancel schedule and Publish now; a published item offers Unpublish.',
     use: ['Content and assets that others see: pages, assets in a shared library, announcements', 'Schedule when the release time matters', 'The audience in the question: “It becomes visible to everyone in the library.”', 'Status only for people who cannot publish'],
@@ -170,7 +170,7 @@ DSParts.records.push(function (H) {
       ['Narrow: the actions wrap under the status', function () { return h(PubDemo, { width: 320, start: 'scheduled', at: '2026-10-20T09:00' }); }]
     ] };
   var unpublish = { id: 'unpublish', icon: 'visibility-off', sec: 'patterns', sub: 'Review and approval', leaf: 'Unpublish', title: 'Unpublish',
-    plenix: 'Publish (status="published", onUnpublish)', src: 'patterns/Publish/Publish.jsx', level: 'Pattern', interaction: 'Action', statesFrom: ['button'],
+    plenix: 'Publish (status="published", onUnpublish)', src: 'patterns/Publish/Publish.tsx', level: 'Pattern', interaction: 'Action', statesFrom: ['button'],
     variantClasses: [], docsFrom: 'publish', aliases: ['Take down', 'Hide', 'Withdraw'],
     purpose: 'Takes a published item back out of view, after saying who will lose access, without deleting it.',
     anatomy: ['Status — the Published badge with its eye icon (required)', 'Unpublish — the button offered while the item is published (required)', 'Question — a confirmation dialog: “Unpublish {name}?”, saying who it is hidden from (required)', 'Toast — “{name} unpublished”, with Undo, which publishes it again (required)'],

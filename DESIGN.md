@@ -151,9 +151,15 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 
 - The DataGrid runs on TanStack Table, under `platform/components/DataGrid`. There is one grid. Features are added to it, never forked.
 - Row heights come from the density: 36 / 40 / 48px. Cell text uses `table-font-size` (12 / 13 / 13px).
-- **Numbers** (check 10): number, currency, percent and duration cells use `font-variant-numeric: tabular-nums` and are end-aligned (`text-align: end`). Their header label stays start-aligned (section 1). Dates and IDs are not numbers: they stay start-aligned.
+- **Numbers** (check 10): number, currency, percent and duration cells use `font-variant-numeric: tabular-nums`. Like all cell content they are **start-aligned**, under their start-aligned header (D-0087, owner 2026-11-06; this replaces the earlier end alignment). A column may set `align`.
 - Empty cell: an empty string shows nothing. Use `—` only where the column spec asks for it (the wording is the Technical Writer's).
 - Long text in a cell: one line, ending in an ellipsis, with the full value in a tooltip. Headers follow the table-header ladder in `fit-and-overflow.md`.
+- **Column widths (D-0087):**
+  - Each column is as wide as the wider of its whole header and its widest value. An app's set width is a minimum for compact columns.
+  - Spare room is shared evenly.
+  - Only long text truncates first, then compact headers; values stay whole until the grid switches to cards.
+  - The checkbox column is fixed. Row actions are icons at the inline-end on hover when there's room, else a pinned ⋮.
+  - Details: `docs/pds1/slices/800-column-fit/design.md`.
 - 10,000 rows: the grid virtualises (`plx-sys.virtual-*`). Only visible rows are in the DOM. The header stays sticky.
 
 ### Pills (D-0010)

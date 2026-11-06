@@ -25,7 +25,7 @@ import { CommandBar, CommandBarSearch } from '../../patterns/CommandBar/CommandB
 import { FilterPanel } from '../../patterns/FilterPanel/FilterPanel.tsx';
 import { QuickFilter } from '../../patterns/QuickFilter/QuickFilter.jsx';
 import { EntityHeader } from '../../patterns/EntityHeader/EntityHeader.jsx';
-import { PropertyList } from '../../patterns/PropertyList/PropertyList.jsx';
+import { PropertyList } from '../../patterns/PropertyList/PropertyList.tsx';
 import { Wizard } from '../../patterns/Wizard/Wizard.jsx';
 import { SettingsSection } from '../../patterns/SettingsLayout/SettingsLayout.tsx';
 import { DataGrid } from '../../components/DataGrid/DataGrid.tsx';

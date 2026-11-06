@@ -21,7 +21,7 @@ require('./limit.js');
         const rows = Array.from({ length: 30 }, (_, i) => ({ id: 'u' + i, name: { name: 'u/ListenFabulous' + i }, flair: ['F'], tags: ['eg'], seen: '2026-11-04T08:47:00Z', chat: 574, images: 0, account: '', added: '2026-10-16', karma: '', posts: '', replies: '', comments: 3, average: 4, awards: 5, a: 1 }));
         const cols = [['Name', 'name', { kind: ['avatar-name', 'name'] }], ['Flair', 'flair', { kind: 'tags' }], ['Tags', 'tags', { kind: 'tags' }], ['Last seen', 'seen', { type: 'date' }], ['Chat size', 'chat', { type: 'number' }], ['Images', 'images', { type: 'number' }],
           ['Account', 'account', {}], ['Added', 'added', { type: 'date' }], ['Karma', 'karma', {}], ['Recent posts', 'posts', {}], ['Recent replies', 'replies', {}], ['Recent comments', 'comments', { type: 'number' }], ['Average score', 'average', { type: 'number' }],
-          ['Total awards', 'awards', { type: 'number' }], ['Joined', 'added', {}], ['A', 'a', { type: 'number' }]].map(([title, field, more], i) => Object.assign({ title, field: i === 14 ? 'added' : field, id: undefined }, more));
+          ['Total awards', 'awards', { type: 'number' }], ['Joined', 'joined', {}], ['A', 'a', { type: 'number' }]].map(([title, field, more], i) => Object.assign({ title, field: i === 14 ? 'added' : field, id: undefined }, more));
         cols[14].field = 'joined'; rows.forEach((r) => { r.joined = r.added; });
         window.__root = ReactDOM.createRoot(document.getElementById('c'));
         window.__root.render(h(P.SplitView, { label: 'People', firstLabel: 'People', defaultSize: size, first: h(P.DataGrid, { label: 'People', data: rows, columns: cols, index: 'id', selectable: true, rowMenu: [{ label: 'Open', onSelect: () => {} }] }),
