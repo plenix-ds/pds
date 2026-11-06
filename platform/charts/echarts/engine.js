@@ -76,6 +76,7 @@ export function chartTokens(where) {
     focus: mk('circle', 'plx-tree-chart__node plx-tree-chart__node--focus'), name: mk('text', 'plx-tree-chart__name'),
     nameFocus: mk('text', 'plx-tree-chart__name plx-tree-chart__name--focus'), detail: mk('text', 'plx-tree-chart__detail') };
   const conn = mk('line', 'plx-waterfall-chart__connector'), selected = mk('rect', 'plx-chart-selected');
+  const fun = mk('rect', 'plx-funnel__drop');
   const bul = [mk('rect', 'plx-bullet-chart__range--1'), mk('rect', 'plx-bullet-chart__range--2'), mk('rect', 'plx-bullet-chart__range--3'), mk('line', 'plx-bullet-chart__target')];
   where.appendChild(svg);
   const cs = (e) => win.getComputedStyle(e);
@@ -118,6 +119,8 @@ export function chartTokens(where) {
     // a waterfall's connector between one step's end and the next step's start, and the outline of the selected step
     waterfall: { color: cs(conn).stroke, width: num(cs(conn).strokeWidth), dash: num(cs(conn).strokeDasharray.split(/[ ,]+/)[0]) },
     selected: { color: cs(selected).stroke, width: num(cs(selected).strokeWidth) },
+    // a funnel's drop: the stage before's length behind each bar, in the sunken surface color
+    funnel: { drop: cs(fun).fill },
     // a bullet chart's look (BulletChart): the three range bands (poor, fair, good) and the target mark
     bullet: { ranges: [cs(bul[0]).fill, cs(bul[1]).fill, cs(bul[2]).fill], target: { color: cs(bul[3]).stroke, width: num(cs(bul[3]).strokeWidth) } },
     // the values not in focus dim to the interaction's token; the drawing's animation is the motion token (reduced motion: 0)

@@ -5,7 +5,7 @@ export { summarizeSeries, CHART_PATTERNS, chartPattern, patternFill, ChartPatter
 export { Sparkline } from '../charts/lazy.jsx';
 export { LollipopChart } from '../charts/lazy.jsx';
 export { ScatterChart } from '../charts/lazy.jsx';
-export { FunnelChart } from '../charts/FunnelChart.jsx';
+export { FunnelChart } from '../charts/lazy.jsx';
 export { Treemap } from '../charts/Treemap.jsx';
 export { GanttChart } from '../charts/GanttChart.jsx';
 export { GeoMap } from '../charts/GeoMap.jsx';

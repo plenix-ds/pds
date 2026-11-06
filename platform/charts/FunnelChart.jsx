@@ -32,16 +32,21 @@ import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatNumber, formatPercent } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.jsx';
-import { scaleLinear, scaleBand, seriesColor } from './scales.js';
-import { Axis } from './parts/Axis.jsx';
+import { seriesColor, niceTicks } from './scales.js';
 import { DataLabel } from './parts/DataLabel.jsx';
 import { ChartTooltip } from './parts/ChartTooltip.jsx';
-import { scalePosition } from './parts/position.js';
 import { useChartPoints } from './a11y.js';
+import { useEChartsPlot, plotGrid } from './echarts/EChartsPlot.jsx';
+import { gridRoom } from './chart-helpers.js';
+import { labelRoom } from './chart-kit.js';
+import { snapToGrid } from '../utils/grid.ts';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 
+const NO_MARGIN = Object.freeze({ top: 0, end: 0, bottom: 0, start: 0 });
 // the room between the active bar and its ring (SVG geometry, the 4px grid)
-const RING = 4, LINE = 12;
+const RING = 4;
+const BAND = 1 / 1.24;   // a bar's thickness as a share of its stage's row (the room between stages is 24% of a bar)
+
 // a stage name in one or two lines, split at the word nearest its middle (the horizontal funnel's names under narrow columns)
 const twoLines = (s) => {
   const w = s.split(' ');
@@ -54,6 +59,7 @@ const twoLines = (s) => {
 export function FunnelChart({ title, description, data = [], orientation = 'vertical', color, format, valueTitle, size = 'md', strings, className }) {
   const t = useStrings('chart.funnelChart', strings);
   const o = orientation === 'horizontal' ? 'horizontal' : 'vertical';
+  const vertical = o === 'vertical';
   const rows = data.map((d, i) => ({ id: i + 1, label: String(d.label), value: Math.max(0, Number(d.value) || 0) }));
   const first = rows.length ? rows[0].value : 0;
   rows.forEach((r, i) => { r.kept = i && rows[i - 1].value ? r.value / rows[i - 1].value : null; r.share = first ? r.value / first : null; });
@@ -64,41 +70,62 @@ export function FunnelChart({ title, description, data = [], orientation = 'vert
   const table = { columns: [{ title: t.stage, field: 'label', kind: 'name', rowLabel: true }, { title: valueTitle || t.value, field: 'shown', kind: 'data', align: 'right' },
     { title: t.kept, field: 'kept', kind: 'data', align: 'right' }, { title: t.ofFirst, field: 'share', kind: 'data', align: 'right' }],
     data: rows.map((r) => ({ id: r.id, label: r.label, shown: fmt(r.value), kept: pct(r.kept), share: pct(r.share) })) };
+  const label = (r) => fmt(r.value) + (r.kept !== null ? ' \u00b7 ' + pct(r.kept) : '');
+  const top = Math.max(1, first, ...rows.map((r) => r.value));
+  const niceTop = niceTicks(0, top, 5).ticks.slice(-1)[0];
+
+  const plot = useEChartsPlot();
+  const dataKey = JSON.stringify(rows.map((r) => [r.label, r.value])) + '|' + o + '|' + mark;
+  const option = React.useCallback((tk) => {
+    // the room beside the bars for what is written at their ends, and for the stage names under a horizontal funnel (two lines)
+    const room = gridRoom(NO_MARGIN, 0);
+    if (vertical) room.right = Math.max(room.right, labelRoom(rows.map(label)));
+    else { room.top = Math.max(room.top, snapToGrid(tk.tick.fontSize + tk.tickOffset * 2, { round: 'up' })); room.bottom = Math.max(room.bottom, snapToGrid(tk.tickOffset + tk.tick.fontSize * 2 + 4, { round: 'up' })); }
+    const named = { nameLocation: 'middle', nameMoveOverlap: true };
+    const valAxis = Object.assign({ type: 'value', min: 0, max: niceTop, show: false, inverse: vertical && tk.rtl }, named);
+    const catAxis = Object.assign({ type: 'category', data: rows.map((r) => r.label), inverse: vertical, position: vertical ? (tk.rtl ? 'right' : 'left') : 'bottom', boundaryGap: true, axisLine: { show: true, lineStyle: { color: tk.axis.color, width: tk.axis.width } },
+      axisLabel: vertical ? {} : { interval: 0, hideOverlap: false, formatter: (v) => twoLines(String(v)).join('\n'), lineHeight: tk.tick.fontSize + 2 } }, named);
+    const w = (Math.round(BAND * 10000) / 100) + '%';
+    return {
+      animationDuration: tk.motion, animationDurationUpdate: tk.motion,
+      grid: Object.assign(room, { outerBoundsMode: 'same', outerBoundsContain: 'all' }),
+      xAxis: vertical ? valAxis : catAxis, yAxis: vertical ? catAxis : valAxis,
+      series: [
+        // the stage before's length behind each bar: the gap is the drop
+        { type: 'bar', id: 'drop', silent: true, barGap: '-100%', barWidth: w, z: 1, itemStyle: { color: tk.funnel.drop }, emphasis: { disabled: true }, data: rows.map((r, i) => (i ? rows[i - 1].value : null)) },
+        { type: 'bar', id: 'bar', silent: true, barGap: '-100%', barWidth: w, z: 2, itemStyle: { color: tk.color(mark) }, emphasis: { disabled: true }, data: rows.map((r) => r.value) },
+      ],
+    };
+  }, [dataKey]);   // eslint-disable-line react-hooks/exhaustive-deps
+
+  const draw = (dims) => {
+    const layer = plot.layer(dims, option);
+    const c = plot.chart;
+    const g = c ? plotGrid(c) : null;
+    if (!g || !rows.length) return layer;
+    const px = (i, v) => { const p = c.convertToPixel({ xAxisIndex: 0, yAxisIndex: 0 }, vertical ? [v, i] : [i, v]); return { x: p[0] - g.x, y: p[1] - g.y }; };
+    const step = (vertical ? g.height : g.width) / rows.length, thick = step * BAND;
+    const inner = { width: g.width, height: g.height };
+    const a = keys.index !== null && keys.index !== undefined && rows[keys.index] ? keys.index : null;
+    const bar = (i) => { const e = px(i, rows[i].value), z = px(i, 0); return vertical ? { x: Math.min(e.x, z.x), y: e.y - thick / 2, width: Math.abs(e.x - z.x), height: thick } : { x: e.x - thick / 2, y: Math.min(e.y, z.y), width: thick, height: Math.abs(e.y - z.y) }; };
+    return [layer, (
+      <g key="plx-chart-overlay" transform={'translate(' + g.x + ',' + g.y + ')'}>
+        {rows.map((r, i) => { const e = px(i, r.value); return <DataLabel key={'l' + r.id} x={e.x} y={e.y} value={label(r)} position={vertical ? 'end' : 'top'} />; })}
+        {rows.map((r, i) => {
+          const e = px(i, 0);
+          return <rect key={'h' + r.id} className="plx-chart-keys__hit" x={vertical ? 0 : e.x - step / 2} y={vertical ? e.y - step / 2 : 0} width={vertical ? g.width : step} height={vertical ? step : g.height}
+            onMouseEnter={() => keys.hover(i)} onMouseLeave={() => keys.hover(null)} />;
+        })}
+        {a !== null ? (() => { const b = bar(a); return <rect className="plx-chart-keys__ring" x={b.x - RING} y={b.y - RING} width={b.width + 2 * RING} height={b.height + 2 * RING} />; })() : null}
+        {a !== null ? (() => { const e = px(a, rows[a].value); return <ChartTooltip x={e.x} y={e.y} inner={inner} title={rows[a].label}
+          items={[{ label: valueTitle || t.value, value: fmt(rows[a].value), color: mark }].concat(rows[a].kept !== null ? [{ label: t.kept, value: pct(rows[a].kept) }, { label: t.ofFirst, value: pct(rows[a].share) }] : [])} />; })() : null}
+      </g>
+    )];
+  };
+
   return (
-      <ChartFrame interaction={keys.interaction} title={title} description={description} size={size} table={table} className={cx('plx-funnel', 'plx-funnel--' + o, className)}>
-        {({ inner, margin }) => {
-          const stages = rows.map((r) => r.label);
-          const band = scaleBand({ domain: stages, range: o === 'vertical' ? [0, inner.height] : [0, inner.width], paddingInner: 0.24 });
-          const val = scaleLinear({ domain: [0, Math.max(1, first, ...rows.map((r) => r.value))], range: o === 'vertical' ? [0, inner.width] : [inner.height, 0], nice: true });
-          // a bar of length v in its stage's band: { x, y, width, height }
-          const bar = (r, v) => (o === 'vertical'
-            ? { x: 0, y: band(r.label), width: val(v), height: band.bandwidth() }
-            : { x: band(r.label), y: val(v), width: band.bandwidth(), height: inner.height - val(v) });
-          const label = (r) => fmt(r.value) + (r.kept !== null ? ' · ' + pct(r.kept) : '');
-          const a = keys.index !== null && keys.index !== undefined && rows[keys.index] ? keys.index : null;
-          const end = (r) => (o === 'vertical' ? { x: val(r.value), y: scalePosition(band, r.label) } : { x: scalePosition(band, r.label), y: val(r.value) });
-          return (
-            <g>
-              {o === 'vertical' ? <line className="plx-chart__axis-line" x1={0} x2={0} y1={0} y2={inner.height} /> : <line className="plx-chart__axis-line" x1={0} x2={inner.width} y1={inner.height} y2={inner.height} />}
-              {rows.map((r, i) => (i ? <rect key={'p' + r.id} className="plx-funnel__drop" {...bar(r, rows[i - 1].value)} /> : null))}
-              {rows.map((r) => <rect key={'b' + r.id} className="plx-chart__mark plx-funnel__bar" data-plx-dataviz={mark} {...bar(r, r.value)} />)}
-              {rows.map((r) => <DataLabel key={'l' + r.id} x={end(r).x} y={end(r).y} value={label(r)} position={o === 'vertical' ? 'end' : 'top'} />)}
-              {o === 'vertical' ? <Axis scale={band} orient="left" inner={inner} margin={margin} line={false} /> : (
-                <g className="plx-chart-axis plx-chart-axis--bottom">
-                  {rows.map((r) => { const mid = scalePosition(band, r.label); return <text key={'n' + r.id} className="plx-chart__tick-label plx-chart-axis__tick" x={mid} y={inner.height}>{twoLines(r.label).map((l, k) => <tspan key={k} x={mid} dy={k ? LINE : 0}>{l}</tspan>)}</text>; })}
-                </g>
-              )}
-              {rows.map((r, i) => {
-                const s = band(r.label), w = band.step(), off = (w - band.bandwidth()) / 2;
-                return <rect key={'h' + r.id} className="plx-chart-keys__hit" x={o === 'vertical' ? 0 : s - off} y={o === 'vertical' ? s - off : 0} width={o === 'vertical' ? inner.width : w} height={o === 'vertical' ? w : inner.height}
-                  onMouseEnter={() => keys.hover(i)} onMouseLeave={() => keys.hover(null)} />;
-              })}
-              {a !== null ? (() => { const b = bar(rows[a], rows[a].value); return <rect className="plx-chart-keys__ring" x={b.x - RING} y={b.y - RING} width={b.width + 2 * RING} height={b.height + 2 * RING} />; })() : null}
-              {a !== null ? <ChartTooltip x={end(rows[a]).x} y={end(rows[a]).y} inner={inner} title={rows[a].label}
-                items={[{ label: valueTitle || t.value, value: fmt(rows[a].value), color: mark }].concat(rows[a].kept !== null ? [{ label: t.kept, value: pct(rows[a].kept) }, { label: t.ofFirst, value: pct(rows[a].share) }] : [])} /> : null}
-            </g>
-          );
-        }}
-      </ChartFrame>
+    <ChartFrame interaction={keys.interaction} title={title} description={description} size={size} margin={NO_MARGIN} table={table} className={cx('plx-funnel', 'plx-funnel--' + o, className)}>
+      {draw}
+    </ChartFrame>
   );
 }
