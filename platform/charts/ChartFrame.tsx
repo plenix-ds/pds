@@ -54,6 +54,7 @@
 */
 import React from 'react';
 import type { ChartInner, ChartMargin } from './chart-types.ts';
+import type { TableProps } from '../components/Table/Table.tsx';
 import type { useChartInteraction } from './interaction.ts';
 import { cx } from '../utils/cx.ts';
 import { dataWhenText } from '../utils/dataText.tsx';
@@ -79,7 +80,7 @@ export type ChartFrameProps = {
   legend?: React.ReactNode;
   legendPosition?: 'bottom' | 'top' | 'end';
   /** the data as a table under the chart, as Table takes it */
-  table?: { columns: any[]; data: any[]; index?: string };
+  table?: { columns: NonNullable<TableProps['columns']>; data: Record<string, unknown>[]; index?: string };
   interaction?: ReturnType<typeof useChartInteraction>;
   actions?: React.ReactNode;
   fitHeight?(width: number): number;
