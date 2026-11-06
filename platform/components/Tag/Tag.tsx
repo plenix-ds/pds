@@ -56,6 +56,7 @@ import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { Icon } from '../Icon/Icon.tsx';
 import { Tooltip } from '../Tooltip/Tooltip.tsx';
+import { useTruncated } from '../../utils/overflow.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import AddIcon from 'plenix-platform/icons/plenix/add';
 
@@ -73,6 +74,18 @@ export type TagProps = React.HTMLAttributes<HTMLSpanElement> & {
   onRename?: (label: string) => void;
   renameLabel?: string;
 };
+// the label: one line that ends in an ellipsis when the tag has less room than its text; the whole name shows in a Tooltip only while it is cut (fit-and-overflow §5)
+function TagLabel({ children }: { children?: React.ReactNode }) {
+  const ref = React.useRef<HTMLSpanElement>(null);
+  const text = typeof children === 'string' ? children : '';
+  const cut = useTruncated(ref, text);
+  return (
+    <Tooltip content={text} disabled={!cut || !text} describe={false} className="plx-tag__tip">
+      <span ref={ref} className="plx-tag__label">{children}</span>
+    </Tooltip>
+  );
+}
+
 export function Tag({ category, onRemove, removeLabel, onRename, renameLabel, className, children, ...rest }: TagProps) {
   const tw = useStrings('tag') as TagWords;
   const [editing, setEditing] = React.useState(false);
@@ -87,7 +100,7 @@ export function Tag({ category, onRemove, removeLabel, onRename, renameLabel, cl
           onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); done(true); } else if (e.key === 'Escape') { e.preventDefault(); done(false); } }} />
       ) : onRename ? (
         <button type="button" className="plx-tag__label plx-tag__rename" aria-label={renameLabel || (text ? tw.rename.replace('{label}', text) : tw.renameTag)} onClick={() => { setDraft(text); setEditing(true); }}>{children}</button>
-      ) : <span className="plx-tag__label">{children}</span>}
+      ) : <TagLabel>{children}</TagLabel>}
       {onRemove ? <RemoveButton label={removeLabel || (typeof children === 'string' ? tw.remove.replace('{label}', children) : tw.removeTag)} onClick={onRemove} /> : null}
     </span>
   );

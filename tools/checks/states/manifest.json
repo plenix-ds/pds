@@ -334,9 +334,9 @@
     "hover": "n/a(stories arrive with Storybook, P0-11)",
     "focus": "n/a(stories arrive with Storybook, P0-11)",
     "active": "n/a(stories arrive with Storybook, P0-11)",
-    "disabled": "n/a(a tag is plain text or has a remove button, which is a Button)",
-    "loading": "n/a(a tag is a label; nothing loads)",
-    "selected": "n/a(a tag is not selectable; a removable tag has its remove button)",
-    "error": "n/a(a tag has no value to validate)"
+    "disabled": "n/a(stories arrive with Storybook, P0-11)",
+    "loading": "n/a(stories arrive with Storybook, P0-11)",
+    "selected": "n/a(stories arrive with Storybook, P0-11)",
+    "error": "n/a(stories arrive with Storybook, P0-11)"
   }
 }

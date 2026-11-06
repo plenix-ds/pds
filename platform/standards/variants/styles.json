@@ -2184,5 +2184,78 @@
   "line-chart--variant-multiple-series": {
     "sets": [],
     "why": "markup only: one line per series; the legend shows and hides series"
+  },
+  "miller-columns--layout-columns-default": {
+    "sets": [
+      {
+        "property": "inline-size",
+        "part": "column",
+        "token": "--plx-comp-miller-columns-column-width"
+      },
+      {
+        "property": "border-inline-end-color",
+        "part": "column",
+        "token": "--plx-comp-miller-columns-column-border-inline-end-color"
+      },
+      {
+        "property": "border-inline-end-width",
+        "part": "column",
+        "token": "--plx-comp-miller-columns-column-border-inline-end-width"
+      }
+    ],
+    "why": ".plx-miller-columns__column, each column of the path"
+  },
+  "miller-columns--layout-with-preview-column": {
+    "sets": [
+      {
+        "property": "inline-size",
+        "part": "preview",
+        "token": "--plx-comp-miller-columns-preview-width"
+      },
+      {
+        "property": "min-inline-size",
+        "part": "preview",
+        "token": "--plx-comp-miller-columns-preview-min-width"
+      },
+      {
+        "property": "padding-block",
+        "part": "preview",
+        "token": "--plx-comp-miller-columns-preview-padding-block"
+      },
+      {
+        "property": "padding-inline",
+        "part": "preview",
+        "token": "--plx-comp-miller-columns-preview-padding-inline"
+      }
+    ],
+    "why": ".plx-miller-columns__preview, the last column that shows the chosen item (renderPreview)"
+  },
+  "miller-columns--behavior-keyboard": {
+    "sets": [],
+    "why": "markup only: arrow keys move between items and columns; no rule is specific to it"
+  },
+  "icon--fill-outline-default": {
+    "sets": [],
+    "why": "markup only: draws the set's outline drawing, the default"
+  },
+  "icon--fill-filled": {
+    "sets": [],
+    "why": "markup only: draws the set's filled drawing instead of the outline (filled), passed by the part that owns a current or selected state"
+  },
+  "illustration--set-empty-states": {
+    "sets": [],
+    "why": "markup only: draws one of the empty-state drawings (empty-folder, no-results, inbox-zero, no-data, get-started)"
+  },
+  "illustration--set-errors": {
+    "sets": [],
+    "why": "markup only: draws one of the error drawings (error, offline, not-found, no-access)"
+  },
+  "image-upload--images-single-default": {
+    "sets": [],
+    "why": "markup only: one image: a drop zone with a Choose button, then the preview with Replace and Remove"
+  },
+  "image-upload--shape-with-crop": {
+    "sets": [],
+    "why": "markup only: after an image is chosen, a crop step (ImageCrop) fits it to the locked ratio before it is kept (crop)"
   }
 }
