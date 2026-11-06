@@ -219,7 +219,9 @@ jobs:
         run: |
           v=$(node -p "require('./package.json').version")
           [ "v$v" = "$TAG" ] || { echo "Tag $TAG does not match package.json $v"; exit 1; }
-          git merge-base --is-ancestor HEAD origin/main || { echo "$TAG is not on main"; exit 1; }
+          # on main, or for a patch of an older minor on its release branch (release/X.Y.x, cut from vX.Y.0; 0.90.1)
+          rel="origin/release/$(echo "$v" | cut -d. -f1,2).x"
+          git merge-base --is-ancestor HEAD origin/main || { git rev-parse -q --verify "$rel" >/dev/null && git merge-base --is-ancestor HEAD "$rel"; } || { echo "$TAG is not on main or $rel"; exit 1; }
           echo "VERSION=$v" >> "$GITHUB_ENV"
 
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
