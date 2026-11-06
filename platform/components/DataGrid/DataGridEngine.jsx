@@ -1087,6 +1087,7 @@ function NextEngine(rawProps) {
           name={valueText(valueAt(formRecord, nameColumn.field))}
           types={props.editing?.types ?? settings.editing?.types}
           surface={props.formSurface}
+          renderForm={props.renderForm}
           onRecordEdit={props.onRecordEdit}
           commitEdit={commitEdit}
           onClose={() => setFormKey(null)}

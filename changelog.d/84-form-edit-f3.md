@@ -1,0 +1,3 @@
+### Added
+
+- DataGrid Form Edit (ADR 0016 addendum D-0063, #84 F3): `renderForm(record, { value, setValue, errors, busy })` fills the form's body with the application's own fields (the header "Edit {name}", the Save / Cancel footer and the refusal message stay the grid's); Save sends only the changed fields to `onRecordEdit`, and a column's `validate` message reaches the form as `errors[field]`. `formSurface={{ panel: ref }}` draws the whole form inside the application's own panel (the element in `ref.current`) and sets `data-plx-form-open` on it while the form is open, so the application's CSS can hide its details there; no element in the ref falls back to the drawer with one development warning. `formSurface="dialog"` is unchanged.
