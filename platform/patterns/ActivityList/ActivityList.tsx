@@ -53,7 +53,12 @@ export function ActivityList({ label, stacked = false, titleLines = 1, className
   return <StackedContext.Provider value={stacked}><ul aria-label={label} className={cx('plx-activity-list', stacked && 'plx-activity-list--stacked', titleLines === 2 && 'plx-activity-list--title-2', className)}>{children}</ul></StackedContext.Provider>;
 }
 
-ActivityList.Item = function ActivityListItem({ leading, title, meta, time, dateTime, unread = false, selected = false, onOpen, href, actions, className }: any) {
+export type ActivityListItemProps = {
+  leading?: React.ReactNode; title?: React.ReactNode; meta?: React.ReactNode; time?: React.ReactNode;
+  /** the machine-readable time of the time element */ dateTime?: string;
+  unread?: boolean; selected?: boolean; onOpen?: React.MouseEventHandler<HTMLButtonElement>; href?: string; actions?: React.ReactNode; className?: string;
+};
+ActivityList.Item = function ActivityListItem({ leading, title, meta, time, dateTime, unread = false, selected = false, onOpen, href, actions, className }: ActivityListItemProps) {
   const stacked = React.useContext(StackedContext);
   const words: any = useStrings('activityList');
   const opener = href ? <a href={href} className="plx-activity-list__opener">{title}</a>

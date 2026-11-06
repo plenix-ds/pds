@@ -389,13 +389,9 @@ export default {
     "rowActions": "إجراءات الصف",
     "clearSort": "إلغاء الفرز",
     "hide": "إخفاء الحقل",
-    "showAll": "إظهار كل الحقول",
-    "narrower": "أضيق",
     "wider": "أعرض",
     "fit": "ملاءمة المحتوى",
     "deleted": "محذوف",
-    "moveLeft": "نقل إلى اليسار",
-    "moveRight": "نقل إلى اليمين",
     "perPage": "الصفوف في كل صفحة",
     "view": "خيارات العرض",
     "wrapHeaders": "التفاف العناوين",
@@ -412,7 +408,6 @@ export default {
     "filter": "تصفية",
     "clearFilter": "مسح التصفية",
     "groupBy": "التجميع حسب هذا الحقل",
-    "ungroup": "إلغاء التجميع",
     "noGroup": "عدم التجميع حسب هذا الحقل",
     "sizeToFit": "ملاءمة عرض العمود",
     "sizeAllToFit": "ملاءمة عرض كل الأعمدة",
@@ -1625,11 +1620,6 @@ export default {
       "message": "ستفقد تغييراتك.",
       "leave": "مغادرة",
       "stay": "متابعة التحرير"
-    },
-    "theme-boot": {
-      "compact": "مضغوط",
-      "standard": "قياسي",
-      "comfortable": "مريح"
     }
   },
   "templates": {
@@ -1657,8 +1647,7 @@ export default {
   },
   "utils": {
     "clipboard": {
-      "copied": "تم النسخ",
-      "failed": "تعذّر النسخ. حدّد النص وانسخه يدويًا."
+      "copied": "تم النسخ"
     }
   },
   "aiButton": {
@@ -2489,7 +2478,6 @@ export default {
       "keep": "الإبقاء على الطلب",
       "notFulfillable": "يمكن تنفيذ الطلبات غير المنفّذة فقط",
       "notCancelable": "يمكن إلغاء الطلبات غير المنفّذة فقط",
-      "notRefundable": "يمكن استرداد الطلبات المشحونة أو المسلَّمة فقط",
       "fulfilled": "تم وضع علامة شُحن على {what}",
       "canceled": "تم إلغاء {what}"
     },
