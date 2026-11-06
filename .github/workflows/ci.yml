@@ -253,10 +253,47 @@ jobs:
       - name: Compare (fail on new problems only)
         run: node tools/ci/new-problems.mjs compare "$TOOL" "$RUNNER_TEMP/base.json" "$RUNNER_TEMP/head.json"
 
+  zero-overlap:
+    name: Zero overlap (computed-style snapshot, diff-aware)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      # runs only when the styling, the test, its fixtures or its snapshot changed (#46); otherwise it passes without running
+      - name: Did anything the test reads change?
+        id: scope
+        run: |
+          if git diff --quiet "$(git merge-base "$BASE_SHA" HEAD)" HEAD -- platform build-app.js tests/zero-overlap.test.js tests/clash-audit.js tests/lib.js tests/fixtures/zero-overlap tests/baselines/pilot-computed.json; then
+            echo "run=no" >> "$GITHUB_OUTPUT"
+            echo "styling, test, fixtures and snapshot unchanged: not run for this PR"
+          else
+            echo "run=yes" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        if: steps.scope.outputs.run == 'yes'
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install and build
+        if: steps.scope.outputs.run == 'yes'
+        run: |
+          npm ci --no-audit --no-fund
+          node build-app.js
+      - name: Zero overlap (Chrome; a missing browser fails)
+        if: steps.scope.outputs.run == 'yes'
+        run: |
+          command -v google-chrome >/dev/null || { echo "::error::Chrome is missing on the runner: zero-overlap cannot run, and a missing browser is a FAIL"; exit 1; }
+          CHROME_PATH="$(command -v google-chrome)" node tests/zero-overlap.test.js
+
   result:
     name: CI result
     if: always()
-    needs: [zizmor, decisions, process, rulesync, generated, trace, design-checks, checks]
+    needs: [zizmor, decisions, process, rulesync, generated, trace, design-checks, zero-overlap, checks]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
