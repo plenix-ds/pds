@@ -90,8 +90,13 @@ import SelectChevronIcon from 'plenix-platform/icons/plenix/select-chevron';
 const NARROW = [1, 1, 1, 1, 1, 1];
 // every choosable item of the hierarchy with its path of items: the leaves, and the parents that are choosable (a parent is listed before its children)
 // (a parent still to load, pending: issue 814, is neither: it has no leaves yet and is never chosen itself until it loads)
-type Id = string | number;
-type CascaderItem = BranchNode & { choosable?: boolean; disabled?: boolean; self?: Id; children?: CascaderItem[] | null };
+/** @public an item's id (ADR 0011) */
+export type CascaderId = string | number;
+type Id = CascaderId;
+/** @public an item: { id, label, disabled, choosable, children } (ADR 0011) */
+export type CascaderItem = BranchNode & { choosable?: boolean; disabled?: boolean; self?: Id; children?: CascaderItem[] | null };
+/** @public a match a server search returns: { id, label, path (the names or items above it), disabled } */
+export type CascaderMatch = { id: CascaderId; label: React.ReactNode; path?: Array<string | { id: CascaderId; label: React.ReactNode }>; disabled?: boolean };
 type Leaf = { item: CascaderItem; trail: CascaderItem[] };
 type Words = Record<string, string>;
 const leavesOf = (items: CascaderItem[], trail: CascaderItem[] = [], choosable: (it: CascaderItem) => boolean = () => false, pending: (it: CascaderItem) => boolean = () => false): Leaf[] => items.reduce<Leaf[]>((all, it) => {
@@ -129,7 +134,7 @@ export type CascaderProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 
   /** the most values that can be chosen (multiple) */
   maxChoices?: number;
   /** a server search: returns [{ id, label, path, disabled }] for a query */
-  loadOptions?: (query: string) => unknown;
+  loadOptions?: (query: string) => CascaderMatch[] | Promise<CascaderMatch[]>;
   loadDelay?: number;
   minChars?: number;
   placeholder?: string;
@@ -209,9 +214,9 @@ export const Cascader = React.forwardRef<HTMLButtonElement | null, CascaderProps
     const n = ++request.current;
     setBusy(true); setFailed(false);
     const timer = setTimeout(() => {
-      Promise.resolve().then(() => (loader.current as (q: string) => unknown)(query)).then((list) => {
+      Promise.resolve().then(() => (loader.current as (q: string) => CascaderMatch[] | Promise<CascaderMatch[]>)(query)).then((list) => {
         if (n !== request.current) return;
-        const got = (Array.isArray(list) ? list : []).map((r: { id: Id; label: string; disabled?: boolean; path?: Array<string | { id: Id; label: string }> }): Leaf => {
+        const got = (Array.isArray(list) ? list : []).map((r: CascaderMatch): Leaf => {
           const ups = (r.path || []).map((x) => (typeof x === 'string' ? { label: x } : { id: x.id, label: x.label })) as CascaderItem[];
           return { item: { id: r.id, label: r.label, disabled: r.disabled }, trail: ups.concat([{ id: r.id, label: r.label }]) };
         });
