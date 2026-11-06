@@ -31,6 +31,10 @@ const cases = [
     { labels: [], events: [lab('g2-changes-requested', '10:05'), note(G2_OK, '10:18'), unlab('g2-changes-requested', '10:20')], commits: [commit('10:15')] }, true],
   ['g2 removed with only a G3 sign-off: fail',
     { labels: [], events: [lab('g2-changes-requested', '10:05'), note(G3_OK, '10:18'), unlab('g2-changes-requested', '10:20')], commits: [commit('10:15')] }, false],
+  ['g3 "still PASS" after a rebase counts: pass',
+    { labels: [], events: [lab('g3-changes-requested', '10:05'), note('**G3 still PASS on 2fe3f130** after the rebase.\n\n— PDS1-DS-Architect', '10:18'), unlab('g3-changes-requested', '10:20')], commits: [commit('10:15')] }, true],
+  ['g3 REQUEST CHANGES is not a sign-off: fail',
+    { labels: [], events: [lab('g3-changes-requested', '10:05'), note('**G3: REQUEST CHANGES**, see the PASS criteria below.\n\n— PDS1-DS-Architect', '10:18'), unlab('g3-changes-requested', '10:20')], commits: [commit('10:15')] }, false],
   ['a review body counts as a sign-off: pass',
     { labels: [], events: [lab('g3-changes-requested', '10:05'), { type: 'PullRequestReview', body: G3_OK, at: t('10:18') }, unlab('g3-changes-requested', '10:20')], commits: [commit('10:15')] }, true],
 ];

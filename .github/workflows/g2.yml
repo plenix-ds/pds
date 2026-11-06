@@ -1,5 +1,6 @@
 # Gates G2 and G3 (plan §3; D-0056; #396, #449): a PR labeled `g2-changes-requested` (Design Director) or
-# `g3-changes-requested` (DS Architect) can't merge, in the PR and in the merge queue. The job keeps its name
+# `g3-changes-requested` (DS Architect) can't merge, in the PR and in the merge queue. A removed label needs the owning
+# role's signed re-review after the newest commit (#621): post the sign-off first, then remove the label (that re-runs this). The job keeps its name
 # "G2 (design review)": the ruleset requires that exact name, and renaming it would strand queued PRs.
 # Its own small workflow, not a job in ci.yml: it re-runs on every label change in seconds, while ci.yml (about 14 jobs)
 # is not re-run on labels. Required on main (ruleset), beside "CI result" and "Ownership". Runs are never cancelled: a
@@ -14,6 +15,7 @@ on:
 permissions:
   contents: read
   pull-requests: read
+  issues: read
 
 concurrency:
   group: g2-${{ github.event.pull_request.number || github.ref }}-${{ github.run_id }}
@@ -29,12 +31,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     env:
-      PR_LABELS: ${{ github.event_name == 'pull_request' && toJSON(github.event.pull_request.labels.*.name) || '' }}
+      PR_NUMBER: ${{ github.event.pull_request.number || '' }}
       MERGE_BRANCH: ${{ github.event_name == 'merge_group' && github.event.merge_group.head_ref || '' }}
       GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - name: No g2-changes-requested or g3-changes-requested label on the PR (D-0056, #449)
+      - name: Self-test (a removed label without the owning role's sign-off fails; #621)
+        run: node tools/ci/check-g2.test.mjs
+      - name: No g2-/g3-changes-requested label; a removed one has its role's signed re-review (D-0056, D-0062, #449, #621)
         run: node tools/ci/check-g2.mjs
