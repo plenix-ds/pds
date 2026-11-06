@@ -57,16 +57,20 @@ import EdZoomOutIcon from 'plenix-platform/icons/plenix/ed-zoom-out';
 // node's hit radius, the zoom steps
 const INSET_X = 64, INSET_TOP = 24, INSET_BOTTOM = 40, HIT = 16, ZOOM_STEP = 1.25, ZOOM_MIN = 0.5, ZOOM_MAX = 4;
 
+/** @public a node's place in the plot, in pixels */
+export type NetworkPosition = { x: number; y: number };
+/** @public the layers of a graph: each node's layer (`rank`) and offset across it, centered on 0 (`place`), the widest layer and the layer count */
+export type NetworkLayers = { rank: number[]; place: number[]; wide: number; layers: number };
 // the neighbors of each node (both directions), by index
-export function graphNeighbors(nodes: any, edges: any) {
+export function graphNeighbors(nodes: NetworkNode[], edges?: NetworkEdge[]): number[][] {
   const at: any = {}; nodes.forEach((n: any, i: any) => { at[n.id] = i; });
-  const out = nodes.map(() => []);
+  const out: number[][] = nodes.map((): number[] => []);
   (edges || []).forEach((e: any) => { const a = at[e.source], b = at[e.target]; if (a === undefined || b === undefined || a === b) return; if (out[a].indexOf(b) < 0) out[a].push(b); if (out[b].indexOf(a) < 0) out[b].push(a); });
   return out;
 }
 
 // a force layout (Fruchterman–Reingold), deterministic: the nodes start on a circle in their order
-export function forceLayout(nodes: any, edges: any, width: any, height: any) {
+export function forceLayout(nodes: NetworkNode[], edges: NetworkEdge[] | undefined, width: number, height: number): NetworkPosition[] {
   const n = nodes.length; if (!n) return [];
   const W = Math.max(1, width - INSET_X * 2), H = Math.max(1, height - INSET_TOP - INSET_BOTTOM);
   const k = Math.sqrt((W * H) / n) * 0.75;
@@ -98,10 +102,10 @@ export function forceLayout(nodes: any, edges: any, width: any, height: any) {
 
 // layers from the roots (longest path), ordered by the mean place of their parents: each node's rank (its layer) and
 // place (its offset across the layer, centered on 0), and the widest layer
-export function graphLayers(nodes: any, edges: any) {
+export function graphLayers(nodes: NetworkNode[], edges?: NetworkEdge[]): NetworkLayers {
   const n = nodes.length;
   const at: any = {}; nodes.forEach((x: any, i: any) => { at[x.id] = i; });
-  const out = nodes.map(() => []), inc = nodes.map(() => []);
+  const out: number[][] = nodes.map((): number[] => []), inc: number[][] = nodes.map((): number[] => []);
   (edges || []).forEach((e: any) => { const a = at[e.source], b = at[e.target]; if (a === undefined || b === undefined || a === b) return; out[a].push(b); inc[b].push(a); });
   const rank = nodes.map(() => -1);
   const roots = nodes.map((x: any, i: any) => i).filter((i: any) => !inc[i].length);
@@ -121,7 +125,7 @@ export function graphLayers(nodes: any, edges: any) {
 }
 
 // the layers laid out in the plot; direction "down" or "right"
-export function layeredLayout(nodes: any, edges: any, width: any, height: any, direction = 'down') {
+export function layeredLayout(nodes: NetworkNode[], edges: NetworkEdge[] | undefined, width: number, height: number, direction: 'down' | 'right' = 'down'): NetworkPosition[] {
   if (!nodes.length) return [];
   const { rank, place, wide } = graphLayers(nodes, edges);
   const p = nodes.map((x: any, i: any) => {
@@ -182,7 +186,7 @@ export function useGraphView({ enabled = true, strings }: { enabled?: boolean; s
 }
 
 // the next node from a in the arrow's direction: a neighbor if one lies that way, else the nearest node that way
-export function directionalMove(pos: any, neighbors: any, a: any, key: any) {
+export function directionalMove(pos: (NetworkPosition | null | undefined)[], neighbors: number[][], a: { r: number; c: number }, key: string): { r: number; c: number } {
   const n = pos.length;
   if (key === 'Home') return { r: 0, c: 0 };
   if (key === 'End') return { r: 0, c: n - 1 };

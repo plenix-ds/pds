@@ -41,8 +41,14 @@ import { useStrings } from '../providers/LocaleProvider.tsx';
 const NODE_WIDTH = 12, NODE_GAP = 12;
 const PLOT_MARGIN = { top: 8, end: 8, bottom: 8, start: 8 };
 
+/** @public a laid-out node: its box (x0 to x1, y0 to y1), its column (`depth`), its total and the flows that leave and enter it */
+export type SankeyLayoutNode = { id: string | number; label: string; color: string; index: number; depth: number; value: number; x0: number; x1: number; y0: number; y1: number; sourceLinks: SankeyLayoutLink[]; targetLinks: SankeyLayoutLink[] };
+/** @public a laid-out flow: its width, and where it leaves the source (`y0`) and enters the target (`y1`) */
+export type SankeyLayoutLink = { index: number; source: SankeyLayoutNode; target: SankeyLayoutNode; value: number; width: number; y0: number; y1: number };
+/** @public what sankeyLayout returns: the nodes, the flows drawn (a flow back is dropped) and the last column */
+export type SankeyLayout = { nodes: SankeyLayoutNode[]; links: SankeyLayoutLink[]; maxDepth: number };
 // the layout: nodes with x0, x1, y0, y1, depth, value; links with width, y0 (at the source), y1 (at the target)
-export function sankeyLayout(nodes: any, links: any, { width, height, nodeWidth = NODE_WIDTH, nodeGap = NODE_GAP, iterations = 8 }: { width: number; height: number; nodeWidth?: number; nodeGap?: number; iterations?: number } = { width: 0, height: 0 }) {
+export function sankeyLayout(nodes: SankeyNode[] | undefined, links: SankeyLink[] | undefined, { width, height, nodeWidth = NODE_WIDTH, nodeGap = NODE_GAP, iterations = 8 }: { width: number; height: number; nodeWidth?: number; nodeGap?: number; iterations?: number } = { width: 0, height: 0 }): SankeyLayout {
   const N = (nodes || []).map((n: any, i: any) => ({ id: n.id === undefined ? String(i) : n.id, label: n.label, color: n.color || seriesColor(i), index: i, sourceLinks: [], targetLinks: [], depth: 0 }));
   const byId: any = {};
   N.forEach((n: any) => { byId[n.id] = n; });
@@ -83,7 +89,7 @@ export function sankeyLayout(nodes: any, links: any, { width, height, nodeWidth 
     let sy = n.y0; n.sourceLinks.forEach((l: any) => { l.width = l.value * ky; l.y0 = sy + l.width / 2; sy += l.width; });
     let ty = n.y0; n.targetLinks.forEach((l: any) => { l.y1 = ty + (l.value * ky) / 2; ty += l.value * ky; });
   });
-  return { nodes: N, links: fwd, maxDepth };
+  return { nodes: N as unknown as SankeyLayoutNode[], links: fwd as unknown as SankeyLayoutLink[], maxDepth };
 }
 
 // a band from the source's end to the target's start, its width the flow's
