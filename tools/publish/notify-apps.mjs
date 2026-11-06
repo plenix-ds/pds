@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Release step after the live check (#750, D-0082): tell each app that auto-upgrades from cdn/latest.json that a new
+// Release step after the live check (#750, D-0083): tell each app that auto-upgrades from cdn/latest.json that a new
 // version is live, so it doesn't wait for its own schedule (GitHub ran CTM's */30 cron three times on 2026-11-06).
 //
 //   node tools/publish/notify-apps.mjs <version> [--dry-run] [--registry tools/baseline/apps.json]

@@ -162,7 +162,7 @@ jobs:
           prev=$(curl -fsS "${CDN}latest.json" | node -p 'JSON.parse(require("fs").readFileSync(0)).latest')
           git fetch -q --depth=1 origin tag "v$prev"
           node tools/publish/removed-in-apps.mjs "v$prev"
-          node tools/publish/notify-apps.mjs "$prev" --dry-run   # the plenix-release step (D-0082), not sent here
+          node tools/publish/notify-apps.mjs "$prev" --dry-run   # the plenix-release step (D-0083), not sent here
 
       - name: Negative proof, the live latest version is refused as already published
         run: |
