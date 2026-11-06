@@ -24,6 +24,7 @@ on:
       - 'build-packages.js'
       - 'build-packages.d/**'
       - 'tools/baseline/**'
+      - 'platform/vendor/**'
   workflow_dispatch:
   # every day on main: the bundle budgets and every release check stay green between releases. A PR that doesn't
   # touch the release files skips the dry run, so a budget overrun could reach main unseen (#84 -> #383)
