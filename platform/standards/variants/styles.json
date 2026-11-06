@@ -6167,5 +6167,123 @@
       }
     ],
     "why": ".plx-row-button.is-selected in row-button.css: the row whose details are open"
+  },
+  "native-select--states-enabled-empty-editable": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-input-background"
+      },
+      {
+        "property": "border-color",
+        "part": "block",
+        "token": "--plx-comp-input-border-color"
+      },
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-comp-input-text"
+      },
+      {
+        "property": "color",
+        "part": "placeholder",
+        "token": "--plx-comp-input-placeholder-text"
+      }
+    ],
+    "why": ".plx-input in input.css (the field family, native-select included): the empty, editable field with its placeholder"
+  },
+  "native-select--states-filled": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-input-background"
+      },
+      {
+        "property": "border-color",
+        "part": "block",
+        "token": "--plx-comp-input-border-color"
+      },
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-comp-input-text"
+      }
+    ],
+    "why": ".plx-input in input.css (the field family, native-select included): the field with a value"
+  },
+  "native-select--states-read-only": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-input-readonly-background"
+      }
+    ],
+    "why": ".plx-input:is([readonly], [aria-readonly=\"true\"]) in input.css: the read-only fill, with the read-only border while the field is not focused"
+  },
+  "native-select--states-required": {
+    "sets": [],
+    "why": "markup only: the field is the same; its Field label carries the required marker"
+  },
+  "text-area--states-enabled-empty-editable": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-input-background"
+      },
+      {
+        "property": "border-color",
+        "part": "block",
+        "token": "--plx-comp-input-border-color"
+      },
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-comp-input-text"
+      },
+      {
+        "property": "color",
+        "part": "placeholder",
+        "token": "--plx-comp-input-placeholder-text"
+      }
+    ],
+    "why": ".plx-input in input.css (the field family, text-area included): the empty, editable field with its placeholder"
+  },
+  "text-area--states-filled": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-input-background"
+      },
+      {
+        "property": "border-color",
+        "part": "block",
+        "token": "--plx-comp-input-border-color"
+      },
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-comp-input-text"
+      }
+    ],
+    "why": ".plx-input in input.css (the field family, text-area included): the field with a value"
+  },
+  "text-area--states-read-only": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-input-readonly-background"
+      }
+    ],
+    "why": ".plx-input:is([readonly], [aria-readonly=\"true\"]) in input.css: the read-only fill, with the read-only border while the field is not focused"
+  },
+  "text-area--states-required": {
+    "sets": [],
+    "why": "markup only: the field is the same; its Field label carries the required marker"
   }
 }
