@@ -68,7 +68,7 @@ import { highlightMatch, matchesText } from '../../utils/highlight.tsx';
 import { useDescribedBy } from '../../utils/describedBy.ts';
 import { useReadOnly } from '../../providers/ReadOnly.tsx';
 import { Tag } from '../Tag/Tag.tsx';
-import { MillerColumns } from '../MillerColumns/MillerColumns.jsx';
+import { MillerColumns } from '../MillerColumns/MillerColumns.tsx';
 import { useBranchLoader } from '../../hooks/useBranchLoader.ts';
 import { announce } from '../../utils/announce.tsx';
 import { useFloating, TOP_LAYER } from '../../utils/floating.ts';

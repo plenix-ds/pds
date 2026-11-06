@@ -53,33 +53,72 @@ import { cx } from '../../utils/cx.ts';
 import { Icon } from '../Icon/Icon.tsx';
 import { tokenPx } from '../../patterns/AppShell/AppShell.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
+import type { IconValue } from '../Icon/Icon.tsx';
 import ChevronRightIcon from 'plenix-platform/icons/plenix/chevron-right';
 import { fill } from '../../utils/fill.ts';
 import { useBranchLoader, BranchStatus } from '../../hooks/useBranchLoader.ts';
+import type { BranchNode, BranchLoader, LoadChildren } from '../../hooks/useBranchLoader.ts';
 
 const MIN_STEP = 1, MAX_STEP = 6, DEFAULT_STEP = 3;
-const EMPTY = [];
+/** @public an item's id (ADR 0011) */
+export type MillerColumnsId = string | number;
+/** @public an item: { id, label, icon, description, disabled, children } (ADR 0011) */
+export type MillerColumnsItem = BranchNode & { icon?: IconValue; description?: React.ReactNode; disabled?: boolean; children?: MillerColumnsItem[] | null };
+type Id = MillerColumnsId;
+type MillerItem = MillerColumnsItem;
+type Column = { items: MillerItem[]; parent: MillerItem | null };
+const EMPTY: MillerItem[] = [];
 
-export const MillerColumns = React.forwardRef(function MillerColumns({ items: given = EMPTY, loadChildren, loader: shared, path, defaultPath = [], onPathChange, onOpen, renderPreview,
+/** @public the prop type (ADR 0011) */
+export type MillerColumnsProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> & {
+  /** the top level: { id, label, icon, description, disabled, children } */
+  items?: MillerItem[];
+  /** loads a parent's children when it is chosen */
+  loadChildren?: LoadChildren<MillerItem>;
+  /** a branch loader shared with another part */
+  loader?: BranchLoader<MillerItem>;
+  /** the chosen ids, one per column (controlled) */
+  path?: Id[];
+  defaultPath?: Id[];
+  onPathChange?: (path: Id[], item?: MillerItem) => void;
+  /** a leaf opened (Enter, double click; click with openOnClick) */
+  onOpen?: (item: MillerItem, path: Id[]) => void;
+  /** a preview column for the chosen leaf */
+  renderPreview?: (item: MillerItem) => React.ReactNode;
+  /** leaf ids drawn checked (shows check marks) */
+  checked?: Id[];
+  expandOnHover?: boolean;
+  openOnClick?: boolean;
+  resizable?: boolean;
+  /** each column's width step (1 to 6) */
+  columnWidths?: number[];
+  onColumnWidthsChange?: (widths: number[]) => void;
+  label?: string;
+  strings?: Catalog | null;
+  className?: string;
+};
+
+export const MillerColumns = React.forwardRef<HTMLDivElement, MillerColumnsProps>(function MillerColumns({ items: given = EMPTY, loadChildren, loader: shared, path, defaultPath = [], onPathChange, onOpen, renderPreview,
   checked, expandOnHover = false, openOnClick = false, resizable = false, columnWidths, onColumnWidthsChange, label, strings, className, ...rest }, ref) {
-  const t = useStrings('millerColumns', strings);
+  const t = useStrings('millerColumns', strings) as Record<string, string>;
   const own = useBranchLoader(shared ? undefined : loadChildren);
   const loader = shared || own;
   const items = loader.merge(given);   // each loaded parent's children in place (issue 814)
   // a parent: children here (an array, maybe empty), or children to load
-  const hasKids = (it) => !!(it && (Array.isArray(it.children) || loader.needs(it)));
+  const hasKids = (it?: MillerItem | null) => !!(it && (Array.isArray(it.children) || loader.needs(it)));
   const auto = 'plx-mc' + React.useId().replace(/[^a-zA-Z0-9]/g, '');
-  const [ownPath, setOwnPath] = React.useState(defaultPath);
+  const [ownPath, setOwnPath] = React.useState<Id[]>(defaultPath);
   const ids = path !== undefined ? path : ownPath;
-  const [ownWidths, setOwnWidths] = React.useState([]);
+  const [ownWidths, setOwnWidths] = React.useState<number[]>([]);
   const widths = columnWidths || ownWidths;
-  const lists = React.useRef([]), columns = React.useRef([]);
-  const focusAt = React.useRef(null);
+  const lists = React.useRef<Array<HTMLUListElement | null>>([]), columns = React.useRef<Array<HTMLDivElement | null>>([]);
+  const focusAt = React.useRef<number | null>(null);
   const pressing = React.useRef(false);   // a click focuses its column: that focus must not choose the first item over the clicked one
 
   // the columns: the top level, then the children of each chosen parent
-  const cols = [{ items, parent: null }];
-  const chosen = [];
+  const cols: Column[] = [{ items, parent: null }];
+  const chosen: MillerItem[] = [];
   for (let i = 0; i < ids.length; i++) {
     const it = cols[i].items.find((x) => x.id === ids[i]);
     if (!it) break;
@@ -92,12 +131,12 @@ export const MillerColumns = React.forwardRef(function MillerColumns({ items: gi
   const last = chosen[chosen.length - 1];
   const preview = renderPreview && last && !hasKids(last) ? last : null;
 
-  const setPath = (next, item) => {
+  const setPath = (next: Id[], item?: MillerItem) => {
     if (path === undefined) setOwnPath(next);
     if (onPathChange) onPathChange(next, item);
   };
-  const choose = (level, item) => { if (!item || item.disabled) return; setPath(chosen.slice(0, level).map((x) => x.id).concat([item.id]), item); };
-  const focusList = (level) => { focusAt.current = level; };
+  const choose = (level: number, item?: MillerItem) => { if (!item || item.disabled) return; setPath(chosen.slice(0, level).map((x) => x.id).concat([item.id]), item); };
+  const focusList = (level: number) => { focusAt.current = level; };
   React.useEffect(() => {
     if (focusAt.current === null) return;
     const el = lists.current[focusAt.current];
@@ -114,10 +153,10 @@ export const MillerColumns = React.forwardRef(function MillerColumns({ items: gi
     chosen.forEach((it, level) => { const o = document.getElementById(optId(level, it.id)); if (o && o.scrollIntoView) o.scrollIntoView({ block: 'nearest', inline: 'nearest' }); });
   }, [ids.join('/')]);
 
-  const optId = (level, id) => auto + '-' + level + '-' + String(id).replace(/[^a-zA-Z0-9_-]/g, '_');
+  const optId = (level: number, id: Id) => auto + '-' + level + '-' + String(id).replace(/[^a-zA-Z0-9_-]/g, '_');
   const rtl = () => typeof document !== 'undefined' && lists.current[0] && getComputedStyle(lists.current[0]).direction === 'rtl';
-  const enabled = (list) => list.filter((x) => !x.disabled);
-  const onKey = (level) => (e) => {
+  const enabled = (list: MillerItem[]) => list.filter((x) => !x.disabled);
+  const onKey = (level: number) => (e: React.KeyboardEvent<HTMLUListElement>) => {
     const list = cols[level].items, here = chosen[level], usable = enabled(list);
     const at = here ? usable.indexOf(here) : -1;
     let key = e.key;
@@ -147,25 +186,25 @@ export const MillerColumns = React.forwardRef(function MillerColumns({ items: gi
     }
   };
 
-  const widthOf = (level) => Math.min(MAX_STEP, Math.max(MIN_STEP, widths[level] || DEFAULT_STEP));
-  const setWidth = (level, step) => {
+  const widthOf = (level: number) => Math.min(MAX_STEP, Math.max(MIN_STEP, widths[level] || DEFAULT_STEP));
+  const setWidth = (level: number, step: number) => {
     const next = cols.map((c, i) => widthOf(i));
     next[level] = Math.min(MAX_STEP, Math.max(MIN_STEP, step));
     if (!columnWidths) setOwnWidths(next);
     if (onColumnWidthsChange) onColumnWidthsChange(next);
   };
-  const onResizeKey = (level) => (e) => {
+  const onResizeKey = (level: number) => (e: React.KeyboardEvent<HTMLDivElement>) => {
     const grow = rtl() ? 'ArrowLeft' : 'ArrowRight', shrink = rtl() ? 'ArrowRight' : 'ArrowLeft';
     if (e.key === grow) { e.preventDefault(); setWidth(level, widthOf(level) + 1); }
     else if (e.key === shrink) { e.preventDefault(); setWidth(level, widthOf(level) - 1); }
     else if (e.key === 'Home') { e.preventDefault(); setWidth(level, MIN_STEP); }
     else if (e.key === 'End') { e.preventDefault(); setWidth(level, MAX_STEP); }
   };
-  const onResizeDown = (level) => (e) => {
+  const onResizeDown = (level: number) => (e: React.PointerEvent<HTMLDivElement>) => {
     if (e.button !== 0) return;
     e.preventDefault();
     const start = e.clientX, from = widthOf(level), step = tokenPx('--plx-comp-miller-columns-resize-step') || 1, dir = rtl() ? -1 : 1;
-    const move = (ev) => setWidth(level, from + Math.round(((ev.clientX - start) * dir) / step));
+    const move = (ev: PointerEvent) => setWidth(level, from + Math.round(((ev.clientX - start) * dir) / step));
     const up = () => { window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up); };
     window.addEventListener('pointermove', move); window.addEventListener('pointerup', up);
   };
@@ -174,7 +213,7 @@ export const MillerColumns = React.forwardRef(function MillerColumns({ items: gi
     <div ref={ref} role="group" aria-label={label} className={cx('plx-miller-columns', resizable && 'plx-miller-columns--resizable', checked && 'plx-miller-columns--checks', className)} {...rest}>
       {cols.map((col, level) => {
         const here = chosen[level];
-        const name = col.parent ? col.parent.label : label;
+        const name = col.parent ? (col.parent.label as string | undefined) : label;
         return (
           <React.Fragment key={level + '-' + (col.parent ? col.parent.id : 'root')}>
             <div ref={(el) => { columns.current[level] = el; }} className="plx-miller-columns__column" data-plx-width={widthOf(level)}>
@@ -193,7 +232,7 @@ export const MillerColumns = React.forwardRef(function MillerColumns({ items: gi
                         if (openOnClick && !parent && !it.disabled && onOpen) onOpen(it, chosen.slice(0, level).map((x) => x.id).concat([it.id])); }}
                       onDoubleClick={() => { if (!parent && !it.disabled && onOpen) onOpen(it, chosen.slice(0, level).map((x) => x.id).concat([it.id])); }}
                       onMouseEnter={expandOnHover && parent && !it.disabled ? () => choose(level, it) : undefined}>
-                      {checked && !parent ? <input type="checkbox" className="plx-check__input plx-miller-columns__mark" tabIndex={-1} aria-hidden="true" inert="" checked={!!isChecked} readOnly /> : null}
+                      {checked && !parent ? <input type="checkbox" className="plx-check__input plx-miller-columns__mark" tabIndex={-1} aria-hidden="true" {...{ inert: "" }} checked={!!isChecked} readOnly /> : null}
                       {it.icon ? <span className="plx-miller-columns__icon" aria-hidden="true"><Icon name={it.icon} filled={!!on} /></span> : null}
                       <span className="plx-miller-columns__text">
                         <span className="plx-miller-columns__label">{it.label}</span>
@@ -214,7 +253,7 @@ export const MillerColumns = React.forwardRef(function MillerColumns({ items: gi
       })}
       {preview ? (
         <div ref={(el) => { columns.current[cols.length] = el; }} className="plx-miller-columns__preview" role="region" tabIndex={0} aria-label={fill(t.preview, { label: preview.label })}>
-          {renderPreview(preview)}
+          {(renderPreview as (item: MillerItem) => React.ReactNode)(preview)}
         </div>
       ) : null}
     </div>

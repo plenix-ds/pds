@@ -70,7 +70,7 @@ DSParts.records.push(function (H) {
   };
   var preview = { renderPreview: function (item) { return h(Preview, { item: item }); } };
   var millerColumns = { id: 'miller-columns', lab: true, icon: 'view-table', sec: 'navigation', sub: 'Hierarchical navigation', leaf: 'Miller columns', title: 'Miller columns',
-    plenix: 'MillerColumns', src: 'components/MillerColumns/MillerColumns.jsx', level: 'Component', interaction: 'Navigation',
+    plenix: 'MillerColumns', src: 'components/MillerColumns/MillerColumns.tsx', level: 'Component', interaction: 'Navigation',
     aliases: ['Column view', 'Cascading lists', 'Finder columns', 'Column browser'],
     text: 'A deep hierarchy browsed in columns side by side: choosing an item lists its children in the next column, so the whole path stays in view and each level keeps its place. Each column is a listbox named by its parent; Arrow Up and Down choose in a column (the children open at once), Arrow Right moves into them, Arrow Left back. An optional preview column shows the chosen item; with resizable, each column’s edge moves in 40px steps.',
     use: ['Browsing deep folder, category or location trees on wide windows', 'A preview column when people check what they found before opening it', 'Resizable columns when names are long'],
