@@ -28,7 +28,7 @@
    Notes:
      No axes, grid lines or legend: a sparkline gives the shape; the number beside it gives the value. Use the same time
        range for every sparkline of a set. Its color is a data-viz step (data-plx-dataviz); sizes, the line and the dot are
-       --plx-comp-sparkline-* tokens, read by the ECharts theme (echarts/engine.ts); no style is written here. It keeps no "Show the data" table: it stands next to the number it describes, and its
+       --plx-comp-sparkline-* tokens, read by the ECharts theme (echarts/engine.js); no style is written here. It keeps no "Show the data" table: it stands next to the number it describes, and its
        name says the trend; link to the full chart (with its table) when there is one.
 */
 import React from 'react';

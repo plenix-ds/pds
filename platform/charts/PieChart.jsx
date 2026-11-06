@@ -37,7 +37,7 @@
    Notes:
      Two to five parts read best; for many parts or parts of similar size use a bar chart. Slices are parted by a thin line
        in the surface color (pie-chart tokens); the hole is 60% of the radius (geometry). The slices are drawn by Apache
-       ECharts (issue 353) in the Plenix theme (echarts/engine.ts); the center value, the shares and the tooltip are Plenix's.
+       ECharts (issue 353) in the Plenix theme (echarts/engine.js); the center value, the shares and the tooltip are Plenix's.
        No style is written here.
 */
 import React from 'react';

@@ -47,7 +47,7 @@
        grid show at once.
    Notes:
      Every color is a data-viz step (seriesColor by the series' order); the lines, points, axes, grid lines and labels
-       take the frame's chart tokens through the ECharts theme (echarts/engine.ts); the focus ring, crosshair and tooltip
+       take the frame's chart tokens through the ECharts theme (echarts/engine.js); the focus ring, crosshair and tooltip
        are the chart interaction's. No style is written in this file.
      Up to about five series; more lines tangle: use small multiples. Unordered categories: a bar or column chart.
 */

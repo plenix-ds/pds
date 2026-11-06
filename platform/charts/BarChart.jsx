@@ -47,7 +47,7 @@
    Notes:
      Colors come from the data-viz scales (seriesColor by the series' order); stacked segments and bins are parted by a
        thin line in the surface color (bar-chart tokens); axes, grid lines and labels take the frame's chart tokens
-       through the ECharts theme (echarts/engine.ts). The plot is drawn by Apache ECharts (issue 353); no style is written here.
+       through the ECharts theme (echarts/engine.js). The plot is drawn by Apache ECharts (issue 353); no style is written here.
 */
 import React from 'react';
 import { cx } from '../utils/cx.ts';

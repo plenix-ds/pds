@@ -34,7 +34,7 @@
    Notes:
      For a few levels and up to a few dozen nodes; a large hierarchy belongs in a Tree (the list) or MillerColumns. The
        lines, the nodes, the focus ring and the fonts are --plx-comp-tree-chart-* tokens read by the ECharts theme
-       (echarts/engine.ts); ECharts' own tooltip is not used. No style is written here: ECharts writes only the sizes
+       (echarts/engine.js); ECharts' own tooltip is not used. No style is written here: ECharts writes only the sizes
        and fonts the page checks allow inside .plx-chart__engine (font weights from the font-weight tokens).
 */
 import React from 'react';

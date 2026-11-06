@@ -18,7 +18,7 @@ const UTIL = new Set();
 for (const f of ['platform/platform.css', 'platform/plenix-system.css'].concat(fs.readdirSync(path.join(ROOT, 'platform', 'system')).filter((x) => /\.css$/.test(x)).map((x) => 'platform/system/' + x))) {
   try { for (const m of fs.readFileSync(path.join(ROOT, f), 'utf8').matchAll(/\.(plx-u-[a-z0-9-]+|plx-motion-[a-z-]+|plx-page-panes)/g)) UTIL.add(m[1]); } catch (e) { /* none */ }
 }
-const CHART = new Set((fs.readFileSync(path.join(ROOT, 'platform', 'charts', 'ChartFrame.jsx'), 'utf8').match(/plx-chart__[a-z-]+[a-z]/g) || []));
+const CHART = new Set((fs.readFileSync(path.join(ROOT, 'platform', 'charts', 'ChartFrame.tsx'), 'utf8').match(/plx-chart__[a-z-]+[a-z]/g) || []));
 const files = process.argv.slice(2).length ? process.argv.slice(2).map((f) => path.resolve(f)) : [];
 if (!files.length) (function walk(d) { for (const e of fs.readdirSync(d, { withFileTypes: true })) { const p = path.join(d, e.name); if (e.isDirectory()) walk(p); else if (/\.jsx?$/.test(e.name) && e.name !== 'app.js') files.push(p); } })(SITE);
 
