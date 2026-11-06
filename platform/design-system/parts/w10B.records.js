@@ -49,7 +49,7 @@ DSParts.records.push(function (H) {
         h(P.Button, { variant: 'ghost', onClick: function () { s[1](CATS.slice(0, props.n || 3)); } }, 'Reset'))));
   };
   var deleteFlow = { id: 'delete-flow', lab: true, icon: 'trash', sec: 'patterns', sub: 'Creation and editing', leaf: 'Delete flow', title: 'Delete flow',
-    plenix: 'DeleteFlow', src: 'patterns/DeleteFlow/DeleteFlow.jsx', level: 'Pattern', interaction: 'Action', statesFrom: ['button', 'confirmation-dialog'],
+    plenix: 'DeleteFlow', src: 'patterns/DeleteFlow/DeleteFlow.tsx', level: 'Pattern', interaction: 'Action', statesFrom: ['button', 'confirmation-dialog'],
     aliases: ['Delete confirmation', 'Destructive flow', 'Remove flow', 'Soft delete', 'Trash'],
     text: 'Deleting in one of four forms, chosen by what can come back. Confirm asks first, with the count in the question (“Delete 2 categories?”), lists what goes and says it cannot be undone; focus starts on Cancel and Delete is the danger button. Type to confirm asks for the item’s name before a delete with a wide reach. Undo deletes at once and offers Undo in the toast; the delete is final when the toast leaves. Move to trash moves the items at once, with Undo in the toast.',
     use: ['Confirm for what cannot come back: a category, a member, a published page', 'Type to confirm for a project, a library or an account: deletes that take much with them', 'Undo or Move to trash whenever the items can come back: one press, no question', 'The count and the names in the question; the consequence in one sentence'],
@@ -84,7 +84,7 @@ DSParts.records.push(function (H) {
         onDelete: function (gone) { var ids = gone.map(function (x) { return x.id; }); rows[1](rows[0].filter(function (x) { return ids.indexOf(x.id) < 0; })); sel[1]([]); } })));
   };
   var deleteAction = { id: 'delete-action', icon: 'trash', sec: 'actions', sub: 'Common actions', leaf: 'Delete', title: 'Delete',
-    plenix: 'DeleteFlow (the action), CommandBar selection', src: 'patterns/DeleteFlow/DeleteFlow.jsx', level: 'Pattern', interaction: 'Action', statesFrom: ['button'],
+    plenix: 'DeleteFlow (the action), CommandBar selection', src: 'patterns/DeleteFlow/DeleteFlow.tsx', level: 'Pattern', interaction: 'Action', statesFrom: ['button'],
     variantClasses: [], docsFrom: 'delete-flow', aliases: ['Remove', 'Trash', 'Destroy'],
     text: 'The Delete command itself: a danger button, a destructive menu item, or the last command of a selection in the command bar. It starts the delete flow: a confirmation with the count for what cannot come back, Undo in a toast for what can.',
     use: ['Delete last, after a divider, in the danger color: in menus, toolbars and the command bar’s selection', 'The same verb on the trigger and on the confirming button', 'The count when several are selected: “Delete 2 categories?”'],

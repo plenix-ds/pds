@@ -58,12 +58,39 @@ import RenameIcon from 'plenix-platform/icons/plenix/rename';
 import { fill } from '../../utils/fill.ts';
 
 // the name before a file's extension (the whole name when it has none, or starts with its only dot)
-export function baseNameEnd(name) { const i = String(name).lastIndexOf('.'); return i > 0 ? i : String(name).length; }
+export function baseNameEnd(name: unknown): number { const i = String(name).lastIndexOf('.'); return i > 0 ? i : String(name).length; }
+
+/** @public the prop type (ADR 0011) */
+export type RenameActionProps = Omit<React.HTMLAttributes<HTMLSpanElement>, 'onSubmit'> & {
+  /** the current name */
+  value?: string;
+  /** the new name; a promise keeps the dialog open until it settles, a rejection shows its message */
+  onRename?: (name: string) => void | Promise<unknown>;
+  variant?: 'inline' | 'dialog';
+  label?: string;
+  /** the other names in the same place: a new name may not be one of them */
+  names?: string[];
+  /** a file keeps its extension: only the name before it is selected */
+  extension?: boolean;
+  /** the page's own check: a message, or nothing when the name is fine */
+  validate?: (name: string) => string | null | undefined | false;
+  maxLength?: number;
+  /** the name is a technical value (the data font) */
+  data?: boolean;
+  /** the dialog variant, controlled */
+  open?: boolean;
+  onClose?: () => void;
+  /** the dialog variant's own button */
+  triggerProps?: Partial<React.ComponentProps<typeof Button>>;
+  disabled?: boolean;
+  strings?: Record<string, unknown> | null;
+  className?: string;
+};
 
 export function RenameAction({ value = '', onRename, variant = 'inline', label, names = [], extension = false, validate, maxLength = 255, data = false,
-  open: openProp, onClose, triggerProps, disabled = false, strings, className, ...rest }) {
+  open: openProp, onClose, triggerProps, disabled = false, strings, className, ...rest }: RenameActionProps) {
   devWarn('RenameAction', { variant }, { variant: ['inline','dialog'] });
-  const t = useStrings('renameAction', strings);
+  const t = useStrings('renameAction', strings) as Record<string, string>;
   const name = label || t.label;
   const formId = useUid('plx-rename');
   const controlled = openProp !== undefined;
@@ -72,10 +99,10 @@ export function RenameAction({ value = '', onRename, variant = 'inline', label, 
   const [draft, setDraft] = React.useState(value);
   const [error, setError] = React.useState('');
   const [busy, setBusy] = React.useState(false);
-  const input = React.useRef(null);
+  const input = React.useRef<HTMLInputElement>(null);
 
   // the rules every new name passes (the page's own validate last)
-  const check = (raw) => {
+  const check = (raw: unknown): string => {
     const next = String(raw).trim();
     if (!next) return t.empty;
     if (/[\/\\]/.test(next)) return t.slash;
@@ -85,14 +112,14 @@ export function RenameAction({ value = '', onRename, variant = 'inline', label, 
     return validate ? validate(next) || '' : '';
   };
   // a file name opens with only the name before its extension selected
-  const selectBase = (el) => { if (el && el.setSelectionRange) el.setSelectionRange(0, extension ? baseNameEnd(el.value) : el.value.length); };
+  const selectBase = (el: HTMLInputElement | null) => { if (el && el.setSelectionRange) el.setSelectionRange(0, extension ? baseNameEnd(el.value) : el.value.length); };
 
   React.useEffect(() => { if (open) { setDraft(value); setError(''); setBusy(false); } }, [open]);
   React.useEffect(() => { if (open && input.current) setTimeout(() => selectBase(input.current), 0); }, [open]);
 
   const close = () => { if (controlled) { if (onClose) onClose(); } else setOwnOpen(false); };
-  const done = (next) => { close(); announce(fill(t.renamed, { name: next })); };
-  const submit = (e) => {
+  const done = (next: string) => { close(); announce(fill(t.renamed, { name: next })); };
+  const submit = (e: React.FormEvent) => {
     e.preventDefault();
     if (busy) return;
     const next = String(draft).trim();
@@ -112,8 +139,8 @@ export function RenameAction({ value = '', onRename, variant = 'inline', label, 
     // The announcement waits a turn, so it comes after InlineEdit's own (left empty here)
     return (
       <span {...rest} className={cx('plx-rename-action', 'plx-rename-action--inline', className)}
-        onFocus={(e) => { if (extension && e.target.tagName === 'INPUT') { const el = e.target; setTimeout(() => selectBase(el), 0); } }}
-        onKeyDown={(e) => { if (e.key === 'F2' && e.target.classList && e.target.classList.contains('plx-inline-edit__read')) { e.preventDefault(); e.target.click(); } }}>
+        onFocus={(e) => { const el = e.target as HTMLElement; if (extension && el.tagName === 'INPUT') setTimeout(() => selectBase(el as HTMLInputElement), 0); }}
+        onKeyDown={(e) => { const el = e.target as HTMLElement; if (e.key === 'F2' && el.classList && el.classList.contains('plx-inline-edit__read')) { e.preventDefault(); el.click(); } }}>
         <InlineEdit label={name} value={value} data={data} disabled={disabled} validate={(v) => check(v) || null}
           onConfirm={(next) => { const v = String(next).trim(); const r = onRename ? onRename(v) : null; const say = () => setTimeout(() => announce(fill(t.renamed, { name: v })), 0); if (r && typeof r.then === 'function') return r.then(say); say(); return r; }}
           strings={{ saved: '' }} />

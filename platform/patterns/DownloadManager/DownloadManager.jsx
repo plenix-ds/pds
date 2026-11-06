@@ -11,7 +11,7 @@
 import React from 'react';
 import { devWarn } from '../../utils/devWarn.ts';
 import { Panel } from '../../components/Card/Card.tsx';
-import { FileRow, FileRowList } from '../../components/FileRow/FileRow.jsx';
+import { FileRow, FileRowList } from '../../components/FileRow/FileRow.tsx';
 import { Badge } from '../../components/Badge/Badge.tsx';
 import { Notice } from '../../components/Notice/Notice.tsx';
 import { EmptyState } from '../../components/EmptyState/EmptyState.tsx';

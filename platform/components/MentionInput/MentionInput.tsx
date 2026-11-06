@@ -14,7 +14,7 @@
 */
 import React from 'react';
 import { Textarea } from '../Input/Input.tsx';
-import { RichTextEditor } from '../RichTextEditor/RichTextEditor.jsx';
+import { RichTextEditor } from '../RichTextEditor/RichTextEditor.tsx';
 import { EntityPicker, type EntityPickerOption } from '../EntityPicker/EntityPicker.tsx';
 import { Button } from '../Button/Button.tsx';
 import { cx } from '../../utils/cx.ts';

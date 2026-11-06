@@ -183,7 +183,7 @@ DSParts.records.push(function (H) {
 
     /* ── 12 Specialized › Files, assets, and DAM › File row: FileRow ── */
     { id: 'file-row', lab: true, icon: 'list-lines', sec: 'specialized', sub: FILES, leaf: 'File row', title: 'File row',
-      plenix: 'FileRow, FileRowList', src: 'components/FileRow/FileRow.jsx', level: 'Component', interaction: 'Selection',
+      plenix: 'FileRow, FileRowList', src: 'components/FileRow/FileRow.tsx', level: 'Component', interaction: 'Selection',
       aliases: ['File list item', 'Upload row', 'Attachment row', 'File line'],
       text: 'One file as a line in a list: a checkbox that selects it; the File (its icon and its name, which opens it); its facts in their own cells (the size and the date in the data font, the owner, a status Badge); then its actions: Download, and More actions with Rename… (the rename dialog) and Delete (the delete flow). While a file moves, the row shows its progress with Cancel; a failed file says why, with Try again.',
       use: ['Uploads, downloads, attachments and pickers: a FileRowList of rows', 'selectable for actions on several files at once', 'onRename and onDelete: they bring the rename dialog and the delete flow', 'progress and error for each file of a transfer'],

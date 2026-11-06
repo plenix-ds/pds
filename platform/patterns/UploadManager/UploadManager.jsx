@@ -71,7 +71,7 @@ import { cx } from '../../utils/cx.ts';
 import { formatBytes, formatNumber, formatPercent } from '../../utils/format.ts';
 import { announce } from '../../utils/announce.tsx';
 import { useUid } from '../../utils/layer.ts';
-import { FileRow, FileRowList } from '../../components/FileRow/FileRow.jsx';
+import { FileRow, FileRowList } from '../../components/FileRow/FileRow.tsx';
 import { Badge } from '../../components/Badge/Badge.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Icon } from '../../components/Icon/Icon.tsx';
