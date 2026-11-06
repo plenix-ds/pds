@@ -21,7 +21,7 @@ import { tableKeys } from './keys.ts';
 import { tokenPixels } from '../environment.ts';
 import { WidthPixels, Check, Width, RowGap, PixelGap } from './parts.jsx';
 import { Scrollbars } from '../scrollbars.tsx';
-import { Rare } from './rare.jsx';
+import { Rare } from './rare.tsx';
 
 export function gridFrame({
   cardBar,

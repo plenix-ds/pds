@@ -2,7 +2,7 @@
    Summary: How the grid groups its rows: the group levels (the caller's, the grid's own, or the options') and which groups are
      collapsed; the caller's collapsed list replaces the grid's own when the caller keeps the view.
    Usage:
-     import { useGrouping } from './engine/useGrouping.js';
+     import { useGrouping } from './engine/useGrouping.ts';
      const { groupBy, groupSignal, collapsed, setGroups, setGroupOwner, setCollapsed } = useGrouping({ props, options, initial });
    Props:
      props: the grid's props (groupBy, collapsedGroups, onViewChange); options: the grid options (groupBy); initial: the saved
@@ -14,9 +14,9 @@
 */
 import React from 'react';
 
-export function useGrouping({ initial, props, options }) {
+export function useGrouping({ initial, props, options }: any) {
   const [localGroups, setGroups] = React.useState(() => initial.groupBy),
-    [groupOwner, setGroupOwner] = React.useState(null),
+    [groupOwner, setGroupOwner] = React.useState<any>(null),
     [collapsed, setCollapsed] = React.useState(() => new Set(initial.collapsed));
   const collapsedSignal = JSON.stringify(props.collapsedGroups || []);
   React.useEffect(() => {

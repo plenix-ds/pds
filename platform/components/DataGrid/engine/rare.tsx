@@ -14,7 +14,7 @@
 */
 import React from 'react';
 
-let loaded = null, loading = null;
+let loaded: any = null, loading: any = null;
 function load() {
   return loading || (loading = import('./chromeRare.tsx').then(
     (m) => (loaded = m),
@@ -25,8 +25,8 @@ function load() {
 // starts the download without drawing anything (a trigger calls it on hover, focus and touch so the part is ready by the click)
 export function preloadRare() { load().catch(() => {}); }
 
-export function Rare({ part, args, fallback, pending }) {
-  const [failed, setFailed] = React.useState(false), [, again] = React.useState(0), from = React.useRef(null);
+export function Rare({ part, args, fallback, pending }: any) {
+  const [failed, setFailed] = React.useState(false), [, again] = React.useState(0), from = React.useRef<any>(null);
   const attempt = React.useCallback(() => {
     setFailed(false);
     load().then(() => again((n) => n + 1), () => setFailed(true));

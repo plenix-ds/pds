@@ -19,7 +19,7 @@ import React from 'react';
 import { typeOf, kinds, interactive, typeIcons } from './helpers.tsx';
 import { MenuDivider, MenuItem, Menu, ContextMenu } from '../../Menu/Menu.tsx';
 import { Width, PressTrigger } from '../engine/parts.jsx';
-import { Rare, preloadRare } from './rare.jsx';
+import { Rare, preloadRare } from './rare.tsx';
 import { Spinner } from '../../Loading/Loading.tsx';
 import { cx } from '../../../utils/cx.ts';
 import { headerKeys, resizeKeys } from '../engine/keys.ts';
