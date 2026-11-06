@@ -3220,8 +3220,14 @@
     "why": "markup only: the decision and the form are which parts and fields render (reason box, review panel); the stylesheet has no modifier for them"
   },
   "search-result--content-with-highlight": {
-    "sets": [],
-    "why": "markup only: the kind picks the icon and the content adds a path or highlight mark; the stylesheet has no modifier for them"
+    "sets": [
+      {
+        "property": "font-weight",
+        "part": "match",
+        "token": "--plx-comp-search-result-match-font-weight"
+      }
+    ],
+    "why": "a query wraps each match in .plx-search-result__match, which search-result.css sets in the match font weight"
   },
   "search-result--content-with-path": {
     "sets": [],
