@@ -66,7 +66,7 @@
        old value back with its message (ADR 0016). source: "edit" (typed or chosen; the default), "paste", "undo" or "redo" (ADR 0021); once per cell
        editing: { types: ["checkbox"] }: the cell editor types the application turns on ("input" and "number" always work)
        editing: { undo: true }: Ctrl+Z undoes and Ctrl+Y (or Cmd+Shift+Z) redoes cell edits, one step per action, inside this table
-         only (up to 100 steps; a step whose cells the data no longer holds as it left them ends the history). Each undo reaches
+         only; a saved row form (Form Edit) is one step (up to 100 steps; a step whose cells the data no longer holds as it left them ends the history). Each undo reaches
          onCellEdit with the old value (source "undo"); an application that refuses it keeps the value and the grid says why. Default false
        editing: { paste: true }: Ctrl+V (or Cmd+V) on a cell pastes a copied block (tab-separated rows, as Excel, Google Sheets and the grid's own
          copy write it). It lands at the active cell, or at the first cell of the selected block (cellSelection); one value with a selected

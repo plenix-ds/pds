@@ -145,9 +145,16 @@ export function editActions({
       return rejected.length;
     });
   };
+  // a saved row form (Form Edit): one step for the whole record. Without onRecordEdit the changed fields go through onCellEdit, one call each;
+  // with it the application saved the record itself, so the step is only remembered (an undo then reaches onCellEdit, one call per field)
+  const commitCells = (key: any, changes: Record<string, any>) => changeCells(Object.entries(changes).map(([field, value]) => ({ key, field, value })), 'edit');
+  const recordEdited = (key: any, changes: Record<string, any>) => {
+    const old = canonical.find((record: any) => recordKey(record[index]) === key);
+    remember(Object.entries(changes).map(([field, after]) => ({ key, field, before: valueAt(old, field), after })));
+  };
   const undo = () => walk(history.current.undo, history.current.redo, true);
   const redo = () => walk(history.current.redo, history.current.undo, false);
-  return { replaceData, updateRecord, commitEdit, changeCells, undo, redo };
+  return { replaceData, updateRecord, commitEdit, changeCells, commitCells, recordEdited, undo, redo };
 }
 
 export function useEditEffect({ source, mutations, pendingEdit, emit, api }: any) {

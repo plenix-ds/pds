@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: ltr: one Ctrl+Z restores the whole form
+
+'Ann' !== 'Alma'
+
+    at /home/cc/pds1/work/component-engineer-2/tests/data-grid-form-undo-3.test.js:46:14 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'Ann',
+  expected: 'Alma',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
