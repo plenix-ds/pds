@@ -54,6 +54,19 @@ Measured on main, 2026-11-05:
   - Prop types become stricter (`any` -> real types). That's a compile-time change for apps that passed wrong values, so it's listed under *Changed* in each wave's changelog.
   - It's MINOR, because the runtime API is the same (VERSIONING.md: *Changed* within its role). A prop whose documented values were wrong in the header is fixed to the documented behavior, so it's a PATCH.
 
+## Addendum (2026-11-06, #292): types for a vendored engine (RichTextEditor and Tiptap, D-0067)
+
+RichTextEditor drives Tiptap, which ships only as the vendored bundle (`platform/vendor/tiptap/tiptap.min.js`, Tiptap 3.31.3), so the repository has no types for `Editor`, `Extension` or the Mention API.
+
+- **Decision (b):** the Tiptap packages the editor touches (`@tiptap/core`, `@tiptap/extension-mention`, and any other it needs) are **type-only devDependencies**, at **exactly** the vendored version (`--save-exact`, no range).
+  - They're imported only with `import type`. The engine at run time is still the vendored bundle (`loadTiptap()`), so nothing from npm is bundled.
+- **The public API stays Plenix's:** `RichTextEditorProps` names no Tiptap type. Tiptap types appear only inside the component.
+- **Upgrading Tiptap** means rebuilding the vendored bundle and bumping these devDependencies to the same version, in one PR.
+- **Rejected:**
+  - (a) hand-written local interfaces: about 60 members, a second source that drifts.
+  - (c) leaving RichTextEditor in JavaScript until wave 5: it blocks wave 1 for no gain.
+- Enforced by: the check-system rule `vendor-types` (`check-system.rules/vendor-types.js`). Every `@tiptap/*` devDependency equals the version in `platform/vendor/tiptap/README.md`; none is a runtime dependency; and nothing in `platform/` imports `@tiptap/*` except with `import type`. Plus G3 review of the RichTextEditor PR (no Tiptap type in its public props).
+
 ## Consequences
 
 - Owners: the Component Engineers convert (each wave is long work, within `agents.config.yaml` limits). pds1-ds-architect reviews each wave's `index.d.ts` diff (G3). QA reviews behavior.
