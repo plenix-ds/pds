@@ -16,10 +16,14 @@ export const gridRoom = (margin: any, top: any) => {
 };
 
 // the parts to draw: colors by the data's order, the smallest beyond maxSlices grouped into Other, sorted by size
-export function pieSlices(data: any, { sort = true, maxSlices = 6, other = 'Other' } = {}) {
+/** @public a slice as the application gives it */
+export type PieDatum = { id?: string | number; label: string; value: number; color?: string };
+/** @public a waterfall bar as the application gives it */
+export type WaterfallDatum = { label: string; value?: number | null; total?: boolean };
+export function pieSlices(data: PieDatum[], { sort = true, maxSlices = 6, other = 'Other' }: { sort?: boolean; maxSlices?: number; other?: string } = {}) {
   const parts = (data || []).map((d: any, i: any) => ({ id: d.id === undefined ? String(i) : d.id, label: d.label, value: Math.max(0, finite(d.value)), color: d.color, index: i }))
     .filter((d: any) => d.value > 0);
-  let kept = parts, rest = [];
+  let kept: any[] = parts, rest: any[] = [];
   if (parts.length > maxSlices) {
     const bySize = parts.slice().sort((a: any, b: any) => b.value - a.value);
     const keep = new Set(bySize.slice(0, Math.max(1, maxSlices - 1)).map((d: any) => d.id));
@@ -32,7 +36,7 @@ export function pieSlices(data: any, { sort = true, maxSlices = 6, other = 'Othe
   return kept.map((d: any) => Object.assign(d, { share: total ? d.value / total : 0 }));
 }
 
-export function binValues(values: any, { bins, domain }: { bins?: number; domain?: number[] } = {}) {
+export function binValues(values: number[], { bins, domain }: { bins?: number; domain?: number[] } = {}) {
   const v = (values || []).map(Number).filter((x: any) => isFinite(x));
   if (!v.length) return [];
   const lo = domain ? Number(domain[0]) : Math.min.apply(null, v);
@@ -51,8 +55,7 @@ export function binValues(values: any, { bins, domain }: { bins?: number; domain
 }
 
 // each bar: its kind, the running total before and after it
-export type WaterfallInput = { label: string; value?: number | null; total?: boolean };
-export function waterfallSteps(data: WaterfallInput[] = [], endLabel?: string | false) {
+export function waterfallSteps(data: WaterfallDatum[] = [], endLabel?: string | false) {
   let run = 0;
   const out: Array<{ label: any; kind: string; from: number; to: number; change: number | null; end?: boolean }> = data.map((d, i) => {
     const v = typeof d.value === 'number' && isFinite(d.value) ? d.value : null;
@@ -75,7 +78,7 @@ function quantile(sorted: any, p: any) {
 }
 
 // the five-number summary with Tukey's whiskers: { min, q1, median, q3, max, outliers, n }
-export function boxStats(values: any) {
+export function boxStats(values: number[]) {
   const v = (values || []).map(Number).filter((x: any) => isFinite(x)).sort((a: any, b: any) => a - b);
   if (!v.length) return null;
   const q1 = quantile(v, 0.25), median = quantile(v, 0.5), q3 = quantile(v, 0.75), fence = (q3 - q1) * 1.5;

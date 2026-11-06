@@ -55,7 +55,7 @@ function tickStep(span: any, count: any) {
 const decimalsOf = (step: any) => Math.max(0, -Math.floor(Math.log10(Math.abs(step)) + 1e-9));
 const round = (v: any, d: any) => Number(v.toFixed(Math.min(20, d)));
 
-export function niceTicks(min: any, max: any, count = 5) {
+export function niceTicks(min: number, max: number, count = 5) {
   let lo = Number(min), hi = Number(max);
   if (lo > hi) { const t = lo; lo = hi; hi = t; }
   if (lo === hi) { const half = tickStep(Math.abs(lo) || 1, count) / 2; lo -= half; hi += half; }
@@ -229,5 +229,5 @@ export function scaleTime({ domain = [0, DAY], range = [0, 1], nice = false, cla
   return scale;
 }
 
-export function seriesColor(index: any) { return datavizCategory(index); }
+export function seriesColor(index: number) { return datavizCategory(index); }
 

@@ -47,7 +47,7 @@ import { fill } from '../utils/fill.ts';
 const h = React.createElement;
 const SUMMARY = { up: 'Up {change}', down: 'Down {change}', flat: 'Flat', range: 'from {first} to {last}', low: 'lowest {value}', high: 'highest {value}', at: '{value} ({label})', empty: 'No data' };
 
-export function summarizeSeries(values: any, { labels, format, strings }: { labels?: string[]; format?: (value: number) => string; strings?: Record<string, string> } = {}) {
+export function summarizeSeries(values: number[], { labels, format, strings }: { labels?: string[]; format?: (value: number) => string; strings?: Record<string, string> } = {}) {
   const t = Object.assign({}, SUMMARY, strings);
   const f = typeof format === 'function' ? format : (v: any) => formatNumber(v);
   const pts = (values || []).map((v: any, i: any) => ({ v: Number(v), i })).filter((p: any) => isFinite(p.v));
@@ -62,11 +62,11 @@ export function summarizeSeries(values: any, { labels, format, strings }: { labe
 }
 
 export const CHART_PATTERNS = Object.freeze(['diagonal', 'dots', 'cross', 'horizontal', 'vertical', 'reverse']);
-export function chartPattern(index: any) {
+export function chartPattern(index: number) {
   const n = CHART_PATTERNS.length, i = Math.floor(Number(index) || 0);
   return CHART_PATTERNS[((i % n) + n) % n];
 }
-export function patternFill(id: any, index: any) { return 'url(#' + id + '-' + chartPattern(index) + ')'; }
+export function patternFill(id: string, index: number) { return 'url(#' + id + '-' + chartPattern(index) + ')'; }
 
 // one 8 × 8 tile per texture (SVG geometry, on the 4px grid); strokes and dots take the chart-a11y classes
 const TILE = 8;
