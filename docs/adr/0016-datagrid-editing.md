@@ -161,6 +161,9 @@ chipOverflow?: 'wrap' | 'count';   // Combobox, with multiple; default 'wrap' (t
 - Backspace on an empty input still removes the last chosen value, including a hidden one: N drops by one.
 - No new token: the "+N" is a Tag at its existing size and tone.
 - DataGrid's `tags` editor sets `chipOverflow="count"`. Everywhere else Combobox is unchanged.
+- **The read cell folds the same way (G2):** a `tags` column's read cell (not editing; the grid's own tag rendering in `cells.jsx`) shows its tags on one line, with the rest as one "+N" Tag named "{count} more". The cell keeps its shape when the editor opens.
+  - Combobox and the read cell share **one internal fit step** (a hook beside `useBarFit`, not exported), so both fold at the same widths.
+  - No public API for the read cell: it's the grid's own rendering. TagList is unchanged.
 - **Semver: MINOR** (an additive optional prop on a public control, and one catalog key).
 - Enforced by: G3 review of the #477 item 1 PR; behavior checks (the chips fit on one line, "+N" counts the hidden ones and is announced, Backspace removes the last value, RTL); the default `'wrap'` is unchanged (a regression check).
 
