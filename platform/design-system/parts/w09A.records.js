@@ -93,7 +93,7 @@ DSParts.records.push(function (H) {
 
   /* ── 07 Data Display › Charts › Line chart: LineChart ── */
   var lineChart = { id: 'line-chart', lab: true, icon: 'chart', sec: 'data-display', sub: 'Charts', leaf: 'Line chart', title: 'Line chart',
-    plenix: 'LineChart', src: 'charts/LineChart.jsx', css: ['charts/line-chart.css'], blocks: ['plx-line-chart'], level: 'Component', interaction: 'Navigation', statesFrom: ['chart-interaction'],
+    plenix: 'LineChart', src: 'charts/LineChart.tsx', css: ['charts/line-chart.css'], blocks: ['plx-line-chart'], level: 'Component', interaction: 'Navigation', statesFrom: ['chart-interaction'],
     aliases: ['Line graph', 'Trend chart', 'Time series', 'Multi-line chart'],
     text: 'Lines through each series’ values over an ordered range, usually time, in ChartFrame with the value axis, the category or time axis, grid lines and the data table. Up to about five series take the categorical data-viz colors in their order, with an interactive legend. Points mark the values when there are few or the moments matter. A missing value is a gap, never a line across it. Interactive by default: one Tab stop, a crosshair with the shared tooltip under the pointer or the arrow keys, each value said in the live region, and an optional brush to zoom.',
     use: ['Change over time or another continuous measure', 'Comparing the trends of two to five series', 'zero={false} when the trend matters more than the size, said in the description', 'An overlay for a target or a threshold (ReferenceLine), a note on an outlier (ChartAnnotation)'],
@@ -118,7 +118,7 @@ DSParts.records.push(function (H) {
 
   /* ── 07 Data Display › Charts › Step chart: LineChart curve="step" ── */
   var stepChart = { id: 'step-chart', lab: true, icon: 'chart', sec: 'data-display', sub: 'Charts', leaf: 'Step chart', title: 'Step chart', purpose: 'Shows values that change at moments and hold in between, such as prices, plans or limits.',
-    plenix: 'LineChart curve="step"', src: 'charts/LineChart.jsx', css: ['charts/line-chart.css'], level: 'Component', interaction: 'Navigation', statesFrom: ['chart-interaction'], docsFrom: 'line-chart', variantClasses: [],
+    plenix: 'LineChart curve="step"', src: 'charts/LineChart.tsx', css: ['charts/line-chart.css'], level: 'Component', interaction: 'Navigation', statesFrom: ['chart-interaction'], docsFrom: 'line-chart', variantClasses: [],
     aliases: ['Step line', 'Staircase chart', 'Step-after line'],
     text: 'A line chart whose lines hold each value until the next change, then jump: prices, plans, limits, stock levels. It is LineChart with curve="step": step="after" (the default) changes at the next value, step="before" at this one. Points mark the moments of change.',
     use: ['Values that change at moments and hold in between: pricing tiers, quotas, inventory', 'points to mark each change', 'Saying in the description whether a step changes at the start or the end of a period'],
@@ -137,7 +137,7 @@ DSParts.records.push(function (H) {
 
   /* ── 07 Data Display › Charts › Area chart: AreaChart ── */
   var areaChart = { id: 'area-chart', lab: true, icon: 'chart', sec: 'data-display', sub: 'Charts', leaf: 'Area chart', title: 'Area chart',
-    plenix: 'AreaChart', src: 'charts/AreaChart.jsx', css: ['charts/line-chart.css'], blocks: ['plx-area-chart'], level: 'Component', interaction: 'Navigation', statesFrom: ['chart-interaction'],
+    plenix: 'AreaChart', src: 'charts/AreaChart.tsx', css: ['charts/line-chart.css'], blocks: ['plx-area-chart'], level: 'Component', interaction: 'Navigation', statesFrom: ['chart-interaction'],
     aliases: ['Stacked area chart', '100% area chart', 'Volume chart'],
     text: 'A line chart filled down to the zero baseline, to show a volume over time. Plain: one or two areas, see-through where they overlap. Stacked: each series sits on the one before it, so the top edge is the total. Percent: the stack fills 100% and the areas are the shares (the tooltip gives the share and the value). Built on LineChart: the same axes, table and interaction.',
     use: ['A volume or a total over time', 'stack="stacked" for parts that add up to a total, the most stable part first (at the bottom)', 'stack="percent" for how the shares change, not the total'],

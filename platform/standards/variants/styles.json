@@ -312,7 +312,7 @@
         "token": "--plx-comp-area-chart-stacked-fill-opacity"
       }
     ],
-    "why": "stack=\"stacked\" adds .plx-area-chart--stacked (LineChart.jsx), which sets the area's opacity"
+    "why": "stack=\"stacked\" adds .plx-area-chart--stacked (LineChart.tsx), which sets the area's opacity"
   },
   "area-chart--stack-percent": {
     "sets": [
@@ -322,7 +322,7 @@
         "token": "--plx-comp-area-chart-stacked-fill-opacity"
       }
     ],
-    "why": "stack=\"percent\" adds .plx-area-chart--stacked (LineChart.jsx), which sets the area's opacity"
+    "why": "stack=\"percent\" adds .plx-area-chart--stacked (LineChart.tsx), which sets the area's opacity"
   },
   "spinner--size-sm": {
     "sets": [

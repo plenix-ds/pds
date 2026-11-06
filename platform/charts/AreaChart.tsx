@@ -25,10 +25,11 @@
        series at the bottom of a stack (first in series). More than two overlapping areas: a line chart.
 */
 import React from 'react';
-import { SeriesChart } from './LineChart.jsx';
+import { SeriesChart } from './LineChart.tsx';
+import type { AreaChartProps } from './LineChart.tsx';
 
 const STACKS = ['none', 'stacked', 'percent'];
 
-export function AreaChart({ stack = 'none', ...props }) {
+export function AreaChart({ stack = 'none', ...props }: AreaChartProps) {
   return <SeriesChart {...props} kind="area" zero stack={STACKS.indexOf(stack) >= 0 ? stack : 'none'} />;
 }

@@ -1,4 +1,4 @@
-/* Plenix · LineChart and AreaChart (platform/charts/line-chart.css; the code is LineChart.jsx and AreaChart.jsx): the
+/* Plenix · LineChart and AreaChart (platform/charts/line-chart.css; the code is LineChart.tsx and AreaChart.tsx): the
    points on a line and the fill of an area. Lines, colors, axes and the focus ring are the frame's (system/charts.css)
    and the chart interaction's; every value here is a --plx-comp-line-chart-* or --plx-comp-area-chart-* token. */
 
