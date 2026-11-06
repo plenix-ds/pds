@@ -286,6 +286,7 @@ export default {
     "error": "تعذّر تحميل الخيارات",
     "emptyText": "لا توجد نتائج مطابقة",
     "removeItem": "إزالة {label}",
+    "moreChips": "{count} إضافية",
     "clear": "مسح",
     "create": "إنشاء “{text}”",
     "results": {
@@ -501,6 +502,9 @@ export default {
     "lastMonth": "الشهر الماضي"
   },
   "confirmAction": {
+    "title": "{verb} {name}؟",
+    "titleMany": "{verb} {count} {plural}؟",
+    "permanent": "لا يمكن التراجع عن هذا.",
     "confirm": "{verb}",
     "cancel": "إلغاء"
   },
