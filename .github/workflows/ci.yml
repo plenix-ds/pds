@@ -203,7 +203,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        tool: [tsc, eslint, stylelint, knip, system, style, opengrep]
+        tool: [tsc, eslint, stylelint, knip, system, style, types, opengrep]
     env:
       TOOL: ${{ matrix.tool }}
       BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
