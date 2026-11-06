@@ -49,6 +49,11 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
       // layout: columns left to right in reading order and rows top to bottom
       const xs = [...new Set(cells.map((c) => Math.round(c.cx)))].sort((a, b) => a - b), ys = [...new Set(cells.map((c) => Math.round(c.cy)))].sort((a, b) => a - b);
       assert.equal(xs.length, cal ? 3 : 4, T + 'the columns (' + xs.length + ')'); assert.equal(ys.length, cal ? 7 : 3, T + 'the rows (' + ys.length + ')');
+      // the gap between neighbours is a tenth of a step (as the band scale left it), and the cells keep their rounded corners (G2: the look must not change with the engine)
+      const row0 = cells.filter((c) => Math.abs(c.cy - cells[0].cy) < 2).sort((a, b) => a.l - b.l);
+      if (row0.length > 1) { const step = row0[1].l - row0[0].l, gap = step - row0[0].w; assert.ok(Math.abs(gap - step * 0.1) <= 1.5, T + 'the gap is a tenth of a step (' + gap.toFixed(1) + ' of ' + step.toFixed(1) + ')'); }
+      const rounded = await page.evaluate(() => [...document.querySelectorAll('.plx-heat-map .plx-chart__engine svg path')].some((e) => /[AaCcQq]/.test(e.getAttribute('d') || '')));
+      assert.ok(rounded, T + 'the cells have rounded corners');
       if (cal) cells.forEach((c) => assert.ok(Math.abs(c.w - c.h) <= 2, T + 'the calendar\'s cells are square'));
       const text = await page.evaluate(() => document.querySelector('.plx-heat-map').textContent);
       if (!cal) { for (const w of ROWS.concat(COLS)) assert.ok(text.includes(w), T + 'the name ' + w + ' is written'); } else { assert.ok(/Mon/.test(text) && /Jan/.test(text), T + 'weekday and month names are written'); }

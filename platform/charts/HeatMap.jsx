@@ -141,7 +141,7 @@ export function HeatMap({ title, description, variant = 'matrix', rows = [], col
     // the room beside and above the cells for the row and column names (the old frame's margins)
     const m = Object.assign(calendar ? { top: 24, start: 40 } : {}, margin);
     const left = m.start !== undefined ? m.start : Math.max(32, Math.ceil(rowNames.reduce((n, x) => Math.max(n, String(x).length), 0) * 7 + tk.tickOffset * 2));
-    return { left, top: m.top !== undefined ? m.top : 0, right: m.end !== undefined ? m.end : 8, bottom: calendar ? (m.bottom !== undefined ? m.bottom : 0) : (m.bottom !== undefined ? m.bottom : Math.ceil(tk.tick.fontSize + tk.tickOffset * 2)) };
+    return { left, top: m.top !== undefined ? m.top : 0, right: m.end !== undefined ? m.end : 8, bottom: calendar ? (m.bottom !== undefined ? m.bottom : 24) : (m.bottom !== undefined ? m.bottom : Math.ceil(tk.tick.fontSize + tk.tickOffset * 2)) };
   };
   // the grid in pixels: the calendar's cells are square (the smaller of the two steps)
   const gridOf = (tk, dims) => {
@@ -151,7 +151,7 @@ export function HeatMap({ title, description, variant = 'matrix', rows = [], col
     return { left: rm.left, top: rm.top, width: st * nCols, height: st * 7 };
   };
   const option = React.useCallback((tk, dims) => {
-    const g = gridOf(tk, dims), step = Math.min(g.width / Math.max(1, nCols), g.height / Math.max(1, rowNames.length)), gap = Math.round(step * GAP * 100) / 100;
+    const g = gridOf(tk, dims);
     const hm = tk.heatmap;
     const thin = Math.max(1, Math.ceil(nCols / Math.max(2, Math.floor(g.width / 48))));
     const monthAt = calendar ? new Set(cols0(nCols).filter((c) => { const d = cal.cells[c * 7].date; const prev = c ? cal.cells[(c - 1) * 7].date : null; return !prev || prev.getMonth() !== d.getMonth(); })) : null;
@@ -162,10 +162,15 @@ export function HeatMap({ title, description, variant = 'matrix', rows = [], col
       grid: { left: g.left, top: g.top, width: g.width, height: g.height, outerBoundsMode: 'none' },
       xAxis: Object.assign({ type: 'category', data: cols0(nCols).map(String), position: calendar ? 'top' : 'bottom', axisLine: { show: false }, axisLabel: { interval: (i) => (calendar ? months.indexOf(i) >= 0 : i % thin === 0), formatter: (v) => (calendar ? new Intl.DateTimeFormat(locale, { month: 'short' }).format(cal.cells[Number(v) * 7].date) : String(columns[Number(v)])), hideOverlap: false } }, named),
       yAxis: Object.assign({ type: 'category', data: rowNames.map((x, r) => String(r)), inverse: true, axisLine: { show: false }, axisLabel: { interval: (i) => (calendar ? i === 1 || i === 3 || i === 5 : true), formatter: (v) => String(rowNames[Number(v)]) } }, named),
-      series: [{ type: 'heatmap', id: 'cells', silent: true, progressive: 0, emphasis: { disabled: true },
-        data: cellList.map((x) => (x.value === null
-          ? { value: [x.c, x.r, 0], itemStyle: { color: hm.empty, borderColor: hm.emptyEdge, borderWidth: hm.edgeWidth || 1, borderType: [hm.dash, hm.dash], borderRadius: hm.radius } }
-          : { value: [x.c, x.r, x.value], itemStyle: { color: tk.color(datavizStep(sc, x.value, lo, hi)), borderColor: hm.surface, borderWidth: gap, borderRadius: hm.radius } })) }],
+      // one rounded rectangle per cell, set in by the gap of the old band scale (a gap is a tenth of a step, per axis); a missing value is an empty cell with a dashed edge
+      series: [{ type: 'custom', id: 'cells', silent: true, progressive: 0, coordinateSystem: 'none', clip: false,
+        data: cellList.map((x) => [x.c, x.r, x.value === null ? 0 : x.value, x.value === null ? 1 : 0]),
+        renderItem: (params, api) => {
+          const c = api.value(0), r = api.value(1), v = api.value(2), mt = api.value(3) === 1;
+          const sx = g.width / (nCols - GAP), sy = g.height / (rowNames.length - GAP);
+          const shape = { x: g.left + c * sx, y: g.top + r * sy, width: sx * (1 - GAP), height: sy * (1 - GAP), r: hm.radius };
+          return { type: 'rect', shape, style: mt ? { fill: hm.empty, stroke: hm.emptyEdge, lineWidth: hm.edgeWidth || 1, lineDash: [hm.dash, hm.dash] } : { fill: tk.color(datavizStep(sc, v, lo, hi)) } };
+        } }],
     };
   }, [dataKey]);   // eslint-disable-line react-hooks/exhaustive-deps
 
