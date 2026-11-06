@@ -117,6 +117,11 @@ let babel;
 async function parser() { return (babel ||= (await import('@babel/parser')).default || (await import('@babel/parser'))); }
 
 const hasWords = (s) => /[A-Za-z\u0600-\u06FF]{2,}/.test(s);
+// product names stay as written in every language (docs/i18n/arabic.md: names and identifiers stay Latin)
+const BRANDS = new Set(['Plenix']);
+// a component's prop value that is one lowercase word ("none", "eager") is a setting, not text a person reads
+const isSetting = (element, value) => /^[A-Z]/.test(element || '') && /^[a-z][a-z0-9-]*$/.test(value);
+const jsxName = (n) => (n && n.type === 'JSXIdentifier' ? n.name : n && n.type === 'JSXMemberExpression' ? jsxName(n.object) + '.' + n.property.name : '');
 function walkAst(node, visit) {
   if (!node || typeof node.type !== 'string') return;
   visit(node);
@@ -137,14 +142,16 @@ export async function checkJsx(text, file) {
     return [{ rule: 'jsx-literal', file, message: `could not parse: ${String(e.message).replace(/\s*\(\d+:\d+\)/, '')}`, line: 0 }];
   }
   const out = [];
+  let element = '';
   walkAst(ast.program, (n) => {
+    if (n.type === 'JSXOpeningElement') element = jsxName(n.name);
     if (n.type === 'JSXText') {
       const t = n.value.replace(/\s+/g, ' ').trim();
-      if (hasWords(t)) out.push({ rule: 'jsx-literal', file, message: `text "${t.slice(0, 60)}"`, line: n.loc.start.line });
+      if (hasWords(t) && !BRANDS.has(t)) out.push({ rule: 'jsx-literal', file, message: `text "${t.slice(0, 60)}"`, line: n.loc.start.line });
     } else if (n.type === 'JSXAttribute' && n.name && VISIBLE_ATTRS.has(n.name.name)) {
       const v = n.value && (n.value.type === 'StringLiteral' ? n.value
         : n.value.type === 'JSXExpressionContainer' && n.value.expression.type === 'StringLiteral' ? n.value.expression : null);
-      if (v && hasWords(v.value)) out.push({ rule: 'jsx-literal', file, message: `${n.name.name}="${v.value.slice(0, 60)}"`, line: n.loc.start.line });
+      if (v && hasWords(v.value) && !BRANDS.has(v.value) && !isSetting(element, v.value)) out.push({ rule: 'jsx-literal', file, message: `${n.name.name}="${v.value.slice(0, 60)}"`, line: n.loc.start.line });
     }
   });
   return out;

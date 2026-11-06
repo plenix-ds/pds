@@ -1684,7 +1684,7 @@
       text: 'Before adding an item: search the canonical names and aliases; decide whether it is a new component, a variant, a composite, a pattern or an implementation detail; confirm its primary purpose; give it one canonical home; add aliases and source mappings; define accessibility and responsive behavior; link related items; assign a status and owner. Add one when it solves a distinct problem, has its own anatomy or behavior, or has its own accessibility requirements. Do not add one that differs only by color, radius, shadow, density or branding, or that is a familiar variant, a wrapper or a rename.',
       use: ['Every new Platform piece'], avoid: [], related: ['component-lifecycle', 'react', 'css-architecture'], guide: { render: 'placement' } },
     { id: 'changelog', sec: 'implementation', sub: 'Governance', leaf: 'Changelog', level: 'Utility', interaction: 'Utility', aliases: ['Audit log', 'Batches'],
-      text: 'Every release is recorded in CHANGELOG.md: new work under Unreleased, with Breaking and Deprecated entries called out. Package users see the same notes on GitHub releases.',
+      text: 'Every release is recorded in CHANGELOG.md. Each change writes its own fragment in changelog.d/, and the release collects the fragments, with Breaking and Deprecated entries called out. Package users see the same notes on GitHub releases.',
       use: [], avoid: [], related: ['component-lifecycle'], guide: { render: 'changelog' } }
   ];
 
