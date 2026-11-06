@@ -690,3 +690,13 @@
   options: [the save's own path with info.source (chosen), always onCellEdit per field (as first built)]
   status: active
   check: G3 review of #647 and its test (only onRecordEdit; Ctrl+Z calls it with the previous values and source undo)
+
+- id: D-0078
+  date: 2026-11-06
+  area: process
+  decided_by: owner (chat, 2026-11-06, plenix-ds/pds#476)
+  decision: 'Where a Microsoft standard exists, it is accepted by default: Microsoft Arabic terminology (Microsoft Language Portal and style guide) and Microsoft product conventions (Windows, Office, Fluent 2). A proposal that follows it needs no owner approval; agents apply it and say so in one line. This covers new Arabic words that are Microsoft terms (it narrows D-0012 to words with no Microsoft term). The owner''s own explicit decisions still win over a Microsoft standard.'
+  why: 'Owner, 2026-11-06: "Use b Microsoft''s standard. As a default from now on. Anything that is a Microsoft standard to accept it by default."'
+  options: ['Microsoft standard accepted by default (chosen)', 'owner approves each choice']
+  status: active
+  check: 'review-only (the i18n proposal and decision cards cite the Microsoft source; pds1-i18n-engineer marks Microsoft-term rows as pre-approved)'
