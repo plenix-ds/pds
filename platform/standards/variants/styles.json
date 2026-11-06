@@ -2608,6 +2608,66 @@
     "sets": [],
     "why": "guidance, not a styled variation: it is writing guidance for messages, with no component style"
   },
+  "comment--variant-default": {
+    "sets": [],
+    "why": "markup only: a person, a timestamp and the plain text body"
+  },
+  "comment--variant-edited": {
+    "sets": [],
+    "why": "markup only: adds the edited mark (edited flag)"
+  },
+  "comment--variant-own": {
+    "sets": [],
+    "why": "markup only: the viewer's own comment, which offers the Edit action (own flag)"
+  },
+  "comment--variant-resolved": {
+    "sets": [],
+    "why": "markup only: shows the comment as resolved (resolved flag)"
+  },
+  "comment--variant-with-reactions": {
+    "sets": [],
+    "why": "markup only: adds reaction buttons with their counts, active ones marked (reactions)"
+  },
+  "comment-thread--variant-thread": {
+    "sets": [],
+    "why": "markup only: an ordered list of comments, oldest first"
+  },
+  "comment-thread--variant-reply-composer": {
+    "sets": [],
+    "why": "markup only: adds a reply composer; blank text is not submitted, and the draft stays when a save fails"
+  },
+  "comment-thread--variant-resolved": {
+    "sets": [],
+    "why": "markup only: marks the thread resolved and disables replies"
+  },
+  "copy-button--form-icon-default": {
+    "sets": [],
+    "why": "markup only: an icon button beside the value"
+  },
+  "copy-button--form-with-label": {
+    "sets": [],
+    "why": "markup only: the icon with its label (showLabel)"
+  },
+  "copy-button--form-in-a-field": {
+    "sets": [],
+    "why": "markup only: the value in a read-only field with the button joined at its end (field)"
+  },
+  "copy-button--state-copied": {
+    "sets": [],
+    "why": "markup only: the icon turns to a check and the label to Copied for a moment, and the result is announced"
+  },
+  "connected-accounts--status-connect": {
+    "sets": [],
+    "why": "markup only: the service shows a Not connected Badge and a Connect action that first says what Plenix will be able to do"
+  },
+  "connected-accounts--status-connected": {
+    "sets": [],
+    "why": "markup only: the service shows a Connected Badge, the linked account in the data font and a Disconnect action that asks first"
+  },
+  "connected-accounts--status-error": {
+    "sets": [],
+    "why": "markup only: the service shows a Connection error Badge, says why, and offers Reconnect"
+  },
   "tour--variant-resume": {
     "sets": [],
     "why": "markup only: the variation shows or hides the tour's own buttons (skip, resume, steps); the stylesheet has no modifier for it"
