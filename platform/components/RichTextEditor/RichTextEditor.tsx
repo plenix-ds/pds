@@ -204,7 +204,9 @@ const HEX = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i;
 // its column group, a task item with the Platform checkbox, the mention node (its suggestion list only when the editor
 // has a mentions slot), Plenix's Ctrl+K and the announcements of the format shortcuts
 type Words = Record<string, string>;
-type MentionItem = { value: string | number; label: string; description?: string };
+/** @public a mention option: { value, label, description } (ADR 0011) */
+export type RichTextEditorMention = { value: string | number; label: string; description?: string };
+type MentionItem = RichTextEditorMention;
 type SuggestProps = { items?: MentionItem[]; clientRect?: (() => DOMRect | null) | null; command?: (attrs: { id: string | number; label: string }) => void } | null;
 type MentionState = { items: MentionItem[]; active: number; x: number; y: number; command?: (attrs: { id: string | number; label: string }) => void };
 type EditorOptions = {
