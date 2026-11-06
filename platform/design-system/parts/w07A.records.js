@@ -21,7 +21,7 @@ DSParts.records.push(function (H) {
   var cal = function (props) { return function () { return h(Cal, props); }; };
   var WEEKEND = function (iso) { var d = new Date(iso + 'T12:00:00').getDay(); return d === 0 || d === 6; };
   var calendar = { id: 'calendar', lab: true, icon: 'calendar', sec: 'forms', sub: 'Date, time, and color', leaf: 'Calendar', title: 'Calendar',
-    plenix: 'Calendar', src: 'components/Calendar/Calendar.jsx', level: 'Component', interaction: 'Selection',
+    plenix: 'Calendar', src: 'components/Calendar/Calendar.tsx', level: 'Component', interaction: 'Selection',
     aliases: ['Month view', 'Date grid', 'Mini calendar', 'Calendar picker'],
     text: 'A month of days to choose a date or a range from, laid out as the reader’s locale writes a week: its first day of the week, its month and weekday names. Today is marked as DateBadge marks it (the number on the action color), the chosen day in the selected state, and a range in the selected fill between its two ends. The days are one grid with one Tab stop. Days that cannot be chosen stay reachable and are announced as unavailable. A second month can sit beside the first, and the ISO week numbers can sit before each week.',
     use: ['Inside DatePicker, where people choose a date near today', 'On its own where the date is chosen while its week is in view: a booking, a schedule', 'min and max (or isDateDisabled) whenever some dates cannot be chosen; say why in help text', 'Two months for a range that crosses a month’s end'],

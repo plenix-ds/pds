@@ -80,7 +80,7 @@ import { InputGroup } from '../InputGroup/InputGroup.tsx';
 import { Popover } from '../Popover/Popover.tsx';
 import { Tooltip } from '../Tooltip/Tooltip.tsx';
 import { useTruncated } from '../../utils/overflow.ts';
-import { Calendar, parseIsoDate, addDays, addMonths, todayIso } from '../Calendar/Calendar.jsx';
+import { Calendar, parseIsoDate, addDays, addMonths, todayIso } from '../Calendar/Calendar.tsx';
 import CalendarIcon from 'plenix-platform/icons/plenix/calendar';
 import { useStrings, useTimeZone } from '../../providers/LocaleProvider.tsx';
 import { useReadOnly } from '../../providers/ReadOnly.tsx';
