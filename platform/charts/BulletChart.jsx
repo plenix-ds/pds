@@ -31,7 +31,7 @@ import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatNumber } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.jsx';
-import { ChartTooltip } from './parts/ChartTooltip.jsx';
+import { ChartTooltip } from './parts/ChartTooltip.tsx';
 import { useChartHover, finite } from './chart-kit.js';
 import { useEChartsPlot, plotGrid } from './echarts/EChartsPlot.jsx';
 import { gridRoom } from './chart-helpers.js';

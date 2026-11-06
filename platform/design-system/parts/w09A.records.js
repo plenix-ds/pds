@@ -48,7 +48,7 @@ DSParts.records.push(function (H) {
 
   /* ── 07 Data Display › Charts › Chart interaction: useChartInteraction and ChartFrame's interaction ── */
   var chartInteraction = { id: 'chart-interaction', lab: true, icon: 'select', sec: 'data-display', sub: 'Charts', leaf: 'Chart interaction', title: 'Chart interaction',
-    plenix: 'useChartInteraction, ChartFrame interaction, ChartFocusMark, ChartBrush, chartAnnounce, chartTooltipText', src: 'charts/interaction.js', also: ['charts/ChartFrame.jsx', 'charts/parts/ChartTooltip.jsx'], css: ['charts/chart-interaction.css'],
+    plenix: 'useChartInteraction, ChartFrame interaction, ChartFocusMark, ChartBrush, chartAnnounce, chartTooltipText', src: 'charts/interaction.js', also: ['charts/ChartFrame.jsx', 'charts/parts/ChartTooltip.tsx'], css: ['charts/chart-interaction.css'],
     level: 'Foundation', interaction: 'Navigation',
     aliases: ['Chart keyboard navigation', 'Crosshair', 'Hover tooltip', 'Brush', 'Zoom', 'Legend toggle', 'Drill down', 'Point selection'],
     text: 'How people explore every Plenix chart. The plot is one Tab stop: the arrow keys move between the values (columns across, series or rows up and down). The value in focus or under the pointer shows the chart tooltip and is said in the live region; a crosshair follows lines and areas. A click or Enter selects a value. Legend toggles show and hide series (the last one stays). A brush (a drag, or Shift with the arrow keys and Enter) zooms to a range; Reset zoom above the plot brings everything back. While one value is active in a chart of points, the other series step back. The chart keeps its geometry and the interaction keeps indices, so a resize or a zoom never loses the value in focus.',

@@ -34,7 +34,7 @@ import { cx } from '../utils/cx.ts';
 import { formatNumber, formatPercent } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.jsx';
 import { seriesColor } from './scales.js';
-import { ChartTooltip } from './parts/ChartTooltip.jsx';
+import { ChartTooltip } from './parts/ChartTooltip.tsx';
 import { useChartPoints } from './a11y.js';
 import { useEChartsPlot } from './echarts/EChartsPlot.jsx';
 import { useStrings } from '../providers/LocaleProvider.tsx';

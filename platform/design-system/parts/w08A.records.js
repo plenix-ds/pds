@@ -52,7 +52,7 @@ DSParts.records.push(function (H) {
       frame: { legend: h(P.ChartLegend, { items: legendItems(), shape: 'line', interactive: true, hidden: s[0], onToggle: function (id, visible) { s[1](visible ? s[0].filter(function (x) { return x !== id; }) : s[0].concat([id])); } }) } }));
   };
   var chartLegend = { id: 'chart-legend', lab: true, icon: 'list-bullets', sec: 'data-display', sub: 'Charts', leaf: 'Chart legend', title: 'Chart legend',
-    plenix: 'ChartLegend, ChartFrame legend', src: 'charts/parts/ChartLegend.jsx', also: ['charts/ChartFrame.jsx'], css: CSS, blocks: ['plx-chart-legend'],
+    plenix: 'ChartLegend, ChartFrame legend', src: 'charts/parts/ChartLegend.tsx', also: ['charts/ChartFrame.jsx'], css: CSS, blocks: ['plx-chart-legend'],
     level: 'Foundation', interaction: 'Selection',
     aliases: ['Legend', 'Key', 'Series key', 'Color key', 'Interactive legend'],
     text: 'The key to a chart’s series: each series’ swatch in its data-viz color, its name and, when it helps, its value (a total, a share) in the data font. It is real text in the frame, so assistive technology reads the series names (ChartFrame legend: under the plot by default, above it in a tight card, beside it with legendPosition="end"). When interactive, each item is a toggle button (aria-pressed) that shows or hides its series; a hidden series keeps its place with a hollow swatch, and the last one shown cannot be hidden.',
@@ -85,7 +85,7 @@ DSParts.records.push(function (H) {
     } }));
   };
   var chartTooltip = { id: 'chart-tooltip', lab: true, icon: 'message', sec: 'data-display', sub: 'Charts', leaf: 'Chart tooltip', title: 'Chart tooltip',
-    plenix: 'ChartTooltip', src: 'charts/parts/ChartTooltip.jsx', css: CSS, blocks: ['plx-chart-tooltip'], level: 'Foundation', interaction: 'Overlay',
+    plenix: 'ChartTooltip', src: 'charts/parts/ChartTooltip.tsx', css: CSS, blocks: ['plx-chart-tooltip'], level: 'Foundation', interaction: 'Overlay',
     aliases: ['Data tooltip', 'Chart callout', 'Crosshair tooltip', 'Shared tooltip'],
     text: 'Shows the exact values at one place on a chart, where the pointer or the keyboard is: one point’s value (single), or every series’ value at one x position with a crosshair line down the plot (shared). It sits beside the point on the side with room, on the popover’s surface. Its heading is the point’s category or date; each value follows its series’ swatch and name, in the data font. It does not take the pointer, so the marks stay reachable as the pointer moves along the chart.',
     use: ['Every interactive chart, for the exact values the axes only approximate', 'shared on line and area charts with several series: one tooltip lists them all at that x, in the legend’s order',
@@ -117,7 +117,7 @@ DSParts.records.push(function (H) {
     });
   };
   var dataLabel = { id: 'chart-data-label', lab: true, icon: 'tags', sec: 'data-display', sub: 'Charts', leaf: 'Data label', title: 'Data label',
-    plenix: 'DataLabel', src: 'charts/parts/DataLabel.jsx', css: CSS, blocks: ['plx-chart-data-label'], level: 'Foundation', interaction: 'Static',
+    plenix: 'DataLabel', src: 'charts/parts/DataLabel.tsx', css: CSS, blocks: ['plx-chart-data-label'], level: 'Foundation', interaction: 'Static',
     aliases: ['Value label', 'Direct label', 'Mark label'],
     text: 'A value written on the chart beside its mark, in the data font: above a column (top), after the end of a bar (end), or centered on a point or a slice with a halo in the surface color (center), so it stays readable over a line or a mark. A number is formatted in the reader’s locale; a string is shown as it is.',
     use: ['Bar and column charts with few marks where the exact values matter', 'The values people compare: the last, the highest, the target, rather than every mark', 'The axis’s format and precision'],
@@ -137,7 +137,7 @@ DSParts.records.push(function (H) {
 
   /* ── 07 Data Display › Charts › Axis: Axis ── */
   var chartAxis = { id: 'chart-axis', lab: true, icon: 'horizontal-rule', sec: 'data-display', sub: 'Charts', leaf: 'Axis', title: 'Axis',
-    plenix: 'Axis, scalePosition, scaleTicks, scaleLabel', src: 'charts/parts/Axis.jsx', also: ['charts/parts/position.js'], css: CSS.concat(['system/charts.css']), blocks: ['plx-chart-axis'],
+    plenix: 'Axis, scalePosition, scaleTicks, scaleLabel', src: 'charts/parts/Axis.tsx', also: ['charts/parts/position.ts'], css: CSS.concat(['system/charts.css']), blocks: ['plx-chart-axis'],
     level: 'Foundation', interaction: 'Static',
     aliases: ['Chart axis', 'Value axis', 'Category axis', 'Time axis', 'Axis title'],
     text: 'A scale along one side of the plot: its tick labels at the scale’s ticks (the middle of each band on a band scale), in the data font and the reader’s locale, the axis line where it is the baseline, and an optional axis title naming the measure and its unit. Bottom and left are the usual pair; right and top are for a second unit or a chart read from the top.',
@@ -171,7 +171,7 @@ DSParts.records.push(function (H) {
 
   /* ── 07 Data Display › Charts › Grid line: GridLines ── */
   var chartGrid = { id: 'chart-grid-line', lab: true, icon: 'grid-2x2', sec: 'data-display', sub: 'Charts', leaf: 'Grid line', title: 'Grid line',
-    plenix: 'GridLines', src: 'charts/parts/GridLines.jsx', css: ['system/charts.css'].concat(CSS), blocks: ['plx-chart-grid'], level: 'Foundation', interaction: 'Static',
+    plenix: 'GridLines', src: 'charts/parts/GridLines.tsx', css: ['system/charts.css'].concat(CSS), blocks: ['plx-chart-grid'], level: 'Foundation', interaction: 'Static',
     aliases: ['Gridlines', 'Chart grid', 'Major grid lines'],
     text: 'Thin lines across the plot at the ticks of one scale, behind the marks, in the subtle border color, so values can be read against the axis. Horizontal lines follow a vertical value axis (columns and lines); vertical lines follow a horizontal one (bars, time).',
     use: ['Horizontal grid lines on column and line charts, vertical ones on bar charts', 'The same ticks as the axis beside them (the ticks prop on both)', 'Drawn first, so every mark sits on top'],
@@ -202,7 +202,7 @@ DSParts.records.push(function (H) {
   };
   var pct = function (v) { return v + '%'; };
   var referenceLine = { id: 'chart-reference-line', lab: true, icon: 'horizontal-rule', sec: 'data-display', sub: 'Charts', leaf: 'Reference line', title: 'Reference line',
-    plenix: 'ReferenceLine', src: 'charts/parts/ReferenceLine.jsx', css: CSS, blocks: ['plx-chart-reference'], variantClasses: ['plx-chart-reference--y', 'plx-chart-reference--x'], level: 'Foundation', interaction: 'Static',
+    plenix: 'ReferenceLine', src: 'charts/parts/ReferenceLine.tsx', css: CSS, blocks: ['plx-chart-reference'], variantClasses: ['plx-chart-reference--y', 'plx-chart-reference--x'], level: 'Foundation', interaction: 'Static',
     aliases: ['Rule', 'Target line', 'Average line', 'Marker line', 'Event line'],
     covers: [],
     text: 'A labeled, dashed line across the chart at a value that gives context: a target, an average, last year’s figure (horizontal, on the value axis), or a date such as a release (vertical, on the time axis). Its name and value sit at its end (or the top of the plot), the value in the data font. The dash tells it from a series, which is solid; kind="threshold" is the same line for a limit, in an alert color.',
@@ -219,7 +219,7 @@ DSParts.records.push(function (H) {
         ['Horizontal (a value)', function () { return box(560, h(Columns, { extra: function (d, x, y) { return h(P.ReferenceLine, { scale: y, value: avg, inner: d.inner, label: 'Average' }); } })); }, 'plx-chart-reference--y', 'axis=' + q('y')],
         ['Vertical (a date)', function () { return box(560, h(Weekly, { description: 'Use climbed after the September 13 release.', lines: function (d, x) { return h(P.ReferenceLine, { axis: 'x', scale: x, value: new Date(2026, 8, 13), inner: d.inner, label: 'Release 3.2', showValue: false }); } })); }, 'plx-chart-reference--x', 'axis=' + q('x')]], { prop: 'axis' }]] };
   var threshold = { id: 'chart-threshold', lab: true, icon: 'warning', sec: 'data-display', sub: 'Charts', leaf: 'Threshold', title: 'Threshold', purpose: 'Marks a limit the data should stay under or above, so values past it stand out.',
-    plenix: 'ReferenceLine kind="threshold"', src: 'charts/parts/ReferenceLine.jsx', css: CSS, blocks: ['plx-chart-reference'], variantClasses: ['plx-chart-reference--threshold'],
+    plenix: 'ReferenceLine kind="threshold"', src: 'charts/parts/ReferenceLine.tsx', css: CSS, blocks: ['plx-chart-reference'], variantClasses: ['plx-chart-reference--threshold'],
     level: 'Foundation', interaction: 'Static', docsFrom: 'chart-reference-line',
     aliases: ['Limit line', 'Alert line', 'SLA line', 'Budget line'],
     text: 'A limit the data should stay under or above (a service level, a budget, a quota), drawn as a dashed line a step heavier than a reference line, in the data-viz alert colors: warning, or critical for the limit that matters most. Its name and value are written at its end, so color is never the only cue.',
@@ -239,7 +239,7 @@ DSParts.records.push(function (H) {
 
   /* ── 07 Data Display › Charts › Annotation: ChartAnnotation ── */
   var chartAnnotation = { id: 'chart-annotation', lab: true, icon: 'pin', sec: 'data-display', sub: 'Charts', leaf: 'Annotation', title: 'Chart annotation',
-    plenix: 'ChartAnnotation', src: 'charts/parts/ChartAnnotation.jsx', css: CSS, blocks: ['plx-chart-annotation'], level: 'Foundation', interaction: 'Static',
+    plenix: 'ChartAnnotation', src: 'charts/parts/ChartAnnotation.tsx', css: CSS, blocks: ['plx-chart-annotation'], level: 'Foundation', interaction: 'Static',
     aliases: ['Chart note', 'Callout', 'Event marker', 'Highlighted range'],
     text: 'A short note on a chart that explains what happened: a ring on one data point with a leader line to its note (above it, or under it when the point is high), or a shaded span of the plot behind the marks with its name at its top (a sale, an outage). It is not a comment thread: that is Collaboration › Annotation.',
     use: ['Outliers, outages, launches and changes in how data is counted', 'One or two notes per chart, a few words each, sentence case', 'The same note in the chart’s description or the data grid'],

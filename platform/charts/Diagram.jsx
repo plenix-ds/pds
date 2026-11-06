@@ -43,7 +43,7 @@ import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatList } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.jsx';
-import { ChartTooltip, chartTooltipText } from './parts/ChartTooltip.jsx';
+import { ChartTooltip, chartTooltipText } from './parts/ChartTooltip.tsx';
 import { useChartInteraction } from './interaction.js';
 import { graphLayers, graphNeighbors, useGraphView, directionalMove } from './NetworkGraph.jsx';
 import { useStrings } from '../providers/LocaleProvider.tsx';

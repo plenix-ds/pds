@@ -19,15 +19,24 @@
        written. Use the lines of one direction in most charts: horizontal for columns and lines, vertical for bars.
 */
 import React from 'react';
+import type { ChartScale, ChartInner, ChartTicks } from '../chart-types.ts';
 import { cx } from '../../utils/cx.ts';
-import { scalePosition, scaleTicks } from './position.js';
+import { scalePosition, scaleTicks } from './position.ts';
 
-export function GridLines({ scale, direction = 'horizontal', inner, ticks, className }) {
+/** @public */
+export type GridLinesProps = {
+  scale: ChartScale;
+  direction?: 'horizontal' | 'vertical';
+  inner: ChartInner;
+  ticks?: ChartTicks;
+  className?: string;
+};
+export function GridLines({ scale, direction = 'horizontal', inner, ticks, className }: GridLinesProps) {
   if (!scale || !inner) return null;
   const d = direction === 'vertical' ? 'vertical' : 'horizontal';
   return (
     <g className={cx('plx-chart-grid', 'plx-chart-grid--' + d, className)}>
-      {scaleTicks(scale, ticks).map((v, i) => {
+      {scaleTicks(scale, ticks).map((v: any, i: any) => {
         const p = scalePosition(scale, v);
         if (p === undefined) return null;
         return d === 'horizontal'

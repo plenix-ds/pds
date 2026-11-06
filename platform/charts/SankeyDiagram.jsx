@@ -32,7 +32,7 @@ import { cx } from '../utils/cx.ts';
 import { formatNumber } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.jsx';
 import { seriesColor } from './scales.js';
-import { ChartTooltip } from './parts/ChartTooltip.jsx';
+import { ChartTooltip } from './parts/ChartTooltip.tsx';
 import { useChartHover, finite } from './chart-kit.js';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 

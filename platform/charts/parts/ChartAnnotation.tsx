@@ -24,12 +24,22 @@
        the chart-parts tokens (existing roles: content colors and the sunken surface).
 */
 import React from 'react';
+import type { ChartInner } from '../chart-types.ts';
 import { cx } from '../../utils/cx.ts';
 
 // SVG geometry, in pixels on the 4px grid: the ring's radius and the leader line's length
 const RING = 6, LEADER = 24;
 
-export function ChartAnnotation({ x, y, x2, inner, kind = 'point', label, placement = 'top', className }) {
+/** @public */
+export type ChartAnnotationProps = {
+  x: number; y?: number; x2?: number;
+  inner: ChartInner;
+  kind?: 'point' | 'range';
+  label: string;
+  placement?: 'top' | 'bottom';
+  className?: string;
+};
+export function ChartAnnotation({ x, y, x2, inner, kind = 'point', label, placement = 'top', className }: ChartAnnotationProps) {
   if (x === undefined || x === null || !inner) return null;
   if (kind === 'range') {
     const a = Math.min(x, x2 === undefined ? x : x2), b = Math.max(x, x2 === undefined ? x : x2);

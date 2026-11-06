@@ -39,7 +39,7 @@ import { formatNumber, formatDate, formatLocale, numeralLocale, parseDate } from
 import { datavizStep, DATAVIZ_SCALES } from '../utils/dataviz.ts';
 import { ChartFrame } from './ChartFrame.jsx';
 import { useEChartsPlot } from './echarts/EChartsPlot.jsx';
-import { ChartTooltip, chartTooltipText } from './parts/ChartTooltip.jsx';
+import { ChartTooltip, chartTooltipText } from './parts/ChartTooltip.tsx';
 import { useChartInteraction } from './interaction.js';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 
