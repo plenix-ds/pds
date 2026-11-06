@@ -219,18 +219,18 @@ t('LineChart', 'component', 'M', 8, 'A', ['chart-parts'], ['line', 'step', 'mult
 t('AreaChart', 'component', 'S', 8, 'A', ['LineChart'], ['area', 'stacked', 'percent'], '', ['platform/charts/AreaChart.tsx']);
 t('BarChart', 'component', 'M', 8, 'B', ['chart-parts'], ['bar (horizontal)', 'column (vertical)', 'grouped', 'stacked', 'percent', 'histogram (binned)'], '', ['platform/charts/BarChart.jsx']);
 t('ComboChart', 'component', 'S', 8, 'B', ['BarChart'], ['bar + line', 'two axes'], '', ['platform/charts/ComboChart.jsx']);
-t('LollipopChart', 'component', 'S', 8, 'B', ['chart-parts'], ['horizontal', 'vertical'], '', ['platform/charts/LollipopChart.jsx']);
+t('LollipopChart', 'component', 'S', 8, 'B', ['chart-parts'], ['horizontal', 'vertical'], '', ['platform/charts/LollipopChart.tsx']);
 t('Sparkline', 'component', 'S', 8, 'C', ['ChartKit'], ['line', 'area', 'bar', 'with last point'], '', ['platform/charts/Sparkline.tsx']);
 t('Metric', 'extend', 'S', 8, 'C', ['Sparkline'], ['card with trend'], 'Metric card = Card + Metric + Sparkline', EX.Metric);
-t('PieChart', 'component', 'M', 8, 'C', ['chart-parts'], ['pie', 'donut', 'with center value', 'half'], '', ['platform/charts/PieChart.jsx']);
+t('PieChart', 'component', 'M', 8, 'C', ['chart-parts'], ['pie', 'donut', 'with center value', 'half'], '', ['platform/charts/PieChart.tsx']);
 t('ScatterChart', 'component', 'M', 8, 'C', ['chart-parts'], ['scatter', 'bubble (size)', 'with trend line'], '', ['platform/charts/ScatterChart.jsx']);
 t('Gauge', 'component', 'S', 8, 'B', ['ChartKit'], ['semicircle', 'with thresholds'], '', ['platform/charts/Gauge.tsx']);
-t('BulletChart', 'component', 'S', 8, 'B', ['chart-parts'], ['horizontal', 'vertical'], '', ['platform/charts/BulletChart.jsx']);
+t('BulletChart', 'component', 'S', 8, 'B', ['chart-parts'], ['horizontal', 'vertical'], '', ['platform/charts/BulletChart.tsx']);
 
 /* ───────── wave 9: charts 2 and visualizations ───────── */
 t('HeatMap', 'component', 'M', 9, 'A', ['chart-parts'], ['matrix', 'calendar heat map'], '', ['platform/charts/HeatMap.jsx']);
-t('BoxPlot', 'component', 'M', 9, 'A', ['chart-parts'], ['vertical', 'horizontal', 'with outliers'], '', ['platform/charts/BoxPlot.jsx']);
-t('FunnelChart', 'component', 'S', 9, 'A', ['chart-parts'], ['vertical', 'horizontal'], '', ['platform/charts/FunnelChart.jsx']);
+t('BoxPlot', 'component', 'M', 9, 'A', ['chart-parts'], ['vertical', 'horizontal', 'with outliers'], '', ['platform/charts/BoxPlot.tsx']);
+t('FunnelChart', 'component', 'S', 9, 'A', ['chart-parts'], ['vertical', 'horizontal'], '', ['platform/charts/FunnelChart.tsx']);
 t('WaterfallChart', 'component', 'S', 9, 'A', ['chart-parts'], ['with totals'], '', ['platform/charts/WaterfallChart.jsx']);
 t('RadarChart', 'component', 'S', 9, 'A', ['chart-parts'], ['single', 'compare'], '', ['platform/charts/RadarChart.jsx']);
 t('Treemap', 'component', 'M', 9, 'B', ['ChartKit'], ['flat', 'nested'], 'squarify layout', ['platform/charts/Treemap.jsx']);

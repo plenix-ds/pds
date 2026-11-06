@@ -220,7 +220,7 @@ DSParts.records.push(function (H) {
 
   /* ── 07 Data Display › Charts › Lollipop chart: LollipopChart ── */
   var lollipop = { id: 'lollipop-chart', lab: true, icon: 'chart', sec: 'data-display', sub: 'Charts', leaf: 'Lollipop chart', title: 'Lollipop chart',
-    plenix: 'LollipopChart', src: 'charts/LollipopChart.jsx', css: ['charts/lollipop-chart.css'], blocks: ['plx-lollipop'], level: 'Component', interaction: 'Display',
+    plenix: 'LollipopChart', src: 'charts/LollipopChart.tsx', css: ['charts/lollipop-chart.css'], blocks: ['plx-lollipop'], level: 'Component', interaction: 'Display',
     aliases: ['Lollipop', 'Dot plot (with stems)', 'Stem chart'],
     text: 'A bar chart drawn light: each category’s value is a thin stem from zero ending in a dot, so many similar values compare without a wall of bars. Horizontal by default (names down the side, sorted largest first), or vertical for categories with an order of their own. Built on ChartFrame and the chart parts, read point by point with the keyboard.',
     use: ['Many categories with similar values, ranked', 'A ranked list where the end value matters', 'sort="desc" unless the categories have an order (months: vertical, in order)'],
@@ -275,7 +275,7 @@ DSParts.records.push(function (H) {
 
   /* ── 07 Data Display › Charts › Funnel: FunnelChart ── */
   var funnel = { id: 'funnel-chart', lab: true, icon: 'filter', sec: 'data-display', sub: 'Charts', leaf: 'Funnel', title: 'Funnel',
-    plenix: 'FunnelChart', src: 'charts/FunnelChart.jsx', css: ['charts/funnel-chart.css'], blocks: ['plx-funnel'], level: 'Component', interaction: 'Display',
+    plenix: 'FunnelChart', src: 'charts/FunnelChart.tsx', css: ['charts/funnel-chart.css'], blocks: ['plx-funnel'], level: 'Component', interaction: 'Display',
     aliases: ['Funnel chart', 'Conversion funnel', 'Drop-off chart'],
     text: 'How many items remain at each step of an ordered process: one bar per stage on a zero baseline (never a tapered shape), with its count and the share kept from the stage before. The stage before’s length shows behind each bar in the sunken surface color, so the drop shows. Vertical (stages down the side) or horizontal (stages along the bottom).',
     use: ['Strictly ordered stages where each is a subset of the one before: sign-up, checkout, onboarding', 'Finding the step with the largest drop; say it in the description', 'The same period for every stage'],

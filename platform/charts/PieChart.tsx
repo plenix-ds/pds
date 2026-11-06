@@ -44,6 +44,7 @@ import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatNumber, formatPercent } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.tsx';
+import type { ChartFrameProps } from './ChartFrame.tsx';
 import { seriesColor } from './scales.ts';
 import { ChartLegend } from './parts/ChartLegend.tsx';
 import { ChartTooltip, chartTooltipText } from './parts/ChartTooltip.tsx';
@@ -63,25 +64,43 @@ const RING_MARGIN = { top: 8, end: 8, bottom: 8, start: 8 };
 const TURN = Math.PI * 2;
 
 // the point at an angle (0 = 12 o'clock, clockwise) and a radius from the center
-const at = (cx0, cy0, r, a) => [cx0 + r * Math.sin(a), cy0 - r * Math.cos(a)];
+const at = (cx0: any, cy0: any, r: any, a: any) => [cx0 + r * Math.sin(a), cy0 - r * Math.cos(a)];
 
 export { pieSlices } from './chart-helpers.ts';
 
+/** @public one part of the whole: its value above zero and an optional data-viz step (default by its order) */
+export type PieSlice = { id?: string | number; label: string; value: number; color?: string };
+/** @public the prop type (ADR 0011) */
+export type PieChartProps = Omit<Pick<ChartFrameProps, 'title' | 'description' | 'hideCaption' | 'size' | 'margin' | 'legend' | 'legendPosition' | 'className'>, 'legend'> & {
+  data?: PieSlice[];
+  variant?: 'pie' | 'donut' | 'half';
+  centerValue?: React.ReactNode;
+  centerLabel?: string;
+  sort?: boolean;
+  maxSlices?: number;
+  format?(value: number): string;
+  showValues?: boolean;
+  /** false hides the legend (default shown) */
+  legend?: boolean;
+  tooltip?: boolean;
+  interactive?: boolean;
+  strings?: Record<string, string>;
+};
 export function PieChart({ title, description, hideCaption, size, data = [], variant = 'pie', centerValue, centerLabel, sort = true, maxSlices = 6,
-  format, showValues = false, legend, legendPosition, tooltip = true, interactive = true, margin, strings, className }) {
-  const t = useStrings('chart.pieChart', strings);
+  format, showValues = false, legend, legendPosition, tooltip = true, interactive = true, margin, strings, className }: PieChartProps) {
+  const t: any = useStrings('chart.pieChart', strings);
   const v = VARIANTS.indexOf(variant) >= 0 ? variant : 'pie';
   const half = v === 'half';
-  const fmt = (x) => (typeof format === 'function' ? format(x) : formatNumber(x));
+  const fmt = (x: any) => (typeof format === 'function' ? format(x) : formatNumber(x));
   const slices = pieSlices(data, { sort, maxSlices, other: t.other });
   const total = slices.reduce((a, d) => a + d.value, 0);
-  const table = {
+  const table: any = {
     columns: [{ title: t.part, field: 'part', kind: 'name', rowLabel: true }, { title: t.value, field: 'value', kind: 'data', align: 'right' }, { title: t.share, field: 'share', kind: 'data', align: 'right' }],
     data: slices.map((d, i) => ({ id: i + 1, part: d.label, value: fmt(d.value), share: formatPercent(d.share) }))
   };
-  const key = legend === false ? null : <ChartLegend items={legendItems(slices, (d) => formatPercent(d.share))} orientation={legendPosition === 'end' ? 'vertical' : 'horizontal'} />;
+  const key = legend === false ? null : <ChartLegend items={legendItems(slices, (d: any) => formatPercent(d.share))} orientation={legendPosition === 'end' ? 'vertical' : 'horizontal'} />;
   const center = v === 'pie' ? null : { value: centerValue === undefined ? fmt(total) : centerValue, label: centerLabel === undefined ? t.total : centerLabel };
-  const tipOf = (i) => ({ title: slices[i].label, items: [{ label: t.value, value: fmt(slices[i].value) + ' · ' + formatPercent(slices[i].share), color: slices[i].color }] });
+  const tipOf = (i: any) => ({ title: slices[i].label, items: [{ label: t.value, value: fmt(slices[i].value) + ' · ' + formatPercent(slices[i].share), color: slices[i].color }] });
 
   // one slice at a time: every arrow key steps around the ring (→ ↓ clockwise, ← ↑ back)
   const ia = useChartInteraction({
@@ -92,18 +111,18 @@ export function PieChart({ title, description, hideCaption, size, data = [], var
   });
 
   // the ring's geometry in the plot (the same as before ECharts: the frame's plot less the ring's margin)
-  const m = {};
-  Object.keys(RING_MARGIN).forEach((k) => { m[k] = snapToGrid(margin && margin[k] !== undefined ? margin[k] : RING_MARGIN[k]); });
-  const ring = (dims) => {
+  const m: any = {};
+  (Object.keys(RING_MARGIN) as (keyof typeof RING_MARGIN)[]).forEach((k) => { m[k] = snapToGrid(margin && margin[k] !== undefined ? margin[k] : RING_MARGIN[k]); });
+  const ring = (dims: any) => {
     const w = Math.max(0, dims.width - m.start - m.end), h = Math.max(0, dims.height - m.top - m.bottom);
     const r1 = Math.max(0, half ? Math.min(w / 2, h) : Math.min(w, h) / 2);
     return { w, h, r1, r0: v === 'pie' ? 0 : r1 * HOLE, cx0: w / 2, cy0: half ? h : h / 2, from: half ? -Math.PI / 2 : 0, sweep: half ? Math.PI : TURN };
   };
-  const angles = (G) => { let a = G.from; return slices.map((d) => { const a0 = a; a += d.share * G.sweep; return [a0, a]; }); };
+  const angles = (G: any) => { let a = G.from; return slices.map((d) => { const a0 = a; a += d.share * G.sweep; return [a0, a]; }); };
 
   const plot = useEChartsPlot();
   const dataKey = slices.map((d) => d.id + ':' + d.value + ':' + d.color).join('|');
-  const option = React.useCallback((tk, dims) => {
+  const option = React.useCallback((tk: any, dims: any) => {
     const G = ring(dims);
     return {
       animationDuration: tk.motion, animationDurationUpdate: tk.motion,
@@ -125,12 +144,12 @@ export function PieChart({ title, description, hideCaption, size, data = [], var
     if (ia.active) c.dispatchAction({ type: 'highlight', seriesIndex: 0, dataIndex: ia.active.c });
   }, [activeKey, plot.chart]);
 
-  const draw = (dims) => {
+  const draw = (dims: any) => {
     const layer = plot.layer(dims, option);
     const G = ring(dims);
     const A = angles(G);
     ia.register({
-      nearest: (px, py) => {
+      nearest: (px: any, py: any) => {
         const dx = px - m.start - G.cx0, dy = py - m.top - G.cy0, r = Math.sqrt(dx * dx + dy * dy);
         if (r > G.r1 || r < G.r0) return null;
         let a = Math.atan2(dx, -dy);
