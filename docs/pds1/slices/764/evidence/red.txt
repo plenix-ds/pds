@@ -1,0 +1,36 @@
+
+ RUN  v5.1.0 /home/cc/pds1/work/component-engineer-1
+
+ ❯ tools/checks/types-consumer-764.test.mjs (1 test | 1 failed) 1688ms
+   ❯ #764 consumer compile (1)
+     × a consumer file using copyName and useAutosave compiles with no error 1687ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tools/checks/types-consumer-764.test.mjs > #764 consumer compile > a consumer file using copyName and useAutosave compiles with no error
+AssertionError: expected 'tests/types/consumer-764.ts(4,15): er…' to be '' // Object.is equality
+
+- Expected
++ Received
+
++ tests/types/consumer-764.ts(4,15): error TS2305: Module '"../../platform/patterns/Autosave/Autosave.tsx"' has no exported member 'AutosaveResult'.
++ tests/types/consumer-764.ts(6,22): error TS2554: Expected 3 arguments, but got 2.
++ tests/types/consumer-764.ts(8,42): error TS2345: Argument of type 'readonly string[]' is not assignable to parameter of type 'never[]'.
++ tests/types/consumer-764.ts(12,45): error TS2558: Expected 0 type arguments, but got 1.
+
+ ❯ tools/checks/types-consumer-764.test.mjs:12:30
+     10|       const r = spawnSync('npx', ['tsc', '--noEmit', '-p', 'tsconfig.c…
+     11|       const own = (r.stdout || '').split('\n').filter((l) => l.startsW…
+     12|       expect(own.join('\n')).toBe('');
+       |                              ^
+     13|     } finally { fs.rmSync('tsconfig.consumer-764.json', { force: true …
+     14|   }, 120000);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  20:47:13
+   Duration  1.82s (tests 98%, transform 1%, import 1%)
+
