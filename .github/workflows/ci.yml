@@ -57,6 +57,36 @@ jobs:
         shell: bash
         run: node tools/ci/check-decisions.mjs "$(git merge-base "$BASE_SHA" HEAD)"
 
+  process:
+    name: Process checks 13 and 15, launch test (role registry, settings in prose; #768)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      issues: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      # the registry is read with PyYAML, as the dashboard and the decisions check read their YAML (#589)
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.12'
+      - name: PyYAML, as the dashboard pins it
+        run: python -m pip install --disable-pip-version-check -q 'PyYAML==6.0.2'
+      - name: Self-test (checks 13 and 15)
+        run: node tools/ci/check-roles.test.mjs
+      - name: Check 13, every role has a definition, label and trigger
+        run: node tools/ci/check-roles.mjs
+      - name: Check 15, no document states a setting that differs from agents.config.yaml
+        run: node tools/ci/check-settings-prose.mjs
+      - name: G0 launch test, every active role through team.sh start once (dry run, starts nothing)
+        run: |
+          mkdir -p "$HOME/pds1"
+          PDS1_CFG="$PWD/agents.config.yaml" bash deploy/agents/team.sh launch-test
+
   rulesync:
     name: Rulesync drift (CLAUDE.md, AGENTS.md)
     runs-on: ubuntu-latest
@@ -226,7 +256,7 @@ jobs:
   result:
     name: CI result
     if: always()
-    needs: [zizmor, decisions, rulesync, generated, trace, design-checks, checks]
+    needs: [zizmor, decisions, process, rulesync, generated, trace, design-checks, checks]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:

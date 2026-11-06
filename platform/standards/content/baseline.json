@@ -2,14 +2,14 @@
   "description": "Explicit existing-copy debt only; new or additional findings fail. Review before changing.",
   "findings": [
     {
-      "file": "platform/patterns/AppHeader/AppHeader.jsx",
+      "file": "platform/patterns/AppHeader/AppHeader.tsx",
       "rule": "action-verb",
       "text": "My account",
       "count": 1,
       "reason": "Existing navigation command label; retain the owner-approved wording."
     },
     {
-      "file": "platform/patterns/AppHeader/AppHeader.jsx",
+      "file": "platform/patterns/AppHeader/AppHeader.tsx",
       "rule": "action-verb",
       "text": "Plenix settings",
       "count": 1,
