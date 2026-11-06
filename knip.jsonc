@@ -89,7 +89,7 @@
     "platform/icons/inventory/inventory.js",
     "docs/**",
     "tools/agent/**",
-    // the open-source vote kit is a package of its own (vote-kit/package.json, vote-kit/README.md), used by the apps that adopt it
-    "vote-kit/**"
+    // archive/ holds what PDS 1.0 no longer builds, tests or publishes (#706, archive/README.md)
+    "archive/**"
   ]
 }
