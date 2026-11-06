@@ -45,29 +45,30 @@ import { Text } from '../../components/Text/Text.tsx';
 import { Icon } from '../../components/Icon/Icon.tsx';
 import { NumberInput } from '../../components/NumberInput/NumberInput.tsx';
 import { Notice } from '../../components/Notice/Notice.tsx';
-import { ProductPrice } from '../../patterns/ProductCard/ProductCard.jsx';
+import { ProductPrice as ProductPriceJs } from '../../patterns/ProductCard/ProductCard.jsx';
+const ProductPrice: any = ProductPriceJs;
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import ImageBIcon from 'plenix-platform/icons/plenix/image-b';
 import { dataPhrase } from '../../utils/dataText.tsx';
 import { fill } from '../../utils/fill.ts';
 
-export const COMMERCE_PAGES = {
+export const COMMERCE_PAGES: Record<string, string> = {
   'product-discovery': 'workspace', 'product-listing': 'workspace', 'product-detail': 'detail', cart: 'workspace', checkout: 'form',
   payment: 'form', 'order-confirmation': 'detail', 'order-management': 'workspace', 'order-detail': 'detail', 'subscription-management': 'settings', returns: 'form',
 };
 
 // a template claims its kind of page on the AppShell around it (the layout standard lays it out)
-export function useCommercePage(template) {
+export function useCommercePage(template: any) {
   const shell = useAppLayout();
   const claim = shell && shell.claimPage;
   const kind = COMMERCE_PAGES[template];
   React.useEffect(() => (claim && kind ? claim(kind) : undefined), [claim, kind]);
 }
 
-export const money = (n, currency) => formatCurrency(n, currency || 'USD');
-const round = (n) => Math.round(n * 100) / 100;
+export const money = (n: any, currency: any) => formatCurrency(n, currency || 'USD');
+const round = (n: any) => Math.round(n * 100) / 100;
 
-export function orderTotals(items = [], o = {}) {
+export function orderTotals(items: any[] = [], o: any = {}) {
   const subtotal = round(items.reduce((s, x) => s + (x.price || 0) * (x.quantity || 0), 0));
   const count = items.reduce((s, x) => s + (x.quantity || 0), 0);
   const discount = round(Math.min(subtotal, o.discount || 0));
@@ -77,8 +78,8 @@ export function orderTotals(items = [], o = {}) {
 }
 
 
-export function CommerceLine({ item, currency = 'USD', onQuantityChange, remove, strings, className }) {
-  const t = useStrings('commerce.line', strings);
+export function CommerceLine({ item, currency = 'USD', onQuantityChange, remove, strings, className }: any) {
+  const t: any = useStrings('commerce.line', strings);
   const name = typeof item.title === 'string' ? item.title : '';
   return (
     <li className={cx('plx-commerce-line', className)}>
@@ -104,10 +105,10 @@ export function CommerceLine({ item, currency = 'USD', onQuantityChange, remove,
 }
 
 
-export function OrderSummary({ items = [], currency = 'USD', totals, estimated = false, showItems = false, title, headingLevel = 2, children, strings, className }) {
-  const t = useStrings('commerce.summary', strings);
+export function OrderSummary({ items = [], currency = 'USD', totals, estimated = false, showItems = false, title, headingLevel = 2, children, strings, className }: any) {
+  const t: any = useStrings('commerce.summary', strings);
   const s = totals || orderTotals(items);
-  const row = (key, label, value, cls) => (
+  const row = (key: any, label: any, value: any, cls?: any) => (
     <div key={key} className={cx('plx-commerce-summary__row', cls)}>
       <dt className="plx-commerce-summary__label">{label}</dt>
       <dd className="plx-commerce-summary__value">{value}</dd>
@@ -117,7 +118,7 @@ export function OrderSummary({ items = [], currency = 'USD', totals, estimated =
     <Panel title={title || t.title} headingLevel={headingLevel} className={cx('plx-commerce-summary', className)}>
       {showItems && items.length ? (
         <ul className="plx-commerce-summary__items" aria-label={s.count === 1 ? t.item : fill(t.items, { n: formatNumber(s.count) })}>
-          {items.map((x) => (
+          {items.map((x: any) => (
             <li key={x.id} className="plx-commerce-summary__item">
               <span className="plx-commerce-summary__name">{x.title} {dataPhrase(t.times, { n: x.quantity })}</span>
               <span className="plx-commerce-summary__value">{money(x.price * x.quantity, currency)}</span>

@@ -4,16 +4,16 @@
      header, lines, totals, delivery, payment and history), subscription management (SubscriptionManagement: the plan,
      changing it, the payment method, pausing or canceling, and the billing history, in settings cards) and returns
      (Returns: the Wizard's items, reason, resolution and return method, the review with the refund, then the return's
-     status). Order statuses are Badges with their icon (ORDER_STATUSES). Commerce.jsx documents every template.
+     status). Order statuses are Badges with their icon (ORDER_STATUSES). Commerce.tsx documents every template.
    Usage:
      <OrderManagement orders={orders} onOpen={open} onFulfill={fulfill} onCancel={cancel} onRefund={refund} />
      <OrderDetail order={order} backHref="#/orders" onFulfill={…} onRefund={…} onCancel={…} />
      <SubscriptionManagement subscription={sub} plans={PLANS} history={invoices} onChangePlan={change} onPause={pause} onCancel={cancel} />
      <Returns order={order} reasons={REASONS} onSubmit={(request) => api.requestReturn(request)} />
    Props:
-     See Commerce.jsx (ORDER_STATUSES, OrderManagement, OrderDetail, SubscriptionManagement, Returns).
+     See Commerce.tsx (ORDER_STATUSES, OrderManagement, OrderDetail, SubscriptionManagement, Returns).
    Behavior:
-     See Commerce.jsx.
+     See Commerce.tsx.
 */
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
@@ -21,13 +21,20 @@ import { useUid } from '../../utils/layer.ts';
 import { announce } from '../../utils/announce.tsx';
 import { formatDate, formatNumber } from '../../utils/format.ts';
 import { useCollectionView } from '../../hooks/useCollectionView.ts';
-import { CommandBar, CommandBarSearch } from '../../patterns/CommandBar/CommandBar.jsx';
+import { CommandBar as CommandBarJs, CommandBarSearch as CommandBarSearchJs } from '../../patterns/CommandBar/CommandBar.jsx';
+const CommandBar: any = CommandBarJs;
+const CommandBarSearch: any = CommandBarSearchJs;
 import { FilterPanel } from '../../patterns/FilterPanel/FilterPanel.tsx';
-import { QuickFilter } from '../../patterns/QuickFilter/QuickFilter.jsx';
-import { EntityHeader } from '../../patterns/EntityHeader/EntityHeader.jsx';
-import { PropertyList } from '../../patterns/PropertyList/PropertyList.jsx';
-import { Wizard } from '../../patterns/Wizard/Wizard.jsx';
-import { SettingsSection } from '../../patterns/SettingsLayout/SettingsLayout.jsx';
+import { QuickFilter as QuickFilterJs } from '../../patterns/QuickFilter/QuickFilter.jsx';
+const QuickFilter: any = QuickFilterJs;
+import { EntityHeader as EntityHeaderJs } from '../../patterns/EntityHeader/EntityHeader.jsx';
+const EntityHeader: any = EntityHeaderJs;
+import { PropertyList as PropertyListJs } from '../../patterns/PropertyList/PropertyList.jsx';
+const PropertyList: any = PropertyListJs;
+import { Wizard as WizardJs } from '../../patterns/Wizard/Wizard.jsx';
+const Wizard: any = WizardJs;
+import { SettingsSection as SettingsSectionJs } from '../../patterns/SettingsLayout/SettingsLayout.jsx';
+const SettingsSection: any = SettingsSectionJs;
 import { DataGrid } from '../../components/DataGrid/DataGrid.tsx';
 import { Badge } from '../../components/Badge/Badge.tsx';
 import { Button } from '../../components/Button/Button.tsx';
@@ -42,7 +49,7 @@ import { Checkbox, RadioGroup } from '../../components/Checkbox/Checkbox.tsx';
 import { Field } from '../../components/Field/Field.tsx';
 import { Textarea } from '../../components/Input/Input.tsx';
 import { NumberInput } from '../../components/NumberInput/NumberInput.tsx';
-import { CommerceLine, OrderSummary, orderTotals, money, useCommercePage } from './shared.jsx';
+import { CommerceLine, OrderSummary, orderTotals, money, useCommercePage } from './shared.tsx';
 import { fill } from '../../utils/fill.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import AlertIcon from 'plenix-platform/icons/plenix/alert';
@@ -58,7 +65,7 @@ import ScheduleIcon from 'plenix-platform/icons/plenix/schedule';
 import { dataPhrase } from '../../utils/dataText.tsx';
 
 // a calendar day ("2026-10-15") read in the reader's locale, at noon so no time zone moves it to another day
-const day = (iso) => (iso ? formatDate(/T/.test(iso) ? iso : iso + 'T12:00:00') : '');
+const day = (iso: any) => (iso ? formatDate(/T/.test(iso) ? iso : iso + 'T12:00:00') : '');
 
 // the order statuses: each a Badge with its icon (never a dot); the actions each one allows
 export const ORDER_STATUSES = {
@@ -69,19 +76,19 @@ export const ORDER_STATUSES = {
   refunded: { tone: 'neutral', icon: EdUndoIcon, label: 'Refunded' },
   canceled: { tone: 'neutral', icon: DoNotDisturbIcon, label: 'Canceled' },
 };
-const canFulfill = (o) => o.status === 'unfulfilled';
-const canRefund = (o) => o.status === 'delivered' || o.status === 'returning' || o.status === 'fulfilled';
-const canCancel = (o) => o.status === 'unfulfilled';
-export function OrderStatus({ status, statuses }) {
+const canFulfill = (o: any) => o.status === 'unfulfilled';
+const canRefund = (o: any) => o.status === 'delivered' || o.status === 'returning' || o.status === 'fulfilled';
+const canCancel = (o: any) => o.status === 'unfulfilled';
+export function OrderStatus({ status, statuses }: any) {
   const s = (statuses || ORDER_STATUSES)[status] || { tone: 'neutral', label: String(status || '') };
   return <Badge tone={s.tone} icon={s.icon}>{s.label}</Badge>;
 }
 
 /* ── order management ── */
 
-export function OrderManagement({ orders = [], currency = 'USD', onOpen, onFulfill, onCancel, onRefund, statuses, strings, className }) {
+export function OrderManagement({ orders = [], currency = 'USD', onOpen, onFulfill, onCancel, onRefund, statuses, strings, className }: any) {
   useCommercePage('order-management');
-  const t = useStrings('commerce.orders', strings);
+  const t: any = useStrings('commerce.orders', strings);
   const S = statuses || ORDER_STATUSES;
   const fields = React.useMemo(() => [
     { value: 'number', label: t.number, kind: 'text' },
@@ -91,32 +98,32 @@ export function OrderManagement({ orders = [], currency = 'USD', onOpen, onFulfi
     { value: 'status', label: t.status, kind: 'select', options: Object.keys(S).map((k) => ({ value: k, label: S[k].label })) },
   ], [S]);
   const v = useCollectionView(fields, { text: (o) => [o.number, o.customer, o.email].join(' '), quick: { status: 'list' } });
-  const [selected, setSelected] = React.useState([]);
-  const [asking, setAsking] = React.useState(null);
-  const chosen = orders.filter((o) => selected.indexOf(o.id) >= 0);
-  const what = (list) => (list.length === 1 ? list[0].number : formatNumber(list.length) + ' ' + t.plural);
-  const fulfill = (list) => { if (onFulfill) onFulfill(list); announce(fill(t.fulfilled, { what: what(list) })); };
+  const [selected, setSelected] = React.useState<any>([]);
+  const [asking, setAsking] = React.useState<any>(null);
+  const chosen = orders.filter((o: any) => selected.indexOf(o.id) >= 0);
+  const what = (list: any) => (list.length === 1 ? list[0].number : formatNumber(list.length) + ' ' + t.plural);
+  const fulfill = (list: any) => { if (onFulfill) onFulfill(list); announce(fill(t.fulfilled, { what: what(list) })); };
   const shown = orders.filter(v.test).length;
   // the rows and columns keep their identity between renders, so the table is not rebuilt (and keeps its row labels)
-  const rows = React.useMemo(() => orders.map((o) => Object.assign({ count: (o.items || []).reduce((s, x) => s + (x.quantity || 0), 0) }, o)), [orders]);
+  const rows = React.useMemo(() => orders.map((o: any) => Object.assign({ count: (o.items || []).reduce((s: any, x: any) => s + (x.quantity || 0), 0) }, o)), [orders]);
   const columns = React.useMemo(() => [
     { title: t.number, field: 'number', kind: ['name', 'data'], width: '--plx-ref-size-30u' },
-    { title: t.date, field: 'date', kind: 'data', sorter: 'date', render: (o) => day(o.date) },
+    { title: t.date, field: 'date', kind: 'data', sorter: 'date', render: (o: any) => day(o.date) },
     { title: t.customer, field: 'customer' },
     { title: t.items, field: 'count', kind: 'data', sorter: 'number', align: 'right', headerAlign: 'right', width: '--plx-ref-size-20u' },
-    { title: t.total, field: 'total', kind: 'data', sorter: 'number', align: 'right', headerAlign: 'right', render: (o) => money(o.total, o.currency || currency) },
-    { title: t.status, field: 'status', kind: 'center', render: (o) => <OrderStatus status={o.status} statuses={S} /> },
+    { title: t.total, field: 'total', kind: 'data', sorter: 'number', align: 'right', headerAlign: 'right', render: (o: any) => money(o.total, o.currency || currency) },
+    { title: t.status, field: 'status', kind: 'center', render: (o: any) => <OrderStatus status={o.status} statuses={S} /> },
   ], [S, currency, strings]);
   return (
     <section className={cx('plx-commerce', 'plx-commerce--orders', className)} aria-label={t.label}>
       <CommandBar label={t.label} count={shown === 1 ? t.one : fill(t.count, { n: formatNumber(shown) })}
-        find={<><CommandBarSearch value={v.search} onChange={(e) => v.setSearch(e.target.value)} onClear={() => v.setSearch('')} placeholder={t.search} label={t.search} />
-          <FilterPanel {...v.filterProps} />
+        find={<><CommandBarSearch value={v.search} onChange={(e: any) => v.setSearch(e.target.value)} onClear={() => v.setSearch('')} placeholder={t.search} label={t.search} />
+          <FilterPanel {...(v.filterProps as any)} />
           <QuickFilter label={t.status} icon={ProgressIcon} noun={t.status.toLowerCase()} options={Object.keys(S).map((k) => ({ value: k, label: S[k].label }))} {...v.quickProps('status')} /></>}
         selection={{ count: chosen.length, noun: t.noun, plural: t.plural, onClear: () => setSelected([]), actions: [
           { id: 'fulfill', label: t.fulfill, icon: CircleCheckIcon, disabled: !chosen.every(canFulfill), why: t.notFulfillable, onSelect: () => fulfill(chosen) },
           { id: 'cancel', label: t.cancelMany, icon: DoNotDisturbIcon, danger: true, disabled: !chosen.every(canCancel), why: t.notCancelable, onSelect: () => setAsking(chosen) }] }} />
-      <DataGrid label={t.label} data={rows} columns={columns}
+      <DataGrid label={t.label} data={rows} columns={columns as any}
         selectable selected={selected} onSelectionChange={setSelected} filter={v.test}
         rowMenu={(o) => [
           { label: t.open, icon: OpenIcon, onSelect: () => onOpen && onOpen(o) },
@@ -124,7 +131,7 @@ export function OrderManagement({ orders = [], currency = 'USD', onOpen, onFulfi
           { label: t.refund, icon: EdUndoIcon, disabled: !canRefund(o), onSelect: () => onRefund && onRefund(o) },
           { separator: true },
           { label: t.cancel, icon: DoNotDisturbIcon, danger: true, disabled: !canCancel(o), onSelect: () => setAsking([o]) }]}
-        onRowDoubleClick={onOpen ? (order) => onOpen(orders.find((o) => o.id === order.id)) : undefined} />
+        onRowDoubleClick={onOpen ? (order) => onOpen(orders.find((o: any) => o.id === order.id)) : undefined} />
       <ConfirmDialog open={!!asking} destructive title={asking ? fill(t.cancelTitle, { what: what(asking) }) : ''} message={t.cancelText}
         confirmLabel={asking && asking.length > 1 ? t.cancelMany : t.cancel} cancelLabel={t.keep}
         onConfirm={() => { if (onCancel) onCancel(asking); announce(fill(t.canceled, { what: what(asking) })); setSelected([]); setAsking(null); }} onCancel={() => setAsking(null)} />
@@ -134,9 +141,9 @@ export function OrderManagement({ orders = [], currency = 'USD', onOpen, onFulfi
 
 /* ── one order ── */
 
-export function OrderDetail({ order, currency = 'USD', backHref, onFulfill, onRefund, onCancel, onReturn, statuses, headingLevel = 1, strings, className }) {
+export function OrderDetail({ order, currency = 'USD', backHref, onFulfill, onRefund, onCancel, onReturn, statuses, headingLevel = 1, strings, className }: any) {
   useCommercePage('order-detail');
-  const t = useStrings('commerce.orderDetail', strings);
+  const t: any = useStrings('commerce.orderDetail', strings);
   const o = order || {};
   const uid = useUid('plx-commerce');
   const [asking, setAsking] = React.useState(false);
@@ -146,7 +153,7 @@ export function OrderDetail({ order, currency = 'USD', backHref, onFulfill, onRe
   if (onRefund) actions.push({ icon: EdUndoIcon, label: t.refund, disabled: !canRefund(o), onClick: () => onRefund(o) });
   if (onReturn) actions.push({ icon: ReplyIcon, label: t.return, disabled: o.status !== 'delivered', onClick: () => onReturn(o) });
   const more = onCancel && canCancel(o) ? [{ icon: DoNotDisturbIcon, label: t.cancel, danger: true, onSelect: () => setAsking(true) }] : undefined;
-  const H2 = 'h' + Math.min(6, headingLevel + 1);
+  const H2: any = 'h' + Math.min(6, headingLevel + 1);
   return (
     <article className={cx('plx-commerce', 'plx-commerce--order', className)}>
       {backHref ? <Link href={backHref} back>{t.back}</Link> : null}
@@ -156,7 +163,7 @@ export function OrderDetail({ order, currency = 'USD', backHref, onFulfill, onRe
         actions={actions.length ? actions : undefined} moreActions={more} />
       <div className="plx-commerce__columns">
         <div className="plx-commerce__main">
-          <ul className="plx-commerce-lines" aria-label={t.items}>{(o.items || []).map((x) => <CommerceLine key={x.id} item={x} currency={cur} />)}</ul>
+          <ul className="plx-commerce-lines" aria-label={t.items}>{(o.items || []).map((x: any) => <CommerceLine key={x.id} item={x} currency={cur} />)}</ul>
           {o.delivery ? (
             <Panel title={t.delivery} headingLevel={Math.min(6, headingLevel + 1)}>
               <PropertyList>
@@ -186,21 +193,21 @@ export function OrderDetail({ order, currency = 'USD', backHref, onFulfill, onRe
 }
 
 /* ── subscription management ── */
-const SUB_TONES = { active: ['success', CircleCheckIcon], paused: ['waiting', ScheduleIcon], canceled: ['neutral', DoNotDisturbIcon], paid: ['success', CircleCheckIcon], refunded: ['neutral', EdUndoIcon], failed: ['negative', AlertIcon] };
+const SUB_TONES: Record<string, any[]> = { active: ['success', CircleCheckIcon], paused: ['waiting', ScheduleIcon], canceled: ['neutral', DoNotDisturbIcon], paid: ['success', CircleCheckIcon], refunded: ['neutral', EdUndoIcon], failed: ['negative', AlertIcon] };
 
-export function SubscriptionManagement({ subscription = {}, plans = [], history = [], currency = 'USD', onChangePlan, onPause, onResume, onCancel, onUpdatePayment, strings, className }) {
+export function SubscriptionManagement({ subscription = {}, plans = [], history = [], currency = 'USD', onChangePlan, onPause, onResume, onCancel, onUpdatePayment, strings, className }: any) {
   useCommercePage('subscription-management');
-  const t = useStrings('commerce.subscription', strings);
+  const t: any = useStrings('commerce.subscription', strings);
   const st = t.statuses;   // merged key by key with the strings prop
   const s = subscription;
-  const current = plans.find((p) => p.id === s.plan) || {};
+  const current = plans.find((p: any) => p.id === s.plan) || {};
   const [pick, setPick] = React.useState(s.plan);
-  const [asking, setAsking] = React.useState(null);
+  const [asking, setAsking] = React.useState<any>(null);
   const [busy, setBusy] = React.useState(false);
-  const target = plans.find((p) => p.id === pick);
-  const per = (p) => fill(t.perPeriod, { price: money(p.price, p.currency || currency), period: p.period });
-  const badge = (k) => <Badge tone={(SUB_TONES[k] || ['neutral'])[0]} icon={(SUB_TONES[k] || [])[1]}>{st[k] || k}</Badge>;
-  const diff = (p) => {
+  const target = plans.find((p: any) => p.id === pick);
+  const per = (p: any) => fill(t.perPeriod, { price: money(p.price, p.currency || currency), period: p.period });
+  const badge = (k: any) => <Badge tone={(SUB_TONES[k] || ['neutral'])[0]} icon={(SUB_TONES[k] || [])[1]}>{st[k] || k}</Badge>;
+  const diff = (p: any) => {
     if (!current.price || p.id === current.id || p.period !== current.period) return '';
     const d = p.price - current.price;
     return d ? ' · ' + fill(d > 0 ? t.more : t.less, { amount: money(Math.abs(d), currency) }) : '';
@@ -214,17 +221,17 @@ export function SubscriptionManagement({ subscription = {}, plans = [], history 
       if (kind === 'cancel' && onCancel) { await onCancel(); announce(t.canceled); }
     } finally { setBusy(false); setAsking(null); }
   };
-  const dialog = {
+  const dialog = ({
     change: target ? { title: fill(t.changeTitle, { plan: target.name }), message: fill(t.changeText, { price: per(target), date: day(s.nextBilling) }), confirm: t.changeConfirm } : null,
     pause: { title: t.pauseTitle, message: t.pauseText, confirm: t.pause },
     cancel: { title: t.cancelTitle, message: fill(t.cancelText, { date: day(s.nextBilling) }), confirm: t.cancel, destructive: true },
-  }[asking];
+  } as Record<string, any>)[asking];
   const columns = [
-    { title: t.date, field: 'date', kind: 'data', sorter: 'date', render: (r) => day(r.date) },
+    { title: t.date, field: 'date', kind: 'data', sorter: 'date', render: (r: any) => day(r.date) },
     { title: t.description, field: 'description', kind: 'wrap' },
-    { title: t.amount, field: 'amount', kind: 'data', sorter: 'number', align: 'right', headerAlign: 'right', render: (r) => money(r.amount, r.currency || currency) },
-    { title: t.status, field: 'status', kind: 'center', render: (r) => badge(r.status) },
-    { title: t.invoice, field: 'invoice', kind: 'center', sortable: false, render: (r) => (r.invoice ? <Link href={r.invoice} variant="subtle">{fill(t.invoiceFor, { date: day(r.date) })}</Link> : null) },
+    { title: t.amount, field: 'amount', kind: 'data', sorter: 'number', align: 'right', headerAlign: 'right', render: (r: any) => money(r.amount, r.currency || currency) },
+    { title: t.status, field: 'status', kind: 'center', render: (r: any) => badge(r.status) },
+    { title: t.invoice, field: 'invoice', kind: 'center', sortable: false, render: (r: any) => (r.invoice ? <Link href={r.invoice} variant="subtle">{fill(t.invoiceFor, { date: day(r.date) })}</Link> : null) },
   ];
   return (
     <div className={cx('plx-commerce', 'plx-commerce--subscription', className)}>
@@ -241,7 +248,7 @@ export function SubscriptionManagement({ subscription = {}, plans = [], history 
       {plans.length > 1 && s.status !== 'canceled' ? (
         <SettingsSection title={t.change}>
           <RadioTiles legend={t.plans} legendHidden value={pick} onChange={setPick}
-            options={plans.map((p) => ({ value: p.id, label: p.name, description: (p.id === s.plan ? t.current + ' · ' : '') + per(p) + diff(p) }))} />
+            options={plans.map((p: any) => ({ value: p.id, label: p.name, description: (p.id === s.plan ? t.current + ' · ' : '') + per(p) + diff(p) }))} />
           <span className="plx-commerce__row-actions"><Button variant="primary" disabled={!target || pick === s.plan} onClick={() => setAsking('change')}>{t.change}</Button></span>
         </SettingsSection>
       ) : null}
@@ -264,7 +271,7 @@ export function SubscriptionManagement({ subscription = {}, plans = [], history 
       ) : null}
       {history.length ? (
         <SettingsSection title={t.history}>
-          <DataGrid label={t.history} data={history} columns={columns} />
+          <DataGrid label={t.history} data={history} columns={columns as any} />
         </SettingsSection>
       ) : null}
       <ConfirmDialog open={!!dialog} title={dialog ? dialog.title : ''} message={dialog ? dialog.message : ''} confirmLabel={dialog ? dialog.confirm : ''} cancelLabel={t.keep}
@@ -275,27 +282,27 @@ export function SubscriptionManagement({ subscription = {}, plans = [], history 
 
 /* ── returns ── */
 
-export function Returns({ order = {}, reasons = [], resolutions = [], methods = [], currency = 'USD', status, onSubmit, onCancel, headingLevel = 2, strings, className }) {
+export function Returns({ order = {}, reasons = [], resolutions = [], methods = [], currency = 'USD', status, onSubmit, onCancel, headingLevel = 2, strings, className }: any) {
   useCommercePage('returns');
-  const t = useStrings('commerce.returns', strings);
+  const t: any = useStrings('commerce.returns', strings);
   const items = order.items || [];
-  const [chosen, setChosen] = React.useState({});
+  const [chosen, setChosen] = React.useState<any>({});
   const [reason, setReason] = React.useState('');
   const [note, setNote] = React.useState('');
   const [resolution, setResolution] = React.useState('');
   const [method, setMethod] = React.useState('');
   const [done, setDone] = React.useState(false);
   const cur = order.currency || currency;
-  const lines = items.filter((x) => chosen[x.id]).map((x) => Object.assign({}, x, { quantity: chosen[x.id] }));
-  const refund = lines.reduce((s, x) => s + x.price * x.quantity, 0);
-  const count = lines.reduce((s, x) => s + x.quantity, 0);
-  const label = (list, v) => (list.find((x) => x.value === v) || {}).label || '';
+  const lines = items.filter((x: any) => chosen[x.id]).map((x: any) => Object.assign({}, x, { quantity: chosen[x.id] }));
+  const refund = lines.reduce((s: any, x: any) => s + x.price * x.quantity, 0);
+  const count = lines.reduce((s: any, x: any) => s + x.quantity, 0);
+  const label = (list: any, v: any) => (list.find((x: any) => x.value === v) || {}).label || '';
   const steps = [
     { id: 'items', label: t.items, validate: () => (lines.length ? '' : t.choose), content: (
       <>
         <Text as="p" variant="secondary">{order.window || t.window}</Text>
         <ul className="plx-commerce__returnables" aria-label={t.items}>
-          {items.map((x) => {
+          {items.map((x: any) => {
             const off = x.returnable === false;
             return (
               <li key={x.id} className="plx-commerce__returnable">
@@ -310,19 +317,19 @@ export function Returns({ order = {}, reasons = [], resolutions = [], methods = 
       </>) },
     { id: 'reason', label: t.reason, validate: () => (reason ? '' : t.whyRequired), content: (
       <>
-        <RadioGroup label={t.why} value={reason} onChange={setReason} options={reasons} />
+        <RadioGroup label={t.why} value={reason} onChange={(v: any) => setReason(v)} options={reasons} />
         <Field label={t.note}><Textarea rows={3} value={note} onChange={(e) => setNote(e.target.value)} /></Field>
       </>) },
     { id: 'resolution', label: t.resolution, validate: () => (!resolution ? t.wantRequired : methods.length && !method ? t.sendRequired : ''), content: (
       <>
-        <RadioGroup label={t.want} value={resolution} onChange={setResolution} options={resolutions} />
-        {methods.length ? <RadioGroup label={t.send} value={method} onChange={setMethod} options={methods} /> : null}
+        <RadioGroup label={t.want} value={resolution} onChange={(v: any) => setResolution(v)} options={resolutions} />
+        {methods.length ? <RadioGroup label={t.send} value={method} onChange={(v: any) => setMethod(v)} options={methods} /> : null}
       </>) },
   ];
   const review = (
     <>
       <PropertyList>
-        <PropertyList.Item label={t.items}>{lines.map((x) => x.title + (x.quantity > 1 ? ' × ' + formatNumber(x.quantity) : '')).join(', ')}</PropertyList.Item>
+        <PropertyList.Item label={t.items}>{lines.map((x: any) => x.title + (x.quantity > 1 ? ' × ' + formatNumber(x.quantity) : '')).join(', ')}</PropertyList.Item>
         <PropertyList.Item label={t.reason}>{label(reasons, reason)}{note ? ' · ' + note : ''}</PropertyList.Item>
         <PropertyList.Item label={t.resolution}>{label(resolutions, resolution)}</PropertyList.Item>
         {methods.length ? <PropertyList.Item label={t.send}>{label(methods, method)}</PropertyList.Item> : null}
@@ -331,7 +338,7 @@ export function Returns({ order = {}, reasons = [], resolutions = [], methods = 
       <Text as="p" variant="secondary">{t.refundTiming}</Text>
     </>
   );
-  const H = 'h' + Math.min(6, Math.max(1, headingLevel));
+  const H: any = 'h' + Math.min(6, Math.max(1, headingLevel));
   if (done || status) {
     return (
       <section className={cx('plx-commerce', 'plx-commerce--returns', className)} aria-label={t.status}>
@@ -346,7 +353,7 @@ export function Returns({ order = {}, reasons = [], resolutions = [], methods = 
       <div className="plx-commerce__columns">
         <div className="plx-commerce__main">
           <Wizard label={t.label} steps={steps} summary={review} onCancel={onCancel} strings={{ complete: t.submit, summary: t.review, cancel: t.cancel }}
-            onComplete={async () => { if (onSubmit) await onSubmit({ order: order.number, items: lines.map((x) => ({ id: x.id, quantity: x.quantity })), reason, note, resolution, method }); setDone(true); announce(t.requested); }} />
+            onComplete={async () => { if (onSubmit) await onSubmit({ order: order.number, items: lines.map((x: any) => ({ id: x.id, quantity: x.quantity })), reason, note, resolution, method }); setDone(true); announce(t.requested); }} />
         </div>
         <aside className="plx-commerce__aside" aria-label={t.refund}>
           <Panel title={t.refund} headingLevel={Math.min(6, headingLevel + 1)}>

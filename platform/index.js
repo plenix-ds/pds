@@ -328,7 +328,7 @@ export { DocumentViewer } from './components/DocumentViewer/DocumentViewer.tsx';
 export { VersionHistory } from './patterns/VersionHistory/VersionHistory.jsx';
 export { ProductCard, ProductPrice } from './patterns/ProductCard/ProductCard.jsx';
 export { ProductOptions } from './components/ProductOptions/ProductOptions.tsx';
-export { COMMERCE_PAGES, useCommercePage, orderTotals, CommerceLine, OrderSummary, ProductListing, ProductDiscovery, ProductDetail, productFields, Cart, Checkout, Payment, PaymentFields, OrderConfirmation, cardBrand, formatCardNumber, ORDER_STATUSES, OrderStatus, OrderManagement, OrderDetail, SubscriptionManagement, Returns } from './templates/Commerce/Commerce.jsx';
+export { COMMERCE_PAGES, useCommercePage, orderTotals, CommerceLine, OrderSummary, ProductListing, ProductDiscovery, ProductDetail, productFields, Cart, Checkout, Payment, PaymentFields, OrderConfirmation, cardBrand, formatCardNumber, ORDER_STATUSES, OrderStatus, OrderManagement, OrderDetail, SubscriptionManagement, Returns } from './templates/Commerce/Commerce.tsx';
 export { Comment } from './components/Comment/Comment.tsx';
 export { CommentThread } from './patterns/CommentThread/CommentThread.tsx';
 export { ImageAnnotation } from './patterns/ImageAnnotation/ImageAnnotation.tsx';
@@ -356,7 +356,7 @@ export { PromptSuggestions } from './components/PromptSuggestions/PromptSuggesti
 export { SuggestedEdit } from './components/SuggestedEdit/SuggestedEdit.tsx';
 export { RefineMenu } from './components/RefineMenu/RefineMenu.tsx';
 export { AnalyticsProvider, useAnalytics, track } from './providers/AnalyticsProvider.tsx';
-export { ListingPage, ContentManagementPage, LandingPage, HomePage, CreatePage, EditPage, MasterDetailPage, SplitWorkspace, SinglePaneWorkspace, FullScreenWorkspace, FullScreenExperience, DetailPage, SearchResultsPage, AuthenticationPage, ErrorPage } from './templates/templates/Templates.jsx';
+export { ListingPage, ContentManagementPage, LandingPage, HomePage, CreatePage, EditPage, MasterDetailPage, SplitWorkspace, SinglePaneWorkspace, FullScreenWorkspace, FullScreenExperience, DetailPage, SearchResultsPage, AuthenticationPage, ErrorPage } from './templates/templates/Templates.tsx';
 export { browserSupport } from './utils/browserSupport.ts';
 export { LocaleProvider, useLocale, useStrings, useTimeZone, createTranslator } from './providers/LocaleProvider.tsx';
 export { SplitView, ReadingPane } from './patterns/SplitView/SplitView.jsx';

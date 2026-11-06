@@ -28,13 +28,18 @@
 */
 import React from 'react';
 import { AppShell, PageContent } from '../../patterns/AppShell/AppShell.tsx';
-import { SidePanel } from '../../patterns/SidePanel/SidePanel.jsx';
-import { RecordPage } from '../../patterns/RecordPage/RecordPage.jsx';
-import { SecondaryPane } from '../../patterns/SecondaryPane/SecondaryPane.jsx';
+import { SidePanel as SidePanelJs } from '../../patterns/SidePanel/SidePanel.jsx';
+const SidePanel: any = SidePanelJs;
+import { RecordPage as RecordPageJs } from '../../patterns/RecordPage/RecordPage.jsx';
+const RecordPage: any = RecordPageJs;
+import { SecondaryPane as SecondaryPaneJs } from '../../patterns/SecondaryPane/SecondaryPane.jsx';
+const SecondaryPane: any = SecondaryPaneJs;
 import { FeatureCard } from '../../patterns/FeatureCard/FeatureCard.tsx';
 import { FormFlow } from '../../patterns/FormFlow/FormFlow.tsx';
-import { Auth } from '../../patterns/Auth/Auth.jsx';
-import { SearchWorkspace } from '../../patterns/SearchWorkspace/SearchWorkspace.jsx';
+import { Auth as AuthJs } from '../../patterns/Auth/Auth.jsx';
+const Auth: any = AuthJs;
+import { SearchWorkspace as SearchWorkspaceJs } from '../../patterns/SearchWorkspace/SearchWorkspace.jsx';
+const SearchWorkspace: any = SearchWorkspaceJs;
 import { Stack } from '../../components/Stack/Stack.tsx';
 import { ContentGrid } from '../../patterns/ContentGrid/ContentGrid.tsx';
 import { DataGrid } from '../../components/DataGrid/DataGrid.tsx';
@@ -42,23 +47,25 @@ import { EmptyState } from '../../components/EmptyState/EmptyState.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Link } from '../../components/Link/Link.tsx';
 import { Panel } from '../../components/Card/Card.tsx';
-import { SplitView, ReadingPane } from '../../patterns/SplitView/SplitView.jsx';
+import { SplitView as SplitViewJs, ReadingPane as ReadingPaneJs } from '../../patterns/SplitView/SplitView.jsx';
+const SplitView: any = SplitViewJs;
+const ReadingPane: any = ReadingPaneJs;
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import FolderIcon from 'plenix-platform/icons/plenix/folder';
 // the templates' words come from the catalog (templates.templates.Templates in platform/i18n), so an Arabic page shows them in
 // Arabic; a template's strings prop still wins
-const useWords = (strings) => useStrings('templates.templates.Templates', strings);
-function Frame({ page = 'workspace', title, description, actions, header, sideNav, footer, mainId, children }) {
+const useWords = (strings: any): any => useStrings('templates.templates.Templates', strings);
+function Frame({ page = 'workspace', title, description, actions, header, sideNav, footer, mainId, children }: any) {
   const id = React.useId();
   return <AppShell page={page} header={header} sideNav={sideNav} footer={footer} mainId={mainId || 'plx-template-' + id}>
     <PageContent><RecordPage header={title ? <RecordPage.Header title={title} description={description} actions={actions} /> : null}>{children}</RecordPage></PageContent>
   </AppShell>;
 }
-function Cards({ items = [], onOpen }) { return <ContentGrid>{items.map(item => <FeatureCard key={item.id} title={item.title} description={item.description} icon={item.icon || FolderIcon} href={item.href} onOpen={!item.href && onOpen ? () => onOpen(item) : undefined} />)}</ContentGrid>; }
-function NoRecords({ strings, empty }) { const t = useWords(strings); return empty || <EmptyState title={t.empty}>{t.emptyDescription}</EmptyState>; }
+function Cards({ items = [], onOpen }: any) { return <ContentGrid>{items.map((item: any) => <FeatureCard key={item.id} title={item.title} description={item.description} icon={item.icon || FolderIcon} href={item.href} onOpen={!item.href && onOpen ? () => onOpen(item) : undefined} />)}</ContentGrid>; }
+function NoRecords({ strings, empty }: any) { const t = useWords(strings); return empty || <EmptyState title={t.empty}>{t.emptyDescription}</EmptyState>; }
 // the full-room list (issue 522, the canonical DataGrid page): the toolbar, then the grid filling the room left and
 // scrolling inside (fill, virtual rows, no page controls); the chosen record's detail in a SidePanel beside it
-export function ListingPage({ rows = [], columns = [], empty, strings, children, label, toolbar, grid, detail, detailTitle, onDetailClose, ...rest }) {
+export function ListingPage({ rows = [], columns = [], empty, strings, children, label, toolbar, grid, detail, detailTitle, onDetailClose, ...rest }: any) {
   const id = React.useId();
   const t = useWords(strings);
   const list = rows.length ? <DataGrid label={label || rest.title || t.pane} data={rows} columns={columns} {...grid} /> : <NoRecords empty={empty} strings={strings} />;
@@ -66,31 +73,31 @@ export function ListingPage({ rows = [], columns = [], empty, strings, children,
   return <AppShell page={rest.page || 'workspace'} header={rest.header} sideNav={rest.sideNav} footer={rest.footer} mainId={rest.mainId || 'plx-template-' + id}>
     <div className="plx-page-panes">
       <PageContent><RecordPage header={rest.title ? <RecordPage.Header title={rest.title} description={rest.description} actions={rest.actions} /> : null}>{children}{toolbar}{list}</RecordPage></PageContent>
-      <SidePanel title={detailTitle || t.detail} onOpenChange={(open) => { if (!open && onDetailClose) onDetailClose(); }}>{detail}</SidePanel>
+      <SidePanel title={detailTitle || t.detail} onOpenChange={(open: any) => { if (!open && onDetailClose) onDetailClose(); }}>{detail}</SidePanel>
     </div>
   </AppShell>;
 }
-export function ContentManagementPage({ items = [], onOpen, empty, strings, children, ...rest }) { return <Frame {...rest}>{children}{items.length ? <Cards items={items} onOpen={onOpen} /> : <NoRecords empty={empty} strings={strings} />}</Frame>; }
-export function LandingPage({ items = [], onOpen, children, ...rest }) { return <Frame {...rest}><Stack gap="lg">{children}<Cards items={items} onOpen={onOpen} /></Stack></Frame>; }
-export function HomePage(props) { return <LandingPage {...props} page="dashboard" />; }
-function FormPage({ mode, fields, initialValue, sessionKey, validate, onSubmit, onSuccess, onCancel, strings, title, children, ...rest }) {
+export function ContentManagementPage({ items = [], onOpen, empty, strings, children, ...rest }: any) { return <Frame {...rest}>{children}{items.length ? <Cards items={items} onOpen={onOpen} /> : <NoRecords empty={empty} strings={strings} />}</Frame>; }
+export function LandingPage({ items = [], onOpen, children, ...rest }: any) { return <Frame {...rest}><Stack gap="lg">{children}<Cards items={items} onOpen={onOpen} /></Stack></Frame>; }
+export function HomePage(props: any) { return <LandingPage {...props} page="dashboard" />; }
+function FormPage({ mode, fields, initialValue, sessionKey, validate, onSubmit, onSuccess, onCancel, strings, title, children, ...rest }: any) {
   return <Frame {...rest} page="form" title={title}><FormFlow mode={mode} title={title} surface="page" initialValue={initialValue} sessionKey={sessionKey} validate={validate} onSubmit={onSubmit} onSuccess={onSuccess} onCancel={onCancel} strings={strings}>{fields || children}</FormFlow></Frame>;
 }
-export function CreatePage(props) { return <FormPage {...props} mode="create" />; }
-export function EditPage(props) { return <FormPage {...props} mode="edit" />; }
-export function MasterDetailPage({ pane, paneTitle, detailOpen = false, onBack, strings, children, header, sideNav, footer, mainId }) {
+export function CreatePage(props: any) { return <FormPage {...props} mode="create" />; }
+export function EditPage(props: any) { return <FormPage {...props} mode="edit" />; }
+export function MasterDetailPage({ pane, paneTitle, detailOpen = false, onBack, strings, children, header, sideNav, footer, mainId }: any) {
   const t = useWords(strings), id = React.useId();
   return <AppShell page="master-detail" header={header} sideNav={sideNav} footer={footer} mainId={mainId || 'plx-template-' + id}><div className="plx-page-panes"><SecondaryPane title={paneTitle || t.pane} detailOpen={detailOpen} onBack={onBack}>{pane}</SecondaryPane><PageContent>{children}</PageContent></div></AppShell>;
 }
-export function SplitWorkspace({ pane, paneTitle, rows, columns, grid, detailOpen = true, title, actions, toolbar, empty, orientation, defaultSize, size, onSizeChange, strings, children, header, sideNav, footer, mainId }) {
+export function SplitWorkspace({ pane, paneTitle, rows, columns, grid, detailOpen = true, title, actions, toolbar, empty, orientation, defaultSize, size, onSizeChange, strings, children, header, sideNav, footer, mainId }: any) {
   const t = useWords(strings), id = React.useId(), list = paneTitle || t.pane;
   // grid: the list's own DataGrid options (issue 681), spread last, so grid.label may rename the list; the fill and scroll stay the grid's defaults
   const first = columns ? <DataGrid label={list} data={rows || []} columns={columns} {...grid} /> : <ReadingPane label={list}>{pane}</ReadingPane>;
   const second = <ReadingPane label={title || t.detail} actions={detailOpen ? actions : null} empty={empty || <EmptyState title={t.noSelection}>{t.noSelectionDescription}</EmptyState>}>{detailOpen ? children : null}</ReadingPane>;
   return <AppShell page="master-detail" header={header} sideNav={sideNav} footer={footer} mainId={mainId || 'plx-template-' + id}><PageContent>{toolbar}<SplitView label={title || list} firstLabel={list} orientation={orientation} defaultSize={defaultSize} size={size} onSizeChange={onSizeChange} first={first} second={second} /></PageContent></AppShell>;
 }
-export function SinglePaneWorkspace({ toolbar, children, ...rest }) { return <Frame {...rest}><Stack gap="md">{toolbar}{children}</Stack></Frame>; }
-export function FullScreenWorkspace({ tools, inspector, toolbar, children, strings, mainId }) {
+export function SinglePaneWorkspace({ toolbar, children, ...rest }: any) { return <Frame {...rest}><Stack gap="md">{toolbar}{children}</Stack></Frame>; }
+export function FullScreenWorkspace({ tools, inspector, toolbar, children, strings, mainId }: any) {
   const t = useWords(strings), id = React.useId();
   return <AppShell page="editor" mainId={mainId || 'plx-template-' + id}><div className="plx-page-panes">
     {tools ? <SecondaryPane title={t.tools} width="sm">{tools}</SecondaryPane> : null}
@@ -98,17 +105,17 @@ export function FullScreenWorkspace({ tools, inspector, toolbar, children, strin
     {inspector ? <SecondaryPane title={t.inspector} side="end">{inspector}</SecondaryPane> : null}
   </div></AppShell>;
 }
-export function FullScreenExperience({ children, ...rest }) { return <Frame {...rest} page="editor">{children}</Frame>; }
-export function DetailPage({ sections = [], strings, children, title, description, actions, ...rest }) {
+export function FullScreenExperience({ children, ...rest }: any) { return <Frame {...rest} page="editor">{children}</Frame>; }
+export function DetailPage({ sections = [], strings, children, title, description, actions, ...rest }: any) {
   const t = useWords(strings);
-  return <MasterDetailPage {...rest} paneTitle={t.sections} detailOpen pane={<Stack gap="sm">{sections.map(s => <Link key={s.id} href={'#' + s.id}>{s.title}</Link>)}</Stack>}><Stack gap="lg"><RecordPage.Header title={title} description={description} actions={actions} />{children}{sections.map(s => <section key={s.id} id={s.id} aria-label={s.title}><Panel title={s.title}>{s.content}</Panel></section>)}</Stack></MasterDetailPage>;
+  return <MasterDetailPage {...rest} paneTitle={t.sections} detailOpen pane={<Stack gap="sm">{sections.map((s: any) => <Link key={s.id} href={'#' + s.id}>{s.title}</Link>)}</Stack>}><Stack gap="lg"><RecordPage.Header title={title} description={description} actions={actions} />{children}{sections.map((s: any) => <section key={s.id} id={s.id} aria-label={s.title}><Panel title={s.title}>{s.content}</Panel></section>)}</Stack></MasterDetailPage>;
 }
-export function SearchResultsPage({ query = '', onQueryChange, rows = [], columns = [], strings, children, title, ...rest }) {
+export function SearchResultsPage({ query = '', onQueryChange, rows = [], columns = [], strings, children, title, ...rest }: any) {
   const t = useWords(strings);
-  return <Frame {...rest}><SearchWorkspace title={title || t.search} query={query} onQueryChange={onQueryChange} count={rows.length}>{children}{rows.length ? <DataGrid data={rows} columns={columns} /> : <NoRecords strings={strings} />}</SearchWorkspace></Frame>;
+  return <Frame {...rest}><SearchWorkspace title={title || t.search} query={query} onQueryChange={onQueryChange} count={rows.length}>{children}{rows.length ? <DataGrid label="" data={rows} columns={columns as any} /> : <NoRecords strings={strings} />}</SearchWorkspace></Frame>;
 }
-export function AuthenticationPage({ auth, form, children, header, footer, mainId }) { return <Frame header={header} footer={footer} mainId={mainId} page="form"><Auth {...auth}>{form || children}</Auth></Frame>; }
-export function ErrorPage({ error = 404, onRetry, homeHref, strings, ...rest }) {
-  const t = useWords(strings), errors = { 404: ['Page not found', 'Check the address or return home.'], 403: ['Access denied', 'Ask the owner for access to this page.'], 500: ['Something went wrong', 'Try again or return home.'] }, copy = errors[error] || errors[500];
+export function AuthenticationPage({ auth, form, children, header, footer, mainId }: any) { return <Frame header={header} footer={footer} mainId={mainId} page="form"><Auth {...auth}>{form || children}</Auth></Frame>; }
+export function ErrorPage({ error = 404, onRetry, homeHref, strings, ...rest }: any) {
+  const t = useWords(strings), errors: Record<number, string[]> = { 404: ['Page not found', 'Check the address or return home.'], 403: ['Access denied', 'Ask the owner for access to this page.'], 500: ['Something went wrong', 'Try again or return home.'] }, copy = errors[error] || errors[500];
   return <Frame {...rest} page="detail"><EmptyState kind={error === 404 ? 'not-found' : error === 403 ? 'permission-denied' : undefined} tone={error === 500 ? 'error' : undefined} title={t.title || copy[0]} action={<Stack gap="sm">{onRetry ? <Button onClick={onRetry}>{t.retry}</Button> : null}{homeHref ? <Link href={homeHref}>{t.home}</Link> : null}</Stack>}>{t.description || copy[1]}</EmptyState></Frame>;
 }
