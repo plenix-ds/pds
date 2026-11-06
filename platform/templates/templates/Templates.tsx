@@ -119,6 +119,7 @@ export type LandingPageProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> 
   children?: React.ReactNode;
 };
 export function LandingPage({ items = [], onOpen, children, ...rest }: LandingPageProps) { return <Frame {...rest}><Stack gap="lg">{children}<Cards items={items} onOpen={onOpen} /></Stack></Frame>; }
+/** @public the prop type of HomePage (ADR 0011) */
 export type HomePageProps = LandingPageProps;
 export function HomePage(props: HomePageProps) { return <LandingPage {...props} page="dashboard" />; }
 /** @public the prop type of CreatePage and EditPage (ADR 0011) */
@@ -137,8 +138,10 @@ function FormPage(props: FormPageProps & { mode: 'create' | 'edit' }) {
   const { mode, fields, initialValue, sessionKey, validate, onSubmit, onSuccess, onCancel, strings, title, children, ...rest } = props as any;
   return <Frame {...rest} page="form" title={title}><FormFlow mode={mode} title={title} surface="page" initialValue={initialValue} sessionKey={sessionKey} validate={validate} onSubmit={onSubmit} onSuccess={onSuccess} onCancel={onCancel} strings={strings}>{fields || children}</FormFlow></Frame>;
 }
+/** @public the prop type of CreatePage (ADR 0011) */
 export type CreatePageProps = FormPageProps;
 export function CreatePage(props: CreatePageProps) { return <FormPage {...props} mode="create" />; }
+/** @public the prop type of EditPage (ADR 0011) */
 export type EditPageProps = FormPageProps;
 export function EditPage(props: EditPageProps) { return <FormPage {...props} mode="edit" />; }
 /** @public the prop type of MasterDetailPage (ADR 0011) */
