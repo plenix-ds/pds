@@ -1,5 +1,5 @@
 /* Plenix · lazy charts (platform/charts/lazy.jsx)
-   Summary: The ECharts charts (LineChart, AreaChart, BarChart, PieChart, ComboChart, ScatterChart, WaterfallChart, Sparkline and TreeChart) as thin components that load their code the first time
+   Summary: The ECharts charts (LineChart, AreaChart, BarChart, PieChart, ComboChart, ScatterChart, WaterfallChart, LollipopChart, Sparkline and TreeChart) as thin components that load their code the first time
      a chart of that kind is drawn, so the first load of Plenix does not carry the chart code (issue 106; the budget note on pull request 547). The public
      names, props and behavior are the chart's own: this file only waits for the module, then draws it.
    Usage:
@@ -45,4 +45,5 @@ export const TreeChart = lazyChart('TreeChart', () => import('./TreeChart.jsx'),
 export const WaterfallChart = lazyChart('WaterfallChart', () => import('./WaterfallChart.jsx'), caption);
 export const ComboChart = lazyChart('ComboChart', () => import('./ComboChart.jsx'), caption);
 export const ScatterChart = lazyChart('ScatterChart', () => import('./ScatterChart.jsx'), caption);
+export const LollipopChart = lazyChart('LollipopChart', () => import('./LollipopChart.jsx'), caption);
 export const Sparkline = lazyChart('Sparkline', () => import('./Sparkline.jsx'), sparkBox);
