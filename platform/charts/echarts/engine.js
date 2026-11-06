@@ -143,7 +143,7 @@ export function chartTokens(where) {
     // a treemap's look (Treemap): the gap between tiles, the names and values on their halo, the groups' frame and name
     treemap: { gap: { color: cs(tm[0]).stroke, width: num(cs(tm[0]).strokeWidth) }, label: Object.assign(font(tm[1]), { halo: cs(tm[1]).stroke, haloWidth: num(cs(tm[1]).strokeWidth) }), value: font(tm[2]), group: { color: cs(tm[3]).stroke, width: num(cs(tm[3]).strokeWidth), label: font(tm[4]) } },
     // a heat map's look (HeatMap): an empty cell's fill and dashed edge, a cell's corner, the focused cell's edge, the gap between cells in the surface color
-    heatmap: { empty: cs(hm[0]).fill, emptyEdge: cs(hm[1]).stroke, dash: len(prop('--plx-comp-heat-map-empty-dash')), edgeWidth: num(cs(hm[1]).strokeWidth), surface: surfaceOf(where) },
+    heatmap: { radius: len(prop('--plx-comp-heat-map-cell-radius')), empty: cs(hm[0]).fill, emptyEdge: cs(hm[1]).stroke, dash: len(prop('--plx-comp-heat-map-empty-dash')), edgeWidth: num(cs(hm[1]).strokeWidth), surface: surfaceOf(where) },
     // the values not in focus dim to the interaction's token; the drawing's animation is the motion token (reduced motion: 0)
     dim: num(prop('--plx-comp-chart-interaction-dim-opacity')) || 1,
     motion: ms(prop('--plx-sys-motion-duration-slow')),

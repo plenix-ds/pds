@@ -164,8 +164,8 @@ export function HeatMap({ title, description, variant = 'matrix', rows = [], col
       yAxis: Object.assign({ type: 'category', data: rowNames.map((x, r) => String(r)), inverse: true, axisLine: { show: false }, axisLabel: { interval: (i) => (calendar ? i === 1 || i === 3 || i === 5 : true), formatter: (v) => String(rowNames[Number(v)]) } }, named),
       series: [{ type: 'heatmap', id: 'cells', silent: true, progressive: 0, emphasis: { disabled: true },
         data: cellList.map((x) => (x.value === null
-          ? { value: [x.c, x.r, 0], itemStyle: { color: hm.empty, borderColor: hm.emptyEdge, borderWidth: hm.edgeWidth || 1, borderType: [hm.dash, hm.dash] } }
-          : { value: [x.c, x.r, x.value], itemStyle: { color: tk.color(datavizStep(sc, x.value, lo, hi)), borderColor: hm.surface, borderWidth: gap } })) }],
+          ? { value: [x.c, x.r, 0], itemStyle: { color: hm.empty, borderColor: hm.emptyEdge, borderWidth: hm.edgeWidth || 1, borderType: [hm.dash, hm.dash], borderRadius: hm.radius } }
+          : { value: [x.c, x.r, x.value], itemStyle: { color: tk.color(datavizStep(sc, x.value, lo, hi)), borderColor: hm.surface, borderWidth: gap, borderRadius: hm.radius } })) }],
     };
   }, [dataKey]);   // eslint-disable-line react-hooks/exhaustive-deps
 
