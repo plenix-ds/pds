@@ -96,6 +96,7 @@ export function bodyRows({
   groupBy,
   keys,
   commitEdit,
+  undoRedo,
   canonical,
   cutAt,
   rowMenu,
@@ -443,6 +444,7 @@ export function bodyRows({
                 focusCell,
                 cardList,
                 cellRange,
+                undoRedo,
                 kept: card ? tpl.keep : undefined,
               })}
               data-plx-sticky={pinned && sticky ? sticky + 'px' : undefined}

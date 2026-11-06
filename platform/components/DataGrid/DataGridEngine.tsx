@@ -226,7 +226,7 @@ function NextEngine(rawProps: any) {
     filters
   });
   const incoming = remoteMode ? remote?.rows || EMPTY_ROWS : data;
-  const { setEdited, editing, setEditing, cellStatus, setCellStatus, mutations, pendingEdit, source } = useEditedRows(incoming);
+  const { setEdited, editing, setEditing, cellStatus, setCellStatus, mutations, pendingEdit, history, source } = useEditedRows(incoming);
   // what was typed in the editing cell, kept while its row is out of the virtual window and cleared when the edit ends
   const draftStore = React.useRef<any>(null);
   React.useEffect(() => {
@@ -268,7 +268,7 @@ function NextEngine(rawProps: any) {
     () => new Map(canonical.map((record) => [recordKey(record[index]), record])),
     [canonical, index]
   );
-  const { replaceData, updateRecord, commitEdit } = editActions({
+  const { replaceData, updateRecord, commitEdit, undo, redo } = editActions({
     incoming,
     source,
     canonical,
@@ -280,7 +280,8 @@ function NextEngine(rawProps: any) {
     setCellStatus,
     S,
     mutations,
-    pendingEdit
+    pendingEdit,
+    history
   });
 
   const { changeGroups, toggleGroup } = groupActions({
@@ -927,6 +928,7 @@ function NextEngine(rawProps: any) {
     groupBy,
     keys,
     commitEdit,
+    undoRedo: props.editing?.undo ? { undo, redo } : null,
     canonical,
     cutAt,
     rowMenu,

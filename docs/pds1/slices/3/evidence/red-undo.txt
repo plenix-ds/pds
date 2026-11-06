@@ -1,0 +1,16 @@
+AssertionError [ERR_ASSERTION]: ltr: a typed edit says source edit
++ actual - expected
+
+  [
++   'r1.name=Ann:-'
+-   'r1.name=Ann:edit'
+  ]
+
+    at /home/cc/pds1/work/component-engineer-2/tests/data-grid-undo-3.test.js:39:14 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [Array],
+  expected: [Array],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
