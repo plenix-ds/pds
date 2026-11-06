@@ -30,3 +30,16 @@ What the 0.x project taught us (plan §2), plus confirmed lessons added after ea
 - **A PR merged with an open G3 point although `g3-changes-requested` was on it** (#471): it entered the merge queue at 01:06, the label came at 01:08, and the queue's check had already run. → When adding `g2-changes-requested` or `g3-changes-requested`, look at the merge queue first and dequeue the PR if it is there (D-0056, D-0062).
 - **The tag workflow was red on 0.89.0 and 0.90.0** (#724): the GitHub release was made by hand while the tag job waited in the queue, and the job stopped at "already has a GitHub release". → The tag job keeps whatever is already published, publishes only what is missing and ends with the G8 version check; don't create the release by hand, let the tag job do it.
 - **A release smoke test probed `/api/v1/` on the public URL and got Authentik's 302** (0.90.0): only `/cdn/` is public. → Check the API through nginx on the web host (`curl -H "Host: design-system.lighthouseway.org" http://127.0.0.1/api/v1/index.json`), as the 0.89.0 smoke test did; a 302 is not a failed release.
+
+## Seeded from template v2.4, Appendix A (D-0084)
+
+Lessons A-01 to A-05, A-10 to A-13 are already above in other words; these are the ones not yet recorded.
+
+- **A late, large merge silently dropped controls (A-06).** → Integrate small and often; before resolving a shared file, list what each side added and confirm both survived.
+- **Owner choices were never written down, so layouts and icons flip-flopped (A-07).** → Every choice is a decision with an enforcing check; an unrecorded reversal fails G5b.
+- **`main` had no branch protection and stayed red for weeks (A-08).** → Required checks on `main` from day one; a red `main` is an S1 bug.
+- **Two agent teams worked with different rules (A-09).** → One team, one rulebook; GitHub is the only channel.
+- **Test fixtures were hand-trimmed and hid missing fields (A-14).** → Fixtures come from, or are checked against, the contract files.
+- **A dependency upgrade removed a file that string-only tests missed (A-15).** → Upgrades fetch every referenced file before merging.
+- **The config said 8 slots while the plan and the instruction file said 4 (A-16).** → Settings live only in the registry (`agents.config.yaml`); documents link to it by setting name, never repeat the number (check 15). This plan now does that.
+- **A label, a tag or a card move made by an agent started no workflow, so the next role never woke (A-17).** → Events caused by `GITHUB_TOKEN` start no workflows (except `workflow_dispatch` and `repository_dispatch`). Hand-offs use the GitHub App token or an explicit dispatch (check 16, #772).
