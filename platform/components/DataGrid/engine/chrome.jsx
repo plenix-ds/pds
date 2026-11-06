@@ -18,7 +18,9 @@ import React from 'react';
 import { EmptyState } from '../../EmptyState/EmptyState.tsx';
 import { Button } from '../../Button/Button.tsx';
 import SettingsCustomizeIcon from 'plenix-platform/icons/plenix/settings-customize';
-import { Menu, MenuItem, MenuDivider, MenuRadioGroup } from '../../Menu/Menu.tsx';
+import { Menu, MenuItem } from '../../Menu/Menu.tsx';
+import { Rare, preloadRare } from './rare.jsx';
+import { Spinner } from '../../Loading/Loading.tsx';
 import { cx } from '../../../utils/cx.ts';
 import { Inline } from '../../Stack/Stack.tsx';
 import { words } from './helpers.jsx';
@@ -80,49 +82,29 @@ export function viewMenu({ props, B, S, effectiveStep, setRowHeight, effectiveWr
     <div className={`${B}__grid-col ${B}__w-view`} role="columnheader">
       <Menu
         label={S.view}
-        trigger={<Button variant="ghost" size="xs" iconOnly icon={SettingsCustomizeIcon} label={S.view} />}
+        trigger={
+          <Button
+            variant="ghost"
+            size="xs"
+            iconOnly
+            icon={SettingsCustomizeIcon}
+            label={S.view}
+            onPointerEnter={preloadRare}
+            onFocus={preloadRare}
+            onPointerDown={preloadRare}
+          />
+        }
       >
-        {['short', 'medium', 'tall', 'extra-tall'].map((step) => (
-          <MenuItem
-            key={step}
-            checked={effectiveStep === step}
-            onSelect={() => {
-              setRowHeight(step);
-              props.onViewChange?.({ rowHeight: step });
-            }}
-          >
-            {S[step]}
-          </MenuItem>
-        ))}
-        <MenuDivider />
-        <MenuItem
-          checked={effectiveWrap}
-          onSelect={() => {
-            setWrapHeaders(!effectiveWrap);
-            props.onViewChange?.({ wrapHeaders: !effectiveWrap });
-          }}
-        >
-          {S.wrapHeaders}
-        </MenuItem>
-        {editMenu?.show ? (
-          <>
-            <MenuDivider />
-            <MenuRadioGroup
-              label={S.editMode}
-              value={editMenu.mode}
-              onChange={(mode) => {
-                editMenu.set(mode);
-                props.onViewChange?.({ editMode: mode });
-              }}
-            >
-              {editMenu.modes.map((mode) => (
-                <MenuItem key={mode} value={mode}>
-                  {mode === 'form' ? S.editModeForm : S.editModeInline}
-                </MenuItem>
-              ))}
-            </MenuRadioGroup>
-          </>
-        ) : null}
+        <Rare
+          part="viewMenuItems"
+          args={{ props, S, effectiveStep, setRowHeight, effectiveWrap, setWrapHeaders, editMenu }}
+          pending={
+            <MenuItem disabled aria-busy="true">
+              <Spinner size="sm" label={S.view} />
+            </MenuItem>
+          }
+          fallback={() => null}
+        />
       </Menu>
     </div>
   ) : null;

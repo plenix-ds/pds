@@ -1533,5 +1533,549 @@
   "heading--variants-plain": {
     "sets": [],
     "why": "markup only: a plain label with no heading level (level null)"
+  },
+  "hide-show--breakpoint-show-above": {
+    "sets": [],
+    "why": "markup only: renders its children only at or above the window class, and the fallback below it; the window class is read with a media query, in script"
+  },
+  "hide-show--breakpoint-show-below": {
+    "sets": [],
+    "why": "markup only: renders its children only under the window class, and the fallback at or above it; the window class is read with a media query, in script"
+  },
+  "hide-show--breakpoint-hide-above": {
+    "sets": [],
+    "why": "markup only: renders nothing at or above the window class (the fallback shows instead); the window class is read with a media query, in script"
+  },
+  "hide-show--breakpoint-hide-below": {
+    "sets": [],
+    "why": "markup only: renders nothing under the window class (the fallback shows instead); the window class is read with a media query, in script"
+  },
+  "hide-show--print-print-only": {
+    "sets": [
+      {
+        "property": "display",
+        "part": "block",
+        "token": "--plx-sys-print-shown"
+      }
+    ],
+    "why": ".plx-visibility--print-only: display none on screen, shown on paper"
+  },
+  "hide-show--print-not-printed": {
+    "sets": [
+      {
+        "property": "display",
+        "part": "block",
+        "token": "--plx-sys-print-hidden"
+      }
+    ],
+    "why": ".plx-visibility--no-print: shown on screen, hidden on paper"
+  },
+  "file-row--state-default": {
+    "sets": [],
+    "why": "markup only: the row of select checkbox, file, facts and actions, with no transfer under way"
+  },
+  "file-row--state-with-progress": {
+    "sets": [],
+    "why": "markup only: shows the transfer's progress and a Cancel action while an upload or download is under way"
+  },
+  "gantt-chart--variant-tasks": {
+    "sets": [
+      {
+        "property": "fill",
+        "part": "task",
+        "token": "--plx-comp-gantt-task-text"
+      },
+      {
+        "property": "font-family",
+        "part": "task",
+        "token": "--plx-comp-gantt-task-font-family"
+      },
+      {
+        "property": "font-size",
+        "part": "task",
+        "token": "--plx-comp-gantt-task-font-size"
+      }
+    ],
+    "why": ".plx-gantt__task, the task names beside the bars"
+  },
+  "gantt-chart--variant-dependencies": {
+    "sets": [
+      {
+        "property": "stroke",
+        "part": "link",
+        "token": "--plx-comp-gantt-link-color"
+      },
+      {
+        "property": "stroke-width",
+        "part": "link",
+        "token": "--plx-comp-gantt-link-width"
+      },
+      {
+        "property": "fill",
+        "part": "arrow",
+        "token": "--plx-comp-gantt-link-color"
+      }
+    ],
+    "why": ".plx-gantt__link and .plx-gantt__arrow, the lines and arrowheads between tasks"
+  },
+  "gantt-chart--variant-milestones": {
+    "sets": [
+      {
+        "property": "fill",
+        "part": "milestone",
+        "token": "--plx-comp-gantt-default-color"
+      },
+      {
+        "property": "stroke",
+        "part": "milestone",
+        "token": "--plx-comp-gantt-milestone-outline"
+      },
+      {
+        "property": "stroke-width",
+        "part": "milestone",
+        "token": "--plx-comp-gantt-milestone-outline-width"
+      }
+    ],
+    "why": ".plx-gantt__milestone, the diamond (a data color replaces the default fill when the item has one)"
+  },
+  "form-section--layout-one-column-default": {
+    "sets": [
+      {
+        "property": "row-gap",
+        "part": "block",
+        "token": "--plx-comp-form-section-gap"
+      }
+    ],
+    "why": ".plx-form-section in form.css: its fields stack in one column with a gap"
+  },
+  "form-section--parts-titled-section": {
+    "sets": [
+      {
+        "property": "row-gap",
+        "part": "header",
+        "token": "--plx-comp-form-section-header-gap"
+      }
+    ],
+    "why": ".plx-form-section__header, the title and description above the fields"
+  },
+  "group-panel--bar-button-group-not-grouped": {
+    "sets": [],
+    "why": "markup only: the Group button with the group-by icon when no group level is set"
+  },
+  "group-panel--panel-a-group-and-a-subgroup": {
+    "sets": [],
+    "why": "markup only: the panel lists each group level with its field, order and menu, and Add subgroup"
+  },
+  "geo-map--variant-regions": {
+    "sets": [],
+    "why": "markup only: draws the supplied GeoJSON regions, outlined or shaded by a measure"
+  },
+  "geo-map--variant-markers": {
+    "sets": [],
+    "why": "markup only: draws markers at the supplied longitude and latitude places"
+  },
+  "input-group--width-xs": {
+    "sets": [
+      {
+        "property": "inline-size",
+        "part": "block",
+        "token": "--plx-comp-input-group-width-xs-width"
+      }
+    ],
+    "why": ".plx-input-group--width-xs in input-group.css"
+  },
+  "input-group--width-sm": {
+    "sets": [
+      {
+        "property": "inline-size",
+        "part": "block",
+        "token": "--plx-comp-input-group-width-sm-width"
+      }
+    ],
+    "why": ".plx-input-group--width-sm in input-group.css"
+  },
+  "input-group--width-md": {
+    "sets": [
+      {
+        "property": "inline-size",
+        "part": "block",
+        "token": "--plx-comp-input-group-width-md-width"
+      }
+    ],
+    "why": ".plx-input-group--width-md in input-group.css"
+  },
+  "input-group--width-lg": {
+    "sets": [
+      {
+        "property": "inline-size",
+        "part": "block",
+        "token": "--plx-comp-input-group-width-lg-width"
+      }
+    ],
+    "why": ".plx-input-group--width-lg in input-group.css"
+  },
+  "import-dialog--variant-file": {
+    "sets": [],
+    "why": "markup only: chooses a file, or drops one, as the import source (initialMode file)"
+  },
+  "import-dialog--variant-paste": {
+    "sets": [],
+    "why": "markup only: pastes the data as text as the import source (initialMode paste)"
+  },
+  "import-dialog--variant-url": {
+    "sets": [],
+    "why": "markup only: takes an HTTP URL as the import source (initialMode url); invalid URLs are rejected"
+  },
+  "import-wizard--variant-map-columns": {
+    "sets": [],
+    "why": "markup only: the step that maps each source column to a target field; required fields must be mapped"
+  },
+  "import-wizard--variant-review": {
+    "sets": [],
+    "why": "markup only: the step that shows the rows with their mapped values before the import"
+  },
+  "import-wizard--variant-results": {
+    "sets": [],
+    "why": "markup only: the step that reports what was imported, after the import is persisted once"
+  },
+  "image-annotation--variant-pins": {
+    "sets": [],
+    "why": "markup only: annotations of kind pin: a named point on the image, listed beside it"
+  },
+  "image-annotation--variant-regions": {
+    "sets": [],
+    "why": "markup only: annotations of kind region: a named area on the image, listed beside it"
+  },
+  "inline-edit--view-read-view": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "read",
+        "token": "--plx-comp-inline-edit-read-background"
+      },
+      {
+        "property": "border-color",
+        "part": "read",
+        "token": "--plx-comp-inline-edit-read-border-color"
+      },
+      {
+        "property": "background-color",
+        "part": "read-hover",
+        "token": "--plx-comp-inline-edit-read-hover-background"
+      },
+      {
+        "property": "color",
+        "part": "read-empty",
+        "token": "--plx-comp-inline-edit-read-empty-text"
+      }
+    ],
+    "why": ".plx-inline-edit__read, the button that shows the value (hover and empty states included)"
+  },
+  "inline-edit--field-text-default": {
+    "sets": [],
+    "why": "markup only: swaps the read view for a text field with the value; Enter saves, Escape puts it back"
+  },
+  "inline-edit--field-select": {
+    "sets": [],
+    "why": "markup only: swaps the read view for a select with the value (type select)"
+  },
+  "inline-edit--field-with-confirm-buttons": {
+    "sets": [],
+    "why": "markup only: adds a check button and a cancel button beside the field (confirmButtons)"
+  },
+  "inline-code--variant-default": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-code-background"
+      },
+      {
+        "property": "border-radius",
+        "part": "block",
+        "token": "--plx-comp-code-radius"
+      }
+    ],
+    "why": ".plx-code in code.css, the base rule for code inside a sentence"
+  },
+  "toast--tone-success": {
+    "sets": [
+      {
+        "property": "border-inline-start-color",
+        "part": "block",
+        "token": "--plx-comp-toast-success-border-inline-start-color"
+      }
+    ],
+    "why": ".plx-toast--success in toast.css; the lab value is named tone-success, which the derivation does not map to the modifier"
+  },
+  "toast--tone-warning": {
+    "sets": [
+      {
+        "property": "border-inline-start-color",
+        "part": "block",
+        "token": "--plx-comp-toast-warning-border-inline-start-color"
+      }
+    ],
+    "why": ".plx-toast--warning in toast.css; the lab value is named tone-warning, which the derivation does not map to the modifier"
+  },
+  "toast--tone-danger": {
+    "sets": [
+      {
+        "property": "border-inline-start-color",
+        "part": "block",
+        "token": "--plx-comp-toast-danger-border-inline-start-color"
+      }
+    ],
+    "why": ".plx-toast--danger in toast.css; the lab value is named tone-danger, which the derivation does not map to the modifier"
+  },
+  "toast--tone-info-default": {
+    "sets": [
+      {
+        "property": "border-inline-start-color",
+        "part": "block",
+        "token": "--plx-comp-toast-border-inline-start-color"
+      }
+    ],
+    "why": ".plx-toast in toast.css: info is the default tone, drawn by the base rule"
+  },
+  "timestamp--format-date-label": {
+    "sets": [],
+    "why": "markup only: the format changes the text and the tooltip, no style"
+  },
+  "timestamp--format-date-only": {
+    "sets": [],
+    "why": "markup only: the format changes the text and the tooltip, no style"
+  },
+  "timestamp--format-relative": {
+    "sets": [],
+    "why": "markup only: the format changes the text and the tooltip, no style"
+  },
+  "timestamp--format-time-only": {
+    "sets": [],
+    "why": "markup only: the format changes the text and the tooltip, no style"
+  },
+  "timestamp--format-timestamp-default": {
+    "sets": [],
+    "why": "markup only: the format changes the text and the tooltip, no style"
+  },
+  "timestamp--format-with-absolute-tooltip": {
+    "sets": [],
+    "why": "markup only: the format changes the text and the tooltip, no style"
+  },
+  "time-picker--clock-12-hour-clock": {
+    "sets": [],
+    "why": "markup only: the clock changes the words (AM/PM) and the list, no style"
+  },
+  "time-picker--clock-24-hour-clock": {
+    "sets": [],
+    "why": "markup only: the clock changes the words and the list, no style"
+  },
+  "time-picker--step-every-30-minutes": {
+    "sets": [],
+    "why": "markup only: the step changes which times the list holds, no style"
+  },
+  "time-picker--form-list-default": {
+    "sets": [],
+    "why": "markup only: the list form is the default markup, no style"
+  },
+  "tooltip--placement-bottom-default": {
+    "sets": [],
+    "why": "markup only: the placement is a data attribute read by the floating layer (system/floating.css), which positions it; the tooltip's own styles do not change"
+  },
+  "tooltip--placement-end": {
+    "sets": [],
+    "why": "markup only: the placement is a data attribute read by the floating layer (system/floating.css), which positions it; the tooltip's own styles do not change"
+  },
+  "tooltip--placement-start": {
+    "sets": [],
+    "why": "markup only: the placement is a data attribute read by the floating layer (system/floating.css), which positions it; the tooltip's own styles do not change"
+  },
+  "tooltip--placement-top": {
+    "sets": [],
+    "why": "markup only: the placement is a data attribute read by the floating layer (system/floating.css), which positions it; the tooltip's own styles do not change"
+  },
+  "image--loading-lazy-default": {
+    "sets": [
+      {
+        "property": "transition-duration",
+        "part": "img",
+        "token": "--plx-comp-image-fade-duration"
+      },
+      {
+        "property": "transition-timing-function",
+        "part": "img",
+        "token": "--plx-comp-image-fade-easing"
+      }
+    ],
+    "why": ".plx-image.is-loading .plx-image__img starts at opacity 0 and fades in with these when the picture loads (the browser loads it lazily)"
+  },
+  "image--error-fallback": {
+    "sets": [],
+    "why": ".plx-image.is-error hides the picture (display none, no token) and the fallback shows in its place"
+  },
+  "image--responsive-responsive-srcset-sizes": {
+    "sets": [],
+    "why": "markup only: srcSet and sizes let the browser pick the file; no style differs"
+  },
+  "heat-map--variant-matrix": {
+    "sets": [],
+    "why": "markup only: a grid of cells where a row and a column meet, colored by the sequential data scale"
+  },
+  "heat-map--variant-calendar": {
+    "sets": [],
+    "why": "markup only: one cell per day laid out in weeks, colored by the same scale"
+  },
+  "logo--tone-brand-default": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-comp-brand-name-color"
+      },
+      {
+        "property": "color",
+        "part": "mark",
+        "token": "--plx-comp-brand-mark-color"
+      },
+      {
+        "property": "background-color",
+        "part": "tile",
+        "token": "--plx-comp-brand-tile-background"
+      },
+      {
+        "property": "color",
+        "part": "tile",
+        "token": "--plx-comp-brand-tile-icon"
+      }
+    ],
+    "why": ".plx-brand-lockup--tone-brand in brand-lockup.css (the tool reads the block as brand-mark)"
+  },
+  "logo--tone-on-accent": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-comp-brand-on-accent-color"
+      },
+      {
+        "property": "background-color",
+        "part": "tile",
+        "token": "--plx-comp-brand-on-accent-tile-background"
+      },
+      {
+        "property": "color",
+        "part": "tile",
+        "token": "--plx-comp-brand-on-accent-tile-icon"
+      }
+    ],
+    "why": ".plx-brand-lockup--tone-on-accent in brand-lockup.css (the tool reads the block as brand-mark)"
+  },
+  "logo--tone-one-color": {
+    "sets": [
+      {
+        "property": "border-width",
+        "part": "tile",
+        "token": "--plx-comp-brand-mono-tile-border-width"
+      }
+    ],
+    "why": ".plx-brand-lockup--tone-mono: the tile is an outline in the current text color (the color itself is currentcolor, no token)"
+  },
+  "logo--clear-space-with-clear-space": {
+    "sets": [
+      {
+        "property": "padding-block",
+        "part": "block",
+        "token": "--plx-comp-brand-md-clear-space"
+      },
+      {
+        "property": "padding-inline",
+        "part": "block",
+        "token": "--plx-comp-brand-md-clear-space"
+      }
+    ],
+    "why": ".plx-brand-lockup--clear with the size's clear-space token (shown for the default size, md)"
+  },
+  "link--state-visited": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-comp-link-visited-text"
+      }
+    ],
+    "why": ".plx-link--inline:visited and .is-visited in link.css"
+  },
+  "link--kind-external": {
+    "sets": [],
+    "why": "markup only: opens in a new tab and shows the open icon after the text (external)"
+  },
+  "link--kind-back": {
+    "sets": [],
+    "why": "markup only: a leading chevron that points back, drawn as a standalone link (back)"
+  },
+  "list--variants-do-success-marks": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "icon",
+        "token": "--plx-comp-list-item-success-icon-text"
+      }
+    ],
+    "why": ".plx-list__item--success .plx-list__icon in list.css"
+  },
+  "list--variants-don-t-danger-marks": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "icon",
+        "token": "--plx-comp-list-item-danger-icon-text"
+      }
+    ],
+    "why": ".plx-list__item--danger .plx-list__icon in list.css"
+  },
+  "keyboard-hint--surface-on-the-accent-header": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-kbd-on-accent-background"
+      },
+      {
+        "property": "border-color",
+        "part": "block",
+        "token": "--plx-comp-kbd-on-accent-border-color"
+      },
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-comp-kbd-on-accent-text"
+      }
+    ],
+    "why": ".plx-kbd--on-accent in kbd.css, for a key hint on the accent header"
+  },
+  "keyboard-hint--surface-on-the-page-default": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-kbd-background"
+      },
+      {
+        "property": "border-color",
+        "part": "block",
+        "token": "--plx-comp-kbd-border-color"
+      },
+      {
+        "property": "border-width",
+        "part": "block",
+        "token": "--plx-comp-kbd-border-width"
+      },
+      {
+        "property": "border-radius",
+        "part": "block",
+        "token": "--plx-comp-kbd-radius"
+      }
+    ],
+    "why": ".plx-kbd in kbd.css, the base rule on the page surface"
   }
 }

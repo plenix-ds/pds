@@ -21,7 +21,7 @@
 .plx-combobox__create{color:var(--plx-comp-combobox-create-text);font-weight:var(--plx-comp-combobox-create-font-weight);}
 .plx-combobox__empty{color:var(--plx-comp-combobox-empty-text);font-size:var(--plx-comp-combobox-empty-font-size);padding-block-end:var(--plx-comp-combobox-empty-padding-block);padding-block-start:var(--plx-comp-combobox-empty-padding-block);padding-inline-end:var(--plx-comp-combobox-empty-padding-inline);padding-inline-start:var(--plx-comp-combobox-empty-padding-inline);}
 /* a group heading in the list (options[].group) */
-.plx-combobox__group{color:var(--plx-comp-combobox-group-text);font-family:var(--plx-comp-combobox-group-font-family);font-size:var(--plx-comp-combobox-group-font-size);font-weight:var(--plx-comp-combobox-group-font-weight);padding-block-end:var(--plx-comp-combobox-group-padding-block-end);padding-block-start:var(--plx-comp-combobox-group-padding-block-start);padding-inline-end:var(--plx-comp-combobox-group-padding-inline);padding-inline-start:var(--plx-comp-combobox-group-padding-inline);text-transform:uppercase;word-spacing:normal;}
+.plx-combobox__group{color:var(--plx-comp-combobox-group-text);font-family:var(--plx-comp-combobox-group-font-family);font-size:var(--plx-comp-combobox-group-font-size);font-weight:var(--plx-comp-combobox-group-font-weight);letter-spacing:var(--plx-comp-combobox-group-letter-spacing);line-height:var(--plx-comp-combobox-group-line-height);padding-block-end:var(--plx-comp-combobox-group-padding-block-end);padding-block-start:var(--plx-comp-combobox-group-padding-block-start);padding-inline-end:var(--plx-comp-combobox-group-padding-inline);padding-inline-start:var(--plx-comp-combobox-group-padding-inline);text-transform:uppercase;word-spacing:normal;}
 /* option marks (marks="checkbox" | "radio", library wave 6): the Checkbox or Radio control before the label, not a target of its own */
 .plx-combobox--marks .plx-combobox__option{column-gap:var(--plx-comp-combobox-option-mark-gap);}
 .plx-combobox__mark{margin-block-start:0;pointer-events:none;}
@@ -48,3 +48,5 @@
 :where(.plx-combobox__list){transform-origin:top center;}
 /* the width its pattern gives it (layout-modes.css), else its own */
 .plx-combobox:where(:not(.plx-combobox--width-xs, .plx-combobox--width-sm, .plx-combobox--width-md, .plx-combobox--width-lg, .plx-combobox--width-fill)){flex-shrink:var(--plx-comp-field-context-content-flex-shrink,1);inline-size:var(--plx-comp-field-context-content-inline-size,var(--plx-comp-field-context-stretch-inline-size,auto));max-inline-size:min(var(--plx-comp-combobox-max-width),var(--plx-comp-field-context-content-max-inline-size,100%),100%);min-inline-size:var(--plx-comp-field-context-content-min-inline-size,0);}
+/* chipOverflow="count": the chips stay on one line (the fit step folds the rest into a "+N" Tag) */
+.plx-combobox__field--count{flex-wrap:nowrap;}

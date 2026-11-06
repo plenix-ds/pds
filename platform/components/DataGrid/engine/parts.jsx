@@ -12,6 +12,7 @@
      Moved out of DataGridEngine.jsx without any change to the code (issue 688). The engine is documented in DataGridEngine.jsx.
 */
 import React from 'react';
+import { rememberPerson } from '../cells.jsx';
 import { useFloating } from '../../../utils/floating.ts';
 import { announce } from '../../../utils/announce.tsx';
 import { Spinner } from '../../Loading/Loading.tsx';
@@ -166,6 +167,7 @@ export function CellEditor({ column, record, value, area, select, date, combobox
           cancel={onCancel}
           options={column.editorProps?.options ?? []}
           load={column.editorProps?.loadOptions}
+          remember={(v, option) => rememberPerson(column.field, v, option)}
           label={S.editCell.replace('{title}', column.title)}
         />
       </React.Suspense>

@@ -52,7 +52,7 @@ DSParts.records.push(function (H) {
     return box(props.width || 560, h(P.VirtualList, Object.assign({ label: props.label || 'Assets', showCount: true }, props.grow ? { items: s[0], loading: busy[0], onEndReached: more } : {}, props.v)));
   };
   var virtualList = { id: 'virtual-list', lab: true, icon: 'list-lines', sec: 'data-display', sub: 'Lists and collections', leaf: 'Virtualized list', title: 'Virtualized list',
-    plenix: 'VirtualList', src: 'components/VirtualList/VirtualList.jsx', also: ['hooks/useVirtualizer.ts'], level: 'Component', interaction: 'Display',
+    plenix: 'VirtualList', src: 'components/VirtualList/VirtualList.tsx', also: ['hooks/useVirtualizer.ts'], level: 'Component', interaction: 'Display',
     aliases: ['Virtual list', 'Windowed list', 'Long list', 'Infinite list', 'Virtual scroll'],
     text: 'A list of hundreds to many thousands of rows in a bordered scroll area that draws only the rows in and near its view (useVirtualizer). The rest are gaps the stylesheet sizes, so the scroll bar keeps the whole list’s length, and each row says its place in it ("12 of 4,000"). Fixed rows are one line at the list row height; variable rows wrap and take their own height; a group keeps its header at the top while it scrolls. The scroll area is a named Tab stop, the count shows above the list in the data font, and a loading row at the end asks for more.',
     use: ['Lists that can pass a few hundred rows: logs, activity, people directories, asset libraries', 'Fixed rows whenever the content fits one line: the fastest and steadiest', 'Groups for a long sorted list (A to Z, by day)', 'onEndReached with loading to bring the next rows from the server'],

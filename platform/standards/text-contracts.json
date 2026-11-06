@@ -289,12 +289,11 @@
    ]
   },
   "plx-bottom-sheet-nav__tile-label": {
-   "contract": "adjusts",
-   "props": [
-    "font-family",
-    "font-size",
-    "line-height",
-    "word-spacing"
+   "contract": "establishes",
+   "role": "secondary",
+   "font": "sans",
+   "adjusts": [
+    "font-size"
    ]
   },
   "plx-brand-lockup--size-lg": {
@@ -741,12 +740,11 @@
    ]
   },
   "plx-combobox__group": {
-   "contract": "adjusts",
-   "props": [
-    "font-family",
-    "font-size",
-    "font-weight",
-    "word-spacing"
+   "contract": "establishes",
+   "role": "label",
+   "font": "sans",
+   "adjusts": [
+    "font-weight"
    ]
   },
   "plx-combobox__loading": {
@@ -780,12 +778,12 @@
    ]
   },
   "plx-command-menu__page-title": {
-   "contract": "adjusts",
-   "props": [
-    "font-family",
+   "contract": "establishes",
+   "role": "label",
+   "font": "sans",
+   "adjusts": [
     "font-size",
-    "font-weight",
-    "word-spacing"
+    "font-weight"
    ]
   },
   "plx-command-menu__status": {
@@ -1205,13 +1203,9 @@
    ]
   },
   "plx-dialog__title": {
-   "contract": "adjusts",
-   "props": [
-    "font-family",
-    "font-size",
-    "font-weight",
-    "word-spacing"
-   ]
+   "contract": "establishes",
+   "role": "surface-title",
+   "font": "sans"
   },
   "plx-document-viewer__text": {
    "contract": "establishes",
@@ -1562,12 +1556,12 @@
    ]
   },
   "plx-focus-order__number": {
-   "contract": "adjusts",
-   "props": [
-    "font-family",
+   "contract": "establishes",
+   "role": "label",
+   "font": "sans",
+   "adjusts": [
     "font-size",
-    "font-weight",
-    "word-spacing"
+    "font-weight"
    ]
   },
   "plx-gantt__task": {
@@ -2780,12 +2774,11 @@
    ]
   },
   "plx-search__popup-title": {
-   "contract": "adjusts",
-   "props": [
-    "font-family",
-    "font-size",
-    "font-weight",
-    "word-spacing"
+   "contract": "establishes",
+   "role": "label",
+   "font": "sans",
+   "adjusts": [
+    "font-weight"
    ]
   },
   "plx-secondary-pane__header": {
@@ -2947,13 +2940,9 @@
    ]
   },
   "plx-sheet__title": {
-   "contract": "adjusts",
-   "props": [
-    "font-family",
-    "font-size",
-    "font-weight",
-    "word-spacing"
-   ]
+   "contract": "establishes",
+   "role": "surface-title",
+   "font": "sans"
   },
   "plx-side-panel__title": {
    "contract": "adjusts",
@@ -3139,12 +3128,12 @@
    "font": "mono"
   },
   "plx-time-picker__option": {
-   "contract": "adjusts",
-   "props": [
-    "font-family",
+   "contract": "establishes",
+   "role": "body",
+   "font": "mono",
+   "adjusts": [
     "font-size",
-    "font-weight",
-    "word-spacing"
+    "font-weight"
    ]
   },
   "plx-time-zone-select__field-offset": {

@@ -36,9 +36,26 @@ export function byteFilter(row, field, search) {
 }
 const DATA_TYPES = ['number', 'currency', 'date', 'bytes'];
 
-export function CellValue({ column, value, strings, record, pill = false, pillField, icon, block = 'plx-data-grid', mods }) {
+// people picked in a person editor (issue 477): a column given only loadOptions has no list to find a saved id in, so the grid keeps the name and picture of each
+// person picked, by column field and value, and the read cell draws them. Capped, oldest dropped first.
+const PICKED_PEOPLE = new Map();
+export function rememberPerson(field, value, option) {
+  if (!option || value === undefined || value === null || value === '') return;
+  const key = field + '|' + String(value); PICKED_PEOPLE.delete(key);
+  PICKED_PEOPLE.set(key, { name: option.label, src: option.src, color: option.color, gender: option.gender });
+  if (PICKED_PEOPLE.size > 500) PICKED_PEOPLE.delete(PICKED_PEOPLE.keys().next().value);
+}
+// a person column's id (a string or a number) as the person it names: the editor's options, else a person picked in this session; else it stays the raw value
+function personOf(column, value) {
+  const found = (column.editorProps?.options || []).find((o) => String(o.value) === String(value));
+  if (found) return { name: found.label, src: found.src, color: found.color, gender: found.gender };
+  return PICKED_PEOPLE.get(column.field + '|' + String(value)) || value;
+}
+
+export function CellValue({ column, value: given, strings, record, pill = false, pillField, icon, block = 'plx-data-grid', mods }) {
   const own = block + '__value' + (mods ? ' ' + mods : '');
   const kinds = [].concat(column.kind || []);
+  const value = (column.type === 'person' || kinds.includes('avatar-name')) && given !== null && given !== undefined && given !== '' && typeof given !== 'object' ? personOf(column, given) : given;
   if (pill && column.pill !== false && value !== null && value !== undefined && value !== '' && !kinds.includes('tags') && !kinds.includes('badge') && !kinds.includes('deleted')) {
     const isPerson = column.type === 'person' || kinds.includes('avatar-name');
     const person = isPerson && typeof value === 'object' ? value : null;

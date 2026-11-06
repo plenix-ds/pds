@@ -2191,6 +2191,9 @@ export default {
     "draft": "Draft"
   },
   "viewMenu": {
+    "editMode": "Editing",
+    "editModeInline": "Inline Edit",
+    "editModeForm": "Form Edit",
     "reset": "Reset view",
     "label": "View",
     "layout": "Layout",
