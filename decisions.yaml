@@ -640,3 +640,13 @@
   options: ['four stay SVG, the rest move (chosen)', 'move all nine through custom series and extra packages']
   status: active
   check: 'review-only (component scope; the chart list in #106 is the record)'
+
+- id: D-0073
+  date: 2026-11-06
+  area: components
+  decided_by: agent (pds1-component-engineer 1, carried by pds1-product-lead), owner may switch
+  decision: SankeyDiagram and NetworkGraph also stay on their own layouts and SVG (like the four in D-0072), because apps use their public layout functions (sankeyLayout, forceLayout, layeredLayout, graphLayers, graphNeighbors, useGraphView); HeatMap moves to ECharts next.
+  why: 'Moving them would change every diagram''s layout, leave six public exports without a user (a breaking change for apps) and rebuild their pointer behavior, for +5.7 KB and +11 KB gzipped.'
+  options: ['both stay on their own layouts (chosen)', 'move both and deprecate the six layout exports']
+  status: active
+  check: 'review-only (component scope; the chart list in #106 is the record)'

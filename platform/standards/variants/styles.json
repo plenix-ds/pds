@@ -4064,5 +4064,135 @@
   "feature-card--variant-horizontal": {
     "sets": [],
     "why": "markup only: the icon, or the picture as a square, before the name and description, for lists and narrow columns (variant horizontal)"
+  },
+  "side-drawer--size-sm": {
+    "sets": [
+      {
+        "property": "max-inline-size",
+        "part": "block",
+        "token": "--plx-comp-drawer-sm-max-width"
+      }
+    ],
+    "why": "dialog.css: .plx-drawer--sm"
+  },
+  "side-drawer--size-md-default": {
+    "sets": [
+      {
+        "property": "max-inline-size",
+        "part": "block",
+        "token": "--plx-comp-drawer-md-max-width"
+      }
+    ],
+    "why": "dialog.css: .plx-drawer--md"
+  },
+  "side-drawer--size-lg": {
+    "sets": [
+      {
+        "property": "max-inline-size",
+        "part": "block",
+        "token": "--plx-comp-drawer-lg-max-width"
+      }
+    ],
+    "why": "dialog.css: .plx-drawer--lg"
+  },
+  "side-drawer--side-end-default": {
+    "sets": [],
+    "why": "markup only: the end side is the base .plx-drawer, which slides in from the end; the start side is the other variation (.plx-drawer--start reverses the slide)"
+  },
+  "session-timeout--variant-warning-with-countdown": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "time",
+        "token": "--plx-comp-session-timeout-time-text"
+      },
+      {
+        "property": "font-weight",
+        "part": "time",
+        "token": "--plx-comp-session-timeout-time-font-weight"
+      }
+    ],
+    "why": "session-timeout.css: .plx-session-timeout--warning .plx-session-timeout__time, the countdown"
+  },
+  "session-timeout--variant-signed-out": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "inline-time",
+        "token": "--plx-comp-session-timeout-text"
+      }
+    ],
+    "why": "session-timeout.css: .plx-session-timeout--signed-out .plx-session-timeout__inline-time"
+  },
+  "session-timeout--placement-on-the-page": {
+    "sets": [
+      {
+        "property": "max-inline-size",
+        "part": "block",
+        "token": "--plx-comp-session-timeout-inline-max-width"
+      },
+      {
+        "property": "row-gap",
+        "part": "block",
+        "token": "--plx-comp-session-timeout-inline-gap"
+      }
+    ],
+    "why": "session-timeout.css: .plx-session-timeout--inline, the title, text and actions stacked without a frame (display flex, column)"
+  },
+  "session-timeout--placement-dialog-default": {
+    "sets": [],
+    "why": "markup only: in a dialog the Dialog draws the frame; session-timeout.css has no modifier for it"
+  },
+  "upload-manager--rows-per-file-progress": {
+    "sets": [],
+    "why": "markup only: the rows are FileRow's and show a progress bar; the queue's own rules are the same for every row"
+  },
+  "upload-manager--rows-retry": {
+    "sets": [],
+    "why": "markup only: the rows are FileRow's and show a retry action; the queue's own rules are the same for every row"
+  },
+  "download-button--variant-icon": {
+    "sets": [],
+    "why": "markup only: only the download icon (iconOnly); its name still says what downloads"
+  },
+  "download-button--variant-with-label": {
+    "sets": [],
+    "why": "markup only: the icon and the label, the default \"Download\""
+  },
+  "download-button--variant-with-size-and-format": {
+    "sets": [],
+    "why": "markup only: shows the format and the size after the label before it starts, such as Download, PNG, 4.2 MB"
+  },
+  "download-button--variant-in-progress": {
+    "sets": [],
+    "why": "markup only: while progress is set the icon becomes a progress ring and the label says Downloading with the percent; the button is busy"
+  },
+  "file--kind-file-default": {
+    "sets": [],
+    "why": "markup only: a file: its type's icon, its name with the extension kept in view, and its size and date"
+  },
+  "file--details-with-size": {
+    "sets": [],
+    "why": "markup only: adds the size, written by formatBytes, in the data font"
+  },
+  "file--details-by-type-icon": {
+    "sets": [],
+    "why": "markup only: the type's icon picks the file's kind (a small picture replaces it with src)"
+  },
+  "file--appearance-line-default": {
+    "sets": [],
+    "why": "markup only: a line inside lists, rows and pickers (appearance line)"
+  },
+  "diagram--variant-flowchart": {
+    "sets": [],
+    "why": "markup only: each shape says what a step is, with labeled branches such as Yes and No"
+  },
+  "diagram--variant-boxes-and-arrows": {
+    "sets": [],
+    "why": "markup only: every node a box with a title and a line, inside its group"
+  },
+  "diagram--variant-read-only": {
+    "sets": [],
+    "why": "markup only: a picture with its steps as a table; no one Tab stop walks the flow"
   }
 }
