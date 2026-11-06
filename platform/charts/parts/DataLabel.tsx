@@ -22,6 +22,7 @@
        set. Values are technical: the data font; no color is written (the label's tokens).
 */
 import React from 'react';
+import type { ChartValue } from '../chart-types.ts';
 import { cx } from '../../utils/cx.ts';
 import { formatNumber } from '../../utils/format.ts';
 
@@ -32,13 +33,13 @@ export type DataLabelProps = {
   /** the mark's anchor in plot pixels */
   x: number; y: number;
   value?: number | string | null;
-  format?(value: any): string;
+  format?(value: ChartValue): string;
   position?: 'top' | 'end' | 'center';
   className?: string;
 };
 export function DataLabel({ x, y, value, format, position = 'top', className }: DataLabelProps) {
   if (x === undefined || y === undefined || x === null || y === null) return null;
   const p = POSITIONS.indexOf(position) >= 0 ? position : 'top';
-  const text = typeof format === 'function' ? format(value) : typeof value === 'number' ? formatNumber(value) : value;
+  const text = typeof format === 'function' ? format(value as ChartValue) : typeof value === 'number' ? formatNumber(value) : value;
   return <text className={cx('plx-chart-data-label', 'plx-chart-data-label--' + p, className)} x={x} y={y}>{text}</text>;
 }

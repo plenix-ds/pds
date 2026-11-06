@@ -28,7 +28,7 @@
        plx-chart__tick-label), the offset and the title their tokens (chart-parts.css).
 */
 import React from 'react';
-import type { ChartScale, ChartInner, ChartMargin, ChartTicks } from '../chart-types.ts';
+import type { ChartScale, ChartInner, ChartMargin, ChartTicks, ChartValue } from '../chart-types.ts';
 import { cx } from '../../utils/cx.ts';
 import { scalePosition, scaleTicks, scaleLabel } from './position.ts';
 
@@ -42,7 +42,7 @@ export type AxisProps = {
   inner: ChartInner;
   margin?: ChartMargin;
   ticks?: ChartTicks;
-  format?(value: any): string;
+  format?(value: ChartValue): string;
   label?: string;
   line?: boolean;
   className?: string;

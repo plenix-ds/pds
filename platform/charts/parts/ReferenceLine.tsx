@@ -28,7 +28,7 @@
        a series color, and its name says what it is, so color is not the only cue.
 */
 import React from 'react';
-import type { ChartScale, ChartInner } from '../chart-types.ts';
+import type { ChartScale, ChartInner, ChartValue } from '../chart-types.ts';
 import { cx } from '../../utils/cx.ts';
 import { scalePosition } from './position.ts';
 
@@ -37,14 +37,14 @@ const LEVELS = ['warning', 'critical'];
 /** @public */
 export type ReferenceLineProps = {
   scale: ChartScale;
-  value: number | string | Date;
+  value: ChartValue;
   axis?: 'x' | 'y';
   inner: ChartInner;
   kind?: 'reference' | 'threshold';
   level?: 'warning' | 'critical';
   label?: string;
   showValue?: boolean;
-  format?(value: any): string;
+  format?(value: ChartValue): string;
   className?: string;
 };
 export function ReferenceLine({ scale, value, axis = 'y', inner, kind = 'reference', level = 'warning', label, showValue = true, format, className }: ReferenceLineProps) {
