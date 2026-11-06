@@ -1,6 +1,6 @@
 {
   "name": "@plenix-ds/icons",
-  "version": "0.90.1",
+  "version": "0.90.2",
   "description": "Plenix icons (SVG, icons.json, icon stylesheet)",
   "private": true,
   "license": "UNLICENSED",
