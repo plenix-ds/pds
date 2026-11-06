@@ -6,7 +6,7 @@ export interface CollectionField<Row = Record<string, unknown>> {
 }
 export interface CollectionLevel { field: string; dir?: 'asc' | 'desc'; hideEmpty?: boolean; }
 export interface CollectionColumns { order: string[]; hidden: string[]; }
-export interface CollectionDisplay { layout: 'list' | 'gallery'; size: 's' | 'm' | 'l'; height: 'short' | 'medium' | 'tall' | 'extra-tall'; }
+export interface CollectionDisplay { layout: 'list' | 'gallery'; size: 's' | 'm' | 'l'; height: 'short' | 'medium' | 'tall' | 'extra-tall'; editMode?: 'inline' | 'form'; }
 export interface CollectionFilter { join: 'and' | 'or'; items: Array<Record<string, unknown> | CollectionFilter>; }
 export type CollectionQuickValue = Array<string | number | boolean> | { preset: string; from?: string; to?: string };
 export interface CollectionViewOptions<Row> {
@@ -29,6 +29,6 @@ export interface CollectionView<Row> {
   columnsProps: { fields: CollectionField<Row>[]; value: CollectionColumns; onChange: CollectionView<Row>['setColumns'] };
   viewProps: { value: CollectionDisplay; onChange: CollectionView<Row>['setView']; onReset(): void };
   quickProps(key: string): { kind: string; required: boolean; value: CollectionQuickValue; onChange(value: CollectionQuickValue): void; counts?: Map<unknown, number> };
-  tableProps: { filter(row: Row): boolean; sort: CollectionLevel[]; groupBy: string[] | false; columnOrder: string[]; hiddenColumns: string[]; rowHeight: CollectionDisplay['height']; onReady(controller: unknown): void };
+  tableProps: { filter(row: Row): boolean; sort: CollectionLevel[]; groupBy: string[] | false; columnOrder: string[]; hiddenColumns: string[]; rowHeight: CollectionDisplay['height']; editMode?: CollectionDisplay['editMode']; onReady(controller: unknown): void };
 }
 export declare function useCollectionView<Row = Record<string, unknown>>(fields: CollectionField<Row>[], options?: CollectionViewOptions<Row>): CollectionView<Row>;
