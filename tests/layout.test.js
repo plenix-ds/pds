@@ -113,6 +113,7 @@ child({ units: ['components/Field', 'components/Input', 'components/InputGroup',
 child({ units: ['components/OverflowList', 'components/Menu'] }, 'overflow-list-811.test.js');   // the overflow list: what fits, then the "…" menu (issue 811)
 child({ units: ['utils/highlight.tsx', 'system/highlight.css', 'components/SearchField', 'components/Combobox', 'components/Cascader', 'components/TreeSelect'] }, 'highlight-810.test.js');   // the typed text marked in the four search lists (issue 810)
 child({ units: ['components/Combobox', 'components/CountrySelect', 'components/TimeZoneSelect'] }, 'combobox-extras-811.test.js');   // the Combobox's Clear button, option icon and description, and the action under No matches (issue 811)
+child({ units: ['components/Combobox'] }, 'combobox-create-words-656.test.js');   // the create option's words from the catalog, the typed text isolated (issue 656)
 child({ units: ['components/Anchor', 'components/NavList'] }, 'anchor-811.test.js');   // the page jump list: current section by scroll, press scrolls and focuses (issue 811)
 // section headings wrap, then end in an ellipsis with a tooltip (issue 502): when CollapsibleSection, NavList, Tooltip or the truncation helper changed
 child({ units: ['components/CollapsibleSection', 'components/NavList', 'components/Tooltip', 'components/Field', 'patterns/PropertyList', 'utils/overflow.ts'] }, 'section-headings-502.test.js');

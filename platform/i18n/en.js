@@ -638,6 +638,7 @@ export default {
     "removeItem": "Remove {label}",
     "moreChips": "{count} more",
     "clear": "Clear",
+    "create": "Create “{text}”",
     "results": {
       "one": "{n} option",
       "other": "{n} options"
