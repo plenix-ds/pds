@@ -159,6 +159,7 @@ chipOverflow?: 'wrap' | 'count';   // Combobox, with multiple; default 'wrap' (t
   - The full list stays in the popup, where the chosen options are checked.
   - It refits on resize, and logical sides apply in RTL.
 - Backspace on an empty input still removes the last chosen value, including a hidden one: N drops by one.
+- **The first chip never folds (G2, #477):** at least one chosen tag always shows, in the editor and in the read cell, its text ellipsized to the room left (the remove button stays; the full name is in the Tooltip while it's cut). "+N" counts only the others, so one tag never shows as "+1". Folding starts at the second chip.
 - No new token: the "+N" is a Tag at its existing size and tone.
 - DataGrid's `tags` editor sets `chipOverflow="count"`. Everywhere else Combobox is unchanged.
 - **The read cell folds the same way (G2):** a `tags` column's read cell (not editing; the grid's own tag rendering in `cells.jsx`) shows its tags on one line, with the rest as one "+N" Tag named "{count} more". The cell keeps its shape when the editor opens.
