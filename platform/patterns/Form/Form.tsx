@@ -53,7 +53,15 @@ import { useStrings } from '../../providers/LocaleProvider.tsx';
 
 const LAYOUTS = ['one-column', 'two-column'];
 
-export function Form({ layout = 'one-column', label, className, children, ...rest }) {
+/** @public */
+export type FormProps = Omit<React.FormHTMLAttributes<HTMLFormElement>, 'onSubmit'> & {
+  layout?: 'one-column' | 'two-column';
+  label?: string;
+  onSubmit?(event: React.FormEvent<HTMLFormElement>): void;
+  className?: string;
+  children?: React.ReactNode;
+};
+export function Form({ layout = 'one-column', label, className, children, ...rest }: FormProps) {
   const lay = LAYOUTS.indexOf(layout) >= 0 ? layout : 'one-column';
   return (
     <FieldLayoutContext.Provider value={lay === 'two-column' ? 'inline' : null}>
@@ -62,13 +70,15 @@ export function Form({ layout = 'one-column', label, className, children, ...res
   );
 }
 
-export function FormSection({ title, description, headingLevel = 2, className, children, ...rest }) {
+/** @public */
+export type FormSectionProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & { title?: string; description?: string; headingLevel?: 1 | 2 | 3 | 4 | 5 | 6; className?: string; children?: React.ReactNode };
+export function FormSection({ title, description, headingLevel = 2, className, children, ...rest }: FormSectionProps) {
   const id = useUid('plx-form-s');
   return (
     <section className={cx('plx-form-section', className)} aria-labelledby={title ? id : undefined} {...rest}>
       {title || description ? (
         <div className="plx-form-section__header">
-          {title ? <Text as={'h' + headingLevel} variant="heading" id={id} className="plx-form-section__title">{title}</Text> : null}
+          {title ? <Text as={('h' + headingLevel) as any} variant="heading" id={id} className="plx-form-section__title">{title}</Text> : null}
           {description ? <Text as="p" variant="secondary" className="plx-form-section__description">{description}</Text> : null}
         </div>
       ) : null}
@@ -77,8 +87,10 @@ export function FormSection({ title, description, headingLevel = 2, className, c
   );
 }
 
-export function FormActions({ label, sticky = true, className, children }) {
-  const tw = useStrings('form');
+/** @public */
+export type FormActionsProps = { label?: string; sticky?: boolean; className?: string; children?: React.ReactNode };
+export function FormActions({ label, sticky = true, className, children }: FormActionsProps) {
+  const tw: any = useStrings('form');
   if (label === undefined) label = tw.label;
   return <ActionBar label={label} className={cx('plx-form-actions', !sticky && 'plx-form-actions--static', className)}>{children}</ActionBar>;
 }

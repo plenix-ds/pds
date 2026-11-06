@@ -261,7 +261,7 @@ DSParts.records.push(function (H) {
   var FEATURES = [['sparkle', 'purple', 'Smart tags', 'Tags your pictures as they upload.'], ['share', 'blue', 'Share links', 'Send a folder to anyone, no account needed.'], ['lock', 'green', 'Permissions', 'Choose who sees and edits each collection.']];
   var feature = function (f, o) { return h(P.FeatureCard, Object.assign({ icon: f[0], hue: f[1], title: f[2], description: f[3], href: '#feature' }, o)); };
   var featureCard = { id: 'feature-card', lab: true, icon: 'sparkle', sec: 'data-display', sub: 'Cards and objects', leaf: 'Feature card', title: 'Feature card',
-    plenix: 'FeatureCard', src: 'patterns/FeatureCard/FeatureCard.jsx', level: 'Pattern', interaction: 'Navigation', statesFrom: ['card'],
+    plenix: 'FeatureCard', src: 'patterns/FeatureCard/FeatureCard.tsx', level: 'Pattern', interaction: 'Navigation', statesFrom: ['card'],
     aliases: ['Feature tile', 'Callout card', 'Promo card', 'Entry-point card', 'Capability card'],
     text: 'A Card that presents one feature or task: its icon tile (or a picture across the top), its name as the heading and one sentence on what it does for people. The whole card is one link (href) or button (onOpen) through Card’s opener: one Tab stop, a hover lift and a focus outline. Horizontal puts the media before the text, for lists and narrow columns.',
     use: ['Home, empty and onboarding pages: two to six features of equal weight in a ContentGrid', 'A name that says the feature or starts with the task’s verb; one sentence on the benefit', 'The same variant for every card of a set'],

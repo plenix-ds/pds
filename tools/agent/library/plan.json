@@ -1399,7 +1399,7 @@
       "platform/design-system/parts/w06B.{records,labs,docs}.js + .css",
       "platform/exports/w06B.{js,css}",
       "platform/standards/web-native-map.d/w06B.json",
-      "platform/patterns/Form/Form.jsx",
+      "platform/patterns/Form/Form.tsx",
       "platform/patterns/Form/form.css",
       "platform/tokens/components/form.tokens.json",
       "platform/components/Field/Field.jsx",
@@ -1652,7 +1652,7 @@
       "platform/patterns/UserCard/UserCard.jsx",
       "platform/patterns/UserCard/user-card.css",
       "platform/tokens/components/user-card.tokens.json",
-      "platform/patterns/FeatureCard/FeatureCard.jsx",
+      "platform/patterns/FeatureCard/FeatureCard.tsx",
       "platform/patterns/FeatureCard/feature-card.css",
       "platform/tokens/components/feature-card.tokens.json",
       "platform/charts/parts/"
@@ -1733,7 +1733,7 @@
       "platform/components/SearchResult/SearchResult.tsx",
       "platform/components/SearchResult/search-result.css",
       "platform/tokens/components/search-result.tokens.json",
-      "platform/patterns/FilterPanel/FilterPanel.jsx",
+      "platform/patterns/FilterPanel/FilterPanel.tsx",
       "platform/patterns/FilterPanel/filter-panel.css",
       "platform/tokens/components/filter-panel.tokens.json",
       "platform/patterns/ResourceList/ResourceList.tsx",
@@ -2142,7 +2142,7 @@
       "platform/components/Checklist/Checklist.tsx",
       "platform/components/Checklist/checklist.css",
       "platform/tokens/components/checklist.tokens.json",
-      "platform/patterns/FeatureIntro/FeatureIntro.jsx",
+      "platform/patterns/FeatureIntro/FeatureIntro.tsx",
       "platform/patterns/FeatureIntro/feature-intro.css",
       "platform/tokens/components/feature-intro.tokens.json",
       "platform/patterns/PermissionsEditor/PermissionsEditor.jsx",
@@ -2178,7 +2178,7 @@
       "platform/design-system/parts/w11C.{records,labs,docs}.js + .css",
       "platform/exports/w11C.{js,css}",
       "platform/standards/web-native-map.d/w11C.json",
-      "platform/patterns/ExportDialog/ExportDialog.jsx",
+      "platform/patterns/ExportDialog/ExportDialog.tsx",
       "platform/patterns/ExportDialog/export-dialog.css",
       "platform/tokens/components/export-dialog.tokens.json",
       "platform/patterns/ImportDialog/ImportDialog.tsx",
@@ -2327,7 +2327,7 @@
       "platform/patterns/AttachmentPicker/AttachmentPicker.tsx",
       "platform/patterns/AttachmentPicker/attachment-picker.css",
       "platform/tokens/components/attachment-picker.tokens.json",
-      "platform/patterns/FilePicker/FilePicker.jsx",
+      "platform/patterns/FilePicker/FilePicker.tsx",
       "platform/patterns/FilePicker/file-picker.css",
       "platform/tokens/components/file-picker.tokens.json",
       "platform/components/DocumentViewer/DocumentViewer.jsx",
@@ -4971,7 +4971,7 @@
    "wave": 6,
    "lane": "B",
    "files": [
-    "platform/patterns/Form/Form.jsx",
+    "platform/patterns/Form/Form.tsx",
     "platform/patterns/Form/form.css",
     "platform/tokens/components/form.tokens.json"
    ],
@@ -5694,7 +5694,7 @@
    "wave": 8,
    "lane": "A",
    "files": [
-    "platform/patterns/FeatureCard/FeatureCard.jsx",
+    "platform/patterns/FeatureCard/FeatureCard.tsx",
     "platform/patterns/FeatureCard/feature-card.css",
     "platform/tokens/components/feature-card.tokens.json"
    ],
@@ -5923,7 +5923,7 @@
    "wave": 8,
    "lane": "C",
    "files": [
-    "platform/patterns/FilterPanel/FilterPanel.jsx",
+    "platform/patterns/FilterPanel/FilterPanel.tsx",
     "platform/patterns/FilterPanel/filter-panel.css",
     "platform/tokens/components/filter-panel.tokens.json"
    ],
@@ -7387,7 +7387,7 @@
    "wave": 11,
    "lane": "B",
    "files": [
-    "platform/patterns/FeatureIntro/FeatureIntro.jsx",
+    "platform/patterns/FeatureIntro/FeatureIntro.tsx",
     "platform/patterns/FeatureIntro/feature-intro.css",
     "platform/tokens/components/feature-intro.tokens.json"
    ],
@@ -7483,7 +7483,7 @@
    "wave": 11,
    "lane": "C",
    "files": [
-    "platform/patterns/ExportDialog/ExportDialog.jsx",
+    "platform/patterns/ExportDialog/ExportDialog.tsx",
     "platform/patterns/ExportDialog/export-dialog.css",
     "platform/tokens/components/export-dialog.tokens.json"
    ],
@@ -7874,7 +7874,7 @@
    "wave": 12,
    "lane": "C",
    "files": [
-    "platform/patterns/FilePicker/FilePicker.jsx",
+    "platform/patterns/FilePicker/FilePicker.tsx",
     "platform/patterns/FilePicker/file-picker.css",
     "platform/tokens/components/file-picker.tokens.json"
    ],
@@ -12305,7 +12305,7 @@
    "target": "ExportDialog",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/ExportDialog/ExportDialog.jsx",
+    "platform/patterns/ExportDialog/ExportDialog.tsx",
     "platform/patterns/ExportDialog/export-dialog.css",
     "platform/tokens/components/export-dialog.tokens.json"
    ],
@@ -12551,7 +12551,7 @@
    "target": "Form",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/Form/Form.jsx",
+    "platform/patterns/Form/Form.tsx",
     "platform/patterns/Form/form.css",
     "platform/tokens/components/form.tokens.json"
    ],
@@ -12699,7 +12699,7 @@
    "target": "Form",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/Form/Form.jsx",
+    "platform/patterns/Form/Form.tsx",
     "platform/patterns/Form/form.css",
     "platform/tokens/components/form.tokens.json"
    ],
@@ -13804,7 +13804,7 @@
    "target": "FilePicker",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/FilePicker/FilePicker.jsx",
+    "platform/patterns/FilePicker/FilePicker.tsx",
     "platform/patterns/FilePicker/file-picker.css",
     "platform/tokens/components/file-picker.tokens.json"
    ],
@@ -14412,7 +14412,7 @@
    "target": "FilterPanel",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/FilterPanel/FilterPanel.jsx",
+    "platform/patterns/FilterPanel/FilterPanel.tsx",
     "platform/patterns/FilterPanel/filter-panel.css",
     "platform/tokens/components/filter-panel.tokens.json"
    ],
@@ -14744,7 +14744,7 @@
    "target": "FeatureCard",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/FeatureCard/FeatureCard.jsx",
+    "platform/patterns/FeatureCard/FeatureCard.tsx",
     "platform/patterns/FeatureCard/feature-card.css",
     "platform/tokens/components/feature-card.tokens.json"
    ],
@@ -18162,7 +18162,7 @@
    "targetKind": "pattern",
    "duplicateOf": "actions/Export",
    "files": [
-    "platform/patterns/ExportDialog/ExportDialog.jsx",
+    "platform/patterns/ExportDialog/ExportDialog.tsx",
     "platform/patterns/ExportDialog/export-dialog.css",
     "platform/tokens/components/export-dialog.tokens.json"
    ],
@@ -18739,7 +18739,7 @@
    "target": "FeatureIntro",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/FeatureIntro/FeatureIntro.jsx",
+    "platform/patterns/FeatureIntro/FeatureIntro.tsx",
     "platform/patterns/FeatureIntro/feature-intro.css",
     "platform/tokens/components/feature-intro.tokens.json"
    ],
@@ -19140,7 +19140,7 @@
    "target": "ExportDialog",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/ExportDialog/ExportDialog.jsx",
+    "platform/patterns/ExportDialog/ExportDialog.tsx",
     "platform/patterns/ExportDialog/export-dialog.css",
     "platform/tokens/components/export-dialog.tokens.json"
    ],
@@ -20238,7 +20238,7 @@
    "target": "FilePicker",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/FilePicker/FilePicker.jsx",
+    "platform/patterns/FilePicker/FilePicker.tsx",
     "platform/patterns/FilePicker/file-picker.css",
     "platform/tokens/components/file-picker.tokens.json"
    ],
@@ -20269,7 +20269,7 @@
    "target": "FilePicker",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/FilePicker/FilePicker.jsx",
+    "platform/patterns/FilePicker/FilePicker.tsx",
     "platform/patterns/FilePicker/file-picker.css",
     "platform/tokens/components/file-picker.tokens.json"
    ],

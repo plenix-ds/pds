@@ -11,9 +11,7 @@
      The caller resolves naming conflicts and unmounts after success. Never overwrite the original record.
 */
 import React from 'react';
-import { Form as FormJs, FormActions as FormActionsJs } from '../Form/Form.jsx';
-const Form: any = FormJs;
-const FormActions: any = FormActionsJs;
+import { Form, FormActions } from '../Form/Form.tsx';
 import { Field } from '../../components/Field/Field.tsx';
 import { Input, Select } from '../../components/Input/Input.tsx';
 import { TreeSelect } from '../../components/TreeSelect/TreeSelect.tsx';
