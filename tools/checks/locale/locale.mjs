@@ -8,6 +8,7 @@
 //   plural-forms   an English plural whose Arabic lacks one of zero, one, two, few, many, other
 //   jsx-literal    visible text written in a component's JSX (text children, or a string aria-label, title,
 //                  placeholder, alt or label) instead of coming from the catalog
+//   duplicate-key  a key written twice in one object of en.json, en.js or ar.js: only the later one is read (#720)
 //   unused-key     an English key no Platform source reads (its section and its leaf name both appear in one file),
 //                  or an Arabic key English does not have
 // Diff-aware (plan §7 "Only new problems block"): with a base ref, the same checks run on the base (the catalogs and the
@@ -62,6 +63,37 @@ const forms = (v) => (typeof v === 'string' ? { '': v } : v);
 export function parseCatalogModule(text) {
   const body = String(text).replace(/^[\s\S]*?export default\s*/, '').replace(/;\s*$/, '');
   return JSON.parse(body);
+}
+
+// a key written twice in one object (#720): JSON.parse and a JS object literal keep only the last one, silently, so the
+// catalog's text is scanned: [{ path, line }] for every repeat. Strings are skipped, so a key inside a value never counts.
+export function duplicateKeys(text) {
+  const t = String(text), out = [];
+  let i = t.search(/export default\s*\{/);
+  i = i < 0 ? t.indexOf('{') : t.indexOf('{', i);
+  if (i < 0) return out;
+  const stack = [];      // { keys: Set, path: string[] } per open object
+  let line = t.slice(0, i).split('\n').length, last = null;
+  for (; i < t.length; i++) {
+    const c = t[i];
+    if (c === '\n') { line++; continue; }
+    if (c === '{') { stack.push({ keys: new Set(), path: last && stack.length ? [...stack.at(-1).path, last] : [] }); last = null; continue; }
+    if (c === '}') { stack.pop(); if (!stack.length) break; continue; }
+    if (c === '"') {
+      let j = i + 1, v = '';
+      while (j < t.length && t[j] !== '"') { if (t[j] === '\\') { v += t[j + 1]; j += 2; } else { if (t[j] === '\n') line++; v += t[j++]; } }
+      const at = line;
+      i = j;
+      let k = j + 1; while (k < t.length && /\s/.test(t[k])) k++;
+      if (t[k] === ':' && stack.length) {
+        const top = stack.at(-1);
+        if (top.keys.has(v)) out.push({ path: [...top.path, v].join('.'), line: at });
+        top.keys.add(v);
+        last = v;
+      }
+    }
+  }
+  return out;
 }
 
 // approved-ar.json: { batches: [{ source, date, strings: { key: arabic | {form: arabic} } }] }; later batches win
@@ -218,6 +250,11 @@ export async function runAll(ref, { jsxFiles } = {}) {
   const findings = [];
   const json = (f, parse) => { const t = tree.read(f); if (t == null) return {}; try { return parse(t); } catch (e) { findings.push({ rule: 'catalog', file: f, message: `not plain data: ${e.message}` }); return {}; } };
   const en = json(EN_FILE, JSON.parse), ar = json(AR_FILE, parseCatalogModule), approved = approvedMap(json(APPROVED_FILE, JSON.parse));
+  // 7. a key written twice: the catalogs and en.js, the browser mirror that LocaleProvider loads
+  for (const f of [EN_FILE, 'platform/i18n/en.js', AR_FILE]) {
+    const t = tree.read(f);
+    if (t != null) for (const d of duplicateKeys(t)) findings.push({ rule: 'duplicate-key', file: f, message: `${d.path}: written twice (the later one wins)`, line: d.line });
+  }
   findings.push(...checkCatalogs(en, ar, approved));
   const sources = {};
   for (const f of tree.list) if (SOURCE_FILE.test(f) && !SOURCE_SKIP.test(f)) { const t = tree.read(f); if (t != null) sources[f] = t; }
