@@ -418,6 +418,15 @@ export type EntityHeaderMoreAction = { icon?: IconValue; label: string; onSelect
 /** @public header style 2: the entity's state as a box among the facts */
 export type EntityHeaderStates = { value: string; onChange?(value: string): void; label?: string; disabled?: boolean;
   options: { value: string; label: string; icon?: IconValue; tone?: EntityHeaderTone }[] };
+/** @public the streamlined header's details strip */
+export type EntityHeaderDetail = {
+  progress?: { label?: React.ReactNode; valueText?: string; value: number; max?: number };
+  facts?: EntityHeaderFact[];
+  tags?: Array<{ label: React.ReactNode; category?: string }>;
+  items?: Array<{ icon?: IconValue; label: React.ReactNode; tone?: 'success' | 'warning'; data?: boolean }>;
+  text?: React.ReactNode;
+  end?: { badge: { tone?: EntityHeaderTone; icon?: IconValue; label: React.ReactNode } } | { link: { label: React.ReactNode; href: string } } | React.ReactElement;
+};
 /** @public the prop type (ADR 0011) */
 export type EntityHeaderProps = {
   /** "structured" (default) | "streamlined" */
@@ -452,7 +461,7 @@ export type EntityHeaderProps = {
   /** (streamlined) an inline progress */
   progress?: { label?: string; value: number; max?: number };
   /** (streamlined) the details strip */
-  detail?: Record<string, any>;
+  detail?: EntityHeaderDetail;
   /** (streamlined) "detailed" (default) | "compact" */
   view?: 'detailed' | 'compact';
 };
