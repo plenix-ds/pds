@@ -1924,5 +1924,75 @@
   "heat-map--variant-calendar": {
     "sets": [],
     "why": "markup only: one cell per day laid out in weeks, colored by the same scale"
+  },
+  "logo--tone-brand-default": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-comp-brand-name-color"
+      },
+      {
+        "property": "color",
+        "part": "mark",
+        "token": "--plx-comp-brand-mark-color"
+      },
+      {
+        "property": "background-color",
+        "part": "tile",
+        "token": "--plx-comp-brand-tile-background"
+      },
+      {
+        "property": "color",
+        "part": "tile",
+        "token": "--plx-comp-brand-tile-icon"
+      }
+    ],
+    "why": ".plx-brand-lockup--tone-brand in brand-lockup.css (the tool reads the block as brand-mark)"
+  },
+  "logo--tone-on-accent": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-comp-brand-on-accent-color"
+      },
+      {
+        "property": "background-color",
+        "part": "tile",
+        "token": "--plx-comp-brand-on-accent-tile-background"
+      },
+      {
+        "property": "color",
+        "part": "tile",
+        "token": "--plx-comp-brand-on-accent-tile-icon"
+      }
+    ],
+    "why": ".plx-brand-lockup--tone-on-accent in brand-lockup.css (the tool reads the block as brand-mark)"
+  },
+  "logo--tone-one-color": {
+    "sets": [
+      {
+        "property": "border-width",
+        "part": "tile",
+        "token": "--plx-comp-brand-mono-tile-border-width"
+      }
+    ],
+    "why": ".plx-brand-lockup--tone-mono: the tile is an outline in the current text color (the color itself is currentcolor, no token)"
+  },
+  "logo--clear-space-with-clear-space": {
+    "sets": [
+      {
+        "property": "padding-block",
+        "part": "block",
+        "token": "--plx-comp-brand-md-clear-space"
+      },
+      {
+        "property": "padding-inline",
+        "part": "block",
+        "token": "--plx-comp-brand-md-clear-space"
+      }
+    ],
+    "why": ".plx-brand-lockup--clear with the size's clear-space token (shown for the default size, md)"
   }
 }
