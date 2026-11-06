@@ -1264,5 +1264,38 @@
   "calendar--variant-min-and-max": {
     "sets": [],
     "why": "markup only: dates outside the minimum and maximum are disabled, which draws as the disabled dates"
+  },
+  "cascader--trigger-click-default": {
+    "sets": [],
+    "why": "behavior only: a parent column opens when it is chosen; no rule is specific to it"
+  },
+  "cascader--trigger-hover": {
+    "sets": [],
+    "why": "behavior only: pointing at a parent opens its column; no rule is specific to it"
+  },
+  "cascader--search-search": {
+    "sets": [
+      {
+        "property": "border-block-end-color",
+        "part": "search",
+        "token": "--plx-comp-cascader-search-border-block-end-color"
+      },
+      {
+        "property": "border-block-end-width",
+        "part": "search",
+        "token": "--plx-comp-cascader-search-border-block-end-width"
+      },
+      {
+        "property": "padding-block",
+        "part": "search",
+        "token": "--plx-comp-cascader-search-padding-block"
+      },
+      {
+        "property": "padding-inline",
+        "part": "search",
+        "token": "--plx-comp-cascader-search-padding-inline"
+      }
+    ],
+    "why": ".plx-cascader__search, the search field at the top of the list"
   }
 }

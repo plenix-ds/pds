@@ -429,6 +429,8 @@ export function bodyRows({
                 value,
                 canEdit,
                 formMode,
+                enterEdits: props.editing?.enterEdits,
+                typeToReplace: props.editing?.typeToReplace,
                 toggle: canToggle ? () => commitEdit(row.id, c.field, !value) : null,
                 setEditing,
                 row,
