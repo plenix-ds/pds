@@ -199,6 +199,7 @@ import { useDataGridActions } from './actions.tsx';
 import { unreadCommands } from './unread-commands.ts';
 import { ToastProvider, useOptionalToast } from '../Toast/Toast.tsx';
 import type { IconValue } from '../Icon/Icon.tsx';
+import type { ChangeSource } from './engine/useEditing.ts';
 
 /* The public types (issue 292, ADR 0011, G3 ruling on #292; ADR 0016 for the editing props). Written from the Props block above.
    Records are R; what a column holds is unknown unless its type narrows it; callbacks get R. */
@@ -246,7 +247,14 @@ export type DataGridEditing = {
   enterEdits?: boolean;
   /** dragging across cells selects a range (default false) */
   rangeSelect?: boolean;
+  /** Ctrl+Z undoes and Ctrl+Y or Cmd+Shift+Z redoes cell edits, one step per action (default false; ADR 0021) */
+  undo?: boolean;
+  /** Ctrl+V pastes a copied block at the active cell or the selected block (default false; ADR 0021) */
+  paste?: boolean;
 };
+
+/** @public why a cell changed: typed or chosen (`edit`, the default), `paste`, `fill`, `undo` or `redo` (ADR 0021) */
+export type DataGridChangeSource = ChangeSource;
 
 /** @public */
 export type DataGridColumnType = 'text' | 'number' | 'currency' | 'date' | 'select' | 'checkbox' | 'file' | 'image' | 'link' | 'person' | 'long-text' | 'bytes' | 'multi';
@@ -342,7 +350,7 @@ export type DataGridProps<R = Record<string, unknown>> = {
   onUnreadOnlyChange?(next: boolean): void;
   onRowClick?(record: R, event: React.SyntheticEvent): void;
   onRowDoubleClick?(record: R, event: React.SyntheticEvent): void;
-  onCellEdit?(record: R, change: { field: string; value: unknown; previous: unknown; row: R }): void | Promise<void>;
+  onCellEdit?(record: R, change: { field: string; value: unknown; previous: unknown; row: R; source?: DataGridChangeSource }): void | Promise<void>;
   /** ADR 0016 */
   editing?: DataGridEditing;
   editMode?: 'inline' | 'form';
