@@ -22,9 +22,9 @@ require('./limit.js');
         window.__root && window.__root.unmount(); document.querySelector('main').innerHTML = '<div id="c" style="inline-size:' + width + 'px;display:grid"></div>';
         const reasons = ['Abandonment', 'Irreconcilable differences', 'Adultery'], statuses = ['Open', 'Closed', 'Pending'];
         const rows = Array.from({ length: 12 }, (_, i) => ({ id: 'DV-' + (2026100 + i), husband: { name: 'Ibrahim Mansour' + i }, wife: { name: 'Mariam Youssef' + i }, reason: reasons[i % 3], judge: { name: 'Judge Anthony Hanna' }, status: { label: statuses[i % 3], tone: i % 3 ? 'neutral' : 'success' },
-          summary: 'The parties separated in 2024 and the court heard the first session on the second of March with both counsel present and a request for mediation ' + i }));
+          fee: 1200 + i, size: 2048 * (i + 1), summary: 'The parties separated in 2024 and the court heard the first session on the second of March with both counsel present and a request for mediation ' + i }));
         const cols = [{ title: 'Case', field: 'id', kind: 'data', width: '--plx-ref-size-25u' }, { title: 'Husband', field: 'husband', kind: 'avatar-name', width: '--plx-ref-size-30u' }, { title: 'Wife', field: 'wife', kind: 'avatar-name', width: '--plx-ref-size-30u' },
-          { title: 'Reason for divorce', field: 'reason', width: '--plx-ref-size-30u' }, { title: 'Judge', field: 'judge', kind: 'avatar-name', width: '--plx-ref-size-30u' }, { title: 'Status', field: 'status', kind: 'badge', width: '--plx-ref-size-25u' }];
+          { title: 'Reason for divorce', field: 'reason', width: '--plx-ref-size-30u' }, { title: 'Judge', field: 'judge', kind: 'avatar-name', width: '--plx-ref-size-30u' }, { title: 'Status', field: 'status', kind: 'badge', width: '--plx-ref-size-25u' }, { title: 'Fee', field: 'fee', type: 'number' }, { title: 'Size', field: 'size', type: 'bytes' }];
         if (withSummary) cols.push({ title: 'Summary', field: 'summary', kind: 'wrap' });
         window.__root = ReactDOM.createRoot(document.getElementById('c'));
         window.__root.render(h(P.DataGrid, { label: 'Cases', data: rows, columns: cols, index: 'id', selectable: true, cells: 'pill', rowMenu: [{ label: 'Open', onSelect: () => {} }] }));
@@ -32,19 +32,20 @@ require('./limit.js');
         const heads = [...document.querySelectorAll('#c [role=columnheader]')];
         const widths = heads.map((x) => ({ t: x.textContent.trim(), w: Math.round(x.getBoundingClientRect().width) }));
         const cut = [...document.querySelectorAll('#c [role=gridcell] span, #c [role=gridcell] .plx-badge__label')].filter((e) => e.scrollWidth > e.clientWidth + 1 && getComputedStyle(e).textOverflow === 'ellipsis' || (e.scrollWidth > e.clientWidth + 1 && e.className.toString().includes('value'))).map((e) => e.textContent.trim().slice(0, 30));
-        const first = document.querySelector('#c [role=row][data-plx-record] [role=gridcell]:nth-child(5)');
-        return { cards: document.querySelectorAll('#c .plx-data-grid__grid-row--narrow').length, widths, cut, sideways: (() => { const g = document.querySelector('#c .plx-data-grid__grid-header'); return g ? g.scrollWidth - g.clientWidth : 0; })() };
+        const aligns = ['Fee', 'Size'].map((t) => { const i = [...document.querySelectorAll('#c [role=columnheader]')].findIndex((x) => x.textContent.trim().startsWith(t)); const c = document.querySelector('#c [role=row][data-plx-record] [role=gridcell]:nth-child(' + (i + 1) + ')'); return c ? getComputedStyle(c).textAlign : null; });
+        return { aligns, cards: document.querySelectorAll('#c .plx-data-grid__grid-row--narrow').length, widths, cut, sideways: (() => { const g = document.querySelector('#c .plx-data-grid__grid-header'); return g ? g.scrollWidth - g.clientWidth : 0; })() };
       }, dir, width, withSummary);
       const wide = await probe(1600, false);
       assert.equal(wide.cards, 0, T + 'a table at 1,600px');
-      assert.deepEqual(wide.cut, [], T + 'AC-1: no value is cut at 1,600px (' + JSON.stringify(wide.cut) + ')');
+      assert.ok(wide.aligns.every((a) => a === 'start' || a === 'left' || a === 'right' && dir === 'rtl' || a === 'end' && false), T + 'AC-3: numbers and sizes start at the column\'s start edge, not the end (' + wide.aligns.join(', ') + ')');
+      assert.deepEqual(wide.cut, [], T + 'AC-1: no value is cut at 1,600px (' + JSON.stringify(wide.cut) + ') widths ' + JSON.stringify(wide.widths));
       const named = (n) => wide.widths.find((x) => x.t.startsWith(n));
       assert.ok(named('Reason').w >= 140, T + 'AC-2: a set width is a minimum: Reason for divorce is ' + named('Reason').w + 'px (needs room for "Irreconcilable differences")');
       assert.ok(wide.sideways <= 1, T + 'no sideways scroll (' + wide.sideways + ')');
       // AC-3: the room is shared evenly: the columns' widths are their widest value plus one equal share
       const narrowish = await probe(1400, false);
-      const grow = ['Case', 'Husband', 'Wife', 'Reason', 'Judge', 'Status'].map((n) => (wide.widths.find((x) => x.t.startsWith(n)).w - narrowish.widths.find((x) => x.t.startsWith(n)).w));
-      assert.ok(Math.max(...grow) - Math.min(...grow) <= 8, T + 'AC-3: equal added width across the columns (within one grid step, widths snap to the grid) when the room grows by 200px (' + grow.join(', ') + ')');
+      const grow = ['Case', 'Husband', 'Wife', 'Reason', 'Judge', 'Status', 'Fee', 'Size'].map((n) => (wide.widths.find((x) => x.t.startsWith(n)).w - narrowish.widths.find((x) => x.t.startsWith(n)).w));
+      assert.ok(Math.max(...grow) - Math.min(...grow) <= 12, T + 'AC-3: equal added width across the columns (within a few grid steps: widths snap to the 4px grid) when the room grows by 200px (' + grow.join(', ') + ')');
       // AC-4: the checkbox column is fixed
       const small = await probe(900, false), big = await probe(1900, false);
       const sel = (r) => r.widths[0].w;

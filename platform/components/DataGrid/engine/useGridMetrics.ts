@@ -24,9 +24,10 @@ import { tokenPixels } from '../environment.ts';
 import { kinds, typeOf } from './helpers.tsx';
 import { valueAt } from '../state.ts';
 import { valueText } from '../cells.tsx';
+import { formatBytes, formatDate, parseDate } from '../../../utils/format.ts';
 
-// a plain-text column whose widest value is longer than this many characters is long text (#800): the only kind that may be cut
-const LONG_CHARS = 48;
+// a plain-text column whose widest value is longer than this many characters is long text (#800, D-0088: an engine constant, not a prop or a token): the only kind that may be cut
+const LONG_TEXT_CHARS = 40;
 export function useGridMetrics({
   frame,
   metrics,
@@ -83,6 +84,8 @@ export function useGridMetrics({
       snapUp = (px: any) => snapToGrid(px, { round: 'up', step });
     // (issue 929) the default grid (narrow="auto") fits its columns to its width; narrow="table" and "list" keep the set widths
     const fitting = narrow === 'auto';
+    // numbers, currency, dates and sizes are drawn in the data font (as the cells do), so they are measured in it
+    const dataFont = (c: any) => kinds(c).includes('data') || ['number', 'currency', 'date', 'bytes'].includes(c.type);
     columns.forEach((c: any) => {
       if (kinds(c).includes('icon')) {
         widths[c.field] = metrics.lead;
@@ -126,12 +129,12 @@ export function useGridMetrics({
       const family =
         cs
           .getPropertyValue(
-            kinds(c).includes('data') ? '--plx-comp-data-grid-data-font-family' : '--plx-comp-data-grid-font-family'
+            dataFont(c) ? '--plx-comp-data-grid-data-font-family' : '--plx-comp-data-grid-font-family'
           )
           .trim() || cs.fontFamily;
       ctx.font = cs.getPropertyValue('--plx-comp-data-grid-font-size').trim() + ' ' + family;
       // a data column measures with the data font's word spacing (Reddit Mono fitted to DM Sans; normal for DM Sans)
-      ctx.wordSpacing = kinds(c).includes('data')
+      ctx.wordSpacing = dataFont(c)
         ? cs.getPropertyValue('--plx-sys-font-data-word-spacing').trim() || '0px'
         : '0px';
       let width = head;
@@ -154,6 +157,8 @@ export function useGridMetrics({
             ? tokenPx('--plx-comp-data-pill-icon-size') + tokenPx('--plx-comp-data-pill-gap')
             : 0)
         : 0; // the icon only where the pill has one
+      // the text a cell draws: a bytes column writes "2.0 kB", not its number, and a date its short form, not the ISO text
+      const shown = (value: any) => (c.type === 'bytes' && value !== null && value !== undefined && value !== '' && Number.isFinite(Number(value)) ? formatBytes(Number(value)) : c.type === 'date' && parseDate(value) ? formatDate(value) : valueText(value));
       let body = 0, chars = 0;   // the widest value alone, without the title (the floor a squeezed column keeps, #783), and its longest text in characters (the long-text test, #800)
       source.forEach((record: any) => {
         const value = valueAt(record, c.field);
@@ -162,17 +167,17 @@ export function useGridMetrics({
         const here = tagged
           ? tagged.reduce((sum, text) => sum + ctx.measureText(text).width + 2 * (tokenPx('--plx-comp-tag-padding-inline') + tokenPx('--plx-comp-tag-border-width')), 0) +
               tokenPx('--plx-comp-data-grid-cell-rich-gap') * Math.max(0, tagged.length - 1)
-          : ctx.measureText(valueText(value)).width * scale + chrome;
+          : ctx.measureText(shown(value)).width * scale + chrome;
         body = Math.max(body, here);
-        chars = Math.max(chars, tagged ? 0 : valueText(value).length);
+        chars = Math.max(chars, tagged ? 0 : shown(value).length);
         width = Math.max(width, here);
       });
       bodyFloor[c.field] = snapUp(Math.max(metrics.min, body + metrics.space * 2));
       const content = width + metrics.space * 2;
       // (#800, D-0087) a column is long text, the only kind that may be cut, when it says so (kind "wrap", type "long-text") or is plain text whose widest value is over
-      // LONG_CHARS characters; every other column is compact: names, numbers, dates, ids, people, status and pills always fit their widest value
-      const plain = !k.some((x: string) => ['data', 'badge', 'tags', 'avatar-name', 'icon', 'deleted', 'id', 'email', 'url', 'phone', 'code'].includes(x)) && !['number', 'currency', 'date', 'bytes', 'person', 'select', 'checkbox', 'file', 'image', 'link', 'multi'].includes(c.type);
-      if (fitting && (k.includes('wrap') || c.type === 'long-text' || (plain && !pill && chars > LONG_CHARS))) longCols.add(c.field);
+      // LONG_TEXT_CHARS characters; every other column is compact: names, numbers, dates, ids, people, status and pills always fit their widest value
+      const plain = !k.some((x: string) => ['data', 'badge', 'tags', 'avatar-name', 'icon', 'deleted', 'id', 'email', 'phone', 'code'].includes(x)) && !['number', 'currency', 'date', 'bytes', 'person', 'select', 'checkbox', 'file', 'image', 'link', 'multi'].includes(c.type);
+      if (fitting && (k.includes('wrap') || k.includes('url') || c.type === 'long-text' || (plain && !pill && chars > LONG_TEXT_CHARS))) longCols.add(c.field);
       // a fixed table or a list (narrow="table" | "list") keeps its set widths as before; the default grid sizes to content. A set width is a minimum for a compact
       // column (never a cap), and a cap only for long text
       if (explicit) {
