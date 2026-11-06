@@ -5,7 +5,7 @@
      card list below the narrow width) from the container's size, density and the page's fonts, and the virtualizer re-measured when a
      row height or the group rows change.
    Usage:
-     import { useGridMetrics } from './engine/useGridMetrics.js';
+     import { useGridMetrics } from './engine/useGridMetrics.ts';
      useGridMetrics({ frame, metrics, setMetrics, setNarrow, setAutoSizing, setFloors, virtual, model, collapsed, columns, ... });
    Props:
      The engine's refs, state and setters the effects read and write (frame, header, holder, metrics, columns, keys, the options that
@@ -59,27 +59,27 @@ export function useGridMetrics({
   virtual,
   model,
   collapsed,
-}) {
+}: any) {
   React.useLayoutEffect(() => {
     const at = frame.current;
     if (!at || !metrics.min) return;
     const ctx = at.ownerDocument.createElement('canvas').getContext('2d'),
-      widths = {},
-      free = [],
-      floor = {};
+      widths: Record<string, any> = {},
+      free: any[] = [],
+      floor: Record<string, any> = {};
     // the probe pills are the only writes: measured first, so the reads below find the styles already computed
-    const scales = cells === 'pill' ? { data: pillFont(at, ctx, true), text: pillFont(at, ctx, false) } : null,
+    const scales: any = cells === 'pill' ? { data: pillFont(at, ctx, true), text: pillFont(at, ctx, false) } : null,
       cs = getComputedStyle(at),
       step = gridStep(at);
     const known = new Map(),
-      tokenPx = (name) => {
+      tokenPx = (name: any) => {
         if (!known.has(name)) known.set(name, tokenPixels(name, at));
         return known.get(name);
       },
-      snapUp = (px) => snapToGrid(px, { round: 'up', step });
+      snapUp = (px: any) => snapToGrid(px, { round: 'up', step });
     // (issue 929) the default grid (narrow="auto") fits its columns to its width; narrow="table" and "list" keep the set widths
     const fitting = narrow === 'auto';
-    columns.forEach((c) => {
+    columns.forEach((c: any) => {
       if (kinds(c).includes('icon')) {
         widths[c.field] = metrics.lead;
         return;
@@ -150,10 +150,10 @@ export function useGridMetrics({
             ? tokenPx('--plx-comp-data-pill-icon-size') + tokenPx('--plx-comp-data-pill-gap')
             : 0)
         : 0; // the icon only where the pill has one
-      source.forEach((record) => {
+      source.forEach((record: any) => {
         const value = valueAt(record, c.field);
         // a tags cell is a row of Tags: each tag's text plus its own padding and border, with the gap between them (issue 477, so the column fits its tags)
-        const tagged = k.includes('tags') && !pill ? [].concat(value ?? []).map((tag) => (typeof tag === 'object' ? tag.label : String(tag))) : null;
+        const tagged = k.includes('tags') && !pill ? ([] as any[]).concat(value ?? []).map((tag) => (typeof tag === 'object' ? tag.label : String(tag))) : null;
         width = Math.max(
           width,
           tagged
@@ -182,27 +182,27 @@ export function useGridMetrics({
       (rowMenu && rowMenuButton ? metrics.menu : 0) -
       (props.viewMenu ? metrics.lead : 0);
     // the shown columns (a hidden column takes no room)
-    const shownColumns = columns.filter((c) => !columnVisibility || columnVisibility[c.field] !== false);
+    const shownColumns = columns.filter((c: any) => !columnVisibility || columnVisibility[c.field] !== false);
     // the table fits its room (owner, issue 929: "autosize and autofit"): each shown column starts at its natural width (its
     // header and its widest value, capped at its set width; measured above). Over the room, the columns with the most room
     // above their minimum readable width (minWidth, else the header floor, never under --plx-ref-size-20u) give it up first,
     // levelled down together, and the title (the first key column) last; a column the person sized keeps its width. The grid
     // draws cards only when every column is at its minimum and it still does not fit (the narrow switch below). Room to spare
     // goes to the title, else the widest text column, else the last column that sizes itself
-    const least = (c) => Math.max(floor[c.field] || 0, tokenPx(c.minWidth) || metrics.min);
-    const sized = (c) => !!(sizing && sizing[c.field]);
-    const widthOf = (c) => (sized(c) ? sizing[c.field] : widths[c.field] || 0);
-    const shrinkable = shownColumns.filter((c) => !kinds(c).includes('icon') && !sized(c));
-    const isText = (c) => !kinds(c).includes('data') && !['number', 'currency', 'date', 'bytes', 'person'].includes(c.type) && !kinds(c).includes('icon');
-    const title = shrinkable.find((c) => c.field === (keys && keys[0])) || null;
-    let over = fitting ? shownColumns.reduce((sum, c) => sum + widthOf(c), 0) - available : 0;
+    const least = (c: any) => Math.max(floor[c.field] || 0, tokenPx(c.minWidth) || metrics.min);
+    const sized = (c: any) => !!(sizing && sizing[c.field]);
+    const widthOf = (c: any) => (sized(c) ? sizing[c.field] : widths[c.field] || 0);
+    const shrinkable = shownColumns.filter((c: any) => !kinds(c).includes('icon') && !sized(c));
+    const isText = (c: any) => !kinds(c).includes('data') && !['number', 'currency', 'date', 'bytes', 'person'].includes(c.type) && !kinds(c).includes('icon');
+    const title = shrinkable.find((c: any) => c.field === (keys && keys[0])) || null;
+    let over = fitting ? shownColumns.reduce((sum: any, c: any) => sum + widthOf(c), 0) - available : 0;
     const shrank = over > 0;
     // the others, levelled: every column above the level comes down to it (its minimum plus the level)
-    const others = shrinkable.filter((c) => c !== title);
-    const extra = (c) => Math.max(0, widths[c.field] - least(c));
-    const room = others.reduce((sum, c) => sum + extra(c), 0);
+    const others = shrinkable.filter((c: any) => c !== title);
+    const extra = (c: any) => Math.max(0, widths[c.field] - least(c));
+    const room = others.reduce((sum: any, c: any) => sum + extra(c), 0);
     if (over > 0 && room > 0) {
-      const cut = Math.min(over, room), byExtra = others.map(extra).sort((x, y) => y - x);
+      const cut = Math.min(over, room), byExtra = others.map(extra).sort((x: any, y: any) => y - x);
       // the level L where the extras above it add up to the cut
       let level = 0, above = 0;
       for (let i = 0; i < byExtra.length; i += 1) {
@@ -210,32 +210,32 @@ export function useGridMetrics({
         const next = i + 1 < byExtra.length ? byExtra[i + 1] : 0, take = above - (i + 1) * next;
         if (take >= cut) { level = next + (take - cut) / (i + 1); break; }
       }
-      others.forEach((c) => { widths[c.field] = least(c) + Math.min(extra(c), level); });
+      others.forEach((c: any) => { widths[c.field] = least(c) + Math.min(extra(c), level); });
       over -= cut;
     }
     if (over > 0 && title) widths[title.field] = Math.max(least(title), widths[title.field] - over);
     // whole grid steps, rounded down (a shrunk column never rounds back over the room) and never under its minimum
     if (shrank)
-      shrinkable.forEach((c) => { widths[c.field] = Math.max(least(c), snapToGrid(widths[c.field], { round: 'down', step })); });
-    const used = shownColumns.reduce((sum, c) => sum + widthOf(c), 0);
+      shrinkable.forEach((c: any) => { widths[c.field] = Math.max(least(c), snapToGrid(widths[c.field], { round: 'down', step })); });
+    const used = shownColumns.reduce((sum: any, c: any) => sum + widthOf(c), 0);
     const units = Math.max(0, Math.floor((available - used) / step));
     // room to spare (issue 272: a one-digit "#" column took all of it): a fixed table or list gives it to its last self-sizing column as
     // before; the default grid shares it, in whole steps, among the text columns that hold real text (wider than the minimum), the
     // title first; with none of those the title, else the widest text column, else the last self-sizing column takes it
     if (!fitting) {
-      const spare = free.filter((field) => shownColumns.some((c) => c.field === field)).pop();
+      const spare = free.filter((field) => shownColumns.some((c: any) => c.field === field)).pop();
       if (spare) widths[spare] += units * step;
     } else {
-      let growers = shrinkable.filter((c) => isText(c) && !tokenPx(c.width) && widths[c.field] > metrics.min);   // a column the app gave a width keeps it
+      let growers = shrinkable.filter((c: any) => isText(c) && !tokenPx(c.width) && widths[c.field] > metrics.min);   // a column the app gave a width keeps it
       if (!growers.length) {   // no column with real text: the title, else the widest text column, else the last self-sizing column (as before)
-        const one = title && isText(title) ? title : shrinkable.filter(isText).sort((x, y) => widths[y.field] - widths[x.field])[0]
-          || free.filter((field) => shownColumns.some((c) => c.field === field)).map((field) => shownColumns.find((c) => c.field === field)).pop();
+        const one = title && isText(title) ? title : shrinkable.filter(isText).sort((x: any, y: any) => widths[y.field] - widths[x.field])[0]
+          || free.filter((field) => shownColumns.some((c: any) => c.field === field)).map((field) => shownColumns.find((c: any) => c.field === field)).pop();
         growers = one ? [one] : [];
       }
-      growers.forEach((c, i) => { widths[c.field] += (Math.floor(units / growers.length) + (i < units % growers.length ? 1 : 0)) * step; });
+      growers.forEach((c: any, i: any) => { widths[c.field] += (Math.floor(units / growers.length) + (i < units % growers.length ? 1 : 0)) * step; });
     }
-    setAutoSizing((old) => (JSON.stringify(old) === JSON.stringify(widths) ? old : widths));
-    setFloors((old) => (JSON.stringify(old) === JSON.stringify(floor) ? old : floor));
+    setAutoSizing((old: any) => (JSON.stringify(old) === JSON.stringify(widths) ? old : widths));
+    setFloors((old: any) => (JSON.stringify(old) === JSON.stringify(floor) ? old : floor));
   }, [
     columns,
     source,
@@ -257,7 +257,7 @@ export function useGridMetrics({
   // the room under the table that the page keeps (#451): the grid's own part below it (its border, a footer) and the end
   // margin, padding and border of each container up to the page, so a table that fills the window ends at the page's
   // padding and only the table scrolls; content placed after the grid is not counted
-  const trailing = (at, hold) => {
+  const trailing = (at: any, hold: any) => {
     let sum = Math.max(0, at.getBoundingClientRect().bottom - hold.getBoundingClientRect().bottom);
     for (let el = at; el; el = el.parentElement) {
       const cs = getComputedStyle(el);
@@ -274,7 +274,7 @@ export function useGridMetrics({
     const measure = () => {
       raf = 0;
       if (!doc.defaultView) return;
-      const next = {
+      const next: Record<string, any> = {
         step: gridStep(at),
         row: tokenPixels('--plx-comp-data-grid-record-height', at),
         line: tokenPixels('--plx-comp-data-grid-line-width', at),
@@ -287,14 +287,14 @@ export function useGridMetrics({
         group: tokenPixels('--plx-comp-data-grid-group-header-height', at),
         groupGap: tokenPixels('--plx-comp-data-grid-group-gap', at),
       };
-      setMetrics((old) => (Object.keys(next).every((k) => next[k] === old[k]) ? old : next));
+      setMetrics((old: any) => (Object.keys(next).every((k) => next[k] === old[k]) ? old : next));
       // auto (#679): the table needs every visible column at its width, plus the selection, row menu and view columns; when
       // the grid's own width is smaller, it draws the row cards instead of scrolling sideways
       // (issue 929) the switch weighs each shown column at its minimum readable width (minSize: its minWidth or floor), so a
       // table that fits by shrinking its columns stays a table; cards only below that
       const visible = live.current.table?.getVisibleLeafColumns() || [];
       const required =
-        visible.reduce((sum, column) => sum + (column.columnDef.minSize || next.min), 0) +
+        visible.reduce((sum: any, column: any) => sum + (column.columnDef.minSize || next.min), 0) +
         (selectable ? next.lead : 0) +
         (rowMenu && rowMenuButton ? next.menu : 0) +
         (props.viewMenu ? next.lead : 0);
