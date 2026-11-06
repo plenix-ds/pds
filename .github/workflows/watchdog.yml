@@ -1,0 +1,48 @@
+# Dispatcher watchdog (template v2.4 §6.1; #772): once a day on a GitHub-hosted runner, check that the agent host's poller
+# (team.sh nudge) still rewrites the pinned heartbeat issue (agents.config.yaml dispatch.heartbeat_issue). When its
+# "Last run:" is older than 2 x dispatch.heartbeat_min, tools/ci/watchdog.mjs opens a P0 process issue for the Delivery
+# Lead (or comments on the open one), then dispatches the dashboard so the issue shows there at once: an issue made with
+# GITHUB_TOKEN starts no workflow by itself (check 16).
+name: Watchdog
+
+on:
+  schedule:
+    - cron: '41 7 * * *'
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: watchdog
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  watchdog:
+    name: Dispatcher heartbeat is fresh
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      issues: write
+      actions: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.12'
+      - name: PyYAML, as the dashboard pins it
+        run: python -m pip install --disable-pip-version-check -q 'PyYAML==6.0.2'
+      - name: Heartbeat age; a stale one opens a P0 process issue and refreshes the dashboard
+        run: |
+          rc=0
+          node tools/ci/watchdog.mjs || rc=$?
+          if [ "$rc" != 0 ]; then gh workflow run dashboard.yml -R "$GITHUB_REPOSITORY" || true; fi
+          exit "$rc"

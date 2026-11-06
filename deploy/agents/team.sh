@@ -141,18 +141,36 @@ wake() {
 }
 
 nudge() {
-  local now last updated open win sent=0
+  local now last updated open win sent=0 hb
   schedule
   now=$(date -u +%FT%TZ); last=$(cat "$NUDGE_STAMP" 2>/dev/null || echo 1970-01-01T00:00:00Z)
-  updated=$(gh api 'repos/plenix-ds/pds/issues?state=all&sort=updated&direction=desc&per_page=1' -q '.[0].updated_at' 2>/dev/null || echo "$now")
+  hb=$(node "$HERE/registry.mjs" get dispatch.heartbeat_issue "$CFG" 2>>"$LOG")
+  # the newest update that is not the heartbeat issue itself (its body is rewritten every run, #772)
+  updated=$(gh api 'repos/plenix-ds/pds/issues?state=all&sort=updated&direction=desc&per_page=2' -q "[.[] | select(.number != ${hb:-0})][0].updated_at" 2>/dev/null || echo "$now")
   open=$(gh pr list -R plenix-ds/pds --state open --json number -q length 2>/dev/null || echo 1)
-  if [[ "$updated" < "$last" && "$open" = 0 ]]; then log "nudge: quiet (no activity since $last, no open PR)"; echo "$now" >"$NUDGE_STAMP"; return; fi
-  tmux has-session -t $S 2>/dev/null || { log "nudge: team not running"; return; }
+  if [[ "$updated" < "$last" && "$open" = 0 ]]; then log "nudge: quiet (no activity since $last, no open PR)"; echo "$now" >"$NUDGE_STAMP"; heartbeat "$hb" "quiet round, no session woken"; return; fi
+  tmux has-session -t $S 2>/dev/null || { log "nudge: team not running"; heartbeat "$hb" "the team session is not running"; return; }
   while read -r win; do
     [ "$win" = shell ] && continue
     wake "$win" "${NUDGE_TEXT//ROLE/${win%-[0-9]*}}" && { sent=$((sent + 1)); [ -n "${NUDGE_DRY:-}" ] || log "nudge: $win"; }
   done < <(tmux list-windows -t $S -F '#W')
   [ -n "${NUDGE_DRY:-}" ] || echo "$now" >"$NUDGE_STAMP"; echo "nudged $sent"
+  heartbeat "$hb" "woke $sent idle session(s)"
+}
+
+# heartbeat <issue> <what this run did>: rewrite the pinned "Dispatcher heartbeat" issue (template v2.4 §6.1, #772);
+# the daily watchdog workflow opens a P0 process issue when its "Last run:" is older than 2 x dispatch.heartbeat_min.
+# An edit wakes nobody (pickup ignores edits) and is left out of the quiet check above.
+heartbeat() {
+  local n=$1 what=$2 windows
+  [[ "$n" =~ ^[0-9]+$ ]] || { log "heartbeat: no dispatch.heartbeat_issue in $CFG"; return; }
+  windows=$(tmux list-windows -t $S -F '#W' 2>/dev/null | grep -vc '^shell$')
+  if [ -n "${NUDGE_DRY:-}" ]; then echo "would update heartbeat #$n: $what"; return; fi
+  gh issue edit "$n" -R plenix-ds/pds --body "This issue is the dispatcher's heartbeat (template v2.4 §6.1, #772). **No action needed:** the poller (\`team.sh nudge\` on the agent host, every \`dispatch.heartbeat_min\`) rewrites this body on each run. The daily watchdog workflow opens a P0 process issue when the time below is older than 2 × \`dispatch.heartbeat_min\`.
+
+Last run: $(date -u +%Y-%m-%dT%H:%M:%SZ)
+Host: $(hostname) · sessions running: ${windows:-0} · this run: $what
+Free memory: $(free -g | awk 'NR==2{print $7}') GB" >/dev/null 2>>"$LOG" || log "heartbeat: could not update #$n"
 }
 
 stop_one() { local win=$1${2:+-$2}; tmux kill-window -t "$S:$win" 2>/dev/null && { log "stop $win"; echo "stopped $win"; }; }

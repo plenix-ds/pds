@@ -58,7 +58,7 @@ jobs:
         run: node tools/ci/check-decisions.mjs "$(git merge-base "$BASE_SHA" HEAD)"
 
   process:
-    name: Process checks 13 and 15, launch test (role registry, settings in prose; #768)
+    name: Process checks 13, 15 and 16, launch test (role registry, settings, workflows; #768, #772)
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
@@ -80,10 +80,13 @@ jobs:
         run: |
           node tools/ci/check-roles.test.mjs
           node tools/ci/capacity.test.mjs
+          node tools/ci/check-workflows.test.mjs
       - name: Check 13, every role has a definition, label and trigger
         run: node tools/ci/check-roles.mjs
       - name: Check 15, no document states a setting that differs from agents.config.yaml
         run: node tools/ci/check-settings-prose.mjs
+      - name: Check 16, required workflows run in the merge queue; no hand-off with GITHUB_TOKEN
+        run: node tools/ci/check-workflows.mjs
       - name: G0 launch test, every active role through team.sh start once (dry run, starts nothing)
         run: |
           mkdir -p "$HOME/pds1"
