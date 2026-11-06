@@ -5,7 +5,7 @@
      grid; the rule goes in a stylesheet the grid owns (one per document, a rule per grid) and leaves with the grid. Measured again
      when the web fonts are ready.
    Usage:
-     import { usePillWidths } from './engine/usePillWidths.js';
+     import { usePillWidths } from './engine/usePillWidths.ts';
      const { gridKey } = usePillWidths({ frame, cells, columns, allRows, metrics, showTypes });
    Props:
      frame (the grid's element ref), cells ('pill' turns it on), columns, allRows (the rows in view), metrics (the measured cell
@@ -21,8 +21,11 @@ import { gridStep, snapToGrid } from '../../../utils/grid.ts';
 import { kinds, typeOf } from './helpers.tsx';
 import { valueAt } from '../state.ts';
 import { valueText } from '../cells.jsx';
+import type { GridColumn } from '../types.ts';
 
-export function usePillWidths({ frame, cells, metrics, columns, allRows, showTypes }) {
+type PillRow = { original?: Record<string, unknown> };
+
+export function usePillWidths({ frame, cells, metrics, columns, allRows, showTypes }: { frame: { current: HTMLElement | null }; cells: string; metrics: { row?: number; space?: number }; columns: GridColumn[]; allRows: PillRow[]; showTypes?: boolean }) {
   // uniform pill widths (CTM, 2026-10-22; always on, owner uniform-pills-always-35): every standard pill of a column as wide as the
   // column's widest pill in the current view (the filtered, sorted page, every row of it, not only the rows drawn), so scrolling
   // a long list never changes it. The uniformPillWidths prop is accepted and ignored (deprecated).
@@ -30,7 +33,7 @@ export function usePillWidths({ frame, cells, metrics, columns, allRows, showTyp
   const gridKey = React.useId(),
     [fontsReady, setFontsReady] = React.useState(0);
   React.useEffect(() => {
-    const fonts = frame.current?.ownerDocument.fonts;
+    const fonts = frame.current?.ownerDocument.fonts as FontFaceSet | undefined;
     if (fonts && fonts.ready) fonts.ready.then(() => setFontsReady((n) => n + 1));
   }, []);
   React.useLayoutEffect(() => {
@@ -41,9 +44,9 @@ export function usePillWidths({ frame, cells, metrics, columns, allRows, showTyp
       if (store.rules.delete(gridKey)) store.flush();
       return undefined;
     }
-    const ctx = at.ownerDocument.createElement('canvas').getContext('2d'),
+    const ctx = at.ownerDocument.createElement('canvas').getContext('2d') as CanvasRenderingContext2D,
       faces = { data: pillFont(at, ctx, true), text: pillFont(at, ctx, false) },
-      px = (name) => tokenPixels(name, at),
+      px = (name: string) => tokenPixels(name, at),
       step = gridStep(at);
     const sides =
         px('--plx-comp-data-pill-md-padding-inline-start') +
@@ -51,7 +54,7 @@ export function usePillWidths({ frame, cells, metrics, columns, allRows, showTyp
         2 * px('--plx-comp-data-pill-border-width'),
       glyph = px('--plx-comp-data-pill-icon-size') + px('--plx-comp-data-pill-gap');
     const key = CSS.escape(gridKey),
-      rules = [];
+      rules: string[] = [];
     columns.forEach((c) => {
       const k = kinds(c);
       if (
@@ -63,7 +66,7 @@ export function usePillWidths({ frame, cells, metrics, columns, allRows, showTyp
         k.includes('icon')
       )
         return;
-      const data = k.includes('data') || ['number', 'currency', 'date', 'bytes'].includes(c.type);
+      const data = k.includes('data') || ['number', 'currency', 'date', 'bytes'].includes(c.type as string);
       const face = faces[data ? 'data' : 'text'],
         scale = face.scale;
       ctx.font = face.font;
@@ -93,7 +96,7 @@ export function usePillWidths({ frame, cells, metrics, columns, allRows, showTyp
   }, [cells, columns, allRows, metrics.row, metrics.space, showTypes, fontsReady]);
   React.useEffect(
     () => () => {
-      const doc = frame.current?.ownerDocument || (typeof document !== 'undefined' ? document : null);
+      const doc = (frame.current?.ownerDocument || (typeof document !== 'undefined' ? document : null)) as (Document & { __plxPillWidths?: { rules: Map<string, string>; flush: () => void } }) | null;
       if (doc && doc.__plxPillWidths && doc.__plxPillWidths.rules.delete(gridKey)) doc.__plxPillWidths.flush();
     },
     []
