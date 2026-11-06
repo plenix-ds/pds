@@ -166,14 +166,6 @@
   "number-input--variant-quantity-1",
   "number-input--variant-stepper-buttons",
   "number-input--variant-with-unit",
-<<<<<<< HEAD
-  "offboarding--variant-cancel-subscription",
-  "offboarding--variant-delete-account",
-  "offboarding--variant-export-data",
-=======
-  "onboarding--variant-setup-checklist",
-  "onboarding--variant-welcome-dialog",
->>>>>>> origin/main
   "ordered-list--variant-nested",
   "ordered-list--variant-ordered-decimal-default",
   "otp-input--kind-alphanumeric",
