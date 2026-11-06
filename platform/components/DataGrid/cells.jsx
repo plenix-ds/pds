@@ -88,24 +88,37 @@ function TagsCell({ tags, block }) {
   const more = useStrings('combobox').moreChips, box = React.useRef(null), label = (tag) => (typeof tag === 'object' ? tag.label : String(tag)), names = tags.map(label);
   const step = useBarFit(box, names.join('|'), Math.max(0, tags.length - 1), 0, ':self');
   const hidden = tags.slice(tags.length - step), listed = hidden.map(label).join(', '), descId = React.useId();
-  // the table keeps one Tab stop (owner answer 7): the "+N" Tag is not a stop of its own. Its Tooltip shows while its cell is the active cell (the cell has the focus: the Tag is told, as a
-  // focus on it would be), and the hidden names are the cell's description for a screen reader.
+  // the first tag may be cut (its text ends in an ellipsis, Tag's rule); then its full name goes in the same Tooltip as the hidden ones, first
+  const [firstCut, setFirstCut] = React.useState(false);
+  React.useLayoutEffect(() => {
+    const el = box.current && box.current.querySelector('.plx-tag__label');
+    if (!el) { setFirstCut(false); return undefined; }
+    const check = () => setFirstCut(el.scrollWidth > el.clientWidth + 1);
+    check();
+    const ro = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(check);
+    if (ro) ro.observe(el);
+    return () => { if (ro) ro.disconnect(); };
+  }, [names.join('|'), step]);
+  const tip = (firstCut ? names[0] + (listed ? ', ' : '') : '') + listed;
+  // the table keeps one Tab stop (owner answer 7): a tag is not a stop of its own. Its Tooltip shows while its cell is the active cell (the cell has the focus: the Tag is told, as a
+  // focus on it would be): the "+N" Tag's (the cut first name, then the hidden ones), else the first tag's own when it is cut. The hidden names are the cell's description for a screen reader.
   React.useEffect(() => {
-    const cell = box.current && box.current.closest('[data-plx-field]'), tag = box.current && box.current.querySelector('[data-plx-more]');
-    if (!cell || !listed) return undefined;
-    const tell = (type) => (event) => { if (event.target === cell && tag) tag.dispatchEvent(new FocusEvent(type, { bubbles: true, relatedTarget: null })); };
+    const cell = box.current && box.current.closest('[data-plx-field]');
+    const target = hidden.length ? box.current && box.current.querySelector('[data-plx-more]') : firstCut ? box.current && box.current.querySelector('.plx-tag__label') : null;
+    if (!cell || !target) return undefined;
+    const tell = (type) => (event) => { if (event.target === cell) target.dispatchEvent(new FocusEvent(type, { bubbles: true, relatedTarget: null })); };
     const on = tell('focusin'), off = tell('focusout');
     cell.addEventListener('focusin', on); cell.addEventListener('focusout', off);
-    const before = cell.getAttribute('aria-describedby'); cell.setAttribute('aria-describedby', (before ? before + ' ' : '') + descId);
-    if (document.activeElement === cell) tag && tag.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
-    return () => { cell.removeEventListener('focusin', on); cell.removeEventListener('focusout', off); if (before) cell.setAttribute('aria-describedby', before); else cell.removeAttribute('aria-describedby'); };
-  }, [listed, descId]);
+    const before = cell.getAttribute('aria-describedby'); if (listed) cell.setAttribute('aria-describedby', (before ? before + ' ' : '') + descId);
+    if (document.activeElement === cell) target.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
+    return () => { cell.removeEventListener('focusin', on); cell.removeEventListener('focusout', off); if (!listed) return; if (before) cell.setAttribute('aria-describedby', before); else cell.removeAttribute('aria-describedby'); };
+  }, [hidden.length, firstCut, listed, descId]);
   return (
     <span ref={box} className={`${block}__rich ${block}__rich--tags`}>
       {tags.slice(0, tags.length - step).map((tag, i) => <Tag key={i} className={i > 0 ? `${block}__tag-fixed` : undefined} category={typeof tag === 'object' ? tag.category : undefined}>{label(tag)}</Tag>)}
       {hidden.length ? (
         <>
-          <Tooltip content={listed} describe={false}>
+          <Tooltip content={tip} describe={false}>
             <Tag className={`${block}__tag-fixed`} tabIndex={-1} data-plx-more="" aria-label={more.replace('{count}', String(hidden.length))}>{'+' + hidden.length}</Tag>
           </Tooltip>
           <span id={descId} className="plx-visually-hidden">{listed}</span>
