@@ -307,6 +307,8 @@ The word-spacing leak happened exactly there.
 
 Only an explicit `inherit` counts as "follows the context". A missing declaration, or `unset`, `initial` or `revert`, is still a finding, so a forgotten property can't pass as deliberate. A part that would inherit all six properties isn't a text part; it declares no contract. The context-sized parts are listed as `context-sized` in `text-contracts.json`, so the list stays visible.
 
+A part's rule that styles a **descendant it doesn't name** (for example the data font on `code` inside rich text, `.plx-rich-text :where(code)`) is that descendant's typography, not the part's contract.
+
 **Declared contracts.** `platform/standards/text-contracts.json` declares the contract of every part that sets
 typography (by its class, a variant by its modifier class): `establishes` with its role and font (sans or mono), `follows` in
 Mono (the switch alone, at most its own size), or `adjusts` with the properties it sets.
