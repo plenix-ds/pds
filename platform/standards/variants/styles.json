@@ -6421,5 +6421,66 @@
   "rendition-list--variant-menu": {
     "sets": [],
     "why": "markup only: a Download menu that lists the renditions, where space is short"
+  },
+  "rich-text-editor--toolbar-basic-default": {
+    "sets": [],
+    "why": "markup only: icon buttons for bold, italic, link, bulleted and numbered list, each with a tooltip of its name and shortcut"
+  },
+  "rich-text-editor--toolbar-full-toolbar": {
+    "sets": [],
+    "why": "markup only: every format in groups: text style, font and size, marks, color, alignment, lists and the rest"
+  },
+  "rich-text-editor--toolbar-read-only": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-rich-text-editor-read-only-background"
+      }
+    ],
+    "why": ".plx-rich-text-editor.is-read-only in rich-text-editor.css: the content without the toolbar, on the sunken fill; it can be selected and copied"
+  },
+  "rich-text-editor--formats-every-format": {
+    "sets": [],
+    "why": "markup only: every element the editor writes, shown as it is: headings, marks, a highlight, a link, a task list, a table, a quote, a code block and a rule"
+  },
+  "rich-text-editor--formats-keyboard": {
+    "sets": [],
+    "why": "markup only: the editor engine's own keyboard shortcuts (Ctrl+B, Ctrl+I, Ctrl+U and the rest)"
+  },
+  "rich-text-editor--behavior-markdown-shortcuts": {
+    "sets": [],
+    "why": "markup only: the engine's rules as people type, such as \"- \" for a list and \"# \" for a heading, and **bold** around words"
+  },
+  "rich-text-editor--behavior-mentions-slot": {
+    "sets": [],
+    "why": "markup only: typing @ opens the list of people under the caret; a mention is one unit in the text"
+  },
+  "people-group--kind-team": {
+    "sets": [],
+    "why": "markup only: the team's picture or initials, its name as a link, the word Team, what it does, and its members' avatars with +N"
+  },
+  "people-group--count-with-member-count": {
+    "sets": [],
+    "why": "markup only: the member count after the kind, the number in the data font (\"8 members\")"
+  },
+  "ordered-list--variant-ordered-decimal-default": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "marker",
+        "token": "--plx-comp-list-marker-text"
+      },
+      {
+        "property": "min-inline-size",
+        "part": "marker",
+        "token": "--plx-comp-list-marker-min-width"
+      }
+    ],
+    "why": ".plx-list--ordered>.plx-list__item::before in list.css: statements numbered 1, 2, 3 in a muted column that keeps them aligned"
+  },
+  "ordered-list--variant-nested": {
+    "sets": [],
+    "why": "markup only: a list under one statement, starting on its text line, numbered or lettered on its own"
   }
 }
