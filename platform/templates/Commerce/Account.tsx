@@ -79,14 +79,33 @@ export const ORDER_STATUSES = {
 const canFulfill = (o: any) => o.status === 'unfulfilled';
 const canRefund = (o: any) => o.status === 'delivered' || o.status === 'returning' || o.status === 'fulfilled';
 const canCancel = (o: any) => o.status === 'unfulfilled';
-export function OrderStatus({ status, statuses }: any) {
+/** @public the prop type of OrderStatus (ADR 0011) */
+export type OrderStatusProps = {
+  status?: unknown;
+  statuses?: unknown;
+};
+export function OrderStatus(props: OrderStatusProps) {
+  const { status, statuses } = props as any;
   const s = (statuses || ORDER_STATUSES)[status] || { tone: 'neutral', label: String(status || '') };
   return <Badge tone={s.tone} icon={s.icon}>{s.label}</Badge>;
 }
 
 /* ── order management ── */
 
-export function OrderManagement({ orders = [], currency = 'USD', onOpen, onFulfill, onCancel, onRefund, statuses, strings, className }: any) {
+/** @public the prop type of OrderManagement (ADR 0011) */
+export type OrderManagementProps = {
+  orders?: unknown[];
+  currency?: string;
+  onOpen?: (...args: never[]) => unknown;
+  onFulfill?: (...args: never[]) => unknown;
+  onCancel?: (...args: never[]) => unknown;
+  onRefund?: (...args: never[]) => unknown;
+  statuses?: unknown;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function OrderManagement(props: OrderManagementProps) {
+  const { orders = [], currency = 'USD', onOpen, onFulfill, onCancel, onRefund, statuses, strings, className } = props as any;
   useCommercePage('order-management');
   const t: any = useStrings('commerce.orders', strings);
   const S = statuses || ORDER_STATUSES;
@@ -141,7 +160,22 @@ export function OrderManagement({ orders = [], currency = 'USD', onOpen, onFulfi
 
 /* ── one order ── */
 
-export function OrderDetail({ order, currency = 'USD', backHref, onFulfill, onRefund, onCancel, onReturn, statuses, headingLevel = 1, strings, className }: any) {
+/** @public the prop type of OrderDetail (ADR 0011) */
+export type OrderDetailProps = {
+  order?: unknown;
+  currency?: string;
+  backHref?: string;
+  onFulfill?: (...args: never[]) => unknown;
+  onRefund?: (...args: never[]) => unknown;
+  onCancel?: (...args: never[]) => unknown;
+  onReturn?: (...args: never[]) => unknown;
+  statuses?: unknown;
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function OrderDetail(props: OrderDetailProps) {
+  const { order, currency = 'USD', backHref, onFulfill, onRefund, onCancel, onReturn, statuses, headingLevel = 1, strings, className } = props as any;
   useCommercePage('order-detail');
   const t: any = useStrings('commerce.orderDetail', strings);
   const o = order || {};
@@ -165,7 +199,7 @@ export function OrderDetail({ order, currency = 'USD', backHref, onFulfill, onRe
         <div className="plx-commerce__main">
           <ul className="plx-commerce-lines" aria-label={t.items}>{(o.items || []).map((x: any) => <CommerceLine key={x.id} item={x} currency={cur} />)}</ul>
           {o.delivery ? (
-            <Panel title={t.delivery} headingLevel={Math.min(6, headingLevel + 1)}>
+            <Panel title={t.delivery} headingLevel={Math.min(6, headingLevel + 1) as 1 | 2 | 3 | 4 | 5 | 6}>
               <PropertyList>
                 {o.delivery.address ? <PropertyList.Item label={t.address}>{o.delivery.address}</PropertyList.Item> : null}
                 {o.delivery.method ? <PropertyList.Item label={t.method}>{o.delivery.method}</PropertyList.Item> : null}
@@ -181,7 +215,7 @@ export function OrderDetail({ order, currency = 'USD', backHref, onFulfill, onRe
           ) : null}
         </div>
         <aside className="plx-commerce__aside" aria-label={t.payment}>
-          <OrderSummary items={o.items || []} currency={cur} totals={o.totals || orderTotals(o.items || [], { shipping: o.shipping, tax: o.tax })} headingLevel={Math.min(6, headingLevel + 1)}>
+          <OrderSummary items={o.items || []} currency={cur} totals={o.totals || orderTotals(o.items || [], { shipping: o.shipping, tax: o.tax })} headingLevel={Math.min(6, headingLevel + 1) as 1 | 2 | 3 | 4 | 5 | 6}>
             {o.payment ? <PropertyList><PropertyList.Item label={t.payment}>{o.payment}</PropertyList.Item></PropertyList> : null}
           </OrderSummary>
         </aside>
@@ -195,7 +229,22 @@ export function OrderDetail({ order, currency = 'USD', backHref, onFulfill, onRe
 /* ── subscription management ── */
 const SUB_TONES: Record<string, any[]> = { active: ['success', CircleCheckIcon], paused: ['waiting', ScheduleIcon], canceled: ['neutral', DoNotDisturbIcon], paid: ['success', CircleCheckIcon], refunded: ['neutral', EdUndoIcon], failed: ['negative', AlertIcon] };
 
-export function SubscriptionManagement({ subscription = {}, plans = [], history = [], currency = 'USD', onChangePlan, onPause, onResume, onCancel, onUpdatePayment, strings, className }: any) {
+/** @public the prop type of SubscriptionManagement (ADR 0011) */
+export type SubscriptionManagementProps = {
+  subscription?: Record<string, unknown>;
+  plans?: unknown[];
+  history?: unknown[];
+  currency?: string;
+  onChangePlan?: (...args: never[]) => unknown;
+  onPause?: (...args: never[]) => unknown;
+  onResume?: (...args: never[]) => unknown;
+  onCancel?: (...args: never[]) => unknown;
+  onUpdatePayment?: (...args: never[]) => unknown;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function SubscriptionManagement(props: SubscriptionManagementProps) {
+  const { subscription = {}, plans = [], history = [], currency = 'USD', onChangePlan, onPause, onResume, onCancel, onUpdatePayment, strings, className } = props as any;
   useCommercePage('subscription-management');
   const t: any = useStrings('commerce.subscription', strings);
   const st = t.statuses;   // merged key by key with the strings prop
@@ -282,7 +331,22 @@ export function SubscriptionManagement({ subscription = {}, plans = [], history 
 
 /* ── returns ── */
 
-export function Returns({ order = {}, reasons = [], resolutions = [], methods = [], currency = 'USD', status, onSubmit, onCancel, headingLevel = 2, strings, className }: any) {
+/** @public the prop type of Returns (ADR 0011) */
+export type ReturnsProps = {
+  order?: Record<string, unknown>;
+  reasons?: unknown[];
+  resolutions?: unknown[];
+  methods?: unknown[];
+  currency?: string;
+  status?: unknown;
+  onSubmit?: (...args: never[]) => unknown;
+  onCancel?: (...args: never[]) => unknown;
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function Returns(props: ReturnsProps) {
+  const { order = {}, reasons = [], resolutions = [], methods = [], currency = 'USD', status, onSubmit, onCancel, headingLevel = 2, strings, className } = props as any;
   useCommercePage('returns');
   const t: any = useStrings('commerce.returns', strings);
   const items = order.items || [];
@@ -356,7 +420,7 @@ export function Returns({ order = {}, reasons = [], resolutions = [], methods = 
             onComplete={async () => { if (onSubmit) await onSubmit({ order: order.number, items: lines.map((x: any) => ({ id: x.id, quantity: x.quantity })), reason, note, resolution, method }); setDone(true); announce(t.requested); }} />
         </div>
         <aside className="plx-commerce__aside" aria-label={t.refund}>
-          <Panel title={t.refund} headingLevel={Math.min(6, headingLevel + 1)}>
+          <Panel title={t.refund} headingLevel={Math.min(6, headingLevel + 1) as 1 | 2 | 3 | 4 | 5 | 6}>
             <PropertyList>
               <PropertyList.Item label={t.items}>{dataPhrase(count === 1 ? t.returningOne : t.returning, { n: count })}</PropertyList.Item>
               <PropertyList.Item label={t.refund} data>{money(refund, cur)}</PropertyList.Item>

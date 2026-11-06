@@ -17,6 +17,7 @@
      See Commerce.tsx.
 */
 import React from 'react';
+import type { Field } from '../../utils/fields.ts';
 import { cx } from '../../utils/cx.ts';
 import { announce } from '../../utils/announce.tsx';
 import { formatNumber, formatLocale } from '../../utils/format.ts';
@@ -68,7 +69,7 @@ import { dataPhrase } from '../../utils/dataText.tsx';
 
 // the products' fields, for the filter, the category quick filter and the sort (utils/fields.ts)
 // Called directly (outside a component), it reads the page's language (formatLocale), not a LocaleProvider's catalogs; ProductListing passes its own words in strings.
-export function productFields(categories = [], strings: any) {
+export function productFields(categories: { value: string; label: string }[] = [], strings?: Record<string, string>): Field[] {
   // not a hook (it is exported, and ProductListing calls it inside useMemo): the page locale's catalog words, with strings on top
   const t = Object.assign({}, createTranslator(formatLocale()).section('commerce.listing'), strings);
   return [
@@ -83,8 +84,27 @@ export function productFields(categories = [], strings: any) {
 
 const SIZES: Record<string, string> = { s: 'sm', m: 'md', l: 'lg' };
 
-export function ProductListing({ products = [], categories = [], title, description, headingLevel = 1, hrefFor, onOpen, onAddToCart, pageSize = 12,
-  query, onQueryChange, defaultView, search = true, strings, className }: any) {
+/** @public the prop type of ProductListing (ADR 0011) */
+export type ProductListingProps = {
+  products?: unknown[];
+  categories?: unknown[];
+  title?: React.ReactNode;
+  description?: React.ReactNode;
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+  hrefFor?: (...args: never[]) => unknown;
+  onOpen?: (...args: never[]) => unknown;
+  onAddToCart?: (...args: never[]) => unknown;
+  pageSize?: number;
+  query?: unknown;
+  onQueryChange?: (...args: never[]) => unknown;
+  defaultView?: unknown;
+  search?: boolean;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function ProductListing(props: ProductListingProps) {
+  const { products = [], categories = [], title, description, headingLevel = 1, hrefFor, onOpen, onAddToCart, pageSize = 12,
+  query, onQueryChange, defaultView, search = true, strings, className } = props as any;
   useCommercePage('product-listing');
   const t: any = useStrings('commerce.listing', strings);
   const fields = React.useMemo(() => productFields(categories, t), [categories, t]);
@@ -129,8 +149,24 @@ export function ProductListing({ products = [], categories = [], title, descript
 }
 
 
-export function ProductDiscovery({ products = [], categories = [], recommended = [], title, headingLevel = 1, hrefFor, onOpen, onAddToCart, suggestions,
-  pageSize = 12, strings, className }: any) {
+/** @public the prop type of ProductDiscovery (ADR 0011) */
+export type ProductDiscoveryProps = {
+  products?: unknown[];
+  categories?: unknown[];
+  recommended?: unknown[];
+  title?: React.ReactNode;
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+  hrefFor?: (...args: never[]) => unknown;
+  onOpen?: (...args: never[]) => unknown;
+  onAddToCart?: (...args: never[]) => unknown;
+  suggestions?: unknown;
+  pageSize?: number;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function ProductDiscovery(props: ProductDiscoveryProps) {
+  const { products = [], categories = [], recommended = [], title, headingLevel = 1, hrefFor, onOpen, onAddToCart, suggestions,
+  pageSize = 12, strings, className } = props as any;
   useCommercePage('product-discovery');
   const t: any = useStrings('commerce.discovery', strings);
   const uid = useUid('plx-commerce');
@@ -196,8 +232,27 @@ export function ProductDiscovery({ products = [], categories = [], recommended =
 }
 
 
-export function ProductDetail({ product, value, defaultValue, onChange, quantity, onQuantityChange, onAddToCart, cartHref, related = [], hrefFor, onOpen,
-  headingLevel = 1, maxQuantity, strings, className }: any) {
+/** @public the prop type of ProductDetail (ADR 0011) */
+export type ProductDetailProps = {
+  product?: unknown;
+  value?: unknown;
+  defaultValue?: unknown;
+  onChange?: (...args: never[]) => unknown;
+  quantity?: unknown;
+  onQuantityChange?: (...args: never[]) => unknown;
+  onAddToCart?: (...args: never[]) => unknown;
+  cartHref?: string;
+  related?: unknown[];
+  hrefFor?: (...args: never[]) => unknown;
+  onOpen?: (...args: never[]) => unknown;
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+  maxQuantity?: unknown;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function ProductDetail(props: ProductDetailProps) {
+  const { product, value, defaultValue, onChange, quantity, onQuantityChange, onAddToCart, cartHref, related = [], hrefFor, onOpen,
+  headingLevel = 1, maxQuantity, strings, className } = props as any;
   useCommercePage('product-detail');
   const t: any = useStrings('commerce.productDetail', strings);
   const uid = useUid('plx-commerce');

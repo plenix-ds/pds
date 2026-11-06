@@ -49,8 +49,27 @@ import TrashIcon from 'plenix-platform/icons/plenix/trash';
 
 /* ── the cart ── */
 
-export function Cart({ items = [], currency = 'USD', onQuantityChange, onRemove, onRestore, onCheckout, continueHref, shipping, taxRate, discount, onApplyPromo,
-  title, headingLevel = 1, strings, className }: any) {
+/** @public the prop type of Cart (ADR 0011) */
+export type CartProps = {
+  items?: unknown[];
+  currency?: string;
+  onQuantityChange?: (...args: never[]) => unknown;
+  onRemove?: (...args: never[]) => unknown;
+  onRestore?: (...args: never[]) => unknown;
+  onCheckout?: (...args: never[]) => unknown;
+  continueHref?: string;
+  shipping?: unknown;
+  taxRate?: unknown;
+  discount?: unknown;
+  onApplyPromo?: (...args: never[]) => unknown;
+  title?: React.ReactNode;
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function Cart(props: CartProps) {
+  const { items = [], currency = 'USD', onQuantityChange, onRemove, onRestore, onCheckout, continueHref, shipping, taxRate, discount, onApplyPromo,
+  title, headingLevel = 1, strings, className } = props as any;
   useCommercePage('cart');
   const t: any = useStrings('commerce.cart', strings);
   const toast = useOptionalToast();
@@ -120,7 +139,7 @@ export function Cart({ items = [], currency = 'USD', onQuantityChange, onRemove,
 
 /* ── payment: the method and the card fields (form UI only) ── */
 // the card's brand from its first digits, and the number in groups as people type it (4 4 4 4, or 4 6 5 for American Express)
-export function cardBrand(number: any) {
+export function cardBrand(number: string) {
   const d = String(number || '').replace(/\D/g, '');
   if (/^4/.test(d)) return 'visa';
   if (/^(5[1-5]|2[2-7])/.test(d)) return 'mastercard';
@@ -128,7 +147,7 @@ export function cardBrand(number: any) {
   if (/^(6011|65|64[4-9])/.test(d)) return 'discover';
   return '';
 }
-export function formatCardNumber(number: any) {
+export function formatCardNumber(number: string) {
   const d = String(number || '').replace(/\D/g, '').slice(0, 19);
   const groups = cardBrand(d) === 'amex' ? [4, 6, 5] : [4, 4, 4, 4, 3];
   const out = []; let i = 0;
@@ -137,7 +156,20 @@ export function formatCardNumber(number: any) {
 }
 const formatExpiry = (v: any) => { const d = String(v || '').replace(/\D/g, '').slice(0, 4); return d.length > 2 ? d.slice(0, 2) + ' / ' + d.slice(2) : d; };
 
-export function PaymentFields({ value = {}, onChange, savedMethods = [], amount, currency = 'USD', billing = true, disabled = false, strings, className }: any) {
+/** @public the prop type of PaymentFields (ADR 0011) */
+export type PaymentFieldsProps = {
+  value?: Record<string, unknown>;
+  onChange?: (...args: never[]) => unknown;
+  savedMethods?: unknown[];
+  amount?: unknown;
+  currency?: string;
+  billing?: boolean;
+  disabled?: boolean;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function PaymentFields(props: PaymentFieldsProps) {
+  const { value = {}, onChange, savedMethods = [], amount, currency = 'USD', billing = true, disabled = false, strings, className } = props as any;
   const t: any = useStrings('commerce.pay', strings);
   const set = (k: any, v: any) => { if (onChange) onChange(Object.assign({}, value, { [k]: v })); };
   const method = value.method || (savedMethods.length ? savedMethods[0].id : 'card');
@@ -186,7 +218,20 @@ export function PaymentFields({ value = {}, onChange, savedMethods = [], amount,
 }
 
 
-export function Payment({ amount, currency = 'USD', savedMethods, defaultValue, onPay, onCancel, title, strings, className }: any) {
+/** @public the prop type of Payment (ADR 0011) */
+export type PaymentProps = {
+  amount?: unknown;
+  currency?: string;
+  savedMethods?: unknown;
+  defaultValue?: unknown;
+  onPay?: (...args: never[]) => unknown;
+  onCancel?: (...args: never[]) => unknown;
+  title?: React.ReactNode;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function Payment(props: PaymentProps) {
+  const { amount, currency = 'USD', savedMethods, defaultValue, onPay, onCancel, title, strings, className } = props as any;
   useCommercePage('payment');
   const t: any = useStrings('commerce.payment', strings);
   const [value, setValue] = React.useState(() => Object.assign({ billingSame: true }, defaultValue));
@@ -218,8 +263,24 @@ export function Payment({ amount, currency = 'USD', savedMethods, defaultValue, 
 
 /* ── checkout: contact, delivery, payment, review ── */
 
-export function Checkout({ items = [], currency = 'USD', deliveryOptions = [], defaultValue, savedMethods, taxRate, discount, onPlaceOrder, onCancel,
-  signInHref, strings, className }: any) {
+/** @public the prop type of Checkout (ADR 0011) */
+export type CheckoutProps = {
+  items?: unknown[];
+  currency?: string;
+  deliveryOptions?: unknown[];
+  defaultValue?: unknown;
+  savedMethods?: unknown;
+  taxRate?: unknown;
+  discount?: unknown;
+  onPlaceOrder?: (...args: never[]) => unknown;
+  onCancel?: (...args: never[]) => unknown;
+  signInHref?: string;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function Checkout(props: CheckoutProps) {
+  const { items = [], currency = 'USD', deliveryOptions = [], defaultValue, savedMethods, taxRate, discount, onPlaceOrder, onCancel,
+  signInHref, strings, className } = props as any;
   useCommercePage('checkout');
   const t: any = useStrings('commerce.checkout', strings);
   const [d, setD] = React.useState(() => Object.assign({ email: '', name: '', street: '', street2: '', city: '', region: '', postal: '', country: 'US', phone: '',
@@ -284,7 +345,24 @@ export function Checkout({ items = [], currency = 'USD', deliveryOptions = [], d
 
 /* ── the order confirmation ── */
 
-export function OrderConfirmation({ orderNumber, email, items = [], currency = 'USD', totals, delivery = {}, steps = [], orderHref, continueHref, headingLevel = 1, autoFocus = true, strings, className }: any) {
+/** @public the prop type of OrderConfirmation (ADR 0011) */
+export type OrderConfirmationProps = {
+  orderNumber?: unknown;
+  email?: unknown;
+  items?: unknown[];
+  currency?: string;
+  totals?: unknown;
+  delivery?: Record<string, unknown>;
+  steps?: unknown[];
+  orderHref?: string;
+  continueHref?: string;
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+  autoFocus?: boolean;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function OrderConfirmation(props: OrderConfirmationProps) {
+  const { orderNumber, email, items = [], currency = 'USD', totals, delivery = {}, steps = [], orderHref, continueHref, headingLevel = 1, autoFocus = true, strings, className } = props as any;
   useCommercePage('order-confirmation');
   const t: any = useStrings('commerce.confirm', strings);
   const uid = useUid('plx-commerce');
@@ -325,7 +403,7 @@ export function OrderConfirmation({ orderNumber, email, items = [], currency = '
           </span>
         </div>
         <aside className="plx-commerce__aside" aria-label={t.items}>
-          <OrderSummary items={items} currency={currency} totals={totals} headingLevel={Math.min(6, headingLevel + 1)} />
+          <OrderSummary items={items} currency={currency} totals={totals} headingLevel={Math.min(6, headingLevel + 1) as 1 | 2 | 3 | 4 | 5 | 6} />
         </aside>
       </div>
     </article>

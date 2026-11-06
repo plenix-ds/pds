@@ -43,6 +43,7 @@ const SearchWorkspace: any = SearchWorkspaceJs;
 import { Stack } from '../../components/Stack/Stack.tsx';
 import { ContentGrid } from '../../patterns/ContentGrid/ContentGrid.tsx';
 import { DataGrid } from '../../components/DataGrid/DataGrid.tsx';
+import type { DataGridColumn } from '../../components/DataGrid/DataGrid.tsx';
 import { EmptyState } from '../../components/EmptyState/EmptyState.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Link } from '../../components/Link/Link.tsx';
@@ -65,7 +66,32 @@ function Cards({ items = [], onOpen }: any) { return <ContentGrid>{items.map((it
 function NoRecords({ strings, empty }: any) { const t = useWords(strings); return empty || <EmptyState title={t.empty}>{t.emptyDescription}</EmptyState>; }
 // the full-room list (issue 522, the canonical DataGrid page): the toolbar, then the grid filling the room left and
 // scrolling inside (fill, virtual rows, no page controls); the chosen record's detail in a SidePanel beside it
-export function ListingPage({ rows = [], columns = [], empty, strings, children, label, toolbar, grid, detail, detailTitle, onDetailClose, ...rest }: any) {
+/** @public the page frame's props, which every page template passes on (title, description, actions, the shell's regions) */
+export type FrameProps = {
+  page?: string;
+  title?: React.ReactNode;
+  description?: React.ReactNode;
+  actions?: React.ReactNode;
+  header?: React.ReactNode;
+  sideNav?: React.ReactNode;
+  footer?: React.ReactNode;
+  mainId?: string;
+};
+/** @public the prop type of ListingPage (ADR 0011) */
+export type ListingPageProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & FrameProps & {
+  rows?: Record<string, unknown>[];
+  columns?: DataGridColumn[];
+  empty?: React.ReactNode;
+  strings?: Record<string, string>;
+  children?: React.ReactNode;
+  label?: unknown;
+  toolbar?: React.ReactNode;
+  grid?: Record<string, unknown>;
+  detail?: React.ReactNode;
+  detailTitle?: React.ReactNode;
+  onDetailClose?: (...args: never[]) => unknown;
+};
+export function ListingPage({ rows = [], columns = [], empty, strings, children, label, toolbar, grid, detail, detailTitle, onDetailClose, ...rest }: ListingPageProps) {
   const id = React.useId();
   const t = useWords(strings);
   const list = rows.length ? <DataGrid label={label || rest.title || t.pane} data={rows} columns={columns} {...grid} /> : <NoRecords empty={empty} strings={strings} />;
@@ -77,27 +103,107 @@ export function ListingPage({ rows = [], columns = [], empty, strings, children,
     </div>
   </AppShell>;
 }
-export function ContentManagementPage({ items = [], onOpen, empty, strings, children, ...rest }: any) { return <Frame {...rest}>{children}{items.length ? <Cards items={items} onOpen={onOpen} /> : <NoRecords empty={empty} strings={strings} />}</Frame>; }
-export function LandingPage({ items = [], onOpen, children, ...rest }: any) { return <Frame {...rest}><Stack gap="lg">{children}<Cards items={items} onOpen={onOpen} /></Stack></Frame>; }
-export function HomePage(props: any) { return <LandingPage {...props} page="dashboard" />; }
-function FormPage({ mode, fields, initialValue, sessionKey, validate, onSubmit, onSuccess, onCancel, strings, title, children, ...rest }: any) {
+/** @public the prop type of ContentManagementPage (ADR 0011) */
+export type ContentManagementPageProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & FrameProps & {
+  items?: unknown[];
+  onOpen?: (...args: never[]) => unknown;
+  empty?: React.ReactNode;
+  strings?: Record<string, string>;
+  children?: React.ReactNode;
+};
+export function ContentManagementPage({ items = [], onOpen, empty, strings, children, ...rest }: ContentManagementPageProps) { return <Frame {...rest}>{children}{items.length ? <Cards items={items} onOpen={onOpen} /> : <NoRecords empty={empty} strings={strings} />}</Frame>; }
+/** @public the prop type of LandingPage (ADR 0011) */
+export type LandingPageProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & FrameProps & {
+  items?: unknown[];
+  onOpen?: (...args: never[]) => unknown;
+  children?: React.ReactNode;
+};
+export function LandingPage({ items = [], onOpen, children, ...rest }: LandingPageProps) { return <Frame {...rest}><Stack gap="lg">{children}<Cards items={items} onOpen={onOpen} /></Stack></Frame>; }
+export type HomePageProps = LandingPageProps;
+export function HomePage(props: HomePageProps) { return <LandingPage {...props} page="dashboard" />; }
+/** @public the prop type of CreatePage and EditPage (ADR 0011) */
+export type FormPageProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & FrameProps & {
+  fields?: unknown[];
+  initialValue?: Record<string, unknown>;
+  sessionKey?: string;
+  validate?: (...args: never[]) => unknown;
+  onSubmit?: (...args: never[]) => unknown;
+  onSuccess?: (...args: never[]) => unknown;
+  onCancel?: (...args: never[]) => unknown;
+  strings?: Record<string, string>;
+  children?: React.ReactNode;
+};
+function FormPage(props: FormPageProps & { mode: 'create' | 'edit' }) {
+  const { mode, fields, initialValue, sessionKey, validate, onSubmit, onSuccess, onCancel, strings, title, children, ...rest } = props as any;
   return <Frame {...rest} page="form" title={title}><FormFlow mode={mode} title={title} surface="page" initialValue={initialValue} sessionKey={sessionKey} validate={validate} onSubmit={onSubmit} onSuccess={onSuccess} onCancel={onCancel} strings={strings}>{fields || children}</FormFlow></Frame>;
 }
-export function CreatePage(props: any) { return <FormPage {...props} mode="create" />; }
-export function EditPage(props: any) { return <FormPage {...props} mode="edit" />; }
-export function MasterDetailPage({ pane, paneTitle, detailOpen = false, onBack, strings, children, header, sideNav, footer, mainId }: any) {
+export type CreatePageProps = FormPageProps;
+export function CreatePage(props: CreatePageProps) { return <FormPage {...props} mode="create" />; }
+export type EditPageProps = FormPageProps;
+export function EditPage(props: EditPageProps) { return <FormPage {...props} mode="edit" />; }
+/** @public the prop type of MasterDetailPage (ADR 0011) */
+export type MasterDetailPageProps = {
+  pane?: React.ReactNode;
+  paneTitle?: React.ReactNode;
+  detailOpen?: boolean;
+  onBack?: (...args: never[]) => unknown;
+  strings?: Record<string, string>;
+  children?: React.ReactNode;
+  header?: React.ReactNode;
+  sideNav?: React.ReactNode;
+  footer?: React.ReactNode;
+  mainId?: string;
+};
+export function MasterDetailPage({ pane, paneTitle, detailOpen = false, onBack, strings, children, header, sideNav, footer, mainId }: MasterDetailPageProps) {
   const t = useWords(strings), id = React.useId();
   return <AppShell page="master-detail" header={header} sideNav={sideNav} footer={footer} mainId={mainId || 'plx-template-' + id}><div className="plx-page-panes"><SecondaryPane title={paneTitle || t.pane} detailOpen={detailOpen} onBack={onBack}>{pane}</SecondaryPane><PageContent>{children}</PageContent></div></AppShell>;
 }
-export function SplitWorkspace({ pane, paneTitle, rows, columns, grid, detailOpen = true, title, actions, toolbar, empty, orientation, defaultSize, size, onSizeChange, strings, children, header, sideNav, footer, mainId }: any) {
+/** @public the prop type of SplitWorkspace (ADR 0011) */
+export type SplitWorkspaceProps = {
+  pane?: React.ReactNode;
+  paneTitle?: React.ReactNode;
+  rows?: Record<string, unknown>[];
+  columns?: DataGridColumn[];
+  grid?: Record<string, unknown>;
+  detailOpen?: boolean;
+  title?: React.ReactNode;
+  actions?: React.ReactNode;
+  toolbar?: React.ReactNode;
+  empty?: React.ReactNode;
+  orientation?: unknown;
+  defaultSize?: unknown;
+  size?: unknown;
+  onSizeChange?: (...args: never[]) => unknown;
+  strings?: Record<string, string>;
+  children?: React.ReactNode;
+  header?: React.ReactNode;
+  sideNav?: React.ReactNode;
+  footer?: React.ReactNode;
+  mainId?: string;
+};
+export function SplitWorkspace({ pane, paneTitle, rows, columns, grid, detailOpen = true, title, actions, toolbar, empty, orientation, defaultSize, size, onSizeChange, strings, children, header, sideNav, footer, mainId }: SplitWorkspaceProps) {
   const t = useWords(strings), id = React.useId(), list = paneTitle || t.pane;
   // grid: the list's own DataGrid options (issue 681), spread last, so grid.label may rename the list; the fill and scroll stay the grid's defaults
   const first = columns ? <DataGrid label={list} data={rows || []} columns={columns} {...grid} /> : <ReadingPane label={list}>{pane}</ReadingPane>;
   const second = <ReadingPane label={title || t.detail} actions={detailOpen ? actions : null} empty={empty || <EmptyState title={t.noSelection}>{t.noSelectionDescription}</EmptyState>}>{detailOpen ? children : null}</ReadingPane>;
   return <AppShell page="master-detail" header={header} sideNav={sideNav} footer={footer} mainId={mainId || 'plx-template-' + id}><PageContent>{toolbar}<SplitView label={title || list} firstLabel={list} orientation={orientation} defaultSize={defaultSize} size={size} onSizeChange={onSizeChange} first={first} second={second} /></PageContent></AppShell>;
 }
-export function SinglePaneWorkspace({ toolbar, children, ...rest }: any) { return <Frame {...rest}><Stack gap="md">{toolbar}{children}</Stack></Frame>; }
-export function FullScreenWorkspace({ tools, inspector, toolbar, children, strings, mainId }: any) {
+/** @public the prop type of SinglePaneWorkspace (ADR 0011) */
+export type SinglePaneWorkspaceProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & FrameProps & {
+  toolbar?: React.ReactNode;
+  children?: React.ReactNode;
+};
+export function SinglePaneWorkspace({ toolbar, children, ...rest }: SinglePaneWorkspaceProps) { return <Frame {...rest}><Stack gap="md">{toolbar}{children}</Stack></Frame>; }
+/** @public the prop type of FullScreenWorkspace (ADR 0011) */
+export type FullScreenWorkspaceProps = {
+  tools?: React.ReactNode;
+  inspector?: React.ReactNode;
+  toolbar?: React.ReactNode;
+  children?: React.ReactNode;
+  strings?: Record<string, string>;
+  mainId?: string;
+};
+export function FullScreenWorkspace({ tools, inspector, toolbar, children, strings, mainId }: FullScreenWorkspaceProps) {
   const t = useWords(strings), id = React.useId();
   return <AppShell page="editor" mainId={mainId || 'plx-template-' + id}><div className="plx-page-panes">
     {tools ? <SecondaryPane title={t.tools} width="sm">{tools}</SecondaryPane> : null}
@@ -105,17 +211,56 @@ export function FullScreenWorkspace({ tools, inspector, toolbar, children, strin
     {inspector ? <SecondaryPane title={t.inspector} side="end">{inspector}</SecondaryPane> : null}
   </div></AppShell>;
 }
-export function FullScreenExperience({ children, ...rest }: any) { return <Frame {...rest} page="editor">{children}</Frame>; }
-export function DetailPage({ sections = [], strings, children, title, description, actions, ...rest }: any) {
+/** @public the prop type of FullScreenExperience (ADR 0011) */
+export type FullScreenExperienceProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & FrameProps & {
+  children?: React.ReactNode;
+};
+export function FullScreenExperience({ children, ...rest }: FullScreenExperienceProps) { return <Frame {...rest} page="editor">{children}</Frame>; }
+/** @public the prop type of DetailPage (ADR 0011) */
+export type DetailPageProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & FrameProps & {
+  sections?: unknown[];
+  strings?: Record<string, string>;
+  children?: React.ReactNode;
+  title?: React.ReactNode;
+  description?: React.ReactNode;
+  actions?: React.ReactNode;
+};
+export function DetailPage({ sections = [], strings, children, title, description, actions, ...rest }: DetailPageProps) {
   const t = useWords(strings);
   return <MasterDetailPage {...rest} paneTitle={t.sections} detailOpen pane={<Stack gap="sm">{sections.map((s: any) => <Link key={s.id} href={'#' + s.id}>{s.title}</Link>)}</Stack>}><Stack gap="lg"><RecordPage.Header title={title} description={description} actions={actions} />{children}{sections.map((s: any) => <section key={s.id} id={s.id} aria-label={s.title}><Panel title={s.title}>{s.content}</Panel></section>)}</Stack></MasterDetailPage>;
 }
-export function SearchResultsPage({ query = '', onQueryChange, rows = [], columns = [], strings, children, title, ...rest }: any) {
+/** @public the prop type of SearchResultsPage (ADR 0011) */
+export type SearchResultsPageProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & FrameProps & {
+  query?: string;
+  onQueryChange?: (...args: never[]) => unknown;
+  rows?: Record<string, unknown>[];
+  columns?: DataGridColumn[];
+  strings?: Record<string, string>;
+  children?: React.ReactNode;
+  title?: React.ReactNode;
+};
+export function SearchResultsPage({ query = '', onQueryChange, rows = [], columns = [], strings, children, title, ...rest }: SearchResultsPageProps) {
   const t = useWords(strings);
   return <Frame {...rest}><SearchWorkspace title={title || t.search} query={query} onQueryChange={onQueryChange} count={rows.length}>{children}{rows.length ? <DataGrid label="" data={rows} columns={columns as any} /> : <NoRecords strings={strings} />}</SearchWorkspace></Frame>;
 }
-export function AuthenticationPage({ auth, form, children, header, footer, mainId }: any) { return <Frame header={header} footer={footer} mainId={mainId} page="form"><Auth {...auth}>{form || children}</Auth></Frame>; }
-export function ErrorPage({ error = 404, onRetry, homeHref, strings, ...rest }: any) {
+/** @public the prop type of AuthenticationPage (ADR 0011) */
+export type AuthenticationPageProps = {
+  auth?: Record<string, unknown>;
+  form?: React.ReactNode;
+  children?: React.ReactNode;
+  header?: React.ReactNode;
+  footer?: React.ReactNode;
+  mainId?: string;
+};
+export function AuthenticationPage({ auth, form, children, header, footer, mainId }: AuthenticationPageProps) { return <Frame header={header} footer={footer} mainId={mainId} page="form"><Auth {...auth}>{form || children}</Auth></Frame>; }
+/** @public the prop type of ErrorPage (ADR 0011) */
+export type ErrorPageProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & FrameProps & {
+  error?: number;
+  onRetry?: (...args: never[]) => unknown;
+  homeHref?: string;
+  strings?: Record<string, string>;
+};
+export function ErrorPage({ error = 404, onRetry, homeHref, strings, ...rest }: ErrorPageProps) {
   const t = useWords(strings), errors: Record<number, string[]> = { 404: ['Page not found', 'Check the address or return home.'], 403: ['Access denied', 'Ask the owner for access to this page.'], 500: ['Something went wrong', 'Try again or return home.'] }, copy = errors[error] || errors[500];
-  return <Frame {...rest} page="detail"><EmptyState kind={error === 404 ? 'not-found' : error === 403 ? 'permission-denied' : undefined} tone={error === 500 ? 'error' : undefined} title={t.title || copy[0]} action={<Stack gap="sm">{onRetry ? <Button onClick={onRetry}>{t.retry}</Button> : null}{homeHref ? <Link href={homeHref}>{t.home}</Link> : null}</Stack>}>{t.description || copy[1]}</EmptyState></Frame>;
+  return <Frame {...rest} page="detail"><EmptyState kind={error === 404 ? 'not-found' : error === 403 ? 'permission-denied' : undefined} tone={error === 500 ? 'error' : undefined} title={t.title || copy[0]} action={<Stack gap="sm">{onRetry ? <Button onClick={onRetry as () => void}>{t.retry}</Button> : null}{homeHref ? <Link href={homeHref}>{t.home}</Link> : null}</Stack>}>{t.description || copy[1]}</EmptyState></Frame>;
 }

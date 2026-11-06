@@ -58,17 +58,21 @@ export const COMMERCE_PAGES: Record<string, string> = {
 };
 
 // a template claims its kind of page on the AppShell around it (the layout standard lays it out)
-export function useCommercePage(template: any) {
+export function useCommercePage(template: string) {
   const shell = useAppLayout();
   const claim = shell && shell.claimPage;
   const kind = COMMERCE_PAGES[template];
   React.useEffect(() => (claim && kind ? claim(kind) : undefined), [claim, kind]);
 }
 
-export const money = (n: any, currency: any) => formatCurrency(n, currency || 'USD');
+export const money = (n: number, currency?: string) => formatCurrency(n, currency || 'USD');
 const round = (n: any) => Math.round(n * 100) / 100;
 
-export function orderTotals(items: any[] = [], o: any = {}) {
+/** @public a line of an order: price and quantity count */
+export type CommerceItem = { id?: string | number; name?: string; price?: number; quantity?: number; [key: string]: unknown };
+/** @public the options of orderTotals */
+export type OrderTotalsOptions = { discount?: number; shipping?: number; tax?: number; taxRate?: number };
+export function orderTotals(items: CommerceItem[] = [], o: OrderTotalsOptions = {}) {
   const subtotal = round(items.reduce((s, x) => s + (x.price || 0) * (x.quantity || 0), 0));
   const count = items.reduce((s, x) => s + (x.quantity || 0), 0);
   const discount = round(Math.min(subtotal, o.discount || 0));
@@ -78,7 +82,17 @@ export function orderTotals(items: any[] = [], o: any = {}) {
 }
 
 
-export function CommerceLine({ item, currency = 'USD', onQuantityChange, remove, strings, className }: any) {
+/** @public the prop type of CommerceLine (ADR 0011) */
+export type CommerceLineProps = {
+  item?: unknown;
+  currency?: string;
+  onQuantityChange?: (...args: never[]) => unknown;
+  remove?: unknown;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function CommerceLine(props: CommerceLineProps) {
+  const { item, currency = 'USD', onQuantityChange, remove, strings, className } = props as any;
   const t: any = useStrings('commerce.line', strings);
   const name = typeof item.title === 'string' ? item.title : '';
   return (
@@ -105,7 +119,21 @@ export function CommerceLine({ item, currency = 'USD', onQuantityChange, remove,
 }
 
 
-export function OrderSummary({ items = [], currency = 'USD', totals, estimated = false, showItems = false, title, headingLevel = 2, children, strings, className }: any) {
+/** @public the prop type of OrderSummary (ADR 0011) */
+export type OrderSummaryProps = {
+  items?: unknown[];
+  currency?: string;
+  totals?: unknown;
+  estimated?: boolean;
+  showItems?: boolean;
+  title?: React.ReactNode;
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+  children?: React.ReactNode;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function OrderSummary(props: OrderSummaryProps) {
+  const { items = [], currency = 'USD', totals, estimated = false, showItems = false, title, headingLevel = 2, children, strings, className } = props as any;
   const t: any = useStrings('commerce.summary', strings);
   const s = totals || orderTotals(items);
   const row = (key: any, label: any, value: any, cls?: any) => (
