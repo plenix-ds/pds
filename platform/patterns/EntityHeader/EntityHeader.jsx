@@ -105,6 +105,7 @@ import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { useOverflow, splitAt } from '../../utils/overflow.ts';
 import { useBarFit } from '../../utils/barFit.ts';
+import { arrowStep } from '../../utils/direction.ts';
 import { SIZE_STEPS } from '../../utils/sizeSteps.js';
 import { Avatar } from '../../components/Avatar/Avatar.tsx';
 import { Button } from '../../components/Button/Button.tsx';
@@ -182,7 +183,8 @@ function States({ states, label, iconOnly }) {
   const refs = React.useRef([]);
   const pick = (i) => { const o = opts[(i + opts.length) % opts.length]; if (o && states.onChange) states.onChange(o.value); refs.current[(i + opts.length) % opts.length]?.focus(); };
   const key = (e, i) => {
-    const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+    // Left and Right follow the writing direction (right-to-left: Right goes to the previous option, which sits on the right), Down and Up stay
+    const step = arrowStep(e, e.currentTarget);
     if (step) { e.preventDefault(); pick(i + step); }
   };
   return (

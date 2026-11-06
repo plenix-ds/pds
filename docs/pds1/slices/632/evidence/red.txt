@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: rtl: Right Arrow goes toward the right
+
+'Gamma' !== 'Alpha'
+
+    at /home/cc/pds1/work/component-engineer-1/tests/entity-header-states-keys-632.test.js:34:41 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'Gamma',
+  expected: 'Alpha',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
