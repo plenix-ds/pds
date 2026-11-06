@@ -31,3 +31,4 @@ Owner: `pds1-ds-architect`. Gate G3 (plan §5) reads these files.
 | [0017](0017-delete-flow-undo-duration.md) | DeleteFlow's undo window: `undoDuration` and `plx-sys.undo-duration` | accepted |
 | [0018](0018-commandbar-selection-add.md) | CommandBar with rows selected adds the selection's commands, it doesn't swap | accepted |
 | [0019](0019-contentgrid-virtualized.md) | ContentGrid draws only the cards in view (`virtualized`) | accepted |
+| [0020](0020-mediaviewer-get-item.md) | MediaViewer builds only the shown item (`count` and `getItem`) | accepted |
