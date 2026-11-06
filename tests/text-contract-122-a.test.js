@@ -35,6 +35,14 @@ const BASE_FILE = path.join(__dirname, 'fixtures', 'text-contract-122-a.base.jso
       }, dir);
       measured[dir] = got;
     }
+    // a page written in plain HTML (no modifier on the part) keeps the data font through the block's modifier (VERSIONING.md: every plx- class is public)
+    const plain = await page.evaluate(async () => {
+      document.querySelector('main').innerHTML = '<div id="h"><div class="plx-inline-edit plx-inline-edit--text plx-inline-edit--data"><button type="button" class="plx-inline-edit__read">abc-123</button></div>'
+        + '<div class="plx-input-group plx-input-group--data"><div class="plx-input-group__box"><span class="plx-input-group__affix plx-input-group__affix--suffix">kg</span></div></div></div>';
+      await new Promise((r) => setTimeout(r, 200));
+      return ['.plx-inline-edit__read', '.plx-input-group__affix'].map((q) => getComputedStyle(document.querySelector(q)).fontFamily.split(',')[0].replace(/['"]/g, ''));
+    });
+    assert.deepEqual(plain, ['Reddit Mono', 'Reddit Mono'], 'plain HTML with the block modifier still gets the data font');
     if (process.argv.includes('--print')) { fs.mkdirSync(path.dirname(BASE_FILE), { recursive: true }); fs.writeFileSync(BASE_FILE, JSON.stringify(measured, null, 1) + '\n'); console.log('written', BASE_FILE); }
     else assert.deepEqual(measured, JSON.parse(fs.readFileSync(BASE_FILE, 'utf8')), 'what the parts compute is unchanged');
     for (const part of ['plx-inline-edit__read', 'plx-input-group__affix']) assert.equal(backlog[part], undefined, part + ' is off the text-role backlog');

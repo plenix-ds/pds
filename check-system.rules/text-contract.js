@@ -89,7 +89,10 @@ function rules(text, file) {
   while ((m = re.exec(clean))) {
     const sel = m[1].trim(); if (!sel || sel.startsWith('@')) continue;
     const decl = {}; for (const d of m[2].split(';')) { const i = d.indexOf(':'); if (i < 0) continue; const p = d.slice(0, i).trim(); if (PROPS.includes(p)) decl[p] = d.slice(i + 1).trim(); }
-    out.push({ file, line: clean.slice(0, m.index + m[0].indexOf('{')).split('\n').length, sel, parts: [...new Set(splitList(sel).map(partOf).filter(Boolean))], decl });
+    // a selector list that names a part's own modifier (plx-x__read--data) and, beside it, the older form on the block (plx-x--data plx-x__read)
+    // is the modifier's rule: the older form stays so a page written in plain HTML keeps working (VERSIONING.md), and it is not the base part's
+    const named = [...new Set(splitList(sel).map(partOf).filter(Boolean))], bases = new Set(named.filter((q) => /--[a-z0-9-]+$/.test(q) && q.includes('__')).map((q) => q.replace(/--[a-z0-9-]+$/, '')));
+    out.push({ file, line: clean.slice(0, m.index + m[0].indexOf('{')).split('\n').length, sel, parts: bases.size ? named.filter((q) => !bases.has(q)) : named, decl });
   }
   return out;
 }
