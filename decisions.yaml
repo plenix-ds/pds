@@ -98,7 +98,7 @@
   decided_by: owner
   decision: Keep the existing Arabic workflow (docs/i18n/arabic.md); the owner approves new Arabic words.
   status: active
-  check: planned:locale-unapproved-ar
+  check: tools/checks/locale/locale.mjs (unapproved-ar, missing-ar; record tools/checks/locale/approved-ar.json)
 
 - id: D-0013
   date: 2026-11-04
@@ -670,3 +670,13 @@
   options: [string or the catalog's plural object (chosen, A), a plural callback (count) => string, string only]
   status: active
   check: G3 review of #633 and tests/command-confirm-plural-630.test.js
+
+- id: D-0075
+  date: 2026-11-06
+  area: i18n
+  decided_by: agent (pds1-i18n-engineer), owner may switch
+  decision: 'The Arabic in platform/i18n/ar.js on main at a5876c52 (shipped through the #427 owner checks) is the approved baseline in tools/checks/locale/approved-ar.json; any new or changed Arabic needs a batch there that links the owner''s answer on an i18n-proposal issue.'
+  why: 'The locale check needs a record of approval per key; re-asking the owner for 2,188 words he already reviewed would block nothing useful.'
+  options: ['the current ar.js is the baseline (chosen, A)', 'the owner re-reviews all existing Arabic before it counts as approved (B)']
+  status: active
+  check: tools/checks/locale/locale.mjs (unapproved-ar)

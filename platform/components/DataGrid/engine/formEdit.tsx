@@ -6,11 +6,11 @@
      shows under its field and stops the save; a refused save keeps the form open with every value and shows the application's message.
    Usage:
      <FormEdit record={record} rowKey={key} columns={visibleColumns} isEditable={(c) => …} name="Person 1" types={['select']} surface="drawer"
-       onRecordEdit={…} commitEdit={…} onClose={() => …} S={strings} />
+       onRecordEdit={…} commitEdit={…} commitCells={…} recordEdited={…} onClose={() => …} S={strings} />
    Props:
      record, rowKey: the row being edited and its key; columns: the visible columns in order; isEditable(column): whether the record's cell can be edited;
      name: the record's name (the key column's value); types: the editor types the table turned on (editing.types); surface: "drawer" (default) | "dialog";
-     onRecordEdit(record, changes): saves; may return a promise; commitEdit(key, field, value): the fallback; onClose(): after Save or Cancel; S: the grid's strings.
+     onRecordEdit(record, changes): saves; may return a promise; commitEdit(key, field, value): the fallback; commitCells(key, changes) saves the changed fields as one undo step and recordEdited(key, changes) remembers a record the application saved (editing.undo); onClose(): after Save or Cancel; S: the grid's strings.
    Notes:
      Loaded on first use (one dynamic import from DataGridEngine.tsx), so a table that never edits in a form does not carry it.
 */
@@ -75,7 +75,7 @@ function Control({ column, kind, value, set, invalid, record }: any) {
   }
 }
 
-export default function FormEdit({ record, rowKey, columns, isEditable, name, types, surface = 'drawer', renderForm, openKey, onRecordEdit, commitEdit, onClose, S }: any) {
+export default function FormEdit({ record, rowKey, columns, isEditable, name, types, surface = 'drawer', renderForm, openKey, onRecordEdit, commitEdit, commitCells, recordEdited, onClose, S }: any) {
   const editable = columns.filter((c: any) => c.editor && isEditable(c)),
     initial = React.useMemo(() => Object.fromEntries(editable.map((c: any) => [c.field, valueAt(record, c.field)])), [record]),
     [errors, setErrors] = React.useState<any>({}),
@@ -132,7 +132,10 @@ export default function FormEdit({ record, rowKey, columns, isEditable, name, ty
     for (const field of Object.keys(value)) if (!Object.is(value[field], field in initial ? initial[field] : valueAt(record, field))) changes[field] = value[field];
     setRefusal(null);
     try {
-      if (onRecordEdit) await onRecordEdit(record, changes);
+      if (onRecordEdit) {
+        await onRecordEdit(record, changes, { source: 'edit' });
+        recordEdited?.(rowKey, changes);   // the saved record is one undo step (editing.undo, ADR 0021)
+      } else if (commitCells) commitCells(rowKey, changes);   // one step, one onCellEdit call per changed field
       else for (const [field, v] of Object.entries(changes)) commitEdit(rowKey, field, v);
     } catch (error) {
       setRefusal((error && (error as any).message) || S.formSaveRefused.replace('{name}', name));

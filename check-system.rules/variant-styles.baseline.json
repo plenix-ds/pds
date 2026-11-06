@@ -120,9 +120,6 @@
   "reorder--order-reversed-below-narrow",
   "reorder--order-reversed-column",
   "reorder--order-reversed-row",
-  "retry-pattern--kind-automatic-with-backoff",
-  "retry-pattern--kind-inline-retry-manual",
-  "retry-pattern--kind-retry-count",
   "rich-text-editor--behavior-markdown-shortcuts",
   "rich-text-editor--behavior-mentions-slot",
   "rich-text-editor--formats-every-format",
@@ -145,8 +142,6 @@
   "section-message--parts-dismissible",
   "section-message--parts-with-actions",
   "section-message--parts-with-title",
-  "sheet--header-close",
-  "sheet--height-medium-about-half-the-window",
   "sparkline--variant-area",
   "sparkline--variant-bar",
   "sparkline--variant-line-default",
@@ -165,7 +160,6 @@
   "type-styles--overflow-expandable",
   "typing-indicator--message-mine",
   "typing-indicator--message-theirs-default",
-  "typing-indicator--variants-typing",
   "waterfall-chart--variant-start-to-end",
   "waterfall-chart--variant-with-totals"
  ]

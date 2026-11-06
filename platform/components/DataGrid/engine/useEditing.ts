@@ -29,7 +29,9 @@ import { development } from '../../../utils/devWarn.ts';
 /** one cell a step changed: the value before and after */
 export type EditedCell = { key: any; field: any; before: any; after: any };
 /** the undo and redo steps of a grid, newest last; a step is the cells one user action changed */
-export type EditHistory = { undo: EditedCell[][]; redo: EditedCell[][] };
+/** a step; `record` marks a saved row form that went through onRecordEdit, so its undo and redo do too */
+export type EditStep = EditedCell[] & { record?: true };
+export type EditHistory = { undo: EditStep[]; redo: EditStep[] };
 /** where a cell change came from; the change the caller hears (onCellEdit) names it */
 export type ChangeSource = 'edit' | 'paste' | 'fill' | 'undo' | 'redo';
 const HISTORY_STEPS = 100;
@@ -106,7 +108,7 @@ export function editActions({
     return { cell: { key, field, before: previous, after: value } as EditedCell, answer };
   };
   const undoOn = () => !!props.editing?.undo;
-  const remember = (cells: EditedCell[]) => {
+  const remember = (cells: EditStep) => {
     if (!undoOn() || !cells.length) return;
     history.current.undo.push(cells);
     if (history.current.undo.length > HISTORY_STEPS) history.current.undo.shift();
@@ -116,7 +118,7 @@ export function editActions({
     remember([applyCell(key, field, value, 'edit').cell]);
   };
   // Ctrl+Z and Ctrl+Y: one step each. A step whose cells no longer hold what it left (the data was replaced from outside) ends the history.
-  const walk = (from: EditedCell[][], to: EditedCell[][], back: boolean) => {
+  const walk = (from: EditStep[], to: EditStep[], back: boolean) => {
     if (!undoOn()) return false;
     const step = from.pop();
     if (!step) return false;
@@ -128,7 +130,24 @@ export function editActions({
     to.push(step);
     // a refused step goes back where it came from, so it can be tried again
     const refused = () => { const at = to.lastIndexOf(step); if (at >= 0) to.splice(at, 1); from.push(step); };
-    step.forEach((cell) => applyCell(cell.key, cell.field, back ? cell.before : cell.after, back ? 'undo' : 'redo', refused));
+    if (step.record && props.onRecordEdit) {
+      // a saved row form: the undo and the redo use the save's own path, onRecordEdit(record, changes, { source }) (ADR 0021 addendum)
+      const key = step[0].key, changes: Record<string, any> = {};
+      for (const cell of step) changes[cell.field] = back ? cell.before : cell.after;
+      const old = canonical.find((record: any) => recordKey(record[index]) === key), was: Record<string, any> = {};
+      for (const field of Object.keys(changes)) was[field] = valueAt(old, field);
+      const put = (values: Record<string, any>) => updateRecord(key, (record: any) => Object.keys(values).reduce((r, field) => setField(r, field, values[field]), record));
+      put(changes);
+      const answer = props.onRecordEdit(old, changes, { source: back ? 'undo' : 'redo' });
+      if (answer && typeof answer.then === 'function') {
+        answer.then(null, (error: any) => {
+          put(was);
+          const message = (error && error.message) || S.saveRefused;
+          announce(message, { politeness: 'assertive' });
+          refused();
+        });
+      }
+    } else step.forEach((cell) => applyCell(cell.key, cell.field, back ? cell.before : cell.after, back ? 'undo' : 'redo', refused));
     announce(back ? S.undone : S.redone);
     return true;
   };
@@ -145,9 +164,18 @@ export function editActions({
       return rejected.length;
     });
   };
+  // a saved row form (Form Edit): one step for the whole record. Without onRecordEdit the changed fields go through onCellEdit, one call each;
+  // with it the application saved the record itself, so the step is only remembered (an undo then reaches onCellEdit, one call per field)
+  const commitCells = (key: any, changes: Record<string, any>) => changeCells(Object.entries(changes).map(([field, value]) => ({ key, field, value })), 'edit');
+  const recordEdited = (key: any, changes: Record<string, any>) => {
+    const old = canonical.find((record: any) => recordKey(record[index]) === key);
+    const step: EditStep = Object.entries(changes).map(([field, after]) => ({ key, field, before: valueAt(old, field), after }));
+    step.record = true;
+    remember(step);
+  };
   const undo = () => walk(history.current.undo, history.current.redo, true);
   const redo = () => walk(history.current.redo, history.current.undo, false);
-  return { replaceData, updateRecord, commitEdit, changeCells, undo, redo };
+  return { replaceData, updateRecord, commitEdit, changeCells, commitCells, recordEdited, undo, redo };
 }
 
 export function useEditEffect({ source, mutations, pendingEdit, emit, api }: any) {
