@@ -1,0 +1,9 @@
+AssertionError [ERR_ASSERTION]: one: the singular form
+    at /home/cc/pds1/work/component-engineer-1/tests/command-confirm-plural-630.test.js:31:12 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'Delete 1 [object Object]?',
+  expected: /Delete 1 file\?/,
+  operator: 'match',
+  diff: 'simple'
+}
