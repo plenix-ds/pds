@@ -45,8 +45,10 @@ const STEPS = 5;
 const PAD = 4, STEP = 4;
 
 // where each word goes: centers of non-overlapping boxes around the middle, the largest first; null when it does not fit
-export function wordCloudLayout(boxes: any, width: any, height: any, layout = 'spiral') {
-  const placed: any[] = [], out: any[] = [];
+/** @public where a word goes: the center of its box, or null when it does not fit */
+export type WordCloudPlacement = { x: number; y: number } | null;
+export function wordCloudLayout(boxes: Array<{ width: number; height: number }>, width: number, height: number, layout: 'spiral' | 'rectangular' = 'spiral'): WordCloudPlacement[] {
+  const placed: any[] = [], out: WordCloudPlacement[] = [];
   const hit = (b: any) => placed.some((p) => b.x0 < p.x1 && b.x1 > p.x0 && b.y0 < p.y1 && b.y1 > p.y0);
   const ratio = width / Math.max(1, height);
   // the candidate offsets from the middle, nearest first: an Archimedean spiral, or the rings of a square spiral; both
@@ -64,7 +66,7 @@ export function wordCloudLayout(boxes: any, width: any, height: any, layout = 's
   } else {
     for (let i = 0, d = 0; d <= reach; i++) { const th = i * 0.1; d = (STEP * th) / (2 * Math.PI) * 2; candidates.push([d * Math.cos(th), d * Math.sin(th)]); }
   }
-  boxes.forEach((s: any) => {
+  boxes.forEach((s) => {
     const w = s.width + PAD, h = s.height + PAD;
     let spot: any = null;
     for (let i = 0; i < candidates.length && !spot; i++) {
@@ -155,7 +157,7 @@ export function WordCloud({ title, description, words = [], layout = 'spiral', g
 
   const draw = ({ inner }: any) => {
     const ready = boxes.key === key && boxes.list.length === shown.length;
-    const at = ready ? wordCloudLayout(boxes.list, inner.width, inner.height, layout === 'rectangular' ? 'rectangular' : 'spiral') : [];
+    const at: any[] = ready ? wordCloudLayout(boxes.list, inner.width, inner.height, layout === 'rectangular' ? 'rectangular' : 'spiral') : [];
     where.current = at;
     ia.register({
       nearest: (px: any, py: any) => {
