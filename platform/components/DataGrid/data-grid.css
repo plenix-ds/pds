@@ -644,3 +644,5 @@ a.plx-data-grid__cell-content{align-items:center;align-self:stretch;display:inli
 .plx-data-grid__grid-cell--range-bottom::after{border-block-end-style:solid;border-block-end-width:var(--plx-comp-data-grid-range-border-width);}
 .plx-data-grid__grid-cell--range-start::after{border-inline-start-style:solid;border-inline-start-width:var(--plx-comp-data-grid-range-border-width);}
 .plx-data-grid__grid-cell--range-end::after{border-inline-end-style:solid;border-inline-end-width:var(--plx-comp-data-grid-range-border-width);}
+/* the fill handle (editing.fill, ADR 0021): a small square on the block's bottom inline-end corner, in the block's border color; the pointer drags it down or toward the inline end */
+.plx-data-grid__fill-handle{background-color:var(--plx-comp-data-grid-range-border-color);block-size:var(--plx-ref-size-2u);cursor:crosshair;inline-size:var(--plx-ref-size-2u);inset-block-end:0;inset-inline-end:0;position:absolute;touch-action:none;}

@@ -98,6 +98,7 @@ export function bodyRows({
   commitEdit,
   undoRedo,
   pasteBlock,
+  fill,
   canonical,
   cutAt,
   rowMenu,
@@ -458,6 +459,7 @@ export function bodyRows({
                 cardList,
                 cellRange,
                 undoRedo,
+                fillDown: fill?.down,
                 kept: card ? tpl.keep : undefined,
               })}
               data-plx-sticky={pinned && sticky ? sticky + 'px' : undefined}
@@ -642,6 +644,8 @@ export function bodyRows({
               ) : (
                 cellDirection(pinned && !isStatic && !kinds(c).includes('id'), shown)
               )}
+              {/* the fill handle (editing.fill, ADR 0021): on the selected block's bottom inline-end corner */}
+              {fill && inRange && inRange.bottom && inRange.end ? <span className={B + '__fill-handle'} aria-hidden="true" onPointerDown={fill.start} /> : null}
             </Width>
           );
         })}

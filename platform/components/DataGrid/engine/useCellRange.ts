@@ -9,7 +9,7 @@
      cellRange.rect                      // { r0, r1, c0, c1 } in model and column order, or null (no range, or one cell)
      cellRange.cellClasses(rowIndex, columnIndex)   // { inside, top, bottom, start, end } for one cell
      cellRange.extend({ row, c, key, rtl, focusCell })   // Shift + an arrow, Home or End on a cell
-     cellRange.collapse(); cellRange.copy(); cellRange.read()
+     cellRange.collapse(); cellRange.copy(); cellRange.read(); cellRange.select({ anchor, focus })
    Props:
      enabled: the grid's cellSelection option; false makes every method do nothing and the grid behave as it did before.
      model: the rows the grid shows (group rows included; they have no record and no cells); ordered: the visible columns, in order;
@@ -75,7 +75,7 @@ export function useCellRange({ enabled, model, ordered, index, onChange, frame, 
     return () => clearTimeout(timer);
   }, [rect]);   // eslint-disable-line react-hooks/exhaustive-deps
 
-  const none = { rect: null, enabled: false, range: null, cellClasses: () => null, extend: () => false, press: () => {}, collapse: () => {}, copy: () => false, read: () => null };
+  const none = { rect: null, enabled: false, range: null, cellClasses: () => null, extend: () => false, press: () => {}, collapse: () => {}, copy: () => false, read: () => null, select: () => {} };
   if (!enabled) return none;
 
   const collapse = () => setRange((old: any) => (old ? null : old));
@@ -143,5 +143,10 @@ export function useCellRange({ enabled, model, ordered, index, onChange, frame, 
     for (let i = rect.r0; i <= rect.r1; i += 1) if (model[i] && model[i].original) rows.push(model[i].original);
     return { rows, fields: ordered.slice(rect.c0, rect.c1 + 1).map((c: any) => c.id), text: text() };
   };
-  return { enabled: true, rect, range, rowAt, cellClasses, extend, press, collapse, copy, read };
+  // the block set from outside (the fill handle widens it to the cells it filled): { anchor, focus }, each { key, field }
+  const select = (next: any) => {
+    trail.current = new Set([next.anchor.key + '|' + next.anchor.field, next.focus.key + '|' + next.focus.field]);
+    setRange(next);
+  };
+  return { enabled: true, rect, range, rowAt, cellClasses, extend, press, collapse, copy, read, select };
 }
