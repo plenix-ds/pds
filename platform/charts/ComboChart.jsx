@@ -35,12 +35,12 @@ import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatNumber } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.jsx';
-import { seriesColor } from './scales.js';
+import { seriesColor } from './scales.ts';
 import { ChartLegend } from './parts/ChartLegend.tsx';
 import { ChartTooltip } from './parts/ChartTooltip.tsx';
-import { useChartHover, legendItems } from './chart-kit.js';
+import { useChartHover, legendItems } from './chart-kit.ts';
 import { useEChartsPlot, plotGrid } from './echarts/EChartsPlot.jsx';
-import { gridRoom } from './chart-helpers.js';
+import { gridRoom } from './chart-helpers.ts';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 
 const NO_MARGIN = Object.freeze({ top: 0, end: 0, bottom: 0, start: 0 });

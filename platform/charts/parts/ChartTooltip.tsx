@@ -24,7 +24,7 @@
      The tooltip goes after the point when it is in the first half of the plot and before it in the second half, so it
        stays inside the chart.
      It shows values already in the chart's data grid; with the plot it is hidden from assistive technology. The chart
-       interaction (useChartInteraction, platform/charts/interaction.js) moves it with the pointer and the arrow keys and
+       interaction (useChartInteraction, platform/charts/interaction.ts) moves it with the pointer and the arrow keys and
        says the same values in the live region: chartTooltipText({ title, items }) is that sentence ("March 2026: Web
        150, iOS 130, Android 90"), so the tooltip and the announcement never differ.
      chartTooltipText({ title, items }): the tooltip's content as one plain sentence, for the live region

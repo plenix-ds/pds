@@ -12,7 +12,7 @@
      The module loads once and is kept. In the single-file builds (the CDN script, the applications, pages opened from file://) the dynamic import is inlined
        by the bundler, so nothing is fetched.
    Notes:
-     The pure helpers the API exports (gridRoom, pieSlices, binValues) are in chart-helpers.js, in the first load. */
+     The pure helpers the API exports (gridRoom, pieSlices, binValues) are in chart-helpers.ts, in the first load. */
 import React from 'react';
 import { ChartFrame } from './ChartFrame.jsx';
 import { cx } from '../utils/cx.ts';
