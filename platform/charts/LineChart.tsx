@@ -113,7 +113,7 @@ export type LineChartProps = {
   /** a click or Enter on a value selects it */
   onSelect?(cell: { r: number; c: number; row: Record<string, unknown>; series: ChartSeries }): void;
   /** more SVG on top of the lines: reference lines, thresholds, annotations */
-  overlay?(draw: { inner: ChartInner; x: (value: any) => number | undefined; y: ((value: number) => number) & { ticks(): number[] }; at(index: number): number }): React.ReactNode;
+  overlay?(draw: { inner: ChartInner; x: (value: ChartValue) => number | undefined; y: ((value: number) => number) & { ticks(): number[] }; at(index: number): number }): React.ReactNode;
   strings?: Record<string, string>;
   frameStrings?: Record<string, string>;
   interactionStrings?: Record<string, string>;
