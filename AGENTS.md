@@ -42,7 +42,7 @@ PDS restarted as **PDS 1.0** on 2026-11-05 (D-0021). It continues `plenix-platfo
 - **Visual checks run per PR only**: light and dark at standard density. Add RTL and compact only when the change touches text, direction or density code. There is no full run before a release (D-0017).
 - **Concurrency comes from `agents.config.yaml`** (D-0018, adjustable):
   - at most `long_work.max_running` sessions on long work (the number in the file, not a number written here);
-  - any number of small tasks, each about 15 minutes at most;
+  - any number of small tasks, each at most `small_tasks.max_minutes` minutes;
   - memory sets the real limit.
 - **Integrate small and often.** A change reaches a PR the same day.
 - **Pull loop** (template v2.4 §5.5, D-0084). Finish the item, hand it off (move it to the next lane's Ready by label and board field), take the next Ready item in your lane, and if there is none post "lane empty" and exit.

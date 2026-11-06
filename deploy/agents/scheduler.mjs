@@ -13,33 +13,35 @@
 //   long_work.max_running and free memory stays at or above start_new_below_free_gb after each start
 //   (each start is counted at memory.per_agent_limit_gb).
 // - Order: highest severity of the role's issues (sev:S1 first), then its oldest issue.
-// - Parked roles (mobile-app-builder, D-0013) and roles team.sh has no window type for are never started.
+// - Parked roles (agents.config.yaml roles: parked: true, for example mobile-app-builder, D-0013) are never started.
 // - Stop: a long-work window that is idle (no "esc to interrupt", unchanged for 30 minutes), whose role has no waiting
 //   issue, no open PR labeled for it and no open PR from the branch checked out in its worktree.
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import { load, roles, setting } from './registry.mjs';
 
 const REPO = 'plenix-ds/pds';
 const SESSION = process.env.PDS1_SESSION || 'pds1';
 const ROOT = process.env.PDS1_ROOT || path.join(os.homedir(), 'pds1');
 const CFG = process.env.PDS1_CFG || path.join(ROOT, 'work', 'pds', 'agents.config.yaml');
-const COORDINATORS = ['product-lead', 'delivery-lead'];
-const PARKED = ['mobile-app-builder'];
+// the role registry (agents.config.yaml roles:, #768): coordinators, parked roles, instances and settings come only from it
+const REG = load(CFG);
+const ROLES = roles(REG);
+const COORDINATORS = setting(REG, 'coordinators.roles').map((r) => r.replace(/^pds1-/, ''));
+const PARKED = ROLES.filter((r) => r.parked === true).map((r) => r.id);
+const INSTANCES = new Map(ROLES.map((r) => [r.id, r.instances || 1]));
 const IDLE_STOP_S = Number(process.env.NUDGE_STOP_IDLE_S || 1800);
 const startable = process.argv.slice(2).filter((r) => !COORDINATORS.includes(r) && !PARKED.includes(r));
 
 const run = (cmd, args) => execFileSync(cmd, args, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64 * 1024 * 1024 });
 const gh = (...args) => JSON.parse(run('gh', args));
 
-// agents.config.yaml: the three numbers this needs (simple "key: value" lines inside their sections)
-const cfgText = fs.readFileSync(CFG, 'utf8');
-const section = (name) => (cfgText.split(/^(?=\S)/m).find((s) => s.startsWith(name + ':')) || '');
-const num = (text, key, dflt) => { const m = text.match(new RegExp('^\\s+' + key + ':\\s*([0-9.]+)', 'm')); return m ? Number(m[1]) : dflt; };
-const maxLong = Number(process.env.NUDGE_MAX_LONG || num(section('long_work'), 'max_running', 4));
-const minFreeGb = num(section('memory'), 'start_new_below_free_gb', 2);
-const perAgentGb = num(section('memory'), 'per_agent_limit_gb', 1.5);
+// the numbers this needs, from the registry; a missing one stops the scheduler (no default written here; check 15)
+const maxLong = Number(process.env.NUDGE_MAX_LONG || setting(REG, 'long_work.max_running'));
+const minFreeGb = Number(setting(REG, 'memory.start_new_below_free_gb'));
+const perAgentGb = Number(setting(REG, 'memory.per_agent_limit_gb'));
 const freeGb = Number(process.env.NUDGE_FREE_GB || (() => {
   const m = fs.readFileSync('/proc/meminfo', 'utf8').match(/^MemAvailable:\s+(\d+) kB/m);
   return m ? Number(m[1]) / 1048576 : 0;
@@ -81,7 +83,9 @@ const stops = [];
 for (const w of long) {
   const role = roleOf(w.name);
   const waiting = byRole.get(role);
-  if (waiting && !(role === 'component-engineer' && w.name.endsWith('-2') && waiting.count < 2)) continue;
+  // instance k of a multi-instance role may stop when its role has fewer than k waiting issues
+  const k = Number((/-(\d+)$/.exec(w.name) || [])[1] || 1);
+  if (waiting && !(INSTANCES.get(role) > 1 && k > 1 && waiting.count < k)) continue;
   if (now - w.act < IDLE_STOP_S || busy(w.name)) continue;
   if (prLabeled(role)) continue;
   let branch = '';
@@ -96,10 +100,11 @@ const candidates = [];
 for (const role of startable) {
   const r = byRole.get(role);
   if (!r) continue;
-  if (role === 'component-engineer') {
-    for (const n of [1, 2]) {
+  const max = INSTANCES.get(role) || 1;
+  if (max > 1) {
+    for (let n = 1; n <= max; n++) {
       if (running.has(`${role}-${n}`) && !stops.includes(`${role}-${n}`)) continue;
-      if (n === 2 && r.count < 2) continue;
+      if (n > 1 && r.count < n) continue;
       candidates.push({ role, n, ...r });
       break;
     }

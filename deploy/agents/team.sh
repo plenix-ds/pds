@@ -14,32 +14,29 @@
 #                               GitHub (pds1-nudge.timer, every 10 min; #220). NUDGE_DRY=1 only prints the plan
 #   team.sh schedule            only the start/stop part of nudge (NUDGE_DRY=1 prints it)
 #   team.sh wake <win> <text>   type <text> into one session if it is idle (exit 0 sent, 3 not idle, 4 no window)
+#   team.sh launch-test         G0 launch test (template v2.4 §5.1 rule 6; #768), a dry run: every active, non-parked
+#                               role in the registry goes through start once without starting anything; parked roles
+#                               are checked for an entry and a definition. Exit 1 when one fails
 set -u
 export PATH="$HOME/.local/bin:$HOME/.bun/bin:/usr/local/bin:/usr/bin:/bin"
 S=pds1
 ROOT=$HOME/pds1
 REPO=$ROOT/work/pds                 # main checkout (coordinators)
-CFG=$REPO/agents.config.yaml
+CFG=${PDS1_CFG:-$REPO/agents.config.yaml}   # PDS1_CFG: another checkout (the launch test on a branch)
 LOG=$ROOT/team.log
 
-# role|display name
-ROLES=(
-  "product-lead|Product Lead"
-  "delivery-lead|Delivery Lead"
-  "design-director|Design Director"
-  "ds-architect|DS Architect"
-  "component-engineer|Component Engineer"
-  "i18n-engineer|i18n Engineer"
-  "release-architect|Backend & Release Architect"
-  "technical-writer|Technical Writer"
-  "qa-engineer|QA Engineer"
-)
-# Started at boot. The Delivery Lead starts the rest as work needs them.
-CORE=(product-lead delivery-lead design-director ds-architect release-architect)
+HERE=$(dirname "$(readlink -f "$0")")
+# The roles come only from the role registry, agents.config.yaml roles: (#768; template v2.4 §5.1), one line each:
+# id|title|instances|parked|boot|kind|memory GB. "boot: true" roles start at boot; the scheduler starts the rest as work
+# needs them. A registry that can't be read stops the launcher: there is no second list here.
+mapfile -t ROLES < <(node "$HERE/registry.mjs" roles "$CFG" 2>>"$LOG")
+[ "${#ROLES[@]}" -gt 0 ] || { echo "team.sh: no roles in $CFG (see $LOG)"; exit 2; }
+field() { local f=$2 r; for r in "${ROLES[@]}"; do [ "${r%%|*}" = "$1" ] && { cut -d'|' -f"$f" <<<"$r"; return; }; done; return 1; }
+CORE=(); for r in "${ROLES[@]}"; do IFS='|' read -r id _ _ parked boot _ _ <<<"$r"; [ "$boot" = true ] && [ "$parked" != true ] && CORE+=("$id"); done
 
 log() { echo "$(date -u +%FT%TZ) $*" >>"$LOG"; }
-display() { for r in "${ROLES[@]}"; do [ "${r%%|*}" = "$1" ] && { echo "${r#*|}"; return; }; done; return 1; }
-mem_limit() { awk '/per_agent_limit_gb:/{print $2; exit}' "$CFG" 2>/dev/null || echo 1.5; }
+display() { field "$1" 2; }
+mem_limit() { field "$1" 7; }   # the role's memory_limit_gb, else memory.per_agent_limit_gb (registry.mjs; no default here)
 
 worktree_for() {  # role instance -> directory
   local role=$1 n=$2 dir
@@ -54,16 +51,37 @@ worktree_for() {  # role instance -> directory
 
 start_one() {
   local role=$1 n=${2:-} name win dir mem
-  name=$(display "$role") || { echo "unknown role: $role"; exit 2; }
-  [ "$role" = component-engineer ] && n=${n:-1}
+  name=$(display "$role") || { echo "unknown role: $role (not in the registry, $CFG)"; exit 2; }
+  [ "$(field "$role" 4)" = true ] && { echo "$name is parked (agents.config.yaml); not started"; return 3; }
+  [ "$(field "$role" 3)" -gt 1 ] && n=${n:-1}
   [ -n "$n" ] && name="$name $n"
   name="PDS1 - $name"; win=$role${n:+-$n}
+  [ -n "${LAUNCH_DRY:-}" ] && { echo "would start $name: window $win, worktree $(dry_worktree "$role" "$n"), MemoryMax=$(mem_limit "$role")G, claude --agent pds1-$role"; return; }
   tmux has-session -t $S 2>/dev/null || tmux new-session -d -s $S -n shell -c "$ROOT"
   tmux list-windows -t $S -F '#W' | grep -qx "$win" && { echo "$name already running"; return; }
-  dir=$(worktree_for "$role" "$n"); mem=$(mem_limit); trust_dir "$dir"
+  dir=$(worktree_for "$role" "$n"); mem=$(mem_limit "$role"); trust_dir "$dir"
   tmux new-window -d -t $S -n "$win" -c "$dir" \
     "systemd-run --user --scope -q -p MemoryMax=${mem}G -- env PDS1_ROLE=pds1-$role claude --agent pds1-$role --name '$name' --remote-control '$name' --permission-mode bypassPermissions 'You are $name. Pull main, read CLAUDE.md, then work your open issues in plenix-ds/pds (gh issue list -R plenix-ds/pds --label agent:pds1-$role --state open), starting with pinned #178 Phase 0 if it names your role. Follow agents.config.yaml.'; echo; echo '$name stopped. Press Enter to close.'; read"
   log "start $win ($name) in $dir"; echo "started $name"
+}
+
+dry_worktree() {  # the worktree start would use, without creating it
+  case $1 in product-lead|delivery-lead) echo "$REPO"; return ;; esac; echo "$ROOT/work/$1${2:+-$2}"
+}
+
+# G0 launch test (#768): every role once through start_one with LAUNCH_DRY, plus its definition and memory limit
+launch_test() {
+  local r id title inst parked fail=0 out def
+  for r in "${ROLES[@]}"; do
+    IFS='|' read -r id title inst parked _ _ _ <<<"$r"
+    def=$REPO/.claude/agents/pds1-$id.md; [ -f "$def" ] || def=$HERE/../../.claude/agents/pds1-$id.md
+    if [ ! -f "$def" ]; then echo "FAIL $id: no definition .claude/agents/pds1-$id.md"; fail=1; continue; fi
+    if [ "$parked" = true ]; then echo "ok   $id: parked (entry and definition only)"; continue; fi
+    [[ "$(mem_limit "$id")" =~ ^[0-9]+(\.[0-9]+)?$ ]] || { echo "FAIL $id: no memory limit"; fail=1; continue; }
+    if out=$(LAUNCH_DRY=1 start_one "$id" 2>&1) && [[ "$out" == "would start "* ]]; then echo "ok   $id: ${out#would start }"
+    else echo "FAIL $id: ${out:-start_one returned an error}"; fail=1; fi
+  done
+  [ $fail = 0 ] && echo "LAUNCH_TEST_OK (${#ROLES[@]} roles)" || { echo "LAUNCH_TEST_FAIL"; return 1; }
 }
 
 trust_dir() {  # pre-accept Claude's folder-trust prompt so unattended sessions don't hang
@@ -82,9 +100,8 @@ NUDGE_STAMP=$ROOT/.nudge-last
 # Start waiting roles and stop finished ones (#246, D-0040): deploy/agents/scheduler.mjs makes the plan from GitHub,
 # tmux, agents.config.yaml and free memory; this carries it out. Each start is logged and posted on #178.
 schedule() {
-  local plan line verb a b why roles=() here
+  local plan line verb a b why roles=() here=$HERE
   for r in "${ROLES[@]}"; do roles+=("${r%%|*}"); done
-  here=$(dirname "$(readlink -f "$0")")
   plan=$(PDS1_CFG="$CFG" PDS1_ROOT="$ROOT" PDS1_SESSION="$S" node "$here/scheduler.mjs" "${roles[@]}" 2>>"$LOG") \
     || { log "schedule: scheduler.mjs failed"; echo "schedule: scheduler failed (see $LOG)"; return; }
   while IFS= read -r line; do
@@ -147,6 +164,7 @@ case "${1:-status}" in
     git -C "$REPO" pull -q --ff-only
     for r in "${CORE[@]}"; do start_one "$r"; done ;;
   start) start_one "${2:?role}" "${3:-}" ;;
+  launch-test) launch_test; exit $? ;;
   stop) stop_one "${2:?role}" "${3:-}" ;;
   stop-all) tmux kill-session -t $S 2>/dev/null && { log "stop-all"; echo "team stopped"; } ;;
   update) git -C "$REPO" pull -q --ff-only; for d in "$ROOT"/work/*/; do git -C "$d" fetch -q origin; done; echo updated ;;

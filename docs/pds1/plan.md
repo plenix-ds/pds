@@ -37,7 +37,7 @@ PDS 1.0 fixes this with five changes:
 | 7 | Rules in prose, not enforced | Radius 2–6 restated by owner, `AGENTS.md` still says "Menus 8px"; pill-size rule spread over 5 PRs; tooltips "light yellow" never applied; "no black" violated 56×; ~23 of ~56 design decisions enforced | Rule = test; `decisions.yaml` where every entry links its check |
 | 8 | Status docs rewritten to fight context loss | HANDOFF.md 38 versions, STATUS.md 24; 94 commits touched only process docs; facts in 4+ places | Status comes only from GitHub; one stable ONBOARDING.md; session notes in PR descriptions |
 | 9 | Releases too fast to consume | 241 versions in 26 days, 85 minor (breaking under 0.x) | 1.0.0 semver, on-demand releases batched with changesets, deprecation window |
-| 10 | Infra and identity | One shared owner GitHub login (715/786 commits under one identity); ~56 agent processes on 15 GB (near-OOM); cron polling; `main` unprotected | GitHub App with bot identity per role; ≤4 long-running agents, plus short-task agents as needed, each with a memory limit; webhooks; branch protection |
+| 10 | Infra and identity | One shared owner GitHub login (715/786 commits under one identity); ~56 agent processes on 15 GB (near-OOM); cron polling; `main` unprotected | GitHub App with bot identity per role; at most `long_work.max_running` long-running agents (`agents.config.yaml`), plus short-task agents as needed, each with a memory limit; webhooks; branch protection |
 
 **Keep from the old PDS (it worked):**
 - Immutable versioned CDN (`/cdn/<version>/`, `index.json`, `SHA256SUMS`)
@@ -503,7 +503,7 @@ The build is still 17 custom `build-*.js` scripts with Vite called from inside t
 |---|---|---|
 | GitHub org | `plenix-ds` | GitHub App with one bot identity per role; fine-grained permissions; also installed on `LighthouseCollection/CTM` for two-way CTM ↔ PDS reporting (§7c); branch protection + required checks + merge queue on `main` |
 | Repo | `plenix-platform` stays as-is for 0.x consumers | **New monorepo `plenix-ds/pds`** (decision 1). Fold the private `plenix-design-system` submodule in |
-| Server | VM 131 (Ubuntu, 8 cores, 15 GB), agent account | Turn on Linger; agents as systemd user services instead of cron/tmux scripts; ≤4 long-running agents plus any number of short-task agents (≈15 min cap; both adjustable in `agents.config.yaml`), each with a memory limit, new ones held back when memory is low; webhooks via proxy instead of 1–2 min polling |
+| Server | VM 131 (Ubuntu, 8 cores, 15 GB), agent account | Turn on Linger; agents as systemd user services instead of cron/tmux scripts; at most `long_work.max_running` long-running agents plus any number of short-task agents (capped at `small_tasks.max_minutes`; both adjustable in `agents.config.yaml`), each with a memory limit, new ones held back when memory is low; webhooks via proxy instead of 1–2 min polling |
 | CDN | `design-system.lighthouseway.org/cdn/<version>/`, `index.json`, `SHA256SUMS`, all old versions immutable | 1.0.0+ published by CI on tag only; publish fails if version exists |
 | API | `/api/v1/` read-only | OpenAPI spec + contract tests + breaking-change diff |
 | Packages | `@plenix-ds/tokens`, `icons`, `styles`, `react` on GitHub Packages | Changesets drive versions; one version across npm/CDN/API; optional `@plenix-ds/locales` |
