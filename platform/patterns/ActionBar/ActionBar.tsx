@@ -37,49 +37,58 @@ import { Menu, MenuItem, MenuDivider } from '../../components/Menu/Menu.tsx';
 import MoreIcon from 'plenix-platform/icons/plenix/more';
 
 // a Button that can fold: a text label, not a link; the primary one never does
-const isButton = (el) => React.isValidElement(el) && el.type === Button && typeof el.props.children === 'string' && !el.props.href;
-const collect = (nodes, out) => {
+const isButton = (el: any) => React.isValidElement(el) && el.type === Button && typeof (el as any).props.children === 'string' && !(el as any).props.href;
+const collect = (nodes: any, out: any) => {
   React.Children.forEach(nodes, (el) => {
     if (!React.isValidElement(el)) return;
-    if (el.type === React.Fragment) collect(el.props.children, out);
-    else if (isButton(el)) out.push({ id: out.length, label: el.props.children, icon: el.props.icon, primary: el.props.variant === 'primary', danger: /^danger/.test(el.props.variant || ''), priority: el.props.priority, props: el.props });
+    if (el.type === React.Fragment) collect((el as any).props.children, out);
+    else if (isButton(el)) out.push({ id: out.length, label: (el as any).props.children, icon: (el as any).props.icon, primary: (el as any).props.variant === 'primary', danger: /^danger/.test((el as any).props.variant || ''), priority: (el as any).props.priority, props: (el as any).props });
   });
   return out;
 };
 
-export function ActionBar({ label, sticky = true, className, children }) {
-  const t = useStrings('actionBar');
-  const tc = useStrings('commandBar');
-  const ref = React.useRef(null);
+/** @public */
+export type ActionBarProps = {
+  /** names the group of buttons for screen readers (default "Actions") */
+  label?: string;
+  /** true (default) keeps page actions at the scroll bottom; false keeps an embedded bar in normal flow */
+  sticky?: boolean;
+  className?: string;
+  children?: React.ReactNode;
+};
+export function ActionBar({ label, sticky = true, className, children }: ActionBarProps) {
+  const t: any = useStrings('actionBar');
+  const tc: any = useStrings('commandBar');
+  const ref = React.useRef<any>(null);
   const phone = useMedia(below('--plx-sys-fit-footer-stack-width'));
   const acts = collect(children, []);
-  const foldable = acts.filter((a) => !a.primary);
+  const foldable = acts.filter((a: any) => !a.primary);
   // the key holds the phone state: a bar measured while the window was a phone starts again when the window grows back. The button that folds last never folds on its own
-  const measured = useBarFit(ref, acts.map((a) => a.label).join('|') + (phone ? '|phone' : ''), Math.max(0, foldable.length - 1), 0, ':self');
+  const measured = useBarFit(ref, acts.map((a: any) => a.label).join('|') + (phone ? '|phone' : ''), Math.max(0, foldable.length - 1), 0, ':self');
   // in a phone window every action but the one that folds last is in More; otherwise only what does not fit
   const fold = phone ? Math.max(0, foldable.length - 1) : measured;
   const folded = new Set(foldOrder(acts).slice(0, fold).map((a) => a.id));
   let n = 0, placed = false;
   const more = () => {
-    const away = menuOrder(acts.filter((a) => folded.has(a.id)));
+    const away = menuOrder(acts.filter((a: any) => folded.has(a.id)));
     if (!away.length) return null;
     return (
       <Menu key="plx-more" label={tc.moreLabel} placement="top-end" trigger={<Button icon={MoreIcon} variant="ghost" iconOnly label={tc.moreLabel} className="plx-action-bar__more" />}>
-        {away.map((a, i) => [a.danger && i > 0 && !away[i - 1].danger ? <MenuDivider key={a.id + 'd'} /> : null,
+        {away.map((a: any, i: number) => [a.danger && i > 0 && !away[i - 1].danger ? <MenuDivider key={a.id + 'd'} /> : null,
           <MenuItem key={a.id} icon={a.icon} danger={a.danger} disabled={a.props.disabled} onSelect={a.props.onClick}>{a.label}</MenuItem>])}
       </Menu>
     );
   };
-  const walk = (nodes) => React.Children.map(nodes, (el) => {
+  const walk = (nodes: any): any => React.Children.map(nodes, (el) => {
     if (!React.isValidElement(el)) return el;
-    if (el.type === React.Fragment) return <>{walk(el.props.children)}</>;
+    if (el.type === React.Fragment) return <>{walk((el as any).props.children)}</>;
     if (!isButton(el)) return el;
     const id = n++;
     if (folded.has(id)) return null;
     const a = acts[id];
     // More sits before the primary action (or at the end), so it is on Cancel's row in a phone window
     const lead = a.primary && !placed ? (placed = true, more()) : null;
-    return <>{lead}{React.cloneElement(el, { priority: undefined, className: cx(el.props.className, a.primary ? 'plx-action-bar__primary' : 'plx-action-bar__action') })}</>;
+    return <>{lead}{React.cloneElement(el as any, { priority: undefined, className: cx((el as any).props.className, a.primary ? 'plx-action-bar__primary' : 'plx-action-bar__action') })}</>;
   });
   const body = walk(children);
   return <div ref={ref} role="group" aria-label={label ?? t.label} data-plx-fit-shrink={measured >= Math.max(0, foldable.length - 1) || undefined} className={cx('plx-action-bar', !sticky && 'plx-action-bar--static', className)}>{body}{placed ? null : more()}</div>;

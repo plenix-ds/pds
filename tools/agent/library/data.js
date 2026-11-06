@@ -36,7 +36,7 @@ const EX = {   // existing Platform code (for extend targets)
   Card: ['platform/components/Card/Card.tsx', 'platform/components/Card/card.css'],
   Metric: ['platform/components/Metric/Metric.tsx', 'platform/components/Metric/metric.css'],
   DropZone: ['platform/components/DropZone/DropZone.tsx', 'platform/components/DropZone/drop-zone.css'],
-  ActionBar: ['platform/patterns/ActionBar/ActionBar.jsx', 'platform/patterns/ActionBar/action-bar.css'],
+  ActionBar: ['platform/patterns/ActionBar/ActionBar.tsx', 'platform/patterns/ActionBar/action-bar.css'],
   Chat: ['platform/components/Chat/Chat.tsx', 'platform/components/Chat/chat.css'],
   ThemeProvider: ['platform/providers/ThemeProvider.jsx', 'platform/providers/themes.js', 'platform/standards/themes.json'],
   SearchWorkspace: ['platform/patterns/SearchWorkspace/SearchWorkspace.jsx', 'platform/patterns/SearchWorkspace/search-workspace.css'],

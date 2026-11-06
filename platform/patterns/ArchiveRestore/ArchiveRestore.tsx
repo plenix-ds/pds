@@ -20,11 +20,21 @@ import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import ArchiveIcon from 'plenix-platform/icons/plenix/archive';
 
-export function ArchiveRestore({ archived = false, onArchive, onRestore, strings, children, className }) {
-  const t = useStrings('archiveRestore', strings);
+/** @public */
+export type ArchiveRestoreProps = {
+  archived?: boolean;
+  onArchive?(): void | Promise<void>;
+  onRestore?(): void | Promise<void>;
+  strings?: Record<string, string>;
+  /** the record's content */
+  children?: React.ReactNode;
+  className?: string;
+};
+export function ArchiveRestore({ archived = false, onArchive, onRestore, strings, children, className }: ArchiveRestoreProps) {
+  const t: any = useStrings('archiveRestore', strings);
   const [busy, setBusy] = React.useState(false), [error, setError] = React.useState('');
   const lock = React.useRef(false);
-  const run = async (fn) => {
+  const run = async (fn: any) => {
     if (lock.current || !fn) return;
     lock.current = true; setBusy(true); setError('');
     try { await fn(); } catch (e) { setError(t.failed); } finally { lock.current = false; setBusy(false); }

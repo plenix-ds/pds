@@ -25,15 +25,25 @@ import CheckIcon from 'plenix-platform/icons/plenix/check';
 import LockIcon from 'plenix-platform/icons/plenix/lock';
 import RefreshIcon from 'plenix-platform/icons/plenix/refresh';
 
-export function AccessRequest({ status = 'request', onRequest, onOpen, strings, className }) {
-  const t = useStrings('accessRequest', strings);
+/** @public */
+export type AccessRequestProps = {
+  status?: 'request' | 'pending' | 'approved' | 'denied';
+  /** persists the request: a promise */
+  onRequest?(message: string): void | Promise<void>;
+  /** opens the approved resource */
+  onOpen?(): void;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function AccessRequest({ status = 'request', onRequest, onOpen, strings, className }: AccessRequestProps) {
+  const t: any = useStrings('accessRequest', strings);
   const [message, setMessage] = React.useState(''), [busy, setBusy] = React.useState(false), [sent, setSent] = React.useState(false), [error, setError] = React.useState('');
   const lock = React.useRef(false);
   React.useEffect(() => { setSent(false); }, [status]);
   const shown = status === 'approved' ? 'approved' : sent ? 'pending' : status;
   const send = async () => {
     if (lock.current) return; lock.current = true; setBusy(true); setError('');
-    try { await onRequest(message); setSent(true); } catch (e) { setError(t.failed); } finally { lock.current = false; setBusy(false); }
+    try { await onRequest!(message); setSent(true); } catch (e) { setError(t.failed); } finally { lock.current = false; setBusy(false); }
   };
   return <Stack className={cx('plx-access-request', className)} aria-busy={busy}>
     <EmptyState title={t.title}>{t.description}</EmptyState>

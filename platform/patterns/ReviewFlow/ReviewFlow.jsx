@@ -67,7 +67,7 @@ import { Text } from '../../components/Text/Text.tsx';
 import { PromptDialog } from '../../components/Dialog/Dialog.tsx';
 import { DataGrid } from '../../components/DataGrid/DataGrid.tsx';
 import { useOptionalToast } from '../../components/Toast/Toast.tsx';
-import { ActivityList } from '../ActivityList/ActivityList.jsx';
+import { ActivityList } from '../ActivityList/ActivityList.tsx';
 import { CommandBar } from '../CommandBar/CommandBar.jsx';
 import { useStrings, useLocale } from '../../providers/LocaleProvider.tsx';
 import english from '../../i18n/en.js';

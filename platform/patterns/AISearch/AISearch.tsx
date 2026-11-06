@@ -26,11 +26,22 @@ import { GeneratedContent } from '../../components/GeneratedContent/GeneratedCon
 import { Citation } from '../../components/Citation/Citation.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import SparkleIcon from 'plenix-platform/icons/plenix/sparkle';
-export function AISearch({onSearch,defaultQuery='',defaultSemantic=false,semanticToggle=true,strings,className}){
- const t=useStrings('aiSearch', strings),[query,setQuery]=React.useState(defaultQuery),[semantic,setSemantic]=React.useState(defaultSemantic),[data,setData]=React.useState(null),[busy,setBusy]=React.useState(false),[error,setError]=React.useState(''),epoch=React.useRef(0),controller=React.useRef(null),pending=React.useRef(null);
+/** @public what a search returns */
+export type AISearchResult = { answer?: string; sources?: unknown[]; results?: unknown[] };
+/** @public */
+export type AISearchProps = {
+  onSearch(request: { query: string; semantic: boolean; signal: AbortSignal }): Promise<AISearchResult>;
+  defaultQuery?: string;
+  defaultSemantic?: boolean;
+  semanticToggle?: boolean;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function AISearch({onSearch,defaultQuery='',defaultSemantic=false,semanticToggle=true,strings,className}: AISearchProps) {
+ const t: any=useStrings('aiSearch', strings),[query,setQuery]=React.useState(defaultQuery),[semantic,setSemantic]=React.useState(defaultSemantic),[data,setData]=React.useState<any>(null),[busy,setBusy]=React.useState(false),[error,setError]=React.useState(''),epoch=React.useRef(0),controller=React.useRef<any>(null),pending=React.useRef<any>(null);
  React.useEffect(()=>()=>{epoch.current++;controller.current?.abort();},[]);
- const search=async e=>{e?.preventDefault();if(!query.trim()||!onSearch)return;const key=JSON.stringify([query.trim(),semantic]);if(pending.current===key)return;pending.current=key;controller.current?.abort();const abort=new AbortController(),at=++epoch.current;controller.current=abort;setBusy(true);setError('');try{const next=await onSearch({query:query.trim(),semantic,signal:abort.signal});if(at===epoch.current)setData(next||{results:[]});}catch(err){if(at===epoch.current&&!abort.signal.aborted)setError(err?.message||t.failed);}finally{if(at===epoch.current){pending.current=null;setBusy(false);}}};
+ const search=async (e: any)=>{e?.preventDefault();if(!query.trim()||!onSearch)return;const key=JSON.stringify([query.trim(),semantic]);if(pending.current===key)return;pending.current=key;controller.current?.abort();const abort=new AbortController(),at=++epoch.current;controller.current=abort;setBusy(true);setError('');try{const next=await onSearch({query:query.trim(),semantic,signal:abort.signal});if(at===epoch.current)setData(next||{results:[]});}catch(err){if(at===epoch.current&&!abort.signal.aborted)setError((err as any)?.message||t.failed);}finally{if(at===epoch.current){pending.current=null;setBusy(false);}}};
  return <Stack className={cx('plx-ai-search',className)} role="region" aria-label={t.label}><Stack as="form" onSubmit={search}><SearchField label={t.query} placeholder={t.query} value={query} onChange={e=>setQuery(e.target.value)} onClear={()=>setQuery('')} strings={strings}/>{semanticToggle?<Switch label={t.semantic} checked={semantic} onChange={e=>setSemantic(e.target.checked)}/>:null}<Button type="submit" disabled={!query.trim()||!onSearch}>{t.search}</Button></Stack>
- {busy?<Inline><Badge icon={SparkleIcon} role="status">{t.pending}</Badge></Inline>:null}{error?<Notice tone="danger">{error}</Notice>:null}{data&&data.answer!==undefined&&data.answer!==null?<GeneratedContent strings={strings?.generatedContent}>{data.answer}<Citation variant="list" sources={data.sources||[]} strings={strings?.citation}/></GeneratedContent>:null}
- {data?<Stack role="region" aria-label={t.results}>{(data.results||[]).length?(data.results||[]).map(item=><Stack key={item.id} gap="xs">{item.href?<Link href={item.href}>{item.title}</Link>:<Text>{item.title}</Text>}{item.description?<Text>{item.description}</Text>:null}</Stack>):<Text>{t.empty}</Text>}</Stack>:null}</Stack>;
+ {busy?<Inline><Badge icon={SparkleIcon} role="status">{t.pending}</Badge></Inline>:null}{error?<Notice tone="danger">{error}</Notice>:null}{data&&data.answer!==undefined&&data.answer!==null?<GeneratedContent strings={strings?.generatedContent as any}>{data.answer}<Citation variant="list" sources={data.sources||[]} strings={(strings?.citation as any)}/></GeneratedContent>:null}
+ {data?<Stack role="region" aria-label={t.results}>{(data.results||[]).length?(data.results||[]).map((item: any)=><Stack key={item.id} gap="xs">{item.href?<Link href={item.href}>{item.title}</Link>:<Text>{item.title}</Text>}{item.description?<Text>{item.description}</Text>:null}</Stack>):<Text>{t.empty}</Text>}</Stack>:null}</Stack>;
 }

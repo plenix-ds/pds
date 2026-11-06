@@ -38,13 +38,24 @@ import { useStrings } from '../../providers/LocaleProvider.tsx';
 // stacked lists set the meta's text in the smallest type: text inside the meta follows it (data-plx-text-follow)
 const StackedContext = React.createContext(false);
 
-export function ActivityList({ label, stacked = false, titleLines = 1, className, children }) {
+/** @public */
+export type ActivityListProps = {
+  label?: string;
+  /** the meta on its own line under the title (narrow panes) */
+  stacked?: boolean;
+  /** 1 (default) or 2 title lines */
+  titleLines?: 1 | 2;
+  className?: string;
+  /** the ActivityList.Item rows */
+  children?: React.ReactNode;
+};
+export function ActivityList({ label, stacked = false, titleLines = 1, className, children }: ActivityListProps) {
   return <StackedContext.Provider value={stacked}><ul aria-label={label} className={cx('plx-activity-list', stacked && 'plx-activity-list--stacked', titleLines === 2 && 'plx-activity-list--title-2', className)}>{children}</ul></StackedContext.Provider>;
 }
 
-ActivityList.Item = function ActivityListItem({ leading, title, meta, time, dateTime, unread = false, selected = false, onOpen, href, actions, className }) {
+ActivityList.Item = function ActivityListItem({ leading, title, meta, time, dateTime, unread = false, selected = false, onOpen, href, actions, className }: any) {
   const stacked = React.useContext(StackedContext);
-  const words = useStrings('activityList');
+  const words: any = useStrings('activityList');
   const opener = href ? <a href={href} className="plx-activity-list__opener">{title}</a>
     : onOpen ? <button type="button" className="plx-activity-list__opener" onClick={onOpen}>{title}</button>
       : <span className="plx-activity-list__opener">{title}</span>;
