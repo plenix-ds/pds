@@ -14,7 +14,7 @@
      engine function, in the same place. The engine is documented in DataGridEngine.jsx.
 */
 import React from 'react';
-import { failureState, manageFailed, viewMenu, emptyRow, moreRow, pagesFooter, loadMoreFooter } from './chrome.jsx';
+import { failureState, manageFailed, viewMenu, emptyRow, moreRow, pagesFooter, loadMoreFooter } from './chrome.tsx';
 import { cx } from '../../../utils/cx.ts';
 import { lengthName } from './helpers.tsx';
 import { tableKeys } from './keys.js';
