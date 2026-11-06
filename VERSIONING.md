@@ -47,6 +47,8 @@ under **Breaking** in the changelog, with what to do instead.
    `deploy.sh` stop when the two differ).
 3. `bash deploy.sh` publishes `/cdn/x.y.z/` (it never overwrites a published version) and refreshes the API; the apps
    move to the new version.
+   After the live check passes, `node tools/publish/notify-apps.mjs x.y.z` sends each app that auto-upgrades (CTM) the
+   `plenix-release` event, so it upgrades at once instead of on its own schedule (D-0082, #750).
 4. Commit, then `git tag vx.y.z && git push origin main vx.y.z`. The Release workflow checks that the tag matches
    `package.json`, builds, runs the checks, publishes the packages and creates the GitHub release with that version's
    changelog section as its notes.
