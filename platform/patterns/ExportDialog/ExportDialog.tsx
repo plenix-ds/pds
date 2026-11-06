@@ -27,17 +27,33 @@ import { useStrings } from '../../providers/LocaleProvider.tsx';
 import CheckIcon from 'plenix-platform/icons/plenix/check';
 import RefreshIcon from 'plenix-platform/icons/plenix/refresh';
 
-export function ExportDialog({ open, title, onClose, formats = [], selectedCount = 0, onExport, allowBackground = true, initialBackground = false, strings, className }) {
-  const t = useStrings('exportDialog', strings);
-  const [format, setFormat] = React.useState(formats[0]?.value || ''), [scope, setScope] = React.useState('all'), [background, setBackground] = React.useState(initialBackground);
-  const [busy, setBusy] = React.useState(false), [result, setResult] = React.useState(null), [finished, setFinished] = React.useState(false), [error, setError] = React.useState('');
-  const lock = React.useRef(false), epoch = React.useRef(0), initial = React.useRef(null); initial.current = { format: formats[0]?.value || '', background: initialBackground };
+/** @public what an export returns when it is ready */
+export type ExportResult = { href?: string; label?: string } | void;
+/** @public */
+export type ExportDialogProps = {
+  open?: boolean;
+  title?: string;
+  onClose?(): void;
+  formats?: Array<{ value: string; label: string }>;
+  /** how many selected records can be exported */
+  selectedCount?: number;
+  onExport?(request: { format: string; scope: string; background: boolean }): ExportResult | Promise<ExportResult>;
+  allowBackground?: boolean;
+  initialBackground?: boolean;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function ExportDialog({ open, title, onClose, formats = [], selectedCount = 0, onExport, allowBackground = true, initialBackground = false, strings, className }: ExportDialogProps) {
+  const t: any = useStrings('exportDialog', strings);
+  const [format, setFormat] = React.useState<any>(formats[0]?.value || ''), [scope, setScope] = React.useState<any>('all'), [background, setBackground] = React.useState<any>(initialBackground);
+  const [busy, setBusy] = React.useState<any>(false), [result, setResult] = React.useState<any>(null), [finished, setFinished] = React.useState<any>(false), [error, setError] = React.useState<any>('');
+  const lock = React.useRef<any>(false), epoch = React.useRef<any>(0), initial = React.useRef<any>(null); initial.current = { format: formats[0]?.value || '', background: initialBackground };
   React.useEffect(() => { epoch.current++; lock.current = false; setBusy(false); setFormat(initial.current.format); setScope('all'); setBackground(initial.current.background); setFinished(false); setResult(null); setError(''); return () => { epoch.current++; }; }, [open]);
   const start = async () => {
     if (lock.current) return;
     if (!formats.some((f) => f.value === format) || scope === 'selection' && selectedCount < 1) { setError(t.invalid); return; }
     const at = epoch.current; lock.current = true; setBusy(true); setError('');
-    try { const out = await onExport({ format, scope, background: allowBackground && background }); if (at === epoch.current) { setResult(out); setFinished(true); } }
+    try { const out = await onExport!({ format, scope, background: allowBackground && background }); if (at === epoch.current) { setResult(out); setFinished(true); } }
     catch (e) { if (at === epoch.current) setError(t.failed); }
     finally { if (at === epoch.current) { lock.current = false; setBusy(false); } }
   };

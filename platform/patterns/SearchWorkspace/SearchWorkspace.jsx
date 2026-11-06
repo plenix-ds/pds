@@ -51,7 +51,7 @@ import { CommandBar, CommandBarButton } from '../CommandBar/CommandBar.jsx';
 import { Menu, MenuItem } from '../../components/Menu/Menu.tsx';
 import { Chip } from '../../components/Tag/Tag.tsx';
 import { EmptyState } from '../../components/EmptyState/EmptyState.tsx';
-import { FilterBar } from '../FilterBar/FilterBar.jsx';
+import { FilterBar } from '../FilterBar/FilterBar.tsx';
 import { useUid } from '../../utils/layer.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import ChecklistIcon from 'plenix-platform/icons/plenix/checklist';

@@ -137,7 +137,7 @@ DSParts.records.push(function (H) {
   /* ── 06 Navigation › Search, filter, and discovery › Filter panel: FilterPanel ── */
   var FilterDemo = function (props) { var f = use(props.value || { join: 'and', items: [] }); return h(P.FilterPanel, { fields: ASSET_FIELDS, value: f[0], onChange: f[1], inline: props.inline }); };
   var filterPanel = { id: 'filter-panel', lab: true, icon: 'filter', sec: 'navigation', sub: 'Search, filter, and discovery', leaf: 'Filter panel', title: 'Filter panel',
-    plenix: 'FilterPanel, matchesFilter', src: 'patterns/FilterPanel/FilterPanel.jsx', also: ['utils/fields.ts', 'patterns/CommandBar/panel-parts.jsx'], css: ['patterns/CommandBar/find-panel.css'], blocks: ['plx-find-panel', 'plx-find-pick', 'plx-find-pill'],
+    plenix: 'FilterPanel, matchesFilter', src: 'patterns/FilterPanel/FilterPanel.tsx', also: ['utils/fields.ts', 'patterns/CommandBar/panel-parts.jsx'], css: ['patterns/CommandBar/find-panel.css'], blocks: ['plx-find-panel', 'plx-find-pick', 'plx-find-pill'],
     level: 'Composite', interaction: 'Filter', statesFrom: ['button', 'action-menu'], covers: ['Advanced filters'],
     aliases: ['Filter', 'Advanced filter', 'Condition builder', 'Where clause'],
     text: 'The command bar’s Filter, in the Airtable style: a Filter button that opens a panel of conditions. Conditions join with Where on the first row, then and or or; each has a field with its type icon, an operator in the field type’s words, and a value (text, a number, a date, the past week, or options shown as pills in their colors). Condition groups go one level deep. The panel holds every possibility, so it is never labeled "advanced"; quick filters are shortcuts beside it.',

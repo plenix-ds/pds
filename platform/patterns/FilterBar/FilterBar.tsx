@@ -27,24 +27,24 @@ import { Menu, MenuItem, MenuGroup, MenuDivider } from '../../components/Menu/Me
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import { fill } from '../../utils/fill.ts';
 
-const isSet = (f) => (f.multiple ? (f.value || []).length > 0 : f.value !== null && f.value !== undefined && f.value !== '');
-const summary = (f, t) => {
+const isSet = (f: any) => (f.multiple ? (f.value || []).length > 0 : f.value !== null && f.value !== undefined && f.value !== '');
+const summary = (f: any, t: any) => {
   if (!isSet(f)) return f.label;
   if (f.multiple) {
     const v = f.value;
     if (v.length > 1) return fill(t.several, { label: f.label, count: v.length });
-    const o = f.options.find((x) => x.value === v[0]);
+    const o = f.options.find((x: any) => x.value === v[0]);
     return fill(t.one, { label: f.label, value: o ? o.label : v[0] });
   }
-  const o = f.options.find((x) => x.value === f.value);
+  const o = f.options.find((x: any) => x.value === f.value);
   return fill(t.one, { label: f.label, value: o ? o.label : f.value });
 };
 
-function choices(f, onChange) {
-  return f.options.map((o) => {
+function choices(f: any, onChange: any) {
+  return f.options.map((o: any) => {
     const on = f.multiple ? (f.value || []).indexOf(o.value) >= 0 : f.value === o.value;
     const pick = () => {
-      if (f.multiple) onChange(f.id, on ? f.value.filter((v) => v !== o.value) : (f.value || []).concat(o.value));
+      if (f.multiple) onChange(f.id, on ? f.value.filter((v: any) => v !== o.value) : (f.value || []).concat(o.value));
       else onChange(f.id, on ? null : o.value);
     };
     return (
@@ -55,16 +55,28 @@ function choices(f, onChange) {
   });
 }
 
-export function FilterBar({ label, filters, onChange, onClearAll, actions, strings, className }) {
-  const t = useStrings('filterBar', strings);
-  const list = React.useRef(null);
-  const fit = useOverflow(list, filters.length, filters.map((f) => summary(f, t)).join('|'));
+/** @public one filter of the bar */
+export type FilterBarFilter = { id: string; label: string; options: Array<{ value: string | number; label: string; count?: number }>; value?: string | number | null | Array<string | number>; multiple?: boolean };
+/** @public */
+export type FilterBarProps = {
+  label?: string;
+  filters: FilterBarFilter[];
+  onChange?(id: string, value: FilterBarFilter['value']): void;
+  onClearAll?(): void;
+  actions?: React.ReactNode;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function FilterBar({ label, filters, onChange, onClearAll, actions, strings, className }: FilterBarProps) {
+  const t: any = useStrings('filterBar', strings);
+  const list = React.useRef<any>(null);
+  const fit = useOverflow(list, filters.length, filters.map((f: any) => summary(f, t)).join('|'));
   const hidden = filters.slice(fit);
   const anySet = filters.some(isSet);
   return (
     <div role="group" aria-label={label || t.label} className={cx('plx-filter-bar', className)}>
       <div ref={list} className="plx-filter-bar__filters">
-        {splitAt(filters.map((f) => (
+        {splitAt(filters.map((f: any) => (
           <span key={f.id} data-plx-overflow-item="" className="plx-filter-bar__slot">
             <Menu label={f.label} trigger={<Button size="sm" caret selected={isSet(f)}>{summary(f, t)}</Button>}>
               {choices(f, onChange)}
@@ -73,10 +85,10 @@ export function FilterBar({ label, filters, onChange, onClearAll, actions, strin
         )), fit, hidden.length ? (
           <span key="plx-more" data-plx-overflow-more="" className="plx-filter-bar__slot">
             <Menu label={t.more} placement="bottom-end" trigger={<Button size="sm" caret selected={hidden.some(isSet)}>{t.more}</Button>}>
-              {hidden.map((f, i) => (
+              {hidden.map((f: any, i: any) => (
                 <React.Fragment key={f.id}>
                   {i ? <MenuDivider /> : null}
-                  <MenuGroup label={f.label}>{choices({ ...f, multiple: true, value: f.multiple ? f.value : (isSet(f) ? [f.value] : []) }, (id, v) => onChange(id, f.multiple ? v : (v.filter((x) => x !== f.value)[0] || null)))}</MenuGroup>
+                  <MenuGroup label={f.label}>{choices({ ...f, multiple: true, value: f.multiple ? f.value : (isSet(f) ? [f.value] : []) }, (id: any, v: any) => onChange!(id, f.multiple ? v : (v.filter((x: any) => x !== f.value)[0] || null)))}</MenuGroup>
                 </React.Fragment>
               ))}
             </Menu>

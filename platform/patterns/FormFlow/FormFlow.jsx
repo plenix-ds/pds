@@ -16,7 +16,7 @@
      Use immutable updates and a stable sessionKey per record. Never nest another Form in children.
 */
 import React from 'react';
-import { Form, FormActions } from '../Form/Form.jsx';
+import { Form, FormActions } from '../Form/Form.tsx';
 import { Dialog, Drawer } from '../../components/Dialog/Dialog.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Notice } from '../../components/Notice/Notice.tsx';
