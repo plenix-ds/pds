@@ -9,6 +9,11 @@
        the row height
      layout: "grid" (default: rows of equal cells) | "masonry" (columns of the card width; each item keeps its own height)
        | "justified" (rows of the size's height that fill the width; each item as wide as its ratio)
+     virtualized: true draws only the card rows in view (default false; ADR 0019): the grid becomes a scroll area at its container's
+       block size, so give the container a height. The columns follow the width and size as today's grid; each card keeps its place in
+       the whole set (aria-posinset of aria-setsize), and a card that has the focus stays drawn when it scrolls out of view. Only for
+       layout "grid" (masonry and justified ignore it, with one development warning); the cards are a flat list of equal-height rows
+       (a card's row is its size's width times the 4:3 ratio, in the data tokens), so a card taller than that is cut
      label: names the list
      className: more classes on the grid
      children: the cards; each child is one list item (null, undefined and false are skipped). In justified rows each
@@ -28,11 +33,14 @@
 import React from 'react';
 import { devWarn } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
+import { useVirtualizer, VirtualGap, VirtualProbe } from '../../hooks/useVirtualizer.ts';
 
 const RATIOS = ['1-1', '4-3', '3-2', '16-9', '21-9', '3-4', '9-16'];
 
-export function ContentGrid({ size = 'md', layout = 'grid', label, className, children }) {
+export function ContentGrid({ size = 'md', layout = 'grid', virtualized = false, label, className, children }) {
   devWarn('ContentGrid', { size }, { size: ['xs','sm','md','lg'] });
+  if (virtualized && layout !== 'grid') devWarn('ContentGrid', { virtualized: 'with layout ' + layout }, { virtualized: ['with layout grid (masonry and justified draw every card)'] });
+  if (virtualized && layout === 'grid') return <VirtualGrid size={size} label={label} className={className}>{children}</VirtualGrid>;
   const justified = layout === 'justified';
   return (
     <ul aria-label={label} className={cx('plx-content-grid', 'plx-content-grid--' + size, layout !== 'grid' ? 'plx-content-grid--' + layout : null, className)}>
@@ -41,6 +49,18 @@ export function ContentGrid({ size = 'md', layout = 'grid', label, className, ch
         const ratio = justified ? (c.props && RATIOS.indexOf(c.props.ratio) >= 0 ? c.props.ratio : '4-3') : undefined;
         return <li className="plx-content-grid__item" data-plx-ratio={ratio}>{c}</li>;
       })}
+    </ul>
+  );
+}
+
+// the virtualized grid (ADR 0019): the same list, a scroll area at its container's height, only the rows in view drawn
+function VirtualGrid({ size, label, className, children }) {
+  const cards = React.Children.toArray(children).filter((c) => c !== null && c !== undefined && c !== false);
+  const v = useVirtualizer({ count: cards.length, grid: true });
+  return (
+    <ul ref={v.viewportRef} aria-label={label} className={cx('plx-content-grid', 'plx-content-grid--' + size, 'plx-content-grid--virtual', className)}>
+      {cards.length ? <VirtualProbe /> : null}
+      {v.segments.map((s) => (s.gap ? <VirtualGap key={s.key} count={s.count} /> : <li key={s.key} className="plx-content-grid__item plx-content-grid__item--virtual" {...v.itemProps(s.index)}>{cards[s.index]}</li>))}
     </ul>
   );
 }
