@@ -33,8 +33,8 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
       const said = () => page.evaluate(() => [...document.querySelectorAll('[aria-live]')].map((e) => e.textContent).join(' | '));
       const handles = () => page.evaluate(() => document.querySelectorAll('.plx-data-grid__fill-handle').length);
       const center = (r, f) => page.evaluate((r, f) => { const b = [...document.querySelectorAll('[role=row][data-plx-record]')][r].querySelector('[data-plx-field="' + f + '"]').getBoundingClientRect(); return { x: b.left + b.width / 2, y: b.top + b.height / 2 }; }, r, f);
-      const drag = async (from, to) => {
-        const a = await page.evaluate(() => { const b = document.querySelector('.plx-data-grid__fill-handle').getBoundingClientRect(); return { x: b.left + b.width / 2, y: b.top + b.height / 2 }; });
+      const drag = async (from, to, off = { x: 0, y: 0 }) => {
+        const a = await page.evaluate((off) => { const b = document.querySelector('.plx-data-grid__fill-handle').getBoundingClientRect(); return { x: b.left + b.width / 2 + off.x, y: b.top + b.height / 2 + off.y }; }, off);
         await page.mouse.move(a.x, a.y); await page.mouse.down(); await page.mouse.move(to.x, to.y, { steps: 6 }); await page.mouse.up(); await wait(400);
       };
       // select rows 0..1 of Name and Role (Shift with arrows)
@@ -71,6 +71,11 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
       assert.equal(await text(4, 'role'), 'Cook');
       assert.equal((await edits()).every((e) => e.endsWith(':fill')), true, T + 'source fill');
 
+      // the pointer target is 24px (WCAG 2.5.8): a press 8px off the square's center, inside the block, still starts a fill
+      await mount({ fill: true });
+      await select(2, 2);
+      await drag(null, await center(4, 'name'), { x: dir === 'rtl' ? 8 : -8, y: -8 });
+      assert.equal(await text(2, 'name'), 'Alma', T + 'a press 8px off the handle still fills');
       await mount({ fill: true });
       await focus(0, 'name'); await key('ArrowDown', ['Shift']);   // Name, rows 0..1
       await drag(null, await center(1, 'role'));

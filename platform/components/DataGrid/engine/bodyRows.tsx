@@ -19,6 +19,7 @@ import { cx } from '../../../utils/cx.ts';
 import { words, kinds, interactive, typeOf, typeIcons, cellDirection } from './helpers.tsx';
 import { valueText, CellValue } from '../cells.tsx';
 import { groupKeys, rowKeys, cellKeys } from './keys.ts';
+import { isRtl } from '../../../utils/direction.ts';
 import { Avatar } from '../../Avatar/Avatar.tsx';
 import { Width, RowTarget, Check, CellEditor, CellStatus, CustomCell, RowMenuContent } from './parts.tsx';
 import { Icon } from '../../Icon/Icon.tsx';
@@ -644,8 +645,8 @@ export function bodyRows({
               ) : (
                 cellDirection(pinned && !isStatic && !kinds(c).includes('id'), shown)
               )}
-              {/* the fill handle (editing.fill, ADR 0021): on the selected block's bottom inline-end corner */}
-              {fill && inRange && inRange.bottom && inRange.end ? <span className={B + '__fill-handle'} aria-hidden="true" onPointerDown={fill.start} /> : null}
+              {/* the fill handle (editing.fill, ADR 0021): on the selected block's bottom inline-end corner; its own dir is the grid's, not the cell's text direction (dir=auto) */}
+              {fill && inRange && inRange.bottom && inRange.end ? <span className={B + '__fill-handle'} dir={isRtl(frame.current) ? 'rtl' : 'ltr'} aria-hidden="true" onPointerDown={fill.start} /> : null}
             </Width>
           );
         })}
