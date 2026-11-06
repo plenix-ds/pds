@@ -4901,5 +4901,49 @@
   "prompt-input--variant-attachments": {
     "sets": [],
     "why": "markup only: single-line or multi-line (Input or Textarea), attachments, the model chip and Stop are parts and components it renders; prompt-input.css styles only the root"
+  },
+  "date-picker--variant-single-default": {
+    "sets": [],
+    "why": "markup only: one date typed in the locale's numeric form or chosen from a Calendar in a popover (mode single)"
+  },
+  "date-picker--variant-date-and-time": {
+    "sets": [],
+    "why": "markup only: a date with a time field beside it, with the time zone (mode date-time)"
+  },
+  "date-picker--variant-with-presets": {
+    "sets": [],
+    "why": "markup only: adds preset choices such as Today and Last 7 days that set a common value in one press (presets)"
+  },
+  "command-bar--layout-one-bar-1a": {
+    "sets": [],
+    "why": "markup only: one bar holding the actions, then the search and the filters, then Sort, Group, Columns and View, and the count at the end"
+  },
+  "command-bar--layout-rows-selected-the-swap": {
+    "sets": [],
+    "why": "markup only: with rows selected the selection's commands replace the page's actions, with Delete last, and \"N selected\" at the end clears the selection"
+  },
+  "command-bar--layout-view-bar-1f": {
+    "sets": [],
+    "why": "markup only: the bar for a page that only finds: search, filters and the view controls, with no actions"
+  },
+  "command-bar--width-icon-and-label": {
+    "sets": [],
+    "why": "markup only: every button is ghost, with its icon and its label"
+  },
+  "command-bar--width-icons-only-the-search-as-its-icon-narrow": {
+    "sets": [],
+    "why": "markup only: when the bar does not fit, icons only with tooltips, the search as its icon"
+  },
+  "filter-panel--bar-button-filter-no-conditions": {
+    "sets": [],
+    "why": "markup only: the Filter button with no conditions set"
+  },
+  "filter-panel--bar-button-filter-with-conditions-tint-and-count": {
+    "sets": [],
+    "why": "markup only: the Filter button when conditions are set, showing their count"
+  },
+  "filter-panel--panel-the-panel-with-conditions-and-a-group": {
+    "sets": [],
+    "why": "markup only: the panel of conditions joined by Where, and and or, with a field, an operator and a value each, and condition groups one level deep"
   }
 }
