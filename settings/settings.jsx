@@ -34,8 +34,8 @@ const FeatureRow=({item})=>{
 /* ── the screen and its cards ── */
 // the screen a card belongs to: its open state is remembered under "<screen>:<title>"
 const ScreenKey=React.createContext("");
-// a settings screen: a way back (lead), its header (the h1: the screen's nav icon in the gray box, "Settings · what it is",
-// its actions) and then its cards. The header is the EntityHeader, Structured, top-small (#127, D-0049); actions are
+// a settings screen: a way back (lead), its header (the h1: the screen's nav icon in gray with no box, filling its 44px square, "Settings · what it is",
+// its actions) and then its cards. The header is the EntityHeader, Structured, top-small (#127, D-0055); actions are
 // elements here, so they go in the header's control slot, not its actions list.
 const SETTINGS_CATS=[
     {id:"account",    label:"Account",      icon:"settings-profile"},
