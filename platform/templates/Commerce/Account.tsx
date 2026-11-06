@@ -31,9 +31,9 @@ import { EntityHeader as EntityHeaderJs } from '../../patterns/EntityHeader/Enti
 const EntityHeader: any = EntityHeaderJs;
 import { PropertyList as PropertyListJs } from '../../patterns/PropertyList/PropertyList.tsx';
 const PropertyList: any = PropertyListJs;
-import { Wizard as WizardJs } from '../../patterns/Wizard/Wizard.tsx';
+import { Wizard as WizardJs } from '../../patterns/Wizard/Wizard.jsx';
 const Wizard: any = WizardJs;
-import { SettingsSection as SettingsSectionJs } from '../../patterns/SettingsLayout/SettingsLayout.tsx';
+import { SettingsSection as SettingsSectionJs } from '../../patterns/SettingsLayout/SettingsLayout.jsx';
 const SettingsSection: any = SettingsSectionJs;
 import { DataGrid } from '../../components/DataGrid/DataGrid.tsx';
 import { Badge } from '../../components/Badge/Badge.tsx';
