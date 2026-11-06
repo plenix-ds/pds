@@ -123,7 +123,7 @@ const itemsOf = (a, off) => {
 export { foldOrder };
 
 export function BarActions({ actions = [], iconOnly = false, fold = 0, off = (a) => !!a.disabled, why = (a) => a.why, moreLabel,
-  dangerClass, size = 'sm', extra = [] }) {
+  dangerClass, size = 'sm', extra = [], selectionKeys = null }) {
   const t = useStrings('commandBar'),
     C = useStrings('confirmAction'),
     [pending, setPending] = React.useState(null);
@@ -139,7 +139,10 @@ export function BarActions({ actions = [], iconOnly = false, fold = 0, off = (a)
       confirmLabel: c.confirmLabel ?? fill(C.confirm, { verb })
     };
   };
-  const folded = new Set(foldOrder(actions).slice(0, fold).map((a) => a.id || a.label));
+  // selectionKeys (CommandBar add mode, D-0068): the ids of the selection's group; the page's commands fold first, then the selection's
+  const inSel = (a) => !!selectionKeys && selectionKeys.has(a.id || a.label);
+  const order = selectionKeys ? foldOrder(actions.filter((a) => !inSel(a))).concat(foldOrder(actions.filter(inSel))) : foldOrder(actions);
+  const folded = new Set(order.slice(0, fold).map((a) => a.id || a.label));
   const kept = actions.filter((a) => !folded.has(a.id || a.label));
   const away = menuOrder(actions.filter((a) => folded.has(a.id || a.label)));   // in More: the others in the bar's order, then the danger ones after a divider
   // a choices command: its options as radio items, and the current one's label
@@ -174,7 +177,7 @@ export function BarActions({ actions = [], iconOnly = false, fold = 0, off = (a)
     <Tooltip key="plx-more" content={allOff ? why(away[0]) : moreLabel}>
       <Menu label={moreLabel} placement="bottom-end" trigger={<Button size={size} variant="ghost" icon={MoreIcon} iconOnly label={moreLabel} disabled={allOff} />}>
         {away.map((a, i) => {
-          const sep = a.danger && i > 0 && !away[i - 1].danger ? <MenuDivider key={(a.id || a.label) + '-sep'} /> : null;
+          const sep = a.danger && i > 0 && !away[i - 1].danger ? <MenuDivider key={(a.id || a.label) + '-sep'} /> : selectionKeys && i > 0 && !a.danger && !away[i - 1].danger && inSel(a) !== inSel(away[i - 1]) ? <MenuDivider key={(a.id || a.label) + '-sep'} /> : null;
           // folded (the Fluent model): a toggle is a checked item, a choices command a submenu of radio items
           const busy = !!a.loading, disabled = off(a) || busy;
           const item = busy ? <MenuItem key={a.id || a.label} icon={<Spinner size="sm" label={a.label} />} danger={a.danger} checked={a.toggle ? !!a.pressed : undefined} aria-label={a.choices ? a.label + ': ' + current(a) : a.label} aria-busy disabled>{a.choices ? a.label + ': ' + current(a) : a.label}</MenuItem>
@@ -209,7 +212,7 @@ export function BarActions({ actions = [], iconOnly = false, fold = 0, off = (a)
           onCancel={() => setPending(null)}
         />
       ) : null}
-      {plain.map(one)}
+      {plain.map((a, i) => (selectionKeys && i > 0 && inSel(a) !== inSel(plain[i - 1]) ? [<span key={(a.id || a.label) + '-split'} className={cx('plx-bar-actions__divider')} aria-hidden="true" />, one(a)] : one(a)))}
       {more}
       {danger.length && (plain.length || more) ? <span key="plx-danger-divider" className={cx('plx-bar-actions__divider')} aria-hidden="true" /> : null}
       {danger.map(one)}

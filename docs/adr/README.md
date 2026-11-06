@@ -29,3 +29,5 @@ Owner: `pds1-ds-architect`. Gate G3 (plan §5) reads these files.
 | [0015](0015-variant-styles.md) | Each variation documents the styling properties it sets | accepted |
 | [0016](0016-datagrid-editing.md) | DataGrid editing: nine cell editors, Inline and Form Edit | accepted |
 | [0017](0017-delete-flow-undo-duration.md) | DeleteFlow's undo window: `undoDuration` and `plx-sys.undo-duration` | accepted |
+| [0018](0018-commandbar-selection-add.md) | CommandBar with rows selected adds the selection's commands, it doesn't swap | accepted |
+| [0019](0019-contentgrid-virtualized.md) | ContentGrid draws only the cards in view (`virtualized`) | accepted |

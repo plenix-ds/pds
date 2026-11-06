@@ -2,9 +2,10 @@
    Summary: The bar over a collection (owner, 2026-10-14 and 2026-10-15, the command bar study): ONE white framed bar of
      one height, fixed at the top of the content while the content scrolls; the table under it never moves. With nothing
      selected: the page's actions, then the search and the filters, then Sort, Group, Columns and View, and the count at
-     the end. With rows selected the bar swaps (Microsoft 365): the page's actions give way to the selection's commands
-     (Delete last); the search, the filters and Sort, Group, Columns and View stay where they are, so the person can keep
-     narrowing the list while rows are ticked (owner, issue 454); the bar ends with "× N selected", which clears the selection. A page with no actions has a view bar (1F).
+     the end. With rows selected the bar adds (owner, 2026-10-19, D-0068): "× N selected" (Clear) first, then the
+     selection's commands, a divider, then the page's commands (Delete last of its group); the search, the filters and Sort, Group,
+     Columns and View stay where they are (owner, issue 454). selection.mode "swap" is the earlier behavior: the page's actions give
+     way to the selection's commands and the bar ends with "× N selected". A page with no actions has a view bar (1F).
    Usage:
      <CommandBar label="Assets" count="24 assets"
        actions={[{ id: 'new', label: 'New', icon: 'plus', items: <><MenuItem icon="folder-add">Folder</MenuItem>…</> },
@@ -43,10 +44,14 @@
        fold: { label, icon, items } } supplies its More submenu; without fold the content stays in the bar.
        items are Menu children or MenuItem descriptors, including checked toggles.
      selection.hidden: how many selected records are hidden by filters (DataGrid onSelectionChange supplies it)
-     selection: the selection (the swap): { count, hidden, actions, onClear, noun, plural, label }; while count is above 0 the bar
-       holds selection.actions ([{ id, label, icon, onSelect, items, danger, single, disabled, why }]; single: disabled
-       while more than one is selected, with a why-tooltip) instead of the page's actions, and ends with "× N selected"
-       (onClear); search and the filters stay (owner, issue 454); label names the bar meanwhile (default "{label} actions")
+     selection: the selection: { count, hidden, actions, onClear, noun, plural, label, mode }; while count is above 0 the bar
+       leads with "× N selected" (onClear), then holds selection.actions ([{ id, label, icon, onSelect, items, danger, single, disabled,
+       why }]; single: disabled while more than one is selected, with a why-tooltip), a divider (only when both groups have a command)
+       and the page's actions; search and the filters stay (owner, issue 454); label names the bar meanwhile (default "{label} actions").
+       mode: "add" (default) | "swap" (the page's actions give way to the selection's, and "× N selected" ends the bar).
+       When the bar narrows the page's commands fold into More before the selection's.
+     actions[].selection: "also" (default: shows with and without a selection) | "only" (shows only while rows are selected, in the
+       selection's group) | "never" (hides while rows are selected); ignored in mode "swap"
      layout: "auto" (default: "one" with actions, "view" without) | "one" (1A) | "view" (1F: a view bar, no actions);
        "split" (a separate action bar for many actions) is retired (2026-10-15) and draws "one": many actions fold into More
      sticky: "auto" (default) sticks only as a direct child of PageContent or AppShell main; true/false force
@@ -145,7 +150,16 @@ export function CommandBar({ label, actions = [], find, quickFilters = [], view,
   const selActs = selecting ? (sel.actions || []) : [];
   // "split" (a separate action bar) is retired (2026-10-15): many actions fold into More in the one bar
   const shape = layout === 'auto' || layout === 'split' ? (actions.length ? 'one' : 'view') : layout;
-  const shown = selecting ? selActs : shape === 'view' ? [] : actions;
+  // selection.mode (owner, 2026-10-19, D-0068): "add" (default) puts the selection's commands before the page's, with a divider; "swap" is the earlier behavior (the page's commands give way).
+  // A page command says selection: "also" (default), "only" (it belongs to the selection's group and shows only while rows are selected) or "never" (it hides while rows are selected).
+  const adding = !(sel && sel.mode === 'swap');
+  const pageActs = shape === 'view' ? [] : actions;
+  const keyOf = (a) => a.id || a.label;
+  const onlyActs = adding ? pageActs.filter((a) => a.selection === 'only') : [];
+  const pageRest = adding ? pageActs.filter((a) => a.selection !== 'only' && !(selecting && a.selection === 'never')) : pageActs;
+  const selGroup = adding && selecting ? selActs.concat(onlyActs) : [];
+  const shown = adding ? selGroup.concat(pageRest) : selecting ? selActs : pageActs;
+  const selKeys = adding && selecting && selGroup.length ? new Set(selGroup.map(keyOf)) : null;
   const quick = quickFilters;   // search and filters stay while rows are ticked (owner, issue 454)
   const ending = end && !React.isValidElement(end) && !Array.isArray(end) && typeof end === 'object' && ('content' in end || 'fold' in end) ? end : null;
   const endContent = ending ? ending.content : end;
@@ -221,7 +235,7 @@ export function CommandBar({ label, actions = [], find, quickFilters = [], view,
   const acts = shown.length || extraMenu.length ? (
     <Toolbar.Group className="plx-command-bar__actions">
       <BarActions actions={shown} iconOnly={ctx.iconOnly} fold={fold} moreLabel={t.more} dangerClass="plx-command-bar__danger"
-        off={selecting ? off : undefined} why={selecting ? why : undefined} extra={extraMenu} />
+        off={selecting ? off : undefined} why={selecting ? why : undefined} extra={extraMenu} selectionKeys={selKeys} />
     </Toolbar.Group>
   ) : null;
   const quickEls = quickKept.map((q) => <QuickFilter key={q.id || q.label} {...q} />);
@@ -250,15 +264,17 @@ export function CommandBar({ label, actions = [], find, quickFilters = [], view,
   ) : null;
   const statusEl = selecting || !status || ctx.collapsed ? null : <Text variant="secondary" className="plx-command-bar__status">{status}</Text>;
   const keptEnd = !selecting && !endAway ? endContent : null;
-  const tail = countEl || statusEl || keptEnd || clearEl ? (
+  const clearFirst = adding && selecting;   // add mode: the count and Clear lead the bar, then the selection's commands
+  const tail = countEl || statusEl || keptEnd || (clearEl && !clearFirst) ? (
     <Toolbar.Group className="plx-command-bar__end">
       {selecting && viewEl ? <Divider orientation="vertical" /> : null}
-      {countEl}{statusEl}{keptEnd}{clearEl}
+      {countEl}{statusEl}{keptEnd}{clearFirst ? null : clearEl}
     </Toolbar.Group>
   ) : null;
   // Escape in the bar clears the selection (as "× N selected" does)
   const onKeyDown = selecting && sel.onClear ? (e) => { if (e.key === 'Escape' && !e.defaultPrevented && !e.target.closest('input, textarea, [role="menu"], [role="dialog"]')) { e.preventDefault(); sel.onClear(); } } : undefined;   // Escape in the search clears the text, not the selection (issue 454)
-  const parts = <>{acts}{acts && findEl ? <Divider orientation="vertical" /> : null}{findEl}<Toolbar.Spacer />{viewEl}{tail}</>;
+  const lead = clearFirst && clearEl ? <Toolbar.Group className="plx-command-bar__lead">{clearEl}</Toolbar.Group> : null;
+  const parts = <>{lead}{acts}{acts && findEl ? <Divider orientation="vertical" /> : null}{findEl}<Toolbar.Spacer />{viewEl}{tail}</>;
   const name = selecting ? (sel.label || fill(t.actions, { label: label || '' }).trim()) : label;
   return (
     <BarContext.Provider value={ctx}>
