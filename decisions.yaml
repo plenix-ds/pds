@@ -580,3 +580,13 @@
   options: [ViewMenu editModes plus value.editMode on the view state (chosen, A), ViewMenu editMode and onEditModeChange props (B)]
   status: active
   check: tests/view-menu-edit-mode-477.test.js and G3 review of #489
+
+- id: D-0067
+  date: 2026-11-06
+  area: api
+  decided_by: agent (pds1-ds-architect) on the Component Engineer's question (#292), owner may switch
+  decision: 'RichTextEditor is typed from the Tiptap packages as type-only devDependencies at exactly the vendored version (3.31.3), imported only with `import type`; the engine at run time stays the vendored bundle, and RichTextEditorProps names no Tiptap type (docs/adr/0011 addendum).'
+  why: 'Real types from the same version as the running code, without a hand-written second copy that drifts, and without leaving the last wave 1 component in JavaScript.'
+  options: [type-only devDependencies at the vendored version (chosen, b), hand-written local interfaces (a), RichTextEditor stays JavaScript until wave 5 (c)]
+  status: active
+  check: check-system.rules/vendor-types.js (the exact version, devDependencies only, import type only) and G3 review of the RichTextEditor PR
