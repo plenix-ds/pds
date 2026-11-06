@@ -3,8 +3,6 @@
  "parts": {
   "plx-data-pill--data": "changes the font family without the whole role (missing font-size, letter-spacing)",
   "plx-inline-edit__read": "changes the font family without the whole role (its font and word spacing are not one switch)",
-  "plx-input-group__affix": "changes the font family without the whole role (its font and word spacing are not one switch)",
-  "plx-link": "changes the font family without the whole role (missing font-size, letter-spacing, line-height)",
-  "plx-link--standalone": "changes the font family without the whole role (missing font-size, letter-spacing, line-height)"
+  "plx-input-group__affix": "changes the font family without the whole role (its font and word spacing are not one switch)"
  }
 }

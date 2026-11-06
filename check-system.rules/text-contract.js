@@ -87,6 +87,8 @@ function partOf(sel) {
   // a rule on descendants the part does not name (.plx-rich-text :where(code)) styles those elements, not the part (#122)
   const compounds = []; { let depth = 0, cur = ''; for (const c of sel.trim()) { if (c === '(' || c === '[') depth++; else if (c === ')' || c === ']') depth--; if (!depth && /[\s>+~]/.test(c)) { if (cur) compounds.push(cur); cur = ''; } else cur += c; } if (cur) compounds.push(cur); }
   if (compounds.length > 1 && /^:(?:where|is)\(/.test(compounds[compounds.length - 1])) return null;
+  // a pseudo-element (::before, ::after) is a generated box of its own: its typography is not the part's (the print-only address after a link, #122)
+  if (compounds.length && /::(?:before|after)\b/.test(compounds[compounds.length - 1])) return null;
   const last = sel.replace(/:(?:not|is|where|has)\((?:[^()]|\([^()]*\))*\)/g, '').trim().split(/\s+|>|\+|~/).filter(Boolean).pop() || '';
   const m = last.match(/\.(plx-[a-z0-9]+(?:-[a-z0-9]+)*(?:__[a-z0-9]+(?:-[a-z0-9]+)*)?)/);
   if (m) { const mod = last.match(new RegExp('\\.(' + m[1].replace(/--[a-z0-9-]+$/, '') + '--[a-z0-9]+(?:-[a-z0-9]+)*)')); return mod ? mod[1] : m[1]; }
@@ -169,7 +171,7 @@ function measure(opts = {}) {
     declared[p] = all.length === PROPS.length && role && font ? Object.assign({ contract: 'establishes', role, font }, adj.length ? { adjusts: adj } : {})
       : followsIn ? Object.assign({ contract: 'follows', font }, eff.props.has('font-size') ? { size: true } : {}) : { contract: 'adjusts', props: own };
     // changes the font family, and every property it does not set from a role is an explicit inherit: complete, and recorded as context-sized
-    if ((x.family || (base && base.family)) && declared[p].contract === 'adjusts' && role && font && eff.inh.size && PROPS.every((k) => eff.props.has(k) || eff.inh.has(k))) {
+    if ((x.family || (base && base.family)) && declared[p].contract === 'adjusts' && role && font && eff.inh.size && (!eff.props.has('font-weight') || isRole('font-weight')) && PROPS.every((k) => eff.props.has(k) || eff.inh.has(k))) {
       declared[p] = { contract: 'context-sized', role, font, inherits: PROPS.filter((k) => !eff.props.has(k)) };
       continue;
     }
@@ -185,7 +187,7 @@ function check({ add }) {
   for (const [p, d] of Object.entries(now.declared)) {
     const r = reg[p], where = now.where[p].split(':');
     if (!r) { add(NAME, where[0], +where[1], p + ' declares typography but has no text contract (' + JSON.stringify(d) + ') in platform/standards/text-contracts.json'); continue; }
-    if (JSON.stringify(r) !== JSON.stringify(d)) add(NAME, where[0], +where[1], p + ': its rules ' + (d.contract === 'establishes' ? 'establish the ' + d.role + ' role in ' + d.font : d.contract === 'follows' ? 'follow the text around them in ' + d.font : 'adjust ' + d.props.join(', ')) + ', its declared contract says ' + JSON.stringify(r) + ' (declare the change on purpose)');
+    if (JSON.stringify(r) !== JSON.stringify(d)) add(NAME, where[0], +where[1], p + ': its rules ' + (d.contract === 'establishes' ? 'establish the ' + d.role + ' role in ' + d.font : d.contract === 'follows' ? 'follow the text around them in ' + d.font : d.contract === 'context-sized' ? 'are context-sized in the ' + d.role + ' role (' + d.font + ')' : 'adjust ' + d.props.join(', ')) + ', its declared contract says ' + JSON.stringify(r) + ' (declare the change on purpose)');
   }
   for (const p of Object.keys(reg)) if (!now.declared[p]) add(NAME, 'platform/standards/text-contracts.json', 0, p + ': declared, but no rule gives it typography any more (remove the declaration)');
   for (const [p, t] of Object.entries(now.incomplete)) if (!log[p]) { const w = now.where[p].split(':'); add(NAME, w[0], +w[1], p + ' ' + t + ' (Styling Standard 6, the boundary rule)'); }
