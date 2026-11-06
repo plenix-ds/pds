@@ -23,9 +23,9 @@ const cands = [c('component-engineer', 'build', false, 1, '2026-11-01'), c('qa-e
 check('admit: priority first, then severity; builders cannot take the reserved slots',
   admit(cands, { slots: 3, reservedLeft: 2, mem: 99, perAgentGb: 2, minFreeGb: 1 }).map((x) => `${x.role}:${x.verdict}`),
   ['release-architect:start', 'qa-engineer:start', 'component-engineer:start', 'design-director:no-slot']);
-check('admit: with every free slot reserved, only gate roles start',
-  admit(cands, { slots: 2, reservedLeft: 2, mem: 99, perAgentGb: 2, minFreeGb: 1 }).map((x) => `${x.role}:${x.verdict}`),
-  ['release-architect:start', 'qa-engineer:start', 'component-engineer:reserved', 'design-director:reserved']);
+check('admit: with every free slot reserved, builders wait even though slots are free',
+  admit(cands.filter((x) => !x.gate), { slots: 2, reservedLeft: 2, mem: 99, perAgentGb: 2, minFreeGb: 1 }).map((x) => `${x.role}:${x.verdict}`),
+  ['component-engineer:reserved', 'design-director:reserved']);
 check('admit: memory still limits',
   admit(cands, { slots: 4, reservedLeft: 0, mem: 5, perAgentGb: 2, minFreeGb: 2 }).map((x) => `${x.role}:${x.verdict}`),
   ['release-architect:start', 'qa-engineer:memory', 'component-engineer:memory', 'design-director:memory']);
