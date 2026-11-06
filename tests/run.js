@@ -19,7 +19,7 @@
 const path = require('path');
 const { spawnSync } = require('child_process');
 
-const AUTOMATIC = ['site-coverage', 'visual', 'layout', 'pages', 'keyboard', 'data-grid', 'typography', 'component-tokens', 'reflow',
+const AUTOMATIC = ['site-coverage', 'site-parts', 'visual', 'layout', 'pages', 'keyboard', 'data-grid', 'typography', 'component-tokens', 'reflow',
   'formats', 'icon-safety', 'utilities', 'focus-order', 'semantic-html', 'navigation', 'one-primary', 'brand-rules', 'login', 'selector-kinds', 'zero-overlap', 'types', 'fill-693',
   // the ECharts charts and sparklines (owner, codex-q3-27: they join the automatic check; #382 F9)
   'charts-echarts-353', 'sparkline-echarts-353', 'treechart-echarts',
