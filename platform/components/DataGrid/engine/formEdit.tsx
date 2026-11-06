@@ -12,7 +12,7 @@
      name: the record's name (the key column's value); types: the editor types the table turned on (editing.types); surface: "drawer" (default) | "dialog";
      onRecordEdit(record, changes): saves; may return a promise; commitEdit(key, field, value): the fallback; onClose(): after Save or Cancel; S: the grid's strings.
    Notes:
-     Loaded on first use (one dynamic import from DataGridEngine.jsx), so a table that never edits in a form does not carry it.
+     Loaded on first use (one dynamic import from DataGridEngine.tsx), so a table that never edits in a form does not carry it.
 */
 import React from 'react';
 import { createPortal } from 'react-dom';

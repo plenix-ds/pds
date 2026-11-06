@@ -8,8 +8,8 @@
      groupSignal, setGroupOwner, setGroups, setCollapsed: from useGrouping; props: the grid's props (onViewChange); live: the
        engine's ref of current values (collapsed); S: the grid's words. Returns changeGroups(value) and toggleGroup(id, open).
    Notes:
-     Moved out of DataGridEngine.jsx without any change to the code (issue 714, the grouping concern): the parts were lines of
-     the engine function, in the same order with the same values. The engine is documented in DataGridEngine.jsx.
+     Moved out of DataGridEngine.tsx without any change to the code (issue 714, the grouping concern): the parts were lines of
+     the engine function, in the same order with the same values. The engine is documented in DataGridEngine.tsx.
 */
 import { announce } from '../../../utils/announce.tsx';
 

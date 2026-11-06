@@ -18,9 +18,9 @@
        it, and focuses it once drawn; rowKeys and cellKeys take cardList: End (or Ctrl or Command with End) on a card goes to
        the last card.
    Notes:
-     Moved out of DataGridEngine.jsx without any change to the handlers' code (issue 714, the keyboard concern): each handler
+     Moved out of DataGridEngine.tsx without any change to the handlers' code (issue 714, the keyboard concern): each handler
      was an inline function of the engine's markup; it is the same function text, built from the same names, at the same place.
-     The engine is documented in DataGridEngine.jsx.
+     The engine is documented in DataGridEngine.tsx.
 */
 import { stepSize } from '../../../utils/sizeSteps.js';
 import { valueText } from '../cells.tsx';

@@ -11,7 +11,7 @@
      Each function takes the engine's values it draws from (the block class B, the strings S, props, the table, the model, the paging
        and remote state, the handlers) and returns the element the engine used to write inline, or null.
    Notes:
-     Moved out of DataGridEngine.jsx without any change to the code (issue 714, the toolbar and menus): each part is the same
+     Moved out of DataGridEngine.tsx without any change to the code (issue 714, the toolbar and menus): each part is the same
      element as it was inline in the engine's return, in the same place.
 */
 import React from 'react';

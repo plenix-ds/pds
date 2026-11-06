@@ -10,8 +10,8 @@
        sent another), sortingRef (the current sorting for later handlers), and the owner state: sortOwner and setSortOwner,
        setSorting (the grid's own sort).
    Notes:
-     Moved out of DataGridEngine.jsx without any change to the code (issue 714, the sorting concern): the parts were lines of
-     the engine function, in the same order with the same values. The engine is documented in DataGridEngine.jsx.
+     Moved out of DataGridEngine.tsx without any change to the code (issue 714, the sorting concern): the parts were lines of
+     the engine function, in the same order with the same values. The engine is documented in DataGridEngine.tsx.
 */
 import React from 'react';
 import { normalizeSort } from '../state.ts';

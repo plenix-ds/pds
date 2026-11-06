@@ -7,7 +7,7 @@
    Props:
      none: a module of constants and plain functions, used only by the DataGrid engine (not a public export)
    Notes:
-     Moved out of DataGridEngine.jsx without any change to the code (issue 688). The engine is documented in DataGridEngine.jsx.
+     Moved out of DataGridEngine.tsx without any change to the code (issue 688). The engine is documented in DataGridEngine.tsx.
 */
 import React from 'react';
 import { valueText } from '../cells.tsx';

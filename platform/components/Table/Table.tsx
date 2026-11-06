@@ -17,7 +17,7 @@
      Links and controls supplied as cell content retain their own behavior. Wrapped cells stretch the entire row. The table grows with its rows and never scrolls internally.
    Notes: Existing Table tokens preserve the static-table look; use DataGrid for records people work with. */
 import React from 'react';
-import { DataGridEngine } from '../DataGrid/DataGridEngine.jsx';
+import { DataGridEngine } from '../DataGrid/DataGridEngine.tsx';
 
 type TableColumn = {
   title?: React.ReactNode; field: string; kind?: string; type?: string; pill?: unknown; render?(record: Record<string, unknown>): React.ReactNode;

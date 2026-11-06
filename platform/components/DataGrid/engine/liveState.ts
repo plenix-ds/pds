@@ -8,8 +8,8 @@
    Props:
      live: the engine's ref; the other names are the engine's values and handlers, stored under the same names. Returns nothing.
    Notes:
-     Moved out of DataGridEngine.jsx without any change to the code (issue 714, the adapter): the assignment was in the engine
-     function, in the same place. The engine is documented in DataGridEngine.jsx.
+     Moved out of DataGridEngine.tsx without any change to the code (issue 714, the adapter): the assignment was in the engine
+     function, in the same place. The engine is documented in DataGridEngine.tsx.
 */
 export function syncLive({
   live,

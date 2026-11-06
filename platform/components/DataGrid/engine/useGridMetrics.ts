@@ -14,8 +14,8 @@
      The default grid (narrow="auto") sizes its columns to their content and fits them to its room before the cards (issue
      929): content first (capped at the set width), spare room shared by the text columns (issue 272), the most room above the minimum given up first
      and the title last; the narrow switch weighs the minimums. narrow="table" and "list" keep their set widths.
-     Moved out of DataGridEngine.jsx (issue 714, metrics and layout): the effects were in the engine function, in the
-     same order between the same neighbors. The engine is documented in DataGridEngine.jsx.
+     Moved out of DataGridEngine.tsx (issue 714, metrics and layout): the effects were in the engine function, in the
+     same order between the same neighbors. The engine is documented in DataGridEngine.tsx.
 */
 import React from 'react';
 import { pillFont } from '../engine/pill.ts';

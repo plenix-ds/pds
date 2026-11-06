@@ -17,8 +17,8 @@
        rows that select all works on (selectionRows), selectedVisible, allVisible, selectAll(value), pickCheckbox(row, event)
        and chooseRow(row, event).
    Notes:
-     Moved out of DataGridEngine.jsx without any change to the code (issue 714, first of its concerns): the hook's parts were
-     lines of the engine function, read in the same order with the same values. The engine is documented in DataGridEngine.jsx.
+     Moved out of DataGridEngine.tsx without any change to the code (issue 714, first of its concerns): the hook's parts were
+     lines of the engine function, read in the same order with the same values. The engine is documented in DataGridEngine.tsx.
 */
 import React from 'react';
 import { recordKey } from '../state.ts';

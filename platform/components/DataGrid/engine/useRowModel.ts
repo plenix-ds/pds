@@ -10,8 +10,8 @@
        columns, printing and the grid's props (onAddToGroup). Returns loadedRows (the rows in view), groups (the tree of groups with
        their rows and summaries) and model (the list the body draws).
    Notes:
-     Moved out of DataGridEngine.jsx without any change to the code (issue 714, the data pipeline): the parts were lines of the
-     engine function, in the same order with the same values. The engine is documented in DataGridEngine.jsx.
+     Moved out of DataGridEngine.tsx without any change to the code (issue 714, the data pipeline): the parts were lines of the
+     engine function, in the same order with the same values. The engine is documented in DataGridEngine.tsx.
 */
 import React from 'react';
 import { EMPTY_ROWS } from './helpers.tsx';

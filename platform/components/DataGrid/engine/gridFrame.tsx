@@ -10,8 +10,8 @@
      The engine's values (the block class B, the strings S, props, refs, the table and the rows to draw, the selection, the metrics, the
        remote and paging state and the handlers); the call reads them in the render in which the grid is drawn. Returns the element.
    Notes:
-     Moved out of DataGridEngine.jsx without any change to the code (issue 714, the frame): the return expression was the end of the
-     engine function, in the same place. The engine is documented in DataGridEngine.jsx.
+     Moved out of DataGridEngine.tsx without any change to the code (issue 714, the frame): the return expression was the end of the
+     engine function, in the same place. The engine is documented in DataGridEngine.tsx.
 */
 import React from 'react';
 import { failureState, manageFailed, viewMenu, emptyRow, moreRow, pagesFooter, loadMoreFooter } from './chrome.tsx';

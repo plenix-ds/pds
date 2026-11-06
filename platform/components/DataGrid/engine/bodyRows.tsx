@@ -11,8 +11,8 @@
        state, the metrics, the table, the api and the handlers); the call reads them in the render in which the rows are drawn.
        Returns groupNode(group, sticky), rowNode(row) (a group, add, gap or record row) and the cut-text helpers.
    Notes:
-     Moved out of DataGridEngine.jsx without any change to the code (issue 714, the body): the parts were lines of the engine
-     function, in the same order with the same values. The engine is documented in DataGridEngine.jsx.
+     Moved out of DataGridEngine.tsx without any change to the code (issue 714, the body): the parts were lines of the engine
+     function, in the same order with the same values. The engine is documented in DataGridEngine.tsx.
 */
 import React from 'react';
 import { cx } from '../../../utils/cx.ts';
