@@ -4742,5 +4742,110 @@
   "popover--narrow-sheet-on-narrow-default": {
     "sets": [],
     "why": "markup only: on a narrow window the Popover renders a Sheet instead; the Sheet's own stylesheet draws it"
+  },
+  "interaction-states--treatment-hover": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-sys-state-hover"
+      }
+    ],
+    "why": ".plx-state:hover in interaction.css: the treatment every interactive element takes on the plx-state class"
+  },
+  "interaction-states--treatment-pressed": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-sys-state-pressed"
+      }
+    ],
+    "why": ".plx-state.is-pressed in interaction.css: the treatment every interactive element takes on the plx-state class"
+  },
+  "interaction-states--treatment-focus": {
+    "sets": [
+      {
+        "property": "outline-color",
+        "part": "block",
+        "token": "--plx-sys-focus-ring-color"
+      },
+      {
+        "property": "outline-offset",
+        "part": "block",
+        "token": "--plx-sys-focus-ring-offset"
+      },
+      {
+        "property": "outline-width",
+        "part": "block",
+        "token": "--plx-sys-focus-ring-width"
+      }
+    ],
+    "why": ".plx-state.is-focus-visible in interaction.css: the treatment every interactive element takes on the plx-state class"
+  },
+  "interaction-states--treatment-selected": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-sys-state-selected"
+      },
+      {
+        "property": "border-color",
+        "part": "block",
+        "token": "--plx-sys-state-selected-border"
+      }
+    ],
+    "why": ".plx-state[aria-current] and .is-selected in interaction.css: the treatment every interactive element takes on the plx-state class"
+  },
+  "interaction-states--treatment-dragged": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-sys-surface-raised"
+      },
+      {
+        "property": "box-shadow",
+        "part": "block",
+        "token": "--plx-sys-elevation-overlay-shadow"
+      },
+      {
+        "property": "opacity",
+        "part": "block",
+        "token": "--plx-sys-state-dragged-opacity"
+      }
+    ],
+    "why": ".plx-state.is-dragging in interaction.css: the treatment every interactive element takes on the plx-state class"
+  },
+  "interaction-states--treatment-disabled": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-sys-content-disabled"
+      }
+    ],
+    "why": ".plx-state.is-disabled in interaction.css: the treatment every interactive element takes on the plx-state class (the background goes transparent, the shadow none, the cursor not-allowed)"
+  },
+  "input-group--content-icon": {
+    "sets": [],
+    "why": "markup only: an icon at the start of the field, inside the border (icon)"
+  },
+  "input-group--attached-button-attached": {
+    "sets": [],
+    "why": "markup only: a Button joined to the outer edge of the field, such as a search button (end)"
+  },
+  "input-group--attached-select-attached": {
+    "sets": [],
+    "why": "markup only: a Select joined to the outer edge, such as a unit or currency choice (start or end)"
+  },
+  "legend--legend-visible-default": {
+    "sets": [],
+    "why": "markup only: the native legend as the fieldset's first child, shown as secondary text at the label size"
+  },
+  "legend--legend-hidden-read-by-screen-readers": {
+    "sets": [],
+    "why": "markup only: the legend kept for assistive technology only, off the screen (hideLegend), when a heading above already says it"
   }
 }
