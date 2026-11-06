@@ -34,7 +34,7 @@ import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { useHotkey, isMac } from '../../utils/hotkey.ts';
 import { Dialog } from '../../components/Dialog/Dialog.tsx';
-import { CommandMenu } from '../../components/CommandMenu/CommandMenu.jsx';
+import { CommandMenu } from '../../components/CommandMenu/CommandMenu.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 
 

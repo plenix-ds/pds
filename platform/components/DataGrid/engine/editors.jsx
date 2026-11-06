@@ -16,7 +16,7 @@ import { Select } from '../../Input/Input.tsx';
 import { useDirection } from '../../../providers/DirectionProvider.tsx';
 import { DatePicker } from '../../DatePicker/DatePicker.tsx';
 import { Combobox } from '../../Combobox/Combobox.tsx';
-import { EntityPicker } from '../../EntityPicker/EntityPicker.jsx';
+import { EntityPicker } from '../../EntityPicker/EntityPicker.tsx';
 import { Avatar } from '../../Avatar/Avatar.tsx';
 import { EditorMessage } from './parts.jsx';
 

@@ -1297,7 +1297,7 @@
       "platform/design-system/parts/w05C.{records,labs,docs}.js + .css",
       "platform/exports/w05C.{js,css}",
       "platform/standards/web-native-map.d/w05C.json",
-      "platform/components/CommandMenu/CommandMenu.jsx",
+      "platform/components/CommandMenu/CommandMenu.tsx",
       "platform/components/CommandMenu/command-menu.css",
       "platform/tokens/components/command-menu.tokens.json",
       "platform/patterns/CommandPalette/CommandPalette.jsx",
@@ -1539,7 +1539,7 @@
       "platform/components/Cascader/Cascader.tsx",
       "platform/components/Cascader/cascader.css",
       "platform/tokens/components/cascader.tokens.json",
-      "platform/components/EntityPicker/EntityPicker.jsx",
+      "platform/components/EntityPicker/EntityPicker.tsx",
       "platform/components/EntityPicker/entity-picker.css",
       "platform/tokens/components/entity-picker.tokens.json",
       "platform/components/TimePicker/TimePicker.tsx",
@@ -4731,7 +4731,7 @@
    "wave": 5,
    "lane": "C",
    "files": [
-    "platform/components/CommandMenu/CommandMenu.jsx",
+    "platform/components/CommandMenu/CommandMenu.tsx",
     "platform/components/CommandMenu/command-menu.css",
     "platform/tokens/components/command-menu.tokens.json"
    ],
@@ -5399,7 +5399,7 @@
    "wave": 7,
    "lane": "B",
    "files": [
-    "platform/components/EntityPicker/EntityPicker.jsx",
+    "platform/components/EntityPicker/EntityPicker.tsx",
     "platform/components/EntityPicker/entity-picker.css",
     "platform/tokens/components/entity-picker.tokens.json"
    ],
@@ -12102,7 +12102,7 @@
    "target": "CommandMenu",
    "targetKind": "component",
    "files": [
-    "platform/components/CommandMenu/CommandMenu.jsx",
+    "platform/components/CommandMenu/CommandMenu.tsx",
     "platform/components/CommandMenu/command-menu.css",
     "platform/tokens/components/command-menu.tokens.json"
    ],
@@ -13144,7 +13144,7 @@
    "target": "EntityPicker",
    "targetKind": "component",
    "files": [
-    "platform/components/EntityPicker/EntityPicker.jsx",
+    "platform/components/EntityPicker/EntityPicker.tsx",
     "platform/components/EntityPicker/entity-picker.css",
     "platform/tokens/components/entity-picker.tokens.json"
    ],
@@ -13173,7 +13173,7 @@
    "target": "EntityPicker",
    "targetKind": "component",
    "files": [
-    "platform/components/EntityPicker/EntityPicker.jsx",
+    "platform/components/EntityPicker/EntityPicker.tsx",
     "platform/components/EntityPicker/entity-picker.css",
     "platform/tokens/components/entity-picker.tokens.json"
    ],
