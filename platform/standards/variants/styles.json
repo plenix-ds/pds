@@ -2846,5 +2846,63 @@
   "command-palette--scope-scoped": {
     "sets": [],
     "why": "markup only: opens only while focus is inside the region the scope ref names"
+  },
+  "checkbox--values-checked": {
+    "sets": [
+      {
+        "property": "accent-color",
+        "part": "input",
+        "token": "--plx-comp-check-input-accent-color"
+      }
+    ],
+    "why": ".plx-check__input: the native checkbox, filled by the browser in this accent color when checked"
+  },
+  "checkbox--values-unchecked": {
+    "sets": [],
+    "why": "markup only: the native checkbox with no mark; the browser draws it"
+  },
+  "checkbox--values-partly-indeterminate": {
+    "sets": [],
+    "why": "markup only: the native indeterminate state, set from script; the browser draws the dash"
+  },
+  "checkbox--values-disabled": {
+    "sets": [
+      {
+        "property": "opacity",
+        "part": "block",
+        "token": "--plx-comp-check-input-disabled-opacity"
+      }
+    ],
+    "why": ".plx-check:has(.plx-check__input:disabled): faded, with a not-allowed cursor"
+  },
+  "character-counter--count-character-counter": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "counter",
+        "token": "--plx-comp-field-counter-text"
+      },
+      {
+        "property": "font-size",
+        "part": "counter",
+        "token": "--plx-comp-field-counter-font-size"
+      },
+      {
+        "property": "font-family",
+        "part": "count",
+        "token": "--plx-comp-field-counter-font-family"
+      }
+    ],
+    "why": ".plx-field__counter and .plx-field__count in field.css (the counter belongs to Field)"
+  },
+  "character-counter--count-over-the-limit": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "counter",
+        "token": "--plx-comp-field-counter-over-text"
+      }
+    ],
+    "why": ".plx-field__counter.is-over in field.css"
   }
 }
