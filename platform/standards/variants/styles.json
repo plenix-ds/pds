@@ -4521,5 +4521,94 @@
   "wizard-dialog--variant-full-screen": {
     "sets": [],
     "why": "WizardDialog passes size full to Dialog: dialog.css .plx-dialog--full sets block-size 100%, max-block-size 100% and max-inline-size none, values with no token"
+  },
+  "user-card--variant-with-actions": {
+    "sets": [
+      {
+        "property": "column-gap",
+        "part": "actions",
+        "token": "--plx-comp-user-card-actions-gap"
+      },
+      {
+        "property": "row-gap",
+        "part": "actions",
+        "token": "--plx-comp-user-card-actions-gap"
+      }
+    ],
+    "why": "user-card.css: .plx-user-card__actions, the row of actions under the identity (flex-wrap: wrap has no token)"
+  },
+  "user-card--variant-default": {
+    "sets": [],
+    "why": "markup only: the default card has no actions row and no modifier; --compact and --cover are the other variations"
+  },
+  "role-label--role-editor": {
+    "sets": [
+      {
+        "property": "column-gap",
+        "part": "block",
+        "token": "--plx-comp-role-label-gap"
+      },
+      {
+        "property": "--plx-comp-icon-size",
+        "part": "icon",
+        "token": "--plx-comp-role-label-icon-size"
+      }
+    ],
+    "why": "role-label.css: .plx-tag.plx-role-label and .plx-role-label__icon; the editor role picks the icon and the tag's tone, drawn by Icon and Tag"
+  },
+  "role-label--role-owner": {
+    "sets": [
+      {
+        "property": "column-gap",
+        "part": "block",
+        "token": "--plx-comp-role-label-gap"
+      },
+      {
+        "property": "--plx-comp-icon-size",
+        "part": "icon",
+        "token": "--plx-comp-role-label-icon-size"
+      }
+    ],
+    "why": "role-label.css: .plx-tag.plx-role-label and .plx-role-label__icon; the owner role picks the icon and the tag's tone, drawn by Icon and Tag"
+  },
+  "role-label--role-viewer": {
+    "sets": [
+      {
+        "property": "column-gap",
+        "part": "block",
+        "token": "--plx-comp-role-label-gap"
+      },
+      {
+        "property": "--plx-comp-icon-size",
+        "part": "icon",
+        "token": "--plx-comp-role-label-icon-size"
+      }
+    ],
+    "why": "role-label.css: .plx-tag.plx-role-label and .plx-role-label__icon; the viewer role picks the icon and the tag's tone, drawn by Icon and Tag"
+  },
+  "thumbnail--content-an-image-default-when-src-is-given": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-thumbnail-background"
+      },
+      {
+        "property": "block-size",
+        "part": "block",
+        "token": "--plx-comp-thumbnail-height"
+      },
+      {
+        "property": "inline-size",
+        "part": "block",
+        "token": "--plx-comp-thumbnail-width"
+      },
+      {
+        "property": "border-radius",
+        "part": "block",
+        "token": "--plx-comp-thumbnail-radius"
+      }
+    ],
+    "why": "the base .plx-thumbnail: the picture fills the box (object-fit: cover); the icon content is --icon"
   }
 }
