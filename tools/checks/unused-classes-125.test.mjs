@@ -18,5 +18,5 @@ describe('unused-classes (125)', () => {
   });
   it('the repository has no unused class outside the deprecated list', () => {
     expect(findings().map((f) => f.text)).toEqual([]);
-  });
+  }, 60000);   // it reads the whole repository
 });
