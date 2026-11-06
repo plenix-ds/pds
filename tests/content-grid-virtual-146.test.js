@@ -3,6 +3,7 @@
 // Written first (proof first): before, ContentGrid draws every card and has no virtualized prop. In left to right and right to left:
 //   default (virtualized off): every card is drawn, nothing else changes; virtualized: 2,000 cards, only the rows in view are in the page, each card knows its place (aria-setsize 2000),
 //   the grid is a scroll area at its container's height; the column count follows the width; a card that has the focus stays drawn when scrolled out of view;
+//   a card taller than the rest makes its row that tall, exactly as in the same grid drawn all at once (nothing is cut at a fixed row height);
 //   with layout masonry or justified, virtualized is ignored (every card drawn) with one development warning.
 const assert = require('assert/strict');
 const { serve, launch } = require('./lib');
@@ -50,6 +51,17 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
       const mid = await stats(), far = await page.evaluate(() => Math.max(...[...document.querySelectorAll('.plx-content-grid > li')].map((l) => Number(l.getAttribute('aria-posinset')))));
       assert.ok(far > 500 && mid.lis < 200, T + 'scrolled: the window moved (last drawn card ' + far + ', ' + mid.lis + ' in the page, the focused one kept)');
 
+      // a tall card: the virtualized grid looks as the one drawn all at once
+      const rowsOf = (props) => page.evaluate(async (dir, props) => {
+        window.__root && window.__root.unmount(); document.documentElement.setAttribute('dir', dir); document.querySelector('main').innerHTML = '<div id="c"></div>'; const h = React.createElement;
+        window.__root = ReactDOM.createRoot(document.getElementById('c'));
+        window.__root.render(h('div', { style: { blockSize: '500px', inlineSize: '800px' } }, h(Plenix.ContentGrid, Object.assign({ label: 'Cards', size: 'md' }, props), Array.from({ length: 40 }, (_, i) => h('div', { key: i, className: 'card', style: { blockSize: i === 0 ? '380px' : '120px' } }, 'Card ' + i)))));
+        await new Promise((r) => setTimeout(r, 1000));
+        const lis = [...document.querySelectorAll('.plx-content-grid > li')], ul = document.querySelector('.plx-content-grid').getBoundingClientRect().top;
+        return lis.slice(0, 12).map((l) => [Math.round(l.getBoundingClientRect().top - ul), Math.round(l.getBoundingClientRect().height)]);
+      }, dir, props);
+      const plain = await rowsOf({}), virt = await rowsOf({ virtualized: true });
+      assert.deepEqual(virt.slice(0, 8), plain.slice(0, 8), T + 'a tall card makes its row that tall, as in the grid drawn all at once: ' + JSON.stringify({ plain: plain.slice(0, 6), virt: virt.slice(0, 6) }));
       // masonry and justified ignore it, with one warning
       warnings.length = 0;
       await mount({ virtualized: true, layout: 'masonry' }, 80, 800); s = await stats();

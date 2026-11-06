@@ -13,7 +13,7 @@
    Props:
      count: how many items there are
      mode: "fixed" (default: every item is one row of --plx-sys-virtual-item-size) or "measured" (items take their own
-       size; the token is the estimate for the items not rendered)
+       size, in a grid each row the height of its tallest item; the token is the estimate for the rows not rendered)
      axis: "y" (default, a vertical list) or "x" (a horizontal strip)
      grid: true lays items out in rows of as many columns as fit (a CSS grid container); gaps then stand for whole rows
      overscan: how many rows are rendered beyond each edge of the view (default 4)
@@ -96,9 +96,15 @@ export function useVirtualizer({ count = 0, mode = 'fixed', axis = 'y', grid = f
       }
     }
     if (mode === 'measured') {
+      // a list: each item's own size. A grid: each row's, the tallest of its cards, with the gap between rows (so a gallery of cards of
+      // different heights looks as the same cards drawn all at once)
+      const rowGap = grid ? parseFloat(getComputedStyle(el).rowGap) || 0 : 0;
+      const rowSize = new Map<number, number>();
       el.querySelectorAll<HTMLElement>(':scope > [data-plx-virtual-index]').forEach((it) => {
-        sizes.current.set(Number(it.getAttribute('data-plx-virtual-index')), horizontal ? it.offsetWidth : it.offsetHeight);
+        const index = Number(it.getAttribute('data-plx-virtual-index')), size = horizontal ? it.offsetWidth : it.offsetHeight;
+        if (grid) { const row = Math.floor(index / columns); rowSize.set(row, Math.max(rowSize.get(row) || 0, size + rowGap)); } else sizes.current.set(index, size);
       });
+      if (grid) rowSize.forEach((size, row) => sizes.current.set(row, size));
     }
     const offset = Math.abs(horizontal ? el.scrollLeft : el.scrollTop);
     const size = horizontal ? el.clientWidth : el.clientHeight;
@@ -134,7 +140,7 @@ export function useVirtualizer({ count = 0, mode = 'fixed', axis = 'y', grid = f
   // item while scroll anchoring shifts the offset by the difference (no back-and-forth between two windows)
   let first: number;
   const last = shown.current;
-  if (mode === 'measured' && !grid && view.offset >= last.start * pitch) {
+  if (mode === 'measured' && view.offset >= last.start * pitch) {
     let pos = last.start * pitch, i = last.start;
     while (i < last.end && pos + (sizes.current.get(i) || pitch) <= view.offset) { pos += sizes.current.get(i) || pitch; i++; }
     if (i >= last.end) i += Math.floor((view.offset - pos) / pitch);
@@ -143,7 +149,7 @@ export function useVirtualizer({ count = 0, mode = 'fixed', axis = 'y', grid = f
   let fill = 0, covered = 0;
   const target = view.size || pitch * 10;
   while (first + fill < rows && covered < target) {
-    covered += mode === 'measured' && !grid ? (sizes.current.get(first + fill) || pitch) : pitch;
+    covered += mode === 'measured' ? (sizes.current.get(first + fill) || pitch) : pitch;
     fill++;
   }
   const startRow = Math.max(0, first - overscan);

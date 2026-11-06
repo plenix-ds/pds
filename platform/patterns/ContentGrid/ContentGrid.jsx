@@ -12,8 +12,8 @@
      virtualized: true draws only the card rows in view (default false; ADR 0019): the grid becomes a scroll area at its container's
        block size, so give the container a height. The columns follow the width and size as today's grid; each card keeps its place in
        the whole set (aria-posinset of aria-setsize), and a card that has the focus stays drawn when it scrolls out of view. Only for
-       layout "grid" (masonry and justified ignore it, with one development warning); the cards are a flat list of equal-height rows
-       (a card's row is its size's width times the 4:3 ratio, in the data tokens), so a card taller than that is cut
+       layout "grid" (masonry and justified ignore it, with one development warning); the cards are a flat list
+       (a row is as tall as its tallest card, as in the same grid drawn all at once; the 4:3 size is only the estimate for the rows not yet drawn)
      label: names the list
      className: more classes on the grid
      children: the cards; each child is one list item (null, undefined and false are skipped). In justified rows each
@@ -56,11 +56,11 @@ export function ContentGrid({ size = 'md', layout = 'grid', virtualized = false,
 // the virtualized grid (ADR 0019): the same list, a scroll area at its container's height, only the rows in view drawn
 function VirtualGrid({ size, label, className, children }) {
   const cards = React.Children.toArray(children).filter((c) => c !== null && c !== undefined && c !== false);
-  const v = useVirtualizer({ count: cards.length, grid: true });
+  const v = useVirtualizer({ count: cards.length, grid: true, mode: 'measured' });
   return (
     <ul ref={v.viewportRef} aria-label={label} className={cx('plx-content-grid', 'plx-content-grid--' + size, 'plx-content-grid--virtual', className)}>
       {cards.length ? <VirtualProbe /> : null}
-      {v.segments.map((s) => (s.gap ? <VirtualGap key={s.key} count={s.count} /> : <li key={s.key} className="plx-content-grid__item plx-content-grid__item--virtual" {...v.itemProps(s.index)}>{cards[s.index]}</li>))}
+      {v.segments.map((s) => (s.gap ? <VirtualGap key={s.key} count={s.count} /> : <li key={s.key} className="plx-content-grid__item" {...v.itemProps(s.index)}>{cards[s.index]}</li>))}
     </ul>
   );
 }

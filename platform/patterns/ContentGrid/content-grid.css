@@ -27,6 +27,5 @@
 .plx-content-grid--justified>[data-plx-ratio="21-9"]{flex-basis:calc(var(--plx-comp-content-grid-min) * var(--plx-comp-content-grid-ratio-21-9));flex-grow:var(--plx-comp-content-grid-ratio-21-9);}
 .plx-content-grid--justified>[data-plx-ratio="3-4"]{flex-basis:calc(var(--plx-comp-content-grid-min) * var(--plx-comp-content-grid-ratio-3-4));flex-grow:var(--plx-comp-content-grid-ratio-3-4);}
 .plx-content-grid--justified>[data-plx-ratio="9-16"]{flex-basis:calc(var(--plx-comp-content-grid-min) * var(--plx-comp-content-grid-ratio-9-16));flex-grow:var(--plx-comp-content-grid-ratio-9-16);}
-/* virtualized (ADR 0019): a scroll area at the container's height; a card's row is the size's width times the 4:3 ratio; the gap pieces stand for whole rows */
+/* virtualized (ADR 0019): a scroll area at the container's height; a row's estimate (before it is drawn and measured) is the size's width times the 4:3 ratio; the gap pieces stand for whole rows */
 .plx-content-grid--virtual{--plx-sys-virtual-item-gap:var(--plx-comp-content-grid-row-gap);--plx-sys-virtual-item-size:calc(var(--plx-comp-content-grid-min) * var(--plx-comp-content-grid-ratio-4-3));align-content:start;block-size:100%;overflow-x:hidden;overflow-y:auto;position:relative;}
-.plx-content-grid__item--virtual{block-size:var(--plx-sys-virtual-item-size);overflow-x:hidden;overflow-y:hidden;}
