@@ -33,7 +33,7 @@ DSParts.docs.push({
   }
 });
 /* Hover card: the Popover's write-up with its own pointer, keyboard and focus rows (the hover card opens on hover and on
-   focus and takes no focus into itself); the rest is the Popover's (#120 batch 7). */
+   focus and takes no focus into itself); the rest is the Popover's. */
 (function () {
   var p = W05A_POPOVER;
   DSParts.docs.push({
