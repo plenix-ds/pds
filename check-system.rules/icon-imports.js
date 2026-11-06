@@ -35,7 +35,7 @@ const EXCEPTIONS = [
     reason: 'fileIcon(name, type) is public and returns a name (a caller may print or compare it); the File draws fileIconModule, the same icon imported' },
   { file: 'platform/components/Thumbnail/Thumbnail.tsx', param: 'document',
     reason: 'the documented default of the icon prop (the spec reads defaults from the signature); the component draws its module' },
-  { file: 'platform/patterns/PermissionSummary/PermissionSummary.jsx', param: 'lock',
+  { file: 'platform/patterns/PermissionSummary/PermissionSummary.tsx', param: 'lock',
     reason: 'the documented default of the icon prop (the spec reads defaults from the signature); the component draws its module' },
   { file: 'platform/providers/apps.ts', inside: ['PLENIX_APPS'],
     reason: 'PLENIX_APPS is public and its icons are names (an application may print or compare them); the header, the switcher and the brand mark draw appIcon(app), the same icon imported' },

@@ -29,7 +29,7 @@ import { QuickFilter as QuickFilterJs } from '../../patterns/QuickFilter/QuickFi
 const QuickFilter: any = QuickFilterJs;
 import { EntityHeader as EntityHeaderJs } from '../../patterns/EntityHeader/EntityHeader.jsx';
 const EntityHeader: any = EntityHeaderJs;
-import { PropertyList as PropertyListJs } from '../../patterns/PropertyList/PropertyList.jsx';
+import { PropertyList as PropertyListJs } from '../../patterns/PropertyList/PropertyList.tsx';
 const PropertyList: any = PropertyListJs;
 import { Wizard as WizardJs } from '../../patterns/Wizard/Wizard.jsx';
 const Wizard: any = WizardJs;

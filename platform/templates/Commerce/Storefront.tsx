@@ -34,7 +34,7 @@ const ViewMenu: any = ViewMenuJs;
 import { QuickFilter as QuickFilterJs } from '../../patterns/QuickFilter/QuickFilter.jsx';
 const QuickFilter: any = QuickFilterJs;
 import { ContentGrid } from '../../patterns/ContentGrid/ContentGrid.tsx';
-import { ProductCard as ProductCardJs, ProductPrice as ProductPriceJs } from '../../patterns/ProductCard/ProductCard.jsx';
+import { ProductCard as ProductCardJs, ProductPrice as ProductPriceJs } from '../../patterns/ProductCard/ProductCard.tsx';
 const ProductCard: any = ProductCardJs;
 const ProductPrice: any = ProductPriceJs;
 import { ProductOptions } from '../../components/ProductOptions/ProductOptions.tsx';

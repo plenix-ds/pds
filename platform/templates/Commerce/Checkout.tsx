@@ -25,7 +25,7 @@ import { DeleteFlow } from '../../patterns/DeleteFlow/DeleteFlow.tsx';
 import { Wizard as WizardJs } from '../../patterns/Wizard/Wizard.jsx';
 const Wizard: any = WizardJs;
 import { Form, FormSection, FormActions } from '../../patterns/Form/Form.tsx';
-import { PropertyList as PropertyListJs } from '../../patterns/PropertyList/PropertyList.jsx';
+import { PropertyList as PropertyListJs } from '../../patterns/PropertyList/PropertyList.tsx';
 const PropertyList: any = PropertyListJs;
 import { Field } from '../../components/Field/Field.tsx';
 import { Input } from '../../components/Input/Input.tsx';
