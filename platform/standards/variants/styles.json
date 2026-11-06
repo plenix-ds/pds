@@ -5212,7 +5212,7 @@
         "token": "--plx-comp-retry-status-margin-block-start"
       }
     ],
-    "why": "retry.css: .plx-retry__status holds the countdown (\"Retrying in \u2026\") while the next attempt waits"
+    "why": "retry.css: .plx-retry__status holds the countdown (\"Retrying in …\") while the next attempt waits"
   },
   "retry-pattern--kind-retry-count": {
     "sets": [
@@ -6025,5 +6025,33 @@
       }
     ],
     "why": ".plx-event-chip--interactive in event-chip.css: a hover fill and a focus ring on an event that opens"
+  },
+  "product-card--variant-sale": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "compare",
+        "token": "--plx-comp-product-card-compare-text"
+      },
+      {
+        "property": "font-size",
+        "part": "compare",
+        "token": "--plx-comp-product-card-compare-font-size"
+      },
+      {
+        "property": "font-family",
+        "part": "compare",
+        "token": "--plx-comp-product-card-price-font-family"
+      }
+    ],
+    "why": "product-card.css: .plx-product-card__compare, the price it was before the sale, struck through (text-decoration-line: line-through has no token) and smaller than the price; the Sale Badge is the Badge component's"
+  },
+  "product-card--variant-out-of-stock": {
+    "sets": [],
+    "why": "markup only: the Out of stock Badge replaces the action (the Badge and Button components draw them); product-card.css has no modifier for it"
+  },
+  "product-card--variant-grid-default": {
+    "sets": [],
+    "why": "markup only: grid is the base card (the picture on top); .plx-product-card--list is the other layout"
   }
 }
