@@ -3655,5 +3655,31 @@
       }
     ],
     "why": ".plx-chart-reference--x: the line up the plot at a date, its label beside the line at the top"
+  },
+  "box-plot--outliers-with-outliers": {
+    "sets": [
+      {
+        "property": "r",
+        "part": "outlier",
+        "token": "--plx-comp-box-plot-outlier-radius"
+      }
+    ],
+    "why": ".plx-box-plot__outlier, the points beyond the whiskers (1.5 times the box's length)"
+  },
+  "box-plot--orientation-vertical": {
+    "sets": [],
+    "why": "markup only: groups along the bottom, each a box from the first to the third quartile with a median line, drawn by the chart engine"
+  },
+  "box-plot--orientation-horizontal": {
+    "sets": [],
+    "why": "markup only: the same boxes in rows, with the value axis along the bottom"
+  },
+  "bullet-chart--orientation-horizontal": {
+    "sets": [],
+    "why": "markup only: one row per measure, a value bar over its ranges with a target line (horizontal)"
+  },
+  "bullet-chart--orientation-vertical": {
+    "sets": [],
+    "why": "markup only: one column per measure, a value bar over its ranges with a target line (vertical)"
   }
 }
