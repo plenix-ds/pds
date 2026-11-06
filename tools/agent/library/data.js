@@ -10,7 +10,7 @@ const EX = {   // existing Platform code (for extend targets)
   Stack: ['platform/components/Stack/Stack.tsx', 'platform/components/Stack/stack.css'],
   Columns: ['platform/components/Columns/Columns.tsx', 'platform/components/Columns/columns.css'],
   Preview: ['platform/components/Preview/Preview.tsx', 'platform/components/Preview/preview.css'],
-  ContentGrid: ['platform/patterns/ContentGrid/ContentGrid.jsx', 'platform/patterns/ContentGrid/content-grid.css'],
+  ContentGrid: ['platform/patterns/ContentGrid/ContentGrid.tsx', 'platform/patterns/ContentGrid/content-grid.css'],
   AppShell: ['platform/patterns/AppShell/AppShell.tsx', 'platform/patterns/AppShell/app-shell.css'],
   BrandMark: ['platform/components/Brand/Brand.tsx', 'platform/components/Brand/brand.css', 'platform/brand/'],
   ColorSwatch: ['platform/components/ColorSwatch/ColorSwatch.tsx', 'platform/components/ColorSwatch/color-swatch.css'],

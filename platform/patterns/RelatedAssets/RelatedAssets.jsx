@@ -10,7 +10,7 @@ import { devWarn } from '../../utils/devWarn.ts';
 import { Carousel } from '../../components/Carousel/Carousel.tsx';
 import { MediaCard } from '../../components/Card/Card.tsx';
 import { EmptyState } from '../../components/EmptyState/EmptyState.tsx';
-import { ContentGrid } from '../ContentGrid/ContentGrid.jsx';
+import { ContentGrid } from '../ContentGrid/ContentGrid.tsx';
 import { Stack } from '../../components/Stack/Stack.tsx';
 import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';

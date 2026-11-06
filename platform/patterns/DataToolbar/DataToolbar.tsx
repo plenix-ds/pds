@@ -17,7 +17,17 @@ import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { Toolbar } from '../../components/Toolbar/Toolbar.tsx';
 
-export function DataToolbar({ label, start, end, className, children }) {
+/** @public */
+export type DataToolbarProps = {
+  label?: string;
+  /** controls at the start of the row */
+  start?: React.ReactNode;
+  /** controls at the end of the row */
+  end?: React.ReactNode;
+  className?: string;
+  children?: React.ReactNode;
+};
+export function DataToolbar({ label, start, end, className, children }: DataToolbarProps) {
   return (
     <Toolbar label={label} className={cx('plx-data-toolbar', className)}>
       {start ? <Toolbar.Group className="plx-data-toolbar__group">{start}</Toolbar.Group> : null}

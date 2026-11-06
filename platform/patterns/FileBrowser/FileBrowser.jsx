@@ -75,7 +75,7 @@ import { PromptDialog } from '../../components/Dialog/Dialog.tsx';
 import { CommandBar, CommandBarSearch } from '../CommandBar/CommandBar.jsx';
 import { SortPanel } from '../SortPanel/SortPanel.jsx';
 import { ViewMenu } from '../ViewMenu/ViewMenu.jsx';
-import { ContentGrid } from '../ContentGrid/ContentGrid.jsx';
+import { ContentGrid } from '../ContentGrid/ContentGrid.tsx';
 import { DeleteFlow } from '../DeleteFlow/DeleteFlow.tsx';
 import { FileList, sortFiles } from '../FileList/FileList.jsx';
 import { useDraggable, useDropTarget } from '../../utils/dnd.ts';

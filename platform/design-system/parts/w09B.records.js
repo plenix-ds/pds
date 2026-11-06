@@ -238,7 +238,7 @@ DSParts.records.push(function (H) {
   var V4 = { id: 'v4', title: 'Version 4', meta: '14 Oct 2026', image: { src: ART('16'), alt: 'Hero banner, version 4' }, values: { format: 'PNG', size: '1.8 MB', width: '2560 px', height: '1440 px', color: 'Display P3', owner: 'Alex Kim' } };
   var compare = function (o) { return h(P.ComparisonView, Object.assign({ label: 'Compare versions of Hero banner', items: VERSIONS, attributes: ATTRS }, o)); };
   var comparisonView = { id: 'comparison-view', lab: true, icon: 'view-table', sec: 'data-display', sub: 'Specialized displays', leaf: 'Comparison view', title: 'Comparison view',
-    plenix: 'ComparisonView', src: 'patterns/ComparisonView/ComparisonView.jsx', level: 'Pattern', interaction: 'Display',
+    plenix: 'ComparisonView', src: 'patterns/ComparisonView/ComparisonView.tsx', level: 'Pattern', interaction: 'Display',
     aliases: ['Compare', 'Side-by-side view', 'Version comparison', 'Before and after', 'Diff view'],
     text: 'Two to four items or versions side by side, with their differences marked. Shown as a pane per item (its name, its version or date in the data font, its preview, and its attributes in rows aligned across the panes); as the same attributes in a table with a column per item; or as two pictures over each other with a slider that moves the line between before and after. Values that differ from the first item carry a Changed badge, the count of differences heads the view, and Show only differences hides the rows that match. Panes can scroll together (scroll) and stack on a narrow view.',
     use: ['Reviewing versions of an asset, a document or a setting before approving or restoring one', 'Choosing between a few options across the same attributes', 'The slider for pictures: retouching, crops, color changes', 'Naming each pane by its version and date'],
@@ -262,7 +262,7 @@ DSParts.records.push(function (H) {
 
   // 10 Patterns › Review and approval › Compare: the same ComparisonView (duplicate leaf)
   var comparePattern = { id: 'compare', icon: 'view-table', sec: 'patterns', sub: 'Review and approval', leaf: 'Compare', title: 'Compare',
-    plenix: 'ComparisonView', src: 'patterns/ComparisonView/ComparisonView.jsx', level: 'Pattern', interaction: 'Display', variantClasses: [], docsFrom: 'comparison-view',
+    plenix: 'ComparisonView', src: 'patterns/ComparisonView/ComparisonView.tsx', level: 'Pattern', interaction: 'Display', variantClasses: [], docsFrom: 'comparison-view',
     aliases: ['Compare versions', 'Side by side', 'Diff'],
     text: 'Comparing is the comparison view (ComparisonView): two to four items or versions side by side, their attributes aligned. Differences are marked with a Changed badge and counted. It offers Show only differences for long lists, a table form, and a before-and-after slider for pictures.',
     use: ['Before approving or restoring a version: the versions side by side', 'Choosing between options on the same attributes'], avoid: ['More items than fit side by side: let people pick which to compare'],

@@ -12,7 +12,7 @@
        import is inlined by the bundler, so nothing is fetched.
 */
 import React from 'react';
-import { ManageColumnsDialog } from '../../../patterns/ColumnsMenu/ColumnsMenu.jsx';
+import { ManageColumnsDialog } from '../../../patterns/ColumnsMenu/ColumnsMenu.tsx';
 import { MenuDivider, MenuItem, MenuRadioGroup } from '../../Menu/Menu.tsx';
 import { typeOf } from './helpers.tsx';
 import SortAscendingIcon from 'plenix-platform/icons/plenix/sort-ascending';

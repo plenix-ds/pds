@@ -60,44 +60,70 @@ const MODES = ['columns', 'matrix', 'slider'];
 // the slider's drawing area (SVG user units; the picture fills it, cropped to the ratio)
 const RATIOS = { '16-9': [1600, 900], '4-3': [1600, 1200], '3-2': [1500, 1000], '1-1': [1200, 1200] };
 
-const text = (v) => (v === undefined || v === null ? '' : typeof v === 'object' ? '' : String(v));
+const text = (v: any) => (v === undefined || v === null ? '' : typeof v === 'object' ? '' : String(v));
 
+/** @public one item compared */
+export type ComparisonItem = { id: string | number; title: string; meta?: string; image?: { src: string; alt?: string }; media?: React.ReactNode; content?: React.ReactNode; values?: Record<string, React.ReactNode> };
+/** @public a row compared */
+export type ComparisonAttribute = { key: string; label: string; kind?: 'data' | 'text' };
+/** @public */
+export type ComparisonMode = 'columns' | 'matrix' | 'slider';
+/** @public */
+export type ComparisonViewProps = {
+  items?: ComparisonItem[];
+  attributes?: ComparisonAttribute[];
+  mode?: ComparisonMode;
+  defaultMode?: ComparisonMode;
+  onModeChange?(mode: ComparisonMode): void;
+  modes?: ComparisonMode[];
+  highlight?: boolean;
+  onlyDifferences?: boolean;
+  defaultOnlyDifferences?: boolean;
+  onOnlyDifferencesChange?(on: boolean): void;
+  scroll?: boolean;
+  ratio?: '16-9' | '4-3' | '3-2' | '1-1';
+  defaultPosition?: number;
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+  label?: string;
+  strings?: Record<string, string>;
+  className?: string;
+};
 export function ComparisonView({ items = [], attributes = [], mode, defaultMode = 'columns', onModeChange, modes, highlight = true, onlyDifferences, defaultOnlyDifferences = false,
-  onOnlyDifferencesChange, scroll = false, ratio = '16-9', defaultPosition = 50, headingLevel = 3, label, strings, className }) {
-  const t = useStrings('comparisonView', strings);
+  onOnlyDifferencesChange, scroll = false, ratio = '16-9', defaultPosition = 50, headingLevel = 3, label, strings, className }: ComparisonViewProps) {
+  const t: any = useStrings('comparisonView', strings);
   const uid = 'plx-cmp' + React.useId().replace(/[^a-zA-Z0-9]/g, '');
-  const [ownMode, setOwnMode] = React.useState(MODES.indexOf(defaultMode) >= 0 ? defaultMode : 'columns');
+  const [ownMode, setOwnMode] = React.useState<any>(MODES.indexOf(defaultMode) >= 0 ? defaultMode : 'columns');
   const current = mode !== undefined && MODES.indexOf(mode) >= 0 ? mode : ownMode;
-  const [ownOnly, setOwnOnly] = React.useState(!!defaultOnlyDifferences);
+  const [ownOnly, setOwnOnly] = React.useState<any>(!!defaultOnlyDifferences);
   const only = onlyDifferences === undefined ? ownOnly : !!onlyDifferences;
-  const [pos, setPos] = React.useState(Math.min(100, Math.max(0, Number(defaultPosition) || 0)));
-  const bodies = React.useRef([]);
-  const syncing = React.useRef(false);
+  const [pos, setPos] = React.useState<any>(Math.min(100, Math.max(0, Number(defaultPosition) || 0)));
+  const bodies = React.useRef<any>([]);
+  const syncing = React.useRef<any>(false);
   const choices = (modes && modes.length ? modes : [current]).filter((x) => MODES.indexOf(x) >= 0);
-  const setMode = (m) => { if (mode === undefined) setOwnMode(m); if (onModeChange) onModeChange(m); };
-  const setOnly = (on) => { if (onlyDifferences === undefined) setOwnOnly(on); if (onOnlyDifferencesChange) onOnlyDifferencesChange(on); };
+  const setMode = (m: any) => { if (mode === undefined) setOwnMode(m); if (onModeChange) onModeChange(m); };
+  const setOnly = (on: any) => { if (onlyDifferences === undefined) setOwnOnly(on); if (onOnlyDifferencesChange) onOnlyDifferencesChange(on); };
 
   // which values differ from the first item's
   const base = items[0] || { values: {} };
-  const differs = (it, a) => it !== base && text((it.values || {})[a.key]) !== text((base.values || {})[a.key]);
+  const differs = (it: any, a: any) => it !== base && text((it.values || {})[a.key]) !== text((base.values || {})[a.key]);
   const changedRows = attributes.filter((a) => items.some((it) => differs(it, a)));
   const rows = only && highlight ? changedRows : attributes;
   const count = changedRows.length;
   const summary = count === 0 ? t.none : count === 1 ? t.one : t.many.replace('{n}', String(count));
-  const valueOf = (it, a) => {
+  const valueOf = (it: any, a: any) => {
     const v = (it.values || {})[a.key];
     const shown = v === undefined || v === null || v === '' ? t.empty : v;
     return a.kind === 'data' ? <span className="plx-comparison-view__data">{shown}</span> : shown;
   };
-  const badge = (it, a) => (highlight && differs(it, a) ? <Badge tone="active" icon={PencilIcon} size="sm">{t.changed}</Badge> : null);
+  const badge = (it: any, a: any) => (highlight && differs(it, a) ? <Badge tone="active" icon={PencilIcon} size="sm">{t.changed}</Badge> : null);
   const H = 'h' + Math.min(6, Math.max(2, headingLevel));
 
   // linked scrolling: one pane's scroll moves the others to the same place
-  const onScroll = (i) => (e) => {
+  const onScroll = (i: any) => (e: any) => {
     if (syncing.current) return;
     syncing.current = true;
     const top = e.currentTarget.scrollTop;
-    bodies.current.forEach((el, j) => { if (el && j !== i && el.scrollTop !== top) el.scrollTop = top; });
+    bodies.current.forEach((el: any, j: any) => { if (el && j !== i && el.scrollTop !== top) el.scrollTop = top; });
     window.requestAnimationFrame(() => { syncing.current = false; });
   };
 
@@ -112,13 +138,13 @@ export function ComparisonView({ items = [], attributes = [], mode, defaultMode 
     </div>
   );
 
-  let body = null;
+  let body: any = null;
   if (current === 'matrix') {
     body = (
       <Table label={(label || t.label) + ': ' + t.matrix} index="key"
-        columns={[{ title: t.attribute, field: 'attribute', kind: 'name', rowLabel: true }].concat(items.map((it, i) => ({
+        columns={([{ title: t.attribute, field: 'attribute', kind: 'name', rowLabel: true }] as any[]).concat(items.map((it, i) => ({
           title: it.title, field: 'i' + i, kind: 'wrap',
-          render: (row) => <span className="plx-comparison-view__cell">{valueOf(it, row.a)}{badge(it, row.a)}</span>
+          render: (row: any) => <span className="plx-comparison-view__cell">{valueOf(it, row.a)}{badge(it, row.a)}</span>
         })))}
         data={rows.map((a) => ({ key: a.key, attribute: a.label, a }))} />
     );
@@ -132,10 +158,10 @@ export function ComparisonView({ items = [], attributes = [], mode, defaultMode 
           <span className="plx-comparison-view__side"><span className="plx-comparison-view__title">{before.title}</span>{before.meta ? <span className="plx-comparison-view__meta">{before.meta}</span> : null}</span>
           <span className="plx-comparison-view__side plx-comparison-view__side--end"><span className="plx-comparison-view__title">{after.title}</span>{after.meta ? <span className="plx-comparison-view__meta">{after.meta}</span> : null}</span>
         </div>
-        <svg className="plx-comparison-view__stage" viewBox={'0 0 ' + box[0] + ' ' + box[1]} role="img" aria-label={before.image.alt + ' · ' + after.image.alt} focusable="false">
+        <svg className="plx-comparison-view__stage" viewBox={'0 0 ' + box[0] + ' ' + box[1]} role="img" aria-label={before.image?.alt + ' · ' + after.image?.alt} focusable="false">
           <defs><clipPath id={uid + '-clip'}><rect x={0} y={0} width={x} height={box[1]} /></clipPath></defs>
-          <image href={after.image.src} x={0} y={0} width={box[0]} height={box[1]} preserveAspectRatio="xMidYMid slice" />
-          <image href={before.image.src} x={0} y={0} width={box[0]} height={box[1]} preserveAspectRatio="xMidYMid slice" clipPath={'url(#' + uid + '-clip)'} />
+          <image href={after.image?.src} x={0} y={0} width={box[0]} height={box[1]} preserveAspectRatio="xMidYMid slice" />
+          <image href={before.image?.src} x={0} y={0} width={box[0]} height={box[1]} preserveAspectRatio="xMidYMid slice" clipPath={'url(#' + uid + '-clip)'} />
           <line className="plx-comparison-view__divider" x1={x} x2={x} y1={0} y2={box[1]} vectorEffect="non-scaling-stroke" />
         </svg>
         <Slider className="plx-comparison-view__position" label={t.position} value={pos} min={0} max={100} unit="%" onChange={setPos} />

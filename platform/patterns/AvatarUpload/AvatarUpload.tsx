@@ -47,17 +47,37 @@ import { useStrings } from '../../providers/LocaleProvider.tsx';
 import TrashIcon from 'plenix-platform/icons/plenix/trash';
 
 
+/** @public the picture a new upload keeps */
+export type AvatarPicture = { url: string; blob: Blob; file: File };
+/** @public */
+export type AvatarUploadProps = {
+  name: string;
+  src?: string;
+  /** a kept picture, or null when it is removed */
+  onChange?(picture: AvatarPicture | null): void;
+  crop?: boolean;
+  removable?: boolean;
+  size?: 'xl' | '2xl';
+  accept?: string;
+  maxSize?: number;
+  description?: string;
+  disabled?: boolean;
+  strings?: Record<string, string>;
+  className?: string;
+  id?: string;
+  'aria-describedby'?: string;
+};
 export function AvatarUpload({ name, src, onChange, crop = true, removable = true, size = '2xl', accept = 'image/png,image/jpeg,image/webp', maxSize,
-  description, disabled = false, strings, className, id, 'aria-describedby': describedBy }) {
+  description, disabled = false, strings, className, id, 'aria-describedby': describedBy }: AvatarUploadProps) {
   devWarn('AvatarUpload', { size }, { size: ['xl','2xl'] });
-  const t = useStrings('avatarUpload', strings);
-  const [pending, setPending] = React.useState(null);   // { url, file } waiting for its crop
-  const [error, setError] = React.useState('');
-  const wrap = React.useRef(null);
+  const t: any = useStrings('avatarUpload', strings);
+  const [pending, setPending] = React.useState<any>(null);   // { url, file } waiting for its crop
+  const [error, setError] = React.useState<any>('');
+  const wrap = React.useRef<any>(null);
   const auto = 'plx-au' + React.useId().replace(/[^a-zA-Z0-9]/g, '');
   const describedAt = useDescribedBy(describedBy, description ? auto + '-hint' : null);   // what its owner (a Field) described, then the hint beside the actions
   const focusChange = () => setTimeout(() => { const inp = wrap.current && wrap.current.querySelector('input[type="file"]'); if (inp) inp.focus(); }, 0);
-  const chosen = (files) => {
+  const chosen = (files: any) => {
     const f = files[0];
     if (!f) return;
     if (!/^image\//.test(f.type)) { setError(t.notImage); return; }
@@ -65,7 +85,7 @@ export function AvatarUpload({ name, src, onChange, crop = true, removable = tru
     setError('');
     const url = URL.createObjectURL(f);
     if (crop) setPending({ url, file: f });
-    else if (onChange) onChange({ url, blob: null, file: f });
+    else if (onChange) onChange({ url, blob: null as any, file: f });
   };
   const word = src ? t.change : t.add;
   return (
@@ -81,9 +101,9 @@ export function AvatarUpload({ name, src, onChange, crop = true, removable = tru
           {description ? <span className="plx-avatar-upload__hint" id={auto + '-hint'}>{description}</span> : null}
         </div>
       </div>
-      {pending ? <ImageCrop src={pending.url} ratio="1-1" output={512} strings={t.crop}
-        onApply={(res) => { setPending(null); if (onChange) onChange({ url: res.url, blob: res.blob, file: pending.file }); focusChange(); }}
-        onCancel={() => { const p = pending; setPending(null); if (onChange) onChange({ url: p.url, blob: null, file: p.file }); focusChange(); }} /> : null}
+      {pending ? <ImageCrop {...({} as any)} src={pending.url} ratio="1-1" output={512} strings={t.crop}
+        onApply={(res: any) => { setPending(null); if (onChange) onChange({ url: res.url, blob: res.blob, file: pending.file }); focusChange(); }}
+        onCancel={() => { const p = pending; setPending(null); if (onChange) onChange({ url: p.url, blob: null as any, file: p.file }); focusChange(); }} /> : null}
       {error ? <Notice tone="danger">{error}</Notice> : null}
     </div>
   );

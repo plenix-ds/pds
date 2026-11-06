@@ -107,7 +107,7 @@ DSParts.records.push(function (H) {
   };
   var OPTIONS = [{ id: 'tags', label: 'Tags', defaultChecked: true }, { id: 'comments', label: 'Comments' }, { id: 'sharing', label: 'Sharing and members' }];
   var duplicateAction = { id: 'duplicate-action', lab: true, icon: 'ed-copy', sec: 'actions', sub: 'Common actions', leaf: 'Duplicate', title: 'Duplicate',
-    plenix: 'DuplicateAction, copyName', src: 'patterns/DuplicateAction/DuplicateAction.jsx', level: 'Pattern', interaction: 'Action', statesFrom: ['button'],
+    plenix: 'DuplicateAction, copyName', src: 'patterns/DuplicateAction/DuplicateAction.tsx', level: 'Pattern', interaction: 'Action', statesFrom: ['button'],
     aliases: ['Copy item', 'Make a copy', 'Clone'],
     text: 'Copies one item and puts the copy next to the original. Copy of the name duplicates at once: the copy is “Copy of Easter banner”, then “Copy of Easter banner (2)”, and a toast gives its name with Undo. Then rename asks first: a small dialog with the copy’s name selected, a line saying what is copied, and checkboxes for what else comes along.',
     use: ['Items people make in similar forms: boards, templates, rules, assets', 'Copy of the name for a quick copy people rename later', 'Then rename when the copy needs its own name now, or a choice of what to copy', 'Comments, members and sharing left out unless people choose them'],
@@ -133,7 +133,7 @@ DSParts.records.push(function (H) {
       }]
     ] };
   var duplicatePattern = { id: 'duplicate-pattern', icon: 'ed-copy', sec: 'patterns', sub: 'Creation and editing', leaf: 'Duplicate', title: 'Duplicate (pattern)',
-    plenix: 'DuplicateAction, copyName', src: 'patterns/DuplicateAction/DuplicateAction.jsx', level: 'Pattern', interaction: 'Action', statesFrom: ['duplicate-action'],
+    plenix: 'DuplicateAction, copyName', src: 'patterns/DuplicateAction/DuplicateAction.tsx', level: 'Pattern', interaction: 'Action', statesFrom: ['duplicate-action'],
     variantClasses: [], docsFrom: 'duplicate-action', aliases: ['Copy flow', 'Clone flow'],
     text: 'The duplicate workflow is the Duplicate action: a copy named “Copy of …” next to the original, with Undo in the toast, or a rename dialog first. Its page is in Actions › Common actions › Duplicate.',
     use: ['Starting a new item from an existing one, in the item’s menu or as a bulk action', 'Saying in the toast what the copy is called'],
@@ -268,7 +268,7 @@ DSParts.records.push(function (H) {
       delegation: d[0], onDelegate: d[1], onEndDelegation: function () { d[1](null); } }, props.a)));
   };
   var assignControl = { id: 'assign-control', lab: true, icon: 'person', sec: 'patterns', sub: 'Review and approval', leaf: 'Assign', title: 'Assign',
-    plenix: 'AssignControl', src: 'patterns/AssignControl/AssignControl.jsx', level: 'Pattern', interaction: 'Selection', statesFrom: ['entity-picker', 'button'],
+    plenix: 'AssignControl', src: 'patterns/AssignControl/AssignControl.tsx', level: 'Pattern', interaction: 'Selection', statesFrom: ['entity-picker', 'button'],
     aliases: ['Assignee', 'Owner', 'Reassign', 'Assign to me'],
     text: 'Shows who is responsible for an item, in one row. Unassigned: the people picker, searchable by name and email, with Assign to me beside it. Assigned: the person’s avatar, name and detail, with Reassign and Unassign; Reassign swaps the row to the picker until a person is chosen (Escape puts it back). Each change is announced.',
     use: ['Tasks, reviews and requests that need one owner', 'Assign to me as the shortcut for the person using the page', 'The assignee’s full name with the avatar, never initials alone'],
@@ -287,7 +287,7 @@ DSParts.records.push(function (H) {
       ['Without Assign to me or Unassign', function () { return h(AsDemo, { value: 'pn', a: { me: null, clearable: false, label: 'Reviewer' } }); }]
     ] };
   var delegate = { id: 'delegate', icon: 'forward', sec: 'patterns', sub: 'Review and approval', leaf: 'Delegate', title: 'Delegate',
-    plenix: 'AssignControl variant="delegate"', src: 'patterns/AssignControl/AssignControl.jsx', level: 'Pattern', interaction: 'Selection', statesFrom: ['entity-picker', 'date-picker'],
+    plenix: 'AssignControl variant="delegate"', src: 'patterns/AssignControl/AssignControl.tsx', level: 'Pattern', interaction: 'Selection', statesFrom: ['entity-picker', 'date-picker'],
     variantClasses: [], docsFrom: 'assign-control', aliases: ['Out of office', 'Act on behalf of', 'Hand over'],
     text: 'Lets someone act for a person for a set time. The row shows to whom, and the start and end dates in the data font. Delegate (or Change) opens a dialog with the person, the dates as a range and a note; the person and both dates are checked when Delegate is pressed. End delegation ends it early.',
     use: ['Approvers and reviewers who will be away', 'Always with an end date; it ends by itself', 'Both names on the affected items: “on behalf of”'],

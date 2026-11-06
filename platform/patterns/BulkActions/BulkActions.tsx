@@ -57,10 +57,10 @@ import { BarActions, foldOrder } from '../CommandBar/BarActions.jsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import { fill } from '../../utils/fill.ts';
 
-const off = (a, count) => !!a.disabled || !count || !!(a.single && count > 1);
+const off = (a: any, count: any) => !!a.disabled || !count || !!(a.single && count > 1);
 
 // "N selected": the number in the data font
-function Count({ count, t }) {
+function Count({ count, t }: any) {
   const [before, after] = String(t.selected).split('{n}');
   return (
     <span className="plx-selection-summary__count" aria-live="polite">
@@ -69,9 +69,9 @@ function Count({ count, t }) {
   );
 }
 // Select all and Clear: disabled, with the reason, until they apply
-function SelectButtons({ count, total, words, onSelectAll, onClear, t }) {
+function SelectButtons({ count, total, words, onSelectAll, onClear, t }: any) {
   const all = total !== undefined && count >= total;
-  const tip = (el, why) => (why ? <Tooltip content={why}>{el}</Tooltip> : el);
+  const tip = (el: any, why: any) => (why ? <Tooltip content={why}>{el}</Tooltip> : el);
   return (
     <>
       {onSelectAll ? tip(<Button size="sm" variant="ghost" disabled={all} onClick={onSelectAll}>{t.selectAll}</Button>, all ? fill(t.allSelected, words) : null) : null}
@@ -80,8 +80,19 @@ function SelectButtons({ count, total, words, onSelectAll, onClear, t }) {
   );
 }
 
-export function SelectionSummary({ count, total, noun, plural, onSelectAll, onClear, strings, className }) {
-  const t = useStrings('bulkActions', strings);
+/** @public */
+export type SelectionSummaryProps = {
+  count: number;
+  total?: number;
+  noun?: string;
+  plural?: string;
+  onSelectAll?(): void;
+  onClear?(): void;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function SelectionSummary({ count, total, noun, plural, onSelectAll, onClear, strings, className }: SelectionSummaryProps) {
+  const t: any = useStrings('bulkActions', strings);
   const words = { noun: noun ?? t.noun, plural: plural || (noun ? noun + 's' : t.plural) };   // the default words come from the catalog
   return (
     <div className={cx('plx-selection-summary', className)}>
@@ -91,19 +102,25 @@ export function SelectionSummary({ count, total, noun, plural, onSelectAll, onCl
   );
 }
 
-export function BulkActions({ count, total, noun, plural, onSelectAll, onClear, actions = [], label, strings, className }) {
-  const t = useStrings('bulkActions', strings);
+/** @public */
+export type BulkActionsProps = SelectionSummaryProps & {
+  /** the commands for the selection */
+  actions?: Array<Record<string, unknown>>;
+  label?: string;
+};
+export function BulkActions({ count, total, noun, plural, onSelectAll, onClear, actions = [], label, strings, className }: BulkActionsProps) {
+  const t: any = useStrings('bulkActions', strings);
   const words = { noun: noun ?? t.noun, plural: plural || (noun ? noun + 's' : t.plural) };   // the default words come from the catalog
-  const root = React.useRef(null);
+  const root = React.useRef<any>(null);
   const folds = foldOrder(actions).length;
   const step = useBarFit(root, actions.map((a) => a.label).join('|') + '§' + count, 1 + folds, 0, ':scope > [data-plx-bar-row]');
-  const why = (a) => a.why || fill(count && a.single && count > 1 ? t.single : t.why, Object.assign({ action: String(a.label).toLowerCase() }, words));
+  const why = (a: any) => a.why || fill(count && a.single && count > 1 ? t.single : t.why, Object.assign({ action: String(a.label).toLowerCase() }, words));
   return (
     <div ref={root} className={cx('plx-bulk-actions', !count && 'plx-bulk-actions--empty', className)}>
       <Toolbar variant="bar" label={label || t.label} className="plx-bulk-actions__row" data-plx-bar-row="">
         <Toolbar.Group className="plx-bulk-actions__actions">
           {actions.length ? (
-            <BarActions actions={actions} iconOnly={step >= 1} fold={Math.max(0, step - 1)} off={(a) => off(a, count)} why={why}
+            <BarActions actions={actions as any} iconOnly={step >= 1} fold={Math.max(0, step - 1)} off={(a) => off(a, count)} why={why}
               moreLabel={t.more} dangerClass="plx-command-bar__danger" />
           ) : null}
           {actions.length && (onSelectAll || onClear) ? <span className="plx-bulk-actions__divider" aria-hidden="true" /> : null}

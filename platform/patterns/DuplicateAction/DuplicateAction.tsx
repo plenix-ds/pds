@@ -34,7 +34,7 @@
        keeps the dialog open with the error under the field (nothing is disabled). Escape and Cancel close it.
      The copy is placed by the page, next to the original, and selected, so people see where it went.
    Notes:
-     copyName(name, taken, strings) is the naming rule, also for pages that duplicate on their own (a menu item).
+     copyName(name, taken as any, strings as any) is the naming rule, also for pages that duplicate on their own (a menu item).
      Duplicate never copies people's comments or members unless they choose it: those belong to the original's history.
 */
 import React from 'react';
@@ -56,29 +56,49 @@ import { formatLocale } from '../../utils/format.ts';
 import EdCopyIcon from 'plenix-platform/icons/plenix/ed-copy';
 import { fill } from '../../utils/fill.ts';
 
-const q = (x) => '“' + x + '”';
+const q = (x: any) => '“' + x + '”';
 
-export function copyName(name, taken = [], strings) {
-  const t = Object.assign({}, createTranslator(formatLocale()).section('duplicateAction'), strings);   // a plain function: no hook
+export function copyName(name: any, taken = [], strings: any) {
+  const t: any = Object.assign({}, createTranslator(formatLocale()).section('duplicateAction'), strings);   // a plain function: no hook
   const used = new Set((taken || []).map((x) => String(x).trim().toLowerCase()));
   const base = fill(t.copyOf, { name });
   if (!used.has(base.toLowerCase())) return base;
   for (let n = 2; ; n++) { const next = fill(t.numbered, { name: base, n }); if (!used.has(next.toLowerCase())) return next; }
 }
 
+/** @public an option to copy too */
+export type DuplicateOption = { id: string; label: string; defaultChecked?: boolean };
+/** @public */
+export type DuplicateActionProps = {
+  name?: string;
+  noun?: string;
+  variant?: 'copy' | 'rename';
+  taken?: string[];
+  onDuplicate?(newName: string, chosen?: string[]): void | Promise<void>;
+  onUndo?(newName: string): void | Promise<void>;
+  source?: string;
+  options?: DuplicateOption[];
+  /** the control that starts it (one element); false for none */
+  trigger?: React.ReactElement | false;
+  open?: boolean;
+  onClose?(): void;
+  size?: 'xs' | 'sm' | 'md' | 'lg';
+  strings?: Record<string, string>;
+  className?: string;
+};
 export function DuplicateAction({ name = '', noun, variant = 'copy', taken = [], onDuplicate, onUndo, source, options = [],
-  trigger, open, onClose, size, strings, className }) {
+  trigger, open, onClose, size, strings, className }: DuplicateActionProps) {
   devWarn('DuplicateAction', { variant, size }, { variant: ['copy','rename'], size: ['md','sm','xs','2xs','lg'] });
-  const t = useStrings('duplicateAction', strings);
+  const t: any = useStrings('duplicateAction', strings);
   const toast = useOptionalToast();
-  const [shown, setShown] = React.useState(false);
-  const [value, setValue] = React.useState('');
-  const [error, setError] = React.useState('');
-  const [chosen, setChosen] = React.useState([]);
-  const input = React.useRef(null);
+  const [shown, setShown] = React.useState<any>(false);
+  const [value, setValue] = React.useState<any>('');
+  const [error, setError] = React.useState<any>('');
+  const [chosen, setChosen] = React.useState<any>([]);
+  const input = React.useRef<any>(null);
   const formId = useUid('plx-duplicate');
-  const fresh = () => copyName(name, taken, strings);
-  const said = (newName) => fill(t.done, { name: q(newName) });
+  const fresh = () => copyName(name, taken as any, strings as any);
+  const said = (newName: any) => fill(t.done, { name: q(newName) });
 
   const begin = () => {
     if (variant === 'rename') {
@@ -93,11 +113,11 @@ export function DuplicateAction({ name = '', noun, variant = 'copy', taken = [],
   };
   const close = () => { setShown(false); if (onClose) onClose(); };
 
-  const was = React.useRef(false);
+  const was = React.useRef<any>(false);
   React.useEffect(() => { if (open && !was.current) begin(); if (!open && was.current) setShown(false); was.current = !!open; }, [open]);
   React.useEffect(() => { if (shown && input.current && input.current.select) input.current.select(); }, [shown]);
 
-  const submit = (e) => {
+  const submit = (e: any) => {
     e.preventDefault();
     const v = value.trim();
     const used = new Set((taken || []).map((x) => String(x).trim().toLowerCase()));
@@ -110,7 +130,7 @@ export function DuplicateAction({ name = '', noun, variant = 'copy', taken = [],
   };
 
   const own = trigger === false ? null : trigger || <Button icon={EdCopyIcon} size={size}>{t.duplicate}</Button>;
-  const start = own ? React.cloneElement(own, { onClick: (e) => { if (own.props.onClick) own.props.onClick(e); if (!e.defaultPrevented) begin(); } }) : null;
+  const start = own ? React.cloneElement(own, { onClick: (e: any) => { if (own.props.onClick) own.props.onClick(e); if (!e.defaultPrevented) begin(); } }) : null;
   return (
     <>
       {start}
@@ -129,7 +149,7 @@ export function DuplicateAction({ name = '', noun, variant = 'copy', taken = [],
               <Fieldset legend={t.also}>
                 {options.map((o) => (
                   <Checkbox key={o.id} label={o.label} checked={chosen.indexOf(o.id) >= 0}
-                    onChange={(e) => setChosen((c) => (e.target.checked ? c.concat(o.id) : c.filter((x) => x !== o.id)))} />
+                    onChange={(e) => setChosen((c: any) => (e.target.checked ? c.concat(o.id) : c.filter((x: any) => x !== o.id)))} />
                 ))}
               </Fieldset>
             ) : null}

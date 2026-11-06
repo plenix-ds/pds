@@ -66,14 +66,28 @@ import { fill } from '../../utils/fill.ts';
 
 const STATUS = { connected: ['success', 'check'], disconnected: ['neutral', 'link'], error: ['negative', 'alert'] };
 // a sentence with a node in place of {key}: the words around it stay in the UI font
-const H = ({ level, ...props }) => React.createElement('h' + Math.min(6, Math.max(2, level || 3)), props);
+const H = ({ level, ...props }: any) => React.createElement('h' + Math.min(6, Math.max(2, level || 3)), props);
 
-export function ConnectedAccount({ account, onConnect, onDisconnect, onReconnect, confirm = true, headingLevel = 3, strings, as = 'div', className, ...rest }) {
-  const t = useStrings('connectedAccounts', strings);
+/** @public one connected service */
+export type ConnectedService = { id: string | number; service: string; icon?: string; description?: string; status?: 'disconnected' | 'connected' | 'error'; account?: string; connectedAt?: string; scopes?: string[]; loses?: string; error?: string; busy?: boolean };
+/** @public */
+export type ConnectedAccountProps = Omit<React.HTMLAttributes<HTMLElement>, 'children'> & {
+  account: ConnectedService;
+  onConnect?(account: ConnectedService): void | Promise<void>;
+  onDisconnect?(account: ConnectedService): void | Promise<void>;
+  onReconnect?(account: ConnectedService): void | Promise<void>;
+  confirm?: boolean;
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+  strings?: Record<string, string>;
+  as?: React.ElementType;
+  className?: string;
+};
+export function ConnectedAccount({ account, onConnect, onDisconnect, onReconnect, confirm = true, headingLevel = 3, strings, as = 'div', className, ...rest }: ConnectedAccountProps) {
+  const t: any = useStrings('connectedAccounts', strings);
   const a = account || {};
-  const status = STATUS[a.status] ? a.status : 'disconnected';
-  const [ask, setAsk] = React.useState(null);   // "connect" | "disconnect"
-  const seen = React.useRef(status);
+  const status = (STATUS as any)[a.status as string] ? a.status : 'disconnected';
+  const [ask, setAsk] = React.useState<any>(null);   // "connect" | "disconnect"
+  const seen = React.useRef<any>(status);
   React.useEffect(() => {
     if (seen.current !== status) {
       if (status === 'connected') announce(fill(t.done, { service: a.service }));
@@ -84,7 +98,7 @@ export function ConnectedAccount({ account, onConnect, onDisconnect, onReconnect
   const connect = () => { setAsk(null); if (onConnect) onConnect(a); };
   const disconnect = () => { setAsk(null); if (onDisconnect) onDisconnect(a); };
   const Tag = as === 'li' ? 'li' : 'div';
-  const [tone, icon] = STATUS[status];
+  const [tone, icon] = (STATUS as any)[status as string];
   const word = status === 'connected' ? t.connected : status === 'error' ? t.error : t.disconnected;
 
   return (
@@ -121,8 +135,10 @@ export function ConnectedAccount({ account, onConnect, onDisconnect, onReconnect
   );
 }
 
-export function ConnectedAccounts({ accounts = [], label, className, strings, ...rest }) {
-  const t = useStrings('connectedAccounts', strings);
+/** @public */
+export type ConnectedAccountsProps = Omit<ConnectedAccountProps, 'account' | 'as'> & { accounts?: ConnectedService[]; label?: string };
+export function ConnectedAccounts({ accounts = [], label, className, strings, ...rest }: ConnectedAccountsProps) {
+  const t: any = useStrings('connectedAccounts', strings);
   const { onConnect, onDisconnect, onReconnect, confirm, headingLevel, ...own } = rest;
   return (
     <ul className={cx('plx-connected-accounts', className)} aria-label={label || t.label} {...own}>
