@@ -16,7 +16,7 @@
      the engine function, in this order, between the same neighbors. The engine is documented in DataGridEngine.jsx.
 */
 import React from 'react';
-import { writeView, recordKey } from '../state.js';
+import { writeView, recordKey } from '../state.ts';
 
 export function useViewSync({
   metrics,

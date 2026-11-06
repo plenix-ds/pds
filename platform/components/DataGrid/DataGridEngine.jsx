@@ -30,11 +30,11 @@ import { gridPx } from '../../utils/grid.ts';
 
 import { MenuItem, MenuDivider } from '../Menu/Menu.tsx';
 
-import { opening, recordKey, valueAt } from './state.js';
+import { opening, recordKey, valueAt } from './state.ts';
 import { valueText } from './cells.jsx';
 import { createAdapter } from './adapter.js';
 
-import { recordsOf } from './records.js';
+import { recordsOf } from './records.ts';
 import { useStrings, useLocale } from '../../providers/LocaleProvider.tsx';
 import { formatNumber } from '../../utils/format.ts';
 import { EMPTY_ROWS, GRID, kinds } from './engine/helpers.jsx';
