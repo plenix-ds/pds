@@ -358,5 +358,15 @@
     "loading": "n/a(the editor shows the cleaned content at once and takes over when the engine has loaded; stories arrive with Storybook, P0-11)",
     "selected": "n/a(a text selection is the browser's)",
     "error": "n/a(invalid is the is-invalid state set by its Field; stories arrive with Storybook, P0-11)"
+  },
+  "FileRow": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(stories arrive with Storybook, P0-11)",
+    "loading": "n/a(stories arrive with Storybook, P0-11)",
+    "selected": "n/a(stories arrive with Storybook, P0-11)",
+    "error": "n/a(stories arrive with Storybook, P0-11)"
   }
 }

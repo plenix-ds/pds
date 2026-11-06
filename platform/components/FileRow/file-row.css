@@ -1,7 +1,7 @@
 /* Plenix · FileRow (platform/components/FileRow): one file as a line in a list. The checkbox, the File (it grows), the
    facts in cells of fixed widths (size and date in the data font, the owner, a status Badge), then the actions at the
    end; a transfer shows a small bar and its percent, a failed one the danger icon and its reason. A line under each
-   row; the hover and selected fills of every list. Anatomy and API: FileRow.jsx. */
+   row; the hover and selected fills of every list. Anatomy and API: FileRow.tsx. */
 .plx-file-row{align-items:center;background-color:var(--plx-comp-file-row-background);border-block-end-color:var(--plx-comp-file-row-border-color);border-block-end-style:solid;border-block-end-width:var(--plx-comp-file-row-border-width);column-gap:var(--plx-comp-file-row-gap);display:flex;list-style-type:none;min-block-size:var(--plx-comp-file-row-min-height);min-inline-size:0;padding-block-end:var(--plx-comp-file-row-padding-block);padding-block-start:var(--plx-comp-file-row-padding-block);padding-inline-end:var(--plx-comp-file-row-padding-inline);padding-inline-start:var(--plx-comp-file-row-padding-inline);}
 .plx-file-row--actions{padding-inline-end:var(--plx-comp-file-row-actions-padding-inline-end);}
 @media (hover: hover){

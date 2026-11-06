@@ -21,7 +21,7 @@ import { useUid } from '../../utils/layer.ts';
 import { announce } from '../../utils/announce.tsx';
 import { formatNumber } from '../../utils/format.ts';
 import { useOptionalToast } from '../../components/Toast/Toast.tsx';
-import { DeleteFlow } from '../../patterns/DeleteFlow/DeleteFlow.jsx';
+import { DeleteFlow } from '../../patterns/DeleteFlow/DeleteFlow.tsx';
 import { Wizard } from '../../patterns/Wizard/Wizard.jsx';
 import { Form, FormSection, FormActions } from '../../patterns/Form/Form.jsx';
 import { PropertyList } from '../../patterns/PropertyList/PropertyList.jsx';

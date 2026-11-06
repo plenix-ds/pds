@@ -68,27 +68,57 @@ import { fill } from '../../utils/fill.ts';
 
 const SHOWN = 5;
 
+/** @public what is deleted: { id, label } */
+export type DeleteFlowItem = { id?: string | number; label: string };
+/** @public the prop type (ADR 0011) */
+export type DeleteFlowProps = {
+  items?: DeleteFlowItem[];
+  /** the singular noun for the words ("file"); with plural, replaces the built-in words */
+  noun?: string;
+  plural?: string;
+  /** "confirm" (default: a question) | "type" (type the phrase) | "undo" (no question, a toast with Undo) | "trash" (as undo, says it went to the trash) */
+  variant?: 'confirm' | 'type' | 'undo' | 'trash';
+  /** what else happens ("This also removes its comments."), before the permanent warning */
+  consequence?: string;
+  /** the phrase to type (default the item's name, or "N items") */
+  confirmPhrase?: string;
+  /** days the trash keeps them (trash) */
+  retention?: number;
+  onDelete?: (items: DeleteFlowItem[]) => void;
+  onRestore?: (items: DeleteFlowItem[]) => void;
+  /** undo: runs once when the delete is final (the toast closed without Undo, or the page went away) */
+  onCommit?: (items: DeleteFlowItem[]) => void;
+  /** how long the Undo toast stays, in milliseconds */
+  undoDuration?: number;
+  /** the element that starts it (its onClick still runs) */
+  trigger?: React.ReactElement<{ onClick?: (event: React.MouseEvent) => void }>;
+  open?: boolean;
+  onClose?: () => void;
+  strings?: Record<string, unknown> | null;
+  className?: string;
+};
+
 export function DeleteFlow({ items = [], noun, plural, variant = 'confirm', consequence, confirmPhrase, retention,
-  onDelete, onRestore, onCommit, undoDuration, trigger, open, onClose, strings, className }) {
+  onDelete, onRestore, onCommit, undoDuration, trigger, open, onClose, strings, className }: DeleteFlowProps) {
   devWarn('DeleteFlow', { variant }, { variant: ['confirm','type','undo','trash'] });
   if (undoDuration !== undefined && !(typeof undoDuration === 'number' && undoDuration >= 0)) { devWarn('DeleteFlow', { undoDuration: String(undoDuration) }, { undoDuration: ['a number of milliseconds, 0 or more'] }); undoDuration = undefined; }
-  const t = useStrings('deleteFlow', strings);
+  const t = useStrings('deleteFlow', strings) as Record<string, string>;
   const toast = useOptionalToast();
   const loc = useLocale();
   const builtIn = !noun && !plural;   // the default words: whole sentences with the Arabic plural forms, from the catalog
   const many = plural || (noun ? noun + 's' : t.plural);
   noun = noun ?? t.noun;
-  const counted = (m) => (builtIn ? loc.t('deleteFlow.items', { count: m, n: formatNumber(m) }) : formatNumber(m) + ' ' + many);
+  const counted = (m: number) => (builtIn ? loc.t('deleteFlow.items', { count: m, n: formatNumber(m) }) : formatNumber(m) + ' ' + many);
   const n = items.length;
   const name = n === 1 ? '“' + items[0].label + '”' : '';
   const what = n === 1 ? name : counted(n);
   const [shown, setShown] = React.useState(false);
   const [typed, setTyped] = React.useState('');
   const [error, setError] = React.useState('');
-  const field = React.useRef(null);
+  const field = React.useRef<HTMLInputElement>(null);
   const phrase = confirmPhrase || (n === 1 ? items[0].label : (builtIn ? loc.t('deleteFlow.phraseItems', { count: n, n: formatNumber(n) }) : fill(t.phraseMany, { count: formatNumber(n), plural: many })));
   const dialog = variant === 'confirm' || variant === 'type';
-  const say = (text, options) => { if (toast) toast.show(text, options); else announce(text); };
+  const say = (text: string, options?: Record<string, unknown>) => { if (toast) toast.show(text, options); else announce(text); };
   const close = () => { setShown(false); setTyped(''); setError(''); if (onClose) onClose(); };
 
   // undo and trash: no question; the toast offers Undo
@@ -122,7 +152,7 @@ export function DeleteFlow({ items = [], noun, plural, variant = 'confirm', cons
     was.current = !!open;
   }, [open]);
 
-  const confirm = (e) => {
+  const confirm = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     if (variant === 'type' && typed.trim() !== phrase) { setError(fill(t.typeError, { phrase })); if (field.current) field.current.focus(); return; }
     const list = items.slice();
@@ -131,7 +161,7 @@ export function DeleteFlow({ items = [], noun, plural, variant = 'confirm', cons
     close();
   };
 
-  const cancelRef = React.useRef(null);
+  const cancelRef = React.useRef<HTMLButtonElement>(null);
   const formId = useUid('plx-delete-flow');
   const label = String(t.typeLabel).split('{phrase}');
   const title = n === 1 ? fill(t.title, { name }) : (builtIn ? loc.t('deleteFlow.titleItems', { count: n, n: formatNumber(n) }) : fill(t.titleMany, { count: formatNumber(n), plural: many }));
@@ -145,7 +175,7 @@ export function DeleteFlow({ items = [], noun, plural, variant = 'confirm', cons
   ) : null;
 
   const startTrigger = trigger ? React.cloneElement(trigger, {
-    onClick: (e) => { if (trigger.props.onClick) trigger.props.onClick(e); if (!e.defaultPrevented) start(); },
+    onClick: (e: React.MouseEvent) => { if (trigger.props.onClick) trigger.props.onClick(e); if (!e.defaultPrevented) start(); },
   }) : null;
 
   return (

@@ -61,8 +61,8 @@ import { Button } from '../Button/Button.tsx';
 import { Icon } from '../Icon/Icon.tsx';
 import { Menu, MenuItem, MenuDivider } from '../Menu/Menu.tsx';
 import { ProgressBar } from '../ProgressBar/ProgressBar.tsx';
-import { RenameAction } from '../../patterns/RenameAction/RenameAction.jsx';
-import { DeleteFlow } from '../../patterns/DeleteFlow/DeleteFlow.jsx';
+import { RenameAction } from '../../patterns/RenameAction/RenameAction.tsx';
+import { DeleteFlow } from '../../patterns/DeleteFlow/DeleteFlow.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import AlertIcon from 'plenix-platform/icons/plenix/alert';
 import DownloadTrayIcon from 'plenix-platform/icons/plenix/download-tray';
@@ -71,15 +71,51 @@ import RefreshIcon from 'plenix-platform/icons/plenix/refresh';
 import RenameIcon from 'plenix-platform/icons/plenix/rename';
 import TrashIcon from 'plenix-platform/icons/plenix/trash';
 import { fill } from '../../utils/fill.ts';
+import type { FileProps } from '../File/File.tsx';
+
+/** @public what a row shows: File's name, kind, size, modified, type, icon and count, with src, open and an id for the delete flow */
+export type FileRowFile = Pick<FileProps, 'name' | 'kind' | 'size' | 'modified' | 'type' | 'icon' | 'count'> & { src?: string; open?: boolean; id?: string | number };
+/** @public the prop type (ADR 0011) */
+export type FileRowProps = Omit<React.HTMLAttributes<HTMLElement>, 'onSelect'> & {
+  file: FileRowFile;
+  as?: 'div' | 'li';
+  selectable?: boolean;
+  selected?: boolean;
+  onSelectChange?: (checked: boolean, event: React.ChangeEvent<HTMLInputElement>) => void;
+  href?: string;
+  onOpen?: () => void;
+  owner?: React.ReactNode;
+  status?: React.ReactNode;
+  /** a transfer under way, 0 to 100 */
+  progress?: number;
+  progressLabel?: string;
+  onCancel?: () => void;
+  /** a failed transfer: the reason in words */
+  error?: React.ReactNode;
+  onRetry?: () => void;
+  onDownload?: () => void;
+  onRename?: (name: string) => void | Promise<unknown>;
+  /** the other names in the same folder */
+  names?: string[];
+  onDelete?: (file: FileRowFile) => void;
+  deleteVariant?: 'confirm' | 'trash' | 'undo';
+  onRestore?: (file: FileRowFile) => void;
+  /** more menu items (MenuItem) at the top of the More actions menu */
+  actions?: React.ReactNode;
+  strings?: Record<string, unknown> | null;
+  className?: string;
+};
+/** @public the list's props */
+export type FileRowListProps = React.HTMLAttributes<HTMLUListElement> & { label?: string };
 
 export function FileRow({ file, as = 'div', selectable = false, selected = false, onSelectChange, href, onOpen, owner, status,
   progress, progressLabel, onCancel, error, onRetry, onDownload, onRename, names, onDelete, deleteVariant = 'confirm', onRestore,
-  actions, strings, className, ...rest }) {
-  const t = useStrings('fileRow', strings);
-  const f = file || {};
+  actions, strings, className, ...rest }: FileRowProps) {
+  const t = useStrings('fileRow', strings) as Record<string, string>;
+  const f: FileRowFile = file || {};
   const name = f.name || '';
   const folder = f.kind === 'folder';
-  const [ask, setAsk] = React.useState(null);   // "rename" | "delete"
+  const [ask, setAsk] = React.useState<'rename' | 'delete' | null>(null);   // "rename" | "delete"
   const moving = typeof progress === 'number';
   const menu = !moving && (onRename || onDelete || actions);
   const withActions = !!(menu || onDownload);
@@ -132,14 +168,14 @@ export function FileRow({ file, as = 'div', selectable = false, selected = false
       ) : null}
       {onDelete ? (
         <DeleteFlow variant={deleteVariant} open={ask === 'delete'} onClose={() => setAsk(null)} items={[{ id: f.id || name, label: name }]}
-          noun={folder ? t.folder : t.file} plural={folder ? t.folders : t.files} onDelete={() => onDelete(f)} onRestore={onRestore ? () => onRestore(f) : undefined} />
+          noun={folder ? t.folder : t.file} plural={folder ? t.folders : t.files} onDelete={() => (onDelete as NonNullable<typeof onDelete>)(f)} onRestore={onRestore ? () => onRestore(f) : undefined} />
       ) : null}
     </Tag>
   );
 }
 
 // the facts as cells: the size (or a folder's count) and the date, each in the data font
-function FileFacts({ file, t }) {
+function FileFacts({ file, t }: { file: FileRowFile; t: Record<string, string> }) {
   const folder = file.kind === 'folder';
   const size = folder ? (typeof file.count === 'number' ? fill(file.count === 1 ? t.item : t.items, { n: formatNumber(file.count) }) : '')
     : typeof file.size === 'number' ? formatBytes(file.size) : (file.size || '');
@@ -151,6 +187,6 @@ function FileFacts({ file, t }) {
   );
 }
 
-export function FileRowList({ label, className, children, ...rest }) {
+export function FileRowList({ label, className, children, ...rest }: FileRowListProps) {
   return <ul className={cx('plx-file-row-list', className)} aria-label={label} {...rest}>{children}</ul>;
 }

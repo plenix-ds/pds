@@ -1,6 +1,6 @@
 /* Plenix · DeleteFlow (platform/patterns/DeleteFlow). The content of its confirmation dialog: the names of the items
    (up to five, then "and N more" muted) and, in the type form, the field that asks for the name. The dialog, its
-   destructive look, the buttons and the Undo toast are Dialog's, Button's and Toast's. Anatomy and API: DeleteFlow.jsx. */
+   destructive look, the buttons and the Undo toast are Dialog's, Button's and Toast's. Anatomy and API: DeleteFlow.tsx. */
 .plx-delete-flow{display:flex;flex-direction:column;row-gap:var(--plx-comp-delete-flow-gap);}
 .plx-delete-flow__names{display:flex;flex-direction:column;list-style:none;margin-block-end:0;margin-block-start:0;padding-inline-start:0;row-gap:var(--plx-comp-delete-flow-names-gap);}
 .plx-delete-flow__name{color:var(--plx-comp-delete-flow-name-text);font-size:var(--plx-comp-delete-flow-name-font-size);font-weight:var(--plx-comp-delete-flow-name-font-weight);line-height:var(--plx-comp-delete-flow-name-line-height);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}

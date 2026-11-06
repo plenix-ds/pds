@@ -123,7 +123,7 @@ DSParts.records.push(function (H) {
   return [
     /* ── 04 Actions › Common actions › Rename: RenameAction ── */
     { id: 'rename-action', lab: true, icon: 'rename', sec: 'actions', sub: 'Common actions', leaf: 'Rename', title: 'Rename',
-      plenix: 'RenameAction', src: 'patterns/RenameAction/RenameAction.jsx', level: 'Pattern', interaction: 'Editing',
+      plenix: 'RenameAction', src: 'patterns/RenameAction/RenameAction.tsx', level: 'Pattern', interaction: 'Editing',
       aliases: ['Rename', 'Edit name', 'Change name', 'F2'],
       text: 'Gives something a new name: in place, where the name turns into a field (inline, InlineEdit), or in a small dialog opened from a button or an actions menu (dialog). Both check the new name the same way: not empty, no slash or backslash, not the name of another item in the same place. A file keeps its extension, so only the name before it is selected.',
       use: ['Inline where the name is a heading or a row that people rename often (a board, a folder in a tree)', 'The dialog from an actions menu ("Rename…") where the name is not editable in place',
