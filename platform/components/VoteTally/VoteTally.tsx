@@ -1,7 +1,7 @@
 /* Plenix · VoteTally
    Summary: A live vote: the members as a list, each with an avatar, the name and role, and three icon-only choices
      (Approve, Deny, Abstain); a turned-off member's lock badge in place of the choices; the totals, the quorum and the
-     result under the list (owner, vote-live-36, vote-screen-36/37; the vote kit's shapes, archive/vote-kit).
+     result under the list (owner, vote-live-36, vote-screen-36/37; the vote kit's shapes, packages/vote-kit).
    Usage:
      <VoteTally label="Motion 14: approve the 2027 budget" members={event.members} outcome={event.outcome}
        settings={event.settings} status={event.status} onVote={(memberId, option) => put(memberId, option)} />
