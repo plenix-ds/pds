@@ -590,3 +590,13 @@
   options: [type-only devDependencies at the vendored version (chosen, b), hand-written local interfaces (a), RichTextEditor stays JavaScript until wave 5 (c)]
   status: active
   check: check-system.rules/vendor-types.js (the exact version, devDependencies only, import type only) and G3 review of the RichTextEditor PR
+
+- id: D-0068
+  date: 2026-11-06
+  area: components
+  decided_by: owner (2026-10-19, on plenix-ds/plenix-platform#195), carried by pds1-design-director (#140)
+  decision: With rows selected, CommandBar adds the selection's commands before the page's (a separator between; Search, filters and quick filters stay); selection.mode "swap" stays available; a command may say selection "also" | "only" | "never". When the bar is narrow, the page's commands fold before the selection's. Supersedes the 2026-10-15 swap default (issue 454).
+  why: 'Owner: "add, don't swap" (2026-10-19), later than the swap decision of 2026-10-15.'
+  options: [add (chosen, default), swap]
+  status: active
+  check: planned:behaviour tests on the #140 PR (add order, fold order, swap unchanged)
