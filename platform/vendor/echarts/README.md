@@ -3,7 +3,7 @@
 Plenix's charts draw with Apache ECharts (owner, 2026-10-26: "use apache charts", #353). The Platform chart components
 keep their names and props and their own layer (ChartFrame's caption, the keyboard and pointer interaction, the live
 region, the legend, the tooltip and "Show the data"); ECharts draws the plot: axes, grid lines, lines, areas, bars and
-slices, in an ECharts theme read from the Platform's chart tokens (`platform/charts/echarts/engine.js`).
+slices, in an ECharts theme read from the Platform's chart tokens (`platform/charts/echarts/engine.ts`).
 
 | File | Package | Version | License | SHA-256 |
 |---|---|---|---|---|
@@ -37,7 +37,7 @@ ECharts chart (and only the parts they need) to the entry file.
 
 ## How pages load it
 
-Only pages that show a chart load it. A chart calls `loadECharts()` (`platform/charts/echarts/engine.js`) the first time
+Only pages that show a chart load it. A chart calls `loadECharts()` (`platform/charts/echarts/engine.ts`) the first time
 it mounts: it adds `echarts.min.js` from this folder once per page and waits for `window.PlenixECharts`. Until it
 arrives the chart shows its caption, legend and "Show the data"; the plot is drawn as soon as the engine is there. The
 folder is found as the shared resolver (`vendorBase()` in `utils/vendorBase.js`). `build-packages.js` copies this folder

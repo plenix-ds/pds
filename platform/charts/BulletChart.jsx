@@ -30,10 +30,10 @@
 import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatNumber } from '../utils/format.ts';
-import { ChartFrame } from './ChartFrame.jsx';
+import { ChartFrame } from './ChartFrame.tsx';
 import { ChartTooltip } from './parts/ChartTooltip.tsx';
 import { useChartHover, finite } from './chart-kit.ts';
-import { useEChartsPlot, plotGrid } from './echarts/EChartsPlot.jsx';
+import { useEChartsPlot, plotGrid } from './echarts/EChartsPlot.tsx';
 import { gridRoom } from './chart-helpers.ts';
 import { snapToGrid } from '../utils/grid.ts';
 import { useStrings } from '../providers/LocaleProvider.tsx';

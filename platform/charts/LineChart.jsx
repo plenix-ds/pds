@@ -47,20 +47,20 @@
        grid show at once.
    Notes:
      Every color is a data-viz step (seriesColor by the series' order); the lines, points, axes, grid lines and labels
-       take the frame's chart tokens through the ECharts theme (echarts/engine.js); the focus ring, crosshair and tooltip
+       take the frame's chart tokens through the ECharts theme (echarts/engine.ts); the focus ring, crosshair and tooltip
        are the chart interaction's. No style is written in this file.
      Up to about five series; more lines tangle: use small multiples. Unordered categories: a bar or column chart.
 */
 import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatNumber, formatDate, formatPercent, parseDate } from '../utils/format.ts';
-import { ChartFrame } from './ChartFrame.jsx';
+import { ChartFrame } from './ChartFrame.tsx';
 import { seriesColor, scaleTime, wholeDays } from './scales.ts';
 import { ChartLegend } from './parts/ChartLegend.tsx';
 import { ChartTooltip, chartTooltipText } from './parts/ChartTooltip.tsx';
 import { useChartInteraction, ChartFocusMark, ChartBrush } from './interaction.ts';
-import { useEChartsPlot, plotGrid } from './echarts/EChartsPlot.jsx';
-import { tickLineHeight } from './echarts/engine.js';
+import { useEChartsPlot, plotGrid } from './echarts/EChartsPlot.tsx';
+import { tickLineHeight } from './echarts/engine.ts';
 import { snapToGrid } from '../utils/grid.ts';
 import { gridRoom } from './chart-helpers.ts';
 import { halfRoom } from './chart-kit.ts';

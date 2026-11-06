@@ -4,7 +4,7 @@ You are a lane writer for the Plenix design-system library program: WAVE {W}, LA
 1. `git submodule update --init platform/design-system`
 2. Git Bash: `cmd //c mklink /J node_modules "C:\Users\Administrator\Documents\Plenix\node_modules"` (never delete through that junction).
 3. Read, in order: tools/agent/library/BRIEF-lane.md (your contract), tools/agent/web/BRIEF-web.md (house rules), tools/agent/library/plan.md ("Recipe per kind" and "Wave {W}"), and your leaves in tools/agent/library/plan.json (`leaves[]`/`targets[]` with wave {W}, lane "{L}").
-4. Look at finished examples: platform/design-system/parts/w07A.*, w07B.*, w07C.* (newest), their exports, tokens (platform/tokens/components/*.tokens.json) and web-native-map.d/w07*.json. Chart code lives in platform/charts/ (scales.js, ChartFrame.jsx; stylesheet platform/system/charts.css); build-exports.js publishes platform/charts/.
+4. Look at finished examples: platform/design-system/parts/w07A.*, w07B.*, w07C.* (newest), their exports, tokens (platform/tokens/components/*.tokens.json) and web-native-map.d/w07*.json. Chart code lives in platform/charts/ (scales.js, ChartFrame.tsx; stylesheet platform/system/charts.css); build-exports.js publishes platform/charts/.
 
 ## Your lane
 {TARGETS}

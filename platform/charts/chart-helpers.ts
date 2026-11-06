@@ -1,6 +1,6 @@
 /* Plenix · chart helpers (platform/charts/chart-helpers.ts)
    Summary: The small, pure helpers the chart files share and the public API exports (gridRoom, pieSlices, binValues). They live apart from the
-     chart components so the components can load on their own (charts/lazy.jsx) while these stay in the first load.
+     chart components so the components can load on their own (charts/lazy.tsx) while these stay in the first load.
    Notes: Moved out of LineChart.jsx, PieChart.jsx and BarChart.jsx without any change to the code; those files still export them. */
 import { snapToGrid } from '../utils/grid.ts';
 import { niceTicks, seriesColor } from './scales.ts';

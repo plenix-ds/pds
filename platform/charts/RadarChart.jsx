@@ -30,12 +30,12 @@
 import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatNumber } from '../utils/format.ts';
-import { ChartFrame } from './ChartFrame.jsx';
+import { ChartFrame } from './ChartFrame.tsx';
 import { niceTicks } from './scales.ts';
 import { ChartLegend } from './parts/ChartLegend.tsx';
 import { ChartTooltip } from './parts/ChartTooltip.tsx';
 import { useChartHover, withColors, legendItems, finite } from './chart-kit.ts';
-import { useEChartsPlot } from './echarts/EChartsPlot.jsx';
+import { useEChartsPlot } from './echarts/EChartsPlot.tsx';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 
 const NO_MARGIN = Object.freeze({ top: 0, end: 0, bottom: 0, start: 0 });

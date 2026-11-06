@@ -1,5 +1,5 @@
 {
-  "$description": "TreeChart (platform/charts/TreeChart.jsx; owner, 2026-10-26, charts-tree-26): a hierarchy drawn by Apache ECharts' tree, left to right or top to bottom, its branches folding. The ECharts theme reads these through the chart's probe classes (echarts/engine.js chartTokens: tree).",
+  "$description": "TreeChart (platform/charts/TreeChart.jsx; owner, 2026-10-26, charts-tree-26): a hierarchy drawn by Apache ECharts' tree, left to right or top to bottom, its branches folding. The ECharts theme reads these through the chart's probe classes (echarts/engine.ts chartTokens: tree).",
   "plx-comp": {
     "tree-chart-link-color": { "$value": "{plx-sys.border-strong}", "$type": "color", "$description": "The lines from a node to its children (the chart's axis-line role)." },
     "tree-chart-link-width": { "$value": "{plx-sys.border-width-thin}", "$type": "dimension", "$description": "The lines from a node to its children." },

@@ -3,11 +3,11 @@
 // charts LineChart (with its step curve), AreaChart, Gauge, HeatMap, WaterfallChart, WordCloud, NetworkGraph and Diagram.
 export { useChartInteraction, ChartFocusMark, ChartBrush, chartAnnounce, CHART_INTERACTION_STRINGS } from '../charts/interaction.ts';
 export { chartTooltipText } from '../charts/parts/ChartTooltip.tsx';
-export { LineChart } from '../charts/lazy.jsx';
-export { AreaChart } from '../charts/lazy.jsx';
+export { LineChart } from '../charts/lazy.tsx';
+export { AreaChart } from '../charts/lazy.tsx';
 export { Gauge } from '../charts/Gauge.jsx';
-export { HeatMap } from '../charts/lazy.jsx';
-export { WaterfallChart } from '../charts/lazy.jsx';
+export { HeatMap } from '../charts/lazy.tsx';
+export { WaterfallChart } from '../charts/lazy.tsx';
 export { waterfallSteps } from '../charts/chart-helpers.ts';
 export { WordCloud, wordCloudLayout } from '../charts/WordCloud.jsx';
 export { NetworkGraph, forceLayout, layeredLayout, graphLayers, graphNeighbors, useGraphView } from '../charts/NetworkGraph.jsx';

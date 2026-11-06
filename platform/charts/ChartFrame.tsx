@@ -53,6 +53,8 @@
        ChartAnnotation; wave 8) and the charts themselves (wave 9) build on this frame.
 */
 import React from 'react';
+import type { ChartInner, ChartMargin } from './chart-types.ts';
+import type { useChartInteraction } from './interaction.ts';
 import { cx } from '../utils/cx.ts';
 import { dataWhenText } from '../utils/dataText.tsx';
 import { isRtl } from '../utils/direction.ts';
@@ -65,10 +67,31 @@ import RefreshIcon from 'plenix-platform/icons/plenix/refresh';
 
 const MARGIN_TOKENS = { top: '--plx-comp-chart-margin-block-start', end: '--plx-comp-chart-margin-inline-end', bottom: '--plx-comp-chart-margin-block-end', start: '--plx-comp-chart-margin-inline-start' };
 
-export function ChartFrame({ title, description, hideCaption = false, size = 'md', margin, legend, legendPosition = 'bottom', table, interaction, actions, fitHeight, clip = false, strings, className, children }) {
-  const t = useStrings('chart.chartFrame', strings);
+/** @public what a chart's children function gets */
+export type ChartFrameDraw = { width: number; height: number; inner: ChartInner; margin: Required<ChartMargin> };
+/** @public */
+export type ChartFrameProps = {
+  title: string;
+  description?: string;
+  hideCaption?: boolean;
+  size?: 'sm' | 'md' | 'lg';
+  margin?: ChartMargin;
+  legend?: React.ReactNode;
+  legendPosition?: 'bottom' | 'top' | 'end';
+  /** the data as a table under the chart, as Table takes it */
+  table?: { columns: any[]; data: any[]; index?: string };
+  interaction?: ReturnType<typeof useChartInteraction>;
+  actions?: React.ReactNode;
+  fitHeight?(width: number): number;
+  clip?: boolean;
+  strings?: { showData?: string; table?: string };
+  className?: string;
+  children?: React.ReactNode | ((draw: ChartFrameDraw) => React.ReactNode);
+};
+export function ChartFrame({ title, description, hideCaption = false, size = 'md', margin, legend, legendPosition = 'bottom', table, interaction, actions, fitHeight, clip = false, strings, className, children }: ChartFrameProps) {
+  const t: any = useStrings('chart.chartFrame', strings);
   const uid = 'plx-chart' + React.useId().replace(/[^a-zA-Z0-9]/g, '');
-  const frame = React.useRef(null), plot = React.useRef(null);
+  const frame = React.useRef<any>(null), plot = React.useRef<any>(null);
   // the data grid is drawn the first time "Show the data" opens (and kept): a closed chart carries no second grid; opened by a click, it mounts in one pass
   const [dataOpened, setDataOpened] = React.useState(false);
   const [box, setBox] = React.useState({ width: 0, height: 0, rtl: false, tokens: null });
@@ -77,8 +100,8 @@ export function ChartFrame({ title, description, hideCaption = false, size = 'md
     if (!el) return undefined;
     const measure = () => {
       const cs = getComputedStyle(frame.current);
-      const tokens = {};
-      Object.keys(MARGIN_TOKENS).forEach((k) => { tokens[k] = parseFloat(cs.getPropertyValue(MARGIN_TOKENS[k])) || 0; });
+      const tokens: any = {};
+      Object.keys(MARGIN_TOKENS).forEach((k) => { tokens[k] = parseFloat(cs.getPropertyValue((MARGIN_TOKENS as Record<string, string>)[k])) || 0; });
       const r = el.getBoundingClientRect();
       // an interactive plot has a border (its focus border): the SVG is drawn inside it
       const next = { width: Math.floor(r.width - el.clientLeft * 2), height: Math.floor(r.height - el.clientTop * 2), rtl: isRtl(el), tokens };
@@ -90,8 +113,8 @@ export function ChartFrame({ title, description, hideCaption = false, size = 'md
     ro.observe(el);
     return () => ro.disconnect();
   }, []);
-  const m = {};
-  Object.keys(MARGIN_TOKENS).forEach((k) => { m[k] = snapToGrid(margin && margin[k] !== undefined ? margin[k] : box.tokens ? box.tokens[k] : 0); });
+  const m: any = {};
+  Object.keys(MARGIN_TOKENS).forEach((k) => { m[k] = snapToGrid(margin && (margin as any)[k] !== undefined ? (margin as any)[k] : box.tokens ? box.tokens[k] : 0); });
   // the drawing is left to right in every language (time runs left to right, owner issue 584 B), so the start margin,
   // where the labels sit, stays at the left
   const left = m.start;
@@ -102,11 +125,11 @@ export function ChartFrame({ title, description, hideCaption = false, size = 'md
   const titleId = uid + '-title', descId = uid + '-desc', hintId = uid + '-hint';
   const ia = interaction && interaction.interactive ? interaction : null;
   // the pointer in plot coordinates: inside the border, less the margins
-  const local = (e) => {
+  const local = (e: any) => {
     const el = plot.current, r = el.getBoundingClientRect();
     return [e.clientX - r.left - el.clientLeft - left, e.clientY - r.top - el.clientTop - m.top];
   };
-  const on = (fn) => (e) => { const p = local(e); fn(p[0], p[1], e); };
+  const on = (fn: any) => (e: any) => { const p = local(e); fn(p[0], p[1], e); };
   const plotProps = ia ? {
     tabIndex: 0, role: 'group', 'aria-label': ia.strings.plot.replace('{title}', title || ''), 'aria-describedby': hintId,
     onKeyDown: ia.keyDown, onFocus: ia.onFocus, onBlur: ia.onBlur, onPointerDown: on(ia.pointerDown), onPointerMove: on(ia.pointerMove),

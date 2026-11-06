@@ -34,15 +34,15 @@
    Notes:
      For a few levels and up to a few dozen nodes; a large hierarchy belongs in a Tree (the list) or MillerColumns. The
        lines, the nodes, the focus ring and the fonts are --plx-comp-tree-chart-* tokens read by the ECharts theme
-       (echarts/engine.js); ECharts' own tooltip is not used. No style is written here: ECharts writes only the sizes
+       (echarts/engine.ts); ECharts' own tooltip is not used. No style is written here: ECharts writes only the sizes
        and fonts the page checks allow inside .plx-chart__engine (font weights from the font-weight tokens).
 */
 import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { snapToGrid } from '../utils/grid.ts';
-import { ChartFrame } from './ChartFrame.jsx';
+import { ChartFrame } from './ChartFrame.tsx';
 import { useChartInteraction } from './interaction.ts';
-import { useEChartsPlot, NO_MARGIN } from './echarts/EChartsPlot.jsx';
+import { useEChartsPlot, NO_MARGIN } from './echarts/EChartsPlot.tsx';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 
 const INTERACTION = { hint: 'Use the arrow keys to move through the tree.', hintSelect: ' Enter folds or opens a branch.', selected: '{text}' };
