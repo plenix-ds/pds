@@ -145,7 +145,7 @@ DSParts.records.push(function (H) {
 
     /* ── 10 Patterns › Selection and organization › Sortable list: SortableList ── */
     { id: 'sortable-list', lab: true, icon: 'list-bullets', sec: 'patterns', sub: 'Selection and organization', leaf: 'Sortable list', title: 'Sortable list',
-      plenix: 'SortableList, useSortable', src: 'patterns/SortableList/SortableList.jsx', also: ['utils/dnd.ts'], css: ['patterns/SortableList/sortable-list.css', 'system/dnd.css'], level: 'Pattern', interaction: 'Drag and drop',
+      plenix: 'SortableList, useSortable', src: 'patterns/SortableList/SortableList.tsx', also: ['utils/dnd.ts'], css: ['patterns/SortableList/sortable-list.css', 'system/dnd.css'], level: 'Pattern', interaction: 'Drag and drop',
       aliases: ['Reorderable list', 'Rearrangeable list', 'Drag to reorder', 'Rank list', 'Kanban column'],
       text: 'A list people put in their own order. Each item drags by its handle, moves with the keyboard (Space to pick it up, the arrow keys, Space to drop) and has a way without dragging: its handle’s menu of moves, or move buttons. It is a column of rows or tiles in a grid; lists of one group take each other’s items (a board). The list never changes the order itself: onReorder hands the new order to the page.',
       use: ['Orders people set by hand and that are kept: steps, priorities, pinned views, the order of fields', 'The handle (default) when the item holds other controls; handles={false} for plain items',

@@ -1,7 +1,7 @@
 /* Plenix · SessionTimeout (platform/patterns/SessionTimeout): the warning before a session ends and the message after
    it. In a dialog (Dialog's own frame, its description is the main sentence) or drawn in the page (inline: the title,
    the text and the actions, stacked, without a frame of its own). The time left and the minutes are in the data font
-   with tabular figures, so the countdown does not shift. Anatomy and API: SessionTimeout.jsx. */
+   with tabular figures, so the countdown does not shift. Anatomy and API: SessionTimeout.tsx. */
 .plx-session-timeout__text{color:var(--plx-comp-session-timeout-text);font-size:var(--plx-comp-session-timeout-font-size);line-height:var(--plx-comp-session-timeout-line-height);margin-block-end:0;margin-block-start:0;}
 .plx-session-timeout__time,
 .plx-session-timeout__inline-time{font-family:var(--plx-comp-session-timeout-time-font-family);font-size:var(--plx-comp-session-timeout-font-size);font-variant-numeric:tabular-nums;font-weight:var(--plx-sys-text-body-font-weight);letter-spacing:var(--plx-sys-text-body-letter-spacing);line-height:var(--plx-comp-session-timeout-line-height);word-spacing:var(--plx-sys-font-data-word-spacing);}

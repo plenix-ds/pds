@@ -55,15 +55,35 @@ import ChevronUpIcon from 'plenix-platform/icons/plenix/chevron-up';
 import { fill } from '../../utils/fill.ts';
 
 // after a move button moves its item, focus stays on that button in the moved item (the other one at the list's end)
-const keep = (dir) => (itemEl) => {
+const keep = (dir: any) => (itemEl: any) => {
   const own = itemEl.querySelector('[data-plx-move="' + dir + '"]'), other = itemEl.querySelector('[data-plx-move="' + (dir === 'up' ? 'down' : 'up') + '"]');
   return own && !own.disabled ? own : other;
 };
 
-export function SortableList({ items = [], renderItem, onReorder, label, getId = (x) => x.id, getName, layout = 'vertical', handles = true, moveButtons = false,
-  id, group, onMove, disabled = false, strings, className, ...rest }) {
-  const t = useStrings('sortableList', strings);
-  const nameOf = getName || ((x) => String(x.name != null ? x.name : x.label != null ? x.label : getId(x)));
+/** @public the prop type (ADR 0011) */
+export type SortableListProps<T = { id: string | number; name?: string }> = Omit<React.HTMLAttributes<HTMLElement>, 'children' | 'onSelect'> & {
+  items: T[];
+  renderItem?(item: T, index: number): React.ReactNode;
+  /** without it the list cannot be reordered */
+  onReorder?(next: T[], change: { item: T; from: number; to: number }): void;
+  label: string;
+  getId?(item: T): string | number;
+  getName?(item: T): string;
+  layout?: 'vertical' | 'grid';
+  handles?: boolean;
+  moveButtons?: boolean;
+  id?: string;
+  group?: string;
+  onMove?(move: { item: T; from: { list: string; index: number }; to: { list: string; index: number } }): void;
+  disabled?: boolean;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function SortableList<T = { id: string | number; name?: string }>(props: SortableListProps<T>) {
+  const { items = [], renderItem, onReorder, label, getId = (x: any) => x.id, getName, layout = 'vertical', handles = true, moveButtons = false,
+  id, group, onMove, disabled = false, strings, className, ...rest } = props as any;
+  const t: any = useStrings('sortableList', strings);
+  const nameOf = getName || ((x: any) => String(x.name != null ? x.name : x.label != null ? x.label : getId(x)));
   const grid = layout === 'grid';
   const off = disabled || !onReorder;
   const s = useSortable({ items, onReorder, getId, getName: nameOf, label, orientation: grid ? 'grid' : 'vertical', handle: handles, id, group, onMove, disabled: off, strings });
@@ -71,7 +91,7 @@ export function SortableList({ items = [], renderItem, onReorder, label, getId =
   return (
     <ul {...rest} {...s.listProps} aria-label={label}
       className={cx('plx-sortable-list', 'plx-sortable-list--' + (grid ? 'grid' : 'vertical'), handles && 'plx-sortable-list--handles', moveButtons && 'plx-sortable-list--buttons', className)}>
-      {items.map((item, i) => {
+      {items.map((item: any, i: any) => {
         const name = nameOf(item), ip = s.itemProps(i);
         const handle = handles ? (
           <Menu label={fill(t.moveMenu, { name })} placement="bottom-start" className="plx-sortable-list__menu"

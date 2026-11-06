@@ -14,8 +14,8 @@ const read = (f) => { try { return fs.readFileSync(path.join(ROOT, f), 'utf8'); 
 const USERS = [
   ['platform/components/Resizable/Resizable.tsx', /paneMax\(/],
   ['platform/patterns/NavPane/NavPane.tsx', /paneMax\(/],
-  ['platform/patterns/SecondaryPane/SecondaryPane.jsx', /paneMax\(/],
-  ['platform/patterns/SidePanel/SidePanel.jsx', /paneMax\(/],
+  ['platform/patterns/SecondaryPane/SecondaryPane.tsx', /paneMax\(/],
+  ['platform/patterns/SidePanel/SidePanel.tsx', /paneMax\(/],
   ['platform/components/DataGrid/engine/useTableModel.ts', /shareOf\(/],
 ];
 

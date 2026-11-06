@@ -304,7 +304,7 @@ DSParts.records.push(function (H) {
 
     /* ── Session timeout: SessionTimeout ── */
     { id: 'session-timeout', lab: true, icon: 'clock', sec: 'patterns', sub: AUTH, leaf: 'Session timeout', title: 'Session timeout',
-      plenix: 'SessionTimeout, useSessionTimeout', src: 'patterns/SessionTimeout/SessionTimeout.jsx', level: 'Pattern', interaction: 'Action', statesFrom: ['dialog', 'button'],
+      plenix: 'SessionTimeout, useSessionTimeout', src: 'patterns/SessionTimeout/SessionTimeout.tsx', level: 'Pattern', interaction: 'Action', statesFrom: ['dialog', 'button'],
       aliases: ['Idle timeout', 'Inactivity warning', 'Session expiry', 'Auto sign-out'],
       text: 'Ends a session nobody is using without losing anyone’s work. Before the end, an alert dialog shows how long is left (counting down in the data font), with Stay signed in (focused) and Sign out. After the end, the signed-out message says what happened and that the work was kept, and offers Sign in again. useSessionTimeout keeps the time: activity restarts it, the warning opens before the end, and the end signs out.',
       use: ['Where policy ends sessions without activity', 'A warning at least 20 seconds before the end (two minutes is better), extended with one action', 'Saying the work is saved', 'inline for the signed-out page'],

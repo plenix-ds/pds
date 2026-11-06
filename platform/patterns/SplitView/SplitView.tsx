@@ -82,20 +82,36 @@ import { shareOf } from '../../utils/paneLimit.ts';
 // stacked: the floor, the ceiling and the starting height
 const LIMITS = { 'side-by-side': [360, Infinity, 560], stacked: [200, 500, 320] };
 
-export function SplitView({ orientation = 'side-by-side', first, second, label, firstLabel, defaultSize, size, onSizeChange,
-  minSize, maxSize, steps, className, ...rest }) {
-  const tw = useStrings('splitView');
+/** @public the prop type of SplitView (ADR 0011) */
+export type SplitViewProps = Omit<React.HTMLAttributes<HTMLElement>, 'children'> & {
+  orientation?: 'side-by-side' | 'stacked';
+  first: React.ReactNode;
+  second: React.ReactNode;
+  label?: string;
+  firstLabel?: string;
+  defaultSize?: number;
+  size?: number;
+  onSizeChange?(px: number): void;
+  minSize?: number;
+  maxSize?: number;
+  steps?: number[];
+  className?: string;
+};
+export function SplitView(props: SplitViewProps) {
+  let { orientation = 'side-by-side', first, second, label, firstLabel, defaultSize, size, onSizeChange,
+  minSize, maxSize, steps, className, ...rest } = props as any;
+  const tw: any = useStrings('splitView');
   const digits = useDigits();
   // the other pane's minimum in the words at the limit, in the page's digits (Arabic-Indic in Arabic)
-  const otherNeeds = (n) => tw.maxWidth.replace('{n}', localDigits(String(n), { digits }));
+  const otherNeeds = (n: any) => tw.maxWidth.replace('{n}', localDigits(String(n), { digits }));
   if (firstLabel === undefined) firstLabel = tw.firstLabel;
   const shell = useAppLayout();
   const claim = shell && shell.claimPage;
   React.useEffect(() => (claim ? claim('master-detail') : undefined), [claim]);
   const side = orientation !== 'stacked';
   const [lo, hi, start] = LIMITS[side ? 'side-by-side' : 'stacked'];
-  const container = React.useRef(null);
-  const [available, setAvailable] = React.useState(null);
+  const container = React.useRef<any>(null);
+  const [available, setAvailable] = React.useState<any>(null);
   // stacked by its room (issue 237): under 900px a side-by-side split view stacks in CSS (the container query); its divider
   // then becomes the stacked one, read from the layout the CSS chose, so the two never disagree
   const [roomStacked, setRoomStacked] = React.useState(false);
@@ -118,7 +134,7 @@ export function SplitView({ orientation = 'side-by-side', first, second, label, 
       const max = Math.max(floor, (horizontal ? box.width : box.height) - gap - minimum);
       // the window's share (--plx-sys-shell-pane-window-share, 90%, on the 4px grid), as Resizable's side panels read it (issue 873)
       const share = shareOf(win.innerWidth, element);
-      setAvailable(previous => previous && previous.max === max && previous.minimum === minimum && previous.horizontal === horizontal && previous.share === share ? previous : { max, minimum, horizontal, share });
+      setAvailable((previous: any) => previous && previous.max === max && previous.minimum === minimum && previous.horizontal === horizontal && previous.share === share ? previous : { max, minimum, horizontal, share });
     };
     measure();
     const observer = win.ResizeObserver ? new win.ResizeObserver(measure) : null;
@@ -144,15 +160,15 @@ export function SplitView({ orientation = 'side-by-side', first, second, label, 
   // stacked (by its orientation or its room): the divider stops where the second panel would get shorter than its token
   // minimum (issue 560), and says so at that limit
   const stackRoom = available && !available.horizontal ? available : null;
-  const heightMax = (wanted) => (stackRoom && stackRoom.max < wanted ? stackRoom.max : wanted);
-  const heightWords = (wanted) => (stackRoom && stackRoom.max < wanted ? { maxHeight: otherNeeds(stackRoom.minimum) } : undefined);
+  const heightMax = (wanted: any) => (stackRoom && stackRoom.max < wanted ? stackRoom.max : wanted);
+  const heightWords = (wanted: any) => (stackRoom && stackRoom.max < wanted ? { maxHeight: otherNeeds(stackRoom.minimum) } : undefined);
   const [, , stackedStart] = LIMITS.stacked;
-  const box = side && roomStacked
+  const box: any = side && roomStacked
     // stacked by its room: the stacked divider, its height limits and start, a horizontal separator that Up and Down move
     ? { axis: 'vertical', defaultWidth: defaultSize != null ? defaultSize : start, minWidth: widthMin, maxWidth: requestedMax, defaultHeight: stackedStart, minHeight: LIMITS.stacked[0], maxHeight: heightMax(LIMITS.stacked[1]), strings: heightWords(LIMITS.stacked[1]) }
     : side
-    ? { axis: 'horizontal', defaultHeight: stackedStart, minHeight: LIMITS.stacked[0], maxHeight: LIMITS.stacked[1], defaultWidth: defaultSize != null ? defaultSize : start, width: size, minWidth: widthMin, maxWidth: widthMax, strings: constrained ? { maxWidth: otherNeeds(available.minimum) } : undefined, onResize: onSizeChange ? (s) => onSizeChange(s.width) : undefined }
-    : { axis: 'vertical', defaultHeight: defaultSize != null ? defaultSize : start, height: size, minHeight: minSize || lo, maxHeight: heightMax(maxSize || hi), strings: heightWords(maxSize || hi), onResize: onSizeChange ? (s) => onSizeChange(s.height) : undefined };
+    ? { axis: 'horizontal', defaultHeight: stackedStart, minHeight: LIMITS.stacked[0], maxHeight: LIMITS.stacked[1], defaultWidth: defaultSize != null ? defaultSize : start, width: size, minWidth: widthMin, maxWidth: widthMax, strings: constrained ? { maxWidth: otherNeeds(available.minimum) } : undefined, onResize: onSizeChange ? (s: any) => onSizeChange(s.width) : undefined }
+    : { axis: 'vertical', defaultHeight: defaultSize != null ? defaultSize : start, height: size, minHeight: minSize || lo, maxHeight: heightMax(maxSize || hi), strings: heightWords(maxSize || hi), onResize: onSizeChange ? (s: any) => onSizeChange(s.height) : undefined };
   return (
     <GridPane.Provider value={true}><div ref={container} role="group" aria-label={label} className={cx('plx-split-view', 'plx-split-view--' + (side ? 'side-by-side' : 'stacked'), className)} {...rest}>
       <div className="plx-split-view__panels">
@@ -163,7 +179,10 @@ export function SplitView({ orientation = 'side-by-side', first, second, label, 
   );
 }
 
-export function ReadingPane({ label, actions, empty, className, children }) {
+/** @public the prop type of ReadingPane (ADR 0011) */
+export type ReadingPaneProps = { label?: string; actions?: React.ReactNode; empty?: React.ReactNode; className?: string; children?: React.ReactNode };
+export function ReadingPane(props: ReadingPaneProps) {
+  const { label, actions, empty, className, children } = props as any;
   return (
     <section aria-label={label} className={cx('plx-reading-pane', className)}>
       {actions ? <div className="plx-reading-pane__actions">{actions}</div> : null}
