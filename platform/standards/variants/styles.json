@@ -3419,5 +3419,110 @@
       }
     ],
     "why": ".plx-chart-tooltip: one point's value in a small framed box beside the point"
+  },
+  "chart-annotation--kind-point-above": {
+    "sets": [
+      {
+        "property": "stroke",
+        "part": "ring",
+        "token": "--plx-comp-chart-annotation-ring-color"
+      },
+      {
+        "property": "stroke-width",
+        "part": "ring",
+        "token": "--plx-comp-chart-annotation-ring-width"
+      },
+      {
+        "property": "stroke",
+        "part": "leader",
+        "token": "--plx-comp-chart-annotation-leader-color"
+      },
+      {
+        "property": "stroke-width",
+        "part": "leader",
+        "token": "--plx-comp-chart-annotation-leader-width"
+      },
+      {
+        "property": "transform",
+        "part": "label",
+        "token": "--plx-comp-chart-annotation-label-offset"
+      }
+    ],
+    "why": ".plx-chart-annotation ring and leader, with .plx-chart-annotation--top: the note sits above the point"
+  },
+  "chart-annotation--kind-point-below": {
+    "sets": [
+      {
+        "property": "stroke",
+        "part": "ring",
+        "token": "--plx-comp-chart-annotation-ring-color"
+      },
+      {
+        "property": "stroke-width",
+        "part": "ring",
+        "token": "--plx-comp-chart-annotation-ring-width"
+      },
+      {
+        "property": "stroke",
+        "part": "leader",
+        "token": "--plx-comp-chart-annotation-leader-color"
+      },
+      {
+        "property": "stroke-width",
+        "part": "leader",
+        "token": "--plx-comp-chart-annotation-leader-width"
+      },
+      {
+        "property": "transform",
+        "part": "label",
+        "token": "--plx-comp-chart-annotation-label-offset"
+      }
+    ],
+    "why": ".plx-chart-annotation ring and leader, with .plx-chart-annotation--bottom: the note sits below the point"
+  },
+  "chart-annotation--kind-range": {
+    "sets": [
+      {
+        "property": "fill",
+        "part": "band",
+        "token": "--plx-comp-chart-annotation-band-background"
+      },
+      {
+        "property": "fill",
+        "part": "label",
+        "token": "--plx-comp-chart-annotation-label-text"
+      }
+    ],
+    "why": ".plx-chart-annotation__band, a shaded span of the plot with its name"
+  },
+  "chart-reference-line--axis-horizontal-a-value": {
+    "sets": [
+      {
+        "property": "stroke",
+        "part": "line",
+        "token": "--plx-comp-chart-reference-line-color"
+      },
+      {
+        "property": "transform",
+        "part": "label",
+        "token": "--plx-comp-chart-reference-label-offset"
+      }
+    ],
+    "why": ".plx-chart-reference--y: the line across the plot at a value, its label above the line at the end"
+  },
+  "chart-reference-line--axis-vertical-a-date": {
+    "sets": [
+      {
+        "property": "stroke",
+        "part": "line",
+        "token": "--plx-comp-chart-reference-line-color"
+      },
+      {
+        "property": "transform",
+        "part": "label",
+        "token": "--plx-comp-chart-reference-label-offset"
+      }
+    ],
+    "why": ".plx-chart-reference--x: the line up the plot at a date, its label beside the line at the top"
   }
 }
