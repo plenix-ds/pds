@@ -183,6 +183,16 @@ export function useGridMetrics({
       (props.viewMenu ? metrics.lead : 0);
     // the shown columns (a hidden column takes no room)
     const shownColumns = columns.filter((c: any) => !columnVisibility || columnVisibility[c.field] !== false);
+    // (issue 783, owner P1) a column's floor is its whole title (the type icon and the options button too), so a wide grid of ordinary titles
+    // "needed" more than its room and drew cards while a table of readable columns fits. When the floors together do not fit, the floor of
+    // each column comes down to its minimum readable width (its minWidth, else the grid's minimum): a title that no longer fits ends in an
+    // ellipsis. Only when even those minimums do not fit does the card switch below take over
+    if (fitting) {
+      const floors = shownColumns.reduce((sum: any, c: any) => sum + (kinds(c).includes('icon') ? 0 : floor[c.field] || 0), 0)
+        + shownColumns.reduce((sum: any, c: any) => sum + (kinds(c).includes('icon') ? metrics.lead : 0), 0);
+      if (floors > available)
+        shownColumns.forEach((c: any) => { if (!kinds(c).includes('icon')) floor[c.field] = snapUp(Math.max(metrics.min, tokenPx(c.minWidth) || 0)); });
+    }
     // the table fits its room (owner, issue 929: "autosize and autofit"): each shown column starts at its natural width (its
     // header and its widest value, capped at its set width; measured above). Over the room, the columns with the most room
     // above their minimum readable width (minWidth, else the header floor, never under --plx-ref-size-20u) give it up first,
