@@ -870,7 +870,9 @@ export default {
     "formSaved": "Saved {name}",
     "formSaveRefused": "Couldn’t save {name}. Check the values and try again.",
     "saved": "Saved",
-    "saveRefused": "Couldn’t save. The previous value is back."
+    "saveRefused": "Couldn’t save. The previous value is back.",
+    "undone": "Edit undone",
+    "redone": "Edit redone"
   },
   "dataPill": {
     "male": "male",
