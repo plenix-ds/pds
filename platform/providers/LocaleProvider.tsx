@@ -131,7 +131,7 @@ const LocaleContext = React.createContext<LocaleValue | null>(null);
 export function LocaleProvider({ locale, catalogs, messages, fallbackLocale = 'en', timeZone, dir, digits = 'auto', root = false, children }: LocaleProviderProps) {
   const language = canonical(locale || F.formatLocale());
   // a language whose built-in words are not on the page yet (the CDN's plenix.js leaves Arabic to plenix-ar.js, issue 882):
-  // ask the page loader for them, and draw again when they arrive ('plenix:language', i18n/optional.js). A switch to Arabic
+  // ask the page loader for them, and draw again when they arrive ('plenix:language', i18n/optional.ts). A switch to Arabic
   // without a reload gets its words; in this checkout and the npm builds Arabic is built in, so nothing is asked
   const [arrived, setArrived] = React.useState(0);
   React.useEffect(() => {

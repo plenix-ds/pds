@@ -46,7 +46,7 @@
     "dashboard/pds1/app.js",
     // run by node build-packages.js through the Vite command line (#709 step 5); the Arabic opt-in is one of its entries
     "vite.packages.config.mjs",
-    "platform/i18n/ar.optin.js"
+    "platform/i18n/ar.optin.ts"
   ],
   "project": ["**/*.{js,jsx,ts,tsx,mjs,cjs}"],
   // the build resolves this name to the script already on the page
