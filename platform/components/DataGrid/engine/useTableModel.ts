@@ -3,7 +3,7 @@
      metrics and the column's own width, minimum and maximum) and the table over the records (sorting, filtering, paging, expansion,
      pinning, visibility, order and sizing state), with every change it makes handed to the engine's own handlers.
    Usage:
-     import { useTableModel } from './engine/useTableModel.js';
+     import { useTableModel } from './engine/useTableModel.ts';
      const { leafDefs, table } = useTableModel({ columns, source, props, sorting, filters, ... });
    Props:
      The engine's columns, records and state (sorting, filters, selection, paging, visibility, order, sizing, pinning, expansion) and
@@ -33,7 +33,7 @@ import {
 import { isRtl } from '../../../utils/direction.ts';
 
 // dates in time order, whatever form they come in (a Date, a timestamp, a bare "YYYY-MM-DD" as its local midnight); no date sorts last (issue 161)
-const dateOrder = (a, b) => {
+const dateOrder = (a: any, b: any) => {
   const x = parseDate(a)?.getTime(), y = parseDate(b)?.getTime();
   return x === y ? 0 : x === undefined ? 1 : y === undefined ? -1 : x - y;
 };
@@ -75,30 +75,30 @@ export function useTableModel({
   remoteMode,
   remote,
   mode,
-}) {
+}: any) {
   const leafDefs = React.useMemo(
     () =>
-      columns.map((c) => ({
+      columns.map((c: any) => ({
         id: c.field,
-        accessorFn: (r) => valueAt(r, c.field),
+        accessorFn: (r: any) => valueAt(r, c.field),
         header: c.title || c.field,
         enableSorting: c.sortable !== false,
         filterFn: c.type === 'bytes' ? byteFilter : c.filter === 'list' ? listFilter : textFilter,
         sortingFn:
           typeof c.sorter === 'function'
-            ? (a, b, id) =>
+            ? (a: any, b: any, id: any) =>
                 c.sorter(
                   a.getValue(id),
                   b.getValue(id),
                   a.original,
                   b.original,
                   id,
-                  sortingRef.current.find((s) => s.id === id)?.desc ? 'desc' : 'asc'
+                  sortingRef.current.find((s: any) => s.id === id)?.desc ? 'desc' : 'asc'
                 )
             : c.sorter === 'number' || c.type === 'bytes'
               ? 'basic'
               : c.type === 'date' || c.sorter === 'date'
-                ? (a, b, id) => dateOrder(a.getValue(id), b.getValue(id))
+                ? (a: any, b: any, id: any) => dateOrder(a.getValue(id), b.getValue(id))
                 : compare,
         size: kinds(c).includes('icon')
           ? metrics.lead
@@ -123,11 +123,11 @@ export function useTableModel({
       })),
     [columns, metrics.min, metrics.lead, metrics.room, autoSizing, floors]
   );
-  const table = useReactTable({
+  const table = useReactTable<any>({
     data: source,
     columns: leafDefs,
-    getRowId: (r) => recordKey(r[index]),
-    getSubRows: childField ? (r) => r[childField] : undefined,
+    getRowId: (r: any) => recordKey(r[index]),
+    getSubRows: childField ? (r: any) => r[childField] : undefined,
     onExpandedChange: setExpanded,
     filterFromLeafRows: true,
     state: {
@@ -145,15 +145,15 @@ export function useTableModel({
     onSortingChange: changeSort,
     enableMultiRowSelection: options.selectableRows !== 1,
     enableSubRowSelection: false,
-    onRowSelectionChange: (update) =>
+    onRowSelectionChange: (update: any) =>
       notifySelection(typeof update === 'function' ? update(live.current.selection || selection) : update),
-    onColumnVisibilityChange: (update) => {
+    onColumnVisibilityChange: (update: any) => {
       changeVisibility(typeof update === 'function' ? update(columnVisibility) : update);
     },
-    onColumnOrderChange: (update) => {
+    onColumnOrderChange: (update: any) => {
       changeOrder(typeof update === 'function' ? update(columnOrder) : update);
     },
-    onColumnSizingChange: (update) => {
+    onColumnSizingChange: (update: any) => {
       const before = live.current.sizing || sizing,
         next = typeof update === 'function' ? update(before) : update;
       Object.keys(next).forEach((id) => {
@@ -162,7 +162,7 @@ export function useTableModel({
     },
     columnResizeMode: 'onChange',
     columnResizeDirection: frame.current && isRtl(frame.current) ? 'rtl' : 'ltr',
-    onColumnFiltersChange: (update) => {
+    onColumnFiltersChange: (update: any) => {
       setFilters(update);
       setPage(0);
     },
@@ -177,13 +177,13 @@ export function useTableModel({
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    getFacetedRowModel: (t) => () => {
+    getFacetedRowModel: (t: any) => () => {
       const all = t.getPreFilteredRowModel();
       return { rows: all.rows, flatRows: all.rows, rowsById: all.rowsById };
     },
     getFacetedUniqueValues: getFacetedUniqueValues(),
     getPaginationRowModel: mode === 'pages' ? getPaginationRowModel() : undefined,
     autoResetPageIndex: false,
-  });
+  } as any);
   return { table };
 }

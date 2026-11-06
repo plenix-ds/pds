@@ -16,7 +16,7 @@ import React from 'react';
 
 let loaded: any = null, loading: any = null;
 function load() {
-  return loading || (loading = import('./chromeRare.jsx').then(
+  return loading || (loading = import('./chromeRare.tsx').then(
     (m) => (loaded = m),
     (error) => { loading = null; throw error; },
   ));
