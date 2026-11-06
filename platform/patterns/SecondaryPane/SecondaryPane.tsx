@@ -54,6 +54,7 @@
      Other props go on its aside element.
 */
 import React from 'react';
+import type { IconValue } from '../../components/Icon/Icon.tsx';
 import { cx } from '../../utils/cx.ts';
 import { asIcon as iconElement } from '../../components/Icon/Icon.tsx';
 import { Button } from '../../components/Button/Button.tsx';
@@ -71,39 +72,69 @@ import PanelLeftOpenIcon from 'plenix-platform/icons/plenix/panel-left-open';
 import PanelRightCloseIcon from 'plenix-platform/icons/plenix/panel-right-close';
 import PanelRightOpenIcon from 'plenix-platform/icons/plenix/panel-right-open';
 
-export function SecondaryPane({ title, label, icon, actions, side = 'start', width = 'md', collapsible = false, collapsed, defaultCollapsed = false,
+/** @public the prop type (ADR 0011) */
+export type SecondaryPaneProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & {
+  title?: React.ReactNode;
+  label?: string;
+  icon?: string | IconValue;
+  actions?: React.ReactNode;
+  side?: 'start' | 'end';
+  width?: 'sm' | 'md' | 'lg';
+  collapsible?: boolean;
+  collapsed?: boolean;
+  defaultCollapsed?: boolean;
+  onCollapsedChange?(next: boolean): void;
+  /** the items the folded rail shows (ToolRail.Item elements) */
+  rail?: React.ReactNode;
+  resizable?: boolean;
+  /** the dragged width in pixels */
+  size?: number;
+  defaultSize?: number | null;
+  onSizeChange?(px: number): void;
+  /** the pane is the list of a list-detail screen, an item's detail showing beside it */
+  detailOpen?: boolean;
+  onBack?(): void;
+  scrollTop?: number;
+  onScrollChange?(top: number): void;
+  onClose?(): void;
+  strings?: Record<string, string>;
+  className?: string;
+  children?: React.ReactNode;
+};
+export function SecondaryPane(props: SecondaryPaneProps) {
+  const { title, label, icon, actions, side = 'start', width = 'md', collapsible = false, collapsed, defaultCollapsed = false,
   onCollapsedChange, rail, resizable = false, size: sizeProp, defaultSize = null, onSizeChange, detailOpen, onBack, scrollTop, onScrollChange,
-  onClose, strings, className, children, ...rest }) {
-  const t = useStrings('secondaryPane', strings);
+  onClose, strings, className, children, ...rest } = props as any;
+  const t: any = useStrings('secondaryPane', strings);
   const [ownCollapsed, setOwnCollapsed] = React.useState(defaultCollapsed);
   const narrow = useMedia(below('--plx-sys-shell-phone-below'));
   const listDetail = detailOpen !== undefined;
   const stepAside = narrow && listDetail && !!detailOpen;   // at Narrow the detail shows alone, led by the Back bar
   const folded = collapsible && !(narrow && listDetail) && (collapsed !== undefined ? collapsed : ownCollapsed);
-  const setFolded = (next) => { if (collapsed === undefined) setOwnCollapsed(next); if (onCollapsedChange) onCollapsedChange(next); };
+  const setFolded = (next: any) => { if (collapsed === undefined) setOwnCollapsed(next); if (onCollapsedChange) onCollapsedChange(next); };
   const [ownSize, setOwnSize] = React.useState(defaultSize);
   const size = sizeProp !== undefined ? sizeProp : ownSize;
-  const setSize = (w) => { if (sizeProp === undefined) setOwnSize(w); if (onSizeChange) onSizeChange(w); };
+  const setSize = (w: any) => { if (sizeProp === undefined) setOwnSize(w); if (onSizeChange) onSizeChange(w); };
   const name = label || title;
-  const named = (s) => s.split('{name}').join(name);
+  const named = (s: any) => s.split('{name}').join(name);
   // the body's scroll position: restored when the body appears (on load, and when the list comes back at Narrow)
-  const body = React.useRef(null);
+  const body = React.useRef<any>(null);
   const top = React.useRef(scrollTop || 0);
   const frame = React.useRef(0);
-  const onScroll = (e) => {
+  const onScroll = (e: any) => {
     top.current = e.currentTarget.scrollTop;
     if (onScrollChange && !frame.current) frame.current = requestAnimationFrame(() => { frame.current = 0; onScrollChange(top.current); });
   };
   React.useLayoutEffect(() => { if (body.current && !stepAside && top.current) body.current.scrollTop = top.current; }, [stepAside, folded]);
   // the Back control: the shell's parent row when there is one (one back control at Narrow), else the pane's own bar
   const layout = useAppLayout();
-  const back = React.useRef(null);
-  const backAction = React.useRef(onBack);
+  const back = React.useRef<any>(null);
+  const backAction = React.useRef<any>(onBack);
   backAction.current = onBack;
   const backLabel = named(t.back);
   const claimBack = layout ? layout.claimBack : null;
   React.useLayoutEffect(() => (stepAside && claimBack
-    ? claimBack({ label: backLabel, onBack: (e) => { if (backAction.current) backAction.current(e); }, ref: back }) : undefined), [stepAside, backLabel, claimBack]);
+    ? claimBack({ label: backLabel, onBack: () => { if (backAction.current) backAction.current(); }, ref: back }) : undefined), [stepAside, backLabel, claimBack]);
   const ownBar = stepAside && !(layout && layout.parentRow);
   // focus: to the Back control when the detail opens at Narrow; back to the chosen item when the list returns
   const chosen = React.useRef(-1);
@@ -123,7 +154,7 @@ export function SecondaryPane({ title, label, icon, actions, side = 'start', wid
     const lost = !ae || ae === document.body || !!(layout && layout.parentEl && layout.parentEl.contains(ae));
     if (item && lost) item.focus();
   }, [stepAside]);
-  const onBodyClick = (e) => {
+  const onBodyClick = (e: any) => {
     const items = body.current ? focusables(body.current) : [];
     chosen.current = items.findIndex((x) => x === e.target || x.contains(e.target));
   };

@@ -1,4 +1,4 @@
-export { ShareDialog } from '../patterns/ShareDialog/ShareDialog.jsx';
+export { ShareDialog } from '../patterns/ShareDialog/ShareDialog.tsx';
 export { PermissionsEditor } from '../patterns/PermissionsEditor/PermissionsEditor.tsx';
 export { Tour } from '../patterns/Tour/Tour.jsx';
 export { Checklist } from '../components/Checklist/Checklist.tsx';

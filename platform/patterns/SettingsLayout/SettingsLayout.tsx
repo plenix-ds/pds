@@ -62,7 +62,10 @@ import { useStrings } from '../../providers/LocaleProvider.tsx';
 import ChevronDownIcon from 'plenix-platform/icons/plenix/chevron-down';
 
 
-export function SettingsLayout({ nav, className, children }) {
+/** @public the prop type of SettingsLayout (ADR 0011) */
+export type SettingsLayoutProps = { nav?: React.ReactNode; className?: string; children?: React.ReactNode };
+export function SettingsLayout(props: SettingsLayoutProps) {
+  const { nav, className, children } = props as any;
   // a settings page: the layout standard (providers/pageLayouts.js) lays it out, through the shell (batch 218)
   const shell = useAppLayout();
   const claim = shell && shell.claimPage;
@@ -88,10 +91,10 @@ function pageOf() {
 }
 
 // the open state of a collapsible section: controlled (expanded), or its own, remembered in the page's view state
-function useOpen(collapsible, defaultExpanded, expanded, onToggle, key, remember) {
+function useOpen(collapsible: any, defaultExpanded: any, expanded: any, onToggle: any, key: any, remember: any) {
   const page = React.useMemo(pageOf, []);
   const [view, update] = useViewState(page);
-  const kept = remember && key && view.sections ? view.sections[key] : undefined;
+  const kept = remember && key && view.sections ? (view.sections as any)[key] : undefined;
   const [own, setOwn] = React.useState(typeof kept === 'boolean' ? kept : defaultExpanded);
   const open = !collapsible || (expanded === undefined ? own : expanded);
   const toggle = () => {
@@ -104,13 +107,31 @@ function useOpen(collapsible, defaultExpanded, expanded, onToggle, key, remember
   return [open, toggle];
 }
 
-export function SettingsSection({ title, description, collapsible = false, defaultExpanded = true, expanded, onToggle, stateKey, remember = true,
-  actions, headingLevel = 2, strings, className, children }) {
-  const t = useStrings('settingsLayout.section', strings);
+/** @public the prop type of SettingsSection (ADR 0011) */
+export type SettingsSectionProps = {
+  title: React.ReactNode;
+  description?: React.ReactNode;
+  collapsible?: boolean;
+  defaultExpanded?: boolean;
+  expanded?: boolean;
+  onToggle?(next: boolean): void;
+  stateKey?: string;
+  remember?: boolean;
+  /** the form's buttons, in an ActionBar under the rows */
+  actions?: React.ReactNode;
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+  strings?: Record<string, string>;
+  className?: string;
+  children?: React.ReactNode;
+};
+export function SettingsSection(props: SettingsSectionProps) {
+  const { title, description, collapsible = false, defaultExpanded = true, expanded, onToggle, stateKey, remember = true,
+  actions, headingLevel = 2, strings, className, children } = props as any;
+  const t: any = useStrings('settingsLayout.section', strings);
   const id = useUid('plx-set');
   const canCollapse = !!(collapsible && title);
   const [open, toggle] = useOpen(canCollapse, defaultExpanded, expanded, onToggle, stateKey || (typeof title === 'string' ? title : null), remember);
-  const H = 'h' + headingLevel;
+  const H: any = 'h' + headingLevel;
   const descId = description ? id + '-d' : undefined;
   return (
     <section aria-labelledby={title ? id : undefined} className={cx('plx-settings__section', canCollapse && 'plx-settings__section--collapsible', canCollapse && !open && 'is-collapsed', className)}>
@@ -137,7 +158,10 @@ export function SettingsSection({ title, description, collapsible = false, defau
   );
 }
 
-export function SettingsRow({ label, description, htmlFor, className, children }) {
+/** @public the prop type of SettingsRow (ADR 0011) */
+export type SettingsRowProps = { label: React.ReactNode; description?: React.ReactNode; htmlFor?: string; className?: string; children?: React.ReactNode };
+export function SettingsRow(props: SettingsRowProps) {
+  const { label, description, htmlFor, className, children } = props as any;
   return (
     <div className={cx('plx-settings__row', className)}>
       <div className="plx-settings__row-text">

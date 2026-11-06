@@ -53,11 +53,11 @@ import { Dialog } from '../../components/Dialog/Dialog.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import { fill } from '../../utils/fill.ts';
 
-const clock = (sec) => { const s = Math.max(0, Math.ceil(sec)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
+const clock = (sec: any) => { const s = Math.max(0, Math.ceil(sec)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
 const MILESTONES = [60, 30, 10];
 
 // the seconds left, from expiresAt (ticking every second) or from remaining
-function useLeft(state, expiresAt, remaining) {
+function useLeft(state: any, expiresAt: any, remaining: any) {
   const [now, setNow] = React.useState(() => Date.now());
   React.useEffect(() => {
     if (state !== 'warning' || typeof expiresAt !== 'number') return undefined;
@@ -70,13 +70,31 @@ function useLeft(state, expiresAt, remaining) {
   return 0;
 }
 
-export function SessionTimeout({ state = 'active', expiresAt, remaining, idleMinutes, saved, onStay, onSignOut, onExpire, onSignIn,
-  inline = false, strings, className }) {
-  const t = useStrings('sessionTimeout', strings);
+/** @public the prop type (ADR 0011) */
+export type SessionTimeoutProps = {
+  state?: 'active' | 'warning' | 'signed-out';
+  /** when the session ends, in milliseconds */
+  expiresAt?: number;
+  /** instead: the seconds left */
+  remaining?: number;
+  idleMinutes?: number;
+  saved?: string;
+  onStay?(): void;
+  onSignOut?(): void;
+  onExpire?(): void;
+  onSignIn?(): void;
+  inline?: boolean;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function SessionTimeout(props: SessionTimeoutProps) {
+  const { state = 'active', expiresAt, remaining, idleMinutes, saved, onStay, onSignOut, onExpire, onSignIn,
+  inline = false, strings, className } = props as any;
+  const t: any = useStrings('sessionTimeout', strings);
   const left = useLeft(state, expiresAt, remaining);
-  const stayRef = React.useRef(null);
-  const signInRef = React.useRef(null);
-  const said = React.useRef({});
+  const stayRef = React.useRef<any>(null);
+  const signInRef = React.useRef<any>(null);
+  const said = React.useRef<any>({});
   const expired = React.useRef(false);
   React.useEffect(() => { if (state === 'warning') { said.current = {}; expired.current = false; } }, [state, expiresAt]);
   React.useEffect(() => {
@@ -113,7 +131,7 @@ export function SessionTimeout({ state = 'active', expiresAt, remaining, idleMin
 
 
 // the message drawn in the page: a region named by its title, the text, then the actions
-function Inline({ kind, title, actions, className, children }) {
+function Inline({ kind, title, actions, className, children }: any) {
   const id = useUid('plx-session-timeout');
   return (
     <section className={cx('plx-session-timeout', 'plx-session-timeout--' + kind, 'plx-session-timeout--inline', className)} aria-labelledby={id}>
@@ -124,9 +142,13 @@ function Inline({ kind, title, actions, className, children }) {
   );
 }
 
-export function useSessionTimeout({ timeout = 1800, warnBefore = 120, onTimeout, events = ['pointerdown', 'keydown', 'wheel', 'touchstart'] } = {}) {
+/** @public the options of useSessionTimeout: timeout and warnBefore in seconds */
+export type SessionTimeoutOptions = { timeout?: number; warnBefore?: number; onTimeout?(): void; events?: string[] };
+/** @public what useSessionTimeout returns */
+export type SessionTimeoutState = { state: 'active' | 'warning' | 'signed-out'; expiresAt: number; stay(): void; signOut(): void };
+export function useSessionTimeout({ timeout = 1800, warnBefore = 120, onTimeout, events = ['pointerdown', 'keydown', 'wheel', 'touchstart'] }: SessionTimeoutOptions = {}): SessionTimeoutState {
   const [expiresAt, setExpiresAt] = React.useState(() => Date.now() + timeout * 1000);
-  const [state, setState] = React.useState('active');
+  const [state, setState] = React.useState<SessionTimeoutState['state']>('active');
   const stateRef = React.useRef(state);
   stateRef.current = state;
   const end = React.useRef(onTimeout);

@@ -21,7 +21,7 @@ function check({ add }) {
   if (!/devicePixelRatio/.test(read('tests/monitor-widths.test.js'))) add(NAME, path.join(ROOT, 'tests/monitor-widths.test.js'), 0, 'the test must set the zoom (devicePixelRatio and a scaled screen size) and check the width survives it');
   if (!/plenix\.paneWidths/.test(h)) add(NAME, hf, 0, 'the store key plenix.paneWidths is missing');
   if (!/paneMax\(/.test(h)) add(NAME, hf, 0, 'a remembered width must be limited by paneMax (it is used only when it still fits the window)');
-  for (const [f, legacy] of [['platform/patterns/SidePanel/SidePanel.jsx', /localStorage\.setItem\(WIDTH_KEY/], ['platform/patterns/AppShell/AppShell.tsx', /writePref\('plenix\.sideNav\.width'/]]) {
+  for (const [f, legacy] of [['platform/patterns/SidePanel/SidePanel.tsx', /localStorage\.setItem\(WIDTH_KEY/], ['platform/patterns/AppShell/AppShell.tsx', /writePref\('plenix\.sideNav\.width'/]]) {
     const s = read(f), file = path.join(ROOT, f);
     if (!/useMonitorWidth\(/.test(s)) add(NAME, file, 0, 'does not ask useMonitorWidth for the dragged width');
     if (legacy.test(s)) add(NAME, file, 0, 'writes the old single saved width again: a width is saved per monitor (setWidth from useMonitorWidth)');
