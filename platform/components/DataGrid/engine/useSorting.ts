@@ -2,7 +2,7 @@
    Summary: Which sort the grid shows: the caller's sort (props.sort, normalized), the grid's own, or none, and who owns it
      now (the person's last choice wins until the caller sends a new sort), kept in a ref for the handlers that run later.
    Usage:
-     import { useSorting } from './engine/useSorting.js';
+     import { useSorting } from './engine/useSorting.ts';
      const { sorting, sortSignal, sortingRef, sortOwner, setSortOwner, setSorting } = useSorting({ props, initial });
    Props:
      props: the grid's props (sort, onViewChange); initial: the saved view the grid opens with (sorting).
@@ -16,11 +16,14 @@
 import React from 'react';
 import { normalizeSort } from '../state.ts';
 import { EMPTY_ROWS } from './helpers.tsx';
+import type { SortItem } from '../state.ts';
 
-export function useSorting({ initial, props }) {
-  const [localSort, setSorting] = React.useState(initial.sorting);
+type SortProps = { sort?: Array<{ field?: string; column?: string; dir?: string }>; onViewChange?: unknown };
+
+export function useSorting({ initial, props }: { initial: { sorting: SortItem[] }; props: SortProps }) {
+  const [localSort, setSorting] = React.useState<SortItem[]>(initial.sorting);
   const sortSignal = JSON.stringify(props.sort);
-  const [sortOwner, setSortOwner] = React.useState(null);
+  const [sortOwner, setSortOwner] = React.useState<string | null>(null);
   const controlledSort = React.useMemo(() => normalizeSort(props.sort), [sortSignal]);
   const initiallyControlledSort = React.useRef(!!props.sort?.length),
     appliedSort = React.useRef(false);
@@ -32,14 +35,14 @@ export function useSorting({ initial, props }) {
   React.useEffect(() => {
     if (props.sort?.length && sortOwner !== sortSignal) setSortOwner(null);
   }, [sortSignal]);
-  const sorting = props.onViewChange
+  const sorting: SortItem[] = props.onViewChange
     ? controlledSort
     : sortOwner === sortSignal || (!props.sort?.length && sortOwner !== null)
       ? localSort
       : props.sort?.length
         ? controlledSort
         : appliedSort.current
-          ? EMPTY_ROWS
+          ? (EMPTY_ROWS as SortItem[])
           : localSort;
   const sortingRef = React.useRef(sorting);
   sortingRef.current = sorting;

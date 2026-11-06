@@ -3,7 +3,7 @@
      what a change tells the caller and the events, the one-row pick, and the clicks and checkboxes that choose rows
      (a plain click, Ctrl or Command, Shift for a range, select all).
    Usage:
-     import { useSelection, selectionActions } from './engine/useSelection.js';
+     import { useSelection, selectionActions } from './engine/useSelection.ts';
      const { selection, notifySelection, pick, selectionInfo, selectionAnchor } = useSelection({ selected, live, canonical, index, options, onSelectionChange, emit, api });
      const { selectionRows, selectedVisible, allVisible, selectAll, pickCheckbox, chooseRow } = selectionActions({ table, live, selection, selectionAnchor, pick, selectable, options });
    Props:
@@ -22,15 +22,20 @@
 */
 import React from 'react';
 import { recordKey } from '../state.ts';
+import type { Table, Row } from '@tanstack/react-table';
+import type { DataRecord, LiveGrid } from '../types.ts';
 
-export function useSelection({ selected, live, canonical, index, options, onSelectionChange, emit, api }) {
+type Selection = Record<string, boolean>;
+type SelectionApi = { row: (key: string) => unknown };
+
+export function useSelection({ selected, live, canonical, index, options, onSelectionChange, emit, api }: { selected?: unknown[]; live: LiveGrid; canonical: DataRecord[]; index: string; options: { selectableRows?: number | boolean }; onSelectionChange?: (keys: unknown[], info: { count: number; hidden: number }) => void; emit: (name: string, ...args: unknown[]) => void; api: SelectionApi }) {
   const selectionInfo = React.useRef({ hidden: 0 }),
     selectionAnchor = React.useRef(null);
-  const [ownSelection, setSelection] = React.useState({});
+  const [ownSelection, setSelection] = React.useState<Selection>({});
   const selection = Array.isArray(selected)
     ? Object.fromEntries(selected.map((k) => [recordKey(k), true]))
     : ownSelection;
-  const notifySelection = (next) => {
+  const notifySelection = (next: Selection) => {
     live.current.selection = next;
     setSelection(next);
     const active = new Set(live.current.table.getFilteredRowModel().flatRows.map((r) => r.id)),
@@ -46,10 +51,10 @@ export function useSelection({ selected, live, canonical, index, options, onSele
       records.map((r) => api.row(recordKey(r[index])))
     );
   };
-  const pick = (key, value) => {
+  const pick = (key: string, value: boolean) => {
     const now = live.current;
     if (!!now.selection[key] === !!value) return;
-    let row = null;
+    let row: Row<DataRecord> | null = null;
     try {
       row = now.table.getRow(key, true);
     } catch (e) {
@@ -68,11 +73,11 @@ export function useSelection({ selected, live, canonical, index, options, onSele
   return { selection, notifySelection, pick, selectionInfo, selectionAnchor };
 }
 
-export function selectionActions({ table, live, selection, selectionAnchor, pick, selectable, options }) {
+export function selectionActions({ table, live, selection, selectionAnchor, pick, selectable, options }: { table: Table<DataRecord>; live: LiveGrid; selection: Selection; selectionAnchor: { current: string | null }; pick: (key: string, value: boolean) => void; selectable?: boolean; options: { selectableRows?: number | boolean } }) {
   const selectionRows = table.getPrePaginationRowModel().rows,
     selectedVisible = selectionRows.filter((r) => selection[r.id]),
     allVisible = selectionRows.length > 0 && selectedVisible.length === selectionRows.length;
-  const selectAll = (value) => {
+  const selectAll = (value: boolean) => {
     const next = { ...selection };
     selectionRows.forEach((r) => {
       if (value) next[r.id] = true;
@@ -80,7 +85,7 @@ export function selectionActions({ table, live, selection, selectionAnchor, pick
     });
     table.setRowSelection(next);
   };
-  const pickCheckbox = (row, event) => {
+  const pickCheckbox = (row: Row<DataRecord>, event: { target: { checked: boolean }; nativeEvent?: { shiftKey?: boolean }; shiftKey?: boolean }) => {
     const wanted = event.target.checked,
       from = selectionRows.findIndex((r) => r.id === selectionAnchor.current),
       to = selectionRows.indexOf(row);
@@ -97,7 +102,7 @@ export function selectionActions({ table, live, selection, selectionAnchor, pick
   // a click on the row (or Enter on it), not on its checkbox (#452, as a file manager): a plain one selects only that row,
   // Ctrl or ⌘ toggles it, Shift extends from the anchor, Ctrl or ⌘ with Shift adds the range to the selection; the
   // checkbox and select all keep toggling
-  const chooseRow = (row, e) => {
+  const chooseRow = (row: Row<DataRecord>, e: React.MouseEvent | React.KeyboardEvent) => {
     if (!selectable && !options.selectableRows) return;
     if ((e.ctrlKey || e.metaKey) && e.shiftKey && selectable) {
       pickCheckbox(row, { target: { checked: true }, nativeEvent: e.nativeEvent, shiftKey: true });
