@@ -46,7 +46,7 @@ import { WITHIN, fieldOf, kindOf, optionsOf, newCondition, nextId, fieldWords, b
 import { Button } from '../../components/Button/Button.tsx';
 import { Input, Select } from '../../components/Input/Input.tsx';
 import { NumberInput } from '../../components/NumberInput/NumberInput.tsx';
-import { DatePicker } from '../../components/DatePicker/DatePicker.jsx';
+import { DatePicker } from '../../components/DatePicker/DatePicker.tsx';
 import { Combobox } from '../../components/Combobox/Combobox.tsx';
 import { SegmentedControl } from '../../components/SegmentedControl/SegmentedControl.tsx';
 import { CodeBlock } from '../../components/CodeBlock/CodeBlock.tsx';

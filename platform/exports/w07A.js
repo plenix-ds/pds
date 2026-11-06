@@ -2,6 +2,6 @@
 // and ProgressSteps (Stepper, Progress tracker, Step progress). Tabs orientation="vertical" and AppHeader back and title
 // are extensions of public components.
 export { Calendar } from '../components/Calendar/Calendar.tsx';
-export { DatePicker } from '../components/DatePicker/DatePicker.jsx';
+export { DatePicker } from '../components/DatePicker/DatePicker.tsx';
 export { CountrySelect } from '../components/CountrySelect/CountrySelect.tsx';
 export { ProgressSteps } from '../components/ProgressSteps/ProgressSteps.tsx';
