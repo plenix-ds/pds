@@ -23,7 +23,7 @@ import { DatePicker } from '../../DatePicker/DatePicker.jsx';
 import { Checkbox } from '../../Checkbox/Checkbox.tsx';
 import { Combobox } from '../../Combobox/Combobox.tsx';
 import { EntityPicker } from '../../EntityPicker/EntityPicker.jsx';
-import { Notice } from '../../Notice/Notice.tsx';
+import { ErrorSummary } from '../../ErrorSummary/ErrorSummary.tsx';
 import { Text } from '../../Text/Text.tsx';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden.tsx';
 import { useDirection } from '../../../providers/DirectionProvider.tsx';
@@ -39,35 +39,37 @@ function kindOf(column, types) {
   return BUILT_IN.includes(e) && (types || []).includes(e) ? e : 'input';
 }
 
+const idOf = (column) => 'plx-form-edit-' + String(column.field).replace(/[^\w-]/g, '-');
 function Control({ column, kind, value, set, invalid, record }) {
   const label = column.title,
+    id = idOf(column),
     options = column.editorProps?.options ?? [],
     load = column.editorProps?.loadOptions,
     { dir } = useDirection();
   switch (kind) {
     case 'number':
-      return <NumberInput value={value ?? null} onChange={set} aria-label={label} />;
+      return <NumberInput id={id} value={value ?? null} onChange={set} aria-label={label} />;
     case 'textarea':
-      return <Textarea value={value ?? ''} onChange={(e) => set(e.target.value)} autoGrow aria-label={label} />;
+      return <Textarea id={id} value={value ?? ''} onChange={(e) => set(e.target.value)} autoGrow aria-label={label} />;
     case 'select':
-      return <Select options={options} value={value ?? ''} onChange={(e) => set(e.target.value)} aria-label={label} block />;
+      return <Select id={id} options={options} value={value ?? ''} onChange={(e) => set(e.target.value)} aria-label={label} block />;
     case 'date':
-      return <DatePicker value={value || null} onChange={set} width="fill" aria-label={label} />;
+      return <DatePicker id={id} value={value || null} onChange={set} width="fill" aria-label={label} />;
     case 'checkbox':
-      return <Checkbox checked={!!value} onChange={(e) => set(e.target.checked)} aria-label={label} />;
+      return <Checkbox id={id} checked={!!value} onChange={(e) => set(e.target.checked)} aria-label={label} />;
     case 'combobox':
-      return <Combobox {...(load ? { loadOptions: load } : { options })} value={value ?? ''} onChange={set} label={label} width="fill" />;
+      return <Combobox id={id} {...(load ? { loadOptions: load } : { options })} value={value ?? ''} onChange={set} label={label} width="fill" />;
     case 'tags':
-      return <Combobox multiple creatable {...(load ? { loadOptions: load } : { options })} values={Array.isArray(value) ? value : []} onChange={set} label={label} width="fill" />;
+      return <Combobox id={id} multiple creatable {...(load ? { loadOptions: load } : { options })} values={Array.isArray(value) ? value : []} onChange={set} label={label} width="fill" />;
     case 'person':
-      return <EntityPicker kind="people" {...(load ? { loadOptions: load } : { options })} value={value ?? ''} onChange={set} label={label} width="fill" />;
+      return <EntityPicker id={id} kind="people" {...(load ? { loadOptions: load } : { options })} value={value ?? ''} onChange={set} label={label} width="fill" />;
     case 'custom': {
       const Editor = column.editor.component;
       return <Editor {...(column.editor.props || {})} value={value} record={record} field={column.field} dir={dir} autoFocus={false} invalid={invalid || undefined}
         onChange={set} onCommit={(v) => { if (v !== undefined) set(v); }} onCancel={() => {}} />;
     }
     default:
-      return <Input value={value ?? ''} onChange={(e) => set(e.target.value)} aria-label={label} />;
+      return <Input id={id} value={value ?? ''} onChange={(e) => set(e.target.value)} aria-label={label} />;
   }
 }
 
@@ -84,7 +86,9 @@ export default function FormEdit({ record, rowKey, columns, isEditable, name, ty
       if (message) found[c.field] = message;
     }
     setErrors(found);
-    return Object.keys(found).length ? false : '';
+    const first = editable.find((c) => found[c.field]);
+    if (first) setTimeout(() => document.getElementById(idOf(first))?.focus(), 0);
+    return first ? false : '';
   };
   const submit = async (value) => {
     const changes = {};
@@ -113,7 +117,7 @@ export default function FormEdit({ record, rowKey, columns, isEditable, name, ty
     >
       {({ value, setValue }) => (
         <>
-          {refusal ? <Notice tone="danger">{refusal}</Notice> : null}
+          {refusal ? <ErrorSummary errors={[{ target: idOf(editable[0] || columns[0]), message: refusal }]} /> : null}
           {columns.map((c) => {
             if (editable.includes(c)) {
               return (

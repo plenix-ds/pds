@@ -904,6 +904,7 @@ function NextEngine(props) {
     cells,
     showTypes,
     setEditing: beginEdit,
+    formMode: editMode === 'form' && canChoose,
     frame,
     pinnedAt,
     groupBy,

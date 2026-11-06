@@ -47,37 +47,42 @@ const check = async (name, fn) => { if (!shared.wanted(name)) return; try { awai
       const click = async (label) => { await page.evaluate((label) => { const d = document.querySelector('[role=dialog]'); [...d.querySelectorAll('button')].find((b) => b.textContent.trim() === label).click(); }, label); await wait(600); };
       const setInput = async (label, text) => { await page.evaluate((label) => { const d = document.querySelector('[role=dialog]'); const f = [...d.querySelectorAll('.plx-field')].find((x) => x.textContent.trim().startsWith(label)); const i = f.querySelector('input'); i.focus(); i.select(); }, label); await page.keyboard.type(text); await wait(200); };
 
-      await check(T + 'Enter opens a drawer titled for the record, not the inline editor', async () => {
-        await mount(); await focus(0); await key('Enter'); const d = await drawer(); assert.ok(d, 'a drawer opens'); assert.match(d.text, /Edit Person 1/); assert.equal(await inlineOpen(), false);
+      await check(T + 'F2 opens a drawer titled for the record, not the inline editor', async () => {
+        await mount(); await focus(0); await key('F2'); const d = await drawer(); assert.ok(d, 'a drawer opens'); assert.match(d.text, /Edit Person 1/); assert.equal(await inlineOpen(), false);
+      });
+      await check(T + 'Enter and a typed letter do not open the form (nor the inline editor)', async () => {
+        await mount(); await focus(0); await key('Enter'); assert.equal(await drawer(), null); assert.equal(await inlineOpen(), false);
+        await key('x'); assert.equal(await drawer(), null); assert.equal(await inlineOpen(), false);
       });
       await check(T + 'a double click opens it too', async () => {
         await mount(); await page.evaluate(() => { const c = [...document.querySelectorAll('[role=row][data-plx-record]')][1].querySelector('[data-plx-field="name"]'); c.dispatchEvent(new MouseEvent('dblclick', { bubbles: true })); }); await wait(600);
         const d = await drawer(); assert.ok(d); assert.match(d.text, /Edit Person 2/);
       });
       await check(T + 'the fields follow the column order: editable columns are Fields with values, the others plain text, an empty one a dash', async () => {
-        await mount(); await focus(0); await key('Enter'); const d = await drawer();
+        await mount(); await focus(0); await key('F2'); const d = await drawer();
         for (const l of ['Name', 'Age', 'Role', 'Locked', 'Empty']) assert.ok(d.labels.some((x) => x.startsWith(l)), 'label ' + l + ': ' + JSON.stringify(d.labels));
         assert.ok(d.inputs.includes('Person 1') && d.inputs.includes('30'), 'controls hold the values: ' + JSON.stringify(d.inputs));
         assert.match(d.text, /Fixed 1/); assert.ok(!d.inputs.includes('Fixed 1'), 'a locked column is plain text'); assert.match(d.text, /—/); assert.match(d.text, /No value/);
       });
       await check(T + 'Save calls onRecordEdit once with only the changes, closes, and a Toast says Saved', async () => {
-        await mount(); await focus(0); await key('Enter'); await setInput('Name', 'Renamed'); await click('Save changes');
+        await mount(); await focus(0); await key('F2'); await setInput('Name', 'Renamed'); await click('Save changes');
         assert.deepEqual(await saved(), ['r1:{"name":"Renamed"}']); assert.equal(await drawer(), null);
         assert.match(await page.evaluate(() => document.body.textContent), /Saved Person 1/);
       });
       await check(T + 'Cancel closes the drawer and saves nothing', async () => {
-        await mount(); await focus(0); await key('Enter'); await click('Cancel'); assert.deepEqual(await saved(), []); assert.equal(await drawer(), null);
+        await mount(); await focus(0); await key('F2'); await click('Cancel'); assert.deepEqual(await saved(), []); assert.equal(await drawer(), null);
       });
       await check(T + 'a value validate refuses shows its message under the field and does not save', async () => {
-        await mount(); await focus(0); await key('Enter'); await setInput('Age', '-5'); await click('Save changes');
+        await mount(); await focus(0); await key('F2'); await setInput('Age', '-5'); await click('Save changes');
         assert.deepEqual(await saved(), []); const d = await drawer(); assert.ok(d, 'stays open'); assert.match(d.text, /Age cannot be negative/);
+        assert.equal(await page.evaluate(() => { const a = document.activeElement; const f = a && a.closest && a.closest('.plx-field'); return f ? f.textContent.trim().slice(0, 3) : null; }), 'Age', 'focus moves to the first wrong field');
       });
       await check(T + 'a rejected onRecordEdit keeps the drawer open with the values and shows the message', async () => {
-        await mount({}, 'form', true); await focus(0); await key('Enter'); await setInput('Name', 'Dup'); await click('Save changes');
-        const d = await drawer(); assert.ok(d, 'stays open'); assert.match(d.text, /Name already used/); assert.ok(d.inputs.includes('Dup'), 'the value is kept: ' + JSON.stringify(d.inputs)); assert.equal((await saved()).length, 1);
+        await mount({}, 'form', true); await focus(0); await key('F2'); await setInput('Name', 'Dup'); await click('Save changes');
+        const d = await drawer(); assert.ok(d, 'stays open'); assert.match(d.text, /Name already used/); assert.equal(await page.evaluate(() => !!document.querySelector('[role=dialog] .plx-error-summary')), true, 'in an ErrorSummary at the top of the form'); assert.ok(d.inputs.includes('Dup'), 'the value is kept: ' + JSON.stringify(d.inputs)); assert.equal((await saved()).length, 1);
       });
       await check(T + 'with editMode inline the same cell opens the inline editor', async () => {
-        await mount({}, 'inline'); await focus(0); await key('Enter'); assert.equal(await inlineOpen(), true); assert.equal(await drawer(), null);
+        await mount({}, 'inline'); await focus(0); await key('F2'); assert.equal(await inlineOpen(), true); assert.equal(await drawer(), null);
       });
     }
   } finally { if (browser) await browser.close(); server.close(); }
