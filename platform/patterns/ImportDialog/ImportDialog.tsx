@@ -27,15 +27,31 @@ import { useUnsavedGuard } from '../../providers/UnsavedGuard.tsx';
 import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 
-export function ImportDialog({ open, title, onClose, initialMode = 'file', accept = '', multiple = false, onImport, validate, strings, className }) {
-  const t = useStrings('importDialog', strings);
-  const [mode, setMode] = React.useState(initialMode), [files, setFiles] = React.useState([]), [text, setText] = React.useState(''), [url, setUrl] = React.useState('');
+/** @public what the dialog hands to the importer */
+export type ImportSource = { mode: 'file' | 'paste' | 'url'; files?: File[]; text?: string; url?: string };
+/** @public the prop type (ADR 0011) */
+export type ImportDialogProps = {
+  open?: boolean;
+  title?: string;
+  onClose?(): void;
+  initialMode?: 'file' | 'paste' | 'url';
+  accept?: string;
+  multiple?: boolean;
+  onImport(source: ImportSource): unknown;
+  /** an error text, or nothing */
+  validate?(source: ImportSource): string | false | void | Promise<string | false | void>;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function ImportDialog({ open, title, onClose, initialMode = 'file', accept = '', multiple = false, onImport, validate, strings, className }: ImportDialogProps) {
+  const t: any = useStrings('importDialog', strings);
+  const [mode, setMode] = React.useState<'file' | 'paste' | 'url'>(initialMode), [files, setFiles] = React.useState<File[]>([]), [text, setText] = React.useState(''), [url, setUrl] = React.useState('');
   const [busy, setBusy] = React.useState(false), [error, setError] = React.useState(''), [drag, setDrag] = React.useState(false);
   const lock = React.useRef(false), epoch = React.useRef(0), first = React.useRef(initialMode); first.current = initialMode;
   React.useEffect(() => { epoch.current++; lock.current = false; setBusy(false); setMode(first.current); setFiles([]); setText(''); setUrl(''); setError(''); return () => { epoch.current++; }; }, [open]);
   const guard = useUnsavedGuard(open && !!(files.length || text || url), t.unsaved);
   const close = guard(() => { if (!lock.current && onClose) onClose(); });
-  const allowed = (file) => !accept || accept.split(',').some((s) => { const rule = s.trim().toLowerCase(); return rule.startsWith('.') ? file.name.toLowerCase().endsWith(rule) : rule.endsWith('/*') ? file.type.toLowerCase().startsWith(rule.slice(0, -1)) : file.type.toLowerCase() === rule; });
+  const allowed = (file: any) => !accept || accept.split(',').some((s) => { const rule = s.trim().toLowerCase(); return rule.startsWith('.') ? file.name.toLowerCase().endsWith(rule) : rule.endsWith('/*') ? file.type.toLowerCase().startsWith(rule.slice(0, -1)) : file.type.toLowerCase() === rule; });
   const submit = async () => {
     if (lock.current) return;
     let validUrl = false; try { validUrl = ['https:', 'http:'].includes(new URL(url.trim()).protocol); } catch (e) { /* invalid source */ }
@@ -54,7 +70,7 @@ export function ImportDialog({ open, title, onClose, initialMode = 'file', accep
   return <Dialog open={open} title={title || t.title} onClose={close} dismissible={!busy}
     footer={<><Button disabled={busy} onClick={close}>{t.cancel}</Button><Button variant="primary" disabled={busy} onClick={submit}>{t.import}</Button></>}>
     <Stack className={cx('plx-import-dialog', className)} aria-busy={busy}>
-      <Tabs label={title || t.title} variant="folder" value={mode} onChange={setMode} items={[
+      <Tabs label={title || t.title} variant="folder" value={mode} onChange={(v: any) => setMode(v)} items={[
         { value: 'file', label: t.file, disabled: busy, content: <DropZone active={drag} onDragOver={(e) => e.preventDefault()} onDragEnter={() => !busy && setDrag(true)}
           onDragLeave={() => setDrag(false)} onDrop={(e) => { e.preventDefault(); setDrag(false); if (!busy) setFiles(Array.from(e.dataTransfer.files)); }}>
           <Text>{t.drop}</Text><FileInput accept={accept} multiple={multiple} label={t.choose} onChange={setFiles} disabled={busy} strings={strings} />

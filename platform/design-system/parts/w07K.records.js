@@ -181,7 +181,7 @@ DSParts.records.push(function (H) {
   /* ── 10 Patterns › Selection and organization › Grouping: GroupPanel ── */
   var GroupDemo = function (props) { var g = use(props.value || []); return h(P.GroupPanel, { fields: ASSET_FIELDS.filter(function (f) { return f.kind === 'select'; }), value: g[0], onChange: g[1], inline: props.inline }); };
   var groupPanel = { id: 'group-panel', lab: true, icon: 'group-by', sec: 'patterns', sub: 'Selection and organization', leaf: 'Grouping', title: 'Grouping',
-    plenix: 'GroupPanel', src: 'patterns/GroupPanel/GroupPanel.jsx', css: ['patterns/CommandBar/find-panel.css'], blocks: ['plx-find-panel'], level: 'Composite', interaction: 'Filter', statesFrom: ['button', 'action-menu'],
+    plenix: 'GroupPanel', src: 'patterns/GroupPanel/GroupPanel.tsx', css: ['patterns/CommandBar/find-panel.css'], blocks: ['plx-find-panel'], level: 'Composite', interaction: 'Filter', statesFrom: ['button', 'action-menu'],
     aliases: ['Group by', 'Group', 'Subgroup', 'Nested groups'],
     text: 'The command bar’s Group, in the Airtable style: a Group button (the group-by icon, stacked rows) opens the group levels, each with a field, its order, a … menu (Hide empty groups), remove and a handle; below them Add subgroup, and Collapse all and Expand all at the top. The DataGrid draws each level as nested Airtable-style group rows.',
     use: ['Gathering records that share a value under one header', 'A subgroup to split each group again', 'Collapse all and Expand all over a long grouped table'],

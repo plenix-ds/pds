@@ -1,5 +1,5 @@
-export { ImportDialog } from '../patterns/ImportDialog/ImportDialog.jsx';
-export { ImportWizard } from '../patterns/ImportWizard/ImportWizard.jsx';
+export { ImportDialog } from '../patterns/ImportDialog/ImportDialog.tsx';
+export { ImportWizard } from '../patterns/ImportWizard/ImportWizard.tsx';
 export { ExportDialog } from '../patterns/ExportDialog/ExportDialog.jsx';
 export { AccessRequest } from '../patterns/AccessRequest/AccessRequest.tsx';
 export { TrialUpgrade } from '../patterns/TrialUpgrade/TrialUpgrade.jsx';

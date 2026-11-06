@@ -63,10 +63,10 @@ import PanelLeftCloseIcon from 'plenix-platform/icons/plenix/panel-left-close';
 import PanelLeftOpenIcon from 'plenix-platform/icons/plenix/panel-left-open';
 
 // the rail's items out of their fragments (the bar draws destinations, never dividers)
-const railItems = (rail) => {
-  const out = [];
-  const walk = (c) => React.Children.forEach(c, (el) => {
-    if (!React.isValidElement(el)) return;
+const railItems = (rail: any) => {
+  const out: any[] = [];
+  const walk = (c: any) => React.Children.forEach(c, (el) => {
+    if (!React.isValidElement<any>(el)) return;
     if (el.type === React.Fragment) walk(el.props.children); else if (el.type !== ToolRail.Divider) out.push(el);
   });
   walk(rail);
@@ -75,10 +75,25 @@ const railItems = (rail) => {
 // in the pane's screen (Narrow), choosing something to show takes the person to it
 const CHOOSES = 'a[href], .plx-nav-list__item:not(.plx-nav-list__item--group), [role="treeitem"]';
 
-export function NavPane({ label, title, actions, as = 'nav', header, footer, rail, collapseAt = 'end', width, strings, className, children }) {
-  const layout = useAppLayout();
-  const ref = React.useRef(null);
-  const t = useStrings('navPane', strings);
+/** @public the prop type (ADR 0011) */
+export type NavPaneProps = {
+  label?: string;
+  title?: React.ReactNode;
+  actions?: React.ReactNode;
+  as?: 'nav' | 'div';
+  header?: React.ReactNode;
+  footer?: React.ReactNode;
+  rail?: React.ReactNode;
+  collapseAt?: 'end' | 'start';
+  width?: number | string;
+  strings?: Record<string, string>;
+  className?: string;
+  children?: React.ReactNode;
+};
+export function NavPane({ label, title, actions, as = 'nav', header, footer, rail, collapseAt = 'end', width, strings, className, children }: NavPaneProps) {
+  const layout: any = useAppLayout();
+  const ref = React.useRef<any>(null);
+  const t: any = useStrings('navPane', strings);
   const Tag = as;
   const mode = layout && layout.hasSideNav ? layout.mode : 'static';
   const narrow = mode === 'bar' || mode === 'screen';
@@ -98,7 +113,7 @@ export function NavPane({ label, title, actions, as = 'nav', header, footer, rai
   // Narrow: the bottom navigation bar (two or more destinations) or the parent row, put in the shell's slots
   let narrowEl = null;
   if (narrow) {
-    const close = (fn) => (e) => { layout.close(); if (fn) fn(e); };
+    const close = (fn: any) => (e: any) => { layout.close(); if (fn) fn(e); };
     if (items.length >= 2) {
       narrowEl = layout.barEl ? createPortal(
         <nav aria-label={label || 'Navigation'} className="plx-nav-bar">
@@ -121,13 +136,13 @@ export function NavPane({ label, title, actions, as = 'nav', header, footer, rai
 
   // a width only the page or the person knows (the width prop, or the splitter's) reaches the stylesheet as the pane's width, on the grid
   const w = mode === 'static' ? width : narrow ? null : layout.width;
-  const paneWidth = w ? gridWithin(parseInt(w, 10), tokenPx('--plx-sys-shell-nav-min-width'), paneMax(tokenPx('--plx-sys-shell-nav-max-width'), tokenPx('--plx-sys-shell-nav-min-width')), { step: DRAG_STEP }) + 'px' : undefined;
+  const paneWidth = w ? gridWithin(parseInt(String(w), 10), tokenPx('--plx-sys-shell-nav-min-width'), paneMax(tokenPx('--plx-sys-shell-nav-max-width'), tokenPx('--plx-sys-shell-nav-min-width')), { step: DRAG_STEP }) + 'px' : undefined;
   const collapse = mode === 'static' || narrow ? null : (
     <span className={cx('plx-nav-pane__collapse', 'plx-nav-pane__collapse--' + collapseAt)}>
       <Button size="sm" variant="ghost" iconOnly icon={PanelLeftCloseIcon} label={t.collapse} onClick={layout.toggle} />
     </span>
   );
-  const onChoose = narrow ? (e) => { if (e.target.closest && e.target.closest(CHOOSES)) layout.close(); } : undefined;
+  const onChoose = narrow ? (e: any) => { if (e.target.closest && e.target.closest(CHOOSES)) layout.close(); } : undefined;
   const pane = (
     <Tag ref={ref} aria-label={Tag === 'nav' ? label : undefined} className={cx('plx-nav-pane', mode !== 'static' && 'plx-nav-pane--' + mode, className)} data-plx-width={paneWidth}>
       {title || actions || collapse ? (

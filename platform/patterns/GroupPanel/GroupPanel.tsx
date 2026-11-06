@@ -29,9 +29,14 @@ import { Button } from '../../components/Button/Button.tsx';
 import { Menu, MenuItem } from '../../components/Menu/Menu.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { Tooltip } from '../../components/Tooltip/Tooltip.tsx';
-import { PanelTrigger, PanelHead, Pick, useReorder } from '../CommandBar/panel-parts.jsx';
+import { PanelTrigger as PanelTriggerJs, PanelHead as PanelHeadJs, Pick as PickJs, useReorder as useReorderJs } from '../CommandBar/panel-parts.jsx';
+const PanelTrigger: any = PanelTriggerJs;
+const PanelHead: any = PanelHeadJs;
+const Pick: any = PickJs;
+const useReorder: any = useReorderJs;
 import { fill } from '../../utils/fill.ts';
 import { fieldOf, kindOf, fieldWords, fieldOption } from '../../utils/fields.ts';
+import type { Field } from '../../utils/fields.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import GroupByIcon from 'plenix-platform/icons/plenix/group-by';
 import MoreIcon from 'plenix-platform/icons/plenix/more';
@@ -39,27 +44,40 @@ import PlusIcon from 'plenix-platform/icons/plenix/plus';
 import TrashIcon from 'plenix-platform/icons/plenix/trash';
 
 // every group of the table, its subgroups too
-const eachGroup = (t, fn) => {
+const eachGroup = (t: any, fn: any) => {
   const table = t && t.current !== undefined && !t.getGroups ? t.current : t;
   if (!table || !table.getGroups) return;
-  const walk = (gs) => gs.forEach((g) => { fn(g); walk(g.getSubGroups ? g.getSubGroups() : []); });
+  const walk = (gs: any) => gs.forEach((g: any) => { fn(g); walk(g.getSubGroups ? g.getSubGroups() : []); });
   walk(table.getGroups());
 };
 
-export function GroupPanel({ fields = [], value = [], onChange, table, inline = false, strings }) {
+/** @public one grouping level, the first the outer group */
+export type GroupLevel = { field: string; dir?: 'asc' | 'desc'; hideEmpty?: boolean; interval?: 'day' | 'week' | 'month' | 'year'; range?: unknown };
+/** @public the prop type (ADR 0011) */
+export type GroupPanelProps = {
+  /** the fields rows can be grouped by (utils/fields.ts); groupable: false excludes one */
+  fields?: (Field & { groupable?: boolean })[];
+  value?: GroupLevel[];
+  onChange(value: GroupLevel[]): void;
+  /** the table controller, or a ref to it: Collapse all and Expand all close and open its groups */
+  table?: unknown;
+  inline?: boolean;
+  strings?: Record<string, string>;
+};
+export function GroupPanel({ fields = [], value = [], onChange, table, inline = false, strings }: GroupPanelProps) {
   fields = fields.filter(f => f.groupable !== false);
-  const t = useStrings('groupPanel', strings);
-  const fw = useStrings('fields');
+  const t: any = useStrings('groupPanel', strings);
+  const fw: any = useStrings('fields');
   const levels = value;
-  const ro = useReorder(levels, onChange, (l) => fieldOf(fields, l.field).label, t);
-  const put = (i, ch) => onChange(levels.map((l, j) => (j === i ? Object.assign({}, l, ch) : l)));
+  const ro = useReorder(levels, onChange, (l: any) => fieldOf(fields, l.field).label, t);
+  const put = (i: any, ch: any) => onChange(levels.map((l, j) => (j === i ? Object.assign({}, l, ch) : l)));
   const free = fields.filter((f) => !levels.some((l) => l.field === f.value));
   const off = !levels.length || !table;
   const body = (
     <div className="plx-find-panel plx-find-panel--group">
       <PanelHead title={t.title} info={t.info} actions={<>
-        <Button size="sm" variant="ghost" disabled={off} onClick={() => eachGroup(table, (g) => g.hide())}>{t.collapseAll}</Button>
-        <Button size="sm" variant="ghost" disabled={off} onClick={() => eachGroup(table, (g) => g.show())}>{t.expandAll}</Button>
+        <Button size="sm" variant="ghost" disabled={off} onClick={() => eachGroup(table, (g: any) => g.hide())}>{t.collapseAll}</Button>
+        <Button size="sm" variant="ghost" disabled={off} onClick={() => eachGroup(table, (g: any) => g.show())}>{t.expandAll}</Button>
       </>} />
       <div className="plx-find-panel__rows" ref={ro.box}>
         {levels.length ? null : <Text variant="secondary">{t.empty}</Text>}
@@ -67,8 +85,8 @@ export function GroupPanel({ fields = [], value = [], onChange, table, inline = 
           const f = fieldOf(fields, l.field), words = fieldWords.directions(fw, kindOf(f));
           return (
             <div key={l.field} {...ro.rowProps(i, f.label)}>
-              <Pick label={t.field} value={l.field} options={fields.filter((x) => x.value === l.field || !levels.some((y) => y.field === x.value)).map(fieldOption)} onChange={(v) => put(i, { field: v, interval: fields.find(f => f.value === v)?.kind === 'date' ? 'day' : undefined, range: undefined })} />
-              <Pick label={t.order} size="dir" value={l.dir || 'asc'} options={[{ value: 'asc', label: words[0] }, { value: 'desc', label: words[1] }]} onChange={(v) => put(i, { dir: v })} />
+              <Pick label={t.field} value={l.field} options={fields.filter((x) => x.value === l.field || !levels.some((y) => y.field === x.value)).map(fieldOption)} onChange={(v: any) => put(i, { field: v, interval: fields.find(f => f.value === v)?.kind === 'date' ? 'day' : undefined, range: undefined })} />
+              <Pick label={t.order} size="dir" value={l.dir || 'asc'} options={[{ value: 'asc', label: words[0] }, { value: 'desc', label: words[1] }]} onChange={(v: any) => put(i, { dir: v })} />
               <Menu label={fill(t.more, { name: f.label })} placement="bottom-end" trigger={<Button variant="ghost" icon={MoreIcon} iconOnly label={fill(t.more, { name: f.label })} />}>
                 {f.kind === 'date' ? ['day', 'week', 'month', 'year'].map(interval => <MenuItem key={interval} checked={(l.interval || 'day') === interval} keepOpen onSelect={() => put(i, { interval })}>{interval[0].toUpperCase() + interval.slice(1)}</MenuItem>) : null}
                 <MenuItem checked={!!l.hideEmpty} keepOpen onSelect={() => put(i, { hideEmpty: !l.hideEmpty })}>{t.hideEmpty}</MenuItem>

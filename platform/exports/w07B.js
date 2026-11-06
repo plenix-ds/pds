@@ -11,6 +11,6 @@ export { RelativeDateInput } from '../components/RelativeDateInput/RelativeDateI
 export { resolveRelativeDate } from '../components/RelativeDateInput/RelativeDateInput.tsx';
 export { RELATIVE_PRESETS } from '../components/RelativeDateInput/RelativeDateInput.tsx';
 export { LoadMore } from '../components/LoadMore/LoadMore.tsx';
-export { ImageUpload } from '../patterns/ImageUpload/ImageUpload.jsx';
-export { ImageCrop } from '../patterns/ImageUpload/ImageUpload.jsx';
+export { ImageUpload } from '../patterns/ImageUpload/ImageUpload.tsx';
+export { ImageCrop } from '../patterns/ImageUpload/ImageUpload.tsx';
 export { AvatarUpload } from '../patterns/AvatarUpload/AvatarUpload.tsx';

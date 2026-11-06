@@ -1,7 +1,7 @@
 /* Plenix · ImageUpload, ImageCrop (platform/patterns/ImageUpload). Places Platform components: the DropZone with its
    icon, words, the FileInput's button and the limits; the previews (Image) with the name and size in the data font and
    their actions; with multiple, a grid of square previews. ImageCrop: the frame, the Zoom slider and the actions.
-   Anatomy and API: ImageUpload.jsx. */
+   Anatomy and API: ImageUpload.tsx. */
 .plx-image-upload{display:flex;flex-direction:column;max-inline-size:var(--plx-comp-image-upload-max-width);row-gap:var(--plx-comp-image-upload-row-gap);}
 .plx-image-upload__zone{display:flex;flex-direction:column;row-gap:var(--plx-comp-image-upload-zone-row-gap);text-align:center;}
 .plx-image-upload__zone-icon{color:var(--plx-comp-image-upload-zone-icon-text);display:inline-flex;}

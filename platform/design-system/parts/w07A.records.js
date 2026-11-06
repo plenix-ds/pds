@@ -208,7 +208,7 @@ DSParts.records.push(function (H) {
     ],
     examples: [['Variant', [['Narrow (mobile app bar)', function () { return h(Phone, {}); }, null, 'AppHeader'], ['With back', function () { return h(Phone, { child: true }); }, null, 'back title']]]] };
   var productNavigation = { id: 'product-navigation', icon: 'panel-left-open', sec: 'navigation', sub: 'Local navigation', leaf: 'Product navigation', title: 'Product navigation',
-    plenix: 'AppHeader, NavPane', src: 'patterns/AppHeader/AppHeader.jsx', also: ['patterns/NavPane/NavPane.jsx'], variantClasses: [], level: 'Composite', interaction: 'Navigation', statesFrom: ['application-header', 'side-navigation'],
+    plenix: 'AppHeader, NavPane', src: 'patterns/AppHeader/AppHeader.jsx', also: ['patterns/NavPane/NavPane.tsx'], variantClasses: [], level: 'Composite', interaction: 'Navigation', statesFrom: ['application-header', 'side-navigation'],
     aliases: ['Product nav', 'App navigation', 'Main navigation'],
     text: 'A Plenix product is navigated at two levels. Across applications: the header (AppHeader), whose header name opens the switcher and whose links are the applications the person pinned. Inside an application: the navigation pane (NavPane) beside the content, with the application’s sections, collections and saved views, the current one marked; it collapses to a rail, opens over the content at Medium and becomes the bottom navigation bar on a phone.',
     use: ['Every application: AppHeader across the top and NavPane at the start, through AppShell', 'Short nouns for the pane’s rows; groups for more than about seven'],

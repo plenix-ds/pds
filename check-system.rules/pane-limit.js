@@ -13,7 +13,7 @@ const ROOT = path.join(__dirname, '..');
 const read = (f) => { try { return fs.readFileSync(path.join(ROOT, f), 'utf8'); } catch (e) { return ''; } };
 const USERS = [
   ['platform/components/Resizable/Resizable.tsx', /paneMax\(/],
-  ['platform/patterns/NavPane/NavPane.jsx', /paneMax\(/],
+  ['platform/patterns/NavPane/NavPane.tsx', /paneMax\(/],
   ['platform/patterns/SecondaryPane/SecondaryPane.jsx', /paneMax\(/],
   ['platform/patterns/SidePanel/SidePanel.jsx', /paneMax\(/],
   ['platform/components/DataGrid/engine/useTableModel.ts', /shareOf\(/],
