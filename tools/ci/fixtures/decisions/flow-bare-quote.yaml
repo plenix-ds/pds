@@ -1,0 +1,5 @@
+- id: D-0001
+  date: 2026-11-06
+  decision: A quoted string followed by more text inside a flow list.
+  status: accepted
+  check: ["CI" Decisions, tools/ci/check-decisions.mjs]
