@@ -34,8 +34,8 @@ import { cx } from '../utils/cx.ts';
 import { formatNumber } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.jsx';
 import { seriesColor } from './scales.js';
-import { ChartLegend } from './parts/ChartLegend.jsx';
-import { ChartTooltip, chartTooltipText } from './parts/ChartTooltip.jsx';
+import { ChartLegend } from './parts/ChartLegend.tsx';
+import { ChartTooltip, chartTooltipText } from './parts/ChartTooltip.tsx';
 import { useChartInteraction } from './interaction.js';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 

@@ -15,18 +15,20 @@
    Notes:
      Geometry only: no color, size or font. */
 
-export function scalePosition(scale, value) {
+import type { ChartScale, ChartTicks } from '../chart-types.ts';
+
+export function scalePosition(scale: ChartScale, value: any): number | undefined {
   const p = scale(value);
   if (p === undefined || p === null || isNaN(p)) return undefined;
   return typeof scale.bandwidth === 'function' ? p + scale.bandwidth() / 2 : p;
 }
 
-export function scaleTicks(scale, ticks) {
+export function scaleTicks(scale: ChartScale, ticks?: ChartTicks | null): any[] {
   if (Array.isArray(ticks)) return ticks.slice();
   return typeof scale.ticks === 'function' ? scale.ticks(typeof ticks === 'number' ? ticks : undefined) : [];
 }
 
-export function scaleLabel(scale, value, ticks, format) {
+export function scaleLabel(scale: ChartScale, value: any, ticks?: ChartTicks | null, format?: ((value: any) => string) | null): string {
   if (typeof format === 'function') return format(value);
   if (typeof scale.format === 'function') return scale.format(value, typeof ticks === 'number' ? ticks : undefined);
   return String(value);

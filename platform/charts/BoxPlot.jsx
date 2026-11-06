@@ -33,7 +33,7 @@ import { cx } from '../utils/cx.ts';
 import { formatNumber } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.jsx';
 import { niceTicks } from './scales.js';
-import { ChartTooltip } from './parts/ChartTooltip.jsx';
+import { ChartTooltip } from './parts/ChartTooltip.tsx';
 import { useChartHover } from './chart-kit.js';
 import { useEChartsPlot, plotGrid } from './echarts/EChartsPlot.jsx';
 import { gridRoom, boxStats } from './chart-helpers.js';

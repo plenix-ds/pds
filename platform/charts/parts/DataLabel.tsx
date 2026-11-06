@@ -27,7 +27,16 @@ import { formatNumber } from '../../utils/format.ts';
 
 const POSITIONS = ['top', 'end', 'center'];
 
-export function DataLabel({ x, y, value, format, position = 'top', className }) {
+/** @public */
+export type DataLabelProps = {
+  /** the mark's anchor in plot pixels */
+  x: number; y: number;
+  value?: number | string | null;
+  format?(value: any): string;
+  position?: 'top' | 'end' | 'center';
+  className?: string;
+};
+export function DataLabel({ x, y, value, format, position = 'top', className }: DataLabelProps) {
   if (x === undefined || y === undefined || x === null || y === null) return null;
   const p = POSITIONS.indexOf(position) >= 0 ? position : 'top';
   const text = typeof format === 'function' ? format(value) : typeof value === 'number' ? formatNumber(value) : value;

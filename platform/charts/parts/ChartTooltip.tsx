@@ -33,18 +33,30 @@
        menu radius and shadow), from the chart-parts tokens. Swatches take the series' data-viz color.
 */
 import React from 'react';
+import type { ChartInner, ChartTooltipItem } from '../chart-types.ts';
 import { cx } from '../../utils/cx.ts';
 
 // the room the tooltip may take beside its point, in pixels (SVG geometry): it is laid out inside this box
 const BOX_W = 240, BOX_H = 200;
 
 // the tooltip as one sentence: the title, then each series' name and value (what the live region says)
-export function chartTooltipText({ title, items = [] } = {}) {
+export function chartTooltipText({ title, items = [] }: { title?: React.ReactNode; items?: ChartTooltipItem[] } = {}): string {
   const values = items.map((it) => [it.label, it.value].filter((x) => x !== undefined && x !== null && x !== '').join(' ')).join(', ');
   return title !== undefined && title !== null && title !== '' ? String(title) + (values ? ': ' + values : '') : values;
 }
 
-export function ChartTooltip({ x, y, inner, variant = 'single', title, titleKind = 'text', items = [], className }) {
+/** @public */
+export type ChartTooltipProps = {
+  x: number;
+  y?: number;
+  inner: ChartInner;
+  variant?: 'single' | 'shared';
+  title?: React.ReactNode;
+  titleKind?: 'text' | 'data';
+  items?: ChartTooltipItem[];
+  className?: string;
+};
+export function ChartTooltip({ x, y, inner, variant = 'single', title, titleKind = 'text', items = [], className }: ChartTooltipProps) {
   if (x === undefined || x === null || !inner) return null;
   const v = variant === 'shared' ? 'shared' : 'single';
   const side = x > inner.width / 2 ? 'start' : 'end';

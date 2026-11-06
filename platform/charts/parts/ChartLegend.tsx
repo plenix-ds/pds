@@ -32,21 +32,36 @@
        names are always shown; on a line chart label the lines directly when there is room.
 */
 import React from 'react';
+import type { ChartLegendItem } from '../chart-types.ts';
 import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 
+/** @public */
+export type ChartLegendProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & {
+  items?: ChartLegendItem[];
+  orientation?: 'horizontal' | 'vertical';
+  shape?: 'square' | 'line';
+  interactive?: boolean;
+  /** the ids of the hidden series, when the parent controls them */
+  hidden?: Array<string | number>;
+  defaultHidden?: Array<string | number>;
+  onToggle?(id: string | number, visible: boolean): void;
+  label?: string;
+  strings?: { legend?: string };
+  className?: string;
+};
 export function ChartLegend({ items = [], orientation = 'horizontal', shape = 'square', interactive = false, hidden, defaultHidden = [],
-  onToggle, label, strings, className, ...rest }) {
-  const t = useStrings('chart.chartLegend', strings);
+  onToggle, label, strings, className, ...rest }: ChartLegendProps) {
+  const t = useStrings('chart.chartLegend', strings) as { legend: string };
   const [own, setOwn] = React.useState(defaultHidden);
   const off = hidden === undefined ? own : hidden;
   const o = orientation === 'vertical' ? 'vertical' : 'horizontal';
   const s = shape === 'line' ? 'line' : 'square';
-  const toggle = (id) => {
+  const toggle = (id: any) => {
     const visible = off.indexOf(id) >= 0;
     // the last series shown stays shown: a chart never goes empty from its legend
     if (!visible && items.length - off.length <= 1) return;
-    if (hidden === undefined) setOwn(visible ? off.filter((x) => x !== id) : off.concat([id]));
+    if (hidden === undefined) setOwn(visible ? off.filter((x: any) => x !== id) : off.concat([id]));
     if (onToggle) onToggle(id, visible);
   };
   return (

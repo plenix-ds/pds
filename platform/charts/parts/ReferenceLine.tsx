@@ -28,12 +28,26 @@
        a series color, and its name says what it is, so color is not the only cue.
 */
 import React from 'react';
+import type { ChartScale, ChartInner } from '../chart-types.ts';
 import { cx } from '../../utils/cx.ts';
-import { scalePosition } from './position.js';
+import { scalePosition } from './position.ts';
 
 const LEVELS = ['warning', 'critical'];
 
-export function ReferenceLine({ scale, value, axis = 'y', inner, kind = 'reference', level = 'warning', label, showValue = true, format, className }) {
+/** @public */
+export type ReferenceLineProps = {
+  scale: ChartScale;
+  value: number | string | Date;
+  axis?: 'x' | 'y';
+  inner: ChartInner;
+  kind?: 'reference' | 'threshold';
+  level?: 'warning' | 'critical';
+  label?: string;
+  showValue?: boolean;
+  format?(value: any): string;
+  className?: string;
+};
+export function ReferenceLine({ scale, value, axis = 'y', inner, kind = 'reference', level = 'warning', label, showValue = true, format, className }: ReferenceLineProps) {
   if (!scale || !inner || value === undefined || value === null) return null;
   const p = scalePosition(scale, value);
   const a = axis === 'x' ? 'x' : 'y';

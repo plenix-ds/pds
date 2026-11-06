@@ -28,13 +28,26 @@
        plx-chart__tick-label), the offset and the title their tokens (chart-parts.css).
 */
 import React from 'react';
+import type { ChartScale, ChartInner, ChartMargin, ChartTicks } from '../chart-types.ts';
 import { cx } from '../../utils/cx.ts';
-import { scalePosition, scaleTicks, scaleLabel } from './position.js';
+import { scalePosition, scaleTicks, scaleLabel } from './position.ts';
 
 const ORIENTS = ['bottom', 'left', 'right', 'top'];
 const NO_MARGIN = { top: 0, end: 0, bottom: 0, start: 0 };
 
-export function Axis({ scale, orient = 'bottom', inner, margin, ticks, format, label, line, className }) {
+/** @public */
+export type AxisProps = {
+  scale: ChartScale;
+  orient?: 'bottom' | 'left' | 'right' | 'top';
+  inner: ChartInner;
+  margin?: ChartMargin;
+  ticks?: ChartTicks;
+  format?(value: any): string;
+  label?: string;
+  line?: boolean;
+  className?: string;
+};
+export function Axis({ scale, orient = 'bottom', inner, margin, ticks, format, label, line, className }: AxisProps) {
   if (!scale || !inner) return null;
   const o = ORIENTS.indexOf(orient) >= 0 ? orient : 'bottom';
   const m = Object.assign({}, NO_MARGIN, margin);
@@ -53,7 +66,7 @@ export function Axis({ scale, orient = 'bottom', inner, margin, ticks, format, l
   return (
     <g className={cx('plx-chart-axis', 'plx-chart-axis--' + o, className)}>
       {axisLine}
-      {values.map((v, i) => {
+      {values.map((v: any, i: any) => {
         const p = scalePosition(scale, v);
         if (p === undefined) return null;
         return (

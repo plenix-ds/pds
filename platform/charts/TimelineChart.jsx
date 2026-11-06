@@ -37,10 +37,10 @@ import { cx } from '../utils/cx.ts';
 import { formatDate as fmtDate } from '../utils/format.ts';
 import { ChartFrame } from './ChartFrame.jsx';
 import { scaleBand, scaleTime, seriesColor, wholeDays } from './scales.js';
-import { Axis } from './parts/Axis.jsx';
-import { GridLines } from './parts/GridLines.jsx';
-import { ChartTooltip } from './parts/ChartTooltip.jsx';
-import { ReferenceLine } from './parts/ReferenceLine.jsx';
+import { Axis } from './parts/Axis.tsx';
+import { GridLines } from './parts/GridLines.tsx';
+import { ChartTooltip } from './parts/ChartTooltip.tsx';
+import { ReferenceLine } from './parts/ReferenceLine.tsx';
 import { useChartHover, labelRoom, halfRoom } from './chart-kit.js';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 
