@@ -5212,7 +5212,7 @@
         "token": "--plx-comp-retry-status-margin-block-start"
       }
     ],
-    "why": "retry.css: .plx-retry__status holds the countdown (\"Retrying in …\") while the next attempt waits"
+    "why": "retry.css: .plx-retry__status holds the countdown (\"Retrying in \u2026\") while the next attempt waits"
   },
   "retry-pattern--kind-retry-count": {
     "sets": [
@@ -5499,5 +5499,64 @@
       }
     ],
     "why": "the today line is a ReferenceLine on the x axis (kind reference): .plx-chart-reference__line, a dashed line in the subtle color, with its label in the reference label role"
+  },
+  "data-grid--grouping-airtable-style-options-groupby-grouped": {
+    "sets": [
+      {
+        "property": "block-size",
+        "part": "group-header",
+        "token": "--plx-comp-data-grid-group-header-height"
+      },
+      {
+        "property": "background-color",
+        "part": "group-header",
+        "token": "--plx-comp-data-grid-group-background"
+      },
+      {
+        "property": "padding-block",
+        "part": "group-gap",
+        "token": "--plx-comp-data-grid-group-gap"
+      },
+      {
+        "property": "background-color",
+        "part": "grouped-column",
+        "token": "--plx-comp-data-grid-grouped-column-background"
+      }
+    ],
+    "why": "the group header row, the gap between groups and the grouped-by column in data-grid.css"
+  },
+  "data-grid--grouping-airtable-style-options-groupby-nested-groups": {
+    "sets": [
+      {
+        "property": "padding-inline-start",
+        "part": "group-header",
+        "token": "--plx-comp-data-grid-group-indent"
+      }
+    ],
+    "why": "each nested level's header is indented one step (group-indent) and sticks under its parent's"
+  },
+  "data-grid--grouping-airtable-style-options-groupby-summaries-and-add-rows": {
+    "sets": [],
+    "why": "markup only: a column summary in each group header and a + add row at the end of each group (onAddToGroup); both are off by default"
+  },
+  "data-grid--many-rows-fill-pages-load-more-the-mode-prop-fill-default": {
+    "sets": [],
+    "why": "markup only: the grid fills the room left on screen and scrolls its rows inside it, drawing only the rows in view (mode fill)"
+  },
+  "data-grid--many-rows-fill-pages-load-more-the-mode-prop-pages": {
+    "sets": [],
+    "why": "markup only: pages of rows with a footer: the range, the rows-per-page choice and Pagination (mode pages)"
+  },
+  "data-grid--many-rows-fill-pages-load-more-the-mode-prop-load-more": {
+    "sets": [],
+    "why": "markup only: the first rows, then more when the last row comes into view or Load more is pressed, with the count in the footer (mode load-more)"
+  },
+  "data-grid--column-headers-type-icons-wrap-headers-the-column-menu-column-menu": {
+    "sets": [],
+    "why": "markup only: a menu from the options button or a right click on a header: the application's field actions, sort, filter and group"
+  },
+  "data-grid--column-headers-type-icons-wrap-headers-the-column-menu-wrap-headers": {
+    "sets": [],
+    "why": "markup only: wrapHeaders lets a long column name wrap onto more lines instead of being cut with an ellipsis (off by default)"
   }
 }
