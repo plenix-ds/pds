@@ -14,6 +14,11 @@ the CSS classes, the tokens and how things look.
   for reading, but products should not use it directly.
 - **Icons:** every icon name.
 - **API:** the `/api/v1/` endpoints and their fields.
+- **Not public: the catalog's key list.** `useStrings`, `createTranslator` and every part's `strings` prop are public. The keys
+  in `en.json` / `ar.js` are the words of Plenix's own parts.
+  - A key that no Platform part reads may be removed in a MINOR release, under *Removed*, once a search of the apps
+    (CTM, the St. John site) finds no reader (D-0085).
+  - A key a part still reads keeps its name; renaming it is a change to that part's `strings` prop.
 
 ## What each part of the version means
 

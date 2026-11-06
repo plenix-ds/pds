@@ -762,6 +762,16 @@
   status: active
   check: 'planned:process-checks-13-16 (role registry complete, settings not restated in prose, hand-offs not made with GITHUB_TOKEN; tracked on the E8 epic)'
 
+- id: D-0085
+  date: 2026-11-06
+  area: api
+  decided_by: agent (pds1-ds-architect) on #667 (G3), owner may switch
+  decision: 'The catalog''s key list is not public API: useStrings, createTranslator and each part''s strings prop are. A catalog key that no Platform part reads may be removed in a MINOR release, listed under Removed, once a search of the apps (CTM, the St. John site) finds no reader; a key a part still reads keeps its name. The 10 unread keys of #667 are removed this way.'
+  why: 'VERSIONING.md''s public list never included catalog keys; deprecating unread words only keeps dead Arabic to review. CTM (9fa6386) and the St. John site (c12c3e0) read none of the 10 keys (CTM''s notRefundable is its own dictionary).'
+  options: ['A - remove unread keys in a MINOR after an app search (chosen)', 'B - deprecate every unread key until the next major']
+  status: active
+  check: tools/checks/locale (unused-key); review-only for the app search, recorded on the removal PR
+
 - id: D-0086
   date: 2026-11-06
   area: process
