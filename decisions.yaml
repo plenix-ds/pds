@@ -680,3 +680,13 @@
   options: ['the current ar.js is the baseline (chosen, A)', 'the owner re-reviews all existing Arabic before it counts as approved (B)']
   status: active
   check: tools/checks/locale/locale.mjs (unapproved-ar)
+
+- id: D-0077
+  date: 2026-11-06
+  area: api
+  decided_by: agent (pds1-ds-architect) at G3 of #647, owner may switch
+  decision: 'Undo and redo of a saved row form use the save''s own path: with onRecordEdit they call onRecordEdit(record, previous or saved values, { source: undo | redo }) (the save passes { source: edit }); without it, onCellEdit once per field as for cells. onRecordEdit gains the optional third argument info (docs/adr/0021 addendum).'
+  why: 'An app that saves forms only through onRecordEdit would otherwise never receive the undo: the grid would show the old values while the store kept the new ones.'
+  options: [the save's own path with info.source (chosen), always onCellEdit per field (as first built)]
+  status: active
+  check: G3 review of #647 and its test (only onRecordEdit; Ctrl+Z calls it with the previous values and source undo)

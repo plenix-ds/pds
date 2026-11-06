@@ -672,9 +672,18 @@ export function bodyRows({
         ) : null}
       </RowTarget>
     );
-    return rowMenu ? (
-      <ContextMenu key={row.displayKey || row.id} target={node} label={S.rowActions}>
-        <RowMenuContent build={menuItems} items={rowMenu} record={record} rowApi={rowApi} />
+    // with a block selected and editing.fill on, the right-click menu fills it down or toward the inline end: the single-pointer alternative to
+    // dragging the fill handle (WCAG 2.5.7). The wrapper stays while the option is on, so a row is not remounted when a block starts or ends
+    const fillItems = fill && cellRange.rect;
+    return rowMenu || fill ? (
+      <ContextMenu key={row.displayKey || row.id} target={node} label={rowMenu ? S.rowActions : S.fillMenu} disabled={!rowMenu && !fillItems}>
+        {fillItems ? (
+          <>
+            <MenuItem onSelect={() => fill.down()}>{S.fillDown}</MenuItem>
+            <MenuItem onSelect={() => fill.right()}>{S.fillRight}</MenuItem>
+          </>
+        ) : null}
+        {rowMenu ? <RowMenuContent build={menuItems} items={rowMenu} record={record} rowApi={rowApi} /> : null}
       </ContextMenu>
     ) : (
       node

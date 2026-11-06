@@ -638,6 +638,7 @@ export default {
     "removeItem": "Remove {label}",
     "moreChips": "{count} more",
     "clear": "Clear",
+    "create": "Create “{text}”",
     "results": {
       "one": "{n} option",
       "other": "{n} options"
@@ -887,6 +888,9 @@ export default {
     "formSaveRefused": "Couldn’t save {name}. Check the values and try again.",
     "saved": "Saved",
     "saveRefused": "Couldn’t save. The previous value is back.",
+    "fillDown": "Fill down",
+    "fillRight": "Fill right",
+    "fillMenu": "Fill",
     "undone": "Edit undone",
     "redone": "Edit redone"
   },

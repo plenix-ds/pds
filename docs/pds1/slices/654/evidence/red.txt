@@ -1,0 +1,17 @@
+AssertionError [ERR_ASSERTION]: ltr: a selected block: the fill items
++ actual - expected
+
++ []
+- [
+-   'Fill down',
+-   'Fill right'
+- ]
+
+    at /home/cc/pds1/work/component-engineer-2/tests/data-grid-fill-menu-654.test.js:42:14 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [],
+  expected: [Array],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
