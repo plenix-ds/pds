@@ -1,6 +1,6 @@
 /* Plenix · EntityPicker (platform/components/EntityPicker). The field reuses .plx-input (focus and invalid change only its
    border color), with a search icon at its end; the list is a menu surface of two-line options: the record's avatar or
-   plain icon (no tile), its name over its detail, and a technical value at the end in the data font. Anatomy and API: EntityPicker.jsx. */
+   plain icon (no tile), its name over its detail, and a technical value at the end in the data font. Anatomy and API: EntityPicker.tsx. */
 .plx-entity-picker{display:block;flex-shrink:var(--plx-comp-field-context-content-flex-shrink,1);inline-size:var(--plx-comp-field-context-content-inline-size,var(--plx-comp-field-context-stretch-inline-size,auto));max-inline-size:var(--plx-comp-entity-picker-max-width);position:relative;}
 .plx-entity-picker__field{align-items:center;column-gap:var(--plx-comp-entity-picker-field-gap);display:flex;flex-wrap:wrap;row-gap:var(--plx-comp-entity-picker-field-row-gap);}
 .plx-entity-picker--multiple .plx-entity-picker__field{padding-block-end:var(--plx-comp-entity-picker-multiple-field-padding-block);padding-block-start:var(--plx-comp-entity-picker-multiple-field-padding-block);}

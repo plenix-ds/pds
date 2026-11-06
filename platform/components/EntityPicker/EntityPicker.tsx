@@ -76,18 +76,10 @@ type EntityValue = EntityPickerValue;
 export type EntityPickerOption = { value: EntityValue; label: string; description?: React.ReactNode; meta?: React.ReactNode; disabled?: boolean; icon?: IconValue; src?: string; color?: string; presence?: AvatarPresence };
 type Item = { kind: 'option'; o: EntityPickerOption } | { kind: 'browse' };
 const NAMES: Record<EntityKind, string> = { people: 'people', teams: 'teams', records: 'records' };
-/** @public the prop type (ADR 0011) */
-export type EntityPickerProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange' | 'placeholder'> & {
+type PickerCommon = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange' | 'placeholder' | 'multiple'> & {
   /** "records" (default) | "people" | "teams" */
   kind?: EntityKind;
   options?: EntityPickerOption[];
-  /** the chosen value (single) */
-  value?: EntityValue | null;
-  /** the chosen values (multiple) */
-  values?: EntityValue[];
-  /** single: the value and its option; multiple: the new values */
-  onChange?: (value: EntityValue | EntityValue[], option?: EntityPickerOption) => void;
-  multiple?: boolean;
   /** a server search: returns the options for a query */
   loadOptions?: (query: string) => EntityPickerOption[] | Promise<EntityPickerOption[]>;
   loadDelay?: number;
@@ -103,8 +95,15 @@ export type EntityPickerProps = Omit<React.InputHTMLAttributes<HTMLInputElement>
   strings?: Catalog | null;
   className?: string;
 };
-export const EntityPicker = React.forwardRef<HTMLInputElement | null, EntityPickerProps>(function EntityPicker({ kind = 'records', options = [], value, values, onChange, multiple = false,
-  loadOptions, loadDelay = 300, minChars = 1, entityName, placeholder, onBrowse, label, invalid, warning, disabled, id, strings, className, ...rest }, ref) {
+/** @public one choice: value, and onChange(value, option) (ADR 0011) */
+export type EntityPickerSingleProps = PickerCommon & { multiple?: false; value?: EntityValue | null; values?: undefined; onChange?: (value: EntityValue, option: EntityPickerOption) => void };
+/** @public several choices, shown as tags: values, and onChange(values) */
+export type EntityPickerMultipleProps = PickerCommon & { multiple: true; values?: EntityValue[]; value?: undefined; onChange?: (values: EntityValue[]) => void };
+/** @public the prop type (ADR 0011): one choice or several */
+export type EntityPickerProps = EntityPickerSingleProps | EntityPickerMultipleProps;
+export const EntityPicker = React.forwardRef<HTMLInputElement | null, EntityPickerProps>(function EntityPicker(props, ref) {
+  const { kind = 'records', options = [], value, values, onChange, multiple = false,
+    loadOptions, loadDelay = 300, minChars = 1, entityName, placeholder, onBrowse, label, invalid, warning, disabled, id, strings, className, ...rest } = props;
   const t = useStrings('entityPicker', strings) as unknown as Record<string, string>;
   const loc = useLocale();
   const noun = entityName || NAMES[kind] || NAMES.records;
