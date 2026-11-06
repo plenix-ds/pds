@@ -44,7 +44,10 @@ export function Autosave({ state = 'saved', onRetry, strings, className }: Autos
   return <Inline className={cx('plx-autosave', className)} wrap><SaveStatus state={state} strings={strings} />
     {state === 'failed' && onRetry ? <Button size="sm" onClick={onRetry}>{t.retry}</Button> : null}</Inline>;
 }
-export function useAutosave(value: any, onSave: any, { delay = 600, enabled = true, unsavedMessage }: { delay?: number; enabled?: boolean; unsavedMessage?: string } = {}) {
+/** @public what useAutosave returns */
+export type AutosaveResult = { state: SaveState; error: unknown; dirty: boolean; /** saves now; resolves true when the value was saved */ retry(): Promise<boolean>; flush(): Promise<boolean> };
+/** @public saves a value after it stops changing (the first value is the saved one) and guards leaving the page while it is unsaved */
+export function useAutosave<T>(value: T, onSave: (value: T) => Promise<unknown> | unknown, { delay = 600, enabled = true, unsavedMessage }: { delay?: number; enabled?: boolean; unsavedMessage?: string } = {}): AutosaveResult {
   const words: any = useStrings('autosave');
   const [snapshot, setSnapshot] = React.useState<any>({ state: 'saved', error: null, dirty: false });
   useUnsavedGuard(snapshot.dirty, unsavedMessage ?? words.unsaved);
@@ -81,5 +84,5 @@ export function useAutosave(value: any, onSave: any, { delay = 600, enabled = tr
     if (enabled && r.online) r.timer = setTimeout(flush, Math.max(0, delay));
     return () => clearTimeout(r.timer);
   }, [value, enabled, delay, flush]);
-  return { ...snapshot, retry: flush, flush };
+  return { ...snapshot, retry: flush, flush } as AutosaveResult;
 }

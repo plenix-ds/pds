@@ -58,9 +58,10 @@ import { fill } from '../../utils/fill.ts';
 
 const q = (x: any) => '“' + x + '”';
 
-export function copyName(name: any, taken = [], strings: any) {
+/** @public the name a copy gets: "Copy of …", or numbered when that is taken */
+export function copyName(name: string, taken: readonly string[] = [], strings?: Record<string, string>): string {
   const t: any = Object.assign({}, createTranslator(formatLocale()).section('duplicateAction'), strings);   // a plain function: no hook
-  const used = new Set((taken || []).map((x) => String(x).trim().toLowerCase()));
+  const used = new Set((taken || []).map((x: unknown) => String(x).trim().toLowerCase()));
   const base = fill(t.copyOf, { name });
   if (!used.has(base.toLowerCase())) return base;
   for (let n = 2; ; n++) { const next = fill(t.numbered, { name: base, n }); if (!used.has(next.toLowerCase())) return next; }
@@ -120,7 +121,7 @@ export function DuplicateAction({ name = '', noun, variant = 'copy', taken = [],
   const submit = (e: any) => {
     e.preventDefault();
     const v = value.trim();
-    const used = new Set((taken || []).map((x) => String(x).trim().toLowerCase()));
+    const used = new Set((taken || []).map((x: unknown) => String(x).trim().toLowerCase()));
     const problem = !v ? t.empty : used.has(v.toLowerCase()) ? fill(t.taken, { noun, name: q(v) }) : '';
     setError(problem);
     if (problem) { if (input.current) input.current.focus(); return; }
