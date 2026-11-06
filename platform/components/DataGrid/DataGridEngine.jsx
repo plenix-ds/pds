@@ -204,7 +204,13 @@ function NextEngine(rawProps) {
     editMenu = { mode: editMode, modes: editModes, show: canChoose, set: setEditMode };
   // Form Edit (ADR 0016, #84 F2): in this mode an edit asked for on a cell opens the record in a form instead of the inline editor
   const [formKey, setFormKey] = React.useState(null),
-    beginEdit = (next) => (next && editMode === 'form' && canChoose ? setFormKey(next.key) : setEditing(next));
+    formFrom = React.useRef(null),
+    beginEdit = (next) => {
+      if (next && editMode === 'form' && canChoose) {
+        formFrom.current = { key: next.key, field: next.field };
+        setFormKey(next.key);
+      } else setEditing(next);
+    };
 
   const deferredFilter = React.useDeferredValue(props.filter);
 
@@ -1088,9 +1094,15 @@ function NextEngine(rawProps) {
           types={props.editing?.types ?? settings.editing?.types}
           surface={props.formSurface}
           renderForm={props.renderForm}
+          openKey={props.openKey === undefined ? undefined : props.openKey == null ? null : recordKey(props.openKey)}
           onRecordEdit={props.onRecordEdit}
           commitEdit={commitEdit}
-          onClose={() => setFormKey(null)}
+          onClose={() => {
+            // focus goes back to the cell the edit began in (a drawer or dialog does it itself; the application's panel does not)
+            const from = formFrom.current;
+            setFormKey(null);
+            if (from) focusCell(model.findIndex((r) => r.id === from.key), Math.max(0, ordered.findIndex((col) => col.columnDef.meta.field === from.field)));
+          }}
           S={S}
         />
       </React.Suspense>

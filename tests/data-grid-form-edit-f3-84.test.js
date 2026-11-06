@@ -25,13 +25,14 @@ const check = async (name, fn) => { if (!shared.wanted(name)) return; try { awai
       const mount = (kind) => page.evaluate(async (dir, kind) => {
         window.__root && window.__root.unmount(); document.documentElement.setAttribute('dir', dir); document.documentElement.setAttribute('lang', 'en'); window.__saved = [];
         document.querySelector('main').innerHTML = '<div id="c"></div>'; const h = React.createElement;
-        const data = [{ id: 'r1', name: 'Person 1', age: 30 }];
+        const data = [{ id: 'r1', name: 'Person 1', age: 30 }, { id: 'r2', name: 'Person 2', age: 31 }];
         const columns = [{ title: 'Name', field: 'name', kind: 'name', editor: 'input' }, { title: 'Age', field: 'age', editor: 'number', validate: (v) => (v < 0 ? 'Age cannot be negative' : null) }];
         const panel = React.createRef(), empty = React.createRef();
         const extra = kind === 'render' ? { renderForm: (record, form) => h('div', { id: 'own-form' }, h('span', { id: 'own-name' }, record.name), h('input', { id: 'own-input', 'aria-label': 'My name', value: form.value.name ?? '', onChange: (e) => form.setValue({ ...form.value, name: e.target.value }) }), h('input', { id: 'own-age', 'aria-label': 'My age', value: form.value.age ?? '', onChange: (e) => form.setValue({ ...form.value, age: e.target.value }) }), h('span', { id: 'own-errors' }, JSON.stringify(form.errors || {}))) }
           : kind === 'panel' ? { formSurface: { panel } } : kind === 'nopanel' ? { formSurface: { panel: empty } } : {};
-        const grid = h(Plenix.DataGrid, Object.assign({ label: 'People', data, columns, viewMenu: true, editModes: ['inline', 'form'], editMode: 'form',
-          onRecordEdit: (r, changes) => { window.__saved.push(r.id + ':' + JSON.stringify(changes)); return Promise.resolve(); } }, extra));
+        const Host = () => { const [open, setOpen] = React.useState('r1'); window.__setOpen = setOpen; return h(Plenix.DataGrid, Object.assign({ label: 'People', data, columns, viewMenu: true, editModes: ['inline', 'form'], editMode: 'form', openKey: kind === 'panel' ? open : undefined,
+          onRecordEdit: (r, changes) => { window.__saved.push(r.id + ':' + JSON.stringify(changes)); return Promise.resolve(); } }, extra)); };
+        const grid = h(Host);
         window.__root = ReactDOM.createRoot(document.getElementById('c'));
         window.__root.render(h(Plenix.ToastProvider, null, h('div', { style: { display: 'flex', gap: 16 } }, h('div', { style: { height: 400, flex: 1 } }, grid), h('div', { id: 'panel', ref: panel, style: { inlineSize: 320 } }, h('span', { id: 'details' }, 'Details of the open row')))));
         await new Promise((r) => setTimeout(r, 1000));
@@ -60,6 +61,15 @@ const check = async (name, fn) => { if (!shared.wanted(name)) return; try { awai
         await mount('panel'); await open(); await click('Cancel'); assert.equal((await panelState()).open, false); assert.deepEqual(await saved(), []);
         await open(); await page.evaluate(() => { const i = document.getElementById('panel').querySelector('input'); i.focus(); i.select(); }); await page.keyboard.type('In panel'); await wait(200); await click('Save changes');
         assert.deepEqual(await saved(), ['r1:{"name":"In panel"}']); assert.equal((await panelState()).open, false);
+      });
+      await check(T + 'closing the form returns focus to the edited row', async () => {
+        await mount('render'); await open(); await click('Cancel');
+        assert.equal(await page.evaluate(() => { const a = document.activeElement; return a && a.getAttribute && a.getAttribute('data-plx-field') ? a.closest('[role=row]').getAttribute('data-plx-record') + '.' + a.getAttribute('data-plx-field') : (a ? a.tagName : null); }), 'string:r1.name');
+      });
+      await check(T + 'closing the open row while the form is in the panel cancels it', async () => {
+        await mount('panel'); await open(); assert.equal((await panelState()).open, true);
+        await page.evaluate(() => window.__setOpen('r2')); await wait(700);
+        assert.equal((await panelState()).open, false, 'the mark is removed'); assert.deepEqual(await saved(), []);
       });
       await check(T + 'a panel ref with no element falls back to the drawer', async () => {
         await mount('nopanel'); await open(); assert.equal(await dialog(), true);

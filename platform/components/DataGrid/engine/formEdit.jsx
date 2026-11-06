@@ -75,7 +75,7 @@ function Control({ column, kind, value, set, invalid, record }) {
   }
 }
 
-export default function FormEdit({ record, rowKey, columns, isEditable, name, types, surface = 'drawer', renderForm, onRecordEdit, commitEdit, onClose, S }) {
+export default function FormEdit({ record, rowKey, columns, isEditable, name, types, surface = 'drawer', renderForm, openKey, onRecordEdit, commitEdit, onClose, S }) {
   const editable = columns.filter((c) => c.editor && isEditable(c)),
     initial = React.useMemo(() => Object.fromEntries(editable.map((c) => [c.field, valueAt(record, c.field)])), [record]),
     [errors, setErrors] = React.useState({}),
@@ -90,6 +90,13 @@ export default function FormEdit({ record, rowKey, columns, isEditable, name, ty
     panelEl.setAttribute('data-plx-form-open', '');
     return () => panelEl.removeAttribute('data-plx-form-open');
   }, [panelEl, wantsPanel]);
+  // the application's close button moves the open row away from the edited record: while the form is in its panel that is Cancel, through FormFlow's
+  // unsaved-changes question (ADR 0016 addendum D-0063)
+  React.useEffect(() => {
+    if (!panelEl || openKey === undefined || String(openKey ?? '') === String(rowKey)) return;
+    const cancel = panelEl.querySelector('.plx-form-actions button:not([type="submit"])');
+    if (cancel) cancel.click();
+  }, [panelEl, openKey, rowKey]);
   const validate = async (value) => {
     const found = {};
     for (const c of editable) {
