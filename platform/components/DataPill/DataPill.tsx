@@ -40,7 +40,7 @@
      kind="id" (owner, issue 606): the value is a computed identifier or case number. It follows the direction around it, so in a right-to-left
        page it reads 01-20261020 and in a left-to-right one 20261020-01; an email, a URL, a phone number or a code stays data (left to right).
      Not a Tag (a keyword next to content, 10px) and not a Badge (a status): a DataPill is the value itself.
-     DataGrid: a column's pill option draws each value as a DataPill (DataGrid.tsx).
+     DataGrid: a column's pill option draws each value as a DataPill (DataGrid.jsx).
 */
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
