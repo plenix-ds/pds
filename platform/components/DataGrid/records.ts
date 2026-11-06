@@ -12,7 +12,7 @@ export type GroupColumn = { field?: string; type?: string; multi?: boolean; grou
 /** a grouping level: a field, a function of the record, or { field, interval, range } */
 export type GroupLevel = string | ((record: DataRecord) => unknown) | { field: string; interval?: string; range?: number };
 /** a table row as TanStack gives it: the record and its row id */
-export type TableRowLike = { id: string; original: DataRecord };
+type TableRowLike = { id: string; original: DataRecord };
 /** one group: its rows, its subgroups and its place in the path */
 export type Group = { id: string; field: unknown; value: unknown; depth: number; separated: boolean; path: Array<{ field: unknown; value: unknown }>; rows: TableRowLike[]; groups: Group[] };
 export function recordsOf(rows: DataRecord[], index = 'id', children: string | null = null): DataRecord[] {
