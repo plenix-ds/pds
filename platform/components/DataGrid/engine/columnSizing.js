@@ -14,7 +14,7 @@
 */
 import { kinds } from './helpers.jsx';
 import { valueText } from '../cells.jsx';
-import { valueAt } from '../state.js';
+import { valueAt } from '../state.ts';
 
 export function columnSizing({ columns, frame, source, resize, metrics, table, B }) {
   const fit = (field) => {

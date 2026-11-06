@@ -4,7 +4,7 @@
    Props: React-owned model access and mutations, always read through a live ref.
    Behavior: Adapts records without exposing a second imperative renderer.
    Notes: The adapter remains private; public callbacks receive records directly. */
-import { recordKey, valueAt } from './state.js';
+import { recordKey, valueAt } from './state.ts';
 import { valueText } from './cells.jsx';
 export function createAdapter(current) {
   // a person's code names a row by its own id (3, 'r10'); the grid keys its rows by recordKey(id). A key already in the grid's form passes through (issue 736).

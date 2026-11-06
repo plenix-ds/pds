@@ -18,7 +18,7 @@
      the engine function, in the same order with the same values. The engine is documented in DataGridEngine.jsx.
 */
 import React from 'react';
-import { visibilityOf } from '../state.js';
+import { visibilityOf } from '../state.ts';
 import { tokenPixels } from '../environment.js';
 import { SIZE_STEPS, snapSize } from '../../../utils/sizeSteps.js';
 import { shareOf } from '../../../utils/paneLimit.ts';
