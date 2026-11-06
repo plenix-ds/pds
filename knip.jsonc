@@ -71,7 +71,7 @@
     // monitorKey: check-system.rules/monitor-widths.js requires the export in the file's text
     "platform/utils/monitorWidths.ts": ["exports"],
     // RICH_TEXT_STYLE_PROPERTIES: a public re-export apps may read (owner of the decision: Tech Lead)
-    "platform/components/RichTextEditor/RichTextEditor.jsx": ["exports"]
+    "platform/components/RichTextEditor/RichTextEditor.tsx": ["exports"]
   },
   "ignore": [
     // Opengrep rule fixtures (.opengrep/rules/*.fixture.tsx): read by `opengrep test`, never imported or built (#197)

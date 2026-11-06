@@ -14,7 +14,7 @@
     "platform/components/TreeSelect/TreeSelect.tsx",
     "platform/components/TransferList/TransferList.tsx",
     "platform/components/InlineEdit/InlineEdit.tsx",
-    "platform/components/RichTextEditor/RichTextEditor.jsx",
+    "platform/components/RichTextEditor/RichTextEditor.tsx",
     "platform/components/CodeEditor/CodeEditor.tsx",
     "platform/components/MentionInput/MentionInput.tsx",
     "platform/components/TimePicker/TimePicker.tsx",

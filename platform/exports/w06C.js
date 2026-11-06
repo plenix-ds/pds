@@ -2,5 +2,5 @@
 // editor, with cleanRichText, its allow-list). Button (toggle), Combobox (async, marks) and Slider (range, marks) are
 // extended in place and already public.
 export { InlineEdit } from '../components/InlineEdit/InlineEdit.tsx';
-export { RichTextEditor } from '../components/RichTextEditor/RichTextEditor.jsx';
-export { cleanRichText } from '../components/RichTextEditor/RichTextEditor.jsx';
+export { RichTextEditor } from '../components/RichTextEditor/RichTextEditor.tsx';
+export { cleanRichText } from '../components/RichTextEditor/RichTextEditor.tsx';
