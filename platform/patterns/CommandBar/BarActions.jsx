@@ -126,7 +126,7 @@ export function BarActions({ actions = [], iconOnly = false, fold = 0, off = (a)
   dangerClass, size = 'sm', extra = [], selectionKeys = null }) {
   const t = useStrings('commandBar'),
     C = useStrings('confirmAction'),
-    { plural: pluralOf } = useLocale(),
+    { plural: pluralOf, format } = useLocale(),
     [pending, setPending] = React.useState(null);
   moreLabel = moreLabel ?? t.moreLabel;
   // a command with confirm opens the destructive Dialog first (ADR 0004); the others run at once
@@ -139,11 +139,12 @@ export function BarActions({ actions = [], iconOnly = false, fold = 0, off = (a)
     const exact = plural['=' + Number(count)];
     return exact !== undefined ? exact : plural[pluralOf(count)] ?? plural.other ?? '';
   };
+  // the count is written in the locale's digits (ar-EG: Arabic-Indic, docs/i18n/arabic.md); the noun form still picks by the number (#649)
   const words = (a) => {
     const c = a.confirm || {}, fill = (text, values) => text.replace(/\{(\w+)\}/g, (m, k) => (values[k] === undefined ? m : values[k]));
     const verb = a.label;
     return {
-      title: c.title ?? (c.count !== undefined ? fill(C.titleMany, { verb, count: c.count, plural: nounFor(c.plural, c.count) }) : fill(C.title, { verb, name: c.name ?? '' })),
+      title: c.title ?? (c.count !== undefined ? fill(C.titleMany, { verb, count: typeof c.count === 'number' ? format.number(c.count) : c.count, plural: nounFor(c.plural, c.count) }) : fill(C.title, { verb, name: c.name ?? '' })),
       message: c.body ?? [c.consequence, c.permanent ? C.permanent : null].filter(Boolean).join(' '),
       confirmLabel: c.confirmLabel ?? fill(C.confirm, { verb })
     };
