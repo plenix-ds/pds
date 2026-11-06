@@ -18,6 +18,10 @@ The product repository holds the product. The team's working history (briefs, st
 - **Published study pages** (`deploy.sh` publishes them): `docs/font-study`, `docs/composition`, `docs/reading-pane-study`, `docs/page-headers`, `docs/grid-header-study`, `docs/grid-row-hover-study`, `docs/grid-row-selection-study`.
 - **Briefs a tool still opens:** `docs/briefs/icons` (`tools/agent/datagrid/icon-compare.js` reads it), `docs/briefs/iconography` (a link in `platform/icons/inventory/README.md`).
 - **Briefs that go to the archive in the next clean-up:** `docs/briefs/commandbar-find-fold`, `header-labels-start` and `segmented-fold`. Their tests open the stage pages in `tests/fixtures/stages/` since #772, and no test, tool, configuration, `deploy.sh` or live document uses these folders. What stays in them is the brief (`index.html`), pictures and a `capture.js` that points at the removed `stage.html`.
-- **Live documents:** `docs/handoff` (named in `CLAUDE.md` and the Arabic notes), `docs/integration`, `docs/i18n`, `docs/accessibility`, `docs/palette.md`, `docs/pills-and-colors.md`, and the PRD viewer files.
+- **Live documents:** `docs/integration`, `docs/i18n`, `docs/accessibility`, `docs/palette.md`, `docs/pills-and-colors.md`, and the PRD viewer files.
 - **Baselines a test still reads:** `pilot-computed.json` (`tests/zero-overlap.test.js`), `computed.json`, `computed-ds.json`, `clashes*.json`, `overlap-strict.json` (`tests/clash-audit.js`, run by the styling-proof workflow). `computed.json` and `computed-ds.json` still hold hashes for the removed Card accent; they refresh when the clash audit is next recorded (it is the owner's run).
 - **`tools/agent/native/`:** not moved in this pull request (its generators may still be run by hand; see `docs/build.md`).
+
+## Moved later (#706)
+
+- `docs/handoff/` and the briefs `commandbar-find-fold`, `header-labels-start` and `segmented-fold` moved into the repository's own `archive/docs/` (with their history): see `archive/README.md`.

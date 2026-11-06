@@ -61,7 +61,7 @@ One row per root item on `main` (2026-11-06, 88 items). **Readers** count the fi
 | `dam` | Suite app (built, tested, CDN) | 1 | 0 | 17 | 21 | 2 | 5 | 2026-11-01 | **keep** |  |
 | `dashboard` | Status page and dashboard (CI dashboard.yml, build, tests) | 1 | 2 | 14 | 34 | 2 | 8 | 2026-11-05 | **keep** |  |
 | `decisions.yaml` | Decisions (protected) | 0 | 2 | 0 | 0 | 0 | 9 | 2026-11-06 | **keep** |  |
-| `deploy.sh` | Host-side deploy of the CDN, API and sites (release.yml publishes after it) | 0 | 0 | 0 | 0 | 0 | 7 | 2026-11-05 | **keep (ask)** | release.yml publishes after the host-side deploy; @pds1-release-architect to confirm whether this script still runs it before any delete. |
+| `deploy.sh` | Host-side deploy of the CDN, API and sites (release.yml publishes after it) | 0 | 0 | 0 | 0 | 0 | 7 | 2026-11-05 | **keep** | The only deploy path (0.90.0 went live through it, 2026-11-06); release.yml expects the CDN and API already published by it. Its replacement is a future CI deploy job (Release Architect, #706). |
 | `deploy` | Agent host units (deploy/agents) | 0 | 1 | 0 | 0 | 2 | 1 | 2026-11-06 | **keep** |  |
 | `design.rules.json` | Design rules read by the design agents and DESIGN.md | 0 | 0 | 0 | 0 | 0 | 5 | 2026-11-05 | **keep** |  |
 | `docs` | Documentation | 0 | 0 | 6 | 9 | 3 | 34 | 2026-11-06 | **keep** |  |
@@ -96,7 +96,7 @@ One row per root item on `main` (2026-11-06, 88 items). **Readers** count the fi
 ## Summary
 
 - **Archive (1):** `vote-kit/`. No build, CI, test, CDN page or package reads it in this repo.
-- **Ask (1):** `deploy.sh`. Kept until the Release Architect confirms whether the host-side deploy still runs it.
+- **Keep, confirmed:** `deploy.sh` is still the only deploy path (the Release Architect on #706). The folders it packs must not move.
 - **Delete (0) at the root:** every other root item has a reader, so none is deleted. The low-reader items were checked one by one:
   - `capabilities/` is read by `build-docs.js`, `build-packages.d/mcp.js` and `check-common.js`;
   - `build-docs-components.js` is required by `build-packages.js` line 438, without its `.js`;
