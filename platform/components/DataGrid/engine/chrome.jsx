@@ -19,7 +19,7 @@ import { EmptyState } from '../../EmptyState/EmptyState.tsx';
 import { Button } from '../../Button/Button.tsx';
 import SettingsCustomizeIcon from 'plenix-platform/icons/plenix/settings-customize';
 import { Menu, MenuItem } from '../../Menu/Menu.tsx';
-import { Rare, preloadRare } from './rare.jsx';
+import { Rare, preloadRare } from './rare.tsx';
 import { Spinner } from '../../Loading/Loading.tsx';
 import { cx } from '../../../utils/cx.ts';
 import { Inline } from '../../Stack/Stack.tsx';

@@ -5,7 +5,7 @@
      selection reconciled against the records and filters (dropped rows, hidden count, onSelectionChange) with the dataFiltered
      event, and the dataChanged event when the records change.
    Usage:
-     import { useViewSync } from './engine/useViewSync.js';
+     import { useViewSync } from './engine/useViewSync.ts';
      useViewSync({ ready, props, metrics, autoSizing, sorting, columnOrder, columnVisibility, sizing, collapsed, groupBy, ... });
    Props:
      The engine's state the effects read (ready, deliveredReady, metrics, sorting, column state, grouping, selection, filters, source,
@@ -51,7 +51,7 @@ export function useViewSync({
   filters,
   deferredFilter,
   source,
-}) {
+}: any) {
   React.useEffect(() => {
     if (!metrics.row || !Object.keys(autoSizing).length || ready.current) return;
     ready.current = true;
@@ -69,7 +69,7 @@ export function useViewSync({
   React.useEffect(() => {
     if (!ready.current || props.onViewChange) return;
     writeView(storageKey, {
-      sort: sorting.map((s) => ({ column: s.id, dir: s.desc ? 'desc' : 'asc' })),
+      sort: sorting.map((s: any) => ({ column: s.id, dir: s.desc ? 'desc' : 'asc' })),
       order: columnOrder,
       hidden: Object.keys(columnVisibility).filter((k) => columnVisibility[k] === false),
       widths: Object.fromEntries(Object.entries(sizing).map(([k, v]) => [k, v + 'px'])),
@@ -96,9 +96,9 @@ export function useViewSync({
   ]);
   React.useEffect(() => {
     if (!ready.current) return;
-    const active = new Set(table.getFilteredRowModel().rows.map((r) => r.id)),
+    const active = new Set(table.getFilteredRowModel().rows.map((r: any) => r.id)),
       next = { ...selection };
-    const known = new Set(canonical.map((record) => recordKey(record[index])));
+    const known = new Set(canonical.map((record: any) => recordKey(record[index])));
     const hidden = Object.keys(next).filter((key) => next[key] && known.has(key) && !active.has(key));
     const removed = Object.keys(next).filter((key) => next[key] && !known.has(key));
     if (removed.length || (!keepHiddenSelection && hidden.length)) {
@@ -106,16 +106,16 @@ export function useViewSync({
       notifySelection(next);
     } else if (hidden.length !== selectionInfo.current.hidden) {
       selectionInfo.current = { hidden: hidden.length };
-      const records = canonical.filter((r) => selection[recordKey(r[index])]);
+      const records = canonical.filter((r: any) => selection[recordKey(r[index])]);
       onSelectionChange?.(
-        records.map((r) => r[index]),
+        records.map((r: any) => r[index]),
         { count: records.length, hidden: hidden.length }
       );
     }
     emit(
       'dataFiltered',
-      filters.map((f) => ({ field: f.id, type: 'like', value: f.value })),
-      table.getFilteredRowModel().rows.map((r) => api.row(r.id))
+      filters.map((f: any) => ({ field: f.id, type: 'like', value: f.value })),
+      table.getFilteredRowModel().rows.map((r: any) => api.row(r.id))
     );
   }, [deferredFilter, JSON.stringify(filters), source, keepHiddenSelection]);
   const previousData = React.useRef(source);

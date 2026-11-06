@@ -3,7 +3,7 @@
      render to the props, the records, the model, the groups, the table, the selection, the sort, the handlers and the elements, so
      the adapter (api.row, api.cell, api.getData...) always reads the latest and never a stale closure.
    Usage:
-     import { syncLive } from './engine/liveState.js';
+     import { syncLive } from './engine/liveState.ts';
      syncLive({ live, props, frame, index, source, model, table, selection, sorting, ... });
    Props:
      live: the engine's ref; the other names are the engine's values and handlers, stored under the same names. Returns nothing.
@@ -49,7 +49,7 @@ export function syncLive({
   rowElements,
   headerElements,
   listeners,
-}) {
+}: any) {
   live.current = {
     props,
     frame,
