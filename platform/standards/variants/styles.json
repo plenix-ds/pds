@@ -1533,5 +1533,49 @@
   "heading--variants-plain": {
     "sets": [],
     "why": "markup only: a plain label with no heading level (level null)"
+  },
+  "hide-show--breakpoint-show-above": {
+    "sets": [],
+    "why": "markup only: renders its children only at or above the window class, and the fallback below it; the window class is read with a media query, in script"
+  },
+  "hide-show--breakpoint-show-below": {
+    "sets": [],
+    "why": "markup only: renders its children only under the window class, and the fallback at or above it; the window class is read with a media query, in script"
+  },
+  "hide-show--breakpoint-hide-above": {
+    "sets": [],
+    "why": "markup only: renders nothing at or above the window class (the fallback shows instead); the window class is read with a media query, in script"
+  },
+  "hide-show--breakpoint-hide-below": {
+    "sets": [],
+    "why": "markup only: renders nothing under the window class (the fallback shows instead); the window class is read with a media query, in script"
+  },
+  "hide-show--print-print-only": {
+    "sets": [
+      {
+        "property": "display",
+        "part": "block",
+        "token": "--plx-sys-print-shown"
+      }
+    ],
+    "why": ".plx-visibility--print-only: display none on screen, shown on paper"
+  },
+  "hide-show--print-not-printed": {
+    "sets": [
+      {
+        "property": "display",
+        "part": "block",
+        "token": "--plx-sys-print-hidden"
+      }
+    ],
+    "why": ".plx-visibility--no-print: shown on screen, hidden on paper"
+  },
+  "file-row--state-default": {
+    "sets": [],
+    "why": "markup only: the row of select checkbox, file, facts and actions, with no transfer under way"
+  },
+  "file-row--state-with-progress": {
+    "sets": [],
+    "why": "markup only: shows the transfer's progress and a Cancel action while an upload or download is under way"
   }
 }
