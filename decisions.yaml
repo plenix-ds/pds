@@ -600,3 +600,23 @@
   options: [add (chosen, default), swap]
   status: active
   check: planned:behaviour tests on the #140 PR (add order, fold order, swap unchanged)
+
+- id: D-0069
+  date: 2026-11-06
+  area: api
+  decided_by: owner (2026-10-19, plenix-platform#195), recorded by pds1-ds-architect
+  decision: 'With rows selected, CommandBar adds the selection''s commands, then a separator, then the page''s commands (selection.mode ''add'', the default); ''swap'' stays; each page command may say selection ''also'' | ''only'' | ''never'' (docs/adr/0018). It supersedes the swap of 2026-10-15 (issue 454).'
+  why: 'The owner: "when selecting multiple.. i should still be able to do actions"; decided "add, don''t swap" on 2026-10-19.'
+  options: [add as the default with swap kept (chosen, the owner), swap as the default]
+  status: active
+  check: G3 review of the #140 build PR and its behavior tests (add order, also/only/never, swap, fold, RTL)
+
+- id: D-0070
+  date: 2026-11-06
+  area: api
+  decided_by: agent (pds1-ds-architect) on the Component Engineer's proposal (#146), owner may switch
+  decision: 'ContentGrid (and AssetGallery) take an opt-in virtualized (default false): with layout grid only the card rows in view are drawn and the grid scrolls at its container''s height; masonry and justified ignore it with a dev warning (docs/adr/0019).'
+  why: 'Automatic virtualization above a count would silently turn a page-flow grid into an inner scroll area that needs a height; opt-in changes no existing page.'
+  options: [opt-in virtualized (chosen, A), automatic above a card count (B), a separate VirtualContentGrid (C)]
+  status: active
+  check: G3 review of the #146 build PR and its behavior tests (rows in view only, columns from width, keyboard and selection across the set, the layout warning)
