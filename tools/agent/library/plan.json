@@ -1786,8 +1786,8 @@
       "platform/charts/WaterfallChart.tsx",
       "platform/charts/WordCloud.tsx",
       "platform/charts/interaction.js",
-      "platform/charts/NetworkGraph.jsx",
-      "platform/charts/Diagram.jsx"
+      "platform/charts/NetworkGraph.tsx",
+      "platform/charts/Diagram.tsx"
      ],
      "targets": [
       "LineChart (component, M)",
@@ -1825,7 +1825,7 @@
       "platform/charts/PieChart.tsx",
       "platform/charts/BoxPlot.tsx",
       "platform/charts/BulletChart.tsx",
-      "platform/charts/SankeyDiagram.jsx",
+      "platform/charts/SankeyDiagram.tsx",
       "platform/charts/RadarChart.jsx",
       "platform/charts/ComboChart.tsx",
       "platform/charts/TimelineChart.tsx",
@@ -6193,7 +6193,7 @@
    "wave": 9,
    "lane": "A",
    "files": [
-    "platform/charts/NetworkGraph.jsx"
+    "platform/charts/NetworkGraph.tsx"
    ],
    "dependsOn": [
     "ChartKit"
@@ -6215,7 +6215,7 @@
    "wave": 9,
    "lane": "A",
    "files": [
-    "platform/charts/Diagram.jsx"
+    "platform/charts/Diagram.tsx"
    ],
    "dependsOn": [
     "NetworkGraph"
@@ -6374,7 +6374,7 @@
    "wave": 9,
    "lane": "B",
    "files": [
-    "platform/charts/SankeyDiagram.jsx"
+    "platform/charts/SankeyDiagram.tsx"
    ],
    "dependsOn": [
     "ChartKit"
@@ -15520,7 +15520,7 @@
    "target": "SankeyDiagram",
    "targetKind": "component",
    "files": [
-    "platform/charts/SankeyDiagram.jsx"
+    "platform/charts/SankeyDiagram.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09B.records.js",
@@ -15943,7 +15943,7 @@
    "target": "NetworkGraph",
    "targetKind": "component",
    "files": [
-    "platform/charts/NetworkGraph.jsx"
+    "platform/charts/NetworkGraph.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09A.records.js",
@@ -15973,7 +15973,7 @@
    "target": "Diagram",
    "targetKind": "component",
    "files": [
-    "platform/charts/Diagram.jsx"
+    "platform/charts/Diagram.tsx"
    ],
    "laneFiles": [
     "platform/design-system/parts/w09A.records.js",

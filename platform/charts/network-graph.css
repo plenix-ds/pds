@@ -1,4 +1,4 @@
-/* Plenix · NetworkGraph (platform/charts/network-graph.css; the code is NetworkGraph.jsx): nodes (a dot in the group's
+/* Plenix · NetworkGraph (platform/charts/network-graph.css; the code is NetworkGraph.tsx): nodes (a dot in the group's
    categorical data-viz color and its label under it), edges (solid or dashed, an arrowhead when directed, a label with
    a halo), the node in focus and its edges, and the plot that clips the zoomed graph. Every value is a
    --plx-comp-network-graph-* token. */
