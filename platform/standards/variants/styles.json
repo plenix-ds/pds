@@ -1673,5 +1673,77 @@
   "geo-map--variant-markers": {
     "sets": [],
     "why": "markup only: draws markers at the supplied longitude and latitude places"
+  },
+  "input-group--width-xs": {
+    "sets": [
+      {
+        "property": "inline-size",
+        "part": "block",
+        "token": "--plx-comp-input-group-width-xs-width"
+      }
+    ],
+    "why": ".plx-input-group--width-xs in input-group.css"
+  },
+  "input-group--width-sm": {
+    "sets": [
+      {
+        "property": "inline-size",
+        "part": "block",
+        "token": "--plx-comp-input-group-width-sm-width"
+      }
+    ],
+    "why": ".plx-input-group--width-sm in input-group.css"
+  },
+  "input-group--width-md": {
+    "sets": [
+      {
+        "property": "inline-size",
+        "part": "block",
+        "token": "--plx-comp-input-group-width-md-width"
+      }
+    ],
+    "why": ".plx-input-group--width-md in input-group.css"
+  },
+  "input-group--width-lg": {
+    "sets": [
+      {
+        "property": "inline-size",
+        "part": "block",
+        "token": "--plx-comp-input-group-width-lg-width"
+      }
+    ],
+    "why": ".plx-input-group--width-lg in input-group.css"
+  },
+  "import-dialog--variant-file": {
+    "sets": [],
+    "why": "markup only: chooses a file, or drops one, as the import source (initialMode file)"
+  },
+  "import-dialog--variant-paste": {
+    "sets": [],
+    "why": "markup only: pastes the data as text as the import source (initialMode paste)"
+  },
+  "import-dialog--variant-url": {
+    "sets": [],
+    "why": "markup only: takes an HTTP URL as the import source (initialMode url); invalid URLs are rejected"
+  },
+  "import-wizard--variant-map-columns": {
+    "sets": [],
+    "why": "markup only: the step that maps each source column to a target field; required fields must be mapped"
+  },
+  "import-wizard--variant-review": {
+    "sets": [],
+    "why": "markup only: the step that shows the rows with their mapped values before the import"
+  },
+  "import-wizard--variant-results": {
+    "sets": [],
+    "why": "markup only: the step that reports what was imported, after the import is persisted once"
+  },
+  "image-annotation--variant-pins": {
+    "sets": [],
+    "why": "markup only: annotations of kind pin: a named point on the image, listed beside it"
+  },
+  "image-annotation--variant-regions": {
+    "sets": [],
+    "why": "markup only: annotations of kind region: a named area on the image, listed beside it"
   }
 }
