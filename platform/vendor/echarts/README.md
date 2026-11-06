@@ -7,31 +7,31 @@ slices, in an ECharts theme read from the Platform's chart tokens (`platform/cha
 
 | File | Package | Version | License | SHA-256 |
 |---|---|---|---|---|
-| `echarts.min.js` | echarts (with zrender 6.1.0, tslib 2.3.0) | 6.1.0 | Apache-2.0 (zrender BSD-3-Clause, tslib 0BSD) | `1730e8e813cc0b3141d592310c79f0b08344adc52bf08bbc0dcf8ee5683ccb4e` |
+| `echarts.min.js` | echarts (with zrender 6.1.0, tslib 2.3.0) | 6.1.0 | Apache-2.0 (zrender BSD-3-Clause, tslib 0BSD) | `ba04eee6cf8f55250b8f7c4d4b440658f9565be66e8b8c55a36cb35fd79d4998` |
 | `LICENSE`, `NOTICE` | echarts | 6.1.0 | Apache-2.0 | `634293835b43a6dd2094fa39182a3d9a6b9ca43b7fdb9ac354e8037af2a3093a`, `d491d358344f842685c1b1585970999db65fe30ecf7ef3867af8814f4016c016` |
 | `LICENSE-zrender` | zrender | 6.1.0 | BSD-3-Clause | `a681e9d183c72b4af4856935893805eb48c08f0f5a3f260203db7444c20fb98a` |
 | `LICENSE-tslib` | tslib | 2.3.0 | 0BSD | `0e8d2550baea17eb3072c4f919b36fbf9852bb49dba948549872e713863c0834` |
 
-Built on 2026-10-27: 554,462 bytes, 190,945 bytes gzipped (gzip -9); the tree chart added 28,771 bytes (9,828 gzipped)
-to the 2026-10-26 build (525,691 bytes), which this recipe rebuilds byte for byte. All of ECharts (`dist/echarts.min.js`) is 360 KB
+Built on 2026-11-06: 560,804 bytes, 192,785 bytes gzipped (gzip -9); the scatter chart added 6,342 bytes (1,840 gzipped) to the 2026-10-27 build (554,462 bytes, 190,945 gzipped),
+which this recipe rebuilds byte for byte (checked 2026-11-06). All of ECharts (`dist/echarts.min.js`) is 360 KB
 gzipped: this file holds only what the Platform's charts use ("ship only what is used", #277).
 
 ## What it holds
 
 The modular build: ECharts' core, the SVG renderer (marks stay vector, crisp at every zoom and in print), the line, bar,
-pie and tree charts and the cartesian grid. `window.PlenixECharts` exposes `init` and `version` only. The entry file:
+pie, tree and scatter charts and the cartesian grid. `window.PlenixECharts` exposes `init` and `version` only. The entry file:
 
 ```js
 import { use, init, version } from 'echarts/core';
 import { SVGRenderer } from 'echarts/renderers';
-import { LineChart, BarChart, PieChart, TreeChart } from 'echarts/charts';
+import { LineChart, BarChart, PieChart, TreeChart, ScatterChart } from 'echarts/charts';
 import { GridComponent } from 'echarts/components';
-use([SVGRenderer, LineChart, BarChart, PieChart, TreeChart, GridComponent]);
+use([SVGRenderer, LineChart, BarChart, PieChart, TreeChart, ScatterChart, GridComponent]);
 export { init, version };
 ```
 
 The charts that use it: LineChart, AreaChart and Sparkline (line; Sparkline's bars: bar), BarChart (bar), PieChart (pie),
-TreeChart (tree; owner, 2026-10-26, charts-tree-26). ECharts' own legend, tooltip,
+TreeChart (tree; owner, 2026-10-26, charts-tree-26), ScatterChart (scatter, with its trend lines drawn as line series; #106, 2026-11-06). ECharts' own legend, tooltip,
 title, data zoom, toolbox and aria parts are not included: the Platform draws those. Later chart types add their
 ECharts chart (and only the parts they need) to the entry file.
 
