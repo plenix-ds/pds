@@ -22,7 +22,7 @@ import { pillFont } from '../engine/pill.js';
 import { gridStep, snapToGrid, gridPx } from '../../../utils/grid.ts';
 import { tokenPixels } from '../environment.js';
 import { kinds, typeOf } from './helpers.tsx';
-import { valueAt } from '../state.js';
+import { valueAt } from '../state.ts';
 import { valueText } from '../cells.jsx';
 
 export function useGridMetrics({

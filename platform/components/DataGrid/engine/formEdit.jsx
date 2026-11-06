@@ -30,7 +30,7 @@ import { Text } from '../../Text/Text.tsx';
 import { VisuallyHidden } from '../../VisuallyHidden/VisuallyHidden.tsx';
 import { useDirection } from '../../../providers/DirectionProvider.tsx';
 import { valueText } from '../cells.jsx';
-import { valueAt } from '../state.js';
+import { valueAt } from '../state.ts';
 
 const BUILT_IN = ['select', 'combobox', 'tags', 'date', 'checkbox', 'textarea', 'person'];
 // the kind of control a column's editor gets in the form: input and number always; the other built-in types only when the table turned them on

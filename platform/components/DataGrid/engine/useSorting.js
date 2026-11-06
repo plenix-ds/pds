@@ -14,7 +14,7 @@
      the engine function, in the same order with the same values. The engine is documented in DataGridEngine.jsx.
 */
 import React from 'react';
-import { normalizeSort } from '../state.js';
+import { normalizeSort } from '../state.ts';
 import { EMPTY_ROWS } from './helpers.tsx';
 
 export function useSorting({ initial, props }) {

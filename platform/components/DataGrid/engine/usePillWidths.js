@@ -19,7 +19,7 @@ import { pillSheet, pillFont } from '../engine/pill.js';
 import { tokenPixels } from '../environment.js';
 import { gridStep, snapToGrid } from '../../../utils/grid.ts';
 import { kinds, typeOf } from './helpers.tsx';
-import { valueAt } from '../state.js';
+import { valueAt } from '../state.ts';
 import { valueText } from '../cells.jsx';
 
 export function usePillWidths({ frame, cells, metrics, columns, allRows, showTypes }) {

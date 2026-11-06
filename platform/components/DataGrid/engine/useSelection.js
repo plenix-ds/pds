@@ -21,7 +21,7 @@
      lines of the engine function, read in the same order with the same values. The engine is documented in DataGridEngine.jsx.
 */
 import React from 'react';
-import { recordKey } from '../state.js';
+import { recordKey } from '../state.ts';
 
 export function useSelection({ selected, live, canonical, index, options, onSelectionChange, emit, api }) {
   const selectionInfo = React.useRef({ hidden: 0 }),

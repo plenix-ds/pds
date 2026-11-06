@@ -14,7 +14,7 @@
      engine function, in the same order with the same values. The engine is documented in DataGridEngine.jsx.
 */
 import React from 'react';
-import { valueAt, recordKey } from '../state.js';
+import { valueAt, recordKey } from '../state.ts';
 import { byteFilter, listFilter, textFilter } from '../cells.jsx';
 import { compare, kinds } from './helpers.tsx';
 import { tokenPixels } from '../environment.js';

@@ -27,7 +27,7 @@ import ChevronDownIcon from 'plenix-platform/icons/plenix/chevron-down';
 import { formatNumber } from '../../../utils/format.ts';
 import { Button } from '../../Button/Button.tsx';
 import AddIcon from 'plenix-platform/icons/plenix/add';
-import { valueAt } from '../state.js';
+import { valueAt } from '../state.ts';
 import { editorTurnedOn } from './useEditing.js';
 import { Menu, MenuItem, ContextMenu } from '../../Menu/Menu.tsx';
 import { DragHandle } from '../../DragHandle/DragHandle.tsx';
