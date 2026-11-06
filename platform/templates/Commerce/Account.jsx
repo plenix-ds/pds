@@ -28,7 +28,7 @@ import { EntityHeader } from '../../patterns/EntityHeader/EntityHeader.jsx';
 import { PropertyList } from '../../patterns/PropertyList/PropertyList.jsx';
 import { Wizard } from '../../patterns/Wizard/Wizard.jsx';
 import { SettingsSection } from '../../patterns/SettingsLayout/SettingsLayout.jsx';
-import { DataGrid } from '../../components/DataGrid/DataGrid.jsx';
+import { DataGrid } from '../../components/DataGrid/DataGrid.tsx';
 import { Badge } from '../../components/Badge/Badge.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { ConfirmDialog } from '../../components/Dialog/Dialog.tsx';

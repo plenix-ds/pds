@@ -12,7 +12,7 @@ import { Stack } from '../../components/Stack/Stack.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { cx } from '../../utils/cx.ts';
-import { DataGrid } from '../../components/DataGrid/DataGrid.jsx';
+import { DataGrid } from '../../components/DataGrid/DataGrid.tsx';
 import { DownloadButton } from '../../components/DownloadButton/DownloadButton.tsx';
 import { Menu,MenuItem } from '../../components/Menu/Menu.tsx';
 import { formatBytes } from '../../utils/format.ts';

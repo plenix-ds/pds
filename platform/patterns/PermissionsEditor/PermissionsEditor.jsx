@@ -17,7 +17,7 @@ import { Stack } from '../../components/Stack/Stack.tsx';
 import { Field } from '../../components/Field/Field.tsx';
 import { Select } from '../../components/Input/Input.tsx';
 import { Checkbox } from '../../components/Checkbox/Checkbox.tsx';
-import { DataGrid } from '../../components/DataGrid/DataGrid.jsx';
+import { DataGrid } from '../../components/DataGrid/DataGrid.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Notice } from '../../components/Notice/Notice.tsx';
 import { PermissionSummary } from '../PermissionSummary/PermissionSummary.jsx';

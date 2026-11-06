@@ -3,7 +3,7 @@
 DSParts.records.push(function (H) {
   var common = function (r) { return Object.assign({ css: [], level: 'Pattern', interaction: 'Static', status: 'Proposed', map: [['Carbon', 'Data table: editing', 'Partial'], ['Material 3', 'Data tables', 'Partial']], variantClasses: [], related: ['data-grid', 'form-flow', 'side-panel'] }, r); };
   return [
-    common({ id: 'table-editing-planned', sec: 'data-display', sub: 'Tables', leaf: 'Table editing (planned)', title: 'Table editing (planned)', plenix: 'DataGrid', src: 'components/DataGrid/DataGrid.jsx', icon: 'edit',
+    common({ id: 'table-editing-planned', sec: 'data-display', sub: 'Tables', leaf: 'Table editing (planned)', title: 'Table editing (planned)', plenix: 'DataGrid', src: 'components/DataGrid/DataGrid.tsx', icon: 'edit',
       text: 'PLANNED, LOWER PRIORITY TO BUILD: nothing on this page is built yet. Every editable table will offer, permanently, a choice in its own menu: Editing, Inline Edit or Form Edit. Inline Edit (the default for every existing table) edits in the cell exactly as today, with the new spreadsheet parts as options each application turns on. Form Edit edits a whole record in a form, in a side panel or a dialog. Today\'s editing (a double-click or Enter opens a plain input or number field in the cell) is never removed or switched off.',
       use: ['The menu choice "Editing: Inline Edit / Form Edit" sits in the table\'s view menu beside Row height and Wrap text, only in a table with at least one editable column; the chosen one is checked',
         'Inline Edit is the default for every table, existing ones included; nothing changes for anyone until a person picks Form Edit or an application sets it',

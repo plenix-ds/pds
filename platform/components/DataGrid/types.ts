@@ -1,6 +1,10 @@
-/* Plenix · DataGrid internal types (issue 292, ADR 0011): the shapes the engine files share while DataGrid moves to TypeScript.
-   Internal: not exported from the package. The public DataGridProps and DataGridColumn come with the engine's own PR and the DS Architect's review (G3);
-   until then a column is read by the fields the engine uses, and any other field of the application's passes through untouched. */
+/* Plenix · DataGrid internal types
+   Summary: The shapes the DataGrid engine files share (issue 292, ADR 0011): a column as the engine reads it, a record, the row template and the live state.
+   Usage: import type { GridColumn } from './types.ts' inside the DataGrid folder; not exported from the package.
+   Props: none; types only. The public DataGridProps and DataGridColumn are in DataGrid.tsx (G3 ruling on #292); a column here is read by the fields the engine uses,
+     and any other field of the application's passes through untouched.
+   Behavior: none; types are erased at build.
+   Notes: Internal; no public API. */
 
 /** a column as the engine reads it (the application's column description) */
 export type GridColumn = {
@@ -9,7 +13,7 @@ export type GridColumn = {
   type?: string;
   /** "data", "id", "email", "tags", "actions", "wrap" … one name or several */
   kind?: string | string[];
-  sorter?: string;
+  sorter?: string | ((...args: any[]) => number);
   rowHandle?: boolean;
   [key: string]: unknown;
 };

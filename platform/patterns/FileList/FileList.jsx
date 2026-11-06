@@ -69,7 +69,7 @@ import { cx } from '../../utils/cx.ts';
 import { formatBytes, formatDate, formatNumber } from '../../utils/format.ts';
 import { File } from '../../components/File/File.tsx';
 import { FileRow, FileRowList } from '../../components/FileRow/FileRow.tsx';
-import { DataGrid } from '../../components/DataGrid/DataGrid.jsx';
+import { DataGrid } from '../../components/DataGrid/DataGrid.tsx';
 import { Badge } from '../../components/Badge/Badge.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Text } from '../../components/Text/Text.tsx';

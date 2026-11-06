@@ -40,7 +40,7 @@ if (require.main === module) {
     const base = process.argv[3], head = process.argv[4] || 'HEAD'; if (!base) { console.error('usage: --check <base ref> [<head ref>]'); process.exit(2); }
     const from = sh('git merge-base ' + base + ' ' + head).trim();
     const version = (ref) => { try { return versionOf(sh('git show ' + ref + ':package.json')); } catch (e) { return undefined; } };
-    const changed = sh('git diff --name-only ' + from + ' ' + head).split('\n').filter(Boolean).filter((file) => isGenerated(file) && !(file === 'package.json' && version(from) === version(head)) && !(file === 'platform/components/DataGrid/data-grid-steps.css' && sh('git diff --diff-filter=D --name-only ' + from + ' ' + head + ' -- platform/components/DataGrid/DataGrid.jsx').trim() && sh('git diff --diff-filter=D --name-only ' + from + ' ' + head + ' -- platform/components/DataGrid/data-grid-steps.css').trim()));
+    const changed = sh('git diff --name-only ' + from + ' ' + head).split('\n').filter(Boolean).filter((file) => isGenerated(file) && !(file === 'package.json' && version(from) === version(head)) && !(file === 'platform/components/DataGrid/data-grid-steps.css' && sh('git diff --diff-filter=D --name-only ' + from + ' ' + head + ' -- platform/components/DataGrid/DataGrid.tsx').trim() && sh('git diff --diff-filter=D --name-only ' + from + ' ' + head + ' -- platform/components/DataGrid/data-grid-steps.css').trim()));
     // index.js and platform.css: a branch may change their library block only to what build-exports.js makes from the branch's
     // own platform/exports (a renamed part file, a new part), so main is never left with a stale block until a rebuild commit.
     // Read on the checkout of head (CI checks out the PR's head commit): the file as committed there, and build-exports' check
@@ -74,7 +74,7 @@ if (require.main === module) {
       const current = require('fs').readFileSync(full, 'utf8'), committed = generatedBlock(sh('git show HEAD:' + file));
       require('fs').writeFileSync(full, current.replace(BLOCK, () => committed));
     }
-    for (const { file } of files.filter((x) => x.file !== 'package.json ("version" only)').filter((x) => x.file !== 'platform/components/DataGrid/data-grid-steps.css' || require('fs').existsSync(path.join(ROOT, 'platform/components/DataGrid/DataGrid.jsx')) || require('fs').existsSync(path.join(ROOT, x.file)))) sh('git checkout -- "' + file + '"');
+    for (const { file } of files.filter((x) => x.file !== 'package.json ("version" only)').filter((x) => x.file !== 'platform/components/DataGrid/data-grid-steps.css' || require('fs').existsSync(path.join(ROOT, 'platform/components/DataGrid/DataGrid.tsx')) || require('fs').existsSync(path.join(ROOT, x.file)))) sh('git checkout -- "' + file + '"');
     console.log(files.length ? 'restored: ' + files.map((x) => x.file).join(', ') : 'nothing to restore'); process.exit(0);
   }
   console.error('usage: node tools/agent/generated.js --check <base> | --restore | --list'); process.exit(2);
