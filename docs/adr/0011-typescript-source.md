@@ -91,6 +91,23 @@ The waves typed 193 sources, with every public props type reviewed at G3, but `i
 ## Enforced by
 
 - CI "New problems (tsc)": no new type errors.
-- `planned:no-js-source`: after wave 4, check-system fails on a `.js`/`.jsx` under `platform/` outside vendor and dist.
+- `no-js-source`: check-system's `js-source` rule (see the closing addendum, D-0089).
 - `planned:no-build-types`: check-system `legacy` fails if `build-types.js` returns.
 - G3 review of each wave's declaration diff.
+
+## Addendum (2026-11-06, #61, #781): the JavaScript that stays, and the check (D-0089)
+
+Wave 4 (#781) showed that some files under `platform/` must stay JavaScript, because a reader needs them as they are. The pull request's rulings (`docs/pds1/slices/781/rulings.md`, #818) are accepted at G3.
+
+- **Allowed, permanently** (`platform/standards/js-source.json` → `allowed`, each with its reason):
+  - `platform/dev/*`: page scripts on a plain `<script>`, with no bundle;
+  - `providers/theme-boot.js` (copied verbatim, runs before React), `loader/loader.js` (it loads the bundle) and `engines/plenix-engines.js` (copied verbatim);
+  - `icons/layout.js` and `icons/uses.js` (CommonJS for Node build tools), and `icons/inventory/inventory.js` (generated);
+  - `i18n/en.js` and `i18n/ar.js` (catalogs read by path; `ar.js` is protected, D-0012).
+- **Outside the rule:** `platform/design-system` (the spec site, excluded from `tsconfig`), `vendor`, `dist` and `mobile`.
+- **Pending** (→ `pending`): the files still to convert. That's wave 3's last patterns, wave 4, and **wave 5**: `platform/index.js` becomes `index.ts`, and the `platform/exports/w*.js` re-export lists become `.ts` with it.
+- **The check:** check-system's `js-source` rule (`check-system.rules/js-source.js`) fails on a `.js`/`.jsx` under `platform/` that is in neither list. A new JavaScript file is a finding at once, and it can only be added to `allowed` through G3.
+  - A conversion doesn't edit the list, so parallel PRs don't conflict on it. The DS Architect prunes converted `pending` entries.
+- **The switch, amended:** `allowJs` stays `true` for the allowed files (`checkJs` stays off). The goal "no `.js` under `platform/`" becomes "no `.js` outside `allowed`". `build-types.js` retires with wave 5, as planned.
+- This replaces `planned:no-js-source` above.
+
