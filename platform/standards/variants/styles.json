@@ -2122,5 +2122,49 @@
       }
     ],
     "why": ".plx-loading-overlay__progress, the progress bar under the indicator"
+  },
+  "mention-input--variant-in-a-text-area": {
+    "sets": [],
+    "why": "markup only: plain text in a textarea; typing @ opens a named EntityPicker (mode textarea)"
+  },
+  "mention-input--variant-in-rich-text": {
+    "sets": [],
+    "why": "markup only: rich text in the editor engine, which keeps each mention as one atomic item (mode rich)"
+  },
+  "metadata-editor--variant-inline": {
+    "sets": [],
+    "why": "markup only: each field is an InlineEdit that saves on its own (variant inline)"
+  },
+  "metadata-editor--variant-form": {
+    "sets": [],
+    "why": "markup only: the fields are in one validated form that keeps drafts when a save fails (variant form)"
+  },
+  "metadata-editor--variant-bulk": {
+    "sets": [],
+    "why": "markup only: applies only the fields explicitly selected and never overwrites untouched ones (variant bulk)"
+  },
+  "media-player--variant-video": {
+    "sets": [],
+    "why": "markup only: native video playback (kind video, the default)"
+  },
+  "media-player--variant-audio": {
+    "sets": [],
+    "why": "markup only: native audio playback (kind audio)"
+  },
+  "media-player--variant-captions": {
+    "sets": [],
+    "why": "markup only: adds WebVTT caption or subtitle tracks to the player (tracks)"
+  },
+  "media-player--variant-transcript": {
+    "sets": [],
+    "why": "markup only: adds a seekable transcript beside the player (transcript, showTranscript)"
+  },
+  "media-player--variant-playback-rate": {
+    "sets": [],
+    "why": "markup only: offers playback speeds from rates, 0.5 to 2 by default"
+  },
+  "media-player--variant-picture-in-picture": {
+    "sets": [],
+    "why": "markup only: offers the browser's picture in picture (pictureInPicture, default true)"
   }
 }
