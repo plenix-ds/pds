@@ -52,7 +52,8 @@ const eachGroup = (t: any, fn: any) => {
 };
 
 /** @public one grouping level, the first the outer group */
-export type GroupLevel = { field: string; dir?: 'asc' | 'desc'; hideEmpty?: boolean; interval?: 'day' | 'week' | 'month' | 'year'; range?: unknown };
+/** @public a group level; one shape with useCollectionView's CollectionLevel (#893) */
+export type GroupLevel = { field: string; dir?: 'asc' | 'desc'; hideEmpty?: boolean; interval?: 'day' | 'week' | 'month' | 'year'; range?: number };
 /** @public the prop type (ADR 0011) */
 export type GroupPanelProps = {
   /** the fields rows can be grouped by (utils/fields.ts); groupable: false excludes one */
@@ -99,7 +100,7 @@ export function GroupPanel({ fields = [], value = [], onChange, table, inline = 
         {ro.status}
       </div>
       <div className="plx-find-panel__add">
-        <Button size="sm" variant="ghost" icon={PlusIcon} disabled={!free.length} onClick={() => onChange(levels.concat({ field: free[0].value, dir: 'asc', interval: free[0].kind === 'date' ? 'day' : undefined, range: free[0].groupRange }))}>{levels.length ? t.addSub : t.add}</Button>
+        <Button size="sm" variant="ghost" icon={PlusIcon} disabled={!free.length} onClick={() => onChange(levels.concat({ field: free[0].value, dir: 'asc', interval: free[0].kind === 'date' ? 'day' : undefined, range: free[0].groupRange as number | undefined }))}>{levels.length ? t.addSub : t.add}</Button>
       </div>
     </div>
   );

@@ -1,0 +1,14 @@
+release/packages/react/index.d.ts(412,1): error TS2308: Module "./types/patterns/SortPanel/SortPanel.js" has already exported a member named 'SortLevel'. Consider explicitly re-exporting to resolve the ambiguity.
+release/packages/react/index.d.ts(484,1): error TS2308: Module "./types/components/Timeline/Timeline.js" has already exported a member named 'TimelineItem'. Consider explicitly re-exporting to resolve the ambiguity.
+release/packages/react/index.d.ts(495,1): error TS2308: Module "./types/charts/TimelineChart.js" has already exported a member named 'ChartDate'. Consider explicitly re-exporting to resolve the ambiguity.
+release/packages/react/index.d.ts(665,1): error TS2308: Module "./types/i18n/optional.js" has already exported a member named 'Catalog'. Consider explicitly re-exporting to resolve the ambiguity.
+tests/fixtures/redsave-types.tsx(17,20): error TS2322: Type '"keep"' is not assignable to type '"name" | "id" | "status"'.
+tests/fixtures/redsave-types.tsx(18,35): error TS2353: Object literal may only specify known properties, and 'headerAlign' does not exist in type 'DataGridColumn<Row>'.
+tests/fixtures/redsave-types.tsx(34,44): error TS2322: Type '(value: string) => void' is not assignable to type '(value: TabValue) => void'.
+tests/fixtures/redsave-types.tsx(40,34): error TS2558: Expected 0 type arguments, but got 1.
+tests/fixtures/redsave-types.tsx(43,8): error TS2322: Type '{ fields: Field[]; value: Filter; onChange: Dispatch<SetStateAction<Filter>>; open: boolean; onOpenChange: Dispatch<SetStateAction<boolean>>; request: { ...; } | null; }' is not assignable to type 'FilterPanelProps'.
+tests/fixtures/redsave-types.tsx(45,8): error TS2322: Type '{ fields: Field[]; value: CollectionLevel[]; onChange: Dispatch<SetStateAction<CollectionLevel[]>>; table: MutableRefObject<TableController | null>; }' is not assignable to type 'GroupPanelProps'.
+tests/fixtures/redsave-types.tsx(46,8): error TS2322: Type '{ fields: Field[]; value: CollectionColumns; onChange: Dispatch<SetStateAction<CollectionColumns>>; }' is not assignable to type 'ColumnsMenuProps'.
+tests/fixtures/redsave-types.tsx(47,8): error TS2322: Type '{ value: CollectionDisplay; onChange: Dispatch<SetStateAction<CollectionDisplay>>; onReset: () => void; }' is not assignable to type 'ViewMenuProps'.
+tests/fixtures/redsave-types.tsx(48,8): error TS2322: Type '{ kind: QuickKind; required: boolean; value: CollectionQuickValue; onChange: (v: CollectionQuickValue) => void; counts: Map<unknown, number> | undefined; label: string; }' is not assignable to type 'QuickFilterProps'.
+tests/fixtures/redsave-types.tsx(49,8): error TS2322: Type '{ filter: (row: Row) => boolean; sort: CollectionLevel[]; groupBy: boolean | { interval: string | undefined; range: unknown; field: string; dir?: "desc" | "asc" | undefined; hideEmpty?: boolean | undefined; }[]; ... 12 more ...; columns: DataGridColumn<...>[]; }' is not assignable to type 'DataGridProps<Row>'.
