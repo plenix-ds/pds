@@ -1,4 +1,4 @@
-// Angular standalone bridges; generated inputs follow build-types.js output.
+// Angular standalone bridges; generated inputs follow the React declarations (tools/publish/react-types.js).
 const fs = require('fs'), path = require('path');
 function runtime(ng, forms) {
  let configured;

@@ -49,13 +49,16 @@ function reporterFindings(tool, script, okWord, failWord) {
   return list;
 }
 
-// the published TypeScript types of @plenix-ds/react (ADR 0011, #61): build them (build-types.js), then one finding per prop
+// the published TypeScript types of @plenix-ds/react (ADR 0011, #61): build them (tools/publish/react-types.js), then one finding per prop
 // typed `any` or with `any` inside its type, per exported component whose whole props object is `any`, and per callback
 // typed `(...args: never[])`. index.d.ts and the tsc declarations it
 // re-exports are read, so a part converted to TypeScript counts too. A finding names the part and the prop, never a line.
 function typesFindings() {
-  const r = exec('node', ['build-types.js']);
-  if (r.status !== 0) throw new Error(`build-types.js failed (exit ${r.status}):\n${(r.stdout || '').slice(-1500)}\n${r.stderr}`);
+  // tools/publish/react-types.js since #889; a base from before it still has build-types.js (the head's runner runs on
+  // the base's code)
+  const script = fs.existsSync(path.join(ROOT, 'tools', 'publish', 'react-types.js')) ? 'tools/publish/react-types.js' : 'build-types.js';
+  const r = exec('node', [script]);
+  if (r.status !== 0) throw new Error(`${script} failed (exit ${r.status}):\n${(r.stdout || '').slice(-1500)}\n${r.stderr}`);
   const dir = path.join(ROOT, 'release', 'packages', 'react');
   // only what a consumer gets: index.d.ts and the declarations it re-exports (types/ also holds tsc's output for the
   // JavaScript sources, which nothing points to until the source is TypeScript)
