@@ -481,9 +481,14 @@
       "$type": "dimension"
     },
     "space-stack-field": {
-      "$value": "{plx-ref.space-5u}",
+      "$value": "{plx-ref.space-4u}",
       "$type": "dimension",
-      "$description": "The gap between read-only fields (label and value pairs) in a stacked list, at every density (D-0101, ADR 0030)."
+      "$description": "The gap between read-only field tiles in a stacked list, at every density: 16px, the owner's preset (D-0106, ADR 0032; was 20px under ADR 0030)."
+    },
+    "space-stack-group": {
+      "$value": "{plx-ref.space-10u}",
+      "$type": "dimension",
+      "$description": "The space above each group of read-only fields (its group heading), at every density (D-0106, ADR 0032)."
     },
     "space-section": {
       "$value": "{plx-ref.space-6u}",

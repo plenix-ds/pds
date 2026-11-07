@@ -36,6 +36,11 @@
       "$type": "color",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
+    "read-only-tile-border": {
+      "$value": "var(--plx-sys-border-strong)",
+      "$type": "color",
+      "$extensions": { "com.plenix": { "webOnly": true } }
+    },
     "control-border": {
       "$value": "var(--plx-sys-border-strong)",
       "$type": "color",

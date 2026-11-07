@@ -1,6 +1,6 @@
 # ADR 0030: Read-only field type roles and spacing (`text-field-label`, `text-field-value`, `space-stack-field`)
 
-- **Status:** accepted
+- **Status:** superseded by 0032 (values; names, the `layout` API and the 2.0.0 default flip stay)
 - **Date:** 2026-11-07
 - **Deciders:** pds1-ds-architect (G3), on G2's design (#946, PR #950, D-0101). Decision D-0103 (owner may switch).
 - **Issue:** #946 (S2)

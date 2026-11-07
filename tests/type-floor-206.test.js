@@ -12,6 +12,8 @@ require('./limit.js');
 const ROOT = path.join(__dirname, '..');
 const TOKENS = path.join(ROOT, 'platform', 'tokens');
 const RETIRED = /\{plx-ref\.font-size-(09|10|11)\}/;
+// the owner's exceptions (D-0106, ADR 0032), the same list check-system's type-floor rule reads
+const { EXCEPTIONS } = require('../check-system.rules/type-floor.js');
 let failed = 0;
 function check(name, ok, detail) {
   if (!shared.check(name, ok, detail)) return;
@@ -32,12 +34,13 @@ function values(node, at, out) {
 const below = [];
 for (const file of files(TOKENS)) {
   for (const [name, value] of values(JSON.parse(fs.readFileSync(file, 'utf8')), '', [])) {
-    if (RETIRED.test(String(value))) below.push(path.relative(TOKENS, file) + ' ' + name);
+    if (RETIRED.test(String(value)) && !EXCEPTIONS[name]) below.push(path.relative(TOKENS, file) + ' ' + name);
   }
 }
 check('Type floor: no token points at a size below 12px', below.length === 0, below.length + ' tokens: ' + below.slice(0, 5).join(', '));
 
 const typo = values(JSON.parse(fs.readFileSync(path.join(TOKENS, 'semantic', 'typography.tokens.json'), 'utf8')), '', []);
+check('Type floor: exceptions are only the owner\'s (D-0106: the read-only field label)', JSON.stringify(EXCEPTIONS) === JSON.stringify({ 'plx-sys.text-field-label-font-size': 'D-0106' }), JSON.stringify(EXCEPTIONS));
 for (const role of ['caption', 'eyebrow']) {
   const v = (typo.find(([n]) => n === 'plx-sys.text-' + role + '-font-size') || [])[1];
   check('Type floor: the ' + role + ' role is 12px', v === '{plx-ref.font-size-100}', String(v));
