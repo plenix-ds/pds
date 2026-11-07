@@ -52,14 +52,15 @@ const toTime = (v: any) => { if (v instanceof Date) return v.getTime(); const d 
 /** @public a date: a Date, a timestamp, or anything Date accepts (a date-only string is that day in local time) */
 export type ChartDate = Date | string | number;
 /** @public one item: with an end a period (a bar), without one an event (a point) */
-export type TimelineItem = { id: string; lane?: string; label: string; start: ChartDate; end?: ChartDate; /** a data-viz step */ color?: string };
+/** @public a TimelineChart item (TimelineChartItem is the Timeline component's) */
+export type TimelineChartItem = { id: string; lane?: string; label: string; start: ChartDate; end?: ChartDate; /** a data-viz step */ color?: string };
 /** @public */
 export type TimelineChartProps = {
   title: string;
   description?: string;
   hideCaption?: boolean;
   size?: 'sm' | 'md' | 'lg';
-  items?: TimelineItem[];
+  items?: TimelineChartItem[];
   lanes?: Array<{ id: string; label: string }>;
   domain?: [ChartDate, ChartDate];
   today?: ChartDate | boolean;
