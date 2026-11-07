@@ -20,15 +20,15 @@
 | The sides (the page backdrop) | `gray-300`, mid grey | `gray-950` | `shell-backdrop` |
 | The frame's surface | as today (`surface-canvas`) | as today | unchanged |
 | The frame's shadow | `shadow-lg` (32px and 8px blur, the wide one) | `shadow-lg` (dark) | `shell-frame-shadow` → `shadow-lg` |
-| The frame's width | 1366px | | `shell-frame-max-inline-size` → a new `size` step for 1366px |
+| The frame's width | 1366px | | `shell-frame-width` (the brief's name) → a new `size` step for 1366px |
 
 - **No corners and no border on the frame.** The shadow is the edge. It runs the full height, so rounded corners would only show at the top and bottom of the window.
 - **Contrast:** the sides are decorative. The frame's own contents keep their contrast; nothing changes inside.
 
-## 3. The person's toggle: Full width / 1366
+## 3. The person's toggle: expand to full window / restore to 1366
 
 - **Where:** in the AppHeader's **end** area (inline-end, beside the other header actions), only when `frame="1366"` and the window is wider than 1366px.
-- **What:** an icon-only ghost Button. The icon is `open_in_full` ("Full width") when framed, and `close_fullscreen` ("Standard width") when full. It **keeps its Tooltip** (it's not in the known set, DESIGN.md §6) and has `aria-pressed` for full width. The words are the Technical Writer's, and the Arabic waits for the owner (D-0012).
+- **What:** an icon-only ghost Button. The icon is `open_in_full`, named "Expand to full window", when framed, and `close_fullscreen`, named "Restore to 1366 width", when full (the brief, #863; Microsoft wording first, D-0078). It **keeps its Tooltip** (it's not in the known set, DESIGN.md §6) and has `aria-pressed` for full width. The words are the Technical Writer's, and the Arabic waits for the owner (D-0012).
 - **Remembered** per person and per app (local storage, with the other view settings). Reloading keeps the choice.
 - **The change:** the frame's width animates with the motion `base` duration; with reduced motion there's no animation. The content reflows as it would on a window resize.
 
