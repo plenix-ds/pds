@@ -1,7 +1,7 @@
 """Write dashboard/pds1/data.js: a snapshot of plenix-ds/pds taken from GitHub.
 
 Same data shape as the CTM 3.0 dashboard (D-0034). Read-only: it only reads
-GitHub and decisions.yaml. Run: python3 dashboard/pds1/collect.py [out_dir]
+GitHub and the decision log (decisions.d/, decisions.yaml). Run: python3 dashboard/pds1/collect.py [out_dir]
 Needs an authenticated `gh` (GH_TOKEN in CI). Never writes a key anywhere.
 """
 import datetime as dt
@@ -78,8 +78,18 @@ def owner_decisions(issues):
     return out
 
 
+def decision_log():
+    """The decision log (#955): decisions.d/D-NNNN.yaml, one decision per file, plus decisions.yaml until it is folded in."""
+    old = ROOT / "decisions.yaml"
+    items = (yaml.safe_load(old.read_text(encoding="utf-8")) or []) if old.exists() else []
+    folder = ROOT / "decisions.d"
+    if folder.is_dir():
+        items += [yaml.safe_load(f.read_text(encoding="utf-8")) for f in sorted(folder.glob("D-*.yaml"))]
+    return sorted(items, key=lambda d: (str(d.get("date", "")), str(d.get("id", ""))))
+
+
 def decisions(runs):
-    items = yaml.safe_load((ROOT / "decisions.yaml").read_text(encoding="utf-8")) or []
+    items = decision_log()
     rows = []
     for d in items:
         chk = str(d.get("check") or d.get("review_only") or "")

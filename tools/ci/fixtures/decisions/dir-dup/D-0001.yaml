@@ -1,0 +1,7 @@
+id: D-0001
+date: 2026-11-07
+area: process
+decided_by: agent (pds1-product-lead)
+decision: 'One file per decision (#955): the folder''s entries are read with the old file''s.'
+status: active
+check: tools/ci/check-decisions.mjs

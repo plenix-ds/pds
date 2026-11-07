@@ -8,7 +8,7 @@ pre-push:
       glob: "{.rulesync/**,rulesync.jsonc,CLAUDE.md,AGENTS.md}"
       run: npx -y rulesync@43.2.0 generate --check
     decisions:
-      glob: "decisions.yaml"
+      glob: "{decisions.yaml,decisions.d/*.yaml}"
       run: node tools/ci/check-decisions.mjs origin/main
     zizmor:
       glob: ".github/workflows/*.{yml,yaml}"
