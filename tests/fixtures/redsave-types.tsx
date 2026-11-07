@@ -5,7 +5,7 @@ import {
   FilterPanel, SortPanel, GroupPanel, ColumnsMenu, ViewMenu, QuickFilter, useCollectionView, useAppLayout,
   Button, Input, Textarea, Select, Combobox, SearchField, NumberInput, Dialog, MenuItem, Field, Popover, Tooltip, AppShell, Chat,
   SegmentedControl, RadioTiles, NavList, MenuRadioGroup,
-  Table, SplitWorkspace,
+  Table, SplitWorkspace, ListingPage,
 } from '../../release/packages/react';
 import type { DataGridColumn, CollectionField, CollectionFilter, CollectionView, MediaCardProps, ComboValue } from '../../release/packages/react';
 
@@ -97,6 +97,7 @@ export function TypedCollection() {
 }
 export const typedTable = <Table label="People" data={people} columns={[{ title: 'Name', field: 'name', render: (record) => record.name.toUpperCase() }]} unread={(record) => record.age > 30} />;
 export const typedSplit = <SplitWorkspace paneTitle="People" rows={people} columns={personColumns} />;
+export const typedListing = <ListingPage title="People" rows={people} columns={personColumns} />;
 
 // wrong code still fails
 // @ts-expect-error aspect is one of the listed shapes
@@ -114,6 +115,8 @@ export const wrongGet: CollectionField<PersonRow> = { value: 'title', get: (row)
 export const wrongRender = <Table label="People" data={people} columns={[{ title: 'Name', render: (record) => record.title, field: 'name' }]} />;
 // @ts-expect-error SplitWorkspace's columns match its rows (#923)
 export const wrongSplit = <SplitWorkspace rows={rows} columns={personColumns} />;
+// @ts-expect-error ListingPage's columns match its rows (#923)
+export const wrongListing = <ListingPage title="People" rows={rows} columns={personColumns} />;
 export const layoutTyped: IsAny<ReturnType<typeof useAppLayout>> = false;
 export const aliasTyped: IsAny<typeof DataTable> = false;
 export const viewerTyped: IsAny<typeof MediaViewer> = false;

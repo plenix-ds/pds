@@ -1,4 +1,4 @@
-# ADR 0024: useCollectionView, Table and SplitWorkspace are generic over the row
+# ADR 0024: useCollectionView, Table, SplitWorkspace and ListingPage are generic over the row
 
 - **Status:** accepted
 - **Date:** 2026-11-07
@@ -32,16 +32,16 @@
   - `R` is inferred from `options.data`, or given (`useCollectionView<Row>(…)`). `fields` never decides it (a deferred-inference helper that also works before TypeScript 5.4's `NoInfer`).
   - The panels' props (`filterProps.fields` and the rest) stay `Field[]`; a `Field<R>` is assignable to them.
 - **`Table<R = Record<string, unknown>>`, `TableProps<R>`:** `data?: R[]`; `columns[].field` is a key of `R` (suggested) or any string; `columns[].render(record: R)`; `unread(record: R)`.
-- **`SplitWorkspace<R = Record<string, unknown>>`, `SplitWorkspaceProps<R>`:** `rows?: R[]`, `columns?: DataGridColumn<R>[]`, passed to its `DataGrid<R>`. `grid` stays `Record<string, unknown>`.
+- **`SplitWorkspace<R = Record<string, unknown>>`, `SplitWorkspaceProps<R>`, and `ListingPage<R>`, `ListingPageProps<R>`** (added at RedSave's recheck on 0.93.1): `rows?: R[]`, `columns?: DataGridColumn<R>[]`, passed to their `DataGrid<R>`. `grid` stays `Record<string, unknown>`.
 - **No runtime change.** No new export names.
 
 ## Consequences
 
 - **Semver: MINOR** (VERSIONING.md: additive). Every new type parameter has a default equal to the old type, so code that compiled on 0.93 still compiles.
 - **Stricter only where an app opts in:** passing typed `data` now checks `text(row)`, `get(row)`, `render(record)` and `unread(record)` against it. That's the point of the request.
-- **ListingPage and SearchResultsPage** keep untyped rows. They can follow the same pattern when an app asks.
+- **SearchResultsPage** keeps untyped rows. It can follow the same pattern when an app asks.
 
 ## Check
 
-- `tests/types.test.js` compiles `tests/fixtures/redsave-types.tsx` strictly against the generated `plenix.d.ts`. The #923 block there covers a typed `CollectionField<PersonRow>[]` with `get`, `count`/`test` on `PersonRow`, `Table` with `render(record)` and `unread(record)`, and `SplitWorkspace` with `DataGridColumn<PersonRow>[]`; three `@ts-expect-error` cases prove a wrong row type fails.
+- `tests/types.test.js` compiles `tests/fixtures/redsave-types.tsx` strictly against the generated `plenix.d.ts`. The #923 block there covers a typed `CollectionField<PersonRow>[]` with `get`, `count`/`test` on `PersonRow`, `Table` with `render(record)` and `unread(record)`, and `SplitWorkspace` and `ListingPage` with `DataGridColumn<PersonRow>[]`; four `@ts-expect-error` cases prove a wrong row type fails.
 - `tsc --noEmit` (CI "new problems" job) on the source.

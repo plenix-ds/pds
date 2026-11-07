@@ -931,7 +931,7 @@
   date: 2026-11-07
   area: components
   decided_by: agent (pds1-ds-architect) at G3, owner may switch
-  decision: 'useCollectionView, Table and SplitWorkspace take the app''s row type R, as DataGrid does (ADR 0024). Each R defaults to the old type, so existing code compiles. useCollectionView reads R from options.data or an explicit <R>, never from fields.'
+  decision: 'useCollectionView, Table, SplitWorkspace and ListingPage take the app''s row type R, as DataGrid does (ADR 0024). Each R defaults to the old type, so existing code compiles. useCollectionView reads R from options.data or an explicit <R>, never from fields.'
   why: 'RedSave P-69 (#923): typed get and render lost the row type, and DataGridColumn<PersonRow>[] could not be passed to SplitWorkspace. Inferring R from fields would make a plain Field[] infer object and break today''s apps.'
   options: ['R from data or explicit (chosen)', 'R also inferred from fields']
   status: active

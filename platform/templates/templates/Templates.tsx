@@ -77,10 +77,10 @@ export type FrameProps = {
   footer?: React.ReactNode;
   mainId?: string;
 };
-/** @public the prop type of ListingPage (ADR 0011) */
-export type ListingPageProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & FrameProps & {
-  rows?: Record<string, unknown>[];
-  columns?: DataGridColumn[];
+/** @public the prop type of ListingPage (ADR 0011); R is the list's row type, passed to its DataGrid (ADR 0024) */
+export type ListingPageProps<R = Record<string, unknown>> = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & FrameProps & {
+  rows?: R[];
+  columns?: DataGridColumn<R>[];
   empty?: React.ReactNode;
   strings?: Record<string, string>;
   children?: React.ReactNode;
@@ -91,10 +91,10 @@ export type ListingPageProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> 
   detailTitle?: React.ReactNode;
   onDetailClose?: () => void;
 };
-export function ListingPage({ rows = [], columns = [], empty, strings, children, label, toolbar, grid, detail, detailTitle, onDetailClose, ...rest }: ListingPageProps) {
+export function ListingPage<R = Record<string, unknown>>({ rows = [], columns = [], empty, strings, children, label, toolbar, grid, detail, detailTitle, onDetailClose, ...rest }: ListingPageProps<R>) {
   const id = React.useId();
   const t = useWords(strings);
-  const list = rows.length ? <DataGrid label={label || rest.title || t.pane} data={rows} columns={columns} {...grid} /> : <NoRecords empty={empty} strings={strings} />;
+  const list = rows.length ? <DataGrid<R> label={label || rest.title || t.pane} data={rows} columns={columns} {...grid} /> : <NoRecords empty={empty} strings={strings} />;
   if (!detail) return <Frame {...rest}>{children}{toolbar}{list}</Frame>;
   return <AppShell page={rest.page || 'workspace'} header={rest.header} sideNav={rest.sideNav} footer={rest.footer} mainId={rest.mainId || 'plx-template-' + id}>
     <div className="plx-page-panes">
