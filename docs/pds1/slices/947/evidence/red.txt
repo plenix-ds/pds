@@ -1,0 +1,4 @@
+AssertionError [ERR_ASSERTION]: ltr: 900px: the Textarea spans the whole row: {"ta":{"l":0,"r":600},"form":{"l":0,"r":900}}
+    at /home/cc/pds1/work/component-engineer-1/tests/textarea-span-947.test.js:34:16 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',

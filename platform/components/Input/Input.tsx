@@ -345,3 +345,6 @@ export const Select = React.forwardRef(function Select(props: SelectProps, ref: 
   const listBox = props.multiple || (typeof props.size === 'number' && props.size > 1);
   return listBox ? <SelectNative {...props} ref={ref} /> : <SelectList {...props} ref={ref} />;
 });
+
+// a Field whose control is a Textarea spans the row by default (ADR 0029, Field reads this)
+Object.assign(Textarea, { plxFieldSpan: 'full' });
