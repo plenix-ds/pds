@@ -86,6 +86,12 @@ jobs:
       - name: Install and build (npm ci runs build-app.js)
         run: npm ci --no-audit --no-fund
 
+      # G6 (#902): every word in English and approved Arabic. Skipped on the dry run's PRs: a PR never fails because
+      # Arabic waits for the owner (D-0012); ci.yml runs the diff-aware check there. Runs nightly and on dispatch.
+      - name: G6 language gate, every word in English and approved Arabic (#902)
+        if: github.event_name != 'pull_request'
+        run: node tools/checks/locale/locale.mjs --release
+
       - name: Release build (build-usage, system and style checks, packages, CDN, API)
         run: |
           node build-usage.js
@@ -250,6 +256,10 @@ jobs:
           node check-system.js
           node check-style.js
           node build-packages.js
+
+      # G6 on the tag too (#902): the dry-run job does not run on a tag push, so the publish job holds its own gate
+      - name: G6 language gate, every word in English and approved Arabic (#902)
+        run: node tools/checks/locale/locale.mjs --release
 
       - name: One version everywhere (the CDN is expected to have it already)
         run: node tools/publish/preflight.mjs "$VERSION" --cdn "$CDN" --expect-published
