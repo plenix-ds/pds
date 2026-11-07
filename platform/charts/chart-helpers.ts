@@ -45,7 +45,7 @@ export function binValues(values: number[], { bins, domain }: { bins?: number; d
   const t = niceTicks(lo, hi, n);
   let edges = t.ticks;
   if (edges.length < 2) edges = [t.start, t.start + t.step];
-  const out = edges.slice(0, -1).map((x0: any, i: any) => ({ x0, x1: edges[i + 1], count: 0 }));
+  const out = edges.slice(0, -1).map((x0, i) => ({ x0, x1: edges[i + 1], count: 0 }));
   v.forEach((x: any) => {
     if (x < edges[0] || x > edges[edges.length - 1]) return;
     const i = Math.min(out.length - 1, Math.floor((x - edges[0]) / t.step));
@@ -57,7 +57,7 @@ export function binValues(values: number[], { bins, domain }: { bins?: number; d
 // each bar: its kind, the running total before and after it
 export function waterfallSteps(data: WaterfallDatum[] = [], endLabel?: string | false) {
   let run = 0;
-  const out: Array<{ label: any; kind: string; from: number; to: number; change: number | null; end?: boolean }> = data.map((d, i) => {
+  const out: Array<{ label: string; kind: string; from: number; to: number; change: number | null; end?: boolean }> = data.map((d, i) => {
     const v = typeof d.value === 'number' && isFinite(d.value) ? d.value : null;
     if (d.total) {
       if (v !== null && (i === 0 || d.value !== undefined)) run = v;
@@ -66,12 +66,12 @@ export function waterfallSteps(data: WaterfallDatum[] = [], endLabel?: string | 
     const from = run; run += v || 0;
     return { label: d.label, kind: (v || 0) < 0 ? 'down' : 'up', from, to: run, change: v || 0 };
   });
-  if (endLabel !== false && (!out.length || out[out.length - 1].kind !== 'total')) out.push({ label: endLabel, kind: 'total', from: 0, to: run, change: null, end: true });
+  if (endLabel !== false && (!out.length || out[out.length - 1].kind !== 'total')) out.push({ label: endLabel as string, kind: 'total', from: 0, to: run, change: null, end: true });
   return out;
 }
 
 // a quantile of sorted values, interpolated between the two nearest
-function quantile(sorted: any, p: any) {
+function quantile(sorted: number[], p: number): number {
   if (!sorted.length) return 0;
   const i = (sorted.length - 1) * p, lo = Math.floor(i), hi = Math.ceil(i);
   return sorted[lo] + (sorted[hi] - sorted[lo]) * (i - lo);

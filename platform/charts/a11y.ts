@@ -42,6 +42,7 @@
 import React from 'react';
 import { formatNumber, formatPercent } from '../utils/format.ts';
 import { useChartInteraction } from './interaction.ts';
+import type { ChartInteraction } from './interaction.ts';
 import { fill } from '../utils/fill.ts';
 
 const h = React.createElement;
@@ -89,12 +90,14 @@ export function ChartPatterns({ id }: ChartPatternsProps) {
 
 // a chart whose values are marks of their own (a funnel's steps, a treemap's tiles, a map's regions, scatter points):
 // the standard chart interaction (useChartInteraction, one value at a time) with the pointer read from the mark under it
-export function useChartPoints({ count = 0, describe, select = false, onSelect, strings }: { count?: number; describe?: (index: number) => string; select?: boolean; onSelect?: (index: number) => void; strings?: Record<string, string> } = {}) {
-  const hovered = React.useRef<any>(null);
+/** @public what useChartPoints returns */
+export type ChartPoints = { interaction: ChartInteraction; index: number | null; hover(index: number | null): void };
+export function useChartPoints({ count = 0, describe, select = false, onSelect, strings }: { count?: number; describe?: (index: number) => string; select?: boolean; onSelect?: (index: number) => void; strings?: Record<string, string> } = {}): ChartPoints {
+  const hovered = React.useRef<{ r: number; c: number } | null>(null);
   const interaction = useChartInteraction({ rows: 1, columns: count, mode: 'point', select, strings,
-    onSelect: typeof onSelect === 'function' ? (cell: any) => onSelect(cell.c) : undefined,
-    describe: typeof describe === 'function' ? (cell: any) => describe(cell.c) : undefined });
+    onSelect: typeof onSelect === 'function' ? (cell) => onSelect(cell.c) : undefined,
+    describe: typeof describe === 'function' ? (cell) => describe(cell.c) : undefined });
   interaction.register({ nearest: () => hovered.current });
-  const hover = (i: any) => { hovered.current = i === null || i === undefined ? null : { r: 0, c: i }; interaction.setActive(hovered.current, 'pointer'); };
+  const hover = (i: number | null) => { hovered.current = i === null || i === undefined ? null : { r: 0, c: i }; interaction.setActive(hovered.current, 'pointer'); };
   return { interaction, index: interaction.active ? interaction.active.c : null, hover };
 }

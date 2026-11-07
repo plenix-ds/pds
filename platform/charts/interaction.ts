@@ -69,7 +69,7 @@ export const CHART_INTERACTION_STRINGS = Object.freeze({
   selected: 'Selected. {text}',
 });
 
-const clamp = (v: any, lo: any, hi: any) => Math.min(hi, Math.max(lo, v));
+const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 
 export function chartAnnounce(text: string) { if (text) announce(text); }
 
@@ -93,52 +93,87 @@ export type ChartInteractionOptions = {
   first?(): ChartCell | null;
   strings?: Record<string, string>;
 };
+/** @public what a chart tells the interaction about its marks: the value nearest a point, and the column under an x */
+export type ChartGeometry = { nearest?(x: number, y: number): ChartCell | null; columnAt?(x: number): number | null };
+/** @public the key event the interaction reads */
+export type ChartKeyEvent = { key: string; shiftKey?: boolean; preventDefault(): void };
+/** @public what useChartInteraction returns: the state a chart draws from and the handlers it wires */
+export type ChartInteraction = {
+  interactive: true;
+  mode: 'x' | 'point';
+  active: ChartCell | null;
+  source: 'pointer' | 'keyboard' | null;
+  selected: ChartCell | null;
+  brush: [number, number] | null;
+  zoom: [number, number] | null;
+  zoomed: boolean;
+  focused: boolean;
+  hidden: Array<string | number>;
+  strings: Record<string, string>;
+  hint: string;
+  view(): [number, number];
+  visible(id: string | number): boolean;
+  isDimmed(row: number): boolean;
+  legendProps: { interactive: true; hidden: Array<string | number>; onToggle(id: string | number, visible: boolean): void };
+  register(geometry: ChartGeometry | null): void;
+  setActive(cell: ChartCell | null, from?: 'pointer' | 'keyboard'): void;
+  select(cell: ChartCell | null): void;
+  resetZoom(): void;
+  setZoom(a: number, b: number): void;
+  keyDown(e: ChartKeyEvent): void;
+  pointerDown(x: number, y: number, e?: { button?: number }): void;
+  pointerMove(x: number, y: number): void;
+  pointerUp(x: number, y: number): void;
+  pointerLeave(): void;
+  onFocus(): void;
+  onBlur(): void;
+};
 export function useChartInteraction({ rows = 1, columns = 0, mode = 'x', series, defaultHidden = [], hidden: hiddenProp, onToggle,
-  zoom = false, select = false, onSelect, describe, labelOf, move, first, strings }: ChartInteractionOptions = {}) {
+  zoom = false, select = false, onSelect, describe, labelOf, move, first, strings }: ChartInteractionOptions = {}): ChartInteraction {
   const t = Object.assign({}, CHART_INTERACTION_STRINGS, strings);
-  const [active, setActiveState] = React.useState<any>(null);
-  const [source, setSource] = React.useState<any>(null);
-  const [selected, setSelected] = React.useState<any>(null);
-  const [brush, setBrush] = React.useState<any>(null);
-  const [zoomRange, setZoom] = React.useState<any>(null);
+  const [active, setActiveState] = React.useState<ChartCell | null>(null);
+  const [source, setSource] = React.useState<'pointer' | 'keyboard' | null>(null);
+  const [selected, setSelected] = React.useState<ChartCell | null>(null);
+  const [brush, setBrush] = React.useState<[number, number] | null>(null);
+  const [zoomRange, setZoom] = React.useState<[number, number] | null>(null);
   const [ownHidden, setOwnHidden] = React.useState(defaultHidden);
   const [focused, setFocused] = React.useState(false);
-  const geometry = React.useRef<any>(null);
-  const drag = React.useRef<any>(null);
+  const geometry = React.useRef<ChartGeometry | null>(null);
+  const drag = React.useRef<{ from: number; moved: boolean } | null>(null);
   const hidden = hiddenProp === undefined ? ownHidden : hiddenProp;
-  const ids = (series || []).map((s: any, i: any) => (s.id === undefined ? i : s.id));
-  const rowShown = (r: any) => !ids.length || hidden.indexOf(ids[r]) < 0;
+  const ids = (series || []).map((s, i) => (s.id === undefined ? i : s.id));
+  const rowShown = (r: number) => !ids.length || hidden.indexOf(ids[r]) < 0;
   const n = Math.max(0, columns);
-  const view = () => (zoomRange ? [clamp(zoomRange[0], 0, n - 1), clamp(zoomRange[1], 0, n - 1)] : [0, Math.max(0, n - 1)]);
-  const say = (cell: any) => { if (cell && typeof describe === 'function') chartAnnounce(describe(cell)); };
-  const label = (c: any) => (typeof labelOf === 'function' ? labelOf(c) : String(c + 1));
+  const view = (): [number, number] => (zoomRange ? [clamp(zoomRange[0], 0, n - 1), clamp(zoomRange[1], 0, n - 1)] : [0, Math.max(0, n - 1)]);
+  const say = (cell: ChartCell | null) => { if (cell && typeof describe === 'function') chartAnnounce(describe(cell)); };
+  const label = (c: number) => (typeof labelOf === 'function' ? labelOf(c) : String(c + 1));
 
-  const setActive = (cell: any, from: any) => {
-    setActiveState((a: any) => (a && cell && a.r === cell.r && a.c === cell.c ? a : cell));
+  const setActive = (cell: ChartCell | null, from?: 'pointer' | 'keyboard') => {
+    setActiveState((a) => (a && cell && a.r === cell.r && a.c === cell.c ? a : cell));
     if (from) setSource(from);
   };
-  const doSelect = (cell: any) => {
+  const doSelect = (cell: ChartCell | null) => {
     if (!select || !cell) return;
     setSelected(cell);
     if (typeof onSelect === 'function') onSelect(cell);
     if (typeof describe === 'function') chartAnnounce(fill(t.selected, { text: describe(cell) }));
   };
-  const applyZoom = (a: any, b: any) => {
+  const applyZoom = (a: number, b: number) => {
     const from = Math.min(a, b), to = Math.max(a, b);
     if (to <= from) { setBrush(null); return; }
     setZoom([from, to]); setBrush(null);
-    setActiveState((x: any) => (x && (x.c < from || x.c > to) ? { r: x.r, c: from } : x));
+    setActiveState((x) => (x && (x.c < from || x.c > to) ? { r: x.r, c: from } : x));
     chartAnnounce(fill(t.zoomed, { from: label(from), to: label(to) }));
   };
   const resetZoom = () => { setZoom(null); setBrush(null); chartAnnounce(t.zoomReset); };
   const firstRow = () => { for (let r = 0; r < rows; r++) if (rowShown(r)) return r; return 0; };
-  const stepRow = (r: any, d: any) => { for (let k = r + d; k >= 0 && k < rows; k += d) if (rowShown(k)) return k; return r; };
+  const stepRow = (r: number, d: number) => { for (let k = r + d; k >= 0 && k < rows; k += d) if (rowShown(k)) return k; return r; };
 
-  const keyDown = (e: any) => {
+  const keyDown = (e: ChartKeyEvent) => {
     const k = e.key;
     const [v0, v1] = view();
     const cur = active && rowShown(active.r) ? active : null;
-    let next: any = null;
+    let next: ChartCell | null = null;
     if (k === 'Escape') {
       if (brush) { setBrush(null); e.preventDefault(); return; }
       if (cur || selected) { setActiveState(null); setSelected(null); e.preventDefault(); }
@@ -163,7 +198,7 @@ export function useChartInteraction({ rows = 1, columns = 0, mode = 'x', series,
     }
     if (brush) setBrush(null);
     if (!cur) next = typeof first === 'function' ? first() || start : start;
-    else if (typeof move === 'function') next = move(cur, k, { shift: e.shiftKey, view: [v0, v1] }) || cur;
+    else if (typeof move === 'function') next = move(cur, k, { shift: !!e.shiftKey, view: [v0, v1] }) || cur;
     else if (k === 'ArrowLeft') next = { r: cur.r, c: clamp(cur.c - 1, v0, v1) };
     else if (k === 'ArrowRight') next = { r: cur.r, c: clamp(cur.c + 1, v0, v1) };
     else if (k === 'Home') next = { r: cur.r, c: v0 };
@@ -174,18 +209,18 @@ export function useChartInteraction({ rows = 1, columns = 0, mode = 'x', series,
     say(next);
   };
 
-  const nearest = (x: any, y: any) => (geometry.current && typeof geometry.current.nearest === 'function' ? geometry.current.nearest(x, y) : null);
-  const columnAt = (x: any) => {
+  const nearest = (x: number, y: number): ChartCell | null => (geometry.current && typeof geometry.current.nearest === 'function' ? geometry.current.nearest(x, y) : null);
+  const columnAt = (x: number): number | null => {
     if (geometry.current && typeof geometry.current.columnAt === 'function') return geometry.current.columnAt(x);
     const cell = nearest(x, 0); return cell ? cell.c : null;
   };
-  const pointerDown = (x: any, y: any, e: any) => {
+  const pointerDown = (x: number, y: number, e?: { button?: number }) => {
     if (!zoom || (e && e.button !== undefined && e.button !== 0)) return;
     const c = columnAt(x);
     if (c === null || c === undefined) return;
     drag.current = { from: c, moved: false };
   };
-  const pointerMove = (x: any, y: any) => {
+  const pointerMove = (x: number, y: number) => {
     if (drag.current) {
       const c = columnAt(x);
       if (c !== null && c !== undefined && c !== drag.current.from) { drag.current.moved = true; setBrush([drag.current.from, c]); }
@@ -194,7 +229,7 @@ export function useChartInteraction({ rows = 1, columns = 0, mode = 'x', series,
     if (cell && rowShown(cell.r)) setActive(cell, 'pointer');
     else if (!focused || source === 'pointer') setActiveState(null);
   };
-  const pointerUp = (x: any, y: any) => {
+  const pointerUp = (x: number, y: number) => {
     const d = drag.current; drag.current = null;
     if (d && d.moved) { const c = columnAt(x); applyZoom(d.from, c === null || c === undefined ? d.from : c); return; }
     const cell = nearest(x, y);
@@ -204,20 +239,20 @@ export function useChartInteraction({ rows = 1, columns = 0, mode = 'x', series,
   const onFocus = () => setFocused(true);
   const onBlur = () => { setFocused(false); setActiveState(null); setBrush(null); };
 
-  const toggle = (id: any, visible: any) => {
+  const toggle = (id: string | number, visible: boolean) => {
     if (hiddenProp === undefined) setOwnHidden((h: Array<string | number>) => (visible ? h.filter((x) => x !== id) : h.concat([id])));
     if (typeof onToggle === 'function') onToggle(id, visible);
-    const s = (series || []).find((x: any, i: any) => (x.id === undefined ? i : x.id) === id);
+    const s = (series || []).find((x, i) => (x.id === undefined ? i : x.id) === id);
     chartAnnounce(fill(visible ? t.shown : t.hidden, { name: s ? s.label : id }));
-    setActiveState((a: any) => (a && ids[a.r] === id && !visible ? null : a));
+    setActiveState((a) => (a && ids[a.r] === id && !visible ? null : a));
   };
 
   return {
     interactive: true, mode, active, source, selected, brush, zoom: zoomRange, zoomed: !!zoomRange, focused, hidden, strings: t,
     hint: t.hint + (select ? t.hintSelect : '') + (zoom && !move ? t.hintZoom : ''),
-    view, visible: (id: any) => hidden.indexOf(id) < 0, isDimmed: (r: any) => mode === 'point' && !!active && active.r !== r,
+    view, visible: (id: string | number) => hidden.indexOf(id) < 0, isDimmed: (r: number) => mode === 'point' && !!active && active.r !== r,
     legendProps: { interactive: true, hidden, onToggle: toggle },
-    register: (g: any) => { geometry.current = g; },
+    register: (g: ChartGeometry | null) => { geometry.current = g; },
     setActive, select: doSelect, resetZoom, setZoom: applyZoom,
     keyDown, pointerDown, pointerMove, pointerUp, pointerLeave, onFocus, onBlur,
   };

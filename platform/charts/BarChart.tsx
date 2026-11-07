@@ -156,11 +156,11 @@ export function BarChart({ title, description, hideCaption, size, categories = N
   }
 
   const table = bins
-    ? { columns: [{ title: categoryLabel || t.range, field: 'range', kind: 'data', rowLabel: true }, { title: valueLabel || t.count, field: 'count', kind: 'data', align: 'right' }],
+    ? { columns: [{ title: categoryLabel || t.range, field: 'range', kind: 'data', rowLabel: true }, { title: valueLabel || t.count, field: 'count', kind: 'data', align: 'right' as const }],
       data: bins.map((b: any, i: any) => ({ id: i + 1, range: rangeText(b), count: fmt(b.count) })) }
     : { columns: ([{ title: categoryLabel || t.category, field: 'category', kind: 'name', rowLabel: true }] as any[])
-      .concat(list.map((s: any, si: any) => ({ title: s.label, field: 's' + si, kind: 'data', align: 'right' })))
-      .concat(mode !== 'grouped' && list.length > 1 ? [{ title: t.total, field: 'total', kind: 'data', align: 'right' }] : []),
+      .concat(list.map((s: any, si: any) => ({ title: s.label, field: 's' + si, kind: 'data', align: 'right' as const })))
+      .concat(mode !== 'grouped' && list.length > 1 ? [{ title: t.total, field: 'total', kind: 'data', align: 'right' as const }] : []),
     data: cats.map((c: any, ci: any) => {
       const all = list.reduce((a: any, s: any, si: any) => a + Math.max(0, val(si, ci) || 0), 0);
       const row: Record<string, any> = { id: ci + 1, category: String(c) };
