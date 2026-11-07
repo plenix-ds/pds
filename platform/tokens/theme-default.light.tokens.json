@@ -64,7 +64,7 @@
         }
       }
     },
-    "shell-backdrop": {
+    "shell-frame-outside": {
       "$value": "{plx-ref.color-gray-300}",
       "$type": "color",
       "$extensions": {

@@ -20,11 +20,11 @@
        An application never sets the mode itself; a pattern that is a kind of page claims it (SettingsLayout: "settings").
      mainId: the main region's id, the skip link's target (default "main")
      mainClassName: more classes on the main region
-     frame: "full" (default: the app fills the window) | "1366" (D-0093): the shell is --plx-sys-shell-frame-width (1366px) wide, centered
-       at the window's full height on a grey backdrop (--plx-sys-shell-backdrop) with the frame's shadow (--plx-sys-shell-frame-shadow). In
+     frame: "full" (default: the app fills the window) | "centered" (D-0093, ADR 0023): the shell is --plx-sys-shell-frame-width (1366px) wide, centered
+       at the window's full height on a grey backdrop (--plx-sys-shell-frame-outside) with the frame's shadow (--plx-sys-shell-frame-shadow). In
        a window wider than the frame, the AppHeader shows a toggle at its end: "Expand to full window" and back ("Restore to 1366 width"),
        remembered in local storage (plenix.shell.frame.full). In a window 1366px wide or narrower the shell fills it, with no sides and no
-       toggle. Print is unchanged. A new project chooses the default at intake; CTM uses "1366"
+       toggle. Print is unchanged. A new project chooses the default at intake; CTM uses "centered"
      minSize: true turns on the screen-size check (default false; ADR 0010, D-0044). Narrower than --plx-sys-shell-min-width
        (1024px) or lower than --plx-sys-shell-min-height (640px), the shell shows a "Screen size not supported" notice (an h1 in
        the main landmark) and keeps the app mounted, hidden and inert, so its state survives a resize; "Continue anyway" shows the
@@ -115,7 +115,7 @@ export type AppLayoutState = {
   registerPortal(): () => void; page: string; layout: string;
   claimPage(kind: string): () => void; parentRow: boolean; claimParentRow(): () => void;
   detailBack: AppLayoutBack | null; claimBack(back: AppLayoutBack): () => void;
-  /** the frame's toggle (frame="1366" in a window wider than the frame): null when there is nothing to toggle */
+  /** the frame's toggle (frame="centered" in a window wider than the frame): null when there is nothing to toggle */
   frame: { full: boolean; toggle(): void } | null;
 };
 const LayoutContext = React.createContext<AppLayoutState | null>(null);
@@ -156,14 +156,16 @@ export type AppShellProps = {
   mainClassName?: string;
   /** turn on the screen-size check: below the shell's minimum screen a notice replaces the view (sizes from tokens) */
   minSize?: boolean;
-  /** "full" (default): the app fills the window. "1366": the shell is 1366px wide, centered on a grey page with a shadow, and the header's toggle expands it to the window and back (D-0093) */
-  frame?: 'full' | '1366';
+  /** "full" (default): the app fills the window. "centered": the shell is 1366px wide, centered on a grey page with a shadow, and the header's toggle expands it to the window and back (D-0093) */
+  frame?: 'full' | 'centered';
+  /** the person's toggle between the two (the frame the app shows now) */
+  onFrameChange?(frame: 'full' | 'centered'): void;
   strings?: Catalog | null;
   className?: string;
   children?: React.ReactNode;
 };
 const MIN_SIZE_KEY = 'plx-shell-min-size-dismissed';
-export function AppShell({ header, sideNav, panel, footer, page = 'workspace', mainId = 'main', mainClassName, minSize = false, frame = 'full', strings, className, children }: AppShellProps) {
+export function AppShell({ header, sideNav, panel, footer, page = 'workspace', mainId = 'main', mainClassName, minSize = false, frame = 'full', onFrameChange, strings, className, children }: AppShellProps) {
   // the page's kind, claimed by a pattern on the page when it is that kind of page (SettingsLayout), else the page prop
   const [claimed, setClaimed] = React.useState<string | null>(null);
   const claimPage = React.useCallback((kind: string) => { setClaimed(kind); return () => setClaimed((k) => (k === kind ? null : k)); }, []);
@@ -175,11 +177,11 @@ export function AppShell({ header, sideNav, panel, footer, page = 'workspace', m
   const blocked = minSize && tooSmall && !goOn;
   const continueAnyway = () => { try { sessionStorage.setItem(MIN_SIZE_KEY, '1'); } catch (e) { /* not stored: it lasts until the next render of the page */ } setGoOn(true); };
   // the frame (D-0093): in a window wider than the frame a person can expand the shell to the window and back, remembered on this origin like the navigation's width
-  const wide = useMedia(frame === '1366' ? '(width > ' + (tokenValue('--plx-sys-shell-frame-width') || '0px') + ')' : 'not all');
+  const wide = useMedia(frame === 'centered' ? '(width > ' + (tokenValue('--plx-sys-shell-frame-width') || '0px') + ')' : 'not all');
   const [fullWindow, setFullWindow] = React.useState(() => readPref('plenix.shell.frame.full', false));
-  const toggleFrame = React.useCallback(() => setFullWindow((f) => { writePref('plenix.shell.frame.full', !f); return !f; }), []);
-  const framed = frame === '1366' && wide && !fullWindow;
-  const frameCtx = React.useMemo(() => (frame === '1366' && wide ? { full: fullWindow, toggle: toggleFrame } : null), [frame, wide, fullWindow, toggleFrame]);
+  const toggleFrame = React.useCallback(() => setFullWindow((f) => { writePref('plenix.shell.frame.full', !f); if (onFrameChange) onFrameChange(f ? 'centered' : 'full'); return !f; }), [onFrameChange]);
+  const framed = frame === 'centered' && wide && !fullWindow;
+  const frameCtx = React.useMemo(() => (frame === 'centered' && wide ? { full: fullWindow, toggle: toggleFrame } : null), [frame, wide, fullWindow, toggleFrame]);
   const small = useMedia(below('--plx-sys-shell-rail-below'));
   const narrow = useMedia(below('--plx-sys-shell-phone-below'));
   const [barEl, setBarEl] = React.useState<HTMLElement | null>(null);         // where NavPane puts the bottom navigation bar at Narrow
@@ -218,7 +220,7 @@ export function AppShell({ header, sideNav, panel, footer, page = 'workspace', m
     parentRow, claimParentRow, detailBack, claimBack, frameCtx]);
   const shell = (
     <LayoutContext.Provider value={ctx}>
-      <div className={cx('plx-app-shell', frame === '1366' && 'plx-app-shell--frame', framed && 'plx-app-shell--framed', className)} data-plx-layout={LAYOUTS.indexOf(layout) >= 0 ? layout : 'fluid'} hidden={blocked || undefined} {...(blocked ? { inert: '' } : null)}>
+      <div className={cx('plx-app-shell', frame === 'centered' && 'plx-app-shell--frame', framed && 'plx-app-shell--framed', className)} data-plx-layout={LAYOUTS.indexOf(layout) >= 0 ? layout : 'fluid'} hidden={blocked || undefined} {...(blocked ? { inert: '' } : null)}>
         <a className="plx-app-shell__skip" href={'#' + mainId}>{t.skip}</a>
         {header}
         {narrow && hasSide ? <div ref={setParentEl} className="plx-app-shell__parent-slot" /> : null}
@@ -232,7 +234,7 @@ export function AppShell({ header, sideNav, panel, footer, page = 'workspace', m
       </div>
     </LayoutContext.Provider>
   );
-  const framedShell = frame === '1366' ? <div className="plx-app-frame" data-plx-frame={framed ? 'framed' : 'full'}>{shell}</div> : shell;
+  const framedShell = frame === 'centered' ? <div className="plx-app-frame" data-plx-frame={framed ? 'framed' : 'full'}>{shell}</div> : shell;
   if (!minSize) return framedShell;
   // the notice is a sibling of the shell, so the app (the shell) keeps its place in the tree and its state while it is hidden
   const size = { width: tokenValue('--plx-sys-shell-min-width'), height: tokenValue('--plx-sys-shell-min-height') };

@@ -62,7 +62,7 @@
    reduced motion zeroes the duration). On paper the page prints at full width: the rules are for the screen only. */
 @media screen {
   .plx-app-frame{display:flex;justify-content:center;}
-  .plx-app-frame[data-plx-frame="framed"]{background-color:var(--plx-sys-shell-backdrop);block-size:100dvh;}
+  .plx-app-frame[data-plx-frame="framed"]{background-color:var(--plx-sys-shell-frame-outside);block-size:100dvh;}
   .plx-app-shell--frame{flex-shrink:0;inline-size:100%;transition-duration:var(--plx-sys-motion-duration-base);transition-property:inline-size;transition-timing-function:var(--plx-sys-motion-ease-standard);}
   .plx-app-shell--framed{background-color:var(--plx-sys-surface-canvas);box-shadow:var(--plx-sys-shell-frame-shadow);inline-size:var(--plx-sys-shell-frame-width);}
 }
