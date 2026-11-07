@@ -1,19 +1,4 @@
 {
  "$description": "variant-styles (docs/adr/0015): variations that document nothing they set yet (no rule of their own selector, no styles.json entry), measured 2026-11-05. Shrink-only: a variation leaves when it gains a table; none is added.",
- "known": [
-  "bottom-navigation--form-bottom-bar-default",
-  "button--behavior-loading",
-  "button--hierarchy-secondary-default",
-  "calendar--variant-month-default",
-  "field-style-variants--appearance-outline-default",
-  "form-section--parts-actions-at-the-end-sticky",
-  "preview--element-a-display-default",
-  "progress-steps--status-with-status-complete-current-error",
-  "role-label--role-custom-a-category-color",
-  "secondary-pane--orientation-side-by-side-default",
-  "secondary-pane--orientation-stacked",
-  "toggle-button--variant-secondary-default",
-  "typing-indicator--message-mine",
-  "typing-indicator--message-theirs-default"
- ]
+ "known": []
 }

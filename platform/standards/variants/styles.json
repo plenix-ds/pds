@@ -6771,5 +6771,185 @@
   "type-styles--overflow-expandable": {
     "sets": [],
     "why": "markup only: a clamped text with a Show more button under it while it is cut; Show less folds it again (Text lines and expandable)"
+  },
+  "bottom-navigation--form-bottom-bar-default": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "bar",
+        "token": "--plx-comp-nav-bar-background"
+      },
+      {
+        "property": "block-size",
+        "part": "bar",
+        "token": "--plx-comp-nav-bar-height"
+      },
+      {
+        "property": "color",
+        "part": "item",
+        "token": "--plx-comp-nav-bar-item-text"
+      },
+      {
+        "property": "min-block-size",
+        "part": "item",
+        "token": "--plx-comp-nav-bar-item-target"
+      }
+    ],
+    "why": ".plx-nav-bar and .plx-nav-bar__item in nav-pane.css: the bar always visible along the bottom, every destination labeled under its icon, each at least the 44px target"
+  },
+  "button--behavior-loading": {
+    "sets": [],
+    "why": ".plx-button.is-loading in button.css sets only --plx-state-button-cursor: progress, an in-CSS hook, not a token"
+  },
+  "button--hierarchy-secondary-default": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-button-secondary-background"
+      },
+      {
+        "property": "border-color",
+        "part": "block",
+        "token": "--plx-comp-button-secondary-border"
+      }
+    ],
+    "why": ".plx-button secondary in button.css: the default variant"
+  },
+  "toggle-button--variant-secondary-default": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-button-selected-background"
+      }
+    ],
+    "why": ".plx-button.is-selected in button.css: a Button with pressed stays on and takes the selected fill (aria-pressed); the selected border and text are in-CSS hooks, not tokens"
+  },
+  "form-section--parts-actions-at-the-end-sticky": {
+    "sets": [],
+    "why": "FormActions is an ActionBar, sticky by default: the sticky position is ActionBar's (action-bar.css); sticky={false} adds .plx-form-actions--static (form.css), which sets position: static, no token"
+  },
+  "preview--element-a-display-default": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-preview-background"
+      },
+      {
+        "property": "border-radius",
+        "part": "block",
+        "token": "--plx-comp-preview-radius"
+      }
+    ],
+    "why": ".plx-preview in preview.css: the asset picture in a sunken box that only shows it"
+  },
+  "progress-steps--status-with-status-complete-current-error": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "marker-error",
+        "token": "--plx-comp-progress-steps-error-marker-background"
+      },
+      {
+        "property": "color",
+        "part": "label-error",
+        "token": "--plx-comp-progress-steps-error-label-text"
+      },
+      {
+        "property": "background-color",
+        "part": "segment-error",
+        "token": "--plx-comp-progress-steps-segment-error-background"
+      }
+    ],
+    "why": ".plx-progress-steps__step.is-error in progress-steps.css: a step that needs attention, in the soft danger colors, with its name in the danger color"
+  },
+  "role-label--role-custom-a-category-color": {
+    "sets": [
+      {
+        "property": "column-gap",
+        "part": "block",
+        "token": "--plx-comp-role-label-gap"
+      },
+      {
+        "property": "--plx-comp-icon-size",
+        "part": "icon",
+        "token": "--plx-comp-role-label-icon-size"
+      }
+    ],
+    "why": ".plx-tag.plx-role-label and .plx-role-label__icon in role-label.css: a role the organization defined, with the person icon; the category color is the Tag's"
+  },
+  "calendar--variant-month-default": {
+    "sets": [
+      {
+        "property": "column-gap",
+        "part": "header",
+        "token": "--plx-comp-calendar-header-gap"
+      },
+      {
+        "property": "min-block-size",
+        "part": "header",
+        "token": "--plx-comp-calendar-header-min-height"
+      }
+    ],
+    "why": ".plx-calendar__header in calendar.css: one month with its header, the weekday row and the days of the weeks around it"
+  },
+  "field-style-variants--appearance-outline-default": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-input-background"
+      },
+      {
+        "property": "border-color",
+        "part": "block",
+        "token": "--plx-comp-input-border-color"
+      },
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-comp-input-text"
+      }
+    ],
+    "why": ".plx-input in input.css: outline is the default look, a border on every side"
+  },
+  "typing-indicator--message-theirs-default": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "bubble",
+        "token": "--plx-comp-chat-bubble-background"
+      },
+      {
+        "property": "border-color",
+        "part": "bubble",
+        "token": "--plx-comp-chat-bubble-border-color"
+      },
+      {
+        "property": "color",
+        "part": "bubble",
+        "token": "--plx-comp-chat-bubble-text"
+      },
+      {
+        "property": "border-radius",
+        "part": "bubble",
+        "token": "--plx-comp-chat-bubble-radius"
+      }
+    ],
+    "why": ".plx-chat bubble in chat.css: a message from someone else, on the start side"
+  },
+  "typing-indicator--message-mine": {
+    "sets": [],
+    "why": ".plx-chat__message--mine in chat.css sets align-self: flex-end, which puts the person's message on the end side; no token"
+  },
+  "secondary-pane--orientation-side-by-side-default": {
+    "sets": [],
+    "why": "SplitView draws the orientation (.plx-split-view__panels is a flex row; under 900px of its own width the panels stack); its values are layout, not tokens"
+  },
+  "secondary-pane--orientation-stacked": {
+    "sets": [],
+    "why": "SplitView draws the orientation (.plx-split-view and .plx-split-view__panels in split-view.css); its values are layout, not tokens"
   }
 }
