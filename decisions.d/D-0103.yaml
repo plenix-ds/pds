@@ -1,0 +1,9 @@
+id: D-0103
+date: 2026-11-07
+area: tokens
+decided_by: agent (pds1-ds-architect) at G3, owner may switch
+decision: 'Read-only fields (D-0101) get two new sys type roles, text-field-label and text-field-value, and a sys stack role space-stack-field (20px, every density) (ADR 0030). PropertyList keeps layout "columns" | "stacked" with default "columns" in 1.x; stacked is the recommended layout now and becomes the default in 2.0.0 (deprecation note in 1.x).'
+why: 'G2''s line heights (16, 24) and 20px gap have no sys role, and comp may not reference ref (check 6). A changed default that reflows existing screens is MAJOR (VERSIONING.md), right after 1.0.0.'
+options: ['new purpose-named sys roles, default flip in 2.0.0 (chosen)', 'change text-label and text-lead line heights', 'flip the default now (major)']
+status: active
+check: 'check 6 and 7 on the #946 build PR; tools/ci/check-decisions.mjs; the visual check at 1366 and 1920'

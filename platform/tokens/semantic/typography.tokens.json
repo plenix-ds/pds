@@ -129,6 +129,70 @@
       "$description": "The text-label role's word spacing (the companion of the typography token).",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
+    "text-field-label-font-family": {
+      "$value": "{plx-sys.font-label}",
+      "$type": "fontFamily",
+      "$description": "A read-only field's label, above or beside its value (Fluent 2 Caption 1 Strong; D-0101, ADR 0030). The text-field-label role's font family."
+    },
+    "text-field-label-font-size": {
+      "$value": "{plx-ref.font-size-100}",
+      "$type": "dimension",
+      "$description": "The text-field-label role's font size."
+    },
+    "text-field-label-font-weight": {
+      "$value": "{plx-sys.font-weight-semibold}",
+      "$type": "fontWeight",
+      "$description": "The text-field-label role's font weight."
+    },
+    "text-field-label-letter-spacing": {
+      "$value": "normal",
+      "$type": "dimension",
+      "$description": "The text-field-label role's letter spacing.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
+    },
+    "text-field-label-line-height": {
+      "$value": "{plx-ref.size-4u}",
+      "$type": "dimension",
+      "$description": "The text-field-label role's line height, on the 4px grid."
+    },
+    "text-field-label-word-spacing": {
+      "$value": "normal",
+      "$type": "dimension",
+      "$description": "The text-field-label role's word spacing (the companion of the typography token).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
+    },
+    "text-field-value-font-family": {
+      "$value": "{plx-sys.font-body}",
+      "$type": "fontFamily",
+      "$description": "A read-only field's value in the stacked layout (Fluent 2 field value; D-0101, ADR 0030). The text-field-value role's font family."
+    },
+    "text-field-value-font-size": {
+      "$value": "{plx-ref.font-size-400}",
+      "$type": "dimension",
+      "$description": "The text-field-value role's font size."
+    },
+    "text-field-value-font-weight": {
+      "$value": "{plx-sys.font-weight-regular}",
+      "$type": "fontWeight",
+      "$description": "The text-field-value role's font weight."
+    },
+    "text-field-value-letter-spacing": {
+      "$value": "normal",
+      "$type": "dimension",
+      "$description": "The text-field-value role's letter spacing.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
+    },
+    "text-field-value-line-height": {
+      "$value": "{plx-ref.size-6u}",
+      "$type": "dimension",
+      "$description": "The text-field-value role's line height, on the 4px grid."
+    },
+    "text-field-value-word-spacing": {
+      "$value": "normal",
+      "$type": "dimension",
+      "$description": "The text-field-value role's word spacing (the companion of the typography token).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
+    },
     "text-heading-font-family": {
       "$value": "{plx-sys.font-heading}",
       "$type": "fontFamily",
