@@ -100,9 +100,13 @@
        density; hovered, every header line shows and the column under the pointer deepens with both edges in gray 400;
        a hovered row tints gray 100 with its lines in gray 300; a selected row is blue 100 with blue-gray lines and a 3px
        blue 600 bar at its start (blue 200 hovered); a click on a title sorts with no arrow drawn (aria-sort carries the order); an active filter shows a funnel
-     rowMenu: [{ label, icon, onSelect(record), danger, disabled, separator }] or (record) => that list, opened by the
+     rowMenu: [{ label, icon, onSelect(record), danger, disabled, separator, inline }] or (record) => that list, opened by the
        row's button (rowMenuButton, default true) or right-click; DataGrid.useActions(actions, selectedKeys, strings)
-       wraps selection commands with Undo for the CommandBar
+       wraps selection commands with Undo for the CommandBar. With room, the first three items that have an icon (not danger) show as
+       icon-only buttons at the row's inline end on row hover, focus and selection, named by their label, and the ⋮ keeps the rest; without
+       room, or on touch, every item is in the ⋮ (issue 800, ADR 0022). inline: false keeps an item in the ⋮; inline: true lets a fourth in;
+       a danger item always stays in the ⋮. Only a list gives icons: a menu built
+       from the record (a function) is not called until opened, so it keeps the ⋮
      The page's view (the command bar drives it; each applies when it changes): filter(record), sort [{ field, dir }],
        groupBy (a field, or a list for nested groups), columnOrder, hiddenColumns; onAddToGroup(value, path): the add row
        at the end of each group
@@ -320,7 +324,9 @@ export type DataGridColumn<R = Record<string, unknown>> = {
 };
 
 /** @public */
-export type DataGridMenuAction<R> = { label?: string; icon?: IconValue | React.ReactNode; onSelect?(record: R): void; danger?: boolean; disabled?: boolean; separator?: boolean };
+export type DataGridMenuAction<R> = { label?: string; icon?: IconValue | React.ReactNode; onSelect?(record: R): void; danger?: boolean; disabled?: boolean; separator?: boolean;
+  /** show as an icon button on a wide grid (true), never (false), or by the default rule: the first three items with an icon. A danger item is never inline. */
+  inline?: boolean };
 /** @public */
 export type DataGridColumnMenuAction<R = Record<string, unknown>> = { label?: string; icon?: IconValue | React.ReactNode; onSelect?(column: DataGridColumn<R>): void; danger?: boolean; disabled?: boolean; separator?: boolean };
 /** @public a row's key: the value of its `index` field */

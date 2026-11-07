@@ -1,0 +1,4 @@
+AssertionError [ERR_ASSERTION]: ltr: the last button ends within one cell padding of the grid's inline-end edge (gap 195px, padding 8px)
+    at /home/cc/pds1/work/component-engineer-1/tests/data-grid-actions-end-844.test.js:39:14 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',

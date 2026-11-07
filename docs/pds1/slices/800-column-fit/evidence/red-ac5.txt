@@ -1,0 +1,6 @@
+AssertionError [ERR_ASSERTION]: ltr: the first three eligible items are icons ([])
++ actual - expected
+
++ []
+- [
+-   'View',
