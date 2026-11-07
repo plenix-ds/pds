@@ -1,1 +1,8 @@
 APP_SHELL_FRAME_862_OK
+Ran: node tests/app-shell-frame-862.test.js (left to right and right to left), each AC of docs/pds1/slices/862-shell-frame/brief.md:
+AC-1 frame="centered" at 1920x1080: the shell is 1366px wide, centered (277px each side), the window's full height, with a shadow, on a backdrop of its own: pass
+AC-2 frame="centered" at 1280x800: the shell fills the window, no sides, no toggle: pass
+AC-3 the toggle fills the window, its name becomes "Restore to 1366 width" (aria-pressed true), a reload keeps it, onFrameChange says "full": pass
+AC-4 the default frame at 1920: the shell fills the window, no frame element, no toggle (nothing changes): pass
+AC-5 right to left: AC-1 and AC-3 hold, the toggle is in the header's end area: pass
+AC-6 the toggle works from the keyboard (Enter and Space), and says its name and pressed state: pass
