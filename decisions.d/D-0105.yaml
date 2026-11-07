@@ -1,0 +1,9 @@
+id: D-0105
+date: 2026-11-07
+area: components
+decided_by: agent (pds1-ds-architect) at G3, owner may switch
+decision: 'A Textarea fills its row: the single-line fields'' 600px cap doesn''t apply to it, so a text area alone on its row ends at the form''s (or the grid''s) inline end (ADR 0029). No Field span prop until Plenix has a multi-column field grid of its own.'
+why: 'CTM (#947): the textarea stopped at about 80% of the row. CTM''s side-by-side fields are its own grid, so a Field span would have no effect there (CE1, #953); the cause is the 600px cap.'
+options: ['textarea fills its row (chosen)', 'Field span with long text full by default', 'a full-row wrapper in Columns']
+status: active
+check: 'tests/textarea-span-947.test.js (edges equal at 900 and 1400px, LTR and RTL)'
