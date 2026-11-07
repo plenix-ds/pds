@@ -1,6 +1,6 @@
 // Unit tests for the locale checks (#192). Each check: a case that passes and a case that fails.
 import { describe, it, expect } from 'vitest';
-import { checkCatalogs, checkJsx, checkUnused, newFindings, approvedMap, parseCatalogModule, entries, duplicateKeys } from './locale.mjs';
+import { checkCatalogs, checkJsx, checkUnused, newFindings, approvedMap, parseCatalogModule, entries, duplicateKeys, checkReads, g6 } from './locale.mjs';
 import { pseudoString, pseudoCatalog } from './pseudo.mjs';
 import { formatNumber, formatDate } from '../../../platform/utils/format.ts';
 
@@ -100,6 +100,31 @@ describe('only new problems block', () => {
   });
   it('reports a new missing Arabic key without blocking (the word waits for the owner)', () => {
     expect(newFindings([], [{ rule: 'missing-ar', file: 'platform/i18n/ar.js', message: 'x.y: no Arabic' }])).toEqual([]);
+  });
+});
+
+describe('missing-en: a word a part reads that English does not have (#902)', () => {
+  const en = { dialog: { close: 'Close' }, wizard: { next: 'Next' }, combobox: { moreChips: '{count} more' }, dataGrid: { cellsPasted: { one: '{n}', other: '{n}' } }, datePicker: { dialog: 'Choose a date' } };
+  const msgs = async (src, f = 'a.tsx') => (await checkReads(src, f, en)).map((x) => x.message);
+  it('finds S.key, a destructured key, an unknown section and a dotted t() key', async () => {
+    expect(await msgs('function A(){ const S = useStrings("dialog") as any; return S.close + S.nope; }')).toEqual(['dialog.nope: read by this part, not in en.json']);
+    expect(await msgs('function A(){ const { close, nope2 } = useStrings("dialog"); return close; }', 'b.jsx')).toEqual(['dialog.nope2: read by this part, not in en.json']);
+    expect(await msgs('function A(){ return useStrings("nosuch").x; }')).toEqual(["useStrings('nosuch'): no such section in en.json"]);
+    expect(await msgs('said(loc, "dataGrid.cellsPasted", 1); t("dataGrid.nopeKey");')).toEqual(['dataGrid.nopeKey: read by this part, not in en.json']);
+  });
+  it('keeps each function\'s own section for the same variable name', async () => {
+    expect(await msgs('function A(){ const t = useStrings("dialog"); return t.close; } function B(){ const t = useStrings("wizard"); return t.next; }')).toEqual([]);
+  });
+  it('skips a pass-through to a child\'s strings prop, and string methods', async () => {
+    expect(await msgs('function A(){ const t: any = useStrings("datePicker"); return <C strings={t.calendar} label={t.dialog.replace("x","y")} />; }')).toEqual([]);
+  });
+});
+
+describe('G6, the release gate (#902)', () => {
+  it('fails on missing or unapproved words, not on unused keys or literals', () => {
+    const f = (rule) => ({ rule, file: 'x', message: rule });
+    expect(g6(['missing-en', 'missing-ar', 'unapproved-ar', 'placeholder', 'plural-forms', 'duplicate-key', 'catalog', 'unused-key', 'jsx-literal'].map(f)).map((x) => x.rule))
+      .toEqual(['missing-en', 'missing-ar', 'unapproved-ar', 'placeholder', 'plural-forms', 'duplicate-key', 'catalog']);
   });
 });
 
