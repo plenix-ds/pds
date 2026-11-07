@@ -480,6 +480,11 @@
       "$value": "{plx-ref.space-6u}",
       "$type": "dimension"
     },
+    "space-stack-field": {
+      "$value": "{plx-ref.space-5u}",
+      "$type": "dimension",
+      "$description": "The gap between read-only fields (label and value pairs) in a stacked list, at every density (D-0101, ADR 0030)."
+    },
     "space-section": {
       "$value": "{plx-ref.space-6u}",
       "$type": "dimension",
