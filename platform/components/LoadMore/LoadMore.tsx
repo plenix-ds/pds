@@ -92,7 +92,7 @@ export const LoadMore = React.forwardRef(function LoadMore({ onLoadMore, hasMore
       {infinite && hasMore ? <div ref={sentinel} className="plx-load-more__sentinel" aria-hidden="true" /> : null}
       {!hasMore ? <p className="plx-load-more__end">{t.end}</p>
         : infinite && loading ? <div className="plx-load-more__loading"><Spinner size="sm" label={t.loading} /><span aria-hidden="true">{t.loading}</span></div>
-        : <Button className="plx-load-more__button" loading={loading} onClick={press} strings={{ working: t.loading }}>{pageSize ? dataPhrase(t.moreCount, { n: pageSize }) : t.more}</Button>}
+        : <Button className="plx-load-more__button" truncate loading={loading} onClick={press} strings={{ working: t.loading }}>{pageSize ? dataPhrase(t.moreCount, { n: pageSize }) : t.more}</Button>}
       {count ? <span className="plx-load-more__count">{dataPhrase(count)}</span> : null}
     </div>
   );
