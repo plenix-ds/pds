@@ -70,7 +70,7 @@
      Returns: order, reasons, resolutions, methods ([{ value, label, description }] each), currency, status (Timeline
        items: the return's status, shown once it is requested), onSubmit(request) (a promise), onCancel, headingLevel,
        strings
-     OrderSummary, CommerceLine, orderTotals, useCommercePage: the shared parts (shared.jsx)
+     OrderSummary, CommerceLine, orderTotals, useCommercePage: the shared parts (shared.tsx)
      strings: every template's words, for other languages (each template's STRINGS: titles, labels, messages)
    Behavior:
      Listing and discovery: the command bar holds the search, Filter (by name, category, price, rating, availability,
@@ -102,7 +102,7 @@
      passes them to a payment provider's secure fields or API. Never keep card numbers; never put real card data in
      demos. The page owns the data, the URL (filters, the open product) and every request.
 */
-export { COMMERCE_PAGES, useCommercePage, orderTotals, CommerceLine, OrderSummary } from './shared.jsx';
-export { ProductListing, ProductDiscovery, ProductDetail, productFields } from './Storefront.jsx';
-export { Cart, Checkout, Payment, PaymentFields, OrderConfirmation, cardBrand, formatCardNumber } from './Checkout.jsx';
-export { ORDER_STATUSES, OrderStatus, OrderManagement, OrderDetail, SubscriptionManagement, Returns } from './Account.jsx';
+export { COMMERCE_PAGES, useCommercePage, orderTotals, CommerceLine, OrderSummary } from './shared.tsx';
+export { ProductListing, ProductDiscovery, ProductDetail, productFields } from './Storefront.tsx';
+export { Cart, Checkout, Payment, PaymentFields, OrderConfirmation, cardBrand, formatCardNumber } from './Checkout.tsx';
+export { ORDER_STATUSES, OrderStatus, OrderManagement, OrderDetail, SubscriptionManagement, Returns } from './Account.tsx';

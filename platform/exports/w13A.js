@@ -3,4 +3,4 @@
 // detail, cart, checkout, payment, order confirmation, order management, subscription management, returns).
 export { ProductCard, ProductPrice } from '../patterns/ProductCard/ProductCard.tsx';
 export { ProductOptions } from '../components/ProductOptions/ProductOptions.tsx';
-export { COMMERCE_PAGES, useCommercePage, orderTotals, CommerceLine, OrderSummary, ProductListing, ProductDiscovery, ProductDetail, productFields, Cart, Checkout, Payment, PaymentFields, OrderConfirmation, cardBrand, formatCardNumber, ORDER_STATUSES, OrderStatus, OrderManagement, OrderDetail, SubscriptionManagement, Returns } from '../templates/Commerce/Commerce.jsx';
+export { COMMERCE_PAGES, useCommercePage, orderTotals, CommerceLine, OrderSummary, ProductListing, ProductDiscovery, ProductDetail, productFields, Cart, Checkout, Payment, PaymentFields, OrderConfirmation, cardBrand, formatCardNumber, ORDER_STATUSES, OrderStatus, OrderManagement, OrderDetail, SubscriptionManagement, Returns } from '../templates/Commerce/Commerce.tsx';

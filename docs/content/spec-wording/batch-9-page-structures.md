@@ -5,7 +5,7 @@ Issue #120. Each question of the Page structures group in `questions.md` was che
 ## Result
 
 - 9 of the 15 questions are already answered by text written after the questions were asked.
-- 6 needed a change, all written from the templates' own header (`platform/templates/templates/Templates.jsx`) and the shell's header:
+- 6 needed a change, all written from the templates' own header (`platform/templates/templates/Templates.tsx`) and the shell's header:
   - Listing page, Content template and Master-detail workspace had placeholder write-ups ("Provides a reusable implementation using existing Platform roles and controls."). Each now has its own purpose, parts, behavior, accessibility and content rows (`parts/w15A.docs.js`).
   - The four Landing page examples (Authentication, Error, Split workspace, Authentication template) said "A authentication page composed from existing Platform controls." They now say what each page is (`parts/w15A.records.js`).
   - The Application shell's localization row said the skip link "is fixed in code and needs translating" and that the arrow keys "should be checked" in right-to-left. It now states the rules: the skip link text comes from `strings` and the catalog; the splitters follow the writing direction (`inventory-docs.js`).

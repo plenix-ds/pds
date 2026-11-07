@@ -4,27 +4,30 @@
      (Checkout: the Wizard's steps, contact, delivery, payment and review, beside the order summary, ending in Place
      order), payment (Payment and PaymentFields: the method and the card fields as form UI only: nothing is charged or
      kept here) and the order confirmation (OrderConfirmation: the order number to copy, what happens next, the summary).
-     Commerce.jsx documents every template.
+     Commerce.tsx documents every template.
    Usage:
      <Cart items={cart} currency="USD" onQuantityChange={setQty} onRemove={remove} onRestore={restore} onCheckout={go} continueHref="#/shop" />
      <Checkout items={cart} deliveryOptions={METHODS} onPlaceOrder={(details) => api.place(details)} />
      <Payment amount={64.5} currency="USD" onPay={(details) => provider.confirm(details)} onCancel={back} />
      <OrderConfirmation orderNumber="PX-10428" email="maya@example.com" items={cart} orderHref="#/orders/PX-10428" continueHref="#/shop" />
    Props:
-     See Commerce.jsx (Cart, Checkout, PaymentFields, Payment, OrderConfirmation).
+     See Commerce.tsx (Cart, Checkout, PaymentFields, Payment, OrderConfirmation).
    Behavior:
-     See Commerce.jsx.
+     See Commerce.tsx.
 */
 import React from 'react';
+import type { CommerceItem } from './shared.tsx';
 import { cx } from '../../utils/cx.ts';
 import { useUid } from '../../utils/layer.ts';
 import { announce } from '../../utils/announce.tsx';
 import { formatNumber } from '../../utils/format.ts';
 import { useOptionalToast } from '../../components/Toast/Toast.tsx';
 import { DeleteFlow } from '../../patterns/DeleteFlow/DeleteFlow.tsx';
-import { Wizard } from '../../patterns/Wizard/Wizard.tsx';
+import { Wizard as WizardJs } from '../../patterns/Wizard/Wizard.tsx';
+const Wizard: any = WizardJs;
 import { Form, FormSection, FormActions } from '../../patterns/Form/Form.tsx';
-import { PropertyList } from '../../patterns/PropertyList/PropertyList.tsx';
+import { PropertyList as PropertyListJs } from '../../patterns/PropertyList/PropertyList.tsx';
+const PropertyList: any = PropertyListJs;
 import { Field } from '../../components/Field/Field.tsx';
 import { Input } from '../../components/Input/Input.tsx';
 import { Checkbox, RadioGroup, ChoiceList } from '../../components/Checkbox/Checkbox.tsx';
@@ -37,7 +40,7 @@ import { EmptyState } from '../../components/EmptyState/EmptyState.tsx';
 import { CopyButton } from '../../components/CopyButton/CopyButton.tsx';
 import { Timeline } from '../../components/Timeline/Timeline.tsx';
 import { StatusIcon } from '../../components/Icon/Icon.tsx';
-import { CommerceLine, OrderSummary, orderTotals, money, useCommercePage } from './shared.jsx';
+import { CommerceLine, OrderSummary, orderTotals, money, useCommercePage } from './shared.tsx';
 import { fill } from '../../utils/fill.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import BriefcaseIcon from 'plenix-platform/icons/plenix/briefcase';
@@ -47,20 +50,39 @@ import TrashIcon from 'plenix-platform/icons/plenix/trash';
 
 /* ── the cart ── */
 
-export function Cart({ items = [], currency = 'USD', onQuantityChange, onRemove, onRestore, onCheckout, continueHref, shipping, taxRate, discount, onApplyPromo,
-  title, headingLevel = 1, strings, className }) {
+/** @public the prop type of Cart (ADR 0011) */
+export type CartProps = {
+  items?: unknown[];
+  currency?: string;
+  onQuantityChange?: (item: CommerceItem, quantity: number) => void;
+  onRemove?: (item: CommerceItem) => void;
+  onRestore?: (item: CommerceItem) => void;
+  onCheckout?: () => void;
+  continueHref?: string;
+  shipping?: unknown;
+  taxRate?: unknown;
+  discount?: unknown;
+  onApplyPromo?: (code: string) => unknown;
+  title?: React.ReactNode;
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function Cart(props: CartProps) {
+  const { items = [], currency = 'USD', onQuantityChange, onRemove, onRestore, onCheckout, continueHref, shipping, taxRate, discount, onApplyPromo,
+  title, headingLevel = 1, strings, className } = props as any;
   useCommercePage('cart');
-  const t = useStrings('commerce.cart', strings);
+  const t: any = useStrings('commerce.cart', strings);
   const toast = useOptionalToast();
-  const [removed, setRemoved] = React.useState(null);
+  const [removed, setRemoved] = React.useState<any>(null);
   const [code, setCode] = React.useState('');
   const [promo, setPromo] = React.useState({ discount: 0, label: '', error: '', busy: false });
   const totals = orderTotals(items, { shipping, taxRate, discount: (discount || 0) + promo.discount });
-  const H = 'h' + Math.min(6, Math.max(1, headingLevel));
+  const H: any = 'h' + Math.min(6, Math.max(1, headingLevel));
   // the total is announced when it changes (a quantity, a removal, a promo code)
   const first = React.useRef(true);
   React.useEffect(() => { if (first.current) { first.current = false; return; } announce(fill(t.total, { total: money(totals.total, currency) })); }, [totals.total]);
-  const apply = async (e) => {
+  const apply = async (e: any) => {
     if (e) e.preventDefault();
     if (!code.trim() || !onApplyPromo) return;
     setPromo((p) => Object.assign({}, p, { busy: true, error: '' }));
@@ -68,7 +90,7 @@ export function Cart({ items = [], currency = 'USD', onQuantityChange, onRemove,
       const r = await onApplyPromo(code.trim());
       setPromo({ discount: (r && r.discount) || 0, label: (r && r.label) || code.trim(), error: '', busy: false });
       announce(fill(t.applied, { code: code.trim() }));
-    } catch (err) { setPromo({ discount: 0, label: '', error: (err && err.message) || t.promoError, busy: false }); }
+    } catch (err: any) { setPromo({ discount: 0, label: '', error: (err && err.message) || t.promoError, busy: false }); }
   };
   const count = totals.count === 1 ? t.item : fill(t.items, { n: formatNumber(totals.count) });
   if (!items.length && !removed) {
@@ -89,8 +111,8 @@ export function Cart({ items = [], currency = 'USD', onQuantityChange, onRemove,
           {removed ? <Notice tone="info" actions={onRestore ? <Button size="xs" icon={EdUndoIcon} onClick={() => { onRestore(removed); setRemoved(null); }}>{t.undo}</Button> : undefined}
             onDismiss={() => setRemoved(null)}>{fill(t.removed, { title: removed.title })}</Notice> : null}
           <ul className="plx-commerce-lines" aria-label={t.lines}>
-            {items.map((x) => (
-              <CommerceLine key={x.id} item={x} currency={currency} onQuantityChange={onQuantityChange ? (n) => onQuantityChange(x, n) : undefined}
+            {items.map((x: any) => (
+              <CommerceLine key={x.id} item={x} currency={currency} onQuantityChange={onQuantityChange ? (n: any) => onQuantityChange(x, n) : undefined}
                 remove={onRemove ? <DeleteFlow variant="undo" items={[{ id: x.id, label: x.title }]} noun={t.noun}
                   onDelete={() => { onRemove(x); if (!toast) setRemoved(x); }} onRestore={onRestore ? () => onRestore(x) : undefined}
                   trigger={<Button variant="ghost" size="xs" iconOnly icon={TrashIcon} label={fill(t.remove, { title: x.title })} />} /> : null} />
@@ -118,7 +140,7 @@ export function Cart({ items = [], currency = 'USD', onQuantityChange, onRemove,
 
 /* ── payment: the method and the card fields (form UI only) ── */
 // the card's brand from its first digits, and the number in groups as people type it (4 4 4 4, or 4 6 5 for American Express)
-export function cardBrand(number) {
+export function cardBrand(number: string) {
   const d = String(number || '').replace(/\D/g, '');
   if (/^4/.test(d)) return 'visa';
   if (/^(5[1-5]|2[2-7])/.test(d)) return 'mastercard';
@@ -126,25 +148,38 @@ export function cardBrand(number) {
   if (/^(6011|65|64[4-9])/.test(d)) return 'discover';
   return '';
 }
-export function formatCardNumber(number) {
+export function formatCardNumber(number: string) {
   const d = String(number || '').replace(/\D/g, '').slice(0, 19);
   const groups = cardBrand(d) === 'amex' ? [4, 6, 5] : [4, 4, 4, 4, 3];
   const out = []; let i = 0;
   for (const g of groups) { if (i >= d.length) break; out.push(d.slice(i, i + g)); i += g; }
   return out.join(' ');
 }
-const formatExpiry = (v) => { const d = String(v || '').replace(/\D/g, '').slice(0, 4); return d.length > 2 ? d.slice(0, 2) + ' / ' + d.slice(2) : d; };
+const formatExpiry = (v: any) => { const d = String(v || '').replace(/\D/g, '').slice(0, 4); return d.length > 2 ? d.slice(0, 2) + ' / ' + d.slice(2) : d; };
 
-export function PaymentFields({ value = {}, onChange, savedMethods = [], amount, currency = 'USD', billing = true, disabled = false, strings, className }) {
-  const t = useStrings('commerce.pay', strings);
-  const set = (k, v) => { if (onChange) onChange(Object.assign({}, value, { [k]: v })); };
+/** @public the prop type of PaymentFields (ADR 0011) */
+export type PaymentFieldsProps = {
+  value?: Record<string, unknown>;
+  onChange?: (value: Record<string, unknown>) => void;
+  savedMethods?: unknown[];
+  amount?: unknown;
+  currency?: string;
+  billing?: boolean;
+  disabled?: boolean;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function PaymentFields(props: PaymentFieldsProps) {
+  const { value = {}, onChange, savedMethods = [], amount, currency = 'USD', billing = true, disabled = false, strings, className } = props as any;
+  const t: any = useStrings('commerce.pay', strings);
+  const set = (k: any, v: any) => { if (onChange) onChange(Object.assign({}, value, { [k]: v })); };
   const method = value.method || (savedMethods.length ? savedMethods[0].id : 'card');
   const brand = cardBrand(value.number);
   const card = method === 'card';
   return (
     <div className={cx('plx-commerce__payment', className)}>
       {savedMethods.length ? <ChoiceList legend={t.method} value={method} onChange={(m) => set('method', m)}
-        options={savedMethods.map((m) => ({ value: m.id, label: m.label, description: m.description })).concat([{ value: 'card', label: t.newCard }])} /> : null}
+        options={savedMethods.map((m: any) => ({ value: m.id, label: m.label, description: m.description })).concat([{ value: 'card', label: t.newCard }])} /> : null}
       {card ? (
         <>
           <Field label={t.number} description={brand ? t.brands[brand] : t.accepted} required>
@@ -184,20 +219,33 @@ export function PaymentFields({ value = {}, onChange, savedMethods = [], amount,
 }
 
 
-export function Payment({ amount, currency = 'USD', savedMethods, defaultValue, onPay, onCancel, title, strings, className }) {
+/** @public the prop type of Payment (ADR 0011) */
+export type PaymentProps = {
+  amount?: unknown;
+  currency?: string;
+  savedMethods?: unknown;
+  defaultValue?: unknown;
+  onPay?: (details: Record<string, unknown>) => unknown;
+  onCancel?: () => void;
+  title?: React.ReactNode;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function Payment(props: PaymentProps) {
+  const { amount, currency = 'USD', savedMethods, defaultValue, onPay, onCancel, title, strings, className } = props as any;
   useCommercePage('payment');
-  const t = useStrings('commerce.payment', strings);
+  const t: any = useStrings('commerce.payment', strings);
   const [value, setValue] = React.useState(() => Object.assign({ billingSame: true }, defaultValue));
   const [busy, setBusy] = React.useState(false);
   const [error, setError] = React.useState('');
   const lock = React.useRef(false);
   // one submission at a time: Pay turns off and shows its spinner until the page answers; a decline keeps every field
-  const submit = async (e) => {
+  const submit = async (e: any) => {
     e.preventDefault();
     if (lock.current) return;
     lock.current = true; setBusy(true); setError('');
     try { if (onPay) await onPay(value); announce(t.paid); }
-    catch (err) { setError((err && err.message) || t.declinedText); announce(t.declined, { politeness: 'assertive' }); }
+    catch (err: any) { setError((err && err.message) || t.declinedText); announce(t.declined, { politeness: 'assertive' }); }
     finally { lock.current = false; setBusy(false); }
   };
   return (
@@ -216,16 +264,32 @@ export function Payment({ amount, currency = 'USD', savedMethods, defaultValue, 
 
 /* ── checkout: contact, delivery, payment, review ── */
 
-export function Checkout({ items = [], currency = 'USD', deliveryOptions = [], defaultValue, savedMethods, taxRate, discount, onPlaceOrder, onCancel,
-  signInHref, strings, className }) {
+/** @public the prop type of Checkout (ADR 0011) */
+export type CheckoutProps = {
+  items?: unknown[];
+  currency?: string;
+  deliveryOptions?: unknown[];
+  defaultValue?: unknown;
+  savedMethods?: unknown;
+  taxRate?: unknown;
+  discount?: unknown;
+  onPlaceOrder?: (details: Record<string, unknown>) => unknown;
+  onCancel?: () => void;
+  signInHref?: string;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function Checkout(props: CheckoutProps) {
+  const { items = [], currency = 'USD', deliveryOptions = [], defaultValue, savedMethods, taxRate, discount, onPlaceOrder, onCancel,
+  signInHref, strings, className } = props as any;
   useCommercePage('checkout');
-  const t = useStrings('commerce.checkout', strings);
+  const t: any = useStrings('commerce.checkout', strings);
   const [d, setD] = React.useState(() => Object.assign({ email: '', name: '', street: '', street2: '', city: '', region: '', postal: '', country: 'US', phone: '',
     delivery: deliveryOptions.length ? deliveryOptions[0].value : '', payment: { billingSame: true } }, defaultValue));
-  const set = (k) => (e) => setD(Object.assign({}, d, { [k]: e && e.target ? e.target.value : e }));
-  const method = deliveryOptions.find((o) => o.value === d.delivery);
+  const set = (k: any) => (e: any) => setD(Object.assign({}, d, { [k]: e && e.target ? e.target.value : e }));
+  const method = deliveryOptions.find((o: any) => o.value === d.delivery);
   const totals = orderTotals(items, { shipping: method ? method.price : 0, taxRate, discount });
-  const saved = (savedMethods || []).find((m) => m.id === (d.payment.method || (savedMethods && savedMethods.length ? savedMethods[0].id : 'card')));
+  const saved = (savedMethods || []).find((m: any) => m.id === (d.payment.method || (savedMethods && savedMethods.length ? savedMethods[0].id : 'card')));
   const paidWith = saved ? saved.label : d.payment.number ? fill(t.card, { last4: String(d.payment.number).slice(-4) }) : '';
   const steps = [
     { id: 'contact', label: t.contact, content: (
@@ -248,9 +312,9 @@ export function Checkout({ items = [], currency = 'USD', deliveryOptions = [], d
         </div>
         <Field label={t.phone} description={t.phoneHint}><Input type="tel" autoComplete="shipping tel" value={d.phone} onChange={set('phone')} /></Field>
         {deliveryOptions.length ? <RadioGroup label={t.method} value={d.delivery} onChange={(v) => setD(Object.assign({}, d, { delivery: v }))}
-          options={deliveryOptions.map((o) => ({ value: o.value, label: o.label + ' · ' + (o.price ? money(o.price, currency) : t.free), description: o.description }))} /> : null}
+          options={deliveryOptions.map((o: any) => ({ value: o.value, label: o.label + ' · ' + (o.price ? money(o.price, currency) : t.free), description: o.description }))} /> : null}
       </>) },
-    { id: 'payment', label: t.payment, content: <PaymentFields value={d.payment} onChange={(p) => setD(Object.assign({}, d, { payment: p }))} savedMethods={savedMethods} strings={strings} /> },
+    { id: 'payment', label: t.payment, content: <PaymentFields value={d.payment} onChange={(p: any) => setD(Object.assign({}, d, { payment: p }))} savedMethods={savedMethods} strings={strings} /> },
   ];
   const review = (
     <>
@@ -261,7 +325,7 @@ export function Checkout({ items = [], currency = 'USD', deliveryOptions = [], d
         {method ? <PropertyList.Item label={t.method}>{method.label}</PropertyList.Item> : null}
         <PropertyList.Item label={t.payment}>{paidWith}</PropertyList.Item>
       </PropertyList>
-      <ul className="plx-commerce-lines" aria-label={t.items}>{items.map((x) => <CommerceLine key={x.id} item={x} currency={currency} />)}</ul>
+      <ul className="plx-commerce-lines" aria-label={t.items}>{items.map((x: any) => <CommerceLine key={x.id} item={x} currency={currency} />)}</ul>
     </>
   );
   return (
@@ -282,14 +346,31 @@ export function Checkout({ items = [], currency = 'USD', deliveryOptions = [], d
 
 /* ── the order confirmation ── */
 
-export function OrderConfirmation({ orderNumber, email, items = [], currency = 'USD', totals, delivery = {}, steps = [], orderHref, continueHref, headingLevel = 1, autoFocus = true, strings, className }) {
+/** @public the prop type of OrderConfirmation (ADR 0011) */
+export type OrderConfirmationProps = {
+  orderNumber?: unknown;
+  email?: unknown;
+  items?: unknown[];
+  currency?: string;
+  totals?: unknown;
+  delivery?: Record<string, unknown>;
+  steps?: unknown[];
+  orderHref?: string;
+  continueHref?: string;
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+  autoFocus?: boolean;
+  strings?: Record<string, string>;
+  className?: string;
+};
+export function OrderConfirmation(props: OrderConfirmationProps) {
+  const { orderNumber, email, items = [], currency = 'USD', totals, delivery = {}, steps = [], orderHref, continueHref, headingLevel = 1, autoFocus = true, strings, className } = props as any;
   useCommercePage('order-confirmation');
-  const t = useStrings('commerce.confirm', strings);
+  const t: any = useStrings('commerce.confirm', strings);
   const uid = useUid('plx-commerce');
-  const heading = React.useRef(null);
+  const heading = React.useRef<any>(null);
   // the page's heading takes the focus when it opens: the success is the first thing read
   React.useEffect(() => { if (autoFocus && heading.current) heading.current.focus(); }, []);
-  const H = 'h' + Math.min(6, Math.max(1, headingLevel)), H2 = 'h' + Math.min(6, headingLevel + 1);
+  const H: any = 'h' + Math.min(6, Math.max(1, headingLevel)), H2: any = 'h' + Math.min(6, headingLevel + 1);
   return (
     <article className={cx('plx-commerce', 'plx-commerce--confirmation', className)}>
       <header className="plx-commerce__confirmed">
@@ -316,14 +397,14 @@ export function OrderConfirmation({ orderNumber, email, items = [], currency = '
               {delivery.method ? <PropertyList.Item label={t.method}>{delivery.method}</PropertyList.Item> : null}
             </PropertyList>
           ) : null}
-          <ul className="plx-commerce-lines" aria-label={t.items}>{items.map((x) => <CommerceLine key={x.id} item={x} currency={currency} />)}</ul>
+          <ul className="plx-commerce-lines" aria-label={t.items}>{items.map((x: any) => <CommerceLine key={x.id} item={x} currency={currency} />)}</ul>
           <span className="plx-commerce__links">
             {orderHref ? <Link href={orderHref} variant="standalone">{t.view}</Link> : null}
             {continueHref ? <Link href={continueHref} variant="standalone">{t.continue}</Link> : null}
           </span>
         </div>
         <aside className="plx-commerce__aside" aria-label={t.items}>
-          <OrderSummary items={items} currency={currency} totals={totals} headingLevel={Math.min(6, headingLevel + 1)} />
+          <OrderSummary items={items} currency={currency} totals={totals} headingLevel={Math.min(6, headingLevel + 1) as 1 | 2 | 3 | 4 | 5 | 6} />
         </aside>
       </div>
     </article>
