@@ -6597,5 +6597,95 @@
   "range-slider--kind-range-two-thumbs": {
     "sets": [],
     "why": "markup only: a minimum and a maximum, with the part between them filled"
+  },
+  "search-input--variants-on-the-page": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "input",
+        "token": "--plx-comp-search-input-background"
+      },
+      {
+        "property": "border-color",
+        "part": "input",
+        "token": "--plx-comp-search-input-border-color"
+      },
+      {
+        "property": "color",
+        "part": "input",
+        "token": "--plx-comp-search-input-text"
+      },
+      {
+        "property": "min-block-size",
+        "part": "input",
+        "token": "--plx-comp-search-input-min-height"
+      },
+      {
+        "property": "border-radius",
+        "part": "input",
+        "token": "--plx-comp-search-input-radius"
+      },
+      {
+        "property": "color",
+        "part": "icon",
+        "token": "--plx-comp-search-icon-text"
+      }
+    ],
+    "why": ".plx-search-field input and icon in search-field.css: the field on a page or a toolbar surface"
+  },
+  "search-input--variants-on-the-accent-header": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "input",
+        "token": "--plx-comp-search-on-accent-input-background"
+      },
+      {
+        "property": "border-color",
+        "part": "input",
+        "token": "--plx-comp-search-on-accent-input-border-color"
+      },
+      {
+        "property": "color",
+        "part": "input",
+        "token": "--plx-comp-search-on-accent-input-text"
+      },
+      {
+        "property": "color",
+        "part": "input-placeholder",
+        "token": "--plx-comp-search-on-accent-input-placeholder-text"
+      },
+      {
+        "property": "color",
+        "part": "icon",
+        "token": "--plx-comp-search-on-accent-icon-text"
+      }
+    ],
+    "why": "the on-accent roles in search-field.css: the field in the colors of the accent header"
+  },
+  "range-slider--kind-with-marks": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "mark",
+        "token": "--plx-comp-slider-mark-text"
+      },
+      {
+        "property": "font-family",
+        "part": "mark",
+        "token": "--plx-comp-slider-mark-font-family"
+      },
+      {
+        "property": "font-size",
+        "part": "mark",
+        "token": "--plx-comp-slider-mark-font-size"
+      },
+      {
+        "property": "block-size",
+        "part": "marks",
+        "token": "--plx-comp-slider-mark-line-height"
+      }
+    ],
+    "why": ".plx-slider__mark and .plx-slider__marks in slider.css: labeled values under the track, in the data font, centered on their place"
   }
 }
