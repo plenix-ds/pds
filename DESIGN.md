@@ -168,6 +168,8 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 - **A pill never wraps.** One line (`white-space: nowrap`). When it is too wide, its text ends in an ellipsis and its icon stays.
 - **Pills in a row have equal height** (check 11). Every boxed pill (soft or solid) in a row uses the same height token (`data-pill-min-height` or `data-pill-md-height`). The `plain` variant has no box: it is a name in running text, so it keeps `min-block-size: 0` and is not measured.
 - A status pill always has its icon.
+- **Pills in a grid column share one width** (owner rule, uniform pills): every standard pill in a column is as wide as the column's widest pill in the current view, person pills included. The column's sizing (D-0087) never shrinks a pill below that width.
+- **A pill's label is start-aligned** (D-0087, owner, 2026-11-07: "text should not be centered"): its icon, then its text from the inline-start, never centred in a wider pill. A cut label ends in an ellipsis with the full text in the Tooltip.
 
 ### Charts
 
