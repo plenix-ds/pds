@@ -11,7 +11,7 @@
          <ViewMenu {...v.viewProps} /></>} />
      <DataGrid label="Assets" data={rows} columns={columns} {...v.tableProps} />
    Props:
-     fields: the collection's fields (utils/fields.ts)
+     fields: the collection's fields (utils/fields.ts); R, the row type, comes from fields' get(row) or options.data (#923)
      options.data: optional source rows for immediate facet counts; otherwise the ready DataGrid supplies its data
      options.text(row): the text the search looks in (without it there is no search)
      options.quick: the quick filters, by field: "list" (the row's value is one of the chosen) | "date" (a date range), or { kind: "single", required: true }.
@@ -37,6 +37,9 @@ import { matchesFilter, matchesDate, valueOf, fieldOf, DATE_PRESETS, blank } fro
 import type { Field, Filter, FilterItem, SortLevel, DateRange } from '../utils/fields.ts';
 
 type Row = Record<string, unknown>;
+// R is read from options.data (or given: useCollectionView<Row>), never from fields: a plain Field[] would make it `object` (#923).
+// NoInfer, written so TypeScript before 5.4 reads it too
+type Later<R> = [R][R extends unknown ? 0 : never];
 /** @public a sort or group level; interval is GroupPanel's (one type with GroupLevel, #893) */
 export type CollectionLevel = SortLevel & { hideEmpty?: boolean; interval?: 'day' | 'week' | 'month' | 'year'; range?: number };
 export type CollectionColumns = { order: string[]; hidden: string[] };
@@ -65,8 +68,9 @@ type ViewPatch = {
 };
 
 
-export function useCollectionView<R extends object = Row>(fields: Field[], typedOptions: CollectionViewOptions<R> = {}) {
-  // the hook reads every row as a plain record; R only types what the app passes in
+export function useCollectionView<R extends object = Row>(typedFields: Field<Later<R>>[], typedOptions: CollectionViewOptions<R> = {}) {
+  // the hook reads every row as a plain record; R only types what the app passes in and gets back (#923)
+  const fields = typedFields as unknown as Field[];
   const options = typedOptions as unknown as CollectionViewOptions;
   const config = (key: string): QuickConfig => typeof (options.quick || {})[key] === 'string' ? { kind: options.quick![key] as QuickKind } : (options.quick || {})[key] as QuickConfig || {};
   const choices = (key: string) => config(key).options || (fields.find(field => field.value === key) || {} as Partial<Field>).options || [];
@@ -145,8 +149,8 @@ export function useCollectionView<R extends object = Row>(fields: Field[], typed
     for (const g of group) if (g.hideEmpty) { const f = fieldOf(fs, g.field); if (blank(f ? valueOf(f, row) : row[g.field])) return false; }
     return true;
   }, [search, filter, quick, group]);
-  const test = React.useCallback((row: Row) => testExcept(row), [testExcept]);
-  const source = Array.isArray(options.data) ? options.data : tableRows;
+  const test = React.useCallback((row: R) => testExcept(row as unknown as Row), [testExcept]);
+  const source: Row[] | null = Array.isArray(options.data) ? options.data : tableRows;
   const facets = new Map<string, Map<unknown, number>>();
   const countsFor = (key: string): Map<unknown, number> | undefined => {
     if (!source) return undefined;
@@ -173,7 +177,7 @@ export function useCollectionView<R extends object = Row>(fields: Field[], typed
   const sorters = group.map((g): CollectionLevel => ({ field: g.field, dir: g.dir || 'asc' })).concat(sort.filter((s) => !group.some((g) => g.field === s.field)));
   return {
     search, filter, quick, sort, group, columns, view, reset, setSearch, setFilter, setQuick, setSort, setGroup, setColumns, setView, test, table,
-    count: (rows: Row[]) => rows.filter(test).length,
+    count: (rows: R[]) => rows.filter(test).length,
     searchProps: { value: search, onChange: (e: { target: { value: string } }) => setSearch(e.target.value), onClear: () => setSearch('') },
     filterProps: { fields, value: filter, onChange: setFilter, open: filterOpen, onOpenChange: setFilterOpen, request: filterRequest },
     quickProps: (k: string) => ({ kind: config(k).kind || 'list', required: !!config(k).required, value: quick[k] || (config(k).kind === 'date' ? { preset: 'any', from: '', to: '' } : []), onChange: (v: CollectionQuickValue) => setQuick(k, v), counts: countsFor(k) }),
@@ -189,7 +193,7 @@ export function useCollectionView<R extends object = Row>(fields: Field[], typed
 // the names 0.90.x published for this hook (from the old useCollectionView.types.d.ts), kept so apps that import them
 // compile (#894): one type each with what the hook really takes and returns
 /** @public a collection's field (the same Field the panels take) */
-export type CollectionField<R extends object = Row> = Field;
+export type CollectionField<R extends object = Row> = Field<R>;
 /** @public the collection's filter */
 export type CollectionFilter = Filter;
 /** @public what useCollectionView returns */
