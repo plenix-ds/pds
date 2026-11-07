@@ -265,7 +265,7 @@ const R = path.join(PKG, 'react');
 // @plenix-ds/react's JavaScript, built by Vite in library mode (#709, step 5; vite.packages.config.mjs), one run per build:
 //   cdn  release/cdn/<v>/plenix.esm.js: the ES module as one file (unchanged): it knows its own address (#284), so Icon finds
 //        the icon files beside it, whatever the file is called
-//   esm  the npm package's ES modules, one per part (#685, the audit #684): an entry for each module platform/index.js
+//   esm  the npm package's ES modules, one per part (#685, the audit #684): an entry for each module platform/index.ts
 //        exports from, at its own path, and the barrel dist/index.js; the code two parts share sits once in dist/chunks/, so
 //        an application that imports one part bundles that part and what it uses. What loads only when asked (#702) is in
 //        these ES modules only: Arabic (import '@plenix-ds/react/i18n/ar', dist/i18n/ar.js) and the icon names (a chunk of

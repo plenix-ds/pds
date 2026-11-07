@@ -1,5 +1,5 @@
 // Plenix tests · the test site uses the whole Platform (owner, 2026-10-25: "a dummy site that utilizes all the defined pages,
-// controls, components"). Every public export of platform/index.js that draws something (a component, pattern, page
+// controls, components"). Every public export of platform/index.ts that draws something (a component, pattern, page
 // template or provider: a name that starts with a capital letter) and every hook an application calls itself (APP_HOOKS)
 // must be imported by the St. John the Beloved test site (its repository's site/**/*.jsx, tests/site.js) and used there. Not required: data, plain
 // functions and constants (formatDate, DATA_COLORS), and the building hooks the components are made of.
@@ -15,7 +15,7 @@ if (!fs.existsSync(SITE)) { console.log('SITE_COVERAGE_FAIL the St. John test si
 const read = (f) => fs.readFileSync(f, 'utf8');
 const site = require('./site.js');
 
-// the public names: export { A, B as C } from '…' in platform/index.js (with the generated library block)
+// the public names: export { A, B as C } from '…' in platform/index.ts (with the generated library block)
 const names = [];
 for (const m of read(path.join(ROOT, 'platform', 'index.ts')).matchAll(/export\s*\{([^}]*)\}\s*from\s*'([^']+)'/g)) {
   m[1].split(',').map((x) => x.trim().split(/\s+as\s+/).pop()).filter(Boolean).forEach((n) => names.push({ name: n, from: m[2] }));
