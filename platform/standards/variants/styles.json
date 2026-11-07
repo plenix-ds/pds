@@ -6687,5 +6687,55 @@
       }
     ],
     "why": ".plx-slider__mark and .plx-slider__marks in slider.css: labeled values under the track, in the data font, centered on their place"
+  },
+  "chip--selection-not-selected-default": {
+    "sets": [
+      {
+        "property": "border-color",
+        "part": "block",
+        "token": "--plx-comp-chip-border-color"
+      },
+      {
+        "property": "border-width",
+        "part": "block",
+        "token": "--plx-comp-chip-border-width"
+      }
+    ],
+    "why": ".plx-tag.plx-tag--chip in tag.css: the chip before it is chosen, with its border; the selected state replaces the fill and border"
+  },
+  "tag--editing-renamable-click-the-text-type-enter": {
+    "sets": [
+      {
+        "property": "outline-color",
+        "part": "rename",
+        "token": "--plx-comp-tag-rename-focus-outline-color"
+      },
+      {
+        "property": "outline-width",
+        "part": "rename",
+        "token": "--plx-comp-tag-rename-focus-outline-width"
+      },
+      {
+        "property": "outline-offset",
+        "part": "rename",
+        "token": "--plx-comp-tag-rename-focus-outline-offset"
+      }
+    ],
+    "why": ".plx-tag__rename in tag.css: the tag text is a button that turns the tag into a small field (underline on hover, focus ring); Enter or leaving keeps the new text, Escape cancels"
+  },
+  "presence--every-size-xl-48px": {
+    "sets": [
+      {
+        "property": "border-width",
+        "part": "dot",
+        "token": "--plx-comp-avatar-presence-ring-width"
+      },
+      {
+        "property": "border-color",
+        "part": "dot",
+        "token": "--plx-comp-avatar-presence-ring-color"
+      }
+    ],
+    "why": ".plx-avatar__presence in avatar.css: from 40px the dot is 12px or 16px with a ring in the surface color, and carries the availability's shape"
   }
 }
