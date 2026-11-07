@@ -1,0 +1,9 @@
+id: D-0104
+date: 2026-11-07
+area: security
+decided_by: agent (pds1-ds-architect) at G3, owner may switch
+decision: 'Plenix uses two Trusted Types policies, each private to its bundle: "plenix" (HTML parsing into an inert document) and "plenix-engines" (the vendor script URL, same origin as plenix-engines.js only). No policy is put on window. New exports iconNode and cleanRichTextNodes (ADR 0031).'
+why: 'RedSave P-47 (#940): pages that enforce Trusted Types. PR #945 shared a pass-through createHTML policy on window.PlenixTrustedTypes, which any script could use to bypass Trusted Types, and its script-URL rule ignored the origin.'
+options: ['two private policies, no global (chosen)', 'one policy on a global', 'one global with createScriptURL only']
+status: active
+check: 'tests/trusted-types-940.test.js (no global; cross-origin script URL refused; no violation under the CSP); the Ownership check'
