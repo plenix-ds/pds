@@ -10,7 +10,8 @@
 #   build (npm ci builds; release:build steps) -> one version everywhere + CDN immutability (tools/publish/preflight.mjs)
 #   -> bundle budgets (check-bundle.js) -> declarations resolve inside the archive, CDN folder and react package
 #   (tools/publish/dts-closure.cjs, #894) -> the packed @plenix-ds/react typechecks on its own, strict tsc, no CDN fetch
-#   (tools/publish/react-types-fixture.sh, #935) -> no remote addresses in the shipped scripts (tools/publish/no-remote-code.mjs) -> SHA256SUMS + version.json (tools/publish/manifest.mjs, verified with sha256sum -c)
+#   (tools/publish/react-types-fixture.sh, #935) -> an app runs the site-icon tool from npm and the archive
+#   (tools/publish/site-icons-fixture.sh, #941) -> no remote addresses in the shipped scripts (tools/publish/no-remote-code.mjs) -> SHA256SUMS + version.json (tools/publish/manifest.mjs, verified with sha256sum -c)
 #   -> next latest.json with every field and the pins kept (tools/publish/latest.mjs, against the live file)
 #   -> npm publish --dry-run of the four packages -> negative proof: the current version is refused as already published
 #   -> the live CDN check (tools/check-live-cdn.js, sampled) still works against the live release
@@ -143,6 +144,11 @@ jobs:
 
       - name: The packed @plenix-ds/react typechecks on its own, strict tsc with no CDN fetch (#935)
         run: bash tools/publish/react-types-fixture.sh release/packages/react
+
+      - name: An app runs the site-icon tool from npm and from the archive (#941)
+        env:
+          DRY: ${{ steps.v.outputs.dry }}
+        run: bash tools/publish/site-icons-fixture.sh "$DRY"
 
       - name: No remote addresses in the shipped scripts (MV3 extensions; #150)
         env:

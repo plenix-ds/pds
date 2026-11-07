@@ -10,7 +10,8 @@
 // They load nothing else, so they work offline and from file://. <Icon name> keeps working without them (until 5c).
 //
 //   node tools/icons/site-icons.js <site> <folder or file> [<folder or file> …] [--out <folder>] [--allow-unknown]
-//   npx plenix-site-icons <site> <folder or file> […]   the same tool from @plenix-ds/icons (no Plenix checkout): every
+//   npx plenix-site-icons <site> <folder or file> […]   the same tool from @plenix-ds/icons (no Plenix checkout), or
+//     node tools/site-icons.cjs <site> … from the CDN folder or its archive (one file, no install; #941): every
 //     Plenix icon and the Material symbols the package ships in svg/; another Material Symbols name is reported unknown
 //     <site>: the file's name (plenix-icons-<site>.js): lowercase letters, digits and dashes
 //     reads .js, .jsx, .mjs, .cjs, .ts, .tsx, .mts, .cts, .html and .htm (folders recursively; node_modules, dist, vendor and dot folders skipped)
@@ -38,7 +39,8 @@ const DATA = path.join(__dirname, 'site-icons.json');
 const PACKAGED = fs.existsSync(DATA);
 const layout = PACKAGED ? null : require(path.join(ROOT, 'platform/icons/layout.js'));
 const uses = PACKAGED ? require('./uses.cjs') : require(path.join(ROOT, 'platform/icons/uses.js'));
-const COMMAND = PACKAGED ? 'npx plenix-site-icons' : 'node tools/icons/site-icons.js';
+// the CDN archive ships the same tool as one file, tools/site-icons.cjs, with @babel/parser bundled in (#941)
+const COMMAND = !PACKAGED ? 'node tools/icons/site-icons.js' : /[\\/]node_modules[\\/]/.test(__dirname) ? 'npx plenix-site-icons' : 'node tools/site-icons.cjs';
 
 const HEADER = 'GENERATED FILE — DO NOT EDIT';
 const COMPAT = 'platform/dist/plenix-icons-plenix.js';
