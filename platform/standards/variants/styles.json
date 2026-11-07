@@ -5212,7 +5212,7 @@
         "token": "--plx-comp-retry-status-margin-block-start"
       }
     ],
-    "why": "retry.css: .plx-retry__status holds the countdown (\"Retrying in \u2026\") while the next attempt waits"
+    "why": "retry.css: .plx-retry__status holds the countdown (\"Retrying in …\") while the next attempt waits"
   },
   "retry-pattern--kind-retry-count": {
     "sets": [
@@ -6584,18 +6584,174 @@
   },
   "product-switcher--name-the-application-name-default": {
     "sets": [],
-    "why": "markup only: Plenix and the application name with a chevron, which opens the applications"
+    "why": "AppHeader draws it: .plx-app-header__brand--switch with __name, __product and __app in app-header.css, Plenix over the application name with a chevron that opens the applications"
   },
   "product-switcher--name-a-brand-mark-before-the-name": {
     "sets": [],
-    "why": "markup only: the Plenix mark before the name, as tall as its two lines"
+    "why": "AppHeader draws it: the BrandMark before .plx-app-header__name in .plx-app-header__brand (app-header.css), as tall as the name's two lines"
   },
   "permission-summary--form-can-and-cannot-lists-default": {
-    "sets": [],
-    "why": "markup only: the access line, then Can and Cannot lists side by side (stacked when narrow), each a small heading over its checks or crosses"
+    "sets": [
+      {
+        "property": "column-gap",
+        "part": "lists",
+        "token": "--plx-comp-permission-summary-lists-gap"
+      },
+      {
+        "property": "grid-template-columns",
+        "part": "lists",
+        "token": "--plx-comp-permission-summary-section-min-width"
+      },
+      {
+        "property": "row-gap",
+        "part": "lists",
+        "token": "--plx-comp-permission-summary-gap"
+      }
+    ],
+    "why": ".plx-permission-summary__lists in permission-summary.css: the Can and Cannot lists side by side in auto-fit columns of the section minimum width, stacked when narrow"
   },
   "range-slider--kind-range-two-thumbs": {
     "sets": [],
-    "why": "markup only: a minimum and a maximum, with the part between them filled"
+    "why": "Slider draws it: .plx-slider__fill in slider.css fills the part between the minimum and maximum thumbs"
+  },
+  "search-input--variants-on-the-page": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "input",
+        "token": "--plx-comp-search-input-background"
+      },
+      {
+        "property": "border-color",
+        "part": "input",
+        "token": "--plx-comp-search-input-border-color"
+      },
+      {
+        "property": "color",
+        "part": "input",
+        "token": "--plx-comp-search-input-text"
+      },
+      {
+        "property": "min-block-size",
+        "part": "input",
+        "token": "--plx-comp-search-input-min-height"
+      },
+      {
+        "property": "border-radius",
+        "part": "input",
+        "token": "--plx-comp-search-input-radius"
+      },
+      {
+        "property": "color",
+        "part": "icon",
+        "token": "--plx-comp-search-icon-text"
+      }
+    ],
+    "why": ".plx-search-field input and icon in search-field.css: the field on a page or a toolbar surface"
+  },
+  "search-input--variants-on-the-accent-header": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "input",
+        "token": "--plx-comp-search-on-accent-input-background"
+      },
+      {
+        "property": "border-color",
+        "part": "input",
+        "token": "--plx-comp-search-on-accent-input-border-color"
+      },
+      {
+        "property": "color",
+        "part": "input",
+        "token": "--plx-comp-search-on-accent-input-text"
+      },
+      {
+        "property": "color",
+        "part": "input-placeholder",
+        "token": "--plx-comp-search-on-accent-input-placeholder-text"
+      },
+      {
+        "property": "color",
+        "part": "icon",
+        "token": "--plx-comp-search-on-accent-icon-text"
+      }
+    ],
+    "why": "the on-accent roles in search-field.css: the field in the colors of the accent header"
+  },
+  "range-slider--kind-with-marks": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "mark",
+        "token": "--plx-comp-slider-mark-text"
+      },
+      {
+        "property": "font-family",
+        "part": "mark",
+        "token": "--plx-comp-slider-mark-font-family"
+      },
+      {
+        "property": "font-size",
+        "part": "mark",
+        "token": "--plx-comp-slider-mark-font-size"
+      },
+      {
+        "property": "block-size",
+        "part": "marks",
+        "token": "--plx-comp-slider-mark-line-height"
+      }
+    ],
+    "why": ".plx-slider__mark and .plx-slider__marks in slider.css: labeled values under the track, in the data font, centered on their place"
+  },
+  "chip--selection-not-selected-default": {
+    "sets": [
+      {
+        "property": "border-color",
+        "part": "block",
+        "token": "--plx-comp-chip-border-color"
+      },
+      {
+        "property": "border-width",
+        "part": "block",
+        "token": "--plx-comp-chip-border-width"
+      }
+    ],
+    "why": ".plx-tag.plx-tag--chip in tag.css: the chip before it is chosen, with its border; the selected state replaces the fill and border"
+  },
+  "tag--editing-renamable-click-the-text-type-enter": {
+    "sets": [
+      {
+        "property": "outline-color",
+        "part": "rename",
+        "token": "--plx-comp-tag-rename-focus-outline-color"
+      },
+      {
+        "property": "outline-width",
+        "part": "rename",
+        "token": "--plx-comp-tag-rename-focus-outline-width"
+      },
+      {
+        "property": "outline-offset",
+        "part": "rename",
+        "token": "--plx-comp-tag-rename-focus-outline-offset"
+      }
+    ],
+    "why": ".plx-tag__rename in tag.css: the tag text is a button that turns the tag into a small field (underline on hover, focus ring); Enter or leaving keeps the new text, Escape cancels"
+  },
+  "presence--every-size-xl-48px": {
+    "sets": [
+      {
+        "property": "border-width",
+        "part": "dot",
+        "token": "--plx-comp-avatar-presence-ring-width"
+      },
+      {
+        "property": "border-color",
+        "part": "dot",
+        "token": "--plx-comp-avatar-presence-ring-color"
+      }
+    ],
+    "why": ".plx-avatar__presence in avatar.css: from 40px the dot is 12px or 16px with a ring in the surface color, and carries the availability's shape"
   }
 }

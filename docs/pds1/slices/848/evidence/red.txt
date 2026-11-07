@@ -1,0 +1,6 @@
+AssertionError [ERR_ASSERTION]: rtl 1500px: applicant labels start at the same place in their pills (not centered), got [48.7,40.7,43.5,5.1,72.2,43.3]
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
