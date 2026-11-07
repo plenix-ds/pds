@@ -36,4 +36,5 @@ Owner: `pds1-ds-architect`. Gate G3 (plan §5) reads these files.
 | [0022](0022-datagrid-row-actions-inline.md) | DataGrid shows row actions as icons on hover (`inline` on a row menu item) | accepted |
 | [0023](0023-appshell-frame.md) | AppShell `frame`: the full window, or a centered frame a person can expand | accepted |
 | [0025](0025-datagrid-column-description.md) | DataGrid column `description`: the header's tooltip and accessible description | accepted |
+| [0026](0026-generic-choice-values.md) | Choice controls are generic over their option values | accepted |
 | [0027](0027-textarea-label.md) | Textarea `label`: its accessible name when nothing else names it | accepted |

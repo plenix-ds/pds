@@ -44,7 +44,7 @@ import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { formatLocale } from '../../utils/format.ts';
 import { Combobox } from '../Combobox/Combobox.tsx';
-import type { ComboboxProps } from '../Combobox/Combobox.tsx';
+import type { ComboboxProps, ComboValue } from '../Combobox/Combobox.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import type { Catalog } from '../../providers/LocaleProvider.tsx';
 
@@ -90,7 +90,9 @@ function countryOptions({ type = 'country', locale, only, ownNames, flags = fals
   }).sort((a, b) => collator.compare(a.sort, b.sort));
 }
 
-export type CountrySelectProps = Omit<ComboboxProps, 'options' | 'loadOptions' | 'loadDelay' | 'value' | 'values' | 'multiple' | 'strings'> & {
+export type CountrySelectProps = Omit<ComboboxProps, 'options' | 'loadOptions' | 'loadDelay' | 'value' | 'values' | 'multiple' | 'strings' | 'onChange'> & {
+  /** the chosen code ('' when cleared); unchanged by #925 */
+  onChange: (value: ComboValue | ComboValue[]) => void;
   /** what it lists: countries and regions, languages, or locales */
   type?: CountrySelectType;
   /** a code ("PT", "pt", "pt-PT") */

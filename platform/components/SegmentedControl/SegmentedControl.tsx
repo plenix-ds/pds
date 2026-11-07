@@ -78,11 +78,12 @@ function useFold(frameRef: React.RefObject<HTMLDivElement | null>, groupRef: Rea
   return enabled && folded;
 }
 
-export type SegmentedOption = { value: string | number; label?: React.ReactNode; icon?: IconValue; ariaLabel?: string };
-export type SegmentedControlProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> & {
-  options: SegmentedOption[];
-  value?: string | number;
-  onChange: (value: string | number) => void;
+/** @public V is the option values' type: onChange hands back the values it was given (#925) */
+export type SegmentedOption<V extends string | number = string | number> = { value: V; label?: React.ReactNode; icon?: IconValue; ariaLabel?: string };
+export type SegmentedControlProps<V extends string | number = string | number> = Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> & {
+  options: SegmentedOption<V>[];
+  value?: V;
+  onChange: (value: V) => void;
   /** the accessible name of the group */
   label?: string;
   size?: 'md' | 'sm';
@@ -90,7 +91,7 @@ export type SegmentedControlProps = Omit<React.HTMLAttributes<HTMLDivElement>, '
   fold?: 'auto' | 'never';
   readOnly?: boolean;
 };
-export function SegmentedControl({ options, value, onChange, label, size = 'md', fold = 'auto', readOnly, className, ...rest }: SegmentedControlProps) {
+export function SegmentedControl<V extends string | number = string | number>({ options, value, onChange, label, size = 'md', fold = 'auto', readOnly, className, ...rest }: SegmentedControlProps<V>) {
   devWarn('SegmentedControl', { size, fold }, { size: ['md','sm'], fold: ['auto','never'] });
   const locked = useReadOnly(readOnly);
   const refs = React.useRef<Array<HTMLButtonElement | null>>([]);
