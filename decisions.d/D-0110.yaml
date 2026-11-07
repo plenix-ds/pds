@@ -1,0 +1,9 @@
+id: D-0110
+date: 2026-11-07
+area: design
+decided_by: owner (2026-11-07, via CTM D-0055; plenix-ds/pds#946)
+decision: 'A page section heading (the heading above a table or content block, outside a card) uses the same style as the card heading of D-0106 (14px bold, secondary ink, UPPERCASE, with its icon), through the same text-card-heading tokens, so the two can never drift apart.'
+why: 'Owner, 2026-11-07 (relayed by CTM): section headings must match the card heading.'
+options: ['share the card-heading style and tokens (chosen)']
+status: active
+check: 'planned:section-heading-matches-card (the computed type of SectionHeading equals the card heading''s, light and dark; #946)'
