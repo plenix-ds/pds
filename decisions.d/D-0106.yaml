@@ -1,0 +1,9 @@
+id: D-0106
+date: 2026-11-07
+area: design
+decided_by: owner (2026-11-07, via CTM's study, CTM D-0050; plenix-ds/pds#946)
+decision: 'Read-only fields and card headings, Plenix defaults: card heading 14px bold UPPERCASE in secondary ink with its icon, a soft vertical glow from the card top to the heading line in the field tint, and a divider inset to the card padding; group headings 13px medium gold, sentence case, no line, 40px above each group; field label 11px regular brand navy, sentence case; value 13px semibold secondary ink; each read-only field on a porcelain tile (a very soft warm neutral) with a 1px border in a deeper shade of the same tint; status as a badge. Label lighter than value; label and value at least 4.5:1 on the tile; no two levels identical; dark mode gets matching tokens. 11px and 13px are an owner-approved exception to the 12px type floor, for these two read-only roles only.'
+why: 'Owner, 2026-11-07: chose the ★ preset of the read-only field study after iterating on a CTM case page, and kept 11/13px knowing the study flags them ("final"). Replaces the Fluent 2 field (option B) applied earlier on #946 under D-0078: the owner''s explicit choice wins.'
+options: ['the owner''s ★ preset (chosen)', 'Fluent 2 field, option B (applied before, replaced)', 'property list, option C']
+status: active
+check: 'planned:read-only-field-roles (visual baselines at 1366 and 1920, plus a contrast check of label and value on the tile >= 4.5:1, light and dark; #946)'
