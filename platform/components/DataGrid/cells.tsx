@@ -16,7 +16,7 @@ import { Tag } from '../Tag/Tag.tsx';
 import { Tooltip } from '../Tooltip/Tooltip.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import { DataPill } from '../DataPill/DataPill.tsx';
-import { formatBytes, formatDate, parseDate } from '../../utils/format.ts';
+import { formatBytes, formatDate, parseDate, instantOf } from '../../utils/format.ts';
 import { Isolate } from '../Isolate/Isolate.tsx';
 import { localDigits } from '../../utils/digits.ts';
 import { useBarFit } from '../../utils/barFit.ts';
@@ -60,14 +60,14 @@ export function CellValue({ column, value: given, strings, record, pill = false,
     const isPerson = column.type === 'person' || kinds.includes('avatar-name');
     const person = isPerson && typeof value === 'object' ? value : null;
     const own = typeof column.pill === 'function' ? column.pill(value, record) || {} : {};
-    const text = column.type === 'bytes' ? formatBytes(Number(value)) : column.type === 'date' && parseDate(value) ? formatDate(value) : person ? (person.name || person.label || '') : valueText(value);
+    const text = column.type === 'bytes' ? formatBytes(Number(value)) : column.type === 'date' && parseDate(value, { timestamp: column.timestamp as any }) ? formatDate(instantOf(value, column.timestamp as any) as any) : person ? (person.name || person.label || '') : valueText(value);
     return <DataPill size="md" data-plx-pill-field={pillField} tone={own.tone} variant={own.variant} icon={own.icon || (isPerson ? undefined : icon)} person={isPerson} gender={own.gender || (person ? person.gender : undefined)}
       data={own.data !== undefined ? own.data : kinds.includes('data') || DATA_TYPES.includes(column.type)} kind={kinds.includes('id') ? 'id' : undefined} fill={own.fill}>{text}</DataPill>;
   }
   if (value === null || value === undefined || value === '') return <span className={own+(kinds.includes('deleted')?' '+block+'__deleted':'')}>{column.empty??(kinds.includes('deleted')?strings?.deleted||'Deleted':'')}</span>;
   if (column.type === 'bytes') return <span className={own}>{formatBytes(Number(value))}</span>;
   // a date column reads a Date, a timestamp or a bare "YYYY-MM-DD" as the viewer's local calendar day (issue 161)
-  if (column.type === 'date' && parseDate(value)) return <span className={own}>{localDigits(formatDate(value))}</span>;
+  if (column.type === 'date' && parseDate(value, { timestamp: column.timestamp as any })) return <span className={own}>{localDigits(formatDate(instantOf(value, column.timestamp as any) as any))}</span>;
   if (kinds.includes('deleted')) return <span className={`${own} ${block}__deleted`}>{valueText(value)}</span>;
   if (kinds.includes('avatar-name')) { const person = typeof value === 'object' ? value : { name: String(value) }, name=person.name||person.label||''; return <span className={`${block}__rich`}><Avatar name={name} src={person.src} size="2xs" aria-hidden="true" /><span className={own}>{name}</span></span>; }
   if (kinds.includes('tags')) return <TagsCell tags={[].concat(value)} block={block} />;

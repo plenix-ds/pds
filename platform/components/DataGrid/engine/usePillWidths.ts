@@ -21,7 +21,7 @@ import { gridStep, snapToGrid } from '../../../utils/grid.ts';
 import { kinds, typeOf } from './helpers.tsx';
 import { valueAt } from '../state.ts';
 import { valueText } from '../cells.tsx';
-import { formatBytes, formatDate, parseDate } from '../../../utils/format.ts';
+import { formatBytes, formatDate, parseDate, instantOf } from '../../../utils/format.ts';
 import type { GridColumn } from '../types.ts';
 
 type PillRow = { original?: Record<string, unknown> };
@@ -82,7 +82,7 @@ export function usePillWidths({ frame, cells, metrics, columns, allRows, showTyp
         const v = valueAt(r.original, c.field);
         if (v == null || v === '') return;
         // the text the pill draws (cells.tsx): a size as "4.1 kB", a date as its short form, never the raw number or timestamp
-        const text = c.type === 'bytes' && Number.isFinite(Number(v)) ? formatBytes(Number(v)) : c.type === 'date' && parseDate(v) ? formatDate(v as any) : valueText(v);
+        const text = c.type === 'bytes' && Number.isFinite(Number(v)) ? formatBytes(Number(v)) : c.type === 'date' && parseDate(v, { timestamp: c.timestamp as any }) ? formatDate(instantOf(v, c.timestamp as any) as any) : valueText(v);
         widest = Math.max(widest, ctx.measureText(text).width * scale);
       });
       if (!widest) return;

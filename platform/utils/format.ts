@@ -108,7 +108,12 @@ export const FORMATS: FormatsStandard = {
 
 const ok = (n: unknown): n is number => typeof n === 'number' && isFinite(n);
 // A date-only value is a calendar date in the reader's zone, not midnight UTC (DT-7).
-export function parseDate(d: unknown): Date | null {
+/** how a numeric timestamp counts: milliseconds (default) or seconds (Unix time); never guessed from the number's size (ADR 0028) */
+export type Timestamp = 'ms' | 's';
+// a numeric timestamp in seconds as milliseconds; every other value is unchanged
+export const instantOf = (d: unknown, timestamp?: Timestamp): unknown => (timestamp === 's' && typeof d === 'number' ? d * 1000 : d);
+export function parseDate(d: unknown, options?: { timestamp?: Timestamp }): Date | null {
+  d = instantOf(d, options && options.timestamp);
   if (typeof d === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(d)) {
     const [year, month, day] = d.split('-').map(Number), x = new Date(0);
     x.setFullYear(year, month - 1, day); x.setHours(0, 0, 0, 0);

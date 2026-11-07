@@ -139,7 +139,7 @@ export function useCollectionView<R extends object = Row>(fields: Field[], typed
     for (const k of Object.keys(o.quick || {})) {
       if (k === except) continue;
       const f = fieldOf(fs, k), v = f ? valueOf(f, row) : row[k], chosen = quick[k] as unknown[];
-      if ((typeof o.quick![k] === 'string' ? o.quick![k] : (o.quick![k] as QuickConfig).kind) === 'date') { if (!matchesDate(chosen as DateRange, v, o.today, f && f.unit)) return false; }
+      if ((typeof o.quick![k] === 'string' ? o.quick![k] : (o.quick![k] as QuickConfig).kind) === 'date') { if (!matchesDate(chosen as DateRange, v, o.today, f && f.timestamp)) return false; }
       else if (chosen && chosen.length && !([] as unknown[]).concat(v).some((x) => chosen.indexOf(x) >= 0)) return false;
     }
     for (const g of group) if (g.hideEmpty) { const f = fieldOf(fs, g.field); if (blank(f ? valueOf(f, row) : row[g.field])) return false; }
@@ -154,7 +154,7 @@ export function useCollectionView<R extends object = Row>(fields: Field[], typed
     const counts = new Map<unknown, number>(), field = fields.find((f) => f.value === key);
     const rows = source.filter((row) => testExcept(row, key));
     if (config(key).kind === 'date') {
-      (DATE_PRESETS as { value: string; label?: string }[]).concat({ value: 'custom' }).forEach((preset) => counts.set(preset.value, rows.filter((row) => matchesDate(Object.assign({}, quick[key], { preset: preset.value }), field ? valueOf(field, row) : row[key], options.today, field && field.unit)).length));
+      (DATE_PRESETS as { value: string; label?: string }[]).concat({ value: 'custom' }).forEach((preset) => counts.set(preset.value, rows.filter((row) => matchesDate(Object.assign({}, quick[key], { preset: preset.value }), field ? valueOf(field, row) : row[key], options.today, field && field.timestamp)).length));
     } else rows.forEach((row) => new Set(([] as unknown[]).concat(field ? valueOf(field, row) : row[key])).forEach((value) => counts.set(value, (counts.get(value) || 0) + 1)));
     facets.set(key, counts); return counts;
   };

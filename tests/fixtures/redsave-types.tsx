@@ -138,3 +138,9 @@ export const cardProps: MediaCardProps = {};
 
 // #924: a column's description (the header's tooltip) compiles
 export const describedColumn: DataGridColumn<Row> = { field: 'name', title: 'Name', description: 'The full legal name' };
+
+// #939 (ADR 0028): numeric timestamps in seconds, on a collection field and a date column
+export const secondsField: CollectionField<Row> = { value: 'name', label: 'Seen', kind: 'date', timestamp: 's' };
+export const secondsColumn: DataGridColumn<Row> = { field: 'name', type: 'date', timestamp: 's' };
+// @ts-expect-error a timestamp is "ms" or "s"
+export const badTimestamp: DataGridColumn<Row> = { field: 'name', type: 'date', timestamp: 'sec' };
