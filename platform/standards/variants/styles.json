@@ -5212,7 +5212,7 @@
         "token": "--plx-comp-retry-status-margin-block-start"
       }
     ],
-    "why": "retry.css: .plx-retry__status holds the countdown (\"Retrying in \u2026\") while the next attempt waits"
+    "why": "retry.css: .plx-retry__status holds the countdown (\"Retrying in …\") while the next attempt waits"
   },
   "retry-pattern--kind-retry-count": {
     "sets": [
@@ -6584,19 +6584,35 @@
   },
   "product-switcher--name-the-application-name-default": {
     "sets": [],
-    "why": "markup only: Plenix and the application name with a chevron, which opens the applications"
+    "why": "AppHeader draws it: .plx-app-header__brand--switch with __name, __product and __app in app-header.css, Plenix over the application name with a chevron that opens the applications"
   },
   "product-switcher--name-a-brand-mark-before-the-name": {
     "sets": [],
-    "why": "markup only: the Plenix mark before the name, as tall as its two lines"
+    "why": "AppHeader draws it: the BrandMark before .plx-app-header__name in .plx-app-header__brand (app-header.css), as tall as the name's two lines"
   },
   "permission-summary--form-can-and-cannot-lists-default": {
-    "sets": [],
-    "why": "markup only: the access line, then Can and Cannot lists side by side (stacked when narrow), each a small heading over its checks or crosses"
+    "sets": [
+      {
+        "property": "column-gap",
+        "part": "lists",
+        "token": "--plx-comp-permission-summary-lists-gap"
+      },
+      {
+        "property": "grid-template-columns",
+        "part": "lists",
+        "token": "--plx-comp-permission-summary-section-min-width"
+      },
+      {
+        "property": "row-gap",
+        "part": "lists",
+        "token": "--plx-comp-permission-summary-gap"
+      }
+    ],
+    "why": ".plx-permission-summary__lists in permission-summary.css: the Can and Cannot lists side by side in auto-fit columns of the section minimum width, stacked when narrow"
   },
   "range-slider--kind-range-two-thumbs": {
     "sets": [],
-    "why": "markup only: a minimum and a maximum, with the part between them filled"
+    "why": "Slider draws it: .plx-slider__fill in slider.css fills the part between the minimum and maximum thumbs"
   },
   "search-input--variants-on-the-page": {
     "sets": [
