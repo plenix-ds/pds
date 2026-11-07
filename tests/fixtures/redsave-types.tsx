@@ -5,7 +5,7 @@ import {
   FilterPanel, SortPanel, GroupPanel, ColumnsMenu, ViewMenu, QuickFilter, useCollectionView, useAppLayout,
   Button, Input, Textarea, Select, Combobox, SearchField, NumberInput, Dialog, MenuItem, Field, Popover, Tooltip, AppShell, Chat,
 } from '../../release/packages/react';
-import type { DataGridColumn } from '../../release/packages/react';
+import type { DataGridColumn, CollectionField, CollectionFilter, CollectionView, MediaCardProps } from '../../release/packages/react';
 
 type Row = { id: number; name: string; status: string };
 const rows: Row[] = [{ id: 1, name: 'Alpha', status: 'open' }];
@@ -129,3 +129,9 @@ export const badStatus = <Chat.Message status="lost">Hi</Chat.Message>;
 // @ts-expect-error a typing indicator's variant is one of three
 export const badVariant = <Chat.Typing variant="dots" />;
 export const chatTyped: IsAny<typeof Chat> = false;
+
+// #894: the names 0.90.1 published still import and fit what they describe
+export const fields: CollectionField<Row>[] = [{ value: 'name', label: 'Name' }];
+export const emptyFilter: CollectionFilter = { join: 'and', items: [] };
+export function useView(): CollectionView<Row> { return useCollectionView<Row>(fields, { data: rows }); }
+export const cardProps: MediaCardProps = {};

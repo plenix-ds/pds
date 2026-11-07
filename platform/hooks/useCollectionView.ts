@@ -185,3 +185,12 @@ export function useCollectionView<R extends object = Row>(fields: Field[], typed
       rowHeight: view.height, editMode: view.editMode, wrapHeaders: !!view.wrapHeaders, columnWidths: view.widths, collapsedGroups: view.collapsed, onViewChange, onReady, onFilterField },
   };
 }
+
+// the names 0.90.x published for this hook (from the old useCollectionView.types.d.ts), kept so apps that import them
+// compile (#894): one type each with what the hook really takes and returns
+/** @public a collection's field (the same Field the panels take) */
+export type CollectionField<R extends object = Row> = Field;
+/** @public the collection's filter */
+export type CollectionFilter = Filter;
+/** @public what useCollectionView returns */
+export type CollectionView<R extends object = Row> = ReturnType<typeof useCollectionView<R>>;
