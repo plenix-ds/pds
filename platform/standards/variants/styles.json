@@ -5212,7 +5212,7 @@
         "token": "--plx-comp-retry-status-margin-block-start"
       }
     ],
-    "why": "retry.css: .plx-retry__status holds the countdown (\"Retrying in …\") while the next attempt waits"
+    "why": "retry.css: .plx-retry__status holds the countdown (\"Retrying in \u2026\") while the next attempt waits"
   },
   "retry-pattern--kind-retry-count": {
     "sets": [
@@ -6753,5 +6753,54 @@
       }
     ],
     "why": ".plx-avatar__presence in avatar.css: from 40px the dot is 12px or 16px with a ring in the surface color, and carries the availability's shape"
+  },
+  "print--print-print-button": {
+    "sets": [],
+    "why": "markup only: a Button that calls usePrint().print; it prints in the light theme and takes an optional title for the paper"
+  },
+  "print--print-print-only-screen-only": {
+    "sets": [
+      {
+        "property": "display",
+        "part": "block",
+        "token": "--plx-sys-print-shown"
+      },
+      {
+        "property": "display",
+        "part": "block-no-print",
+        "token": "--plx-sys-print-hidden"
+      }
+    ],
+    "why": ".plx-visibility--print-only and --no-print: Show print draws content only on paper, Hide print leaves it off the paper"
+  },
+  "print--print-print-stylesheet": {
+    "sets": [],
+    "why": "system/print.css takes the chrome off the paper, lets the page run its full length, keeps cards whole and prints link addresses inside plx-print-urls; these rules set layout and visibility values, not tokens"
+  },
+  "query-builder--view-text-view": {
+    "sets": [],
+    "why": "markup only: the whole query as one sentence in a code block with Copy; unfinished rules are left out"
+  },
+  "layout-full-screen-workspace--page-full-screen": {
+    "sets": [],
+    "why": ".plx-app-shell[data-plx-layout=\"focus\"] in layout-modes.css hides the navigation pane and the inspector; the header and the footer stay (page kind editor)"
+  },
+  "inspector-region--resize-resizable-drag-its-start-edge-from-240px-to-560px-remembered": {
+    "sets": [],
+    "why": "SidePanel draws the edge: .plx-side-panel--resizable marks the panel and .plx-side-panel--resized sets its width (side-panel.css); the drag edge, the 90% of window limit and the remembered width are script"
+  },
+  "navigation-rail--labels-icons-only-default": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "rail",
+        "token": "--plx-comp-nav-pane-background"
+      }
+    ],
+    "why": "NavPane draws the rail (.plx-nav-pane-rail in nav-pane.css, stretched to the pane's height, on the pane's background); the icon buttons, each named by its tooltip, are markup"
+  },
+  "type-styles--overflow-expandable": {
+    "sets": [],
+    "why": "markup only: a clamped text with a Show more button under it while it is cut; Show less folds it again (Text lines and expandable)"
   }
 }
