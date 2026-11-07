@@ -118,7 +118,7 @@
        icon (a calendar for a date, a person for a person; a person's value.gender makes it blue or pink with the male or
        female icon); technical values (numbers, currency, dates, sizes, kind data) in the data font. A column chooses per value
        with pill(value, record) → { tone, icon, variant, data, gender, fill } (a price band green to red, the sun or the moon
-       by the hour) or keeps its plain value with pill: false. Tags, badges and deleted values keep their own look
+       by the hour) or keeps its plain value with pill: false. A DataPill returned by render is equalized with the column's pills too. Tags, badges and deleted values keep their own look
      mode: "fill" (default: fills the room left on screen, virtual rows) | "pages" (pageSize, pageSizes, a footer with
        Pagination) | "load-more"; height: a size token or "100%" in place of the room "fill" measures
      fetchRows({ page, size, sort, filters, search }): rows from a server, returning { rows, total }; search: the page's

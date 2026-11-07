@@ -466,6 +466,7 @@ export function bodyRows({
               })}
               data-plx-sticky={pinned && sticky ? sticky + 'px' : undefined}
               data-plx-label={detail ? c.title || c.field : undefined}
+              data-plx-cell-field={c.render ? c.field : undefined}
               aria-busy={status?.kind === 'saving' ? 'true' : undefined}
               aria-readonly={checkboxEditor && !editable ? 'true' : undefined}
               aria-describedby={status?.kind === 'refused' ? status.id : undefined}
@@ -665,6 +666,7 @@ export function bodyRows({
                     variant="ghost"
                     size="xs"
                     iconOnly
+                    tooltip={false}
                     icon={MoreIcon}
                     label={S.rowActions}
                   />

@@ -5,7 +5,7 @@
 //                                                  → platform/dist/icons/plenix/<name>.svg|.js, index.json (the asset layout, #279)
 //                                                  → platform/dist/plenix-icons-plenix.js (the compatibility file: every Plenix icon, #553)
 //                                                  → <app>/plenix-icons-<app>.js, dam/plenix-icons-dam.js (each page's icons, #557)
-//   Platform       platform/index.js               → platform/dist/platform.js       publishes its exports on window.Plenix
+//   Platform       platform/index.ts               → platform/dist/platform.js       publishes its exports on window.Plenix
 //                                                    (Vite, vite.platform.config.mjs; its hidden source map → build/vite/platform.js.map)
 //   Applications   <folder>/main.jsx               → <folder>/app.js                  one per suite application (dashboard,
 //                  projects, messages, contacts, calendar, tasks, notes, bookmarks, files, settings); they share suite/
@@ -35,7 +35,7 @@ const SUITE = ['dashboard', 'projects', 'messages', 'contacts', 'calendar', 'tas
 // the library parts first (library plan, wave 0): the lanes' exports and stylesheets into the generated block of index.js and
 // platform.css (build-exports.js), and their records, labs and docs into the design system's spec-parts.js (build-spec-parts.js)
 const EXPORTS = require('./build-exports.js')(ROOT);
-console.log('Built the library block of platform/index.js and platform.css (' + EXPORTS.exports + ' exports, ' + EXPORTS.stylesheets + ' stylesheets' + (EXPORTS.stale.length ? '' : ', unchanged') + ')');
+console.log('Built the library block of platform/index.ts and platform.css (' + EXPORTS.exports + ' exports, ' + EXPORTS.stylesheets + ' stylesheets' + (EXPORTS.stale.length ? '' : ', unchanged') + ')');
 const PARTS = require('./build-spec-parts.js')(ROOT);
 if (!PARTS.skipped) console.log('Built platform/design-system/spec-parts.js and ds-sample-parts.css (' + PARTS.parts + ' part files' + (PARTS.changed ? '' : ', unchanged') + ')');
 // the token stylesheets first (platform/tokens/*.tokens.json -> system/tokens/*.css, themes/plenix.css; batch 158)

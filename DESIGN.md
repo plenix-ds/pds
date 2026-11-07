@@ -130,6 +130,15 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 - Heights for each density are in the front matter. Every height a component uses comes from `plx-sys.control-height-*` or `plx-sys.*-row-height`, never a fixed number.
 - `semantic.density-standard-comfortable.tokens.json` is retired. Removing it is a DS Architect task (section 12).
 
+### Screen sizes (D-0092)
+
+- **Design at 1440×900**, the middle of the common laptops.
+- **Every change must also look right at 1366×768** (the smallest common laptop, where Fluent 2's 1366 band starts) **and at 1920×1080** (the most common desktop screen).
+- **The minimum is 1024×640** (AppShell's `minSize`). Nothing scrolls sideways or overlaps there. Below it, the page follows the fit and reflow ladders (`fit-and-overflow.md`) down to 320px wide (WCAG 1.4.10).
+- **These are screen sizes, not viewports.** Browser chrome takes about 130px off the height, so a 1920×1080 screen gives a viewport near 1920×950. Judge layouts at the viewport.
+- **Phones and tablets** are parked (D-0013).
+- **The visual checks** run at 1366×768 and 1920×1080 (light, standard density, plus RTL and compact when the change touches them), and once at 1024×640 for the minimum.
+
 ## 6. Icons (D-0011)
 
 - Material Symbols Sharp, weight 300, from `platform/icons/`. There are two optical drawings: 20 (for the `xs`, `sm` and `md` sizes) and 24 (for `lg` and `xl`).

@@ -318,7 +318,7 @@ export function RowActions({ B, S, items, record, rowApi, menuItems }: any) {
         />
       ))}
       {rest.length ? (
-        <Menu label={S.rowActions} trigger={<Button className={B + '__row-menu'} variant="ghost" size="xs" iconOnly icon={MoreIcon} label={S.rowActions} />}>
+        <Menu label={S.rowActions} trigger={<Button className={B + '__row-menu'} variant="ghost" size="xs" iconOnly tooltip={false} icon={MoreIcon} label={S.rowActions} />}>
           {menuItems(rest, record, rowApi)}
         </Menu>
       ) : null}
