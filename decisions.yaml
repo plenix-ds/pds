@@ -880,3 +880,12 @@
   options: ['description (chosen)', 'tooltip', 'headerTooltip (rich)']
   status: active
   check: 'planned:datagrid-column-description (behaviour test per ADR 0025 Check; #924)'
+- id: D-0099
+  date: 2026-11-07
+  area: components
+  decided_by: agent (pds1-ds-architect) at G3, owner may switch
+  decision: 'Textarea takes label?: string (ADR 0027). It becomes the aria-label only when nothing else names the Textarea: the app''s aria-labelledby or aria-label wins, then an enclosing Field''s label. description and error stay on Field.'
+  why: 'RedSave P-72 (#926): unnamed text areas. An aria-label would override a labeled Field''s visible label (WCAG 2.5.3), so the Field''s label must win.'
+  options: ['label only, Field label wins (chosen)', 'label, description and error on Textarea', 'label always the aria-label']
+  status: active
+  check: 'tests/textarea-label-926.test.js (the Field-with-label case, ADR 0027 Check)'
