@@ -6,6 +6,47 @@ The batch numbers point to the work log (Plenix - DAM/audit/batches/).
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-11-07
+
+### Upgrading from 0.93.1
+Nothing to change. 1.0.0 is Plenix's stable public API (VERSIONING.md): from now on, a breaking change comes only in a new major version. Every deprecated name keeps working until 2.0.0 and says what replaces it (D-0095). Apps on the CDN loader follow this release by themselves; npm apps update the version as usual.
+
+### Added
+- `data-plx-frame="centered"` on `<html>` while a centered frame is shown (ADR 0023 addendum).
+- Behavior tests for CommandPalette and ExportDialog (#908, plan 7e): hotkey, focus, filtering, running a command, Escape; export options, repeat press, failure, queued and download link, RTL.
+- Behavior tests for ApprovalWorkflow, ArchiveRestore, AuditLog and CommentThread (#908, plan 7e): who can decide, repeat presses, failures keeping drafts, the diff dialog and focus return, text never HTML, RTL.
+- Behavior tests for ComparisonView, DuplicateAction, FeatureCard and the image editor steps (#908, plan 7e): modes, Changed badges and counts, copy and rename flows, one-target cards, RTL.
+
+### Changed
+- TypeScript: the 16 charts (`LineChart` to `Sparkline`) are published with their own props types (`LineChartProps` and the others). Before this, the lazy-loading wrapper published them as `(props: any)`. An app that passed a prop a chart doesn't have now gets a compile error (ADR 0011: stricter types are *Changed*). No runtime change.
+- check-system's `js-source` list has no pending files left: every source under `platform/` is TypeScript except the allowed ones (ADR 0011, D-0089). CI's `types` check also catches a component declared as `(props: any)` in a const.
+- Types (#61, compile time only): `useChartInteraction` returns the exported `ChartInteraction` (with `ChartGeometry` and `ChartKeyEvent`), so `useChartPoints`' `index` and `hover(i)`, and every field of the interaction (`active`, `selected`, `brush`, `zoom`, `keyDown`, `pointerDown`, `register`, …) have real types; `useGraphView`'s `zoomBy` and `wrap` are typed; `niceTicks().ticks`, `boxStats` and `waterfallSteps().label` are `number[]`, `number` and `string`; the lazy charts' `displayName` is a string; `DataGridEngine` takes `DataGridEngineProps`; `WaterfallChart`'s `onSelect` argument is the exported `WaterfallSelection`.
+- `@plenix-ds/react`'s `index.d.ts` now comes straight from `tsc` (`tools/publish/react-types.js`; ADR 0011 wave 5, #889). `build-types.js` and its header-comment reader are retired. The published names are unchanged: 606 exports, 379 `*Props` types, 732 type names in all, and the bridges read the same props. The ten data exports from JavaScript files (`DATA_COLORS`, `CATEGORY_COLORS`, `THEMES`, `DEFAULT_THEME`, `PAGE_LAYOUTS`, `pageLayout`, `PAGE_REGIONS`, `COMPOSITION_GUIDE`, `FIELD_RULES`, `IMAGE_EDITOR_STEPS`) now carry tsc's inferred types instead of `any`.
+
+### Fixed
+- AppShell `frame="centered"`: a Drawer opens from the frame's edge, not the window's, and the toasts stay inside the frame; the Dialog is unchanged and every backdrop still covers the whole window. The Drawer layer and the toast region read the frame's width from `--plx-comp-shell-context-frame-width`, set on the page root while a centered frame is shown (#877, D-0093).
+- `FloatingActionButton`: an extended button with a long label shrinks to its container and cuts the label with an ellipsis instead of overflowing (found by the new §7e behaviour tests, #908).
+- Pagination: a page outside 1 to the page count is held inside it, so the current page is always one of the pages shown and marked (#908). New behavior tests cover Pagination, Breadcrumbs, ProgressSteps, CopyButton, DownloadButton, DropZone, Scrim and Spotlight.
+- `RoleLabel`: a long role name shrinks to its container and ends in an ellipsis instead of overflowing it (found by the new §7e behaviour tests, #908).
+- `LoadMore`: a long button label truncates inside its box instead of overflowing it (found by the new §7e behaviour tests, #908).
+
+## [0.93.1] - 2026-11-07
+
+### Upgrading from 0.93.0
+Nothing to change. Deprecated names keep working (each says what replaces it). Apps on the CDN loader follow this release by themselves; npm apps update the version as usual.
+
+### Fixed
+- TypeScript (RedSave P-67, #893): `@plenix-ds/react`'s published types accept correct app code again, as they did before 0.92. No runtime change.
+  - **DataGrid columns:** a column's `field` can be any string, as well as a row key, so a computed or action column ("Keep") compiles. `headerAlign` is back as an optional, `@deprecated` field. It's ignored (D-0087) and removed in 2.0.0.
+  - **`useCollectionView`** takes the app's row type again (`useCollectionView<Row>(…)`). Its outputs spread into FilterPanel, SortPanel, GroupPanel, ColumnsMenu, ViewMenu, QuickFilter and DataGrid without errors, because the hook and the components now share one type each: the field, the filter, the level, the view, the quick value and the group.
+    - DataGrid's `sort` levels take an optional `dir`, and `groupBy` accepts `false`.
+    - FilterPanel's `request` accepts `null`, and QuickFilter's `counts` and `value` take numbers.
+  - **Tabs** `onChange` accepts a handler typed for the app's own value (`(value: string) => …`).
+  - **Four type names were exported twice and couldn't be imported:** `SortLevel`, `ChartDate`, `Catalog` and `TimelineItem`. Each now resolves to one type. TimelineChart's item is `TimelineChartItem`; `TimelineItem` is the Timeline component's.
+- `tests/types.test.js`'s RedSave fixture imports the built package again. Its path still pointed at `packages/react`, from before the build moved to `release/packages/` (#223), so it had stopped checking.
+- **Three type names 0.90.1 published are exported again:** `CollectionField`, `CollectionFilter` and `CollectionView` (#894). `useCollectionView.ts` now exports them itself, and the stale hand-written `useCollectionView.types.d.ts` is gone. A new check (`tools/checks/published-names.mjs`, run by `tests/types.test.js`) fails the build if any name a past release exported goes missing; 0.90.1's 957 names are recorded in `tests/fixtures/published-names-0.90.1.txt`.
+- The self-hosting archive (`plenix-<version>.tgz`) carries the `types/` folder again. Since 0.91.0, its `plenix.d.ts` imported 317 declaration files from `./types/` that the archive did not hold, so an app that copies the archive failed its typecheck. The CDN folder and `@plenix-ds/react` were not affected. The build now fails when any declaration import in the archive, the CDN folder or the npm package resolves to no file inside it (#894).
+
 ## [0.93.0] - 2026-11-07
 
 ### Upgrading from 0.92.0
