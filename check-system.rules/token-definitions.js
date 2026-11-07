@@ -28,7 +28,6 @@ const GRID_EXEMPT = [
   ['border-width-', 'hairline widths (1, 2 and 3px): a line is thinner than the grid'],
   ['focus-ring-offset', 'an outline offset (2px): a gap between a control and its focus ring, not a space in the layout'],
   ['font-size-', 'type sizes come from the type scale, not the grid'],
-  ['breakpoint-frame', 'the AppShell frame is the common laptop screen, 1366px wide (the owner, D-0093, #862): a window width, not a space in the layout'],
   ['paper-', 'paper sizes and margins in mm (D-0052): the A4 sheet and its margin, for print parts only (docs/adr/0014)'],
   ['print-sheet-', 'the A4 sheet in mm (D-0052, docs/adr/0014)'],
   ['print-document-margin', 'the document page margin in mm (D-0052, docs/adr/0014)'],

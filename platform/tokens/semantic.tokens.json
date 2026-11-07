@@ -94,11 +94,6 @@
       "$type": "dimension",
       "$description": "AppShell minSize: below this width the shell shows the screen-size notice (docs/adr/0010)."
     },
-    "shell-frame-width": {
-      "$value": "{plx-ref.breakpoint-frame}",
-      "$type": "dimension",
-      "$description": "AppShell frame=\"1366\" (D-0093, #862): the shell's width, centered, on the backdrop. At this width or narrower the shell fills the window."
-    },
     "shell-min-height": {
       "$value": "{plx-ref.size-160u}",
       "$type": "dimension",
