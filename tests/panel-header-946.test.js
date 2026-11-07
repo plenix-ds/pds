@@ -41,7 +41,7 @@ require('./limit.js');
         assert.ok((r.bg.match(/gradient/g) || []).length >= 2, T2 + 'the header paints a glow and an inset divider layer (two gradients) ' + r.bg.slice(0, 160));
         const sizes = r.bgSize.split(/,(?![^(]*\))/).map((x) => x.trim()); const second = sizes[1] || '';
         const w = parseFloat((second.match(/^([\d.]+)px/) || [])[1] || (second.match(/^calc\((.+)\)/) ? NaN : 0));
-        assert.ok(/calc\(100% - /.test(second) || (w > 0 && Math.abs(w - (r.hw - 2 * r.pad)) <= 1), T2 + 'the divider is inset by the header's padding on both sides (' + second + ', header ' + r.hw + ', padding ' + r.pad + ')');
+        assert.ok(/calc\(100% - /.test(second) || (w > 0 && Math.abs(w - (r.hw - 2 * r.pad)) <= 1), T2 + 'the divider is inset by the header padding on both sides (' + second + ', header ' + r.hw + ', padding ' + r.pad + ')');
         assert.ok(r.bare, T2 + 'a Panel without a title draws no header');
       }
       await page.close();
