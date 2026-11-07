@@ -15,7 +15,7 @@
 .plx-floating-action-button--lg{block-size:var(--plx-comp-floating-action-button-lg-size);border-end-end-radius:var(--plx-comp-floating-action-button-lg-radius);border-end-start-radius:var(--plx-comp-floating-action-button-lg-radius);border-start-end-radius:var(--plx-comp-floating-action-button-lg-radius);border-start-start-radius:var(--plx-comp-floating-action-button-lg-radius);min-inline-size:var(--plx-comp-floating-action-button-lg-size);}
 .plx-floating-action-button--lg .plx-floating-action-button__icon{--plx-comp-icon-size:var(--plx-comp-floating-action-button-lg-icon-size);}
 /* extended: the icon and the label, padded */
-.plx-floating-action-button--extended{padding-inline-end:var(--plx-comp-floating-action-button-extended-padding-inline-end);padding-inline-start:var(--plx-comp-floating-action-button-extended-padding-inline-start);}
+.plx-floating-action-button--extended{flex-shrink:1;max-inline-size:100%;padding-inline-end:var(--plx-comp-floating-action-button-extended-padding-inline-end);padding-inline-start:var(--plx-comp-floating-action-button-extended-padding-inline-start);}
 /* primary: the action color and its own hover and pressed steps */
 .plx-floating-action-button--primary{background-color:var(--plx-comp-floating-action-button-primary-background);border-bottom-color:var(--plx-comp-floating-action-button-primary-background);border-left-color:var(--plx-comp-floating-action-button-primary-background);border-right-color:var(--plx-comp-floating-action-button-primary-background);border-top-color:var(--plx-comp-floating-action-button-primary-background);color:var(--plx-comp-floating-action-button-primary-text);}
 .plx-floating-action-button--primary:hover,
@@ -31,3 +31,4 @@
 .plx-floating-action-button:disabled{background-color:var(--plx-comp-floating-action-button-disabled-background);border-bottom-color:var(--plx-comp-floating-action-button-disabled-background);border-left-color:var(--plx-comp-floating-action-button-disabled-background);border-right-color:var(--plx-comp-floating-action-button-disabled-background);border-top-color:var(--plx-comp-floating-action-button-disabled-background);box-shadow:none;color:var(--plx-comp-floating-action-button-disabled-text);cursor:default;}
 /* placement: fixed in the window's bottom end corner, over the content */
 .plx-floating-action-button--corner{inset-block-end:var(--plx-comp-floating-action-button-inset);inset-inline-end:var(--plx-comp-floating-action-button-inset);position:fixed;z-index:var(--plx-comp-floating-action-button-z-index);}
+
