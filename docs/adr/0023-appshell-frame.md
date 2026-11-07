@@ -39,8 +39,8 @@
 - **Tokens (no tier skipped, and no value in a name):**
   - `plx-ref.breakpoint-laptop`: 1366px, the D-0092 laptop screen. It's a screen size, not a layout step, so it's exempt from the 4px grid, like the other breakpoints, which are screen sizes too.
   - `plx-sys.shell-frame-width` -> `{plx-ref.breakpoint-laptop}`.
-  - `plx-sys.shell-frame-outside` (a color). In light and dark it's an existing ref grey that G2 picks; no new color.
-  - `plx-sys.shell-frame-shadow` (a shadow). It's an existing shadow ref or role that G2 picks.
+  - `plx-sys.shell-frame-outside` (a color): `{plx-ref.color-gray-300}` in light, `{plx-ref.color-gray-950}` in dark (G2). No new color.
+  - `plx-sys.shell-frame-shadow` (a shadow): `{plx-sys.shadow-lg}` in both themes (G2). That's a sys-to-sys alias, because a shadow is a sys composite.
 
 ## Consequences
 
