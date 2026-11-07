@@ -44,7 +44,7 @@
 
 ## 5. Choosing the default
 
-- **An app picks it:** `<AppShell frame="full" | "1366">`. CTM sets `"centered"`.
+- **An app picks it:** `<AppShell frame="full" | "centered">`. CTM sets `"centered"`.
 - **New projects:** the starter asks which frame (Full window or 1366). That's the docs and starter's job, not the component's.
 
 ## 6. The engineer must not invent
