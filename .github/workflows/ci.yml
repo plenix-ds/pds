@@ -176,7 +176,7 @@ jobs:
           command -v google-chrome >/dev/null || { echo "::error::Chrome is missing on the runner: check 11 cannot run, and a missing browser is a FAIL"; exit 1; }
           google-chrome --version
           npx --no-install playwright test -c tests/pills/playwright.config.mjs
-      - name: Check 12, visual regression (light and dark per specimen; RTL and compact for changed components; #191)
+      - name: Check 12, visual regression (1366×768 and 1920×1080 in light and dark, RTL and compact for changed components; 1024×640 light; #191, D-0092)
         run: |
           VISUAL_EXTRA=$(node tools/ci/visual-extra.mjs "$(git merge-base "$BASE_SHA" HEAD)")
           export VISUAL_EXTRA
@@ -187,8 +187,12 @@ jobs:
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: visual-regression
-          # Playwright writes its output beside its config (tests/visual/test-results: visual.json and any diff images)
-          path: tests/visual/test-results/
+          # Playwright writes its output beside its config (tests/visual/test-results: visual.json and any diff images).
+          # baselines/ carries any baseline the run wrote because it was missing (a new specimen or screen size): commit
+          # those from the artifact, never from a local machine (D-0092, #857)
+          path: |
+            tests/visual/test-results/
+            tests/visual/baselines/
           if-no-files-found: ignore
           retention-days: 90
       - name: Dashboard acceptance tests (#195 AC-1 to AC-6), when the dashboard or its tests change
