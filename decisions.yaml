@@ -811,3 +811,13 @@
   options: ['the owner''s rule (chosen)']
   status: active
   check: 'planned:data-grid-column-fit (behaviour tests AC-1 to AC-8 in docs/pds1/slices/800-column-fit/brief.md)'
+
+- id: D-0090
+  date: 2026-11-06
+  area: api
+  decided_by: agent (pds1-ds-architect) on #800 (G3, AC-5), on the Design Director's design (#836); owner may switch
+  decision: 'DataGrid''s hover row actions (D-0087) come from rowMenu. The items with an icon that are not danger show inline, at most three, and the rest stay in ⋮. DataGridMenuAction gains one optional field, inline?: boolean: false keeps an item in ⋮, and true shows it inline when it has an icon. A danger item is never inline, whatever inline says: it stays in ⋮ after its divider. No new DataGrid prop (docs/adr/0022).'
+  why: 'The override sits beside the item it is about, and the default needs no code from an app. A second rowActions list would duplicate the menu and drift.'
+  options: ['A - inline?: boolean on the menu item (chosen)', 'B - a rowActions prop', 'C - no override']
+  status: active
+  check: 'G3 on the AC-5 build PR (only inline?: boolean added; CI types check); the AC-5 behaviour tests'

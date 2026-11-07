@@ -36,7 +36,7 @@ import { SecondaryPane as SecondaryPaneJs } from '../../patterns/SecondaryPane/S
 const SecondaryPane: any = SecondaryPaneJs;
 import { FeatureCard } from '../../patterns/FeatureCard/FeatureCard.tsx';
 import { FormFlow } from '../../patterns/FormFlow/FormFlow.tsx';
-import { Auth as AuthJs } from '../../patterns/Auth/Auth.jsx';
+import { Auth as AuthJs } from '../../patterns/Auth/Auth.tsx';
 const Auth: any = AuthJs;
 import { SearchWorkspace as SearchWorkspaceJs } from '../../patterns/SearchWorkspace/SearchWorkspace.tsx';
 const SearchWorkspace: any = SearchWorkspaceJs;

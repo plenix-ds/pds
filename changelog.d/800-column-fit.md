@@ -1,3 +1,0 @@
-### Changed
-
-- DataGrid column sizing (owner, D-0087, #800): compact columns (names, numbers, dates, ids, people, status and pills) always fit their widest value, and an app's set `width` is a minimum for them, no longer a cap; the room left is shared evenly across the columns that size themselves (the checkbox and row menu columns stay fixed); only long text (kind `wrap`, type `long-text`, or plain text over 48 characters) may be cut, and it gives its width up first when the room runs short. A grid whose columns used to be cut at their set width while there was room to spare now shows them whole.

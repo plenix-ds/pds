@@ -6482,5 +6482,80 @@
   "ordered-list--variant-nested": {
     "sets": [],
     "why": "markup only: a list under one statement, starting on its text line, numbered or lettered on its own"
+  },
+  "record-page--entity-header-a-person-the-avatar-status-at-the-upper-right-icon-actions-key-facts": {
+    "sets": [],
+    "why": "markup only: the header of a page about a person: the avatar, the status, the actions as icons and one line of facts"
+  },
+  "record-page--entity-header-no-picture-of-its-own-a-generic-icon-for-its-kind-tinted-a-description-instead-of-facts": {
+    "sets": [],
+    "why": "markup only: an entity without a picture shows a tinted icon for its kind and a sentence instead of facts"
+  },
+  "record-page--entity-header-live-state-the-first-fact-a-status-badge-with-its-icon": {
+    "sets": [],
+    "why": "markup only: the live state of the entity leads the facts as a small status Badge with its icon (never a dot)"
+  },
+  "record-page--entity-header-an-email-its-common-actions-no-context-line": {
+    "sets": [],
+    "why": "markup only: an email header with its common actions as icons and no context line above the subject"
+  },
+  "record-page--entity-header-narrow-a-long-name-wraps-the-actions-at-the-end-fold-into": {
+    "sets": [],
+    "why": "markup only: in a narrow region the long name wraps and the actions at the end fold into the more menu"
+  },
+  "record-page--size-lg-default-a-page-title": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "title",
+        "token": "--plx-comp-record-page-title-text"
+      },
+      {
+        "property": "font-family",
+        "part": "title",
+        "token": "--plx-comp-record-page-title-font-family"
+      },
+      {
+        "property": "font-size",
+        "part": "title",
+        "token": "--plx-comp-record-page-title-font-size"
+      },
+      {
+        "property": "font-weight",
+        "part": "title",
+        "token": "--plx-comp-record-page-title-font-weight"
+      },
+      {
+        "property": "column-gap",
+        "part": "header",
+        "token": "--plx-comp-record-page-header-gap"
+      },
+      {
+        "property": "margin-block-end",
+        "part": "header",
+        "token": "--plx-comp-record-page-header-margin-block-end"
+      }
+    ],
+    "why": ".plx-record-page__header and __title in record-page.css: the header at page title size, with its meta line and actions"
+  },
+  "record-page--surface-none-default-on-the-page": {
+    "sets": [],
+    "why": "markup only: the header sits on the page with no surface of its own; only the card surface has a rule"
+  },
+  "reorder--order-reversed-column": {
+    "sets": [],
+    "why": ".plx-layout--reverse in stack.css sets only a reversed column direction, none of them tokens"
+  },
+  "reorder--order-reversed-row": {
+    "sets": [],
+    "why": ".plx-layout--reverse in stack.css sets only a reversed row direction, none of them tokens"
+  },
+  "reorder--order-moved-to-the-start": {
+    "sets": [],
+    "why": ".plx-layout--order-first in stack.css sets only order: -1, none of them tokens"
+  },
+  "reorder--order-reversed-below-narrow": {
+    "sets": [],
+    "why": ".plx-layout--reverse-below-narrow in stack.css applies the same reversed direction only under 600px (a window media query); it sets a direction, not a token"
   }
 }

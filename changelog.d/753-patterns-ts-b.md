@@ -1,3 +1,0 @@
-### Changed
-
-- TypeScript wave 3, batch B (#753, ADR 0011): ten patterns are now `.tsx` with exported prop types: `Offboarding` (`OffboardingProps`), `Onboarding` (`OnboardingProps`), `PeopleGroup` (`PeopleGroupProps`, `PeopleGroupMember`), `PermissionSummary` (`PermissionSummaryProps`), `PermissionsEditor` (`PermissionsEditorProps`, `PermissionSubject`, `PermissionCapability`), `PresenceBar` (`PresenceBarProps`, `PresencePerson`), `ProductCard` and `ProductPrice` (`ProductCardProps`, `ProductPriceProps`, `ProductImage`), `PromptHistory` (`PromptHistoryProps`, `PromptHistoryItem`), `PropertyList` and `PropertyList.Item` (`PropertyListProps`, `PropertyListItemProps`), `Publish` (`PublishProps`). No `any` in a public prop. No behavior change.
