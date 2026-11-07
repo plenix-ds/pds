@@ -35,3 +35,4 @@ Owner: `pds1-ds-architect`. Gate G3 (plan §5) reads these files.
 | [0021](0021-datagrid-paste-fill-undo.md) | DataGrid paste, fill and undo (`editing.paste`, `.fill`, `.undo`) | accepted |
 | [0022](0022-datagrid-row-actions-inline.md) | DataGrid shows row actions as icons on hover (`inline` on a row menu item) | accepted |
 | [0023](0023-appshell-frame.md) | AppShell `frame`: the full window, or a centered frame a person can expand | accepted |
+| [0025](0025-datagrid-column-description.md) | DataGrid column `description`: the header's tooltip and accessible description | accepted |
