@@ -11,7 +11,7 @@
          <ViewMenu {...v.viewProps} /></>} />
      <DataGrid label="Assets" data={rows} columns={columns} {...v.tableProps} />
    Props:
-     fields: the collection's fields (utils/fields.ts); R, the row type, comes from fields' get(row) or options.data (#923)
+     fields: the collection's fields (utils/fields.ts); R, the row type, comes from options.data or useCollectionView<Row>(…), never from fields (issue 923)
      options.data: optional source rows for immediate facet counts; otherwise the ready DataGrid supplies its data
      options.text(row): the text the search looks in (without it there is no search)
      options.quick: the quick filters, by field: "list" (the row's value is one of the chosen) | "date" (a date range), or { kind: "single", required: true }.
