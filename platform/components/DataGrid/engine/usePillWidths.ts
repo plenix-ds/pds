@@ -30,7 +30,7 @@ export function usePillWidths({ frame, cells, metrics, columns, allRows, showTyp
   // uniform pill widths (CTM, 2026-10-22; always on, owner uniform-pills-always-35): every standard pill of a column as wide as the
   // column's widest pill in the current view (the filtered, sorted page, every row of it, not only the rows drawn), so scrolling
   // a long list never changes it. The uniformPillWidths prop is accepted and ignored (deprecated).
-  // Measured like the column widths (the pill's font, weight, sides, border and icon), snapped up to the grid, the text centered in it so the leftover splits between the two sides (#649).
+  // Measured like the column widths (the pill's font, weight, sides, border and icon), snapped up to the grid, the label at the start edge, the leftover after it (#848: the owner's rule is that text is not centered; it was centered in #649).
   const gridKey = React.useId(),
     [fontsReady, setFontsReady] = React.useState(0);
   React.useEffect(() => {
@@ -94,7 +94,7 @@ export function usePillWidths({ frame, cells, metrics, columns, allRows, showTyp
           CSS.escape(c.field) +
           '"]{inline-size:' +
           snapToGrid(widest + sides + (icon ? glyph : 0), { round: 'up', step }) +
-          'px;justify-content:center;}'
+          'px;justify-content:flex-start;}'
       );
     });
     store.rules.set(gridKey, rules.join('\n'));
