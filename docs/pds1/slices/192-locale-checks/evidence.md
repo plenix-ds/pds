@@ -77,3 +77,12 @@
 
 - **jsx-literal:** the product name (Plenix) and a component's one-word setting (`<Image placeholder="none">`) are no longer reported. A DOM element's `placeholder` still is.
 - **Ran:** `node tools/checks/locale/locale.mjs origin/main` on main after #642, #656, #668 and #671: 43 findings (missing-ar 33, unused-key 10), 0 new.
+
+## #902: G6, the release language gate (2026-11-07)
+
+- **New rule `missing-en`:** a word a part reads that `en.json` does not have. It reads the parse tree function by function: `useStrings('section')`, `S.key`, `const { key } = S`, `useStrings('x').key`, and dotted keys passed to `t()`, `said()` or `translate()`. A read handed straight to a child's `strings` prop is a pass-through, not a catalog read. It blocks new findings on PRs.
+- **New mode `node tools/checks/locale/locale.mjs --release`:** fails on any missing-en, missing-ar, unapproved-ar, placeholder, plural-forms, duplicate-key or catalog finding, old ones included. unused-key and jsx-literal are reported only.
+- **Ran:** missing-en on main: 0 findings in 478 files. A first prototype gave 162 by mixing up each function's own `t`; the scoped version gave 2 false alarms (`strings={t.calendar}`, `strings={t.crop}`), now skipped as pass-throughs.
+- **Ran:** a planted `S.bogusWord` in `DataGrid/engine/parts.tsx` was found as `dataGrid.bogusWord`.
+- **Ran:** `--release` on main fails with exit 1 on 5 missing-ar (the strings PR #905 adds). The PR mode against origin/main reports 0 new, exit 0.
+- **Planned:** the step in `release.yml` (release-architect's file).
