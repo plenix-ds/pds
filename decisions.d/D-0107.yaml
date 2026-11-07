@@ -1,0 +1,9 @@
+id: D-0107
+date: 2026-11-07
+area: design
+decided_by: agent (pds1-design-director) at G2, owner may switch
+decision: 'D-0106 in 1.x: porcelain tiles go on PropertyList layout="stacked" and on read-only controls; layout="columns" takes the new label and value type without tiles; the default layout stays columns until 2.0.0 (a default that reflows screens is MAJOR). The card heading style (14px bold uppercase, glow, inset divider) goes on the Panel header; the compact Card title is unchanged. Dark navy is blue-275, light navy blue-700, gold brown-600 / yellow-300.'
+why: 'D-0106 says "Plenix defaults" but VERSIONING.md makes a reflowing default MAJOR, and the release is a MINOR ship-now; CTM already passes layout="stacked", so it gets the full preset at once. Card titles in lists and media cards are not section headings.'
+options: ['stacked + Panel header now, default in 2.0.0 (chosen)', 'stacked becomes the default now, as a 2.0.0 release', 'also restyle the compact Card title']
+status: active
+check: 'planned:read-only-field-roles (#946: computed styles of a stacked PropertyList and a Panel header, contrast >= 4.5:1 on the tile, visual baselines at 1366 and 1920)'

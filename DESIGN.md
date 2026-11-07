@@ -18,6 +18,7 @@ type:                            # D-0006
     arabic: IBM Plex Sans Arabic
     arabic_title: Readex Pro
   min_px: 12
+  min_px_exceptions: { field-label: 11 }   # owner, D-0106: this role only
   roles:                         # px; size / weight / line height
     caption:   { size: 12, weight: 400, line: 1.5 }   # defect: 11 today, fixed to 12
     eyebrow:   { size: 12, weight: 700, line: 1.5, tracking: widest }  # defect: 11 today, fixed to 12
@@ -29,8 +30,10 @@ type:                            # D-0006
     surface-title: { size: 15, weight: 700, line: 1.5 }  # dialog and sheet titles, as drawn today (#122)
     title:     { size: 20, weight: 700, line: 1.5 }
     display:   { size: 20, weight: 600, line: 1.3, tracking: tight }
-    field-label: { size: 12, weight: 600, line_px: 16 }  # read-only label (D-0101, #946)
-    field-value: { size: 15, weight: 400, line_px: 24 }  # read-only value, stacked layout (D-0101, #946)
+    field-label: { size: 11, weight: 400, line_px: 16 }  # read-only label, brand navy (D-0106, #946); the one exception to min_px
+    field-value: { size: 13, weight: 600, line_px: 20 }  # read-only value, content-default (D-0106, #946)
+    card-heading: { size: 14, weight: 700, line_px: 20, case: upper, tracking: caps }  # Panel header title (D-0106); tracking 0 in Arabic
+    group-heading: { size: 13, weight: 500, line_px: 20 }  # PropertyGroup heading, gold (D-0106)
   allowed_sizes_px: [12, 13, 14, 15, 18, 20, 24, 28, 36]
 density:                         # D-0007; "standard-comfortable" is retired
   modes: [compact, standard, comfortable]
@@ -60,7 +63,7 @@ colour:                          # D-0008, D-0009
   accent: plx-ref.color-blue-400 # sys.brand-primary; the default theme
   contrast_min: { text: 4.5, large_text: 3, ui_boundary: 3 }
   themes: [light, dark]
-  new_colours: forbidden         # exception: gray-250 (owner)
+  new_colours: forbidden         # exceptions: gray-250 (owner); the read-only porcelain tile fill and border, light and dark (owner, D-0106)
 focus:
   ring: { colour: plx-sys.focus-ring-color, width_px: 2, offset_px: 2 }
 states: [default, hover, focus, active, disabled, loading, error, selected]
@@ -107,24 +110,28 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 - **DM Sans** for all text. Arabic falls back to IBM Plex Sans Arabic, and Arabic titles to Readex Pro.
 - **Reddit Mono** (`plx-sys.font-data`) is for numbers in data: grid and table cells, metrics, counts in data views, codes and IDs. It is also used for code.
 - **Never mono in prose.** "7 events" in a sentence, a heading or a button stays in DM Sans. Numbers there use `font-variant-numeric: tabular-nums` only when they need to line up.
-- Sizes come only from the type roles in the front matter (check 3). No numeric `font-size` in CSS. Nothing below 12px. `font-size-09`, `-10` and `-11` are retired (section 12).
+- Sizes come only from the type roles in the front matter (check 3). No numeric `font-size` in CSS. Nothing below 12px, except the read-only field label (11px, owner, D-0106). `font-size-09`, `-10` and `-11` are retired (section 12).
 - **surface-title** (15px, 700) is the title of a dialog or a sheet, recorded as Plenix draws it today (#122). Page and section titles use **title** (20px).
 - Body and heading are both 13px. Hierarchy comes from weight (400 → 600) and from title or display (20px). That is the existing language, recorded as is.
 
-### Read-only fields (D-0101, #946)
+### Read-only fields and card headings (D-0106, #946)
 
-- A read-only label and its value never share a look. The label is quieter in colour and stronger in weight, and the value is larger. This is the Fluent 2 field (D-0078).
-- **Stacked (recommended for read-only details; the default from 2.0.0, ADR 0030):** the label above its value.
-  - The label uses **field-label**: 12px, semibold, 16px line, `content-muted`.
-  - The value uses **field-value**: 15px, regular, 24px line, `content-default`. A data value is Reddit Mono at 15px.
-  - The label sits 4px above its value. Pairs are 20px apart (`space-stack-field`) at every density.
-- **Columns (`layout="columns"`, the default in 1.x, for dense panes):** the label column and the value on one line.
-  - The label is **field-label**. The value is **body** (13px, 20px line).
-  - A `border-subtle` hairline separates the pairs, with none after the last.
-  - Each pair has 4 / 8 / 12px of padding-block, by density.
-- **Inside `<ReadOnly>`**, a Field's label takes **field-label**. Its value stays in the sunken read-only control at the control's size, so heights don't change.
-- A value wraps between words. It is never cut. A status in a value is a Badge with its icon.
-- Applies to PropertyList and to any description list (`dl`) of an item's details. Details: `docs/pds1/slices/946/design.md`.
+- The owner's preset (D-0106) replaces the Fluent 2 field (D-0101). Every level has its own look: card heading › group heading › value › label.
+- **Card heading** (the Panel header): **card-heading**, 14px, bold, UPPERCASE, `content-default`, with its icon in the same colour.
+  - A soft glow runs from the tile fill at the top to the surface at the heading line.
+  - The divider is inset to the header's padding. It is not edge to edge.
+  - In Arabic the tracking is 0.
+- **Group heading** (`PropertyGroup`): **group-heading**, 13px, medium, gold (brown-600 light, yellow-300 dark), sentence case, no line. There are 40px between groups.
+- **Field label:** **field-label**, 11px, regular, navy (blue-700 light, blue-275 dark), sentence case. It is the only role below 12px (owner, D-0106).
+- **Value:** **field-value**, 13px, semibold, `content-default`. A data value is Reddit Mono at the same size. A status is a Badge with its icon.
+- **Stacked (`layout="stacked"`):** each field sits on a porcelain tile with a 1px border in a deeper shade of the same tint, never the card's grey.
+  - Tiles have a 6px radius and 8/12px padding.
+  - They sit 2 to a row (`columnCount`), with 16px gaps (`space-stack-field`). Tiles in a row are equal in height.
+- **Columns (`layout="columns"`, the 1.x default):** the same label and value type, with no tiles. The default changes in 2.0.0 (D-0107).
+- **Inside `<ReadOnly>`**, a control takes the tile fill and border. Its label is **field-label**. Heights don't change.
+- The label is always lighter than its value. Label and value stay ≥ 4.5:1 on the tile in light and dark.
+- A value wraps and is never cut.
+- Details and the state matrix: `docs/pds1/slices/946/design.md`.
 
 ## 4. Shape (D-0005)
 
