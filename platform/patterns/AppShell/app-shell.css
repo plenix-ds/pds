@@ -66,3 +66,6 @@
   .plx-app-shell--frame{flex-shrink:0;inline-size:100%;transition-duration:var(--plx-sys-motion-duration-base);transition-property:inline-size;transition-timing-function:var(--plx-sys-motion-ease-standard);}
   .plx-app-shell--framed{background-color:var(--plx-sys-surface-canvas);box-shadow:var(--plx-sys-shell-frame-shadow);inline-size:var(--plx-sys-shell-frame-width);}
 }
+
+/* while a centered frame is shown (data-plx-frame on the page root, set by AppShell) the Drawer layer and the toast region read its width to stay inside it (issue 877) */
+:root[data-plx-frame="centered"]{--plx-comp-shell-context-frame-width:var(--plx-sys-shell-frame-width);}
