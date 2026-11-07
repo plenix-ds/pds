@@ -124,6 +124,10 @@ export const more = [
   <MenuItem type="radio" value="a">A</MenuItem>,
   <Field label="Name" info={<span>Shown to everyone</span>} counter={100} labelWidth="md"><Input /></Field>,
   <Field label="Bio" counter><Textarea /></Field>,
+  <Field label="Notes" span="full"><Textarea /></Field>,
+  <Field label="Notes" span={2}><Textarea /></Field>,
+  // @ts-expect-error span is 1, 2, 3 or "full" (ADR 0029)
+  <Field label="Notes" span={5}><Textarea /></Field>,
   <AppShell sideNav={<nav />} panel={<aside />} mainClassName="plx-main" />,
   <DataGrid label="Records" data={rows} columns={columns} selectable openKey={1} tree storageKey="records" />,
   <Tabs label="Details" value="info" defaultValue="info" idBase="details" panelClassName="plx-panel" items={[{ value: 'info', label: 'Info' }]} />,

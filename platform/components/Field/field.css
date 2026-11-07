@@ -51,3 +51,8 @@
 .plx-field--inline .plx-field__label{--plx-comp-field-grid-label-white-space:normal;}
 }
 /* its motion (moved from motion.css, Styling Standard 3.6: each component owns its own; reduced motion sets the durations to 0s) */
+/* a Field that spans (ADR 0029, issue 947): in a grid it takes every column (full) or the count; its control fills it, so the single-line cap (--plx-comp-input-max-width) does not shorten it */
+.plx-field--span-full{--plx-comp-input-context-max-width:100%;grid-column:1 / -1;}
+.plx-field--span-2{--plx-comp-input-context-max-width:100%;grid-column:span 2;}
+.plx-field--span-3{--plx-comp-input-context-max-width:100%;grid-column:span 3;}
+.plx-field--fill{--plx-comp-input-context-max-width:100%;}

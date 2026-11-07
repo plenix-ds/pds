@@ -42,6 +42,7 @@
        the dir attribute, never the CSS direction property: the :dir(rtl) rules answer only to the attribute.
 */
 import React from 'react';
+import { devWarn } from '../../utils/devWarn.ts';
 import { FieldLabelContext } from '../../utils/fieldLabel.ts';
 import { cx } from '../../utils/cx.ts';
 import { useTruncated } from '../../utils/overflow.ts';
@@ -75,6 +76,8 @@ export type FieldProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> 
   info?: React.ReactNode;
   infoLabel?: string;
   layout?: FieldLayout;
+  /** the columns the Field takes in a grid (Columns): a number, or "full" for every column (ADR 0029). Default "full" for a Textarea or a RichTextEditor, else 1; it acts only as a direct child of a grid, and a spanning Field lets its control fill it */
+  span?: 1 | 2 | 3 | 'full';
   /** a size name for the label column (plx-field--label-<value>) */
   labelWidth?: string;
   /** true (the limit is the control's maxLength) or the limit */
@@ -87,7 +90,7 @@ export type FieldProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> 
   /** the control: one element */
   children: React.ReactElement;
 };
-export function Field({ label, hideLabel = false, description, error, warning, required = false, info, infoLabel, layout, labelWidth, counter, strings, type, inputMode, autoComplete, enterKeyHint, className, children, ...rest }: FieldProps) {
+export function Field({ label, hideLabel = false, description, error, warning, required = false, info, infoLabel, layout, span, labelWidth, counter, strings, type, inputMode, autoComplete, enterKeyHint, className, children, ...rest }: FieldProps) {
   const id = React.useId();
   const formLayout = React.useContext(FieldLayoutContext);
   const lay = layout || formLayout || 'stacked';
@@ -98,6 +101,9 @@ export function Field({ label, hideLabel = false, description, error, warning, r
   const labelRef = React.useRef<HTMLLabelElement>(null);
   const cut = useTruncated(labelRef);
   const child = React.Children.only(children) as React.ReactElement<FieldControlProps>;
+  // ADR 0029: a text area or a rich text editor spans the row by default; any Field can say how many columns it takes
+  devWarn('Field', { span }, { span: [1, 2, 3, 'full'] });
+  const own = (child.type as { plxFieldSpan?: 'full' }).plxFieldSpan, spans = span !== undefined ? span : (own || 1);
   // the character counter: the limit, the length (the control's value, else what was typed), what is left
   const max = counter ? (typeof counter === 'number' ? counter : Number(child.props.maxLength) || 0) : 0;
   const [typed, setTyped] = React.useState(() => String(child.props.defaultValue == null ? '' : child.props.defaultValue).length);
@@ -133,7 +139,7 @@ export function Field({ label, hideLabel = false, description, error, warning, r
   Object.keys(hints).forEach((k) => { if (hints[k] !== undefined && child.props[k] === undefined) props[k] = hints[k]; });
   const control = <FieldLabelContext.Provider value={!!label}>{React.cloneElement(child, props)}</FieldLabelContext.Provider>;
   return (
-    <div className={cx('plx-field', 'plx-field--' + lay, labelWidth && 'plx-field--label-' + labelWidth, error && 'is-invalid', showWarning && 'is-warning', className)} {...rest}>
+    <div className={cx('plx-field', 'plx-field--' + lay, spans !== 1 && 'plx-field--span-' + spans, spans === 1 && own && 'plx-field--fill', labelWidth && 'plx-field--label-' + labelWidth, error && 'is-invalid', showWarning && 'is-warning', className)} {...rest}>
       <div className={cx('plx-field__head', hideLabel && 'plx-visually-hidden')}>
         <Tooltip content={label} disabled={!cut} describe={false} className="plx-field__label-tip">
           <label ref={labelRef} className="plx-field__label" htmlFor={child.props.id || controlId}>{label}{required ? <span className="plx-field__required" aria-hidden="true"> *</span> : null}</label>
