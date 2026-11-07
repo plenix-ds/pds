@@ -1,6 +1,6 @@
 {
   "name": "@plenix-ds/react",
-  "version": "0.91.0",
+  "version": "0.92.0",
   "description": "Plenix React components, patterns, hooks and providers",
   "private": true,
   "license": "UNLICENSED",
@@ -13,8 +13,8 @@
     "build": "node ../../tools/workspace-build.js"
   },
   "dependencies": {
-    "@plenix-ds/styles": "0.91.0",
-    "@plenix-ds/tokens": "0.91.0",
-    "@plenix-ds/icons": "0.91.0"
+    "@plenix-ds/styles": "0.92.0",
+    "@plenix-ds/tokens": "0.92.0",
+    "@plenix-ds/icons": "0.92.0"
   }
 }

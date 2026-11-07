@@ -23,6 +23,11 @@ import { gridPx } from '../../../utils/grid.ts';
 import { gapPieces } from '../../../hooks/useVirtualizer.ts';
 import { useStrings } from '../../../providers/LocaleProvider.tsx';
 import { GRID } from './helpers.tsx';
+import { splitRowActions } from './rowActions.ts';
+import { arrowStep } from '../../../utils/direction.ts';
+import { Button } from '../../Button/Button.tsx';
+import { Menu } from '../../Menu/Menu.tsx';
+import MoreIcon from 'plenix-platform/icons/plenix/more';
 
 function Gap({ count, kind = 'record' }: any) {
   return count > 0 ? (
@@ -277,6 +282,48 @@ export const Width = React.forwardRef<any, any>(function Width(
 // Compatibility cell adapters read through a live ref; retain custom output until its record, column or row state changes.
 export function RowMenuContent({ build, items, record, rowApi }: any) {
   return build(typeof items === 'function' ? items(record) : items || [], record, rowApi);
+}
+
+// the row's actions as icons (#800 AC-5, ADR 0022): the first items of the row menu as icon-only buttons named by their label, then the ⋮ menu for the rest
+// (only when some action stays in the menu). Shown on row hover, focus inside the row and when the row is selected (data-grid.css)
+export function RowActions({ B, S, items, record, rowApi, menuItems }: any) {
+  const { inline, rest } = splitRowActions(items || []);
+  return (
+    <span
+      className={B + '__row-actions'}
+      role="group"
+      aria-label={S.rowActions}
+      onKeyDown={(e) => {
+        // the arrows move between the icons and the ⋮ (mirrored in a right-to-left grid); the grid's own cell keys do not see them
+        const step = arrowStep(e, e.currentTarget, { vertical: false });
+        if (!step) return;
+        const buttons = Array.from(e.currentTarget.querySelectorAll<HTMLElement>('button:not(:disabled)')), at = buttons.indexOf(e.target as HTMLElement);
+        if (at < 0) return;
+        e.preventDefault();
+        e.stopPropagation();
+        buttons[Math.min(buttons.length - 1, Math.max(0, at + step))]?.focus();
+      }}
+    >
+      {inline.map((item: any, i: number) => (
+        <Button
+          key={i}
+          className={B + '__row-action'}
+          variant="ghost"
+          size="xs"
+          iconOnly
+          icon={item.icon}
+          label={item.label}
+          disabled={typeof item.disabled === 'function' ? item.disabled(record) : item.disabled}
+          onClick={() => (item.onSelect || item.action)?.(record, rowApi)}
+        />
+      ))}
+      {rest.length ? (
+        <Menu label={S.rowActions} trigger={<Button className={B + '__row-menu'} variant="ghost" size="xs" iconOnly tooltip={false} icon={MoreIcon} label={S.rowActions} />}>
+          {menuItems(rest, record, rowApi)}
+        </Menu>
+      ) : null}
+    </span>
+  );
 }
 
 // a custom cell's own elements (each element of a fragment too) take __cell-content: the grid's class on what it places in the cell
