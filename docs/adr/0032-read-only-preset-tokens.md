@@ -2,7 +2,7 @@
 
 - **Status:** accepted
 - **Date:** 2026-11-07
-- **Deciders:** pds1-ds-architect (G3), on the owner's preset (D-0106) and G2's design (PR #967, D-0107). Decision D-0108 (owner may switch).
+- **Deciders:** pds1-ds-architect (G3), on the owner's preset (D-0106) and G2's design (PR #967, D-0107). Decision D-0109 (owner may switch).
 - **Issue:** #946 (S1)
 - **Supersedes:** ADR 0030 on values. ADR 0030's names, its `layout` API and its 2.0.0 default flip stay.
 
@@ -29,7 +29,7 @@
 
 ## Decision
 
-**Option A** (D-0108; reply B or C on #946 to switch).
+**Option A** (D-0109; reply B or C on #946 to switch).
 
 - **New refs** (`reference.tokens.json`, owner-approved under D-0106, recorded in `check-system.token-definitions.json`):
   - `color-porcelain-50` #fbfaf9 (tile, light) and `color-porcelain-200` #edebe8 (tile border, light).
