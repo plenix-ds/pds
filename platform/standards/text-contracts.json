@@ -3593,6 +3593,11 @@
    "contract": "establishes",
    "role": "label",
    "font": "sans"
+  },
+  "plx-property-group__heading": {
+   "contract": "establishes",
+   "role": "group-heading",
+   "font": "sans"
   }
  }
 }

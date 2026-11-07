@@ -9306,6 +9306,38 @@
       "$value": "{plx-sys.space-inset-sm}",
       "$type": "dimension"
     },
+    "property-group-heading-text": {
+      "$value": "{plx-sys.read-only-group-heading}",
+      "$type": "color"
+    },
+    "property-group-heading-font-family": {
+      "$value": "{plx-sys.text-group-heading-font-family}",
+      "$type": "fontFamily"
+    },
+    "property-group-heading-font-size": {
+      "$value": "{plx-sys.text-group-heading-font-size}",
+      "$type": "dimension"
+    },
+    "property-group-heading-font-weight": {
+      "$value": "{plx-sys.text-group-heading-font-weight}",
+      "$type": "fontWeight"
+    },
+    "property-group-heading-line-height": {
+      "$value": "{plx-sys.text-group-heading-line-height}",
+      "$type": "dimension"
+    },
+    "property-group-heading-letter-spacing": {
+      "$value": "{plx-sys.text-group-heading-letter-spacing}",
+      "$type": "dimension"
+    },
+    "property-group-gap": {
+      "$value": "{plx-sys.space-stack-group}",
+      "$type": "dimension"
+    },
+    "property-group-heading-gap": {
+      "$value": "{plx-sys.space-stack-field}",
+      "$type": "dimension"
+    },
     "property-list-value-data-font-family": {
       "$value": "{plx-sys.font-data}",
       "$type": "fontFamily",

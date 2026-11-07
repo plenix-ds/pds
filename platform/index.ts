@@ -75,6 +75,7 @@ export { DataToolbar } from './patterns/DataToolbar/DataToolbar.tsx';
 export { BulkActions, SelectionSummary } from './patterns/BulkActions/BulkActions.tsx';
 export { ContentGrid } from './patterns/ContentGrid/ContentGrid.tsx';
 export { PropertyList } from './patterns/PropertyList/PropertyList.tsx';
+export { PropertyGroup } from './patterns/PropertyGroup/PropertyGroup.tsx';
 export { TableSettings } from './providers/TableSettings.tsx';
 export { PrintDocument } from './patterns/PrintDocument/PrintDocument.tsx';
 export { RecordPage } from './patterns/RecordPage/RecordPage.tsx';
