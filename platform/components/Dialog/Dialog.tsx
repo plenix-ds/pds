@@ -70,7 +70,7 @@
      Modal layers follow D3, option C.
      Full-screen dialog (09 Overlays › Dialogs › Full-screen dialog) is size="full": the whole modal layer, inside the
        layout inset.
-     Header and footer are filled bands (--plx-sys-surface-dialog-chrome) with hairline dividers, always shown; the body is white.
+     The header is a filled band (--plx-sys-surface-dialog-chrome); the footer has no fill and a hairline above it only while the body scrolls.
      The title is at the start of the header, the close button at its end, the actions in the footer.
      The layer renders in a portal on document.body.
 */
@@ -151,6 +151,17 @@ function ModalShell({ kind, open, onClose, title, description, icon, size, side,
     const root = ref.current as HTMLDivElement;
     return focusables(root.querySelector('.plx-dialog__body'))[0] || focusables(root.querySelector('.plx-dialog__footer'))[0] || null;
   };
+  // the footer hairline shows only while the body scrolls (D-0102)
+  const [scrolls, setScrolls] = React.useState(false);
+  React.useEffect(() => {
+    const body = open && ref.current ? ref.current.querySelector<HTMLElement>('.plx-dialog__body') : null;
+    if (!body) return undefined;
+    const check = () => setScrolls(body.scrollHeight > body.clientHeight + 1);
+    check();
+    const ro = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(check);
+    if (ro) { ro.observe(body); Array.from(body.children).forEach((c) => ro.observe(c)); }
+    return () => { if (ro) ro.disconnect(); };
+  });
   useLayer(ref, open, { modal, onEscape: dismissible && modal ? onClose : null, initialFocus: firstFocus });
   const inside = useNonModalFocus(ref, open, !modal, firstFocus);
   if (!open) return null;
@@ -174,7 +185,7 @@ function ModalShell({ kind, open, onClose, title, description, icon, size, side,
           {description ? <p id={id + 'd'} className="plx-dialog__description">{description}</p> : null}
           {children}
         </div>
-        {footer ? <div className="plx-dialog__footer">{footer}</div> : null}
+        {footer ? <div className={cx('plx-dialog__footer', scrolls && 'plx-dialog__footer--divided')}>{footer}</div> : null}
       </div>
     </div>,
     document.body,
