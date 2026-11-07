@@ -8,6 +8,7 @@
    Notes: Used by RichText (its html prop) and RichTextEditor (its value and onChange); published as cleanRichText.
      SAFE_HREF and SAFE_SRC, its address checks for links and pictures, are also what RichTextEditor's Insert link and Insert
      image accept (one rule in one place, issue 884). */
+import { parseHtmlFragment } from './trustedHtml.ts';
 const MENTION_CLASS = 'plx-rich-text-editor__mention';
 const CHECK_CLASS = 'plx-check__input';
 const ALLOWED: Record<string, number> = { P: 1, BR: 1, STRONG: 1, EM: 1, U: 1, S: 1, CODE: 1, SUB: 1, SUP: 1, MARK: 1, A: 1, SPAN: 1, H1: 1, H2: 1, H3: 1, H4: 1, H5: 1, H6: 1,
@@ -21,10 +22,10 @@ export const SAFE_HREF = /^(https?:|mailto:|\/|\.|#|[^:]*$)/i;
 export const SAFE_SRC = /^(https?:|\/|\.|[^:]*$)/i;
 
 // the allow-list: a clean copy of the HTML (elements renamed or unwrapped, attributes dropped, styles kept to the person's formatting)
-export function cleanRichText(html: unknown): string {
-  if (typeof document === 'undefined') return '';
-  const from = document.createElement('template'); from.innerHTML = String(html || '');
-  // build the copy in the template's own inert document: an <img src> made in the live document starts a request (issue 59)
+function cleanTree(html: unknown): HTMLElement | null {
+  if (typeof document === 'undefined') return null;
+  // parsed in an inert document through the one Trusted Types policy (utils/trustedHtml.ts); the copy is built in that document too: an <img src> made in the live document starts a request (issue 59)
+  const from = { content: parseHtmlFragment(String(html || '')) };
   const doc = from.content.ownerDocument;
   const copy = (node: Node, into: Node, task: boolean): void => {
     // each child is an element past the two node-type tests below
@@ -71,5 +72,18 @@ export function cleanRichText(html: unknown): string {
     });
   };
   const out = doc.createElement('div'); copy(from.content, out, false);
-  return out.innerHTML;
+  return out;
+}
+
+/** the clean copy as an HTML string ('' with no document) */
+export function cleanRichText(html: unknown): string {
+  const out = cleanTree(html);
+  return out ? out.innerHTML : '';
+}
+
+/** the clean copy as nodes for the live document, with no HTML string written: append them with replaceChildren (Trusted Types safe) */
+export function cleanRichTextNodes(html: unknown): DocumentFragment {
+  const out = cleanTree(html), fragment = document.createDocumentFragment();
+  if (out) Array.from(out.childNodes).forEach((n) => fragment.appendChild(document.importNode(n, true)));
+  return fragment;
 }

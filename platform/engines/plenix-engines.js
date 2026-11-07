@@ -21,6 +21,21 @@
     if (!SCRIPT) return 'platform/vendor/';
     return new URL(/\/platform\/engines\/plenix-engines\.js(\?.*)?$/.test(SCRIPT) ? '../vendor/' : './vendor/', SCRIPT).href;
   }
+  // Trusted Types (issue 940): a page that requires them accepts a script address only from a policy; this is the same "plenix" policy platform/utils/trustedHtml.ts makes (a name can be made once,
+  // so whichever file loads first shares it as window.PlenixTrustedTypes), and it names only Plenix's own vendor scripts
+  function trustedUrl(url) {
+    var api = window.trustedTypes;
+    if (!api || typeof api.createPolicy !== 'function') return url;
+    if (!window.PlenixTrustedTypes) {
+      try {
+        window.PlenixTrustedTypes = api.createPolicy('plenix', {
+          createHTML: function (html) { return html; },
+          createScriptURL: function (u) { if (!/\/vendor\/[\w./-]+\.js$/.test(new URL(u, document.baseURI).pathname)) throw new TypeError('Plenix only loads its own vendor scripts'); return u; }
+        });
+      } catch (e) { return url; }
+    }
+    return window.PlenixTrustedTypes.createScriptURL(url);
+  }
   var loading = new WeakMap();
   function script(name, file, global) {
     return function (win) {
@@ -31,9 +46,9 @@
       var doc = w.document;
       key[name] = new Promise(function (resolve, reject) {
         var s = doc.createElement('script');
-        s.src = vendorBase() + file; s.async = true; s.setAttribute('data-plx-vendor', name);
-        s.onload = function () { if (w[global]) resolve(w[global]); else { delete key[name]; s.remove(); reject(new Error(name + ' did not load from ' + s.src)); } };
-        s.onerror = function () { delete key[name]; s.remove(); reject(new Error(name + ' could not be loaded from ' + s.src)); };
+        s.src = trustedUrl(vendorBase() + file); s.async = true; s.setAttribute('data-plx-vendor', name);
+        s.onload = function () { if (w[global]) resolve(w[global]); else { delete key[name]; s.remove(); reject(new Error(name + ' did not load from ' + vendorBase() + file)); } };
+        s.onerror = function () { delete key[name]; s.remove(); reject(new Error(name + ' could not be loaded from ' + vendorBase() + file)); };
         doc.head.appendChild(s);
       });
       return key[name];

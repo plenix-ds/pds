@@ -1,0 +1,5 @@
+AssertionError [ERR_ASSERTION]: ltr: no Trusted Types violation from Plenix's own code [{"directive":"require-trusted-types-for","sample":"Element innerHTML|<p>Hello <strong>there</strong> <a href=","file":"dist/platform.js","line":28256},{"directive":"require-trusted-types-for","sample":"Element innerHTML|<p>Hello <strong>there</strong> <a href=","file":"dist/platform.js","line":28256},{"directive":"require-trusted-types-for","sample":"Element innerHTML|<p>Hello <strong>there</strong> <a href=","file":"dist/platform.js","line":28256},{"directive":"require-trusted-types-for","sample":"Element 
++ actual - expected
+
++ [
++   {
