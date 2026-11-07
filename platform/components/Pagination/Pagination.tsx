@@ -51,10 +51,12 @@ export type PaginationProps = React.HTMLAttributes<HTMLElement> & {
   label?: string;
   strings?: Catalog | null;
 };
-export function Pagination({ page = 1, pageCount = 1, onPageChange, total, perPage, perPageOptions, onPerPageChange, label, strings, className, ...rest }: PaginationProps) {
+export function Pagination({ page: pageProp = 1, pageCount = 1, onPageChange, total, perPage, perPageOptions, onPerPageChange, label, strings, className, ...rest }: PaginationProps) {
   // the words: the catalog's for the locale (i18n/en.js, and Arabic says the range its own way: "31 إلى 60 من 120"),
   // then the strings prop
   const t = useStrings('pagination', strings) as PaginationWords;
+  // a page outside 1..pageCount is held inside it (#908): the current page is always one of the pages shown
+  const page = Math.min(Math.max(1, pageProp), Math.max(1, pageCount));
   const go = (p: number) => { if (p >= 1 && p <= pageCount && p !== page && onPageChange) onPageChange(p); };
   const first = total ? (page - 1) * (perPage || 0) + 1 : null;
   const last = total ? Math.min(total, page * (perPage || total)) : null;
