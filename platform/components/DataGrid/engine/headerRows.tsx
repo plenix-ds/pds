@@ -60,7 +60,8 @@ function HeaderTitle({ text, description, className, children }: { text: string;
 
 // a number for each grid (its headerElements ref is stable), so a column description's id is unique on the page
 const gridNumbers = new WeakMap<object, number>();
-const gridNumber = (key: object) => { if (!gridNumbers.has(key)) gridNumbers.set(key, gridNumbers.size + 1); return gridNumbers.get(key); };
+let gridCount = 0;
+const gridNumber = (key: object): number => { let n = gridNumbers.get(key); if (!n) { n = ++gridCount; gridNumbers.set(key, n); } return n; };
 
 export function headerRows({
   groupBy,
