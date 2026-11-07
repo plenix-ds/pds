@@ -3,7 +3,7 @@
 PDS restarted as **PDS 1.0** on 2026-11-05 (D-0021). It continues `plenix-platform` 0.x: same code and history, same GitHub org (`plenix-ds`), same servers and same CDN. It now works in a structured environment with one team: `pds1-*` agents, in sessions titled "PDS1 - <role>". The 0.x team and its files (`docs/legacy/`) are retired history.
 
 - **Delivery system** (team, SDLC, intake, dashboard, enforcement): `docs/pds1/plan.md`. It is protected; to propose a change, open an issue.
-- **Decisions:** `decisions.yaml`. Later dates win, and every entry names the check that enforces it.
+- **Decisions:** one file per decision in `decisions.d/` (`decisions.d/README.md`; the id comes from `node tools/decision-id.mjs`). Later dates win, and every decision names the check that enforces it.
 - **Design contract:** `DESIGN.md`. Phase 0 writes it from the existing design language, as-is (D-0004).
 - **Lessons from past mistakes:** `docs/lessons.md`.
 - **Arabic standard:** `docs/i18n/arabic.md`. It is protected.
@@ -29,8 +29,8 @@ PDS restarted as **PDS 1.0** on 2026-11-05 (D-0021). It continues `plenix-platfo
   - Sign every comment `— PDS1-<Role>` until the GitHub App bot identities exist.
   - Status lives on GitHub: the pinned "Daily summary" issue and the dashboard.
 - **Never stop to wait for the owner.** Ask about intent only when a request can't be read any other way.
-  - Even then, apply the recommended option, post a decision card ("I went with A; reply B to switch") and record it in `decisions.yaml` with its enforcing check (`pds1-owner-interview` skill).
-  - Never ask what `decisions.yaml`, `DESIGN.md`, the plan or the code already answers.
+  - Even then, apply the recommended option, post a decision card ("I went with A; reply B to switch") and record it as `decisions.d/D-NNNN.yaml` with its enforcing check (`pds1-owner-interview` skill).
+  - Never ask what `decisions.d/`, `DESIGN.md`, the plan or the code already answers.
 - **Artifacts are files** in `docs/pds1/slices/<id>/` (brief, design, plan, ledger, evidence), not chat.
 - **Evidence:** report each item as Ran / Skipped / Planned / Manual, with a path.
   - Don't claim anything is done without command output from this session.
