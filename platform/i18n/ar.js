@@ -469,6 +469,7 @@ export default {
     "editModeForm": "تعديل في نموذج",
     "formTitle": "تعديل {name}",
     "emptyValue": "—",
+    "formNoValue": "لا توجد قيمة",
     "formSaved": "تم حفظ {name}",
     "formSaveRefused": "تعذّر حفظ {name}. تحقق من القيم وحاول مرة أخرى.",
     "saved": "تم الحفظ",
@@ -1003,6 +1004,11 @@ export default {
   },
   "appShell": {
     "skip": "تخطّي إلى المحتوى الرئيسي",
+    "minSize": {
+      "title": "حجم الشاشة غير مدعوم",
+      "text": "يعرض هذا التطبيق الكثير من المعلومات التفصيلية، ولم يُصمَّم للشاشات الصغيرة بعد. استخدم كمبيوتر سطح المكتب أو كمبيوترًا محمولًا بشاشة لا تقل عن {width} × {height}. نخطط لتصميم للأجهزة المحمولة.",
+      "continue": "المتابعة على أي حال"
+    },
     "frame": {
       "expand": "توسيع إلى ملء النافذة",
       "restore": "استعادة إلى عرض {width}"
@@ -2393,6 +2399,7 @@ export default {
     "abstain": "امتناع",
     "turnedOff": "متوقف",
     "notVoted": "لم يصوّتوا",
+    "notRecorded": "لم يُسجَّل",
     "voteOf": "تصويت {name}",
     "hiddenUntilClosed": "مخفي حتى يُغلق التصويت",
     "totalsOnly": "المجاميع فقط",

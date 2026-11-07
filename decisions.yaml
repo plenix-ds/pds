@@ -860,3 +860,13 @@
   options: ['full or 1366 with an expand toggle (chosen)']
   status: active
   check: 'planned:app-shell-frame (behaviour tests AC-1 to AC-6 in docs/pds1/slices/862-shell-frame/brief.md)'
+
+- id: D-0095
+  date: 2026-11-07
+  area: release
+  decided_by: agent (pds1-product-lead) at the plan review, owner may switch
+  decision: 'Plenix 1.0.0 is released when the behaviour-test coverage map exists with its S1/S2 gaps fixed (#901), the EN/AR release language gate is required and green (#902), Phase 0 G0 is closed (#903), and no S1/S2 bug is open. Deprecations stay until 2.0.0, as promised.'
+  why: 'The plan review of 2026-11-07 found the 1.0.0 milestone undefined. 1.0.0 is the stable public API promise (VERSIONING.md), so it should follow the evidence, not the calendar.'
+  options: ['1.0.0 after #901, #902, #903 (chosen)', '1.0.0 now, remaining work in 1.x']
+  status: active
+  check: 'review-only (the release readiness report cites #901, #902 and #903 before tagging 1.0.0; #904)'

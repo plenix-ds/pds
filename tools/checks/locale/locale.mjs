@@ -1,5 +1,6 @@
 // Locale checks (plan §7, P0-10; issue #192; G6). English and Arabic, from the catalogs and the components' JSX.
 //   node tools/checks/locale/locale.mjs [baseRef] [--json]
+//   node tools/checks/locale/locale.mjs --release      G6, the release gate (#902): fails on any RELEASE_BLOCKING finding
 // The six checks, each a rule name in the findings:
 //   missing-ar     an English key (a plural counts once) has no Arabic entry
 //   unapproved-ar  Arabic text in ar.js that the owner has not approved (approved-ar.json; D-0012, D-0075)
@@ -9,6 +10,7 @@
 //   jsx-literal    visible text written in a component's JSX (text children, or a string aria-label, title,
 //                  placeholder, alt or label) instead of coming from the catalog
 //   duplicate-key  a key written twice in one object of en.json, en.js or ar.js: only the later one is read (#720)
+//   missing-en     a word a part reads (useStrings section, S.key, t('a.b')) that en.json does not have (#902)
 //   unused-key     an English key no Platform source reads (its section and its leaf name both appear in one file),
 //                  or an Arabic key English does not have
 // Diff-aware (plan §7 "Only new problems block"): with a base ref, the same checks run on the base (the catalogs and the
@@ -189,6 +191,78 @@ export async function checkJsx(text, file) {
   return out;
 }
 
+// ---------- missing-en: a word a part reads that English does not have (#902) ----------
+// LocaleProvider returns undefined for a key no catalog has, so the part shows nothing. Read from the parse tree, function
+// by function: a variable set from useStrings('section'), then `S.key`, `S?.key`, `const { key } = S`, or the call itself
+// (`useStrings('x').key`); a section useStrings asks for; a dotted key passed to t(), said() or translate(). A read handed
+// straight to a child's strings prop (strings={t.calendar}) is a pass-through of the app's own words, not a catalog read.
+const NOT_KEYS = new Set(['replace', 'split', 'length', 'map', 'toString', 'trim', 'slice', 'indexOf', 'includes', 'startsWith',
+  'endsWith', 'concat', 'toLowerCase', 'toUpperCase', 'match', 'hasOwnProperty', 'valueOf']);
+const lookup = (o, k) => k.split('.').reduce((v, x) => (v && typeof v === 'object' ? v[x] : undefined), o);
+const unwrap = (n) => { while (n && (n.type === 'TSAsExpression' || n.type === 'TSNonNullExpression' || n.type === 'ParenthesizedExpression' || n.type === 'TSSatisfiesExpression' || n.type === 'TSTypeAssertion')) n = n.expression; return n; };
+const sectionOf = (n) => { n = unwrap(n); return n && n.type === 'CallExpression' && n.callee.type === 'Identifier' && n.callee.name === 'useStrings' && n.arguments[0] && n.arguments[0].type === 'StringLiteral' ? n.arguments[0].value : null; };
+const propName = (m) => (!m.computed && m.property.type === 'Identifier' ? m.property.name : m.computed && m.property.type === 'StringLiteral' ? m.property.value : null);
+const isFn = (n) => /Function|ArrowFunctionExpression|ObjectMethod|ClassMethod/.test(n.type);
+
+export async function checkReads(text, file, en) {
+  const { parse } = await parser();
+  let ast;
+  try { ast = parse(text, { sourceType: 'module', plugins: ['jsx', ...(/\.tsx?$/.test(file) ? ['typescript'] : [])], errorRecovery: true }); } catch { return []; }
+  const out = [], seen = new Set();
+  const report = (message, line) => { if (!seen.has(message)) { seen.add(message); out.push({ rule: 'missing-en', file, message, line }); } };
+  const leaf = (sec, key, line) => {
+    const s = lookup(en, sec);
+    if (!s || typeof s !== 'object' || NOT_KEYS.has(key) || key in s) return;
+    report(`${sec}.${key}: read by this part, not in en.json`, line);
+  };
+  const scopes = [new Map()];
+  // strings={t.calendar}: an app's own nested words handed down to a child part; undefined means "use the child's catalog"
+  const passThrough = new WeakSet();
+  const resolve = (name) => { for (let i = scopes.length - 1; i >= 0; i--) if (scopes[i].has(name)) return scopes[i].get(name); return null; };
+  (function walk(n) {
+    if (!n || typeof n.type !== 'string') return;
+    const fn = isFn(n);
+    if (fn) scopes.push(new Map());
+    if (n.type === 'CallExpression') {
+      const sec = sectionOf(n);
+      if (sec !== null && lookup(en, sec) === undefined) report(`useStrings('${sec}'): no such section in en.json`, n.loc.start.line);
+      const callee = n.callee.type === 'Identifier' ? n.callee.name : n.callee.type === 'MemberExpression' && !n.callee.computed ? n.callee.property.name : '';
+      if (/^(t|said|translate)$/.test(callee)) for (const a of n.arguments.slice(0, 2))
+        if (a.type === 'StringLiteral' && /^[a-zA-Z][\w-]*(\.[\w-]+)+$/.test(a.value) && lookup(en, a.value.split('.')[0]) !== undefined && lookup(en, a.value) === undefined)
+          report(`${a.value}: read by this part, not in en.json`, a.loc.start.line);
+    }
+    if (n.type === 'JSXAttribute' && n.name && n.name.name === 'strings' && n.value && n.value.type === 'JSXExpressionContainer') {
+      const v = unwrap(n.value.expression);
+      if (v && (v.type === 'MemberExpression' || v.type === 'OptionalMemberExpression')) passThrough.add(v);
+    }
+    if (n.type === 'VariableDeclarator') {
+      const sec = sectionOf(n.init);
+      if (sec !== null) {
+        if (n.id.type === 'Identifier') scopes[scopes.length - 1].set(n.id.name, sec);
+        else if (n.id.type === 'ObjectPattern') for (const p of n.id.properties) if (p.type === 'ObjectProperty' && p.key.type === 'Identifier') leaf(sec, p.key.name, p.loc.start.line);
+      } else if (n.id.type === 'ObjectPattern' && n.init && unwrap(n.init).type === 'Identifier') {
+        const s2 = resolve(unwrap(n.init).name);
+        if (s2) for (const p of n.id.properties) if (p.type === 'ObjectProperty' && p.key.type === 'Identifier') leaf(s2, p.key.name, p.loc.start.line);
+      }
+    }
+    if ((n.type === 'MemberExpression' || n.type === 'OptionalMemberExpression') && !passThrough.has(n)) {
+      const obj = unwrap(n.object), key = propName(n);
+      if (key) {
+        const sec = obj.type === 'Identifier' ? resolve(obj.name) : sectionOf(obj);
+        if (sec) leaf(sec, key, n.loc.start.line);
+      }
+    }
+    for (const k of Object.keys(n)) {
+      if (k === 'loc' || k === 'start' || k === 'end' || k === 'leadingComments' || k === 'trailingComments') continue;
+      const v = n[k];
+      if (Array.isArray(v)) { for (const c of v) if (c && typeof c.type === 'string') walk(c); }
+      else if (v && typeof v.type === 'string') walk(v);
+    }
+    if (fn) scopes.pop();
+  })(ast.program);
+  return out;
+}
+
 // ---------- the English side of check 6: unused keys ----------
 
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -259,6 +333,8 @@ export async function runAll(ref, { jsxFiles } = {}) {
   const sources = {};
   for (const f of tree.list) if (SOURCE_FILE.test(f) && !SOURCE_SKIP.test(f)) { const t = tree.read(f); if (t != null) sources[f] = t; }
   findings.push(...checkUnused(en, sources));
+  // missing-en: the words each Platform source reads, against en.json
+  for (const [f, t] of Object.entries(sources)) if (/\.(jsx|tsx|ts|js)$/.test(f) && !/\.(test|stories|spec)\./.test(f)) findings.push(...await checkReads(t, f, en));
   const jsx = (jsxFiles || tree.list).filter((f) => JSX_FILE.test(f) && JSX_DIRS.some((d) => f.startsWith(d + '/')) && !JSX_SKIP.test(f));
   for (const f of jsx) { const t = tree.read(f); if (t != null) findings.push(...await checkJsx(t, f)); }
   return findings;
@@ -270,6 +346,9 @@ export const findingKey = (x) => `${x.rule} | ${x.file} | ${x.message}`;
 // missing Arabic never fails a PR: a new English word waits for the owner's answer and shows in English until then
 // (D-0012, "waiting never blocks other work"); it is reported, and G6 counts it at a release
 export const NON_BLOCKING = new Set(['missing-ar']);
+// G6, the release gate (#902): a release fails on any of these, old or new. unused-key and jsx-literal are reported only.
+export const RELEASE_BLOCKING = new Set(['missing-en', 'missing-ar', 'unapproved-ar', 'placeholder', 'plural-forms', 'duplicate-key', 'catalog']);
+export const g6 = (findings) => findings.filter((x) => RELEASE_BLOCKING.has(x.rule));
 export function newFindings(base, head) {
   const left = new Map();
   for (const x of base) left.set(findingKey(x), (left.get(findingKey(x)) || 0) + 1);
@@ -279,10 +358,10 @@ export function newFindings(base, head) {
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  const args = process.argv.slice(2), asJson = args.includes('--json'), base = args.find((a) => !a.startsWith('--'));
+  const args = process.argv.slice(2), asJson = args.includes('--json'), release = args.includes('--release'), base = args.find((a) => !a.startsWith('--'));
   const head = await runAll(null);
   const byRule = (list) => Object.entries(list.reduce((m, x) => ((m[x.rule] = (m[x.rule] || 0) + 1), m), {})).map(([r, n]) => `${r} ${n}`).join(', ') || 'none';
-  let added = head;
+  let added = release ? [] : head;   // --release prints its own G6 list below
   if (base) {
     // the base's JSX findings are only needed for the files the diff changed: the rest are the head's own
     const baseFindings = await runAll(base);
@@ -295,8 +374,14 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     else console.error(`locale: ${x.rule}: ${where(x)} ${x.message}`);
   }
   if (added.length > 300) console.error(`locale: … and ${added.length - 300} more`);
-  const g6 = head.filter((x) => x.rule === 'missing-ar' || x.rule === 'unapproved-ar').length;
+  const gate = g6(head);
+  if (release) for (const x of gate.slice(0, 300)) {
+    if (process.env.GITHUB_ACTIONS) console.log(`::error file=${x.file}${x.line ? `,line=${x.line}` : ''},title=G6: ${x.rule}::${x.message}`);
+    else console.error(`G6: ${x.rule}: ${where(x)} ${x.message}`);
+  }
   console.log(`locale: ${head.length} findings (${byRule(head)})` + (base ? `; ${added.length} new (${byRule(added)})` : '')
-    + `; G6 release state: ${g6 ? `FAIL (${g6} missing or unapproved Arabic)` : 'PASS'}`);
-  process.exit(base ? (added.length ? 1 : 0) : head.length ? 1 : 0);
+    + `; G6 release state: ${gate.length ? `FAIL (${gate.length}: ${byRule(gate)})` : 'PASS'}`);
+  if (release && process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `### G6 language gate\n\n${gate.length ? '❌ FAIL: ' + byRule(gate) : '✅ PASS: every word a part reads is in English and in approved Arabic'}\n`);
+  // --release: G6, any blocking finding fails; with a base ref: only new findings fail; alone: any finding fails
+  process.exit(release ? (gate.length ? 1 : 0) : base ? (added.length ? 1 : 0) : head.length ? 1 : 0);
 }

@@ -27,9 +27,9 @@ Current version: 0.90.1. The history continues (template §1, principle 6). The 
 
 | Milestone | Contents (epics) | Status |
 |---|---|---|
-| **0.91.0** | E3 TypeScript wave 3 (patterns); E4 the 311-class removal (#723) with upgrade notes; E5 contrast and minimum-size fixes (#206, #251, #235) | Next |
-| 0.92.0 | E3 TypeScript remainder and #61 public types; E6 test gaps; E7 variant styles (#353) | Outline |
-| **1.0.0** | Phase 0 G0 passed (#178); O3 and O5 met; public API stable; deprecations that are due removed (`plx-u-left-0`/`right-0` wait for 2.0.0) | Outline: a proposal, the definition goes on a decision issue before it is fixed |
+| 0.91.0 to 0.93.1 | E3 TypeScript (done), E4 the class removal, the table fixes (D-0087), the 1366 frame (D-0093), the type fixes (#893) | **Shipped** 2026-11-07 |
+| **1.0.0** | O3 the coverage map and S1/S2 gaps (#901); O4 the language gate (#902); G0 closed (#903); no open S1/S2 (D-0095) | Next |
+| 1.x | The coverage gaps below S2; E7 docs; dark mode (D-0025, last) | Outline |
 
 ## 5. Epics
 
@@ -69,5 +69,7 @@ Recorded needs only (template §4.5). Each item links its finding. They rank bel
 - The 1.0.0 definition isn't fixed yet; it goes on a decision issue.
 
 ## 9. Change log
+
+- 2026-11-07: plan review: 0.91.0 to 0.93.1 shipped; O2 and O5 met; 1.0.0 defined (D-0095); next: #901, #902, #903.
 
 - 2026-11-06: created from template v2.4 (owner's upload) by pds1-product-lead.
