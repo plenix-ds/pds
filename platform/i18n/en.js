@@ -146,7 +146,7 @@ export default {
     },
     "frame": {
       "expand": "Expand to full window",
-      "restore": "Restore to 1366 width"
+      "restore": "Restore to {width} width"
     }
   },
   "approvalWorkflow": {
