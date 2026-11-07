@@ -275,7 +275,8 @@ export function useGridMetrics({
     const units = Math.max(0, Math.floor((available - used) / step));
     // room to spare (#800, D-0087): shared evenly, in whole steps, across every column that sizes itself (an app's set width is a minimum, so those grow too), in a table
     // that fits its room and in a fixed one alike (CTM's static tables gave it all to the last column: "Years married" took 940px); the checkbox and row menu columns are fixed and the cells stay at the start edge
-    const growers = shrinkable;
+    // an actions column keeps its natural width and sits at the inline end, its content end-aligned: the room goes to the columns before it, never to a gap after it (owner, #844)
+    const growers = shrinkable.filter((c: any) => !kinds(c).includes('actions'));
     growers.forEach((c: any, i: any) => { widths[c.field] += (Math.floor(units / growers.length) + (i < units % growers.length ? 1 : 0)) * step; });
     setAutoSizing((old: any) => (JSON.stringify(old) === JSON.stringify(widths) ? old : widths));
     setFloors((old: any) => (JSON.stringify(old) === JSON.stringify(floor) ? old : floor));
