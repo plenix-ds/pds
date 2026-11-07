@@ -1,10 +1,10 @@
-/* Plenix tests · #800 AC-3 in CTM's real "To assign" grid (owner, 0.91.0: "why such a huge column here for little text?").
+/* Plenix tests · issue 800, AC-3 in CTM's real "To assign" grid (owner, 0.91.0: "why such a huge column here for little text?").
    Summary: CTM's columns as the app gives them (static/ctm/council.js): Applicant and Respondent (minWidth 10.5rem, pill:false, render a person pill), Reason (minWidth 6.5rem, text),
      Years married (a number drawn through render as "13 years", minWidth 7.5rem and no width), Assigned to (minWidth 12rem, render a person pill), Actions (minWidth 7rem, render two
      small buttons). At about 2,000px: no column takes the spare room alone (Years married stays near its text, not 900px), the room is shared evenly across the columns that
      size themselves (the same added width within a few grid steps when the room grows by 300px), and nothing is cut. Left to right and right to left.
    Proof first: on 0.91.0 "Years married" took the leftover room.
-   Usage: node tests/data-grid-column-fit-ctm-800.test.js   → DATA_GRID_COLUMN_FIT_CTM_800_OK */
+   Usage: node tests/data-grid-static-share-848.test.js   → DATA_GRID_STATIC_SHARE_848_OK */
 const assert = require('assert/strict'), { serve, launch } = require('./lib');
 require('./limit.js');
 (async () => {
@@ -45,6 +45,6 @@ require('./limit.js');
       await page.close();
     }
     assert.deepEqual(errors, [], 'no script errors');
-    console.log('DATA_GRID_COLUMN_FIT_CTM_800_OK');
+    console.log('DATA_GRID_STATIC_SHARE_848_OK');
   } finally { if (browser) await browser.close(); server.close(); }
 })().catch((e) => { console.error(e); process.exit(1); });
