@@ -1225,7 +1225,7 @@ function sheetText(url) {
         : h(P.Text, { as: 'p' }, 'No gaps: every concept asked for has a candidate.')));
   }
   function ExportsView() {
-    var t = useAsync(function () { return R.text('index.js'); }, []);
+    var t = useAsync(function () { return R.text('index.ts'); }, []);
     if (!t) return null;
     var re = /export \{([^}]+)\} from '([^']+)'/g, m, rows = [];
     while ((m = re.exec(t))) m[1].split(',').forEach(function (n) { n = n.trim(); var rec = REC.filter(function (r) { return r.plenix && r.plenix.split(/[ ,+.]+/).indexOf(n) >= 0; })[0]; rows.push([h(Mono, null, n), h(Mono, null, m[2].replace('./', 'platform/')), rec ? h(Link, { href: href(rec) }, rec.title) : 'part of a documented item']); });
@@ -1334,7 +1334,7 @@ function sheetText(url) {
   function HomePage() {
     var leaves = 0, answered = 0; TAX.forEach(function (x) { x.subList.forEach(function (sub) { sub.leaves.forEach(function (l) { leaves++; if (ANSWER[x.id + '|' + l]) answered++; }); }); });
     var f = useState({ level: '', inter: '', status: '', sec: '' }), fv = f[0];
-    var audit = useAsync(function () { return R.text('index.js').then(function (t) {
+    var audit = useAsync(function () { return R.text('index.ts').then(function (t) {
       var re = /export \{([^}]+)\}/g, m, names = []; while ((m = re.exec(t))) m[1].split(',').forEach(function (n) { names.push(n.trim()); });
       var known = {}; REC.forEach(function (r) { (r.plenix || '').split(/[ ,+.()]+/).forEach(function (n) { if (n) known[n] = 1; }); });
       var helpers = ['initialsOf', 'tabsPanelId', 'DEMO_SESSION', 'appById', 'appHref', 'SideNavPortal', 'useAppLayout', 'MenuItem', 'MenuDivider', 'MenuGroup', 'SelectionSummary'];

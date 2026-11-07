@@ -25,7 +25,7 @@ function stage(name, edit) {
   // the token build (slice 101): style-dictionary/build.mjs with its assembly and the value reader, and the packages it imports
   for (const f of ['build-standards.js', 'style-dictionary/build.mjs', 'packages/tokens/sd/assemble.cjs', 'tools/token-value.js']) { fs.mkdirSync(path.dirname(path.join(T, f)), { recursive: true }); fs.copyFileSync(path.join(ROOT, f), path.join(T, f)); }
   fs.symlinkSync(path.join(ROOT, 'node_modules'), path.join(T, 'node_modules'), 'dir');
-  fs.copyFileSync(path.join(ROOT, 'platform', 'index.js'), path.join(T, 'platform', 'index.js'));
+  fs.copyFileSync(path.join(ROOT, 'platform', 'index.ts'), path.join(T, 'platform', 'index.ts'));
   edit(T);
   return T;
 }

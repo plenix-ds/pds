@@ -78,6 +78,12 @@ Documentation site, package registry, and CDN or asset host. "Decide later" is a
 
 Becomes `{{PROFILE}}`. It decides the role set (§5.8), the release pipeline (§10) and which checks apply (§9).
 
+### Q7. App frame *(Application only; added at the owner's request, 2026-11-07, D-0093)*
+> **A (recommended for back-office apps). 1366** — the app is 1366px wide, centered on a mid-grey page with a wide soft shadow; a person can expand it to the full window and back.
+> **B. Full window** — the app fills the browser window.
+
+Becomes the app's `AppShell frame` default. Every screen is designed at 1440×900 and must look right at 1366×768 and 1920×1080 (D-0092).
+
 ### What the mode changes
 
 | Area | New project | Existing project |
