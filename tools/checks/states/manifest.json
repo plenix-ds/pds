@@ -628,5 +628,45 @@
     "loading": "n/a(the pages are chosen by the caller; it does not load)",
     "selected": "n/a(the current page carries aria-current=\"page\", not a selection)",
     "error": "n/a(a page number has no value to validate; a page outside the range is held inside it)"
+  },
+  "SegmentedControl": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(stories arrive with Storybook, P0-11)",
+    "loading": "n/a(a choice is instant; it has no loading state)",
+    "selected": "n/a(stories arrive with Storybook, P0-11)",
+    "error": "n/a(no invalid state; a SegmentedControl always holds a choice)"
+  },
+  "RadioTiles": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(stories arrive with Storybook, P0-11)",
+    "loading": "n/a(a choice is instant; it has no loading state)",
+    "selected": "n/a(stories arrive with Storybook, P0-11)",
+    "error": "n/a(an invalid choice is shown by its Fieldset or Field, not the tiles)"
+  },
+  "NavList": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(stories arrive with Storybook, P0-11)",
+    "loading": "n/a(the app supplies the items; a list loading is the page's Skeleton)",
+    "selected": "n/a(stories arrive with Storybook, P0-11)",
+    "error": "n/a(a navigation list has no invalid state)"
+  },
+  "CountrySelect": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(an option's highlighted look is its Combobox hover and active-descendant state)",
+    "disabled": "n/a(stories arrive with Storybook, P0-11)",
+    "loading": "n/a(its options are local; no loading row)",
+    "selected": "n/a(stories arrive with Storybook, P0-11)",
+    "error": "n/a(invalid is the is-invalid state set by its Field; stories arrive with Storybook, P0-11)"
   }
 }

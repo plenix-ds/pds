@@ -68,21 +68,22 @@ const OPEN_ICONS: Record<string, IconModule> = { folder: FolderOpenIcon };
 const iconOf = (icon: unknown, on: boolean) => (on && OPEN_ICONS[iconKey(icon) as string]) || icon;
 
 // one row of the list: a destination, or (with children) a group that opens in place
-export type NavItem = {
-  id: string;
+/** @public V is the item ids' type: onSelect hands back the ids it was given (#925) */
+export type NavItem<V extends string = string> = {
+  id: V;
   label: React.ReactNode;
   href?: string;
   icon?: IconValue | React.ReactNode;
   count?: number | string;
   muted?: boolean;
   disabled?: boolean;
-  children?: NavItem[];
+  children?: NavItem<V>[];
   defaultExpanded?: boolean;
   actions?: React.ReactNode;
   pinned?: boolean;
-  onPin?: (id: string) => void;
+  onPin?: (id: V) => void;
 };
-export type NavGroup = { heading?: React.ReactNode; items: NavItem[]; collapsible?: boolean; icon?: IconValue | React.ReactNode; defaultExpanded?: boolean };
+export type NavGroup<V extends string = string> = { heading?: React.ReactNode; items: NavItem<V>[]; collapsible?: boolean; icon?: IconValue | React.ReactNode; defaultExpanded?: boolean };
 type NavWords = { unpinItem: string; pinItem: string; unpin: string; pin: string };
 type RowProps = { item: NavItem; current?: string; onSelect?: (id: string) => void; t: NavWords; loc: string };
 
@@ -155,21 +156,23 @@ function Group({ heading, items, current, onSelect, collapsible = true, icon, de
   );
 }
 
-export type NavListProps = {
+export type NavListProps<V extends string = string> = {
   /** the navigation's name */
   label?: string;
   /** one list without headings */
-  items?: NavItem[];
+  items?: NavItem<V>[];
   /** lists under headings (collapsible by default) */
-  groups?: NavGroup[];
+  groups?: NavGroup<V>[];
   /** the current item's id */
-  value?: string;
-  onSelect?: (id: string) => void;
+  value?: V;
+  onSelect?: (id: V) => void;
   locale?: string;
   strings?: Catalog | null;
   className?: string;
 };
-export function NavList({ label, items, groups, value, onSelect, locale, strings, className }: NavListProps) {
+export function NavList<V extends string = string>(props: NavListProps<V>) {
+  // the rows read ids as strings; V only types what the app passes in and gets back
+  const { label, items, groups, value, onSelect, locale, strings, className } = props as unknown as NavListProps;
   const t = useStrings('navList', strings) as NavWords;
   const loc = numeralLocale(locale || (typeof document !== 'undefined' && document.documentElement.lang) || undefined);
   const all: NavGroup[] = groups || [{ heading: null, items: items || [] }];

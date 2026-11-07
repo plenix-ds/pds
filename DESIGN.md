@@ -29,6 +29,8 @@ type:                            # D-0006
     surface-title: { size: 15, weight: 700, line: 1.5 }  # dialog and sheet titles, as drawn today (#122)
     title:     { size: 20, weight: 700, line: 1.5 }
     display:   { size: 20, weight: 600, line: 1.3, tracking: tight }
+    field-label: { size: 12, weight: 600, line_px: 16 }  # read-only label (D-0101, #946)
+    field-value: { size: 15, weight: 400, line_px: 24 }  # read-only value, stacked layout (D-0101, #946)
   allowed_sizes_px: [12, 13, 14, 15, 18, 20, 24, 28, 36]
 density:                         # D-0007; "standard-comfortable" is retired
   modes: [compact, standard, comfortable]
@@ -107,6 +109,21 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 - Sizes come only from the type roles in the front matter (check 3). No numeric `font-size` in CSS. Nothing below 12px. `font-size-09`, `-10` and `-11` are retired (section 12).
 - **surface-title** (15px, 700) is the title of a dialog or a sheet, recorded as Plenix draws it today (#122). Page and section titles use **title** (20px).
 - Body and heading are both 13px. Hierarchy comes from weight (400 → 600) and from title or display (20px). That is the existing language, recorded as is.
+
+### Read-only fields (D-0101, #946)
+
+- A read-only label and its value never share a look. The label is quieter in colour and stronger in weight, and the value is larger. This is the Fluent 2 field (D-0078).
+- **Stacked (the default):** the label above its value.
+  - The label uses **field-label**: 12px, semibold, 16px line, `content-muted`.
+  - The value uses **field-value**: 15px, regular, 24px line, `content-default`. A data value is Reddit Mono at 15px.
+  - The label sits 4px above its value. Pairs are 16px apart (`space-stack-lg`) at every density.
+- **Columns (`layout="columns"`, the inline variant, for dense panes):** the label column and the value on one line.
+  - The label is **field-label**. The value is **body** (13px, 20px line).
+  - A `border-subtle` hairline separates the pairs, with none after the last.
+  - Each pair has 4 / 8 / 12px of padding-block, by density.
+- **Inside `<ReadOnly>`**, a Field's label takes **field-label**. Its value stays in the sunken read-only control at the control's size, so heights don't change.
+- A value wraps between words. It is never cut. A status in a value is a Badge with its icon.
+- Applies to PropertyList and to any description list (`dl`) of an item's details. Details: `docs/pds1/slices/946/design.md`.
 
 ## 4. Shape (D-0005)
 

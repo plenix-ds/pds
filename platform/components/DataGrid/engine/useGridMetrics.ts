@@ -25,7 +25,7 @@ import { kinds, typeOf } from './helpers.tsx';
 import { valueAt } from '../state.ts';
 import { splitRowActions } from './rowActions.ts';
 import { valueText } from '../cells.tsx';
-import { formatBytes, formatDate, parseDate } from '../../../utils/format.ts';
+import { formatBytes, formatDate, parseDate, instantOf } from '../../../utils/format.ts';
 
 // a plain-text column whose widest value is longer than this many characters is long text (#800, D-0088: an engine constant, not a prop or a token): the only kind that may be cut
 const LONG_TEXT_CHARS = 40;
@@ -167,7 +167,7 @@ export function useGridMetrics({
             : 0)
         : 0; // the icon only where the pill has one
       // the text a cell draws: a bytes column writes "2.0 kB", not its number, and a date its short form, not the ISO text
-      const shown = (value: any) => (c.type === 'bytes' && value !== null && value !== undefined && value !== '' && Number.isFinite(Number(value)) ? formatBytes(Number(value)) : c.type === 'date' && parseDate(value) ? formatDate(value) : valueText(value));
+      const shown = (value: any) => (c.type === 'bytes' && value !== null && value !== undefined && value !== '' && Number.isFinite(Number(value)) ? formatBytes(Number(value)) : c.type === 'date' && parseDate(value, { timestamp: c.timestamp as any }) ? formatDate(instantOf(value, c.timestamp as any) as any) : valueText(value));
       let body = 0, chars = 0;   // the widest value alone, without the title (the floor a squeezed column keeps, #783), and its longest text in characters (the long-text test, #800)
       source.forEach((record: any) => {
         const value = valueAt(record, c.field);

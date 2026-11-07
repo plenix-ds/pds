@@ -33,8 +33,8 @@ import {
 import { isRtl } from '../../../utils/direction.ts';
 
 // dates in time order, whatever form they come in (a Date, a timestamp, a bare "YYYY-MM-DD" as its local midnight); no date sorts last (issue 161)
-const dateOrder = (a: any, b: any) => {
-  const x = parseDate(a)?.getTime(), y = parseDate(b)?.getTime();
+const dateOrder = (a: any, b: any, timestamp?: 'ms' | 's') => {
+  const x = parseDate(a, { timestamp })?.getTime(), y = parseDate(b, { timestamp })?.getTime();
   return x === y ? 0 : x === undefined ? 1 : y === undefined ? -1 : x - y;
 };
 
@@ -98,7 +98,7 @@ export function useTableModel({
             : c.sorter === 'number' || c.type === 'bytes'
               ? 'basic'
               : c.type === 'date' || c.sorter === 'date'
-                ? (a: any, b: any, id: any) => dateOrder(a.getValue(id), b.getValue(id))
+                ? (a: any, b: any, id: any) => dateOrder(a.getValue(id), b.getValue(id), c.timestamp)
                 : compare,
         size: kinds(c).includes('icon')
           ? metrics.lead

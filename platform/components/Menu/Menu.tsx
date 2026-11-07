@@ -255,10 +255,12 @@ export function MenuGroup({ label, children }: MenuGroupProps) {
 }
 
 /* MenuRadioGroup: a labeled set of radio items, one checked (a sort order, a view) */
-export type MenuRadioGroupProps = { label?: React.ReactNode; value?: unknown; onChange?: (value: unknown) => void; keepOpen?: boolean; children?: React.ReactNode };
-export function MenuRadioGroup({ label, value, onChange, keepOpen = false, children }: MenuRadioGroupProps) {
+/** @public V is the radio items' value type (#925) */
+export type MenuRadioGroupProps<V = unknown> = { label?: React.ReactNode; value?: V; onChange?: (value: V) => void; keepOpen?: boolean; children?: React.ReactNode };
+export function MenuRadioGroup<V = unknown>({ label, value, onChange, keepOpen = false, children }: MenuRadioGroupProps<V>) {
   const id = useUid('plx-mrg');
-  const ctx = React.useMemo(() => ({ value, onChange, keepOpen }), [value, onChange, keepOpen]);
+  // the items read values as unknown; V only types what the app passes in and gets back
+  const ctx = React.useMemo(() => ({ value, onChange, keepOpen }) as RadioGroupValue, [value, onChange, keepOpen]);
   return (
     <div role="group" aria-labelledby={label ? id : undefined} className="plx-menu__group plx-menu__group--radio">
       {label ? <div id={id} className="plx-menu__group-label">{label}</div> : null}

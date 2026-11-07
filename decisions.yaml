@@ -889,3 +889,32 @@
   options: ['label only, Field label wins (chosen)', 'label, description and error on Textarea', 'label always the aria-label']
   status: active
   check: 'tests/textarea-label-926.test.js (the Field-with-label case, ADR 0027 Check)'
+- id: D-0098
+  date: 2026-11-07
+  area: components
+  decided_by: agent (pds1-ds-architect) at G3, owner may switch
+  decision: 'SegmentedControl, RadioTiles, Tabs, NavList, MenuRadioGroup and Combobox take the option value type V and hand it back (ADR 0026). Each V defaults to the old type. V is read from the options and value, never from the handler. Combobox single hands back V or '''' and multiple hands back V[].'
+  why: 'RedSave P-71 (#925): apps cast every chosen value back to their own option type. Inferring from handlers would break wider handlers that compile today (Tabs).'
+  options: ['V from options and value (chosen)', 'strict handler properties, inferred from the handler too']
+  status: active
+  check: 'tests/types.test.js (tests/fixtures/redsave-types.tsx, #925 block and its @ts-expect-error cases)'
+
+- id: D-0100
+  date: 2026-11-07
+  area: components
+  decided_by: agent (pds1-ds-architect) at G3, owner may switch
+  decision: 'Columns and filters read dates through one reader (ADR 0028): bare YYYY-MM-DD as the local day, ISO text and Date as their instant, numbers as epoch ms, or epoch seconds when the field or column says timestamp: "s". Filters compare the local calendar day (the LocaleProvider timeZone when set). No guessing seconds from the number size.'
+  why: 'RedSave DT-7 (#939): "last 7 days" dropped the same day given as seconds, ms or a Date. The name timestamp leaves unit free for number units (kg, km).'
+  options: ['timestamp: "ms" | "s" (chosen)', 'unit: "s" | "ms"', 'guess from the number size']
+  status: active
+  check: 'planned:date-filter-939 (behaviour test per ADR 0028 Check; #939)'
+
+- id: D-0101
+  date: 2026-11-07
+  area: design
+  decided_by: agent (pds1-product-lead) at intake, owner may switch (#946, D-0078 Microsoft first)
+  decision: 'Read-only label and value follow the Fluent 2 field. Stacked is the default: the label is 12px semibold content-muted (16px line) and the value 15px regular content-default (24px line), with 4px between them and 16px between pairs (space-stack-lg; no 20px sys role, G3). The value size is the existing text-lead role. The inline property list is PropertyList layout="columns" (label column, value at 13px, hairlines), a variant for dense panes; stacked becomes the default (MINOR, changelog note). Inside a read-only region a Field label takes the same label role, and its value stays in its control.'
+  why: 'The owner, through CTM''s case summary: in read mode, label and value look alike (a 12px regular label next to a 13px regular value). Options came from the owner''s study (A today, B Fluent 2, C property list, D Carbon, E grouped sections).'
+  options: ['B default with C as the inline variant (chosen)', 'A (today)', 'C only', 'D (Carbon)', 'E (grouped sections, an app-level page choice)']
+  status: active
+  check: 'planned:readonly-field-type-946 (CSS test that PropertyList and the read-only Field label read the field-label and field-value roles; visual checks on #946)'

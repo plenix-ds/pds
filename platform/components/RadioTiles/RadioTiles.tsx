@@ -28,18 +28,19 @@ import { useReadOnly, readOnlyProps } from '../../providers/ReadOnly.tsx';
 import { Icon } from '../Icon/Icon.tsx';
 import CheckIcon from 'plenix-platform/icons/plenix/check';
 
-export type RadioTileOption = { value: string | number; label?: React.ReactNode; description?: React.ReactNode; preview?: React.ReactNode; disabled?: boolean };
-export type RadioTilesProps = Omit<React.FieldsetHTMLAttributes<HTMLFieldSetElement>, 'onChange'> & {
+/** @public V is the option values' type: onChange hands back the values it was given (#925) */
+export type RadioTileOption<V extends string | number = string | number> = { value: V; label?: React.ReactNode; description?: React.ReactNode; preview?: React.ReactNode; disabled?: boolean };
+export type RadioTilesProps<V extends string | number = string | number> = Omit<React.FieldsetHTMLAttributes<HTMLFieldSetElement>, 'onChange'> & {
   legend?: React.ReactNode;
   legendHidden?: boolean;
-  options?: RadioTileOption[];
-  value?: string | number;
-  onChange?: (value: string | number) => void;
+  options?: RadioTileOption<V>[];
+  value?: V;
+  onChange?: (value: V) => void;
   name?: string;
   size?: 'sm' | 'md' | 'lg';
   readOnly?: boolean;
 };
-export function RadioTiles({ legend, legendHidden = false, options = [], value, onChange, name, size = 'md', className, readOnly, ...rest }: RadioTilesProps) {
+export function RadioTiles<V extends string | number = string | number>({ legend, legendHidden = false, options = [], value, onChange, name, size = 'md', className, readOnly, ...rest }: RadioTilesProps<V>) {
   const locked = useReadOnly(readOnly);
   devWarn('RadioTiles', { size }, { size: ['sm','md','lg'] });
   const auto = 'plx-rt' + React.useId().replace(/[^a-zA-Z0-9]/g, '');

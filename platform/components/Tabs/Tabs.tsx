@@ -90,20 +90,24 @@ function useTabsFit(rootRef: React.RefObject<HTMLElement | null>, listRef: React
 
 /** @public a tab's value (ADR 0011) */
 export type TabValue = string | number;
+// NoInfer, written so TypeScript before 5.4 reads it too (#925)
+type Later<V> = [V][V extends unknown ? 0 : never];
 /** @public a tab: { value, label, icon, count, disabled, content } (ADR 0011) */
-export type TabItem = { value: TabValue; label: React.ReactNode; icon?: IconValue | React.ReactNode; count?: number; disabled?: boolean; content?: React.ReactNode };
+/** @public V is the tab values' type: onChange hands back the values it was given (#925) */
+export type TabItem<V extends TabValue = TabValue> = { value: V; label: React.ReactNode; icon?: IconValue | React.ReactNode; count?: number; disabled?: boolean; content?: React.ReactNode };
 /** @public the prop type (ADR 0011) */
-export type TabsProps = {
+export type TabsProps<V extends TabValue = TabValue> = {
   /** "contained" (default) | "folder" | "segmented" */
   variant?: 'contained' | 'folder' | 'segmented';
   /** "horizontal" (default) | "vertical" */
   orientation?: 'horizontal' | 'vertical';
   /** the tabs: { value, label, icon, count, disabled, content } */
-  items: TabItem[];
-  value?: TabValue;
-  defaultValue?: TabValue;
+  items: TabItem<V>[];
+  value?: V;
+  defaultValue?: V;
   /** method syntax, so a handler written for the app's own value type (string) fits too (#893) */
-  onChange?(value: TabValue): void;
+  /** a method, so a handler typed more widely (value: string) still compiles; V is read from items and value, not from it */
+  onChange?(value: Later<V>): void;
   /** the tab list's accessible name */
   label?: string;
   /** a base for the tabs' and panels' ids */
@@ -113,7 +117,7 @@ export type TabsProps = {
   strings?: Catalog | null;
 };
 
-export function Tabs({ variant = 'contained', orientation = 'horizontal', items, value, defaultValue, onChange, label, idBase, className, panelClassName, strings }: TabsProps) {
+export function Tabs<V extends TabValue = TabValue>({ variant = 'contained', orientation = 'horizontal', items, value, defaultValue, onChange, label, idBase, className, panelClassName, strings }: TabsProps<V>) {
   devWarn('Tabs', { variant }, { variant: ['contained','folder','segmented'] });
   const words = useStrings('tabs', strings) as Record<string, string>;
   const uid = useUid('plx-tabs');
@@ -135,12 +139,12 @@ export function Tabs({ variant = 'contained', orientation = 'horizontal', items,
   const kind = vertical ? 'vertical' : variant, seg = kind === 'segmented';
   const shownAt = items.map((t, i) => i).filter(shown), firstShown = shownAt[0], lastShown = shownAt[shownAt.length - 1];
   // focus goes to a tab once it is shown (a moved tab chosen by key or from the menu)
-  const focusNext = React.useRef<TabValue | null>(null);
+  const focusNext = React.useRef<V | null>(null);
   React.useLayoutEffect(() => {
     const el = focusNext.current !== null ? refs.current[String(focusNext.current)] : null;
     if (el && !el.hidden) { focusNext.current = null; el.focus(); }
   });
-  const select = (v: TabValue) => { if (value === undefined) setOwn(v); if (onChange) onChange(v); };
+  const select = (v: V) => { if (value === undefined) setOwn(v); if (onChange) onChange(v); };
   const enabled = items.filter((t) => !t.disabled);
   const onKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
     const at = enabled.findIndex((t) => t.value === current);

@@ -1,3 +1,0 @@
-### Changed
-
-- Types (#61, compile time only): `useChartInteraction` returns the exported `ChartInteraction` (with `ChartGeometry` and `ChartKeyEvent`), so `useChartPoints`' `index` and `hover(i)`, and every field of the interaction (`active`, `selected`, `brush`, `zoom`, `keyDown`, `pointerDown`, `register`, …) have real types; `useGraphView`'s `zoomBy` and `wrap` are typed; `niceTicks().ticks`, `boxStats` and `waterfallSteps().label` are `number[]`, `number` and `string`; the lazy charts' `displayName` is a string; `DataGridEngine` takes `DataGridEngineProps`; `WaterfallChart`'s `onSelect` argument is the exported `WaterfallSelection`.
