@@ -116,8 +116,10 @@ import { PLENIX_APPS, appById, appHref, appIcon } from '../../providers/apps.ts'
 import type { PlenixApp } from '../../providers/apps.ts';
 import { useLayer, useUid } from '../../utils/layer.ts';
 import { useDensity } from '../../hooks/useDensity.ts';
-import { useMedia, below, tokenPx } from '../AppShell/AppShell.tsx';
-import { useStrings } from '../../providers/LocaleProvider.tsx';
+import { useMedia, below, tokenPx, useAppLayout } from '../AppShell/AppShell.tsx';
+import OpenInFullIcon from 'plenix-platform/icons/material/open-in-full';
+import CloseFullscreenIcon from 'plenix-platform/icons/material/close-fullscreen';
+import { useStrings, useDigits } from '../../providers/LocaleProvider.tsx';
 import AppSwitcherIcon from 'plenix-platform/icons/plenix/app-switcher';
 import ArrowLeftIcon from 'plenix-platform/icons/plenix/arrow-left';
 import ChevronDownIcon from 'plenix-platform/icons/plenix/chevron-down';
@@ -132,6 +134,7 @@ import DensityCompactIcon from 'plenix-platform/icons/plenix/density-compact';
 import DensityStandardIcon from 'plenix-platform/icons/plenix/density-standard';
 import DensityComfortableIcon from 'plenix-platform/icons/plenix/density-comfortable';
 import { fill } from '../../utils/fill.ts';
+import { localDigits } from '../../utils/digits.ts';
 
 /** @public a place the account menu links to: a link (href) or an action (onSelect) */
 export type AppHeaderLink = { href?: string; onSelect?: () => void };
@@ -170,6 +173,9 @@ export function AppHeader({ tone = 'accent', appName, brand, brandHref, currentA
   action, search, searchSuggestions, searchResults, searchScope, actions, account, switcher, back, title, className, ...rest }: AppHeaderProps) {
   devWarn('AppHeader', { tone }, { tone: ['accent','frost','plain'] });
   const tw = useStrings('appHeader') as Words;
+  // the AppShell frame's toggle (frame="1366", D-0093): expand to the window and back; the shell says when there is anything to toggle
+  const digits = useDigits(), layout = useAppLayout(), fw = useStrings('appShell') as unknown as { frame: { expand: string; restore: string } };
+  const frameToggle = layout?.frame ? <AppHeader.Item icon={layout.frame.full ? CloseFullscreenIcon : OpenInFullIcon} label={layout.frame.full ? fill(fw.frame.restore, { width: localDigits(String(tokenPx('--plx-sys-shell-frame-width')), { digits }) }) : fw.frame.expand} aria-pressed={layout.frame.full} onClick={layout.frame.toggle} /> : null;
   if (navLabel === undefined) navLabel = tw.navLabel;
   const { pinnedApps } = useSession();
   const [searching, setSearching] = React.useState(false);
@@ -283,6 +289,7 @@ export function AppHeader({ tone = 'accent', appName, brand, brandHref, currentA
           ) : null}
         {action ? <div className="plx-app-header__action">{action}</div> : null}
         <div className="plx-app-header__utilities">
+          {frameToggle}
           {actions}
           {account}
         </div>
