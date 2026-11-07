@@ -4,6 +4,15 @@
 - **Extends:** `PropertyList` (`platform/patterns/PropertyList`) and the read-only region (`platform/system/read-only.css`, `<ReadOnly>`). No new component.
 - **Cause:** PropertyList's label is 12px regular `content-muted` and its value 13px regular `content-default`. Same weight, one step apart in size: they read as one text.
 
+## G2/G3 reconciliation (2026-11-07)
+
+- **Value 15px** (intake, D-0101) instead of G3's 13px.
+  - The owner's complaint is that label and value look alike. Fluent 2 separates them by size too (Caption 1 Strong 12px against Body 1 14px).
+  - 15px is the existing `text-lead-font-size` role, so there is no new size or token.
+- **The gap between pairs is 16px** (`space-stack-lg`, G3) instead of the intake's 20px. There is no 20px sys stack role, and a new one would need an ADR.
+- **The default is `stacked`** (intake) instead of G3's "keep `columns`". G3 named this case a MINOR release with a changelog note.
+- **C is `columns`, with no `inline` prop** (G3).
+
 ## 1. The two layouts
 
 | | **B: stacked (the default)** | **C: columns (the inline variant)** |
@@ -11,16 +20,17 @@
 | Use | Read-only details: a case summary, a record's details, a form in read mode | Dense detail panes: an inspector, a side panel |
 | Shape | Label above value | Label column and value on one line, a hairline between pairs |
 | Label | **field-label** role: 12px, semibold (600), line 16px, `content-muted` | the same **field-label** role |
-| Value | **field-value** role: 15px, regular (400), line 24px, `content-default` | **body** role: 13px, regular, line 20px, `content-default` |
+| Value | **field-value** role: 15px (`text-lead-font-size`, an existing sys role), regular (400), line 24px, `content-default` | **body** role: 13px, regular, line 20px, `content-default` |
 | Data value (`data`) | Reddit Mono at the value size (15px), line 24px | Reddit Mono at 13px, line 20px |
 | Label → value | 4px (`space-stack-xs`) | the existing label column gap (`space-inline-md`) |
-| Between pairs | 20px (`plx-ref.space-5u` through a sys stack role; name is G3's), at every density | padding-block per density: 4 / 8 / 12px (`space-component-gap-sm`) |
+| Between pairs | 16px (`space-stack-lg`, G3), at every density | padding-block per density: 4 / 8 / 12px (`space-component-gap-sm`) |
 | Divider | none | `border-subtle` 1px at the block-end of each pair except the last (decorative, exempt from contrast) |
 | Description under label | `secondary` role, `content-subtle` (unchanged) | unchanged |
 
-- **Line heights are px on the grid**: 16 + 4 + 24 = 44px per pair, plus a 20px gap = 64px rhythm. The field label already uses `plx-ref.size-4u` for its line height; the value uses `plx-ref.size-6u`, and C's value `plx-ref.size-5u`.
+- **Line heights are px on the grid**: 16 + 4 + 24 = 44px per pair, plus a 16px gap = 60px rhythm. The field label already uses `plx-ref.size-4u` for its line height; the value uses `plx-ref.size-6u`, and C's value `plx-ref.size-5u`.
 - **Sizes and colours are existing tokens only**: 12 (`font-size-100`), 13 (`font-size-200`), 15 (`font-size-400`), `font-weight-semibold`, `content-muted`, `content-default`, `border-subtle`. Nothing new.
-- **The default changes from `columns` to `stacked`**. The intake accepted that every read-only view changes look. Whether the prop stays `layout="columns"` or gains `"inline"` as a name is G3's (ds-architect).
+- **The default changes from `columns` to `stacked`**. The intake accepted that every read-only view changes look. It is a MINOR release with a changelog *Changed* note (G3).
+- **C is `layout="columns"`.** There is no `inline` prop (G3).
 - **A status in a value is a Badge with its icon** (DESIGN §1). The value's line box grows to the badge height. The badge is start-aligned and never stretched.
 
 ## 2. Read-only Field (a control inside `<ReadOnly>`)
@@ -67,10 +77,10 @@
 ## 7. Choices the engineer must not invent
 
 - The role values above: 12/600/16px and 15/400/24px; C's 13/400/20px.
-- The 20px gap stays fixed in B. C's 4/8/12 padding follows density.
+- The 16px gap stays fixed in B. C's 4/8/12 padding follows density.
 - C's hairline: `border-subtle`, block-end, none after the last pair.
 - The read-only Field's value stays 13px in its box. Only its label changes.
-- Token names (the sys stack role at 20px, the comp tokens, any `inline` alias) are G3's. Their values are not.
+- Comp token names are G3's (see G3 on #946). Their values are not.
 
 ## 8. Visual checks (D-0092, D-0017)
 

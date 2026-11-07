@@ -116,8 +116,8 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 - **Stacked (the default):** the label above its value.
   - The label uses **field-label**: 12px, semibold, 16px line, `content-muted`.
   - The value uses **field-value**: 15px, regular, 24px line, `content-default`. A data value is Reddit Mono at 15px.
-  - The label sits 4px above its value. Pairs are 20px apart at every density.
-- **Columns (the inline variant, for dense panes):** the label column and the value on one line.
+  - The label sits 4px above its value. Pairs are 16px apart (`space-stack-lg`) at every density.
+- **Columns (`layout="columns"`, the inline variant, for dense panes):** the label column and the value on one line.
   - The label is **field-label**. The value is **body** (13px, 20px line).
   - A `border-subtle` hairline separates the pairs, with none after the last.
   - Each pair has 4 / 8 / 12px of padding-block, by density.
