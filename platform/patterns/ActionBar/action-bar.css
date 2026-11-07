@@ -8,7 +8,7 @@
    the scrolling areas (AppShell), so they never cover what scrolls. */
 :where(:root, .plx-app-shell__main, .plx-page-content, .plx-settings__content, .plx-side-panel__body, .plx-secondary-pane__body, .plx-u-overflow-y-auto):has(.plx-action-bar:not(.plx-action-bar--static)){scroll-padding-block-end:var(--plx-comp-action-bar-block-size);}
 
-.plx-action-bar--static{position:static;}
+.plx-action-bar--static{background-color:transparent;position:static;}
 /* a window under 400px (a phone; the same value as --plx-sys-fit-footer-stack-width, which a media query cannot read): the main button and the one beside it stack full width,
    the main one first; More (the other actions) sits on Cancel's row */
 @media (width < 400px){
