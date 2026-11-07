@@ -1,7 +1,7 @@
 // node tools/agent/types-any.js [--check] [--update] [--top N] [file]
 // How many props of @plenix-ds/react's TypeScript declarations are still `any` (#687, from the audit #684). Reads the built
-// declarations (release/packages/react/index.d.ts, written by build-types.js through node build-packages.js, or node build-types.js
-// alone) and counts the prop lines typed `?: any;`. The index signature every Props interface keeps ([prop: string]: any)
+// declarations (release/packages/react/index.d.ts, written by tools/publish/react-types.js through node build-packages.js, or
+// node tools/publish/react-types.js alone) and counts the prop lines typed `?: any;`. The index signature every Props interface keeps ([prop: string]: any)
 // is not a prop and is not counted.
 //   --check   fails (TYPES_ANY_FAIL) when the count is above the recorded one (types-any.baseline.json): it only goes down
 // CI does not run this script. Its gate is tools/ci/new-problems.mjs types (#61), which reads index.d.ts and the types/ files it
@@ -25,7 +25,7 @@ function count(text) {
 module.exports = { count, BASELINE };
 
 if (require.main === module) {
-  if (!fs.existsSync(file)) { console.log('TYPES_ANY_FAIL ' + path.relative(ROOT, file) + ' is missing: run node build-types.js (or node build-packages.js)'); process.exit(2); }
+  if (!fs.existsSync(file)) { console.log('TYPES_ANY_FAIL ' + path.relative(ROOT, file) + ' is missing: run node tools/publish/react-types.js (or node build-packages.js)'); process.exit(2); }
   const r = count(fs.readFileSync(file, 'utf8'));
   console.log('TypeScript props in ' + path.relative(ROOT, file) + ': ' + r.props + ', of them `any`: ' + r.any);
   const top = args.indexOf('--top');

@@ -280,8 +280,8 @@ for (const build of ['cdn', 'esm', 'cjs', 'ar']) {
 }
 copy(path.join(P, 'dist', 'platform.js'), path.join(R, 'dist', 'plenix.global.js'));
 copy(path.join(P, 'engines', 'plenix-engines.js'), path.join(R, 'dist', 'plenix-engines.js'));
-// the TypeScript definitions, from the components' header comments (build-types.js)
-require('./build-types.js')(path.join(R, 'index.d.ts'), VERSION);
+// the TypeScript definitions, straight from tsc (tools/publish/react-types.js; ADR 0011 wave 5, #889)
+require('./tools/publish/react-types.js')(path.join(R, 'index.d.ts'), VERSION);
 // the Arabic opt-in is imported for what it does, and exports nothing (#702)
 write(path.join(R, 'i18n', 'ar.d.ts'), '/* @plenix-ds/react ' + VERSION + ' · import \'@plenix-ds/react/i18n/ar\': Plenix\'s own words in Arabic on an Arabic page (generated). */\nexport {};\n');
 const exportsList = [];

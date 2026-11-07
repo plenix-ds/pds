@@ -13,7 +13,7 @@ Developers who write Plenix apps in TypeScript can write correct code without fa
 - Added in commit c10f7488 "Types: fix the generator rules behind #170 and #171".
 
 ## How it checks
-- Rebuilds the definitions into `packages/react/index.d.ts` with `build-types.js`.
+- Rebuilds the definitions into `packages/react/index.d.ts` with `tools/publish/react-types.js` (tsc).
 - Compiles `tests/fixtures/redsave-types.tsx` (what the RedSave app writes) with TypeScript, strict, without writing output. No browser.
 
 ## What a failure means
@@ -27,4 +27,4 @@ Developers who write Plenix apps in TypeScript can write correct code without fa
 
 ## What it needs
 - Node only (no browser, no server), with the installed packages (`typescript`, `@types/react`).
-- `build-types.js` and the fixture `tests/fixtures/redsave-types.tsx`. It rewrites `packages/react/index.d.ts` when it runs.
+- `tools/publish/react-types.js` and the fixture `tests/fixtures/redsave-types.tsx`. It rewrites `packages/react/index.d.ts` when it runs.
