@@ -1,5 +1,5 @@
 /* Plenix · EntityHeader (platform/patterns/EntityHeader): the header of a page that shows one entity, and of a section in
-   it. Header style 1, Structured · Top row · Small (owner, 2026-10-19). Anatomy and API: EntityHeader.jsx.
+   it. Header style 1, Structured · Top row · Small (owner, 2026-10-19). Anatomy and API: EntityHeader.tsx.
    .plx-entity-header              a card; a container (narrow: the aside moves under the main column)
    .plx-entity-header__layout      two columns: main 1.7 · aside 1, with a divider between them
    .plx-entity-header__main        heading, accent rule, details

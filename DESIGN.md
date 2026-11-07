@@ -130,13 +130,32 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 - Heights for each density are in the front matter. Every height a component uses comes from `plx-sys.control-height-*` or `plx-sys.*-row-height`, never a fixed number.
 - `semantic.density-standard-comfortable.tokens.json` is retired. Removing it is a DS Architect task (section 12).
 
+### Screen sizes (D-0092)
+
+- **Design at 1440×900**, the middle of the common laptops.
+- **Every change must also look right at 1366×768** (the smallest common laptop, where Fluent 2's 1366 band starts) **and at 1920×1080** (the most common desktop screen).
+- **The minimum is 1024×640** (AppShell's `minSize`). Nothing scrolls sideways or overlaps there. Below it, the page follows the fit and reflow ladders (`fit-and-overflow.md`) down to 320px wide (WCAG 1.4.10).
+- **These are screen sizes, not viewports.** Browser chrome takes about 130px off the height, so a 1920×1080 screen gives a viewport near 1920×950. Judge layouts at the viewport.
+- **Phones and tablets** are parked (D-0013).
+- **The visual checks** run at 1366×768 and 1920×1080 (light, standard density, plus RTL and compact when the change touches them), and once at 1024×640 for the minimum.
+
 ## 6. Icons (D-0011)
 
 - Material Symbols Sharp, weight 300, from `platform/icons/`. There are two optical drawings: 20 (for the `xs`, `sm` and `md` sizes) and 24 (for `lg` and `xl`).
 - An icon colours itself with `currentColor`. It takes its colour from the text around it and has no fill token of its own.
 - Sizes come from `plx-sys.icon-size-*` (12, 16, 20, 24, 48).
 - **RTL:** icons that point along the reading direction (arrows, chevrons, first/last page, forward, send, reply, undo/redo, panel open/close, log in/out) flip. The list is `MIRROR` in `platform/icons/layout.js`. All other icons (check, search, clock, media play) never flip.
-- An icon-only control has an accessible name and a tooltip.
+- **An icon-only control always has an accessible name** (`aria-label`). It also shows its name in the **Tooltip**, **except the known set below** (D-0091, owner, 2026-11-07: "there is no need to have tool tips on things that are known"). Known buttons show **no visual tooltip** and keep their accessible name.
+- **The known set** (following Microsoft Fluent and Windows, D-0078), by the button's **role** in a Plenix part, not by glyph:
+  - **Close / dismiss (X):** Dialog, Drawer, Sheet, Popover, Toast, Banner, Notice and side-panel close; a Tag or chip's remove X.
+  - **Clear (X in a field):** the clear button inside Input, SearchField, Combobox, DatePicker and the other fields.
+  - **Search (magnifier)** inside a search field.
+  - **Back (arrow):** the back button in a page or panel header.
+  - **Previous / next (chevrons):** in Pagination, the calendar and DatePicker months, Carousel and MediaViewer.
+  - **Expand / collapse (chevron):** a disclosure, accordion, tree or grid row toggle, and a group header.
+  - **Show more:** the ⋮ row menu in a **DataGrid row**, because it sits beside the row's own icons. Everywhere else ⋮ "More actions" keeps its tooltip.
+- **Always keep the Tooltip on:** ⋮ More outside a grid row, sort, filter, settings, the password show/hide eye, copy, download, share, print, every app or domain icon, and any icon button an app makes (unless it passes `tooltip={false}` on purpose for one of the roles above).
+- A button whose **label is hidden by a bar's fit** (fit-and-overflow §2) always shows its Tooltip, known icon or not: the person saw the word before.
 
 ## 7. Motion
 
@@ -168,6 +187,8 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 - **A pill never wraps.** One line (`white-space: nowrap`). When it is too wide, its text ends in an ellipsis and its icon stays.
 - **Pills in a row have equal height** (check 11). Every boxed pill (soft or solid) in a row uses the same height token (`data-pill-min-height` or `data-pill-md-height`). The `plain` variant has no box: it is a name in running text, so it keeps `min-block-size: 0` and is not measured.
 - A status pill always has its icon.
+- **Pills in a grid column share one width** (owner rule, uniform pills): every standard pill in a column is as wide as the column's widest pill in the current view, person pills included. The column's sizing (D-0087) never shrinks a pill below that width.
+- **A pill's label is start-aligned** (D-0087, owner, 2026-11-07: "text should not be centered"): its icon, then its text from the inline-start, never centred in a wider pill. A cut label ends in an ellipsis with the full text in the Tooltip.
 
 ### Charts
 

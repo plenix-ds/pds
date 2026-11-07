@@ -1,0 +1,59 @@
+node tools/ci/new-problems.mjs run types (main): 58 findings
+useChartPoints.hover has any in its type
+useChartPoints.isDimmed has any in its type
+useChartPoints.keyDown has any in its type
+useChartPoints.onToggle has any in its type
+useChartPoints.pointerDown has any in its type
+useChartPoints.pointerMove has any in its type
+useChartPoints.pointerUp has any in its type
+useChartPoints.register has any in its type
+useChartPoints.select has any in its type
+useChartPoints.setActive has any in its type
+useChartPoints.setZoom has any in its type
+useChartPoints.visible has any in its type
+useChartPoints.active is any
+useChartPoints.brush is any
+useChartPoints.index is any
+useChartPoints.selected is any
+useChartPoints.source is any
+useChartPoints.zoom is any
+boxStats.median is any
+boxStats.q1 is any
+boxStats.q3 is any
+waterfallSteps.label is any
+useChartInteraction.isDimmed has any in its type
+useChartInteraction.keyDown has any in its type
+useChartInteraction.onToggle has any in its type
+useChartInteraction.pointerDown has any in its type
+useChartInteraction.pointerMove has any in its type
+useChartInteraction.pointerUp has any in its type
+useChartInteraction.register has any in its type
+useChartInteraction.select has any in its type
+useChartInteraction.setActive has any in its type
+useChartInteraction.setZoom has any in its type
+useChartInteraction.visible has any in its type
+useChartInteraction.active is any
+useChartInteraction.brush is any
+useChartInteraction.selected is any
+useChartInteraction.source is any
+useChartInteraction.zoom is any
+AreaChart.displayName is any
+BarChart.displayName is any
+BoxPlot.displayName is any
+BulletChart.displayName is any
+ComboChart.displayName is any
+FunnelChart.displayName is any
+HeatMap.displayName is any
+LineChart.displayName is any
+LollipopChart.displayName is any
+PieChart.displayName is any
+RadarChart.displayName is any
+ScatterChart.displayName is any
+Sparkline.displayName is any
+TreeChart.displayName is any
+Treemap.displayName is any
+WaterfallChart.displayName is any
+useGraphView.wrap has any in its type
+useGraphView.zoomBy has any in its type
+niceTicks.ticks is any
+DataGridEngine's props are any

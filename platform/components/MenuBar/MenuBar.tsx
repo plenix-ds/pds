@@ -49,9 +49,12 @@ import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import MoreIcon from 'plenix-platform/icons/plenix/more';
 
 // a declaration: the bar reads the label and the items of each menu and draws them itself (as a button and a Menu, or as a group in More)
-export function MenuBarMenu(_props: { label: React.ReactNode; children?: React.ReactNode }): null { return null; }
+/** @public */
+export type MenuBarMenuProps = { label: React.ReactNode; children?: React.ReactNode };
+export function MenuBarMenu(_props: MenuBarMenuProps): null { return null; }
 
-type MenuBarProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & {
+/** @public */
+export type MenuBarProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & {
   /** the bar's accessible name */
   label?: string;
   /** the buttons' size; default "md" */

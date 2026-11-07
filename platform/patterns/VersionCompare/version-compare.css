@@ -2,7 +2,7 @@
    With, and the views at the end; they wrap on a narrow view), then the comparison: ComparisonView's panes or slider, or
    the text diff: its bar (the summary, Previous and Next change) and its lines in the data font, each with the line
    numbers before and after, a sign, and the added and removed lines on the success and danger soft surfaces. Anatomy and
-   API: VersionCompare.jsx. */
+   API: VersionCompare.tsx. */
 .plx-version-compare{container-type:inline-size;display:flex;flex-direction:column;min-inline-size:0;row-gap:var(--plx-comp-version-compare-gap);}
 .plx-version-compare--columns,.plx-version-compare--slider{row-gap:var(--plx-comp-version-compare-gap);}
 .plx-version-compare__pickers{align-items:flex-end;column-gap:var(--plx-comp-version-compare-pickers-gap);display:flex;flex-wrap:wrap;row-gap:var(--plx-comp-version-compare-pickers-gap);}

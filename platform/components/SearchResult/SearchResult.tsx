@@ -81,7 +81,8 @@ export function highlightMatches(text: unknown, query?: string): React.ReactNode
   return parts.map((p, i) => (i % 2 ? <strong key={i} className="plx-search-result__match">{p}</strong> : p));
 }
 
-type SearchResultProps = Omit<React.HTMLAttributes<HTMLLIElement>, 'title'> & {
+/** @public */
+export type SearchResultProps = Omit<React.HTMLAttributes<HTMLLIElement>, 'title'> & {
   /** the result's title (text, so the query can be highlighted) */
   title?: React.ReactNode;
   /** the link the title opens */
@@ -144,7 +145,8 @@ export function SearchResult({ title, href, onOpen, kind = 'page', icon, thumbna
   );
 }
 
-type SearchResultGroupProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & {
+/** @public */
+export type SearchResultGroupProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & {
   /** the group's heading */
   heading?: React.ReactNode;
   /** the number of results, shown beside the heading */

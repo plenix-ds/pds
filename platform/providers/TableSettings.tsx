@@ -16,7 +16,9 @@ import React from 'react';
 type EditModeValue = 'inline' | 'form';
 type TableSettingsValue = { editMode?: EditModeValue; editModes?: EditModeValue[]; editing?: Record<string, unknown> };
 const TableSettingsContext = React.createContext<TableSettingsValue | null>(null);
-export function TableSettings({ editMode, editModes, editing, children }: TableSettingsValue & { children?: React.ReactNode }) {
+/** @public */
+export type TableSettingsProps = TableSettingsValue & { children?: React.ReactNode };
+export function TableSettings({ editMode, editModes, editing, children }: TableSettingsProps) {
   const value = React.useMemo(() => ({ editMode, editModes, editing }), [editMode, JSON.stringify(editModes), editing]);
   return <TableSettingsContext.Provider value={value}>{children}</TableSettingsContext.Provider>;
 }

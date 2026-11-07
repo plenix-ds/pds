@@ -48,6 +48,7 @@ import { seriesColor } from './scales.ts';
 import { ChartLegend } from './parts/ChartLegend.tsx';
 import { ChartTooltip, chartTooltipText } from './parts/ChartTooltip.tsx';
 import { useChartInteraction } from './interaction.ts';
+import type { ChartInteraction } from './interaction.ts';
 import { useStrings } from '../providers/LocaleProvider.tsx';
 import EdRecenterIcon from 'plenix-platform/icons/plenix/ed-recenter';
 import EdZoomInIcon from 'plenix-platform/icons/plenix/ed-zoom-in';
@@ -150,7 +151,7 @@ export function useGraphView({ enabled = true, strings }: { enabled?: boolean; s
   const [view, setView] = React.useState({ k: 1, x: 0, y: 0 });
   const size = React.useRef({ width: 0, height: 0 });
   const drag = React.useRef<any>(null);
-  const zoomBy = (f: any) => setView((v) => {
+  const zoomBy = (f: number) => setView((v) => {
     const k = Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, v.k * f)), cx0 = size.current.width / 2, cy0 = size.current.height / 2;
     return { k, x: cx0 - ((cx0 - v.x) / v.k) * k, y: cy0 - ((cy0 - v.y) / v.k) * k };
   });
@@ -161,7 +162,7 @@ export function useGraphView({ enabled = true, strings }: { enabled?: boolean; s
     <Button key="fit" size="sm" icon={EdRecenterIcon} onClick={fit}>{t.fit}</Button>,
   ] : null;
   // wraps an interaction: the background drags the view, + − 0 zoom; everything else goes to the interaction
-  const wrap = (ia: any, hitNode: any) => {
+  const wrap = <T extends ChartInteraction | null | undefined>(ia: T, hitNode: (x: number, y: number) => boolean): T => {
     if (!enabled || !ia) return ia;
     return Object.assign({}, ia, {
       hint: ia.hint + t.hintZoom,
@@ -172,14 +173,14 @@ export function useGraphView({ enabled = true, strings }: { enabled?: boolean; s
         ia.keyDown(e);
       },
       pointerDown: (px: any, py: any, e: any) => { if (!hitNode(px, py)) drag.current = { px, py, x: view.x, y: view.y, moved: false }; else ia.pointerDown(px, py, e); },
-      pointerMove: (px: any, py: any, e: any) => {
+      pointerMove: (px: number, py: number) => {
         const d = drag.current;
         if (d) { if (Math.abs(px - d.px) + Math.abs(py - d.py) > 2) d.moved = true; if (d.moved) { setView((v) => ({ k: v.k, x: d.x + px - d.px, y: d.y + py - d.py })); return; } }
-        ia.pointerMove(px, py, e);
+        ia.pointerMove(px, py);
       },
-      pointerUp: (px: any, py: any, e: any) => { const d = drag.current; drag.current = null; if (d && d.moved) return; ia.pointerUp(px, py, e); },
+      pointerUp: (px: number, py: number) => { const d = drag.current; drag.current = null; if (d && d.moved) return; ia.pointerUp(px, py); },
       pointerLeave: () => { drag.current = null; ia.pointerLeave(); },
-    });
+    }) as T;
   };
   return { view, setView, zoomBy, fit, actions, wrap, size, transform: 'translate(' + view.x + ',' + view.y + ') scale(' + view.k + ')',
     toScreen: (p: any) => ({ x: view.x + p.x * view.k, y: view.y + p.y * view.k }), toLayer: (px: any, py: any) => ({ x: (px - view.x) / view.k, y: (py - view.y) / view.k }) };
@@ -302,8 +303,8 @@ export function NetworkGraph({ title, description, nodes = [], edges = [], direc
             </g>
           ))}
         </g>
-        {tip ? <ChartTooltip x={tip.x + (tip.x > inner.width / 2 ? -HIT : HIT)} y={tip.y} inner={inner} title={nodes[a].label}
-          items={((groups ? [{ label: t.group, value: groupName(nodes[a]), color: colorOf(nodes[a]) }] : []) as any[]).concat([{ label: t.links, value: String(nb[a].length) }])} /> : null}
+        {tip ? <ChartTooltip x={tip.x + (tip.x > inner.width / 2 ? -HIT : HIT)} y={tip.y} inner={inner} title={nodes[a as number].label}
+          items={((groups ? [{ label: t.group, value: groupName(nodes[a as number]), color: colorOf(nodes[a as number]) }] : []) as any[]).concat([{ label: t.links, value: String(nb[a as number].length) }])} /> : null}
       </g>
     );
   };

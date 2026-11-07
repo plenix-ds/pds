@@ -1,0 +1,6 @@
+AssertionError [ERR_ASSERTION]: ltr: AC-1 the shell is 1366 wide and centered, got [0,1920,0]
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',

@@ -195,7 +195,7 @@ DSParts.records.push(function (H) {
 
     /* ── 12 Specialized › Files, assets, and DAM › Upload manager: UploadManager, useUploadQueue ── */
     { id: 'upload-manager', lab: true, icon: 'upload', sec: 'specialized', sub: FILES, leaf: 'Upload manager', title: 'Upload manager',
-      plenix: 'UploadManager, useUploadQueue', src: 'patterns/UploadManager/UploadManager.jsx', level: 'Pattern', interaction: 'Input',
+      plenix: 'UploadManager, useUploadQueue', src: 'patterns/UploadManager/UploadManager.tsx', level: 'Pattern', interaction: 'Input',
       aliases: ['Upload queue', 'Uploads panel', 'File uploader', 'Upload progress'],
       text: 'Files on their way up. A drop zone also opens the system’s file and folder pickers. Then comes a queue: a file row per file with its own progress (per file progress), Cancel while it moves, and the reason and Try again when it fails (retry), with the overall progress and counts at the top. It is a panel people keep working beside, in place or docked at the window’s bottom end (panel), or a dialog that starts the upload (dialog). useUploadQueue checks each file’s type and size first and uploads a few at a time.',
       use: ['Many files or large ones, and uploads that outlast the moment', 'The limits in hint, shown before people choose', 'useUploadQueue in the page, so uploads go on while the dialog is closed', 'docked for uploads that follow people from page to page'],
@@ -225,7 +225,7 @@ DSParts.records.push(function (H) {
 
     /* ── 12 Specialized › Files, assets, and DAM › Version comparison: VersionCompare ── */
     { id: 'version-comparison', lab: true, icon: 'doc-search', sec: 'specialized', sub: FILES, leaf: 'Version comparison', title: 'Version comparison',
-      plenix: 'VersionCompare, diffLines', src: 'patterns/VersionCompare/VersionCompare.jsx', level: 'Pattern', interaction: 'Selection',
+      plenix: 'VersionCompare, diffLines', src: 'patterns/VersionCompare/VersionCompare.tsx', level: 'Pattern', interaction: 'Selection',
       aliases: ['Compare versions', 'Version diff', 'Before and after', 'Text diff', 'Revision comparison'],
       text: 'What changed between two versions of one item. The two version pickers (Compare … with …, and Swap) sit above the comparison, in one of three views: side by side, with the changed attributes marked (side by side); the two pictures over each other, with the line people move (slider); or the text’s lines, with the added and removed ones marked and Previous and Next change to step through them (text diff).',
       use: ['Reviewing changes before approving', 'Choosing a version to restore', 'The text diff for documents, captions and descriptions', 'The slider for pictures of the same size'],

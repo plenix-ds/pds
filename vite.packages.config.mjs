@@ -1,7 +1,7 @@
-// The npm package's JavaScript (#709, Vite step 5): @plenix-ds/react's three builds of platform/index.js, in Vite library
+// The npm package's JavaScript (#709, Vite step 5): @plenix-ds/react's three builds of platform/index.ts, in Vite library
 // mode. node build-packages.js runs Vite once per build (PLENIX_PACKAGE=<build>) and keeps everything else of the release:
 // the package folders, package.json and the exports map, the copies, the styles, the CDN and the JSON API.
-//   esm   release/packages/react/dist/: the ES modules, one per part (#685). An entry for each module platform/index.js exports from,
+//   esm   release/packages/react/dist/: the ES modules, one per part (#685). An entry for each module platform/index.ts exports from,
 //         at its own path (dist/components/Button/Button.js), plus the barrel (dist/index.js) and the Arabic opt-in
 //         (dist/i18n/ar.js, #702). The code two parts share sits once in dist/chunks/, so an application that imports one
 //         part bundles that part and what it uses.
@@ -50,11 +50,11 @@ const STAND_INS = [
   { file: path.join(OPT, 'library.js'), importer: path.join(P, 'components', 'Icon', 'Icon.tsx') },
 ];
 
-// the part entries: platform/index.js, each module it exports from (by its path under platform/, without the extension),
+// the part entries: platform/index.ts, each module it exports from (by its path under platform/, without the extension),
 // and the Arabic opt-in
 function partEntries() {
-  const entries = { index: path.join(P, 'index.js') };
-  for (const m of fs.readFileSync(path.join(P, 'index.js'), 'utf8').matchAll(/from '\.\/([^']+)'/g)) entries[m[1].replace(/\.[jt]sx?$/, '')] = path.join(P, m[1]);
+  const entries = { index: path.join(P, 'index.ts') };
+  for (const m of fs.readFileSync(path.join(P, 'index.ts'), 'utf8').matchAll(/from '\.\/([^']+)'/g)) entries[m[1].replace(/\.[jt]sx?$/, '')] = path.join(P, m[1]);
   entries['i18n/ar'] = path.join(P, 'i18n', 'ar.optin.ts');
   return entries;
 }
@@ -87,8 +87,8 @@ const iconNames = {
 
 const BUILDS = {
   esm: { entry: partEntries, outDir: path.join(ROOT, 'release', 'packages', 'react', 'dist'), optional: true },
-  cjs: { entry: () => path.join(P, 'index.js'), outDir: path.join(ROOT, 'release', 'packages', 'react', 'dist'), format: 'cjs', file: 'index.cjs' },
-  cdn: { entry: () => path.join(P, 'index.js'), outDir: path.join(ROOT, 'release', 'cdn', VERSION), format: 'es', file: 'plenix.esm.js', banner: BANNER + '\nconst __plenixModuleUrl = import.meta.url;' },
+  cjs: { entry: () => path.join(P, 'index.ts'), outDir: path.join(ROOT, 'release', 'packages', 'react', 'dist'), format: 'cjs', file: 'index.cjs' },
+  cdn: { entry: () => path.join(P, 'index.ts'), outDir: path.join(ROOT, 'release', 'cdn', VERSION), format: 'es', file: 'plenix.esm.js', banner: BANNER + '\nconst __plenixModuleUrl = import.meta.url;' },
   // the CDN's plenix-ar.js (issue 882): the built-in Arabic words, for an Arabic page that loads the CDN's plenix.js
   ar: { entry: () => path.join(P, 'i18n', 'ar.global.ts'), outDir: path.join(ROOT, 'release', 'cdn', VERSION), format: 'iife', file: 'plenix-ar.js', banner: '/* ' + SCOPE + ' ' + VERSION + ' · plenix-ar.js: Plenix\'s built-in Arabic words, after plenix.js (generated) */' },
 };

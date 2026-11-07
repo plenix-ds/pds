@@ -60,6 +60,7 @@ import { seriesColor, scaleTime, wholeDays } from './scales.ts';
 import { ChartLegend } from './parts/ChartLegend.tsx';
 import { ChartTooltip, chartTooltipText } from './parts/ChartTooltip.tsx';
 import { useChartInteraction, ChartFocusMark, ChartBrush } from './interaction.ts';
+import type { ChartCell } from './interaction.ts';
 import { useEChartsPlot, plotGrid } from './echarts/EChartsPlot.tsx';
 import { tickLineHeight } from './echarts/engine.ts';
 import { snapToGrid } from '../utils/grid.ts';
@@ -275,7 +276,7 @@ export function SeriesChart({ kind = 'line', title, description, data = NONE, x 
       <g key="plx-chart-overlay" className={cx('plx-line-chart__plot', area && 'plx-area-chart__plot')} transform={'translate(' + g.x + ',' + g.y + ')'}>
         {ia.brush ? <ChartBrush x0={at(ia.brush[0])} x1={at(ia.brush[1])} inner={inner} /> : null}
         {typeof overlay === 'function' ? overlay({ inner, x: X, y: Y, at }) : null}
-        {selLevel ? <ChartFocusMark className="plx-chart-selected" x={at(sel.c)} y={Y(selLevel[1])} color={list[sel.r].color} /> : null}
+        {selLevel ? <ChartFocusMark className="plx-chart-selected" x={at((sel as ChartCell).c)} y={Y(selLevel[1])} color={list[(sel as ChartCell).r].color} /> : null}
         {a ? list.map((s: any, i: any) => { const y = top(i, a.c); return y === null ? null : <ChartFocusMark key={s.id} x={at(a.c)} y={y} color={s.color} />; }) : null}
         {a ? <ChartTooltip variant="shared" x={at(a.c)} inner={inner} title={fmtX(xs[a.c])} titleKind={type === 'band' ? 'text' : 'data'} items={tipItems(a.c)} /> : null}
       </g>

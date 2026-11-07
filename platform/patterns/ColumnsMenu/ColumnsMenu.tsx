@@ -44,7 +44,7 @@ import { Select } from '../../components/Input/Input.tsx';
 import { SearchField } from '../../components/SearchField/SearchField.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { LiveRegion } from '../../utils/announce.tsx';
-import { PanelTrigger, toggle } from '../CommandBar/panel-parts.jsx';
+import { PanelTrigger, toggle } from '../CommandBar/panel-parts.tsx';
 import { fill } from '../../utils/fill.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import ChevronDownIcon from 'plenix-platform/icons/plenix/chevron-down';

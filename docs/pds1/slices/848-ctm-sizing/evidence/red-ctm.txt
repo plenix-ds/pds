@@ -1,0 +1,3 @@
+AssertionError [ERR_ASSERTION]: ltr: AC-3: the room is shared evenly: each column grows by the same (within a few grid steps) when the room grows by 300px (4, 4, -2, 3, 4, 286)
+    at /home/cc/pds1/work/component-engineer-1/tests/data-grid-column-fit-ctm-800.test.js:44:14 {
+  generatedMessage: false,

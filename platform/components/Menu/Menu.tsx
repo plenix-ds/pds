@@ -237,7 +237,9 @@ export function MenuItem({ icon, danger = false, disabled = false, checked, type
   return href && !disabled ? <a href={href} {...props}>{content}</a> : <button type="button" {...props}>{content}</button>;
 }
 
-export function MenuDivider() {
+/** @public a divider takes no props */
+export type MenuDividerProps = Record<never, never>;
+export function MenuDivider(_props: MenuDividerProps = {}) {
   return <div role="separator" className="plx-menu__divider" />;
 }
 

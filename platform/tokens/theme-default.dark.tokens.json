@@ -1123,6 +1123,40 @@
         }
       }
     },
+    "status-tile-border": {
+      "$value": "{plx-ref.color-gray-800}",
+      "$type": "color",
+      "$description": "A status tile's 1px border in every tone: gray-800, as the status pills' dark border (dark is worked last, D-0024; #838).",
+      "$extensions": {
+        "plenix": {
+          "group": "status",
+          "purpose": "A status tile (EntityHeader): its 1px border, the same in every tone."
+        }
+      }
+    },
+    "status-tile-background": {
+      "$value": "{plx-ref.color-gray-700}",
+      "$type": "color",
+      "$description": "A status tile's fill in every tone: gray-700, as the status pills' dark fill (dark is worked last, D-0024; #838).",
+      "$extensions": {
+        "plenix": {
+          "group": "status",
+          "purpose": "A status tile (EntityHeader): its fill, the same in every tone; the tone is in its text and icon."
+        }
+      }
+    },
+    "shell-frame-outside": {
+      "$value": "{plx-ref.color-gray-950}",
+      "$type": "color",
+      "$description": "The page outside a centered AppShell frame in dark: gray-950, darker than the frame's gray-800 surface (G2 on #862).",
+      "$extensions": { "plenix": { "group": "surface", "purpose": "AppShell frame=\"centered\": the page outside the frame, left and right (docs/adr/0023)." } }
+    },
+    "shell-frame-shadow": {
+      "$value": "{plx-sys.shadow-lg}",
+      "$type": "shadow",
+      "$description": "AppShell frame=\"centered\": the wide shadow the frame casts on the outside (docs/adr/0023, G2 on #862).",
+      "$extensions": { "plenix": { "group": "elevation", "purpose": "AppShell frame=\"centered\": the frame's shadow." } }
+    },
     "status-pill-negative-text": {
       "$value": "{plx-ref.color-red-100}",
       "$type": "color",

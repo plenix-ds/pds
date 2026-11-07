@@ -470,7 +470,7 @@ never a raw value. One token per decision; the public ones say so, and give thei
 **5. Register it.**
 
 - Its stylesheet goes into the `components` layer through `platform.css`.
-- Its export goes into `platform/index.js`.
+- Its export goes into `platform/index.ts`.
 - Its design-system record documents the props, the public tokens and their scope, the text contract, the state
   matrix and the states (the contract above).
 

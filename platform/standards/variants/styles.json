@@ -605,19 +605,8 @@
     "why": ".plx-avatar--24 in avatar.css: the height by size, and the corner that grows with it"
   },
   "avatar--colors-a-person-s-own-colors": {
-    "sets": [
-      {
-        "property": "background-color",
-        "part": "block",
-        "token": "--plx-comp-data-color-soft"
-      },
-      {
-        "property": "color",
-        "part": "block",
-        "token": "--plx-comp-data-color-on-soft"
-      }
-    ],
-    "why": ".plx-avatar[data-plx-color] in avatar.css: the person's own data color, soft"
+    "sets": [],
+    "why": ".plx-avatar[data-plx-color] in avatar.css sets the person's own data color (soft fill, on-soft text) through in-CSS hooks, not tokens"
   },
   "ai-chat--variant-full-page": {
     "sets": [],
@@ -3902,14 +3891,9 @@
         "property": "stroke-width",
         "part": "line",
         "token": "--plx-comp-chart-threshold-line-width"
-      },
-      {
-        "property": "stroke",
-        "part": "line",
-        "token": "--plx-comp-data-color"
       }
     ],
-    "why": ".plx-chart-reference--threshold in chart-parts.css: a thicker line; the level sets the data-viz color to alert-critical (data-plx-dataviz)"
+    "why": ".plx-chart-reference--threshold in chart-parts.css: a thicker line; the level sets the data-viz color to alert-critical through data-plx-dataviz (an in-CSS hook, not a token)"
   },
   "chart-threshold--level-warning-default": {
     "sets": [
@@ -3917,14 +3901,9 @@
         "property": "stroke-width",
         "part": "line",
         "token": "--plx-comp-chart-threshold-line-width"
-      },
-      {
-        "property": "stroke",
-        "part": "line",
-        "token": "--plx-comp-data-color"
       }
     ],
-    "why": ".plx-chart-reference--threshold in chart-parts.css: a thicker line; the level sets the data-viz color to alert-warning (data-plx-dataviz)"
+    "why": ".plx-chart-reference--threshold in chart-parts.css: a thicker line; the level sets the data-viz color to alert-warning through data-plx-dataviz (an in-CSS hook, not a token)"
   },
   "combo-chart--variant-bar-line": {
     "sets": [],
@@ -5068,11 +5047,6 @@
   "swatch--shape-square-default": {
     "sets": [
       {
-        "property": "background-color",
-        "part": "block",
-        "token": "--plx-comp-data-color"
-      },
-      {
         "property": "border-color",
         "part": "block",
         "token": "--plx-comp-color-swatch-border-color"
@@ -5831,11 +5805,6 @@
         "property": "border-width",
         "part": "block",
         "token": "--plx-comp-color-swatch-border-width"
-      },
-      {
-        "property": "background-color",
-        "part": "block",
-        "token": "--plx-comp-color-swatch-value"
       }
     ],
     "why": ".plx-color-swatch in color-swatch.css: the square chip filled with the data color, with the default border"
@@ -6421,5 +6390,566 @@
   "rendition-list--variant-menu": {
     "sets": [],
     "why": "markup only: a Download menu that lists the renditions, where space is short"
+  },
+  "rich-text-editor--toolbar-basic-default": {
+    "sets": [],
+    "why": "markup only: icon buttons for bold, italic, link, bulleted and numbered list, each with a tooltip of its name and shortcut"
+  },
+  "rich-text-editor--toolbar-full-toolbar": {
+    "sets": [],
+    "why": "markup only: every format in groups: text style, font and size, marks, color, alignment, lists and the rest"
+  },
+  "rich-text-editor--toolbar-read-only": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-rich-text-editor-read-only-background"
+      }
+    ],
+    "why": ".plx-rich-text-editor.is-read-only in rich-text-editor.css: the content without the toolbar, on the sunken fill; it can be selected and copied"
+  },
+  "rich-text-editor--formats-every-format": {
+    "sets": [],
+    "why": "markup only: every element the editor writes, shown as it is: headings, marks, a highlight, a link, a task list, a table, a quote, a code block and a rule"
+  },
+  "rich-text-editor--formats-keyboard": {
+    "sets": [],
+    "why": "markup only: the editor engine's own keyboard shortcuts (Ctrl+B, Ctrl+I, Ctrl+U and the rest)"
+  },
+  "rich-text-editor--behavior-markdown-shortcuts": {
+    "sets": [],
+    "why": "markup only: the engine's rules as people type, such as \"- \" for a list and \"# \" for a heading, and **bold** around words"
+  },
+  "rich-text-editor--behavior-mentions-slot": {
+    "sets": [],
+    "why": "markup only: typing @ opens the list of people under the caret; a mention is one unit in the text"
+  },
+  "people-group--kind-team": {
+    "sets": [],
+    "why": "markup only: the team's picture or initials, its name as a link, the word Team, what it does, and its members' avatars with +N"
+  },
+  "people-group--count-with-member-count": {
+    "sets": [],
+    "why": "markup only: the member count after the kind, the number in the data font (\"8 members\")"
+  },
+  "ordered-list--variant-ordered-decimal-default": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "marker",
+        "token": "--plx-comp-list-marker-text"
+      },
+      {
+        "property": "min-inline-size",
+        "part": "marker",
+        "token": "--plx-comp-list-marker-min-width"
+      }
+    ],
+    "why": ".plx-list--ordered>.plx-list__item::before in list.css: statements numbered 1, 2, 3 in a muted column that keeps them aligned"
+  },
+  "ordered-list--variant-nested": {
+    "sets": [],
+    "why": "markup only: a list under one statement, starting on its text line, numbered or lettered on its own"
+  },
+  "record-page--entity-header-a-person-the-avatar-status-at-the-upper-right-icon-actions-key-facts": {
+    "sets": [],
+    "why": "markup only: the header of a page about a person: the avatar, the status, the actions as icons and one line of facts"
+  },
+  "record-page--entity-header-no-picture-of-its-own-a-generic-icon-for-its-kind-tinted-a-description-instead-of-facts": {
+    "sets": [],
+    "why": "markup only: an entity without a picture shows a tinted icon for its kind and a sentence instead of facts"
+  },
+  "record-page--entity-header-live-state-the-first-fact-a-status-badge-with-its-icon": {
+    "sets": [],
+    "why": "markup only: the live state of the entity leads the facts as a small status Badge with its icon (never a dot)"
+  },
+  "record-page--entity-header-an-email-its-common-actions-no-context-line": {
+    "sets": [],
+    "why": "markup only: an email header with its common actions as icons and no context line above the subject"
+  },
+  "record-page--entity-header-narrow-a-long-name-wraps-the-actions-at-the-end-fold-into": {
+    "sets": [],
+    "why": "markup only: in a narrow region the long name wraps and the actions at the end fold into the more menu"
+  },
+  "record-page--size-lg-default-a-page-title": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "title",
+        "token": "--plx-comp-record-page-title-text"
+      },
+      {
+        "property": "font-family",
+        "part": "title",
+        "token": "--plx-comp-record-page-title-font-family"
+      },
+      {
+        "property": "font-size",
+        "part": "title",
+        "token": "--plx-comp-record-page-title-font-size"
+      },
+      {
+        "property": "font-weight",
+        "part": "title",
+        "token": "--plx-comp-record-page-title-font-weight"
+      },
+      {
+        "property": "column-gap",
+        "part": "header",
+        "token": "--plx-comp-record-page-header-gap"
+      },
+      {
+        "property": "margin-block-end",
+        "part": "header",
+        "token": "--plx-comp-record-page-header-margin-block-end"
+      }
+    ],
+    "why": ".plx-record-page__header and __title in record-page.css: the header at page title size, with its meta line and actions"
+  },
+  "record-page--surface-none-default-on-the-page": {
+    "sets": [],
+    "why": "markup only: the header sits on the page with no surface of its own; only the card surface has a rule"
+  },
+  "reorder--order-reversed-column": {
+    "sets": [],
+    "why": ".plx-layout--reverse in stack.css sets only a reversed column direction, none of them tokens"
+  },
+  "reorder--order-reversed-row": {
+    "sets": [],
+    "why": ".plx-layout--reverse in stack.css sets only a reversed row direction, none of them tokens"
+  },
+  "reorder--order-moved-to-the-start": {
+    "sets": [],
+    "why": ".plx-layout--order-first in stack.css sets only order: -1, none of them tokens"
+  },
+  "reorder--order-reversed-below-narrow": {
+    "sets": [],
+    "why": ".plx-layout--reverse-below-narrow in stack.css applies the same reversed direction only under 600px (a window media query); it sets a direction, not a token"
+  },
+  "platform-implementation--guidance-mobile-web": {
+    "sets": [],
+    "why": "markup only: guidance: use the existing shell layout modes, touch targets and list-detail navigation at narrow widths"
+  },
+  "platform-implementation--guidance-desktop": {
+    "sets": [],
+    "why": "markup only: guidance: keep keyboard operation, resizable panes, and restoring the last screen, side pane width and scroll position consistent with the desktop shell"
+  },
+  "platform-implementation--guidance-native-implementation": {
+    "sets": [],
+    "why": "markup only: guidance: use the generated iOS and Android tokens and the additive native guidance; native controls keep the platform's behavior"
+  },
+  "product-options--kind-size-buttons": {
+    "sets": [],
+    "why": "markup only: RadioTiles at the product's tile width in one radio group; an out of stock size is disabled with its note under it"
+  },
+  "product-options--kind-color-swatches": {
+    "sets": [],
+    "why": "markup only: ColorSwatch buttons in a row, each named by its color; the chosen one has a ring and its name beside the label, and an out of stock one is dimmed and announced"
+  },
+  "product-options--kind-quantity": {
+    "sets": [],
+    "why": "markup only: the NumberInput quantity stepper in a Field (minus, the count in the data font, plus), named with the product and kept between min and max"
+  },
+  "product-switcher--name-the-application-name-default": {
+    "sets": [],
+    "why": "AppHeader draws it: .plx-app-header__brand--switch with __name, __product and __app in app-header.css, Plenix over the application name with a chevron that opens the applications"
+  },
+  "product-switcher--name-a-brand-mark-before-the-name": {
+    "sets": [],
+    "why": "AppHeader draws it: the BrandMark before .plx-app-header__name in .plx-app-header__brand (app-header.css), as tall as the name's two lines"
+  },
+  "permission-summary--form-can-and-cannot-lists-default": {
+    "sets": [
+      {
+        "property": "column-gap",
+        "part": "lists",
+        "token": "--plx-comp-permission-summary-lists-gap"
+      },
+      {
+        "property": "grid-template-columns",
+        "part": "lists",
+        "token": "--plx-comp-permission-summary-section-min-width"
+      },
+      {
+        "property": "row-gap",
+        "part": "lists",
+        "token": "--plx-comp-permission-summary-gap"
+      }
+    ],
+    "why": ".plx-permission-summary__lists in permission-summary.css: the Can and Cannot lists side by side in auto-fit columns of the section minimum width, stacked when narrow"
+  },
+  "range-slider--kind-range-two-thumbs": {
+    "sets": [],
+    "why": "Slider draws it: .plx-slider__fill in slider.css fills the part between the minimum and maximum thumbs"
+  },
+  "search-input--variants-on-the-page": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "input",
+        "token": "--plx-comp-search-input-background"
+      },
+      {
+        "property": "border-color",
+        "part": "input",
+        "token": "--plx-comp-search-input-border-color"
+      },
+      {
+        "property": "color",
+        "part": "input",
+        "token": "--plx-comp-search-input-text"
+      },
+      {
+        "property": "min-block-size",
+        "part": "input",
+        "token": "--plx-comp-search-input-min-height"
+      },
+      {
+        "property": "border-radius",
+        "part": "input",
+        "token": "--plx-comp-search-input-radius"
+      },
+      {
+        "property": "color",
+        "part": "icon",
+        "token": "--plx-comp-search-icon-text"
+      }
+    ],
+    "why": ".plx-search-field input and icon in search-field.css: the field on a page or a toolbar surface"
+  },
+  "search-input--variants-on-the-accent-header": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "input",
+        "token": "--plx-comp-search-on-accent-input-background"
+      },
+      {
+        "property": "border-color",
+        "part": "input",
+        "token": "--plx-comp-search-on-accent-input-border-color"
+      },
+      {
+        "property": "color",
+        "part": "input",
+        "token": "--plx-comp-search-on-accent-input-text"
+      },
+      {
+        "property": "color",
+        "part": "input-placeholder",
+        "token": "--plx-comp-search-on-accent-input-placeholder-text"
+      },
+      {
+        "property": "color",
+        "part": "icon",
+        "token": "--plx-comp-search-on-accent-icon-text"
+      }
+    ],
+    "why": "the on-accent roles in search-field.css: the field in the colors of the accent header"
+  },
+  "range-slider--kind-with-marks": {
+    "sets": [
+      {
+        "property": "color",
+        "part": "mark",
+        "token": "--plx-comp-slider-mark-text"
+      },
+      {
+        "property": "font-family",
+        "part": "mark",
+        "token": "--plx-comp-slider-mark-font-family"
+      },
+      {
+        "property": "font-size",
+        "part": "mark",
+        "token": "--plx-comp-slider-mark-font-size"
+      },
+      {
+        "property": "block-size",
+        "part": "marks",
+        "token": "--plx-comp-slider-mark-line-height"
+      }
+    ],
+    "why": ".plx-slider__mark and .plx-slider__marks in slider.css: labeled values under the track, in the data font, centered on their place"
+  },
+  "chip--selection-not-selected-default": {
+    "sets": [
+      {
+        "property": "border-color",
+        "part": "block",
+        "token": "--plx-comp-chip-border-color"
+      },
+      {
+        "property": "border-width",
+        "part": "block",
+        "token": "--plx-comp-chip-border-width"
+      }
+    ],
+    "why": ".plx-tag.plx-tag--chip in tag.css: the chip before it is chosen, with its border; the selected state replaces the fill and border"
+  },
+  "tag--editing-renamable-click-the-text-type-enter": {
+    "sets": [
+      {
+        "property": "outline-color",
+        "part": "rename",
+        "token": "--plx-comp-tag-rename-focus-outline-color"
+      },
+      {
+        "property": "outline-width",
+        "part": "rename",
+        "token": "--plx-comp-tag-rename-focus-outline-width"
+      },
+      {
+        "property": "outline-offset",
+        "part": "rename",
+        "token": "--plx-comp-tag-rename-focus-outline-offset"
+      }
+    ],
+    "why": ".plx-tag__rename in tag.css: the tag text is a button that turns the tag into a small field (underline on hover, focus ring); Enter or leaving keeps the new text, Escape cancels"
+  },
+  "presence--every-size-xl-48px": {
+    "sets": [
+      {
+        "property": "border-width",
+        "part": "dot",
+        "token": "--plx-comp-avatar-presence-ring-width"
+      },
+      {
+        "property": "border-color",
+        "part": "dot",
+        "token": "--plx-comp-avatar-presence-ring-color"
+      }
+    ],
+    "why": ".plx-avatar__presence in avatar.css: from 40px the dot is 12px or 16px with a ring in the surface color, and carries the availability's shape"
+  },
+  "print--print-print-button": {
+    "sets": [],
+    "why": "markup only: a Button that calls usePrint().print; it prints in the light theme and takes an optional title for the paper"
+  },
+  "print--print-print-only-screen-only": {
+    "sets": [
+      {
+        "property": "display",
+        "part": "block",
+        "token": "--plx-sys-print-shown"
+      },
+      {
+        "property": "display",
+        "part": "block-no-print",
+        "token": "--plx-sys-print-hidden"
+      }
+    ],
+    "why": ".plx-visibility--print-only and --no-print: Show print draws content only on paper, Hide print leaves it off the paper"
+  },
+  "print--print-print-stylesheet": {
+    "sets": [],
+    "why": "system/print.css takes the chrome off the paper, lets the page run its full length, keeps cards whole and prints link addresses inside plx-print-urls; these rules set layout and visibility values, not tokens"
+  },
+  "query-builder--view-text-view": {
+    "sets": [],
+    "why": "markup only: the whole query as one sentence in a code block with Copy; unfinished rules are left out"
+  },
+  "layout-full-screen-workspace--page-full-screen": {
+    "sets": [],
+    "why": ".plx-app-shell[data-plx-layout=\"focus\"] in layout-modes.css hides the navigation pane and the inspector; the header and the footer stay (page kind editor)"
+  },
+  "inspector-region--resize-resizable-drag-its-start-edge-from-240px-to-560px-remembered": {
+    "sets": [],
+    "why": "SidePanel draws the edge: .plx-side-panel--resizable marks the panel and .plx-side-panel--resized sets its width (side-panel.css); the drag edge, the 90% of window limit and the remembered width are script"
+  },
+  "navigation-rail--labels-icons-only-default": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "rail",
+        "token": "--plx-comp-nav-pane-background"
+      }
+    ],
+    "why": "NavPane draws the rail (.plx-nav-pane-rail in nav-pane.css, stretched to the pane's height, on the pane's background); the icon buttons, each named by its tooltip, are markup"
+  },
+  "type-styles--overflow-expandable": {
+    "sets": [],
+    "why": "markup only: a clamped text with a Show more button under it while it is cut; Show less folds it again (Text lines and expandable)"
+  },
+  "bottom-navigation--form-bottom-bar-default": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "bar",
+        "token": "--plx-comp-nav-bar-background"
+      },
+      {
+        "property": "block-size",
+        "part": "bar",
+        "token": "--plx-comp-nav-bar-height"
+      },
+      {
+        "property": "color",
+        "part": "item",
+        "token": "--plx-comp-nav-bar-item-text"
+      },
+      {
+        "property": "min-block-size",
+        "part": "item",
+        "token": "--plx-comp-nav-bar-item-target"
+      }
+    ],
+    "why": ".plx-nav-bar and .plx-nav-bar__item in nav-pane.css: the bar always visible along the bottom, every destination labeled under its icon, each at least the 44px target"
+  },
+  "button--behavior-loading": {
+    "sets": [],
+    "why": ".plx-button.is-loading in button.css sets only --plx-state-button-cursor: progress, an in-CSS hook, not a token"
+  },
+  "button--hierarchy-secondary-default": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-button-secondary-background"
+      },
+      {
+        "property": "border-color",
+        "part": "block",
+        "token": "--plx-comp-button-secondary-border"
+      }
+    ],
+    "why": ".plx-button secondary in button.css: the default variant"
+  },
+  "toggle-button--variant-secondary-default": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-button-selected-background"
+      }
+    ],
+    "why": ".plx-button.is-selected in button.css: a Button with pressed stays on and takes the selected fill (aria-pressed); the selected border and text are in-CSS hooks, not tokens"
+  },
+  "form-section--parts-actions-at-the-end-sticky": {
+    "sets": [],
+    "why": "FormActions is an ActionBar, sticky by default: the sticky position is ActionBar's (action-bar.css); sticky={false} adds .plx-form-actions--static (form.css), which sets position: static, no token"
+  },
+  "preview--element-a-display-default": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-preview-background"
+      },
+      {
+        "property": "border-radius",
+        "part": "block",
+        "token": "--plx-comp-preview-radius"
+      }
+    ],
+    "why": ".plx-preview in preview.css: the asset picture in a sunken box that only shows it"
+  },
+  "progress-steps--status-with-status-complete-current-error": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "marker-error",
+        "token": "--plx-comp-progress-steps-error-marker-background"
+      },
+      {
+        "property": "color",
+        "part": "label-error",
+        "token": "--plx-comp-progress-steps-error-label-text"
+      },
+      {
+        "property": "background-color",
+        "part": "segment-error",
+        "token": "--plx-comp-progress-steps-segment-error-background"
+      }
+    ],
+    "why": ".plx-progress-steps__step.is-error in progress-steps.css: a step that needs attention, in the soft danger colors, with its name in the danger color"
+  },
+  "role-label--role-custom-a-category-color": {
+    "sets": [
+      {
+        "property": "column-gap",
+        "part": "block",
+        "token": "--plx-comp-role-label-gap"
+      },
+      {
+        "property": "--plx-comp-icon-size",
+        "part": "icon",
+        "token": "--plx-comp-role-label-icon-size"
+      }
+    ],
+    "why": ".plx-tag.plx-role-label and .plx-role-label__icon in role-label.css: a role the organization defined, with the person icon; the category color is the Tag's"
+  },
+  "calendar--variant-month-default": {
+    "sets": [
+      {
+        "property": "column-gap",
+        "part": "header",
+        "token": "--plx-comp-calendar-header-gap"
+      },
+      {
+        "property": "min-block-size",
+        "part": "header",
+        "token": "--plx-comp-calendar-header-min-height"
+      }
+    ],
+    "why": ".plx-calendar__header in calendar.css: one month with its header, the weekday row and the days of the weeks around it"
+  },
+  "field-style-variants--appearance-outline-default": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "block",
+        "token": "--plx-comp-input-background"
+      },
+      {
+        "property": "border-color",
+        "part": "block",
+        "token": "--plx-comp-input-border-color"
+      },
+      {
+        "property": "color",
+        "part": "block",
+        "token": "--plx-comp-input-text"
+      }
+    ],
+    "why": ".plx-input in input.css: outline is the default look, a border on every side"
+  },
+  "typing-indicator--message-theirs-default": {
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "bubble",
+        "token": "--plx-comp-chat-bubble-background"
+      },
+      {
+        "property": "border-color",
+        "part": "bubble",
+        "token": "--plx-comp-chat-bubble-border-color"
+      },
+      {
+        "property": "color",
+        "part": "bubble",
+        "token": "--plx-comp-chat-bubble-text"
+      },
+      {
+        "property": "border-radius",
+        "part": "bubble",
+        "token": "--plx-comp-chat-bubble-radius"
+      }
+    ],
+    "why": ".plx-chat bubble in chat.css: a message from someone else, on the start side"
+  },
+  "typing-indicator--message-mine": {
+    "sets": [],
+    "why": ".plx-chat__message--mine in chat.css sets align-self: flex-end, which puts the person's message on the end side; no token"
+  },
+  "secondary-pane--orientation-side-by-side-default": {
+    "sets": [],
+    "why": "SplitView draws the orientation (.plx-split-view__panels is a flex row; under 900px of its own width the panels stack); its values are layout, not tokens"
+  },
+  "secondary-pane--orientation-stacked": {
+    "sets": [],
+    "why": "SplitView draws the orientation (.plx-split-view and .plx-split-view__panels in split-view.css); its values are layout, not tokens"
   }
 }

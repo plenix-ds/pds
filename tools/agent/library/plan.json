@@ -917,7 +917,7 @@
       "platform/components/IconTile/IconTile.jsx",
       "platform/components/IconTile/icon-tile.css",
       "platform/tokens/components/icon-tile.tokens.json",
-      "platform/patterns/EntityHeader/EntityHeader.jsx",
+      "platform/patterns/EntityHeader/EntityHeader.tsx",
       "platform/patterns/EntityHeader/entity-header.css",
       "platform/components/Preview/Preview.jsx",
       "platform/components/Preview/preview.css",
@@ -1649,7 +1649,7 @@
       "platform/design-system/parts/w08A.{records,labs,docs}.js + .css",
       "platform/exports/w08A.{js,css}",
       "platform/standards/web-native-map.d/w08A.json",
-      "platform/patterns/UserCard/UserCard.jsx",
+      "platform/patterns/UserCard/UserCard.tsx",
       "platform/patterns/UserCard/user-card.css",
       "platform/tokens/components/user-card.tokens.json",
       "platform/patterns/FeatureCard/FeatureCard.tsx",
@@ -2013,7 +2013,7 @@
       "platform/design-system/parts/w10C.{records,labs,docs}.js + .css",
       "platform/exports/w10C.{js,css}",
       "platform/standards/web-native-map.d/w10C.json",
-      "platform/patterns/WizardDialog/WizardDialog.jsx",
+      "platform/patterns/WizardDialog/WizardDialog.tsx",
       "platform/patterns/WizardDialog/wizard-dialog.css",
       "platform/tokens/components/wizard-dialog.tokens.json",
       "platform/patterns/GroupBy/GroupBy.jsx",
@@ -2022,7 +2022,7 @@
       "platform/patterns/FormFlow/FormFlow.tsx",
       "platform/patterns/FormFlow/form-flow.css",
       "platform/tokens/components/form-flow.tokens.json",
-      "platform/patterns/Wizard/Wizard.jsx",
+      "platform/patterns/Wizard/Wizard.tsx",
       "platform/patterns/Wizard/wizard.css",
       "platform/tokens/components/wizard.tokens.json",
       "platform/patterns/Autosave/Autosave.tsx",
@@ -2076,7 +2076,7 @@
       "platform/design-system/parts/w11A.{records,labs,docs}.js + .css",
       "platform/exports/w11A.{js,css}",
       "platform/standards/web-native-map.d/w11A.json",
-      "platform/patterns/Auth/Auth.jsx",
+      "platform/patterns/Auth/Auth.tsx",
       "platform/patterns/Auth/auth.css",
       "platform/tokens/components/auth.tokens.json",
       "platform/patterns/RoleManager/RoleManager.tsx",
@@ -2136,7 +2136,7 @@
       "platform/patterns/Onboarding/Onboarding.tsx",
       "platform/patterns/Onboarding/onboarding.css",
       "platform/tokens/components/onboarding.tokens.json",
-      "platform/patterns/Tour/Tour.jsx",
+      "platform/patterns/Tour/Tour.tsx",
       "platform/patterns/Tour/tour.css",
       "platform/tokens/components/tour.tokens.json",
       "platform/components/Checklist/Checklist.tsx",
@@ -2190,7 +2190,7 @@
       "platform/patterns/ImportWizard/ImportWizard.tsx",
       "platform/patterns/ImportWizard/import-wizard.css",
       "platform/tokens/components/import-wizard.tokens.json",
-      "platform/patterns/TrialUpgrade/TrialUpgrade.jsx",
+      "platform/patterns/TrialUpgrade/TrialUpgrade.tsx",
       "platform/patterns/TrialUpgrade/trial-upgrade.css",
       "platform/tokens/components/trial-upgrade.tokens.json",
       "platform/patterns/Offboarding/Offboarding.tsx",
@@ -2244,10 +2244,10 @@
       "platform/patterns/FileList/FileList.tsx",
       "platform/patterns/FileList/file-list.css",
       "platform/tokens/components/file-list.tokens.json",
-      "platform/patterns/UploadManager/UploadManager.jsx",
+      "platform/patterns/UploadManager/UploadManager.tsx",
       "platform/patterns/UploadManager/upload-manager.css",
       "platform/tokens/components/upload-manager.tokens.json",
-      "platform/patterns/VersionCompare/VersionCompare.jsx",
+      "platform/patterns/VersionCompare/VersionCompare.tsx",
       "platform/patterns/VersionCompare/version-compare.css",
       "platform/tokens/components/version-compare.tokens.json"
      ],
@@ -2333,7 +2333,7 @@
       "platform/components/DocumentViewer/DocumentViewer.jsx",
       "platform/components/DocumentViewer/document-viewer.css",
       "platform/tokens/components/document-viewer.tokens.json",
-      "platform/patterns/VersionHistory/VersionHistory.jsx",
+      "platform/patterns/VersionHistory/VersionHistory.tsx",
       "platform/patterns/VersionHistory/version-history.css",
       "platform/tokens/components/version-history.tokens.json",
       "platform/patterns/RenditionList/RenditionList.tsx",
@@ -3600,7 +3600,7 @@
     "platform/components/IconTile/IconTile.jsx",
     "platform/components/IconTile/icon-tile.css",
     "platform/tokens/components/icon-tile.tokens.json",
-    "platform/patterns/EntityHeader/EntityHeader.jsx",
+    "platform/patterns/EntityHeader/EntityHeader.tsx",
     "platform/patterns/EntityHeader/entity-header.css"
    ],
    "dependsOn": [],
@@ -5718,7 +5718,7 @@
    "wave": 8,
    "lane": "A",
    "files": [
-    "platform/patterns/UserCard/UserCard.jsx",
+    "platform/patterns/UserCard/UserCard.tsx",
     "platform/patterns/UserCard/user-card.css",
     "platform/tokens/components/user-card.tokens.json"
    ],
@@ -6916,7 +6916,7 @@
    "wave": 10,
    "lane": "C",
    "files": [
-    "platform/patterns/Wizard/Wizard.jsx",
+    "platform/patterns/Wizard/Wizard.tsx",
     "platform/patterns/Wizard/wizard.css",
     "platform/tokens/components/wizard.tokens.json"
    ],
@@ -6943,7 +6943,7 @@
    "wave": 10,
    "lane": "C",
    "files": [
-    "platform/patterns/WizardDialog/WizardDialog.jsx",
+    "platform/patterns/WizardDialog/WizardDialog.tsx",
     "platform/patterns/WizardDialog/wizard-dialog.css",
     "platform/tokens/components/wizard-dialog.tokens.json"
    ],
@@ -7112,7 +7112,7 @@
    "wave": 11,
    "lane": "A",
    "files": [
-    "platform/patterns/Auth/Auth.jsx",
+    "platform/patterns/Auth/Auth.tsx",
     "platform/patterns/Auth/auth.css",
     "platform/tokens/components/auth.tokens.json"
    ],
@@ -7315,7 +7315,7 @@
    "wave": 11,
    "lane": "B",
    "files": [
-    "platform/patterns/Tour/Tour.jsx",
+    "platform/patterns/Tour/Tour.tsx",
     "platform/patterns/Tour/tour.css",
     "platform/tokens/components/tour.tokens.json"
    ],
@@ -7531,7 +7531,7 @@
    "wave": 11,
    "lane": "C",
    "files": [
-    "platform/patterns/TrialUpgrade/TrialUpgrade.jsx",
+    "platform/patterns/TrialUpgrade/TrialUpgrade.tsx",
     "platform/patterns/TrialUpgrade/trial-upgrade.css",
     "platform/tokens/components/trial-upgrade.tokens.json"
    ],
@@ -7676,7 +7676,7 @@
    "wave": 12,
    "lane": "A",
    "files": [
-    "platform/patterns/UploadManager/UploadManager.jsx",
+    "platform/patterns/UploadManager/UploadManager.tsx",
     "platform/patterns/UploadManager/upload-manager.css",
     "platform/tokens/components/upload-manager.tokens.json"
    ],
@@ -7701,7 +7701,7 @@
    "wave": 12,
    "lane": "A",
    "files": [
-    "platform/patterns/VersionCompare/VersionCompare.jsx",
+    "platform/patterns/VersionCompare/VersionCompare.tsx",
     "platform/patterns/VersionCompare/version-compare.css",
     "platform/tokens/components/version-compare.tokens.json"
    ],
@@ -7945,7 +7945,7 @@
    "wave": 12,
    "lane": "C",
    "files": [
-    "platform/patterns/VersionHistory/VersionHistory.jsx",
+    "platform/patterns/VersionHistory/VersionHistory.tsx",
     "platform/patterns/VersionHistory/version-history.css",
     "platform/tokens/components/version-history.tokens.json"
    ],
@@ -9526,7 +9526,7 @@
     "platform/components/IconTile/IconTile.jsx",
     "platform/components/IconTile/icon-tile.css",
     "platform/tokens/components/icon-tile.tokens.json",
-    "platform/patterns/EntityHeader/EntityHeader.jsx",
+    "platform/patterns/EntityHeader/EntityHeader.tsx",
     "platform/patterns/EntityHeader/entity-header.css"
    ],
    "laneFiles": [
@@ -11646,7 +11646,7 @@
    "target": "UserCard",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/UserCard/UserCard.jsx",
+    "platform/patterns/UserCard/UserCard.tsx",
     "platform/patterns/UserCard/user-card.css",
     "platform/tokens/components/user-card.tokens.json"
    ],
@@ -14685,7 +14685,7 @@
    "targetKind": "pattern",
    "duplicateOf": "content/User card",
    "files": [
-    "platform/patterns/UserCard/UserCard.jsx",
+    "platform/patterns/UserCard/UserCard.tsx",
     "platform/patterns/UserCard/user-card.css",
     "platform/tokens/components/user-card.tokens.json"
    ],
@@ -16826,7 +16826,7 @@
    "target": "WizardDialog",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/WizardDialog/WizardDialog.jsx",
+    "platform/patterns/WizardDialog/WizardDialog.tsx",
     "platform/patterns/WizardDialog/wizard-dialog.css",
     "platform/tokens/components/wizard-dialog.tokens.json"
    ],
@@ -17912,7 +17912,7 @@
    "target": "Wizard",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/Wizard/Wizard.jsx",
+    "platform/patterns/Wizard/Wizard.tsx",
     "platform/patterns/Wizard/wizard.css",
     "platform/tokens/components/wizard.tokens.json"
    ],
@@ -17941,7 +17941,7 @@
    "target": "Wizard",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/Wizard/Wizard.jsx",
+    "platform/patterns/Wizard/Wizard.tsx",
     "platform/patterns/Wizard/wizard.css",
     "platform/tokens/components/wizard.tokens.json"
    ],
@@ -18552,7 +18552,7 @@
    "target": "Tour",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/Tour/Tour.jsx",
+    "platform/patterns/Tour/Tour.tsx",
     "platform/patterns/Tour/tour.css",
     "platform/tokens/components/tour.tokens.json"
    ],
@@ -18650,7 +18650,7 @@
    "targetKind": "pattern",
    "duplicateOf": "patterns/Product tour",
    "files": [
-    "platform/patterns/Tour/Tour.jsx",
+    "platform/patterns/Tour/Tour.tsx",
     "platform/patterns/Tour/tour.css",
     "platform/tokens/components/tour.tokens.json"
    ],
@@ -18770,7 +18770,7 @@
    "target": "Auth",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/Auth/Auth.jsx",
+    "platform/patterns/Auth/Auth.tsx",
     "platform/patterns/Auth/auth.css",
     "platform/tokens/components/auth.tokens.json"
    ],
@@ -18807,7 +18807,7 @@
    "target": "Auth",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/Auth/Auth.jsx",
+    "platform/patterns/Auth/Auth.tsx",
     "platform/patterns/Auth/auth.css",
     "platform/tokens/components/auth.tokens.json"
    ],
@@ -18836,7 +18836,7 @@
    "target": "Auth",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/Auth/Auth.jsx",
+    "platform/patterns/Auth/Auth.tsx",
     "platform/patterns/Auth/auth.css",
     "platform/tokens/components/auth.tokens.json"
    ],
@@ -18865,7 +18865,7 @@
    "target": "Auth",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/Auth/Auth.jsx",
+    "platform/patterns/Auth/Auth.tsx",
     "platform/patterns/Auth/auth.css",
     "platform/tokens/components/auth.tokens.json"
    ],
@@ -18894,7 +18894,7 @@
    "target": "Auth",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/Auth/Auth.jsx",
+    "platform/patterns/Auth/Auth.tsx",
     "platform/patterns/Auth/auth.css",
     "platform/tokens/components/auth.tokens.json"
    ],
@@ -18923,7 +18923,7 @@
    "target": "Auth",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/Auth/Auth.jsx",
+    "platform/patterns/Auth/Auth.tsx",
     "platform/patterns/Auth/auth.css",
     "platform/tokens/components/auth.tokens.json"
    ],
@@ -19220,7 +19220,7 @@
    "target": "TrialUpgrade",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/TrialUpgrade/TrialUpgrade.jsx",
+    "platform/patterns/TrialUpgrade/TrialUpgrade.tsx",
     "platform/patterns/TrialUpgrade/trial-upgrade.css",
     "platform/tokens/components/trial-upgrade.tokens.json"
    ],
@@ -20172,7 +20172,7 @@
    "target": "UploadManager",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/UploadManager/UploadManager.jsx",
+    "platform/patterns/UploadManager/UploadManager.tsx",
     "platform/patterns/UploadManager/upload-manager.css",
     "platform/tokens/components/upload-manager.tokens.json"
    ],
@@ -20330,7 +20330,7 @@
    "target": "VersionHistory",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/VersionHistory/VersionHistory.jsx",
+    "platform/patterns/VersionHistory/VersionHistory.tsx",
     "platform/patterns/VersionHistory/version-history.css",
     "platform/tokens/components/version-history.tokens.json"
    ],
@@ -20363,7 +20363,7 @@
    "target": "VersionCompare",
    "targetKind": "pattern",
    "files": [
-    "platform/patterns/VersionCompare/VersionCompare.jsx",
+    "platform/patterns/VersionCompare/VersionCompare.tsx",
     "platform/patterns/VersionCompare/version-compare.css",
     "platform/tokens/components/version-compare.tokens.json"
    ],

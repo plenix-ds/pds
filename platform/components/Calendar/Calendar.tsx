@@ -244,10 +244,10 @@ export const Calendar = React.forwardRef<HTMLDivElement | null, CalendarProps>(f
     return (
       <div key={ym} className="plx-calendar__month">
         <div className="plx-calendar__header">
-          {i === 0 ? <Button variant="ghost" size="sm" iconOnly icon={ChevronLeftIcon} label={t.previous} className="plx-calendar__nav plx-calendar__nav--previous"
+          {i === 0 ? <Button variant="ghost" size="sm" iconOnly tooltip={false} icon={ChevronLeftIcon} label={t.previous} className="plx-calendar__nav plx-calendar__nav--previous"
             disabled={!!prevOff} onClick={() => setShown(shiftMonth(shown, -1))} /> : <span className="plx-calendar__nav-space" aria-hidden="true" />}
           <div id={titleId} className="plx-calendar__title" aria-live="polite">{monthName.format(dateOf(monthStart(ym)))}</div>
-          {i === count - 1 ? <Button variant="ghost" size="sm" iconOnly icon={ChevronRightIcon} label={t.next} className="plx-calendar__nav plx-calendar__nav--next"
+          {i === count - 1 ? <Button variant="ghost" size="sm" iconOnly tooltip={false} icon={ChevronRightIcon} label={t.next} className="plx-calendar__nav plx-calendar__nav--next"
             disabled={!!nextOff} onClick={() => setShown(shiftMonth(shown, 1))} /> : <span className="plx-calendar__nav-space" aria-hidden="true" />}
         </div>
         <div role="grid" aria-labelledby={titleId} className="plx-calendar__grid" onKeyDown={onKeyDown} onMouseLeave={() => setHover(null)}>

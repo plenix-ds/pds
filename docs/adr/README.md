@@ -33,3 +33,5 @@ Owner: `pds1-ds-architect`. Gate G3 (plan §5) reads these files.
 | [0019](0019-contentgrid-virtualized.md) | ContentGrid draws only the cards in view (`virtualized`) | accepted |
 | [0020](0020-mediaviewer-get-item.md) | MediaViewer builds only the shown item (`count` and `getItem`) | accepted |
 | [0021](0021-datagrid-paste-fill-undo.md) | DataGrid paste, fill and undo (`editing.paste`, `.fill`, `.undo`) | accepted |
+| [0022](0022-datagrid-row-actions-inline.md) | DataGrid shows row actions as icons on hover (`inline` on a row menu item) | accepted |
+| [0023](0023-appshell-frame.md) | AppShell `frame`: the full window, or a centered frame a person can expand | accepted |

@@ -62,7 +62,7 @@ export function Notice({ tone = 'info', icon, title, actions, onDismiss, strings
           {actions ? <div className="plx-notice__actions">{actions}</div> : null}
         </div>
       ) : <div className="plx-notice__text">{children}</div>}
-      {onDismiss ? <Button className="plx-notice__dismiss" variant="ghost" size="xs" iconOnly icon={CloseIcon} label={t.dismiss as string} onClick={onDismiss} /> : null}
+      {onDismiss ? <Button className="plx-notice__dismiss" variant="ghost" size="xs" iconOnly tooltip={false} icon={CloseIcon} label={t.dismiss as string} onClick={onDismiss} /> : null}
     </div>
   );
 }

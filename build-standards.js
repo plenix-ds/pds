@@ -31,7 +31,7 @@ module.exports = function buildStandards(root, opts) {
   // ---- providers/pageLayouts.js: the page kinds, for AppShell
   // ---- the composition standard (owner, 2026-10-15/16, GitHub #55): regions per kind of page, patterns per region, the
   // "what is this region?" guide and the fields rule; every pattern named must be a public export
-  const indexSrc = fs.readFileSync(path.join(P, 'index.js'), 'utf8');
+  const indexSrc = fs.readFileSync(path.join(P, 'index.ts'), 'utf8');
   const exported = new Set(); for (const m of indexSrc.matchAll(/export\s*\{([^}]*)\}/g)) m[1].split(',').map((x) => x.trim().split(/\s+as\s+/).pop()).filter(Boolean).forEach((n) => exported.add(n));
   const REG = std.regions || {};
   Object.keys(REG).forEach((r) => (REG[r].patterns || []).forEach((p) => { if (!exported.has(p)) errors.push('regions.' + r + ': "' + p + '" is not a public export'); }));

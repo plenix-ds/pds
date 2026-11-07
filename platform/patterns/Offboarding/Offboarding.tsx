@@ -17,7 +17,7 @@ import { Field } from '../../components/Field/Field.tsx';
 import { Input, Textarea } from '../../components/Input/Input.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Text } from '../../components/Text/Text.tsx';
-import { WizardDialog as WizardDialogJs } from '../WizardDialog/WizardDialog.jsx';
+import { WizardDialog as WizardDialogJs } from '../WizardDialog/WizardDialog.tsx';
 const WizardDialog: any = WizardDialogJs;
 import { ExportDialog } from '../ExportDialog/ExportDialog.tsx';
 import { cx } from '../../utils/cx.ts';

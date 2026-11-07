@@ -13,7 +13,7 @@
 //   lanes       (#692) a lane carries sources only: no design-system generated file (spec-parts.js, reviewed.js, …) under
 //               lanes/<task>/design-system/; lanes/<task>/BASE (the spec commit the lane was built on) is accepted, and a
 //               lane without it is warned about (not a finding)
-//   legacy      the retired files stay gone (suite/, tokens/legacy.css, the asset app's plenix.css and demo.css, system/nesting.css)
+//   legacy      the retired files stay gone (build-types.js, ADR 0011 wave 5; suite/, tokens/legacy.css, the asset app's plenix.css and demo.css, system/nesting.css)
 //   embedded    the asset app has no embedded SVG and no data: URIs (icons are files)
 //   generated   the token stylesheets and the standards' code (build-standards.js: providers/pageLayouts.js, system/layout-modes.css)
 //               are exactly what is generated from their JSON (platform/tokens/*.tokens.json, platform/standards/*.json);
@@ -163,7 +163,7 @@ if (fs.existsSync(path.join(ROOT, 'lanes'))) for (const lane of fs.readdirSync(p
   if (!fs.existsSync(path.join(ROOT, 'lanes', lane, 'BASE'))) console.log('warning (lanes): lanes/' + lane + '/BASE is missing: add it with the design-system commit the lane was built on');
 }
 // legacy files stay gone
-for (const f of [path.join(ROOT, 'build-tokens.js'), path.join(ROOT, 'tools', 'agent', 'sd-reference-compare.js'), path.join(ROOT, 'shared'), path.join(ROOT, 'platform', 'system', 'tokens', 'legacy.css'), path.join(DAM, 'plenix.css'), path.join(DAM, 'demo.css'), path.join(ROOT, 'platform', 'system', 'nesting.css')]) {
+for (const f of [path.join(ROOT, 'build-tokens.js'), path.join(ROOT, 'build-types.js'), path.join(ROOT, 'tools', 'agent', 'sd-reference-compare.js'), path.join(ROOT, 'shared'), path.join(ROOT, 'platform', 'system', 'tokens', 'legacy.css'), path.join(DAM, 'plenix.css'), path.join(DAM, 'demo.css'), path.join(ROOT, 'platform', 'system', 'nesting.css')]) {
   if (fs.existsSync(f)) add('legacy', f, 0, 'retired file or folder is back');
 }
 

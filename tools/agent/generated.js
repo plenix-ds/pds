@@ -19,7 +19,7 @@ const GENERATED = [
   /^platform\/design-system$/, /^node_modules$/,           // the submodule pointer and the dependency junction
   // the design system's own generated files are ignored in its repository (#692), and lanes carry sources only (check-system)
 ];
-const PARTIAL = ['platform/index.js', 'platform/platform.css'];
+const PARTIAL = ['platform/index.ts', 'platform/platform.css'];
 const BLOCK = /\/\* BEGIN library parts[^]*?\/\* END library parts \*\//;
 const generatedBlock = (text) => (text.match(BLOCK) || [''])[0];
 const isGenerated = (file) => GENERATED.some((re) => re.test(file));

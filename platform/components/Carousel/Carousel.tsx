@@ -160,7 +160,7 @@ export function Carousel({ label, children, perView = 1, controls = 'both', auto
             <Button size="sm" variant="ghost" className="plx-carousel__play" aria-label={playing ? t.pauseLabel : t.playLabel}
               onClick={() => setPlaying(!playing)}>{playing ? t.pause : t.play}</Button>
           ) : null}
-          {arrows ? <Button size="sm" iconOnly icon={ChevronLeftIcon} label={t.previous} className="plx-carousel__previous" disabled={page <= 0} onClick={() => go(page - 1)} /> : null}
+          {arrows ? <Button size="sm" iconOnly tooltip={false} icon={ChevronLeftIcon} label={t.previous} className="plx-carousel__previous" disabled={page <= 0} onClick={() => go(page - 1)} /> : null}
           {dots ? (
             <div className="plx-carousel__dots" role="group" aria-label={t.pages}>
               {Array.from({ length: pages }, (_, i) => (
@@ -169,7 +169,7 @@ export function Carousel({ label, children, perView = 1, controls = 'both', auto
               ))}
             </div>
           ) : null}
-          {arrows ? <Button size="sm" iconOnly icon={ChevronRightIcon} label={t.next} className="plx-carousel__next" disabled={page >= pages - 1} onClick={() => go(page + 1)} /> : null}
+          {arrows ? <Button size="sm" iconOnly tooltip={false} icon={ChevronRightIcon} label={t.next} className="plx-carousel__next" disabled={page >= pages - 1} onClick={() => go(page + 1)} /> : null}
         </div>
       ) : null}
     </section>

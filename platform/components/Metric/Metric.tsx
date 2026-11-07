@@ -44,7 +44,8 @@ import { dataWhenText } from '../../utils/dataText.tsx';
 import { Card } from '../Card/Card.tsx';
 import { Sparkline } from '../../charts/lazy.tsx';
 
-type MetricProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & {
+/** @public */
+export type MetricProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & {
   /** the figure */
   value?: React.ReactNode;
   label?: React.ReactNode;

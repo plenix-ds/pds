@@ -21,7 +21,7 @@ import { valueText, CellValue } from '../cells.tsx';
 import { groupKeys, rowKeys, cellKeys } from './keys.ts';
 import { isRtl } from '../../../utils/direction.ts';
 import { Avatar } from '../../Avatar/Avatar.tsx';
-import { Width, RowTarget, Check, CellEditor, CellStatus, CustomCell, RowMenuContent } from './parts.tsx';
+import { Width, RowTarget, Check, CellEditor, CellStatus, CustomCell, RowMenuContent, RowActions } from './parts.tsx';
 import { Icon } from '../../Icon/Icon.tsx';
 import ChevronRightIcon from 'plenix-platform/icons/plenix/chevron-right';
 import ChevronDownIcon from 'plenix-platform/icons/plenix/chevron-down';
@@ -104,6 +104,7 @@ export function bodyRows({
   cutAt,
   rowMenu,
   rowMenuButton,
+  rowActions,
   menuItems,
 }: any) {
   const groupNode = (group: any, sticky = false) => (
@@ -425,7 +426,7 @@ export function bodyRows({
               onMouseDown={cellRange.enabled ? (e: any) => { if (!e.target.closest(interactive)) cellRange.press({ e, row, c, focusCell }); } : undefined}
               // a card's lines line up at the card's start edge in both directions (#679), so a card cell takes the grid's
               // direction; a table cell keeps its value's own direction (dir="auto")
-              dir={(pinned && !isStatic) || kinds(c).includes('id') || isNarrow ? undefined : 'auto'}
+              dir={(pinned && !isStatic) || kinds(c).includes('id') || actions || isNarrow ? undefined : 'auto'}
               onDoubleClick={() => {
                 if (canEdit) setEditing({ key: row.id, field: c.field, value });
               }}
@@ -465,6 +466,7 @@ export function bodyRows({
               })}
               data-plx-sticky={pinned && sticky ? sticky + 'px' : undefined}
               data-plx-label={detail ? c.title || c.field : undefined}
+              data-plx-cell-field={c.render ? c.field : undefined}
               aria-busy={status?.kind === 'saving' ? 'true' : undefined}
               aria-readonly={checkboxEditor && !editable ? 'true' : undefined}
               aria-describedby={status?.kind === 'refused' ? status.id : undefined}
@@ -653,21 +655,26 @@ export function bodyRows({
         {props.viewMenu ? <div className={cx(`${B}__grid-cell ${B}__w-view`, modes)} role="gridcell" /> : null}
         {rowMenu && rowMenuButton ? (
           <Width width={card ? null : metrics.menu} className={cx(`${B}__grid-cell ${B}__cell--row-menu`, card && B + '__grid-cell--template-menu ' + B + '__grid-cell--card', modes)} role="gridcell">
-            <Menu
-              label={S.rowActions}
-              trigger={
-                <Button
-                  className={B + '__row-menu'}
-                  variant="ghost"
-                  size="xs"
-                  iconOnly
-                  icon={MoreIcon}
-                  label={S.rowActions}
-                />
-              }
-            >
-              <RowMenuContent build={menuItems} items={rowMenu} record={record} rowApi={rowApi} />
-            </Menu>
+            {rowActions && rowActions.inline && !card ? (
+              <RowActions B={B} S={S} items={rowMenu} record={record} rowApi={rowApi} menuItems={menuItems} />
+            ) : (
+              <Menu
+                label={S.rowActions}
+                trigger={
+                  <Button
+                    className={B + '__row-menu'}
+                    variant="ghost"
+                    size="xs"
+                    iconOnly
+                    tooltip={false}
+                    icon={MoreIcon}
+                    label={S.rowActions}
+                  />
+                }
+              >
+                <RowMenuContent build={menuItems} items={rowMenu} record={record} rowApi={rowApi} />
+              </Menu>
+            )}
           </Width>
         ) : null}
       </RowTarget>

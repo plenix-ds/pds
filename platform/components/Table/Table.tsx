@@ -18,6 +18,7 @@
    Notes: Existing Table tokens preserve the static-table look; use DataGrid for records people work with. */
 import React from 'react';
 import { DataGridEngine } from '../DataGrid/DataGridEngine.tsx';
+import type { DataGridEngineProps } from '../DataGrid/DataGridEngine.tsx';
 
 type TableColumn = {
   title?: React.ReactNode; field: string; kind?: string; type?: string; pill?: unknown; render?(record: Record<string, unknown>): React.ReactNode;
@@ -44,6 +45,8 @@ export type TableProps = {
 export function Table({ label, data, columns = [], index, empty, narrow = 'table', headerVisible = true, cells = 'text', className, unread, unreadKeys, onUnreadChange }: TableProps) {
   const staticColumns = React.useMemo(() => columns.map(({ title, field, kind, type, pill, render, width, minWidth, maxWidth, rowLabel, frozen, align, headerAlign, empty, wrap }) =>
     ({ title, field, kind, type, pill, render, width, minWidth, maxWidth, rowLabel, frozen, align, headerAlign, empty, wrap, sortable: false, resizable: false })), [columns]);
-  return <DataGridEngine isStatic unread={unread} unreadKeys={unreadKeys} onUnreadChange={onUnreadChange} label={label} data={data} columns={staticColumns} index={index} empty={empty} narrow={narrow} headerVisible={headerVisible} cells={cells} className={className} headerMenu={false} />;
+  // Table's own props are looser than the grid's (a free string for a kind or a narrow mode): the engine reads them as the grid's
+  const engineProps = { isStatic: true, unread, unreadKeys, onUnreadChange, label, data, columns: staticColumns, index, empty, narrow, headerVisible, cells, className, headerMenu: false } as unknown as DataGridEngineProps;
+  return <DataGridEngine {...engineProps} />;
 }
 Table.preload = (): void => {};

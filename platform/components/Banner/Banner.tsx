@@ -65,7 +65,7 @@ export function Banner({ tone = 'info', title, children, actions, onDismiss, pla
         {children ? <span className="plx-banner__text">{dataWhenText(children)}</span> : null}
       </div>
       {actions ? <div className="plx-banner__actions">{actions}</div> : null}
-      {onDismiss ? <Button variant="ghost" size="sm" iconOnly icon={CloseIcon} label={words.dismiss as string} className="plx-banner__dismiss" onClick={onDismiss} /> : null}
+      {onDismiss ? <Button variant="ghost" size="sm" iconOnly tooltip={false} icon={CloseIcon} label={words.dismiss as string} className="plx-banner__dismiss" onClick={onDismiss} /> : null}
     </div>
   );
 }

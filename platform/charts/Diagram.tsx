@@ -196,8 +196,8 @@ export function Diagram({ title, description, nodes = [], edges = [], variant = 
             );
           })}
         </g>
-        {tip ? <ChartTooltip x={tip.x + (tip.x > inner.width / 2 ? -1 : 1) * half(a)[0] * k * gv.view.k} y={tip.y} inner={inner} title={nodes[a].label}
-          items={[{ label: t.kind, value: kindOf(nodes[a]) }, { label: t.next, value: nextText(a) }]} /> : null}
+        {tip ? <ChartTooltip x={tip.x + (tip.x > inner.width / 2 ? -1 : 1) * half(a)[0] * k * gv.view.k} y={tip.y} inner={inner} title={nodes[a as number].label}
+          items={[{ label: t.kind, value: kindOf(nodes[a as number]) }, { label: t.next, value: nextText(a as number) }]} /> : null}
       </g>
     );
   };

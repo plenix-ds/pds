@@ -46,7 +46,8 @@ type OverflowItem = {
   /** your own element instead of a button */
   content?: React.ReactNode;
 };
-type OverflowListProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & {
+/** @public */
+export type OverflowListProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & {
   items?: OverflowItem[];
   /** the group's accessible name */
   label?: string;

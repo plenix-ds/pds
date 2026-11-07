@@ -42,7 +42,7 @@ import { SearchField } from '../../components/SearchField/SearchField.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { Inline } from '../../components/Stack/Stack.tsx';
 import { formatNumber } from '../../utils/format.ts';
-import { PanelTrigger as PanelTriggerJs, Pill as PillJs, toggle } from '../CommandBar/panel-parts.jsx';
+import { PanelTrigger as PanelTriggerJs, Pill as PillJs, toggle } from '../CommandBar/panel-parts.tsx';
 const PanelTrigger: any = PanelTriggerJs;
 const Pill: any = PillJs;
 import { fill } from '../../utils/fill.ts';

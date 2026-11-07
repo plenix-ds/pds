@@ -17,7 +17,7 @@ import { Stack } from '../../components/Stack/Stack.tsx';
 import { Dialog } from '../../components/Dialog/Dialog.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Checklist } from '../../components/Checklist/Checklist.tsx';
-import { Tour as TourJs } from '../Tour/Tour.jsx';
+import { Tour as TourJs } from '../Tour/Tour.tsx';
 const Tour: any = TourJs;
 import { cx } from '../../utils/cx.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
