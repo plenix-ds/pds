@@ -49,8 +49,8 @@ import MoreIcon from 'plenix-platform/icons/plenix/more';
 
 
 // Composite triggers do not all forward arbitrary props. Keep Tooltip's description on the real control.
-function HintTarget({ children, 'aria-describedby': description }) {
-  const wrap = React.useRef(null);
+function HintTarget({ children, 'aria-describedby': description }: any) {
+  const wrap = React.useRef<any>(null);
   React.useLayoutEffect(() => {
     const button = wrap.current && wrap.current.querySelector('button,a[href]');
     if (!button || !description) return undefined;
@@ -61,19 +61,19 @@ function HintTarget({ children, 'aria-describedby': description }) {
   });
   return <span ref={wrap} className="plx-bar-actions__hint-target">{children}</span>;
 }
-function ActionHint({ content, children, className }) {
+function ActionHint({ content, children, className }: any) {
   return <Tooltip content={content} className={className}><HintTarget>{children}</HintTarget></Tooltip>;
 }
 
 // MenuItem intentionally has no public ref. This adapter exposes its real button to Popover's focus/anchor handling.
-const PanelMenuTrigger = React.forwardRef(function PanelMenuTrigger(props, ref) {
-  const wrap = React.useRef(null);
+const PanelMenuTrigger = React.forwardRef<any, any>(function PanelMenuTrigger(props: any, ref) {
+  const wrap = React.useRef<any>(null);
   React.useImperativeHandle(ref, () => wrap.current && wrap.current.querySelector('[data-plx-menu-item]'));
   return <span ref={wrap} className="plx-bar-actions__panel-item"><MenuItem {...props} keepOpen /></span>;
 });
-function ActionPanel({ action, trigger }) {
+function ActionPanel({ action, trigger }: any) {
   const [open, setOpen] = React.useState(false);
-  const holder = React.useRef(null);
+  const holder = React.useRef<any>(null);
   const unavailable = !!action.disabled || !!action.loading;
   const show = open && !unavailable;
   const close = () => setOpen(false);
@@ -85,7 +85,7 @@ function ActionPanel({ action, trigger }) {
     return () => { requestAnimationFrame(() => { if (more && more.isConnected && document.activeElement === document.body) more.focus({ preventScroll: true }); }); };
   }, [show]);
   React.useEffect(() => { if (unavailable) setOpen(false); }, [unavailable]);
-  const contain = (e) => {
+  const contain = (e: any) => {
     const dialog = e.target.closest('[role="dialog"]');
     if (!dialog) return;
     // The non-modal form is outside the toolbar's roving order. Tab past its last control leaves the whole bar.
@@ -99,7 +99,7 @@ function ActionPanel({ action, trigger }) {
     }
     e.stopPropagation();
   };
-  const leave = (e) => {
+  const leave = (e: any) => {
     const next = e.relatedTarget, menu = e.currentTarget.closest('[role="menu"]');
     if (!menu || !next || menu.contains(next) || next.closest('[role="dialog"]')) return;
     const more = menu.parentElement.querySelector(':scope > button');
@@ -113,7 +113,7 @@ function ActionPanel({ action, trigger }) {
 }
 
 // a menu's items: Menu children, or descriptors drawn as MenuItems
-const itemsOf = (a, off) => {
+const itemsOf = (a: any, off: any) => {
   const list = a.items;
   if (!Array.isArray(list) || !list.length || React.isValidElement(list[0])) return list;
   return list.map((it) => <MenuItem key={it.id || it.label} icon={it.icon} danger={it.danger} disabled={off(it)} onSelect={it.onSelect}>{it.label}</MenuItem>);
@@ -122,26 +122,26 @@ const itemsOf = (a, off) => {
 // the commands that fold, in their folding order (utils/foldOrder.ts): low priority first, the last command first within a priority, the danger ones last of theirs
 export { foldOrder };
 
-export function BarActions({ actions = [], iconOnly = false, fold = 0, off = (a) => !!a.disabled, why = (a) => a.why, moreLabel,
-  dangerClass, size = 'sm', extra = [], selectionKeys = null }) {
+export function BarActions({ actions = [] as any[], iconOnly = false, fold = 0, off = (a: any) => !!a.disabled, why = (a: any) => a.why, moreLabel,
+  dangerClass, size = 'sm', extra = [], selectionKeys = null }: any) {
   const t = useStrings('commandBar'),
     C = useStrings('confirmAction'),
     { plural: pluralOf, format } = useLocale(),
-    [pending, setPending] = React.useState(null);
+    [pending, setPending] = React.useState<any>(null);
   moreLabel = moreLabel ?? t.moreLabel;
   // a command with confirm opens the destructive Dialog first (ADR 0004); the others run at once
-  const ask = (a, run) => (a.confirm ? () => setPending({ a, run }) : run);
+  const ask = (a: any, run: any) => (a.confirm ? () => setPending({ a, run }) : run);
   // confirm.plural: one string, or a plural object ({ one, other }; Arabic { zero, one, two, few, many, other }) whose form the locale's plural rules pick for the count
   // (an exact count key such as "=0" wins), so a noun agrees with its number in every language (#630)
-  const nounFor = (plural, count) => {
+  const nounFor = (plural: any, count: any) => {
     if (plural === undefined || plural === null) return '';
     if (typeof plural !== 'object') return plural;
     const exact = plural['=' + Number(count)];
     return exact !== undefined ? exact : plural[pluralOf(count)] ?? plural.other ?? '';
   };
   // the count is written in the locale's digits (ar-EG: Arabic-Indic, docs/i18n/arabic.md); the noun form still picks by the number (#649)
-  const words = (a) => {
-    const c = a.confirm || {}, fill = (text, values) => text.replace(/\{(\w+)\}/g, (m, k) => (values[k] === undefined ? m : values[k]));
+  const words = (a: any) => {
+    const c: any = a.confirm || {}, fill = (text: any, values: any) => text.replace(/\{(\w+)\}/g, (m: any, k: any) => (values[k] === undefined ? m : values[k]));
     const verb = a.label;
     return {
       title: c.title ?? (c.count !== undefined ? fill(C.titleMany, { verb, count: typeof c.count === 'number' ? format.number(c.count) : c.count, plural: nounFor(c.plural, c.count) }) : fill(C.title, { verb, name: c.name ?? '' })),
@@ -150,19 +150,19 @@ export function BarActions({ actions = [], iconOnly = false, fold = 0, off = (a)
     };
   };
   // selectionKeys (CommandBar add mode, D-0068): the ids of the selection's group; the page's commands fold first, then the selection's
-  const inSel = (a) => !!selectionKeys && selectionKeys.has(a.id || a.label);
-  const order = selectionKeys ? foldOrder(actions.filter((a) => !inSel(a))).concat(foldOrder(actions.filter(inSel))) : foldOrder(actions);
+  const inSel = (a: any) => !!selectionKeys && selectionKeys.has(a.id || a.label);
+  const order = selectionKeys ? foldOrder(actions.filter((a: any) => !inSel(a))).concat(foldOrder(actions.filter(inSel))) : foldOrder(actions);
   const folded = new Set(order.slice(0, fold).map((a) => a.id || a.label));
-  const kept = actions.filter((a) => !folded.has(a.id || a.label));
-  const away = menuOrder(actions.filter((a) => folded.has(a.id || a.label)));   // in More: the others in the bar's order, then the danger ones after a divider
+  const kept = actions.filter((a: any) => !folded.has(a.id || a.label));
+  const away: any[] = menuOrder<any>(actions.filter((a: any) => folded.has(a.id || a.label)));   // in More: the others in the bar's order, then the danger ones after a divider
   // a choices command: its options as radio items, and the current one's label
-  const radios = (a) => (
+  const radios = (a: any) => (
     <MenuRadioGroup label={a.label} value={a.value} onChange={(v) => a.onChange && a.onChange(v)}>
-      {(a.choices || []).map((c) => <MenuItem key={c.value} value={c.value} icon={c.icon}>{c.label}</MenuItem>)}
+      {(a.choices || []).map((c: any) => <MenuItem key={c.value} value={c.value} icon={c.icon}>{c.label}</MenuItem>)}
     </MenuRadioGroup>
   );
-  const current = (a) => { const c = (a.choices || []).find((x) => x.value === a.value); return c ? c.label : ''; };
-  const one = (a) => {
+  const current = (a: any) => { const c = (a.choices || []).find((x: any) => x.value === a.value); return c ? c.label : ''; };
+  const one = (a: any) => {
     const disabled = off(a), loading = !!a.loading;
     const filled = !!a.primary;
     const only = iconOnly && !filled && !!a.icon;
@@ -181,7 +181,7 @@ export function BarActions({ actions = [], iconOnly = false, fold = 0, off = (a)
     const tip = (disabled && why(a)) || a.tooltip || (only ? name : null);
     return <React.Fragment key={a.id || a.label}>{tip ? <ActionHint content={tip}>{el}</ActionHint> : el}</React.Fragment>;
   };
-  const plain = kept.filter((a) => !a.danger), danger = kept.filter((a) => a.danger);
+  const plain = kept.filter((a: any) => !a.danger), danger = kept.filter((a: any) => a.danger);
   const allOff = away.length > 0 && !extra.length && away.every((a) => off(a));
   const more = away.length || extra.length ? (
     <Tooltip key="plx-more" content={allOff ? why(away[0]) : moreLabel}>
@@ -212,7 +212,7 @@ export function BarActions({ actions = [], iconOnly = false, fold = 0, off = (a)
         <ConfirmDialog
           open
           destructive={!!pending.a.danger}
-          {...words(pending.a)}
+          {...(words(pending.a) as any)}
           cancelLabel={C.cancel}
           onConfirm={() => {
             const run = pending.run;
@@ -222,7 +222,7 @@ export function BarActions({ actions = [], iconOnly = false, fold = 0, off = (a)
           onCancel={() => setPending(null)}
         />
       ) : null}
-      {plain.map((a, i) => (selectionKeys && i > 0 && inSel(a) !== inSel(plain[i - 1]) ? [<span key={(a.id || a.label) + '-split'} className={cx('plx-bar-actions__divider')} aria-hidden="true" />, one(a)] : one(a)))}
+      {plain.map((a: any, i: any) => (selectionKeys && i > 0 && inSel(a) !== inSel(plain[i - 1]) ? [<span key={(a.id || a.label) + '-split'} className={cx('plx-bar-actions__divider')} aria-hidden="true" />, one(a)] : one(a)))}
       {more}
       {danger.length && (plain.length || more) ? <span key="plx-danger-divider" className={cx('plx-bar-actions__divider')} aria-hidden="true" /> : null}
       {danger.map(one)}

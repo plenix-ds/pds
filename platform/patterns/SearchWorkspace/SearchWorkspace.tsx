@@ -47,7 +47,7 @@ import { numeralLocale } from '../../utils/format.ts';
 import { cx } from '../../utils/cx.ts';
 import { Button } from '../../components/Button/Button.tsx';
 import { SearchField } from '../../components/SearchField/SearchField.tsx';
-import { CommandBar as CommandBarJs, CommandBarButton as CommandBarButtonJs } from '../CommandBar/CommandBar.jsx';
+import { CommandBar as CommandBarJs, CommandBarButton as CommandBarButtonJs } from '../CommandBar/CommandBar.tsx';
 const CommandBar: any = CommandBarJs;
 const CommandBarButton: any = CommandBarButtonJs;
 import { Menu, MenuItem } from '../../components/Menu/Menu.tsx';

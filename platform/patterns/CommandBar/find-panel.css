@@ -1,5 +1,5 @@
 /* Plenix · the command bar's find-and-view panels (FilterPanel, SortPanel, GroupPanel, ColumnsMenu and ManageColumnsDialog,
-   QuickFilter; their parts in panel-parts.jsx). One row geometry in every panel (owner, 2026-10-14): the controls at the
+   QuickFilter; their parts in panel-parts.tsx). One row geometry in every panel (owner, 2026-10-14): the controls at the
    standard height, the same gaps; the pickers at fixed widths, so the rows line up. */
 .plx-find-panel {
   display: flex;

@@ -53,7 +53,7 @@ import { Button } from '../../components/Button/Button.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { Toolbar } from '../../components/Toolbar/Toolbar.tsx';
 import { Tooltip } from '../../components/Tooltip/Tooltip.tsx';
-import { BarActions, foldOrder } from '../CommandBar/BarActions.jsx';
+import { BarActions, foldOrder } from '../CommandBar/BarActions.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import { fill } from '../../utils/fill.ts';
 
@@ -120,7 +120,7 @@ export function BulkActions({ count, total, noun, plural, onSelectAll, onClear, 
       <Toolbar variant="bar" label={label || t.label} className="plx-bulk-actions__row" data-plx-bar-row="">
         <Toolbar.Group className="plx-bulk-actions__actions">
           {actions.length ? (
-            <BarActions actions={actions as any} iconOnly={step >= 1} fold={Math.max(0, step - 1)} off={(a) => off(a, count)} why={why}
+            <BarActions actions={actions as any} iconOnly={step >= 1} fold={Math.max(0, step - 1)} off={(a: any) => off(a, count)} why={why}
               moreLabel={t.more} dangerClass="plx-command-bar__danger" />
           ) : null}
           {actions.length && (onSelectAll || onClear) ? <span className="plx-bulk-actions__divider" aria-hidden="true" /> : null}

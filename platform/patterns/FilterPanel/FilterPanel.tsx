@@ -39,7 +39,7 @@ import { Button } from '../../components/Button/Button.tsx';
 import { Input } from '../../components/Input/Input.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { Tooltip } from '../../components/Tooltip/Tooltip.tsx';
-import { PanelTrigger, PanelHead, Pick, MultiPick, useReorder } from '../CommandBar/panel-parts.jsx';
+import { PanelTrigger, PanelHead, Pick, MultiPick, useReorder } from '../CommandBar/panel-parts.tsx';
 import { fill } from '../../utils/fill.ts';
 import { WITHIN, fieldOf, kindOf, optionsOf, conditionsOf, newCondition, nextId, fieldWords, fieldOption } from '../../utils/fields.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';

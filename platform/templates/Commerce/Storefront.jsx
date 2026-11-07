@@ -22,7 +22,7 @@ import { announce } from '../../utils/announce.tsx';
 import { formatNumber, formatLocale } from '../../utils/format.ts';
 import { compareLevels } from '../../utils/fields.ts';
 import { useCollectionView } from '../../hooks/useCollectionView.ts';
-import { CommandBar, CommandBarSearch } from '../../patterns/CommandBar/CommandBar.jsx';
+import { CommandBar, CommandBarSearch } from '../../patterns/CommandBar/CommandBar.tsx';
 import { FilterPanel } from '../../patterns/FilterPanel/FilterPanel.tsx';
 import { SortPanel } from '../../patterns/SortPanel/SortPanel.tsx';
 import { ViewMenu } from '../../patterns/ViewMenu/ViewMenu.tsx';

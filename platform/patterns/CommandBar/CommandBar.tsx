@@ -99,7 +99,11 @@ import { Tooltip } from '../../components/Tooltip/Tooltip.tsx';
 import { announce } from '../../utils/announce.tsx';
 import { formatNumber } from '../../utils/format.ts';
 import { SearchField } from '../../components/SearchField/SearchField.tsx';
-import { BarActions, foldOrder } from './BarActions.jsx';
+import type { SearchFieldProps } from '../../components/SearchField/SearchField.tsx';
+import type { IconValue } from '../../components/Icon/Icon.tsx';
+import type { ButtonProps } from '../../components/Button/Button.tsx';
+import type { QuickFilterProps } from '../QuickFilter/QuickFilter.tsx';
+import { BarActions, foldOrder } from './BarActions.tsx';
 import { MenuSub, MenuItem, MenuRadioGroup } from '../../components/Menu/Menu.tsx';
 import { QuickFilter } from '../QuickFilter/QuickFilter.tsx';
 import { SingleQuickFilterMenu } from '../QuickFilter/single-menu.tsx';
@@ -115,10 +119,56 @@ import { fill } from '../../utils/fill.ts';
 // into More
 const ICONS = 1, SEARCH = 2;
 
-const BarContext = React.createContext({ iconOnly: false, collapsed: false, step: 0, searchOpen: false, setSearchOpen: () => {} });
+/** @public a menu item descriptor of a command or of the end fold */
+export type CommandBarItem = { id?: string; label: string; icon?: IconValue; danger?: boolean; disabled?: boolean; onSelect?(): void; toggle?: boolean; pressed?: boolean };
+/** @public a command of the bar */
+export type CommandBarAction = {
+  id?: string; label: string; icon?: IconValue; onSelect?(next?: boolean): void;
+  /** makes the command a menu: Menu children or item descriptors */
+  items?: React.ReactNode | CommandBarItem[];
+  danger?: boolean; disabled?: boolean; why?: React.ReactNode; primary?: boolean; loading?: boolean; tooltip?: React.ReactNode;
+  /** an on/off command (onSelect gets the next value) */
+  toggle?: boolean; pressed?: boolean;
+  /** a pick of one value */
+  choices?: { value: string; label: string; icon?: IconValue }[]; value?: string; onChange?(value: string): void;
+  /** a small form in a Popover anchored to the command */
+  panel?(api: { close(): void }): React.ReactNode;
+  priority?: 'low' | 'high' | string;
+  /** with a selection: "also" (default) | "only" | "never" */
+  selection?: 'also' | 'only' | 'never';
+  /** (selection commands) disabled while more than one row is selected */
+  single?: boolean;
+  confirm?: { title?: React.ReactNode; body?: React.ReactNode; consequence?: React.ReactNode; permanent?: boolean; confirmLabel?: string; count?: number | string; plural?: Record<string, string> };
+};
+/** @public the selection the bar leads with */
+export type CommandBarSelection = { count: number; hidden?: number; actions?: CommandBarAction[]; onClear?(): void; noun?: string; plural?: string; label?: string; mode?: 'add' | 'swap' };
+/** @public more controls at the very end; { content, fold } supplies the control's More submenu */
+export type CommandBarEnd = React.ReactNode | { content: React.ReactNode; fold?: { label: string; icon?: IconValue; items: React.ReactNode | CommandBarItem[] } };
+/** @public the prop type (ADR 0011) */
+export type CommandBarProps = {
+  label: string;
+  actions?: CommandBarAction[];
+  find?: React.ReactNode;
+  quickFilters?: (QuickFilterProps & { id?: string })[];
+  view?: React.ReactNode;
+  count?: React.ReactNode;
+  status?: React.ReactNode;
+  end?: CommandBarEnd;
+  selection?: CommandBarSelection;
+  layout?: 'auto' | 'one' | 'view' | 'split';
+  sticky?: 'auto' | boolean;
+  narrow?: boolean;
+  strings?: Record<string, string>;
+  className?: string;
+};
+/** @public the prop type (ADR 0011) */
+export type CommandBarButtonProps = Omit<ButtonProps, 'icon' | 'label' | 'iconOnly'> & { icon?: IconValue; label: string; count?: number; active?: boolean; caret?: boolean; iconOnly?: boolean };
+/** @public the prop type (ADR 0011) */
+export type CommandBarSearchProps = SearchFieldProps;
+const BarContext = React.createContext({ iconOnly: false, collapsed: false, step: 0, searchOpen: false, setSearchOpen: (_open: boolean) => {} });
 export const useCommandBar = () => React.useContext(BarContext);
 
-export const CommandBarButton = React.forwardRef(function CommandBarButton({ icon, label, count = 0, active = false, caret = false, iconOnly, className, children, ...rest }, ref) {
+export const CommandBarButton = React.forwardRef<HTMLButtonElement, CommandBarButtonProps>(function CommandBarButton({ icon, label, count = 0, active = false, caret = false, iconOnly, className, children, ...rest }: any, ref) {
   const ctx = useCommandBar();
   const only = iconOnly === undefined ? ctx.iconOnly : iconOnly;
   const n = Number(count) || 0;
@@ -133,15 +183,16 @@ export const CommandBarButton = React.forwardRef(function CommandBarButton({ ico
   );
 });
 
-export const CommandBarSearch = React.forwardRef(function CommandBarSearch(props, ref) {
+export const CommandBarSearch = React.forwardRef<HTMLInputElement, CommandBarSearchProps>(function CommandBarSearch(props: any, ref) {
   const { collapsed, searchOpen, setSearchOpen } = useCommandBar();
   return <SearchField ref={ref} width="bar" collapsed={collapsed} open={collapsed ? searchOpen : undefined} onOpenChange={collapsed ? setSearchOpen : undefined} {...props} />;
 });
 
-export function CommandBar({ label, actions = [], find, quickFilters = [], view, count, status, end, selection, layout = 'auto', sticky = 'auto', narrow = false, strings, className }) {
-  const t = useStrings('commandBar', strings);
+export function CommandBar(props: CommandBarProps) {
+  const { label, actions = [], find, quickFilters = [], view, count, status, end, selection, layout = 'auto', sticky = 'auto', narrow = false, strings, className } = props as any;
+  const t: any = useStrings('commandBar', strings);
   const fw = useStrings('fields');
-  const root = React.useRef(null);
+  const root = React.useRef<any>(null);
   // the selection (owner, 2026-10-15: the swap; issue 454): an object { count, actions, onClear, noun, plural, label }; while
   // its count is above 0 the selection's commands replace the page's actions; search and filters stay
   const sel = selection && !React.isValidElement(selection) && typeof selection === 'object' ? selection : null;
@@ -153,8 +204,8 @@ export function CommandBar({ label, actions = [], find, quickFilters = [], view,
   // selection.mode (owner, 2026-10-19, D-0068): "add" (default) puts the selection's commands before the page's, with a divider; "swap" is the earlier behavior (the page's commands give way).
   // A page command says selection: "also" (default), "only" (it belongs to the selection's group and shows only while rows are selected) or "never" (it hides while rows are selected).
   const adding = !(sel && sel.mode === 'swap');
-  const pageActs = shape === 'view' ? [] : actions;
-  const keyOf = (a) => a.id || a.label;
+  const pageActs: any[] = shape === 'view' ? [] : actions;
+  const keyOf = (a: any) => a.id || a.label;
   const onlyActs = adding ? pageActs.filter((a) => a.selection === 'only') : [];
   const pageRest = adding ? pageActs.filter((a) => a.selection !== 'only' && !(selecting && a.selection === 'never')) : pageActs;
   const selGroup = adding && selecting ? selActs.concat(onlyActs) : [];
@@ -168,7 +219,7 @@ export function CommandBar({ label, actions = [], find, quickFilters = [], view,
   const folds = foldOrder(shown).length + quick.length + (endFold ? 1 : 0) + (finding ? 1 : 0);
   // the bar's search, opened across the bar: the bar holds its step while it is open
   const [searchOpen, setSearchOpen] = React.useState(false);
-  const key = [shape, narrow, selecting ? 'sel' : 'rest', shown.map((a) => a.label + (a.disabled ? '0' : '') + (a.loading ? 'busy' : '')).join('|'), quickFilters.map((q) => q.label + (q.value && q.value.length ? q.value.length : '')).join('|'), endFold && endFold.label].join('§');
+  const key = [shape, narrow, selecting ? 'sel' : 'rest', shown.map((a: any) => a.label + (a.disabled ? '0' : '') + (a.loading ? 'busy' : '')).join('|'), quickFilters.map((q: any) => q.label + (q.value && q.value.length ? q.value.length : '')).join('|'), endFold && endFold.label].join('§');
   const step = useBarFit(root, key, SEARCH + folds, narrow ? SEARCH : 0, ':scope > .plx-command-bar__bar > [data-plx-bar-row]', searchOpen);
   const ctx = React.useMemo(() => ({ iconOnly: step >= ICONS, collapsed: step >= SEARCH, step, searchOpen: searchOpen && step >= SEARCH, setSearchOpen }), [step, searchOpen]);
   // Commands fold first (from the end, Delete last), then an opted-in end control, then quick filters.
@@ -179,9 +230,9 @@ export function CommandBar({ label, actions = [], find, quickFilters = [], view,
   // the last step: the find side folds into its button (after every command, the end control and the quick filters)
   const findAway = finding && foldAll > fold + (endAway ? 1 : 0) + quickAway;
   const quickKept = quick.slice(0, quick.length - quickAway), quickFolded = quick.slice(quick.length - quickAway);
-  const quickMenu = quickFolded.map((q) => {
+  const quickMenu = quickFolded.map((q: any) => {
     const id = q.id || q.label;
-    const counted = option => {
+    const counted = (option: any) => {
       const count = option.count !== undefined ? option.count : q.counts instanceof Map ? q.counts.get(option.value) || 0 : q.counts ? q.counts[option.value] || 0 : undefined;
       return count === undefined ? option.label || option.value : <Inline as="span" gap="xs">{option.label || option.value}<Text variant="data">{formatNumber(count)}</Text></Inline>;
     };
@@ -193,13 +244,13 @@ export function CommandBar({ label, actions = [], find, quickFilters = [], view,
     }
     const chosen = q.value || [];
     return <MenuSub key={id} label={chosen.length ? q.label + ' (' + chosen.length + ')' : q.label} icon={q.icon}>
-      {(q.options || []).map((o) => (typeof o === 'string' ? { value: o, label: o } : o)).map((o) => (
+      {(q.options || []).map((o: any) => (typeof o === 'string' ? { value: o, label: o } : o)).map((o: any) => (
         <MenuItem key={o.value} checked={chosen.indexOf(o.value) >= 0} keepOpen
-          onSelect={() => q.onChange && q.onChange(chosen.indexOf(o.value) >= 0 ? chosen.filter((x) => x !== o.value) : chosen.concat(o.value))}>{counted(o)}</MenuItem>))}
+          onSelect={() => q.onChange && q.onChange(chosen.indexOf(o.value) >= 0 ? chosen.filter((x: any) => x !== o.value) : chosen.concat(o.value))}>{counted(o)}</MenuItem>))}
     </MenuSub>;
   });
   const endMenu = endAway ? <MenuSub key="plx-end" label={endFold.label} icon={endFold.icon}>
-    {Array.isArray(endFold.items) && endFold.items.length && !React.isValidElement(endFold.items[0]) ? endFold.items.map(item => <MenuItem key={item.id || item.label} icon={item.icon} checked={item.checked} disabled={item.disabled} danger={item.danger} onSelect={item.onSelect}>{item.label}</MenuItem>) : endFold.items}
+    {Array.isArray(endFold.items) && endFold.items.length && !React.isValidElement(endFold.items[0]) ? endFold.items.map((item: any) => <MenuItem key={item.id || item.label} icon={item.icon} checked={item.checked} disabled={item.disabled} danger={item.danger} onSelect={item.onSelect}>{item.label}</MenuItem>) : endFold.items}
   </MenuSub> : null;
   const extraMenu = endMenu ? [endMenu].concat(quickMenu) : quickMenu;
   // the swap is announced (the focus stays where it is, on the table)
@@ -208,7 +259,7 @@ export function CommandBar({ label, actions = [], find, quickFilters = [], view,
   React.useEffect(() => {
     const el = root.current;
     if (!el || typeof window === 'undefined') return undefined;
-    const scrollerOf = (node) => { for (let p = node.parentElement; p; p = p.parentElement) { const o = getComputedStyle(p).overflowY; if (o === 'auto' || o === 'scroll') return p; } return null; };
+    const scrollerOf = (node: any) => { for (let p = node.parentElement; p; p = p.parentElement) { const o = getComputedStyle(p).overflowY; if (o === 'auto' || o === 'scroll') return p; } return null; };
     // the scroll container is found on each check: on the first render the page's stylesheets may not have applied yet
     const check = () => {
       const scroller = scrollerOf(el);
@@ -230,15 +281,15 @@ export function CommandBar({ label, actions = [], find, quickFilters = [], view,
     was.current = selecting;
   }, [selecting]);
   const words = { noun: (sel && sel.noun) || 'item', plural: (sel && sel.plural) || ((sel && sel.noun) || 'item') + 's' };
-  const off = (a) => !!a.disabled || !!(a.single && selCount > 1);
-  const why = (a) => a.why || fill(a.single && selCount > 1 ? t.single : t.why, Object.assign({ action: String(a.label).toLowerCase() }, words));
+  const off = (a: any) => !!a.disabled || !!(a.single && selCount > 1);
+  const why = (a: any) => a.why || fill(a.single && selCount > 1 ? t.single : t.why, Object.assign({ action: String(a.label).toLowerCase() }, words));
   const acts = shown.length || extraMenu.length ? (
     <Toolbar.Group className="plx-command-bar__actions">
       <BarActions actions={shown} iconOnly={ctx.iconOnly} fold={fold} moreLabel={t.more} dangerClass="plx-command-bar__danger"
         off={selecting ? off : undefined} why={selecting ? why : undefined} extra={extraMenu} selectionKeys={selKeys} />
     </Toolbar.Group>
   ) : null;
-  const quickEls = quickKept.map((q) => <QuickFilter key={q.id || q.label} {...q} />);
+  const quickEls = quickKept.map((q: any) => <QuickFilter key={q.id || q.label} {...q} />);
   // folded, the find side opens from one button; inside the popover its controls show at full size (labels, the field open)
   const fullCtx = React.useMemo(() => ({ iconOnly: false, collapsed: false, step: 0, searchOpen: false, setSearchOpen }), []);
   const findEl = !(find || quickEls.length) ? null : findAway ? (
@@ -272,7 +323,7 @@ export function CommandBar({ label, actions = [], find, quickFilters = [], view,
     </Toolbar.Group>
   ) : null;
   // Escape in the bar clears the selection (as "× N selected" does)
-  const onKeyDown = selecting && sel.onClear ? (e) => { if (e.key === 'Escape' && !e.defaultPrevented && !e.target.closest('input, textarea, [role="menu"], [role="dialog"]')) { e.preventDefault(); sel.onClear(); } } : undefined;   // Escape in the search clears the text, not the selection (issue 454)
+  const onKeyDown = selecting && sel.onClear ? (e: any) => { if (e.key === 'Escape' && !e.defaultPrevented && !e.target.closest('input, textarea, [role="menu"], [role="dialog"]')) { e.preventDefault(); sel.onClear(); } } : undefined;   // Escape in the search clears the text, not the selection (issue 454)
   const lead = clearFirst && clearEl ? <Toolbar.Group className="plx-command-bar__lead">{clearEl}</Toolbar.Group> : null;
   const parts = <>{lead}{acts}{acts && findEl ? <Divider orientation="vertical" /> : null}{findEl}<Toolbar.Spacer />{viewEl}{tail}</>;
   const name = selecting ? (sel.label || fill(t.actions, { label: label || '' }).trim()) : label;

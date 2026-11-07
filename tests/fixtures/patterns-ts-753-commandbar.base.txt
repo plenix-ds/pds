@@ -1,0 +1,11 @@
+bar {"text":"New Share A Pin Delete 24 Synced 2 min ago","buttons":5,"inputs":1,"links":0,"roles":"search,separator,toolbar","names":"Assets|Order: A|Search"}
+barMenu {"text":"More Rename Sync Working Archive","buttons":4,"inputs":0,"links":0,"roles":"status,toolbar,tooltip","names":"Files"}
+barSelection {"text":"3 selected (1 hidden by filters) Move New Delete","buttons":4,"inputs":0,"links":0,"roles":"toolbar,tooltip","names":"Assets actions|3 selected, clear the selection (1 hidden by filters)"}
+barQuick {"text":"New 1 1","buttons":3,"inputs":0,"links":0,"roles":"separator,toolbar,tooltip","names":"Assets|Type, 1|Date, 1"}
+barView {"text":"Sort: Name Export","buttons":1,"inputs":1,"links":0,"roles":"search,toolbar","names":"Assets|Search|Sort: Name"}
+barButton {"text":"Filter 2","buttons":1,"inputs":0,"links":0,"roles":"toolbar","names":"Assets"}
+filterPanel {"text":"Filter In this view, show records Where Status is any of open Add condition Add condition group","buttons":8,"inputs":0,"links":0,"roles":"status,tooltip","names":"Filter|Status, 1 of 1. Alt + Arrow Up or Down moves it|Field: Status|Operator: is any of|Status: open|Remove condition|Reorder Status"}
+groupPanel {"text":"Group by Collapse all Expand all Status First → Last Add subgroup","buttons":9,"inputs":0,"links":0,"roles":"status,tooltip","names":"Group by|Status, 1 of 1. Alt + Arrow Up or Down moves it|Field: Status|Order: First → Last|More for Status|Remove the grouping by Status|Reorder Status"}
+columnsMenu {"text":"First column Name Type Name Name First column Type","buttons":2,"inputs":3,"links":0,"roles":"combobox,status,tooltip","names":"Name, first column. Alt + Arrow Up or Down moves it|Move Name|Type. Alt + Arrow Up or Down moves it|Move Type"}
+bulkActions {"text":"Download Delete Clear 2 selected","buttons":3,"inputs":0,"links":0,"roles":"toolbar","names":"Selection actions"}
+quick {"text":"Alpha 3 Beta","buttons":0,"inputs":3,"links":0,"roles":"search","names":"Find a category"}

@@ -21,7 +21,7 @@ import { useUid } from '../../utils/layer.ts';
 import { announce } from '../../utils/announce.tsx';
 import { formatDate, formatNumber } from '../../utils/format.ts';
 import { useCollectionView } from '../../hooks/useCollectionView.ts';
-import { CommandBar, CommandBarSearch } from '../../patterns/CommandBar/CommandBar.jsx';
+import { CommandBar, CommandBarSearch } from '../../patterns/CommandBar/CommandBar.tsx';
 import { FilterPanel } from '../../patterns/FilterPanel/FilterPanel.tsx';
 import { QuickFilter } from '../../patterns/QuickFilter/QuickFilter.tsx';
 import { EntityHeader } from '../../patterns/EntityHeader/EntityHeader.tsx';

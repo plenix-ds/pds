@@ -215,7 +215,7 @@ export { TimeZoneSelect, timeZoneOptions } from './components/TimeZoneSelect/Tim
 export { TreeSelect } from './components/TreeSelect/TreeSelect.tsx';
 export { TransferList } from './components/TransferList/TransferList.tsx';
 export { BottomSheetNav } from './patterns/BottomSheetNav/BottomSheetNav.tsx';
-export { CommandBar, CommandBarButton, CommandBarSearch, useCommandBar } from './patterns/CommandBar/CommandBar.jsx';
+export { CommandBar, CommandBarButton, CommandBarSearch, useCommandBar } from './patterns/CommandBar/CommandBar.tsx';
 export { FilterPanel } from './patterns/FilterPanel/FilterPanel.tsx';
 export { SortPanel } from './patterns/SortPanel/SortPanel.tsx';
 export { GroupPanel } from './patterns/GroupPanel/GroupPanel.tsx';
