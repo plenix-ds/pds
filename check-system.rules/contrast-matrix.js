@@ -10,7 +10,8 @@
 //             <x>-on-solid also on <x>-solid-label (a badge's fill), <x>-on-primary on <x>-primary
 //   own       content-inverse on surface-inverse, content-on-media(-muted) on surface-media, content-dialog-chrome on
 //             surface-dialog-chrome, message-text on both message backgrounds, field-placeholder on surface-default,
-//             accent-field-placeholder on accent-field-background, data-color-<hue>-on-surface on surface-default and state-hover
+//             accent-field-placeholder on accent-field-background, read-only-label on read-only-tile and the card surfaces,
+//             read-only-group-heading on the card surfaces (never on a hovered or selected row; D-0106, ADR 0032), data-color-<hue>-on-surface on surface-default and state-hover
 //   also      status-pill-<tone>-text on status-tile-background too (the EntityHeader status tile, #838)
 // The minimum: 4.5:1 for text, 3:1 for an icon or mark role (a name ending in -on-surface, or with -icon). A background
 // with alpha is laid over surface-canvas first. A color is #hex or rgb()/rgba() (as tools/token-value.js writes a typed
@@ -34,11 +35,16 @@ const OWN = {
   'message-text': ['message-incoming-background', 'message-outgoing-background'],
   'field-placeholder': ['surface-default'],
   'accent-field-placeholder': ['accent-field-background'],
+  // read-only fields (D-0106, ADR 0032): the label sits on its tile (stacked) or on the card (columns); a group heading on the card
+  'read-only-label': ['read-only-tile', 'surface-default', 'surface-raised'],
+  'read-only-group-heading': ['surface-default', 'surface-raised'],
 };
 const NOT_NEUTRAL = new Set(['content-disabled', ...Object.keys(OWN)]);
 // also: backgrounds a role is drawn on besides its named one (it keeps that pair too). A status tile (EntityHeader) draws
 // every tone's text and icon (currentColor) on one fill, status-tile-background (#838)
 const ALSO = Object.fromEntries(['neutral', 'success', 'active', 'waiting', 'action-required', 'negative'].map((t) => ['status-pill-' + t + '-text', ['status-tile-background']]));
+// a read-only field's value (content-default) sits on the read-only tile (D-0106, ADR 0032)
+ALSO['content-default'] = ['read-only-tile'];
 
 const read = (f) => JSON.parse(fs.readFileSync(path.join(TOK, f), 'utf8'));
 function flat(data, tier) {

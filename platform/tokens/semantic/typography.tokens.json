@@ -132,15 +132,15 @@
     "text-field-label-font-family": {
       "$value": "{plx-sys.font-label}",
       "$type": "fontFamily",
-      "$description": "A read-only field's label, above or beside its value (Fluent 2 Caption 1 Strong; D-0101, ADR 0030). The text-field-label role's font family."
+      "$description": "A read-only field's label, above or beside its value: 11px regular, 16px line, in plx-sys.read-only-label (D-0106, ADR 0032). The text-field-label role's font family."
     },
     "text-field-label-font-size": {
-      "$value": "{plx-ref.font-size-100}",
+      "$value": "{plx-ref.font-size-11}",
       "$type": "dimension",
-      "$description": "The text-field-label role's font size."
+      "$description": "The text-field-label role's font size: 11px, the owner's one exception to the 12px type floor (D-0106, ADR 0032; check-system rule type-floor allows this token only)."
     },
     "text-field-label-font-weight": {
-      "$value": "{plx-sys.font-weight-semibold}",
+      "$value": "{plx-sys.font-weight-regular}",
       "$type": "fontWeight",
       "$description": "The text-field-label role's font weight."
     },
@@ -164,15 +164,15 @@
     "text-field-value-font-family": {
       "$value": "{plx-sys.font-body}",
       "$type": "fontFamily",
-      "$description": "A read-only field's value in the stacked layout (Fluent 2 field value; D-0101, ADR 0030). The text-field-value role's font family."
+      "$description": "A read-only field's value: 13px semibold, 20px line, in plx-sys.content-default (D-0106, ADR 0032). The text-field-value role's font family."
     },
     "text-field-value-font-size": {
-      "$value": "{plx-ref.font-size-400}",
+      "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",
       "$description": "The text-field-value role's font size."
     },
     "text-field-value-font-weight": {
-      "$value": "{plx-sys.font-weight-regular}",
+      "$value": "{plx-sys.font-weight-semibold}",
       "$type": "fontWeight",
       "$description": "The text-field-value role's font weight."
     },
@@ -183,7 +183,7 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "text-field-value-line-height": {
-      "$value": "{plx-ref.size-6u}",
+      "$value": "{plx-ref.size-5u}",
       "$type": "dimension",
       "$description": "The text-field-value role's line height, on the 4px grid."
     },
@@ -191,6 +191,70 @@
       "$value": "normal",
       "$type": "dimension",
       "$description": "The text-field-value role's word spacing (the companion of the typography token).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
+    },
+    "text-group-heading-font-family": {
+      "$value": "{plx-sys.font-heading}",
+      "$type": "fontFamily",
+      "$description": "A heading over a group of read-only fields: 13px medium, 20px line, sentence case, in plx-sys.read-only-group-heading, plx-sys.space-stack-group above it (D-0106, ADR 0032). The text-group-heading role's font family."
+    },
+    "text-group-heading-font-size": {
+      "$value": "{plx-ref.font-size-200}",
+      "$type": "dimension",
+      "$description": "The text-group-heading role's font size."
+    },
+    "text-group-heading-font-weight": {
+      "$value": "{plx-sys.font-weight-medium}",
+      "$type": "fontWeight",
+      "$description": "The text-group-heading role's font weight."
+    },
+    "text-group-heading-letter-spacing": {
+      "$value": "normal",
+      "$type": "dimension",
+      "$description": "The text-group-heading role's letter spacing.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
+    },
+    "text-group-heading-line-height": {
+      "$value": "{plx-ref.size-5u}",
+      "$type": "dimension",
+      "$description": "The text-group-heading role's line height, on the 4px grid."
+    },
+    "text-group-heading-word-spacing": {
+      "$value": "normal",
+      "$type": "dimension",
+      "$description": "The text-group-heading role's word spacing (the companion of the typography token).",
+      "$extensions": { "com.plenix": { "webOnly": true } }
+    },
+    "text-card-heading-font-family": {
+      "$value": "{plx-sys.font-heading}",
+      "$type": "fontFamily",
+      "$description": "A card heading: 14px bold, 20px line, uppercase (the component sets text-transform), in plx-sys.content-default (D-0106, ADR 0032). The text-card-heading role's font family."
+    },
+    "text-card-heading-font-size": {
+      "$value": "{plx-ref.font-size-300}",
+      "$type": "dimension",
+      "$description": "The text-card-heading role's font size."
+    },
+    "text-card-heading-font-weight": {
+      "$value": "{plx-sys.font-weight-bold}",
+      "$type": "fontWeight",
+      "$description": "The text-card-heading role's font weight."
+    },
+    "text-card-heading-letter-spacing": {
+      "$value": "{plx-ref.letter-spacing-caps}",
+      "$type": "dimension",
+      "$description": "The text-card-heading role's letter spacing.",
+      "$extensions": { "com.plenix": { "webOnly": true } }
+    },
+    "text-card-heading-line-height": {
+      "$value": "{plx-ref.size-5u}",
+      "$type": "dimension",
+      "$description": "The text-card-heading role's line height, on the 4px grid."
+    },
+    "text-card-heading-word-spacing": {
+      "$value": "normal",
+      "$type": "dimension",
+      "$description": "The text-card-heading role's word spacing (the companion of the typography token).",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "text-heading-font-family": {

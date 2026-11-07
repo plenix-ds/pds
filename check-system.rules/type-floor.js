@@ -3,6 +3,9 @@
 //   below   its value, followed through its references, is a length under 12px (1rem = 16px), unless the token itself
 //           is $deprecated (plx-ref.font-size-09, -10, -11 stay until 2.0.0 so old readers keep working);
 //   reads   it refers to a $deprecated font-size token (a new reader of a step going away).
+// Exceptions: EXCEPTIONS below, each named by the owner decision that allows it (D-0106: the read-only field label, 11px).
+//   The listed token may be under the floor and may read a deprecated size; nothing else may. tests/type-floor-206.test.js
+//   reads the same list.
 // In stylesheets, a font size comes from a type role, never the raw scale: Stylelint
 // (declaration-property-value-disallowed-list, font-size and var(--plx-ref-font-size-…)).
 // Alone: node check-system.rules/type-floor.js   -> TYPE_FLOOR_OK, or the findings and exit 1
@@ -11,6 +14,8 @@ const G = require('./token-graph.js');
 
 const NAME = 'type-floor';
 const FLOOR = 12;
+// token -> the decision that allows it under the floor (owner only; ADR 0032)
+const EXCEPTIONS = { 'plx-sys.text-field-label-font-size': 'D-0106' };
 const px = (v) => { const m = String(v).trim().match(/^(\d*\.?\d+)(px|rem)$/); return m ? Number(m[1]) * (m[2] === 'rem' ? 16 : 1) : null; };
 
 function findings(docs = G.load()) {
@@ -26,6 +31,7 @@ function findings(docs = G.load()) {
   for (const d of defs) {
     if (!/(^|-)font-size(-|$)/.test(d.name)) continue;
     const self = d.tier + '.' + d.name;
+    if (EXCEPTIONS[self]) continue;
     for (const r of d.refs) {
       const t = byName.get(r.tier + '.' + r.name);
       if (t && t.deprecated && /(^|-)font-size(-|$)/.test(t.name) && !d.deprecated) out.push({ file: d.file, text: self + ' reads ' + r.tier + '.' + r.name + ', a deprecated size: use a type role (plx-sys.text-*-font-size)' });
@@ -37,7 +43,7 @@ function findings(docs = G.load()) {
 }
 
 function check({ add }) { for (const f of findings()) add(NAME, f.file, 0, f.text); }
-module.exports = { check, findings, NAME, FLOOR };
+module.exports = { check, findings, NAME, FLOOR, EXCEPTIONS };
 
 if (require.main === module) {
   const list = findings();

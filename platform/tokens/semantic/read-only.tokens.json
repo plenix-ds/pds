@@ -2,9 +2,9 @@
   "$description": "Read-only state (library plan wave 2, foundation read-only-context): the roles of a value that can be read, selected and copied but not changed. system/read-only.css draws the controls inside a read-only region (data-plx-readonly, providers/ReadOnly.tsx) from them.",
   "plx-sys": {
     "read-only-background": {
-      "$value": "{plx-sys.surface-sunken}",
+      "$value": "{plx-sys.read-only-tile}",
       "$type": "color",
-      "$description": "The fill of a read-only field or select: the sunken surface, so it reads as not editable without dimming its value (a read-only Input uses the same surface).",
+      "$description": "The fill of a read-only field or select: the porcelain read-only tile, so it reads as not editable without dimming its value, and matches a read-only field in a PropertyList (D-0106, ADR 0032).",
       "$extensions": {
         "plenix": {
           "group": "surface",
@@ -23,10 +23,21 @@
         }
       }
     },
-    "read-only-border": {
-      "$value": "{plx-sys.border-subtle}",
+    "read-only-glow": {
+      "$value": "{plx-sys.read-only-tile}",
       "$type": "color",
-      "$description": "The edge of a read-only field: the subtle border, quieter than an editable control's border, which tells it takes no input.",
+      "$description": "The start of a card header's soft glow: the tile fill at the card top, fading to plx-sys.surface-default at the heading line (D-0106, ADR 0032).",
+      "$extensions": {
+        "plenix": {
+          "group": "surface",
+          "purpose": "The start color of a card header's glow."
+        }
+      }
+    },
+    "read-only-border": {
+      "$value": "{plx-sys.read-only-tile-border}",
+      "$type": "color",
+      "$description": "The edge of a read-only field: the read-only tile border, a deeper shade of the tile, quieter than an editable control's border (D-0106, ADR 0032).",
       "$extensions": {
         "plenix": {
           "group": "border",

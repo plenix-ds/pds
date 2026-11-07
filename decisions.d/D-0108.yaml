@@ -1,0 +1,9 @@
+id: D-0108
+date: 2026-11-07
+area: tokens
+decided_by: agent (pds1-ds-architect) at G3, owner may switch
+decision: 'D-0106 tokens (ADR 0032): purpose-named sys roles read-only-tile, read-only-tile-border, read-only-label, read-only-group-heading and read-only-glow; gold and navy from existing refs (brown-600 / yellow-300, blue-700 / blue-275); four new refs color-porcelain-50/-200/-750/-800 for the tile and its border, light and dark; text-field-label 11px regular 16px line, text-field-value 13px semibold 20px line, new text-group-heading and text-card-heading roles, space-stack-group 40px, space-stack-field 16px; read-only controls take the tile fill and border; text-field-label-font-size is the one listed exception to the 12px type floor.'
+why: 'The owner chose these values (D-0106). Existing refs first; no existing ref is a warm neutral at the tile lightness (gray-50 is cool, yellow-100 is yellow), and comp may not reference ref (check 6).'
+options: ['purpose-named sys roles, new porcelain refs, one listed type-floor exception (chosen)', 'comp tokens with raw values', 'gray-50 and gray-200 for the tile']
+status: active
+check: 'check-system rules type-floor (EXCEPTIONS), token-tiers (check 6), token-names (check 7), contrast-matrix (check 8: read-only-label and content-default on read-only-tile >= 4.5:1, light and dark) and token-definitions (the porcelain refs); tests/type-floor-206.test.js'

@@ -64,6 +64,50 @@
         }
       }
     },
+    "read-only-tile": {
+      "$value": "{plx-ref.color-porcelain-800}",
+      "$type": "color",
+      "$description": "The tile behind each read-only field: a very soft warm neutral (owner, D-0106, ADR 0032).",
+      "$extensions": {
+        "plenix": {
+          "group": "surface",
+          "purpose": "The tile behind each read-only field: a very soft warm neutral."
+        }
+      }
+    },
+    "read-only-tile-border": {
+      "$value": "{plx-ref.color-porcelain-750}",
+      "$type": "color",
+      "$description": "The 1px edge of a read-only field tile: a deeper shade of the tile, never the neutral card border (owner, D-0106, ADR 0032).",
+      "$extensions": {
+        "plenix": {
+          "group": "border",
+          "purpose": "The 1px edge of a read-only field tile: a deeper shade of the tile, never the neutral card border."
+        }
+      }
+    },
+    "read-only-label": {
+      "$value": "{plx-ref.color-blue-275}",
+      "$type": "color",
+      "$description": "A read-only field label: brand navy, lighter than its value, at least 4.5:1 on the tile (owner, D-0106, ADR 0032).",
+      "$extensions": {
+        "plenix": {
+          "group": "text",
+          "purpose": "A read-only field label: brand navy, lighter than its value, at least 4.5:1 on the tile."
+        }
+      }
+    },
+    "read-only-group-heading": {
+      "$value": "{plx-ref.color-yellow-300}",
+      "$type": "color",
+      "$description": "A heading over a group of read-only fields: gold, at least 4.5:1 on the surface (owner, D-0106, ADR 0032).",
+      "$extensions": {
+        "plenix": {
+          "group": "text",
+          "purpose": "A heading over a group of read-only fields: gold, at least 4.5:1 on the surface."
+        }
+      }
+    },
     "surface-inverse": {
       "$value": "{plx-ref.color-gray-200}",
       "$type": "color",
