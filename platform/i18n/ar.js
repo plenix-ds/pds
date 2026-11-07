@@ -1002,7 +1002,11 @@ export default {
     "pending": "جارٍ البحث"
   },
   "appShell": {
-    "skip": "تخطّي إلى المحتوى الرئيسي"
+    "skip": "تخطّي إلى المحتوى الرئيسي",
+    "frame": {
+      "expand": "توسيع إلى ملء النافذة",
+      "restore": "استعادة إلى عرض {width}"
+    }
   },
   "assignControl": {
     "assign": "إسناد",

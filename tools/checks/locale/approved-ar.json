@@ -2899,6 +2899,18 @@
      "permanent": "لا يمكن التراجع عن هذا."
     }
    }
+  },
+  {
+   "source": "D-0078 (standards accepted by default, Microsoft first), ruled for #868 by PDS1-Product-Lead on 2026-11-07: every word is a Microsoft term in the Microsoft Terminology Collection (ARABIC.tbx, checked 2026-11-07): Expand = توسيع, window = نافذة, full screen = ملء الشاشة, Restore = استعادة; width = عرض (Plenix resizable.minWidth). {width} is filled in the page's digits. #862, #868.",
+   "date": "2026-11-07",
+   "strings": {
+    "appShell": {
+     "frame": {
+      "expand": "توسيع إلى ملء النافذة",
+      "restore": "استعادة إلى عرض {width}"
+     }
+    }
+   }
   }
  ]
 }
