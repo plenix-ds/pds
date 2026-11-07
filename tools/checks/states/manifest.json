@@ -568,5 +568,15 @@
     "loading": "n/a(stories arrive with Storybook, P0-11)",
     "selected": "n/a(stories arrive with Storybook, P0-11)",
     "error": "n/a(a change to where the toast region sits; the toast has no value to validate)"
+  },
+  "Pagination": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(Previous on the first page and Next on the last are disabled buttons; the control as a whole is never disabled)",
+    "loading": "n/a(the pages are chosen by the caller; it does not load)",
+    "selected": "n/a(the current page carries aria-current=\"page\", not a selection)",
+    "error": "n/a(a page number has no value to validate; a page outside the range is held inside it)"
   }
 }
