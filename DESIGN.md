@@ -81,6 +81,7 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 - Quiet, dense, work-focused UI for data-heavy applications. Fluent-style controls on near-white surfaces, with one blue accent.
 - **Buttons** and menu commands are Fluent 2 style (D-0023): 1px borders, 4px corners; filled primary in the accent colour, outlined secondary, ghost for toolbars.
 - **No icon in a box** (D-0024). By default an icon is never drawn on its own tinted tile; a box stays only where a specific usage calls for it.
+- **Footers have no fill** (D-0102, #948). Save and Cancel sit at the end, on the surface of the card, form or dialog that holds them, never on a grey band. A hairline separates them only where content passes under or scrolls behind them (a sticky bar, a dialog whose body scrolls). Details: `docs/pds1/slices/948/design.md`.
 - **No action links.** An action is a Button, never a text link. Links only navigate.
 - **Statuses are badges with an icon,** never a bare coloured dot. A dot only shows presence (online/away).
 - **Table header labels are start-aligned** (left in LTR, right in RTL), including the header of a number column.
