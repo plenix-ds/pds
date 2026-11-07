@@ -1,0 +1,1 @@
+ltr: RoleLabel: a long name does not overflow (213px)  (found by the new display test before the fix)
