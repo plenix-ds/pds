@@ -38,3 +38,4 @@ Owner: `pds1-ds-architect`. Gate G3 (plan §5) reads these files.
 | [0025](0025-datagrid-column-description.md) | DataGrid column `description`: the header's tooltip and accessible description | accepted |
 | [0026](0026-generic-choice-values.md) | Choice controls are generic over their option values | accepted |
 | [0027](0027-textarea-label.md) | Textarea `label`: its accessible name when nothing else names it | accepted |
+| [0028](0028-date-timestamp-unit.md) | Dates read one way in columns and filters; `timestamp: "s"` for Unix seconds | accepted |
