@@ -57,7 +57,7 @@ export function binValues(values: number[], { bins, domain }: { bins?: number; d
 // each bar: its kind, the running total before and after it
 export function waterfallSteps(data: WaterfallDatum[] = [], endLabel?: string | false) {
   let run = 0;
-  const out: Array<{ label: string; kind: string; from: number; to: number; change: number | null; end?: boolean }> = data.map((d, i) => {
+  const out: Array<{ label: string | undefined; kind: string; from: number; to: number; change: number | null; end?: boolean }> = data.map((d, i) => {
     const v = typeof d.value === 'number' && isFinite(d.value) ? d.value : null;
     if (d.total) {
       if (v !== null && (i === 0 || d.value !== undefined)) run = v;
@@ -66,7 +66,7 @@ export function waterfallSteps(data: WaterfallDatum[] = [], endLabel?: string | 
     const from = run; run += v || 0;
     return { label: d.label, kind: (v || 0) < 0 ? 'down' : 'up', from, to: run, change: v || 0 };
   });
-  if (endLabel !== false && (!out.length || out[out.length - 1].kind !== 'total')) out.push({ label: endLabel ?? '', kind: 'total', from: 0, to: run, change: null, end: true });
+  if (endLabel !== false && (!out.length || out[out.length - 1].kind !== 'total')) out.push({ label: endLabel, kind: 'total', from: 0, to: run, change: null, end: true });
   return out;
 }
 
