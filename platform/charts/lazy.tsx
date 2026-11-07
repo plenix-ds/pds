@@ -28,7 +28,7 @@ const sparkBox = (props: any) => (
   <span className={cx('plx-sparkline', 'plx-sparkline--' + (props.variant || 'line'), 'plx-sparkline--' + (props.size || 'inline'), props.className)} aria-hidden="true" aria-busy="true" />
 );
 
-function lazyChart(name: any, load: any, fallback: any) {
+function lazyChart(name: string, load: any, fallback: any) {
   const Chart = React.lazy(() => load().then((m: any) => ({ default: m[name] })));
   function LazyChart(props: any) {
     return <React.Suspense fallback={fallback ? fallback(props) : null}><Chart {...props} /></React.Suspense>;

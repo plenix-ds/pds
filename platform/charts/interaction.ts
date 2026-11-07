@@ -93,8 +93,43 @@ export type ChartInteractionOptions = {
   first?(): ChartCell | null;
   strings?: Record<string, string>;
 };
+/** @public the geometry a chart registers: the value nearest a point, and the column at an x */
+export type ChartGeometry = { nearest?(x: number, y: number): ChartCell | null; columnAt?(x: number): number | null };
+/** @public a key press, as far as the interaction reads it */
+export type ChartKeyEvent = { key: string; shiftKey?: boolean; preventDefault(): void };
+/** @public what useChartInteraction returns: pass it to ChartFrame as `interaction` */
+export type ChartInteraction = {
+  interactive: true;
+  mode: 'x' | 'point';
+  active: ChartCell | null;
+  source: 'pointer' | 'keyboard' | null;
+  selected: ChartCell | null;
+  brush: [number, number] | null;
+  zoom: [number, number] | null;
+  zoomed: boolean;
+  focused: boolean;
+  hidden: Array<string | number>;
+  strings: Record<string, string>;
+  hint: string;
+  view(): [number, number];
+  visible(id: string | number): boolean;
+  isDimmed(row: number): boolean;
+  legendProps: { interactive: true; hidden: Array<string | number>; onToggle(id: string | number, visible: boolean): void };
+  register(geometry: ChartGeometry): void;
+  setActive(cell: ChartCell | null, from?: 'pointer' | 'keyboard'): void;
+  select(cell: ChartCell | null): void;
+  resetZoom(): void;
+  setZoom(from: number, to: number): void;
+  keyDown(event: ChartKeyEvent): void;
+  pointerDown(x: number, y: number, event?: { button?: number }): void;
+  pointerMove(x: number, y: number): void;
+  pointerUp(x: number, y: number): void;
+  pointerLeave(): void;
+  onFocus(): void;
+  onBlur(): void;
+};
 export function useChartInteraction({ rows = 1, columns = 0, mode = 'x', series, defaultHidden = [], hidden: hiddenProp, onToggle,
-  zoom = false, select = false, onSelect, describe, labelOf, move, first, strings }: ChartInteractionOptions = {}) {
+  zoom = false, select = false, onSelect, describe, labelOf, move, first, strings }: ChartInteractionOptions = {}): ChartInteraction {
   const t = Object.assign({}, CHART_INTERACTION_STRINGS, strings);
   const [active, setActiveState] = React.useState<any>(null);
   const [source, setSource] = React.useState<any>(null);
@@ -109,7 +144,7 @@ export function useChartInteraction({ rows = 1, columns = 0, mode = 'x', series,
   const ids = (series || []).map((s: any, i: any) => (s.id === undefined ? i : s.id));
   const rowShown = (r: any) => !ids.length || hidden.indexOf(ids[r]) < 0;
   const n = Math.max(0, columns);
-  const view = () => (zoomRange ? [clamp(zoomRange[0], 0, n - 1), clamp(zoomRange[1], 0, n - 1)] : [0, Math.max(0, n - 1)]);
+  const view = (): [number, number] => (zoomRange ? [clamp(zoomRange[0], 0, n - 1), clamp(zoomRange[1], 0, n - 1)] : [0, Math.max(0, n - 1)]);
   const say = (cell: any) => { if (cell && typeof describe === 'function') chartAnnounce(describe(cell)); };
   const label = (c: any) => (typeof labelOf === 'function' ? labelOf(c) : String(c + 1));
 

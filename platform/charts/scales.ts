@@ -61,7 +61,7 @@ export function niceTicks(min: number, max: number, count = 5) {
   if (lo === hi) { const half = tickStep(Math.abs(lo) || 1, count) / 2; lo -= half; hi += half; }
   const step = tickStep(hi - lo, count), d = decimalsOf(step);
   const start = round(Math.floor(lo / step) * step, d), stop = round(Math.ceil(hi / step) * step, d);
-  const ticks: any = [];
+  const ticks: number[] = [];
   for (let v = start, i = 0; v <= stop + step / 2 && i < 1000; i++, v = start + i * step) ticks.push(round(v, d));
   return { start, stop, step, ticks };
 }

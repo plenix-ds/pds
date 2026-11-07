@@ -95,6 +95,6 @@ export function useChartPoints({ count = 0, describe, select = false, onSelect, 
     onSelect: typeof onSelect === 'function' ? (cell: any) => onSelect(cell.c) : undefined,
     describe: typeof describe === 'function' ? (cell: any) => describe(cell.c) : undefined });
   interaction.register({ nearest: () => hovered.current });
-  const hover = (i: any) => { hovered.current = i === null || i === undefined ? null : { r: 0, c: i }; interaction.setActive(hovered.current, 'pointer'); };
+  const hover = (i: number | null) => { hovered.current = i === null || i === undefined ? null : { r: 0, c: i }; interaction.setActive(hovered.current, 'pointer'); };
   return { interaction, index: interaction.active ? interaction.active.c : null, hover };
 }
