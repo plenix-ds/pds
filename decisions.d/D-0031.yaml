@@ -1,0 +1,7 @@
+id: D-0031
+date: 2026-11-05
+area: architecture
+decided_by: agent (pds1-ds-architect), owner may switch
+decision: The monorepo uses npm workspaces with Changesets (not pnpm, Nx or Turborepo); packages react -> styles -> tokens, icons and locales stand alone; one version for npm, CDN and API (docs/adr/0001).
+status: active
+check: planned:package-boundaries

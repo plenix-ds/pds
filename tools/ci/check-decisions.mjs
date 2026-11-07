@@ -4,7 +4,8 @@
 //   node tools/ci/check-decisions.mjs [<base-ref>] [--main <ref>]
 //
 // The log is decisions.d/D-NNNN.yaml, one decision per file (#955: two PRs that each add a decision never touch the same
-// file), plus decisions.yaml, the old single file, until its entries are moved into the folder. Both are read as one log.
+// file). decisions.yaml, the old single file, is still read at a base ref from before the fold, and fails when a change
+// adds it back after the fold.
 // Fails when:
 // - an entry has no id, date, decision, status or check (check may be "review-only (<reason>)");
 // - ids are not D-NNNN or are repeated, across both sources (order is free: parallel PRs reserve ids out of order);
@@ -139,7 +140,10 @@ for (const e of head) {
 const byId = new Map(head.map((e) => [e.id, e]));
 const baseIds = new Set();
 if (baseRef) {
-  for (const b of entriesOf(filesAt(baseRef))) {
+  const baseFiles = filesAt(baseRef);
+  // the fold (#955 PR 2) retired the single file: once the base has none, adding it back fails
+  if (files.some((f) => !f.folder) && !baseFiles.some((f) => !f.folder)) errors.push(`${FILE}: decisions.yaml is retired (#955); add each decision as ${DIR}/<id>.yaml (node tools/decision-id.mjs)`);
+  for (const b of entriesOf(baseFiles)) {
     baseIds.add(b.id);
     const h = byId.get(b.id);
     if (!h) { errors.push(`${b.id}: removed; past entries stay (set status: superseded instead)`); continue; }

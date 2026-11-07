@@ -1,0 +1,9 @@
+id: D-0023
+date: 2026-11-05
+area: design
+decided_by: owner (2026-10-24, chat; plenix-ds/pds#109, #77)
+decision: Buttons and menu commands follow the Fluent 2 style (1px borders, 4px corners); hover and pressed details are built under plenix-ds/pds#109.
+why: '"i would like to follow fluent style buttons and menu commands" (owner, 2026-10-24).'
+options: [Fluent 2 style (chosen), keep the 0.6x button look]
+status: active
+check: planned:design-lint (radius and border checks)

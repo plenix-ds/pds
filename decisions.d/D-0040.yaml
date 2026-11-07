@@ -1,0 +1,9 @@
+id: D-0040
+date: 2026-11-05
+area: process
+decided_by: agent (pds1-product-lead) after the owner's complaint, owner may switch
+decision: The nudge timer starts the role for waiting tasks by itself, within agents.config.yaml limits (long-work slots and free memory), and stops idle roles with no open work. The Delivery Lead still sets the order, but nobody has to remember to start a session.
+why: 'Owner, 2026-11-05: "why do i have to keep reminding to assign the open tasks?" P0-8 to P0-11 waited with a slot free.'
+options: [timer starts roles (chosen), Delivery Lead prompted to fill slots on each nudge]
+status: active
+check: 'planned:nudge-autostart (NUDGE_DRY=1 team.sh nudge prints "would start <role>"; #246)'

@@ -1,0 +1,7 @@
+id: D-0004
+date: 2026-11-04
+area: design
+decided_by: owner
+decision: Keep the existing PDS design language; Phase 0 writes it down in DESIGN.md as-is.
+status: active
+check: planned:design-lint (checks 1-12)

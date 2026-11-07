@@ -1,0 +1,9 @@
+id: D-0089
+date: 2026-11-06
+area: api
+decided_by: agent (pds1-ds-architect) on #61 and #818 (G3), owner may switch
+decision: 'Plenix''s source under platform/ is TypeScript except the files listed as allowed in platform/standards/js-source.json, each with its reason: dev page scripts, theme-boot, the loader, the engines copy, the two CommonJS icon files and the generated icon inventory, and the en/ar catalogs. platform/design-system, vendor, dist and mobile are outside the rule. Files still to convert are listed as pending, which includes wave 5 (index.js and the exports lists). allowJs stays on for the allowed files (docs/adr/0011, closing addendum).'
+why: 'The wave 4 rulings (#818) show readers that need these files as JavaScript (a plain script tag, a verbatim copy, CommonJS, a generated file, the protected catalog). A listed exception with its reason, plus a check, keeps the rest from drifting back to JavaScript.'
+options: ['A - an allowed list with reasons plus a check (chosen)', 'B - convert everything and add build steps for script tags and CommonJS readers', 'C - no check, the review only']
+status: active
+check: check-system.rules/js-source.js (check-system rule js-source)

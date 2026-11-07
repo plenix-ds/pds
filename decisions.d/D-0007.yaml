@@ -1,0 +1,7 @@
+id: D-0007
+date: 2026-11-04
+area: design
+decided_by: owner
+decision: Three densities - compact, standard, comfortable.
+status: active
+check: planned:density-tokens

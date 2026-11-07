@@ -1,0 +1,7 @@
+id: D-0005
+date: 2026-11-04
+area: design
+decided_by: owner
+decision: Corner radius scale 0/2/4/6/circle; pills 4px.
+status: active
+check: planned:lint-radius

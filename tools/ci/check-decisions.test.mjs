@@ -2,7 +2,8 @@
 // Self-test of tools/ci/check-decisions.mjs. The three YAML breaks that took the dashboard down (#585) must fail the
 // check, the same way the dashboard's yaml.safe_load (PyYAML) fails on them; a valid file must pass (#589).
 // One file per decision (#955): decisions.d/D-NNNN.yaml is read with decisions.yaml; an id in both, a file named for
-// another id, a file PyYAML can't read, an entry rewritten across the move, and a new id already taken on main all fail.
+// another id, a file PyYAML can't read, an entry rewritten across the move, a new id already taken on main, and
+// decisions.yaml added back after the fold all fail.
 //   node tools/ci/check-decisions.test.mjs        (CI: the Decisions job, before the check itself)
 import { spawnSync, execFileSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -51,8 +52,11 @@ try {
 
   // the fold: D-0001 moves from the file into the folder unchanged; nothing is removed or rewritten
   git('checkout', '-q', '-b', 'fold');
-  fs.rmSync(path.join(repo, 'decisions.yaml'));
-  fs.writeFileSync(path.join(repo, 'decisions.d', 'D-0001.yaml'), fs.readFileSync(path.join(fixtures, 'ok.yaml'), 'utf8').replace(/^- /, '').replace(/^ {2}/gm, ''));
+  const fold = () => {
+    fs.rmSync(path.join(repo, 'decisions.yaml'));
+    fs.writeFileSync(path.join(repo, 'decisions.d', 'D-0001.yaml'), fs.readFileSync(path.join(fixtures, 'ok.yaml'), 'utf8').replace(/^- /, '').replace(/^ {2}/gm, ''));
+  };
+  fold();
   let r = run(env, ['main'], repo);
   report('the fold keeps every entry', r.status === 0, r, 0);
 
@@ -77,10 +81,19 @@ try {
   report('a new id already taken on main', r.status === 1 && /D-0003: taken on main/.test(r.stdout), r, 1);
   r = run(env, [base], repo);
   report('the same branch without --main', r.status === 0, r, 0);
+
+  // after the fold, decisions.yaml is retired: a branch that adds it back fails (its entry belongs in the folder)
+  git('checkout', '-q', '-f', 'fold'); git('clean', '-fdq');
+  fold();
+  git('add', '-A'); git('commit', '-q', '-m', 'fold');
+  git('checkout', '-q', '-b', 'back');
+  fs.writeFileSync(path.join(repo, 'decisions.yaml'), fs.readFileSync(path.join(fixtures, 'ok.yaml'), 'utf8').replace(/D-0001/, 'D-0009'));
+  r = run(env, ['fold'], repo);
+  report('decisions.yaml added back after the fold', r.status === 1 && /decisions\.yaml is retired/.test(r.stdout), r, 1);
 } finally {
   fs.rmSync(repo, { recursive: true, force: true });
 }
 
-const total = cases.length + 4;
+const total = cases.length + 5;
 console.log(failed ? `DECISIONS_TEST_FAIL (${failed} of ${total})` : `DECISIONS_TEST_OK (${total})`);
 process.exit(failed ? 1 : 0);

@@ -1,0 +1,7 @@
+id: D-0038
+date: 2026-11-05
+area: design
+decided_by: agent (pds1-design-director), owner may switch
+decision: For #108 (D-0036), EntityHeader fact icons without their box are drawn at the full tile size, as the owner's rule says (A); in dark mode the media icons use one lighter existing shade per hue (blue-300, green-200, purple-300, red-200, orange-200, gray-300, blue-200 for surface) so they keep 3:1 or more without the tile. Option B, fact icons at the text's icon size (20px), is offered on #108. Reply B there to switch.
+status: active
+check: planned:contrast-matrix

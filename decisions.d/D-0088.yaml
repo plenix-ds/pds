@@ -1,0 +1,9 @@
+id: D-0088
+date: 2026-11-06
+area: api
+decided_by: agent (pds1-ds-architect) on #800 (G3), owner may switch
+decision: 'DataGrid column fit (D-0087) adds no prop, kind or token. The selection checkbox column keeps --plx-comp-data-grid-lead-column-width, and the row menu (⋮) column keeps --plx-comp-data-grid-row-menu-width (both existing, with their touch values). long_text_threshold is an engine constant, LONG_TEXT_CHARS = 40 in platform/components/DataGrid/engine/useGridMetrics.ts: a text column whose widest value in view is longer than 40 characters is long text. kind "wrap" and url columns are long text whatever their length. Check 10 keeps tabular-nums and no longer requires text-align:end.'
+why: 'A character count is not a CSS value and is not themed, so it is not a token. The design adds no prop (G2, #804). The two widths already exist. 40 characters holds the compact values of the owner''s case grid (reasons and statuses, under 30) and puts a sentence (a summary or a note) into long text.'
+options: ['A - existing tokens plus an engine constant of 40 (chosen)', 'B - a public prop longTextThreshold on DataGrid', 'C - a comp token with a webOnly number']
+status: active
+check: tools/checks/numeric/numeric.mjs (check 10, tabular-nums only); the #800 behaviour tests AC-1 to AC-8 for the threshold; G3 on the build PR (no new prop or token)

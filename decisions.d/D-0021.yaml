@@ -1,0 +1,7 @@
+id: D-0021
+date: 2026-11-05
+area: process
+decided_by: owner
+decision: Restart as PDS 1.0 - a continuation of the existing project in a structured environment (same GitHub, servers, CDN). The 0.x team is retired; the new team's agents are named PDS1-.
+status: active
+check: review-only (setup)

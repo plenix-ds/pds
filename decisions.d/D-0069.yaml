@@ -1,0 +1,9 @@
+id: D-0069
+date: 2026-11-06
+area: api
+decided_by: owner (2026-10-19, plenix-platform#195), recorded by pds1-ds-architect
+decision: 'With rows selected, CommandBar adds the selection''s commands, then a separator, then the page''s commands (selection.mode ''add'', the default); ''swap'' stays; each page command may say selection ''also'' | ''only'' | ''never'' (docs/adr/0018). It supersedes the swap of 2026-10-15 (issue 454).'
+why: 'The owner: "when selecting multiple.. i should still be able to do actions"; decided "add, don''t swap" on 2026-10-19.'
+options: [add as the default with swap kept (chosen, the owner), swap as the default]
+status: active
+check: G3 review of the #140 build PR and its behavior tests (add order, also/only/never, swap, fold, RTL)

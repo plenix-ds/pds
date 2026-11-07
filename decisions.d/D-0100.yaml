@@ -1,0 +1,9 @@
+id: D-0100
+date: 2026-11-07
+area: components
+decided_by: agent (pds1-ds-architect) at G3, owner may switch
+decision: 'Columns and filters read dates through one reader (ADR 0028): bare YYYY-MM-DD as the local day, ISO text and Date as their instant, numbers as epoch ms, or epoch seconds when the field or column says timestamp: "s". Filters compare the local calendar day (the LocaleProvider timeZone when set). No guessing seconds from the number size.'
+why: 'RedSave DT-7 (#939): "last 7 days" dropped the same day given as seconds, ms or a Date. The name timestamp leaves unit free for number units (kg, km).'
+options: ['timestamp: "ms" | "s" (chosen)', 'unit: "s" | "ms"', 'guess from the number size']
+status: active
+check: 'planned:date-filter-939 (behaviour test per ADR 0028 Check; #939)'

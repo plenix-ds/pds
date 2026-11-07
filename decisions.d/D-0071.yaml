@@ -1,0 +1,9 @@
+id: D-0071
+date: 2026-11-06
+area: api
+decided_by: agent (pds1-ds-architect) on the Component Engineer's proposal (#142), owner may switch
+decision: 'MediaViewer takes optional count and getItem(index); when both are set they replace items, and the viewer builds only the shown item and its neighbors (each once per open). items is unchanged; a partial pair warns and uses items (docs/adr/0020).'
+why: 'An app with 1,500 images built every item on each step (RedSave: about 180 ms per Next); the viewer only ever draws one.'
+options: [count plus getItem (chosen, A), renderItem(index) (B), document cheap items only (C)]
+status: active
+check: G3 review of the #142 build PR and its behavior test (getItem called only for the shown index and its neighbors)

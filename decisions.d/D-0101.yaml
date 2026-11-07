@@ -1,0 +1,9 @@
+id: D-0101
+date: 2026-11-07
+area: design
+decided_by: agent (pds1-product-lead) at intake, owner may switch (#946, D-0078 Microsoft first)
+decision: 'Read-only label and value follow the Fluent 2 field. Stacked is the default: the label is 12px semibold content-muted (16px line) and the value 15px regular content-default (24px line), with 4px between them and 16px between pairs (space-stack-lg; no 20px sys role, G3). The value size is the existing text-lead role. The inline property list is PropertyList layout="columns" (label column, value at 13px, hairlines), a variant for dense panes; stacked becomes the default (MINOR, changelog note). Inside a read-only region a Field label takes the same label role, and its value stays in its control.'
+why: 'The owner, through CTM''s case summary: in read mode, label and value look alike (a 12px regular label next to a 13px regular value). Options came from the owner''s study (A today, B Fluent 2, C property list, D Carbon, E grouped sections).'
+options: ['B default with C as the inline variant (chosen)', 'A (today)', 'C only', 'D (Carbon)', 'E (grouped sections, an app-level page choice)']
+status: active
+check: 'planned:readonly-field-type-946 (CSS test that PropertyList and the read-only Field label read the field-label and field-value roles; visual checks on #946)'

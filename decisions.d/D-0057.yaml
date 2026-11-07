@@ -1,0 +1,9 @@
+id: D-0057
+date: 2026-11-05
+area: design
+decided_by: agent (pds1-design-director), owner may switch
+decision: DeleteFlow's undo toast shows no countdown or time-left display (#144). It stays 10 seconds by default, pauses while hovered or focused (the Toast already does) and restarts after; an app can keep it until dismissed (undoDuration 0, the DS Architect's API). The undo stays a Toast action button with its words.
+why: 'A countdown bar or timer is a new visual element the toast does not have (DESIGN.md); adding one changes the look and needs the owner. WCAG 2.2.1 (timing adjustable) is met by the pause on hover and focus, the 10-second floor and the until-dismissed option.'
+options: [no countdown, 10 s with pause (chosen), a countdown bar in the toast]
+status: active
+check: review-only (pds1-design-critic on the #144 PR)

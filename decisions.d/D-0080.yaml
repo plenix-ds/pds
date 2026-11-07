@@ -1,0 +1,9 @@
+id: D-0080
+date: 2026-11-06
+area: tests
+decided_by: agent (pds1-qa-engineer) on #107, owner may switch (chat 2026-11-06 "Continue next high and medium priority")
+decision: 'The small probe-page tests (tests/fixtures/platform-host.html, about 35) stay as they are, and the 8 on-demand comparison tools (a11y-report, clash-audit, compare, compare-styles, style-compare, pixels, typography-181-compare, typography-197-compare) stay on the design spec. Page-level tests run on the St. John site.'
+why: 'A real church site cannot show a forced hover, a huge list or a wrong value; the spec shows every component state, which a comparison needs. These were the recommended options of the #107 decision block, and the owner asked to continue without choosing another.'
+options: ['keep probes and keep spec tools (chosen)', 'move the probe tests that can run on a site page', 'move every test onto the site']
+status: active
+check: tests/site-coverage.test.js (the site uses every Platform name); review-only for where a new test runs

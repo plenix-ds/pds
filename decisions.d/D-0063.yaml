@@ -1,0 +1,9 @@
+id: D-0063
+date: 2026-11-06
+area: api
+decided_by: agent (pds1-ds-architect) on the Component Engineer's questions (#84 F3), owner may switch
+decision: 'DataGrid Form Edit (docs/adr/0016 addendum F3): renderForm(record, { value, setValue, errors, busy }) keeps the record first and gives the application''s form the draft, its setter, the validate messages and the busy state; Save sends only the changed fields to onRecordEdit. formSurface { panel: ref } replaces the unbuilt ''openPanel'': the grid portals its form into the application''s panel element and marks it data-plx-form-open; a null ref falls back to the drawer with a dev warning; closing the open row while the form is in the panel cancels it (the unsaved-changes question first; keeping on moves the draft to the drawer). No new prop.'
+why: 'The ADR''s one-line renderForm(record) gave a form no way to report its values; the grid cannot draw into a panel it does not own without a mount point, and a callback that hands the form to the application would split Save, Cancel and errors across two owners.'
+options: ['second argument plus a panel ref (chosen)', 'renderForm({ record, value, setValue, busy }) as one object', 'a new onFormEdit({ record, close }) callback']
+status: active
+check: G3 review of the F3 PR and its behavior tests (renderForm changes, errors, the panel portal, the null-panel fallback)

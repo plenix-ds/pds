@@ -1,0 +1,9 @@
+id: D-0059
+date: 2026-11-05
+area: tokens
+decided_by: agent (pds1-ds-architect) on the Product Lead's reading of the owner (#418), owner may switch
+decision: 'With no box, an EntityHeader media icon''s drawn shape reaches the edges of its media area (#418): the icon is the area (entity-header-media-size*, section-media-size*, streamlined-media-size, or the measured square when stretched) times plx-comp.entity-header-media-icon-fill-scale -> plx-sys.icon-fill-scale -> plx-ref.icon-optical-scale (1.2 = 960 / 800, the icon set''s drawing area), centered. The entity-header-*media-icon-size* tokens size the icon only with box (media.box). The fact icon stays entity-header-fact-icon-size -> fact-icon-tile-size (40px).'
+why: 'The owner asked that the icon take the full space of the former box (#418). An icon as big as its area still draws its shape at about 37 of 44px, because the icon set leaves a margin inside its 960 units; the Product Lead read the owner''s words as the drawn shape reaching the box''s edges (option B on #418).'
+options: [area times the icon fill scale (chosen, B), the icon element as big as the area (A, the shape about 37 of 44px)]
+status: active
+check: review-only (G3 on #422 and #423) and tests/entity-header-media-icon-418.test.js, which measures the drawn icon in every layout

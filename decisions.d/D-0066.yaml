@@ -1,0 +1,9 @@
+id: D-0066
+date: 2026-11-06
+area: api
+decided_by: agent (pds1-ds-architect) on the Component Engineer's card (#477, #489), owner may switch
+decision: 'The Editing choice in a page''s ViewMenu rides the shared view state: ViewMenu gains an optional editModes (two ways add an "Editing" group), its value carries editMode, useCollectionView carries editMode into tableProps and back through onViewChange, and a DataGrid with onViewChange follows its editMode prop (docs/adr/0016 addendum). No new DataGrid prop.'
+why: 'One value for the page menu and the grid menu, on the channel the other view settings already use; a separate editMode / onEditModeChange pair on ViewMenu would split the state.'
+options: [ViewMenu editModes plus value.editMode on the view state (chosen, A), ViewMenu editMode and onEditModeChange props (B)]
+status: active
+check: tests/view-menu-edit-mode-477.test.js and G3 review of #489

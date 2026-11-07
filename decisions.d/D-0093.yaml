@@ -1,0 +1,9 @@
+id: D-0093
+date: 2026-11-07
+area: components
+decided_by: owner (chat, 2026-11-07, plenix-ds/pds#862)
+decision: 'An app frame is either "full" (the full window, as before) or "1366": the whole shell is 1366px wide, centered, at the full window height, on a mid-grey page with a wide soft shadow, from existing tokens. In "1366" a person can expand to the full window and back (remembered per app). At 1366px or less the frame fills the window. Each new project chooses its default at intake. CTM''s default is "1366".'
+why: 'Owner, 2026-11-07: "I need to have options, full window size (what we have now); we should have option for 1366 × 768 ... user can expand the view to full screen size ... the frame is centered with a wide shadow ... mid grey border on the left and right ... for ctm it needs to be 1366 as default".'
+options: ['full or 1366 with an expand toggle (chosen)']
+status: active
+check: 'planned:app-shell-frame (behaviour tests AC-1 to AC-6 in docs/pds1/slices/862-shell-frame/brief.md)'

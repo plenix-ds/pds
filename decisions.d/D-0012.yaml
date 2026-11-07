@@ -1,0 +1,7 @@
+id: D-0012
+date: 2026-11-04
+area: i18n
+decided_by: owner
+decision: Keep the existing Arabic workflow (docs/i18n/arabic.md); the owner approves new Arabic words.
+status: active
+check: tools/checks/locale/locale.mjs (unapproved-ar, missing-ar; record tools/checks/locale/approved-ar.json)

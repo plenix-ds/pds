@@ -1,0 +1,9 @@
+id: D-0083
+date: 2026-11-06
+area: release
+decided_by: agent (pds1-product-lead) on CTM's request (plenix-ds/pds#750), owner may switch
+decision: 'After a release passes its live CDN check, the release step sends CTM the plenix-release event (repository_dispatch, client_payload.version), from the agent host where the release already runs, signed in as the account that owns CTM, so no new token or secret is stored. CTM''s own schedule stays as the fallback. When the PDS GitHub App exists (D-0019), the event moves to its token.'
+why: 'GitHub ran CTM''s */30 schedule only three times on 2026-11-06, so 0.89.0 and 0.90.1 waited hours. D-0020 avoided the signal only because it needs Contents write on CTM, which the release host already has through the owner account.'
+options: ['send plenix-release from the release host now, App token later (chosen)', 'wait for the PDS GitHub App (owner step D-0019)', 'keep the schedule only (D-0020)']
+status: active
+check: 'planned:release-ctm-dispatch (the release log shows the dispatch, and CTM''s Plenix CDN auto-upgrade run starts within minutes; #750)'

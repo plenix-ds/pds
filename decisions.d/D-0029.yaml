@@ -1,0 +1,9 @@
+id: D-0029
+date: 2026-11-05
+area: tokens
+decided_by: owner (2026-10-26 and 2026-11-02; plenix-ds/pds#101)
+decision: Style Dictionary replaces build-tokens.js only once the output is proven identical; steps go through QA with a computed-style proof and need no owner preview, unless something visible changes.
+why: '"Yes, only after the output is proven identical"; "i dont need a preview.. just do it correctly".'
+options: [switch after proof (chosen), switch now, keep build-tokens.js]
+status: active
+check: planned:token-output-identical (diff of generated token files in CI)

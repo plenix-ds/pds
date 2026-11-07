@@ -1,0 +1,7 @@
+id: D-0019
+date: 2026-11-05
+area: release
+decided_by: owner
+decision: CTM and PDS talk both ways through the PDS GitHub App (no personal tokens); CTM opens "CTM - Plenix <v> breaks CTM" issues in plenix-ds/pds.
+status: active
+check: review-only (until the app exists after Phase 0)

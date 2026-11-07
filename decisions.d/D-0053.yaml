@@ -1,0 +1,9 @@
+id: D-0053
+date: 2026-11-05
+area: design
+decided_by: agent (pds1-design-director), owner may switch
+decision: PrintDocument's footer prints once, at the end of the document in normal flow; no repeated running footer and no page numbers in P0 (#87).
+why: 'Repeating footers and page counters on paper behave differently across browsers (fixed position, @page margin boxes); the brief needs a footer slot, not a repeated one.'
+options: [footer once at the end (chosen), running footer on every sheet]
+status: active
+check: review-only (pds1-design-critic on the PrintDocument PR)

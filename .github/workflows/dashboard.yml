@@ -1,5 +1,5 @@
 # PDS dashboard publish (P0-13, #195; plan §6a; D-0034, built like CTM 3.0).
-# dashboard/pds1/collect.py reads GitHub and decisions.yaml (read-only) and writes data.js; the page is published to
+# dashboard/pds1/collect.py reads GitHub and the decision log, decisions.d/ (read-only) and writes data.js; the page is published to
 # GitHub Pages (https://plenix-ds.github.io/pds/) by GitHub's own Pages actions, so no job can push to the repo.
 # Runs on every push to main, on a comment on an issue labeled "decision" (an owner answer), hourly and by hand.
 name: Dashboard

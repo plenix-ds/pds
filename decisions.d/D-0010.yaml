@@ -1,0 +1,7 @@
+id: D-0010
+date: 2026-11-04
+area: design
+decided_by: owner
+decision: Table pills stay as defined; wrapping is fixed as a bug.
+status: active
+check: planned:pill-height (check 11)

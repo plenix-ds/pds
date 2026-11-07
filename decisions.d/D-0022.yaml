@@ -1,0 +1,7 @@
+id: D-0022
+date: 2026-11-05
+area: release
+decided_by: agent (pds1-release-architect), owner may switch
+decision: CI v1 on main - only new problems block (head vs merge base); "CI result" is the one required check, through a merge queue, squash only, with no bypass actors (the shared owner identity is also the agents' identity, so a bypass would let agents skip CI). Actions are limited to GitHub-owned ones and must be pinned to a commit SHA. The 0.x tag publish workflow is removed until the new release job exists, so a tag publishes nothing meanwhile. Reply to switch - B) let repository admins bypass the ruleset.
+status: active
+check: ci.yml "CI result" + ruleset 26593194 + Actions sha_pinning_required

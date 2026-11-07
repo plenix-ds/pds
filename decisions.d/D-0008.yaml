@@ -1,0 +1,7 @@
+id: D-0008
+date: 2026-11-04
+area: design
+decided_by: owner
+decision: The current blue accent is the default theme; theming is a later build.
+status: active
+check: planned:lint-colour-tokens

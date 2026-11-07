@@ -1,0 +1,9 @@
+id: D-0098
+date: 2026-11-07
+area: components
+decided_by: agent (pds1-ds-architect) at G3, owner may switch
+decision: 'SegmentedControl, RadioTiles, Tabs, NavList, MenuRadioGroup and Combobox take the option value type V and hand it back (ADR 0026). Each V defaults to the old type. V is read from the options and value, never from the handler. Combobox single hands back V or '''' and multiple hands back V[].'
+why: 'RedSave P-71 (#925): apps cast every chosen value back to their own option type. Inferring from handlers would break wider handlers that compile today (Tabs).'
+options: ['V from options and value (chosen)', 'strict handler properties, inferred from the handler too']
+status: active
+check: 'tests/types.test.js (tests/fixtures/redsave-types.tsx, #925 block and its @ts-expect-error cases)'

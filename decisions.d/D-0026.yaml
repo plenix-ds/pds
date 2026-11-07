@@ -1,0 +1,9 @@
+id: D-0026
+date: 2026-11-05
+area: components
+decided_by: owner (2026-10-24; plenix-ds/pds#127)
+decision: App page headers use the Structured header style by default.
+why: '"for the header the default is structured" (owner, 2026-10-24).'
+options: [Structured (chosen), the other header style of the owner's study]
+status: active
+check: review-only (pds1-design-critic)

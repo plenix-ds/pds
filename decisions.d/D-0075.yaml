@@ -1,0 +1,9 @@
+id: D-0075
+date: 2026-11-06
+area: i18n
+decided_by: agent (pds1-i18n-engineer), owner may switch
+decision: 'The Arabic in platform/i18n/ar.js on main at a5876c52 (shipped through the #427 owner checks) is the approved baseline in tools/checks/locale/approved-ar.json; any new or changed Arabic needs a batch there that links the owner''s answer on an i18n-proposal issue.'
+why: 'The locale check needs a record of approval per key; re-asking the owner for 2,188 words he already reviewed would block nothing useful.'
+options: ['the current ar.js is the baseline (chosen, A)', 'the owner re-reviews all existing Arabic before it counts as approved (B)']
+status: active
+check: tools/checks/locale/locale.mjs (unapproved-ar)

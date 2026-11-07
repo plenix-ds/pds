@@ -1,0 +1,7 @@
+id: D-0032
+date: 2026-11-05
+area: architecture
+decided_by: agent (pds1-ds-architect), owner may switch
+decision: Token tiers are ref -> sys -> comp with no skipping, and names never contain values; tokens are renamed in 1.0.0 and every old name stays as a deprecated alias until 2.0.0 so CTM keeps working (docs/adr/0002).
+status: active
+check: planned:token-tiers (check 6), planned:token-names (check 7)
