@@ -1,0 +1,3 @@
+### Fixed
+
+- The release build (`node build-packages.js`) works again. The Angular, Vue and web-component packages took their component names and props from `export declare const X: React.ComponentType<` lines that exist only for parts documented in JavaScript; with the last of them in TypeScript the build stopped ("Angular needs generated React declarations"). They now read the published declarations with the TypeScript compiler (`tools/packages/react-components.js`). The same 18 components are bridged as in 0.91.0 (`tools/packages/bridge-components.json`); each bridge package now also carries the `types/` declarations that its `react-props.d.ts` re-exports (#871).

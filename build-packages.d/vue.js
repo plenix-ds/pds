@@ -67,18 +67,12 @@ module.exports = function buildVue(ctx) {
   const { ROOT, PKG, VERSION, SCOPE, SITE, REPO, write, json, copy } = ctx;
   const out = path.join(PKG, 'vue'), types = path.join(PKG, 'react', 'index.d.ts');
   if (!fs.existsSync(types)) throw new Error('Build the React types before the Vue package.');
-  const source = fs.readFileSync(types, 'utf8');
-  const names = [...source.matchAll(/export declare const (\w+): React\.ComponentType</g)].map((match) => match[1]);
-  if (!names.length) throw new Error('No React component types found for the Vue bridge.');
-  const booleans = {};
-  for (const block of source.split('export interface ').slice(1)) {
-    const name = block.split('Props')[0], props = block.split(String.fromCharCode(10) + '}')[0];
-    booleans[name] = [...props.matchAll(/([A-Za-z0-9_]+)[?]: boolean;/g)].map((prop) => prop[1]);
-  }
+  const rc = require('../tools/packages/react-components.js')(types), names = rc.names, booleans = rc.booleans;
   const body = 'import * as Vue from "vue";\nconst COMPONENT_NAMES = ' + JSON.stringify(names) + ';\nconst COMPONENT_BOOLEANS = ' + JSON.stringify(booleans) + ';\nconst bridge = (' + runtime.toString() + ')(Vue);\n';
   write(path.join(out, 'index.mjs'), body + 'export const { configurePlenix, createVueComponents, PlenixVue } = bridge;\n' + names.map((name) => 'export const ' + name + ' = bridge.components.' + name + ';').join('\n') + '\nexport default PlenixVue;\n');
   write(path.join(out, 'bridge.css'), '.plx-vue-host, .plx-vue-slot { display: contents; }\n');
   copy(types, path.join(out, 'react-props.d.ts'));
+  ctx.copyDir(path.join(PKG, 'react', 'types'), path.join(out, 'types'));
   const header = 'import type * as Vue from "vue";\nimport type * as React from "react";\nimport type * as Props from "./react-props.js";\nexport interface PlenixRuntime { React: typeof React; ReactDOM: { createRoot(host: Element): { render(node: React.ReactNode): void; unmount(): void } }; Plenix: Record<string, React.ElementType> }\nexport interface VueOptions { runtime?: PlenixRuntime; prefix?: string }\ntype ModelProps = { modelValue?: unknown; "onUpdate:modelValue"?: (value: any) => void };\n';
   write(path.join(out, 'index.d.ts'), header + names.map((name) => 'export declare const ' + name + ': Vue.DefineComponent<Props.' + name + 'Props & ModelProps>;').join('\n') + '\nexport declare function configurePlenix(runtime: PlenixRuntime): void;\nexport declare function createVueComponents(runtime?: PlenixRuntime): { ' + names.map((name) => name + ': typeof ' + name).join('; ') + ' };\nexport declare const PlenixVue: Vue.Plugin<[VueOptions?]>;\nexport default PlenixVue;\n');
   json(path.join(out, 'package.json'), { name: SCOPE + '/vue', version: VERSION, description: 'Vue 3 bridges for the Plenix CDN React components', license: 'UNLICENSED', homepage: SITE + '/', repository: { type: 'git', url: 'git+' + REPO + '.git', directory: 'packages/vue' }, publishConfig: { registry: 'https://npm.pkg.github.com', access: 'restricted' }, type: 'module', main: './index.mjs', types: './index.d.ts', exports: { '.': { types: './index.d.ts', import: './index.mjs' }, './bridge.css': './bridge.css' }, files: ['*.mjs', '*.d.ts', '*.css', 'README.md', 'example'], sideEffects: ['*.css'], peerDependencies: { vue: '^3.3.0', '@types/react': '>=18 <20' } });

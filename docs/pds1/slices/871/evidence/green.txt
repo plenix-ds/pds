@@ -1,0 +1,4 @@
+node build-app.js && node build-packages.js on this branch:
+  steps (build-packages.d): angular (angular: 18 typed standalone CDN adapters), figma (figma: 141 existing kit-node connections, 7213 token records), lint (lint: ESLint and Stylelint adapters plus or
+exit 0
+main (before): exit 1, Error: Angular needs generated React declarations

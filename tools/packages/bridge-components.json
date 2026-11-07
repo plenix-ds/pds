@@ -1,0 +1,20 @@
+[
+ "AuthenticationPage",
+ "CommandBar",
+ "CommandBarButton",
+ "CommandBarSearch",
+ "ContentManagementPage",
+ "CreatePage",
+ "DetailPage",
+ "EditPage",
+ "ErrorPage",
+ "FullScreenExperience",
+ "FullScreenWorkspace",
+ "HomePage",
+ "LandingPage",
+ "ListingPage",
+ "MasterDetailPage",
+ "SearchResultsPage",
+ "SinglePaneWorkspace",
+ "SplitWorkspace"
+]

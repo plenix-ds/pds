@@ -141,8 +141,7 @@ export function defineElements(options = {}) {
 module.exports = function buildWebComponents(ctx) {
   const fs = require('fs'), path = require('path');
   const { PKG, VERSION, SCOPE, SITE, REPO, write, json } = ctx, dest = path.join(PKG, 'web-components');
-  const types = fs.readFileSync(path.join(PKG, 'react', 'index.d.ts'), 'utf8');
-  const names = [...types.matchAll(/export declare const (\w+): React\.ComponentType/g)].map((m) => m[1]).filter((name) => !/(Provider|Context)$/.test(name));
+  const names = require('../tools/packages/react-components.js')(path.join(PKG, 'react', 'index.d.ts')).names.filter((name) => !/(Provider|Context)$/.test(name));
   const runtime = SOURCE.replace('__ELEMENTS__', JSON.stringify(names));
   write(path.join(dest, 'index.js'), runtime);
   const css = fs.readFileSync(path.join(PKG, 'styles', 'plenix.min.css'), 'utf8').replace(/(?::root|(?<![\w-])html)((?:\[[^\]]+\])*)/g, (match, attrs) => attrs ? ':host(' + attrs + ')' : ':host');
