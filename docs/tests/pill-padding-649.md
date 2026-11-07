@@ -1,6 +1,6 @@
 # pill-padding-649
 
-A pill (a small rounded label such as "Needs decision") in a table cell has the same space on both sides, and its text is centered.
+A pill (a small rounded label such as "Needs decision") in a table cell has the same space on both sides, and its text starts at the start edge (it was centered until #848, owner 2026-11-07).
 
 - File: `tests/pill-padding-649.test.js`
 
@@ -8,7 +8,7 @@ A pill (a small rounded label such as "Needs decision") in a table cell has the 
 - Each pill has 4px of padding before and after its text (the old build had 6px and 10px).
 - The text is as far from one edge of the pill as from the other, within half a pixel.
 - Every pill in a column has the same width, on the 4px grid: the widest text plus two paddings and two borders, rounded up, and no more.
-- A narrower pill's text is centered in that shared width.
+- A narrower pill's text starts at the start edge of that shared width (#848).
 - It checks a column of identical pills and a column of mixed widths, in the compact and the standard density, left to right and right to left (RTL, for Arabic).
 - No script errors.
 

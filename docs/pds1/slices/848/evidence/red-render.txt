@@ -1,0 +1,6 @@
+AssertionError [ERR_ASSERTION]: rtl 1500px 12 rows: render-plaintiff pills share one width, got [64.2,94.1,120.7,106.1,128.4,167.6]
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',

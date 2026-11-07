@@ -30,7 +30,7 @@ export function usePillWidths({ frame, cells, metrics, columns, allRows, showTyp
   // uniform pill widths (CTM, 2026-10-22; always on, owner uniform-pills-always-35): every standard pill of a column as wide as the
   // column's widest pill in the current view (the filtered, sorted page, every row of it, not only the rows drawn), so scrolling
   // a long list never changes it. The uniformPillWidths prop is accepted and ignored (deprecated).
-  // Measured like the column widths (the pill's font, weight, sides, border and icon), snapped up to the grid, the text centered in it so the leftover splits between the two sides (#649).
+  // Measured like the column widths (the pill's font, weight, sides, border and icon), snapped up to the grid, the label at the start edge, the leftover after it (#848: the owner's rule is that text is not centered; it was centered in #649).
   const gridKey = React.useId(),
     [fontsReady, setFontsReady] = React.useState(0);
   React.useEffect(() => {
@@ -94,12 +94,55 @@ export function usePillWidths({ frame, cells, metrics, columns, allRows, showTyp
           CSS.escape(c.field) +
           '"]{inline-size:' +
           snapToGrid(widest + sides + (icon ? glyph : 0), { round: 'up', step }) +
-          'px;justify-content:center;}'
+          'px;justify-content:flex-start;}'
       );
     });
+    // the pills a column's own render draws (an app's Plenix DataPill, #848): there is no value to measure, so the pills drawn are, and the widest seen
+    // since the data or the columns last changed holds, so scrolling never narrows a pill. Same rule, same variable path: one width, label at the start.
+    const drawn = columns.filter((c) => c.render);
+    const seen = new Map<string, number>();
+    const base = rules.slice();
+    const publish = () => {
+      const more = [...seen].map(
+        ([field, w]) =>
+          '[data-plx-grid-key="' + key + '"] [data-plx-cell-field="' + CSS.escape(field) + '"] .plx-data-pill{inline-size:' +
+          snapToGrid(w, { round: 'up', step }) + 'px;justify-content:flex-start;}'
+      );
+      store.rules.set(gridKey, base.concat(more).join('\n'));
+      store.flush();
+    };
+    const measureDrawn = () => {
+      let grew = false;
+      drawn.forEach((c) => {
+        at.querySelectorAll('[data-plx-cell-field="' + CSS.escape(c.field) + '"] .plx-data-pill').forEach((pill) => {
+          const data = pill.classList.contains('plx-data-pill--data'),
+            face = faces[data ? 'data' : 'text'];
+          ctx.font = face.font;
+          ctx.wordSpacing = face.wordSpacing;
+          const label = pill.querySelector('.plx-data-pill__value'),
+            w = ctx.measureText((label?.textContent || '').trim()).width * face.scale + sides + (pill.querySelector('.plx-data-pill__icon, .plx-avatar') ? glyph : 0);
+          if (w > (seen.get(c.field) || 0)) {
+            seen.set(c.field, w);
+            grew = true;
+          }
+        });
+      });
+      if (grew) publish();
+    };
     store.rules.set(gridKey, rules.join('\n'));
     store.flush();
-    return undefined;
+    if (!drawn.length) return undefined;
+    measureDrawn();
+    const View = at.ownerDocument.defaultView as Window & typeof globalThis;
+    let queued = 0;
+    const watch = new View.MutationObserver(() => {
+      if (!queued) queued = View.requestAnimationFrame(() => { queued = 0; measureDrawn(); });
+    });
+    watch.observe(at, { childList: true, subtree: true });
+    return () => {
+      watch.disconnect();
+      if (queued) View.cancelAnimationFrame(queued);
+    };
   }, [cells, columns, allRows, metrics.row, metrics.space, showTypes, fontsReady]);
   React.useEffect(
     () => () => {

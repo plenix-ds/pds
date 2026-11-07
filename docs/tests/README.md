@@ -72,7 +72,7 @@ Each line links to the test's page. A test that a group test starts is listed un
 - [filter-by-field-269](filter-by-field-269.md): "Filter by this field" in a column's menu opens the command bar's Filter panel on that field when the list has a command bar, and the column's own filter box when it does not.
 - [listing-page-522](listing-page-522.md): A list page (ListingPage) fills the window with its table, scrolls only inside the table, and shows the chosen record beside it.
 - [multi-groups](multi-groups.md): Grouping a table by a field with several values (such as tags) shows a record under each value, yet selecting, editing, counting or deleting it treats it as one record.
-- [pill-padding-649](pill-padding-649.md): A pill (a small rounded label such as "Needs decision") in a table cell has the same space on both sides, and its text is centered.
+- [pill-padding-649](pill-padding-649.md): A pill (a small rounded label such as "Needs decision") in a table cell has the same space on both sides, and its text starts at the start edge.
 - [remote-fill-522](remote-fill-522.md): A table whose rows come from a server loads more rows as the person scrolls, with no page buttons, and recovers when a page fails to load.
 - [remote-fill-614](remote-fill-614.md): A table whose rows come from a server stops asking for more when the server runs out, starts over cleanly on a new search, and ignores a late page after a sort.
 - [row-line-559](row-line-559.md): A hovered or selected row in a table has a line above it that matches the line below it.
