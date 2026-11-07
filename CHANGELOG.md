@@ -6,6 +6,36 @@ The batch numbers point to the work log (Plenix - DAM/audit/batches/).
 
 ## [Unreleased]
 
+## [0.92.0] - 2026-11-07
+
+### Upgrading from 0.91.0
+No breaking change. DataGrid fixes from 0.91.0: pills in a column are one width again with their label at the start, and a fixed table shares its spare room evenly. Icon buttons everyone knows (a close X, a clear X, calendar chevrons, the row ⋮) no longer show a visual tooltip; they keep their accessible name. AppShell gains a frame prop ("full", the default and unchanged, or "centered" at 1366px with an expand toggle). The 20 props type names 0.91.0 dropped are exported again.
+
+### Added
+- Tokens for the AppShell frame (#862, ADR 0023): `--plx-ref-breakpoint-laptop` (1366px, the D-0092 laptop screen) and `--plx-sys-shell-frame-width`, which points to it. Also `--plx-sys-shell-frame-outside` (gray-300 in light, gray-950 in dark) and `--plx-sys-shell-frame-shadow` (the `shadow-lg` role) for the page outside a centered frame. The `frame` prop and the toggle come with the build.
+- AppShell: a `frame` prop, `"full"` (default, as before) or `"centered"` (D-0093, ADR 0023, #862), with `onFrameChange`. With `"centered"` the shell is 1366px wide, centered at the full window height, on a grey backdrop with a wide shadow, and the AppHeader gets a toggle at its end to expand to the full window and back (remembered). New tokens: `--plx-sys-shell-frame-outside` and `--plx-sys-shell-frame-shadow` (the breakpoint and the width come with ADR 0023). New words: `appShell.frame.expand` and `appShell.frame.restore` (Arabic pending approval).
+
+### Changed
+- `platform/standards/variants/styles.json`: Platforms standard guidance, Product options, Product switcher, Permission summary and the Range slider range document what they render (#353).
+- `platform/standards/variants/styles.json`: Search input surfaces and Range slider marks document what they set (#353).
+- `platform/standards/variants/styles.json`: the unselected Chip, the renamable Tag and the XL Presence dot document what they set (#353).
+- `platform/standards/variants/styles.json`: Print, Query builder text view, Full-screen workspace, Inspector resize, Navigation rail and expandable text document what they set or render (#353).
+- TypeScript wave 3, CommandBar (#753, ADR 0011): `CommandBar`, `BarActions` and the panel parts are now `.tsx`, with exported prop types: `CommandBarProps`, `CommandBarAction`, `CommandBarItem`, `CommandBarSelection`, `CommandBarEnd`, `CommandBarButtonProps` and `CommandBarSearchProps`. No `any` in a public prop. No behavior change.
+- TypeScript wave 4, templates (#781, ADR 0011): the page templates (`templates/templates/Templates`) and the commerce templates (`Commerce`, `Storefront`, `Checkout`, `Account`, `shared`) are now `.tsx`. Their props stay untyped for now (internal `any`); no behavior change.
+- TypeScript wave 5 (#781, ADR 0011): `platform/index.js` is now `platform/index.ts` and the `platform/exports/w*.js` re-export lists are `w*.ts`. `build-exports.js`, the Vite configs, `build-packages.js`, `build-types.js`, `build-standards.js`, the ownership check and the tests that read those paths follow. The public API, the bundles and the published declarations are unchanged (606 exports).
+
+### Changed (visual)
+- Icon buttons everyone knows show no visual tooltip (D-0091, DESIGN.md §6); they keep their `aria-label`. The close and dismiss X of `Dialog`, `Sheet`, `Popover`, `Banner`, `Notice`, `TeachingBubble`, `SecondaryPane` and `UploadManager`, the clear X of `Combobox`, the previous and next chevrons of `Calendar` and `Carousel`, the back arrow of `CommandMenu` and the `DataGrid` row ⋮ pass `tooltip={false}`. `Button` still shows its label as a tooltip on every other icon-only button, and an app can pass `tooltip` explicitly (#851).
+
+### Fixed
+- TypeScript: 20 props type names that `@plenix-ds/react` published until 0.90.x are exported again. 0.91.0 dropped them without a *Breaking* note (D-0081 moved TypeScript parts to tsc's own declarations, and these parts didn't export their props type). The 20 are `AnchorProps`, `ChartPatternsProps`, `ChatAttachmentProps`, `ChatVoiceProps`, `DataGridEngineProps`, `EntityTitleProps`, `HideProps`, `MenuBarMenuProps`, `MenuBarProps`, `MenuDividerProps`, `MetricProps`, `OverflowListProps`, `PromptInputProps`, `PromptSuggestionsProps`, `RichTextProps`, `SearchResultGroupProps`, `SearchResultProps`, `ShowProps`, `SideNavPortalProps` and `TableSettingsProps`.
+- The `@plenix-ds/angular` and `@plenix-ds/vue` bridges are generated again, and their typings resolve: they now ship React's `types/` folder beside `react-props.d.ts`, which since 0.91.0 re-exports from it. Both read each part's props from tsc's declarations as well as from the header-typed ones (`build-packages.d/lib/react-props.js`). The release build had stopped once the last parts became TypeScript.
+- `platform/standards/variants/styles.json`: Permission summary's Can and Cannot lists record the styles that draw them (its own `__lists` rule and three tokens). The range slider and the product switcher rows name the component that draws them (Slider, AppHeader) instead of "markup only" (#353, G3 on #843).
+- DataGrid: the label of a pill in a pill grid starts at the start edge of the pill, the equal width of the column leaves its spare room after it. It was centered, against the rule that text is not centered (#848). The equal width of a column's pills is unchanged and now has a test, with people pills.
+- DataGrid: Plenix `DataPill`s that a column's own `render` draws (CTM's Applicant, Respondent and Assigned to) are one width per column too, the widest drawn in the view, label at the start. The width never shrinks while scrolling (#848).
+- DataGrid: in a fixed table (`isStatic`, `narrow="table"` or a list), the spare room is shared evenly across the columns that size themselves, as in the default grid. It went to the last one alone, so a short-valued column ("Years married") could take most of a wide grid (AC-3 of the column-sizing rule, D-0087, #848).
+- The `@plenix-ds/web-components` package defines its custom elements again. Once the last parts became TypeScript, its build found no components and produced an empty package without an error. It now reads the components the same way as the Vue and Angular bridges, and the build fails if it finds none.
+
 ## [0.91.0] - 2026-11-06
 
 ### Upgrading from 0.90.2
