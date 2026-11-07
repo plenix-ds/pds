@@ -265,7 +265,7 @@ const R = path.join(PKG, 'react');
 // @plenix-ds/react's JavaScript, built by Vite in library mode (#709, step 5; vite.packages.config.mjs), one run per build:
 //   cdn  release/cdn/<v>/plenix.esm.js: the ES module as one file (unchanged): it knows its own address (#284), so Icon finds
 //        the icon files beside it, whatever the file is called
-//   esm  the npm package's ES modules, one per part (#685, the audit #684): an entry for each module platform/index.js
+//   esm  the npm package's ES modules, one per part (#685, the audit #684): an entry for each module platform/index.ts
 //        exports from, at its own path, and the barrel dist/index.js; the code two parts share sits once in dist/chunks/, so
 //        an application that imports one part bundles that part and what it uses. What loads only when asked (#702) is in
 //        these ES modules only: Arabic (import '@plenix-ds/react/i18n/ar', dist/i18n/ar.js) and the icon names (a chunk of
@@ -285,7 +285,7 @@ require('./build-types.js')(path.join(R, 'index.d.ts'), VERSION);
 // the Arabic opt-in is imported for what it does, and exports nothing (#702)
 write(path.join(R, 'i18n', 'ar.d.ts'), '/* @plenix-ds/react ' + VERSION + ' · import \'@plenix-ds/react/i18n/ar\': Plenix\'s own words in Arabic on an Arabic page (generated). */\nexport {};\n');
 const exportsList = [];
-for (const m of fs.readFileSync(path.join(P, 'index.js'), 'utf8').matchAll(/export \{([^}]+)\} from '([^']+)'/g)) {
+for (const m of fs.readFileSync(path.join(P, 'index.ts'), 'utf8').matchAll(/export \{([^}]+)\} from '([^']+)'/g)) {
   // a renamed export ("PLACEMENTS as FLOATING_PLACEMENTS") is listed by its public name
   for (const n of m[1].split(',').map((x) => x.trim()).filter(Boolean)) exportsList.push({ name: n.replace(/^\w+\s+as\s+/, ''), file: 'platform/' + m[2].replace(/^\.\//, '') });
 }
@@ -395,7 +395,7 @@ copy(path.join(I, 'icons.json'), path.join(CDN, 'icons', 'icons.json'));
 // library are already in the release) plus the few repository files a spec page documents (src: '../…' in a record).
 {
   const SRC = path.join(CDN, 'source');
-  for (const f of ['platform.css', 'plenix-system.css', 'index.js', path.join('tokens', 'tokens.index.json')]) copy(path.join(P, f), path.join(SRC, 'platform', f));
+  for (const f of ['platform.css', 'plenix-system.css', 'index.ts', path.join('tokens', 'tokens.index.json')]) copy(path.join(P, f), path.join(SRC, 'platform', f));
   for (const d of ['components', 'patterns', 'hooks', 'providers', 'templates', 'utils', 'charts', 'i18n', 'exports', 'system', 'standards', 'brand', 'dev', path.join('icons', 'inventory')]) copyDir(path.join(P, d), path.join(SRC, 'platform', d), (n) => n !== 'node_modules');
   const DSD = path.join(P, 'design-system'), outside = new Set();
   for (const f of ['spec-parts.js', 'inventory.js'].map((x) => path.join(DSD, x)).filter((x) => fs.existsSync(x))) {

@@ -127,7 +127,7 @@ const unitOf = (p) => { const m = /^(components|patterns)\/([^/]+)\//.exec(p) ||
 function platform() {
   const P = path.join(ROOT, 'platform');
   const exportsOf = {};   // export name -> unit
-  for (const f of [path.join(P, 'index.js')].concat(walk(path.join(P, 'exports'), (n) => /\.js$/.test(n)))) {
+  for (const f of [path.join(P, 'index.ts')].concat(walk(path.join(P, 'exports'), (n) => /\.ts$/.test(n)))) {
     for (const m of read(f).matchAll(/export\s*\{([^}]*)\}\s*from\s*'([^']+)'/g)) {
       const u = unitOf(path.posix.normalize(path.posix.join(rel(path.dirname(f)).replace(/^platform\/?/, ''), m[2])));
       if (u) m[1].split(',').map((x) => x.trim().split(/\s+as\s+/).pop()).filter(Boolean).forEach((n) => { exportsOf[n] = u; });

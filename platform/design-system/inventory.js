@@ -1655,7 +1655,7 @@
       use: ['const [view, updateView] = useViewState(\'notes\'); <SecondaryPane size={view.paneWidth} onSizeChange={(w) => updateView({ paneWidth: w })} scrollTop={view.scroll} onScrollChange={(t) => updateView({ scroll: t })}>'],
       avoid: ['State that other people or devices must see (it stays in this browser)', 'localStorage without try/catch'],
       related: ['screen-location', 'secondary-pane'], map: [] },
-    { id: 'react', sec: 'implementation', sub: 'Frameworks', leaf: 'React', title: 'React (the Platform)', plenix: 'platform/index.js', src: 'index.js', css: [], level: 'Utility', interaction: 'Utility',
+    { id: 'react', sec: 'implementation', sub: 'Frameworks', leaf: 'React', title: 'React (the Platform)', plenix: 'platform/index.ts', src: 'index.ts', css: [], level: 'Utility', interaction: 'Utility',
       aliases: ['Component library', 'plenix-platform'],
       text: 'Components are React (JSX) in platform/components and platform/patterns; only what index.js exports is public. Applications import them from "plenix-platform". node build-app.js (in Plenix/) builds platform/dist/platform.js (window.Plenix), each suite application’s app.js and the Asset Manager\'s app/assets.js.',
       use: ['Every new piece: a folder with its .jsx and .css, a header comment (its documentation), an export in index.js, a record in this inventory'], avoid: ['Components inside one application that more than one application needs'],
