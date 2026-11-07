@@ -28,8 +28,8 @@ Current version: 0.90.1. The history continues (template §1, principle 6). The 
 | Milestone | Contents (epics) | Status |
 |---|---|---|
 | 0.91.0 to 0.93.1 | E3 TypeScript (done), E4 the class removal, the table fixes (D-0087), the 1366 frame (D-0093), the type fixes (#893) | **Shipped** 2026-11-07 |
-| **1.0.0** | O3 the coverage map and S1/S2 gaps (#901); O4 the language gate (#902); G0 closed (#903); no open S1/S2 (D-0095) | Next |
-| 1.x | The coverage gaps below S2; E7 docs; dark mode (D-0025, last) | Outline |
+| **1.0.0** | O3 the coverage map (#901, 0 parts with no test, #908); O4 the language gate (#902); G0 closed (#903); no open S1/S2 (D-0095) | **Shipped** 2026-11-07 (G8 PASS) |
+| **1.x** (next) | RedSave typed rows (#923), date filters (#939), no raw HTML sinks (#940); read-only fields (#946), form span (#947), footer with no fill (#948); the coverage gaps below S2 (#909); decisions one file each (#955); dark mode last (D-0025) | Next |
 
 ## 5. Epics
 
@@ -69,6 +69,8 @@ Recorded needs only (template §4.5). Each item links its finding. They rank bel
 - The 1.0.0 definition isn't fixed yet; it goes on a decision issue.
 
 ## 9. Change log
+
+- 2026-11-07: **Plenix 1.0.0 shipped** (CDN, npm and API; G8 PASS). The 1.x milestone is planned.
 
 - 2026-11-07: plan review: 0.91.0 to 0.93.1 shipped; O2 and O5 met; 1.0.0 defined (D-0095); next: #901, #902, #903.
 
