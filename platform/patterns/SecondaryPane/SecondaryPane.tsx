@@ -178,7 +178,7 @@ export function SecondaryPane(props: SecondaryPaneProps) {
         <span className="plx-secondary-pane__title">{title}</span>
         {actions}
         {collapsible ? <Button size="xs" variant="ghost" iconOnly icon={side === 'start' ? PanelLeftCloseIcon : PanelRightCloseIcon} label={named(t.collapse)} onClick={() => setFolded(true)} /> : null}
-        {onClose ? <Button size="xs" variant="ghost" iconOnly icon={CloseIcon} label={named(t.close)} onClick={onClose} /> : null}
+        {onClose ? <Button size="xs" variant="ghost" iconOnly tooltip={false} icon={CloseIcon} label={named(t.close)} onClick={onClose} /> : null}
       </div>
       <div ref={body} className="plx-secondary-pane__body" onScroll={onScroll} onClick={listDetail ? onBodyClick : undefined}>{children}</div>
       {resizable && !(narrow && listDetail) ? (
