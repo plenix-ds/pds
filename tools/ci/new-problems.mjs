@@ -78,6 +78,8 @@ function typesFindings() {
       const whole = /^export declare (?:function|const) ([\w$]+)\s*[:(]\s*(?:\{[^}]*\}|props|_props)\s*:\s*any\b/.exec(l)
         || (/^\s+var ([\w$]+): \((?:\{[^}]*\}|props)\s*:\s*any\)/.exec(l) && [null, owner + '.' + /^\s+var ([\w$]+)/.exec(l)[1]]);
       if (whole) out.push(['types', name, 'any-props-object', `${whole[1]}'s props are any`, i + 1]);
+      // a component declared as a const with a call signature: export declare const X: { (props: any): … } (the lazy charts, #61)
+      if (/^\s+\((?:props|_props|\{[^}]*\})\s*:\s*any\)\s*:/.test(l)) out.push(['types', name, 'any-props-object', `${owner}'s props are any`, i + 1]);
       // a callback typed (...args: never[]) takes any function but gives an inline handler's parameters the type never (#812)
       const never = /^\s+([\w$]+)\??: \(\.\.\.args: never\[\]\) =>/.exec(l);
       if (never) out.push(['types', name, 'never-callback', `${owner}.${never[1]} takes (...args: never[]): type its parameters`, i + 1]);
