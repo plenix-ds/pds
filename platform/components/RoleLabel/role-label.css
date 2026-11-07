@@ -1,5 +1,5 @@
 /* Plenix · RoleLabel (platform/components/RoleLabel). The label is a Tag (tag.css: height, corners, fill, border, type,
    and the category colors); this sets the icon before the name: its size and the space after it. The icon takes the
    label's text color (gray, or the category's dark shade). */
-.plx-tag.plx-role-label{column-gap:var(--plx-comp-role-label-gap);}
+.plx-tag.plx-role-label{column-gap:var(--plx-comp-role-label-gap);max-inline-size:100%;}
 .plx-role-label__icon{--plx-comp-icon-size:var(--plx-comp-role-label-icon-size);align-items:center;display:inline-flex;flex-shrink:0;}

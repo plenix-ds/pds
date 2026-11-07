@@ -119,6 +119,16 @@
     "selected": "n/a(an event chip does not stay selected)",
     "error": "n/a(a chip has no value to validate)"
   },
+  "RoleLabel": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(stories arrive with Storybook, P0-11)",
+    "loading": "n/a(stories arrive with Storybook, P0-11)",
+    "selected": "n/a(stories arrive with Storybook, P0-11)",
+    "error": "n/a(a long role name now truncates; the part has no value to validate)"
+  },
   "Checklist": {
     "default": "n/a(stories arrive with Storybook, P0-11)",
     "hover": "n/a(stories arrive with Storybook, P0-11)",
@@ -379,6 +389,16 @@
     "selected": "n/a(a metric is not selectable)",
     "error": "n/a(a metric has no value to validate)"
   },
+  "FloatingActionButton": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(stories arrive with Storybook, P0-11)",
+    "loading": "n/a(stories arrive with Storybook, P0-11)",
+    "selected": "n/a(stories arrive with Storybook, P0-11)",
+    "error": "n/a(an extended button now shrinks to its container; the part has no value to validate)"
+  },
   "MediaViewer": {
     "default": "n/a(stories arrive with Storybook, P0-11)",
     "hover": "n/a(stories arrive with Storybook, P0-11)",
@@ -578,5 +598,15 @@
     "loading": "n/a(stories arrive with Storybook, P0-11)",
     "selected": "n/a(stories arrive with Storybook, P0-11)",
     "error": "n/a(a change to where the toast region sits; the toast has no value to validate)"
+  },
+  "Pagination": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(Previous on the first page and Next on the last are disabled buttons; the control as a whole is never disabled)",
+    "loading": "n/a(the pages are chosen by the caller; it does not load)",
+    "selected": "n/a(the current page carries aria-current=\"page\", not a selection)",
+    "error": "n/a(a page number has no value to validate; a page outside the range is held inside it)"
   }
 }

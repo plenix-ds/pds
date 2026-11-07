@@ -1,0 +1,1 @@
+ltr: FloatingActionButton: a long label does not overflow (268px)  (found by the new actions test before the fix)
