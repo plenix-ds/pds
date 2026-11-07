@@ -6557,5 +6557,45 @@
   "reorder--order-reversed-below-narrow": {
     "sets": [],
     "why": ".plx-layout--reverse-below-narrow in stack.css applies the same reversed direction only under 600px (a window media query); it sets a direction, not a token"
+  },
+  "platform-implementation--guidance-mobile-web": {
+    "sets": [],
+    "why": "markup only: guidance: use the existing shell layout modes, touch targets and list-detail navigation at narrow widths"
+  },
+  "platform-implementation--guidance-desktop": {
+    "sets": [],
+    "why": "markup only: guidance: keep keyboard operation, resizable panes, and restoring the last screen, side pane width and scroll position consistent with the desktop shell"
+  },
+  "platform-implementation--guidance-native-implementation": {
+    "sets": [],
+    "why": "markup only: guidance: use the generated iOS and Android tokens and the additive native guidance; native controls keep the platform's behavior"
+  },
+  "product-options--kind-size-buttons": {
+    "sets": [],
+    "why": "markup only: RadioTiles at the product's tile width in one radio group; an out of stock size is disabled with its note under it"
+  },
+  "product-options--kind-color-swatches": {
+    "sets": [],
+    "why": "markup only: ColorSwatch buttons in a row, each named by its color; the chosen one has a ring and its name beside the label, and an out of stock one is dimmed and announced"
+  },
+  "product-options--kind-quantity": {
+    "sets": [],
+    "why": "markup only: the NumberInput quantity stepper in a Field (minus, the count in the data font, plus), named with the product and kept between min and max"
+  },
+  "product-switcher--name-the-application-name-default": {
+    "sets": [],
+    "why": "markup only: Plenix and the application name with a chevron, which opens the applications"
+  },
+  "product-switcher--name-a-brand-mark-before-the-name": {
+    "sets": [],
+    "why": "markup only: the Plenix mark before the name, as tall as its two lines"
+  },
+  "permission-summary--form-can-and-cannot-lists-default": {
+    "sets": [],
+    "why": "markup only: the access line, then Can and Cannot lists side by side (stacked when narrow), each a small heading over its checks or crosses"
+  },
+  "range-slider--kind-range-two-thumbs": {
+    "sets": [],
+    "why": "markup only: a minimum and a maximum, with the part between them filled"
   }
 }
