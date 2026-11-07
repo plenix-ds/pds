@@ -1,0 +1,1 @@
+ltr: LoadMore: a long label does not overflow (50px)  (found by the new navigation test before the LoadMore fix)
