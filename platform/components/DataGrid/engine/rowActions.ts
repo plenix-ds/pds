@@ -9,7 +9,7 @@
        fourth item in (items with inline: true take the places first, then the others in order). A danger item is never an icon, whatever inline says.
      The rest keep their order; separators are kept between items but never lead, trail or double up, so Delete stays last after its divider.
 */
-import React from 'react';
+import { development } from '../../../utils/devWarn.ts';
 
 const MAX_ICONS = 3;
 type Item = { icon?: unknown; separator?: boolean; danger?: boolean; inline?: boolean };
@@ -18,8 +18,8 @@ const warned = new Set<string>();
 export function splitRowActions<T extends Item>(items: T[]): { inline: T[]; rest: T[] } {
   const eligible = (i: T) => !i.separator && !!i.icon && !i.danger;
   const chosen = new Set<T>();
-  // development only (React's dev build marks its elements with _store): a danger item asked to be an icon is told once that it stays in the menu
-  const dev = Object.prototype.hasOwnProperty.call(React.createElement('span'), '_store');
+  // development only: a danger item asked to be an icon is told once that it stays in the menu
+  const dev = development();
   items.forEach((i) => {
     const name = String((i as any).label);
     if (dev && i.inline === true && i.danger && !warned.has(name)) { warned.add(name); console.warn('DataGrid: a danger row action stays in the ⋮ menu; inline is ignored for ' + name); }

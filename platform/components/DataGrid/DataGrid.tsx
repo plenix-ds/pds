@@ -328,7 +328,7 @@ export type DataGridMenuAction<R> = { label?: string; icon?: IconValue | React.R
   /** show as an icon button on a wide grid (true), never (false), or by the default rule: the first three items with an icon. A danger item is never inline. */
   inline?: boolean };
 /** @public */
-export type DataGridColumnMenuAction<R = Record<string, unknown>> = { label?: string; icon?: IconValue | React.ReactNode; onSelect?(column: DataGridColumn<R>): void; danger?: boolean; disabled?: boolean; separator?: boolean; inline?: boolean };
+export type DataGridColumnMenuAction<R = Record<string, unknown>> = { label?: string; icon?: IconValue | React.ReactNode; onSelect?(column: DataGridColumn<R>): void; danger?: boolean; disabled?: boolean; separator?: boolean };
 /** @public a row's key: the value of its `index` field */
 export type DataGridKey = string | number;
 /** @public */
