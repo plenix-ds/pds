@@ -57,7 +57,7 @@
 ## Addendum (2026-11-07, #877): `data-plx-frame` on `<html>`
 
 - While a centered frame is shown (`frame="centered"`, with room, not expanded), AppShell sets **`data-plx-frame="centered"`** on `<html>` and removes it otherwise.
-  - Layers that sit on the window (a Drawer, the toasts) read the frame's width through it, in CSS: `:root[data-plx-frame="centered"]` sets `--plx-state-frame-width`.
+  - Layers that sit on the window (a Drawer, the toasts) read the frame's width through it, in CSS: `:root[data-plx-frame="centered"]` sets `--plx-comp-shell-context-frame-width`, an in-CSS context hook that inherits down to those layers (not a token).
   - There's no inline style on `<html>` (the owner's rule).
 - It's **public** (VERSIONING.md: the `data-plx-*` attributes on `<html>`): *Added*, MINOR. An app's own fixed layers can follow the same attribute.
 - **Check:** G3 on #878, which sets the attribute and has no `style.setProperty` on the root.
