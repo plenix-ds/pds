@@ -21,7 +21,7 @@ import { valueText, CellValue } from '../cells.tsx';
 import { groupKeys, rowKeys, cellKeys } from './keys.ts';
 import { isRtl } from '../../../utils/direction.ts';
 import { Avatar } from '../../Avatar/Avatar.tsx';
-import { Width, RowTarget, Check, CellEditor, CellStatus, CustomCell, RowMenuContent } from './parts.tsx';
+import { Width, RowTarget, Check, CellEditor, CellStatus, CustomCell, RowMenuContent, RowActions } from './parts.tsx';
 import { Icon } from '../../Icon/Icon.tsx';
 import ChevronRightIcon from 'plenix-platform/icons/plenix/chevron-right';
 import ChevronDownIcon from 'plenix-platform/icons/plenix/chevron-down';
@@ -104,6 +104,7 @@ export function bodyRows({
   cutAt,
   rowMenu,
   rowMenuButton,
+  rowActions,
   menuItems,
 }: any) {
   const groupNode = (group: any, sticky = false) => (
@@ -653,21 +654,25 @@ export function bodyRows({
         {props.viewMenu ? <div className={cx(`${B}__grid-cell ${B}__w-view`, modes)} role="gridcell" /> : null}
         {rowMenu && rowMenuButton ? (
           <Width width={card ? null : metrics.menu} className={cx(`${B}__grid-cell ${B}__cell--row-menu`, card && B + '__grid-cell--template-menu ' + B + '__grid-cell--card', modes)} role="gridcell">
-            <Menu
-              label={S.rowActions}
-              trigger={
-                <Button
-                  className={B + '__row-menu'}
-                  variant="ghost"
-                  size="xs"
-                  iconOnly
-                  icon={MoreIcon}
-                  label={S.rowActions}
-                />
-              }
-            >
-              <RowMenuContent build={menuItems} items={rowMenu} record={record} rowApi={rowApi} />
-            </Menu>
+            {rowActions && rowActions.inline && !card ? (
+              <RowActions B={B} S={S} items={rowMenu} record={record} rowApi={rowApi} menuItems={menuItems} />
+            ) : (
+              <Menu
+                label={S.rowActions}
+                trigger={
+                  <Button
+                    className={B + '__row-menu'}
+                    variant="ghost"
+                    size="xs"
+                    iconOnly
+                    icon={MoreIcon}
+                    label={S.rowActions}
+                  />
+                }
+              >
+                <RowMenuContent build={menuItems} items={rowMenu} record={record} rowApi={rowApi} />
+              </Menu>
+            )}
           </Width>
         ) : null}
       </RowTarget>

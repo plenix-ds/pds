@@ -23,11 +23,19 @@ import { gridStep, snapToGrid, gridPx } from '../../../utils/grid.ts';
 import { tokenPixels } from '../environment.ts';
 import { kinds, typeOf } from './helpers.tsx';
 import { valueAt } from '../state.ts';
+import { splitRowActions } from './rowActions.ts';
 import { valueText } from '../cells.tsx';
 import { formatBytes, formatDate, parseDate } from '../../../utils/format.ts';
 
 // a plain-text column whose widest value is longer than this many characters is long text (#800, D-0088: an engine constant, not a prop or a token): the only kind that may be cut
 const LONG_TEXT_CHARS = 40;
+// how many icon buttons the row menu gives, and whether some action stays in the ⋮ menu. Only a list gives icons: a menu built from the record (a function) is
+// not called until it is opened (issue 187: closed row menus build nothing), so it keeps the ⋮
+function rowActionSlots(rowMenu: any) {
+  if (!Array.isArray(rowMenu)) return { icons: 0, more: true };
+  const { inline, rest } = splitRowActions(rowMenu);
+  return { icons: inline.length, more: rest.length > 0 };
+}
 export function useGridMetrics({
   frame,
   metrics,
@@ -43,6 +51,7 @@ export function useGridMetrics({
   rowMenuButton,
   props,
   setAutoSizing,
+  setRowActions,
   setFloors,
   setMetrics,
   live,
@@ -192,10 +201,25 @@ export function useGridMetrics({
       );
       free.push(c.field);
     });
+    // (#800 AC-5) the row actions are icons while every column fits at its natural width beside them; else one fixed ⋮ column (ADR 0022). One icon takes a menu-button
+    // slot of --plx-comp-data-grid-row-menu-width, and the ⋮ after them another when some action stays in the menu. Touch always shows the ⋮
+    let menuWidth = rowMenu && rowMenuButton ? metrics.menu : 0, iconsOn = false;
+    if (rowMenu && rowMenuButton) {
+      const touch = ['touch', 'mobile'].includes((frame.current?.ownerDocument || document).documentElement.getAttribute('data-plx-interaction') || '');
+      const slots = rowActionSlots(rowMenu);
+      if (!touch && slots.icons > 0) {
+        const natural = columns
+          .filter((c: any) => !columnVisibility || columnVisibility[c.field] !== false)
+          .reduce((sum: any, c: any) => sum + (kinds(c).includes('icon') ? metrics.lead : (sizing && sizing[c.field]) || widths[c.field] || 0), 0);
+        const iconsWidth = (slots.icons + (slots.more ? 1 : 0)) * metrics.menu;
+        if (natural + (selectable ? metrics.lead : 0) + (props.viewMenu ? metrics.lead : 0) + iconsWidth <= metrics.room) { menuWidth = iconsWidth; iconsOn = true; }
+      }
+    }
+    setRowActions((old: any) => (old.inline === iconsOn && old.width === menuWidth ? old : { inline: iconsOn, width: menuWidth }));
     const available =
       metrics.room -
       (selectable ? metrics.lead : 0) -
-      (rowMenu && rowMenuButton ? metrics.menu : 0) -
+      menuWidth -
       (props.viewMenu ? metrics.lead : 0);
     // the shown columns (a hidden column takes no room)
     const shownColumns = columns.filter((c: any) => !columnVisibility || columnVisibility[c.field] !== false);
@@ -278,6 +302,10 @@ export function useGridMetrics({
     JSON.stringify(sizing || {}),
     keys.join('|'),
     narrow,
+    metrics.menu,
+    metrics.lead,
+    rowMenu,
+    rowMenuButton,
   ]);
   // the room under the table that the page keeps (#451): the grid's own part below it (its border, a footer) and the end
   // margin, padding and border of each container up to the page, so a table that fills the window ends at the page's

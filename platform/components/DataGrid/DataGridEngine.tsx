@@ -183,8 +183,11 @@ function NextEngine(rawProps: any) {
     setResetSeen(resetBy);
     if (page !== 0) setPage(0);
   }
-  const [metrics, setMetrics] = React.useState<any>({ row: 0, line: 0, lead: 0, menu: 0, min: 0, space: 0, room: 0 }),
+  const [rawMetrics, setMetrics] = React.useState<any>({ row: 0, line: 0, lead: 0, menu: 0, min: 0, space: 0, room: 0 }),
+    [rowActions, setRowActions] = React.useState<{ inline: boolean; width: number }>({ inline: false, width: 0 }),
     [isNarrow, setNarrow] = React.useState(false);
+  // the metrics the parts draw with: the row-menu column is as wide as the icons the row actions give while there is room (#800 AC-5, ADR 0022)
+  const metrics = React.useMemo(() => (rowActions.inline ? { ...rawMetrics, menu: rowActions.width } : rawMetrics), [rawMetrics, rowActions]);
   // One conversion per distinct width and measured environment, shared by every visible cell.
   const widthPixels = React.useMemo(() => {
     const cache = new Map();
@@ -614,7 +617,8 @@ function NextEngine(rawProps: any) {
 
   useGridMetrics({
     frame,
-    metrics,
+    metrics: rawMetrics,
+    setRowActions,
     cells,
     columns,
     effectiveWrap,
@@ -958,6 +962,7 @@ function NextEngine(rawProps: any) {
     widths,
     selectable,
     metrics,
+    rowActions,
     isNarrow,
     columns,
     cutOpen,
