@@ -870,3 +870,13 @@
   options: ['1.0.0 after #901, #902, #903 (chosen)', '1.0.0 now, remaining work in 1.x']
   status: active
   check: 'review-only (the release readiness report cites #901, #902 and #903 before tagging 1.0.0; #904)'
+
+- id: D-0097
+  date: 2026-11-07
+  area: components
+  decided_by: agent (pds1-ds-architect) at G3, owner may switch
+  decision: 'A DataGrid column takes description?: string (ADR 0025). It is the header''s tooltip on hover and keyboard focus, and the header''s accessible description. No icon is added to the header.'
+  why: 'RedSave P-70 (#924): header titles whose meaning isn''t obvious need an explanation. The name says what the text is, so one text serves sighted and screen-reader users.'
+  options: ['description (chosen)', 'tooltip', 'headerTooltip (rich)']
+  status: active
+  check: 'planned:datagrid-column-description (behaviour test per ADR 0025 Check; #924)'
