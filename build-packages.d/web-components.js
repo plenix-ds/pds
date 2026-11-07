@@ -138,11 +138,14 @@ export function defineElements(options = {}) {
 }
 `;
 
+const { propBlocks } = require('./lib/react-props.js');
 module.exports = function buildWebComponents(ctx) {
   const fs = require('fs'), path = require('path');
   const { PKG, VERSION, SCOPE, SITE, REPO, write, json } = ctx, dest = path.join(PKG, 'web-components');
   const types = fs.readFileSync(path.join(PKG, 'react', 'index.d.ts'), 'utf8');
-  const names = [...types.matchAll(/export declare const (\w+): React\.ComponentType/g)].map((m) => m[1]).filter((name) => !/(Provider|Context)$/.test(name));
+  // the components: header-typed ones and those written in TypeScript (build-packages.d/lib/react-props.js); none means a broken build
+  const names = Object.keys(propBlocks(PKG, types)).filter((name) => !/(Provider|Context)$/.test(name));
+  if (!names.length) throw new Error('No React component types found for the web components.');
   const runtime = SOURCE.replace('__ELEMENTS__', JSON.stringify(names));
   write(path.join(dest, 'index.js'), runtime);
   const css = fs.readFileSync(path.join(PKG, 'styles', 'plenix.min.css'), 'utf8').replace(/(?::root|(?<![\w-])html)((?:\[[^\]]+\])*)/g, (match, attrs) => attrs ? ':host(' + attrs + ')' : ':host');
