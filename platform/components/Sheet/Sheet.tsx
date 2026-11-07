@@ -167,7 +167,7 @@ export function Sheet({ open, onClose, title, description, icon, onDone, doneLab
           <h2 id={id + 't'} className="plx-sheet__title">{title}</h2>
           {actions}
           {task ? <Button variant="primary" className="plx-sheet__done" onClick={onDone}>{doneLabel}</Button>
-            : dismissible ? <Button variant="ghost" iconOnly icon={CloseIcon} label={closeLabel} className="plx-sheet__close" onClick={onClose} /> : null}
+            : dismissible ? <Button variant="ghost" iconOnly tooltip={false} icon={CloseIcon} label={closeLabel} className="plx-sheet__close" onClick={onClose} /> : null}
         </div>
         <div className={cx('plx-sheet__body', flush && 'plx-sheet__body--flush')}>
           {description ? <p id={id + 'd'} className="plx-dialog__description">{description}</p> : null}

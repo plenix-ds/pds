@@ -261,7 +261,7 @@ export const Combobox = React.forwardRef(function Combobox({ options = [], value
         {counting && folded > 0 ? <Tooltip content={chosen.slice(chosen.length - folded).map((v) => { const o = optionOf(v); return String(o ? o.label : v); }).join(', ')} placement="bottom" className="plx-combobox__more-tip">
           <Tag className="plx-combobox__more" tabIndex={0} aria-label={words.moreChips.replace('{count}', String(folded))}>{'+' + folded}</Tag></Tooltip> : null}
         {multiple ? field : <Tooltip content={label1} disabled={!cut} describe={false} placement={open ? 'top' : 'bottom'} className="plx-combobox__tip">{field}</Tooltip>}
-        {canClear ? <Button variant="ghost" size="xs" iconOnly icon={CloseIcon} label={t.clear} className="plx-combobox__clear" onMouseDown={(e) => e.preventDefault()} onClick={clear} /> : null}
+        {canClear ? <Button variant="ghost" size="xs" iconOnly tooltip={false} icon={CloseIcon} label={t.clear} className="plx-combobox__clear" onMouseDown={(e) => e.preventDefault()} onClick={clear} /> : null}
         <span className="plx-combobox__chevron" aria-hidden="true"><Icon icon={SelectChevronIcon} filled={false} /></span>
       </div>
       {open ? (

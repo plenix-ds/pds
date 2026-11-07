@@ -321,7 +321,7 @@ export function UploadManager(props: UploadManagerProps) {
         <span className="plx-upload-manager__actions">
           {bulk}
           <Button size="sm" variant="ghost" iconOnly icon={collapsed ? ChevronUpIcon : ChevronDownIcon} label={collapsed ? t.show : t.hide} aria-expanded={!collapsed} aria-controls={id + '-list'} onClick={() => setCollapsed(!collapsed)} />
-          {onClose && !moving ? <Button size="sm" variant="ghost" iconOnly icon={CloseIcon} label={t.close} onClick={onClose} /> : null}
+          {onClose && !moving ? <Button size="sm" variant="ghost" iconOnly tooltip={false} icon={CloseIcon} label={t.close} onClick={onClose} /> : null}
         </span>
       </div>
       {summary}
