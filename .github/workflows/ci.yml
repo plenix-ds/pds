@@ -56,6 +56,12 @@ jobs:
       - name: Valid YAML; unique ids; every entry has a check; past entries never rewritten
         shell: bash
         run: node tools/ci/check-decisions.mjs "$(git merge-base "$BASE_SHA" HEAD)"
+      - name: ADR index self-test (#956)
+        shell: bash
+        run: node tools/ci/adr-index.test.mjs
+      - name: ADR files well-formed; the index is generated, never committed (#956)
+        shell: bash
+        run: node tools/ci/adr-index.mjs --check
 
   process:
     name: Process checks 13, 15 and 16, launch test (role registry, settings, workflows; #768, #772)
