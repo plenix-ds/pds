@@ -135,3 +135,6 @@ export const fields: CollectionField<Row>[] = [{ value: 'name', label: 'Name' }]
 export const emptyFilter: CollectionFilter = { join: 'and', items: [] };
 export function useView(): CollectionView<Row> { return useCollectionView<Row>(fields, { data: rows }); }
 export const cardProps: MediaCardProps = {};
+
+// #924: a column's description (the header's tooltip) compiles
+export const describedColumn: DataGridColumn<Row> = { field: 'name', title: 'Name', description: 'The full legal name' };

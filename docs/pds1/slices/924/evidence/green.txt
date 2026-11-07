@@ -1,0 +1,3 @@
+DATA_GRID_DESCRIPTION_924_OK
+DATA_GRID_HEADER_TOOLTIP_794_OK
+TYPES_OK DataGrid columns, rowMenu as a list or a function per row, Tabs onChange(value), collection panels, MediaCard 4/3, Text as span/h2–h4, MediaViewer, useAppLayout
