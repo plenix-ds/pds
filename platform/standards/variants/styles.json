@@ -605,19 +605,8 @@
     "why": ".plx-avatar--24 in avatar.css: the height by size, and the corner that grows with it"
   },
   "avatar--colors-a-person-s-own-colors": {
-    "sets": [
-      {
-        "property": "background-color",
-        "part": "block",
-        "token": "--plx-comp-data-color-soft"
-      },
-      {
-        "property": "color",
-        "part": "block",
-        "token": "--plx-comp-data-color-on-soft"
-      }
-    ],
-    "why": ".plx-avatar[data-plx-color] in avatar.css: the person's own data color, soft"
+    "sets": [],
+    "why": ".plx-avatar[data-plx-color] in avatar.css sets the person's own data color (soft fill, on-soft text) through in-CSS hooks, not tokens"
   },
   "ai-chat--variant-full-page": {
     "sets": [],
@@ -3902,14 +3891,9 @@
         "property": "stroke-width",
         "part": "line",
         "token": "--plx-comp-chart-threshold-line-width"
-      },
-      {
-        "property": "stroke",
-        "part": "line",
-        "token": "--plx-comp-data-color"
       }
     ],
-    "why": ".plx-chart-reference--threshold in chart-parts.css: a thicker line; the level sets the data-viz color to alert-critical (data-plx-dataviz)"
+    "why": ".plx-chart-reference--threshold in chart-parts.css: a thicker line; the level sets the data-viz color to alert-critical through data-plx-dataviz (an in-CSS hook, not a token)"
   },
   "chart-threshold--level-warning-default": {
     "sets": [
@@ -3917,14 +3901,9 @@
         "property": "stroke-width",
         "part": "line",
         "token": "--plx-comp-chart-threshold-line-width"
-      },
-      {
-        "property": "stroke",
-        "part": "line",
-        "token": "--plx-comp-data-color"
       }
     ],
-    "why": ".plx-chart-reference--threshold in chart-parts.css: a thicker line; the level sets the data-viz color to alert-warning (data-plx-dataviz)"
+    "why": ".plx-chart-reference--threshold in chart-parts.css: a thicker line; the level sets the data-viz color to alert-warning through data-plx-dataviz (an in-CSS hook, not a token)"
   },
   "combo-chart--variant-bar-line": {
     "sets": [],
@@ -5068,11 +5047,6 @@
   "swatch--shape-square-default": {
     "sets": [
       {
-        "property": "background-color",
-        "part": "block",
-        "token": "--plx-comp-data-color"
-      },
-      {
         "property": "border-color",
         "part": "block",
         "token": "--plx-comp-color-swatch-border-color"
@@ -5831,11 +5805,6 @@
         "property": "border-width",
         "part": "block",
         "token": "--plx-comp-color-swatch-border-width"
-      },
-      {
-        "property": "background-color",
-        "part": "block",
-        "token": "--plx-comp-color-swatch-value"
       }
     ],
     "why": ".plx-color-swatch in color-swatch.css: the square chip filled with the data color, with the default border"
