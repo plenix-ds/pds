@@ -14,20 +14,18 @@
 | Card heading (Panel title) | 14px (`font-size-300`), bold 700, line 20px, UPPERCASE, tracking `letter-spacing-caps` (0.06em) | `content-default` (gray-900) | `content-default` (gray-200) | 11.6 / 8.0 |
 | Card heading icon | `control-icon-standard`, `currentColor` | as heading | as heading | ≥ 3 (UI) |
 | Group heading | 13px (`font-size-200`), medium 500, line 20px, sentence case, no line | **gold** = `plx-ref.color-brown-600` | **gold** = `plx-ref.color-yellow-300` | 6.8 on white / 5.7 on gray-800 |
-| Field label | **11px**, regular 400, line 16px, sentence case | **navy** = `plx-ref.color-blue-700` | **navy** = `plx-ref.color-blue-275` | 6.8 / 5.5 on the tile |
-| Field value | 13px (`font-size-200`), semibold 600, line 20px | `content-default` (gray-900) | `content-default` (gray-200) | 11.6 / 7.5 on the tile |
+| Field label | **11px**, regular 400, line 16px, sentence case | **navy** = `plx-ref.color-blue-700` | **navy** = `plx-ref.color-blue-275` | 6.8 / 5.4 on the tile |
+| Field value | 13px (`font-size-200`), semibold 600, line 20px | `content-default` (gray-900) | `content-default` (gray-200) | 11.6 / 7.4 on the tile |
 | Data value (`data`) | Reddit Mono 13px, 600, line 20px, `tabular-nums` | as value | as value | as value |
-| Tile fill | n/a | **porcelain** `#fbfaf9` (new ref) | **porcelain dark** `#484847` (new ref) | n/a |
-| Tile border, 1px | n/a | **porcelain border** `#edebe8` (new ref) | **porcelain border dark** `#555350` (new ref) | decorative; the text carries the field |
-| Header glow | `linear-gradient(to block-end, tile fill, surface)` over the header box only | tile fill → `surface-default` | tile fill → `surface-default` | n/a |
-| Header divider | `border-width-thin`, inset by `panel-header-padding-inline` on both sides | `border-divider` | `border-divider` | decorative |
+| Tile fill | n/a | **porcelain** `#fbfaf9` (new ref) | **porcelain dark** `#4a4949` (new ref) | n/a |
+| Tile border, 1px | n/a | **porcelain border** `#edeae7` (new ref) | **porcelain border dark** `#565352` (new ref) | decorative; the text carries the field |
+| Header glow | `linear-gradient(to block-end, tile fill, surface)` over the header box only | tile fill → `surface-raised` | tile fill → `surface-raised` | n/a |
+| Header divider | `border-width-thin`, inset by `panel-header-padding-inline` on both sides | `border-subtle` | `border-subtle` | decorative |
 | Status in a value | Badge with its icon (DESIGN §1). Never a dot (the study's dot is not Plenix) | badge tokens | badge tokens | badge rule |
 
-- **Existing refs first** (D-0106). Gold, navy and both inks are existing refs. The four porcelain values are new refs, owner-approved under D-0106. The values come from the study: the light tile is the study's own value; the dark tile and the borders are the study's mix (tile + 12% warm) re-based on Plenix's dark surface `#444444`. G3 names them. Suggested: `plx-ref.color-porcelain-50/-200/-800/-750`.
-- **Sys roles for G3 to add or re-point** (names are G3's):
-  - `read-only-tile-background`, `read-only-tile-border`
-  - `field-label-color` (navy), `group-heading-color` (gold)
-  - `read-only-background` → the tile fill and `read-only-border` → the tile border, so read-only controls match
+- **Token names and values are G3's** (#946, 2026-11-07 23:30): `read-only-tile`, `read-only-tile-border`, `read-only-glow`, `read-only-label`, `read-only-group-heading`, the type roles `text-field-label-*`, `text-field-value-*`, `text-group-heading-*` and `text-card-heading-*`, and `space-stack-group` (40px). The new refs are `porcelain-50/-200/-750/-800`, owner-approved under D-0106. Gold, navy and both inks are existing refs.
+- **Read-only controls** in `<ReadOnly>` re-point `read-only-background` and `read-only-border` to the tile and its border.
+- **More contrast:** the tile border becomes `border-strong` (G3).
 - **Type floor:** only the field label (11px) is below 12px. It is D-0106's exception for this one role. 13px is above the floor. The study only flags it under its 14px readability advice, so it needs no exception.
 - **Rules that come with it** (D-0106): the label is lighter than its value (regular against semibold, 11 against 13). Label and value are ≥ 4.5:1 on the tile in both themes (the table above). No two levels share a look.
 
@@ -36,7 +34,7 @@
 | | Stacked (tiles) | Columns (dense panes) |
 |---|---|---|
 | Grid | `columnCount` 2 (default) or 1; 16px column gap (`space-inline-lg`); collapses to 1 column below a 480px container (container query) | unchanged: label column + value |
-| Between tiles (block) | 16px: **`space-stack-field` changes from 20px to 16px** (the preset's gap) | padding-block 4 / 8 / 12px by density (unchanged) |
+| Between tiles (block) | 16px: **`space-stack-field` is 16px** (the preset's gap; it was 20px) | padding-block 4 / 8 / 12px by density (unchanged) |
 | Tile | radius 6px (`shape-sm`), padding-block 8px, padding-inline 12px, 1px tile border | no tile; `border-subtle` hairline between pairs (unchanged) |
 | Label → value | 4px (`space-stack-xs`) | label column gap (unchanged) |
 | Tile height | 8 + 16 + 4 + 20 + 8 + 2 = 58px for one line, equal in a row (`align-items: stretch`) | n/a |
@@ -44,7 +42,7 @@
 - **New prop:** `columnCount?: 1 | 2` on `PropertyList`, stacked only (MINOR). Long text, such as notes or grounds, goes in its own `columnCount={1}` list, like the study's single-column list.
 - **PropertyGroup** (new, MINOR): `<PropertyGroup heading="Parties" headingLevel={3}>` wraps one PropertyList.
   - The heading sits 12px above the list (`space-stack-md`).
-  - There are **40px between groups** (`plx-ref.space-10u`), set on the block-start of each group except the first. The first group starts at the panel's body padding.
+  - There are **40px between groups** (`space-stack-group`), set on the block-start of each group except the first. The first group starts at the panel's body padding.
 - **Panel header:** padding is unchanged (`panel-header-padding-block/-inline`). The full-width `border-bottom` is replaced by the inset divider. The glow fills the header box and does not reach under the body. A collapsed panel shows no divider, as today, and keeps its glow.
 
 ## 3. State matrix
