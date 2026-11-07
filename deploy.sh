@@ -27,6 +27,10 @@ node check-system.js >/dev/null 2>&1 || { echo "check-system failed: fix it befo
 node tools/checks/locale/locale.mjs --release >/dev/null || { echo "G6 language gate failed: run node tools/checks/locale/locale.mjs --release"; exit 1; }
 node build-packages.js >/dev/null || { echo "build-packages failed: run node build-packages.js"; exit 1; }
 VERSION=$(node -p "require('./package.json').version")
+# SHA256SUMS and version.json at the version root (plan §7c, G8): written from this exact build and verified before anything
+# is uploaded, so the published folder carries its own checksums (tools/publish/manifest.mjs)
+node tools/publish/manifest.mjs "$VERSION" --commit "$(git rev-parse HEAD)" || { echo "manifest failed: SHA256SUMS and version.json were not written"; exit 1; }
+(cd "release/cdn/$VERSION" && sha256sum --quiet -c SHA256SUMS) || { echo "STOPPED: release/cdn/$VERSION does not match its own SHA256SUMS"; exit 1; }
 # the release holds every app's own files (#842: apps/<app>/), since the page loader loads them from it
 node -e "
 const fs = require('fs'), { pages } = require('./check-system.rules/one-source.js'), dir = 'release/cdn/$VERSION/apps/';
@@ -72,7 +76,7 @@ ssh "${SSH_OPTS[@]}" "$HOST" "set -e
   # build's release folder must equal the published one; any difference stops the deploy before anything changes, because
   # the apps would mix the published release with newer files of their own
   if [ -d /srv/plenix/cdn/$VERSION ]; then
-    if ! diff -rq /srv/plenix/www.new/Plenix/release/cdn/$VERSION /srv/plenix/cdn/$VERSION >/tmp/plenix-cdn-diff.txt 2>&1; then
+    if ! diff -rq -x SHA256SUMS -x version.json /srv/plenix/www.new/Plenix/release/cdn/$VERSION /srv/plenix/cdn/$VERSION >/tmp/plenix-cdn-diff.txt 2>&1; then
       echo 'STOPPED: CDN $VERSION is already published and this build differs from it:'
       head -20 /tmp/plenix-cdn-diff.txt; rm -f /tmp/plenix-cdn-diff.txt
       echo 'Raise the version in package.json to release these changes, then deploy again. Nothing was changed on the site.'
@@ -117,6 +121,11 @@ ssh "${SSH_OPTS[@]}" "$HOST" "set -e
   fi
   echo \"Apps on the page loader, CDN latest.json, fallback $VERSION: \$onCdn of \$total pages\"
   # every check passed: the API, the Material library and the CDN version go live, then the site is swapped
+  # back up what this deploy replaces, for a rollback (tools/publish/rollback.sh <backup>): the API, latest.json and index.json
+  BK=/srv/plenix/backup/pre-$VERSION-\$(date -u +%Y%m%dT%H%M%SZ)
+  sudo mkdir -p \$BK && sudo cp -a /srv/plenix/api \$BK/api
+  for f in latest.json index.json; do [ ! -f /srv/plenix/cdn/\$f ] || sudo cp -p /srv/plenix/cdn/\$f \$BK/; done
+  echo \"Backup: \$BK\"
   # the API is replaced; a CDN version is added once and never overwritten
   sudo rm -rf /srv/plenix/api.new && sudo mv /srv/plenix/www.new/Plenix/release/api /srv/plenix/api.new
   sudo rm -rf /srv/plenix/api && sudo mv /srv/plenix/api.new /srv/plenix/api
