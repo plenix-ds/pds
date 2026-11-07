@@ -181,6 +181,13 @@ export function AppShell({ header, sideNav, panel, footer, page = 'workspace', m
   const [fullWindow, setFullWindow] = React.useState(() => readPref('plenix.shell.frame.full', false));
   const toggleFrame = React.useCallback(() => setFullWindow((f) => { writePref('plenix.shell.frame.full', !f); if (onFrameChange) onFrameChange(f ? 'centered' : 'full'); return !f; }), [onFrameChange]);
   const framed = frame === 'centered' && wide && !fullWindow;
+  // the layers that sit on the window (a Drawer, the toasts) read the frame's width to stay inside it (issue 877, design §4): set on the page root while the shell is framed
+  React.useLayoutEffect(() => {
+    if (!framed) return undefined;
+    const root = document.documentElement;
+    root.style.setProperty('--plx-state-frame-width', 'var(--plx-sys-shell-frame-width)');
+    return () => { root.style.removeProperty('--plx-state-frame-width'); };
+  }, [framed]);
   const frameCtx = React.useMemo(() => (frame === 'centered' && wide ? { full: fullWindow, toggle: toggleFrame } : null), [frame, wide, fullWindow, toggleFrame]);
   const small = useMedia(below('--plx-sys-shell-rail-below'));
   const narrow = useMedia(below('--plx-sys-shell-phone-below'));
