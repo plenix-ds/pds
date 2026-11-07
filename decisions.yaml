@@ -831,3 +831,13 @@
   options: ['no tooltip on known icons (chosen)', 'a tooltip on every icon-only button (before)']
   status: active
   check: 'planned:known-icon-no-tooltip (behaviour test: the dialog X has an aria-label and no tooltip on hover or focus; #851)'
+
+- id: D-0094
+  date: 2026-11-07
+  area: api
+  decided_by: agent (pds1-ds-architect) on #862 (G3), owner may switch
+  decision: 'AppShell gains frame?: "full" | "centered" (default "full", unchanged) and onFrameChange?(frame). "centered" is the width of --plx-sys-shell-frame-width (-> plx-ref.breakpoint-laptop, 1366px), centered on --plx-sys-shell-frame-outside with --plx-sys-shell-frame-shadow. AppHeader shows the expand toggle through AppShell''s context, with no new AppHeader prop. A person''s choice is kept per app in localStorage (docs/adr/0023).'
+  why: 'The owner''s two frames (#862, D-0093). Naming the behavior, not the number, keeps a later width (1440) a token change rather than a new API value.'
+  options: ['A - frame "full" | "centered" with the width from a token (chosen)', 'B - frame "full" | "1366"', 'C - frameWidth as a token name']
+  status: active
+  check: 'G3 on the build PR (only frame and onFrameChange added to AppShellProps, no AppHeader prop, the four tokens); token checks 6 and 7; the #862 behaviour tests AC-1 to AC-6'
