@@ -136,7 +136,17 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 - An icon colours itself with `currentColor`. It takes its colour from the text around it and has no fill token of its own.
 - Sizes come from `plx-sys.icon-size-*` (12, 16, 20, 24, 48).
 - **RTL:** icons that point along the reading direction (arrows, chevrons, first/last page, forward, send, reply, undo/redo, panel open/close, log in/out) flip. The list is `MIRROR` in `platform/icons/layout.js`. All other icons (check, search, clock, media play) never flip.
-- An icon-only control has an accessible name and a tooltip.
+- **An icon-only control always has an accessible name** (`aria-label`). It also shows its name in the **Tooltip**, **except the known set below** (D-0091, owner, 2026-11-07: "there is no need to have tool tips on things that are known"). Known buttons show **no visual tooltip** and keep their accessible name.
+- **The known set** (following Microsoft Fluent and Windows, D-0078), by the button's **role** in a Plenix part, not by glyph:
+  - **Close / dismiss (X):** Dialog, Drawer, Sheet, Popover, Toast, Banner, Notice and side-panel close; a Tag or chip's remove X.
+  - **Clear (X in a field):** the clear button inside Input, SearchField, Combobox, DatePicker and the other fields.
+  - **Search (magnifier)** inside a search field.
+  - **Back (arrow):** the back button in a page or panel header.
+  - **Previous / next (chevrons):** in Pagination, the calendar and DatePicker months, Carousel and MediaViewer.
+  - **Expand / collapse (chevron):** a disclosure, accordion, tree or grid row toggle, and a group header.
+  - **Show more:** the ⋮ row menu in a **DataGrid row**, because it sits beside the row's own icons. Everywhere else ⋮ "More actions" keeps its tooltip.
+- **Always keep the Tooltip on:** ⋮ More outside a grid row, sort, filter, settings, the password show/hide eye, copy, download, share, print, every app or domain icon, and any icon button an app makes (unless it passes `tooltip={false}` on purpose for one of the roles above).
+- A button whose **label is hidden by a bar's fit** (fit-and-overflow §2) always shows its Tooltip, known icon or not: the person saw the word before.
 
 ## 7. Motion
 
