@@ -1,0 +1,4 @@
+DATE_FILTERS_FORMATS_939_OK
+}
+COLLECTION_FACETS_OK 22
+FILTER_BY_FIELD_269_OK command bar panel on the field; header box without a bar
