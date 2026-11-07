@@ -133,5 +133,3 @@
 .plx-select--width-lg{flex-shrink:var(--plx-comp-field-context-width-flex-shrink,0);inline-size:var(--plx-sys-field-width-lg);min-inline-size:min(var(--plx-sys-field-width-lg),var(--plx-comp-field-context-content-min-inline-size,var(--plx-sys-field-width-lg)));}
 .plx-select--width-fill{flex-shrink:var(--plx-state-select-flex-shrink,1);inline-size:100%;}
 /* its motion (moved from motion.css, Styling Standard 3.6: each component owns its own; reduced motion sets the durations to 0s) */
-/* a text area fills its row (a field alone on a row spans every column of a form, issue 947): the single-line field cap above does not shorten it */
-.plx-input.plx-input--textarea{--plx-state-input-max-inline-size:100%;}

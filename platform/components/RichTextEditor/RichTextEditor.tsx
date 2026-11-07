@@ -666,3 +666,5 @@ export function RichTextEditor({ label, defaultValue = '', onChange, toolbar = '
 
 // starts loading the engine before the first editor mounts (a page whose first screen has an editor)
 RichTextEditor.preload = () => { loadTiptap().catch(() => {}); };
+// a Field whose control is the editor spans the row by default (ADR 0029, Field reads this)
+Object.assign(RichTextEditor, { plxFieldSpan: 'full' });
