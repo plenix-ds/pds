@@ -54,8 +54,8 @@ const DIAMOND = 8, ELBOW = 8, HEAD = 4, RING = 4, NAME_GAP = 8;
 const toDate = (v: any) => parseDate(v) || new Date(NaN);
 
 /** @public a date: a Date, a timestamp, or anything Date accepts (a date-only string is that day in local time) */
+// ChartDate is published from TimelineChart (one symbol, #893); Gantt uses the same type
 import type { ChartDate } from './TimelineChart.tsx';
-export type { ChartDate };
 /** @public one row of a Gantt chart */
 export type GanttTask = { id: string; label: string; start: ChartDate; end?: ChartDate; /** 0 to 1 */ progress?: number; /** the ids of the tasks it waits for */ dependsOn?: string[]; /** a single date (start) */ milestone?: boolean; status?: string };
 /** @public */
