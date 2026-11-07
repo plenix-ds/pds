@@ -83,6 +83,7 @@
        only color, background-color, font-family, font-size and text-align; everything else is unwrapped or dropped.
 */
 import React from 'react';
+import { development } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
 import { useUid } from '../../utils/layer.ts';
 import { announce } from '../../utils/announce.tsx';
@@ -100,7 +101,7 @@ import { loadTiptap } from './tiptap.ts';
 import type { Editor, ChainedCommands } from '@tiptap/core';
 import type { Node as PMNode } from '@tiptap/pm/model';
 import type { TiptapEngine } from './tiptap.ts';
-import { cleanRichText, RICH_TEXT_STYLE_PROPERTIES, SAFE_HREF, SAFE_SRC } from '../../utils/richTextClean.ts';
+import { cleanRichTextNodes, cleanRichText, RICH_TEXT_STYLE_PROPERTIES, SAFE_HREF, SAFE_SRC } from '../../utils/richTextClean.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import type { IconModule } from '../Icon/Icon.tsx';
@@ -137,7 +138,7 @@ import SubscriptIcon from 'plenix-platform/icons/plenix/subscript';
 import SuperscriptIcon from 'plenix-platform/icons/plenix/superscript';
 import TableIcon from 'plenix-platform/icons/plenix/table';
 import TrashIcon from 'plenix-platform/icons/plenix/trash';
-export { cleanRichText, RICH_TEXT_STYLE_PROPERTIES };
+export { cleanRichText, cleanRichTextNodes, RICH_TEXT_STYLE_PROPERTIES };
 
 
 // the toolbar's icons (Material Symbols Sharp, platform/icons/map.json)
@@ -367,10 +368,11 @@ export function RichTextEditor({ label, defaultValue = '', onChange, toolbar = '
   React.useLayoutEffect(() => {
     const el = area.current; if (!el) return undefined;
     const content = cleanRichText(defaultValue);
-    el.innerHTML = content;
+    el.replaceChildren(cleanRichTextNodes(defaultValue));
     let gone = false;
     loadTiptap(el.ownerDocument.defaultView).then((T) => {
       if (gone) return;
+      try {
       const ed = makeEditor(T, el, {
         content, editable: live.current.editable, markdown: markdownShortcuts, attributes: attributes as Record<string, string>,
         trigger: (mentions && mentions.trigger) || '@', mentions: !!mentions, strings: () => live.current.t,
@@ -421,6 +423,10 @@ export function RichTextEditor({ label, defaultValue = '', onChange, toolbar = '
       ed.on('update', () => { const cb = live.current.onChange; if (cb) cb(ed.isEmpty ? '' : cleanRichText(ed.getHTML())); });
       ed.on('blur', () => setMention(null));
       sync(); setReady(true);
+      } catch (err) {
+        // the engine could not start (a page that enforces Trusted Types stops the engine's own HTML parsing, issue 940): the cleaned content stays on the page, as it does while the engine loads
+        if (development()) console.warn('[Plenix] RichTextEditor: the editing engine could not start; the content stays read-only.', err);
+      }
     }, () => {});
     return () => { gone = true; const ed = editorRef.current; editorRef.current = null; if (ed) ed.destroy(); };
   }, []);   // eslint-disable-line react-hooks/exhaustive-deps

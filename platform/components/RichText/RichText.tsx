@@ -38,7 +38,7 @@
 import React from 'react';
 import { devWarn } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
-import { cleanRichText } from '../../utils/richTextClean.ts';
+import { cleanRichTextNodes } from '../../utils/richTextClean.ts';
 
 /** @public */
 export type RichTextProps = Omit<React.HTMLAttributes<HTMLElement>, 'children'> & {
@@ -52,11 +52,11 @@ export type RichTextProps = Omit<React.HTMLAttributes<HTMLElement>, 'children'> 
 };
 export function RichText({ variant = 'article', html, as: Tag = 'div', label, className, children, ...rest }: RichTextProps) {
   devWarn('RichText', { variant }, { variant: ['article','compact'] });
-  const clean = React.useMemo(() => (html != null ? cleanRichText(html) : null), [html]);
-  // nosemgrep: pds-no-dangerously-set-inner-html -- the HTML went through cleanRichText just above (this is the rich-text engine, as the rule asks)
-  const content = clean != null ? { dangerouslySetInnerHTML: { __html: clean } } : null;
+  // the HTML goes through the allow-list and arrives as nodes, never as a string handed to the DOM (Trusted Types safe, issue 940)
+  const host = React.useRef<HTMLElement | null>(null);
+  React.useLayoutEffect(() => { if (html != null && host.current) host.current.replaceChildren(cleanRichTextNodes(html)); }, [html]);
   return (
-    <Tag aria-label={label} {...content} {...rest}
+    <Tag ref={host} aria-label={label} {...rest}
       className={cx('plx-rich-text', 'plx-rich-text--' + (variant === 'compact' ? 'compact' : 'article'), html != null && 'plx-user-content', className)}>
       {html != null ? undefined : children}
     </Tag>

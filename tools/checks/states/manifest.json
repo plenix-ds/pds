@@ -109,6 +109,16 @@
     "selected": "n/a(a checked or radio item shows a check mark; no row stays selected)",
     "error": "n/a(a menu has no value to validate)"
   },
+  "Icon": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(stories arrive with Storybook, P0-11)",
+    "loading": "n/a(stories arrive with Storybook, P0-11)",
+    "selected": "n/a(stories arrive with Storybook, P0-11)",
+    "error": "n/a(a new helper (iconNode) that returns the same icon as an element; the icon's states are unchanged)"
+  },
   "EventChip": {
     "default": "n/a(stories arrive with Storybook, P0-11)",
     "hover": "n/a(stories arrive with Storybook, P0-11)",

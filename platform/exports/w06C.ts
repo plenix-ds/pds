@@ -3,4 +3,4 @@
 // extended in place and already public.
 export { InlineEdit } from '../components/InlineEdit/InlineEdit.tsx';
 export { RichTextEditor } from '../components/RichTextEditor/RichTextEditor.tsx';
-export { cleanRichText } from '../components/RichTextEditor/RichTextEditor.tsx';
+export { cleanRichText, cleanRichTextNodes } from '../components/RichTextEditor/RichTextEditor.tsx';

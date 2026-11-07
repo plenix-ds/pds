@@ -37,6 +37,7 @@
        default: call it at startup, before icons draw (icons already on the page do not draw again)
      registerIcons(...modules[, { library }]): modules drawn first by their name and their symbol's spelling, in their
        set's library or the one named
+     iconNode(icon[, same options]): the same icon as an element, for code that builds nodes and must not write HTML (Trusted Types)
      iconMarkup(icon[, { size, filled, label, className, library }]): the markup Icon renders, as an HTML string, from an
        imported module or a name with a registered module (no module: the span without a drawing, and a development
        warning); for code that writes HTML instead of the deprecated bare class plx-icon--<name>
@@ -79,6 +80,7 @@
        keeps the text color and size of where it sits.
 */
 import React from 'react';
+import { parseHtmlFragment } from '../../utils/trustedHtml.ts';
 import { devWarn, development } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
 import { LIBRARY_COMMIT } from './glyphs.js';
@@ -488,6 +490,13 @@ export function iconMarkup(icon: IconValue, options?: IconMarkupOptions | null):
   // as Icon: with a label (the caller's words) an image, without one decorative
   const named: Record<string, string> = o.label ? { role: 'img', 'aria-label': o.label } : { 'aria-hidden': 'true' };
   return '<span class="' + esc(classes) + '"' + Object.keys(named).map((k) => ' ' + k + '="' + esc(named[k]) + '"').join('') + '>' + svg + '</span>';
+}
+
+// iconNode(icon, { size, filled, label, className, library }): the same icon as iconMarkup, as an element, for code that builds DOM nodes (a browser extension's page, a content
+// script) and must not write HTML (Trusted Types, Firefox's add-on linter; issue 940). Parsed in an inert document through the one "plenix" policy (utils/trustedHtml.ts)
+export function iconNode(icon: IconValue, options?: IconMarkupOptions | null): HTMLElement {
+  const parsed = parseHtmlFragment(iconMarkup(icon, options)).firstElementChild;
+  return parsed ? (document.importNode(parsed, true) as HTMLElement) : document.createElement('span');
 }
 
 // stateIcon: an icon a component draws in its own state: filled while the state is on, the outline otherwise (Styling
