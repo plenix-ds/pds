@@ -249,16 +249,10 @@ export function useGridMetrics({
       shrinkable.forEach((c: any) => { widths[c.field] = Math.max(least(c), snapToGrid(widths[c.field], { round: 'down', step })); });
     const used = shownColumns.reduce((sum: any, c: any) => sum + widthOf(c), 0);
     const units = Math.max(0, Math.floor((available - used) / step));
-    // room to spare: a fixed table or list gives it to its last self-sizing column as before; the default grid shares it evenly (#800)
-    if (!fitting) {
-      const spare = free.filter((field) => shownColumns.some((c: any) => c.field === field)).pop();
-      if (spare) widths[spare] += units * step;
-    } else {
-      // (#800, D-0087) the room left is shared evenly, in whole steps, across every column that sizes itself (an app's set width is a minimum, so those grow too);
-      // the checkbox and row menu columns are fixed and the cells stay at the start edge
-      const growers = shrinkable;
-      growers.forEach((c: any, i: any) => { widths[c.field] += (Math.floor(units / growers.length) + (i < units % growers.length ? 1 : 0)) * step; });
-    }
+    // room to spare (#800, D-0087): shared evenly, in whole steps, across every column that sizes itself (an app's set width is a minimum, so those grow too), in a table
+    // that fits its room and in a fixed one alike (CTM's static tables gave it all to the last column: "Years married" took 940px); the checkbox and row menu columns are fixed and the cells stay at the start edge
+    const growers = shrinkable;
+    growers.forEach((c: any, i: any) => { widths[c.field] += (Math.floor(units / growers.length) + (i < units % growers.length ? 1 : 0)) * step; });
     setAutoSizing((old: any) => (JSON.stringify(old) === JSON.stringify(widths) ? old : widths));
     setFloors((old: any) => (JSON.stringify(old) === JSON.stringify(floor) ? old : floor));
   }, [

@@ -841,3 +841,12 @@
   options: ['A - frame "full" | "centered" with the width from a token (chosen)', 'B - frame "full" | "1366"', 'C - frameWidth as a token name']
   status: active
   check: 'G3 on the build PR (only frame and onFrameChange added to AppShellProps, no AppHeader prop, the four tokens); token checks 6 and 7; the #862 behaviour tests AC-1 to AC-6'
+- id: D-0092
+  date: 2026-11-07
+  area: design
+  decided_by: agent (pds1-product-lead) on the owner's question, owner may switch
+  decision: 'Screens are designed at 1440x900. Every change must also look right at 1366x768 (the smallest common laptop, where Fluent 2''s 1366 band starts) and at 1920x1080 (the most common desktop screen). The supported minimum stays 1024x640 (AppShell minSize, #274). The visual checks run at 1366x768 and 1920x1080, plus one run at 1024x640. Mobile stays parked (D-0013).'
+  why: 'Owner, 2026-11-07: "what is the standard size that should be designed for?" No design width was set, and the visual checks ran at 960x640, below the supported minimum. D-0078: Microsoft first (Fluent 2 desktop breakpoints 1024, 1366, 1920).'
+  options: ['design at 1440x900, check at 1366 and 1920 (chosen)', 'design at 1920x1080 only']
+  status: active
+  check: 'planned:visual-check-viewports (tests/visual/playwright.config.mjs runs 1366x768 and 1920x1080, plus 1024x640; #857)'

@@ -662,6 +662,7 @@ export function bodyRows({
                   variant="ghost"
                   size="xs"
                   iconOnly
+                  tooltip={false}
                   icon={MoreIcon}
                   label={S.rowActions}
                 />

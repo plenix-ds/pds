@@ -153,7 +153,7 @@ export const CommandMenu = React.forwardRef<HTMLInputElement | null, CommandMenu
     <div className={cx('plx-command-menu', className)} {...rest}>
       {page ? (
         <div className="plx-command-menu__page">
-          <Button variant="ghost" size="xs" iconOnly icon={ArrowLeftIcon} label={t.back} onClick={back} />
+          <Button variant="ghost" size="xs" iconOnly tooltip={false} icon={ArrowLeftIcon} label={t.back} onClick={back} />
           <span className="plx-command-menu__page-title">{page.label}</span>
         </div>
       ) : null}
