@@ -21,20 +21,27 @@
     if (!SCRIPT) return 'platform/vendor/';
     return new URL(/\/platform\/engines\/plenix-engines\.js(\?.*)?$/.test(SCRIPT) ? '../vendor/' : './vendor/', SCRIPT).href;
   }
-  // Trusted Types (issue 940): a page that requires them accepts a script address only from a policy; this is the same "plenix" policy platform/utils/trustedHtml.ts makes (a name can be made once,
-  // so whichever file loads first shares it as window.PlenixTrustedTypes), and it names only Plenix's own vendor scripts
+  // Trusted Types (issue 940, ADR 0031): a page that requires them accepts a script address only from a policy. This file makes its own, "plenix-engines", kept in this closure (never on window),
+  // and it names only a .js file under vendor/ on THE ORIGIN OF THIS FILE: another origin is refused. A page that restricts policy names allows "plenix" and "plenix-engines".
+  var engineOrigin = (function () { try { return new URL(SCRIPT || location.href, location.href).origin; } catch (e) { return location.origin; } })();
+  var scriptPolicy = null, scriptPolicyTried = false;
   function trustedUrl(url) {
     var api = window.trustedTypes;
     if (!api || typeof api.createPolicy !== 'function') return url;
-    if (!window.PlenixTrustedTypes) {
+    if (!scriptPolicyTried) {
+      scriptPolicyTried = true;
       try {
-        window.PlenixTrustedTypes = api.createPolicy('plenix', {
-          createHTML: function (html) { return html; },
-          createScriptURL: function (u) { if (!/\/vendor\/[\w./-]+\.js$/.test(new URL(u, document.baseURI).pathname)) throw new TypeError('Plenix only loads its own vendor scripts'); return u; }
+        scriptPolicy = api.createPolicy('plenix-engines', {
+          createScriptURL: function (u) {
+            var parsed = new URL(u, document.baseURI);
+            if (parsed.origin !== engineOrigin || !/\/vendor\/[\w./-]+\.js$/.test(parsed.pathname)) throw new TypeError('Plenix only loads its own vendor scripts, from the origin of plenix-engines.js');
+            return u;
+          }
         });
-      } catch (e) { return url; }
+      } catch (e) { scriptPolicy = null; }
     }
-    return window.PlenixTrustedTypes.createScriptURL(url);
+    if (!scriptPolicy) throw new TypeError('This page enforces Trusted Types and does not allow the "plenix-engines" policy (trusted-types plenix plenix-engines)');
+    return scriptPolicy.createScriptURL(url);
   }
   var loading = new WeakMap();
   function script(name, file, global) {
@@ -45,8 +52,9 @@
       if (key[name]) return key[name];
       var doc = w.document;
       key[name] = new Promise(function (resolve, reject) {
-        var s = doc.createElement('script');
-        s.src = trustedUrl(vendorBase() + file); s.async = true; s.setAttribute('data-plx-vendor', name);
+        var s = doc.createElement('script'), href;
+        try { href = trustedUrl(vendorBase() + file); } catch (e) { setTimeout(function () { delete key[name]; }, 0); reject(e); return; }
+        s.src = href; s.async = true; s.setAttribute('data-plx-vendor', name);
         s.onload = function () { if (w[global]) resolve(w[global]); else { delete key[name]; s.remove(); reject(new Error(name + ' did not load from ' + vendorBase() + file)); } };
         s.onerror = function () { delete key[name]; s.remove(); reject(new Error(name + ' could not be loaded from ' + vendorBase() + file)); };
         doc.head.appendChild(s);

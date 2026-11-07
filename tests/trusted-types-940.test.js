@@ -1,7 +1,7 @@
 /* Plenix tests · no raw HTML sinks (issue 940, RedSave P-47): rich text, highlights and icons render under Trusted Types.
    Summary: on a page with `Content-Security-Policy: require-trusted-types-for 'script'; trusted-types plenix`, RichText (its html prop), the highlight a SearchField draws, an Icon and
      `iconNode` render with no Trusted Types violation, the rich text is still cleaned (a script, an event attribute and a javascript: link are gone), and the RichTextEditor's start content shows at once.
-     Plenix creates one policy, named "plenix", for the one place real HTML is parsed (the sanitizer); nothing else writes HTML. Left to right and right to left.
+     Plenix creates two private policies: "plenix" for the one place real HTML is parsed (the sanitizer) and "plenix-engines" for the one vendor script it loads, which only accepts a script on the origin of plenix-engines.js; neither is on window; nothing else writes HTML. Left to right and right to left.
    Proof first: before the change RichText sets innerHTML with a plain string, so the page reports a violation, and `iconNode` does not exist.
    Usage: node tests/trusted-types-940.test.js   → TRUSTED_TYPES_940_OK */
 const assert = require('assert/strict'), { serve, launch } = require('./lib');
@@ -26,7 +26,7 @@ assert.deepEqual(sinks, [], 'no code under platform/ writes HTML: ' + sinks.join
       await page.waitForFunction(() => window.Plenix && window.ReactDOM, { timeout: 60000 });
       const r = await page.evaluate(async (dir) => {
         window.__tt = []; document.addEventListener('securitypolicyviolation', (e) => window.__tt.push({ directive: e.effectiveDirective, sample: (e.sample || '').slice(0, 60), file: (e.sourceFile || '').split('/').slice(-2).join('/'), line: e.lineNumber }));
-        const meta = document.createElement('meta'); meta.httpEquiv = 'Content-Security-Policy'; meta.content = "require-trusted-types-for 'script'; trusted-types plenix"; document.head.appendChild(meta);
+        const meta = document.createElement('meta'); meta.httpEquiv = 'Content-Security-Policy'; meta.content = "require-trusted-types-for 'script'; trusted-types plenix plenix-engines"; document.head.appendChild(meta);
         document.documentElement.setAttribute('dir', dir); const h = React.createElement, P = window.Plenix;
         const host = document.createElement('div'); host.id = 'c'; document.querySelector('main').replaceChildren(host);
         const dirty = '<p>Hello <strong>there</strong> <a href="javascript:alert(1)" onclick="x()">link</a><script>window.__pwn = 1<\/script><img src="x" onerror="window.__pwn = 2"></p>';
@@ -43,10 +43,17 @@ assert.deepEqual(sinks, [], 'no code under platform/ writes HTML: ' + sinks.join
         out.rt = !rt ? null : { strong: !!rt.querySelector('strong'), script: !!rt.querySelector('script'), onerror: /onerror|onclick/.test(rt.innerHTML), js: /javascript:/.test(rt.innerHTML), pwn: window.__pwn || 0, text: rt.textContent.trim().slice(0, 14) };
         out.icon = !!document.querySelector('#ic svg, #ic .plx-icon__svg');
         out.editor = /Start/.test(document.body.textContent) && !!document.querySelector('.plx-rich-text-editor em, [contenteditable] em');
+        out.global = typeof window.PlenixTrustedTypes;
+        // the engines policy refuses a script on another origin, and adds nothing to the page
+        window.PlenixVendorBase = 'https://other.example/vendor/'; let refused = '';
+        try { await window.PlenixEngines.echarts(); } catch (e) { refused = String(e && e.message); }
+        out.refused = refused; out.foreign = !!document.querySelector('script[src*="other.example"]'); delete window.PlenixVendorBase;
         out.tt = window.__tt;
         return out;
       }, dir);
       assert.deepEqual(r.tt.filter((v) => !/tiptap|prosemirror|vendor/i.test(v.file)), [], T + 'no Trusted Types violation from Plenix\'s own code ' + JSON.stringify(r.tt));
+      assert.equal(r.global, 'undefined', T + 'no policy is left on window (window.PlenixTrustedTypes is undefined)');
+      assert.ok(/own vendor scripts/.test(r.refused) && !r.foreign, T + 'plenix-engines refuses a script on another origin and adds none (' + r.refused + ')');
       assert.equal(r.has, 'function', T + 'iconNode is exported'); assert.ok(r.node, T + 'iconNode builds the icon as an element');
       assert.ok(r.rt && r.rt.strong && !r.rt.script && !r.rt.onerror && !r.rt.js && !r.rt.pwn, T + 'rich text is still cleaned: ' + JSON.stringify(r.rt));
       assert.ok(r.icon, T + 'the Icon renders'); assert.ok(r.editor, T + 'the RichTextEditor\'s start content shows');

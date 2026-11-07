@@ -1,6 +1,6 @@
 /* Plenix · trustedHtml (platform/utils/trustedHtml.ts)
    Summary: The one place Plenix turns an HTML string into nodes, safe under Trusted Types: a page that sets `Content-Security-Policy: require-trusted-types-for 'script'` rejects a plain string
-     handed to innerHTML or DOMParser. Plenix creates one Trusted Types policy, named "plenix", and uses it to parse into an inert document (scripts never run, nothing loads) and to name the one vendor script it loads (window.PlenixTrustedTypes shares it with plenix-engines.js); the nodes that
+     handed to innerHTML or DOMParser. Plenix creates one Trusted Types policy, named "plenix", and uses it to parse into an inert document (scripts never run, nothing loads) (plenix-engines.js has a second policy of its own, "plenix-engines", for the one vendor script it loads); the nodes that
      reach the page are copied from that document through an allow-list (richTextClean.ts) or are built by Plenix (iconMarkup), never the parsed nodes themselves.
    Usage: const fragment = parseHtmlFragment('<p>Hello</p>');   // a DocumentFragment in an inert document; adopt what you keep
    Props: parseHtmlFragment(html): the fragment the HTML parses to (as a <template>'s content: table rows and the like stay)
@@ -11,9 +11,8 @@
 */
 import { development } from './devWarn.ts';
 
-type Policy = { createHTML(html: string): unknown; createScriptURL(url: string): unknown };
-type Rules = { createHTML(html: string): string; createScriptURL(url: string): string };
-type TrustedTypesApi = { createPolicy(name: string, rules: Rules): Policy };
+type Policy = { createHTML(html: string): unknown };
+type TrustedTypesApi = { createPolicy(name: string, rules: { createHTML(html: string): string }): Policy };
 
 let policy: Policy | null | undefined, warned = false;
 
@@ -23,15 +22,8 @@ function plenixPolicy(): Policy | null {
   policy = null;
   const api = typeof window !== 'undefined' ? (window as unknown as { trustedTypes?: TrustedTypesApi }).trustedTypes : undefined;
   if (api && typeof api.createPolicy === 'function') {
-    const shared = (window as unknown as { PlenixTrustedTypes?: Policy }).PlenixTrustedTypes;   // plenix-engines.js may have made it first: a name can be made once
-    if (shared) policy = shared;
-    else {
-      try {
-        // createScriptURL is for the one script Plenix adds, the editor engine under vendor/ (plenix-engines.js makes the same policy when it loads first)
-        policy = api.createPolicy('plenix', { createHTML: (html: string) => html, createScriptURL: (url: string) => { if (!/\/vendor\/[\w./-]+\.js$/.test(new URL(url, document.baseURI).pathname)) throw new TypeError('Plenix only loads its own vendor scripts'); return url; } });
-        (window as unknown as { PlenixTrustedTypes?: Policy }).PlenixTrustedTypes = policy;
-      } catch { policy = null; }
-    }
+    // private to this bundle: kept in a module variable, never on window (ADR 0031); a name can be made once, so a second attempt (or a page that does not allow it) leaves the capability off
+    try { policy = api.createPolicy('plenix', { createHTML: (html: string) => html }); } catch { policy = null; }
   }
   return policy;
 }
