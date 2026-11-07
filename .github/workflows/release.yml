@@ -73,10 +73,13 @@ jobs:
         id: v
         run: |
           base=$(node -p "require('./package.json').version")
-          next=$(node -p "const [a,b,c]=process.argv[1].split('.').map(Number); [a,b,c+1].join('.')" "$base")
+          # a patch of an older minor is released from release/X.Y.x, so main can trail the live latest (0.93.1): plan
+          # the next patch after the newer of main's version and the live latest
+          live=$(curl -fsS "${CDN}latest.json" | node -e 'const j=JSON.parse(require("fs").readFileSync(0));process.stdout.write(String(j.latest||""))')
+          next=$(node -p "const p=v=>(v||'0.0.0').split('.').map(Number),[x,y]=[p(process.argv[1]),p(process.argv[2])],n=(x[0]-y[0]||x[1]-y[1]||x[2]-y[2])>=0?x:y; [n[0],n[1],n[2]+1].join('.')" "$base" "$live")
           dry="${next}-dryrun.${RUN_NUMBER}"
           echo "base=$base" >> "$GITHUB_OUTPUT"; echo "next=$next" >> "$GITHUB_OUTPUT"; echo "dry=$dry" >> "$GITHUB_OUTPUT"
-          echo "Released: $base · planned next: $next · this dry run builds: $dry"
+          echo "Released: $base · live latest: $live · planned next: $next · this dry run builds: $dry"
 
       - name: Set the dry-run version everywhere (root, workspaces, their references, lockfile; offline)
         env:
