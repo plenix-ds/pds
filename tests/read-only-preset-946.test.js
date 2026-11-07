@@ -25,7 +25,9 @@ for (const [k, v] of Object.entries(want)) check('plx-comp.' + k + ' = ' + v, va
 const css = fs.readFileSync(path.join(ROOT, 'platform/patterns/PropertyList/property-list.css'), 'utf8');
 check('the value draws the tile (background and border)', /__value\{[^}]*background-color:var\(--plx-comp-property-list-value-background\)/.test(css) && /__value\{[^}]*border-color:var\(--plx-comp-property-list-value-border-color\)/.test(css));
 for (const r of ['label', 'value']) for (const p of ['font-size', 'font-weight', 'line-height'])
-  check('the ' + r + ' takes ' + p + ' from the field-' + r + ' role', css.includes(p + ':var(--plx-sys-text-field-' + r + '-' + p + ')'));
+  check('the ' + r + ' takes ' + p + ' from the field-' + r + ' role', css.includes(p + ':var(--plx-sys-text-field-' + r + '-' + p + ')') || (r === 'value' && p === 'font-size' && css.includes('font-size:var(--plx-comp-property-list-value-font-size)')));
+check('the deprecated label size token is kept (G3)', (comp['property-list-label-font-size'] || {}).$value === '{plx-sys.text-field-label-font-size}' && !!(comp['property-list-label-font-size'] || {}).$deprecated);
+check('the value size tokens point at the field-value size', ['property-list-value-font-size', 'property-list-value-data-font-size'].every((k) => (comp[k] || {}).$value === '{plx-sys.text-field-value-font-size}'));
 const fcss = fs.readFileSync(path.join(ROOT, 'platform/components/Field/field.css'), 'utf8');
 const rcss = fs.readFileSync(path.join(ROOT, 'platform/system/read-only.css'), 'utf8');
 check('a Field label reads the read-only context color', /\.plx-field__label\{[^}]*var\(--plx-comp-field-readonly-context-label-text/.test(fcss));

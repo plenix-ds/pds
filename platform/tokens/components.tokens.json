@@ -9266,6 +9266,11 @@
       "$value": "{plx-sys.read-only-label}",
       "$type": "color"
     },
+    "property-list-label-font-size": {
+      "$value": "{plx-sys.text-field-label-font-size}",
+      "$type": "dimension",
+      "$deprecated": "Use --plx-sys-text-field-label-font-size: the PropertyList label now takes the field-label role directly (D-0106, ADR 0032). It keeps working and is removed in 2.0.0."
+    },
     "property-list-label-row-gap": {
       "$value": "{plx-sys.space-stack-xs}",
       "$type": "dimension"
@@ -9281,6 +9286,10 @@
     "property-list-value-text": {
       "$value": "{plx-sys.content-default}",
       "$type": "color"
+    },
+    "property-list-value-font-size": {
+      "$value": "{plx-sys.text-field-value-font-size}",
+      "$type": "dimension"
     },
     "property-list-value-background": {
       "$value": "{plx-sys.read-only-tile}",
@@ -9342,6 +9351,11 @@
       "$value": "{plx-sys.font-data}",
       "$type": "fontFamily",
       "$description": "A technical value (a size, a date, an ID): the data font, Reddit Mono (owner, 2026-10-11)"
+    },
+    "property-list-value-data-font-size": {
+      "$value": "{plx-sys.text-field-value-font-size}",
+      "$type": "dimension",
+      "$description": "A technical value at the value size, so Reddit Mono and DM Sans values share one baseline"
     },
     "property-list-columns-gap": {
       "$value": "{plx-sys.space-inline-md}",

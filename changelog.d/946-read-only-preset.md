@@ -5,3 +5,7 @@
 ### Added
 
 - `PropertyGroup` (`@plenix-ds/react`): a `<section>` named by its heading, over one `PropertyList`. The heading is 13px medium gold sentence case, and a group that follows another sits 40px below it (#946, ADR 0033, D-0111).
+
+### Deprecated
+
+- `--plx-comp-property-list-label-font-size`: the PropertyList label takes the field-label role (`--plx-sys-text-field-label-*`) directly. The token keeps working and is removed in 2.0.0. `--plx-comp-property-list-value-font-size` and `--plx-comp-property-list-value-data-font-size` stay, now 13px (`--plx-sys-text-field-value-font-size`) (#946, D-0106).
