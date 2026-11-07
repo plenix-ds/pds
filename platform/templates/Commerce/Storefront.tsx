@@ -23,7 +23,7 @@ import { announce } from '../../utils/announce.tsx';
 import { formatNumber, formatLocale } from '../../utils/format.ts';
 import { compareLevels } from '../../utils/fields.ts';
 import { useCollectionView } from '../../hooks/useCollectionView.ts';
-import { CommandBar as CommandBarJs, CommandBarSearch as CommandBarSearchJs } from '../../patterns/CommandBar/CommandBar.jsx';
+import { CommandBar as CommandBarJs, CommandBarSearch as CommandBarSearchJs } from '../../patterns/CommandBar/CommandBar.tsx';
 const CommandBar: any = CommandBarJs;
 const CommandBarSearch: any = CommandBarSearchJs;
 import { FilterPanel } from '../../patterns/FilterPanel/FilterPanel.tsx';

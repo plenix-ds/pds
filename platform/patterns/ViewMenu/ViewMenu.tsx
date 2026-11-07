@@ -23,7 +23,7 @@
 import React from 'react';
 import { Menu, MenuItem, MenuDivider, MenuGroup, MenuRadioGroup } from '../../components/Menu/Menu.tsx';
 import { Tooltip } from '../../components/Tooltip/Tooltip.tsx';
-import { CommandBarButton as CommandBarButtonJs, useCommandBar as useCommandBarJs } from '../CommandBar/CommandBar.jsx';
+import { CommandBarButton as CommandBarButtonJs, useCommandBar as useCommandBarJs } from '../CommandBar/CommandBar.tsx';
 const CommandBarButton: any = CommandBarButtonJs;
 const useCommandBar: any = useCommandBarJs;
 import { useStrings } from '../../providers/LocaleProvider.tsx';
