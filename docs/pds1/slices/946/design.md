@@ -14,16 +14,16 @@
 | Card heading (Panel title) | 14px (`font-size-300`), bold 700, line 20px, UPPERCASE, tracking `letter-spacing-caps` (0.06em) | `content-default` (gray-900) | `content-default` (gray-200) | 11.6 / 8.0 |
 | Card heading icon | `control-icon-standard`, `currentColor` | as heading | as heading | ≥ 3 (UI) |
 | Group heading | 13px (`font-size-200`), medium 500, line 20px, sentence case, no line | **gold** = `plx-ref.color-brown-600` | **gold** = `plx-ref.color-yellow-300` | 6.8 on white / 5.7 on gray-800 |
-| Field label | **11px**, regular 400, line 16px, sentence case | **navy** = `plx-ref.color-blue-700` | **navy** = `plx-ref.color-blue-275` | 6.8 / 5.4 on the tile |
-| Field value | 13px (`font-size-200`), semibold 600, line 20px | `content-default` (gray-900) | `content-default` (gray-200) | 11.6 / 7.4 on the tile |
+| Field label | **11px**, regular 400, line 16px, sentence case | **navy** = `plx-ref.color-blue-700` | **navy** = `plx-ref.color-blue-275` | 6.8 / 5.5 on the tile |
+| Field value | 13px (`font-size-200`), semibold 600, line 20px | `content-default` (gray-900) | `content-default` (gray-200) | 11.6 / 7.5 on the tile |
 | Data value (`data`) | Reddit Mono 13px, 600, line 20px, `tabular-nums` | as value | as value | as value |
-| Tile fill | n/a | **porcelain** `#fbfaf9` (new ref) | **porcelain dark** `#4a4949` (new ref) | n/a |
-| Tile border, 1px | n/a | **porcelain border** `#edeae7` (new ref) | **porcelain border dark** `#565352` (new ref) | decorative; the text carries the field |
-| Header glow | `linear-gradient(to block-end, tile fill, surface)` over the header box only | tile fill → `surface-raised` | tile fill → `surface-raised` | n/a |
+| Tile fill | n/a | **porcelain** `#fbfaf9` (new ref) | **porcelain dark** `#484847` (new ref) | n/a |
+| Tile border, 1px | n/a | **porcelain border** `#edebe8` (new ref) | **porcelain border dark** `#555350` (new ref) | decorative; the text carries the field |
+| Header glow | `linear-gradient(to block-end, tile fill, surface)` over the header box only | tile fill → `surface-default` | tile fill → `surface-default` | n/a |
 | Header divider | `border-width-thin`, inset by `panel-header-padding-inline` on both sides | `border-subtle` | `border-subtle` | decorative |
 | Status in a value | Badge with its icon (DESIGN §1). Never a dot (the study's dot is not Plenix) | badge tokens | badge tokens | badge rule |
 
-- **Token names and values are G3's** (#946, 2026-11-07 23:30): `read-only-tile`, `read-only-tile-border`, `read-only-glow`, `read-only-label`, `read-only-group-heading`, the type roles `text-field-label-*`, `text-field-value-*`, `text-group-heading-*` and `text-card-heading-*`, and `space-stack-group` (40px). The new refs are `porcelain-50/-200/-750/-800`, owner-approved under D-0106. Gold, navy and both inks are existing refs.
+- **Token names and values are G3's** (PR #969, ADR 0032, D-0109; final): `read-only-tile`, `read-only-tile-border`, `read-only-glow`, `read-only-label`, `read-only-group-heading`, the type roles `text-field-label-*`, `text-field-value-*`, `text-group-heading-*` and `text-card-heading-*`, and `space-stack-group` (40px). The new refs are `porcelain-50/-200/-750/-800`, owner-approved under D-0106. Gold, navy and both inks are existing refs.
 - **Read-only controls** in `<ReadOnly>` re-point `read-only-background` and `read-only-border` to the tile and its border.
 - **More contrast:** the tile border becomes `border-strong` (G3).
 - **Type floor:** only the field label (11px) is below 12px. It is D-0106's exception for this one role. 13px is above the floor. The study only flags it under its 14px readability advice, so it needs no exception.
