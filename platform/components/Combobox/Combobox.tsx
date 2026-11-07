@@ -142,7 +142,7 @@ type ComboboxBase<V extends ComboValue> = Omit<React.InputHTMLAttributes<HTMLInp
   /** true forces the data font, false keeps the interface font; unset, it follows the shown value */
   data?: boolean;
 };
-/** @public the props of Combobox. V is the option values' type (#925): a single choice hands back V ('' when cleared),
+/** @public the props of Combobox. V is the option values' type (issue 925): a single choice hands back V ('' when cleared),
  * multiple hands back V[]. With multiple as a boolean variable, a handler that takes either compiles. V defaults to ComboValue, as before. */
 export type ComboboxProps<V extends ComboValue = ComboValue> = ComboboxBase<V> & (
   | { multiple?: false; onChange: (value: V | '') => void }
