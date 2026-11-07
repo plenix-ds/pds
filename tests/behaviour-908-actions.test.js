@@ -1,9 +1,8 @@
-/* Plenix tests · plan §7e baseline behaviour tests, buttons and actions family (issue 908): CopyButton, DownloadButton, FloatingActionButton.
+/* Plenix tests · plan §7e baseline behaviour tests, buttons and actions family (issue 908): FloatingActionButton.
    Summary: each part mounts without errors or console warnings (development React); its states have the right ARIA; disabled steps fire nothing; the keyboard reaches and uses
      everything clickable (Tab, Enter, Space) with a visible focus ring; long text (three times the English) and empty values do not overflow; right to left mirrors; no axe violations
      (WCAG 2.2 A and AA). Left to right and right to left.
-   Parts: CopyButton (one press copies the value once, the copied state is announced; disabled copies nothing), DownloadButton (a link with the download attribute and a name that tells file, format
-     and size; progress makes it busy and a click does nothing), FloatingActionButton (a native button named by its label, extended shows the label, disabled fires nothing, the corner one stays put).
+   Parts: FloatingActionButton (a native button named by its label, extended shows the label, disabled fires nothing, the corner one stays put). CopyButton and DownloadButton are tested in #912 (ruling on #908).
    Usage: node tests/behaviour-908-actions.test.js   → BEHAVIOUR_908_ACTIONS_OK */
 const assert = require('assert/strict'), { serve, launch } = require('./lib');
 require('./limit.js');
@@ -11,7 +10,6 @@ require('./limit.js');
   const PORT = +process.env.TEST_PORT || 9909, server = await serve(PORT); let browser;
   try {
     browser = await launch(); const problems = [];
-    await browser.defaultBrowserContext().overridePermissions('http://localhost:' + PORT, ['clipboard-read', 'clipboard-write']);
     for (const dir of ['ltr', 'rtl']) {
       const T = dir + ': ';
       const page = await browser.newPage(); await page.setViewport({ width: 1000, height: 800 });
@@ -32,43 +30,6 @@ require('./limit.js');
       const tab = async (n = 1) => { for (let i = 0; i < n; i++) await page.keyboard.press('Tab'); };
       const focused = () => page.evaluate(() => { const e = document.activeElement; return e && e !== document.body ? (e.getAttribute('aria-label') || e.textContent.trim()) : null; });
       const focusRing = () => page.evaluate(() => { const e = document.activeElement, cs = getComputedStyle(e); return (cs.outlineStyle !== 'none' && parseFloat(cs.outlineWidth) > 0) || cs.boxShadow !== 'none'; });
-
-      // ---- CopyButton
-      await mount("h(P.CopyButton, { value: 'ASSET-0142', label: 'Copy ID', onCopy: (ok) => window.__log.push(ok) })");
-      let r = await page.evaluate(() => { const b = document.querySelector('#c button'); return { name: b.getAttribute('aria-label') || b.textContent.trim(), disabled: b.disabled }; });
-      assert.equal(r.name, 'Copy ID', T + 'CopyButton: the icon button is named by its label');
-      await tab(); assert.ok(await focusRing(), T + 'CopyButton: Tab reaches it and focus is visible');
-      await page.keyboard.press('Enter'); await new Promise((res) => setTimeout(res, 300));
-      assert.deepEqual(await log(), [true], T + 'CopyButton: Enter copies once');
-      assert.equal(await page.evaluate(() => navigator.clipboard.readText()), 'ASSET-0142', T + 'CopyButton: the clipboard holds the value as it is');
-      assert.ok(/Copied/.test(await page.evaluate(() => document.body.textContent)), T + 'CopyButton: "Copied" is announced');
-      await page.keyboard.press('Space'); await new Promise((res) => setTimeout(res, 300)); assert.deepEqual(await log(), [true, true], T + 'CopyButton: Space copies again');
-      await mount("h(P.CopyButton, { value: 'x', label: 'Copy link', showLabel: true, disabled: true, onCopy: (ok) => window.__log.push(ok) })");
-      await page.click('#c button').catch(() => {}); assert.deepEqual(await log(), [], T + 'CopyButton: disabled copies nothing');
-      assert.ok(await page.$eval('#c button', (b) => b.disabled || b.getAttribute('aria-disabled') === 'true'), T + 'CopyButton: disabled is told to assistive technology');
-      await mount("h(P.CopyButton, { value: 'https://example.org/a/very/long/link/that/keeps/going/and/going/and/going/on/and/on', field: true, fieldLabel: 'Share link', label: 'Copy link' })", 320);
-      assert.ok((await overflow()) <= 1, T + 'CopyButton: a long value in a field does not overflow (' + (await overflow()) + 'px)');
-      await mount("h(P.CopyButton, { value: '', label: 'Copy ID' })"); assert.ok(await page.$('#c button'), T + 'CopyButton: an empty value does not break it');
-      await mount("h(P.CopyButton, { value: 'ASSET-0142', label: 'Copy ID' })");
-      assert.deepEqual(await axeViolations(), [], T + 'CopyButton: no axe violations');
-
-      // ---- DownloadButton
-      await mount("h(P.DownloadButton, { href: '#file', fileName: 'cross-014.png', format: 'PNG', size: 4200000 })");
-      r = await page.evaluate(() => { const a = document.querySelector('#c a, #c button'); return { tag: a.tagName, download: a.getAttribute('download'), name: a.getAttribute('aria-label') || a.textContent.trim(), text: a.textContent }; });
-      assert.ok(r.tag === 'A' && r.download === 'cross-014.png', T + 'DownloadButton: a link with the download attribute ' + JSON.stringify(r));
-      assert.ok(/cross-014\.png/.test(r.name) && /PNG/.test(r.name), T + 'DownloadButton: the name tells the file and its format (' + r.name + ')');
-      assert.ok(/PNG/.test(r.text) && /MB|4\.2/.test(r.text), T + 'DownloadButton: the format and size show before it starts');
-      await tab(); assert.ok(await focusRing(), T + 'DownloadButton: Tab reaches it and focus is visible');
-      await mount("h(P.DownloadButton, { onDownload: () => window.__log.push('go'), fileName: 'export.csv', progress: 40 })");
-      r = await page.evaluate(() => { const b = document.querySelector('#c button, #c a'); return { busy: b.getAttribute('aria-busy'), text: b.textContent }; });
-      assert.equal(r.busy, 'true', T + 'DownloadButton: while downloading it is aria-busy'); assert.ok(/Downloading/.test(r.text) && /40/.test(r.text), T + 'DownloadButton: it says Downloading with the percent (' + r.text + ')');
-      await page.click('#c button, #c a'); assert.deepEqual(await log(), [], T + 'DownloadButton: a click while downloading does nothing');
-      await mount("h(P.DownloadButton, { onDownload: () => window.__log.push('go'), fileName: 'export.csv' })");
-      await tab(); await page.keyboard.press('Enter'); assert.deepEqual(await log(), ['go'], T + 'DownloadButton: Enter runs onDownload once');
-      await mount("h(P.DownloadButton, { iconOnly: true, href: '#f', fileName: 'report-with-a-very-long-name-that-goes-on-and-on-and-on-and-on.pdf', format: 'PDF', size: 1200 })", 200);
-      assert.ok((await overflow()) <= 1, T + 'DownloadButton: icon only with a long file name does not overflow'); assert.ok(/report-with/.test(await page.$eval('#c a, #c button', (b) => b.getAttribute('aria-label') || b.textContent)), T + 'DownloadButton: the icon-only name says the file');
-      await mount("h(P.DownloadButton, { href: '#file', fileName: 'cross-014.png', format: 'PNG', size: 4200000 })");
-      assert.deepEqual(await axeViolations(), [], T + 'DownloadButton: no axe violations');
 
       // ---- FloatingActionButton
       await mount("h(P.FloatingActionButton, { icon: 'plus', label: 'New asset', placement: 'inline', onClick: () => window.__log.push('new') })");
