@@ -1,6 +1,6 @@
 # ADR 0030: Read-only field type roles and spacing (`text-field-label`, `text-field-value`, `space-stack-field`)
 
-- **Status:** accepted
+- **Status:** superseded by 0032 (values; names, the `layout` API and the 2.0.0 default flip stay)
 - **Date:** 2026-11-07
 - **Deciders:** pds1-ds-architect (G3), on G2's design (#946, PR #950, D-0101). Decision D-0103 (owner may switch).
 - **Issue:** #946 (S2)
@@ -58,3 +58,14 @@
 - Check 6 (no comp -> ref) and check 7 (no values in names) on the build PR.
 - The visual check at 1366 and 1920 (D-0092), before and after, on #946.
 - A behaviour or style test on the build PR: a stacked PropertyList's label computes to 12px/600/16px, its value to 15px/400/24px, and the pairs are 20px apart at compact, standard and comfortable density.
+
+## Amendment, 2026-11-07 (D-0106, D-0107)
+
+- The owner's preset (D-0106) replaces the values above. The role and token names stay.
+  - `text-field-label-*`: 11px / 400 / 16px, in navy. It is D-0106's only type-floor exception.
+  - `text-field-value-*`: 13px / 600 / 20px.
+  - `space-stack-field`: 16px.
+- New pieces: tiles on `stacked`, `PropertyGroup`, `columnCount` and the Panel header glow and inset divider.
+- The default layout stays `columns` until 2.0.0 (D-0107).
+- Design and values: `docs/pds1/slices/946/design.md`. Token names and the new porcelain refs are G3's.
+- The test in "Check" reads the new values: 11px/400/16px and 13px/600/20px, with tiles 16px apart.
