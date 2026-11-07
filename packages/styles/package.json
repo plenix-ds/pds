@@ -1,6 +1,6 @@
 {
   "name": "@plenix-ds/styles",
-  "version": "0.92.0",
+  "version": "0.93.0",
   "description": "Plenix stylesheets (plenix.css, per-part CSS, fonts)",
   "private": true,
   "license": "UNLICENSED",
@@ -13,6 +13,6 @@
     "build": "node ../../tools/workspace-build.js"
   },
   "dependencies": {
-    "@plenix-ds/tokens": "0.92.0"
+    "@plenix-ds/tokens": "0.93.0"
   }
 }
