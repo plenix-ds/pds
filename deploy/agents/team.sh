@@ -92,11 +92,14 @@ trust_dir() {  # pre-accept Claude's folder-trust prompt so unattended sessions 
 
 # Wake idle sessions (#220): nothing else tells a session about new issues, comments or check results.
 # A window is idle when its screen has no "esc to interrupt" (Claude is working), its input box is empty and it
-# has not changed for NUDGE_IDLE_S seconds. A round is skipped when the repo had no activity since the last round
-# and has no open PR, so a quiet night costs nothing.
+# has not changed for NUDGE_IDLE_S seconds. A round is skipped only when the repo had no activity since the last round,
+# has no open PR and no role has open, unblocked, non-later work (#895: the old rule slept 10 h with an S1 open). With no
+# activity and no PR, only the sessions whose role has work are woken; an unanswered S1/S2 is named to its role.
 NUDGE_TEXT='Scheduled check (#220): keep working. 1) Queue every green PR of yours with gh pr merge --auto; fix any red or conflicting one. 2) If you are not in the middle of a task, take your next open issue (gh issue list -R plenix-ds/pds --label agent:pds1-ROLE --state open): highest severity first, then oldest; skip only issues labelled later and issues blocked by a named open issue or owner decision. Work it end to end to a merged PR, then take the next one. Reply "idle" only when every open issue of yours is later or blocked, and name each blocker.'
 NUDGE_IDLE_S=${NUDGE_IDLE_S:-120}
 NUDGE_STAMP=$ROOT/.nudge-last
+NUDGE_OVERDUE=$ROOT/.nudge-overdue-rounds   # rounds in a row with an unanswered S1/S2 (#895)
+OVERDUE_MIN=30                               # deploy/agents/dispatch.mjs OVERDUE_MIN
 # Start waiting roles and stop finished ones (#246, D-0040): deploy/agents/scheduler.mjs makes the plan from GitHub,
 # tmux, agents.config.yaml and free memory; this carries it out. Each start is logged and posted on #178.
 schedule() {
@@ -152,7 +155,7 @@ selfupdate() {
 }
 
 nudge() {
-  local now last updated open win sent=0 hb
+  local now last updated open win role sent=0 hb plan mode changed=1 text overdue rounds health wake_roles=" " sev_text=""
   selfupdate
   schedule
   now=$(date -u +%FT%TZ); last=$(cat "$NUDGE_STAMP" 2>/dev/null || echo 1970-01-01T00:00:00Z)
@@ -160,29 +163,48 @@ nudge() {
   # the newest update that is not the heartbeat issue itself (its body is rewritten every run, #772)
   updated=$(gh api 'repos/plenix-ds/pds/issues?state=all&sort=updated&direction=desc&per_page=2' -q "[.[] | select(.number != ${hb:-0})][0].updated_at" 2>/dev/null || echo "$now")
   open=$(gh pr list -R plenix-ds/pds --state open --json number -q length 2>/dev/null || echo 1)
-  if [[ "$updated" < "$last" && "$open" = 0 ]]; then log "nudge: quiet (no activity since $last, no open PR)"; echo "$now" >"$NUDGE_STAMP"; heartbeat "$hb" "quiet round, no session woken"; return; fi
-  tmux has-session -t $S 2>/dev/null || { log "nudge: team not running"; heartbeat "$hb" "the team session is not running"; return; }
+  [[ "$updated" < "$last" ]] && changed=0
+  # #895: quiet only when no role has open, unblocked, non-later work as well (deploy/agents/dispatch.mjs); a failed
+  # read wakes everyone, never nobody
+  plan=$(PDS1_CFG="$CFG" node "$HERE/dispatch.mjs" --open-prs "$open" --changed "$changed" 2>>"$LOG") || { log "nudge: dispatch.mjs failed"; plan="round all"; }
+  mode=$(awk '$1=="round"{print $2}' <<<"$plan"); mode=${mode:-all}
+  overdue=$(awk '$1=="overdue"{print $2" "$3}' <<<"$plan"); overdue=${overdue:-0}
+  rounds=$(cat "$NUDGE_OVERDUE" 2>/dev/null || echo 0)
+  if [ "${overdue%% *}" != 0 ]; then rounds=$((rounds + 1)); else rounds=0; fi
+  [ -n "${NUDGE_DRY:-}" ] || echo "$rounds" >"$NUDGE_OVERDUE"
+  health="open S1/S2 with no response > ${OVERDUE_MIN} min: ${overdue} · rounds in a row: $rounds"
+  if [ "$mode" = quiet ]; then log "nudge: quiet (no activity since $last, no open PR, no open work)"; echo "$now" >"$NUDGE_STAMP"; heartbeat "$hb" "quiet round, no session woken" "$health"; return; fi
+  tmux has-session -t $S 2>/dev/null || { log "nudge: team not running"; heartbeat "$hb" "the team session is not running" "$health"; return; }
+  while read -r _ role _; do wake_roles+="$role "; done < <(grep '^work ' <<<"$plan")
   while read -r win; do
     [ "$win" = shell ] && continue
-    wake "$win" "${NUDGE_TEXT//ROLE/${win%-[0-9]*}}" && { sent=$((sent + 1)); [ -n "${NUDGE_DRY:-}" ] || log "nudge: $win"; }
+    role=${win%-[0-9]*}
+    [ "$mode" = all ] || [[ "$wake_roles" == *" $role "* ]] || continue
+    # severity first (#895): an S1/S2 this role has not answered is named, every round, until it is
+    sev_text=$(awk -v r="$role" '$1=="unanswered" && $2==r {printf "%s%s (S%s, %s min)", (n++?", ":""), $3, $4, $5}' <<<"$plan")
+    text="${NUDGE_TEXT//ROLE/$role}"
+    [ -n "$sev_text" ] && text="Severity first: no response from you yet on $sev_text. Comment on it now (signed) and work it before anything else. $text"
+    wake "$win" "$text" && { sent=$((sent + 1)); [ -n "${NUDGE_DRY:-}" ] || log "nudge: $win${sev_text:+ ($sev_text)}"; }
   done < <(tmux list-windows -t $S -F '#W')
-  [ -n "${NUDGE_DRY:-}" ] || echo "$now" >"$NUDGE_STAMP"; echo "nudged $sent"
-  heartbeat "$hb" "woke $sent idle session(s)"
+  [ -n "${NUDGE_DRY:-}" ] || echo "$now" >"$NUDGE_STAMP"; echo "nudged $sent ($mode)"
+  heartbeat "$hb" "woke $sent idle session(s) ($mode)" "$health"
 }
 
 # heartbeat <issue> <what this run did>: rewrite the pinned "Dispatcher heartbeat" issue (template v2.4 §6.1, #772);
-# the daily watchdog workflow opens a P0 process issue when its "Last run:" is older than 2 x dispatch.heartbeat_min.
+# the hourly watchdog workflow opens a P0 process issue when its "Last run:" is older than 2 x dispatch.heartbeat_min,
+# or when its "Health:" line shows an unanswered S1/S2 for 2 rounds in a row (#895).
 # An edit wakes nobody (pickup ignores edits) and is left out of the quiet check above.
 heartbeat() {
-  local n=$1 what=$2 windows
+  local n=$1 what=$2 health=${3:-} windows
   [[ "$n" =~ ^[0-9]+$ ]] || { log "heartbeat: no dispatch.heartbeat_issue in $CFG"; return; }
   windows=$(tmux list-windows -t $S -F '#W' 2>/dev/null | grep -vc '^shell$')
   if [ -n "${NUDGE_DRY:-}" ]; then echo "would update heartbeat #$n: $what"; return; fi
-  gh issue edit "$n" -R plenix-ds/pds --body "This issue is the dispatcher's heartbeat (template v2.4 §6.1, #772). **No action needed:** the poller (\`team.sh nudge\` on the agent host, every \`dispatch.heartbeat_min\`) rewrites this body on each run. The daily watchdog workflow opens a P0 process issue when the time below is older than 2 × \`dispatch.heartbeat_min\`.
+  gh issue edit "$n" -R plenix-ds/pds --body "This issue is the dispatcher's heartbeat (template v2.4 §6.1, #772). **No action needed:** the poller (\`team.sh nudge\` on the agent host, every \`dispatch.heartbeat_min\`) rewrites this body on each run. The hourly watchdog workflow opens a P0 process issue when the time below is older than 2 × \`dispatch.heartbeat_min\`, or when Health shows an unanswered S1/S2 for 2 rounds in a row (#895).
 
 Last run: $(date -u +%Y-%m-%dT%H:%M:%SZ)
 Host: $(hostname) · sessions running: ${windows:-0} · this run: $what
-Free memory: $(free -g | awk 'NR==2{print $7}') GB" >/dev/null 2>>"$LOG" || log "heartbeat: could not update #$n"
+Free memory: $(free -g | awk 'NR==2{print $7}') GB
+Health: ${health:-not measured this run}" >/dev/null 2>>"$LOG" || log "heartbeat: could not update #$n"
 }
 
 stop_one() { local win=$1${2:+-$2}; tmux kill-window -t "$S:$win" 2>/dev/null && { log "stop $win"; echo "stopped $win"; }; }

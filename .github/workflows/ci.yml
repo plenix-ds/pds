@@ -76,10 +76,11 @@ jobs:
           python-version: '3.12'
       - name: PyYAML, as the dashboard pins it
         run: python -m pip install --disable-pip-version-check -q 'PyYAML==6.0.2'
-      - name: Self-test (checks 13 and 15; the capacity rules, #769)
+      - name: Self-test (checks 13 and 15; the capacity rules, #769; the nudge never sleeps on open work, #895)
         run: |
           node tools/ci/check-roles.test.mjs
           node tools/ci/capacity.test.mjs
+          node tools/ci/dispatch.test.mjs
           node tools/ci/check-workflows.test.mjs
       - name: Check 13, every role has a definition, label and trigger
         run: node tools/ci/check-roles.mjs
