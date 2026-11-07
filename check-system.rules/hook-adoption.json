@@ -35,7 +35,7 @@
     "platform/components/Resizable/Resizable.tsx",
     "platform/patterns/WidgetGrid/WidgetGrid.tsx",
     "platform/patterns/ColumnsMenu/ColumnsMenu.tsx",
-    "platform/patterns/CommandBar/panel-parts.jsx"
+    "platform/patterns/CommandBar/panel-parts.tsx"
   ],
   "usePressable": [
     "platform/components/RowButton/RowButton.tsx",

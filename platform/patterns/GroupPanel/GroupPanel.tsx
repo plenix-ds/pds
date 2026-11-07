@@ -29,7 +29,7 @@ import { Button } from '../../components/Button/Button.tsx';
 import { Menu, MenuItem } from '../../components/Menu/Menu.tsx';
 import { Text } from '../../components/Text/Text.tsx';
 import { Tooltip } from '../../components/Tooltip/Tooltip.tsx';
-import { PanelTrigger as PanelTriggerJs, PanelHead as PanelHeadJs, Pick as PickJs, useReorder as useReorderJs } from '../CommandBar/panel-parts.jsx';
+import { PanelTrigger as PanelTriggerJs, PanelHead as PanelHeadJs, Pick as PickJs, useReorder as useReorderJs } from '../CommandBar/panel-parts.tsx';
 const PanelTrigger: any = PanelTriggerJs;
 const PanelHead: any = PanelHeadJs;
 const Pick: any = PickJs;

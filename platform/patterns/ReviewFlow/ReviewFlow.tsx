@@ -69,7 +69,7 @@ import { PromptDialog } from '../../components/Dialog/Dialog.tsx';
 import { DataGrid } from '../../components/DataGrid/DataGrid.tsx';
 import { useOptionalToast } from '../../components/Toast/Toast.tsx';
 import { ActivityList } from '../ActivityList/ActivityList.tsx';
-import { CommandBar as CommandBarJs } from '../CommandBar/CommandBar.jsx';
+import { CommandBar as CommandBarJs } from '../CommandBar/CommandBar.tsx';
 const CommandBar: any = CommandBarJs;
 import { useStrings, useLocale } from '../../providers/LocaleProvider.tsx';
 import english from '../../i18n/en.js';

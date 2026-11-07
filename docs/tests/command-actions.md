@@ -20,7 +20,7 @@ The buttons in a list's command bar (and the small forms they open) behave corre
 - Added in commit b9502283 (2026-10-16) "0.40.0: Wave 15 B and C (packages: Vue, web components, lint, MCP; i18n), command bar fixes, developer experience".
 
 ## How it checks
-- Builds the CommandBar's action part (`platform/patterns/CommandBar/BarActions.jsx`) from source with esbuild and adds it to the page.
+- Builds the CommandBar's action part (`platform/patterns/CommandBar/BarActions.tsx`) from source with esbuild and adds it to the page.
 - Draws CommandBars and Toolbars with sample commands, clicks, focuses and presses keys, and reads focus, roles and tooltips.
 - Inside the keyboard test it runs on the St. John test site's Members page; alone, it runs on `tests/fixtures/platform-host.html`.
 

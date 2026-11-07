@@ -21,7 +21,7 @@ import { useUid } from '../../utils/layer.ts';
 import { announce } from '../../utils/announce.tsx';
 import { formatDate, formatNumber } from '../../utils/format.ts';
 import { useCollectionView } from '../../hooks/useCollectionView.ts';
-import { CommandBar as CommandBarJs, CommandBarSearch as CommandBarSearchJs } from '../../patterns/CommandBar/CommandBar.jsx';
+import { CommandBar as CommandBarJs, CommandBarSearch as CommandBarSearchJs } from '../../patterns/CommandBar/CommandBar.tsx';
 const CommandBar: any = CommandBarJs;
 const CommandBarSearch: any = CommandBarSearchJs;
 import { FilterPanel } from '../../patterns/FilterPanel/FilterPanel.tsx';

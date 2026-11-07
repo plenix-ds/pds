@@ -6,7 +6,7 @@ const ROOT = path.resolve(__dirname, '..');
 const BASE_PATH = '/Plenix/tests/fixtures/platform-host.html';   // an empty page with this checkout's Platform
 async function internalActions(page) {
   const esbuild = require('esbuild');
-  const output = await esbuild.build({ entryPoints: [path.join(ROOT, 'platform/patterns/CommandBar/BarActions.jsx')], bundle: true, write: false, format: 'iife', globalName: 'CommandActionsTest',
+  const output = await esbuild.build({ entryPoints: [path.join(ROOT, 'platform/patterns/CommandBar/BarActions.tsx')], bundle: true, write: false, format: 'iife', globalName: 'CommandActionsTest',
     plugins: [require('./icon-modules.js'), { name: 'global-react', setup(build) { build.onResolve({ filter: /^react(-dom)?$/ }, args => ({ path: args.path, namespace: 'global-react' })); build.onLoad({ filter: /.*/, namespace: 'global-react' }, args => ({ contents: 'module.exports = window.' + (args.path === 'react' ? 'React' : 'ReactDOM') + ';' })); } }] });
   await page.addScriptTag({ content: output.outputFiles[0].text });
 }
