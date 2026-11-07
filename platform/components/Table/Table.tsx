@@ -20,16 +20,17 @@ import React from 'react';
 import { DataGridEngine } from '../DataGrid/DataGridEngine.tsx';
 import type { DataGridEngineProps } from '../DataGrid/DataGridEngine.tsx';
 
-type TableColumn = {
-  title?: React.ReactNode; field: string; kind?: string; type?: string; pill?: unknown; render?(record: Record<string, unknown>): React.ReactNode;
+type TableColumn<R = Record<string, unknown>> = {
+  title?: React.ReactNode; field: (keyof R & string) | (string & {}); kind?: string; type?: string; pill?: unknown; render?(record: R): React.ReactNode;
   width?: number | string; minWidth?: number | string; maxWidth?: number | string; rowLabel?: boolean; frozen?: boolean;
   align?: 'start' | 'center' | 'end' | 'left' | 'right'; headerAlign?: 'start' | 'center' | 'end' | 'left' | 'right'; empty?: React.ReactNode; wrap?: boolean;
 };
-export type TableProps = {
+/** @public R is the app's row type (Table<Row>, as DataGrid, #923) */
+export type TableProps<R = Record<string, unknown>> = {
   /** the accessible table name (required) */
   label: string;
-  data?: Record<string, unknown>[];
-  columns?: TableColumn[];
+  data?: R[];
+  columns?: TableColumn<R>[];
   /** the field that identifies a record; default "id" */
   index?: string;
   empty?: React.ReactNode;
@@ -38,11 +39,11 @@ export type TableProps = {
   /** "text" (default) | "pill" */
   cells?: 'text' | 'pill';
   className?: string;
-  unread?(record: Record<string, unknown>): boolean;
+  unread?(record: R): boolean;
   unreadKeys?: unknown[];
   onUnreadChange?(keys: unknown[]): void;
 };
-export function Table({ label, data, columns = [], index, empty, narrow = 'table', headerVisible = true, cells = 'text', className, unread, unreadKeys, onUnreadChange }: TableProps) {
+export function Table<R = Record<string, unknown>>({ label, data, columns = [], index, empty, narrow = 'table', headerVisible = true, cells = 'text', className, unread, unreadKeys, onUnreadChange }: TableProps<R>) {
   const staticColumns = React.useMemo(() => columns.map(({ title, field, kind, type, pill, render, width, minWidth, maxWidth, rowLabel, frozen, align, headerAlign, empty, wrap }) =>
     ({ title, field, kind, type, pill, render, width, minWidth, maxWidth, rowLabel, frozen, align, headerAlign, empty, wrap, sortable: false, resizable: false })), [columns]);
   // Table's own props are looser than the grid's (a free string for a kind or a narrow mode): the engine reads them as the grid's

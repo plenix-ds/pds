@@ -5,6 +5,7 @@ import {
   FilterPanel, SortPanel, GroupPanel, ColumnsMenu, ViewMenu, QuickFilter, useCollectionView, useAppLayout,
   Button, Input, Textarea, Select, Combobox, SearchField, NumberInput, Dialog, MenuItem, Field, Popover, Tooltip, AppShell, Chat,
   SegmentedControl, RadioTiles, NavList, MenuRadioGroup,
+  Table, SplitWorkspace, ListingPage,
 } from '../../release/packages/react';
 import type { DataGridColumn, CollectionField, CollectionFilter, CollectionView, MediaCardProps, ComboValue } from '../../release/packages/react';
 
@@ -84,6 +85,19 @@ export function Choices() {
 }
 // still compiles: multiple from a flag, with a handler that takes either shape (as on 0.93)
 export const comboEither = (flag: boolean) => <Combobox label="Any" multiple={flag} options={themes} onChange={(value: ComboValue | ComboValue[]) => value} />;
+// #923 (RedSave P-69): the row type flows through useCollectionView, Table and SplitWorkspace, as through DataGrid
+type PersonRow = { id: number; name: string; age: number };
+const people: PersonRow[] = [{ id: 1, name: 'Ada', age: 36 }];
+const personColumns: DataGridColumn<PersonRow>[] = [{ title: 'Name', field: 'name' }];
+const personFields: CollectionField<PersonRow>[] = [{ value: 'name', label: 'Name' }, { value: 'decade', label: 'Decade', get: (row) => Math.floor(row.age / 10) }];
+export function TypedCollection() {
+  const view = useCollectionView(personFields, { data: people, text: (row) => row.name });
+  const shown: number = view.count(people), first: boolean = view.test(people[0]);
+  return <DataGrid label={`People ${shown} ${first}`} data={people} columns={personColumns} {...view.tableProps} />;
+}
+export const typedTable = <Table label="People" data={people} columns={[{ title: 'Name', field: 'name', render: (record) => record.name.toUpperCase() }]} unread={(record) => record.age > 30} />;
+export const typedSplit = <SplitWorkspace paneTitle="People" rows={people} columns={personColumns} />;
+export const typedListing = <ListingPage title="People" rows={people} columns={personColumns} />;
 
 // wrong code still fails
 // @ts-expect-error aspect is one of the listed shapes
@@ -95,6 +109,14 @@ type IsAny<T> = 0 extends (1 & T) ? true : false;
 export const wrongChoice = <SegmentedControl label="Theme" options={themes} onChange={(value: number) => value} />;
 // @ts-expect-error multiple hands back an array (#925)
 export const wrongMany = <Combobox label="Themes" multiple options={themes} onChange={(value: Theme) => value} />;
+// @ts-expect-error a PersonRow field's get reads a PersonRow (#923)
+export const wrongGet: CollectionField<PersonRow> = { value: 'title', get: (row) => row.title };
+// @ts-expect-error Table's render sees the row type (#923)
+export const wrongRender = <Table label="People" data={people} columns={[{ title: 'Name', render: (record) => record.title, field: 'name' }]} />;
+// @ts-expect-error SplitWorkspace's columns match its rows (#923)
+export const wrongSplit = <SplitWorkspace rows={rows} columns={personColumns} />;
+// @ts-expect-error ListingPage's columns match its rows (#923)
+export const wrongListing = <ListingPage title="People" rows={rows} columns={personColumns} />;
 export const layoutTyped: IsAny<ReturnType<typeof useAppLayout>> = false;
 export const aliasTyped: IsAny<typeof DataTable> = false;
 export const viewerTyped: IsAny<typeof MediaViewer> = false;

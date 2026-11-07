@@ -21,7 +21,8 @@ import TagsIcon from 'plenix-platform/icons/plenix/tags';
 export type FieldKind = 'text' | 'select' | 'multi' | 'number' | 'date';
 export type FieldOption = { value: string; label?: string; color?: string };
 // a field of a collection (see the header); a page's own fields pass through
-export type Field = { value: string; label?: string; kind?: FieldKind | string; /** a date field's number unit: "s" for epoch seconds, "ms" (default) for milliseconds; never guessed from the size (#939) */ timestamp?: Timestamp; options?: (string | FieldOption)[]; get?(row: object): unknown; [key: string]: unknown };
+/** @public a collection's field; R is the app's row type, so get(row) sees it (#923) */
+export type Field<R extends object = object> = { value: string; label?: string; kind?: FieldKind | string; /** a date field's number unit: "s" for epoch seconds, "ms" (default) for milliseconds; never guessed from the size (#939) */ timestamp?: Timestamp; options?: (string | FieldOption)[]; get?(row: R): unknown; [key: string]: unknown };
 export type Condition = { id?: string; field: string; op: string; value?: unknown; group?: false };
 export type ConditionGroup = { group: true; id?: string; join?: 'and' | 'or'; items: FilterItem[] };
 export type FilterItem = Condition | ConditionGroup;
