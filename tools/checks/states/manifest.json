@@ -668,5 +668,15 @@
     "loading": "n/a(its options are local; no loading row)",
     "selected": "n/a(stories arrive with Storybook, P0-11)",
     "error": "n/a(invalid is the is-invalid state set by its Field; stories arrive with Storybook, P0-11)"
+  },
+  "Card": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11; the interactive Card's hover is its own surface state)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(a card is a surface; its buttons carry their own disabled state)",
+    "loading": "n/a(a card's content is the caller's; a busy button is the Button's loading state)",
+    "selected": "n/a(a card is not selectable)",
+    "error": "n/a(an error shows in the content; stories arrive with Storybook, P0-11)"
   }
 }
