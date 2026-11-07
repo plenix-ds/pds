@@ -136,7 +136,8 @@ function ColumnsList({ fields, value, onChange, filter = '', t }: any) {
 }
 
 /** @public a column the collection offers */
-export type ColumnField = { value: string; label: string };
+/** @public a column's field (the label falls back to the value), as useCollectionView gives it (#893) */
+export type ColumnField = { value: string; label?: string };
 /** @public the order and the hidden columns */
 export type ColumnsValue = { order: string[]; hidden: string[] };
 /** @public */

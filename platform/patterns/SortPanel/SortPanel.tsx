@@ -42,7 +42,9 @@ import SortIcon from 'plenix-platform/icons/plenix/sort';
 
 
 /** @public one sort level, the first the main sort */
-export type SortLevel = { field: string; dir?: 'asc' | 'desc' };
+/** @public the sort level (one type with utils/fields.ts, so the package exports one SortLevel) */
+import type { SortLevel } from '../../utils/fields.ts';
+export type { SortLevel };
 /** @public the prop type (ADR 0011) */
 export type SortPanelProps = { fields?: Field[]; value?: SortLevel[]; onChange(value: SortLevel[]): void; grouped?: boolean; inline?: boolean; strings?: Record<string, string> };
 export function SortPanel(props: SortPanelProps) {
