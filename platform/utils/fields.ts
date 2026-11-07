@@ -10,7 +10,8 @@
    Sort levels: [{ field, dir: "asc" | "desc" }], the first the main one; a select field sorts in its options' order. */
 
 import english from '../i18n/en.js';
-import { parseDate, isoDay } from './format.ts';
+import { parseDate, isoDay, instantOf } from './format.ts';
+import type { Timestamp } from './format.ts';
 import CalendarIcon from 'plenix-platform/icons/plenix/calendar';
 import EdTextIcon from 'plenix-platform/icons/plenix/ed-text';
 import FieldNumberIcon from 'plenix-platform/icons/plenix/field-number';
@@ -20,7 +21,7 @@ import TagsIcon from 'plenix-platform/icons/plenix/tags';
 export type FieldKind = 'text' | 'select' | 'multi' | 'number' | 'date';
 export type FieldOption = { value: string; label?: string; color?: string };
 // a field of a collection (see the header); a page's own fields pass through
-export type Field = { value: string; label?: string; kind?: FieldKind | string; options?: (string | FieldOption)[]; get?(row: object): unknown; [key: string]: unknown };
+export type Field = { value: string; label?: string; kind?: FieldKind | string; /** a date field's number unit: "s" for epoch seconds, "ms" (default) for milliseconds; never guessed from the size (#939) */ timestamp?: Timestamp; options?: (string | FieldOption)[]; get?(row: object): unknown; [key: string]: unknown };
 export type Condition = { id?: string; field: string; op: string; value?: unknown; group?: false };
 export type ConditionGroup = { group: true; id?: string; join?: 'and' | 'or'; items: FilterItem[] };
 export type FilterItem = Condition | ConditionGroup;
@@ -57,6 +58,14 @@ export const blank = (x: unknown) => x === null || x === undefined || x === '' |
 const iso = isoDay;
 const daysBefore = (n: number, today: unknown) => { const d = new Date((parseDate(today) || new Date()).getTime()); d.setDate(d.getDate() - n); return iso(d); };
 
+// the calendar day ("YYYY-MM-DD") of a date value for the filters: ISO text keeps its written day, a Date and a number are the reader's local day;
+// timestamp "s" reads a number as epoch seconds (never guessed from its size). "" when it is empty or not a date. One reader for every date filter (#939)
+export function dayOf(value: unknown, timestamp?: Timestamp): string {
+  if (blank(value)) return '';
+  if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}/.test(value)) return value.slice(0, 10);
+  return isoDay(instantOf(value, timestamp)) || String(value).slice(0, 10);
+}
+
 // one condition against one row (today: an ISO date, for "is within"; default the current date)
 export function matchesCondition(c: Condition, row: object, fields: Field[], today?: string): boolean {
   const f = fieldOf(fields, c.field), v = valueOf(f, row), val = c.value, k = kindOf(f);
@@ -67,7 +76,7 @@ export function matchesCondition(c: Condition, row: object, fields: Field[], tod
   if (k === 'select') { const list = ([] as unknown[]).concat(val); return c.op === 'any' ? list.indexOf(v) >= 0 : list.indexOf(v) < 0; }
   if (k === 'multi') { const list = ([] as unknown[]).concat(val), hit = ([] as unknown[]).concat(v || []).some((x) => list.indexOf(x) >= 0); return c.op === 'any' ? hit : !hit; }
   if (k === 'number') { const n = Number(v), q = parseFloat(val as string); if (isNaN(q)) return true; return c.op === 'eq' ? n === q : c.op === 'ne' ? n !== q : c.op === 'lt' ? n < q : n > q; }
-  const d = blank(v) ? '' : String(v).slice(0, 10);
+  const d = dayOf(v, f && f.timestamp);
   if (c.op === 'within') { const w = WITHIN.find((x) => x.value === val) || WITHIN[0]; return d >= daysBefore(w.days, today); }
   return c.op === 'is' ? d === val : c.op === 'before' ? d < (val as string) : d > (val as string);
 }
@@ -102,9 +111,9 @@ export function compareLevels(fields: Field[], levels: SortLevel[] | null | unde
 
 // the date quick filter: { preset: "any" | "7" | "30" | "year" | "custom", from, to } (ISO dates)
 export const DATE_PRESETS: { value: string; label: string }[] = [{ value: 'any', label: english.fields.presets.any }, { value: '7', label: english.fields.presets['7'] }, { value: '30', label: english.fields.presets['30'] }, { value: 'year', label: english.fields.presets.year }];
-export function matchesDate(range: DateRange | null | undefined, value: unknown, today?: string): boolean {
+export function matchesDate(range: DateRange | null | undefined, value: unknown, today?: string, timestamp?: Timestamp): boolean {
   if (!range || range.preset === 'any' || !range.preset) return true;
-  const d = blank(value) ? '' : String(value).slice(0, 10);
+  const d = dayOf(value, timestamp);
   if (!d) return false;
   const now = today || iso(new Date());
   if (range.preset === '7' || range.preset === '30') return d >= daysBefore(Number(range.preset), now) && d <= now;
