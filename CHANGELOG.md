@@ -6,6 +6,20 @@ The batch numbers point to the work log (Plenix - DAM/audit/batches/).
 
 ## [Unreleased]
 
+## [0.93.0] - 2026-11-07
+
+### Upgrading from 0.92.0
+No breaking change. DataGrid row actions show as icons at the row's end on hover, focus and selection (the first three rowMenu items with an icon, never a danger item); the ⋮ stays when more remain. A row menu item can opt in or out with inline. An actions column keeps its natural width at the grid's end.
+
+### Added
+- DataGrid: `inline?: boolean` on a row menu item (`DataGridMenuAction`). `inline: false` keeps an item in the ⋮ menu; `inline: true` lets a fourth icon item show as an icon. A `danger` item is never an icon (ADR 0022, D-0090, #800).
+
+### Changed (visual)
+- DataGrid: with room, a grid's row actions show as icon-only buttons at the row's inline end, on row hover, focus inside the row and when the row is selected: the first three items of `rowMenu` that have an icon and are not `danger`, each named by its label. The ⋮ stays after them only when some action stays in the menu. Without room, or on touch, the ⋮ holds every action as before. Set `inline: false` on an item to keep the old look (#800 AC-5).
+
+### Fixed
+- DataGrid: a column with `kind: "actions"` keeps its natural width and sits at the grid's inline end with its content end-aligned (also in a right-to-left grid, where the cell's `dir="auto"` placed it at the wrong edge); the spare room goes to the columns before it, never to a gap after it (#844).
+
 ## [0.92.0] - 2026-11-07
 
 ### Upgrading from 0.91.0
@@ -28,6 +42,7 @@ No breaking change. DataGrid fixes from 0.91.0: pills in a column are one width 
 - Icon buttons everyone knows show no visual tooltip (D-0091, DESIGN.md §6); they keep their `aria-label`. The close and dismiss X of `Dialog`, `Sheet`, `Popover`, `Banner`, `Notice`, `TeachingBubble`, `SecondaryPane` and `UploadManager`, the clear X of `Combobox`, the previous and next chevrons of `Calendar` and `Carousel`, the back arrow of `CommandMenu` and the `DataGrid` row ⋮ pass `tooltip={false}`. `Button` still shows its label as a tooltip on every other icon-only button, and an app can pass `tooltip` explicitly (#851).
 
 ### Fixed
+- `platform/standards/variants/styles.json`: no side-table row lists a custom property that a stylesheet sets for itself; only tokens defined in `platform/system/tokens` or `themes` remain (ADR 0015, #353).
 - TypeScript: 20 props type names that `@plenix-ds/react` published until 0.90.x are exported again. 0.91.0 dropped them without a *Breaking* note (D-0081 moved TypeScript parts to tsc's own declarations, and these parts didn't export their props type). The 20 are `AnchorProps`, `ChartPatternsProps`, `ChatAttachmentProps`, `ChatVoiceProps`, `DataGridEngineProps`, `EntityTitleProps`, `HideProps`, `MenuBarMenuProps`, `MenuBarProps`, `MenuDividerProps`, `MetricProps`, `OverflowListProps`, `PromptInputProps`, `PromptSuggestionsProps`, `RichTextProps`, `SearchResultGroupProps`, `SearchResultProps`, `ShowProps`, `SideNavPortalProps` and `TableSettingsProps`.
 - The `@plenix-ds/angular` and `@plenix-ds/vue` bridges are generated again, and their typings resolve: they now ship React's `types/` folder beside `react-props.d.ts`, which since 0.91.0 re-exports from it. Both read each part's props from tsc's declarations as well as from the header-typed ones (`build-packages.d/lib/react-props.js`). The release build had stopped once the last parts became TypeScript.
 - `platform/standards/variants/styles.json`: Permission summary's Can and Cannot lists record the styles that draw them (its own `__lists` rule and three tokens). The range slider and the product switcher rows name the component that draws them (Slider, AppHeader) instead of "markup only" (#353, G3 on #843).
