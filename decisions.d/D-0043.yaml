@@ -1,0 +1,9 @@
+id: D-0043
+date: 2026-11-05
+area: components
+decided_by: agent (pds1-product-lead), owner may switch
+decision: Printable documents come from Plenix parts - a PrintDocument pattern (A4, 20mm margins from a print token, header and footer slots, dir and lang), AnswerLines and PageBreak - so apps print with no style block of their own. Plenix does not generate PDFs.
+why: 'CTM 3.0 needs A4 forms and certificates without local CSS (PLX-010); utility classes alone would leave apps assembling layout by hand.'
+options: [PrintDocument + AnswerLines + PageBreak (chosen), print utility classes only]
+status: active
+check: 'planned:print-document (behaviour tests AC-1 to AC-6, docs/pds1/slices/87-print-document/brief.md)'

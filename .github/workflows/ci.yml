@@ -33,7 +33,7 @@ jobs:
         run: pipx run zizmor==1.32.0 --offline --format=github .github/workflows
 
   decisions:
-    name: Decisions (decisions.yaml)
+    name: Decisions (decisions.d)
     runs-on: ubuntu-latest
     timeout-minutes: 5
     env:

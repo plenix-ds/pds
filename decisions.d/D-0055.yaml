@@ -1,0 +1,9 @@
+id: D-0055
+date: 2026-11-05
+area: design
+decided_by: owner (2026-11-05, CTM review deck via LighthouseCollection/CTM#109; plenix-ds/pds#275), reading applied by pds1-design-director (D-0035)
+decision: The EntityHeader { icon, hue } media has no box by default - the icon fills the square in its hue's on-surface colour (D-0036 row 1, D-0038 dark shades); media.box true keeps the bordered tile where a usage needs it (D-0024). Fact icons stay without a box.
+why: 'Owner: "the icon does not have the box around it as we decided." His own screenshot (0.86.0, case 20261020-04) already shows the box, so the sentence reads as "does not have [to have] the box, as we decided" - D-0024 ("do not put an icon inside a box") and D-0036 row 1, shown to him on #108.'
+options: [no box, box opt-in (chosen), box by default]
+status: active
+check: planned:visual-regression (record-page example) + behaviour test (tile has no border or fill unless media.box)

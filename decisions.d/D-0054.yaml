@@ -1,0 +1,9 @@
+id: D-0054
+date: 2026-11-05
+area: design
+decided_by: owner (2026-11-05, CTM review deck via CTM#115; earlier 2026-11-02, plenix-ds/pds#6), applied by pds1-design-director
+decision: All raised buttons (secondary, tertiary, danger-secondary, primary, danger) share one lighter elevation - no shadow at rest, the Halo card shadow on hover, and the glow's rim narrowed (stop 75% to 90%). danger-secondary joins the raised family (rest glow, Halo on hover, no hover glow over its red fill). Ghost, 2xs and bars stay flat. No new token (plenix-ds/pds#269).
+why: '"Buttons are not consistent. Delete has no glow or shadow. Reduce glow and shadow and make buttons look consistent." (owner, 2026-11-05); "Make the drop shadow also more subtle. Using one of the shadows from the card shadows. The light shadows." (owner, 2026-11-02). Halo is already the lightest card shadow, so lighter means none at rest.'
+options: [none at rest + Halo on hover (chosen), Halo at rest and on hover as today]
+status: active
+check: planned:visual-regression (Button page, secondary/tertiary/danger-secondary side by side)

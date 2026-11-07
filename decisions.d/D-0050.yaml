@@ -1,0 +1,9 @@
+id: D-0050
+date: 2026-11-05
+area: architecture
+decided_by: agent (pds1-ds-architect), owner may switch
+decision: Each of the spec's 1,186 variations becomes its own record by derivation at build time (stable id item--group-name, checked), not by moving the entries; new per-variation data (styling, Figma, platforms, mappings) goes in side tables keyed by the id; the API gains variants.json and components[].variants (docs/adr/0013).
+why: 'The owner asked for a record per variation (#117); moving 1,186 entries across about 200 files adds churn and no reader value, while ids and side tables give linking, mapping and per-variation styling (#116).'
+options: [derived records + side tables (chosen), move every entry into separate variant files]
+status: active
+check: build-spec-parts.js duplicate-id and side-table key checks (check-system generated)

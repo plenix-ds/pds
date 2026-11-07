@@ -1,0 +1,9 @@
+id: D-0087
+date: 2026-11-06
+area: components
+decided_by: owner (chat, 2026-11-06, plenix-ds/pds#800)
+decision: 'DataGrid column sizing: from the grid''s current width and its visible columns, compact columns (numbers, IDs, dates, names, people, status and pills) take the width of their widest item, with an app''s set width as a minimum, never a cap; spare room is shared evenly across the columns and content stays left-aligned; only long text (summary, description) may truncate. The first column, when it is the selection checkbox, is a fixed static width. The last column, when it holds actions, shows them as icon-only buttons, right-aligned, on row hover when the grid has room, and otherwise is a fixed ⋮ menu pinned to the right edge.'
+why: 'Owner, 2026-11-06: columns truncated with lots of space left ("this issue is really bothering me"); he set the rule himself.'
+options: ['the owner''s rule (chosen)']
+status: active
+check: 'planned:data-grid-column-fit (behaviour tests AC-1 to AC-8 in docs/pds1/slices/800-column-fit/brief.md)'

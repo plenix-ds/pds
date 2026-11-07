@@ -1,0 +1,7 @@
+id: D-0037
+date: 2026-11-05
+area: design
+decided_by: agent (pds1-design-director), owner may switch
+decision: Fluent 2 state layers (#109, owner decision 3 of 2026-10-24) are an existing colour at opacity - color-mix of content-default (white on primary and danger) at 8% hover, 10% pressed and 10% focus over any fill, with new opacity steps only, no new colours. Destructive command-bar actions confirm through the existing destructive Dialog. Option B, new see-through palette colours, is not recommended (no new colours). Reply B on #109 to switch.
+status: active
+check: planned:lint-colour-tokens

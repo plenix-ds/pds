@@ -1,0 +1,8 @@
+id: D-0020
+date: 2026-11-05
+area: release
+decided_by: agent (pds1 setup), owner may switch
+decision: The instant plenix-release signal to CTM needs Contents write on CTM, so it is not used; CTM relies on its own schedule. Recommended - CTM checks every 5 minutes. Reply to switch to granting Contents write.
+status: superseded
+superseded_by: D-0083
+check: review-only (pending owner reply)

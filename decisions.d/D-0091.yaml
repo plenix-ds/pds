@@ -1,0 +1,9 @@
+id: D-0091
+date: 2026-11-07
+area: components
+decided_by: owner (chat, 2026-11-07, plenix-ds/pds#851)
+decision: 'Icon buttons whose meaning everyone knows (close or dismiss X first; the Design Director lists the set in DESIGN.md, Microsoft first per D-0078) show no visual tooltip. They keep their accessible name for screen readers. Other icon-only buttons keep their tooltip, and an app may still pass one explicitly.'
+why: 'Owner, 2026-11-07, on a dialog X showing "Cancel": "there is no need to have tool tips on things that are known such as this!!!"'
+options: ['no tooltip on known icons (chosen)', 'a tooltip on every icon-only button (before)']
+status: active
+check: 'planned:known-icon-no-tooltip (behaviour test: the dialog X has an aria-label and no tooltip on hover or focus; #851)'

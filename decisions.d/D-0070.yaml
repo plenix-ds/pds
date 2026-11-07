@@ -1,0 +1,9 @@
+id: D-0070
+date: 2026-11-06
+area: api
+decided_by: agent (pds1-ds-architect) on the Component Engineer's proposal (#146), owner may switch
+decision: 'ContentGrid (and AssetGallery) take an opt-in virtualized (default false): with layout grid only the card rows in view are drawn and the grid scrolls at its container''s height; masonry and justified ignore it with a dev warning (docs/adr/0019).'
+why: 'Automatic virtualization above a count would silently turn a page-flow grid into an inner scroll area that needs a height; opt-in changes no existing page.'
+options: [opt-in virtualized (chosen, A), automatic above a card count (B), a separate VirtualContentGrid (C)]
+status: active
+check: G3 review of the #146 build PR and its behavior tests (rows in view only, columns from width, keyboard and selection across the set, the layout warning)

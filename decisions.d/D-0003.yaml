@@ -1,0 +1,7 @@
+id: D-0003
+date: 2026-11-04
+area: release
+decided_by: owner
+decision: Releases are on demand, triggered by agents, with no owner approval; automatic tag, live smoke test, automatic rollback.
+status: active
+check: planned:release-integrity

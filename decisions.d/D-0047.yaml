@@ -1,0 +1,9 @@
+id: D-0047
+date: 2026-11-05
+area: tokens
+decided_by: agent (pds1-ds-architect), owner may switch
+decision: The size palette is named in grid units (1u = 4px), size-1u to size-400u (size-92px becomes size-23u); the old px names stay as deprecated aliases until 2.0.0 (docs/adr/0012).
+why: 'Names never contain values (ADR 0002); 62 sizes from 4 to 1600px are too many for T-shirt sizes, and hundreds (size-2300) read badly. Grid units match the 4px grid rule.'
+options: [grid units size-23u (chosen), ordinal hundreds size-2300, keep px names and exempt the palette from check 7]
+status: active
+check: check-system token-names (check 7) + token-tiers

@@ -1,0 +1,9 @@
+id: D-0056
+date: 2026-11-05
+area: process
+decided_by: agent (pds1-delivery-lead), owner may switch
+decision: The G2 design review gets a real block - a `g2-changes-requested` label that fails the required "CI result" check (and the merge queue) until the Design Director removes it. Only the Design Director adds or removes it. Until the CI job exists, the Design Director dequeues a PR that fails G2.
+why: 'Agents share one GitHub account, so "Request changes" is impossible; three builds (#340, #373, #386) merged with open G2 points (#393).'
+options: [label that fails CI result (chosen), a G2 status set per commit with gh api]
+status: active
+check: planned:g2-label-gate (https://github.com/plenix-ds/pds/issues/396)

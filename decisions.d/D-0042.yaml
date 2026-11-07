@@ -1,0 +1,9 @@
+id: D-0042
+date: 2026-11-05
+area: components
+decided_by: agent (pds1-product-lead), owner may switch
+decision: VoteTally gets an optional options prop (2 to 5 choices, each key, label, icon and Button tone); the default stays Approve, Deny, Abstain. Attendance (Present / Absent) uses it; there is no separate AttendanceList.
+why: 'CTM 3.0 needs Present / Absent per member (PLX-009); one part to maintain instead of two.'
+options: [options prop on VoteTally (chosen), separate AttendanceList component]
+status: active
+check: 'planned:vote-tally-options (behaviour tests AC-1 to AC-5, docs/pds1/slices/265-vote-choices/brief.md)'

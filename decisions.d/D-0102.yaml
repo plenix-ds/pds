@@ -1,0 +1,9 @@
+id: D-0102
+date: 2026-11-07
+area: design
+decided_by: agent (pds1-product-lead) at intake, owner may switch (#948, D-0078 Microsoft first)
+decision: 'Card, form and dialog footers have no fill. Actions sit at the end on the surface that holds them. A static ActionBar is transparent; a sticky one takes its container''s surface (the context background, page canvas by default) with its hairline above; the Dialog footer is transparent with a hairline only while the body scrolls. No opt-in fill variant. The Dialog header band is unchanged.'
+why: 'The owner, through CTM: "why is there grey bar bg behind the save / cancel". ActionBar painted surface-canvas (grey inside white cards) and the Dialog footer surface-dialog-chrome (gray-200, also in dark).'
+options: ['no fill, hairline where needed (chosen)', 'keep the band', 'no fill and no hairline anywhere']
+status: active
+check: 'planned:footer-no-fill-948 (CSS test: action-bar static background transparent, dialog-footer-background transparent; visual checks on #948)'

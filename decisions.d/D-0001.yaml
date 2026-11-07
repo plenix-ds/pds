@@ -1,0 +1,7 @@
+id: D-0001
+date: 2026-11-04
+area: process
+decided_by: owner
+decision: New repo plenix-ds/pds, continuing plenix-platform 0.x with full history (2,365 commits, 240 tags); plenix-platform stays read-only for 0.x consumers.
+status: active
+check: review-only (one-time setup)

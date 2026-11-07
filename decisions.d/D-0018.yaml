@@ -1,0 +1,7 @@
+id: D-0018
+date: 2026-11-04
+area: process
+decided_by: owner
+decision: At most 4 agents on long work, plus any number of small tasks (~15 min cap); memory is the real limit; all adjustable in agents.config.yaml.
+status: active
+check: review-only (pds1-delivery-lead schedules by agents.config.yaml)

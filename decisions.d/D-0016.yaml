@@ -1,0 +1,7 @@
+id: D-0016
+date: 2026-11-04
+area: process
+decided_by: owner
+decision: Pictures only when the owner asks; screenshots CI already takes are always sent to the owner (PR, issue) and logged on the dashboard.
+status: active
+check: planned:visual-artifacts-posted

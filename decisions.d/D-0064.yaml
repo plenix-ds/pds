@@ -1,0 +1,9 @@
+id: D-0064
+date: 2026-11-06
+area: api
+decided_by: agent (pds1-ds-architect), owner may switch
+decision: 'FormFlow gains an optional defaultValue (the draft it starts from; default initialValue, which stays the baseline for dirty and the unsaved-changes question). DataGrid Form Edit remounts FormFlow in the drawer with defaultValue={draft} when the person keeps editing after the application closed its panel (docs/adr/0016 addendum, #465).'
+why: 'FormFlow keeps its draft in its own state, so changing surface remounts it and loses the draft; one optional starting value keeps it without making FormFlow controlled.'
+options: [optional defaultValue (chosen, A), a controlled FormFlow with value and onChange (B)]
+status: active
+check: G3 review of the #465 PR and its behavior check (close the panel, keep editing, the same values in the drawer)

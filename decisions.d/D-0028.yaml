@@ -1,0 +1,9 @@
+id: D-0028
+date: 2026-11-05
+area: styles
+decided_by: owner (2026-10-31; plenix-ds/pds#54, #48)
+decision: Component CSS stays as written; no source rewrite to shorthand and no Lightning CSS minifier for now.
+why: 'Measured gain about 3% (1.6% compressed); the owner chose to leave it.'
+options: [leave as is (chosen), shorthand rewrite, Lightning CSS minifier]
+status: active
+check: review-only (no change to enforce)

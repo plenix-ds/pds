@@ -1,0 +1,7 @@
+id: D-0015
+date: 2026-11-04
+area: process
+decided_by: owner
+decision: GitHub is the only channel for the owner and all agents; decisions and visual checks are shown on the dashboard.
+status: active
+check: review-only (process)

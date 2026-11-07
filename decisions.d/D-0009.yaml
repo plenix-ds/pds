@@ -1,0 +1,7 @@
+id: D-0009
+date: 2026-11-04
+area: design
+decided_by: owner
+decision: Dark mode stays as defined; defects are fixed as bugs.
+status: active
+check: planned:contrast-matrix

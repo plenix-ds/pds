@@ -1,0 +1,7 @@
+id: D-0014
+date: 2026-11-04
+area: process
+decided_by: owner
+decision: Full autonomy with bypass permissions; agents merge, deploy and migrate; CI is the gate; safety nets replace approvals.
+status: active
+check: planned:branch-protection-required-checks

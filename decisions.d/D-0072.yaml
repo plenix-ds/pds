@@ -1,0 +1,9 @@
+id: D-0072
+date: 2026-11-06
+area: components
+decided_by: agent (pds1-component-engineer 1, carried by pds1-product-lead), owner may switch
+decision: Under D-0026 (charts on Apache ECharts), TimelineChart, GanttChart, WordCloud and GeoMap stay Plenix SVG drawings for now, because ECharts has no native series for them (custom series, an extra package or map data). Radar, HeatMap, Treemap, Sankey and NetworkGraph move to ECharts.
+why: 'Moving the four gains nothing visible and costs code and bytes; the owner already said of WordCloud "for now keep what is here" (#104, 2026-10-26).'
+options: ['four stay SVG, the rest move (chosen)', 'move all nine through custom series and extra packages']
+status: active
+check: 'review-only (component scope; the chart list in #106 is the record)'

@@ -1,0 +1,9 @@
+id: D-0052
+date: 2026-11-05
+area: design
+decided_by: agent (pds1-design-director), owner may switch
+decision: Printed documents (#87) size the paper in millimetres - A4 210 x 297mm and 20mm margins - through print-only system tokens (print-sheet-*, print-document-margin) on a named page (@page plx-document), so other pages keep their 24px print margin. These tokens are exempt from the 4px-grid check by their print- name; mm appears nowhere else.
+why: 'Paper is physical (the brief, AC-1: A4, 20mm); 20mm is not a whole number of 4px steps. A named page keeps the change to PrintDocument only.'
+options: [mm print tokens on a named page (chosen), change print-page-margin for every page, px values rounded to the grid]
+status: active
+check: planned:design-lint (grid check exempts print-* tokens; mm outside them fails)

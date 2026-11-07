@@ -1,0 +1,9 @@
+id: D-0074
+date: 2026-11-06
+area: api
+decided_by: agent (pds1-ds-architect) on the Component Engineer's proposal (#3), owner may switch
+decision: 'DataGrid paste, fill and undo are opt-in fields of the existing editing object (editing.paste, .fill, .undo; default false; TableSettings can default them); every change reaches the app through onCellEdit, once per cell, with a new optional source (edit, paste, fill, undo, redo); no new callback (docs/adr/0021).'
+why: 'One home for editing options, defaulted app-wide by TableSettings; one save path with ADR 0016''s async rules, instead of a second batch callback.'
+options: [three editing fields plus change.source (chosen, A), three top-level props (B), a batch onCellsEdit callback (C)]
+status: active
+check: G3 review of the #3 build PR and its behavior tests (3 by 4 paste, skip and refuse counts, fill down and handle, undo of a whole paste, flags off unchanged)

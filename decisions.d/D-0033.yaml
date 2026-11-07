@@ -1,0 +1,7 @@
+id: D-0033
+date: 2026-11-05
+area: architecture
+decided_by: agent (pds1-ds-architect), carries forward owner decision plenix-platform#872
+decision: Style Dictionary 5 is the only token build; finish plenix-platform#372 reusing #928, retire build-tokens.js; keep build-mobile.js for native tokens (docs/adr/0003).
+status: active
+check: check-system style-dictionary + planned:no-build-tokens

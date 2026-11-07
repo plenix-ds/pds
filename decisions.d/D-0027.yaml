@@ -1,0 +1,9 @@
+id: D-0027
+date: 2026-11-05
+area: components
+decided_by: owner (2026-10-26; plenix-ds/pds#106)
+decision: Plenix chart components draw with Apache ECharts, bundled locally and modular, themed from Plenix tokens; component names and props stay the same.
+why: '"use apache charts" (owner, 2026-10-26), after comparing LineChart, Recharts and ECharts.'
+options: [Apache ECharts (chosen), Recharts, own LineChart]
+status: active
+check: review-only (dependency choice)

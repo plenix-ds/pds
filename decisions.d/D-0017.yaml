@@ -1,0 +1,7 @@
+id: D-0017
+date: 2026-11-04
+area: process
+decided_by: owner
+decision: Visual regression runs per PR only (light/dark, standard density; RTL and compact when touched). No separate full run before a release.
+status: active
+check: planned:visual-regression

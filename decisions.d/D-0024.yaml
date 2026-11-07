@@ -1,0 +1,9 @@
+id: D-0024
+date: 2026-11-05
+area: design
+decided_by: owner (2026-10-24 and 2026-11-01, chat; plenix-ds/pds#108, #78)
+decision: No icon inside a decorative box; drop the frame and fill and draw the icon at the tile's full size. A box stays only where a specific usage needs it.
+why: '"do not put an icon inside a box" (2026-10-24); "The box is a per usage based on certain UI" (2026-11-01).'
+options: [no box by default (chosen), keep boxes]
+status: active
+check: review-only (pds1-design-critic on each UI PR; no reliable static check)
