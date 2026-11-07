@@ -68,7 +68,9 @@ export function useColumns({ initial, props, columns, frame, live, emit, api }: 
   const resize = (field: string, value: number | string) => {
     const definition = columns.find((c) => c.field === field),
       at = frame.current;
-    const min = Math.max(floors[field] || 0, tokenPixels(definition?.minWidth || '--plx-ref-size-20u', at)),
+    // a narrow column (#966) can be resized down to its own floor (size-8u at least)
+    const narrowCol = floors[field] > 0 && floors[field] < tokenPixels('--plx-ref-size-20u', at) && !definition?.width && !definition?.minWidth;
+    const min = Math.max(floors[field] || 0, tokenPixels(definition?.minWidth || (narrowCol ? '--plx-ref-size-8u' : '--plx-ref-size-20u'), at)),
       max = Math.min(
         definition?.maxWidth ? tokenPixels(definition.maxWidth, at) : SIZE_STEPS[SIZE_STEPS.length - 1],
         Math.max(min, shareOf(at?.clientWidth as number, at))

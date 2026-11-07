@@ -76,6 +76,8 @@ export function useTableModel({
   remote,
   mode,
 }: any) {
+  // a narrow column (#966) measured below the grid's minimum keeps its own floor: size-8u at least, not metrics.min (the floors state holds it)
+  const narrowFloor = (c: any) => (floors[c.field] > 0 && floors[c.field] < metrics.min && !c.width && !c.minWidth ? floors[c.field] : metrics.min);
   const leafDefs = React.useMemo(
     () =>
       columns.map((c: any) => ({
@@ -103,19 +105,19 @@ export function useTableModel({
         size: kinds(c).includes('icon')
           ? metrics.lead
           : Math.max(
-              metrics.min,
+              narrowFloor(c),
               floors[c.field] || 0,
-              autoSizing[c.field] || tokenPixels(c.width, frame.current) || metrics.min
+              autoSizing[c.field] || tokenPixels(c.width, frame.current) || narrowFloor(c)
             ),
         minSize: kinds(c).includes('icon')
           ? metrics.lead
-          : Math.max(floors[c.field] || 0, tokenPixels(c.minWidth, frame.current) || metrics.min),
+          : Math.max(floors[c.field] || 0, tokenPixels(c.minWidth, frame.current) || narrowFloor(c)),
         maxSize: kinds(c).includes('icon')
           ? metrics.lead
           : Math.min(
               c.maxWidth ? tokenPixels(c.maxWidth, frame.current) : SIZE_STEPS[SIZE_STEPS.length - 1],
               Math.max(
-                Math.max(floors[c.field] || 0, tokenPixels(c.minWidth, frame.current) || metrics.min),
+                Math.max(floors[c.field] || 0, tokenPixels(c.minWidth, frame.current) || narrowFloor(c)),
                 shareOf(metrics.room, frame.current)
               )
             ),

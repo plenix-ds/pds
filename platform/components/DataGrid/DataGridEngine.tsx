@@ -785,6 +785,8 @@ function NextEngine(rawProps: any) {
     });
 
   const { chooserColumns, headerCell } = headerRows({
+    floors,
+    metrics,
     groupBy,
     columnMenu,
     S,

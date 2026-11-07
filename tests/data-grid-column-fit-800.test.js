@@ -45,7 +45,8 @@ require('./limit.js');
       assert.ok(wide.sideways <= 1, T + 'no sideways scroll (' + wide.sideways + ')');
       // AC-3: the room is shared evenly: the columns' widths are their widest value plus one equal share
       const narrowish = await probe(1400, false);
-      const grow = ['Case', 'Husband', 'Wife', 'Reason', 'Judge', 'Status', 'Fee', 'Size'].map((n) => (wide.widths.find((x) => x.t.startsWith(n)).w - narrowish.widths.find((x) => x.t.startsWith(n)).w));
+      // #966 (D-0108): a narrow column (under 80px by content: Fee) takes no spare room, so it is left out of the equal share
+      const grow = ['Case', 'Husband', 'Wife', 'Reason', 'Judge', 'Status', 'Fee', 'Size'].filter((n) => narrowish.widths.find((x) => x.t.startsWith(n)).w >= 80).map((n) => (wide.widths.find((x) => x.t.startsWith(n)).w - narrowish.widths.find((x) => x.t.startsWith(n)).w));
       assert.ok(Math.max(...grow) - Math.min(...grow) <= 12, T + 'AC-3: equal added width across the columns (within a few grid steps: widths snap to the 4px grid) when the room grows by 200px (' + grow.join(', ') + ')');
       // AC-4: the checkbox column is fixed
       const small = await probe(900, false), big = await probe(1900, false);

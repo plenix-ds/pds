@@ -33,10 +33,12 @@ const assert = require('assert/strict'), { serve, launch } = require('./lib');
       assert.ok(by['#'].w <= 300, w + ': the # column takes an equal share, not all the room, got ' + by['#'].w);
       assert.ok(r.heads.every((x) => x.right <= r.holderRight + 1), w + ': every column is inside the grid (Actions not cut off): ' + JSON.stringify(r.heads.map((x) => [x.t, Math.round(x.right)])) + ' edge ' + Math.round(r.holderRight));
       assert.equal(r.scrolls, false, w + ': nothing scrolls sideways when the columns fit');
-      assert.ok(by['Session date'].w <= 340, w + ': the date column takes an equal share, got ' + by['Session date'].w);
+      // #966 (D-0108): a narrow column (the # column) takes no spare room, so the other columns share its part
+      assert.ok(Math.abs(by['Session date'].w - by['Court'].w) <= 48 || by['Status'].w < 80, w + ': the date column takes an equal share with Court, got ' + by['Session date'].w + ' and ' + by['Court'].w);
       // the text columns that hold real text share the spare room (a short Title stays at its minimum); the date column does not grow
+      // Status is a narrow column once its pills fit under 80px (#966): it takes no share
       const spare = ['Court', 'Status'].map((t) => by[t].w);
-      assert.ok(Math.abs(spare[0] - spare[1]) <= 24, w + ': the spare room is shared between Court and Status: ' + spare.join(','));
+      assert.ok(by['Status'].w < 80 || Math.abs(spare[0] - spare[1]) <= 24, w + ': the spare room is shared between Court and Status: ' + spare.join(','));
       assert.ok(by['Court'].w > 120 || w === 1280, w + ': Court takes part of the spare room, got ' + by['Court'].w);
     }
     // the columns do not fit: a scrollbar, and it is below the last row (the last row is not under it)
