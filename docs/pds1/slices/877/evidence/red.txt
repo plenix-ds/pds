@@ -1,0 +1,3 @@
+AssertionError [ERR_ASSERTION]: ltr: end drawer meets the frame's right edge (1643), got 1910
+    at /home/cc/pds1/work/component-engineer-1/tests/app-shell-frame-overlays-877.test.js:38:29 {
+  generatedMessage: false,
