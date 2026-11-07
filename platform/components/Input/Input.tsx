@@ -23,7 +23,7 @@
      Input.appearance: "outline" (default; a border on every side) | "filled" (the same border and corners, a gray fill and
        the value in dark gray); one appearance per form. There is no underline field (owner, 2026-10-16)
      Input.className: more classes on the <input>
-     Textarea.label: its accessible name (aria-label), as SearchField's label does; inside a Field the Field's label names it, and an aria-label or aria-labelledby you pass wins
+     Textarea.label: its accessible name (aria-label), as SearchField's label does; inside a Field with a label the Field's label names it (no aria-label is set), and an aria-label or aria-labelledby you pass wins
      Textarea.invalid: marks the field (aria-invalid)
      Textarea.warning: true marks the field with a warning (data-plx-warning, a warning border and fill); put the message in Field's warning
      Textarea.rows: the visible lines (default 3); an autoGrow text area starts at its minimum height and grows from there
@@ -76,6 +76,7 @@
      All three forward their ref to the native element.
 */
 import React from 'react';
+import { FieldLabelContext } from '../../utils/fieldLabel.ts';
 import { cx } from '../../utils/cx.ts';
 import { gridPx } from '../../utils/grid.ts';
 import { isDataValue } from '../../utils/dataValue.ts';
@@ -149,6 +150,7 @@ export type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> & 
 };
 export const Textarea = React.forwardRef(function Textarea({ invalid, warning, appearance, autoGrow = false, data = false, label, className, rows = 3, onInput, readOnly, ...rest }: TextareaProps, ref: React.ForwardedRef<HTMLTextAreaElement>) {
   const locked = useReadOnly(readOnly);   // its own readOnly, else the nearest read-only region's
+  const fieldNamesIt = React.useContext(FieldLabelContext);   // a Field with a label names it with <label for> (ADR 0027)
   const own = React.useRef<HTMLTextAreaElement | null>(null);
   const setRef = React.useCallback((el: HTMLTextAreaElement | null) => { own.current = el; if (typeof ref === 'function') ref(el); else if (ref) ref.current = el; }, [ref]);
   // the fallback: measure the content and set the height on the grid (the stylesheet caps it at the maximum)
@@ -161,7 +163,7 @@ export const Textarea = React.forwardRef(function Textarea({ invalid, warning, a
   }, [autoGrow]);
   React.useLayoutEffect(() => { fit(); });
   return <textarea ref={setRef} rows={rows} readOnly={locked || undefined} className={cx('plx-input', 'plx-input--textarea', data && 'plx-input--data', autoGrow && 'plx-input--auto-grow', look(appearance), className)} aria-invalid={invalid || undefined} data-plx-warning={warning || undefined}
-    onInput={(e) => { fit(); if (onInput) onInput(e); }} aria-label={label && !rest['aria-labelledby'] ? label : undefined} {...rest} />;
+    onInput={(e) => { fit(); if (onInput) onInput(e); }} aria-label={label && !fieldNamesIt && !rest['aria-labelledby'] ? label : undefined} {...rest} />;
 });
 
 /* the native control: a list box (multiple, or a size above 1) keeps the browser's own select */

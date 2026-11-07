@@ -27,6 +27,8 @@ require('./limit.js');
       r = await read("h(P.Textarea, { label: 'Notes', 'aria-label': 'Case notes' })"); assert.equal(r.name, 'Case notes', T + 'an aria-label from the app wins');
       r = await read("h('div', null, h('span', { id: 'x' }, 'Reason'), h(P.Textarea, { label: 'Notes', 'aria-labelledby': 'x' }))"); assert.ok(r.labelledby === 'x' && r.name === null, T + 'an aria-labelledby from the app wins and no aria-label is added');
       r = await read("h(P.Field, { label: 'Description' }, h(P.Textarea, null))"); assert.equal(r.axe, 0, T + 'inside a Field the Field\'s label names it');
+      r = await read("h(P.Field, { label: 'Description' }, h(P.Textarea, { label: 'Notes' }))");
+      assert.ok(r.name === null && r.axe === 0 && (await page.evaluate(() => { const t = document.querySelector('#c textarea'), l = document.querySelector('#c label'); return l && l.htmlFor === t.id && l.textContent.includes('Description'); })), T + '<Field label="Description"><Textarea label="Notes"/></Field> is named "Description" by the Field and has no aria-label (ADR 0027)');
       r = await read("h(P.Textarea, { label: 'Un nom très long pour une zone de texte qui continue encore et encore pour tester les noms longs' })"); assert.equal(r.axe, 0, T + 'a long name is fine');
       await page.close();
     }

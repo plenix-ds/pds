@@ -42,6 +42,7 @@
        the dir attribute, never the CSS direction property: the :dir(rtl) rules answer only to the attribute.
 */
 import React from 'react';
+import { FieldLabelContext } from '../../utils/fieldLabel.ts';
 import { cx } from '../../utils/cx.ts';
 import { useTruncated } from '../../utils/overflow.ts';
 import { Tooltip } from '../Tooltip/Tooltip.tsx';
@@ -130,7 +131,7 @@ export function Field({ label, hideLabel = false, description, error, warning, r
   // keyboard hints given on the Field reach the control, unless it has its own
   const hints: Record<string, unknown> = { type, inputMode, autoComplete, enterKeyHint };
   Object.keys(hints).forEach((k) => { if (hints[k] !== undefined && child.props[k] === undefined) props[k] = hints[k]; });
-  const control = React.cloneElement(child, props);
+  const control = <FieldLabelContext.Provider value={!!label}>{React.cloneElement(child, props)}</FieldLabelContext.Provider>;
   return (
     <div className={cx('plx-field', 'plx-field--' + lay, labelWidth && 'plx-field--label-' + labelWidth, error && 'is-invalid', showWarning && 'is-warning', className)} {...rest}>
       <div className={cx('plx-field__head', hideLabel && 'plx-visually-hidden')}>
