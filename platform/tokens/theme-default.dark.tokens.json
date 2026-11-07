@@ -64,6 +64,16 @@
         }
       }
     },
+    "shell-backdrop": {
+      "$value": "{plx-ref.color-gray-950}",
+      "$type": "color",
+      "$extensions": {
+        "plenix": {
+          "group": "surface",
+          "purpose": "The page beside an AppShell frame=\"1366\" (D-0093, #862): mid grey in light, near black in dark. Decorative: the frame's own contents keep their contrast."
+        }
+      }
+    },
     "surface-inverse": {
       "$value": "{plx-ref.color-gray-200}",
       "$type": "color",
@@ -1176,6 +1186,12 @@
     "shadow-lg": {
       "$value": "0 0 32px {plx-ref.color-black}, 0 0 0 1px {plx-ref.color-gray-700}",
       "$type": "shadow",
+      "$extensions": { "com.plenix": { "webOnly": true } }
+    },
+    "shell-frame-shadow": {
+      "$value": "{plx-sys.shadow-lg}",
+      "$type": "shadow",
+      "$description": "AppShell frame=\"1366\" (D-0093, #862): the wide soft shadow the frame casts on the backdrop beside it (the large shadow).",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "shadow-card": {

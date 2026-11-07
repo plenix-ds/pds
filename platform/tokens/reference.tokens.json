@@ -1298,6 +1298,11 @@
       "$type": "dimension",
       "$deprecated": "Renamed: use --plx-ref-breakpoint-xl (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
     },
+    "breakpoint-frame": {
+      "$value": { "value": 1366, "unit": "px" },
+      "$type": "dimension",
+      "$description": "The width of the AppShell frame (D-0093, #862): the common laptop screen, 1366 pixels. Windows this wide or narrower show the app across the window."
+    },
     "breakpoint-1920px": {
       "$value": { "value": 1920, "unit": "px" },
       "$deprecated": "Not used by any page, application or the design spec (issue 882): it keeps working, and is removed no earlier than the next minor release.",

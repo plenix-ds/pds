@@ -143,6 +143,10 @@ export default {
       "title": "Screen size not supported",
       "text": "This app shows a lot of detailed information and isn't designed for small screens yet. Use a desktop or laptop with a screen of at least {width} × {height}. A design for mobile is planned.",
       "continue": "Continue anyway"
+    },
+    "frame": {
+      "expand": "Expand to full window",
+      "restore": "Restore to 1366 width"
     }
   },
   "approvalWorkflow": {

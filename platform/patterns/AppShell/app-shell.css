@@ -56,3 +56,13 @@
 .plx-app-shell[hidden]{display:none;}
 .plx-app-shell__min-size{align-items:center;block-size:100dvh;display:flex;justify-content:center;}
 .plx-app-shell__min-size-title{font:inherit;margin-block-end:0;margin-block-start:0;}
+
+/* the frame (D-0093, #862): frame="1366" puts the shell in a frame as wide as --plx-sys-shell-frame-width, centered at the window's
+   full height, on the backdrop with the frame's shadow; the header's toggle sets it to the window and back (the width animates;
+   reduced motion zeroes the duration). On paper the page prints at full width: the rules are for the screen only. */
+@media screen {
+  .plx-app-frame{display:flex;justify-content:center;}
+  .plx-app-frame[data-plx-frame="framed"]{background-color:var(--plx-sys-shell-backdrop);block-size:100dvh;}
+  .plx-app-shell--frame{flex-shrink:0;inline-size:100%;transition-duration:var(--plx-sys-motion-duration-base);transition-property:inline-size;transition-timing-function:var(--plx-sys-motion-ease-standard);}
+  .plx-app-shell--framed{background-color:var(--plx-sys-surface-canvas);box-shadow:var(--plx-sys-shell-frame-shadow);inline-size:var(--plx-sys-shell-frame-width);}
+}
