@@ -2911,6 +2911,25 @@
      }
     }
    }
+  },
+  {
+   "source": "D-0078, ruled for #629 rows 1, 2, 3, 10 and 12 by PDS1-Product-Lead on 2026-11-07. Word sources, checked 2026-11-07: Microsoft Terminology Collection (ARABIC.tbx): screen = شاشة, value = قيمة, record = سجل, app = تطبيق, information = معلومات, design = تصميم, desktop = كمبيوتر سطح المكتب, laptop = كمبيوتر محمول, mobile device = جهاز محمول. Owner-approved Plenix Arabic, which wins over a standard (D-0078): supported = مدعوم (importDialog.invalid, attachmentPicker.invalid), size = الحجم (attachmentPicker.invalid), Continue = المتابعة (connectedAccounts.continue). Microsoft writes unsupported as غير معتمدة; the owner-approved مدعوم is kept.",
+   "date": "2026-11-07",
+   "strings": {
+    "appShell": {
+     "minSize": {
+      "title": "حجم الشاشة غير مدعوم",
+      "text": "يعرض هذا التطبيق الكثير من المعلومات التفصيلية، ولم يُصمَّم للشاشات الصغيرة بعد. استخدم كمبيوتر سطح المكتب أو كمبيوترًا محمولًا بشاشة لا تقل عن {width} × {height}. نخطط لتصميم للأجهزة المحمولة.",
+      "continue": "المتابعة على أي حال"
+     }
+    },
+    "voteTally": {
+     "notRecorded": "لم يُسجَّل"
+    },
+    "dataGrid": {
+     "formNoValue": "لا توجد قيمة"
+    }
+   }
   }
  ]
 }
