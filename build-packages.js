@@ -508,6 +508,9 @@ function cdnOfflineBundle() {
   };
   // icons/plenix: the Plenix set's files, where Icon loads a Plenix name that no module or icon file registers (#557)
   for (const name of ['plenix.esm.js', 'plenix.d.ts', 'README.md', 'plenix.js', 'plenix-ar.js', 'plenix-icons-plenix.js', 'plenix-engines.js', 'plenix.css', 'plenix.min.css', 'foundations.css', 'parts', 'fonts.css', 'theme-boot.js', 'fonts', 'vendor', 'icons/plenix']) add(name);
+  // types/: plenix.d.ts re-exports the sources' own declarations from ./types/ (ADR 0011 wave 5a); 0.91.0 to 0.93.0 shipped
+  // the archive without it, so a self-hosted plenix.d.ts pointed at 317 missing files (#894)
+  if (fs.existsSync(path.join(CDN, 'types'))) add('types');
   // the icon library inside the bundle (#59; packaging fix for the 0.69.2 regression, the full icon architecture is #277):
   // every Material Symbols file under icons/library/, where <Icon> looks by default when Plenix is served from these files
   // (icons-all.css is retired, #557)
@@ -516,6 +519,12 @@ function cdnOfflineBundle() {
   // every icon the Icon API documents has its files in the package (#284): a missing one fails the build
   const lacking = require('./platform/icons/layout.js').missingPackageIcons(ROOT, (f) => assets.has(f));
   if (lacking.length) throw new Error('The offline bundle lacks ' + lacking.length + ' icon file(s) the Icon API documents, for example ' + lacking.slice(0, 5).join(', '));
+  // every relative import in a declaration file resolves inside the artifact that ships it: the archive, the CDN folder
+  // and @plenix-ds/react (#894); a dangling one fails the build, and so the release dry run
+  const closure = require('./tools/publish/dts-closure.cjs');
+  const dts = [['the archive plenix-' + VERSION + '.tgz', assets], ['the CDN folder', closure.readFolder(CDN)], [SCOPE + '/react', closure.readFolder(R)]]
+    .map(([label, files]) => label + ' ' + closure.assertClosed(files, label));
+  stepNotes.push('declarations closed (' + dts.join(', ') + ')');
   const hash = (buffer) => crypto.createHash('sha256').update(buffer).digest('hex');
   const manifest = { version: VERSION, algorithm: 'sha256', description: 'Hashes cover every runtime file, TypeScript declarations and the README. This manifest is excluded from its own list; the CDN index hashes the complete archive.', files: [...assets].map(([name, data]) => ({ path: name, bytes: data.length, sha256: hash(data) })) };
   const manifestName = 'bundle-manifest.json';

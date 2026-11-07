@@ -8,7 +8,8 @@
 #
 # What the dry run does, on a throwaway version <package.json version>-dryrun.<run number> so nothing collides:
 #   build (npm ci builds; release:build steps) -> one version everywhere + CDN immutability (tools/publish/preflight.mjs)
-#   -> bundle budgets (check-bundle.js) -> no remote addresses in the shipped scripts (tools/publish/no-remote-code.mjs) -> SHA256SUMS + version.json (tools/publish/manifest.mjs, verified with sha256sum -c)
+#   -> bundle budgets (check-bundle.js) -> declarations resolve inside the archive, CDN folder and react package
+#   (tools/publish/dts-closure.cjs, #894) -> no remote addresses in the shipped scripts (tools/publish/no-remote-code.mjs) -> SHA256SUMS + version.json (tools/publish/manifest.mjs, verified with sha256sum -c)
 #   -> next latest.json with every field and the pins kept (tools/publish/latest.mjs, against the live file)
 #   -> npm publish --dry-run of the four packages -> negative proof: the current version is refused as already published
 #   -> the live CDN check (tools/check-live-cdn.js, sampled) still works against the live release
@@ -120,6 +121,15 @@ jobs:
           want=$(( $(find "$cdn/parts" -name '*.css' | wc -l) + 1 ))
           [ "$listed" = "$want" ] || { echo "PARTS_FAIL: the archive has $listed of $want part files"; exit 1; }
           echo "PARTS_OK: foundations.css + $((want - 1)) parts on the CDN and in the archive, equal to @plenix-ds/styles"
+
+      - name: Declarations resolve inside every artifact, archive included (#894)
+        env:
+          DRY: ${{ steps.v.outputs.dry }}
+        run: |
+          node tools/publish/dts-closure.test.mjs
+          x="$RUNNER_TEMP/archive"; mkdir -p "$x"; tar -xzf "release/cdn/$DRY/plenix-$DRY.tgz" -C "$x"
+          test -d "$x/types" || { echo "DTS_CLOSURE_FAIL: the archive has no types/ folder"; exit 1; }
+          node tools/publish/dts-closure.cjs "$x" "release/cdn/$DRY" release/packages/react
 
       - name: No remote addresses in the shipped scripts (MV3 extensions; #150)
         env:
