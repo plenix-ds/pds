@@ -6782,16 +6782,39 @@
     "why": "markup only: the whole query as one sentence in a code block with Copy; unfinished rules are left out"
   },
   "layout-full-screen-workspace--page-full-screen": {
-    "sets": [],
-    "why": "markup only: the task takes the whole window: the header and panes step aside, and Close returns (page kind editor)"
+    "sets": [
+      {
+        "property": "display",
+        "part": "side-start",
+        "token": "--plx-comp-app-shell-context-side-start-display"
+      },
+      {
+        "property": "display",
+        "part": "side-end",
+        "token": "--plx-comp-app-shell-context-side-end-display"
+      }
+    ],
+    "why": ".plx-app-shell[data-plx-layout=\"focus\"] in layout-modes.css hides the navigation pane and the inspector; the header and the footer stay (page kind editor)"
   },
   "inspector-region--resize-resizable-drag-its-start-edge-from-240px-to-560px-remembered": {
-    "sets": [],
-    "why": "markup only: a drag edge at the inspector's start; it is never dragged wider than 90% of the window, and the width a person sets is kept for the next visit on the same monitor"
+    "sets": [
+      {
+        "property": "inline-size",
+        "part": "panel",
+        "token": "--plx-comp-side-panel-width"
+      }
+    ],
+    "why": "SidePanel draws the edge: .plx-side-panel--resizable marks the panel and .plx-side-panel--resized sets its width (side-panel.css); the drag edge, the 90% of window limit and the remembered width are script"
   },
   "navigation-rail--labels-icons-only-default": {
-    "sets": [],
-    "why": "markup only: a narrow rail of icon buttons, each named by its tooltip"
+    "sets": [
+      {
+        "property": "background-color",
+        "part": "rail",
+        "token": "--plx-comp-nav-pane-background"
+      }
+    ],
+    "why": "NavPane draws the rail (.plx-nav-pane-rail in nav-pane.css, stretched to the pane's height, on the pane's background); the icon buttons, each named by its tooltip, are markup"
   },
   "type-styles--overflow-expandable": {
     "sets": [],
