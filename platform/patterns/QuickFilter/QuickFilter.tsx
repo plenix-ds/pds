@@ -62,7 +62,8 @@ const asOptions = (options: any) => (options || []).map((o: any) => (typeof o ==
 /** @public one value to filter by: a string, or { value, label, color, count } */
 export type QuickFilterOption = string | { value: string; label?: string; color?: string; count?: number };
 /** @public a date filter's value */
-export type QuickFilterDate = { preset?: 'any' | '7' | '30' | 'year' | 'custom'; from?: string; to?: string };
+/** @public a date range; preset suggests the built-in ones and takes any string, as useCollectionView's DateRange does (#893) */
+export type QuickFilterDate = { preset?: 'any' | '7' | '30' | 'year' | 'custom' | (string & {}); from?: string; to?: string };
 /** @public the prop type (ADR 0011) */
 export type QuickFilterProps = {
   kind?: 'list' | 'single' | 'date';
@@ -72,10 +73,12 @@ export type QuickFilterProps = {
   noun?: string;
   options?: QuickFilterOption[];
   /** (list, single) the chosen values; (date) the range */
-  value?: string[] | QuickFilterDate;
+  /** the chosen option values (strings or numbers, as useCollectionView gives them, #893) or a date range */
+  value?: Array<string | number> | QuickFilterDate;
   onChange?(value: string[] | QuickFilterDate): void;
   /** option value to faceted count (a Map or an object) */
-  counts?: Map<string, number> | Record<string, number>;
+  /** by option value (a string or a number), as useCollectionView's quickProps gives it (#893) */
+  counts?: ReadonlyMap<unknown, number> | Record<string, number>;
   required?: boolean;
   inline?: boolean;
   strings?: Record<string, string>;

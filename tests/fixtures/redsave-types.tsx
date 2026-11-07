@@ -2,15 +2,22 @@
 import * as React from 'react';
 import {
   DataGrid, DataTable, Tabs, MediaCard, MediaViewer, Text,
-  FilterPanel, SortPanel, GroupPanel, ColumnsMenu, useCollectionView, useAppLayout,
+  FilterPanel, SortPanel, GroupPanel, ColumnsMenu, ViewMenu, QuickFilter, useCollectionView, useAppLayout,
   Button, Input, Textarea, Select, Combobox, SearchField, NumberInput, Dialog, MenuItem, Field, Popover, Tooltip, AppShell, Chat,
-} from '../../packages/react';
+} from '../../release/packages/react';
+import type { DataGridColumn } from '../../release/packages/react';
 
 type Row = { id: number; name: string; status: string };
 const rows: Row[] = [{ id: 1, name: 'Alpha', status: 'open' }];
 
 // DataGrid columns are column records, not a string union; DataTable is the same component
-const columns = [{ title: 'Name', field: 'name', kind: 'name' }, { title: 'Status', field: 'status', kind: ['center', 'badge'] }];
+const columns: DataGridColumn<Row>[] = [{ title: 'Name', field: 'name', kind: 'name' }, { title: 'Status', field: 'status', kind: ['center', 'badge'] }];
+// #893 (RedSave P-67): a computed column whose field isn't a row property, and headerAlign (deprecated, ignored) still compile
+export const computed: DataGridColumn<Row>[] = [
+  { title: 'Keep', field: 'keep', render: (record: Row) => (record.status === 'open' ? 'Yes' : 'No') },
+  { title: 'Name', field: 'name', headerAlign: 'center' },
+];
+export const computedGrid = <DataGrid label="Records" data={rows} columns={computed} />;
 export const grid = <DataGrid label="Records" data={rows} columns={columns} />;
 export const alias = <DataTable label="Records" data={rows} columns={columns} />;
 
@@ -30,13 +37,15 @@ export function TabsUse() {
 
 // the collection panels take useCollectionView's props as they come
 export function Collection() {
-  const view = useCollectionView<Row>([{ value: 'name', label: 'Name' }, { value: 'status', label: 'Status', kind: 'select' }], { data: rows });
+  const view = useCollectionView<Row>([{ value: 'name', label: 'Name' }, { value: 'status', label: 'Status', kind: 'select' }], { data: rows, text: (row) => row.name, quick: { status: 'list' } });
   return (
     <>
       <FilterPanel {...view.filterProps} />
       <SortPanel {...view.sortProps} />
       <GroupPanel {...view.groupProps} />
       <ColumnsMenu {...view.columnsProps} />
+      <ViewMenu {...view.viewProps} />
+      <QuickFilter label="Status" {...view.quickProps('status')} />
       <DataGrid label="Records" data={rows} columns={columns} {...view.tableProps} />
     </>
   );
@@ -75,14 +84,14 @@ export const inputs = [
   <Input size={20} />,
   <Textarea rows={4} autoGrow appearance="outline" />,
   <Select size="sm" width="lg" block appearance="filled" options={[{ value: 'a', label: 'A' }]} joined={{ start: 'square' }} />,
-  <Combobox size="md" value="a" emptyText="Nothing" options={[{ value: 'a', label: 'A' }]} />,
-  <Combobox multiple values={['a', 'b']} options={[{ value: 'a', label: 'A' }]} />,
+  <Combobox size="md" value="a" emptyText="Nothing" options={[{ value: 'a', label: 'A' }]} onChange={() => {}} />,
+  <Combobox multiple values={['a', 'b']} options={[{ value: 'a', label: 'A' }]} onChange={() => {}} />,
   <SearchField size="sm" value="term" shortcut="Ctrl K" recent={['one', 'two']} suggestions={[{ value: 'x', label: 'X' }]} />,
   <NumberInput min={0} max={10} decimals={2} defaultValue={1} format="currency" currency="USD" unit="kg" />,
 ];
 export const layers = [
   <Dialog open title="Edit" initialFocus={ref} />,
-  <Popover initialFocus={ref} focusOnOpen={false} anchorClassName="plx-anchor" />,
+  <Popover trigger={<Button>Open</Button>} initialFocus={ref} focusOnOpen={false} anchorClassName="plx-anchor" />,
   <Tooltip content="Copy" action={<Button>Learn more</Button>}><Button>Copy</Button></Tooltip>,
 ];
 export const more = [

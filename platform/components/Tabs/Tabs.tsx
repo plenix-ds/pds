@@ -102,7 +102,8 @@ export type TabsProps = {
   items: TabItem[];
   value?: TabValue;
   defaultValue?: TabValue;
-  onChange?: (value: TabValue) => void;
+  /** method syntax, so a handler written for the app's own value type (string) fits too (#893) */
+  onChange?(value: TabValue): void;
   /** the tab list's accessible name */
   label?: string;
   /** a base for the tabs' and panels' ids */

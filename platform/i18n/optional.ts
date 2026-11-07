@@ -5,7 +5,8 @@
 // (import '@plenix-ds/react/i18n/ar'). Without it, an Arabic page shows Plenix's own words in English (the app's own
 // catalog still applies).
 /** a language's built-in words, by dotted section */
-export type Catalog = Record<string, unknown>;
+import type { Catalog } from '../providers/LocaleProvider.tsx';
+export type { Catalog };
 const slots: Record<string, Catalog> = {};
 // the one catalog object LocaleProvider holds for a language, filled in place by addLanguage
 export function languageSlot(code: string): Catalog { return slots[code] || (slots[code] = {}); }

@@ -277,9 +277,12 @@ export type DataGridSortDir = 'asc' | 'desc';
 /** @public */
 export type DataGridOption = { value: string; label: string; src?: string; color?: string; gender?: string };
 
-/** @public a column of the grid; `field` names a field of the record */
+/** @public a column of the grid; `field` names a field of the record, or any string for a column it draws itself (render, actions) */
 export type DataGridColumn<R = Record<string, unknown>> = {
-  field: keyof R & string;
+  /** a key of the record (suggested), or any other string for a computed or action column (#893) */
+  field: (keyof R & string) | (string & {});
+  /** @deprecated ignored: a header label is always start-aligned (D-0087). Kept so existing columns compile; removed in 2.0.0 */
+  headerAlign?: 'start' | 'center' | 'end' | 'left' | 'right';
   title?: string;
   /** one kind, or several that combine as a list */
   kind?: DataGridColumnKind | DataGridColumnKind[];
@@ -385,8 +388,10 @@ export type DataGridProps<R = Record<string, unknown>> = {
   rowMenuButton?: boolean;
   /** the page's view */
   filter?(record: R): boolean;
-  sort?: { field: string; dir: DataGridSortDir }[];
-  groupBy?: DataGridGroup | DataGridGroup[];
+  /** dir defaults to asc (useCollectionView's levels leave it out, #893) */
+  sort?: { field: string; dir?: DataGridSortDir }[];
+  /** false: no grouping (what useCollectionView passes when nothing is grouped, #893) */
+  groupBy?: DataGridGroup | DataGridGroup[] | false;
   columnOrder?: string[];
   hiddenColumns?: string[];
   onAddToGroup?(value: unknown, path: unknown[]): void;

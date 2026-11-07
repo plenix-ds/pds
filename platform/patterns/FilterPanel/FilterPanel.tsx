@@ -108,7 +108,8 @@ function ConditionRows({ fields, node, setNode, nested, t }: any) {
 }
 
 /** @public a field the collection can be filtered by (utils/fields.ts) */
-export type FilterField = { value: string; label: string; kind?: 'text' | 'select' | 'multi' | 'number' | 'date'; options?: Array<{ value: string | number; label: string }>; get?(record: unknown): unknown };
+/** @public a filter's field: the collection's own Field (utils/fields.ts), one type with useCollectionView (#893) */
+export type FilterField = import('../../utils/fields.ts').Field;
 /** @public a filter condition */
 export type FilterCondition = { id: string; field: string; op: string; value?: unknown };
 /** @public a group of conditions */
@@ -118,17 +119,20 @@ export type FilterValue = { join: 'and' | 'or'; items: Array<FilterCondition | F
 /** @public */
 export type FilterPanelProps = {
   fields?: FilterField[];
-  value?: FilterValue;
+  /** the filter; useCollectionView's Filter (join optional, default and) fits as it comes (#893) */
+  value?: FilterValue | import('../../utils/fields.ts').Filter;
   onChange?(value: FilterValue): void;
   inline?: boolean;
   open?: boolean;
   onOpenChange?(open: boolean): void;
-  request?: { field: string; id: number | string };
+  /** useCollectionView passes null when there is no request (#893) */
+  request?: { field: string; id: number | string } | null;
   strings?: Record<string, unknown>;
 };
 export function FilterPanel({ fields = [], value, onChange, inline = false, strings, open, onOpenChange, request }: FilterPanelProps) {
   const t: any = useStrings('filterPanel', strings);
-  const node = value || { join: 'and', items: [] };
+  // the same object as before; a Filter without join reads as and (#893: the type only, no runtime change)
+  const node = (value || { join: 'and', items: [] }) as FilterValue;
   const n = conditionsOf(node).length;
   const add = (x: any) => onChange!(Object.assign({}, node, { items: node.items.concat(x) }));
   const handled = React.useRef<any>(null);

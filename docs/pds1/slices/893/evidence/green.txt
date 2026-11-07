@@ -1,0 +1,1 @@
+exit=0 (tsc --strict on tests/fixtures/redsave-types.tsx against the built index.d.ts: no output means 0 errors)

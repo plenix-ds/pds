@@ -37,15 +37,19 @@ import { matchesFilter, matchesDate, valueOf, fieldOf, DATE_PRESETS, blank } fro
 import type { Field, Filter, FilterItem, SortLevel, DateRange } from '../utils/fields.ts';
 
 type Row = Record<string, unknown>;
-export type CollectionLevel = SortLevel & { hideEmpty?: boolean; interval?: string; range?: unknown };
+/** @public a sort or group level; interval is GroupPanel's (one type with GroupLevel, #893) */
+export type CollectionLevel = SortLevel & { hideEmpty?: boolean; interval?: 'day' | 'week' | 'month' | 'year'; range?: number };
 export type CollectionColumns = { order: string[]; hidden: string[] };
-export type CollectionDisplay = { layout: string; size: string; height: string; editMode?: 'inline' | 'form'; wrapHeaders?: boolean; widths?: unknown; collapsed?: unknown };
+/** @public the view, in ViewMenu's terms (one type with ViewMenuValue, #893) */
+export type CollectionDisplay = { layout: 'list' | 'gallery'; size: 's' | 'm' | 'l'; height: 'short' | 'medium' | 'tall' | 'extra-tall'; editMode?: 'inline' | 'form'; wrapHeaders?: boolean; widths?: Record<string, number | string>; collapsed?: unknown };
 type QuickKind = 'list' | 'date' | 'single';
 type QuickConfig = { kind?: QuickKind; required?: boolean; options?: Field['options'] };
 // a quick filter's value: the chosen values (list, single) or a date range (date)
-export type CollectionQuickValue = unknown[] | DateRange;
-export type CollectionViewOptions = {
-  data?: Row[]; text?(row: Row): unknown; quick?: Record<string, QuickKind | QuickConfig>; columns?: CollectionColumns;
+/** @public a quick filter's value: the chosen option values, or a date range (one type with QuickFilter's value, #893) */
+export type CollectionQuickValue = Array<string | number> | DateRange;
+/** @public R is the app's row type (useCollectionView<Row>(…), #893) */
+export type CollectionViewOptions<R extends object = Row> = {
+  data?: R[]; text?(row: R): unknown; quick?: Record<string, QuickKind | QuickConfig>; columns?: CollectionColumns;
   view?: Partial<CollectionDisplay>; sort?: CollectionLevel[]; storageKey?: string; today?: string;
 };
 type CollectionState = {
@@ -61,7 +65,9 @@ type ViewPatch = {
 };
 
 
-export function useCollectionView(fields: Field[], options: CollectionViewOptions = {}) {
+export function useCollectionView<R extends object = Row>(fields: Field[], typedOptions: CollectionViewOptions<R> = {}) {
+  // the hook reads every row as a plain record; R only types what the app passes in
+  const options = typedOptions as unknown as CollectionViewOptions;
   const config = (key: string): QuickConfig => typeof (options.quick || {})[key] === 'string' ? { kind: options.quick![key] as QuickKind } : (options.quick || {})[key] as QuickConfig || {};
   const choices = (key: string) => config(key).options || (fields.find(field => field.value === key) || {} as Partial<Field>).options || [];
   const normalizeQuick = (quick: Record<string, CollectionQuickValue>): Record<string, CollectionQuickValue> => Object.assign({}, quick, Object.fromEntries(Object.keys(options.quick || {}).filter(key => config(key).kind === 'single').map(key => [key, singleChoice(choices(key), quick[key], config(key).required)])));
@@ -158,7 +164,7 @@ export function useCollectionView(fields: Field[], options: CollectionViewOption
     if(patch.sort){const next=patch.sort.filter(item=>known.has(item.field)&&!group.some(level=>level.field===item.field));setSort(old=>same(old,next)?old:next);setGroup(old=>{const next=old.map(level=>{const sorted=patch.sort!.find(item=>item.field===level.field);return sorted?{...level,dir:sorted.dir}:level;});return same(old,next)?old:next;});}
     if(patch.columnOrder||patch.hiddenColumns)setColumns(old=>{const next={order:patch.columnOrder?patch.columnOrder.filter(field=>known.has(field)):old.order,hidden:patch.hiddenColumns?patch.hiddenColumns.filter(field=>known.has(field)):old.hidden};return same(old,next)?old:next;});
     if('groupBy'in patch)setGroup(old=>([] as (string | CollectionLevel)[]).concat(patch.groupBy||[]).map(value=>typeof value==='string'?{field:value}:value).filter(value=>known.has(value.field)).map(value=>({...old.find(level=>level.field===value.field),dir:'asc',...value})));
-    if('rowHeight'in patch||'editMode'in patch||'wrapHeaders'in patch||'widths'in patch||'collapsed'in patch)setView(old=>({...old,...('rowHeight'in patch?{height:patch.rowHeight}:{}),...('editMode'in patch?{editMode:patch.editMode}:{}),...('wrapHeaders'in patch?{wrapHeaders:patch.wrapHeaders}:{}),...('widths'in patch?{widths:patch.widths}:{}),...('collapsed'in patch?{collapsed:patch.collapsed}:{})}));
+    if('rowHeight'in patch||'editMode'in patch||'wrapHeaders'in patch||'widths'in patch||'collapsed'in patch)setView(old=>({...old,...('rowHeight'in patch?{height:patch.rowHeight as CollectionDisplay['height']}:{}),...('editMode'in patch?{editMode:patch.editMode}:{}),...('wrapHeaders'in patch?{wrapHeaders:patch.wrapHeaders}:{}),...('widths'in patch?{widths:patch.widths as CollectionDisplay['widths']}:{}),...('collapsed'in patch?{collapsed:patch.collapsed}:{})}));
   },[fields,group]);
   // the grid's "Filter by this field" opens the command bar's Filter panel on that field (one filter state, shown in one place)
   const [filterOpen, setFilterOpen] = React.useState(false), [filterRequest, setFilterRequest] = React.useState<{ field: string; id: number } | null>(null);
@@ -175,7 +181,7 @@ export function useCollectionView(fields: Field[], options: CollectionViewOption
     groupProps: { fields: groupable, value: group, onChange: setGroup, table },
     columnsProps: { fields, value: columns, onChange: setColumns },
     viewProps: { value: view, onChange: setView, onReset: reset },
-    tableProps: { filter: test, sort: sorters, groupBy: group.length ? group.map((g) => ({ ...g, interval: g.interval || (fields.find(f => f.value === g.field)?.kind === 'date' ? 'day' : undefined), range: g.range ?? fields.find(f => f.value === g.field)?.groupRange })) : false, columnOrder: columns.order, hiddenColumns: columns.hidden,
+    tableProps: { filter: test, sort: sorters, groupBy: group.length ? group.map((g) => ({ ...g, interval: g.interval || (fields.find(f => f.value === g.field)?.kind === 'date' ? 'day' : undefined), range: (g.range ?? fields.find(f => f.value === g.field)?.groupRange) as number | undefined })) : (false as const), columnOrder: columns.order, hiddenColumns: columns.hidden,
       rowHeight: view.height, editMode: view.editMode, wrapHeaders: !!view.wrapHeaders, columnWidths: view.widths, collapsedGroups: view.collapsed, onViewChange, onReady, onFilterField },
   };
 }
