@@ -193,7 +193,8 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 - Long text in a cell: one line, ending in an ellipsis, with the full value in a tooltip. Headers follow the table-header ladder in `fit-and-overflow.md`.
 - **Column widths (D-0087):**
   - Each column is as wide as the wider of its whole header and its widest value. An app's set width is a minimum for compact columns.
-  - Spare room is shared evenly.
+  - Spare room is shared evenly, except with narrow columns (D-0108).
+  - **Narrow columns** (natural width under 80px: "#", short IDs, short numbers, single pills) are as wide as their content plus cell padding, at least 32px. They take no spare room. Their header options button reserves no width: it overlays at the inline end on hover, on focus and while its menu is open. Touch keeps the reserve. Details: `docs/pds1/slices/966/design.md`.
   - Only long text truncates first, then compact headers; values stay whole until the grid switches to cards.
   - The checkbox column is fixed. Row actions are icons at the inline-end on hover when there's room, else a pinned ⋮.
   - Details: `docs/pds1/slices/800-column-fit/design.md`.

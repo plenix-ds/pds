@@ -1,0 +1,9 @@
+id: D-0108
+date: 2026-11-07
+area: components
+decided_by: agent (pds1-design-director) at G2, owner may switch
+decision: 'DataGrid narrow columns (natural width under 80px): their floor is their content (title text with its sort slot and marks, or the widest value) plus cell padding, at least 32px; no width is reserved for the header options button, which overlays at the inline end on hover, focus and while its menu is open; they take no share of spare room (it goes to the other columns), unless every column is narrow. Touch (hover: none) keeps the reserved button.'
+why: 'Owner, 2026-11-07 (#966): a "#" column of 1-digit pills was about 125px, "waste of space". The 80px floor, the button reserve and the even share of spare room (D-0087) together made it wide; removing only the floor would leave it wide.'
+options: ['content floor + overlay button + no spare room (chosen)', 'content floor + overlay button, spare room still shared evenly', 'lower the 80px floor only']
+status: active
+check: 'planned:data-grid-narrow-column (#966: width of a "#" pill column at 1366 and 1920 with spare room, sort-stable width, keyboard and pointer menu, RTL)'
