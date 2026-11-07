@@ -284,6 +284,8 @@ export type DataGridColumn<R = Record<string, unknown>> = {
   /** @deprecated ignored: a header label is always start-aligned (D-0087). Kept so existing columns compile; removed in 2.0.0 */
   headerAlign?: 'start' | 'center' | 'end' | 'left' | 'right';
   title?: string;
+  /** what the column means, in plain text in the app's language: the header's Tooltip (on hover and on the keyboard focus of the header) and its accessible description (ADR 0025) */
+  description?: string;
   /** one kind, or several that combine as a list */
   kind?: DataGridColumnKind | DataGridColumnKind[];
   type?: DataGridColumnType;

@@ -37,27 +37,29 @@ import FilterIcon from 'plenix-platform/icons/plenix/filter';
 
 // a header's title: the Plenix Tooltip shows the whole title while it is cut (an ellipsis), on hover, on the keyboard focus of the header cell and with a long press on
 // touch (#794, fit-and-overflow §5); never a bare title attribute. The header's accessible name already holds the whole title, so the Tooltip does not describe it
-function HeaderTitle({ text, className, children }: { text: string; className: string; children: (textRef: React.RefObject<HTMLSpanElement | null>) => React.ReactNode }) {
+function HeaderTitle({ text, description, className, children }: { text: string; description?: string; className: string; children: (textRef: React.RefObject<HTMLSpanElement | null>) => React.ReactNode }) {
   const textRef = React.useRef<HTMLSpanElement | null>(null), box = React.useRef<HTMLDivElement | null>(null);
   const cut = useTruncated(textRef, text);
   // the header cell is the one Tab stop: while it has the focus, the Tooltip is told as a focus on the title would tell it
   React.useEffect(() => {
     const cell = box.current && box.current.closest('[role="columnheader"]');
-    if (!cell || !cut) return undefined;
+    if (!cell || !(cut || description)) return undefined;
     const tell = (type: string) => (event: Event) => { if (event.target === cell && box.current) box.current.dispatchEvent(new FocusEvent(type, { bubbles: true, relatedTarget: null })); };
     const on = tell('focusin'), off = tell('focusout');
     cell.addEventListener('focusin', on); cell.addEventListener('focusout', off);
     if (document.activeElement === cell && box.current) box.current.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
     return () => { cell.removeEventListener('focusin', on); cell.removeEventListener('focusout', off); };
-  }, [cut]);
+  }, [cut, description]);
+  // a column's description (ADR 0025) is the Tooltip, whether or not the title is cut; the header's aria-describedby (below) already carries it, so the Tooltip does not describe it again
   return (
-    <Tooltip content={text} disabled={!cut || !text} describe={false} className="plx-data-grid__title-tip">
+    <Tooltip content={description || text} disabled={description ? false : !cut || !text} describe={false} className="plx-data-grid__title-tip">
       <div ref={box} className={className}>{children(textRef)}</div>
     </Tooltip>
   );
 }
 
 export function headerRows({
+  viewportId,
   groupBy,
   columnMenu,
   S,
@@ -144,6 +146,8 @@ export function headerRows({
       .filter((col: any) => !kinds(col.columnDef.meta).some((k) => ['icon', 'actions'].includes(k)));
     return all.slice().sort((x: any, y: any) => orderAt(x.id) - orderAt(y.id));
   };
+  // the id of the text that describes a column's header (its description, ADR 0025)
+  const descId = (field: string) => viewportId + '-desc-' + String(field).replace(/[^A-Za-z0-9_-]/g, '_');
   const headerCell = (column: any) => {
     const c = column.columnDef.meta,
       pinned = column.getIsPinned() === 'left',
@@ -164,6 +168,7 @@ export function headerRows({
         role="columnheader"
         tabIndex={isStatic ? undefined : 0}
         data-plx-field={c.field}
+        aria-describedby={c.description ? descId(c.field) : undefined}
         aria-sort={column.getIsSorted() ? (column.getIsSorted() === 'desc' ? 'descending' : 'ascending') : undefined}
         className={cx(
           '' + B + '__grid-col',
@@ -188,6 +193,7 @@ export function headerRows({
         }}
         onKeyDown={headerKeys({ column })}
       >
+        {c.description ? <span id={descId(c.field)} hidden>{c.description}</span> : null}
         <div
           className={cx(
             B + '__grid-col-content',
@@ -199,6 +205,7 @@ export function headerRows({
           <div className={cx(B + '__grid-col-title-holder', icon && B + '__grid-col-title-holder--flush')}>
             <HeaderTitle
               text={String(c.title || c.field || '')}
+              description={c.description || undefined}
               className={cx(
                 B + '__grid-col-title',
                 isStatic && B + '__grid-col-title--static',

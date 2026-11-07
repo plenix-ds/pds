@@ -785,6 +785,7 @@ function NextEngine(rawProps: any) {
     });
 
   const { chooserColumns, headerCell } = headerRows({
+    viewportId,
     groupBy,
     columnMenu,
     S,

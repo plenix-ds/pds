@@ -11,7 +11,7 @@ type Row = { id: number; name: string; status: string };
 const rows: Row[] = [{ id: 1, name: 'Alpha', status: 'open' }];
 
 // DataGrid columns are column records, not a string union; DataTable is the same component
-const columns: DataGridColumn<Row>[] = [{ title: 'Name', field: 'name', kind: 'name' }, { title: 'Status', field: 'status', kind: ['center', 'badge'] }];
+const columns: DataGridColumn<Row>[] = [{ title: 'Name', field: 'name', kind: 'name', description: 'The full legal name' }, { title: 'Status', field: 'status', kind: ['center', 'badge'] }];
 // #893 (RedSave P-67): a computed column whose field isn't a row property, and headerAlign (deprecated, ignored) still compile
 export const computed: DataGridColumn<Row>[] = [
   { title: 'Keep', field: 'keep', render: (record: Row) => (record.status === 'open' ? 'Yes' : 'No') },
