@@ -31,6 +31,7 @@ const GRID_EXEMPT = [
   ['paper-', 'paper sizes and margins in mm (D-0052): the A4 sheet and its margin, for print parts only (docs/adr/0014)'],
   ['print-sheet-', 'the A4 sheet in mm (D-0052, docs/adr/0014)'],
   ['print-document-margin', 'the document page margin in mm (D-0052, docs/adr/0014)'],
+  ['breakpoint-laptop', 'a screen width (1366, D-0092), not a layout space: the AppShell frame width (docs/adr/0023)'],
 ];
 // a corner token (a key with "radius") may hold 0, a reference, or a length of 2, 4 or 6px; anything else (50%, 0.5em, 9999em, 100vh, any calc(), a keyword)
 // fails, unless it is named here with its value and the reason
