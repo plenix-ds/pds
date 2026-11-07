@@ -98,7 +98,8 @@ import CloseIcon from 'plenix-platform/icons/plenix/close';
 
 
 export type ComboValue = string | number;
-export type ComboOption = { value: ComboValue; label: string; description?: string; group?: string; icon?: IconValue; [field: string]: unknown };
+/** @public V is the option values' type: onChange hands back the values it was given (#925) */
+export type ComboOption<V extends ComboValue = ComboValue> = { value: V; label: string; description?: string; group?: string; icon?: IconValue; [field: string]: unknown };
 // the one action offered when nothing matches ("Add a person..."): an item of the list, so the keys reach it
 export type ComboEmptyAction = { label: React.ReactNode; icon?: IconValue; onSelect?: (typed: string) => void };
 // a row of the open list: an option, the create row, or the empty action
@@ -111,17 +112,14 @@ function createLabel(template: string, typed: string): React.ReactNode {
   return <>{template.slice(0, at)}<bdi>{typed}</bdi>{template.slice(at + 6)}</>;
 }
 type ComboWords = { emptyText: string; results?: string | ((count: number) => string); removeItem: string; moreChips: string; clear: string; create: string; loading: string; error: string };
-export type ComboboxProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange' | 'size' | 'width'> & {
-  options?: ComboOption[];
+type ComboboxBase<V extends ComboValue> = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange' | 'size' | 'width'> & {
+  options?: ComboOption<V>[];
   /** the chosen value (single); '' or null: none */
-  value?: ComboValue | null;
+  value?: V | '' | null;
   /** with multiple: "wrap" (default) lets the chosen chips wrap onto more rows; "count" keeps them on one line and folds the ones that don't fit into one "+N" Tag */
   chipOverflow?: 'wrap' | 'count';
   /** the chosen values (multiple) */
-  values?: ComboValue[];
-  /** single: the value ('' when cleared); multiple: the values */
-  onChange: (value: ComboValue | ComboValue[]) => void;
-  multiple?: boolean;
+  values?: V[];
   creatable?: boolean;
   onCreate?: (text: string) => void;
   width?: FieldWidth;
@@ -133,7 +131,7 @@ export type ComboboxProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'v
   emptyAction?: ComboEmptyAction;
   clearable?: boolean;
   /** async options: what the typed text finds */
-  loadOptions?: (query: string) => ComboOption[] | Promise<ComboOption[]>;
+  loadOptions?: (query: string) => ComboOption<V>[] | Promise<ComboOption<V>[]>;
   loadDelay?: number;
   minChars?: number;
   loading?: boolean;
@@ -144,9 +142,17 @@ export type ComboboxProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'v
   /** true forces the data font, false keeps the interface font; unset, it follows the shown value */
   data?: boolean;
 };
-export const Combobox = React.forwardRef(function Combobox({ options = [], value, values, onChange, multiple = false, creatable = false, onCreate, width,
+/** @public the props of Combobox. V is the option values' type (#925): a single choice hands back V ('' when cleared),
+ * multiple hands back V[]. With multiple as a boolean variable, a handler that takes either compiles. V defaults to ComboValue, as before. */
+export type ComboboxProps<V extends ComboValue = ComboValue> = ComboboxBase<V> & (
+  | { multiple?: false; onChange: (value: V | '') => void }
+  | { multiple: true; onChange: (values: V[]) => void }
+);
+// what the body reads: values as ComboValue, onChange with either shape
+type ComboboxOwnProps = ComboboxBase<ComboValue> & { multiple?: boolean; onChange: (value: ComboValue | ComboValue[]) => void };
+const ComboboxRender = React.forwardRef(function Combobox({ options = [], value, values, onChange, multiple = false, creatable = false, onCreate, width,
   placeholder, label, invalid, warning, disabled, readOnly: readOnlyOwn, chipOverflow = 'wrap', emptyText, emptyAction, clearable = false, loadOptions, loadDelay = 300, minChars = 0, loading = false, marks, strings,
-  className, id, size, data, ...rest }: ComboboxProps, ref: React.ForwardedRef<HTMLInputElement>) {
+  className, id, size, data, ...rest }: ComboboxOwnProps, ref: React.ForwardedRef<HTMLInputElement>) {
   const locked = useReadOnly(readOnlyOwn);   // its own readOnly, else the nearest ReadOnly region's: the value shows; the list does not open, nothing is chosen, created or removed
   const t = useStrings('combobox', strings) as ComboWords, words = t;
   const loc = useLocale();
@@ -290,3 +296,5 @@ export const Combobox = React.forwardRef(function Combobox({ options = [], value
     </div>
   );
 });
+// generic over V for apps (#925); the one component underneath
+export const Combobox = ComboboxRender as unknown as (<V extends ComboValue = ComboValue>(props: ComboboxProps<V> & React.RefAttributes<HTMLInputElement>) => React.ReactElement | null) & { displayName?: string };

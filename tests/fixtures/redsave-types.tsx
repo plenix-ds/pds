@@ -4,8 +4,9 @@ import {
   DataGrid, DataTable, Tabs, MediaCard, MediaViewer, Text,
   FilterPanel, SortPanel, GroupPanel, ColumnsMenu, ViewMenu, QuickFilter, useCollectionView, useAppLayout,
   Button, Input, Textarea, Select, Combobox, SearchField, NumberInput, Dialog, MenuItem, Field, Popover, Tooltip, AppShell, Chat,
+  SegmentedControl, RadioTiles, NavList, MenuRadioGroup,
 } from '../../release/packages/react';
-import type { DataGridColumn, CollectionField, CollectionFilter, CollectionView, MediaCardProps } from '../../release/packages/react';
+import type { DataGridColumn, CollectionField, CollectionFilter, CollectionView, MediaCardProps, ComboValue } from '../../release/packages/react';
 
 type Row = { id: number; name: string; status: string };
 const rows: Row[] = [{ id: 1, name: 'Alpha', status: 'open' }];
@@ -63,12 +64,37 @@ export function Layout() {
   return null;
 }
 
+// #925 (RedSave P-71): choice controls hand back the option values they were given, no cast
+type Theme = 'light' | 'dark';
+const themes: { value: Theme; label: string }[] = [{ value: 'light', label: 'Light' }, { value: 'dark', label: 'Dark' }];
+export function Choices() {
+  const [theme, setTheme] = React.useState<Theme>('light');
+  const [chosen, setChosen] = React.useState<Theme[]>([]);
+  return (
+    <>
+      <SegmentedControl label="Theme" options={themes} value={theme} onChange={setTheme} />
+      <RadioTiles legend="Theme" options={themes} value={theme} onChange={setTheme} />
+      <Tabs label="Theme" items={themes} value={theme} onChange={setTheme} />
+      <NavList label="Theme" items={[{ id: 'light', label: 'Light' }, { id: 'dark', label: 'Dark' }]} value={theme} onSelect={setTheme} />
+      <MenuRadioGroup label="Theme" value={theme} onChange={setTheme}><MenuItem type="radio" value="light">Light</MenuItem></MenuRadioGroup>
+      <Combobox label="Theme" options={themes} value={theme} onChange={(value) => setTheme(value || 'light')} />
+      <Combobox label="Themes" multiple options={themes} values={chosen} onChange={setChosen} />
+    </>
+  );
+}
+// still compiles: multiple from a flag, with a handler that takes either shape (as on 0.93)
+export const comboEither = (flag: boolean) => <Combobox label="Any" multiple={flag} options={themes} onChange={(value: ComboValue | ComboValue[]) => value} />;
+
 // wrong code still fails
 // @ts-expect-error aspect is one of the listed shapes
 export const badAspect = <MediaCard aspect="7/5" />;
 // @ts-expect-error the layout's width is a number
 export const badWidth = () => useAppLayout()?.setWidth('wide');
 type IsAny<T> = 0 extends (1 & T) ? true : false;
+// @ts-expect-error SegmentedControl hands back a Theme, not a number (#925)
+export const wrongChoice = <SegmentedControl label="Theme" options={themes} onChange={(value: number) => value} />;
+// @ts-expect-error multiple hands back an array (#925)
+export const wrongMany = <Combobox label="Themes" multiple options={themes} onChange={(value: Theme) => value} />;
 export const layoutTyped: IsAny<ReturnType<typeof useAppLayout>> = false;
 export const aliasTyped: IsAny<typeof DataTable> = false;
 export const viewerTyped: IsAny<typeof MediaViewer> = false;
