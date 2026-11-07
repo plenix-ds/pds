@@ -2,7 +2,7 @@
    heading; the two columns (the main column and the summary at the end, stacked on a narrow page); the product page's
    picture and buying column; the lines of a cart or an order (picture, text, quantity, line total, remove); the order
    summary's totals; the payment fields' pairs; the confirmation's head. Every look inside is its component's.
-   Anatomy and API: Commerce.jsx. */
+   Anatomy and API: Commerce.tsx. */
 .plx-commerce{container-type:inline-size;display:flex;flex-direction:column;min-inline-size:0;row-gap:var(--plx-comp-commerce-gap);}
 .plx-commerce__head{display:flex;flex-direction:column;min-inline-size:0;row-gap:var(--plx-comp-commerce-head-gap);}
 .plx-commerce__title{color:var(--plx-comp-commerce-title-text);font-family:var(--plx-comp-commerce-title-font-family);font-size:var(--plx-comp-commerce-title-font-size);font-weight:var(--plx-comp-commerce-title-font-weight);letter-spacing:var(--plx-sys-text-title-letter-spacing);line-height:var(--plx-comp-commerce-title-line-height);margin-block-end:0;margin-block-start:0;word-spacing:normal;}

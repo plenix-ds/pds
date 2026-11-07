@@ -138,12 +138,12 @@
       "$description": "EntityHeader: between the status icon and its label."
     },
     "entity-header-status-neutral-background": {
-      "$value": "{plx-sys.status-pill-neutral-background}",
+      "$value": "{plx-sys.status-tile-background}",
       "$type": "color",
       "$description": "EntityHeader: the status tile's fill (neutral)."
     },
     "entity-header-status-neutral-border": {
-      "$value": "{plx-sys.status-pill-neutral-border}",
+      "$value": "{plx-sys.status-tile-border}",
       "$type": "color",
       "$description": "EntityHeader: the status tile's border (neutral)."
     },
@@ -153,12 +153,12 @@
       "$description": "EntityHeader: the status tile's label and value (neutral)."
     },
     "entity-header-status-success-background": {
-      "$value": "{plx-sys.status-pill-success-background}",
+      "$value": "{plx-sys.status-tile-background}",
       "$type": "color",
       "$description": "EntityHeader: the status tile's fill (success)."
     },
     "entity-header-status-success-border": {
-      "$value": "{plx-sys.status-pill-success-border}",
+      "$value": "{plx-sys.status-tile-border}",
       "$type": "color",
       "$description": "EntityHeader: the status tile's border (success)."
     },
@@ -168,12 +168,12 @@
       "$description": "EntityHeader: the status tile's label and value (success)."
     },
     "entity-header-status-active-background": {
-      "$value": "{plx-sys.status-pill-active-background}",
+      "$value": "{plx-sys.status-tile-background}",
       "$type": "color",
       "$description": "EntityHeader: the status tile's fill (active)."
     },
     "entity-header-status-active-border": {
-      "$value": "{plx-sys.status-pill-active-border}",
+      "$value": "{plx-sys.status-tile-border}",
       "$type": "color",
       "$description": "EntityHeader: the status tile's border (active)."
     },
@@ -183,12 +183,12 @@
       "$description": "EntityHeader: the status tile's label and value (active)."
     },
     "entity-header-status-waiting-background": {
-      "$value": "{plx-sys.status-pill-waiting-background}",
+      "$value": "{plx-sys.status-tile-background}",
       "$type": "color",
       "$description": "EntityHeader: the status tile's fill (waiting)."
     },
     "entity-header-status-waiting-border": {
-      "$value": "{plx-sys.status-pill-waiting-border}",
+      "$value": "{plx-sys.status-tile-border}",
       "$type": "color",
       "$description": "EntityHeader: the status tile's border (waiting)."
     },
@@ -198,12 +198,12 @@
       "$description": "EntityHeader: the status tile's label and value (waiting)."
     },
     "entity-header-status-action-required-background": {
-      "$value": "{plx-sys.status-pill-action-required-background}",
+      "$value": "{plx-sys.status-tile-background}",
       "$type": "color",
       "$description": "EntityHeader: the status tile's fill (action-required)."
     },
     "entity-header-status-action-required-border": {
-      "$value": "{plx-sys.status-pill-action-required-border}",
+      "$value": "{plx-sys.status-tile-border}",
       "$type": "color",
       "$description": "EntityHeader: the status tile's border (action-required)."
     },
@@ -213,12 +213,12 @@
       "$description": "EntityHeader: the status tile's label and value (action-required)."
     },
     "entity-header-status-negative-background": {
-      "$value": "{plx-sys.status-pill-negative-background}",
+      "$value": "{plx-sys.status-tile-background}",
       "$type": "color",
       "$description": "EntityHeader: the status tile's fill (negative)."
     },
     "entity-header-status-negative-border": {
-      "$value": "{plx-sys.status-pill-negative-border}",
+      "$value": "{plx-sys.status-tile-border}",
       "$type": "color",
       "$description": "EntityHeader: the status tile's border (negative)."
     },

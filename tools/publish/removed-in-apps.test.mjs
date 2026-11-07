@@ -26,7 +26,9 @@ put('src/Other.tsx', 'const c = "plx-u-bee";');                   // longer name
 put('node_modules/x/index.js', 'el.className = "plx-u-b";');       // dependency: skipped
 put('public/vendor/plenix.css', '.plx-u-b{top:0}');                 // a copied Plenix stylesheet: skipped
 put('styles/app.css', '.card .plx-u-b { margin: 0 }');
-check('uses found, with their files, skipping dependencies and copies',
+put('tests/frontend/plenix-deprecated-classes.test.cjs', "const gone = ['plx-u-a'];");  // an app's guard test lists the names: not a use
+put('src/Header.test.jsx', '<div className="plx-u-a" />');                               // tests never reach users
+check('uses found, with their files, skipping dependencies, copies and tests',
   usesIn(app, ['plx-u-a', 'plx-u-b']), [{ cls: 'plx-u-a', files: ['src/Header.jsx'] }, { cls: 'plx-u-b', files: ['styles/app.css'] }]);
 check('no use: empty', usesIn(app, ['plx-u-z']), []);
 fs.rmSync(app, { recursive: true, force: true });

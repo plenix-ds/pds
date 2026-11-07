@@ -3,7 +3,7 @@
 // RoleManager and ConnectedAccounts.
 export { File, fileIcon, fileExtension } from '../components/File/File.tsx';
 export { FileRow, FileRowList } from '../components/FileRow/FileRow.tsx';
-export { Auth, SignInForm, SignUpForm, PasswordResetForm, MfaChallenge, SsoButtons, AccountRecovery } from '../patterns/Auth/Auth.jsx';
+export { Auth, SignInForm, SignUpForm, PasswordResetForm, MfaChallenge, SsoButtons, AccountRecovery } from '../patterns/Auth/Auth.tsx';
 export { SessionTimeout, useSessionTimeout } from '../patterns/SessionTimeout/SessionTimeout.tsx';
 export { RoleManager } from '../patterns/RoleManager/RoleManager.tsx';
 export { ConnectedAccounts, ConnectedAccount } from '../patterns/ConnectedAccounts/ConnectedAccounts.tsx';

@@ -2,4 +2,4 @@ export { AttachmentPicker } from '../patterns/AttachmentPicker/AttachmentPicker.
 export { FilePicker } from '../patterns/FilePicker/FilePicker.tsx';
 export { RenditionList } from '../patterns/RenditionList/RenditionList.tsx';
 export { DocumentViewer } from '../components/DocumentViewer/DocumentViewer.tsx';
-export { VersionHistory } from '../patterns/VersionHistory/VersionHistory.jsx';
+export { VersionHistory } from '../patterns/VersionHistory/VersionHistory.tsx';

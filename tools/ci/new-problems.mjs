@@ -50,7 +50,8 @@ function reporterFindings(tool, script, okWord, failWord) {
 }
 
 // the published TypeScript types of @plenix-ds/react (ADR 0011, #61): build them (build-types.js), then one finding per prop
-// typed `any`, per exported component whose whole props object is `any`, and per callback typed `(...args: never[])`. index.d.ts and the tsc declarations it
+// typed `any` or with `any` inside its type, per exported component whose whole props object is `any`, and per callback
+// typed `(...args: never[])`. index.d.ts and the tsc declarations it
 // re-exports are read, so a part converted to TypeScript counts too. A finding names the part and the prop, never a line.
 function typesFindings() {
   const r = exec('node', ['build-types.js']);
@@ -71,6 +72,9 @@ function typesFindings() {
       if (top) owner = top[1];
       const prop = /^\s+([\w$]+)\??: any(?:\[\])?;$/.exec(l);
       if (prop && prop[1] !== 'prop') out.push(['types', name, 'any-prop', `${owner}.${prop[1]} is any`, i + 1]);
+      // any inside a prop's type: Record<string, any>, Array<any>, a callback (value: any) => …, a union with any (#829)
+      const typed = !prop && /^\s+([\w$]+)\??: (.+);$/.exec(l);
+      if (typed && typed[1] !== 'prop' && /\bany\b/.test(typed[2].replace(/'[^']*'|"[^"]*"/g, ''))) out.push(['types', name, 'any-in-prop', `${owner}.${typed[1]} has any in its type`, i + 1]);
       const whole = /^export declare (?:function|const) ([\w$]+)\s*[:(]\s*(?:\{[^}]*\}|props|_props)\s*:\s*any\b/.exec(l)
         || (/^\s+var ([\w$]+): \((?:\{[^}]*\}|props)\s*:\s*any\)/.exec(l) && [null, owner + '.' + /^\s+var ([\w$]+)/.exec(l)[1]]);
       if (whole) out.push(['types', name, 'any-props-object', `${whole[1]}'s props are any`, i + 1]);
