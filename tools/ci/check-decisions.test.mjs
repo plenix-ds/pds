@@ -52,8 +52,11 @@ try {
 
   // the fold: D-0001 moves from the file into the folder unchanged; nothing is removed or rewritten
   git('checkout', '-q', '-b', 'fold');
-  fs.rmSync(path.join(repo, 'decisions.yaml'));
-  fs.writeFileSync(path.join(repo, 'decisions.d', 'D-0001.yaml'), fs.readFileSync(path.join(fixtures, 'ok.yaml'), 'utf8').replace(/^- /, '').replace(/^ {2}/gm, ''));
+  const fold = () => {
+    fs.rmSync(path.join(repo, 'decisions.yaml'));
+    fs.writeFileSync(path.join(repo, 'decisions.d', 'D-0001.yaml'), fs.readFileSync(path.join(fixtures, 'ok.yaml'), 'utf8').replace(/^- /, '').replace(/^ {2}/gm, ''));
+  };
+  fold();
   let r = run(env, ['main'], repo);
   report('the fold keeps every entry', r.status === 0, r, 0);
 
@@ -81,6 +84,7 @@ try {
 
   // after the fold, decisions.yaml is retired: a branch that adds it back fails (its entry belongs in the folder)
   git('checkout', '-q', '-f', 'fold'); git('clean', '-fdq');
+  fold();
   git('add', '-A'); git('commit', '-q', '-m', 'fold');
   git('checkout', '-q', '-b', 'back');
   fs.writeFileSync(path.join(repo, 'decisions.yaml'), fs.readFileSync(path.join(fixtures, 'ok.yaml'), 'utf8').replace(/D-0001/, 'D-0009'));
