@@ -1,0 +1,7 @@
+id: D-0003
+date: 2026-11-07
+area: release
+decided_by: owner
+decision: A second entry in its own file.
+status: active
+check: review-only (fixture)

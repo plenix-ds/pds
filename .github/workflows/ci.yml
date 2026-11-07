@@ -53,9 +53,10 @@ jobs:
       - name: Self-test (the three YAML breaks of #585 fail, a valid file passes)
         shell: bash
         run: node tools/ci/check-decisions.test.mjs
-      - name: Valid YAML; unique ids; every entry has a check; past entries never rewritten
+      - name: Valid YAML; unique ids, also against main; every entry has a check; past entries never rewritten
         shell: bash
-        run: node tools/ci/check-decisions.mjs "$(git merge-base "$BASE_SHA" HEAD)"
+        # --main: an id this change adds that main took meanwhile fails here, before the queue (#955)
+        run: node tools/ci/check-decisions.mjs "$(git merge-base "$BASE_SHA" HEAD)" --main origin/main
       - name: ADR index self-test (#956)
         shell: bash
         run: node tools/ci/adr-index.test.mjs

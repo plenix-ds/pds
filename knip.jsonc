@@ -26,6 +26,8 @@
     ".claude/hooks/*.cjs",
     // the release tools, run by hand at a release or by release.yml (#194, #312)
     "tools/publish/*.mjs",
+    // run by hand before adding a decision: prints the next free id (decisions.d/README.md, #955)
+    "tools/decision-id.mjs",
     // run by npm run tokens:sd:check (slice 101, #372 steps 5 to 7)
     "style-dictionary/build.mjs",
     // a proof tool run by hand (the other proof folders moved to the archive, docs/ARCHIVE.md)
