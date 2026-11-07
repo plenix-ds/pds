@@ -23,6 +23,8 @@ cd "$(dirname "$0")"
 if [ -n "$(git status --porcelain)" ]; then echo "STOPPED: the working tree has uncommitted or untracked files. Commit or clean them, then deploy again."; git status --short | head -20; exit 1; fi
 (node build-app.js >/dev/null 2>&1 && node build-usage.js >/dev/null) || { echo "BUILD FAILED: run node build-app.js"; exit 1; }
 node check-system.js >/dev/null 2>&1 || { echo "check-system failed: fix it before publishing"; exit 1; }
+# G6 (#902): no missing English, no missing or unapproved Arabic in the release
+node tools/checks/locale/locale.mjs --release >/dev/null || { echo "G6 language gate failed: run node tools/checks/locale/locale.mjs --release"; exit 1; }
 node build-packages.js >/dev/null || { echo "build-packages failed: run node build-packages.js"; exit 1; }
 VERSION=$(node -p "require('./package.json').version")
 # the release holds every app's own files (#842: apps/<app>/), since the page loader loads them from it
