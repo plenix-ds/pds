@@ -50,6 +50,8 @@ const GAP = '30%';   // the room between the columns, as a share of a column
 
 const COLORS: Record<string, string> = { up: 'status-positive', down: 'status-negative', total: seriesColor(0) };
 
+/** @public what onSelect receives */
+export type WaterfallSelection = { c: number; step: { label: string; kind: string; from: number; to: number; change: number | null } };
 /** @public */
 export type WaterfallChartProps = {
   title: string;
@@ -63,7 +65,7 @@ export type WaterfallChartProps = {
   margin?: ChartMargin;
   legend?: boolean;
   interactive?: boolean;
-  onSelect?(selection: { c: number; step: { label: string; kind: string; from: number; to: number; change: number | null } }): void;
+  onSelect?(selection: WaterfallSelection): void;
   strings?: Record<string, string>;
   frameStrings?: Record<string, string>;
   interactionStrings?: Record<string, string>;
@@ -79,7 +81,8 @@ export function WaterfallChart({ title, description, data = [], endLabel, format
     : [{ label: t.change, value: signed(b.change), color: COLORS[b.kind] }, { label: t.running, value: fmt(b.to) }]);
   const ia = useChartInteraction({
     rows: 1, columns: bars.length, mode: 'point', select: typeof onSelect === 'function', strings: interactionStrings,
-    onSelect: (cell) => onSelect && onSelect(Object.assign({ step: bars[cell.c] }, cell)),
+    // the chart always passes the helper an end label (a string, or false for none), so every step it draws has a string label
+    onSelect: (cell) => onSelect && onSelect(Object.assign({ step: bars[cell.c] as WaterfallSelection['step'] }, cell)),
     describe: (cell) => chartTooltipText({ title: bars[cell.c].label, items: items(bars[cell.c]) }),
   });
   const table: any = {

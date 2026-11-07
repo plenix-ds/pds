@@ -156,7 +156,7 @@ export function BarChart({ title, description, hideCaption, size, categories = N
   }
 
   const table = bins
-    ? { columns: [{ title: categoryLabel || t.range, field: 'range', kind: 'data', rowLabel: true }, { title: valueLabel || t.count, field: 'count', kind: 'data', align: 'right' }],
+    ? { columns: [{ title: categoryLabel || t.range, field: 'range', kind: 'data', rowLabel: true }, { title: valueLabel || t.count, field: 'count', kind: 'data', align: 'right' as const }],
       data: bins.map((b: any, i: any) => ({ id: i + 1, range: rangeText(b), count: fmt(b.count) })) }
     : { columns: ([{ title: categoryLabel || t.category, field: 'category', kind: 'name', rowLabel: true }] as any[])
       .concat(list.map((s: any, si: any) => ({ title: s.label, field: 's' + si, kind: 'data', align: 'right' })))
