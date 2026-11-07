@@ -1515,6 +1515,10 @@
       "$value": "{plx-ref.size-4u}",
       "$type": "number"
     },
+    "field-readonly-label-text": {
+      "$value": "{plx-sys.read-only-label}",
+      "$type": "color"
+    },
     "field-row-label-font-size": {
       "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
@@ -9259,12 +9263,8 @@
       "$type": "dimension"
     },
     "property-list-label-text": {
-      "$value": "{plx-sys.content-muted}",
+      "$value": "{plx-sys.read-only-label}",
       "$type": "color"
-    },
-    "property-list-label-font-size": {
-      "$value": "{plx-ref.font-size-100}",
-      "$type": "dimension"
     },
     "property-list-label-row-gap": {
       "$value": "{plx-sys.space-stack-xs}",
@@ -9282,19 +9282,34 @@
       "$value": "{plx-sys.content-default}",
       "$type": "color"
     },
-    "property-list-value-font-size": {
-      "$value": "{plx-ref.font-size-200}",
+    "property-list-value-background": {
+      "$value": "{plx-sys.read-only-tile}",
+      "$type": "color"
+    },
+    "property-list-value-border-color": {
+      "$value": "{plx-sys.read-only-tile-border}",
+      "$type": "color"
+    },
+    "property-list-value-border-width": {
+      "$value": "{plx-sys.border-width-thin}",
+      "$type": "dimension"
+    },
+    "property-list-value-radius": {
+      "$value": "{plx-sys.radius-compact}",
+      "$type": "dimension"
+    },
+    "property-list-value-padding-block": {
+      "$value": "{plx-sys.space-inset-xs}",
+      "$type": "dimension"
+    },
+    "property-list-value-padding-inline": {
+      "$value": "{plx-sys.space-inset-sm}",
       "$type": "dimension"
     },
     "property-list-value-data-font-family": {
       "$value": "{plx-sys.font-data}",
       "$type": "fontFamily",
       "$description": "A technical value (a size, a date, an ID): the data font, Reddit Mono (owner, 2026-10-11)"
-    },
-    "property-list-value-data-font-size": {
-      "$value": "{plx-ref.font-size-200}",
-      "$type": "dimension",
-      "$description": "A technical value at the value size (--plx-comp-property-list-value-font-size), so Reddit Mono and DM Sans values share one baseline"
     },
     "property-list-columns-gap": {
       "$value": "{plx-sys.space-inline-md}",

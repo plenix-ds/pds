@@ -1,0 +1,17 @@
+FAIL plx-comp.property-list-label-text = {plx-sys.read-only-label}: {plx-sys.content-muted}
+FAIL plx-comp.property-list-label-font-family = {plx-sys.text-field-label-font-family}: undefined
+FAIL plx-comp.property-list-label-font-size = {plx-sys.text-field-label-font-size}: {plx-ref.font-size-100}
+FAIL plx-comp.property-list-label-font-weight = {plx-sys.text-field-label-font-weight}: undefined
+FAIL plx-comp.property-list-label-line-height = {plx-sys.text-field-label-line-height}: undefined
+FAIL plx-comp.property-list-value-font-size = {plx-sys.text-field-value-font-size}: {plx-ref.font-size-200}
+FAIL plx-comp.property-list-value-font-weight = {plx-sys.text-field-value-font-weight}: undefined
+FAIL plx-comp.property-list-value-line-height = {plx-sys.text-field-value-line-height}: undefined
+FAIL plx-comp.property-list-value-background = {plx-sys.read-only-tile}: undefined
+FAIL plx-comp.property-list-value-border-color = {plx-sys.read-only-tile-border}: undefined
+FAIL plx-comp.field-readonly-label-text = {plx-sys.read-only-label}: undefined
+FAIL the value draws the tile (background and border)
+FAIL a Field label in a read-only region takes the read-only label role
+FAIL CONTRAST_PAIRS has read-only-label on read-only-tile
+FAIL CONTRAST_PAIRS has content-default on read-only-tile
+
+READONLY_PRESET_FAIL 15
