@@ -1,0 +1,2 @@
+APP_SHELL_FRAME_OVERLAYS_877_OK
+AC (design 862 section 4): Drawer at the frame edge (start and end), backdrop over the window, Toast inside the frame, Dialog centered, full unchanged; left to right and right to left; 1920 and 1280: pass (green.txt)

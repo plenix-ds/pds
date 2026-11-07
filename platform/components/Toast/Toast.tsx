@@ -39,6 +39,7 @@
 */
 import React from 'react';
 import { createPortal } from 'react-dom';
+import { useFramed } from '../../utils/frame.ts';
 import { cx } from '../../utils/cx.ts';
 import { Icon } from '../Icon/Icon.tsx';
 import type { IconModule } from '../Icon/Icon.tsx';
@@ -67,6 +68,7 @@ let nextId = 1;
 export type ToastProviderProps = { /** how long a toast shows, in ms (default the token) */ duration?: number; children?: React.ReactNode };
 export function ToastProvider({ duration, children }: ToastProviderProps) {
   const words = useStrings('toast') as { dismiss: string };
+  const framed = useFramed();   // inside the AppShell frame, not on the grey sides (#877)
   const [toasts, setToasts] = React.useState<ToastItem[]>([]);
   const timers = React.useRef(new Map<number, ToastTimer>());   // id -> { wait, timer, onClose }
   const texts = React.useRef(new Map<number, HTMLSpanElement>());    // id -> the message element, read for its announcement
@@ -109,7 +111,7 @@ export function ToastProvider({ duration, children }: ToastProviderProps) {
     <ToastContext.Provider value={api}>
       {children}
       {createPortal(
-        <div className="plx-toast-region">
+        <div className={cx('plx-toast-region', framed && 'plx-toast-region--framed')}>
           {toasts.map((t) => (
             <div key={t.id}
               className={cx('plx-toast', 'plx-toast--' + t.tone, t.leaving && 'is-leaving')}

@@ -38,3 +38,5 @@
 .plx-dialog--non-modal{pointer-events:auto;}
 /* the modal backdrop fades in (moved from motion.css; Sheet and CommandPalette use the same layer) */
 :where(.plx-modal-layer)::before{animation-duration:var(--plx-sys-motion-duration-quick);animation-name:motion-fade-in;animation-timing-function:var(--plx-sys-motion-ease-standard);}
+/* a Drawer inside an AppShell frame="centered" (#877): its panel meets the frame's edge; the backdrop (::before) still covers the window */
+.plx-modal-layer--framed{padding-inline-end:calc((100% - var(--plx-sys-shell-frame-width)) / 2);padding-inline-start:calc((100% - var(--plx-sys-shell-frame-width)) / 2);}

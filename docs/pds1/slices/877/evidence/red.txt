@@ -1,0 +1,6 @@
+AssertionError [ERR_ASSERTION]: ltr centered 1920: a Drawer at the end meets the frame edge, got [1510,1910] for 277..1643
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',

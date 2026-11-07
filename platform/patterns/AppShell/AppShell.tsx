@@ -90,6 +90,7 @@
        page for screen readers). Every hidden action needs a place where it still is (fallback, a menu, the detail view).
 */
 import React from 'react';
+import { setFramed } from '../../utils/frame.ts';
 import { createPortal } from 'react-dom';
 import { cx } from '../../utils/cx.ts';
 import { pageLayout } from '../../providers/pageLayouts.js';
@@ -181,6 +182,7 @@ export function AppShell({ header, sideNav, panel, footer, page = 'workspace', m
   const [fullWindow, setFullWindow] = React.useState(() => readPref('plenix.shell.frame.full', false));
   const toggleFrame = React.useCallback(() => setFullWindow((f) => { writePref('plenix.shell.frame.full', !f); if (onFrameChange) onFrameChange(f ? 'centered' : 'full'); return !f; }), [onFrameChange]);
   const framed = frame === 'centered' && wide && !fullWindow;
+  React.useEffect(() => { setFramed(framed); return () => setFramed(false); }, [framed]);
   const frameCtx = React.useMemo(() => (frame === 'centered' && wide ? { full: fullWindow, toggle: toggleFrame } : null), [frame, wide, fullWindow, toggleFrame]);
   const small = useMedia(below('--plx-sys-shell-rail-below'));
   const narrow = useMedia(below('--plx-sys-shell-phone-below'));

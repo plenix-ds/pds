@@ -75,6 +75,7 @@
      The layer renders in a portal on document.body.
 */
 import React from 'react';
+import { useFramed } from '../../utils/frame.ts';
 import { devWarn } from '../../utils/devWarn.ts';
 import { createPortal } from 'react-dom';
 import { cx } from '../../utils/cx.ts';
@@ -144,6 +145,7 @@ type ModalShellProps = Omit<DialogProps, 'size'> & { kind: 'dialog' | 'drawer'; 
 function ModalShell({ kind, open, onClose, title, description, icon, size, side, role = 'dialog', footer, initialFocus,
   closeLabel, dismissible = true, flush = false, modal = true, className, children }: ModalShellProps) {
   const t = useStrings('dialog') as DialogWords;
+  const framed = useFramed();   // a Drawer opens from the AppShell frame's edge, not the window's (#877)
   const ref = React.useRef<HTMLDivElement>(null);
   const id = useUid('plx-dlg');
   const firstFocus = () => {
@@ -162,7 +164,7 @@ function ModalShell({ kind, open, onClose, title, description, icon, size, side,
     onBlur: (e) => { inside.current = !!(ref.current && ref.current.contains(e.relatedTarget as Node | null)); },
   } : {};
   return createPortal(
-    <div className={cx('plx-modal-layer', 'plx-modal-layer--' + kind, side && 'plx-modal-layer--' + side, !modal && 'plx-modal-layer--non-modal')} onMouseDown={onVeil}>
+    <div className={cx('plx-modal-layer', 'plx-modal-layer--' + kind, side && 'plx-modal-layer--' + side, kind === 'drawer' && framed && 'plx-modal-layer--framed', !modal && 'plx-modal-layer--non-modal')} onMouseDown={onVeil}>
       <div ref={ref} role={role} aria-modal={modal ? 'true' : undefined} aria-labelledby={id + 't'} aria-describedby={description ? id + 'd' : undefined}
         tabIndex={-1} className={cx('plx-dialog', kind === 'drawer' && 'plx-drawer', kind === 'drawer' && side === 'start' && 'plx-drawer--start', !modal && 'plx-dialog--non-modal', 'plx-' + kind + '--' + size, className)} onKeyDown={onKeyDown} {...track}>
         <div className="plx-dialog__header">

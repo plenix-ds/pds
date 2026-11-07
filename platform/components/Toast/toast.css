@@ -18,3 +18,5 @@
 .plx-toast__action{flex-shrink:0;}
 /* its motion (moved from motion.css, Styling Standard 3.6: each component owns its own; reduced motion sets the durations to 0s) */
 .plx-toast__close:active:where(:not(:disabled, [aria-disabled="true"])){transform:scale(var(--plx-sys-motion-press-scale));}
+/* inside an AppShell frame="centered" (#877): the region moves in by the width of the sides, half of what the frame leaves of the window */
+.plx-toast-region--framed{inset-inline-end:calc((100% - var(--plx-sys-shell-frame-width)) / 2 + var(--plx-comp-toast-region-inset-inline-end));}
