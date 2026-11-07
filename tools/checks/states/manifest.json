@@ -558,5 +558,15 @@
     "loading": "n/a(stories arrive with Storybook, P0-11)",
     "selected": "n/a(stories arrive with Storybook, P0-11)",
     "error": "n/a(stories arrive with Storybook, P0-11)"
+  },
+  "Toast": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(a toast pauses its timer on pointer and focus when it has an action; there is no separate hover look)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(a toast is a message, not a control; its action button carries its own disabled state)",
+    "loading": "n/a(a toast reports a result; it does not load)",
+    "selected": "n/a(a toast has no selection)",
+    "error": "n/a(an error is the danger tone of the toast, which stays until dismissed)"
   }
 }
