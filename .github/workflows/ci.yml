@@ -144,6 +144,11 @@ jobs:
           persist-credentials: false
       - name: Each AC-n of a slice this PR implements is in its tests and its evidence (plan §7)
         run: node tools/ci/check-trace.mjs "$(git merge-base "$BASE_SHA" HEAD)"
+      # a version PR leaves no changelog fragment behind: in the merge queue, one merged ahead of it is in this head (#884)
+      - name: Release notes, a version change leaves no changelog fragment unfolded (#884)
+        run: |
+          node tools/ci/check-release-notes.test.mjs
+          node tools/ci/check-release-notes.mjs "$(git merge-base "$BASE_SHA" HEAD)"
 
   design-checks:
     name: Checks 9-12 (state manifest, numeric columns, pill height, visual regression)
