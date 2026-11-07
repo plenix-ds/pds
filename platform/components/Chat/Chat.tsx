@@ -124,6 +124,8 @@ import { Badge } from '../Badge/Badge.tsx';
 import { Popover } from '../Popover/Popover.tsx';
 import { Tooltip } from '../Tooltip/Tooltip.tsx';
 import { Attachment, Attachments, Voice, FileIcon } from './ChatMedia.tsx';
+/** @public Chat.Attachment's and Chat.Voice's props, by their published names */
+export type { AttachmentProps as ChatAttachmentProps, VoiceProps as ChatVoiceProps } from './ChatMedia.tsx';
 import { fill } from '../../utils/fill.ts';
 import { ProgressBar } from '../ProgressBar/ProgressBar.tsx';
 import { announce } from '../../utils/announce.tsx';

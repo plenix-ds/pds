@@ -1201,6 +1201,8 @@ function NextEngine(rawProps: any) {
   );
 }
 
+/** @public the engine takes DataGrid's props (DataGrid passes them through) */
+export type DataGridEngineProps = import('./DataGrid.tsx').DataGridProps;
 export function DataGridEngine(props: any) {
   return <NextEngine key={props.storageKey || ''} {...props} />;
 }

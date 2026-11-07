@@ -40,7 +40,8 @@ import { devWarn } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
 import { cleanRichText } from '../../utils/richTextClean.ts';
 
-type RichTextProps = Omit<React.HTMLAttributes<HTMLElement>, 'children'> & {
+/** @public */
+export type RichTextProps = Omit<React.HTMLAttributes<HTMLElement>, 'children'> & {
   /** "article" (default) | "compact" */
   variant?: 'article' | 'compact';
   /** HTML to clean and show (it is cleaned with cleanRichText); without it the children show */
