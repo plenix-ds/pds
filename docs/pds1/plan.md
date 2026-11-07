@@ -256,7 +256,7 @@ The pull loop: finish the item, hand it off (move it to the next lane's Ready by
 - **Pictures.** Screenshots that CI already makes are always shared: changed snapshots on the PR and your issue, all of them on the dashboard. Agents make *extra* pictures (options, variants, mock-ups) only when you ask ("show me", "options").
 - **One summary.** Decisions made, releases shipped and anything worth a look go into the pinned "Daily summary" issue. Nothing waits on a reply.
 - **Don't ask when** the answer is in the decision log, the codebase or `DESIGN.md`, or the change is cheap to reverse (apply the default and say so).
-- **Never ask twice.** Every decision becomes a `decision` issue and an entry in `decisions.yaml` with date, reason, and the **check that enforces it**.
+- **Never ask twice.** Every decision becomes a `decision` issue and a file `decisions.d/D-NNNN.yaml` with date, reason, and the **check that enforces it**.
 - **"Other" is not an ending.** The Product Lead maps it back to options in the next card.
 - **Feedback register.** Each owner comment is tracked as open → accepted → applied (with a link to the changed file). No silent drops, and nothing is redone without a new decision.
 - **The owner's answer is final** (D-0035). Agents pick the sensible reading, act on it and say in one line on the thread how they read it; an answer never produces a new question card. All pending answers are handled in one pass, and the dashboard is refreshed once at the end. Threads use plain words, not card jargon; the A/B options stay so the dashboard can show them.
@@ -269,7 +269,7 @@ The pull loop: finish the item, hand it off (move it to the next lane's Ready by
 
 One read-only page with two tabs: **Decisions**, where every decision is logged and presented, and **Visual checks**, where every screenshot CI takes is logged. It is generated, not a hand-built dashboard, so it can't drift from GitHub.
 
-**Source of truth:** `decisions.yaml` in the repo plus the GitHub issues labelled `decision`. A GitHub Action rebuilds the page on every change and publishes it beside the docs (`design-system.lighthouseway.org/decisions/`).
+**Source of truth:** `decisions.d/` in the repo (one file per decision, so two decision PRs never conflict; #955) plus the GitHub issues labelled `decision`. A GitHub Action rebuilds the page on every change and publishes it beside the docs (`design-system.lighthouseway.org/decisions/`).
 
 **Each decision shows:**
 - ID, date and area (design, tokens, components, i18n, release, process)
@@ -322,10 +322,10 @@ One read-only page with two tabs: **Decisions**, where every decision is logged 
 
 **Agent hooks**
 - A SessionStart hook loads the skills, the ledger and `docs/lessons.md`.
-- A PreToolUse guard (as CTM's `guard-protected`) blocks agents, even on bypass, from editing a few protected files: the Arabic standard and approved glossary (`docs/i18n/arabic.md`), past entries in `decisions.yaml`, and published release manifests. To change one, they open a GitHub issue.
+- A PreToolUse guard (as CTM's `guard-protected`) blocks agents, even on bypass, from editing a few protected files: the Arabic standard and approved glossary (`docs/i18n/arabic.md`), past decisions in `decisions.d/`, and published release manifests. To change one, they open a GitHub issue.
 - A Stop hook blocks "done" when edited UI has no fresh passing check result (from plugin87's measurement-receipt pattern).
 
-**Decision coverage.** CI fails if any `decisions.yaml` entry has no linked check (or an explicit `review-only` reason).
+**Decision coverage.** CI fails if any decision in `decisions.d/` has no linked check (or an explicit `review-only` reason).
 
 **Borrowed from CTM** (already working in CTM's repo, 2026-11-04):
 - **Only new problems block.** Every check compares against the PR's base: problems the PR adds fail it; old debt is reported but doesn't block. This is how CI gets green from day one instead of the old 0-of-1,509.
