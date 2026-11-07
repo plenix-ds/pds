@@ -285,7 +285,7 @@ require('./build-types.js')(path.join(R, 'index.d.ts'), VERSION);
 // the Arabic opt-in is imported for what it does, and exports nothing (#702)
 write(path.join(R, 'i18n', 'ar.d.ts'), '/* @plenix-ds/react ' + VERSION + ' · import \'@plenix-ds/react/i18n/ar\': Plenix\'s own words in Arabic on an Arabic page (generated). */\nexport {};\n');
 const exportsList = [];
-for (const m of fs.readFileSync(path.join(P, 'index.js'), 'utf8').matchAll(/export \{([^}]+)\} from '([^']+)'/g)) {
+for (const m of fs.readFileSync(path.join(P, 'index.ts'), 'utf8').matchAll(/export \{([^}]+)\} from '([^']+)'/g)) {
   // a renamed export ("PLACEMENTS as FLOATING_PLACEMENTS") is listed by its public name
   for (const n of m[1].split(',').map((x) => x.trim()).filter(Boolean)) exportsList.push({ name: n.replace(/^\w+\s+as\s+/, ''), file: 'platform/' + m[2].replace(/^\.\//, '') });
 }
@@ -395,7 +395,7 @@ copy(path.join(I, 'icons.json'), path.join(CDN, 'icons', 'icons.json'));
 // library are already in the release) plus the few repository files a spec page documents (src: '../…' in a record).
 {
   const SRC = path.join(CDN, 'source');
-  for (const f of ['platform.css', 'plenix-system.css', 'index.js', path.join('tokens', 'tokens.index.json')]) copy(path.join(P, f), path.join(SRC, 'platform', f));
+  for (const f of ['platform.css', 'plenix-system.css', 'index.ts', path.join('tokens', 'tokens.index.json')]) copy(path.join(P, f), path.join(SRC, 'platform', f));
   for (const d of ['components', 'patterns', 'hooks', 'providers', 'templates', 'utils', 'charts', 'i18n', 'exports', 'system', 'standards', 'brand', 'dev', path.join('icons', 'inventory')]) copyDir(path.join(P, d), path.join(SRC, 'platform', d), (n) => n !== 'node_modules');
   const DSD = path.join(P, 'design-system'), outside = new Set();
   for (const f of ['spec-parts.js', 'inventory.js'].map((x) => path.join(DSD, x)).filter((x) => fs.existsSync(x))) {

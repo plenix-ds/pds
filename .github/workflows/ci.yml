@@ -123,11 +123,11 @@ jobs:
             exit 1
           fi
           echo "no build output committed"
-      - name: The library block of platform/index.js and platform.css equals build-exports.js (#60)
+      - name: The library block of platform/index.ts and platform.css equals build-exports.js (#60)
         run: |
           node build-exports.js
-          if ! git diff --exit-code -- platform/index.js platform/platform.css; then
-            echo "::error::The library block is stale: run node build-exports.js and commit platform/index.js and platform/platform.css"
+          if ! git diff --exit-code -- platform/index.ts platform/platform.css; then
+            echo "::error::The library block is stale: run node build-exports.js and commit platform/index.ts and platform/platform.css"
             exit 1
           fi
 

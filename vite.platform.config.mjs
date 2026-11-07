@@ -1,5 +1,5 @@
-// The Platform bundle (#709, Vite step 2): platform/index.js -> platform/dist/platform.js, one classic script that
-// publishes the exports of platform/index.js on window.Plenix. node build-app.js runs it (write: false) after the
+// The Platform bundle (#709, Vite step 2): platform/index.ts -> platform/dist/platform.js, one classic script that
+// publishes the exports of platform/index.ts on window.Plenix. node build-app.js runs it (write: false) after the
 // pre-steps (tokens, icons, the library block of index.js) and writes the file only when every bundle compiled and
 // passed its checks. Run alone (npx vite build --config vite.platform.config.mjs), it writes into the ignored build/vite/.
 //
@@ -13,7 +13,7 @@
 //   - the friendly error when React or ReactDOM is missing: the guard after the banner throws the old bundle's
 //     words (Plenix: "react" is not loaded before this script) before the bundle reads either global
 //   - window.Plenix is a plain frozen object: Object.freeze(Object.assign({}, the exports))
-//   - the public-API check: every name exported by platform/index.js is defined on window.Plenix, once, and nothing else is
+//   - the public-API check: every name exported by platform/index.ts is defined on window.Plenix, once, and nothing else is
 // The source map is hidden (no sourceMappingURL in the bundle): build-app.js writes it to the ignored build/vite/, and
 // check-bundle.js traces each finding back to its source file through it.
 import path from 'node:path';
@@ -25,13 +25,13 @@ import { defineConfig } from 'vite';
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const require = createRequire(import.meta.url);
-const ENTRY = path.join(ROOT, 'platform', 'index.js');
+const ENTRY = path.join(ROOT, 'platform', 'index.ts');
 // PLENIX_GLOBAL=cdn (build-packages.js, issue 882): the CDN's plenix.js, without the built-in Arabic words. LocaleProvider's
 // import of ../i18n/ar.js resolves to the empty catalog plenix-ar.js fills (tools/npm-esm/ar.js, as the npm ES modules do);
 // it writes build/vite/cdn/plenix.js. Without it: platform/dist/platform.js, Arabic built in
 const CDN = process.env.PLENIX_GLOBAL === 'cdn';
 const GLOBALS = { 'react': 'React', 'react-dom': 'ReactDOM', 'react-dom/client': 'ReactDOM' };
-const BANNER = '/*\n * GENERATED FILE — DO NOT EDIT\n * Source: platform/index.js and the modules it imports\n * Build: node build-app.js (Vite, vite.platform.config.mjs)\n */\n';
+const BANNER = '/*\n * GENERATED FILE — DO NOT EDIT\n * Source: platform/index.ts and the modules it imports\n * Build: node build-app.js (Vite, vite.platform.config.mjs)\n */\n';
 // the old bundle's error for a missing global, in its words; it runs before the bundle passes React and ReactDOM in
 const GUARD = Object.entries({ 'react': 'React', 'react-dom': 'ReactDOM' })
   .map(([spec, name]) => 'if (!window.' + name + ') throw new Error(\'Plenix: "' + spec + '" is not loaded before this script\');\n').join('');

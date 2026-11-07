@@ -17,7 +17,7 @@ const site = require('./site.js');
 
 // the public names: export { A, B as C } from '…' in platform/index.js (with the generated library block)
 const names = [];
-for (const m of read(path.join(ROOT, 'platform', 'index.js')).matchAll(/export\s*\{([^}]*)\}\s*from\s*'([^']+)'/g)) {
+for (const m of read(path.join(ROOT, 'platform', 'index.ts')).matchAll(/export\s*\{([^}]*)\}\s*from\s*'([^']+)'/g)) {
   m[1].split(',').map((x) => x.trim().split(/\s+as\s+/).pop()).filter(Boolean).forEach((n) => names.push({ name: n, from: m[2] }));
 }
 // not drawn by an application: an old name kept for one release, the providers the site gets from the page, data

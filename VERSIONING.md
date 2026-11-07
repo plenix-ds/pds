@@ -7,7 +7,7 @@ the CSS classes, the tokens and how things look.
 
 ## What is public
 
-- **React:** every export of `@plenix-ds/react` (platform/index.js), its props, their allowed values and defaults.
+- **React:** every export of `@plenix-ds/react` (platform/index.ts), its props, their allowed values and defaults.
 - **CSS:** every `plx-` class in `@plenix-ds/styles` (blocks, elements, modifiers, `is-` states) and the `data-plx-*`
   attributes on `<html>` (mode, density, interaction).
 - **Tokens:** every `--plx-sys-*` and `--plx-comp-*` token: its name, tier and role. The `--plx-ref-*` palette is public

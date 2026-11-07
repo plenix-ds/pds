@@ -3,7 +3,7 @@
      a chart of that kind is drawn, so the first load of Plenix does not carry the chart code (issue 106; the budget note on pull request 547). The public
      names, props and behavior are the chart's own: this file only waits for the module, then draws it.
    Usage:
-     import { LineChart, Sparkline } from './charts/lazy.tsx';   // what platform/index.js and the exports files export
+     import { LineChart, Sparkline } from './charts/lazy.tsx';   // what platform/index.ts and the exports files export
    Props:
      The chart's own props (platform/charts/<Chart>.jsx).
    Behavior:

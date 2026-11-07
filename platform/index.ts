@@ -1,4 +1,4 @@
-/* Plenix · Platform public API (platform/index.js). Only what is exported here is public: the build publishes these
+/* Plenix · Platform public API (platform/index.ts). Only what is exported here is public: the build publishes these
    exports, and nothing else, on window.Plenix (platform/dist/platform.js). Applications import them from
    "plenix-platform". Add a component here only when it is ready for both applications. */
 export { Badge } from './components/Badge/Badge.tsx';

@@ -11,7 +11,7 @@ const Babel = require('@babel/standalone');
 const ROOT = path.resolve(__dirname, '..');
 const SITE = path.join(require('./site.js').DIR, 'site');
 if (!fs.existsSync(SITE)) { console.log('SITE_CHECK_FAIL the St. John test site is not at ' + SITE + ' (clone github.com/LighthouseCollection/st-john-test-site beside this repository, or set SITE_DIR)'); process.exit(1); }
-const exportsText = fs.readFileSync(path.join(ROOT, 'platform', 'index.js'), 'utf8');
+const exportsText = fs.readFileSync(path.join(ROOT, 'platform', 'index.ts'), 'utf8');
 const PUBLIC = new Set();
 for (const m of exportsText.matchAll(/export\s*\{([^}]*)\}/g)) m[1].split(',').map((x) => x.trim().split(/\s+as\s+/).pop()).filter(Boolean).forEach((n) => PUBLIC.add(n));
 const UTIL = new Set();
