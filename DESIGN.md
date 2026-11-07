@@ -113,11 +113,11 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 ### Read-only fields (D-0101, #946)
 
 - A read-only label and its value never share a look. The label is quieter in colour and stronger in weight, and the value is larger. This is the Fluent 2 field (D-0078).
-- **Stacked (the default):** the label above its value.
+- **Stacked (recommended for read-only details; the default from 2.0.0, ADR 0030):** the label above its value.
   - The label uses **field-label**: 12px, semibold, 16px line, `content-muted`.
   - The value uses **field-value**: 15px, regular, 24px line, `content-default`. A data value is Reddit Mono at 15px.
-  - The label sits 4px above its value. Pairs are 16px apart (`space-stack-lg`) at every density.
-- **Columns (`layout="columns"`, the inline variant, for dense panes):** the label column and the value on one line.
+  - The label sits 4px above its value. Pairs are 20px apart (`space-stack-field`) at every density.
+- **Columns (`layout="columns"`, the default in 1.x, for dense panes):** the label column and the value on one line.
   - The label is **field-label**. The value is **body** (13px, 20px line).
   - A `border-subtle` hairline separates the pairs, with none after the last.
   - Each pair has 4 / 8 / 12px of padding-block, by density.
