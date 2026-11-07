@@ -25,7 +25,8 @@ require('./limit.js');
           fee: 1200 + i, size: 2048 * (i + 1), summary: 'The parties separated in 2024 and the court heard the first session on the second of March with both counsel present and a request for mediation ' + i }));
         const cols = [{ title: 'Case', field: 'id', kind: 'data', width: '--plx-ref-size-25u' }, { title: 'Husband', field: 'husband', kind: 'avatar-name', width: '--plx-ref-size-30u' }, { title: 'Wife', field: 'wife', kind: 'avatar-name', width: '--plx-ref-size-30u' },
           { title: 'Reason for divorce', field: 'reason', width: '--plx-ref-size-30u' }, { title: 'Judge', field: 'judge', kind: 'avatar-name', width: '--plx-ref-size-30u' }, { title: 'Status', field: 'status', kind: 'badge', width: '--plx-ref-size-25u' }, { title: 'Fee', field: 'fee', type: 'number' }, { title: 'Size', field: 'size', type: 'bytes' }];
-        if (withSummary) cols.push({ title: 'Summary', field: 'summary', kind: 'wrap' });
+        if (withSummary === 'url') { cols.push({ title: 'Page', field: 'page', kind: 'url' }); rows.forEach((r, i) => { r.page = 'https://example.org/cases/' + (2026100 + i) + '/documents/judgment-and-order'; }); }
+        else if (withSummary) cols.push({ title: 'Summary', field: 'summary', kind: 'wrap' });
         window.__root = ReactDOM.createRoot(document.getElementById('c'));
         window.__root.render(h(P.DataGrid, { label: 'Cases', data: rows, columns: cols, index: 'id', selectable: true, cells: 'pill', rowMenu: [{ label: 'Open', onSelect: () => {} }] }));
         await new Promise((r) => setTimeout(r, 1500));
@@ -54,6 +55,11 @@ require('./limit.js');
       const s = await probe(1600, true);
       assert.equal(s.cards, 0, T + 'with a summary column the grid is still a table');
       assert.deepEqual(s.cut.filter((x) => !/^The parties/.test(x)), [], T + 'AC-6: only the summary is cut (' + JSON.stringify(s.cut.slice(0, 4)) + ')');
+      // D-0088: a url column is long text at any length: it gives way before the compact columns
+      const u = await probe(1500, 'url');
+      assert.equal(u.cards, 0, T + 'with a url column the grid is still a table');
+      assert.ok(u.cut.some((x) => /^https:/.test(x)), T + 'the url column is the one that gives way');
+      assert.deepEqual(u.cut.filter((x) => !/^https:/.test(x)), [], T + 'a url column is cut first, the compact columns stay whole (' + JSON.stringify(u.cut.slice(0, 4)) + ')');
       await page.close();
     }
     assert.deepEqual(errors, [], 'no script errors');
