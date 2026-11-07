@@ -61,7 +61,8 @@ const tagOf = (tag: EntityTag): React.ReactNode => {
   return <Badge tone={object.tone} icon={object.icon}>{object.label}</Badge>;
 };
 
-type EntityTitleProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> & {
+/** @public */
+export type EntityTitleProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> & {
   /** the title line */
   title?: React.ReactNode;
   /** an icon before the title */

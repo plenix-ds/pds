@@ -21,10 +21,28 @@ function runtime(ng, forms) {
  }
  return{configurePlenix,components:Object.fromEntries(Object.entries(SCHEMA).map(([n,s])=>[n,adapter(n,s)]))};
 }
+// each component's props block, in the header-typed form the schema reads ("  name?: type;" lines, "[prop: string]" when it takes
+// its element's attributes): from index.d.ts's header-typed declarations, and, for a part written in TypeScript (re-exported
+// from tsc's types/ since D-0081), from its <Name>Props in that declaration, its top-level members brought to that form
+function propBlocks(PKG,src){
+ const out={};
+ for(const m of src.matchAll(/export declare const (\w+): React\.ComponentType</g)){const n=m[1],start=src.indexOf('export interface '+n+'Props');out[n]=start<0?'':src.slice(start,src.indexOf('\n}',start));}
+ // every <Name>Props in tsc's declarations (a barrel re-exports a part from another file, so the props can live anywhere in types/)
+ const props={},walk=(d)=>{for(const f of fs.existsSync(d)?fs.readdirSync(d):[]){const p=path.join(d,f);if(fs.statSync(p).isDirectory())walk(p);else if(f.endsWith('.d.ts')){const t=fs.readFileSync(p,'utf8');for(const m of t.matchAll(/export (?:type|interface) (\w+)Props\b/g)){if(m[1] in props)continue;const e=t.indexOf('\n}',m.index);props[m[1]]=t.slice(m.index,e<0?undefined:e);}}}};
+ walk(path.join(PKG,'react','types'));
+ for(const m of src.matchAll(/export \{([^}]+)\} from "\.\/types\/[^"]+\.js"/g)){
+  for(const raw of m[1].split(',')){
+   const n=raw.trim().split(/\s+as\s+/).pop();if(!/^[A-Z]\w*$/.test(n)||n in out||!(n in props))continue;
+   const blk=props[n];
+   out[n]=blk.split('\n').filter(l=>/^ {4}\w+\??: /.test(l)).map(l=>'  '+l.slice(4).replace(/^(\w+)\??: /,'$1?: ')).join('\n')+(/HTMLAttributes|\[prop: string\]/.test(blk)?'\n  [prop: string]':'');
+  }
+ }
+ return out;
+}
 module.exports=function(ctx){
  const{PKG,VERSION,SCOPE,SITE,REPO,write,json,copy}=ctx,out=path.join(PKG,'angular'),types=path.join(PKG,'react','index.d.ts'),src=fs.readFileSync(types,'utf8');
- const names=[...src.matchAll(/export declare const (\w+): React\.ComponentType</g)].map(m=>m[1]),schema={};if(!names.length)throw Error('Angular needs generated React declarations');
- for(const n of names){const start=src.indexOf('export interface '+n+'Props'),block=src.slice(start,src.indexOf('\n}',start)),keys=[...block.matchAll(/^  (\w+)\?: /gm)].map(m=>m[1]);if(block.includes('[prop: string]'))keys.push(...['id','value','checked','disabled','required','readOnly','placeholder','name','multiple','onClick','onFocus','onKeyDown'].filter(k=>!keys.includes(k)));schema[n]={booleans:[...block.matchAll(/^  (\w+)\?: boolean;/gm)].map(m=>m[1]).concat(['disabled','checked','required','readOnly','multiple']),inputs:keys.filter(k=>!/^on[A-Z]/.test(k)&&k!=='children'),events:[...new Set([...keys.filter(k=>/^on[A-Z]/.test(k)),'onChange','onBlur'])].map(prop=>({prop,output:'plx'+prop.slice(2)}))};}
+ const blocks=propBlocks(PKG,src),names=Object.keys(blocks),schema={};if(!names.length)throw Error('Angular needs generated React declarations');
+ for(const n of names){const block=blocks[n],keys=[...block.matchAll(/^  (\w+)\?: /gm)].map(m=>m[1]);if(block.includes('[prop: string]'))keys.push(...['id','value','checked','disabled','required','readOnly','placeholder','name','multiple','onClick','onFocus','onKeyDown'].filter(k=>!keys.includes(k)));schema[n]={booleans:[...block.matchAll(/^  (\w+)\?: boolean;/gm)].map(m=>m[1]).concat(['disabled','checked','required','readOnly','multiple']),inputs:keys.filter(k=>!/^on[A-Z]/.test(k)&&k!=='children'),events:[...new Set([...keys.filter(k=>/^on[A-Z]/.test(k)),'onChange','onBlur'])].map(prop=>({prop,output:'plx'+prop.slice(2)}))};}
  write(path.join(out,'index.mjs'),'import "@angular/compiler";\nimport * as ng from "@angular/core";\nimport * as forms from "@angular/forms";\nconst SCHEMA='+JSON.stringify(schema)+';\nconst api=('+runtime.toString()+')(ng,forms);\nexport const configurePlenix=api.configurePlenix;\n'+names.map(n=>'export const '+n+'=api.components.'+n+';').join('\n')+'\n');copy(types,path.join(out,'react-props.d.ts'));
  write(path.join(out,'index.d.ts'),'import type * as ng from "@angular/core";\nimport type * as Props from "./react-props.js";\nexport declare function configurePlenix(runtime:{React:any;ReactDOM:any;Plenix:Record<string,any>}):void;\n'+names.map(n=>{const s=schema[n],ins=['props',...s.inputs],outs=s.events.map(e=>e.output),selector='plx-'+n.replace(/([a-z0-9])([A-Z])/g,'$1-$2').toLowerCase();return 'export declare class '+n+' {\n props:Props.'+n+'Props;\n'+s.inputs.map(k=>' '+k+':Props.'+n+'Props['+JSON.stringify(k)+'];').join('\n')+'\n'+outs.map(k=>' '+k+':ng.EventEmitter<any>;').join('\n')+'\n writeValue(v:unknown):void; registerOnChange(fn:(v:any)=>void):void; registerOnTouched(fn:()=>void):void; setDisabledState(v:boolean):void;\n static ɵfac:ng.ɵɵFactoryDeclaration<'+n+',never>;\n static ɵcmp:ng.ɵɵComponentDeclaration<'+n+','+JSON.stringify(selector)+',never,{'+ins.map(k=>JSON.stringify(k)+':'+JSON.stringify(k)).join(';')+'},{'+outs.map(k=>JSON.stringify(k)+':'+JSON.stringify(k)).join(';')+'},never,["*"],true>;\n}';}).join('\n'));
  json(path.join(out,'components.json'),schema);json(path.join(out,'package.json'),{name:SCOPE+'/angular',version:VERSION,type:'module',main:'./index.mjs',types:'./index.d.ts',exports:{'.':{types:'./index.d.ts',import:'./index.mjs'},'./components.json':'./components.json'},files:['*.mjs','*.d.ts','*.json','README.md','example'],sideEffects:true,publishConfig:{registry:'https://npm.pkg.github.com',access:'restricted'},license:'UNLICENSED',homepage:SITE,repository:{type:'git',url:'git+'+REPO,directory:'packages/angular'},peerDependencies:{'@angular/core':'>=17 <22','@angular/common':'>=17 <22','@angular/forms':'>=17 <22','@angular/compiler':'>=17 <22','@types/react':'>=18 <20'}});

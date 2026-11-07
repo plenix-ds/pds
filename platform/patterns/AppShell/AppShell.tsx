@@ -237,7 +237,9 @@ export function AppShell({ header, sideNav, panel, footer, page = 'workspace', m
    10; the panes (NavPane, SecondaryPane, SidePanel) still import it from here */
 export { PanelSplitter };
 
-export function SideNavPortal({ children }: { children?: React.ReactNode }) {
+/** @public */
+export type SideNavPortalProps = { children?: React.ReactNode };
+export function SideNavPortal({ children }: SideNavPortalProps) {
   const layout = useAppLayout();
   React.useEffect(() => (layout && layout.registerPortal ? layout.registerPortal() : undefined), []);
   if (!layout || !layout.registerPortal) return children as React.ReactElement;   // outside an AppShell: render in place
@@ -256,12 +258,16 @@ function useWithin(above: Breakpoint | undefined, under: Breakpoint | undefined)
   return (!above || !underAbove) && (!under || underBelow);
 }
 export type VisibilityProps = { above?: Breakpoint; below?: Breakpoint; /** on paper only (Show) or never on paper (Hide) */ print?: boolean; fallback?: React.ReactNode; children?: React.ReactNode };
-export function Show({ above, below: under, print = false, fallback = null, children }: VisibilityProps) {
+/** @public */
+export type ShowProps = VisibilityProps;
+/** @public */
+export type HideProps = VisibilityProps;
+export function Show({ above, below: under, print = false, fallback = null, children }: ShowProps) {
   const within = useWithin(above, under);
   if (print) return <div className="plx-visibility plx-visibility--print-only">{children}</div>;
   return (within ? children : fallback) as React.ReactElement;
 }
-export function Hide({ above, below: under, print = false, fallback = null, children }: VisibilityProps) {
+export function Hide({ above, below: under, print = false, fallback = null, children }: HideProps) {
   const within = useWithin(above, under);
   if (print) return <div className="plx-visibility plx-visibility--no-print">{children}</div>;
   return ((above || under) && within ? fallback : children) as React.ReactElement;

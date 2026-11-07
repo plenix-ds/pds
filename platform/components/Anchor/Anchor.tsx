@@ -35,7 +35,8 @@ const flatten = (items: AnchorItem[], out: AnchorItem[] = []): AnchorItem[] => {
 // how long a press keeps its section current while the smooth scroll passes the others
 const HOLD = 900;
 
-type AnchorProps = Omit<React.HTMLAttributes<HTMLElement>, 'onChange'> & {
+/** @public */
+export type AnchorProps = Omit<React.HTMLAttributes<HTMLElement>, 'onChange'> & {
   /** the sections: { id, label, children? }; each id is the id of an element on the page */
   items?: AnchorItem[];
   /** the navigation's accessible name; default strings.label */

@@ -1,0 +1,4 @@
+### Fixed
+
+- TypeScript: 20 props type names that `@plenix-ds/react` published until 0.90.x are exported again. 0.91.0 dropped them without a *Breaking* note (D-0081 moved TypeScript parts to tsc's own declarations, and these parts didn't export their props type). The 20 are `AnchorProps`, `ChartPatternsProps`, `ChatAttachmentProps`, `ChatVoiceProps`, `DataGridEngineProps`, `EntityTitleProps`, `HideProps`, `MenuBarMenuProps`, `MenuBarProps`, `MenuDividerProps`, `MetricProps`, `OverflowListProps`, `PromptInputProps`, `PromptSuggestionsProps`, `RichTextProps`, `SearchResultGroupProps`, `SearchResultProps`, `ShowProps`, `SideNavPortalProps` and `TableSettingsProps`.
+- The `@plenix-ds/angular` adapters are generated again. They read each part's props from tsc's declarations as well as from the header-typed ones; the release build had stopped with "Angular needs generated React declarations" once the last parts became TypeScript.

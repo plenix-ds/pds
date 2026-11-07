@@ -79,7 +79,9 @@ const SHAPES = {
   reverse: [['path', { d: 'M-2,6 L2,10 M0,0 L8,8 M6,-2 L10,2' }]],
 };
 
-export function ChartPatterns({ id }: { id?: string }) {
+/** @public */
+export type ChartPatternsProps = { id?: string };
+export function ChartPatterns({ id }: ChartPatternsProps) {
   if (!id) return null;
   return h('defs', { className: 'plx-chart-patterns' }, CHART_PATTERNS.map((name) => h('pattern', { key: name, id: id + '-' + name, width: TILE, height: TILE, patternUnits: 'userSpaceOnUse' },
     (SHAPES as Record<string, any[]>)[name].map(([tag, geo]: any, k: number) => h(tag, Object.assign({ key: k, className: tag === 'circle' ? 'plx-chart-pattern__dot' : 'plx-chart-pattern__stroke' }, geo))))));

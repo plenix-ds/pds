@@ -30,7 +30,8 @@ import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import SparkleIcon from 'plenix-platform/icons/plenix/sparkle';
 import StopIcon from 'plenix-platform/icons/plenix/stop';
 type PromptModel = { id: string; label: string; disabled?: boolean };
-type PromptInputProps = {
+/** @public */
+export type PromptInputProps = {
   /** the text (controlled) */
   value?: string;
   defaultValue?: string;

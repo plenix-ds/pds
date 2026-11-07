@@ -19,7 +19,8 @@ import { useStrings } from '../../providers/LocaleProvider.tsx';
 import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import SparkleIcon from 'plenix-platform/icons/plenix/sparkle';
 type PromptOption = { id: string; label: string; description?: React.ReactNode; disabled?: boolean };
-type PromptSuggestionsProps = {
+/** @public */
+export type PromptSuggestionsProps = {
   /** the suggestions: { id, label, description?, disabled? } */
   options?: PromptOption[];
   /** "chips" (default) | "cards" */
