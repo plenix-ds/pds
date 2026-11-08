@@ -145,6 +145,17 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 - A value wraps and is never cut.
 - Details and the state matrix: `docs/pds1/slices/946/design.md`.
 
+### Named variations (register)
+
+A named variation sets a whole agreed look with one prop, so an app never gets half of it. Each one is an existing part, has its own decision, and adds no colours or values of its own.
+
+| Variation | Entry point | Look | Decision | Details |
+|---|---|---|---|---|
+| Read-only tiles | `<PropertyGroup variant="tiles">` (name confirmed at G3) | the D-0106 preset above: porcelain tiles 2 per row, gold group heading, navy label, semibold value, statuses as Badges with icons | D-0132 (owner, #1043) | `docs/pds1/slices/1043/design.md` |
+| Grouped Timeline | `Timeline` grouped by year | §8 "Timeline, grouped" | D-0115, D-0117 | `docs/pds1/slices/987/design.md` |
+
+- **Read-only tiles** is the look for every read-only card (case summaries, record details). Use `columns` only in dense panes and inspectors. The 1.x default stays `columns` (D-0107).
+
 ## 4. Shape (D-0005)
 
 | Role | Radius | Token |
