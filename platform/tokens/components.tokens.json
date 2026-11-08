@@ -7639,6 +7639,14 @@
       "$value": "{plx-sys.content-default}",
       "$type": "color"
     },
+    "section-heading-icon-size": {
+      "$value": "{plx-sys.control-icon-standard}",
+      "$type": "dimension"
+    },
+    "section-heading-icon-gap": {
+      "$value": "{plx-sys.space-inline-sm}",
+      "$type": "dimension"
+    },
     "section-heading-gap": {
       "$value": "{plx-sys.space-inline-sm}",
       "$type": "dimension"

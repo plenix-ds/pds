@@ -12,3 +12,6 @@
 /* the toggle shows the focus ring, as every control (batch 213) */
 .plx-section-heading__toggle:focus-visible{outline-color:var(--plx-comp-section-heading-toggle-focus-outline-color);outline-offset:var(--plx-comp-section-heading-toggle-focus-outline-offset);outline-style:solid;outline-width:var(--plx-comp-section-heading-toggle-focus-outline-width);}
 /* its motion (moved from motion.css, Styling Standard 3.6: each component owns its own; reduced motion sets the durations to 0s) */
+.plx-section-heading--icon{column-gap:var(--plx-comp-section-heading-icon-gap);}
+.plx-section-heading__toggle--icon{column-gap:var(--plx-comp-section-heading-icon-gap);}
+.plx-section-heading__icon{--plx-comp-icon-size:var(--plx-comp-section-heading-icon-size);align-items:center;display:inline-flex;flex-shrink:0;}

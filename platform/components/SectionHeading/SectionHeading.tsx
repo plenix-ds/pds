@@ -4,6 +4,7 @@
      <SectionHeading collapsible expanded={open} onToggle={() => setOpen(!open)} controls="recent-body">Recent</SectionHeading>
      <SectionHeading level={2}>Appearance</SectionHeading>
    Props:
+     icon: an icon before the label (an icon name or element, as Panel's icon), decorative and hidden from assistive technology
      level: the heading level; default 3; null for a plain label. Every level draws with the card heading's type (D-0110)
      collapsible: renders a button that shows or hides the section; default false
      expanded: whether the section is shown (collapsible only); default true
@@ -22,6 +23,8 @@
 */
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
+import { asIcon as iconElement } from '../Icon/Icon.tsx';
+import type { IconValue } from '../Icon/Icon.tsx';
 
 export type SectionHeadingProps = React.HTMLAttributes<HTMLElement> & {
   /** the heading level (h1 to h6); 0 or none: a div */
@@ -32,13 +35,17 @@ export type SectionHeadingProps = React.HTMLAttributes<HTMLElement> & {
   /** the id of the region the toggle shows and hides */
   controls?: string;
   actions?: React.ReactNode;
+  /** an icon before the label, as the card heading's (Panel.icon): decorative, hidden from assistive technology (ADR 0035) */
+  icon?: IconValue | React.ReactNode;
 };
-export function SectionHeading({ level = 3, collapsible = false, expanded = true, onToggle, controls, actions, className, children, ...rest }: SectionHeadingProps) {
+export function SectionHeading({ level = 3, collapsible = false, expanded = true, onToggle, controls, actions, icon, className, children, ...rest }: SectionHeadingProps) {
   const Tag = (level ? 'h' + level : 'div') as React.ElementType;
+  const mark = icon ? <span className="plx-section-heading__icon" aria-hidden="true">{iconElement(icon)}</span> : null;
   if (collapsible) {
     return (
-      <Tag className={cx('plx-section-heading', 'plx-section-heading--collapsible', className)} {...rest}>
-        <button type="button" className="plx-section-heading__toggle" aria-expanded={expanded} aria-controls={controls} onClick={onToggle}>
+      <Tag className={cx('plx-section-heading', icon && 'plx-section-heading--icon', 'plx-section-heading--collapsible', className)} {...rest}>
+        <button type="button" className={cx('plx-section-heading__toggle', icon && 'plx-section-heading__toggle--icon')} aria-expanded={expanded} aria-controls={controls} onClick={onToggle}>
+          {mark}
           <span className="plx-section-heading__label">{children}</span>
           <span className="plx-section-heading__chevron" aria-hidden="true" />
         </button>
@@ -47,7 +54,8 @@ export function SectionHeading({ level = 3, collapsible = false, expanded = true
     );
   }
   return (
-    <Tag className={cx('plx-section-heading', className)} {...rest}>
+    <Tag className={cx('plx-section-heading', icon && 'plx-section-heading--icon', className)} {...rest}>
+      {mark}
       <span className="plx-section-heading__label">{children}</span>
       {actions ? <span className="plx-section-heading__actions">{actions}</span> : null}
     </Tag>
