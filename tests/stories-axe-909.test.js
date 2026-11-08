@@ -24,26 +24,32 @@ const server = http.createServer((req, res) => {
 });
 (async () => {
   await new Promise((r) => server.listen(0, r)); const base = 'http://127.0.0.1:' + server.address().port;
-  const browser = await launch(), page = await browser.newPage(); await page.setViewport({ width: 1000, height: 800 });
+  const browser = await launch();
   const axeSrc = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
-  const found = {}, broken = [];
-  for (const s of stories) {
-    try {
-      await page.goto(base + '/iframe.html?id=' + s.id + '&viewMode=story', { waitUntil: 'load', timeout: 30000 });
-      await page.waitForSelector('#storybook-root > *, #storybook-docs', { timeout: 15000 });
-      if (!(await page.evaluate(() => !!window.axe))) await page.evaluate(axeSrc);
-      for (const mode of ['light', 'dark']) {
-        await page.evaluate((m) => { document.documentElement.setAttribute('data-plx-mode', m); }, mode);
-        const out = await page.evaluate(async (tags) => {
-          const r = await window.axe.run(document.querySelector('#storybook-root'), { runOnly: { type: 'tag', values: tags }, resultTypes: ['violations'] });
-          const o = {}; r.violations.forEach((v) => { o[v.id] = { n: v.nodes.length, help: v.help, target: String(v.nodes[0] && v.nodes[0].target) }; }); return o;
-        }, TAGS);
-        if (Object.keys(out).length) found[s.id + ' · ' + mode] = out;
-      }
-    } catch (e) { broken.push(s.id + ': ' + e.message.split('\n')[0]); }
-  }
+  const found = {}, broken = [], queue = stories.slice();
+  // several pages at once: a thousand stories in two modes would otherwise outlast the test's time limit (TEST_TIMEOUT_MS)
+  const worker = async () => {
+    const page = await browser.newPage(); await page.setViewport({ width: 1000, height: 800 });
+    for (let s = queue.shift(); s; s = queue.shift()) {
+      try {
+        await page.goto(base + '/iframe.html?id=' + s.id + '&viewMode=story', { waitUntil: 'load', timeout: 30000 });
+        await page.waitForSelector('#storybook-root > *, #storybook-docs', { timeout: 15000 });
+        if (!(await page.evaluate(() => !!window.axe))) await page.evaluate(axeSrc);
+        for (const mode of ['light', 'dark']) {
+          await page.evaluate((m) => { document.documentElement.setAttribute('data-plx-mode', m); }, mode);
+          const out = await page.evaluate(async (tags) => {
+            const r = await window.axe.run(document.querySelector('#storybook-root'), { runOnly: { type: 'tag', values: tags }, resultTypes: ['violations'] });
+            const o = {}; r.violations.forEach((v) => { o[v.id] = { n: v.nodes.length, help: v.help, target: String(v.nodes[0] && v.nodes[0].target) }; }); return o;
+          }, TAGS);
+          if (Object.keys(out).length) found[s.id + ' · ' + mode] = out;
+        }
+      } catch (e) { broken.push(s.id + ': ' + e.message.split('\n')[0]); }
+    }
+  };
+  await Promise.all(Array.from({ length: +process.env.STORIES_WORKERS || 4 }, worker));
   await browser.close(); server.close();
-  const counts = Object.fromEntries(Object.entries(found).map(([k, v]) => [k, Object.fromEntries(Object.entries(v).map(([r, x]) => [r, x.n]))]));
+  const sorted = Object.fromEntries(Object.keys(found).sort().map((k) => [k, found[k]]));
+  const counts = Object.fromEntries(Object.entries(sorted).map(([k, v]) => [k, Object.fromEntries(Object.entries(v).map(([r, x]) => [r, x.n]))]));
   if (process.argv.includes('--update') || process.argv.includes('--init')) {
     if (only) { console.error('--update records the whole set; run it without STORIES_ONLY'); process.exit(1); }
     if (!process.argv.includes('--init')) changed.shrinkOnly(BASELINE, counts);
@@ -53,7 +59,7 @@ const server = http.createServer((req, res) => {
   }
   const base0 = fs.existsSync(BASELINE) ? JSON.parse(fs.readFileSync(BASELINE, 'utf8')) : {};
   const worse = [];
-  Object.entries(found).forEach(([k, v]) => Object.entries(v).forEach(([rule, x]) => { const was = ((base0[k] || {})[rule]) || 0; if (x.n > was) worse.push(k + ': ' + rule + ' ' + was + ' -> ' + x.n + ' · ' + x.help + ' · e.g. ' + x.target); }));
+  Object.entries(sorted).forEach(([k, v]) => Object.entries(v).forEach(([rule, x]) => { const was = ((base0[k] || {})[rule]) || 0; if (x.n > was) worse.push(k + ': ' + rule + ' ' + was + ' -> ' + x.n + ' · ' + x.help + ' · e.g. ' + x.target); }));
   broken.forEach((b) => console.log('  BROKEN ' + b)); worse.forEach((w) => console.log('  NEW ' + w));
   if (broken.length || worse.length) { console.log('STORIES_AXE_FAIL ' + worse.length + ' new findings, ' + broken.length + ' stories that did not open, of ' + stories.length + ' stories'); process.exit(1); }
   console.log('STORIES_AXE_909_OK ' + stories.length + ' stories, light and dark, ' + Object.keys(counts).length + ' pairs with known findings');
