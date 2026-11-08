@@ -1,0 +1,9 @@
+id: D-0116
+date: 2026-11-08
+area: api
+decided_by: agent (pds1-ds-architect) at G3, owner may switch
+decision: 'Timeline variant="grouped" (ADR 0036): year groups from items[].dateTime in the given order, events in category-tinted containers, a calendar date icon, upcoming events dashed with Pending, an optional legend (legend, hiddenCategories, onHiddenCategoriesChange); items carry category { id, label, color } and upcoming. category-1..8 are sys -> sys aliases of existing category hues (1 magenta, 2 gray, 3 teal, 4 purple, 5 orange, 6 navy, 7 green, 8 yellow) with -on, -soft, -soft-border, -on-soft, and data-plx-category="1".."8"; no new refs. New sys role content-decorative for the watermark; new strings timeline.pending and timeline.legend (Arabic by owner approval, D-0012).'
+why: 'The 21-hue category palette already covers CTM''s eight colours with contrast-checked tints; slots give apps one curated set without new palette colours.'
+options: ['slots aliasing existing hues, variant="grouped" (chosen)', 'apps use hue names directly, no slots', 'new refs for plum, copper, slate, gold']
+status: active
+check: 'G3 API diff on the build PR; check-system token-tiers (check 6), token-names (check 7), contrast-matrix (check 8: the eight slots, light and dark), token-definitions (no new ref); G6 locale check; planned:timeline-grouped-987 behavior tests'
