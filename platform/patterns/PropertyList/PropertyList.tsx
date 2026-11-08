@@ -77,6 +77,7 @@ PropertyList.Item = function PropertyListItem({ label, htmlFor, description, dat
   const textRef = React.useRef<any>(null);
   const cut = useTruncated(textRef);
   const tile = React.useContext(TilesContext);
+  devWarn('PropertyList.Item', { status: status && !status.icon ? 'without an icon' : undefined, children: status && children ? 'beside a status' : undefined }, { status: ['with an icon'], children: ['alone'] });   // a status needs its icon and wins over children
   return (
     <div className={cx('plx-property-list__item', tile && 'plx-property-list__item--tile', span === 'full' && 'plx-property-list__item--full', className)}>
       <dt className="plx-property-list__label"><Tooltip content={label} disabled={!cut} describe={false} className="plx-property-list__label-tip"><span ref={textRef} className="plx-property-list__label-text">{htmlFor ? <label htmlFor={htmlFor}>{label}</label> : label}</span></Tooltip>

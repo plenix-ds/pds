@@ -17,15 +17,15 @@ require('./limit.js');
       page.on('console', (m) => { if (/error|warn/.test(m.type()) && !/Failed to load resource|net::|was fetched at run time/.test(m.text())) (/PropertyList/.test(m.text()) ? warnings : problems).push(m.text()); });
       await page.goto('http://localhost:' + PORT + '/Plenix/tests/fixtures/platform-host.html?react=dev', { waitUntil: 'domcontentloaded' });
       await page.waitForFunction(() => window.Plenix && window.ReactDOM, { timeout: 60000 });
-      const mount = (expr, width, mode) => page.evaluate(async (dir, expr, width, mode) => {
-        document.documentElement.setAttribute('dir', dir); document.documentElement.setAttribute('data-plx-mode', mode || 'light');
+      const mount = (expr, width, mode, density) => page.evaluate(async (dir, expr, width, mode, density) => {
+        document.documentElement.setAttribute('dir', dir); document.documentElement.setAttribute('data-plx-mode', mode || 'light'); document.documentElement.setAttribute('data-plx-density', density || 'standard');
         const host = document.createElement('div'); host.id = 'c'; host.style.inlineSize = width + 'px'; document.querySelector('main').replaceChildren(host);
         const h = React.createElement, P = window.Plenix, I = P.PropertyList.Item; ReactDOM.createRoot(host).render(eval(expr)); await new Promise((r) => setTimeout(r, 600));
         const items = [...host.querySelectorAll('.plx-property-list__item')].map((e) => { const b = e.getBoundingClientRect(), s = getComputedStyle(e), v = getComputedStyle(e.querySelector('.plx-property-list__value')), l = getComputedStyle(e.querySelector('.plx-property-list__label'));
-          return { l: b.left, t: b.top, w: b.width, h: b.height, r: b.right, bw: parseFloat(s.borderTopWidth), vbw: parseFloat(v.borderTopWidth), bg: s.backgroundColor, vc: v.color, lc: l.color, full: e.classList.contains('plx-property-list__item--full'), badge: !!e.querySelector('.plx-property-list__status .plx-badge svg, .plx-property-list__status .plx-badge .plx-icon') }; });
+          return { l: b.left, t: b.top, w: b.width, h: b.height, r: b.right, bw: parseFloat(s.borderTopWidth), pt: parseFloat(s.paddingTop), pb: parseFloat(s.paddingBottom), pis: parseFloat(s.paddingInlineStart), pie: parseFloat(s.paddingInlineEnd), vbw: parseFloat(v.borderTopWidth), bg: s.backgroundColor, vc: v.color, lc: l.color, full: e.classList.contains('plx-property-list__item--full'), badge: !!e.querySelector('.plx-property-list__status .plx-badge svg, .plx-property-list__status .plx-badge .plx-icon') }; });
         const list = host.querySelector('.plx-property-list'), lb = list && list.getBoundingClientRect(), gs = [...host.querySelectorAll('.plx-property-group')].map((g) => g.getBoundingClientRect()), hd = host.querySelector('.plx-property-group__heading');
         return { cls: list ? list.className : '', items, lw: lb && lb.width, ll: lb && lb.left, lr: lb && lb.right, gaps: gs.length > 1 ? gs[1].top - gs[0].bottom : null, hc: hd && getComputedStyle(hd).color, ink: getComputedStyle(document.documentElement).getPropertyValue('--plx-sys-content-default') };
-      }, dir, expr, width, mode);
+      }, dir, expr, width, mode, density);
       const four = `h(P.PropertyGroup, { heading: 'Case', variant: 'tiles' }, h(P.PropertyList, null, h(I, { label: 'Number', data: true }, '2026-01'), h(I, { label: 'Owner' }, 'Maya Chen'), h(I, { label: 'Opened' }, 'May 9'), h(I, { label: 'Status', status: { label: 'Open', tone: 'active', icon: 'check' } })))`;
       let r = await mount(four, 720);
       assert.ok(/plx-property-list--stacked/.test(r.cls) && /plx-property-list--tiles/.test(r.cls), T + 'a tiles group gives its list the stacked and tiles classes: ' + r.cls);
@@ -34,6 +34,11 @@ require('./limit.js');
       assert.ok(dir === 'ltr' ? b.l > a.l : b.l < a.l, T + 'tiles fill from the inline start');
       assert.ok(a.bw >= 1 && a.vbw === 0, T + 'the whole field is on the tile, not the value alone (' + a.bw + '/' + a.vbw + ')');
       assert.ok(r.items[3].badge, T + 'status draws a Badge with its icon');
+      assert.deepEqual([a.pt, a.pb, a.pis, a.pie], [8, 8, 12, 12], T + 'standard tile padding is 8px block and 12px inline');
+      // compact: 4px block padding and an 8px gap
+      r = await mount(four, 720, 'light', 'compact'); assert.deepEqual([r.items[0].pt, r.items[0].pb, r.items[0].pis], [4, 4, 12], T + 'compact tile padding is 4px block and 12px inline');
+      assert.ok(Math.abs(Math.abs(r.items[1].l - r.items[0].l) - (r.items[0].w + 8)) < 1.5 && Math.abs(r.items[2].t - (r.items[0].t + r.items[0].h) - 8) < 1.5, T + 'compact gap between tiles is 8px');
+      r = await mount(`h(P.PropertyList, { layout: 'stacked' }, h(I, { label: 'A' }, 'x'))`, 720); assert.equal(r.items[0].bw, 0, T + 'plain stacked keeps 1.2.0 (value boxed)');
       // odd tile
       r = await mount(four.replace(", h(I, { label: 'Status', status: { label: 'Open', tone: 'active', icon: 'check' } })", ''), 720);
       assert.ok(Math.abs(r.items[2].w - r.items[0].w) < 1 && Math.abs((dir === 'ltr' ? r.items[2].l - r.ll : r.lr - r.items[2].r)) < 1, T + 'an odd last tile sits alone at the inline start, at half width');
