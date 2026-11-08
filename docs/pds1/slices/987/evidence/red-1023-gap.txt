@@ -1,0 +1,13 @@
+[{"dir":"ltr","mode":"light","sw":["12x12","12x12"],"gap":24,"label":0},{"dir":"ltr","mode":"dark","sw":["12x12","12x12"],"gap":24,"label":0},{"dir":"rtl","mode":"light","sw":["12x12","12x12"],"gap":24,"label":0}]
+AssertionError [ERR_ASSERTION]: ltr light: swatch to label is 4px, got 0
+
+0 !== 4
+
+    at /home/cc/pds1/work/component-engineer-2/tests/timeline-legend-1023.test.js:35:14 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 0,
+  expected: 4,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

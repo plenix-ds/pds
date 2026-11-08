@@ -23,12 +23,16 @@ require('./limit.js');
         const off = document.querySelector('.plx-timeline__legend-item:last-child'); off.click(); await new Promise((r) => setTimeout(r, 300));
         const sw = [...document.querySelectorAll('.plx-timeline__swatch')].map((e) => { const r = e.getBoundingClientRect(); return Math.round(r.width) + 'x' + Math.round(r.height); });
         const lg = document.querySelector('.plx-timeline__legend').getBoundingClientRect(), hd = document.querySelector('.plx-timeline__year').getBoundingClientRect();
-        return { sw, gap: Math.round(hd.top - lg.bottom) };
+        // the swatch's inline-end edge to the label text's start (G2: the Button's own icon gap, 4px)
+        const sEl = document.querySelector('.plx-timeline__swatch'), tn = [...sEl.parentNode.childNodes].find((n) => n.nodeType === 3), rg = document.createRange(); rg.selectNodeContents(tn);
+        const sr = sEl.getBoundingClientRect(), tr = rg.getBoundingClientRect(), label = dir === 'rtl' ? Math.round(sr.left - tr.right) : Math.round(tr.left - sr.right);
+        return { sw, gap: Math.round(hd.top - lg.bottom), label };
       }, dir, mode)));
     }
     console.log(JSON.stringify(rows));
     for (const r of rows) {
       assert.deepEqual(r.sw, ['12x12', '12x12'], r.dir + ' ' + r.mode + ': swatches (on and off) are 12x12: ' + r.sw);
+      assert.equal(r.label, 4, r.dir + ' ' + r.mode + ': swatch to label is 4px, got ' + r.label);
       assert.equal(r.gap, 24, r.dir + ' ' + r.mode + ': legend to first year is 24px, got ' + r.gap);
     }
     console.log('TIMELINE_LEGEND_1023_OK');

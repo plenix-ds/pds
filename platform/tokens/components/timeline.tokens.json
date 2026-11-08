@@ -87,6 +87,7 @@
     "timeline-grouped-legend-gap": { "$value": "{plx-sys.space-inline-sm}", "$type": "dimension", "$description": "Timeline, grouped (ADR 0036): the legend: the gap between its buttons." },
     "timeline-grouped-legend-offset": { "$value": "{plx-sys.space-stack-xl}", "$type": "dimension", "$description": "Timeline, grouped (ADR 0036): the total space between the legend and the first year heading (the group gap is taken off it, as the legend is in the gapped column)." },
     "timeline-grouped-legend-swatch-size": { "$value": "{plx-sys.icon-size-xs}", "$type": "dimension", "$description": "Timeline, grouped (ADR 0036): a legend swatch: width and height." },
+    "timeline-grouped-legend-swatch-gap": { "$value": "{plx-sys.space-inline-xs}", "$type": "dimension", "$description": "Timeline, grouped (ADR 0036): a legend swatch: the space before its label (the icon gap of a Button)." },
     "timeline-grouped-legend-swatch-radius": { "$value": "{plx-sys.shape-xs}", "$type": "dimension", "$description": "Timeline, grouped (ADR 0036): a legend swatch: corners." },
     "timeline-grouped-legend-swatch-border-width": { "$value": "{plx-sys.border-width-thin}", "$type": "dimension", "$description": "Timeline, grouped (ADR 0036): a legend swatch (hollow when the category is hidden): its border." },
     "timeline-grouped-legend-text": { "$value": "{plx-sys.content-default}", "$type": "color", "$description": "Timeline, grouped (ADR 0036): a legend button that is on." },
