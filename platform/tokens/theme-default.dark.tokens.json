@@ -292,6 +292,17 @@
         }
       }
     },
+    "content-decorative": {
+      "$value": "{plx-ref.color-gray-700}",
+      "$type": "color",
+      "$description": "The ink of a decorative mark that carries no meaning (the watermark year of a grouped Timeline). Never used for text people must read (ADR 0036).",
+      "$extensions": {
+        "plenix": {
+          "group": "text",
+          "purpose": "A decorative mark, such as a watermark year: never text people must read."
+        }
+      }
+    },
     "content-subtle": {
       "$value": "{plx-ref.color-gray-500}",
       "$type": "color",
@@ -3626,6 +3637,468 @@
         "plenix": {
           "group": "dataviz",
           "purpose": "A category pill, navy: its text."
+        }
+      }
+    },
+    "category-1": {
+      "$value": "{plx-sys.category-magenta}",
+      "$type": "color",
+      "$description": "Category slot 1, the color: an alias of the magenta category hue (ADR 0036, D-0116). [data-plx-category=\"1\"] applies it.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 1 (magenta): the color."
+        }
+      }
+    },
+    "category-1-on": {
+      "$value": "{plx-sys.category-magenta-on}",
+      "$type": "color",
+      "$description": "Category slot 1, text on the color: an alias of the magenta category hue (ADR 0036, D-0116). [data-plx-category=\"1\"] applies it.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 1 (magenta): text on the color."
+        }
+      }
+    },
+    "category-1-soft": {
+      "$value": "{plx-sys.surface-default}",
+      "$type": "color",
+      "$description": "Category slot 1, the soft background: in dark mode the surface itself, because the container is tinted by mixing the text color into it (ADR 0036, D-0117). [data-plx-category=\"1\"] applies it.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 1 (magenta): the soft background."
+        }
+      }
+    },
+    "category-1-soft-border": {
+      "$value": "{plx-sys.surface-default}",
+      "$type": "color",
+      "$description": "Category slot 1, the soft border: in dark mode the surface itself, mixed with the text color for the container border (ADR 0036, D-0117).",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 1 (magenta): the 1px border of the soft background."
+        }
+      }
+    },
+    "category-1-on-soft": {
+      "$value": "{plx-sys.category-magenta-soft-border}",
+      "$type": "color",
+      "$description": "Category slot 1, the text on the soft background: light in dark mode (D-0117, ADR 0036), at least 4.5:1 on the tinted container.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 1 (magenta): the text on the soft background."
+        }
+      }
+    },
+    "category-2": {
+      "$value": "{plx-sys.category-gray}",
+      "$type": "color",
+      "$description": "Category slot 2, the color: an alias of the gray category hue (ADR 0036, D-0116). [data-plx-category=\"2\"] applies it.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 2 (gray): the color."
+        }
+      }
+    },
+    "category-2-on": {
+      "$value": "{plx-sys.category-gray-on}",
+      "$type": "color",
+      "$description": "Category slot 2, text on the color: an alias of the gray category hue (ADR 0036, D-0116). [data-plx-category=\"2\"] applies it.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 2 (gray): text on the color."
+        }
+      }
+    },
+    "category-2-soft": {
+      "$value": "{plx-sys.surface-default}",
+      "$type": "color",
+      "$description": "Category slot 2, the soft background: in dark mode the surface itself, because the container is tinted by mixing the text color into it (ADR 0036, D-0117). [data-plx-category=\"2\"] applies it.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 2 (gray): the soft background."
+        }
+      }
+    },
+    "category-2-soft-border": {
+      "$value": "{plx-sys.surface-default}",
+      "$type": "color",
+      "$description": "Category slot 2, the soft border: in dark mode the surface itself, mixed with the text color for the container border (ADR 0036, D-0117).",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 2 (gray): the 1px border of the soft background."
+        }
+      }
+    },
+    "category-2-on-soft": {
+      "$value": "{plx-ref.color-blue-250}",
+      "$type": "color",
+      "$description": "Category slot 2, the text on the soft background: light in dark mode (D-0117, ADR 0036), at least 4.5:1 on the tinted container.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 2 (gray): the text on the soft background."
+        }
+      }
+    },
+    "category-3": {
+      "$value": "{plx-sys.category-teal}",
+      "$type": "color",
+      "$description": "Category slot 3, the color: an alias of the teal category hue (ADR 0036, D-0116). [data-plx-category=\"3\"] applies it.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 3 (teal): the color."
+        }
+      }
+    },
+    "category-3-on": {
+      "$value": "{plx-sys.category-teal-on}",
+      "$type": "color",
+      "$description": "Category slot 3, text on the color: an alias of the teal category hue (ADR 0036, D-0116). [data-plx-category=\"3\"] applies it.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 3 (teal): text on the color."
+        }
+      }
+    },
+    "category-3-soft": {
+      "$value": "{plx-sys.surface-default}",
+      "$type": "color",
+      "$description": "Category slot 3, the soft background: in dark mode the surface itself, because the container is tinted by mixing the text color into it (ADR 0036, D-0117). [data-plx-category=\"3\"] applies it.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 3 (teal): the soft background."
+        }
+      }
+    },
+    "category-3-soft-border": {
+      "$value": "{plx-sys.surface-default}",
+      "$type": "color",
+      "$description": "Category slot 3, the soft border: in dark mode the surface itself, mixed with the text color for the container border (ADR 0036, D-0117).",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 3 (teal): the 1px border of the soft background."
+        }
+      }
+    },
+    "category-3-on-soft": {
+      "$value": "{plx-sys.category-teal-soft-border}",
+      "$type": "color",
+      "$description": "Category slot 3, the text on the soft background: light in dark mode (D-0117, ADR 0036), at least 4.5:1 on the tinted container.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 3 (teal): the text on the soft background."
+        }
+      }
+    },
+    "category-4": {
+      "$value": "{plx-sys.category-purple}",
+      "$type": "color",
+      "$description": "Category slot 4, the color: an alias of the purple category hue (ADR 0036, D-0116). [data-plx-category=\"4\"] applies it.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 4 (purple): the color."
+        }
+      }
+    },
+    "category-4-on": {
+      "$value": "{plx-sys.category-purple-on}",
+      "$type": "color",
+      "$description": "Category slot 4, text on the color: an alias of the purple category hue (ADR 0036, D-0116). [data-plx-category=\"4\"] applies it.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 4 (purple): text on the color."
+        }
+      }
+    },
+    "category-4-soft": {
+      "$value": "{plx-sys.surface-default}",
+      "$type": "color",
+      "$description": "Category slot 4, the soft background: in dark mode the surface itself, because the container is tinted by mixing the text color into it (ADR 0036, D-0117). [data-plx-category=\"4\"] applies it.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 4 (purple): the soft background."
+        }
+      }
+    },
+    "category-4-soft-border": {
+      "$value": "{plx-sys.surface-default}",
+      "$type": "color",
+      "$description": "Category slot 4, the soft border: in dark mode the surface itself, mixed with the text color for the container border (ADR 0036, D-0117).",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 4 (purple): the 1px border of the soft background."
+        }
+      }
+    },
+    "category-4-on-soft": {
+      "$value": "{plx-sys.category-purple-soft-border}",
+      "$type": "color",
+      "$description": "Category slot 4, the text on the soft background: light in dark mode (D-0117, ADR 0036), at least 4.5:1 on the tinted container.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 4 (purple): the text on the soft background."
+        }
+      }
+    },
+    "category-5": {
+      "$value": "{plx-sys.category-orange}",
+      "$type": "color",
+      "$description": "Category slot 5, the color: an alias of the orange category hue (ADR 0036, D-0116). [data-plx-category=\"5\"] applies it.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 5 (orange): the color."
+        }
+      }
+    },
+    "category-5-on": {
+      "$value": "{plx-sys.category-orange-on}",
+      "$type": "color",
+      "$description": "Category slot 5, text on the color: an alias of the orange category hue (ADR 0036, D-0116). [data-plx-category=\"5\"] applies it.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 5 (orange): text on the color."
+        }
+      }
+    },
+    "category-5-soft": {
+      "$value": "{plx-sys.surface-default}",
+      "$type": "color",
+      "$description": "Category slot 5, the soft background: in dark mode the surface itself, because the container is tinted by mixing the text color into it (ADR 0036, D-0117). [data-plx-category=\"5\"] applies it.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 5 (orange): the soft background."
+        }
+      }
+    },
+    "category-5-soft-border": {
+      "$value": "{plx-sys.surface-default}",
+      "$type": "color",
+      "$description": "Category slot 5, the soft border: in dark mode the surface itself, mixed with the text color for the container border (ADR 0036, D-0117).",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 5 (orange): the 1px border of the soft background."
+        }
+      }
+    },
+    "category-5-on-soft": {
+      "$value": "{plx-ref.color-orange-200}",
+      "$type": "color",
+      "$description": "Category slot 5, the text on the soft background: light in dark mode (D-0117, ADR 0036), at least 4.5:1 on the tinted container.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 5 (orange): the text on the soft background."
+        }
+      }
+    },
+    "category-6": {
+      "$value": "{plx-sys.category-navy}",
+      "$type": "color",
+      "$description": "Category slot 6, the color: an alias of the navy category hue (ADR 0036, D-0116). [data-plx-category=\"6\"] applies it.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 6 (navy): the color."
+        }
+      }
+    },
+    "category-6-on": {
+      "$value": "{plx-sys.category-navy-on}",
+      "$type": "color",
+      "$description": "Category slot 6, text on the color: an alias of the navy category hue (ADR 0036, D-0116). [data-plx-category=\"6\"] applies it.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 6 (navy): text on the color."
+        }
+      }
+    },
+    "category-6-soft": {
+      "$value": "{plx-sys.surface-default}",
+      "$type": "color",
+      "$description": "Category slot 6, the soft background: in dark mode the surface itself, because the container is tinted by mixing the text color into it (ADR 0036, D-0117). [data-plx-category=\"6\"] applies it.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 6 (navy): the soft background."
+        }
+      }
+    },
+    "category-6-soft-border": {
+      "$value": "{plx-sys.surface-default}",
+      "$type": "color",
+      "$description": "Category slot 6, the soft border: in dark mode the surface itself, mixed with the text color for the container border (ADR 0036, D-0117).",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 6 (navy): the 1px border of the soft background."
+        }
+      }
+    },
+    "category-6-on-soft": {
+      "$value": "{plx-ref.color-blue-275}",
+      "$type": "color",
+      "$description": "Category slot 6, the text on the soft background: light in dark mode (D-0117, ADR 0036), at least 4.5:1 on the tinted container.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 6 (navy): the text on the soft background."
+        }
+      }
+    },
+    "category-7": {
+      "$value": "{plx-sys.category-green}",
+      "$type": "color",
+      "$description": "Category slot 7, the color: an alias of the green category hue (ADR 0036, D-0116). [data-plx-category=\"7\"] applies it.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 7 (green): the color."
+        }
+      }
+    },
+    "category-7-on": {
+      "$value": "{plx-sys.category-green-on}",
+      "$type": "color",
+      "$description": "Category slot 7, text on the color: an alias of the green category hue (ADR 0036, D-0116). [data-plx-category=\"7\"] applies it.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 7 (green): text on the color."
+        }
+      }
+    },
+    "category-7-soft": {
+      "$value": "{plx-sys.surface-default}",
+      "$type": "color",
+      "$description": "Category slot 7, the soft background: in dark mode the surface itself, because the container is tinted by mixing the text color into it (ADR 0036, D-0117). [data-plx-category=\"7\"] applies it.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 7 (green): the soft background."
+        }
+      }
+    },
+    "category-7-soft-border": {
+      "$value": "{plx-sys.surface-default}",
+      "$type": "color",
+      "$description": "Category slot 7, the soft border: in dark mode the surface itself, mixed with the text color for the container border (ADR 0036, D-0117).",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 7 (green): the 1px border of the soft background."
+        }
+      }
+    },
+    "category-7-on-soft": {
+      "$value": "{plx-sys.category-green-soft-border}",
+      "$type": "color",
+      "$description": "Category slot 7, the text on the soft background: light in dark mode (D-0117, ADR 0036), at least 4.5:1 on the tinted container.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 7 (green): the text on the soft background."
+        }
+      }
+    },
+    "category-8": {
+      "$value": "{plx-sys.category-yellow}",
+      "$type": "color",
+      "$description": "Category slot 8, the color: an alias of the yellow category hue (ADR 0036, D-0116). [data-plx-category=\"8\"] applies it.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 8 (yellow): the color."
+        }
+      }
+    },
+    "category-8-on": {
+      "$value": "{plx-sys.category-yellow-on}",
+      "$type": "color",
+      "$description": "Category slot 8, text on the color: an alias of the yellow category hue (ADR 0036, D-0116). [data-plx-category=\"8\"] applies it.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 8 (yellow): text on the color."
+        }
+      }
+    },
+    "category-8-soft": {
+      "$value": "{plx-sys.surface-default}",
+      "$type": "color",
+      "$description": "Category slot 8, the soft background: in dark mode the surface itself, because the container is tinted by mixing the text color into it (ADR 0036, D-0117). [data-plx-category=\"8\"] applies it.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 8 (yellow): the soft background."
+        }
+      }
+    },
+    "category-8-soft-border": {
+      "$value": "{plx-sys.surface-default}",
+      "$type": "color",
+      "$description": "Category slot 8, the soft border: in dark mode the surface itself, mixed with the text color for the container border (ADR 0036, D-0117).",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 8 (yellow): the 1px border of the soft background."
+        }
+      }
+    },
+    "category-8-on-soft": {
+      "$value": "{plx-sys.category-yellow-soft-border}",
+      "$type": "color",
+      "$description": "Category slot 8, the text on the soft background: light in dark mode (D-0117, ADR 0036), at least 4.5:1 on the tinted container.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "Category slot 8 (yellow): the text on the soft background."
+        }
+      }
+    },
+    "category-tint-amount": {
+      "$value": "{plx-ref.mix-amount-xs}",
+      "$type": "number",
+      "$description": "How much of a category slot's text color tints a container: none in light (the soft background is the tint), a little in dark (ADR 0036).",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "How much of a category slot's text color tints a container: none in light (the soft background is the tint), a little in dark (ADR 0036)."
+        }
+      }
+    },
+    "category-tint-border-amount": {
+      "$value": "{plx-ref.mix-amount-lg}",
+      "$type": "number",
+      "$description": "How much of a category slot's text color goes in a container border: none in light (the soft border), more in dark (ADR 0036).",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "How much of a category slot's text color goes in a container border: none in light (the soft border), more in dark (ADR 0036)."
         }
       }
     },

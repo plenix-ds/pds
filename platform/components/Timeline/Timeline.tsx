@@ -22,6 +22,16 @@
      align: "start" (default; every event after the line) | "alternate" (vertical only: the events take turns on each side
        of a line down the middle; one side again at Narrow widths)
      label: the timeline's accessible name (required when no heading names it)
+     variant: "default" (the marker-and-line timeline) | "grouped" (ADR 0036, ADR 0036: events grouped by year, each in a container tinted by
+       its category, with a calendar date tile; vertical only, so orientation and align are ignored)
+     Grouped only:
+       items[].dateTime: required (ISO 8601); the year groups and the date tile come from it. An upcoming event may leave it out.
+       items[].category: { id, label, color }: the tag at the event's end and its tint; color is "1" to "8" or a category hue name
+       items[].upcoming: a dashed outline, a grey band and the word Pending instead of the day
+       legend: a row of toggle buttons that hide a category's events (default false)
+       hiddenCategories, onHiddenCategoriesChange: the hidden category ids, to control the legend (without them it keeps its own)
+       headingLevel: 2 to 6, the year headings (default 3)
+       strings: the words (pending, legend), for other languages
      className: more classes on the list
    Behavior:
      The timeline is an ordered list (<ol>): each event is announced with its place (1 of 5), its time and title.
@@ -38,6 +48,12 @@ import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { Icon } from '../Icon/Icon.tsx';
 import type { IconValue } from '../Icon/Icon.tsx';
+import { Button } from '../Button/Button.tsx';
+import { useStrings } from '../../providers/LocaleProvider.tsx';
+import type { Catalog } from '../../providers/LocaleProvider.tsx';
+import { development, devWarn } from '../../utils/devWarn.ts';
+import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden.tsx';
+import { formatDate, formatLocale, numeralLocale, parseDate } from '../../utils/format.ts';
 
 export type TimelineItem = {
   id?: string | number;
@@ -51,15 +67,116 @@ export type TimelineItem = {
   badge?: React.ReactNode;
   description?: React.ReactNode;
   content?: React.ReactNode;
+  /** grouped: the category (its label is the tag, its color the tint) */
+  category?: TimelineCategory;
+  /** grouped: not happened yet: a dashed outline and Pending */
+  upcoming?: boolean;
 };
+/** a category slot "1" to "8", or a category hue name (platform/system/steps.css) */
+export type CategoryColor = '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | (string & {});
+export type TimelineCategory = { id: string; label: React.ReactNode; color: CategoryColor };
+type TimelineWords = { pending: string; legend: string };
 export type TimelineProps = Omit<React.HTMLAttributes<HTMLOListElement>, 'children'> & {
   items?: TimelineItem[];
   orientation?: 'vertical' | 'horizontal';
   align?: 'start' | 'alternate';
   /** the accessible name (aria-label) */
   label?: string;
+  variant?: 'default' | 'grouped';
+  legend?: boolean;
+  hiddenCategories?: string[];
+  onHiddenCategoriesChange?: (ids: string[]) => void;
+  headingLevel?: 2 | 3 | 4 | 5 | 6;
+  strings?: Catalog | null;
 };
-export function Timeline({ items = [], orientation = 'vertical', align = 'start', label, className, ...rest }: TimelineProps) {
+export function Timeline({ variant = 'default', ...props }: TimelineProps) {
+  devWarn('Timeline', { variant }, { variant: ['default', 'grouped'] });
+  return variant === 'grouped' ? <GroupedTimeline {...props} /> : <PlainTimeline {...props} />;
+}
+type Row = { it: TimelineItem; key: React.Key; date: Date | null; year: number | null };
+let warnedDates = false, warnedLayout = false;
+function GroupedTimeline({ items = [], label, className, legend = false, hiddenCategories, onHiddenCategoriesChange, headingLevel = 3, strings, orientation, align, ...rest }: TimelineProps) {
+  const t = useStrings('timeline', strings) as TimelineWords;
+  const uid = React.useId();
+  const [own, setOwn] = React.useState<string[]>([]);
+  const hidden = hiddenCategories || own;
+  const locale = formatLocale(), numerals = numeralLocale(locale);
+  if (development()) {
+    const missing = items.filter((it) => !it.upcoming && !parseDate(it.dateTime)).map((it, i) => it.id !== undefined ? it.id : i);
+    if (missing.length && !warnedDates) { warnedDates = true; console.warn('[Plenix] Timeline: variant="grouped" needs a dateTime (ISO 8601) on every item that is not upcoming. Missing on: ' + missing.join(', ') + '.'); }
+    if (((orientation && orientation !== 'vertical') || (align && align !== 'start')) && !warnedLayout) { warnedLayout = true; console.warn('[Plenix] Timeline: variant="grouped" is vertical only; orientation and align are ignored.'); }
+  }
+  const kinds: TimelineCategory[] = [];
+  items.forEach((it) => { if (it.category && !kinds.some((k) => k.id === it.category!.id)) kinds.push(it.category); });
+  const toggle = (id: string) => {
+    const next = hidden.includes(id) ? hidden.filter((x) => x !== id) : hidden.concat(id);
+    if (!hiddenCategories) setOwn(next);
+    if (onHiddenCategoriesChange) onHiddenCategoriesChange(next);
+  };
+  const groups: { year: number | null; rows: Row[] }[] = [];
+  items.forEach((it, i) => {
+    if (it.category && hidden.includes(it.category.id)) return;
+    const date = parseDate(it.dateTime), year = date ? date.getFullYear() : null, row: Row = { it, key: it.id !== undefined ? it.id : i, date, year };
+    const last = groups[groups.length - 1];
+    if (last && (year === null || last.year === year)) last.rows.push(row); else groups.push({ year, rows: [row] });
+  });
+  const H = ('h' + headingLevel) as 'h2';
+  const digits = (n: number | string, o?: Intl.NumberFormatOptions) => new Intl.NumberFormat(numerals, { useGrouping: false, ...o }).format(Number(n));
+  return (
+    <section aria-label={label} className={cx('plx-timeline', 'plx-timeline--grouped', className)} {...(rest as React.HTMLAttributes<HTMLElement>)}>
+      {legend && kinds.length ? (
+        <div role="group" aria-label={t.legend} className="plx-timeline__legend">
+          {kinds.map((k) => {
+            const on = !hidden.includes(k.id);
+            return (
+              <Button key={k.id} variant="ghost" size="sm" pressed={on} data-plx-category={k.color} className={cx('plx-timeline__legend-item', !on && 'plx-timeline__legend-item--off')} onClick={() => toggle(k.id)}>
+                <span className={cx('plx-timeline__swatch', !on && 'plx-timeline__swatch--off')} aria-hidden="true" />{k.label}
+              </Button>
+            );
+          })}
+        </div>
+      ) : null}
+      {groups.map((g, gi) => {
+        const hid = uid + '-' + gi;
+        return (
+          <section key={g.year === null ? 'none' + gi : g.year} className="plx-timeline__group" aria-labelledby={g.year === null ? undefined : hid} aria-label={g.year === null ? label : undefined}>
+            {g.year === null ? null : <H id={hid} className="plx-timeline__year">{digits(g.year)}</H>}
+            <ol className="plx-timeline__events">
+              {g.rows.map((r) => {
+                const { it, date } = r, year = date ? date.getFullYear() : g.year;
+                const full = date ? formatDate(date, { dateStyle: 'long' }) : '';
+                return (
+                  <li key={r.key} className="plx-timeline__row">
+                    {year === null ? null : <span className="plx-timeline__watermark" aria-hidden="true">{digits(year)}</span>}
+                    <div className={cx('plx-timeline__event', it.upcoming && 'plx-timeline__event--upcoming')} data-plx-category={it.category ? it.category.color : undefined}>
+                      <span className={cx('plx-timeline__date', it.upcoming && 'plx-timeline__date--upcoming')} aria-hidden="true">
+                        <span className={cx('plx-timeline__date-band', it.category && 'plx-timeline__date-band--category', it.upcoming && 'plx-timeline__date-band--upcoming')} />
+                        {it.upcoming || !date
+                          ? <span className="plx-timeline__date-pending">{it.upcoming ? t.pending : ''}</span>
+                          : <><span className="plx-timeline__date-month">{new Intl.DateTimeFormat(numerals, { month: 'short' }).format(date)}</span><span className="plx-timeline__date-day">{digits(date.getDate())}</span></>}
+                      </span>
+                      <div className="plx-timeline__event-body">
+                        <div className="plx-timeline__heading">
+                          <span className={cx('plx-timeline__event-title', it.category && 'plx-timeline__event-title--category')}>{it.title}</span>
+                          {it.badge ? <span className="plx-timeline__badge">{it.badge}</span> : null}
+                        </div>
+                        {it.dateTime ? <VisuallyHidden as="time" dateTime={it.dateTime}>{full}</VisuallyHidden> : null}
+                        {it.description ? <p className="plx-timeline__event-description">{it.description}</p> : null}
+                        {it.content ? <div className="plx-timeline__extra">{it.content}</div> : null}
+                      </div>
+                      {it.category ? <span className="plx-timeline__tag plx-timeline__tag--category">{it.category.label}</span> : null}
+                    </div>
+                  </li>
+                );
+              })}
+            </ol>
+          </section>
+        );
+      })}
+    </section>
+  );
+}
+function PlainTimeline({ items = [], orientation = 'vertical', align = 'start', label, className, legend: _l, hiddenCategories: _h, onHiddenCategoriesChange: _o, headingLevel: _hl, strings: _s, ...rest }: TimelineProps) {
   const horizontal = orientation === 'horizontal';
   const alternate = !horizontal && align === 'alternate';
   return (

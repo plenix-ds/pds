@@ -61,6 +61,10 @@ export default {
   "overflowList": {
     "more": "More items"
   },
+  "timeline": {
+    "pending": "Pending",
+    "legend": "Filter by category"
+  },
   "pagination": {
     "label": "Pages",
     "range": "{first}–{last} of {total}",
