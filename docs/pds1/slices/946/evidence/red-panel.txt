@@ -1,0 +1,3 @@
+AssertionError [ERR_ASSERTION]: ltr: 1366px light: the heading is bold (400)
+    at /home/cc/pds1/work/component-engineer-1/tests/panel-header-946.test.js:37:74 {
+  generatedMessage: false,

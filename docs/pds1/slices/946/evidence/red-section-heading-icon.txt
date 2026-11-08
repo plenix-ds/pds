@@ -1,0 +1,4 @@
+AssertionError [ERR_ASSERTION]: ltr light: the icon is aria-hidden
+    at /home/cc/pds1/work/component-engineer-1/tests/section-heading-matches-card-946.test.js:38:14 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',

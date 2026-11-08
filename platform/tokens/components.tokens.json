@@ -4479,10 +4479,6 @@
       "$value": "{plx-sys.border-width-thin}",
       "$type": "dimension"
     },
-    "panel-header-border-bottom-color": {
-      "$value": "{plx-sys.border-divider}",
-      "$type": "color"
-    },
     "panel-header-border-bottom-width": {
       "$value": "{plx-sys.border-width-thin}",
       "$type": "dimension"
@@ -4508,16 +4504,41 @@
       "$type": "color"
     },
     "panel-title-font-family": {
-      "$value": "{plx-sys.font-heading}",
+      "$value": "{plx-sys.text-card-heading-font-family}",
       "$type": "fontFamily"
     },
     "panel-title-font-size": {
-      "$value": "{plx-ref.font-size-300}",
+      "$value": "{plx-sys.text-card-heading-font-size}",
       "$type": "dimension"
     },
     "panel-title-font-weight": {
-      "$value": "{plx-sys.font-weight-semibold}",
+      "$value": "{plx-sys.text-card-heading-font-weight}",
       "$type": "fontWeight"
+    },
+    "panel-title-letter-spacing": {
+      "$value": "{plx-sys.text-card-heading-letter-spacing}",
+      "$type": "dimension"
+    },
+    "panel-title-line-height": {
+      "$value": "{plx-sys.text-card-heading-line-height}",
+      "$type": "dimension"
+    },
+    "panel-header-glow-start": {
+      "$value": "{plx-sys.read-only-glow}",
+      "$type": "color"
+    },
+    "panel-header-glow-end": {
+      "$value": "{plx-sys.surface-default}",
+      "$type": "color"
+    },
+    "panel-header-border-bottom-color": {
+      "$value": "{plx-sys.border-divider}",
+      "$type": "color",
+      "$deprecated": "Use --plx-comp-panel-header-divider-color; removed in 2.0.0"
+    },
+    "panel-header-divider-color": {
+      "$value": "{plx-sys.border-subtle}",
+      "$type": "color"
     },
     "panel-description-text": {
       "$value": "{plx-sys.content-muted}",
@@ -7620,19 +7641,27 @@
       "$type": "color"
     },
     "section-heading-text": {
-      "$value": "{plx-sys.content-muted}",
+      "$value": "{plx-sys.content-default}",
       "$type": "color"
+    },
+    "section-heading-icon-size": {
+      "$value": "{plx-sys.control-icon-standard}",
+      "$type": "dimension"
+    },
+    "section-heading-icon-gap": {
+      "$value": "{plx-sys.space-inline-sm}",
+      "$type": "dimension"
     },
     "section-heading-gap": {
       "$value": "{plx-sys.space-inline-sm}",
       "$type": "dimension"
     },
     "section-heading-font-family": {
-      "$value": "{plx-sys.font-label}",
+      "$value": "{plx-sys.text-card-heading-font-family}",
       "$type": "fontFamily"
     },
     "section-heading-font-size": {
-      "$value": "{plx-sys.text-label-font-size}",
+      "$value": "{plx-sys.text-card-heading-font-size}",
       "$type": "dimension",
       "$description": "Section heading: the size of a plain label (level null) and of levels 5 and 6: 12px, the smallest step of the type scale a heading takes."
     },
@@ -7652,15 +7681,15 @@
       "$description": "Section heading: the size of a level 4 heading (h4: a part inside a section): 12px from the type scale, smaller than level 3 (owner, 2026-10-12)."
     },
     "section-heading-font-weight": {
-      "$value": "{plx-sys.text-eyebrow-font-weight}",
+      "$value": "{plx-sys.text-card-heading-font-weight}",
       "$type": "fontWeight"
     },
     "section-heading-letter-spacing": {
-      "$value": "{plx-sys.text-eyebrow-letter-spacing}",
+      "$value": "{plx-sys.text-card-heading-letter-spacing}",
       "$type": "dimension"
     },
     "section-heading-line-height": {
-      "$value": "{plx-ref.line-height-tight}",
+      "$value": "{plx-sys.text-card-heading-line-height}",
       "$type": "number"
     },
     "section-heading-toggle-gap": {
