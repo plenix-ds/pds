@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: ltr light 1x: the header top-left radius is the panel radius minus its border (0 vs 5)
+
+0 !== 5
+
+    at /home/cc/pds1/work/component-engineer-1/tests/panel-header-corners-1031.test.js:41:14 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 0,
+  expected: 5,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
