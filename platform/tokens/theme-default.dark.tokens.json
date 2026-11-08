@@ -3740,7 +3740,7 @@
       }
     },
     "category-2-on-soft": {
-      "$value": "{plx-ref.color-blue-250}",
+      "$value": "{plx-sys.category-gray-soft-border}",
       "$type": "color",
       "$description": "Category slot 2, the text on the soft background: light in dark mode (D-0117, ADR 0036), at least 4.5:1 on the tinted container.",
       "$extensions": {
@@ -3905,7 +3905,7 @@
       }
     },
     "category-5-on-soft": {
-      "$value": "{plx-ref.color-orange-200}",
+      "$value": "{plx-sys.category-orange-soft-border}",
       "$type": "color",
       "$description": "Category slot 5, the text on the soft background: light in dark mode (D-0117, ADR 0036), at least 4.5:1 on the tinted container.",
       "$extensions": {
@@ -3960,7 +3960,7 @@
       }
     },
     "category-6-on-soft": {
-      "$value": "{plx-ref.color-blue-275}",
+      "$value": "{plx-sys.category-navy-soft-border}",
       "$type": "color",
       "$description": "Category slot 6, the text on the soft background: light in dark mode (D-0117, ADR 0036), at least 4.5:1 on the tinted container.",
       "$extensions": {
@@ -4081,7 +4081,7 @@
       }
     },
     "category-tint-amount": {
-      "$value": "{plx-ref.mix-amount-xs}",
+      "$value": "{plx-ref.mix-amount-2xs}",
       "$type": "number",
       "$description": "How much of a category slot's text color tints a container: none in light (the soft background is the tint), a little in dark (ADR 0036).",
       "$extensions": {

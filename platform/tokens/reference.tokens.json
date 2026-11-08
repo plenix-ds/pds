@@ -1122,6 +1122,11 @@
       "$extensions": { "com.plenix": { "webOnly": true } },
       "$description": "A color-mix amount step: none of the mixed color (a tinted container in light mode, ADR 0036)."
     },
+    "mix-amount-2xs": {
+      "$value": "5%",
+      "$extensions": { "com.plenix": { "webOnly": true } },
+      "$description": "A color-mix amount step: the fill of a tinted container in dark mode (ADR 0036)."
+    },
     "mix-amount-xs": {
       "$value": "8%",
       "$extensions": { "com.plenix": { "webOnly": true } },

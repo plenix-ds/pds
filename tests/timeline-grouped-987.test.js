@@ -59,9 +59,12 @@ require('./limit.js');
     // upcoming
     const up = await page.evaluate(() => { const e = [...document.querySelectorAll('#c .plx-timeline__event')].find((x) => x.classList.contains('plx-timeline__event--upcoming'));
       return e && { text: e.textContent, style: getComputedStyle(e).borderTopStyle }; });
-    assert.ok(up, 'an upcoming event has the --upcoming class'); assert.equal(up.style, 'dashed', 'its outline is dashed'); assert.ok(/Pending/.test(up.text), 'it shows Pending');
+    assert.ok(up, 'an upcoming event has the --upcoming class'); assert.equal(up.style, 'dashed', 'its outline is dashed'); assert.ok(!/Pending/.test(up.text) && /FEB|Feb/.test(up.text), 'with a date it shows the month and day, not Pending');
+    await mount({ items: [{ id: 1, title: 'Hearing', upcoming: true, category: cat(5) }] });
+    assert.ok(await page.evaluate(() => /Pending/.test(document.querySelector('#c .plx-timeline__event').textContent)), 'without a date it shows Pending');
     // legend: keyboard, aria-pressed, hides events and an empty year
     await mount({ items, legend: true });
+    assert.equal(await page.evaluate(() => getComputedStyle(document.querySelector('#c [role=group] button')).backgroundColor), 'rgba(0, 0, 0, 0)', 'a legend item that is on has no fill');
     const legend = await page.evaluate(() => { const g = document.querySelector('#c [role=group]'); return g && { name: g.getAttribute('aria-label') || (document.getElementById(g.getAttribute('aria-labelledby')) || {}).textContent,
       buttons: [...g.querySelectorAll('button')].map((b) => [b.textContent.trim(), b.getAttribute('aria-pressed')]) }; });
     assert.equal(legend.name, 'Filter by category', 'the legend is a group with a name'); assert.deepEqual(legend.buttons, [['Category 5', 'true'], ['Category 3', 'true'], ['Category 1', 'true'], ['Category 7', 'true']], 'one toggle per category, in item order');
@@ -96,6 +99,13 @@ require('./limit.js');
       else assert.ok(g.dateEnd < g.dateStart, 'RTL: the date tile is at the right');
       assert.ok(g.wmOutside, dir + ': the watermark sits beside the event, not over it');
     }
+    // densities: the group gap is 80px, 64px compact; the event padding is 12/16, 8/12 compact, 16/16 comfortable
+    for (const [density, gap, pad] of [['standard', 80, '12px 16px'], ['compact', 64, '8px 12px'], ['comfortable', 80, '16px 16px']]) {
+      await mount({ items }); await page.evaluate((d) => document.documentElement.setAttribute('data-plx-density', d), density);
+      const g = await page.evaluate(() => ({ gap: parseFloat(getComputedStyle(document.querySelector('#c .plx-timeline--grouped')).rowGap), pad: ['paddingBlockStart', 'paddingInlineStart'].map((k) => getComputedStyle(document.querySelector('#c .plx-timeline__event'))[k]).join(' ') }));
+      assert.equal(g.gap, gap, density + ': group gap'); assert.equal(g.pad, pad, density + ': event padding');
+    }
+    await page.evaluate(() => document.documentElement.removeAttribute('data-plx-density'));
     // the default variant is unchanged
     await mount({ variant: 'default', items: [{ id: 1, time: 'Oct 2', dateTime: '2026-10-02', title: 'Created' }] });
     assert.equal(await page.evaluate(() => [document.querySelectorAll('#c section').length, document.querySelectorAll('#c .plx-timeline__item').length]).then(String), '0,1', 'default: a plain list, no year sections');

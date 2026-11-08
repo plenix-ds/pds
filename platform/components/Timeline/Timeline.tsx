@@ -27,7 +27,7 @@
      Grouped only:
        items[].dateTime: required (ISO 8601); the year groups and the date tile come from it. An upcoming event may leave it out.
        items[].category: { id, label, color }: the tag at the event's end and its tint; color is "1" to "8" or a category hue name
-       items[].upcoming: a dashed outline, a grey band and the word Pending instead of the day
+       items[].upcoming: a dashed outline and a grey band; the tile shows the month and day, or the word Pending when there is no dateTime
        legend: a row of toggle buttons that hide a category's events (default false)
        hiddenCategories, onHiddenCategoriesChange: the hidden category ids, to control the legend (without them it keeps its own)
        headingLevel: 2 to 6, the year headings (default 3)
@@ -129,7 +129,7 @@ function GroupedTimeline({ items = [], label, className, legend = false, hiddenC
           {kinds.map((k) => {
             const on = !hidden.includes(k.id);
             return (
-              <Button key={k.id} variant="ghost" size="sm" pressed={on} data-plx-category={k.color} className={cx('plx-timeline__legend-item', !on && 'plx-timeline__legend-item--off')} onClick={() => toggle(k.id)}>
+              <Button key={k.id} variant="ghost" size="sm" aria-pressed={on} data-plx-category={k.color} className={cx('plx-timeline__legend-item', !on && 'plx-timeline__legend-item--off')} onClick={() => toggle(k.id)}>
                 <span className={cx('plx-timeline__swatch', !on && 'plx-timeline__swatch--off')} aria-hidden="true" />{k.label}
               </Button>
             );
@@ -151,7 +151,7 @@ function GroupedTimeline({ items = [], label, className, legend = false, hiddenC
                     <div className={cx('plx-timeline__event', it.upcoming && 'plx-timeline__event--upcoming')} data-plx-category={it.category ? it.category.color : undefined}>
                       <span className={cx('plx-timeline__date', it.upcoming && 'plx-timeline__date--upcoming')} aria-hidden="true">
                         <span className={cx('plx-timeline__date-band', it.category && 'plx-timeline__date-band--category', it.upcoming && 'plx-timeline__date-band--upcoming')} />
-                        {it.upcoming || !date
+                        {!date
                           ? <span className="plx-timeline__date-pending">{it.upcoming ? t.pending : ''}</span>
                           : <><span className="plx-timeline__date-month">{new Intl.DateTimeFormat(numerals, { month: 'short' }).format(date)}</span><span className="plx-timeline__date-day">{digits(date.getDate())}</span></>}
                       </span>
