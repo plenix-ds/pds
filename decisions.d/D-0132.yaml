@@ -1,0 +1,9 @@
+id: D-0132
+date: 2026-11-08
+area: design
+decided_by: owner (2026-11-08, relayed by ctm3-product-lead on #1043, "this new look to be registered as a new variation style in the PDS!")
+decision: 'The D-0106 read-only look is a registered, named variation (proposed variant="tiles" on PropertyGroup, also accepted by PropertyList; G3 may rename it) that sets the whole look from one prop, built on layout="stacked"; it is listed under Variations in DESIGN.md with this id, in the docs gallery and in the visual baselines. The 1.x default stays columns (D-0107). Study: docs/read-only-field-study/.'
+why: 'Apps missed the look because it hid behind layout="stacked" (CTM#273); a named variation, like the grouped Timeline (D-0115), makes it discoverable.'
+options: ['a named variation, default unchanged (chosen)', 'make it the default now (MAJOR, D-0107)']
+status: active
+check: 'tests for #1043 AC-1..AC-6 (docs/pds1/slices/1043/brief.md); G3 API diff on the build PR; check 12 baselines for the variation'
