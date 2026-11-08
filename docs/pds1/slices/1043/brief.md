@@ -16,6 +16,8 @@ Source: plenix-ds/pds#1043, the owner (2026-11-08, "this new look to be register
 ## P0
 
 - One entry point (G3 names it; for example `<PropertyGroup variant="tiles">`, with the same value accepted by `PropertyList`), which sets the full D-0106 look: tiles 2 per row with 16px gaps, the gold group heading, navy label, semibold value, and a status shown as a Badge with its icon. It's built on the existing `layout="stacked"` roles and tokens, with no new colors.
+- **The tile frames the whole field** (label and value together), as in the study. Today 1.2.0 boxes only the value (`.plx-property-list__value` carries the background; `platform/patterns/PropertyList/property-list.css`). #1050 item 1.
+- **Two tiles per row** from the variation alone. `PropertyList` has no `columnCount` in 1.2.0, and CTM lays out columns itself with `Columns`. Add the column count (G3 names it; one per row under a 480px container, and `1` stays allowed for long notes). #1050 item 2.
 - `layout="stacked"` keeps working (it's the same look). The default stays `columns` in 1.x (D-0107).
 - DESIGN.md: a "Variations" entry naming the variation, its decision id and when to use it.
 - The component docs and the docs site gallery show it.
@@ -46,6 +48,9 @@ Source: plenix-ds/pds#1043, the owner (2026-11-08, "this new look to be register
 - **AC-3:** Given two groups with the variation, then the gap between them is 40px and the heading is gold (computed style).
 - **AC-4:** Given `layout="stacked"` without the variation, then the output is unchanged from 1.2.0.
 - **AC-5:** Given no variation and no layout, then PropertyList renders `columns` (D-0107).
+- **AC-7:** Given the variation, then the label and the value sit inside one tile (the tile's background and border wrap both), not a boxed value under a bare label.
+- **AC-8:** Given the variation in a container wider than 480px, then tiles are 2 per row with no app layout. Under 480px, they're 1 per row.
+- **AC-9:** Given a Panel with a title that is not collapsed, then the inset divider shows under the header (it's in 1.2.0 already, hidden only when collapsed; #1050 item 3).
 - **AC-6:** Given `dir="rtl"`, then the tiles and labels mirror. Given dark mode, then label and value contrast on the tile is ≥ 4.5:1.
 
 ## Anything unclear
