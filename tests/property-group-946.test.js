@@ -45,7 +45,7 @@ const want = {
 for (const [k, v] of Object.entries(want)) check('plx-comp.' + k + ' -> ' + v, (comp[k] || {}).$value === '{plx-sys.' + v + '}', String((comp[k] || {}).$value));
 let css = ''; try { css = rd('platform/patterns/PropertyGroup/property-group.css'); } catch (e) { check('property-group.css exists', false); }
 check('the heading reads the comp tokens', ['text', 'font-family', 'font-size', 'font-weight', 'line-height', 'letter-spacing'].every((p) => css.includes('var(--plx-comp-property-group-heading-' + p + ')')));
-check('a following group gets the 40px gap; the first none', /margin-block-start:var\(--plx-comp-property-group-gap\)/.test(css) && /:first-child\{[^}]*margin-block-start:0/.test(css));
+check('only a group after a group gets the 40px gap (ADR 0033): a sibling selector, no :first-child reset', /\.plx-property-group \+ \.plx-property-group\{[^}]*margin-block-start:var\(--plx-comp-property-group-gap\)/.test(css) && !/:first-child/.test(css) && !/(?<!\+ )\.plx-property-group\{[^}]*margin-block-start/.test(css));
 check('no text-transform, no physical sides', !/text-transform/.test(css) && !/(^|[^-])(left|right)\s*:/.test(css));
 check('platform.css imports it', rd('platform/platform.css').includes('patterns/PropertyGroup/property-group.css'));
 check('the export is public', /export \{ PropertyGroup[^}]*\} from '\.\/patterns\/PropertyGroup\/PropertyGroup\.tsx'/.test(rd('platform/index.ts')));

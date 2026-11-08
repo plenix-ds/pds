@@ -1,4 +1,4 @@
 /* Plenix · PropertyGroup. */
-.plx-property-group{display:flex;flex-direction:column;margin-block-start:var(--plx-comp-property-group-gap);min-inline-size:0;row-gap:var(--plx-comp-property-group-heading-gap);}
-.plx-property-group:first-child{margin-block-start:0;}
+.plx-property-group{display:flex;flex-direction:column;min-inline-size:0;row-gap:var(--plx-comp-property-group-heading-gap);}
+.plx-property-group + .plx-property-group{margin-block-start:var(--plx-comp-property-group-gap);}
 .plx-property-group__heading{color:var(--plx-comp-property-group-heading-text);font-family:var(--plx-comp-property-group-heading-font-family);font-size:var(--plx-comp-property-group-heading-font-size);font-weight:var(--plx-comp-property-group-heading-font-weight);letter-spacing:var(--plx-comp-property-group-heading-letter-spacing);line-height:var(--plx-comp-property-group-heading-line-height);margin-block-end:0;margin-block-start:0;margin-inline-end:0;margin-inline-start:0;word-spacing:normal;}
