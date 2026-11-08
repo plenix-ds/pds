@@ -1,1 +1,23 @@
-{}
+{
+ "components-navlist--current \u00b7 dark": {
+  "color-contrast": 1
+ },
+ "components-timezoneselect--by-offset \u00b7 dark": {
+  "color-contrast": 1
+ },
+ "components-timezoneselect--disabled \u00b7 dark": {
+  "color-contrast": 1
+ },
+ "components-timezoneselect--focus \u00b7 dark": {
+  "color-contrast": 4
+ },
+ "components-timezoneselect--open \u00b7 dark": {
+  "color-contrast": 4
+ },
+ "components-timezoneselect--rtl \u00b7 dark": {
+  "color-contrast": 1
+ },
+ "components-timezoneselect--selected \u00b7 dark": {
+  "color-contrast": 1
+ }
+}
