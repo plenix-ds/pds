@@ -24,7 +24,7 @@
 
 | Option | For | Against |
 |---|---|---|
-| **A. Slots `category-1…8` over existing palette shades, per mode; `variant="grouped"`; items carry a `category` object** | No new colours. The slots give apps a curated, contrast-checked set of eight that works in dark mode, and one mechanism (`data-plx-category`) for every part. | 32 slot roles beside the pill hues. |
+| **A. Slots `category-1…8` as sys -> sys aliases of existing category hues, read per theme by a container mix; `variant="grouped"`; items carry a `category` object** | No new colours. A curated set of eight that works in dark mode, and one mechanism (`data-plx-category`) for every part. | 40 alias names and four mix roles. |
 | B. Apps use the hue names directly, with no slots | No new tokens | Each app picks its own eight, so the timelines of two apps differ. The owner asked for a set. |
 | C. New refs for plum, copper, slate and gold | Closest to the study | New palette colours that the existing hues already cover; the palette is frozen. |
 
@@ -34,42 +34,43 @@
 
 ### Tokens
 
-Revised the same day after G2 (PR #992, D-0117): the pill palette keeps light tints in dark mode, and a container that size would glare. The slots therefore get their own per-mode values, and the names stay G3's.
+Final, to G2's measured design (PR #992, `docs/pds1/slices/987/design.md` §1c). The pill category roles are the same in every theme. A pastel container on the dark surface would glare, and the dark `content-muted` would fail on it. So the slots alias the pill hues, and containers read them differently in dark, through per-theme mix amounts.
 
-- **Slots** (sys, light and dark theme files). For each n there are four roles. No new colour ref; they are existing palette shades.
-  - `category-<n>-on-soft`: the text (an event's title, the tag text, the legend swatch).
-  - `category-<n>`: the date band. It equals `-on-soft`.
-  - `category-<n>-soft`: the tint base.
-  - `category-<n>-soft-border`: the border base.
+- **Slots** (sys -> sys aliases, light and dark theme files). For each slot n: `category-<n>`, `-on`, `-soft`, `-soft-border` and `-on-soft` read the hue's matching role.
 
-  | Slot | CTM | Light text / tint / border | Dark text |
-  |---|---|---|---|
-  | 1 | plum | pink-700 / pink-100 / pink-300 | pink-300 |
-  | 2 | slate | gray-700 / gray-100 / gray-300 | blue-250 |
-  | 3 | teal | cyan-700 / cyan-100 / cyan-300 | cyan-300 |
-  | 4 | violet | purple-700 / purple-100 / purple-300 | purple-300 |
-  | 5 | copper | brown-500 / orange-100 / orange-300 | orange-200 |
-  | 6 | navy | blue-700 / blue-100 / blue-300 | blue-275 |
-  | 7 | green | green-700 / green-100 / green-200 | green-200 |
-  | 8 | gold | brown-600 / yellow-100 / yellow-300 | yellow-300 |
+  | Slot | Hue (CTM's use) |
+  |---|---|
+  | `category-1` | `magenta` (plum: Marriage) |
+  | `category-2` | `gray` (slate: Application) |
+  | `category-3` | `teal` (Filing) |
+  | `category-4` | `purple` (violet: Assignment) |
+  | `category-5` | `orange` (copper: Interviews & hearings) |
+  | `category-6` | `navy` (Council decision) |
+  | `category-7` | `green` (Decree) |
+  | `category-8` | `yellow` (gold: Communications) |
 
-  - In dark mode, `-soft` and `-soft-border` are `{plx-sys.surface-default}`, and the hue comes from the mix below.
-- **The mix, token-only** (the ADR 0004 pattern). A container draws:
-  - fill: `color-mix(in srgb, var(--plx-comp-category-on-soft) var(--plx-sys-category-tint-mix), var(--plx-comp-category-soft))`;
-  - border: `color-mix(in srgb, var(--plx-comp-category-on-soft) var(--plx-sys-category-border-mix), var(--plx-comp-category-soft-border))`.
-  - New sys roles, per theme:
-    - `category-tint-mix`: light `{plx-ref.mix-amount-none}` (0%, so the fill is the 100 shade exactly), dark `{plx-ref.mix-amount-xs}` (8%).
-    - `category-border-mix`: light `mix-amount-none`, dark `{plx-ref.mix-amount-lg}`.
-  - New refs (not colours): `mix-amount-none` 0% and `mix-amount-lg` 35%.
-- **`steps.css`:** `[data-plx-category="1"]` through `"8"` publish `--plx-comp-category-on-soft`, `-soft`, `-soft-border` and `--plx-comp-data-color` from the slot. They don't set `--plx-comp-data-color-on-soft`: the slots are for coloured containers, not filled avatars or pills. The 21 named pill hues are unchanged.
-- **Check 8**, light and dark, for all eight slots:
-  - `category-<n>-on-soft` on the tint ≥ 4.5:1, and `content-muted` on the tint ≥ 4.5:1.
-  - The dark tint is computed by the rule from the mix. G2 measured all of them at ≥ 4.56.
-- **The watermark:** new sys role `decorative-mix` (`{plx-ref.mix-amount-xs}`, 8%). The component draws `color-mix(in srgb, var(--plx-sys-content-default) var(--plx-sys-decorative-mix), var(--plx-sys-surface-default))` through its comp tokens. It is never used for text people must read, and check 8 skips it.
+  - No new colour ref. A slot never points at a ref.
+- **`steps.css`:** `[data-plx-category="1"]` through `"8"` publish the same `--plx-comp-category-*` values as the named hues.
+- **A coloured container** (light / dark, as G2 measured):
+
+  | Part | Light | Dark |
+  |---|---|---|
+  | Fill | `-soft` | `-soft-border` mixed 5% into `surface-default` |
+  | Border | `-soft-border` | `-soft-border` mixed 35% into `surface-default` |
+  | Title, date band | `-on-soft` | `-soft-border` |
+
+  - The band is never `-on`.
+  - It is token-only (the ADR 0004 pattern), with one formula for both modes. The new sys roles are per theme; the light value is first:
+    - fill: `color-mix(in srgb, var(soft-border) var(--plx-sys-category-container-hue-mix), color-mix(in srgb, var(soft) var(--plx-sys-category-container-soft-mix), var(--plx-sys-surface-default)))`. `container-hue-mix` is `mix-amount-none` / `mix-amount-2xs`, and `container-soft-mix` is `mix-amount-full` / `mix-amount-none`.
+    - border: `color-mix(in srgb, var(soft-border) var(--plx-sys-category-container-border-mix), var(--plx-sys-surface-default))`. `container-border-mix` is `mix-amount-full` / `mix-amount-lg`.
+    - title and band: `color-mix(in srgb, var(on-soft) var(--plx-sys-category-container-text-mix), var(soft-border))`. `container-text-mix` is `mix-amount-full` / `mix-amount-none`.
+  - **New refs (amounts, not colours):** `mix-amount-none` 0%, `mix-amount-2xs` 5%, `mix-amount-lg` 35% and `mix-amount-full` 100%.
+- **Check 8:** for all eight slots, light and dark, the title colour and `content-muted` on the computed fill are ≥ 4.5:1. The rule computes the mix. G2 measured ≥ 4.67.
+- **New sys role `content-decorative`:** the watermark. Light `gray-200`, dark `gray-700`. It is never used for text people must read; check 8 excludes it by its `use` note.
 - **Group gap:** new sys `space-stack-3xl`, in the density files. Standard and comfortable read the new ref `space-20u` (80px); compact reads `space-16u` (64px).
-- **Comp tokens `timeline-grouped-*`** (comp -> sys only) follow G2's table (§1b of `docs/pds1/slices/987/design.md`).
+- **Comp tokens `timeline-grouped-*`** (comp -> sys only) follow G2's §1b.
   - Where G2 names a size with no sys role yet (the 56px date tile, the 72 × 2px rule, the 4 × 8px ring, the 24px watermark column), the build PR adds a purpose-named sys role over an existing `plx-ref.size-*` step, under G3 review.
-  - The colours of an event always come from `--plx-comp-category-*`.
+  - An event's colours always come from `--plx-comp-category-*` through the mixes above.
 
 ### API (`Timeline`)
 
@@ -105,7 +106,7 @@ Revised the same day after G2 (PR #992, D-0117): the pill palette keeps light ti
   - the `variant` prop and the item fields `category` and `upcoming`;
   - the props `legend`, `hiddenCategories`, `onHiddenCategoriesChange` and `headingLevel`;
   - the type `CategoryColor`;
-  - the 32 slot roles, `category-tint-mix`, `category-border-mix`, `decorative-mix`, `space-stack-3xl`, the refs `mix-amount-none`, `mix-amount-lg` and `space-20u`, the `timeline-grouped-*` comp tokens, the classes, and the two strings.
+  - the 40 slot aliases, the four `category-container-*-mix` roles, `content-decorative`, `space-stack-3xl`, the refs `mix-amount-none`, `-2xs`, `-lg`, `-full` and `space-20u`, the `timeline-grouped-*` comp tokens, the classes, and the two strings.
 - CTM moves its case timeline onto `variant="grouped"` and maps its categories to slots 1–8 (CTM#242).
 
 ## Enforced by
@@ -113,7 +114,7 @@ Revised the same day after G2 (PR #992, D-0117): the pill palette keeps light ti
 - G3 on the build PR: the API diff matches this entry.
 - Check 6: the slots are sys -> sys, and `timeline-grouped-*` is comp -> sys. Check 7: no values in the names.
 - Check 8: slot text on its tint, and the title (`-on-soft`) on the tint, ≥ 4.5:1, light and dark.
-- `token-definitions`: no new colour ref; the three new refs are a mix amount pair and one space step.
+- `token-definitions`: no new colour ref. The new refs are four mix amounts and one space step.
 - Locale check (G6): `timeline.pending` and `timeline.legend` exist in `en.json`; `ar.js` gets them only after owner approval.
 - The build PR's behavior tests (plan §7e):
   - grouping and order;
