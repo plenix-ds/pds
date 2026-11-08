@@ -1,0 +1,10 @@
+id: D-0130
+date: 2026-11-08
+area: design
+decided_by: owner (via CTM, #1032) for the rule; agent (pds1-design-director) at G2 for the readings, owner may switch
+decision: 'The default loading state in PDS is a spinner with a visible label naming what loads, centred in the region, shown only after motion-loading-region-delay (1s); ProgressBar with label for known progress; Skeleton is opt-in only and used by no PDS component, pattern, template or default. Readings applied - A: label after the ring on one line (Fluent default); ring lg 24px in regions, md 16px in one-line regions and grid rows, sm 12px in controls; the 1s delay is for regions only, buttons keep 0.5s.'
+why: 'Owner, 2026-11-08, on a CTM page with shimmer bars: "I do not want this loading style view". Fluent 2 (Microsoft first, D-0078) uses Spinner with a label; docs/content/messaging.md already says nothing for the first second, then name what loads.'
+options: ['A label after the ring (chosen)', 'B label below the ring']
+status: active
+superseded_by: null
+check: 'planned:no-default-skeleton (check-system: no Skeleton import or plx-skeleton outside platform/components/Loading/); planned:loading-region-1032 tests (no draw at 999ms, draws at 1000ms, one announcement, reduced motion, error replaces spinner); CI visual check light/dark standard + RTL'
