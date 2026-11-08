@@ -237,15 +237,25 @@ const SelectList = React.forwardRef(function SelectList({ invalid, warning, opti
     form.addEventListener('reset', reset);
     return () => form.removeEventListener('reset', reset);
   }, [read]);
-  React.useEffect(() => {   // a <label for="id"> names the field and focuses it
+  React.useLayoutEffect(() => {   // a <label for="id"> names the field and focuses it, before the first paint (an effect left a moment with no name); one that is drawn a moment later (a Field in a panel that draws in two steps) is waited for
     if (!id || labelledBy || typeof document === 'undefined') return undefined;
-    const label = document.querySelector('label[for="' + (window.CSS && CSS.escape ? CSS.escape(id) : id) + '"]');
-    if (!label) return undefined;
-    if (!label.id) label.id = id + '-label';
-    setLabelId(label.id);
-    const focus = () => { if (field.current) field.current.focus(); };
-    label.addEventListener('click', focus);
-    return () => label.removeEventListener('click', focus);
+    const find = () => document.querySelector('label[for="' + (window.CSS && CSS.escape ? CSS.escape(id) : id) + '"]');
+    let undo: (() => void) | null = null, watch: MutationObserver | null = null, stop: ReturnType<typeof setTimeout> | null = null;
+    const attach = (label: Element) => {
+      if (!label.id) label.id = id + '-label';
+      setLabelId(label.id);
+      const focus = () => { if (field.current) field.current.focus(); };
+      label.addEventListener('click', focus);
+      undo = () => label.removeEventListener('click', focus);
+    };
+    const now = find();
+    if (now) attach(now);
+    else if (typeof MutationObserver !== 'undefined') {
+      watch = new MutationObserver(() => { const late = find(); if (late && watch) { watch.disconnect(); watch = null; attach(late); } });
+      watch.observe(document.body, { childList: true, subtree: true });
+      stop = setTimeout(() => { if (watch) { watch.disconnect(); watch = null; } }, 1000);   // a label that is not there after a second is not coming: a Select with no label costs nothing later
+    }
+    return () => { if (stop) clearTimeout(stop); if (watch) watch.disconnect(); if (undo) undo(); };
   }, [id, labelledBy]);
   React.useEffect(() => {   // keep the row under the arrow keys in view
     if (!open || active < 0) return;
