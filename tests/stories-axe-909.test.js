@@ -42,8 +42,8 @@ const server = http.createServer((req, res) => {
   const worker = async () => {
     const page = await browser.newPage(); await page.setViewport({ width: 1000, height: 800 });
     for (let s = queue.shift(); s; s = queue.shift()) {
-      try {
-        await page.goto(base + '/iframe.html?id=' + s.id + '&viewMode=story', { waitUntil: 'load', timeout: 30000 });
+      for (let attempt = 1; attempt <= 2; attempt++) try {   // a second try: on a busy runner a page can be slow to load, which is not an accessibility result
+        await page.goto(base + '/iframe.html?id=' + s.id + '&viewMode=story', { waitUntil: 'load', timeout: 60000 });
         await page.waitForSelector('#storybook-root > *, #storybook-docs', { timeout: 15000 });
         if (!(await page.evaluate(() => !!window.axe))) await page.evaluate(axeSrc);
         for (const mode of ['light', 'dark']) {
@@ -54,10 +54,11 @@ const server = http.createServer((req, res) => {
           }, TAGS);
           if (Object.keys(out).length) found[s.id + ' · ' + mode] = out;
         }
-      } catch (e) { broken.push(s.id + ': ' + e.message.split('\n')[0]); }
+        break;
+      } catch (e) { if (attempt === 2) broken.push(s.id + ': ' + e.message.split('\n')[0]); }
     }
   };
-  await Promise.all(Array.from({ length: +process.env.STORIES_WORKERS || 4 }, worker));
+  await Promise.all(Array.from({ length: +process.env.STORIES_WORKERS || 3 }, worker));
   await browser.close(); server.close();
   const sorted = Object.fromEntries(Object.keys(found).sort().map((k) => [k, found[k]]));
   const counts = Object.fromEntries(Object.entries(sorted).map(([k, v]) => [k, Object.fromEntries(Object.entries(v).map(([r, x]) => [r, x.n]))]));
