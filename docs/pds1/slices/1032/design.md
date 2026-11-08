@@ -46,7 +46,7 @@
   - `'after'` is the region default (reading A). `'below'` exists for option B and narrow regions under 160px.
 - `delay?: number | 'region'`: when set, the spinner renders nothing until the delay passes. `'region'` reads `motion-loading-region-delay`. Region uses set `'region'`.
 - **The visible label is the status text.** It is the content of `role="status"`. With `labelPosition !== 'hidden'` there is no second, visually hidden copy, so it is announced once.
-- **Region use is one helper, `Spinner.Region`** (or the same props on `Spinner` with a `region` flag; G3 names it). It is the centred flex box with the delay set to `'region'` and `labelPosition="after"`. DataGrid, MetricCard, LoadingOverlay and the templates all use it, so the layout lives in one place.
+- **Region use is one helper, `LoadingState`** (G3 name, D-0131, ADR 0042: a named export built from Spinner; size `lg` by default). It is the centred flex box with the delay set to `'region'` and `labelPosition="after"`. DataGrid, MetricCard, LoadingOverlay and the templates all use it, so the layout lives in one place.
 
 ## 3. State matrix
 
@@ -75,8 +75,8 @@
 | DataGrid next page (`moreRow`) | the word, no ring | the same `md` spinner and label; it is already `role="status"`, so it is not wrapped in a second one |
 | MetricCard `state="loading"` | three Skeleton bars | `Spinner` region, `lg`, label `strings.loading` (the catalog's "Loading…"), centred in the body; the header stays (MetricCard rule) and the card keeps its height |
 | EntityTitle `loading` | two Skeleton bars | a `sm` spinner at the text's start with its label hidden (`labelPosition="hidden"`). The item keeps its 36px height and stays `aria-busy`. It is a line, not a region, so it gets no visible label; the region around it shows the label |
-| LoadingOverlay | spinner + message (already this pattern) | unchanged look. Its note "for content that loads the first time … use skeletons" becomes "use the region spinner (`Spinner.Region`)" |
-| Card / Panel bodies, RecordPage, templates | the app's own choice | the docs and examples show `Spinner.Region`; no example uses Skeleton |
+| LoadingOverlay | spinner + message (already this pattern) | unchanged look. Its note "for content that loads the first time … use skeletons" becomes "use the region spinner (`LoadingState`)" |
+| Card / Panel bodies, RecordPage, templates | the app's own choice | the docs and examples show `LoadingState`; no example uses Skeleton |
 | Skeleton | used by EntityTitle and MetricCard | used by nothing in PDS. The header comment and the docs page say "opt-in only; not a Plenix default (D-0130)" |
 
 - **Spec wording:** 34 `loading:` notes in 14 files under `platform/design-system/parts/*.docs.js` tell people to use Skeleton rows. The Technical Writer rewords them to the region spinner with a label. That work is listed for #1032, and the rule is this file.
@@ -95,7 +95,7 @@
 - **A load under 1s:** nothing flashes and nothing is announced. A test uses fake timers at 999ms and at 1000ms.
 - **A load that ends after the spinner shows:** the content replaces it at once, with no fade (Fluent), and nothing is announced at the end.
 - **10,000 rows:** the first load is one region spinner. Later pages use the `moreRow` spinner, and the virtualised rows are unaffected.
-- **Nested regions** (a card inside a loading page): only the outermost loading region shows a spinner. Inner regions stay `aria-busy` with nothing drawn, so a page never shows a stack of spinners. The `Spinner.Region` helper does this through a context flag.
+- **Nested regions** (a card inside a loading page): only the outermost loading region shows a spinner. Inner regions stay `aria-busy` with nothing drawn, so a page never shows a stack of spinners. `LoadingState` does this through a context flag.
 
 ## 7. Messages
 
