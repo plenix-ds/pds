@@ -1412,11 +1412,11 @@
   },
   "plx-field__label": {
    "contract": "establishes",
-   "role": "label",
+   "role": "field-label",
    "font": "sans",
    "adjusts": [
     "font-size",
-    "font-weight",
+    "letter-spacing",
     "line-height"
    ]
   },
@@ -2406,21 +2406,25 @@
   "plx-property-list__label": {
    "contract": "adjusts",
    "props": [
-    "font-size"
+    "font-size",
+    "font-weight",
+    "line-height"
    ]
   },
   "plx-property-list__value": {
    "contract": "adjusts",
    "props": [
-    "font-size"
+    "font-size",
+    "font-weight",
+    "line-height"
    ]
   },
   "plx-property-list__value--data": {
    "contract": "establishes",
-   "role": "body",
+   "role": "field-value",
    "font": "mono",
    "adjusts": [
-    "font-size"
+    "letter-spacing"
    ]
   },
   "plx-publish__detail": {
@@ -3556,6 +3560,11 @@
   "plx-data-grid__card-count": {
    "contract": "establishes",
    "role": "label",
+   "font": "sans"
+  },
+  "plx-property-group__heading": {
+   "contract": "establishes",
+   "role": "group-heading",
    "font": "sans"
   }
  }

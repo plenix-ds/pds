@@ -1,0 +1,2 @@
+READONLY_PRESET_OK
+CONTRAST_OK 164 checks (158 pairs)

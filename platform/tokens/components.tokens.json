@@ -1515,6 +1515,10 @@
       "$value": "{plx-ref.size-4u}",
       "$type": "number"
     },
+    "field-readonly-label-text": {
+      "$value": "{plx-sys.read-only-label}",
+      "$type": "color"
+    },
     "field-row-label-font-size": {
       "$value": "{plx-ref.font-size-200}",
       "$type": "dimension"
@@ -9275,12 +9279,13 @@
       "$type": "dimension"
     },
     "property-list-label-text": {
-      "$value": "{plx-sys.content-muted}",
+      "$value": "{plx-sys.read-only-label}",
       "$type": "color"
     },
     "property-list-label-font-size": {
-      "$value": "{plx-ref.font-size-100}",
-      "$type": "dimension"
+      "$value": "{plx-sys.text-field-label-font-size}",
+      "$type": "dimension",
+      "$deprecated": "Use --plx-sys-text-field-label-font-size: the PropertyList label now takes the field-label role directly (D-0106, ADR 0032). It keeps working and is removed in 2.0.0."
     },
     "property-list-label-row-gap": {
       "$value": "{plx-sys.space-stack-xs}",
@@ -9299,7 +9304,63 @@
       "$type": "color"
     },
     "property-list-value-font-size": {
-      "$value": "{plx-ref.font-size-200}",
+      "$value": "{plx-sys.text-field-value-font-size}",
+      "$type": "dimension"
+    },
+    "property-list-value-background": {
+      "$value": "{plx-sys.read-only-tile}",
+      "$type": "color"
+    },
+    "property-list-value-border-color": {
+      "$value": "{plx-sys.read-only-tile-border}",
+      "$type": "color"
+    },
+    "property-list-value-border-width": {
+      "$value": "{plx-sys.border-width-thin}",
+      "$type": "dimension"
+    },
+    "property-list-value-radius": {
+      "$value": "{plx-sys.radius-compact}",
+      "$type": "dimension"
+    },
+    "property-list-value-padding-block": {
+      "$value": "{plx-sys.space-inset-xs}",
+      "$type": "dimension"
+    },
+    "property-list-value-padding-inline": {
+      "$value": "{plx-sys.space-inset-sm}",
+      "$type": "dimension"
+    },
+    "property-group-heading-text": {
+      "$value": "{plx-sys.read-only-group-heading}",
+      "$type": "color"
+    },
+    "property-group-heading-font-family": {
+      "$value": "{plx-sys.text-group-heading-font-family}",
+      "$type": "fontFamily"
+    },
+    "property-group-heading-font-size": {
+      "$value": "{plx-sys.text-group-heading-font-size}",
+      "$type": "dimension"
+    },
+    "property-group-heading-font-weight": {
+      "$value": "{plx-sys.text-group-heading-font-weight}",
+      "$type": "fontWeight"
+    },
+    "property-group-heading-line-height": {
+      "$value": "{plx-sys.text-group-heading-line-height}",
+      "$type": "dimension"
+    },
+    "property-group-heading-letter-spacing": {
+      "$value": "{plx-sys.text-group-heading-letter-spacing}",
+      "$type": "dimension"
+    },
+    "property-group-gap": {
+      "$value": "{plx-sys.space-stack-group}",
+      "$type": "dimension"
+    },
+    "property-group-heading-gap": {
+      "$value": "{plx-sys.space-stack-field}",
       "$type": "dimension"
     },
     "property-list-value-data-font-family": {
@@ -9308,9 +9369,9 @@
       "$description": "A technical value (a size, a date, an ID): the data font, Reddit Mono (owner, 2026-10-11)"
     },
     "property-list-value-data-font-size": {
-      "$value": "{plx-ref.font-size-200}",
+      "$value": "{plx-sys.text-field-value-font-size}",
       "$type": "dimension",
-      "$description": "A technical value at the value size (--plx-comp-property-list-value-font-size), so Reddit Mono and DM Sans values share one baseline"
+      "$description": "A technical value at the value size, so Reddit Mono and DM Sans values share one baseline"
     },
     "property-list-columns-gap": {
       "$value": "{plx-sys.space-inline-md}",
