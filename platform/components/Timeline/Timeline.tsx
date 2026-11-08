@@ -145,7 +145,7 @@ function GroupedTimeline({ items = [], label, className, legend = false, hiddenC
                 const { it, date } = r, year = date ? date.getFullYear() : g.year;
                 const full = date ? formatDate(date, { dateStyle: 'long' }) : '';
                 return (
-                  <li key={r.key} className="plx-timeline__row">
+                  <li key={r.key} className={cx('plx-timeline__row', year === null && 'plx-timeline__row--bare')}>
                     {year === null ? null : <span className="plx-timeline__watermark" aria-hidden="true">{digits(year)}</span>}
                     <div className={cx('plx-timeline__event', it.upcoming && 'plx-timeline__event--upcoming')} data-plx-category={it.category ? it.category.color : undefined}>
                       <span className={cx('plx-timeline__date', it.upcoming && 'plx-timeline__date--upcoming')} aria-hidden="true">
