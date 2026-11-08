@@ -1,0 +1,21 @@
+FAIL PropertyGroup renders: ENOENT: no such file or directory, open '/home/cc/pds1/work/component-engineer-2/platform/patterns/PropertyGroup/Propert
+FAIL a section with the class and rest props
+FAIL named by its heading
+FAIL heading level 3 by default, with the class
+FAIL level 2 gives an h2
+FAIL children follow the heading
+FAIL plx-comp.property-group-heading-text -> read-only-group-heading: undefined
+FAIL plx-comp.property-group-heading-font-family -> text-group-heading-font-family: undefined
+FAIL plx-comp.property-group-heading-font-size -> text-group-heading-font-size: undefined
+FAIL plx-comp.property-group-heading-font-weight -> text-group-heading-font-weight: undefined
+FAIL plx-comp.property-group-heading-line-height -> text-group-heading-line-height: undefined
+FAIL plx-comp.property-group-heading-letter-spacing -> text-group-heading-letter-spacing: undefined
+FAIL plx-comp.property-group-gap -> space-stack-group: undefined
+FAIL plx-comp.property-group-heading-gap -> space-stack-field: undefined
+FAIL property-group.css exists
+FAIL the heading reads the comp tokens
+FAIL a following group gets the 40px gap; the first none
+FAIL platform.css imports it
+FAIL the export is public
+
+PROPERTY_GROUP_FAIL 19
