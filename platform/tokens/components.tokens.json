@@ -4828,6 +4828,10 @@
       "$value": "{plx-sys.control-height-inline}",
       "$type": "dimension"
     },
+    "panel-toggle-pressed-background": {
+      "$value": "{plx-sys.state-pressed}",
+      "$type": "color"
+    },
     "panel-toggle-hover-background": {
       "$value": "{plx-sys.state-hover}",
       "$type": "color"

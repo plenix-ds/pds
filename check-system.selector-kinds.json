@@ -114,7 +114,6 @@
    "relational | .plx-media-card:has(.plx-media-card__title:focus-visible)": 1,
    "relational | .plx-media-card:has(.plx-media-card__title.is-focus-visible)": 1,
    "combinator | .plx-panel.is-collapsed>.plx-panel__header": 1,
-   "combinator | .plx-panel.is-collapsed>.plx-panel__header .plx-panel__toggle": 1,
    "combinator | .plx-media-card--selectable .plx-media-card__title::after": 1,
    "combinator | .plx-media-card--selectable .plx-media-card__title": 1,
    "combinator | .plx-card.is-collapsed .plx-card__toggle": 1,
