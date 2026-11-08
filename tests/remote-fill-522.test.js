@@ -52,7 +52,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
     await toEnd(); await sleep(100); r = await look();
     assert.deepEqual(r.pages, [1, 2], 'near the end it asks for page 2: ' + JSON.stringify(r.pages));
-    assert.deepEqual(r.status, ['Loading records'], 'a loading row at the end while page 2 comes');
+    assert.deepEqual(r.status, [''], 'a placeholder row at the end while page 2 comes (its spinner waits 1 s: a 300 ms load shows nothing, #1032)');
     await sleep(500); r = await look();
     assert.ok(/^Record 100\b/.test(r.lastRow) || r.pages.length > 2, 'page 2 is appended: ' + r.lastRow);
 

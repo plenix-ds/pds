@@ -45,7 +45,7 @@
      change: { amount, direction: "up" | "down", versus }: the change since the last period
      goodWhen: which way is good: "up" (higher is better) | "down" (lower is better) | "none" (default: neither): the change's color
      footer: one line: a status message, the source, when it was updated, the threshold rule
-     state: "ready" (default) | "loading" (placeholders) | "empty" (no data: "–" and emptyText) | "error" (the message and
+     state: "ready" (default) | "loading" (a centred spinner with its label after about 1s) | "empty" (no data: "–" and emptyText) | "error" (the message and
        Try again) | "stale" (an Out of date badge); emptyText: the no-data line; errorText; onRetry(): Try again
      trend: the values, oldest first (type trend); trendVariant: "line" | "area" (default) | "bar"; trendLabel: what they show
      progress: { value, max, tone } (type progress, person): a progress bar
@@ -90,7 +90,7 @@ import { Menu } from '../Menu/Menu.tsx';
 import { ContextualHelp } from '../ContextualHelp/ContextualHelp.tsx';
 import { ProgressBar } from '../ProgressBar/ProgressBar.tsx';
 import { Notice } from '../Notice/Notice.tsx';
-import { Skeleton } from '../Loading/Loading.tsx';
+import { LoadingState } from '../Loading/Loading.tsx';
 import { Table } from '../Table/Table.tsx';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden.tsx';
 import { Sparkline } from '../../charts/lazy.tsx';
@@ -371,14 +371,8 @@ function Month({ month, t }: { month?: MetricMonth; t: Words }) {
   return <div className="plx-metric-card__month" role="img" aria-label={fill(t.month, { done, days: work })}>{cells}</div>;
 }
 
-function Loading() {
-  return (
-    <div className="plx-metric-card__placeholder">
-      <Skeleton width="96px" height="32px" />
-      <Skeleton width="160px" height="16px" />
-      <Skeleton height="32px" />
-    </div>
-  );
+function Loading({ label }: { label?: string }) {
+  return <LoadingState size="lg" label={label} className="plx-metric-card__placeholder" />;
 }
 
 export function MetricCard({ type = 'value', layout = 'stacked', appearance = 'plain', color = 'blue', gradientTo = 'purple', size = 'md',
@@ -465,7 +459,7 @@ export function MetricCard({ type = 'value', layout = 'stacked', appearance = 'p
   }
 
   let body;
-  if (state === 'loading') body = <Loading />;
+  if (state === 'loading') body = <Loading label={typeof name === 'string' && name ? fill(t.loading, { title: name }) : undefined} />;
   else if (state === 'error') body = (
     <>
       <Figure empty />

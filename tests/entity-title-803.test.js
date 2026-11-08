@@ -3,7 +3,7 @@
      the parts: the icon (decorative), the title, the subtitle and the tag; each but the title optional; a string tag is a
        Tag, { label, tone, icon } a status Badge with its icon, { label, category } a category Tag
      a long title stays on one line, ends in "…", and shows its whole text in a tooltip only while it is cut
-     loading: a placeholder in place of the text (two bars with a subtitle), aria-busy, as tall as the loaded item
+     loading: a placeholder in place of the text (a small spinner after 1 s), aria-busy, as tall as the loaded item
      in a list row (RowButton): one line is 20px (as plain row text), two lines 36px (the 4px grid); in a card the title
        is a heading with level
      right to left: the icon at the inline start, the tag after the title
@@ -74,7 +74,7 @@ require('./limit.js');   // the hard time limit (TEST_TIMEOUT_MS)
       assert.ok(r.cut && r.ellipsis === 'ellipsis' && r.oneLine === 20, dir + ': a long title stays on one 20px line and ends in "…"; got ' + JSON.stringify([r.cut, r.ellipsis, r.oneLine]));
       assert.deepEqual(r.heights, { plain: 20, one: 20, two: 36, tagged: 36, loadTwo: 36, loadOne: 20 }, dir + ': one line as tall as plain row text, two lines 36px, loading as tall as loaded');
       assert.equal(r.busy, 'true', dir + ': loading is aria-busy');
-      assert.deepEqual([r.bars, r.barsOne, r.loadText], [2, 1, ''], dir + ': loading shows bars, no text');
+      assert.deepEqual([r.bars, r.barsOne, r.loadText], [0, 0, ''], dir + ': loading draws no Skeleton bars, and no text before the 1 s region delay (#1032)');
       assert.deepEqual([r.heading, r.rowHeading], ['H3', 'SPAN'], dir + ': level makes the card title a heading; a row title is a span');
       if (dir === 'ltr') assert.ok(r.iconSide.icon < r.iconSide.title && r.iconSide.title < r.iconSide.tag, 'left to right: icon, title, tag');
       else assert.ok(r.iconSide.icon > r.iconSide.title && r.iconSide.title > r.iconSide.tag, 'right to left: icon, title, tag from the right');

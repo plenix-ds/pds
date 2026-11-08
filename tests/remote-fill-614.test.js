@@ -97,7 +97,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
     // 5. a sort while page 2 is still on its way: the late page 2 (unsorted) is not appended to the sorted page 1
     await mount({ mode: undefined, have: 1000, total: 1000, sortedHave: 50, slow: true });
-    await sleep(600); await scrollTo('end'); await sleep(150);
+    await sleep(600); await scrollTo('end'); await sleep(1150);   // the more-rows spinner waits 1 s (#1032)
     r = await look();
     assert.deepEqual(r.pages, [1, 2], 'page 2 is on its way: ' + JSON.stringify(r.pages));
     assert.deepEqual(r.status, ['Loading records'], 'the loading row shows');
