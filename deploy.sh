@@ -26,6 +26,9 @@ node check-system.js >/dev/null 2>&1 || { echo "check-system failed: fix it befo
 # G6 (#902): no missing English, no missing or unapproved Arabic in the release
 node tools/checks/locale/locale.mjs --release >/dev/null || { echo "G6 language gate failed: run node tools/checks/locale/locale.mjs --release"; exit 1; }
 node build-packages.js >/dev/null || { echo "build-packages failed: run node build-packages.js"; exit 1; }
+# bundle budgets on every release (plan §7c; #1103): 1.3.0 shipped an import over its budget because only the dry run
+# checked them; a release over budget stops here, before anything is uploaded
+node check-bundle.js >/dev/null 2>&1 || { echo "STOPPED: bundle budgets: run node check-bundle.js, fix the import over its limit, then deploy again"; exit 1; }
 VERSION=$(node -p "require('./package.json').version")
 # SHA256SUMS and version.json at the version root (plan §7c, G8): written from this exact build and verified before anything
 # is uploaded, so the published folder carries its own checksums (tools/publish/manifest.mjs)
