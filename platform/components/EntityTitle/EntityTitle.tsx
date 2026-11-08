@@ -14,7 +14,7 @@
        its icon (tone and icon as Badge takes them; the icon is required by the status rule) or, with category, a Tag of
        that category color; an element is drawn as given
      level: a number, 1 to 6: makes the title a heading of that level (a card's title); default none (a span, for list rows)
-     loading: a placeholder in place of the text (two bars, the icon's place kept); the item is aria-busy
+     loading: a small spinner in place of the text (the icon's place kept, shown after about 1s); the item is aria-busy
      className: more classes on the wrapper
    Behavior:
      The title and the subtitle each stay on one line; a cut one shows its whole text in a tooltip on hover and focus, only
@@ -22,7 +22,7 @@
      Not interactive itself: put it inside the row's or the card's link or button; it adds no Tab stop.
      Its lines are 20px (the title, a list row's text line and a badge's height) and 16px (the subtitle): one line 20px,
        two 36px, on the 4px grid, loading as tall as loaded. No padding of its own: a list row or a card keeps its rules.
-     loading with subtitle (any truthy value) shows the second bar, so a two-line item keeps its height while it loads.
+     loading with subtitle (any truthy value) keeps the two-line height while it loads.
    Notes:
      The icon is decorative (aria-hidden): the title names the item.
      Other props pass through to the wrapper.
@@ -36,7 +36,7 @@ import { Badge } from '../Badge/Badge.tsx';
 import type { BadgeProps } from '../Badge/Badge.tsx';
 import { Tag } from '../Tag/Tag.tsx';
 import { Tooltip } from '../Tooltip/Tooltip.tsx';
-import { Skeleton } from '../Loading/Loading.tsx';
+import { Spinner } from '../Loading/Loading.tsx';
 
 // one line that ends in "…" when cut; its whole text in a tooltip only while it is cut
 function Line({ as: As = 'span', className, children }: { as?: React.ElementType; className?: string; children?: React.ReactNode }) {
@@ -82,10 +82,7 @@ export function EntityTitle({ title, icon, subtitle, tag, level, loading = false
     <div className={cx('plx-entity-title', subtitle && 'plx-entity-title--subtitle', loading && 'is-loading', className)} aria-busy={loading || undefined} {...rest}>
       {icon ? <span className="plx-entity-title__icon" aria-hidden="true">{asIcon(icon)}</span> : null}
       {loading ? (
-        <span className="plx-entity-title__placeholder">
-          <span className="plx-entity-title__bar-line"><Skeleton width="160px" height="12px" className="plx-entity-title__bar" /></span>
-          {subtitle ? <span className="plx-entity-title__bar-line plx-entity-title__bar-line--subtitle"><Skeleton width="96px" height="8px" className="plx-entity-title__bar" /></span> : null}
-        </span>
+        <span className={cx('plx-entity-title__placeholder', subtitle && 'plx-entity-title__placeholder--subtitle')}><Spinner size="sm" labelPosition="hidden" delay="region" /></span>
       ) : (
         <span className="plx-entity-title__text">
           <span className="plx-entity-title__line">

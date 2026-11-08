@@ -20,7 +20,7 @@ import { Button } from '../../Button/Button.tsx';
 import SettingsCustomizeIcon from 'plenix-platform/icons/plenix/settings-customize';
 import { Menu, MenuItem } from '../../Menu/Menu.tsx';
 import { Rare, preloadRare } from './rare.tsx';
-import { Spinner } from '../../Loading/Loading.tsx';
+import { Spinner, LoadingState } from '../../Loading/Loading.tsx';
 import { cx } from '../../../utils/cx.ts';
 import { Inline } from '../../Stack/Stack.tsx';
 import { words } from './helpers.tsx';
@@ -110,7 +110,7 @@ export function viewMenu({ props, B, S, effectiveStep, setRowHeight, effectiveWr
   ) : null;
 }
 
-export function emptyRow({ model, B, isStatic, ordered, remoteMode, remoteBusy, S, empty }: any) {
+export function emptyRow({ model, B, isStatic, ordered, remoteMode, remoteBusy, loading, S, empty }: any) {
   return !model.length ? (
     <div className={cx(`${B}__grid-placeholder`, isStatic && B + '__grid-placeholder--static')} role="row">
       <div
@@ -118,7 +118,7 @@ export function emptyRow({ model, B, isStatic, ordered, remoteMode, remoteBusy, 
         role={isStatic ? 'cell' : 'gridcell'}
         aria-colspan={Math.max(1, ordered.length)}
       >
-        <span className={B + '__empty'}>{remoteMode && remoteBusy ? S.loading : empty || S.empty}</span>
+        {(remoteMode && remoteBusy) || loading ? <LoadingState size="md" label={S.loading} /> : <span className={B + '__empty'}>{empty || S.empty}</span>}
       </div>
     </div>
   ) : null;
@@ -136,9 +136,7 @@ export function moreRow({ scrollFill, model, remoteBusy, moreFailed, B, semantic
             </Button>
           </Inline>
         ) : (
-          <span className={B + '__empty'} role="status">
-            {S.loading}
-          </span>
+          <Spinner size="md" label={S.loading} labelPosition="after" delay="region" />
         )}
       </div>
     </div>

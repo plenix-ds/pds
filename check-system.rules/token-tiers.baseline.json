@@ -604,8 +604,6 @@
   "plx-comp.load-more-infinite-button-min-width -> plx-ref.size-30u",
   "plx-comp.load-more-loading-font-size -> plx-ref.font-size-200",
   "plx-comp.load-more-sentinel-height -> plx-ref.size-1u",
-  "plx-comp.loading-overlay-message-font-size -> plx-ref.font-size-200",
-  "plx-comp.loading-overlay-message-line-height -> plx-ref.line-height-normal",
   "plx-comp.loading-overlay-progress-max-width -> plx-ref.size-60u",
   "plx-comp.lollipop-category-width -> plx-ref.size-24u",
   "plx-comp.lollipop-dot-radius -> plx-ref.size-1u",

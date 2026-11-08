@@ -2953,6 +2953,13 @@
     "font-size"
    ]
   },
+  "plx-spinner-wrap": {
+   "contract": "adjusts",
+   "props": [
+    "font-size",
+    "line-height"
+   ]
+  },
   "plx-status-bar": {
    "contract": "adjusts",
    "props": [

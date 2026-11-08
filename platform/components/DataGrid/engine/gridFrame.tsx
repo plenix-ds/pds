@@ -97,6 +97,7 @@ export function gridFrame({
   renderRow,
   last,
   empty,
+  loading,
   scrollFill,
   moreFailed,
   displayedTotal,
@@ -148,7 +149,7 @@ export function gridFrame({
           role={isStatic ? 'table' : groups.length || childField ? 'treegrid' : 'grid'}
           aria-label={label}
           aria-multiselectable={props.cellSelection && !isStatic ? true : undefined}
-          aria-busy={remoteMode && remoteBusy ? true : undefined}
+          aria-busy={(remoteMode && remoteBusy) || (loading && !model.length) ? true : undefined}
           aria-rowcount={
             groups.length || childField
               ? semanticRows.length + 1
@@ -275,7 +276,7 @@ export function gridFrame({
               {cardAfter}
               <RowGap rows={model.slice(last)} />
             </div>
-            {emptyRow({ model, B, isStatic, ordered, remoteMode, remoteBusy, S, empty })}
+            {emptyRow({ model, B, isStatic, ordered, remoteMode, remoteBusy, loading, S, empty })}
             {moreRow({ scrollFill, model, remoteBusy, moreFailed, B, semanticRows, ordered, S, setRetry })}
           </div>
         </div>
