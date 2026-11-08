@@ -38,7 +38,9 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - name: Self-test (a removed label without the owning role's sign-off fails; #621)
-        run: node tools/ci/check-g2.test.mjs
+      - name: Self-test (a removed label without the owning role's sign-off fails; #621; a signed gate comment sets the label, #1071)
+        run: |
+          node tools/ci/check-g2.test.mjs
+          node tools/ci/gate-comment.test.mjs
       - name: No g2-/g3-changes-requested label; a removed one has its role's signed re-review (D-0056, D-0062, #449, #621)
         run: node tools/ci/check-g2.mjs

@@ -1,0 +1,50 @@
+# A gate FAIL comment sets the gate label (#1071, part of #1068): on a new PR comment, tools/ci/gate-comment.mjs reads
+# its first line. "G2: FAIL" / "G3: FAIL" signed by the gate's role (Design Director for G2, DS Architect for G3) adds
+# g2-/g3-changes-requested; "G2: PASS" / "G3: PASS" so signed removes it. Then it re-runs the G2 check on the PR and, when
+# the PR is queued, on its merge group: a label set with GITHUB_TOKEN starts no workflow (lesson A-17), and the re-run is
+# what turns G2 red (or green) and takes a queued PR out of the queue. The label stays the gate (tools/ci/check-g2.mjs);
+# this workflow only makes the comment enough. Not a required check, so it needs no merge_group trigger.
+# Only comments by the repository's members and collaborators count: the repo is public, and the signature is text.
+# It runs main's code only (issue_comment always runs the default branch) and never checks out the PR.
+name: Gate comment
+
+on:
+  # the only trigger a comment starts. Safe here: main's code only, the PR is never checked out or run, the body
+  # reaches the script through an env var (no expression in run:), and only members' and collaborators' comments run
+  issue_comment: # zizmor: ignore[dangerous-triggers]
+    types: [created]
+
+permissions: {}
+
+concurrency:
+  group: gate-comment-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  label:
+    name: Gate verdict sets the gate label
+    if: >-
+      github.event.issue.pull_request &&
+      contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: write
+      actions: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Self-test (a signed FAIL adds, a signed PASS removes, anything else does nothing)
+        run: node tools/ci/gate-comment.test.mjs
+      - name: Apply the verdict, then re-run G2 on the PR and its merge group
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.issue.number }}
+          COMMENT_BODY: ${{ github.event.comment.body }}
+        run: node tools/ci/gate-comment.mjs
