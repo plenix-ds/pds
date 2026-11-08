@@ -39,7 +39,16 @@ require('./limit.js');
         await mount(Object.assign({ media: { versus: [a, b] } }, base)); const two = await read();
         assert.equal(two.h, one, T + kind + ' ' + layout + ': the pair is as tall as the single media (' + two.h + ' vs ' + one + ')');
       }
-      await mount({ media: { versus: [a, b] }, layout: 'column-large' }); s = await read(); assert.equal(s.parties, 2, T + 'a stretched layout takes the pair'); assert.ok(s.h >= 44, T + 'stretched media');
+      for (const layout of ['column-large', 'edge']) {
+        await mount({ media: { versus: [a, b] }, layout });
+        const e = await page.evaluate(() => { const m = document.querySelector('#c .plx-entity-header__media'); return { edge: m.classList.contains('plx-entity-header__media--edge'), stretch: m.classList.contains('plx-entity-header__media--stretch'), bw: getComputedStyle(m).borderInlineEndWidth, ph: Math.round(m.querySelector('.plx-entity-header__party').getBoundingClientRect().height), parties: m.querySelectorAll('.plx-entity-header__party').length }; });
+        assert.equal(e.parties, 2, T + layout + ': the pair'); assert.equal(e.ph, 44, T + layout + ': the avatars are 44px (' + e.ph + ')'); assert.equal(e.stretch, true, T + layout + ': it keeps its column');
+        if (layout === 'edge') { assert.equal(e.edge, true, T + 'edge keeps its class'); assert.notEqual(e.bw, '0px', T + 'and its edge line'); }
+      }
+      await mount({ media: { versus: [a, b] }, kind: 'section', layout: 'top-large' });
+      assert.equal(await page.evaluate(() => getComputedStyle(document.querySelector('.plx-entity-header__versus-mark')).fontSize), '12px', T + 'the mark is 12px beside 48px section avatars');
+      await mount({ media: { versus: [a, b] }, layout: 'top-large' });
+      assert.equal(await page.evaluate(() => getComputedStyle(document.querySelector('.plx-entity-header__versus-mark')).fontSize), '13px', T + 'and 13px beside 72px page avatars');
       // decorative
       await mount({ media: { versus: [a, b], decorative: true } }); s = await read(); assert.equal(s.hidden, 'true', T + 'decorative hides the pair'); assert.equal(s.role, null, T + 'and it is not an image');
       // a picture

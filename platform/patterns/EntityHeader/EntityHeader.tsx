@@ -147,8 +147,6 @@ function Media({ media, section, layout, strings }: any) {
   const kind = section ? 'section' : 'page';
   const t = useStrings('entityHeader', strings) as { vs: string; versus: string };
   const versus = !!media && !React.isValidElement(media) && Array.isArray(media.versus);
-  // a pair is drawn at the small size even in the stretched layouts (ADR 0037, G2)
-  if (versus && STRETCH[layout]) layout = 'top-small';
   const stretch = !!STRETCH[layout];
   const ref = React.useRef<any>(null);
   const [size, setSize] = React.useState<number | null>(null);
@@ -177,7 +175,7 @@ function Media({ media, section, layout, strings }: any) {
     if (pair.length !== 2 && development() && typeof console !== 'undefined') console.warn('[Plenix] EntityHeader: media.versus takes exactly two parties; got ' + pair.length + ', so one is drawn.');
     const party = (x: any, i: number) => <Avatar key={i} className="plx-entity-header__party plx-entity-header__avatar" name={x.name} src={x.src} color={x.color} size={section ? 'md' : 'xl'} />;
     inner = pair.length === 2
-      ? <>{party(pair[0], 0)}<span className={cx('plx-entity-header__versus-mark', layout === 'top-large' && 'plx-entity-header__versus-mark--large')} aria-hidden="true">{t.vs}</span>{party(pair[1], 1)}</>
+      ? <>{party(pair[0], 0)}<span className={cx('plx-entity-header__versus-mark', !section && layout === 'top-large' && 'plx-entity-header__versus-mark--large')} aria-hidden="true">{t.vs}</span>{party(pair[1], 1)}</>
       : pair.length ? party(pair[0], 0) : null;
   } else if (React.isValidElement(media)) inner = media;
   else if (media.person || media.src) inner = <Avatar className="plx-entity-header__avatar" name={media.person} src={media.src} color={media.color} gender={media.gender} size={section ? 'md' : 'xl'} />;
@@ -189,7 +187,7 @@ function Media({ media, section, layout, strings }: any) {
   return (
     <span ref={ref} data-plx-size={size ? size + 'px' : undefined}
       {...(versus && media.versus.filter(Boolean).length === 2 ? (media.decorative ? { 'aria-hidden': true } : { role: 'img', 'aria-label': fill(t.versus, { a: media.versus[0].name, b: media.versus[1].name }) }) : {})}
-      className={cx('plx-entity-header__media', 'plx-entity-header__media--' + kind + '-' + layout, versus && 'plx-entity-header__media--versus', stretch && 'plx-entity-header__media--stretch', layout === 'edge' && 'plx-entity-header__media--edge', layout === 'column-small' && 'plx-entity-header__media--start')}>
+      className={cx('plx-entity-header__media', 'plx-entity-header__media--' + kind + '-' + layout, versus && 'plx-entity-header__media--versus', versus && stretch && 'plx-entity-header__media--versus-' + kind, stretch && 'plx-entity-header__media--stretch', layout === 'edge' && 'plx-entity-header__media--edge', layout === 'column-small' && 'plx-entity-header__media--start')}>
       {inner}
     </span>
   );
