@@ -1826,7 +1826,7 @@
       }
     },
     "code-selector": {
-      "$value": "{plx-ref.color-orange-500}",
+      "$value": "{plx-ref.color-brown-500}",
       "$type": "color",
       "$extensions": {
         "plenix": {

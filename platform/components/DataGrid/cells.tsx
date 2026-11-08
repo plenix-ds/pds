@@ -84,26 +84,45 @@ export function CellValue({ column, value: given, strings, record, pill = false,
 }
 
 // A text value that may be cut (a line count, an ellipsis): with the tooltip on, the full text shows on hover and on keyboard focus of its cell, only while it is cut.
-// The cut is measured when the cell draws and when it resizes (the cells drawn are the visible rows). The cell is the grid's focus stop, so its focus drives the tooltip.
+// The cut is measured on demand (ADR 0043, #1067): when the pointer enters the text or its cell takes the focus, never when the cell draws, so a long list costs nothing extra.
+// The cell is the grid's focus stop, so its focus drives the tooltip. The Tooltip is off until a measure says the text is cut; it is then woken with the event that caused the measure.
 export function CutText({ tip, text, className, hover, children }: { tip: boolean; text: string; className: string; hover: (event: any) => void; children: React.ReactNode }) {
-  const box = React.useRef<HTMLSpanElement>(null), cutNow = React.useRef(false), [cut, setCut] = React.useState(false);
-  React.useLayoutEffect(() => {
+  const box = React.useRef<HTMLSpanElement>(null), wake = React.useRef<'pointerover' | 'focusin' | null>(null), [cutFor, setCutFor] = React.useState<string | null>(null);
+  const cut = cutFor === text;
+  // a line clamp reports its clamped height, so the natural height is read with the clamp lifted for the moment of the measure (written and restored at once)
+  const measure = React.useCallback((how: 'pointerover' | 'focusin') => {
+    const el = box.current;
+    if (!el) return;
+    const st = el.style, clamp = st.getPropertyValue('-webkit-line-clamp'), max = st.getPropertyValue('max-block-size');
+    st.setProperty('-webkit-line-clamp', 'none'); st.setProperty('max-block-size', 'none');
+    const natural = el.scrollHeight;
+    if (clamp) st.setProperty('-webkit-line-clamp', clamp); else st.removeProperty('-webkit-line-clamp');
+    if (max) st.setProperty('max-block-size', max); else st.removeProperty('max-block-size');
+    const c = natural > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1;
+    if (c && !cut) wake.current = how;
+    else if (c && how === 'focusin' && el.parentElement) el.parentElement.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));   // the Tooltip is already on: the cell's focus never reaches it, so tell it
+    setCutFor(c ? text : null);
+  }, [text, cut]);
+  // the cell's focus (a listener only: nothing is read until it fires)
+  React.useEffect(() => {
     const el = box.current;
     if (!tip || !el) return undefined;
-    // a line clamp reports its clamped height, so the natural height is read with the clamp lifted for the moment of the measure (written and restored at once)
-    const natural = () => { const st = el.style, clamp = st.getPropertyValue('-webkit-line-clamp'), max = st.getPropertyValue('max-block-size'); st.setProperty('-webkit-line-clamp', 'none'); st.setProperty('max-block-size', 'none'); const h = el.scrollHeight; st.setProperty('-webkit-line-clamp', clamp); st.setProperty('max-block-size', max); return h; };
-    const check = () => { const c = natural() > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1; cutNow.current = c; setCut(c); };
-    check();
-    const ro = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(check);
-    if (ro) ro.observe(el);
-    const cell = el.closest('[role=gridcell]'), trigger = el.parentElement;
-    const focus = () => { if (cutNow.current && trigger) trigger.dispatchEvent(new FocusEvent('focusin', { bubbles: true })); };
-    const blur = () => { if (trigger) trigger.dispatchEvent(new FocusEvent('focusout', { bubbles: true })); };
-    if (cell) { cell.addEventListener('focus', focus); cell.addEventListener('blur', blur); }
-    return () => { if (ro) ro.disconnect(); if (cell) { cell.removeEventListener('focus', focus); cell.removeEventListener('blur', blur); } };
-  }, [tip, text]);
+    const cell = el.closest('[role=gridcell]');
+    if (!cell) return undefined;
+    const focus = () => measure('focusin');
+    const blur = () => { const trigger = el.parentElement; if (trigger) trigger.dispatchEvent(new FocusEvent('focusout', { bubbles: true })); };
+    cell.addEventListener('focus', focus); cell.addEventListener('blur', blur);
+    return () => { cell.removeEventListener('focus', focus); cell.removeEventListener('blur', blur); };
+  }, [tip, measure]);
+  // the Tooltip is drawn on the first measure that finds a cut: tell it what happened, as the event it missed
+  React.useLayoutEffect(() => {
+    const how = wake.current, trigger = box.current && box.current.parentElement;
+    if (!how || !cut || !trigger) return;
+    wake.current = null;
+    trigger.dispatchEvent(how === 'focusin' ? new FocusEvent('focusin', { bubbles: true }) : new PointerEvent('pointerover', { bubbles: true, pointerType: 'mouse' }));
+  }, [cut]);
   if (!tip) return <span className={className} onMouseEnter={hover}>{children}</span>;
-  return <Tooltip content={text} describe={false} disabled={!cut}><span ref={box} className={className}>{children}</span></Tooltip>;
+  return <Tooltip content={text} describe={false} disabled={!cut}><span ref={box} className={className} onPointerEnter={() => measure('pointerover')}>{children}</span></Tooltip>;
 }
 
 // A tags cell: the tags that fit, then one "+N" Tag for the rest (design 84-cell-editors §2 and §3, issue 477). The fit is useBarFit's (the same step
