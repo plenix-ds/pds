@@ -87,6 +87,7 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 - **Footers have no fill** (D-0102, #948). Save and Cancel sit at the end, on the surface of the card, form or dialog that holds them, never on a grey band. A hairline separates them only where content passes under or scrolls behind them (a sticky bar, a dialog whose body scrolls). Details: `docs/pds1/slices/948/design.md`.
 - **No action links.** An action is a Button, never a text link. Links only navigate.
 - **Statuses are badges with an icon,** never a bare coloured dot. A dot only shows presence (online/away).
+- **An avatar's photo action** is a small corner button with an icon (camera) on the presence dot's ring and shape, never a full button. It is offered on `lg` and up, at the bottom-end corner, or the top-end when presence is shown (D-0112, `docs/pds1/slices/977/design.md`).
 - **Table header labels are start-aligned** (left in LTR, right in RTL), including the header of a number column.
 - **Logical properties only:** `inline-start` and `inline-end`, never left and right. That is what makes RTL work.
 - **Colours only through tokens.** No hex, rgb or named colours outside `plx-ref`. No inline styles, except in the rich-text engine and in ECharts options built from token values. No `!important`.
