@@ -137,6 +137,7 @@ roles:
     instances: 1
     parked: false
     boot: false
+    memory_limit_gb: 6        # runs headless Chrome over every story (story axe, #909); the 2.5 GB default was OOM-killed twice on 2026-11-08
     definition: .claude/agents/pds1-qa-engineer.md
     wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
   - id: code-reviewer
