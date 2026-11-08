@@ -43,7 +43,7 @@
 
 ## Consequences
 
-- **Semver: MINOR** (*Added*: the `PropertyGroup` export, its two classes and its seven comp tokens). Nothing is removed or renamed.
+- **Semver: MINOR** (*Added*: the `PropertyGroup` export, its two classes and its eight comp tokens). Nothing is removed or renamed.
 - CTM wraps each read-only group in `PropertyGroup` and drops its own group heading.
 
 ## Enforced by
