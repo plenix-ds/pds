@@ -54,7 +54,9 @@
        tile for surface), for a usage that needs the box; or an element. 44px square (32px in a section)
      status: the Status tile, first in the details, in its tone as a whole: { tone, label, icon } (tone: a Badge tone:
        neutral, success, active, waiting, action-required, negative; info, warning and danger still work)
-     facts: up to four fact tiles after the Status tile, each as wide as its content: [{ label, value, data, icon, action }];
+     facts: up to four fact tiles after the Status tile, each as wide as its content: [{ label, value, data, icon, tone, action }]
+       (tone: the tile in the tone of a Status tile, for a missing required value use "negative" (or its alias "danger"), the softer "action-required";
+       an icon takes the tone colour);
        dates, times and numbers in a value are set in the data font and its words in the normal font; data: true
        sets the whole value in the data font, data: false none of it
        (data: a technical value, in the data font); a plain string or element is a tile with no label. icon: the fact's
@@ -239,11 +241,13 @@ function dataText(value: any) {
 }
 
 function Fact({ f, iconOnly }: any) {
+  // a tone makes the tile a status tile (the Status tile's fill, border and text; the icon inherits the text colour)
+  const toned = f.tone ? { className: ' plx-entity-header__fact--status', tone: toneOf(f.tone) } : { className: '', tone: undefined };
   const value = f.data ? <Text variant="data">{f.value}</Text> : f.data === false ? f.value : dataText(f.value);
   if (f.action) {
     const a = f.action;
     return (
-      <div className="plx-entity-header__fact plx-entity-header__fact--action">
+      <div className={'plx-entity-header__fact plx-entity-header__fact--action' + toned.className} data-plx-tone={toned.tone}>
         <dt className="plx-entity-header__fact-label plx-entity-header__fact-label--icon">{f.icon ? <span className="plx-entity-header__fact-label-icon" aria-hidden="true"><Icon name={f.icon} /></span> : null}{f.label}</dt>
         <dd className="plx-entity-header__fact-line">
           <span className="plx-entity-header__fact-value plx-entity-header__fact-value--count">{f.data ? <span className="plx-entity-header__count-data">{f.value}</span> : f.value}</span>
@@ -256,14 +260,14 @@ function Fact({ f, iconOnly }: any) {
   }
   if (f.icon) {
     return (
-      <div className="plx-entity-header__fact plx-entity-header__fact--icon">
-        <dt className="plx-entity-header__fact-label plx-entity-header__fact-label--tile"><span className="plx-entity-header__fact-icon" aria-hidden="true"><Icon name={f.icon} /></span><span className="plx-entity-header__fact-name">{f.label}</span></dt>
+      <div className={'plx-entity-header__fact plx-entity-header__fact--icon' + toned.className} data-plx-tone={toned.tone}>
+        <dt className="plx-entity-header__fact-label plx-entity-header__fact-label--tile"><span className={'plx-entity-header__fact-icon' + (f.tone ? ' plx-entity-header__fact-icon--toned' : '')} aria-hidden="true"><Icon name={f.icon} /></span><span className="plx-entity-header__fact-name">{f.label}</span></dt>
         <dd className="plx-entity-header__fact-value plx-entity-header__fact-value--tile">{value}</dd>
       </div>
     );
   }
   return (
-    <div className="plx-entity-header__fact">
+    <div className={'plx-entity-header__fact' + toned.className} data-plx-tone={toned.tone}>
       {f.label ? <dt className="plx-entity-header__fact-label">{f.label}</dt> : null}
       <dd className="plx-entity-header__fact-value">{value}</dd>
     </div>

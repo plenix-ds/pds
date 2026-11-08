@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: ltr: danger is drawn as negative
+
+null !== 'negative'
+
+    at /home/cc/pds1/work/component-engineer-1/tests/entity-header-fact-tone-990.test.js:32:14 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: null,
+  expected: 'negative',
+  operator: 'strictEqual',
+  diff: 'simple'
+}

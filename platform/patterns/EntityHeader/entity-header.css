@@ -558,6 +558,10 @@
   inline-size: var(--plx-comp-entity-header-fact-icon-tile-size);
   justify-content: center;
 }
+/* a toned fact with an icon: the icon takes the tone's text colour (#990) */
+.plx-entity-header__fact-icon--toned {
+  color: inherit;
+}
 .plx-entity-header__fact-name {
   grid-column: 2;
   grid-row: 1;
