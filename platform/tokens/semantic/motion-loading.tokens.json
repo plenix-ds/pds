@@ -36,11 +36,6 @@
       "$value": "{plx-ref.motion-delay-long-press}",
       "$type": "duration",
       "$description": "The wait before a loading indicator appears, half a second, so a fast answer never flashes it (plx-motion-delayed on its wrapper)."
-    },
-    "motion-loading-region-delay": {
-      "$value": "{plx-ref.motion-delay-loading-region}",
-      "$type": "duration",
-      "$description": "The wait before a region loading state (LoadingState, Spinner delay=\"region\") appears, one second, so a fast load shows nothing (D-0130, ADR 0042). Not motion: the reduced-motion file never sets it to 0. Controls keep motion-loading-delay."
     }
   }
 }
