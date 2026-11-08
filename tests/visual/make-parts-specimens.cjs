@@ -6,7 +6,19 @@ const fs = require('fs'), path = require('path');
 const { serve, launch } = require('../lib');
 
 // each entry: a function returning React.createElement(...) source run in the page (h = createElement, P = Plenix)
+// a flat grey logo as a data URI, so the specimen needs no file or network
+const logo = (w, h) => 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '"><rect width="' + w + '" height="' + h + '" fill="gray"/></svg>');
+const brand = (src, org) => `h(P.AppHeader, { appName: 'Cases', brand: { logo: { src: '${src}', alt: 'Logo' }, organization: '${org}', application: 'Clerical Tribunal Management' } })`;
+const nav = `h(P.NavList, { label: 'Case', items: [{ id: 'a', label: 'Summary', current: true }, { id: 'b', label: 'Parties' }, { id: 'c', label: 'Documents' }] })`;
 const parts = {
+  'entity-header-fact-tone': `h(P.EntityHeader, { title: 'Case 2026-114', subtitle: 'Council review', status: { tone: 'waiting', icon: 'clock', label: 'Open' },
+    facts: [ { label: 'Council member', icon: 'alert', tone: 'negative', value: h(P.Combobox, { 'aria-label': 'Council member', invalid: true, options: [{ value: 'a', label: 'Maya Chen' }, { value: 'b', label: 'Noor Haddad' }], value: null, onChange: function () {} }) },
+      { label: 'Filed', value: 'Mar 2, 2026' } ] })`,
+  'secondary-pane-back': `h('div', null,
+    h(P.SecondaryPane, { title: 'Case overview', back: { parent: 'cases', href: '#cases' } }, ${nav}),
+    h(P.SecondaryPane, { title: 'Case overview', back: { parent: 'all of the cases assigned to the tribunal this year', href: '#cases' } }, ${nav}))`,
+  'app-header-brand': `h('div', null, ${brand(logo(64, 64), 'Diocese of Los Angeles')}, ${brand(logo(256, 64), 'Diocese of Los Angeles')}, ${brand(logo(64, 64), 'The Very Long Name of an Organization That Does Not Fit')})`,
+  'panel-toggle-header': `h('div', null, h(P.Panel, { title: 'Spouse', collapsible: true, toggleOn: 'header', defaultExpanded: true }, 'Details of the party.'), h(P.Panel, { title: 'Witness', collapsible: true, toggleOn: 'header', defaultExpanded: false }, 'Details of the witness.'))`,
   'timeline-grouped': `h(P.Timeline, { variant: 'grouped', label: 'Case history', legend: true, hiddenCategories: ['c3'], onHiddenCategoriesChange: function () {}, items: [
     { id: 5, dateTime: '2027-02-01T09:00:00Z', title: 'Decision due', description: 'A ruling is expected.', upcoming: true, category: { id: 'c5', label: 'Review', color: '5' } },
     { id: 6, title: 'Appeal window', description: 'Opens after the decision.', upcoming: true, category: { id: 'c1', label: 'Filing', color: '1' } },
