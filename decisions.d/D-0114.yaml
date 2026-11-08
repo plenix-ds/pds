@@ -1,0 +1,9 @@
+id: D-0114
+date: 2026-11-08
+area: api
+decided_by: agent (pds1-ds-architect) at G3, owner may switch
+decision: 'SectionHeading gets icon?: IconValue | React.ReactNode, the same as Panel.icon (ADR 0035): an aria-hidden plx-section-heading__icon before the label (inside the toggle when collapsible), sized and spaced by section-heading-icon-size -> control-icon-standard and section-heading-icon-gap -> space-inline-sm, Panel''s values, so the section heading and the card heading match with their icon (D-0110).'
+why: 'D-0110 asks for the card heading style with its icon; icons placed in children by each app would drift and be read as part of the label.'
+options: ['icon prop like Panel.icon (chosen)', 'apps put an Icon in children']
+status: active
+check: 'G3 API diff on the build PR; check-system token-tiers (check 6), token-names (check 7); tests/section-heading-matches-card-946.test.js (icon size and gap equal the Panel title icon, aria-hidden, inline start in RTL)'
