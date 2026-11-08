@@ -54,7 +54,7 @@
 | focus | n/a (not focusable; a link or control in a value keeps `focus-ring-color` 2px, offset 2px, which is visible on the tile) | n/a (the toggle keeps its ring) | n/a |
 | active | n/a (not pressable) | n/a (the toggle keeps its press) | n/a |
 | disabled | n/a (read-only is not disabled, DESIGN §9; the value keeps full contrast) | n/a | n/a |
-| loading | the tile keeps its size and holds a Skeleton line of 20px in place of the value. The label stays | n/a (the body loads) | n/a |
+| loading | superseded by D-0130 (#1032): no Skeleton. The body shows `LoadingState`; a single late value shows an `sm` spinner in its place (`docs/pds1/slices/1043/design.md` §2). The label stays | n/a (the body loads) | n/a |
 | error | n/a (no input. An invalid value is the app's Badge or Notice, `docs/content/messaging.md`) | n/a | n/a |
 | selected | n/a (not selectable; the text can be selected and copied) | n/a | n/a |
 | empty | the tile stays at full height. The value shows the app's empty text (wording is the Technical Writer's, e.g. "None recorded") in the value style, never blank | n/a | a group with no items is not rendered |

@@ -136,14 +136,26 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 - **Group heading** (`PropertyGroup`): **group-heading**, 13px, medium, gold (brown-600 light, yellow-300 dark), sentence case, no line. There are 40px between groups.
 - **Field label:** **field-label**, 11px, regular, navy (blue-700 light, blue-275 dark), sentence case. It is the only role below 12px (owner, D-0106).
 - **Value:** **field-value**, 13px, semibold, `content-default`. A data value is Reddit Mono at the same size. A status is a Badge with its icon.
-- **Stacked (`layout="stacked"`):** each field sits on a porcelain tile with a 1px border in a deeper shade of the same tint, never the card's grey.
+- **Stacked (`layout="stacked"`, 1.2.0):** the label sits above the value, and the value sits on a porcelain tile.
+- **Tiles (`variant="tiles"`, the owner's look, D-0132):** the **whole field** (label and value) sits on a porcelain tile with a 1px border in a deeper shade of the same tint, never the card's grey.
   - Tiles have a 6px radius and 8/12px padding.
-  - They sit 2 to a row (`columnCount`), with 16px gaps (`space-stack-field`). Tiles in a row are equal in height.
+  - They sit 2 to a row with 16px gaps (`space-stack-field`), and one per row below 496px (a 240px tile minimum, `size-field-tile-min`). A full-row tile for long text is #1052 (1.3.0). Tiles in a row are equal in height.
 - **Columns (`layout="columns"`, the 1.x default):** the same label and value type, with no tiles. The default changes in 2.0.0 (D-0107).
 - **Inside `<ReadOnly>`**, a control takes the tile fill and border. Its label is **field-label**. Heights don't change.
 - The label is always lighter than its value. Label and value stay ≥ 4.5:1 on the tile in light and dark.
 - A value wraps and is never cut.
 - Details and the state matrix: `docs/pds1/slices/946/design.md`.
+
+### Named variations (register)
+
+A named variation sets a whole agreed look with one prop, so an app never gets half of it. Each one is an existing part, has its own decision, and adds no colours or values of its own.
+
+| Variation | Entry point | Look | Decision | Details |
+|---|---|---|---|---|
+| Read-only tiles | `<PropertyGroup variant="tiles">` (name confirmed at G3) | the D-0106 preset above: porcelain tiles 2 per row, gold group heading, navy label, semibold value, statuses as Badges with icons | D-0132 (owner, #1043) | `docs/pds1/slices/1043/design.md` |
+| Grouped Timeline | `Timeline` grouped by year | §8 "Timeline, grouped" | D-0115, D-0117 | `docs/pds1/slices/987/design.md` |
+
+- **Read-only tiles** is the look for every read-only card (case summaries, record details). Use `columns` only in dense panes and inspectors. The 1.x default stays `columns` (D-0107).
 
 ## 4. Shape (D-0005)
 
@@ -273,7 +285,7 @@ Every component declares a state manifest (check 9). Each state is a token set o
 - **Ring and label:**
   - The ring is `lg` (24px) in a page, panel, card or dialog body. It is `md` (16px) in a grid placeholder row or a one-line region, and `sm` (12px) only inside a control.
   - The label sits after the ring with an 8px gap (`space-inline-sm`). It uses the `body` role in `content-default`.
-  - The arc is at least 3:1 in light and dark: `feedback-info-solid` (the remap is assigned to the DS Architect, #1032).
+  - The arc is at least 3:1 in light and dark: `feedback-info-solid` (#1047).
 - **Announcements:** the region is `aria-busy="true"`. The label is the `role="status"` text and is announced once. Only the outermost loading region shows a spinner.
 - **Known progress** uses a `ProgressBar` with its label. Past about 10 seconds, the region adds a Cancel button or a progress value.
 - **Reduced motion:** the ring stands still, and the label still shows.
