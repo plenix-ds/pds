@@ -73,6 +73,14 @@ require('./limit.js');
     assert.equal(s.pressed, 'false', 'Enter turns the category off'); assert.equal(s.n, 4, 'its events are not rendered'); assert.deepEqual(s.years, ['2026', '2025'], 'a year with no visible event is dropped');
     await page.keyboard.press('Tab'); await page.keyboard.press('Space'); await new Promise((r) => setTimeout(r, 200));
     assert.equal(await page.evaluate(() => document.querySelectorAll('#c .plx-timeline__event').length), 2, 'Space toggles the next category');
+    // the swatch is 12 x 12px on and off, and the legend is 24px above the first year
+    for (const [dir, mode] of [['ltr', 'light'], ['ltr', 'dark'], ['rtl', 'light']]) {
+      await mount({ items, legend: true }, dir, mode); await page.focus('#c [role=group] button'); await page.keyboard.press('Enter'); await new Promise((r) => setTimeout(r, 200));
+      const g = await page.evaluate(() => ({ sw: [...document.querySelectorAll('#c .plx-timeline__swatch')].map((x) => { const r = x.getBoundingClientRect(); return [Math.round(r.width), Math.round(r.height)].join('x'); }),
+        gap: Math.round(document.querySelector('#c section.plx-timeline__group h3').getBoundingClientRect().top - document.querySelector('#c [role=group]').getBoundingClientRect().bottom) }));
+      assert.ok(g.sw.length === 4 && g.sw.every((x) => x === '12x12'), dir + ' ' + mode + ': swatches are 12x12 on and off: ' + g.sw);
+      assert.equal(g.gap, 24, dir + ' ' + mode + ': the legend is 24px above the first year (' + g.gap + ')');
+    }
     // controlled
     await mount({ items, legend: true, hiddenCategories: ['c3'], controlled: true });
     assert.equal(await page.evaluate(() => document.querySelectorAll('#c .plx-timeline__event').length), 4, 'hiddenCategories hides those');
@@ -102,7 +110,7 @@ require('./limit.js');
     // densities: the group gap is 80px, 64px compact; the event padding is 12/16, 8/12 compact, 16/16 comfortable
     for (const [density, gap, pad] of [['standard', 80, '12px 16px'], ['compact', 64, '8px 12px'], ['comfortable', 80, '16px 16px']]) {
       await mount({ items }); await page.evaluate((d) => document.documentElement.setAttribute('data-plx-density', d), density);
-      const g = await page.evaluate(() => ({ gap: parseFloat(getComputedStyle(document.querySelector('#c .plx-timeline--grouped')).rowGap), pad: ['paddingBlockStart', 'paddingInlineStart'].map((k) => getComputedStyle(document.querySelector('#c .plx-timeline__event'))[k]).join(' ') }));
+      const g = await page.evaluate(() => ({ gap: parseFloat(getComputedStyle(document.querySelector('#c .plx-timeline__groups')).rowGap), pad: ['paddingBlockStart', 'paddingInlineStart'].map((k) => getComputedStyle(document.querySelector('#c .plx-timeline__event'))[k]).join(' ') }));
       assert.equal(g.gap, gap, density + ': group gap'); assert.equal(g.pad, pad, density + ': event padding');
     }
     await page.evaluate(() => document.documentElement.removeAttribute('data-plx-density'));

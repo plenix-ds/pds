@@ -135,6 +135,7 @@ function GroupedTimeline({ items = [], label, className, legend = false, hiddenC
           })}
         </div>
       ) : null}
+      <div className="plx-timeline__groups">
       {groups.map((g, gi) => {
         const hid = uid + '-' + gi;
         return (
@@ -172,6 +173,7 @@ function GroupedTimeline({ items = [], label, className, legend = false, hiddenC
           </section>
         );
       })}
+      </div>
     </section>
   );
 }

@@ -1,0 +1,9 @@
+AssertionError [ERR_ASSERTION]: ltr light: swatches are 12x12 on and off: 2x18,2x18,2x18,2x18
+    at /home/cc/pds1/work/component-engineer-1/tests/timeline-grouped-987.test.js:81:14 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}

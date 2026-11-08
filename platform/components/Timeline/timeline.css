@@ -44,7 +44,8 @@
 /* grouped (ADR 0036, #987): year groups; each event in a container tinted by its category, a calendar date tile at its start, the
    category tag at its end, a watermark year beside it. The colors come from the category slots (--plx-comp-category-*): the tint is the
    slot's soft color with a little of its text color mixed in (none in light, a little in dark), so one rule serves both themes. */
-.plx-timeline--grouped{display:flex;flex-direction:column;row-gap:var(--plx-comp-timeline-grouped-group-gap);}
+.plx-timeline--grouped{display:flex;flex-direction:column;}
+.plx-timeline__groups{display:flex;flex-direction:column;row-gap:var(--plx-comp-timeline-grouped-group-gap);}
 .plx-timeline__group{display:flex;flex-direction:column;min-inline-size:0;row-gap:var(--plx-comp-timeline-grouped-heading-gap);}
 .plx-timeline__year{color:var(--plx-comp-timeline-grouped-heading-text);font-size:var(--plx-comp-timeline-grouped-heading-font-size);font-variant-numeric:tabular-nums;font-weight:var(--plx-comp-timeline-grouped-heading-font-weight);margin-block-end:0;margin-block-start:0;margin-inline-end:0;margin-inline-start:0;}
 .plx-timeline__year::after{background-color:var(--plx-comp-timeline-grouped-heading-rule-color);block-size:var(--plx-comp-timeline-grouped-heading-rule-height);border-end-end-radius:var(--plx-comp-timeline-grouped-heading-rule-radius);border-end-start-radius:var(--plx-comp-timeline-grouped-heading-rule-radius);border-start-end-radius:var(--plx-comp-timeline-grouped-heading-rule-radius);border-start-start-radius:var(--plx-comp-timeline-grouped-heading-rule-radius);content:"";display:block;inline-size:var(--plx-comp-timeline-grouped-heading-rule-width);margin-block-start:var(--plx-comp-timeline-grouped-heading-rule-gap);}
@@ -74,7 +75,7 @@
 .plx-timeline__legend{column-gap:var(--plx-comp-timeline-grouped-legend-gap);display:flex;flex-wrap:wrap;margin-block-end:var(--plx-comp-timeline-grouped-legend-offset);row-gap:var(--plx-comp-timeline-grouped-legend-gap);}
 .plx-timeline__legend-item{color:var(--plx-comp-timeline-grouped-legend-text);transition-duration:var(--plx-sys-motion-duration-quick);transition-property:background-color, color;transition-timing-function:var(--plx-sys-motion-ease-standard);}
 .plx-timeline__legend-item--off{color:var(--plx-comp-timeline-grouped-legend-text-off);}
-.plx-timeline__swatch{background-color:var(--plx-comp-category-on-soft);block-size:var(--plx-comp-timeline-grouped-legend-swatch-size);border-color:var(--plx-comp-category-on-soft);border-radius:var(--plx-comp-timeline-grouped-legend-swatch-radius);border-style:solid;border-width:var(--plx-comp-timeline-grouped-legend-swatch-border-width);box-sizing:border-box;flex-shrink:0;inline-size:var(--plx-comp-timeline-grouped-legend-swatch-size);}
+.plx-timeline__swatch{display:inline-block;background-color:var(--plx-comp-category-on-soft);block-size:var(--plx-comp-timeline-grouped-legend-swatch-size);border-color:var(--plx-comp-category-on-soft);border-radius:var(--plx-comp-timeline-grouped-legend-swatch-radius);border-style:solid;border-width:var(--plx-comp-timeline-grouped-legend-swatch-border-width);box-sizing:border-box;flex-shrink:0;inline-size:var(--plx-comp-timeline-grouped-legend-swatch-size);}
 .plx-timeline__swatch--off{background-color:transparent;}
 /* below the Narrow width the tag goes under the body */
 @media (width < 600px){
