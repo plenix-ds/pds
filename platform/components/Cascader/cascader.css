@@ -32,3 +32,4 @@
 .plx-cascader__loading{align-items:center;column-gap:var(--plx-comp-cascader-loading-gap);display:flex;}
 .plx-cascader__error{color:var(--plx-comp-cascader-error-text);}
 .plx-cascader__limit{border-block-start-color:var(--plx-comp-cascader-search-border-block-end-color);border-block-start-style:solid;border-block-start-width:var(--plx-comp-cascader-search-border-block-end-width);color:var(--plx-comp-cascader-limit-text);font-size:var(--plx-comp-cascader-limit-font-size);padding-block-end:var(--plx-comp-cascader-limit-padding-block);padding-block-start:var(--plx-comp-cascader-limit-padding-block);padding-inline-end:var(--plx-comp-cascader-limit-padding-inline);padding-inline-start:var(--plx-comp-cascader-limit-padding-inline);}
+.plx-cascader__placeholder--invalid{color:var(--plx-comp-cascader-invalid-placeholder-text);}

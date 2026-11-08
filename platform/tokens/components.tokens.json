@@ -934,6 +934,11 @@
       "$value": "{plx-sys.field-placeholder}",
       "$type": "color"
     },
+    "input-invalid-placeholder-text": {
+      "$value": "{plx-sys.field-placeholder-invalid}",
+      "$type": "color",
+      "$description": "Input: the placeholder on the invalid fill (ADR 0046)."
+    },
     "input-hover-border-color": {
       "$value": "{plx-sys.border-strong}",
       "$type": "color"

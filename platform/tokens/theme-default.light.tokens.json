@@ -1665,6 +1665,16 @@
         }
       }
     },
+    "field-placeholder-invalid": {
+      "$value": "{plx-ref.color-gray-700}",
+      "$type": "color",
+      "$extensions": {
+        "plenix": {
+          "group": "text",
+          "purpose": "Placeholder text in a field with the invalid (tinted) fill: 4.5:1 or more on it (ADR 0046, D-0137)."
+        }
+      }
+    },
     "tooltip-background": {
       "$value": "{plx-ref.color-gray-900}",
       "$type": "color",

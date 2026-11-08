@@ -267,7 +267,7 @@ export const Cascader = React.forwardRef<HTMLButtonElement | null, CascaderProps
           aria-label={label || undefined} aria-describedby={describedAt} disabled={disabled}
           onClick={() => (open ? close(false) : openList())}
           onKeyDown={(e) => { if (e.key === 'ArrowDown' && !open) { e.preventDefault(); openList(); } }} {...rest}>
-          <span id={auto + '-value'} className={cx('plx-cascader__value', !shown && 'plx-cascader__placeholder')}>{shown || (multiple && chosen.length ? '' : placeholder || t.placeholder)}</span>
+          <span id={auto + '-value'} className={cx('plx-cascader__value', !shown && 'plx-cascader__placeholder', !shown && invalid && 'plx-cascader__placeholder--invalid')}>{shown || (multiple && chosen.length ? '' : placeholder || t.placeholder)}</span>
           <span className="plx-cascader__chevron" aria-hidden="true"><Icon icon={SelectChevronIcon} filled={false} /></span>
         </button>
       </div>

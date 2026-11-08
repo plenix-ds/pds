@@ -56,6 +56,11 @@
       "$type": "color",
       "$description": "Cascader placeholder: text color (field-placeholder, as Combobox and Input; AA in dark mode, ADR 0046)."
     },
+    "cascader-invalid-placeholder-text": {
+      "$value": "{plx-sys.field-placeholder-invalid}",
+      "$type": "color",
+      "$description": "Cascader: the placeholder on the invalid fill (ADR 0046)."
+    },
     "cascader-chevron-background": {
       "$value": "{plx-sys.content-muted}",
       "$type": "color",
