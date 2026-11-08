@@ -1,0 +1,9 @@
+id: D-0123
+date: 2026-11-08
+area: components
+decided_by: agent (pds1-design-director) at G2, owner may switch
+decision: 'NavPane back item (#995): a link row "Back to {parent}" above the title row, only when the pane has a parent; arrow_back 16px on the NavList icon column, secondary role (12px, 400) in content-muted, control-height-inline, never filled or centred; the pane title keeps 13px bold, so the order is title > section label > item > back; in the rail it is the item after Expand; at Narrow it is not repeated while a list-detail Back shows; the settings footer keeps the way back from settings.'
+why: 'CTM owner (#995): the back control should be start-aligned with icons and quieter than the pane title. Fluent puts back at the top of the pane. Enlarging the title would change every pane and needs an owner decision.'
+options: ['back row above the title, title unchanged (chosen)', 'the same, with the pane title raised to 15px (surface-title)', 'back arrow inside the title row, icon only']
+status: active
+check: 'planned:nav-pane-back-995 (#995: row only with a parent, link before the title, arrow aligned with NavList icons, title weight above the back row, RTL flip, rail order, single back at Narrow)'

@@ -115,6 +115,11 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 - **surface-title** (15px, 700) is the title of a dialog or a sheet, recorded as Plenix draws it today (#122). Page and section titles use **title** (20px).
 - Body and heading are both 13px. Hierarchy comes from weight (400 → 600) and from title or display (20px). That is the existing language, recorded as is.
 
+### Navigation pane type order (D-0123, #995)
+
+- The pane title (13px, 700, `content-default`) is the strongest text in a NavPane. Below it come the NavList section label (12px, 700, caps, `content-muted`), then the item (13px, 400), then the back item (12px, 400, `content-muted`).
+- **A back item** ("Back to {parent}") is a link row above the title row, start-aligned, with its arrow on the nav icon column. It is never a filled or centred button. Details: `docs/pds1/slices/995-nav-back/design.md`.
+
 ### Read-only fields and card headings (D-0106, #946)
 
 - The owner's preset (D-0106) replaces the Fluent 2 field (D-0101). Every level has its own look: card heading › group heading › value › label.
