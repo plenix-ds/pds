@@ -6,6 +6,15 @@ The batch numbers point to the work log (Plenix - DAM/audit/batches/).
 
 ## [Unreleased]
 
+## [1.2.1] - 2026-11-08
+
+### Upgrading from 1.2.0
+Nothing to change. Deprecated names keep working (each says what replaces it). Apps on the CDN loader follow this release by themselves; npm apps update the version as usual.
+
+### Fixed
+- `Panel`: the header's glow no longer paints over the panel's rounded top corners, which hid the border along both curves. The header's top corners take the panel's inner radius (its radius minus its border width), and a collapsed panel rounds the header's bottom corners too (#1031).
+- Grouped `Timeline`: an item without `dateTime`, such as an upcoming event with no date yet, keeps its full width (it collapsed to about 34px, its title wrapping a letter per line) and shows its tile reading Pending (#1055).
+
 ## [1.2.0] - 2026-11-08
 
 ### Upgrading from 1.1.0
