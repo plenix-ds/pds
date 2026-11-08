@@ -1,0 +1,9 @@
+id: D-0133
+date: 2026-11-08
+area: api
+decided_by: agent (pds1-product-lead) at G1, owner may switch
+decision: 'DataGrid columns take lines: n (clamp to n lines, then an ellipsis; the grid picks the smallest row-height step that fits) and show a truncated cell''s full text in a tooltip on hover and keyboard focus, only when the text is cut (proposed overflow: "tooltip", on by default for wrap and lines columns); a Tooltip inside a cell takes the cell''s width. G3 may rename (#1044).'
+why: 'CTM needs two-line cells and the full text for keyboard users; today wrap shows only what fits the row step, and the title attribute gives nothing on focus.'
+options: ['lines plus an overflow tooltip (chosen)', 'apps pick rowHeight and wrap their own Tooltip']
+status: active
+check: 'tests for #1044 AC-1..AC-6 (docs/pds1/slices/1044/brief.md); G3 API diff on the build PR'
