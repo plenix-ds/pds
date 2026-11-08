@@ -214,12 +214,14 @@ export const MillerColumns = React.forwardRef<HTMLDivElement, MillerColumnsProps
       {cols.map((col, level) => {
         const here = chosen[level];
         const name = col.parent ? (col.parent.label as string | undefined) : label;
+        const ListTag: any = col.items.length ? 'ul' : 'div';
         return (
           <React.Fragment key={level + '-' + (col.parent ? col.parent.id : 'root')}>
             <div ref={(el) => { columns.current[level] = el; }} className="plx-miller-columns__column" data-plx-width={widthOf(level)}>
-              <ul ref={(el) => { lists.current[level] = el; }} className="plx-miller-columns__list" role="listbox" tabIndex={0} aria-label={name}
+              {/* a column with items is a listbox; one with none (loading, failed, empty) is a group holding its status or message, so the listbox never holds a status */}
+              <ListTag ref={(el: HTMLElement | null) => { lists.current[level] = el as HTMLUListElement | null; }} className="plx-miller-columns__list" role={col.items.length ? 'listbox' : 'group'} tabIndex={0} aria-label={name}
                 aria-busy={col.parent && loader.needs(col.parent) && loader.statusOf(col.parent) !== 'failed' ? true : undefined}
-                aria-activedescendant={here ? optId(level, here.id) : undefined} onKeyDown={onKey(level)}
+                aria-activedescendant={here && col.items.length ? optId(level, here.id) : undefined} onKeyDown={onKey(level)}
                 onFocus={() => { if (!pressing.current && !here && col.items.length) choose(level, enabled(col.items)[0]); }}>
                 {col.items.length ? col.items.map((it) => {
                   const on = here && here.id === it.id, parent = hasKids(it), isChecked = checked && !parent && checked.indexOf(it.id) >= 0;
@@ -242,9 +244,9 @@ export const MillerColumns = React.forwardRef<HTMLDivElement, MillerColumnsProps
                     </li>
                   );
                 }) : col.parent && loader.needs(col.parent)
-                  ? <li className="plx-miller-columns__empty" role="presentation"><BranchStatus loader={loader} node={col.parent} className="plx-miller-columns__status" /></li>
-                  : <li className="plx-miller-columns__empty" role="presentation">{t.empty}</li>}
-              </ul>
+                  ? <div className="plx-miller-columns__empty"><BranchStatus loader={loader} node={col.parent} className="plx-miller-columns__status" /></div>
+                  : <div className="plx-miller-columns__empty">{t.empty}</div>}
+              </ListTag>
             </div>
             {resizable ? <div className="plx-miller-columns__resizer" role="separator" aria-orientation="vertical" tabIndex={0} aria-label={fill(t.resize, { label: name })}
               aria-valuemin={MIN_STEP} aria-valuemax={MAX_STEP} aria-valuenow={widthOf(level)} onKeyDown={onResizeKey(level)} onPointerDown={onResizeDown(level)} /> : null}
