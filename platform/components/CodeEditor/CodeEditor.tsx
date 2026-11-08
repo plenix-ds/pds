@@ -151,7 +151,7 @@ export const CodeEditor = React.forwardRef<HTMLTextAreaElement, CodeEditorProps>
             required={required} id={id} aria-label={label} aria-invalid={invalid || undefined} rows={1} wrap="off" spellCheck={false} autoCapitalize="off"
             autoComplete="off" autoCorrect="off" data-gramm="false" aria-describedby={describedAt} {...rest} />
           {/* the colored copy lies over the textarea (its text is transparent): the selection and the caret show through */}
-          <pre className="plx-code-editor__pre" aria-hidden="true"><code data-plx-language={language}>{colored}{code.endsWith('\n') || !code ? ' ' : ''}</code></pre>
+          <pre className="plx-code-editor__pre" aria-hidden="true" aria-disabled={disabled || undefined}><code data-plx-language={language}>{colored}{code.endsWith('\n') || !code ? ' ' : ''}</code></pre>
         </div>
       </div>
       {editable ? <span id={hintId} className="plx-visually-hidden">{t.hint}</span> : null}
