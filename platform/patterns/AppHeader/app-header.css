@@ -107,3 +107,4 @@
 .plx-app-header__logo{block-size:var(--plx-comp-brand-mark-context-size);flex-shrink:0;inline-size:auto;max-inline-size:calc(var(--plx-comp-brand-mark-context-size) * 3);object-fit:contain;}
 .plx-app-header__logo-slot{align-items:center;block-size:var(--plx-comp-brand-mark-context-size);display:inline-flex;flex-shrink:0;}
 .plx-app-header__text-cut{max-inline-size:var(--plx-comp-app-header-name-width);overflow-x:hidden;overflow-y:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.plx-app-header__tip{display:contents;}

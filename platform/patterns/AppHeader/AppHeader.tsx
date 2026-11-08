@@ -190,11 +190,26 @@ function brandContent(b: AppHeaderBrand, fallbackApp: React.ReactNode, sw: boole
     <>
       {b.logo ? <BrandLogo logo={b.logo} /> : null}
       <span className={cx('plx-app-header__name', sw && 'plx-app-header__name--switch')}>
-        {b.organization ? <span className={cx('plx-app-header__product', 'plx-app-header__text-cut', sw && 'plx-app-header__product--switch')} title={typeof b.organization === 'string' ? b.organization : undefined}>{b.organization}</span> : null}
-        {app ? <span className={cx('plx-app-header__app', 'plx-app-header__text-cut', sw && 'plx-app-header__app--switch')} title={typeof app === 'string' ? app : undefined}>{app}</span> : null}
+        {b.organization ? <span className={cx('plx-app-header__product', 'plx-app-header__text-cut', sw && 'plx-app-header__product--switch')}>{b.organization}</span> : null}
+        {app ? <span className={cx('plx-app-header__app', 'plx-app-header__text-cut', sw && 'plx-app-header__app--switch')}>{app}</span> : null}
       </span>
     </>
   );
+}
+// the full brand in a Tooltip while a line is cut (no tab stop of its own: it wraps the one element already there)
+function BrandTip({ text, children }: { text: string; children: React.ReactElement }) {
+  const box = React.useRef<HTMLSpanElement>(null);
+  const [cut, setCut] = React.useState(false);
+  React.useLayoutEffect(() => {
+    const el = box.current;
+    if (!el) return undefined;
+    const measure = () => setCut([...el.querySelectorAll<HTMLElement>('.plx-app-header__text-cut')].some((x) => x.scrollWidth > x.clientWidth));
+    measure();
+    if (typeof ResizeObserver === 'undefined') return undefined;
+    const ro = new ResizeObserver(measure); el.querySelectorAll('.plx-app-header__text-cut').forEach((x) => ro.observe(x));
+    return () => ro.disconnect();
+  }, [text]);
+  return <span ref={box} className="plx-app-header__tip"><Tooltip content={text} describe={false} disabled={!cut} placement="bottom">{children}</Tooltip></span>;
 }
 const brandName = (b: AppHeaderBrand) => [b.organization, b.application].filter((x) => typeof x === 'string').join(' ');
 type Words = Record<string, string>;
@@ -271,6 +286,7 @@ export function AppHeader({ tone = 'accent', appName, brand, brandHref, currentA
   // the name's parts in the switch button give way (--switch: they shrink and end in an ellipsis)
   const sw = (switcher !== undefined ? switcher : currentApp !== undefined) && !title;
   const brandEl = isBrandObject(brand) ? brandContent(brand, name, sw) : brand || (name ? <><BrandMark /><span className={cx('plx-app-header__name', sw && 'plx-app-header__name--switch')}><span className={cx('plx-app-header__product', sw && 'plx-app-header__product--switch')}>Plenix</span><span className={cx('plx-app-header__app', sw && 'plx-app-header__app--switch')}>{name}</span></span></> : <><BrandMark />Plenix</>);
+  const withTip = (b: unknown, el: React.ReactElement) => (isBrandObject(b) && brandName(b) ? <BrandTip text={brandName(b)}>{el}</BrandTip> : el);
   const open = (a: PlenixApp) => (e: React.MouseEvent<HTMLElement>) => { if (onOpenApp && onOpenApp(a) === true) e.preventDefault(); };
   const pinned = nav || (inApps ? PLENIX_APPS.filter((a) => pinnedApps.indexOf(a.id) >= 0).map((a) => (
     <AppHeader.Item key={a.id} icon={<Icon name={appIcon(a) as IconValue} />} label={a.label} current={a.id === currentApp} href={appHref(a, appsRoot)} onClick={open(a)} />
@@ -301,7 +317,7 @@ export function AppHeader({ tone = 'accent', appName, brand, brandHref, currentA
         {back ? <AppHeader.Item icon={<Icon name={ArrowLeftIcon} />} label={back.label || 'Back'} href={back.href} onClick={back.onClick} className="plx-app-header__back" /> : null}
         {title ? <span className="plx-app-header__brand plx-app-header__title">{title}</span>
           : showSwitcher ? <AppHeader.Switcher currentApp={currentApp} appsRoot={appsRoot} onOpenApp={onOpenApp} brand={brandEl} />
-          : brandHref ? <a href={brandHref} className="plx-app-header__brand">{brandEl}</a> : <span className="plx-app-header__brand">{brandEl}</span>}
+          : brandHref ? withTip(brand, <a href={brandHref} className="plx-app-header__brand">{brandEl}</a>) : withTip(brand, <span className="plx-app-header__brand">{brandEl}</span>)}
         {pinned && (!Array.isArray(pinned) || pinned.length) ? <><span className="plx-app-header__divider" aria-hidden="true" /><nav aria-label={navLabel} className="plx-app-header__nav">{pinned}</nav></> : null}
       </div>
       <div className="plx-app-header__end">
@@ -426,11 +442,19 @@ AppHeader.Switcher = function AppHeaderSwitcher({ currentApp, appsRoot = '', onO
   return (
     <div ref={wrap} className={cx('plx-app-switcher', brand && 'plx-app-switcher--brand')}>
       {brand ? (
+        isBrandObject(brand) && brandName(brand) ? <BrandTip text={brandName(brand)}>
         <button ref={trigger as React.RefObject<HTMLButtonElement>} type="button" className="plx-app-header__brand plx-app-header__brand--switch" aria-haspopup="dialog" aria-expanded={open} aria-controls={id}
           aria-label={tw.switchApp.replace('{app}', typeof brand === 'string' ? brand : isBrandObject(brand) ? brandName(brand) : 'Plenix' + (currentApp && appById(currentApp) ? ' ' + appById(currentApp)!.label : ''))}
           onClick={() => setOpen(!open)}>
           {isBrandObject(brand) ? brandContent(brand, null, true) : brand}<Icon name={ChevronDownIcon} className="plx-app-header__switch-chevron" />
         </button>
+        </BrandTip> : (
+        <button ref={trigger as React.RefObject<HTMLButtonElement>} type="button" className="plx-app-header__brand plx-app-header__brand--switch" aria-haspopup="dialog" aria-expanded={open} aria-controls={id}
+          aria-label={tw.switchApp.replace('{app}', typeof brand === 'string' ? brand : isBrandObject(brand) ? brandName(brand) : 'Plenix' + (currentApp && appById(currentApp) ? ' ' + appById(currentApp)!.label : ''))}
+          onClick={() => setOpen(!open)}>
+          {isBrandObject(brand) ? brandContent(brand, null, true) : brand}<Icon name={ChevronDownIcon} className="plx-app-header__switch-chevron" />
+        </button>
+        )
       ) : (
         <AppHeader.Item ref={trigger} icon={<Icon name={AppSwitcherIcon} />} label={tw.applications} tooltip={false} aria-haspopup="dialog" aria-expanded={open} aria-controls={id}
           onClick={() => setOpen(!open)} />

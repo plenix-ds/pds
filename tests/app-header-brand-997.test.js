@@ -39,6 +39,14 @@ require('./limit.js');
       // a long organization ends in an ellipsis
       await mount({ organization: 'The Roman Catholic Archdiocese of Los Angeles and Surroundings', application: 'Tribunal' }, {});
       s = await read(); assert.equal(s.cut, true, T + 'a long organization is cut with an ellipsis'); assert.equal(s.logo, false, T + 'no logo, no mark');
+      // a cut line shows the Tooltip on keyboard focus of the link, and adds no tab stop
+      await mount({ organization: 'The Roman Catholic Archdiocese of Los Angeles and Surroundings', application: 'Tribunal' }, { brandHref: '/home' });
+      const stops = () => page.evaluate(() => [...document.querySelectorAll('#c a, #c button, #c [tabindex]')].filter((x) => x.tabIndex >= 0).length);
+      const withTip = await stops(); await page.focus('#c a.plx-app-header__brand'); await page.keyboard.press('Shift'); await new Promise((r) => setTimeout(r, 700));
+      assert.equal(await page.evaluate(() => [...document.querySelectorAll('[role=tooltip]')].filter((x) => /Archdiocese/.test(x.textContent)).length), 1, T + 'focus shows the Tooltip for a cut line');
+      assert.equal(await page.evaluate(() => document.querySelectorAll('#c [title]').length), 0, T + 'no native title');
+      await mount({ organization: 'Diocese', application: 'Tribunal' }, { brandHref: '/home' }); await page.focus('#c a.plx-app-header__brand'); await page.keyboard.press('Shift'); await new Promise((r) => setTimeout(r, 700));
+      assert.equal(await page.evaluate(() => [...document.querySelectorAll('[role=tooltip]')].filter((x) => x.textContent.trim()).length), 0, T + 'no Tooltip while the text fits'); assert.equal(await stops(), withTip, T + 'the tab order is unchanged');
       // application only: defaults to the computed app name; one link with brandHref
       await mount({ organization: 'Diocese' }, { appName: 'Tribunal', brandHref: '/home' });
       s = await read(); assert.equal(s.application, 'Tribunal', T + 'the application defaults to the app name'); assert.equal(s.links, 1, T + 'with brandHref the brand is one link');
