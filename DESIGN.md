@@ -273,7 +273,7 @@ Every component declares a state manifest (check 9). Each state is a token set o
 - **Ring and label:**
   - The ring is `lg` (24px) in a page, panel, card or dialog body. It is `md` (16px) in a grid placeholder row or a one-line region, and `sm` (12px) only inside a control.
   - The label sits after the ring with an 8px gap (`space-inline-sm`). It uses the `body` role in `content-default`.
-  - The arc is at least 3:1 in light and dark: `feedback-info-solid` (the remap is assigned to the DS Architect, #1032).
+  - The arc is at least 3:1 in light and dark: `feedback-info-solid` (#1047).
 - **Announcements:** the region is `aria-busy="true"`. The label is the `role="status"` text and is announced once. Only the outermost loading region shows a spinner.
 - **Known progress** uses a `ProgressBar` with its label. Past about 10 seconds, the region adds a Cancel button or a progress value.
 - **Reduced motion:** the ring stands still, and the label still shows.
