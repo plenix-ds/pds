@@ -19,6 +19,7 @@ require('./limit.js');
         { id: 'button', dir: 'ltr', props: { back: { parent: 'cases', onClick: () => { window.__clicked = true; } } } },
         { id: 'none', dir: 'ltr', props: {} },
         { id: 'rtl', dir: 'rtl', props: { back: { parent: 'cases', href: '/cases' } } },
+        { id: 'long', dir: 'ltr', props: { width: 'sm', back: { parent: 'a very long list of the parish council cases of the year', href: '/cases' } } },
         { id: 'folded', dir: 'ltr', props: { back: { parent: 'cases', href: '/cases' }, collapsible: true, defaultCollapsed: true } },
       ];
       document.querySelector('main').innerHTML = cases.map((c) => '<div id="' + c.id + '" dir="' + c.dir + '" style="height:400px"></div>').join('');
@@ -49,6 +50,12 @@ require('./limit.js');
       }, 1500);
     }));
     console.log(JSON.stringify(r));
+    // G2: a cut "Back to …" shows the Plenix Tooltip on focus (not a native title); an uncut one has none
+    const tip = async (id) => { await page.keyboard.press('Shift'); await page.focus('#' + id + ' .plx-secondary-pane__back'); await new Promise((x) => setTimeout(x, 700)); return page.evaluate((i) => !!document.querySelector('#' + i + ' [role=tooltip], body > [role=tooltip]') && !!document.querySelector('[role=tooltip]'), id); };
+    assert.equal(await page.$eval('#long .plx-secondary-pane__back', (e) => e.hasAttribute('title') || !!e.querySelector('[title]')), false, 'no native title');
+    assert.equal(await tip('long'), true, 'a cut Back shows the Tooltip on focus');
+    await page.evaluate(() => document.activeElement && document.activeElement.blur()); await new Promise((x) => setTimeout(x, 400));
+    assert.equal(await tip('link'), false, 'an uncut Back has no Tooltip');
     assert.equal(r.none.rows, 0, 'no back, no row');
     assert.equal(r.link.rows, 1);
     assert.equal(r.link.tag, 'A'); assert.equal(r.link.href, '/cases'); assert.match(r.link.text, /Back to cases/);

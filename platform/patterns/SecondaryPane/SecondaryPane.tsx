@@ -60,6 +60,7 @@ import type { IconValue } from '../../components/Icon/Icon.tsx';
 import { cx } from '../../utils/cx.ts';
 import { asIcon as iconElement } from '../../components/Icon/Icon.tsx';
 import { Button } from '../../components/Button/Button.tsx';
+import { Tooltip } from '../../components/Tooltip/Tooltip.tsx';
 import { ToolRail } from '../ToolRail/ToolRail.tsx';
 import { PanelSplitter, tokenPx, below, useMedia, useAppLayout } from '../AppShell/AppShell.tsx';
 import { focusables } from '../../utils/layer.ts';
@@ -136,6 +137,16 @@ export function SecondaryPane(props: SecondaryPaneProps) {
   const backAction = React.useRef<any>(onBack);
   backAction.current = onBack;
   const backLabel = named(t.back);
+  // the Tooltip shows only when the text is cut short (the NavList ladder, fit-and-overflow.md)
+  const backTextEl = React.useRef<HTMLElement | null>(null);
+  const [backCut, setBackCut] = React.useState(false);
+  React.useEffect(() => {
+    const el: any = backTextEl.current; if (!el) return undefined;
+    const measure = () => setBackCut(el.scrollWidth > el.clientWidth + 1);
+    measure();
+    if (typeof ResizeObserver === 'undefined') return undefined;
+    const ro = new ResizeObserver(measure); ro.observe(el); return () => ro.disconnect();
+  });
   const backText = backItem ? t.back.split('{name}').join(backItem.parent) : '';
   const claimBack = layout ? layout.claimBack : null;
   React.useLayoutEffect(() => (stepAside && claimBack
@@ -179,9 +190,12 @@ export function SecondaryPane(props: SecondaryPaneProps) {
     <aside aria-label={name} className={cx('plx-secondary-pane', 'plx-secondary-pane--' + side, 'plx-secondary-pane--' + width, sized && 'plx-secondary-pane--resized',
       narrow && listDetail && (stepAside ? 'plx-secondary-pane--aside' : 'plx-secondary-pane--list'), className)}
       data-plx-width={sized ? gridWithin(size, min(), paneMax(max(), min()), { step: DRAG_STEP }) + 'px' : undefined} {...rest}>
-      {backItem ? (backItem.href
-        ? <a className="plx-secondary-pane__back" href={backItem.href} onClick={backItem.onClick}>{iconElement(ArrowLeftIcon, { className: 'plx-secondary-pane__back-icon' })}<span className="plx-secondary-pane__back-text" title={backText}>{backText}</span></a>
-        : <button type="button" className="plx-secondary-pane__back" onClick={backItem.onClick}>{iconElement(ArrowLeftIcon, { className: 'plx-secondary-pane__back-icon' })}<span className="plx-secondary-pane__back-text" title={backText}>{backText}</span></button>) : null}
+      {backItem ? (
+        <Tooltip content={backText} disabled={!backCut} describe={false}>
+          {backItem.href
+            ? <a className="plx-secondary-pane__back" href={backItem.href} onClick={backItem.onClick}>{iconElement(ArrowLeftIcon, { className: 'plx-secondary-pane__back-icon' })}<span ref={backTextEl} className="plx-secondary-pane__back-text">{backText}</span></a>
+            : <button type="button" className="plx-secondary-pane__back" onClick={backItem.onClick}>{iconElement(ArrowLeftIcon, { className: 'plx-secondary-pane__back-icon' })}<span ref={backTextEl} className="plx-secondary-pane__back-text">{backText}</span></button>}
+        </Tooltip>) : null}
       <div className={cx('plx-secondary-pane__header', backItem && 'plx-secondary-pane__header--after-back')}>
         {icon ? iconElement(icon) : null}
         <span className="plx-secondary-pane__title">{title}</span>
