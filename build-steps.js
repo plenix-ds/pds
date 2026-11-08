@@ -170,7 +170,7 @@ module.exports = function buildSteps(root) {
   // docs/pills-and-colors.md, owner 2026-10-14: --plx-comp-category-soft, -soft-border, -on-soft: shades 100, 300, 700), and
   // categoryColors.js lists them in order
   const cats = Object.keys(theme).filter((k) => !theme[k].$deprecated).map((k) => /^category-([a-z]+)$/.exec(k)).filter(Boolean).map((m) => m[1]);
-  const compatibleCats = Object.keys(theme).map((k) => /^category-([a-z]+)$/.exec(k)).filter(Boolean).map((m) => m[1]);
+  const compatibleCats = Object.keys(theme).map((k) => /^category-([a-z0-9]+)$/.exec(k)).filter(Boolean).map((m) => m[1]);
   compatibleCats.forEach((c) => out.push('[data-plx-category="' + c + '"]{--plx-comp-data-color:var(--plx-sys-category-' + c + ');--plx-comp-data-color-soft:var(--plx-sys-category-' + c + ');--plx-comp-data-color-on-soft:var(--plx-sys-category-' + c + '-on);--plx-comp-category-soft:var(--plx-sys-category-' + c + '-soft);--plx-comp-category-soft-border:var(--plx-sys-category-' + c + '-soft-border);--plx-comp-category-on-soft:var(--plx-sys-category-' + c + '-on-soft);}'));
   const catFile = path.join(P, 'components', 'ColorSwatch', 'categoryColors.js');
   const catText = ['/* Plenix · CATEGORY_COLORS',

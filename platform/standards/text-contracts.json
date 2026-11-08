@@ -3137,12 +3137,69 @@
     "font-size"
    ]
   },
+  "plx-timeline__event-description": {
+   "contract": "adjusts",
+   "props": [
+    "font-size"
+   ]
+  },
+  "plx-timeline__event-title": {
+   "contract": "adjusts",
+   "props": [
+    "font-size",
+    "font-weight"
+   ]
+  },
   "plx-timeline__time": {
    "contract": "follows",
    "font": "mono",
    "size": true
   },
   "plx-timeline__title": {
+   "contract": "adjusts",
+   "props": [
+    "font-size",
+    "font-weight"
+   ]
+  },
+  "plx-timeline__date-day": {
+   "contract": "adjusts",
+   "props": [
+    "font-size",
+    "font-weight",
+    "line-height"
+   ]
+  },
+  "plx-timeline__date-month": {
+   "contract": "adjusts",
+   "props": [
+    "font-size",
+    "font-weight"
+   ]
+  },
+  "plx-timeline__date-pending": {
+   "contract": "adjusts",
+   "props": [
+    "font-size",
+    "font-weight"
+   ]
+  },
+  "plx-timeline__tag": {
+   "contract": "adjusts",
+   "props": [
+    "font-size",
+    "font-weight"
+   ]
+  },
+  "plx-timeline__watermark": {
+   "contract": "adjusts",
+   "props": [
+    "font-size",
+    "font-weight",
+    "line-height"
+   ]
+  },
+  "plx-timeline__year": {
    "contract": "adjusts",
    "props": [
     "font-size",
