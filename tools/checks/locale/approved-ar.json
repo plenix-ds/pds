@@ -2940,6 +2940,16 @@
      "legend": "التصفية حسب الفئة"
     }
    }
+  },
+  {
+   "source": "PENDING: the owner's answer on #1027 (option A, ضد, prepared). Replace this source with his answer before merging.",
+   "date": "2026-11-08",
+   "strings": {
+    "entityHeader": {
+     "vs": "ضد",
+     "versus": "{a} ضد {b}"
+    }
+   }
   }
  ]
 }
