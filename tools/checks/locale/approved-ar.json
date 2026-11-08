@@ -2930,6 +2930,16 @@
      "formNoValue": "لا توجد قيمة"
     }
    }
+  },
+  {
+   "source": "D-0078, #987 (2026-11-08). timeline.pending: Microsoft Terminology Collection (ARABIC.tbx) pending = معلق. timeline.legend: Microsoft filter = تصفية, category = فئة; same pattern as owner-approved Plenix Arabic dataGrid.filterBy (التصفية حسب هذا الحقل) and chart.*.category (الفئة).",
+   "date": "2026-11-08",
+   "strings": {
+    "timeline": {
+     "pending": "معلّق",
+     "legend": "التصفية حسب الفئة"
+    }
+   }
   }
  ]
 }

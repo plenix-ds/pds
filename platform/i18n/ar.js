@@ -8,6 +8,10 @@ export default {
   "overflowList": {
     "more": "عناصر أخرى"
   },
+  "timeline": {
+    "pending": "معلّق",
+    "legend": "التصفية حسب الفئة"
+  },
   "pagination": {
     "label": "الصفحات",
     "range": "{first} إلى {last} من {total}",
