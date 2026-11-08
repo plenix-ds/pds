@@ -1,0 +1,2 @@
+[{"dir":"ltr","mode":"light","sw":["12x12","12x12"],"gap":24,"label":4},{"dir":"ltr","mode":"dark","sw":["12x12","12x12"],"gap":24,"label":4},{"dir":"rtl","mode":"light","sw":["12x12","12x12"],"gap":24,"label":4}]
+TIMELINE_LEGEND_1023_OK

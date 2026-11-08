@@ -1,0 +1,19 @@
+[{"dir":"ltr","mode":"light","sw":["2x18","2x18"],"gap":96},{"dir":"ltr","mode":"dark","sw":["2x18","2x18"],"gap":96},{"dir":"rtl","mode":"light","sw":["2x18","2x18"],"gap":96}]
+AssertionError [ERR_ASSERTION]: ltr light: swatches (on and off) are 12x12: 2x18,2x18
++ actual - expected
+
+  [
++   '2x18',
++   '2x18'
+-   '12x12',
+-   '12x12'
+  ]
+
+    at /home/cc/pds1/work/component-engineer-2/tests/timeline-legend-1023.test.js:31:14 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [Array],
+  expected: [Array],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
