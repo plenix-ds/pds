@@ -23,3 +23,9 @@
 .plx-property-list--columns .plx-property-list__item{grid-template-columns:minmax(0,1fr);row-gap:var(--plx-comp-property-list-columns-item-row-gap);}
 .plx-property-list--columns .plx-property-list__label-text{white-space:normal;}
 }
+/* variant tiles (issue 1043, ADR 0044, D-0106): the whole field sits on the tile, two tiles per row, one when the list is narrower than two minimum tiles */
+.plx-property-list--tiles{column-gap:var(--plx-comp-property-list-tiles-gap);display:grid;grid-template-columns:repeat(auto-fill, minmax(max(var(--plx-comp-property-list-tiles-min-inline-size), calc((100% - var(--plx-comp-property-list-tiles-gap)) / 2)), 1fr));row-gap:var(--plx-comp-property-list-tiles-gap);}
+.plx-property-list__item--tile{align-content:start;background-color:var(--plx-comp-property-list-value-background);border-color:var(--plx-comp-property-list-value-border-color);border-radius:var(--plx-comp-property-list-value-radius);border-style:solid;border-width:var(--plx-comp-property-list-value-border-width);padding-block:var(--plx-comp-property-list-value-padding-block);padding-inline:var(--plx-comp-property-list-value-padding-inline);}
+.plx-property-list__value--tile{background-color:transparent;border-width:0;padding-block:0;padding-inline:0;}
+.plx-property-list__item--full{grid-column:1 / -1;}
+.plx-property-list__status{display:inline-flex;max-inline-size:100%;}

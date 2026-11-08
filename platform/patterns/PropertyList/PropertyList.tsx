@@ -6,6 +6,9 @@
      </PropertyList>
    Props:
      layout: "columns" (default; label and value side by side on a shared baseline) | "stacked" (label above value)
+     variant: "default" | "tiles" (the read-only look of D-0106, set in one go: stacked items, each field on its own tile, two per row 16px apart,
+       one per row when the list is narrower than 496px). Default: the enclosing PropertyGroup's variant, else "default". An explicit layout
+       that is not "stacked" wins over "tiles" and warns in development (ADR 0044)
      className: more classes on the list
      children: the PropertyList.Item pairs
      PropertyList.Item.label: the label
@@ -17,6 +20,8 @@
        controls or other parts inside it)
      PropertyList.Item.kind: "id" for a computed identifier or case number: it follows the page's direction (01-20261020 in a
        right-to-left page, 20261020-01 in a left-to-right one; owner, issue 606). Pair it with data for the data font
+     PropertyList.Item.status: { label, tone, icon }: the value is a Badge with its icon (the icon is required: a status always has one); wins over children
+     PropertyList.Item.span: "full": in a tiles list the tile takes the whole row (a long note among short fields); no effect elsewhere (ADR 0045)
      PropertyList.Item.className: more classes on the pair
      PropertyList.Item.children: the value
    Notes:
@@ -31,9 +36,17 @@ import { cx } from '../../utils/cx.ts';
 import { useTruncated } from '../../utils/overflow.ts';
 import { Tooltip } from '../../components/Tooltip/Tooltip.tsx';
 import { Isolate } from '../../components/Isolate/Isolate.tsx';
+import { Badge } from '../../components/Badge/Badge.tsx';
+import type { BadgeProps } from '../../components/Badge/Badge.tsx';
+import type { IconValue } from '../../components/Icon/Icon.tsx';
+import { devWarn } from '../../utils/devWarn.ts';
+
+/** the variation a PropertyGroup gives its lists (internal, not exported from the package) */
+export const PropertyVariantContext = React.createContext<'default' | 'tiles'>('default');
+const TilesContext = React.createContext(false);   // the list is a tiles list (its items draw the tile)
 
 /** @public the prop type of PropertyList (ADR 0011) */
-export type PropertyListProps = React.HTMLAttributes<HTMLDListElement> & { layout?: 'columns' | 'stacked'; className?: string; children?: React.ReactNode };
+export type PropertyListProps = React.HTMLAttributes<HTMLDListElement> & { layout?: 'columns' | 'stacked'; variant?: 'default' | 'tiles'; className?: string; children?: React.ReactNode };
 /** @public the prop type of PropertyList.Item (ADR 0011) */
 export type PropertyListItemProps = {
   label: React.ReactNode;
@@ -44,22 +57,32 @@ export type PropertyListItemProps = {
   data?: boolean;
   /** "id": a computed identifier that follows the page's direction */
   kind?: 'id';
+  /** the value as a Badge with its icon (the icon is required) */
+  status?: { label: React.ReactNode; tone: BadgeProps['tone']; icon: IconValue };
+  /** "full": the tile takes the whole row in a tiles list */
+  span?: 'full';
   className?: string;
   children?: React.ReactNode;
 };
-export function PropertyList({ layout = 'columns', className, children, ...rest }: PropertyListProps) {
-  return <dl className={cx('plx-property-list', 'plx-property-list--' + layout, className)} {...rest}>{children}</dl>;
+export function PropertyList({ layout, variant, className, children, ...rest }: PropertyListProps) {
+  const inherited = React.useContext(PropertyVariantContext);
+  const tiles = (variant ?? inherited) === 'tiles';
+  devWarn('PropertyList', { layout: tiles ? layout : undefined }, { layout: ['stacked'] });   // variant tiles is stacked: another layout wins
+  const shown = layout ?? (tiles ? 'stacked' : 'columns');
+  const isTiles = tiles && shown === 'stacked';
+  return <TilesContext.Provider value={isTiles}><dl className={cx('plx-property-list', 'plx-property-list--' + shown, isTiles && 'plx-property-list--tiles', className)} {...rest}>{children}</dl></TilesContext.Provider>;
 }
 
-PropertyList.Item = function PropertyListItem({ label, htmlFor, description, data = false, kind, className, children }: PropertyListItemProps) {
+PropertyList.Item = function PropertyListItem({ label, htmlFor, description, data = false, kind, status, span, className, children }: PropertyListItemProps) {
   const textRef = React.useRef<any>(null);
   const cut = useTruncated(textRef);
+  const tile = React.useContext(TilesContext);
   return (
-    <div className={cx('plx-property-list__item', className)}>
+    <div className={cx('plx-property-list__item', tile && 'plx-property-list__item--tile', span === 'full' && 'plx-property-list__item--full', className)}>
       <dt className="plx-property-list__label"><Tooltip content={label} disabled={!cut} describe={false} className="plx-property-list__label-tip"><span ref={textRef} className="plx-property-list__label-text">{htmlFor ? <label htmlFor={htmlFor}>{label}</label> : label}</span></Tooltip>
         {description ? <span className="plx-property-list__description" data-plx-text-follow="size">{description}</span> : null}
       </dt>
-      <dd className={cx('plx-property-list__value', data && 'plx-property-list__value--data')} data-plx-text-follow="size">{kind === 'id' ? <Isolate kind="id">{children}</Isolate> : data ? <Isolate dir="auto">{children}</Isolate> : children}</dd>
+      <dd className={cx('plx-property-list__value', tile && 'plx-property-list__value--tile', data && 'plx-property-list__value--data')} data-plx-text-follow="size">{status ? <span className="plx-property-list__status"><Badge tone={status.tone} icon={status.icon}>{status.label}</Badge></span> : kind === 'id' ? <Isolate kind="id">{children}</Isolate> : data ? <Isolate dir="auto">{children}</Isolate> : children}</dd>
     </div>
   );
 };
