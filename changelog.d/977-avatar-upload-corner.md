@@ -1,0 +1,3 @@
+### Added
+
+- `AvatarUpload` takes `actions="corner"` (default `"buttons"`, today's look): one icon button (camera) at the avatar's bottom-end corner (bottom-left in right to left), ringed in the surface color like the presence dot, named "Change photo" ("Add photo" without a picture) with a Tooltip saying the same. It is in the tab order and visible at rest, with a target of at least 24px; press opens the file picker, or with a picture and `removable` a menu with Change photo and Remove photo. The description line and the secondary buttons are not drawn, and nothing is drawn when `disabled`. `size` gains `"lg"` (40px), with `actions="corner"` only. New tokens `avatar-upload-corner-*` (ADR 0034, D-0113, #977).

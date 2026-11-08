@@ -1,6 +1,58 @@
 {
   "$description": "AvatarUpload (platform/patterns/AvatarUpload), library wave 7, lane B: the pattern’s own tokens (the placement of the Avatar, its actions and the hint).",
   "plx-comp": {
+    "avatar-upload-corner-size-lg": {
+      "$value": "{plx-sys.icon-size-md}",
+      "$type": "dimension"
+    },
+    "avatar-upload-corner-size-xl": {
+      "$value": "{plx-sys.icon-size-lg}",
+      "$type": "dimension"
+    },
+    "avatar-upload-corner-size-2xl": {
+      "$value": "{plx-sys.icon-size-lg}",
+      "$type": "dimension"
+    },
+    "avatar-upload-corner-icon-size-lg": {
+      "$value": "{plx-sys.icon-size-xs}",
+      "$type": "dimension"
+    },
+    "avatar-upload-corner-icon-size-xl": {
+      "$value": "{plx-sys.icon-size-sm}",
+      "$type": "dimension"
+    },
+    "avatar-upload-corner-icon-size-2xl": {
+      "$value": "{plx-sys.icon-size-sm}",
+      "$type": "dimension"
+    },
+    "avatar-upload-corner-target-size": {
+      "$value": "{plx-sys.control-target-min}",
+      "$type": "dimension"
+    },
+    "avatar-upload-corner-radius": {
+      "$value": "{plx-sys.shape-mark}",
+      "$type": "dimension"
+    },
+    "avatar-upload-corner-background": {
+      "$value": "{plx-sys.surface-raised}",
+      "$type": "color"
+    },
+    "avatar-upload-corner-background-hover": {
+      "$value": "{plx-sys.state-hover}",
+      "$type": "color"
+    },
+    "avatar-upload-corner-background-pressed": {
+      "$value": "{plx-sys.state-pressed}",
+      "$type": "color"
+    },
+    "avatar-upload-corner-text": {
+      "$value": "{plx-sys.content-muted}",
+      "$type": "color"
+    },
+    "avatar-upload-corner-text-hover": {
+      "$value": "{plx-sys.content-default}",
+      "$type": "color"
+    },
     "avatar-upload-max-width": {
       "$value": "{plx-ref.size-100u}",
       "$type": "dimension",
