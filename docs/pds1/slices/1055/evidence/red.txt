@@ -1,0 +1,9 @@
+AssertionError [ERR_ASSERTION]: ltr: an undated first event is as wide as the others (34 vs 868)
+    at /home/cc/pds1/work/component-engineer-1/tests/timeline-grouped-undated-1055.test.js:29:14 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
