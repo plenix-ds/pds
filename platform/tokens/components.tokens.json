@@ -2232,7 +2232,7 @@
       "$type": "dimension"
     },
     "spinner-border-bottom-color": {
-      "$value": "{plx-sys.action-primary-background}",
+      "$value": "{plx-sys.feedback-info-solid}",
       "$type": "color"
     },
     "spinner-radius": {
@@ -2242,12 +2242,32 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "spinner-border-left-color": {
-      "$value": "{plx-sys.action-primary-background}",
+      "$value": "{plx-sys.feedback-info-solid}",
       "$type": "color"
     },
     "spinner-border-right-color": {
-      "$value": "{plx-sys.action-primary-background}",
+      "$value": "{plx-sys.feedback-info-solid}",
       "$type": "color"
+    },
+    "spinner-label-gap": {
+      "$value": "{plx-sys.space-inline-sm}",
+      "$type": "dimension",
+      "$description": "Spinner with a visible label (labelPosition after or below): the space between the ring and the label (ADR 0042, #1032)."
+    },
+    "spinner-label-text": {
+      "$value": "{plx-sys.content-default}",
+      "$type": "color",
+      "$description": "Spinner: the visible label, in the default text color (ADR 0042)."
+    },
+    "spinner-label-font-size": {
+      "$value": "{plx-sys.text-body-font-size}",
+      "$type": "dimension",
+      "$description": "Spinner: the visible label, in the body role (ADR 0042)."
+    },
+    "spinner-label-line-height": {
+      "$value": "{plx-sys.text-body-line-height}",
+      "$type": "number",
+      "$description": "Spinner: the visible label line height, the body role (ADR 0042)."
     },
     "spinner-sm-height": {
       "$value": "{plx-ref.size-3u}",
