@@ -52,7 +52,6 @@ import { Button } from '../Button/Button.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import { development, devWarn } from '../../utils/devWarn.ts';
-import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden.tsx';
 import { formatDate, formatLocale, numeralLocale, parseDate } from '../../utils/format.ts';
 
 export type TimelineItem = {
@@ -160,7 +159,7 @@ function GroupedTimeline({ items = [], label, className, legend = false, hiddenC
                           <span className={cx('plx-timeline__event-title', it.category && 'plx-timeline__event-title--category')}>{it.title}</span>
                           {it.badge ? <span className="plx-timeline__badge">{it.badge}</span> : null}
                         </div>
-                        {it.dateTime ? <VisuallyHidden as="time" dateTime={it.dateTime}>{full}</VisuallyHidden> : null}
+                        {it.dateTime ? <time className="plx-visually-hidden" dateTime={it.dateTime}>{full}</time> : null}
                         {it.description ? <p className="plx-timeline__event-description">{it.description}</p> : null}
                         {it.content ? <div className="plx-timeline__extra">{it.content}</div> : null}
                       </div>
