@@ -19,7 +19,7 @@ const file = 'platform/patterns/PropertyGroup/PropertyGroup.tsx';
 let html = '', html2 = '';
 try {
   const mod = { exports: {} };
-  new Function('exports', 'module', 'require', Babel.transform(rd(file), { presets: ['env', 'react', 'typescript'], filename: 'PropertyGroup.tsx', sourceType: 'module' }).code)(mod.exports, mod, (n) => { if (n === 'react') return React; if (/cx\.ts$/.test(n)) return { cx: (...a) => a.filter(Boolean).join(' ') }; throw new Error('unexpected import ' + n); });
+  new Function('exports', 'module', 'require', Babel.transform(rd(file), { presets: ['env', 'react', 'typescript'], filename: 'PropertyGroup.tsx', sourceType: 'module' }).code)(mod.exports, mod, (n) => { if (n === 'react') return React; if (/cx\.ts$/.test(n)) return { cx: (...a) => a.filter(Boolean).join(' ') }; if (/PropertyList\.tsx$/.test(n)) return { PropertyVariantContext: React.createContext('default') }; throw new Error('unexpected import ' + n); });
   const { PropertyGroup } = mod.exports;
   html = renderToStaticMarkup(React.createElement(PropertyGroup, { heading: 'Contact', className: 'x', 'data-k': '1' }, React.createElement('p', null, 'body')));
   html2 = renderToStaticMarkup(React.createElement(PropertyGroup, { heading: 'Case', level: 2 }, null));
