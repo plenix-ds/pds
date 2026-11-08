@@ -1,7 +1,7 @@
 /* Plenix · Tooltip (platform/components/Tooltip). Context hook (Styling Standard 4.1), set by the slot that holds the
    tooltip on the wrapper's own element: --plx-comp-tooltip-context-position (default relative; absolute where the wrapper
    takes the place of a control laid over another, as Select's field over its native select, issue 577). */
-.plx-tooltip{display:inline-flex;outline-color:var(--plx-sys-boundary-outline-color);outline-style:solid;outline-width:var(--plx-sys-boundary-outline-width);position:var(--plx-comp-tooltip-context-position,relative);}
+.plx-tooltip{display:var(--plx-comp-tooltip-context-display, inline-flex);max-inline-size:var(--plx-comp-tooltip-context-max-inline-size, none);min-inline-size:var(--plx-comp-tooltip-context-min-inline-size, auto);outline-color:var(--plx-sys-boundary-outline-color);outline-style:solid;outline-width:var(--plx-sys-boundary-outline-width);position:var(--plx-comp-tooltip-context-position,relative);}
 /* closed, the bubble is not displayed, so a hidden bubble near an edge never widens a scroll area (reflow at 320px);
    it still fades in and out (display is a discrete transition; @starting-style gives the fade in its start) */
 @property --plx-state-tooltip-bubble-display{syntax:"*";inherits:false;}

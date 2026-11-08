@@ -77,8 +77,33 @@ export function CellValue({ column, value: given, strings, record, pill = false,
   // numbers and code read left to right; an id reads as the table does (01-20261020 in a right-to-left one); any other data value
   // by its first strong letter
   const island=ISLANDS.find(k=>kinds.includes(k));
-  if (island) return <span className={own} onMouseEnter={fullText}><Isolate dir={island==='data'?'auto':island==='id'?undefined:'ltr'} kind={island==='email'||island==='url'||island==='id'?island:undefined}>{valueText(value)}</Isolate></span>;
-  return <span className={own} onMouseEnter={fullText}>{localDigits(valueText(value))}</span>;
+  // the full text in a Tooltip when the cell cuts it (#1044, ADR 0043): by default for a wrapping column, by overflow: "tooltip" for any, never with "none"
+  const tip = column.overflow === 'tooltip' || (column.overflow !== 'none' && / \S*__value--wrap\b/.test(' ' + (mods || '')));
+  if (island) return <CutText tip={tip} text={valueText(value)} className={own} hover={fullText}><Isolate dir={island==='data'?'auto':island==='id'?undefined:'ltr'} kind={island==='email'||island==='url'||island==='id'?island:undefined}>{valueText(value)}</Isolate></CutText>;
+  return <CutText tip={tip} text={valueText(value)} className={own} hover={fullText}>{localDigits(valueText(value))}</CutText>;
+}
+
+// A text value that may be cut (a line count, an ellipsis): with the tooltip on, the full text shows on hover and on keyboard focus of its cell, only while it is cut.
+// The cut is measured when the cell draws and when it resizes (the cells drawn are the visible rows). The cell is the grid's focus stop, so its focus drives the tooltip.
+export function CutText({ tip, text, className, hover, children }: { tip: boolean; text: string; className: string; hover: (event: any) => void; children: React.ReactNode }) {
+  const box = React.useRef<HTMLSpanElement>(null), cutNow = React.useRef(false), [cut, setCut] = React.useState(false);
+  React.useLayoutEffect(() => {
+    const el = box.current;
+    if (!tip || !el) return undefined;
+    // a line clamp reports its clamped height, so the natural height is read with the clamp lifted for the moment of the measure (written and restored at once)
+    const natural = () => { const st = el.style, clamp = st.getPropertyValue('-webkit-line-clamp'), max = st.getPropertyValue('max-block-size'); st.setProperty('-webkit-line-clamp', 'none'); st.setProperty('max-block-size', 'none'); const h = el.scrollHeight; st.setProperty('-webkit-line-clamp', clamp); st.setProperty('max-block-size', max); return h; };
+    const check = () => { const c = natural() > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1; cutNow.current = c; setCut(c); };
+    check();
+    const ro = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(check);
+    if (ro) ro.observe(el);
+    const cell = el.closest('[role=gridcell]'), trigger = el.parentElement;
+    const focus = () => { if (cutNow.current && trigger) trigger.dispatchEvent(new FocusEvent('focusin', { bubbles: true })); };
+    const blur = () => { if (trigger) trigger.dispatchEvent(new FocusEvent('focusout', { bubbles: true })); };
+    if (cell) { cell.addEventListener('focus', focus); cell.addEventListener('blur', blur); }
+    return () => { if (ro) ro.disconnect(); if (cell) { cell.removeEventListener('focus', focus); cell.removeEventListener('blur', blur); } };
+  }, [tip, text]);
+  if (!tip) return <span className={className} onMouseEnter={hover}>{children}</span>;
+  return <Tooltip content={text} describe={false} disabled={!cut}><span ref={box} className={className}>{children}</span></Tooltip>;
 }
 
 // A tags cell: the tags that fit, then one "+N" Tag for the rest (design 84-cell-editors §2 and §3, issue 477). The fit is useBarFit's (the same step
