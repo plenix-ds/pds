@@ -1,83 +1,82 @@
-# #995 NavPane: a "back to parent" item, and the pane's type order (G2)
+# #995 SecondaryPane: a "back to parent" item, and the pane's type order (G2)
 
-- **Request:** the CTM owner (2026-11-07), on CTM's case pane: "back to cases looks like crap! should be left aligned with icons … case overview is more important than back to cases but it's smaller font". CTM drew a filled, full-width, centred grey button under the pane title.
-- **Extends:** `NavPane` (`platform/patterns/NavPane`), its title row and its Narrow parent row ("the pane's title after a back arrow"), and the `NavList` item geometry (icon column, inline padding). There are no new colours.
+- **Request:** the CTM owner (2026-11-07), on CTM's case pane: "back to cases looks like crap! should be left aligned with icons … case overview is more important than back to cases but it's smaller font". CTM drew a filled, full-width, centred grey button under the pane title. The ask (#995 item 2) is that the pane title be the strongest text in the pane, with its size and weight above the nav items' and the back item's.
+- **Extends:** `SecondaryPane` (`platform/patterns/SecondaryPane`), per G3 (ADR 0038, D-0124): `back={{ parent, href | onClick }}`. It reuses its existing `strings.back` ("Back to {name}") and the Narrow Back control. It also uses the `NavList` item geometry (icon column, inline padding). There are no new colours or words.
+- **The cause:** the SecondaryPane title is 12px, 600 (`secondary-pane-header-font-*`), and the NavList items under it are 13px. So the title is smaller than the items. Making the back item quieter alone does not fix that.
 - **Readings applied (D-0123, the owner may switch):**
-  - **The back item is a row above the title row**, shown only when the pane has a parent. This is the Fluent order (back at the top of the pane) that CTM asked for. Every pane's title row is unchanged.
-  - **It is a link** (it navigates up to the parent list), not a button. It is never filled and never centred.
-  - **The pane title keeps its size** (13px, 700, `content-default`). The hierarchy is made by the back item being the quietest text in the pane (12px, 400, `content-muted`). Making the title larger changes every pane's look and needs an owner decision (option B).
-  - **The settings footer is unchanged.** A settings screen's way back stays in the footer (NavPane's existing rule). The top back item is for a pane that belongs to one record under a list ("Back to cases").
+  - **The back item is the first row, above the title row**, shown only with `back` (G3). It is a link with `href`, otherwise a button. It is never filled and never centred.
+  - **The SecondaryPane title rises to the surface-title role** (15px, 700, `content-default`), the size dialog and sheet titles already use. It applies to every SecondaryPane, so all panes keep one title style. This is the owner's ask (#995: the title's size is above the items'). It is *Changed (visual)* in the changelog. Option B keeps 12px and changes only CTM's case pane, which would give two title styles.
+  - **The folded rail:** the back item is the first control, above Expand (G3), as an icon with a Tooltip. This matches the expanded order (back above the title).
 
 ## 1. Look
 
 ```
-← Back to cases                 ← back row: 12px, content-muted, arrow on the nav icon column
-Case Overview          [⋯] [«]  ← title row (unchanged): 13px bold
-  ▢ Summary                     ← NavList items: 13px regular
-  ▢ Hearings
-SECTION                         ← NavList section labels: 12px bold caps, muted
+← Back to cases                 ← back row: 12px, 400, content-muted; the arrow on the nav icon column
+Case Overview          [⋯] [«]  ← title row: 15px, 700, content-default (was 12px, 600)
+  ▢ Summary                     ← NavList items: 13px, 400
+SECTION                         ← NavList section labels: 12px, 700, caps, content-muted
 ```
 
-| Part | Value |
+| Part | Value (comp `secondary-pane-back-*` → sys, for G3) |
 |---|---|
 | Row height | `control-height-inline` (24 / 28 / 32px by density) |
-| Inline padding | `nav-list-item-padding-inline` (8px), the same as a NavList item, so the arrow sits on the nav icon column |
-| Icon | `arrow-left` (`arrow_back`), Material Symbols Sharp, **sm** (16px), `currentColor`, centred in the items' icon column. It mirrors in RTL (it is in the MIRROR list) |
-| Icon to text | `nav-list-item-gap` (8px) |
-| Text | **secondary** role (12px, 400), `content-muted`, sentence case: "Back to {parent}". One line, start-aligned |
-| Above the title row | the pane's `header-padding-block-start` (8px) above the back row; 0 between the back row and the title row |
-| Shape | `shape-xs` (4px) for its hover fill and focus ring, as a NavList item |
+| Inline padding | start: `secondary-pane-header-padding-inline-start` (12px), so the arrow's start edge lines up with the title's start edge and the NavList icon column under it; end: `space-inset-sm` (8px) |
+| Icon | `arrow-left` (`arrow_back`), Material Symbols Sharp, **sm** (16px), `currentColor`. It mirrors in RTL (MIRROR list) |
+| Icon to text | `space-inline-sm` (8px) |
+| Text | **secondary** role: `text-secondary-font-size` (12px), `text-secondary-font-weight` (400), `content-muted`, one line, start-aligned |
+| Spacing | the header's `padding-block-start` (8px) moves above the back row. There are 0px between the back row and the title row |
+| Hover and focus shape | `shape-xs` (4px), as a NavList item |
+| Title (changed) | `secondary-pane-header-font-size` → `text-lead-font-size` (15px); `-font-weight` → `font-weight-bold` (700). The header min-height stays `control-height-toolbar` (28px); a 15px line at 1.5 is 22.5px and fits |
 
-- **Type order in the pane** (DESIGN.md §3, recorded): title (13/700, `content-default`) › NavList section label (12/700, caps, `content-muted`) › item (13/400, `content-default`) › back item (12/400, `content-muted`).
-- **Contrast:** `content-muted` on the pane: 7.11 light, 6.31 dark (gray-300 on gray-800); on `state-hover`: ≥ 4.5.
+- **Type order in the pane:** title (15/700, `content-default`) › NavList item (13/400, `content-default`) › section label (12/700, caps, `content-muted`) › back item (12/400, `content-muted`). The title is the largest text in the pane, and the back item is the quietest.
+- **Contrast:** `content-muted` on the pane surface: 7.11 light, 6.31 dark; on `state-hover`: ≥ 4.5:1.
 
 ## 2. State matrix
 
 | State | Tokens / behaviour |
 |---|---|
 | default | §1 |
-| hover | `state-hover` fill over the row's inline padding box, text and icon `content-default`, pointer cursor |
-| focus | `focus-ring-color`, 2px, 2px offset, `shape-xs`. In the tab order before the title row's actions |
+| hover | `state-hover` fill, text and icon `content-default`, pointer cursor (the NavList item states) |
+| focus | `focus-ring-color`, 2px, 2px offset, `shape-xs`. It is the first Tab stop in the pane |
 | active | `state-pressed`, `motion-press-scale` |
-| disabled | n/a (a parent is always reachable; with no parent, the row isn't rendered) |
-| loading | n/a (a link; the route's own loading applies) |
+| disabled | n/a (with no parent, the row isn't rendered) |
+| loading | n/a (navigation; the route's own loading applies) |
 | error | n/a (navigation) |
 | selected | n/a (it is never the current page) |
-| empty | no parent: the row isn't rendered, and the pane looks as it does today |
-| long text | one line, ending in an ellipsis, with the full text in a Tooltip (the NavList item ladder in `fit-and-overflow.md`). The arrow never shrinks |
+| empty | no `back`: the row isn't rendered, and the pane is as today (with the new title size) |
+| long text | one line, ending in an ellipsis, with the full text in a Tooltip (the NavList item ladder, `fit-and-overflow.md`). The arrow never shrinks. A long title wraps as it does today |
 
 - **Motion:** `background-color` and `color`, `motion-duration-quick`, with a reduced-motion guard.
-- **Name:** the visible text is the name ("Back to cases"), so no `aria-label` is needed. It is an `<a href>` inside the navigation landmark, before the title.
+- **Name:** the visible text ("Back to cases") is the name.
 
 ## 3. Densities, themes, Arabic, sizes
 
-- **Densities:** the row height follows `control-height-inline`. Text and icon sizes don't change.
-- **Light and dark:** the tokens above. Forced colours: the text is `LinkText`, the hover is `Highlight`, and the focus ring is the system ring.
-- **RTL:** the row is right-aligned (logical), and the arrow flips to point right. "Back to {parent}" is one catalog string with a placeholder. The i18n Engineer proposes the Arabic (D-0012). CI adds the RTL shot.
-- **Collapsed (rail):** the back item is the second rail item, right after Expand and before the divider. It is an icon button (the arrow, ToolRail item size) with a Tooltip and the name "Back to {parent}".
-- **Medium (600–839px):** the rail as above. The expanded overlay shows the back row as in §1.
-- **Narrow (< 600px):** the pane is its own screen. The back row is its first row, as in §1. When a list-detail's detail shows, the existing parent row ("Back to {list}") stays the page's single back control, and the pane's back row is not repeated in it.
+- **Densities:** only the row height changes, through `control-height-inline`.
+- **Light and dark:** the tokens above. Forced colours: link text `LinkText` (a button: `ButtonText`), hover `Highlight`, and the system focus ring.
+- **RTL:** the row is right-aligned, and the arrow points right. The string exists (`strings.back`), so there are no new Arabic words. CI adds the RTL shot.
+- **Folded rail:** the first control, above Expand: the arrow at the ToolRail item size, with a Tooltip "Back to {name}".
+- **Narrow (< 600px):** while the list fills the width, the back row is its first row. While a detail shows, the existing detail Back bar (or the shell's parent row) is the only back control, and the pane's row isn't repeated (it has stepped aside).
 
 ## 4. Edge cases
 
-- **3× English:** an ellipsis and a Tooltip (§2). The pane's resize limits (140–320px) never hide the arrow.
-- **A long parent name:** the same.
-- **A pane with both a back row and a settings footer:** both show. One goes up (top), and one leaves settings (bottom).
+- **3× English:** an ellipsis and a Tooltip (§2). The title wraps at 15px, and the header grows.
+- **Panes with an icon in the title row:** the icon keeps its size. The back arrow sits on the same start edge as that icon.
+- **Narrow panes (`width="sm"`, 180px):** "Back to cases" fits. Longer names truncate.
 - **10,000 rows:** n/a.
 
 ## 5. Messages
 
-- One new string, `navPane.back` = "Back to {parent}" (one string with a placeholder, so Arabic can order the words). Wording: the Technical Writer's. Arabic: the i18n Engineer, then the owner (D-0012).
+- None new. It uses `strings.back` ("Back to {name}"). The wording is the Technical Writer's.
 
 ## 6. Choices the engineer must not invent
 
-- The row above the title row, rendered only with a parent; a link, never a filled or centred button.
-- The arrow on the NavList icon column; the secondary role in `content-muted`; the title unchanged.
-- In the rail, the back item comes after Expand and before the divider. At Narrow, there is no duplicate back control while a detail shows.
+- The row above the title, only with `back`; never filled or centred; the arrow on the title's start edge; the secondary role in `content-muted`.
+- The title at 15px, 700, on every SecondaryPane (Changed (visual)).
+- In the rail, back comes first, above Expand. At Narrow, there is one back control.
 - **Tests:**
-  - the row renders only with a parent, as an `<a>` before the title;
-  - the arrow's inline-start lines up with a NavList item's icon;
-  - the computed title font-weight is greater than the back row's, and its size is not smaller;
+  - the row renders only with `back`, as an `<a>` with `href` or a `<button>`, before the title;
+  - the arrow's inline-start equals the title's inline-start;
+  - the title's computed font-size is greater than every NavList item's, and the back row's is the smallest;
   - RTL flips the arrow;
-  - the collapsed rail's second item is the back item, with a Tooltip;
+  - the folded rail's first control is back;
   - at Narrow, there is one back control while a detail shows.

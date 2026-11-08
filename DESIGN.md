@@ -112,13 +112,13 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 - **Reddit Mono** (`plx-sys.font-data`) is for numbers in data: grid and table cells, metrics, counts in data views, codes and IDs. It is also used for code.
 - **Never mono in prose.** "7 events" in a sentence, a heading or a button stays in DM Sans. Numbers there use `font-variant-numeric: tabular-nums` only when they need to line up.
 - Sizes come only from the type roles in the front matter (check 3). No numeric `font-size` in CSS. Nothing below 12px, except the read-only field label (11px, owner, D-0106). `font-size-09`, `-10` and `-11` are retired (section 12).
-- **surface-title** (15px, 700) is the title of a dialog or a sheet, recorded as Plenix draws it today (#122). Page and section titles use **title** (20px).
+- **surface-title** (15px, 700) is the title of a dialog, a sheet or a SecondaryPane (#122; the pane, D-0123). Page and section titles use **title** (20px).
 - Body and heading are both 13px. Hierarchy comes from weight (400 → 600) and from title or display (20px). That is the existing language, recorded as is.
 
-### Navigation pane type order (D-0123, #995)
+### Pane type order (D-0123, #995)
 
-- The pane title (13px, 700, `content-default`) is the strongest text in a NavPane. Below it come the NavList section label (12px, 700, caps, `content-muted`), then the item (13px, 400), then the back item (12px, 400, `content-muted`).
-- **A back item** ("Back to {parent}") is a link row above the title row, start-aligned, with its arrow on the nav icon column. It is never a filled or centred button. Details: `docs/pds1/slices/995-nav-back/design.md`.
+- **The SecondaryPane title is the largest text in the pane:** surface-title, 15px, 700, `content-default`. It was 12px, 600 (changed, D-0123). Below it come the NavList item (13px, 400), then the section label (12px, 700, caps, `content-muted`), then the back item (12px, 400, `content-muted`).
+- **A back item** ("Back to {name}", `SecondaryPane back`, ADR 0038) is a link row above the title row, start-aligned, with its arrow on the title's start edge. It is never a filled or centred button. In the folded rail it is the first control. Details: `docs/pds1/slices/995-nav-back/design.md`.
 
 ### Read-only fields and card headings (D-0106, #946)
 
