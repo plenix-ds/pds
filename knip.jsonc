@@ -30,6 +30,8 @@
     "tools/decision-id.mjs",
     // run by npm run tokens:sd:check (slice 101, #372 steps 5 to 7)
     "style-dictionary/build.mjs",
+    // run by hand to refresh the check 12 part specimens (tests/visual/specimens-parts.json, #1021)
+    "tests/visual/make-parts-specimens.cjs",
     // a proof tool run by hand (the other proof folders moved to the archive, docs/ARCHIVE.md)
     "tests/ci197-*.cjs",
     // loaded by script tags in pages
