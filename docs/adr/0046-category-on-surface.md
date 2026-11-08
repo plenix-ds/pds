@@ -32,9 +32,13 @@
 
 **Option A** (D-0137; reply B or C on #1074 to switch).
 
-### Cascader
+### Cascader and the field placeholder
 
 - `plx-comp.cascader-placeholder-text` -> `{plx-sys.field-placeholder}`, as Combobox and Input do. It is a remap, not a new token.
+- **`plx-sys.field-placeholder` in light: `gray-600` -> `{plx-ref.color-gray-700}`.** Dark stays `gray-300`.
+  - Why (QA's axe run on #1079): an invalid field has the `feedback-danger-soft` fill (#fde7e7 in light). `gray-600` on it measures 4.31:1, which fails. `gray-700` measures 6.01:1 on it and 7.11:1 on white.
+  - Dark `gray-300` measures 6.31:1 on #444 and 4.61:1 on the dark invalid fill (#56585e).
+  - The Cascader's light placeholder is `gray-700` on main today (`content-subtle`), so it doesn't change. Input, Combobox, TreeSelect and every other field that reads `field-placeholder` get a slightly darker placeholder in light, and their invalid state passes too.
 
 ### `plx-sys.category-<hue>-on-surface` (new, in both theme files)
 
@@ -71,12 +75,12 @@
 ## Consequences
 
 - **Semver: PATCH** (*Fixed*: dark-mode contrast for Cascader's placeholder and plain DataPills). The new tokens are internal roles with no new prop. They also go in the changelog as *Added* (tokens), so a consumer reading `--plx-sys-category-*` sees them.
-- Light mode doesn't change.
+- Light mode doesn't change for categories. Light field placeholders get one step darker (`gray-600` -> `gray-700`).
 - `tests/baselines/stories-axe.json` drops the two failures (`node tests/stories-axe-909.test.js --update`).
 
 ## Enforced by
 
 - G3 on the build PR: the token diff matches this entry (29 sys entries per theme, one comp entry per category in `build-steps.js`, and the Cascader remap).
 - Checks 6 and 7 on the new tokens.
-- Check 8 (contrast) and the axe story run (#909): no color-contrast failure for Cascader or plain DataPill in light and dark.
+- Check 8 (contrast) and the axe story run (#909): no color-contrast failure for Cascader (including invalid) or plain DataPill in light and dark.
 - A build test: every `category-<hue>-on-surface` measures 4.5:1 or more on `surface-default` in both themes.
