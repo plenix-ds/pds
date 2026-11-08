@@ -16,7 +16,7 @@ Source: plenix-ds/pds#987, the CTM owner (2026-11-07, "lock this in as variation
 
 - `variant="grouped"` with `groupBy="year"`: year headings (latest first, reversible by an order prop), with the group gap `space-stack-3xl`.
 - Each event in a container in its category slot (`category-1…8`: tint, border, title color, band), with the title, a secondary-ink description and the category tag at the end. No dots.
-- The date tile at the container's start: the category band, month and day. An upcoming event with a date shows its month and day with a dashed outline. "Pending" is shown only when an event has no date (G2 on PR #1009). The accessible name is the full date.
+- The date tile at the container's start: the category band, month and day. An upcoming event with a date shows its month and day with a dashed outline. "Pending" is shown only for an upcoming event with no date (G2 on PR #1009). The accessible name is the full date.
 - The watermark year beside each event: decorative (`aria-hidden`), never overlapping.
 - Light and dark mode, token-only (D-0116 mix roles). Title and description contrast ≥ 4.5:1 for all 8 slots in both modes (check 8).
 - RTL: the date column and the watermark mirror.
@@ -45,7 +45,7 @@ Source: plenix-ds/pds#987, the CTM owner (2026-11-07, "lock this in as variation
 
 - **AC-1:** Given events across 2024-2026, when `variant="grouped"` renders, then year headings appear 2026, 2025, 2024, each followed by its events. Given the reversed order, then 2024 comes first.
 - **AC-2:** Given an event with `category: 3`, then its container has `data-plx-category="3"` and uses the slot's tint, border and title tokens, with no dot element.
-- **AC-3:** Given a dated upcoming event, then the tile shows its month and day and the container has the dashed outline. Given an event with no date, then the tile reads the `timeline.pending` string.
+- **AC-3:** Given a dated upcoming event, then the tile shows its month and day and the container has the dashed outline. Given an upcoming event with no date, then the tile reads `timeline.pending`. Given a past event with no date (a data error), then it warns in development, joins the previous group, and its tile shows the band only.
 - **AC-4:** Given any slot 1-8, in light and in dark, then the title and the description have contrast ≥ 4.5:1 against the container fill (check 8).
 - **AC-5:** Given the legend with category 2 turned off, then category 2's events are hidden, and the remaining legend items show no selected fill.
 - **AC-6:** Given `dir="rtl"`, then the date tile sits at the inline start (the right) and the watermark mirrors.
