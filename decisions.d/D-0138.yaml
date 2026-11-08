@@ -1,0 +1,9 @@
+id: D-0138
+date: 2026-11-08
+area: design
+decided_by: agent (pds1-product-lead), owner may switch
+decision: 'One-time exception to D-0025 (dark mode last): keep the two dark-mode contrast fixes already built in PR #1079 for #1074 (Cascader dark placeholder, plain DataPill category text, category-*-on-surface tokens, ADR 0046), because they are finished, correct and add no new colors. D-0025 stays in force: other dark findings (for example content-subtle on surface-default, #1085, #1090) are listed on #251, not fixed, until the dark phase.'
+why: 'Reverting finished, correct work costs more than it saves and delays no light work; the exception is named so D-0025 is not eroded.'
+options: ['keep #1079 as built, one-time exception (chosen)', 'split #1079: merge the light half, park the dark half until the dark phase']
+status: active
+check: 'review_only on #251: the dark-phase list carries every other dark finding unfixed until the owner starts dark mode'
