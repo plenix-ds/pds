@@ -1,6 +1,6 @@
 # #977 Avatar: a discreet corner action (Change photo) (G2)
 
-- **Request:** the CTM owner (LighthouseCollection/CTM#240, PLX-012): "changing a photo must be discreet, a small icon in the corner", never a full button.
+- **Request:** the CTM owner (LighthouseCollection/CTM#240, PLX-027): "changing a photo must be discreet, a small icon in the corner", never a full button.
 - **Extends:** the Avatar presence dot (`platform/components/Avatar/avatar.css`, `.plx-avatar__presence`) for its corner, ring and offset, and `AvatarUpload` (`platform/patterns/AvatarUpload`) for the flow (file choice, crop, its messages). It adds one optional part, the **corner action**. The API name is G3's (for example `action` on Avatar, built in on AvatarUpload).
 - **Readings applied (D-0112):**
   - The corner action is only on `lg`, `xl` and `2xl`. A 24px target over a 28–32px avatar would cover most of the face, so it would not be discreet. Smaller avatars, such as the one in a Panel header, keep CTM's ghost `Button size="sm"` (icon-only, with a tooltip).
