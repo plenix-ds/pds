@@ -61,7 +61,7 @@ const launch = async (options = {}) => {
   // 90 seconds, keep the shared-memory folder off /dev/shm (small on a runner), and try again twice
   let browser, last;
   for (let attempt = 0; attempt < 3 && !browser; attempt++) {
-    try { browser = await puppeteer.launch({ executablePath: chromePath(), headless: true, protocolTimeout: 180000, timeout: 90000, ...(options.enableExtensions ? { enableExtensions: options.enableExtensions } : {}), args: ['--no-sandbox', '--disable-dev-shm-usage', '--allow-file-access-from-files'] }); }
+    try { browser = await puppeteer.launch({ executablePath: chromePath(), headless: true, protocolTimeout: 180000, timeout: 90000, ...(options.enableExtensions ? { enableExtensions: options.enableExtensions } : {}), args: ['--no-sandbox', '--disable-dev-shm-usage', '--allow-file-access-from-files', ...(options.args || [])] }); }
     catch (e) { last = e; if (!/WS endpoint|Timed out/i.test(String(e && e.message))) throw e; console.log('Chrome did not start (attempt ' + (attempt + 1) + ' of 3): ' + String(e.message).split('\n')[0]); }
   }
   if (!browser) throw last;

@@ -19,5 +19,23 @@
  },
  "components-timezoneselect--selected \u00b7 dark": {
   "color-contrast": 1
+ },
+ "patterns-versioncompare--default \u00b7 dark": {
+  "color-contrast": 4
+ },
+ "patterns-versioncompare--focus \u00b7 dark": {
+  "color-contrast": 4
+ },
+ "patterns-versioncompare--long-text \u00b7 dark": {
+  "color-contrast": 4
+ },
+ "patterns-versioncompare--rtl \u00b7 dark": {
+  "color-contrast": 4
+ },
+ "patterns-versioncompare--same-version \u00b7 dark": {
+  "color-contrast": 4
+ },
+ "patterns-versioncompare--wide \u00b7 dark": {
+  "color-contrast": 4
  }
 }

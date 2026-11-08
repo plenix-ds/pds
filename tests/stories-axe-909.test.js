@@ -35,7 +35,7 @@ const server = http.createServer((req, res) => {
 });
 (async () => {
   await new Promise((r) => server.listen(0, r)); const base = 'http://127.0.0.1:' + server.address().port;
-  const browser = await launch();
+  const browser = await launch({ args: ['--disable-background-timer-throttling', '--disable-renderer-backgrounding', '--disable-backgrounding-occluded-windows'] });   // pages open side by side: a page behind another would otherwise have its timers and frames paused, and its story never finish rendering
   const axeSrc = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
   const found = {}, broken = [], queue = stories.slice();
   // several pages at once: a thousand stories in two modes would otherwise outlast the test's time limit (TEST_TIMEOUT_MS)
@@ -43,8 +43,11 @@ const server = http.createServer((req, res) => {
     const page = await browser.newPage(); await page.setViewport({ width: 1000, height: 800 });
     for (let s = queue.shift(); s; s = queue.shift()) {
       for (let attempt = 1; attempt <= 2; attempt++) try {   // a second try: on a busy runner a page can be slow to load, which is not an accessibility result
-        await page.goto(base + '/iframe.html?id=' + s.id + '&viewMode=story', { waitUntil: 'load', timeout: 60000 });
-        await page.waitForSelector('#storybook-root > *, #storybook-docs', { timeout: 15000 });
+        await page.bringToFront();
+        await page.goto(base + '/iframe.html?id=' + s.id + '&viewMode=story', { waitUntil: 'domcontentloaded', timeout: 60000 });
+        await page.waitForFunction(() => document.body.classList.contains('sb-show-main') || document.body.classList.contains('sb-show-errordisplay') || !!document.querySelector('#storybook-root > *'), { timeout: 30000 });   // a closed dialog renders nothing in the root, so wait for Storybook's own "shown" flag
+        if (await page.evaluate(() => document.body.classList.contains('sb-show-errordisplay') && !document.querySelector('#storybook-root > *'))) throw new Error('the story threw while rendering');
+        await new Promise((r) => setTimeout(r, 200));
         if (!(await page.evaluate(() => !!window.axe))) await page.evaluate(axeSrc);
         for (const mode of ['light', 'dark']) {
           await page.evaluate((m) => { document.documentElement.setAttribute('data-plx-mode', m); }, mode);
