@@ -257,7 +257,7 @@ Every component declares a state manifest (check 9). Each state is a token set o
 | focus | `:focus-visible` only: a ring in `focus-ring-color`, 2px wide, 2px offset. The ring is never removed. In forced colours it uses the system `Highlight` colour |
 | active | `state-pressed` (accent: `accent-state-pressed`), plus `motion-press-scale` |
 | disabled | `content-disabled` and `state-disabled-opacity` (0.5). No events fire. Not focusable, or `aria-disabled` and announced, per the component spec |
-| loading | `aria-busy="true"`. The control keeps its width. A spinner (`motion-loading-*`) appears after `motion-loading-delay`. Clicks are blocked |
+| loading | `aria-busy="true"`. A control keeps its width, its spinner appears after `motion-loading-delay` (0.5s), and clicks are blocked. A region (a page, grid, card or panel body) follows "Loading" below |
 | error | `feedback-danger-solid` border, `feedback-danger-content` message under the field, linked by `aria-describedby`, `aria-invalid="true"` |
 | selected | `state-selected` background, `state-selected-border` (or `selected-border`), `selected-content` text; pressed while selected: `state-selected-pressed`. `aria-selected` / `aria-checked` / `aria-current` as fits |
 | empty | the EmptyState pattern: `content-muted` text with one Button action at most. The wording is the Technical Writer's (`docs/content/messaging.md`) |
@@ -265,6 +265,20 @@ Every component declares a state manifest (check 9). Each state is a token set o
 
 - Read-only is not disabled. It uses `read-only-background`, `read-only-content` and `read-only-border`, and can still be focused.
 - Every new design brief includes this matrix for the change, in light and dark, at every density it touches.
+
+### Loading (D-0130, owner, #1032)
+
+- **The default loading state is a spinner with a visible label** (the Fluent pattern). The label is a few words that name what is loading ("Loading cases…"), centred in the region that loads. Wording follows `docs/content/messaging.md`.
+- **It shows nothing for the first second.** It appears after `motion-loading-region-delay` (1s). A fast load never flashes it.
+- **Ring and label:**
+  - The ring is `lg` (24px) in a page, panel, card or dialog body. It is `md` (16px) in a grid placeholder row or a one-line region, and `sm` (12px) only inside a control.
+  - The label sits after the ring with an 8px gap (`space-inline-sm`). It uses the `body` role in `content-default`.
+  - The arc is at least 3:1 in light and dark: `feedback-info-solid` (#1047).
+- **Announcements:** the region is `aria-busy="true"`. The label is the `role="status"` text and is announced once. Only the outermost loading region shows a spinner.
+- **Known progress** uses a `ProgressBar` with its label. Past about 10 seconds, the region adds a Cancel button or a progress value.
+- **Reduced motion:** the ring stands still, and the label still shows.
+- **Skeleton (shimmer bars) is opt-in only.** No Plenix component, pattern, template or default uses it.
+- Details and the state matrix: `docs/pds1/slices/1032/design.md`.
 
 ## 10. RTL and Arabic
 
