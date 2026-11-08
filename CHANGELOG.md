@@ -6,6 +6,32 @@ The batch numbers point to the work log (Plenix - DAM/audit/batches/).
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-11-08
+
+### Upgrading from 1.2.1
+No breaking changes. Loading states now show a labeled spinner after a short delay instead of skeleton bars; Skeleton stays available, opt-in. Apps on the CDN loader follow this release by themselves; npm apps update the version as usual.
+
+### Added
+- `LoadingState` (new export): a region's loading state, a ring and a label ("Loading cases…") centred in the region, shown only after about a second so a fast load shows nothing. It is a status region from the start (announced once, when the label appears), keeps the region's least height, shows a `ProgressBar` with the label when `progress` is known, and the ring stands still with reduced motion. Props `label`, `progress`, `delay`, `size` (default `"lg"`), `labelPosition` (`"after"` by default, or `"below"`) and `strings`; only the outermost one draws. `Spinner` takes `labelPosition` (`"hidden"` by default) and `delay`. New tokens `motion-loading-region-delay` and `spinner-label-*` (#1032).
+- `DataGrid` and `ListingPage` take `loading`: with no rows to show, the grid draws the loading state in its placeholder row (ADR 0042, D-0130, #1032).
+- `DataGrid` `columns[].lines` (1 to 4): the cell shows that many lines, then an ellipsis, and implies `wrap` (#1044). The grid uses the smallest row-height step whose rows hold the most lines asked for, measured from the row-height and line-height tokens at the current density; the app's `rowHeight` or the person's choice wins when taller. A value outside 1 to 4 warns in development and is clamped.
+- `DataGrid` `columns[].overflow` (`"tooltip"` or `"none"`): the full text in a Tooltip on pointer hover and on keyboard focus of the cell, only while the text is cut. It is the default for a wrapping column; `"none"` opts out (ADR 0043, D-0133, #1044).
+- `PropertyGroup` and `PropertyList` take `variant="tiles"`: the read-only look of D-0106 (one tile per field, two per row, one per row when narrow), set in one go. `PropertyList.Item` takes `status` (a Badge with its icon) and `span="full"` (a full-row tile for long text). The default stays `columns` (#1043, #1052).
+- Tokens `--plx-sys-category-<hue>-on-surface` (and `--plx-comp-category-on-surface`): a category color as text on the page surface, 4.5:1 or more in both themes (#1074).
+
+### Changed
+- `EntityTitle loading`, `MetricCard state="loading"` and the `DataGrid` remote loading rows draw the loading state (a ring after a delay) instead of skeleton bars or bare text. `Skeleton` stays exported, opt-in only: no Plenix component, pattern or template uses it by default (a new check-system rule enforces it) (#1032).
+- The spinner's arc is `feedback-info-solid`, so it reads at least 3:1 on the dark surface (it was 2.04:1) (#1032).
+
+### Fixed
+- The `LoadingOverlay` message tokens point at system tokens, not references (#1032).
+- A `Tooltip` around a grid cell's content takes the cell's width, so the text can truncate with an ellipsis instead of growing past the cell (#1044).
+- DataGrid: the cut-text tooltip measures whether a cell is cut only when the pointer enters it or it takes focus, no longer when each row is drawn, so long lists cost nothing extra (#1067).
+- A plain DataPill with a category and the Cascader placeholder now meet the 4.5:1 text contrast in dark mode (#1074).
+- The placeholder of an invalid field (Input, Cascader) is 4.5:1 or more on the invalid fill in light mode, through the new `--plx-sys-field-placeholder-invalid`; resting fields are unchanged (#1074).
+- CodeBlock and CodeEditor: the CSS selector token color is now 4.5:1 or more on the code surface in light mode; a disabled CodeEditor's text is marked `aria-disabled` (#1081).
+- Combobox (and CountrySelect, EntityPicker): the empty and error rows of the open list are disabled options, so the listbox always has its required children (#1081).
+
 ## [1.2.1] - 2026-11-08
 
 ### Upgrading from 1.2.0
