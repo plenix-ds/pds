@@ -2232,7 +2232,7 @@
       "$type": "dimension"
     },
     "spinner-border-bottom-color": {
-      "$value": "{plx-sys.feedback-info-solid}",
+      "$value": "{plx-sys.action-primary-background}",
       "$type": "color"
     },
     "spinner-radius": {
@@ -2242,11 +2242,11 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "spinner-border-left-color": {
-      "$value": "{plx-sys.feedback-info-solid}",
+      "$value": "{plx-sys.action-primary-background}",
       "$type": "color"
     },
     "spinner-border-right-color": {
-      "$value": "{plx-sys.feedback-info-solid}",
+      "$value": "{plx-sys.action-primary-background}",
       "$type": "color"
     },
     "spinner-sm-height": {

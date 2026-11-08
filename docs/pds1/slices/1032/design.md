@@ -10,7 +10,7 @@
   - Every default loading state in PDS becomes a **spinner with a visible label**, centred in the region that loads. It shows only after about **1 second**.
   - `Skeleton` stays exported but is **opt-in only**: no PDS component, pattern or template uses it, and its docs say so.
 - **Defects fixed (DESIGN.md rule, no owner question):**
-  - **Fixed in this PR (token only):** the spinner arc was `action-primary-background`, which is blue-400 in both themes. On the dark `surface-default` (gray-800) that measures **2.04:1**, below the 3:1 non-text rule. `spinner-border-{bottom,left,right}-color` now point to `feedback-info-solid`. It is blue-400 in light (4.78:1 on white, so light is unchanged) and blue-300 in dark (5.19:1 on gray-800). This is also ProgressCircle's default `info` arc.
+  - **Specified here; the DS Architect applies the token remap** (token tiers are theirs, ADR 0001; the Ownership check). The spinner arc was `action-primary-background`, which is blue-400 in both themes. On the dark `surface-default` (gray-800) that measures **2.04:1**, below the 3:1 non-text rule. The fix: `spinner-border-{bottom,left,right}-color` point to `feedback-info-solid`. It is blue-400 in light (4.78:1 on white, so light is unchanged) and blue-300 in dark (5.19:1 on gray-800). This is also ProgressCircle's default `info` arc.
   - **For the engineer:** a loading **primary button** draws the blue arc on its blue fill (about 1:1 in both themes). Inside a filled button (primary, danger, accent), the Button stylesheet sets the spinner arc to the button's own text colour (`currentColor`). The test checks the arc against the button fill at 3:1 or more.
 - **Readings applied (D-0130; the owner may switch):**
   - **A. The label sits after the ring, on one line** (Fluent `labelPosition="after"`, its default). B: the label goes under the ring.
@@ -117,7 +117,7 @@
 
 - Ran: `grep` for `Skeleton` / `plx-skeleton` across `platform/` (2 component uses: EntityTitle, MetricCard; 34 spec notes in 14 parts files).
 - Ran: contrast computed from the ref hex values (node): blue-400 on gray-800 2.04 (the defect), blue-300 on gray-800 5.19.
-- Ran: `npm run tokens:build` after the token remap ("7435 tokens, 4 changed").
+- Ran: `npm run tokens:build` with the remap applied locally (7435 tokens, 4 changed). The remap was then taken out of PR #1042 for the DS Architect.
 - Ran: read `motion-loading.tokens.json` (delay 0.5s), `Loading.tsx` (Spinner label hidden only) and `engine/chrome.tsx` (grid loading is text only).
 - Planned: the §7e tests (delay at 999 and 1000ms, one announcement, reduced motion, error replaces spinner, no Skeleton import check).
 - Planned: the CI visual check, light and dark at standard density plus RTL.
