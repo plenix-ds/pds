@@ -1,0 +1,9 @@
+id: D-0118
+date: 2026-11-08
+area: api
+decided_by: agent (pds1-product-lead) at G1, owner may switch
+decision: 'EntityHeader facts[].tone works in the structured style too, with the Status tile''s tones and aliases (danger -> negative); the softer tone is the existing action-required, no new attention tone. "Required, not chosen" on Select, Combobox and EntityPicker is the existing invalid prop plus aria-describedby to a hint, with no Field error; no new status prop (#990).'
+why: 'The streamlined style already has fact tones and the pickers already have invalid; one tone list and one invalid prop keep the API small.'
+options: ['reuse tones and invalid (chosen)', 'a new attention tone and a status="danger" prop on pickers']
+status: active
+check: 'tests/entity-header-fact-tone-990.test.js (AC-1..AC-5 in docs/pds1/slices/990-fact-danger-tone/brief.md); G3 API diff on the build PR'
