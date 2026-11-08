@@ -1,0 +1,9 @@
+id: D-0120
+date: 2026-11-08
+area: components
+decided_by: agent (pds1-design-director) at G2, owner may switch
+decision: 'EntityHeader toned fact (#990, D-0118): inside a toned tile the fact''s icon takes the tone text colour and its icon tile takes the tone border (fill unchanged); the embedded picker uses the existing invalid field look only with tone danger, never when disabled, and keeps the existing invalid-over-focus border with no extra ring; the "required, not chosen" hint is visually hidden, read through aria-describedby; toned and untoned tiles are the same size.'
+why: 'The owner asked for the label, value and icon tile in red tones and a danger-bordered dropdown. The field focus rule (owner, 2026-10-16) has no outer ring, and danger already wins over focus. The header has no room for a visible hint line; the placeholder and label are the non-colour cues.'
+options: ['icon and icon tile toned, hidden hint, existing field focus (chosen)', 'icon tile left neutral', 'a visible hint line under the tile']
+status: active
+check: 'planned:entity-header-fact-tone-990 (#990: AC-1..5, icon colour is the tone text, toned and untoned tiles same box size, focused invalid picker keeps the danger border)'
