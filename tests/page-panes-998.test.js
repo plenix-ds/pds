@@ -29,5 +29,5 @@ assert.ok(/export \{[^}]*\bPagePanes\b[^}]*\}/.test(read('platform/index.ts')), 
     assert.equal(r.cls, 'plx-page-panes mine');
     assert.equal(r.mine.replace(' class="plx-page-panes mine" data-x="1"', ' class="plx-page-panes"').replace(' data-x="1" class="plx-page-panes mine"', ' class="plx-page-panes"'), r.raw, 'same DOM as the raw div');
     console.log('PAGE_PANES_998_OK');
-  } finally { await Promise.race([browser.close(), new Promise((x) => setTimeout(x, 5000))]); process.exit(process.exitCode || 0); }
-})().catch((e) => { console.error(e); process.exit(1); });
+  } finally { await Promise.race([browser.close(), new Promise((x) => setTimeout(x, 5000))]); }
+})().then(() => process.exit(0), (e) => { console.error(e); process.exit(1); });
