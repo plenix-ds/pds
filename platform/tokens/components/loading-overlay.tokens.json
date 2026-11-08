@@ -6,9 +6,9 @@
     "loading-overlay-z-index": { "$value": "{plx-sys.layer-raised}", "$type": "number", "$description": "The status over a region: the raised layer, drawn after its veil." },
     "loading-overlay-page-z-index": { "$value": "{plx-sys.layer-overlay}", "$type": "number", "$description": "The status over the window: the overlay layer, drawn after its veil." },
     "loading-overlay-message-color": { "$value": "{plx-sys.content-default}", "$type": "color", "$description": "The message: the default text color, readable on the veil." },
-    "loading-overlay-message-font-size": { "$value": "{plx-ref.font-size-200}", "$type": "dimension", "$description": "The message: the body size." },
+    "loading-overlay-message-font-size": { "$value": "{plx-sys.text-body-font-size}", "$type": "dimension", "$description": "The message: the body size." },
     "loading-overlay-message-font-weight": { "$value": "{plx-sys.font-weight-semibold}", "$type": "fontWeight", "$description": "The message: semibold, so it reads over the veil." },
-    "loading-overlay-message-line-height": { "$value": "{plx-ref.line-height-normal}", "$type": "number", "$description": "The message's line height." },
+    "loading-overlay-message-line-height": { "$value": "{plx-sys.text-body-line-height}", "$type": "number", "$description": "The message's line height." },
     "loading-overlay-progress-max-width": { "$value": "{plx-ref.size-60u}", "$type": "dimension", "$description": "The progress bar's greatest width in the middle of the region." }
   }
 }

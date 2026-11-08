@@ -229,6 +229,26 @@
     "selected": "n/a(stories arrive with Storybook, P0-11)",
     "error": "n/a(invalid is the is-invalid state set by its Field; stories arrive with Storybook, P0-11)"
   },
+  "Loading": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(stories arrive with Storybook, P0-11)",
+    "loading": "n/a(stories arrive with Storybook, P0-11)",
+    "selected": "n/a(stories arrive with Storybook, P0-11)",
+    "error": "n/a(a failed load is the region's own error and Retry (design 1032 §3))"
+  },
+  "LoadingOverlay": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(stories arrive with Storybook, P0-11)",
+    "loading": "n/a(stories arrive with Storybook, P0-11)",
+    "selected": "n/a(stories arrive with Storybook, P0-11)",
+    "error": "n/a(the overlay is the loading state; its failure is the page's own Notice)"
+  },
   "Timeline": {
     "default": "n/a(stories arrive with Storybook, P0-11)",
     "hover": "n/a(stories arrive with Storybook, P0-11)",

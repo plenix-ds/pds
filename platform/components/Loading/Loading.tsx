@@ -93,9 +93,8 @@ export type LoadingStateProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'chil
   labelPosition?: 'after' | 'below';
   delay?: number | 'region';
   strings?: Catalog | null;
-  children?: React.ReactNode;
 };
-export function LoadingState({ label, progress, size = 'lg', labelPosition = 'after', delay = 'region', strings, className, children, ...rest }: LoadingStateProps) {
+export function LoadingState({ label, progress, size = 'lg', labelPosition = 'after', delay = 'region', strings, className, ...rest }: LoadingStateProps) {
   const t = useStrings('loading', strings);
   const nested = React.useContext(InLoadingState);
   const ready = useAfter(delay);
@@ -104,9 +103,8 @@ export function LoadingState({ label, progress, size = 'lg', labelPosition = 'af
   return (
     <InLoadingState.Provider value>
       <div className={cx('plx-loading-state', className)} {...rest}>
-        {typeof progress === 'number' ? <ProgressBar value={progress} label={text} showValue className="plx-loading-state__progress" />
+        {typeof progress === 'number' ? <ProgressBar value={progress} label={typeof text === 'string' ? text : String(t.label)} showValue className="plx-loading-state__progress" />
           : <Spinner size={size} label={text} labelPosition={labelPosition} />}
-        {children}
       </div>
     </InLoadingState.Provider>
   );
