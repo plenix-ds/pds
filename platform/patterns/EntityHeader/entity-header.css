@@ -1082,5 +1082,6 @@
 .plx-entity-header__versus-mark{color:var(--plx-comp-entity-header-versus-mark-text);font-size:var(--plx-comp-entity-header-versus-mark-font-size);font-weight:var(--plx-comp-entity-header-versus-mark-font-weight);white-space:nowrap;}
 .plx-entity-header__versus-mark--large{font-size:var(--plx-comp-entity-header-versus-mark-font-size-large);}
 /* in the stretched layouts the pair keeps the media's column (and the edge's fill and line) but is drawn at the small size, at the top of the column (G2) */
-.plx-entity-header__media--versus-page{--plx-state-entity-header-media-self:start;--plx-state-entity-header-media-size:var(--plx-comp-entity-header-media-size);}
-.plx-entity-header__media--versus-section{--plx-state-entity-header-media-self:start;--plx-state-entity-header-media-size:var(--plx-comp-entity-header-section-media-size);}
+.plx-entity-header__media--versus-page{--plx-state-entity-header-media-size:var(--plx-comp-entity-header-media-size);}
+.plx-entity-header__media--versus-section{--plx-state-entity-header-media-size:var(--plx-comp-entity-header-section-media-size);}
+.plx-entity-header__media--versus.plx-entity-header__media--stretch{align-items:flex-start;}
