@@ -5,7 +5,7 @@
 - **Deciders:** pds1-ds-architect (G3), on the owner's words relayed on #1043 ("this new look to be registered as a new variation style in the PDS!") and D-0132 (A: a named variation, default unchanged). Decision D-0135 (owner may switch).
 - **Issue:** #1043 (S1).
   - Brief: `docs/pds1/slices/1043/brief.md`.
-  - Design (G2): `docs/pds1/slices/1043/design.md`. It owns the look, the sizes, the narrow-width rule and the DESIGN.md "Variations" entry. This entry owns the names.
+  - Design (G2, PR #1048, D-0134): `docs/pds1/slices/1043/design.md`. It owns the look, the precedence and the narrow-width rule. This entry owns the names and the tokens.
 
 ## Context
 
@@ -40,11 +40,13 @@
 - An explicit `variant` on the list wins over its group's.
 - **`"tiles"`:**
   - It is the D-0106 look in one go: `layout="stacked"` items, each on a porcelain tile, **two tiles per row** with the variation's gaps, the navy label and the semibold value.
-  - It falls to one tile per row when the list is too narrow. G2 names the width as a token.
+  - It falls to one tile per row when the list is too narrow: a tile is never narrower than `size-field-tile-min` (240px).
+  - That is an intrinsic grid (G2 §1), not a container query.
+  - It reuses the stacked classes and adds no CSS values of its own (G2 §7).
   - The list gets the classes `plx-property-list--stacked plx-property-list--tiles`.
-- **With `layout`:**
-  - `layout="stacked"` together with `"tiles"` is allowed and changes nothing.
-  - `layout="columns"` together with `"tiles"` gets a `devWarn`, and the tiles win.
+- **With `layout`** (G2 design §1, D-0134):
+  - An explicit `layout` on the list wins over the variation, and a `devWarn` says the two disagree.
+  - `layout="stacked"` with `"tiles"` agrees, so it gets no warning.
 - **`"default"`:** today's behavior exactly. `layout` defaults to `columns` (D-0107), and `layout="stacked"` is unchanged from 1.2.0 (AC-4, AC-5).
 
 ### `PropertyList.Item.status?: { label: React.ReactNode; tone: BadgeProps['tone']; icon: IconValue }`
@@ -56,21 +58,22 @@
 - With both `status` and `children`, a `devWarn` fires and `status` wins.
 - New class: `plx-property-list__status`.
 
-### Tokens (comp -> sys only; no new colors, per the brief's non-goals)
+### Tokens (ref -> sys -> comp; no new colors, per the brief's non-goals; G2 §1)
 
-- `plx-comp.property-list-tiles-column-gap` -> `{plx-sys.space-inline-lg}` (16px).
-- `plx-comp.property-list-tiles-row-gap` -> `{plx-sys.space-stack-lg}` (16px).
-- `plx-comp.property-list-tiles-min-inline-size`: the width below which tiles go one per row. Its sys target comes from G2's design.md, and it is never a raw value.
+- `plx-sys.size-field-tile-min` -> `{plx-ref.size-60u}` (240px): the narrowest read-only tile.
+- `plx-comp.property-list-tiles-min-inline-size` -> `{plx-sys.size-field-tile-min}`.
+- `plx-comp.property-list-tiles-gap` -> `{plx-sys.space-stack-field}`: 16px, both axes, varying with density as 946 §4 says.
 - The tile, label, value and heading tokens are the existing `property-list-*` and `property-group-*` tokens.
 
 ### Not in this change
 
+- **No `columnCount` prop.** G2 §1 mentions `columnCount={1}` (946 §2), but PropertyList has no such prop on `main`. A one-per-row option for long notes needs its own ADR entry first.
 - The 1.x default stays `columns` (D-0107). Making `"tiles"` the default is a 2.0.0 question for the owner (brief P2).
 - No Panel API. The docs show the variation inside a Panel, using the existing header.
 
 ## Consequences
 
-- **Semver: MINOR.** *Added:* `PropertyGroup.variant`, `PropertyList.variant`, `PropertyList.Item.status`, three comp tokens and the classes `plx-property-group--tiles`, `plx-property-list--tiles` and `plx-property-list__status`.
+- **Semver: MINOR.** *Added:* `PropertyGroup.variant`, `PropertyList.variant`, `PropertyList.Item.status`, one sys and two comp tokens and the classes `plx-property-group--tiles`, `plx-property-list--tiles` and `plx-property-list__status`.
 - Nothing changes for apps that don't set `variant` or `status`.
 - CTM uses `<PropertyGroup variant="tiles">` on every read-only card, and `status` for its status values (CTM#273).
 - DESIGN.md gets a "Variations" entry (G2): its name, D-0132 and D-0135, and when to use it. The docs and the gallery get light, dark, RTL and compact specimens, with visual baselines (check 12).
@@ -78,12 +81,13 @@
 ## Enforced by
 
 - G3 on the build PR: the API diff matches this entry (three props, no others).
-- Checks 6 and 7 on the three tokens.
+- Checks 6 and 7 on the three new tokens.
 - The build PR's tests (brief AC-1 to AC-6):
   - a `"tiles"` group gives its list the stacked and tiles classes, two tiles per row, with no other props;
   - a list's own `variant` wins over its group's;
   - `status` gives a Badge with its icon;
-  - `layout="columns"` with tiles warns and draws tiles;
+  - an explicit `layout="columns"` with tiles warns, and `columns` wins;
+  - an odd last tile sits alone at the inline start, at half width (G2 §5);
   - without `variant`, the output is unchanged from 1.2.0 for both layouts;
   - two groups are 40px apart, with a gold heading;
   - RTL mirrors;
