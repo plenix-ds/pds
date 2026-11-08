@@ -2,8 +2,8 @@ id: D-0131
 date: 2026-11-08
 area: api
 decided_by: agent (pds1-ds-architect) at G3, owner may switch
-decision: 'Region loading is a new export LoadingState (ADR 0042): label (catalog default), progress (ProgressBar), delay (default token motion-loading-region-delay = new ref motion-delay-slow-load 1 s; controls keep motion-loading-delay 0.5 s), size, labelPosition "below" | "after"; one role=status, ring aria-hidden. EntityTitle loading, MetricCard state="loading", DataGrid (new loading prop and remote mode), ListingPage (new loading prop) and LoadingOverlay use it; Skeleton stays opt-in, not deprecated.'
-why: 'The owner wants a labeled spinner after about 1 s, not skeleton bars (#1032, D-0130); a named first-load sibling of EmptyState keeps Spinner an inline control ring and avoids a veil over nothing.'
-options: ['LoadingState export (chosen)', 'Spinner with delay/centered/visible label', 'LoadingOverlay without children']
+decision: 'Region loading API (ADR 0042, adopting G2 design.md §2): Spinner gains labelPosition "hidden" (default) | "after" | "below" and delay number | "region"; the region helper is a named export LoadingState (label, progress, size default lg, labelPosition default after, delay default region; outermost-only nesting); DataGrid.loading and ListingPage.loading are new; tokens ref motion-delay-loading-region 1 s -> sys motion-loading-region-delay, comp spinner-label-{gap,text,font-size,line-height}. EntityTitle, MetricCard and DataGrid stop using Skeleton; Skeleton stays opt-in, not deprecated.'
+why: 'The owner wants a labeled spinner after about 1 s, not skeleton bars (#1032, D-0130); a named export (the EmptyState sibling) tree-shakes and has its own type, unlike a Spinner.Region static, and keeps the inline ring free of a region flag.'
+options: ['LoadingState named export (chosen)', 'Spinner.Region static', 'region flag on Spinner']
 status: active
-check: 'G3 API diff on the build PR; check-system token-tiers (check 6), token-names (check 7); planned:loading-state-1032 tests (AC-1..AC-6, no .plx-skeleton in defaults); planned: check-system rule, no Skeleton render outside Loading.tsx'
+check: 'G3 API diff on the build PR; check-system token-tiers (check 6), token-names (check 7); planned:loading-region-1032 tests (AC-1..AC-6, 999/1000 ms, one status, nesting, no .plx-skeleton in defaults); planned:no-default-skeleton'
