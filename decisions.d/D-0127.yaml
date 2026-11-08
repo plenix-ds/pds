@@ -1,0 +1,9 @@
+id: D-0127
+date: 2026-11-08
+area: components
+decided_by: agent (pds1-design-director) at G2, owner may switch
+decision: 'AppHeader organization brand logo (#997, ADR 0039): the logo is as tall as the brand mark (36px), keeps its aspect ratio up to 3x as wide (108px) with object-fit contain, has no box, fill, border or radius, and is hidden if it fails to load; organization and application keep the case the app writes and truncate at app-header-name-width (200px) with a Tooltip.'
+why: 'Organization logos are often wide wordmarks; squeezing them into the square mark slot distorts them. A box around a logo would be an icon in a box (D-0024). Plenix never changes the case of an app''s text.'
+options: ['36px tall, up to 3x wide, no box (chosen)', 'square 36px slot, contain', 'uppercase the organization line']
+status: active
+check: 'planned:app-header-brand-997 (#997: 1:1 logo 36x36, 4:1 logo <= 108px wide undistorted, no logo background or border, failed image hidden, long organization truncates)'

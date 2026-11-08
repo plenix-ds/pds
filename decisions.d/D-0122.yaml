@@ -1,0 +1,9 @@
+id: D-0122
+date: 2026-11-08
+area: components
+decided_by: agent (pds1-design-director) at G2, owner may switch
+decision: 'EntityHeader versus media (#991, D-0119): the two avatars sit side by side at the full media height (44/72px page, 32/48px section) with no overlap and no ring, the "vs." mark between them as plain text (label role, content-muted; heading role at 72px), 8px gaps (4px at 32px); stretched layouts show the pair at the small size at the top, centred.'
+why: 'Side by side keeps both faces whole and the mark readable; CTM allowed overlap only with a ring. A box around the mark would be an icon in a box (D-0024). The brief keeps stretched layouts at the small size.'
+options: ['side by side, plain mark (chosen)', 'overlapping avatars with a surface ring', 'the mark in a small circle between overlapping avatars']
+status: active
+check: 'planned:entity-header-versus-991 (#991: AC-1..6, pair height equals single media height per layout, mark has no background or border, RTL order)'

@@ -103,3 +103,8 @@
 .plx-app-header__title{display:block;flex-shrink:1;min-inline-size:0;overflow-x:hidden;overflow-y:hidden;text-overflow:ellipsis;white-space:nowrap;}
 /* its motion (moved from motion.css, Styling Standard 3.6: each component owns its own; reduced motion sets the durations to 0s) */
 .plx-app-switcher__tile:active:where(:not(:disabled, [aria-disabled="true"])){transform:scale(var(--plx-sys-motion-press-scale));}
+/* an organization's brand (ADR 0039, #997): the logo in the mark's slot, 36px tall and up to three times as wide, with no box; hidden when it fails */
+.plx-app-header__logo{block-size:var(--plx-comp-brand-mark-context-size);flex-shrink:0;inline-size:auto;max-inline-size:calc(var(--plx-comp-brand-mark-context-size) * 3);object-fit:contain;}
+.plx-app-header__logo-slot{align-items:center;block-size:var(--plx-comp-brand-mark-context-size);display:inline-flex;flex-shrink:0;}
+.plx-app-header__text-cut{max-inline-size:var(--plx-comp-app-header-name-width);overflow-x:hidden;overflow-y:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.plx-app-header__tip{display:contents;}
