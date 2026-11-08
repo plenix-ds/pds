@@ -1,0 +1,3 @@
+FAIL only a group after a group gets the 40px gap (ADR 0033): a sibling selector, no :first-child reset
+
+PROPERTY_GROUP_FAIL 1

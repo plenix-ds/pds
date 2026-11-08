@@ -936,6 +936,9 @@
    "combinator | .plx-product-card--list .plx-product-card__media": 1,
    "combinator | .plx-product-card--list .plx-product-card__actions": 1
   },
+  "platform/patterns/PropertyGroup/property-group.css": {
+   "combinator | .plx-property-group + .plx-property-group": 1
+  },
   "platform/patterns/PropertyList/property-list.css": {
    "combinator | .plx-property-list--columns .plx-property-list__item": 3,
    "combinator | .plx-property-list--stacked .plx-property-list__item": 1,
