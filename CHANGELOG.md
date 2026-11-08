@@ -6,6 +6,30 @@ The batch numbers point to the work log (Plenix - DAM/audit/batches/).
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-11-08
+
+### Upgrading from 1.1.0
+No breaking changes. New canonical props and parts replace app-side workarounds: AppHeader brand, PagePanes, Panel whole-header toggle, EntityHeader versus and fact tone, SecondaryPane back item, grouped Timeline, AvatarUpload corner action. Apps that hand-built these should switch to the documented API.
+
+### Added
+- `AvatarUpload` takes `actions="corner"` (default `"buttons"`, today's look): one icon button (camera) at the avatar's bottom-end corner (bottom-left in right to left), ringed in the surface color like the presence dot, named "Change photo" ("Add photo" without a picture) with a Tooltip saying the same. It is in the tab order and visible at rest, with a target of at least 24px; press opens the file picker, or with a picture and `removable` a menu with Change photo and Remove photo. The description line and the secondary buttons are not drawn, and nothing is drawn when `disabled`. `size` gains `"lg"` (40px), with `actions="corner"` only. New tokens `avatar-upload-corner-*` (ADR 0034, D-0113, #977).
+- `Timeline` takes `variant="grouped"` (default `"default"`, unchanged): the events are grouped by year (a heading and an ordered list per year, in the order given), each in a container tinted by its category, with a calendar date tile at its start, a category tag at its end and a faint watermark year beside it. New item fields `category` (`{ id, label, color }`, `color` is a slot `"1"` to `"8"` or a category hue name) and `upcoming` (a dashed outline, a grey band and Pending). New props `legend` (toggle buttons that hide a category), `hiddenCategories` and `onHiddenCategoriesChange` (to control it), `headingLevel` (2 to 6, default 3) and `strings`. Grouped is vertical only; `dateTime` (ISO 8601) is required on each item that is not upcoming. New type `CategoryColor`, new strings `timeline.pending` and `timeline.legend`, the category slots `category-1` to `category-8` (aliases of existing category hues; in dark mode their text is light and the container is tinted by mixing it into the surface), `content-decorative`, `space-stack-3xl`, and the tokens `timeline-grouped-*` (ADR 0036, D-0116, #987).
+- `EntityHeader`: a fact in `facts[]` takes `tone` (`negative` or its alias `danger`, the softer `action-required`, and the other Status tones) and is drawn as a status tile in that tone, with or without an icon; an icon takes the tone's text colour. Use it to flag a missing required value, with an `invalid` `EntityPicker` or `Select` inside the tile. No new tokens (#990, D-0118, D-0120).
+- `EntityHeader` `media` takes `{ versus: [party, party], decorative }` (new type `EntityHeaderParty` = `{ name, src?, color? }`): two Avatars side by side, with a "vs." mark between them, as tall as the single media (initials without a picture, never a person icon). By default the pair is one image named "A versus B"; `decorative` hides it when the title already says it. Stretched layouts show the pair at the small size. The pair mirrors in right to left. New strings `entityHeader.vs` and `entityHeader.versus`, and tokens `entity-header-versus-*` (ADR 0037, D-0119, D-0122, #991).
+- `SecondaryPane` takes `back={{ parent, href | onClick }}`: a quiet "Back to {parent}" row above the title (a link with `href`, otherwise a button), the arrow on the title's start edge and mirrored in right to left. Folded to a rail, it is the rail's first control with a tooltip. It reuses `strings.back`, so there are no new words. New tokens `secondary-pane-back-item-*` (ADR 0038, D-0124, #995).
+- `AppHeader` and `AppHeader.Switcher` take `brand={{ logo, organization, application }}` (new type `AppHeaderBrand`): the default brand's layout with the app's own logo (36px tall, up to 108px wide, no box, not drawn if it fails; `alt` defaults to empty), organization (where "Plenix" is) and application (default: the app name). Long lines end in an ellipsis. With `brandHref` it is one link; as the switcher trigger its name is the organization and application. An element `brand` is unchanged (ADR 0039, D-0125, D-0127, #997).
+- `PagePanes` (and the type `PagePanesProps`): the wrapper of a `SecondaryPane` and the content beside it. It renders `<div class="plx-page-panes">` and takes div attributes; there is no layout change (ADR 0040, D-0126, #998).
+- `Panel` takes `toggleOn="header"` (default `"button"`, today's behavior): with `collapsible`, a click anywhere on the header toggles the panel, as the Collapse/Expand button does. Actions, interactive children and a click that ends a text selection do not toggle; the button stays the only focusable control. Hovering or pressing the header lights the button's own hover or pressed look (no header fill), with a pointer cursor. New token `panel-toggle-pressed-background` (ADR 0041, D-0129, #999).
+
+### Changed (visual)
+- The `SecondaryPane` title is now 15px bold on every pane (was 12px, 600), so it is the strongest text in the pane: `secondary-pane-header-font-size` and `-font-weight` point to the lead size and the bold weight (D-0123, #995).
+
+### Deprecated
+- Writing the `plx-page-panes` class by hand. Use `PagePanes`; the class becomes internal in 2.0.0.
+
+### Fixed
+- A closed `Panel`'s chevron now points left in right to left (it pointed right), as the `Card`'s does.
+
 ## [1.1.0] - 2026-11-08
 
 ### Upgrading from 1.0.0
