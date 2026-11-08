@@ -22,6 +22,7 @@ const parts = {
         h(P.PropertyList.Item, { label: 'Filed' }, 'Mar 2, 2026'),
         h(P.PropertyList.Item, { label: 'Notes', span: 'full' }, 'A long note that sits among short fields and takes the whole row so that it can wrap over several lines without squeezing its neighbors.'))),
       h(P.PropertyGroup, { heading: 'Parties', variant: 'tiles' }, h(P.PropertyList, null, h(P.PropertyList.Item, { label: 'Petitioner' }, 'Michael Bennett'), h(P.PropertyList.Item, { label: 'Respondent' }, 'Charlotte Bennett'), h(P.PropertyList.Item, { label: 'Witness' }, 'Noor Haddad')))))`,
+  'panel-header-corners': `h('div', null, h(P.Panel, { title: 'Spouse', icon: 'user' }, 'Body.'), h(P.Panel, { title: 'Witness', surface: 'glow' }, 'Body.'), h(P.Card, { surface: 'glow' }, 'A glow card.'))`,
   'secondary-pane-back': `h('div', null,
     h(P.SecondaryPane, { title: 'Case overview', back: { parent: 'cases', href: '#cases' } }, ${nav}),
     h(P.SecondaryPane, { title: 'Case overview', back: { parent: 'all of the cases assigned to the tribunal this year', href: '#cases' } }, ${nav}))`,
