@@ -31,6 +31,36 @@
       "$type": "dimension",
       "$description": "EntityHeader: the media square (top row, small)."
     },
+    "entity-header-versus-gap": {
+      "$value": "{plx-sys.space-inline-sm}",
+      "$type": "dimension",
+      "$description": "EntityHeader, versus media (ADR 0037): the space between an avatar and the vs. mark."
+    },
+    "entity-header-versus-gap-section": {
+      "$value": "{plx-sys.space-inline-xs}",
+      "$type": "dimension",
+      "$description": "EntityHeader, versus media (ADR 0037): the same, in a section header (32px avatars)."
+    },
+    "entity-header-versus-mark-text": {
+      "$value": "{plx-sys.content-muted}",
+      "$type": "color",
+      "$description": "EntityHeader, versus media (ADR 0037): the vs. mark."
+    },
+    "entity-header-versus-mark-font-size": {
+      "$value": "{plx-sys.text-label-font-size}",
+      "$type": "dimension",
+      "$description": "EntityHeader, versus media (ADR 0037): the mark's size."
+    },
+    "entity-header-versus-mark-font-size-large": {
+      "$value": "{plx-sys.text-heading-font-size}",
+      "$type": "dimension",
+      "$description": "EntityHeader, versus media (ADR 0037): the mark's size beside 72px avatars."
+    },
+    "entity-header-versus-mark-font-weight": {
+      "$value": "{plx-sys.font-weight-semibold}",
+      "$type": "fontWeight",
+      "$description": "EntityHeader, versus media (ADR 0037): the mark's weight."
+    },
     "entity-header-media-radius": {
       "$value": "{plx-sys.radius-avatar-sm}",
       "$type": "dimension",

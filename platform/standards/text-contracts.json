@@ -3538,6 +3538,19 @@
     "font-weight"
    ]
   },
+  "plx-entity-header__versus-mark": {
+   "contract": "adjusts",
+   "props": [
+    "font-size",
+    "font-weight"
+   ]
+  },
+  "plx-entity-header__versus-mark--large": {
+   "contract": "adjusts",
+   "props": [
+    "font-size"
+   ]
+  },
   "plx-tree-chart__name": {
    "contract": "establishes",
    "role": "label",

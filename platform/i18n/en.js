@@ -61,6 +61,10 @@ export default {
   "overflowList": {
     "more": "More items"
   },
+  "entityHeader": {
+    "vs": "vs.",
+    "versus": "{a} versus {b}"
+  },
   "timeline": {
     "pending": "Pending",
     "legend": "Filter by category"

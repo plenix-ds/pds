@@ -46,7 +46,8 @@
        "edge": the media fills the card's start edge, top to bottom, with one line at its inner side (at least 128px; 80px)
      title: the entity's name, in the Title role (20px bold; 15px in a section); a long name wraps, never cut off
      subtitle: the line under the title: the entity's description, where it belongs or who it involves; wraps
-     media: the entity's picture, always shown: { person, src, color, gender } an Avatar (gender: its icon when there is no
+     media: the entity's picture, always shown: { versus: [{ name, src, color }, { name, src, color }], decorative } two Avatars with vs. between
+       them (side by side, as tall as the single media; one image named "A versus B", or hidden with decorative); { person, src, color, gender } an Avatar (gender: its icon when there is no
        picture); { icon, hue, box } a generic icon for the entity's kind in a data color (hue: blue, green, purple, red,
        brown, gray; default gray) or the link blue (hue: surface). By default it has no box: no fill, no border, the icon
        fills the square (owner, D-0024; D-0036, pds#275). box: true puts it on its tinted tile with a 1px border (a white
@@ -109,6 +110,9 @@ import { useOverflow, splitAt } from '../../utils/overflow.ts';
 import { useBarFit } from '../../utils/barFit.ts';
 import { arrowStep } from '../../utils/direction.ts';
 import { SIZE_STEPS } from '../../utils/sizeSteps.js';
+import { useStrings } from '../../providers/LocaleProvider.tsx';
+import { fill } from '../../utils/fill.ts';
+import { development } from '../../utils/devWarn.ts';
 import { Avatar } from '../../components/Avatar/Avatar.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Icon } from '../../components/Icon/Icon.tsx';
@@ -139,8 +143,10 @@ const STRETCH_MAX: Record<string, Record<string, number>> = { page: { 'column-la
 
 // the media: its size by kind and layout (a class of its own); a stretched media (column, large and edge to edge) is a
 // square as tall as its row, on the size tokens (data-plx-size, system/steps.css), measured here
-function Media({ media, section, layout }: any) {
+function Media({ media, section, layout, strings }: any) {
   const kind = section ? 'section' : 'page';
+  const t = useStrings('entityHeader', strings) as { vs: string; versus: string };
+  const versus = !!media && !React.isValidElement(media) && Array.isArray(media.versus);
   const stretch = !!STRETCH[layout];
   const ref = React.useRef<any>(null);
   const [size, setSize] = React.useState<number | null>(null);
@@ -164,7 +170,14 @@ function Media({ media, section, layout }: any) {
     return () => ro.disconnect();
   }, [stretch, kind, layout]);
   let inner;
-  if (React.isValidElement(media)) inner = media;
+  if (versus) {
+    const pair = (media.versus as any[]).filter(Boolean);
+    if (pair.length !== 2 && development() && typeof console !== 'undefined') console.warn('[Plenix] EntityHeader: media.versus takes exactly two parties; got ' + pair.length + ', so one is drawn.');
+    const party = (x: any, i: number) => <Avatar key={i} className="plx-entity-header__party plx-entity-header__avatar" name={x.name} src={x.src} color={x.color} size={section ? 'md' : 'xl'} />;
+    inner = pair.length === 2
+      ? <>{party(pair[0], 0)}<span className={cx('plx-entity-header__versus-mark', !section && layout === 'top-large' && 'plx-entity-header__versus-mark--large')} aria-hidden="true">{t.vs}</span>{party(pair[1], 1)}</>
+      : pair.length ? party(pair[0], 0) : null;
+  } else if (React.isValidElement(media)) inner = media;
   else if (media.person || media.src) inner = <Avatar className="plx-entity-header__avatar" name={media.person} src={media.src} color={media.color} gender={media.gender} size={section ? 'md' : 'xl'} />;
   else {
     const hue = HUES.indexOf(media.hue) >= 0 ? media.hue : 'gray';
@@ -173,7 +186,8 @@ function Media({ media, section, layout }: any) {
   }
   return (
     <span ref={ref} data-plx-size={size ? size + 'px' : undefined}
-      className={cx('plx-entity-header__media', 'plx-entity-header__media--' + kind + '-' + layout, stretch && 'plx-entity-header__media--stretch', layout === 'edge' && 'plx-entity-header__media--edge', layout === 'column-small' && 'plx-entity-header__media--start')}>
+      {...(versus && media.versus.filter(Boolean).length === 2 ? (media.decorative ? { 'aria-hidden': true } : { role: 'img', 'aria-label': fill(t.versus, { a: media.versus[0].name, b: media.versus[1].name }) }) : {})}
+      className={cx('plx-entity-header__media', 'plx-entity-header__media--' + kind + '-' + layout, versus && 'plx-entity-header__media--versus', versus && stretch && 'plx-entity-header__media--versus-' + kind, stretch && 'plx-entity-header__media--stretch', layout === 'edge' && 'plx-entity-header__media--edge', layout === 'column-small' && 'plx-entity-header__media--start')}>
       {inner}
     </span>
   );
@@ -343,7 +357,7 @@ function Streamlined({ section, H, title, sub, media, status, badges, summary, p
     <header className={cx('plx-entity-header', 'plx-entity-header--streamlined', section && 'plx-entity-header--section', view === 'compact' && 'plx-entity-header--compact', className)}>
       <div className="plx-entity-header__top">
         <div className="plx-entity-header__start">
-          {media === null ? null : <Media media={media || { icon: DocTextIcon }} section={section} layout={section ? 'top-small' : 'streamlined'} />}
+          {media === null ? null : <Media media={media || { icon: DocTextIcon }} section={section} layout={section ? 'top-small' : 'streamlined'} strings={strings} />}
           <div className="plx-entity-header__head">
             <div className="plx-entity-header__title-row">
               <H className="plx-entity-header__title">{title}</H>
@@ -405,9 +419,12 @@ export type EntityHeaderTone = 'neutral' | 'success' | 'active' | 'waiting' | 'a
 /** @public the entity's picture: an Avatar ({ person, src, color, gender }), a generic icon ({ icon, hue, box }) or an element */
 export type EntityHeaderMedia =
   | { person: string; src?: string; color?: string; gender?: string }
+  | { versus: [EntityHeaderParty, EntityHeaderParty]; decorative?: boolean }
   | { icon: IconValue; hue?: 'blue' | 'green' | 'purple' | 'red' | 'brown' | 'gray' | 'surface'; box?: boolean | React.ReactNode }
   | React.ReactElement
   | null;
+/** @public one side of a versus media: the name gives the initials and the accessible name */
+export type EntityHeaderParty = { name: string; src?: string; color?: string };
 /** @public the Status tile, or a badge */
 export type EntityHeaderStatus = { tone?: EntityHeaderTone; label: React.ReactNode; icon?: IconValue };
 /** @public a fact tile, or a plain string or element */
@@ -497,7 +514,7 @@ function Structured({ kind = 'page', layout = 'top-small', title, subtitle, medi
   const fitKey = (facts || []).map((f: any) => (f && (f.label || '') + (f.value || '') + (f.action ? f.action.label : ''))).join('|') + '§' + (states ? states.value + (states.options || []).map((o: any) => o.label).join(',') : '');
   const step = useBarFit(root, fitKey, fitted ? 2 : 0, 0, '.plx-entity-header__details');
   // top row: the media beside the title; column and edge: the media in a column of its own, before the text
-  const mediaEl = <Media media={media || { icon: DocTextIcon }} section={section} layout={lay} />;
+  const mediaEl = <Media media={media || { icon: DocTextIcon }} section={section} layout={lay} strings={strings} />;
   const lead = (
     <div className="plx-entity-header__lead">
       <div className="plx-entity-header__heading">
