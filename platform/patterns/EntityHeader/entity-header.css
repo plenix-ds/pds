@@ -536,10 +536,6 @@
   border-color: var(--plx-comp-entity-header-status-negative-border);
   color: var(--plx-comp-entity-header-status-negative-text);
 }
-/* a toned fact with an icon: the icon takes the tone's text colour (#990) */
-.plx-entity-header__fact--status .plx-entity-header__fact-icon {
-  color: inherit;
-}
 /* header style 2 (owner, 2026-10-23): the fact boxes carry their actions; the entity's state is a box among the facts */
 /* a fact with its icon: the icon in a square at its start, the label over the value beside it */
 .plx-entity-header__fact--icon {
@@ -561,6 +557,10 @@
   grid-row: 1 / 3;
   inline-size: var(--plx-comp-entity-header-fact-icon-tile-size);
   justify-content: center;
+}
+/* a toned fact with an icon: the icon takes the tone's text colour (#990) */
+.plx-entity-header__fact-icon--toned {
+  color: inherit;
 }
 .plx-entity-header__fact-name {
   grid-column: 2;

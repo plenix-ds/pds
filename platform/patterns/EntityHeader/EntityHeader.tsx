@@ -245,7 +245,7 @@ function Fact({ f, iconOnly }: any) {
   if (f.icon) {
     return (
       <div className={'plx-entity-header__fact plx-entity-header__fact--icon' + toned.className} data-plx-tone={toned.tone}>
-        <dt className="plx-entity-header__fact-label plx-entity-header__fact-label--tile"><span className="plx-entity-header__fact-icon" aria-hidden="true"><Icon name={f.icon} /></span><span className="plx-entity-header__fact-name">{f.label}</span></dt>
+        <dt className="plx-entity-header__fact-label plx-entity-header__fact-label--tile"><span className={'plx-entity-header__fact-icon' + (f.tone ? ' plx-entity-header__fact-icon--toned' : '')} aria-hidden="true"><Icon name={f.icon} /></span><span className="plx-entity-header__fact-name">{f.label}</span></dt>
         <dd className="plx-entity-header__fact-value plx-entity-header__fact-value--tile">{value}</dd>
       </div>
     );
