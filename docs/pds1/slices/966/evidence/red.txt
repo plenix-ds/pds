@@ -1,0 +1,3 @@
+AssertionError [ERR_ASSERTION]: ltr: 1366px: the "#" column is as wide as its pill plus the cell padding (416px for a 20px pill)
+    at /home/cc/pds1/work/component-engineer-1/tests/data-grid-narrow-column-966.test.js:38:16 {
+  generatedMessage: false,

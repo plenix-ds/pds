@@ -121,6 +121,7 @@ This file records the PDS design language as it is today (D-0004). It is a recor
   - A soft glow runs from the tile fill at the top to the surface at the heading line.
   - The divider is inset to the header's padding. It is not edge to edge.
   - In Arabic the tracking is 0.
+- **Section heading** (`SectionHeading`, a heading above a table or content block outside a card) uses the card heading's style and tokens (`text-card-heading-*`, `content-default`, UPPERCASE, with its icon), so the two never drift (owner, D-0110).
 - **Group heading** (`PropertyGroup`): **group-heading**, 13px, medium, gold (brown-600 light, yellow-300 dark), sentence case, no line. There are 40px between groups.
 - **Field label:** **field-label**, 11px, regular, navy (blue-700 light, blue-275 dark), sentence case. It is the only role below 12px (owner, D-0106).
 - **Value:** **field-value**, 13px, semibold, `content-default`. A data value is Reddit Mono at the same size. A status is a Badge with its icon.

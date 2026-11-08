@@ -1,0 +1,9 @@
+id: D-0111
+date: 2026-11-07
+area: api
+decided_by: agent (pds1-ds-architect) at G3, owner may switch
+decision: 'The D-0106 group heading (13px medium gold, sentence case, 40px above each group) is carried by a new export PropertyGroup (ADR 0033): a section named by its heading (prop heading, level default 3) that wraps one PropertyList; comp tokens property-group-* read text-group-heading-*, read-only-group-heading and space-stack-group. SectionHeading stays the page section heading (D-0110).'
+why: 'A heading is not valid inside a dl, so PropertyList cannot hold it; a SectionHeading variant would give one component two opposite styles against D-0110. PropertyGroup is additive (MINOR) and owns the gap between groups.'
+options: ['new PropertyGroup export (chosen)', 'a heading prop on PropertyList', 'a SectionHeading variant']
+status: active
+check: 'G3 API diff on the build PR; check-system token-tiers (check 6), token-names (check 7), contrast-matrix (check 8); planned:property-group-946 behavior test (computed type, color, 40px gap, accessible name)'
