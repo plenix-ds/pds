@@ -9592,11 +9592,11 @@
       "$type": "dimension"
     },
     "secondary-pane-header-font-size": {
-      "$value": "{plx-ref.font-size-100}",
+      "$value": "{plx-sys.text-lead-font-size}",
       "$type": "dimension"
     },
     "secondary-pane-header-font-weight": {
-      "$value": "{plx-sys.font-weight-semibold}",
+      "$value": "{plx-sys.font-weight-bold}",
       "$type": "fontWeight"
     },
     "secondary-pane-header-min-height": {
@@ -9640,6 +9640,74 @@
       "$value": "inset {plx-sys.border-width-thin} 0 0 {plx-sys.border-default}",
       "$type": "shadow",
       "$extensions": { "com.plenix": { "webOnly": true } }
+    },
+    "secondary-pane-back-item-text": {
+      "$value": "{plx-sys.content-muted}",
+      "$type": "color"
+    },
+    "secondary-pane-back-item-text-hover": {
+      "$value": "{plx-sys.content-default}",
+      "$type": "color"
+    },
+    "secondary-pane-back-item-background-hover": {
+      "$value": "{plx-sys.state-hover}",
+      "$type": "color"
+    },
+    "secondary-pane-back-item-background-pressed": {
+      "$value": "{plx-sys.state-pressed}",
+      "$type": "color"
+    },
+    "secondary-pane-back-item-font-size": {
+      "$value": "{plx-sys.text-secondary-font-size}",
+      "$type": "dimension"
+    },
+    "secondary-pane-back-item-font-weight": {
+      "$value": "{plx-sys.text-secondary-font-weight}",
+      "$type": "fontWeight"
+    },
+    "secondary-pane-back-item-line-height": {
+      "$value": "{plx-sys.text-secondary-line-height}",
+      "$type": "number"
+    },
+    "secondary-pane-back-item-icon-size": {
+      "$value": "{plx-sys.icon-size-sm}",
+      "$type": "dimension"
+    },
+    "secondary-pane-back-item-gap": {
+      "$value": "{plx-sys.space-inline-sm}",
+      "$type": "dimension"
+    },
+    "secondary-pane-back-item-min-height": {
+      "$value": "{plx-sys.control-height-inline}",
+      "$type": "dimension"
+    },
+    "secondary-pane-back-item-padding-block-start": {
+      "$value": "{plx-sys.space-inset-sm}",
+      "$type": "dimension"
+    },
+    "secondary-pane-back-item-padding-inline-start": {
+      "$value": "{plx-sys.space-inset-md}",
+      "$type": "dimension"
+    },
+    "secondary-pane-back-item-padding-inline-end": {
+      "$value": "{plx-sys.space-inset-sm}",
+      "$type": "dimension"
+    },
+    "secondary-pane-back-item-radius": {
+      "$value": "{plx-sys.shape-xs}",
+      "$type": "dimension"
+    },
+    "secondary-pane-back-item-focus-outline-color": {
+      "$value": "{plx-sys.focus-ring-color}",
+      "$type": "color"
+    },
+    "secondary-pane-back-item-focus-outline-offset": {
+      "$value": "calc({plx-sys.border-width-medium} * -1)",
+      "$type": "dimension"
+    },
+    "secondary-pane-back-item-focus-outline-width": {
+      "$value": "{plx-sys.border-width-medium}",
+      "$type": "dimension"
     },
     "secondary-pane-back-background": {
       "$value": "{plx-sys.surface-default}",

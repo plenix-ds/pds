@@ -29,6 +29,8 @@
      detailOpen: the pane is the list of a list-detail screen (Platforms Standard 5.2): true while an item's detail shows
        beside it. At Narrow (under 600px, --plx-sys-shell-phone-below) one pane shows at a time: the list fills the
        width while detailOpen is false; while it is true the list steps aside and a Back control leads the detail
+     back: { parent, href | onClick }: a quiet row above the title, "Back to {parent}" (strings.back), a link with href else a button; the arrow
+       mirrors in right to left; folded, it is the rail's first control. The title (15px, 700) is the strongest text in the pane, then the items, then the back row
      onBack(): the Back control's action at Narrow (the detail's parent, the list: useScreenLocation's parent('/'))
      scrollTop / onScrollChange(top): the body's scroll position, to restore it (on load and when the list comes back
        at Narrow) and to keep it
@@ -94,6 +96,8 @@ export type SecondaryPaneProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'
   /** the pane is the list of a list-detail screen, an item's detail showing beside it */
   detailOpen?: boolean;
   onBack?(): void;
+  /** a back-to-parent row above the title: a link with href, else a button (ADR 0038) */
+  back?: { parent: string; href?: string; onClick?(event: React.MouseEvent<HTMLElement>): void };
   scrollTop?: number;
   onScrollChange?(top: number): void;
   onClose?(): void;
@@ -103,7 +107,7 @@ export type SecondaryPaneProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'
 };
 export function SecondaryPane(props: SecondaryPaneProps) {
   const { title, label, icon, actions, side = 'start', width = 'md', collapsible = false, collapsed, defaultCollapsed = false,
-  onCollapsedChange, rail, resizable = false, size: sizeProp, defaultSize = null, onSizeChange, detailOpen, onBack, scrollTop, onScrollChange,
+  onCollapsedChange, rail, resizable = false, size: sizeProp, defaultSize = null, onSizeChange, detailOpen, onBack, back: backItem, scrollTop, onScrollChange,
   onClose, strings, className, children, ...rest } = props as any;
   const t: any = useStrings('secondaryPane', strings);
   const [ownCollapsed, setOwnCollapsed] = React.useState(defaultCollapsed);
@@ -132,6 +136,7 @@ export function SecondaryPane(props: SecondaryPaneProps) {
   const backAction = React.useRef<any>(onBack);
   backAction.current = onBack;
   const backLabel = named(t.back);
+  const backText = backItem ? t.back.split('{name}').join(backItem.parent) : '';
   const claimBack = layout ? layout.claimBack : null;
   React.useLayoutEffect(() => (stepAside && claimBack
     ? claimBack({ label: backLabel, onBack: () => { if (backAction.current) backAction.current(); }, ref: back }) : undefined), [stepAside, backLabel, claimBack]);
@@ -161,6 +166,7 @@ export function SecondaryPane(props: SecondaryPaneProps) {
   if (folded) {
     return (
       <ToolRail label={name} className={cx('plx-secondary-pane-rail', 'plx-secondary-pane-rail--' + side, className)}>
+        {backItem ? <ToolRail.Item icon={ArrowLeftIcon} label={backText} onClick={(e: any) => { if (backItem.onClick) backItem.onClick(e); else if (backItem.href) window.location.assign(backItem.href); }} /> : null}
         <ToolRail.Item icon={side === 'start' ? PanelLeftOpenIcon : PanelRightOpenIcon} label={named(t.expand)} onClick={() => setFolded(false)} />
         {rail ? <><ToolRail.Divider />{rail}</> : null}
       </ToolRail>
@@ -173,7 +179,10 @@ export function SecondaryPane(props: SecondaryPaneProps) {
     <aside aria-label={name} className={cx('plx-secondary-pane', 'plx-secondary-pane--' + side, 'plx-secondary-pane--' + width, sized && 'plx-secondary-pane--resized',
       narrow && listDetail && (stepAside ? 'plx-secondary-pane--aside' : 'plx-secondary-pane--list'), className)}
       data-plx-width={sized ? gridWithin(size, min(), paneMax(max(), min()), { step: DRAG_STEP }) + 'px' : undefined} {...rest}>
-      <div className="plx-secondary-pane__header">
+      {backItem ? (backItem.href
+        ? <a className="plx-secondary-pane__back" href={backItem.href} onClick={backItem.onClick}>{iconElement(ArrowLeftIcon, { className: 'plx-secondary-pane__back-icon' })}<span className="plx-secondary-pane__back-text" title={backText}>{backText}</span></a>
+        : <button type="button" className="plx-secondary-pane__back" onClick={backItem.onClick}>{iconElement(ArrowLeftIcon, { className: 'plx-secondary-pane__back-icon' })}<span className="plx-secondary-pane__back-text" title={backText}>{backText}</span></button>) : null}
+      <div className={cx('plx-secondary-pane__header', backItem && 'plx-secondary-pane__header--after-back')}>
         {icon ? iconElement(icon) : null}
         <span className="plx-secondary-pane__title">{title}</span>
         {actions}
