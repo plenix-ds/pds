@@ -14,7 +14,7 @@ const kebab = (s) => s.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
 if (changed.some((f) => /^platform\/system\/[^/]*(rtl|direction|density)[^/]*\.css$/i.test(f))) { console.log('all'); process.exit(0); }
 // a change to check 12 itself (its config, page or specimens) runs every variant, so each baseline is written or
 // re-checked at every screen size (D-0092, #857)
-if (changed.some((f) => /^tests\/visual\/[^/]+\.mjs$/.test(f))) { console.log('all'); process.exit(0); }
+if (changed.some((f) => /^tests\/visual\/[^/]+\.(mjs|json)$/.test(f))) { console.log('all'); process.exit(0); }
 const comps = new Set(changed.map((f) => (/^platform\/(?:components|patterns)\/([^/]+)\//.exec(f) || [])[1]).filter(Boolean).map(kebab));
 const out = Object.keys(specimens).filter((n) => [...comps].some((c) => n === c || n.startsWith(c + '-')));
 console.log(out.join(','));
