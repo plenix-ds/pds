@@ -15,6 +15,7 @@ const parts = {
     facts: [ { label: 'Council member', icon: 'alert', tone: 'negative', value: h(P.Combobox, { 'aria-label': 'Council member', invalid: true, options: [{ value: 'a', label: 'Maya Chen' }, { value: 'b', label: 'Noor Haddad' }], value: null, onChange: function () {} }) },
       { label: 'Filed', value: 'Mar 2, 2026' } ] })`,
   'entity-header-versus': `h('div', null, ${['top-small','top-large','edge'].map((l) => "h(P.EntityHeader, { layout: '" + l + "', title: 'Michael Bennett vs. Charlotte Bennett', subtitle: 'Case 2026-114', media: { versus: [{ name: 'Michael Bennett' }, { name: 'Charlotte Bennett' }] } })").join(', ')})`,
+  'panel-header-corners': `h('div', null, h(P.Panel, { title: 'Spouse', icon: 'user' }, 'Body.'), h(P.Panel, { title: 'Witness', surface: 'glow' }, 'Body.'), h(P.Card, { surface: 'glow' }, 'A glow card.'))`,
   'secondary-pane-back': `h('div', null,
     h(P.SecondaryPane, { title: 'Case overview', back: { parent: 'cases', href: '#cases' } }, ${nav}),
     h(P.SecondaryPane, { title: 'Case overview', back: { parent: 'all of the cases assigned to the tribunal this year', href: '#cases' } }, ${nav}))`,
