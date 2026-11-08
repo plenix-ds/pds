@@ -15,7 +15,8 @@
 
 | Part | With the variation | Source |
 |---|---|---|
-| PropertyList inside the group | `layout="stacked"`: porcelain tiles, 1px same-tint border, 6px radius, 8/12px padding, 2 per row (`columnCount` 2), 16px gaps (`space-stack-field`), equal height in a row | 946 §2 |
+| The tile | **the whole field** (label and value) sits on the tile, as in the study (`.f`). In 1.2.0 `stacked` boxes only the value (`.plx-property-list__value`); the variation moves the box to the item. Porcelain fill, 1px same-tint border, 6px radius, 8/12px padding (946 §1–2), equal height in a row. The item wrapper is a `<div>` around `<dt>` and `<dd>`, which is valid inside `<dl>` | #1050 correction; study line 85 |
+| Columns | 2 per row by default, with 16px gaps (`space-stack-field`) between tiles in both directions. **New list API (G3): a one-column option** (the study's `dl.one`, `--cols:1`) for long text such as notes or grounds. G3 names it (for example `columnCount?: 1 \| 2`, default 2 with tiles). It is new in 1.3.0, not in 1.2.0 | #1050 correction; study lines 79–80 |
 | One per row when narrow | a tile is never narrower than **240px**. Two tiles fit from a 496px list (240 + 16 + 240), and anything narrower shows one per row. It is an intrinsic grid, `repeat(auto-fill, minmax(max(<min>, (100% - <gap>) / 2), 1fr))`, not a container query, because a container query cannot read a token. Tokens: comp `property-list-tiles-min-inline-size` → **new sys `size-field-tile-min`** → `plx-ref.size-60u` (240px). This replaces 946's 480px container rule for tiles | G3 ask on #1043 |
 | Group heading | `group-heading` role, 13px medium, gold (brown-600 light, yellow-300 dark), sentence case, 12px above the list, 40px between groups (`space-stack-group`) | 946 §1–2 |
 | Label | `field-label`, 11px regular, navy (blue-700 light, blue-275 dark), sentence case | D-0106 |
@@ -26,10 +27,10 @@
 - **Precedence:**
   - `variant="tiles"` on `PropertyGroup` reaches its PropertyList.
   - An explicit `layout` on that PropertyList still wins. A dev warning says the two disagree.
-  - `columnCount={1}` on a list stays allowed (long notes, 946 §2).
+  - The one-column option on a list (new API, §1) is how long text gets a full row.
 - **Status values:** the app passes a `Badge` as the value. Whether `PropertyList.Item` gets a `status` shorthand is G3's call. Either way, the look is the Badge above.
 - **Without the variation**, nothing changes:
-  - `layout="stacked"` renders as in 1.2.0 (AC-4).
+  - `layout="stacked"` renders as in 1.2.0, with only the value boxed (AC-4).
   - No layout renders `columns` (D-0107, AC-5).
 
 ## 2. State matrix (the variation; the values are 946's)
@@ -79,7 +80,8 @@
 
 ## 7. Choices the engineer must not invent
 
-- **No values of its own:** every value comes from 946 §1, §2 and §4 through the existing `stacked` classes. The variation adds no new CSS values, and must not copy the stacked CSS into a second rule.
+- **No values of its own:** every value comes from 946 §1, §2 and §4 and the existing `stacked` tokens. The variation moves the tile box from the value to the item; it does not copy the stacked rules into a second set, and it adds no colour or size beyond the tokens named here.
+- **The tile is the whole field**, label and value, never the value alone (AC-7..9 in the brief).
 - **The name and precedence** as in §1 (ADR 0044, D-0135).
 - **The one-per-row width:** `size-field-tile-min` (240px) through the intrinsic grid in §1. No container query and no other breakpoint.
 - **Status:** an existing Badge with its icon.

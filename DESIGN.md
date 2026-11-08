@@ -136,9 +136,10 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 - **Group heading** (`PropertyGroup`): **group-heading**, 13px, medium, gold (brown-600 light, yellow-300 dark), sentence case, no line. There are 40px between groups.
 - **Field label:** **field-label**, 11px, regular, navy (blue-700 light, blue-275 dark), sentence case. It is the only role below 12px (owner, D-0106).
 - **Value:** **field-value**, 13px, semibold, `content-default`. A data value is Reddit Mono at the same size. A status is a Badge with its icon.
-- **Stacked (`layout="stacked"`):** each field sits on a porcelain tile with a 1px border in a deeper shade of the same tint, never the card's grey.
+- **Stacked (`layout="stacked"`, 1.2.0):** the label sits above the value, and the value sits on a porcelain tile.
+- **Tiles (`variant="tiles"`, the owner's look, D-0132):** the **whole field** (label and value) sits on a porcelain tile with a 1px border in a deeper shade of the same tint, never the card's grey.
   - Tiles have a 6px radius and 8/12px padding.
-  - They sit 2 to a row (`columnCount`), with 16px gaps (`space-stack-field`). Tiles in a row are equal in height.
+  - They sit 2 to a row with 16px gaps (`space-stack-field`), and one per row below 496px (a 240px tile minimum, `size-field-tile-min`). A list can ask for one column for long text. Tiles in a row are equal in height.
 - **Columns (`layout="columns"`, the 1.x default):** the same label and value type, with no tiles. The default changes in 2.0.0 (D-0107).
 - **Inside `<ReadOnly>`**, a control takes the tile fill and border. Its label is **field-label**. Heights don't change.
 - The label is always lighter than its value. Label and value stay ≥ 4.5:1 on the tile in light and dark.
