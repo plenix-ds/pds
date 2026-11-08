@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // VISUAL_EXTRA for check 12 (tests/visual; #191, D-0017): the specimens of the components this PR changed, so they also
-// run in RTL and compact. A changed folder platform/components/<Name>/ selects every specimen named <name>-… (kebab
+// run in RTL and compact. A changed folder platform/components/<Name>/ or platform/patterns/<Name>/ selects every specimen named <name>-… (kebab
 // case); a change to the shared direction or density code (platform/system/*.css with "rtl", "direction" or "density"
 // in its name) or to tests/visual/*.mjs selects all.
 //   node tools/ci/visual-extra.mjs <base ref>      prints the comma list (empty when none)
@@ -14,7 +14,7 @@ const kebab = (s) => s.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
 if (changed.some((f) => /^platform\/system\/[^/]*(rtl|direction|density)[^/]*\.css$/i.test(f))) { console.log('all'); process.exit(0); }
 // a change to check 12 itself (its config, page or specimens) runs every variant, so each baseline is written or
 // re-checked at every screen size (D-0092, #857)
-if (changed.some((f) => /^tests\/visual\/[^/]+\.mjs$/.test(f))) { console.log('all'); process.exit(0); }
-const comps = new Set(changed.map((f) => (/^platform\/components\/([^/]+)\//.exec(f) || [])[1]).filter(Boolean).map(kebab));
+if (changed.some((f) => /^tests\/visual\/[^/]+\.(mjs|json)$/.test(f))) { console.log('all'); process.exit(0); }
+const comps = new Set(changed.map((f) => (/^platform\/(?:components|patterns)\/([^/]+)\//.exec(f) || [])[1]).filter(Boolean).map(kebab));
 const out = Object.keys(specimens).filter((n) => [...comps].some((c) => n === c || n.startsWith(c + '-')));
 console.log(out.join(','));
