@@ -9291,6 +9291,26 @@
       "$type": "dimension",
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
+    "property-list-tiles-gap": {
+      "$value": "{plx-sys.space-stack-field}",
+      "$type": "dimension",
+      "$description": "PropertyList variant tiles: the gap between tiles, across and down (ADR 0044)."
+    },
+    "property-list-tiles-min-inline-size": {
+      "$value": "{plx-sys.size-field-tile-min}",
+      "$type": "dimension",
+      "$description": "PropertyList variant tiles: a tile is never narrower than this, so a narrow list shows one tile per row (ADR 0044)."
+    },
+    "property-list-tiles-padding-block": {
+      "$value": "{plx-sys.space-inset-sm}",
+      "$type": "dimension",
+      "$description": "PropertyList variant tiles: the tile's padding above and below its field, 8px (4px in compact). Plain stacked keeps property-list-value-padding-block (ADR 0044, D-0106)."
+    },
+    "property-list-tiles-padding-inline": {
+      "$value": "{plx-sys.space-inset-md}",
+      "$type": "dimension",
+      "$description": "PropertyList variant tiles: the tile's padding at its inline start and end, 12px at every density (ADR 0044, D-0106)."
+    },
     "property-list-stacked-item-row-gap": {
       "$value": "{plx-sys.space-stack-xs}",
       "$type": "dimension"

@@ -8,6 +8,14 @@
     }
   },
   "plx-comp": {
+    "property-list-tiles-padding-block": {
+      "$value": "{plx-sys.space-inset-xs}",
+      "$type": "dimension"
+    },
+    "property-list-tiles-gap": {
+      "$value": "{plx-sys.space-stack-sm}",
+      "$type": "dimension"
+    },
     "button-icon-label-gap": {
       "$value": "{plx-ref.space-1u}",
       "$type": "dimension"
