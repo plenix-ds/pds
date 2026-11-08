@@ -46,7 +46,7 @@ export function DownloadManager({ items = [], onCancel, onRetry, onDownload, tit
     finally { locks.current.delete(item.id); setPending((p: any) => ({ ...p, [item.id]: false })); }
   };
   const content = <Stack className={cx('plx-download-manager', className)}>
-    {items.length ? <FileRowList label={title || t.title}>{items.map((a) => <FileRow key={a.id} as="li" file={a.file as any} aria-busy={!!pending[a.id]}
+    {items.length ? <FileRowList label={title || t.title}>{items.map((a) => <FileRow key={a.id} as="li" file={typeof a.file === 'string' ? { name: a.file } : (a.file as any)} aria-busy={!!pending[a.id]}
       progress={a.status === 'progress' ? a.progress : undefined} progressLabel={t.progress}
       error={a.status === 'failed' ? a.error || t.failed : undefined} status={<Badge tone={a.status === 'ready' ? 'success' : a.status === 'failed' ? 'negative' : 'active'} icon={a.status === 'ready' ? CheckIcon : a.status === 'failed' ? AlertIcon : RefreshIcon}>{t[a.status] || t.queued}</Badge>}
       onCancel={onCancel && !pending[a.id] ? () => run(a, onCancel) : undefined} onRetry={onRetry && !pending[a.id] ? () => run(a, onRetry) : undefined}
