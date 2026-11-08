@@ -17,9 +17,10 @@
 import React from 'react';
 import { cx } from '../../../utils/cx.ts';
 import { words, kinds, interactive, typeOf, typeIcons, cellDirection } from './helpers.tsx';
-import { valueText, CellValue } from '../cells.tsx';
+import { valueText, CellValue, CutText } from '../cells.tsx';
 import { groupKeys, rowKeys, cellKeys } from './keys.ts';
 import { isRtl } from '../../../utils/direction.ts';
+import { linesOf } from './lines.ts';
 import { Avatar } from '../../Avatar/Avatar.tsx';
 import { Width, RowTarget, Check, CellEditor, CellStatus, CustomCell, RowMenuContent, RowActions } from './parts.tsx';
 import { Icon } from '../../Icon/Icon.tsx';
@@ -380,6 +381,7 @@ export function bodyRows({
                 k.includes('wrap') && B + '__value--wrap',
                 sized && B + '__value--sized',
                 lines && k.includes('wrap') && B + '__value--lines',
+                linesOf(c) >= 2 && k.includes('wrap') && B + '__value--lines-' + linesOf(c),
                 isNarrow && B + '__value--narrow'
               ) || undefined,
             shown = CellValue({
@@ -402,7 +404,7 @@ export function bodyRows({
             !actions &&
             !(pinned && !isStatic) &&
             React.isValidElement(shown) &&
-            shown.type === 'span' &&
+            (shown.type === 'span' || shown.type === CutText) &&
             String((shown as any).props.className)
               .split(' ')
               .includes(B + '__value');
@@ -625,7 +627,7 @@ export function bodyRows({
                 >
                   {shown}
                 </span>
-              ) : cutAt === row.id + '|' + c.field ? (
+              ) : cutAt === row.id + '|' + c.field && !(shown as any)?.props?.tip ? (
                 <>
                   {cellDirection(pinned && !isStatic && !kinds(c).includes('id'), shown)}
                   <span className={B + '__cut'}>

@@ -55,6 +55,7 @@ import { useViewSync } from './engine/useViewSync.ts';
 import { useCellRange } from './engine/useCellRange.ts';
 import { usePillWidths } from './engine/usePillWidths.ts';
 import { useGridMetrics } from './engine/useGridMetrics.ts';
+import { linesOf, stepFor, STEPS } from './engine/lines.ts';
 import { gridFrame } from './engine/gridFrame.tsx';
 const LazyFormEdit = React.lazy(() => import('./engine/formEdit.tsx'));
 import { columnSizing } from './engine/columnSizing.ts';
@@ -144,7 +145,7 @@ function NextEngine(rawProps: any) {
   const [cutAt, setCutAt] = React.useState<any>(null),
     cutOpen = React.useRef(false);
   const [wrapColumns, setWrapColumns] = React.useState<any>(() => props.wrapColumns || (initial as any).wrapColumns || {});
-  const wrapOf = (c: any) => (props.wrapColumns || wrapColumns)[c.field] ?? (c.wrap === true || kinds(c).includes('wrap'));
+  const wrapOf = (c: any) => (props.wrapColumns || wrapColumns)[c.field] ?? (c.wrap === true || kinds(c).includes('wrap') || linesOf(c) >= 2);
   const kindsOf = (c: any) => {
     const k = kinds(c).filter((x) => x !== 'wrap');
     return wrapOf(c) ? k.concat('wrap') : k;
@@ -197,7 +198,12 @@ function NextEngine(rawProps: any) {
       return cache.get(value);
     };
   }, [metrics]);
-  const effectiveStep = props.rowHeight || rowHeight,
+  // columns[].lines (#1044): the grid picks the smallest row step that holds the most lines a wrapped column asks for; the app's rowHeight or the person's choice wins when taller
+  const maxLines = Math.max(0, ...(props.columns || []).filter((c: any) => wrapOf(c)).map((c: any) => linesOf(c)));
+  const [linesStep, setLinesStep] = React.useState('short');
+  React.useLayoutEffect(() => { setLinesStep(stepFor(maxLines, frame.current)); }, [maxLines, density]);
+  const asked = props.rowHeight || rowHeight || 'short';
+  const effectiveStep = STEPS.indexOf(linesStep) > STEPS.indexOf(asked) ? linesStep : props.rowHeight || rowHeight,
     effectiveWrap = props.wrapHeaders ?? wrapHeaders;
   // how the table edits (ADR 0016): the person's remembered choice, then the table's editMode, then the TableSettings above it, then Inline Edit;
   // the choice is offered in the view menu only when both ways are offered and a column can be edited

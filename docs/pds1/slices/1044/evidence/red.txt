@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: ltr: lines: 2 clamps the cell to two lines (none)
+
+'none' !== '2'
+
+    at /home/cc/pds1/work/component-engineer-1/tests/data-grid-lines-1044.test.js:33:14 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'none',
+  expected: '2',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
