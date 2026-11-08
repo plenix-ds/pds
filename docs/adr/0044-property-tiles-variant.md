@@ -64,6 +64,7 @@
 - `plx-comp.property-list-tiles-min-inline-size` -> `{plx-sys.size-field-tile-min}`.
 - `plx-comp.property-list-tiles-gap` -> `{plx-sys.space-stack-field}`: 16px, both axes, varying with density as 946 §4 says.
 - The tile, label, value and heading tokens are the existing `property-list-*` and `property-group-*` tokens.
+- The build PR adds these three tokens together with the CSS that reads them, because CI rejects a token that nothing reads. G3 labels that PR `agent:pds1-ds-architect` for the ownership check.
 
 ### Not in this change
 

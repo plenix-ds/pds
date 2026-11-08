@@ -505,11 +505,6 @@
       "$type": "dimension",
       "$description": "The space between the year groups of a grouped Timeline (80px; ADR 0036)."
     },
-    "size-field-tile-min": {
-      "$value": "{plx-ref.size-60u}",
-      "$type": "dimension",
-      "$description": "The narrowest read-only tile (PropertyList variant tiles): two tiles share a row from 496px, narrower lists show one per row (ADR 0044, #1043)."
-    },
     "size-calendar-tile": {
       "$value": "{plx-ref.size-14u}",
       "$type": "dimension",
