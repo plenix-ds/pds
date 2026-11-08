@@ -1,0 +1,9 @@
+id: D-0130
+date: 2026-11-08
+area: design
+decided_by: owner (2026-11-08, relayed by ctm3-product-lead on #1032, "I do not want this loading style view")
+decision: 'Loading is a spinner with a short label, centered in the loading region, shown only after motion-loading-delay (about 1 s); known progress uses a ProgressBar with its label. No Plenix default or template uses Skeleton or shimmer bars; Skeleton stays an opt-in component (#1032, Fluent 2 per D-0078).'
+why: 'The owner rejected the skeleton look; Fluent 2 uses a labeled spinner, and the delay keeps fast loads quiet.'
+options: ['labeled spinner after a delay (chosen)', 'skeleton bars (rejected by the owner)']
+status: active
+check: 'tests for #1032 AC-1..AC-6 (docs/pds1/slices/1032/brief.md): no Skeleton element in any default or template loading state; G2 on the build PR'
