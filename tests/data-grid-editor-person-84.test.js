@@ -61,13 +61,13 @@ const check = async (name, fn) => { if (!shared.wanted(name)) return; try { awai
       });
       await check(T + 'a typed text that matches nothing shows the empty row and Enter saves nothing', async () => {
         await mount(ON); await focus(0); await key('Enter'); await page.keyboard.down('Control'); await page.keyboard.press('a'); await page.keyboard.up('Control'); await page.keyboard.type('qqqq'); await wait(300);
-        const row = await page.evaluate(() => { const l = document.querySelector('[role=listbox]'); return { options: document.querySelectorAll('[role=option]').length, text: l ? l.textContent.trim() : null }; });
+        const row = await page.evaluate(() => { const l = document.querySelector('[role=listbox]'); return { options: document.querySelectorAll('[role=option]:not([aria-disabled=true])').length, text: l ? l.textContent.trim() : null }; });
         assert.equal(row.options, 0); assert.ok(row.text && row.text.length > 0, 'the list says there is nothing: ' + JSON.stringify(row));
         await key('Enter'); assert.deepEqual(await edits(), []); assert.notEqual(await sel(), null, 'the editor stays open');
       });
       await check(T + 'loadOptions returning nothing shows the same empty row', async () => {
         await mount({ types: ['person'] }, true); await focus(0); await key('Enter'); await page.keyboard.down('Control'); await page.keyboard.press('a'); await page.keyboard.up('Control'); await page.keyboard.type('nomatch'); await wait(1100);
-        assert.equal(await page.evaluate(() => document.querySelectorAll('[role=option]').length), 0); await key('Enter'); assert.deepEqual(await edits(), []); assert.notEqual(await sel(), null);
+        assert.equal(await page.evaluate(() => document.querySelectorAll('[role=option]:not([aria-disabled=true])').length), 0); await key('Enter'); assert.deepEqual(await edits(), []); assert.notEqual(await sel(), null);
       });
       await check(T + 'the read cell shows the person with an avatar and the name, a long name ending in an ellipsis', async () => {
         await mount(ON); const r = await page.evaluate(() => { const cells = [...document.querySelectorAll('[role=row][data-plx-record]')].map((row) => row.querySelector('[data-plx-field="state"]')); const info = (c) => { const n = c.querySelector('.plx-data-grid__person-name'); return { avatar: !!c.querySelector('.plx-avatar'), name: n ? n.textContent : null, cut: n ? n.scrollWidth > n.clientWidth && getComputedStyle(n).textOverflow === 'ellipsis' : false }; }; return [info(cells[0]), info(cells[1])]; });

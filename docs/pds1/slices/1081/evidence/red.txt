@@ -1,0 +1,13 @@
+  NEW components-codeblock--css · light: color-contrast 0 -> 1 · Elements must meet minimum color contrast ratio thresholds · e.g. .plx-code-block__tok--selector
+  NEW components-codeeditor--default · light: color-contrast 0 -> 1 · Elements must meet minimum color contrast ratio thresholds · e.g. .plx-code-block__tok--selector
+  NEW components-codeeditor--focus · light: color-contrast 0 -> 1 · Elements must meet minimum color contrast ratio thresholds · e.g. .plx-code-block__tok--selector
+  NEW components-codeeditor--line-numbers · light: color-contrast 0 -> 1 · Elements must meet minimum color contrast ratio thresholds · e.g. .plx-code-block__tok--selector
+  NEW components-codeeditor--read-only · light: color-contrast 0 -> 1 · Elements must meet minimum color contrast ratio thresholds · e.g. .plx-code-block__tok--selector
+  NEW components-codeeditor--invalid · light: color-contrast 0 -> 1 · Elements must meet minimum color contrast ratio thresholds · e.g. .plx-code-block__tok--selector
+  NEW components-codeeditor--warning · light: color-contrast 0 -> 1 · Elements must meet minimum color contrast ratio thresholds · e.g. .plx-code-block__tok--selector
+  NEW components-codeeditor--disabled · light: color-contrast 0 -> 2 · Elements must meet minimum color contrast ratio thresholds · e.g. code[data-plx-language="css"]
+  NEW components-codeeditor--disabled · dark: color-contrast 0 -> 1 · Elements must meet minimum color contrast ratio thresholds · e.g. code[data-plx-language="css"]
+  NEW components-codeeditor--tall · light: color-contrast 0 -> 1 · Elements must meet minimum color contrast ratio thresholds · e.g. .plx-code-block__tok--selector
+  NEW components-codeeditor--long-text · light: color-contrast 0 -> 1 · Elements must meet minimum color contrast ratio thresholds · e.g. .plx-code-block__tok--selector
+  NEW components-codeeditor--rtl · light: color-contrast 0 -> 1 · Elements must meet minimum color contrast ratio thresholds · e.g. .plx-code-block__tok--selector
+STORIES_AXE_FAIL 12 new findings, 0 stories that did not open, of 28 stories
