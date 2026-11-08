@@ -1,0 +1,9 @@
+id: D-0136
+date: 2026-11-08
+area: api
+decided_by: agent (pds1-ds-architect) at G3, owner may switch
+decision: 'Long text in read-only tiles (ADR 0045): PropertyList.Item.span?: "full" makes that tile span the row in a two-column tiles list; an all-long list marks each item. No columnCount (G2 on #1052 prefers the per-item option). No new tokens; class plx-property-list__item--full.'
+why: 'The owner''s study puts long values in full-row tiles (dl.one); a PropertyGroup holds one list, so a mixed group also needs a per-item span (#1052, #1053).'
+options: ['columnCount and Item span', 'columnCount only', 'Item span only (chosen)']
+status: active
+check: 'G3 API diff on the build PR; planned:property-tiles-1043 tests (span full, span outside tiles inert, all items spanning, RTL); check 12 specimen property-group-tiles'
