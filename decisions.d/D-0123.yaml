@@ -1,0 +1,9 @@
+id: D-0123
+date: 2026-11-08
+area: components
+decided_by: agent (pds1-design-director) at G2, owner may switch
+decision: 'SecondaryPane back item (#995, API ADR 0038 / D-0124): the first row above the title, only with back; arrow_back 16px on the title''s start edge, secondary role (12px, 400) in content-muted, control-height-inline, never filled or centred; in the folded rail it is the first control, above Expand. The SecondaryPane title rises from 12px/600 to the surface-title role (15px, 700, content-default) on every SecondaryPane, so the order is title > item > section label > back (Changed (visual)).'
+why: 'CTM owner (#995): the back control should be start-aligned with icons, and the pane title is more important but was the smaller font; the ask says the title''s size is above the nav items''. The title was 12px under 13px items, so quieting the back item alone would not fix it. One title style for every pane.'
+options: ['back row above the title, title 15px/700 on every SecondaryPane (chosen)', 'title unchanged at 12px/600, back row only', 'title 15px only on panes that have a back row']
+status: active
+check: 'planned:secondary-pane-back-995 (#995: row only with back, before the title, arrow on the title start edge, title font-size > NavList items > back row, RTL flip, rail order, one back at Narrow)'
