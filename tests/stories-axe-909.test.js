@@ -5,6 +5,7 @@
    Usage:
      npm run build-storybook && node tests/stories-axe-909.test.js            compare
      node tests/stories-axe-909.test.js --update                              record the current findings (lowers the baseline; never raises it, see changed.shrinkOnly)
+     node tests/stories-axe-909.test.js --init                                write the baseline as it is now, raising it: only for adopting the gate (#909) or an owner-listed exception (D-0025)
      STORIES_ONLY=badge,button node tests/stories-axe-909.test.js             only story ids that start with these prefixes
    -> STORIES_AXE_909_OK */
 const fs = require('fs'), path = require('path'), http = require('http');
@@ -43,9 +44,9 @@ const server = http.createServer((req, res) => {
   }
   await browser.close(); server.close();
   const counts = Object.fromEntries(Object.entries(found).map(([k, v]) => [k, Object.fromEntries(Object.entries(v).map(([r, x]) => [r, x.n]))]));
-  if (process.argv.includes('--update')) {
+  if (process.argv.includes('--update') || process.argv.includes('--init')) {
     if (only) { console.error('--update records the whole set; run it without STORIES_ONLY'); process.exit(1); }
-    changed.shrinkOnly(BASELINE, counts);
+    if (!process.argv.includes('--init')) changed.shrinkOnly(BASELINE, counts);
     fs.mkdirSync(path.dirname(BASELINE), { recursive: true }); fs.writeFileSync(BASELINE, JSON.stringify(counts, null, 1) + '\n');
     console.log('STORIES_AXE_BASELINE written: ' + Object.keys(counts).length + ' story/mode pairs with findings of ' + stories.length * 2 + '; ' + broken.length + ' could not be opened');
     broken.forEach((b) => console.log('  BROKEN ' + b)); return;
