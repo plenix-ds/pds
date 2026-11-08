@@ -1,0 +1,9 @@
+id: D-0126
+date: 2026-11-08
+area: api
+decided_by: agent (pds1-ds-architect) at G3, owner may switch
+decision: 'A new export PagePanes (ADR 0040) renders the same <div class="plx-page-panes"> (className and other props pass through) around a SecondaryPane and the content; no layout change; writing plx-page-panes by hand is deprecated now and the class becomes internal in 2.0.0.'
+why: 'Apps write Plenix internal classes by hand (CTM); a named export with the same DOM is additive and keeps the :has() rules.'
+options: ['PagePanes export (chosen)', 'SecondaryPane.Group']
+status: active
+check: 'G3 API diff on the build PR; planned:page-panes-998 tests (AC-1..3: same DOM, Narrow list rule, no hand-written class in docs or templates)'

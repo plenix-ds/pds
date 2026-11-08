@@ -1,0 +1,9 @@
+id: D-0125
+date: 2026-11-08
+area: api
+decided_by: agent (pds1-ds-architect) at G3, owner may switch
+decision: 'AppHeader brand (and AppHeader.Switcher brand) also takes an object AppHeaderBrand { logo?: { src, alt (default ""), width?, height? } | element, organization, application? } (ADR 0039), drawn with the default name layout and tokens: the logo in the brand-mark slot at the brand-mark context size, organization in the product line, application (default the computed app name) in the app line; one new class plx-app-header__logo; an element or string brand is unchanged.'
+why: 'Apps (CTM) hand-build the brand with Plenix internal classes; one prop with an object form keeps the slot, the layout and the tokens, and is additive.'
+options: ['brand also takes an object (chosen)', 'new props logo, organization and application beside brand']
+status: active
+check: 'G3 API diff on the build PR; planned:app-header-brand-997 tests (AC-1..4: same markup as default, element unchanged, one link with brandHref, RTL)'
