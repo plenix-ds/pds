@@ -52,9 +52,9 @@
       "$description": "Cascader trigger padding inline end: trigger padding inline end (space-inset-xs)."
     },
     "cascader-placeholder-text": {
-      "$value": "{plx-sys.content-subtle}",
+      "$value": "{plx-sys.field-placeholder}",
       "$type": "color",
-      "$description": "Cascader placeholder: text color (content-subtle)."
+      "$description": "Cascader placeholder: text color (field-placeholder, as Combobox and Input; AA in dark mode, ADR 0046)."
     },
     "cascader-chevron-background": {
       "$value": "{plx-sys.content-muted}",

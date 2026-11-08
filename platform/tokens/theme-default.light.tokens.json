@@ -2636,6 +2636,17 @@
         }
       }
     },
+    "category-red-on-surface": {
+      "$value": "{plx-sys.category-red-on-soft}",
+      "$type": "color",
+      "$description": "The red category as text on the page surface (a plain DataPill, ADR 0046, D-0137): the pill text in light, a lighter shade in dark so it is 4.5:1 or more on the surface.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category as text on the surface, red."
+        }
+      }
+    },
     "category-green": {
       "$value": "{plx-ref.color-green-300}",
       "$type": "color",
@@ -2688,6 +2699,17 @@
         "plenix": {
           "group": "dataviz",
           "purpose": "A category pill, green: its text."
+        }
+      }
+    },
+    "category-green-on-surface": {
+      "$value": "{plx-sys.category-green-on-soft}",
+      "$type": "color",
+      "$description": "The green category as text on the page surface (a plain DataPill, ADR 0046, D-0137): the pill text in light, a lighter shade in dark so it is 4.5:1 or more on the surface.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category as text on the surface, green."
         }
       }
     },
@@ -2746,6 +2768,17 @@
         }
       }
     },
+    "category-yellow-on-surface": {
+      "$value": "{plx-sys.category-yellow-on-soft}",
+      "$type": "color",
+      "$description": "The yellow category as text on the page surface (a plain DataPill, ADR 0046, D-0137): the pill text in light, a lighter shade in dark so it is 4.5:1 or more on the surface.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category as text on the surface, yellow."
+        }
+      }
+    },
     "category-blue": {
       "$value": "{plx-ref.color-blue-400}",
       "$type": "color",
@@ -2798,6 +2831,17 @@
         "plenix": {
           "group": "dataviz",
           "purpose": "A category pill, blue: its text."
+        }
+      }
+    },
+    "category-blue-on-surface": {
+      "$value": "{plx-sys.category-blue-on-soft}",
+      "$type": "color",
+      "$description": "The blue category as text on the page surface (a plain DataPill, ADR 0046, D-0137): the pill text in light, a lighter shade in dark so it is 4.5:1 or more on the surface.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category as text on the surface, blue."
         }
       }
     },
@@ -2856,6 +2900,17 @@
         }
       }
     },
+    "category-orange-on-surface": {
+      "$value": "{plx-sys.category-orange-on-soft}",
+      "$type": "color",
+      "$description": "The orange category as text on the page surface (a plain DataPill, ADR 0046, D-0137): the pill text in light, a lighter shade in dark so it is 4.5:1 or more on the surface.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category as text on the surface, orange."
+        }
+      }
+    },
     "category-purple": {
       "$value": "{plx-ref.color-purple-500}",
       "$type": "color",
@@ -2908,6 +2963,17 @@
         "plenix": {
           "group": "dataviz",
           "purpose": "A category pill, purple: its text."
+        }
+      }
+    },
+    "category-purple-on-surface": {
+      "$value": "{plx-sys.category-purple-on-soft}",
+      "$type": "color",
+      "$description": "The purple category as text on the page surface (a plain DataPill, ADR 0046, D-0137): the pill text in light, a lighter shade in dark so it is 4.5:1 or more on the surface.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category as text on the surface, purple."
         }
       }
     },
@@ -2966,6 +3032,17 @@
         }
       }
     },
+    "category-cyan-on-surface": {
+      "$value": "{plx-sys.category-cyan-on-soft}",
+      "$type": "color",
+      "$description": "The cyan category as text on the page surface (a plain DataPill, ADR 0046, D-0137): the pill text in light, a lighter shade in dark so it is 4.5:1 or more on the surface.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category as text on the surface, cyan."
+        }
+      }
+    },
     "category-magenta": {
       "$value": "{plx-ref.color-magenta-500}",
       "$type": "color",
@@ -3018,6 +3095,17 @@
         "plenix": {
           "group": "dataviz",
           "purpose": "A category pill, magenta: its text."
+        }
+      }
+    },
+    "category-magenta-on-surface": {
+      "$value": "{plx-sys.category-magenta-on-soft}",
+      "$type": "color",
+      "$description": "The magenta category as text on the page surface (a plain DataPill, ADR 0046, D-0137): the pill text in light, a lighter shade in dark so it is 4.5:1 or more on the surface.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category as text on the surface, magenta."
         }
       }
     },
@@ -3076,6 +3164,17 @@
         }
       }
     },
+    "category-lime-on-surface": {
+      "$value": "{plx-sys.category-lime-on-soft}",
+      "$type": "color",
+      "$description": "The lime category as text on the page surface (a plain DataPill, ADR 0046, D-0137): the pill text in light, a lighter shade in dark so it is 4.5:1 or more on the surface.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category as text on the surface, lime."
+        }
+      }
+    },
     "category-pink": {
       "$value": "{plx-ref.color-pink-300}",
       "$type": "color",
@@ -3128,6 +3227,17 @@
         "plenix": {
           "group": "dataviz",
           "purpose": "A category pill, pink: its text."
+        }
+      }
+    },
+    "category-pink-on-surface": {
+      "$value": "{plx-sys.category-pink-on-soft}",
+      "$type": "color",
+      "$description": "The pink category as text on the page surface (a plain DataPill, ADR 0046, D-0137): the pill text in light, a lighter shade in dark so it is 4.5:1 or more on the surface.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category as text on the surface, pink."
         }
       }
     },
@@ -3186,6 +3296,17 @@
         }
       }
     },
+    "category-teal-on-surface": {
+      "$value": "{plx-sys.category-teal-on-soft}",
+      "$type": "color",
+      "$description": "The teal category as text on the page surface (a plain DataPill, ADR 0046, D-0137): the pill text in light, a lighter shade in dark so it is 4.5:1 or more on the surface.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category as text on the surface, teal."
+        }
+      }
+    },
     "category-lavender": {
       "$value": "{plx-ref.color-purple-300}",
       "$type": "color",
@@ -3238,6 +3359,17 @@
         "plenix": {
           "group": "dataviz",
           "purpose": "A category pill, lavender: its text."
+        }
+      }
+    },
+    "category-lavender-on-surface": {
+      "$value": "{plx-sys.category-lavender-on-soft}",
+      "$type": "color",
+      "$description": "The lavender category as text on the page surface (a plain DataPill, ADR 0046, D-0137): the pill text in light, a lighter shade in dark so it is 4.5:1 or more on the surface.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category as text on the surface, lavender."
         }
       }
     },
@@ -3301,6 +3433,17 @@
       },
       "$deprecated": "Use --plx-sys-category-orange-on-soft; Brown is retired in favor of Orange (kept for one release)."
     },
+    "category-brown-on-surface": {
+      "$value": "{plx-sys.category-orange-on-surface}",
+      "$type": "color",
+      "$description": "The brown category as text on the page surface (a plain DataPill, ADR 0046, D-0137): the pill text in light, a lighter shade in dark so it is 4.5:1 or more on the surface.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category as text on the surface, brown."
+        }
+      }
+    },
     "category-beige": {
       "$value": "{plx-ref.color-yellow-100}",
       "$type": "color",
@@ -3353,6 +3496,17 @@
         "plenix": {
           "group": "dataviz",
           "purpose": "A category pill, beige: its text."
+        }
+      }
+    },
+    "category-beige-on-surface": {
+      "$value": "{plx-sys.category-beige-on-soft}",
+      "$type": "color",
+      "$description": "The beige category as text on the page surface (a plain DataPill, ADR 0046, D-0137): the pill text in light, a lighter shade in dark so it is 4.5:1 or more on the surface.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category as text on the surface, beige."
         }
       }
     },
@@ -3411,6 +3565,17 @@
         }
       }
     },
+    "category-maroon-on-surface": {
+      "$value": "{plx-sys.category-maroon-on-soft}",
+      "$type": "color",
+      "$description": "The maroon category as text on the page surface (a plain DataPill, ADR 0046, D-0137): the pill text in light, a lighter shade in dark so it is 4.5:1 or more on the surface.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category as text on the surface, maroon."
+        }
+      }
+    },
     "category-mint": {
       "$value": "{plx-ref.color-green-100}",
       "$type": "color",
@@ -3463,6 +3628,17 @@
         "plenix": {
           "group": "dataviz",
           "purpose": "A category pill, mint: its text."
+        }
+      }
+    },
+    "category-mint-on-surface": {
+      "$value": "{plx-sys.category-mint-on-soft}",
+      "$type": "color",
+      "$description": "The mint category as text on the page surface (a plain DataPill, ADR 0046, D-0137): the pill text in light, a lighter shade in dark so it is 4.5:1 or more on the surface.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category as text on the surface, mint."
         }
       }
     },
@@ -3521,6 +3697,17 @@
         }
       }
     },
+    "category-olive-on-surface": {
+      "$value": "{plx-sys.category-olive-on-soft}",
+      "$type": "color",
+      "$description": "The olive category as text on the page surface (a plain DataPill, ADR 0046, D-0137): the pill text in light, a lighter shade in dark so it is 4.5:1 or more on the surface.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category as text on the surface, olive."
+        }
+      }
+    },
     "category-apricot": {
       "$value": "{plx-ref.color-orange-200}",
       "$type": "color",
@@ -3573,6 +3760,17 @@
         "plenix": {
           "group": "dataviz",
           "purpose": "A category pill, apricot: its text."
+        }
+      }
+    },
+    "category-apricot-on-surface": {
+      "$value": "{plx-sys.category-apricot-on-soft}",
+      "$type": "color",
+      "$description": "The apricot category as text on the page surface (a plain DataPill, ADR 0046, D-0137): the pill text in light, a lighter shade in dark so it is 4.5:1 or more on the surface.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category as text on the surface, apricot."
         }
       }
     },
@@ -3631,6 +3829,17 @@
         }
       }
     },
+    "category-navy-on-surface": {
+      "$value": "{plx-sys.category-navy-on-soft}",
+      "$type": "color",
+      "$description": "The navy category as text on the page surface (a plain DataPill, ADR 0046, D-0137): the pill text in light, a lighter shade in dark so it is 4.5:1 or more on the surface.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category as text on the surface, navy."
+        }
+      }
+    },
     "category-1": {
       "$value": "{plx-sys.category-magenta}",
       "$type": "color",
@@ -3683,6 +3892,17 @@
         "plenix": {
           "group": "dataviz",
           "purpose": "Category slot 1 (magenta): the text on the soft background."
+        }
+      }
+    },
+    "category-1-on-surface": {
+      "$value": "{plx-sys.category-1-on-soft}",
+      "$type": "color",
+      "$description": "The 1 category as text on the page surface (a plain DataPill, ADR 0046, D-0137): the pill text in light, a lighter shade in dark so it is 4.5:1 or more on the surface.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category as text on the surface, 1."
         }
       }
     },
@@ -3741,6 +3961,17 @@
         }
       }
     },
+    "category-2-on-surface": {
+      "$value": "{plx-sys.category-2-on-soft}",
+      "$type": "color",
+      "$description": "The 2 category as text on the page surface (a plain DataPill, ADR 0046, D-0137): the pill text in light, a lighter shade in dark so it is 4.5:1 or more on the surface.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category as text on the surface, 2."
+        }
+      }
+    },
     "category-3": {
       "$value": "{plx-sys.category-teal}",
       "$type": "color",
@@ -3793,6 +4024,17 @@
         "plenix": {
           "group": "dataviz",
           "purpose": "Category slot 3 (teal): the text on the soft background."
+        }
+      }
+    },
+    "category-3-on-surface": {
+      "$value": "{plx-sys.category-3-on-soft}",
+      "$type": "color",
+      "$description": "The 3 category as text on the page surface (a plain DataPill, ADR 0046, D-0137): the pill text in light, a lighter shade in dark so it is 4.5:1 or more on the surface.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category as text on the surface, 3."
         }
       }
     },
@@ -3851,6 +4093,17 @@
         }
       }
     },
+    "category-4-on-surface": {
+      "$value": "{plx-sys.category-4-on-soft}",
+      "$type": "color",
+      "$description": "The 4 category as text on the page surface (a plain DataPill, ADR 0046, D-0137): the pill text in light, a lighter shade in dark so it is 4.5:1 or more on the surface.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category as text on the surface, 4."
+        }
+      }
+    },
     "category-5": {
       "$value": "{plx-sys.category-orange}",
       "$type": "color",
@@ -3903,6 +4156,17 @@
         "plenix": {
           "group": "dataviz",
           "purpose": "Category slot 5 (orange): the text on the soft background."
+        }
+      }
+    },
+    "category-5-on-surface": {
+      "$value": "{plx-sys.category-5-on-soft}",
+      "$type": "color",
+      "$description": "The 5 category as text on the page surface (a plain DataPill, ADR 0046, D-0137): the pill text in light, a lighter shade in dark so it is 4.5:1 or more on the surface.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category as text on the surface, 5."
         }
       }
     },
@@ -3961,6 +4225,17 @@
         }
       }
     },
+    "category-6-on-surface": {
+      "$value": "{plx-sys.category-6-on-soft}",
+      "$type": "color",
+      "$description": "The 6 category as text on the page surface (a plain DataPill, ADR 0046, D-0137): the pill text in light, a lighter shade in dark so it is 4.5:1 or more on the surface.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category as text on the surface, 6."
+        }
+      }
+    },
     "category-7": {
       "$value": "{plx-sys.category-green}",
       "$type": "color",
@@ -4016,6 +4291,17 @@
         }
       }
     },
+    "category-7-on-surface": {
+      "$value": "{plx-sys.category-7-on-soft}",
+      "$type": "color",
+      "$description": "The 7 category as text on the page surface (a plain DataPill, ADR 0046, D-0137): the pill text in light, a lighter shade in dark so it is 4.5:1 or more on the surface.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category as text on the surface, 7."
+        }
+      }
+    },
     "category-8": {
       "$value": "{plx-sys.category-yellow}",
       "$type": "color",
@@ -4068,6 +4354,17 @@
         "plenix": {
           "group": "dataviz",
           "purpose": "Category slot 8 (yellow): the text on the soft background."
+        }
+      }
+    },
+    "category-8-on-surface": {
+      "$value": "{plx-sys.category-8-on-soft}",
+      "$type": "color",
+      "$description": "The 8 category as text on the page surface (a plain DataPill, ADR 0046, D-0137): the pill text in light, a lighter shade in dark so it is 4.5:1 or more on the surface.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category as text on the surface, 8."
         }
       }
     },
@@ -4148,6 +4445,17 @@
         }
       }
     },
+    "category-gray-on-surface": {
+      "$value": "{plx-sys.category-gray-on-soft}",
+      "$type": "color",
+      "$description": "The gray category as text on the page surface (a plain DataPill, ADR 0046, D-0137): the pill text in light, a lighter shade in dark so it is 4.5:1 or more on the surface.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category as text on the surface, gray."
+        }
+      }
+    },
     "category-grey": {
       "$value": "{plx-sys.category-gray}",
       "$type": "color",
@@ -4207,6 +4515,17 @@
         }
       },
       "$deprecated": "Use --plx-sys-category-gray-on-soft; \"grey\" is the British spelling, and Plenix writes American English (#882). Kept until the next minor release."
+    },
+    "category-grey-on-surface": {
+      "$value": "{plx-sys.category-gray-on-surface}",
+      "$type": "color",
+      "$description": "The grey category as text on the page surface (a plain DataPill, ADR 0046, D-0137): the pill text in light, a lighter shade in dark so it is 4.5:1 or more on the surface.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "A category as text on the surface, grey."
+        }
+      }
     },
     "list-bullet": {
       "$value": "{plx-ref.color-gray-400}",
