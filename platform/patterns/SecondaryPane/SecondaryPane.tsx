@@ -5,10 +5,12 @@
    Usage:
      <SecondaryPane title="Files" icon="folder-open" actions={…} side="start" width="md">…</SecondaryPane>
      <SecondaryPane title="Kitchen Renovation" collapsible resizable rail={<><ToolRail.Item … /></>}>…</SecondaryPane>
-     <div className="plx-page-panes">
+     <PagePanes>
        <SecondaryPane title="Notes" detailOpen={!!note} onBack={() => loc.parent('/')}>{the list}</SecondaryPane>
        <PageContent>{the open note}</PageContent>
-     </div>
+     </PagePanes>
+   PagePanes: the wrapper of a pane and the content beside it (renders <div class="plx-page-panes">, div attributes pass through).
+     Writing the plx-page-panes class by hand is deprecated; it becomes internal in 2.0.0 (ADR 0040).
    Props:
      title: the title in the header row
      label: its landmark name (default: the title)
@@ -198,4 +200,9 @@ export function SecondaryPane(props: SecondaryPaneProps) {
       </div>
     </>
   ) : pane;
+}
+
+export type PagePanesProps = React.HTMLAttributes<HTMLDivElement>;
+export function PagePanes({ className, children, ...rest }: PagePanesProps) {
+  return <div className={cx('plx-page-panes', className)} {...rest}>{children}</div>;
 }
