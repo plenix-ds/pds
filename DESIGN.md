@@ -99,6 +99,7 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 - Text roles, from strongest to weakest: `content-strong`, `content-default`, `content-muted`, `content-subtle`, `content-disabled`. Disabled text is the only role allowed below 4.5:1.
 - Feedback has five tones: neutral, info, success, warning, danger. Each tone has `solid`, `on-solid`, `solid-label`, `soft`, `soft-border` and `content`.
 - Category colours (19) and status pills follow `docs/pills-and-colors.md`.
+- The grouped Timeline's container categories (`category-1…8`) alias existing category hues (ADR 0036). In dark they read the soft-border shade over a token `color-mix`, not a new colour (D-0117, `docs/pds1/slices/987/design.md`).
 - **Contrast** (check 8): every text role pairs with every surface it can sit on, in light and dark: `surface-canvas`, `-default`, `-raised`, `-sunken`, `state-hover`, `state-selected`. Each pair is at least 4.5:1, or 3:1 for text at 18px and up (or 14px bold and up). Control boundaries (`field-border`, `control-border`) are at least 3:1. Decorative dividers (`border-subtle`, `border-divider`) are exempt.
 
 ### Dark mode (D-0009)
@@ -223,6 +224,18 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 - Charts use Apache ECharts (D-0027), bundled locally, themed only from tokens (`plx-sys.dataviz-*`, `plx-sys.font-*`). Inline styles are allowed only in ECharts options built from token values.
 - Palettes: categorical 1 to 6, sequential 1 to 7, diverging 1 to 7, and status colours.
 - Axis and label text uses `dataviz-label` at 12px or more. Numbers on axes and in tooltips use `tabular-nums`.
+
+### Timeline, grouped (D-0115, D-0117, #987)
+
+- A variation of `Timeline`, not a new component. Events are grouped by year, latest first (the order is a prop).
+- **Year heading:** the **title** role, `content-default`, with a 72 × 2px `border-strong` line 8px under it. Groups are 80px apart (64px compact), with no divider.
+- **Watermark:** the year, rotated, 24px bold, in `content-decorative`. It sits beside each event, in the event's own row, so it never overlaps. It is `aria-hidden`.
+- **Each event is a container:** 6px corners, the category tint and border, the title in the category text colour, the description in `content-muted`, and a category tag (4px, one line) at the inline-end. There are no markers or dots.
+- **Date:** a 56px calendar tile at the inline-start, with a band in the category colour, two binder rings, the month (12px, bold, uppercase) and the day (18px, bold). The tile is `aria-hidden`; a `<time>` carries the full date.
+- **Upcoming:** a dashed outline, a grey band, and "Pending" when there is no date. Events never fade.
+- **Categories `category-1…8`** alias existing category hues (ADR 0036), with no new colours. Light uses the pill roles (soft, soft border, on-soft). Dark uses the soft-border shade for the title and band, over a 5% mix of it into the surface. Text on every fill is ≥ 4.5:1 in light and dark.
+- **Legend (opt-in):** ghost toggle buttons with a swatch. A hidden category has a hollow swatch and `content-muted` text, never reduced opacity.
+- Details, tokens and the state matrix: `docs/pds1/slices/987/design.md`.
 
 ## 9. States
 
