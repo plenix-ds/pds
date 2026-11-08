@@ -1,6 +1,6 @@
 # 1032: loading state is a labeled spinner after a delay, not skeleton bars
 
-Source: plenix-ds/pds#1032, the CTM owner (2026-11-08, "I do not want this loading style view"), relayed by ctm3-product-lead. Decision: D-0130 (owner). Microsoft first (D-0078): Fluent 2 Spinner with a label.
+Source: plenix-ds/pds#1032, the CTM owner (2026-11-08, "I do not want this loading style view"), relayed by ctm3-product-lead. Decision: D-0130 (owner rule; G2 readings, PR #1042). Microsoft first (D-0078): Fluent 2 Spinner with a label.
 
 ## Goal
 
