@@ -1,0 +1,9 @@
+id: D-0121
+date: 2026-11-08
+area: process
+decided_by: owner (chat, 2026-11-08 01:00 UTC, "ensure that these are not patches but to rewritten so that its canonical")
+decision: 'Every consumer request (CTM, RedSave) is built in Plenix as a documented prop or component with tests and docs; consumers never style or build Plenix markup with internal plx-* classes; the CTM batch ships together as minor 1.2.0, not as patch releases, and CTM, RedSave and the PDS site then move to it and drop their workarounds (#1001).'
+why: 'Workarounds in an app break silently when Plenix changes its internals, and patches leave each app on a different look.'
+options: ['canonical props and one minor release (chosen)', 'patch each request as it comes']
+status: active
+check: 'G3 API diff on each consumer-request PR (a documented prop, tests and docs); the #1001 checklist before the 1.2.0 release; CTM and RedSave carry their own check for internal plx-* classes.'
