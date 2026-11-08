@@ -16,6 +16,7 @@
 | Part | With the variation | Source |
 |---|---|---|
 | PropertyList inside the group | `layout="stacked"`: porcelain tiles, 1px same-tint border, 6px radius, 8/12px padding, 2 per row (`columnCount` 2), 16px gaps (`space-stack-field`), equal height in a row | 946 §2 |
+| One per row when narrow | a tile is never narrower than **240px**. Two tiles fit from a 496px list (240 + 16 + 240), and anything narrower shows one per row. It is an intrinsic grid, `repeat(auto-fill, minmax(max(<min>, (100% - <gap>) / 2), 1fr))`, not a container query, because a container query cannot read a token. Tokens: comp `property-list-tiles-min-inline-size` → **new sys `size-field-tile-min`** → `plx-ref.size-60u` (240px). This replaces 946's 480px container rule for tiles | G3 ask on #1043 |
 | Group heading | `group-heading` role, 13px medium, gold (brown-600 light, yellow-300 dark), sentence case, 12px above the list, 40px between groups (`space-stack-group`) | 946 §1–2 |
 | Label | `field-label`, 11px regular, navy (blue-700 light, blue-275 dark), sentence case | D-0106 |
 | Value | `field-value`, 13px semibold, `content-default`; data values in Reddit Mono at the same size | D-0106 |
@@ -69,7 +70,7 @@
 
 - **3× English:** labels, values and group headings wrap, and the tiles in a row grow to the tallest. Nothing overlaps at 1024×640.
 - **An odd number of tiles:** the last tile sits alone at the inline start, at half width. It does not stretch across the row.
-- **A container under 480px:** one tile per row (946 container query).
+- **A list under 496px:** one tile per row (the 240px tile minimum, §1).
 - **10,000 rows:** n/a. A PropertyList holds one item's details. Lists of items go in a DataGrid.
 
 ## 6. Messages
@@ -79,7 +80,8 @@
 ## 7. Choices the engineer must not invent
 
 - **No values of its own:** every value comes from 946 §1, §2 and §4 through the existing `stacked` classes. The variation adds no new CSS values, and must not copy the stacked CSS into a second rule.
-- **The name and precedence** as in §1 (G3 may only rename).
+- **The name and precedence** as in §1 (ADR 0044, D-0135).
+- **The one-per-row width:** `size-field-tile-min` (240px) through the intrinsic grid in §1. No container query and no other breakpoint.
 - **Status:** an existing Badge with its icon.
 - **Loading:** `LoadingState` (D-0130), never Skeleton.
 - **Tests:** AC-1 to AC-6 (brief), plus the odd-tile case and the explicit-`layout`-wins case.
