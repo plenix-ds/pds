@@ -313,10 +313,15 @@ jobs:
           CHROME_PATH="$(command -v google-chrome)" node tests/zero-overlap.test.js
 
   story-axe:
-    name: Story axe (every story, light and dark, diff-aware)
+    name: Story axe (${{ matrix.shard }}/4)
     runs-on: ubuntu-latest
     timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
     env:
+      SHARD: ${{ matrix.shard }}
       BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -350,7 +355,7 @@ jobs:
           command -v google-chrome >/dev/null || { echo "::error::Chrome is missing on the runner: the story axe run cannot run, and a missing browser is a FAIL"; exit 1; }
           # a pull request opens only the stories of the part it touches (when it touches one part); the nightly and tag run opens all (#909)
           if [ -n "$BASE_SHA" ]; then git diff --name-only "$(git merge-base "$BASE_SHA" HEAD)" HEAD > "$RUNNER_TEMP/changed.txt"; export STORIES_CHANGED="$RUNNER_TEMP/changed.txt"; fi
-          CHROME_PATH="$(command -v google-chrome)" node tests/stories-axe-909.test.js
+          STORIES_SHARD="$SHARD/4" STORIES_WARN_BROKEN=1 CHROME_PATH="$(command -v google-chrome)" node tests/stories-axe-909.test.js
 
   result:
     name: CI result

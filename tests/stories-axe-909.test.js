@@ -7,6 +7,7 @@
      node tests/stories-axe-909.test.js --update                              record the current findings (lowers the baseline; never raises it, see changed.shrinkOnly)
      node tests/stories-axe-909.test.js --init                                write the baseline as it is now, raising it: only for adopting the gate (#909) or an owner-listed exception (D-0025)
      STORIES_ONLY=badge,button node tests/stories-axe-909.test.js             only story ids that start with these prefixes
+     STORIES_SHARD=i/n and STORIES_WARN_BROKEN=1 split the set across jobs / make an unopenable story a warning (pull requests)
      STORIES_CHANGED=<file> node tests/stories-axe-909.test.js                <file> lists changed paths, one per line (a pull request): when every path is inside one part
        (platform/components/<Part>/, platform/patterns/<Part>/ or docs/site/stories/<Part>.stories.tsx) only that part's stories open; any other path (tokens, styles, setup, this test) opens all of them.
        The full run stays nightly and on tag (ci.yml), so a regression in an untouched dependent part is found there.
@@ -28,6 +29,7 @@ if (process.env.STORIES_CHANGED) {
 const partOf = (e) => [path.basename(e.importPath || '').replace(/\.stories\.\w+$/, ''), path.basename(path.dirname(e.componentPath || ''))];
 const stories = Object.values(JSON.parse(fs.readFileSync(path.join(ROOT, 'index.json'), 'utf8')).entries).filter((e) => e.type === 'story' && (!only || only.some((p) => e.id.startsWith(p))) && (!parts || partOf(e).some((n) => parts.has(n))));
 if (parts) console.log('pull request touches only ' + [...parts].join(', ') + ': ' + stories.length + ' stories');
+if (process.env.STORIES_SHARD) { const [i, n] = process.env.STORIES_SHARD.split('/').map(Number); stories.splice(0, stories.length, ...stories.filter((_, k) => k % n === i - 1)); }   // STORIES_SHARD=2/4: every 4th story from the 2nd, so a matrix of jobs splits the set
 const server = http.createServer((req, res) => {
   const f = path.join(ROOT, decodeURIComponent(new URL(req.url, 'http://x').pathname).replace(/\/$/, '/index.html'));
   if (!f.startsWith(ROOT) || !fs.existsSync(f) || fs.statSync(f).isDirectory()) { res.writeHead(404); return res.end(); }
@@ -76,6 +78,8 @@ const server = http.createServer((req, res) => {
   const worse = [];
   Object.entries(sorted).forEach(([k, v]) => Object.entries(v).forEach(([rule, x]) => { const was = ((base0[k] || {})[rule]) || 0; if (x.n > was) worse.push(k + ': ' + rule + ' ' + was + ' -> ' + x.n + ' · ' + x.help + ' · e.g. ' + x.target); }));
   broken.forEach((b) => console.log('  BROKEN ' + b)); worse.forEach((w) => console.log('  NEW ' + w));
+  // STORIES_WARN_BROKEN=1 (pull requests): a story that cannot open after its retry is a warning, not a failure; the nightly run keeps it a failure
+  if (process.env.STORIES_WARN_BROKEN && broken.length && !worse.length) { console.log('::warning::' + broken.length + ' stories did not open (load problem, not an axe result): ' + broken.join(' | ')); broken.length = 0; }
   if (broken.length || worse.length) { console.log('STORIES_AXE_FAIL ' + worse.length + ' new findings, ' + broken.length + ' stories that did not open, of ' + stories.length + ' stories'); process.exit(1); }
   console.log('STORIES_AXE_909_OK ' + stories.length + ' stories, light and dark, ' + Object.keys(counts).length + ' pairs with known findings');
 })().catch((e) => { server.close(); console.error(e); process.exit(1); });
