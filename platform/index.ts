@@ -86,7 +86,7 @@ export { SettingsLayout, SettingsSection, SettingsRow } from './patterns/Setting
 export { ToolRail } from './patterns/ToolRail/ToolRail.tsx';
 export { AppShell, PageContent, useAppLayout, SideNavPortal, tokenValue, tokenPx, below } from './patterns/AppShell/AppShell.tsx';
 export { SidePanel } from './patterns/SidePanel/SidePanel.tsx';
-export { SecondaryPane } from './patterns/SecondaryPane/SecondaryPane.tsx';
+export { SecondaryPane, PagePanes } from './patterns/SecondaryPane/SecondaryPane.tsx';
 export { NavPane } from './patterns/NavPane/NavPane.tsx';
 export { StatusBar } from './patterns/StatusBar/StatusBar.tsx';
 export { ThemeProvider, useTheme } from './providers/ThemeProvider.tsx';

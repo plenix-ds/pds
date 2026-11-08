@@ -500,6 +500,31 @@
       "$deprecated": "Not used by any page, application or the design spec (issue 882): it keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
     },
+    "space-stack-3xl": {
+      "$value": "{plx-ref.space-20u}",
+      "$type": "dimension",
+      "$description": "The space between the year groups of a grouped Timeline (80px; ADR 0036)."
+    },
+    "size-calendar-tile": {
+      "$value": "{plx-ref.size-14u}",
+      "$type": "dimension",
+      "$description": "The calendar date tile of a grouped Timeline: its width and height (56px; ADR 0036)."
+    },
+    "size-calendar-band": {
+      "$value": "{plx-ref.size-4u}",
+      "$type": "dimension",
+      "$description": "The calendar date tile: the height of its top band (16px)."
+    },
+    "size-section-rule": {
+      "$value": "{plx-ref.size-18u}",
+      "$type": "dimension",
+      "$description": "The soft line under a year heading: its length (72px)."
+    },
+    "size-watermark": {
+      "$value": "{plx-ref.size-6u}",
+      "$type": "dimension",
+      "$description": "The watermark year of a grouped Timeline: the width of its column (24px)."
+    },
     "space-inset-xs": {
       "$value": "{plx-ref.space-1u}",
       "$type": "dimension"

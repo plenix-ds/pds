@@ -51,8 +51,13 @@
 .plx-panel__toggle{--plx-comp-icon-turn-duration:var(--plx-comp-panel-toggle-icon-duration);--plx-comp-icon-turn-easing:var(--plx-comp-panel-toggle-icon-easing);align-items:center;appearance:none;background-color:transparent;block-size:var(--plx-comp-panel-toggle-height);border-bottom-left-radius:var(--plx-comp-panel-toggle-radius);border-bottom-right-radius:var(--plx-comp-panel-toggle-radius);border-bottom-style:none;border-left-style:none;border-right-style:none;border-top-left-radius:var(--plx-comp-panel-toggle-radius);border-top-right-radius:var(--plx-comp-panel-toggle-radius);border-top-style:none;color:var(--plx-comp-panel-toggle-text);cursor:pointer;display:inline-flex;flex-shrink:0;font-family:inherit;inline-size:var(--plx-comp-panel-toggle-width);justify-content:center;padding-block-end:0;padding-block-start:0;padding-inline-end:0;padding-inline-start:0;transition-duration:var(--plx-sys-motion-duration-instant);transition-property:background-color, border-color, box-shadow, color, transform;transition-timing-function:var(--plx-sys-motion-ease-standard);}
 .plx-panel__toggle:hover,.plx-panel__toggle.is-hover{background-color:var(--plx-comp-panel-toggle-hover-background);color:var(--plx-comp-panel-toggle-hover-text);}
 .plx-panel.is-collapsed>.plx-panel__header{background-size:100% 100%,0 0;}
-.plx-panel.is-collapsed>.plx-panel__header .plx-panel__toggle{--plx-comp-icon-turn:rotate(-90deg);}
+.plx-panel__toggle--closed{--plx-comp-icon-turn:rotate(-90deg);}
+.plx-panel__toggle--closed:dir(rtl){--plx-comp-icon-turn:rotate(90deg);}
 /* the collapse toggle shows the focus ring, as every control (batch 213) */
+/* toggleOn="header" (#999, ADR 0041): the whole header toggles; its hover and press light the toggle button, never a header fill */
+.plx-panel__header--toggle{cursor:pointer;}
+.plx-panel__actions--own-cursor{cursor:default;}
+.plx-panel__toggle.is-pressed{background-color:var(--plx-comp-panel-toggle-pressed-background);}
 .plx-panel__toggle:focus-visible{outline-color:var(--plx-comp-panel-toggle-focus-outline-color);outline-offset:var(--plx-comp-panel-toggle-focus-outline-offset);outline-style:solid;outline-width:var(--plx-comp-panel-toggle-focus-outline-width);}
 /* a card's icon (owner, batch 272): before the heading, at the control icon size, in the heading's color */
 .plx-panel__title--icon{align-items:center;column-gap:var(--plx-comp-panel-title-icon-gap);display:flex;}

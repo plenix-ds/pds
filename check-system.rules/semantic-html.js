@@ -28,6 +28,7 @@ const DELEGATES = {
   'components/Tree/Tree.tsx|plx-tree__row': 'the row is inside its treeitem, which takes focus and the keys (Enter, Space, the arrows)',
   'patterns/NavPane/NavPane.tsx|plx-nav-pane__body': 'closes the overlay pane after a link or button inside it is chosen',
   'patterns/SecondaryPane/SecondaryPane.tsx|plx-secondary-pane__body': 'opens the detail after a row button inside the list is chosen (list-detail)',
+  'components/Card/Card.tsx|plx-panel__header': 'toggleOn="header" (ADR 0041, #999): a click on the header is a pointer shortcut for the Collapse/Expand button inside it, which is the keyboard path (the header has no role or tab stop)',
   'components/Card/Card.tsx|plx-media-card': 'a click on a selectable card toggles its selection checkbox, which is the keyboard path; its title link opens it',
   'design-system/parts/w01B.records.js|ds-float-pointer': 'the context-menu stage: a click closes the menu that Escape also closes; the stage takes focus and opens it with Shift F10'
 };

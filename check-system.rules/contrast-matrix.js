@@ -4,7 +4,7 @@
 // The pairs, built from the roles themselves (no hand-kept list to drift):
 //   neutral   every text role (group "text") on every neutral surface (canvas, default, raised, overlay, sunken) and on a
 //             hovered or selected item (state-hover, state-selected), except
-//             content-disabled (WCAG 1.4.3 exempts disabled text) and the roles that have their own surface (below)
+//             content-disabled (WCAG 1.4.3 exempts disabled text), content-decorative (a mark with no meaning, ADR 0036) and the roles that have their own surface (below)
 //   named     a role and the background its name points to: <x>-on-solid on <x>-solid, <x>-on-soft on <x>-soft, <x>-on on
 //             <x>, <x>-text or <x>-content on <x>-background (or <x>-surface, <x>-soft, or <x>);
 //             <x>-on-solid also on <x>-solid-label (a badge's fill), <x>-on-primary on <x>-primary
@@ -39,7 +39,7 @@ const OWN = {
   'read-only-label': ['read-only-tile', 'surface-default', 'surface-raised'],
   'read-only-group-heading': ['surface-default', 'surface-raised'],
 };
-const NOT_NEUTRAL = new Set(['content-disabled', ...Object.keys(OWN)]);
+const NOT_NEUTRAL = new Set(['content-disabled', 'content-decorative', ...Object.keys(OWN)]);
 // also: backgrounds a role is drawn on besides its named one (it keeps that pair too). A status tile (EntityHeader) draws
 // every tone's text and icon (currentColor) on one fill, status-tile-background (#838)
 const ALSO = Object.fromEntries(['neutral', 'success', 'active', 'waiting', 'action-required', 'negative'].map((t) => ['status-pill-' + t + '-text', ['status-tile-background']]));

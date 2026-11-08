@@ -1,0 +1,18 @@
+AssertionError [ERR_ASSERTION]: consecutive items with the same year form a group, in the order given: []
++ actual - expected
+
++ []
+- [
+-   '2026',
+-   '2025',
+-   '2027'
+- ]
+
+    at /home/cc/pds1/work/component-engineer-1/tests/timeline-grouped-987.test.js:43:12 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [],
+  expected: [Array],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}

@@ -65,6 +65,10 @@ export default {
     "vs": "vs.",
     "versus": "{a} versus {b}"
   },
+  "timeline": {
+    "pending": "Pending",
+    "legend": "Filter by category"
+  },
   "pagination": {
     "label": "Pages",
     "range": "{first}–{last} of {total}",
