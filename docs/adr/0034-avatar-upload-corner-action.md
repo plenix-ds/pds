@@ -37,7 +37,14 @@
   - The target is 24px or more (WCAG 2.5.8).
 - **`size`** becomes `"lg" | "xl" | "2xl"`. `"lg"` (40px) is allowed only with `actions="corner"`. With `"buttons"`, `devWarn` names the allowed sizes, as it does today.
 - **`Avatar`** is unchanged: no action prop. An avatar people can change is an `AvatarUpload`.
-- **Comp tokens** (comp -> sys only; G2 sets the values from existing sys roles): `avatar-upload-corner-size`, `-icon-size`, `-background`, `-text`, `-ring-color`, `-ring-width`, `-rest-opacity`, plus the per-size inset if G2 needs one. No new sys token or ref.
+- **Comp tokens** (comp -> sys only; values from G2's design, `docs/pds1/slices/977/design.md` §1, PR #979). No new sys token or ref.
+  - `avatar-upload-corner-size-lg` -> `plx-sys.icon-size-md` (20px); `-size-xl` and `-size-2xl` -> `plx-sys.icon-size-lg` (24px).
+  - `avatar-upload-corner-icon-size-lg` -> `plx-sys.icon-size-xs` (12px); `-icon-size-xl` and `-icon-size-2xl` -> `plx-sys.icon-size-sm` (16px).
+  - `avatar-upload-corner-target-size` -> `plx-sys.control-target-min`. That is 24px with a pointer, and larger in touch mode, as a touch target should be.
+  - `avatar-upload-corner-radius` -> `plx-sys.shape-mark`.
+  - `avatar-upload-corner-background`, `-background-hover` and `-background-pressed` -> `surface-raised`, `state-hover` and `state-pressed`.
+  - `avatar-upload-corner-text` and `-text-hover` -> `content-muted` and `content-default`.
+  - The ring, the offset and the duration read the presence dot's comp tokens (`avatar-presence-ring-*`, `avatar-presence-offset`) and `plx-sys.motion-duration-quick`. There are no copies.
 - **Strings:** none new. The existing keys `change`, `add` and `remove` are reused, so no Arabic is needed (D-0012).
 
 ## Consequences
