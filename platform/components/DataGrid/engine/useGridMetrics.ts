@@ -80,7 +80,8 @@ export function useGridMetrics({
       free: any[] = [],
       floor: Record<string, any> = {},
       bodyFloor: Record<string, any> = {},
-      longCols = new Set<string>();
+      longCols = new Set<string>(),
+      tight = new Set<string>();   // the narrow columns (#966): as wide as their content
     // the probe pills are the only writes: measured first, so the reads below find the styles already computed
     const scales: any = cells === 'pill' ? { data: pillFont(at, ctx, true), text: pillFont(at, ctx, false) } : null,
       cs = getComputedStyle(at),
@@ -127,11 +128,8 @@ export function useGridMetrics({
       // hovered, a header shows its type icon, its title and the options button at the edge: the floor holds them (owner, 2026-10-23: no sort arrow; a click on the title sorts, aria-sort tells assistive technology)
       const gap = tokenPx('--plx-comp-data-grid-header-type-icon-gap'),
         arrow = 0;
-      const head =
-        text +
-        (showTypes ? tokenPx('--plx-comp-data-grid-header-type-icon-size') + gap : 0) +
-        arrow +
-        (!isStatic && headerMenu ? tokenPx('--plx-comp-data-grid-title-reserve') : 0);
+      const bare = text + (showTypes ? tokenPx('--plx-comp-data-grid-header-type-icon-size') + gap : 0) + arrow;   // the title and its marks, without the options button's reserve
+      const head = bare + (!isStatic && headerMenu ? tokenPx('--plx-comp-data-grid-title-reserve') : 0);
       floor[c.field] = snapUp(Math.max(metrics.min, head + metrics.space * 2));
       // (issue 929) a column with a set width is measured too: its natural width is its content, capped at the set width
       const explicit = tokenPx(c.width);
@@ -146,6 +144,7 @@ export function useGridMetrics({
       ctx.wordSpacing = dataFont(c)
         ? cs.getPropertyValue('--plx-sys-font-data-word-spacing').trim() || '0px'
         : '0px';
+      const explicit0 = tokenPx(c.width);
       let width = head;
       const k = kinds(c),
         pill =
@@ -182,7 +181,16 @@ export function useGridMetrics({
         width = Math.max(width, here);
       });
       bodyFloor[c.field] = snapUp(Math.max(metrics.min, body + metrics.space * 2));
-      const content = width + metrics.space * 2;
+      // (#966, D-0108) a narrow column ("#", short ids, 1-digit numbers, single pills) is as wide as its content: its title and marks or its widest value, plus the cell padding, at least
+      // size-8u (32px). No 80px floor, no room for the options button (it overlays on hover and focus), and no share of the spare room. A column the app or the person sized keeps its width
+      // with no hover to reveal the button (touch) a narrow column keeps its reserve, as before
+      const touchReserve = !isStatic && headerMenu && ['touch', 'mobile'].includes(at.ownerDocument.documentElement.getAttribute('data-plx-interaction') || '') ? tokenPx('--plx-comp-data-grid-title-reserve') : 0;
+      const hereNatural = snapUp(Math.max(bare + touchReserve, body) + metrics.space * 2);
+      if (!explicit0 && !c.minWidth && !kinds(c).includes('icon') && hereNatural < metrics.min) {
+        tight.add(c.field);
+        floor[c.field] = bodyFloor[c.field] = Math.max(tokenPx('--plx-ref-size-8u') || 32, hereNatural);
+      }
+      const content = tight.has(c.field) ? hereNatural : width + metrics.space * 2;
       // (#800, D-0087) a column is long text, the only kind that may be cut, when it says so (kind "wrap", type "long-text") or is plain text whose widest value is over
       // LONG_TEXT_CHARS characters; every other column is compact: names, numbers, dates, ids, people, status and pills always fit their widest value
       const plain = !k.some((x: string) => ['data', 'badge', 'tags', 'avatar-name', 'icon', 'deleted', 'id', 'email', 'phone', 'code'].includes(x)) && !['number', 'currency', 'date', 'bytes', 'person', 'select', 'checkbox', 'file', 'image', 'link', 'multi'].includes(c.type);
@@ -195,7 +203,7 @@ export function useGridMetrics({
       }
       widths[c.field] = snapUp(
         Math.max(
-          metrics.min,
+          tight.has(c.field) ? floor[c.field] : metrics.min,
           longCols.has(c.field) || !fitting ? Math.min(content, tokenPx('--plx-comp-data-grid-auto-max-width') || Infinity) : content
         )
       );
@@ -231,7 +239,7 @@ export function useGridMetrics({
       const floors = shownColumns.reduce((sum: any, c: any) => sum + (kinds(c).includes('icon') ? 0 : floor[c.field] || 0), 0)
         + shownColumns.reduce((sum: any, c: any) => sum + (kinds(c).includes('icon') ? metrics.lead : 0), 0);
       if (floors > available)
-        shownColumns.forEach((c: any) => { if (!kinds(c).includes('icon')) floor[c.field] = snapUp(Math.max(metrics.min, tokenPx(c.minWidth) || 0, Math.min(bodyFloor[c.field] || 0, tokenPx('--plx-comp-data-grid-auto-max-width') || Infinity))); });
+        shownColumns.forEach((c: any) => { if (!kinds(c).includes('icon') && !tight.has(c.field)) floor[c.field] = snapUp(Math.max(metrics.min, tokenPx(c.minWidth) || 0, Math.min(bodyFloor[c.field] || 0, tokenPx('--plx-comp-data-grid-auto-max-width') || Infinity))); });
     }
     // the table fits its room (owner, issue 929: "autosize and autofit"): each shown column starts at its natural width (its
     // header and its widest value, capped at its set width; measured above). Over the room, the columns with the most room
@@ -239,7 +247,7 @@ export function useGridMetrics({
     // levelled down together, and the title (the first key column) last; a column the person sized keeps its width. The grid
     // draws cards only when every column is at its minimum and it still does not fit (the narrow switch below). Room to spare
     // goes to the title, else the widest text column, else the last column that sizes itself
-    const least = (c: any) => Math.max(floor[c.field] || 0, tokenPx(c.minWidth) || metrics.min);
+    const least = (c: any) => Math.max(floor[c.field] || 0, tokenPx(c.minWidth) || (tight.has(c.field) ? 0 : metrics.min));
     const sized = (c: any) => !!(sizing && sizing[c.field]);
     const widthOf = (c: any) => (sized(c) ? sizing[c.field] : widths[c.field] || 0);
     const shrinkable = shownColumns.filter((c: any) => !kinds(c).includes('icon') && !sized(c));
@@ -276,7 +284,9 @@ export function useGridMetrics({
     // room to spare (#800, D-0087): shared evenly, in whole steps, across every column that sizes itself (an app's set width is a minimum, so those grow too), in a table
     // that fits its room and in a fixed one alike (CTM's static tables gave it all to the last column: "Years married" took 940px); the checkbox and row menu columns are fixed and the cells stay at the start edge
     // an actions column keeps its natural width and sits at the inline end, its content end-aligned: the room goes to the columns before it, never to a gap after it (owner, #844)
-    const growers = shrinkable.filter((c: any) => !kinds(c).includes('actions'));
+    // a narrow column takes no spare room (#966, D-0108); when every column is narrow they share it, so the grid still ends at its edge (#844)
+    const roomy = shrinkable.filter((c: any) => !kinds(c).includes('actions') && !tight.has(c.field));
+    const growers = roomy.length ? roomy : shrinkable.filter((c: any) => !kinds(c).includes('actions'));
     growers.forEach((c: any, i: any) => { widths[c.field] += (Math.floor(units / growers.length) + (i < units % growers.length ? 1 : 0)) * step; });
     setAutoSizing((old: any) => (JSON.stringify(old) === JSON.stringify(widths) ? old : widths));
     setFloors((old: any) => (JSON.stringify(old) === JSON.stringify(floor) ? old : floor));
@@ -342,7 +352,8 @@ export function useGridMetrics({
       // table that fits by shrinking its columns stays a table; cards only below that
       const visible = live.current.table?.getVisibleLeafColumns() || [];
       const required =
-        visible.reduce((sum: any, column: any) => sum + (column.columnDef.minSize || next.min), 0) +
+        // the card switch weighs a narrow column (#966) at the grid's minimum as before: a table that fits only by narrow columns is not a new table at phone widths
+        visible.reduce((sum: any, column: any) => sum + Math.max(column.columnDef.minSize || next.min, column.columnDef.meta && (column.columnDef.meta.minWidth || column.columnDef.meta.width) ? 0 : next.min), 0) +
         (selectable ? next.lead : 0) +
         (rowMenu && rowMenuButton ? next.menu : 0) +
         (props.viewMenu ? next.lead : 0);

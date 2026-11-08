@@ -64,6 +64,8 @@ let gridCount = 0;
 const gridNumber = (key: object): number => { let n = gridNumbers.get(key); if (!n) { n = ++gridCount; gridNumbers.set(key, n); } return n; };
 
 export function headerRows({
+  floors,
+  metrics,
   groupBy,
   columnMenu,
   S,
@@ -155,7 +157,10 @@ export function headerRows({
       pinned = column.getIsPinned() === 'left',
       filtered = column.getIsFiltered(),
       icon = kinds(c).includes('icon'),
-      titleFixed = icon ? 'flush' : null,
+      // a narrow column (#966, D-0108): as wide as its content, so the options button reserves no room and overlays on hover and focus
+      tight = !icon && !isStatic && !c.width && !c.minWidth && floors[c.field] > 0 && floors[c.field] < metrics.min,
+      touch = ['touch', 'mobile'].includes(document.documentElement.getAttribute('data-plx-interaction') || ''),
+      titleFixed = icon || tight ? 'flush' : null,
       offset = pinned ? pinStart(column) : 0,
       describedBy = c.description ? 'plx-colhelp-' + gridNumber(headerElements) + '-' + String(c.field).replace(/[^a-zA-Z0-9_-]/g, '_') : undefined;
     const node = (
@@ -185,6 +190,7 @@ export function headerRows({
           column.getCanSort() && B + '__grid-col-sorter-element',
           kinds(c).includes('icon') && B + '__cell--icon',
           kinds(c).includes('icon') && B + '__w-lead',
+          tight && B + '__grid-col--tight',
           column.getIsFiltered() && B + '__filtered',
           pinned && '' + B + '__grid-frozen',
           ([] as any[]).concat(groupBy || []).some((level) => (typeof level === 'object' ? level.field : level) === c.field) &&
@@ -204,7 +210,7 @@ export function headerRows({
             effectiveWrap && B + '__grid-col-content--wrap'
           )}
         >
-          <div className={cx(B + '__grid-col-title-holder', icon && B + '__grid-col-title-holder--flush')}>
+          <div className={cx(B + '__grid-col-title-holder', (icon || tight) && B + '__grid-col-title-holder--flush', tight && touch && B + '__grid-col-title-holder--reserve')}>
             <HeaderTitle
               text={String(c.title || c.field || '')}
               description={c.description}

@@ -35,6 +35,8 @@
 .plx-data-grid__grid-header-contents{overflow:visible;position:relative;}
 .plx-data-grid__grid-headers{display:flex;inline-size:var(--plx-state-data-grid-headers-inline-size,max-content);min-inline-size:var(--plx-state-data-grid-headers-min-inline-size,100%);position:relative;}
 .plx-data-grid__grid-col{background-color:var(--plx-state-data-grid-col-hover-bg,var(--plx-state-data-grid-col-grouped-bg,transparent));background-image:var(--plx-state-data-grid-col-hover-image,var(--plx-state-data-grid-col-frozen-image,none));border-inline-end-style:none;display:inline-flex;flex-direction:column;flex-grow:0;flex-shrink:var(--plx-state-data-grid-col-shrink,0);overflow:visible;position:var(--plx-state-data-grid-position,relative);vertical-align:bottom;}
+/* a narrow column (#966): its options button overlays on the keyboard focus of the header too */
+.plx-data-grid__grid-col--tight:focus-within{--plx-comp-data-grid-context-hover-on:1;}
 .plx-data-grid__grid-col:hover{--plx-comp-data-grid-context-col-edge:var(--plx-comp-data-grid-header-hover-edge);--plx-comp-data-grid-context-hover-on:1;--plx-comp-data-grid-context-hover-reserve:var(--plx-comp-data-grid-title-reserve);--plx-comp-data-grid-context-hover-type-icon:none;}
 .plx-data-grid__grid-col.plx-data-grid__grid-sortable:hover{--plx-state-data-grid-col-hover-image:var(--plx-comp-data-grid-header-hover-background-image);}
 /* the header's lines (H3): while the pointer is over the header every column line shows in gray 350; the column under it
@@ -58,6 +60,8 @@
 /* title, sort arrow and filter mark in one row; the row keeps the hover room for the options button at the edge */
 .plx-data-grid__grid-col-title-holder{align-items:center;column-gap:var(--plx-comp-data-grid-header-type-icon-gap);display:flex;flex:1;min-inline-size:0;padding-inline-end:var(--plx-state-data-grid-holder-reserve,var(--plx-comp-data-grid-context-hover-reserve,0));position:relative;}
 .plx-data-grid__grid-col-title-holder--flush{--plx-state-data-grid-holder-reserve:0;}
+/* no hover to reveal the options button (touch): a narrow column keeps its reserve (#966) */
+.plx-data-grid__grid-col-title-holder--reserve{--plx-state-data-grid-holder-reserve:var(--plx-comp-data-grid-title-reserve);}
 /* the active filter: a funnel after the title (opens the filter); the filter form stacks its field and its Clear button */
 .plx-data-grid__title-filter{--plx-comp-icon-size:var(--plx-comp-data-grid-header-icon-size);align-items:center;color:var(--plx-comp-data-grid-header-popup-button-text);display:inline-flex;flex-shrink:0;}
 .plx-data-grid__title-filter--on{color:var(--plx-comp-data-grid-filtered-text);}
