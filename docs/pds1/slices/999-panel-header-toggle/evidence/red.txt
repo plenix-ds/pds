@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+'true' !== 'false'
+
+    at /home/cc/pds1/work/component-engineer-2/tests/panel-header-toggle-999.test.js:27:61 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'true',
+  expected: 'false',
+  operator: 'strictEqual',
+  diff: 'simple'
+}

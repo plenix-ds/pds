@@ -79,6 +79,14 @@
       "$type": "dimension",
       "$description": "Compact: no padding, so a single-line Checkbox is the 24px compact control role (owner, batch 224).",
       "$extensions": { "com.plenix": { "webOnly": true } }
+    },
+    "timeline-grouped-event-padding-block": {
+      "$value": "{plx-sys.space-inset-sm}",
+      "$type": "dimension"
+    },
+    "timeline-grouped-event-padding-inline": {
+      "$value": "{plx-sys.space-inset-md}",
+      "$type": "dimension"
     }
   }
 }

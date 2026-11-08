@@ -294,6 +294,16 @@
       "$type": "fontFamily",
       "$description": "A page's title. The text-title role's font family."
     },
+    "text-calendar-day-font-size": {
+      "$value": "{plx-ref.font-size-500}",
+      "$type": "dimension",
+      "$description": "The day number in a calendar date tile (18px)."
+    },
+    "text-watermark-font-size": {
+      "$value": "{plx-ref.font-size-700}",
+      "$type": "dimension",
+      "$description": "The watermark year of a grouped Timeline (24px)."
+    },
     "text-title-font-size": {
       "$value": "{plx-ref.font-size-600}",
       "$type": "dimension",

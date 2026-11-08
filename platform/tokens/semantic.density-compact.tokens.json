@@ -155,6 +155,10 @@
       "$value": "{plx-ref.font-size-100}",
       "$deprecated": "Not used by any page, application or the design spec (issue 882): use --plx-sys-data-grid-font-size instead (the same value in every theme and density). It keeps working, and is removed no earlier than the next minor release.",
       "$type": "dimension"
+    },
+    "space-stack-3xl": {
+      "$value": "{plx-ref.space-16u}",
+      "$type": "dimension"
     }
   }
 }

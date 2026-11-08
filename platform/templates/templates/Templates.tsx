@@ -34,6 +34,7 @@ import { RecordPage as RecordPageJs } from '../../patterns/RecordPage/RecordPage
 const RecordPage: any = RecordPageJs;
 import { SecondaryPane as SecondaryPaneJs } from '../../patterns/SecondaryPane/SecondaryPane.tsx';
 const SecondaryPane: any = SecondaryPaneJs;
+import { PagePanes } from '../../patterns/SecondaryPane/SecondaryPane.tsx';
 import { FeatureCard } from '../../patterns/FeatureCard/FeatureCard.tsx';
 import { FormFlow } from '../../patterns/FormFlow/FormFlow.tsx';
 import { Auth as AuthJs } from '../../patterns/Auth/Auth.tsx';
@@ -97,10 +98,10 @@ export function ListingPage<R = Record<string, unknown>>({ rows = [], columns = 
   const list = rows.length ? <DataGrid<R> label={label || rest.title || t.pane} data={rows} columns={columns} {...grid} /> : <NoRecords empty={empty} strings={strings} />;
   if (!detail) return <Frame {...rest}>{children}{toolbar}{list}</Frame>;
   return <AppShell page={rest.page || 'workspace'} header={rest.header} sideNav={rest.sideNav} footer={rest.footer} mainId={rest.mainId || 'plx-template-' + id}>
-    <div className="plx-page-panes">
+    <PagePanes>
       <PageContent><RecordPage header={rest.title ? <RecordPage.Header title={rest.title} description={rest.description} actions={rest.actions} /> : null}>{children}{toolbar}{list}</RecordPage></PageContent>
       <SidePanel title={detailTitle || t.detail} onOpenChange={(open: any) => { if (!open && onDetailClose) onDetailClose(); }}>{detail}</SidePanel>
-    </div>
+    </PagePanes>
   </AppShell>;
 }
 /** @public the prop type of ContentManagementPage (ADR 0011) */
@@ -159,7 +160,7 @@ export type MasterDetailPageProps = {
 };
 export function MasterDetailPage({ pane, paneTitle, detailOpen = false, onBack, strings, children, header, sideNav, footer, mainId }: MasterDetailPageProps) {
   const t = useWords(strings), id = React.useId();
-  return <AppShell page="master-detail" header={header} sideNav={sideNav} footer={footer} mainId={mainId || 'plx-template-' + id}><div className="plx-page-panes"><SecondaryPane title={paneTitle || t.pane} detailOpen={detailOpen} onBack={onBack}>{pane}</SecondaryPane><PageContent>{children}</PageContent></div></AppShell>;
+  return <AppShell page="master-detail" header={header} sideNav={sideNav} footer={footer} mainId={mainId || 'plx-template-' + id}><PagePanes><SecondaryPane title={paneTitle || t.pane} detailOpen={detailOpen} onBack={onBack}>{pane}</SecondaryPane><PageContent>{children}</PageContent></PagePanes></AppShell>;
 }
 /** @public the prop type of SplitWorkspace (ADR 0011); R is the list's row type, passed to its DataGrid (#923) */
 export type SplitWorkspaceProps<R = Record<string, unknown>> = {
@@ -208,11 +209,11 @@ export type FullScreenWorkspaceProps = {
 };
 export function FullScreenWorkspace({ tools, inspector, toolbar, children, strings, mainId }: FullScreenWorkspaceProps) {
   const t = useWords(strings), id = React.useId();
-  return <AppShell page="editor" mainId={mainId || 'plx-template-' + id}><div className="plx-page-panes">
+  return <AppShell page="editor" mainId={mainId || 'plx-template-' + id}><PagePanes>
     {tools ? <SecondaryPane title={t.tools} width="sm">{tools}</SecondaryPane> : null}
     <PageContent><Stack gap="md">{toolbar}{children}</Stack></PageContent>
     {inspector ? <SecondaryPane title={t.inspector} side="end">{inspector}</SecondaryPane> : null}
-  </div></AppShell>;
+  </PagePanes></AppShell>;
 }
 /** @public the prop type of FullScreenExperience (ADR 0011) */
 export type FullScreenExperienceProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & FrameProps & {

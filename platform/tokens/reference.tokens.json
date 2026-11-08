@@ -367,6 +367,10 @@
       "$type": "dimension",
       "$deprecated": "Renamed: use --plx-ref-space-8u (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
     },
+    "space-20u": {
+      "$value": { "value": 5, "unit": "rem" },
+      "$type": "dimension"
+    },
     "space-10u": {
       "$value": { "value": 2.5, "unit": "rem" },
       "$type": "dimension"
@@ -1113,6 +1117,16 @@
       "$type": "number",
       "$deprecated": "Renamed: use --plx-ref-opacity-700 (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
     },
+    "mix-amount-none": {
+      "$value": "0%",
+      "$extensions": { "com.plenix": { "webOnly": true } },
+      "$description": "A color-mix amount step: none of the mixed color (a tinted container in light mode, ADR 0036)."
+    },
+    "mix-amount-2xs": {
+      "$value": "5%",
+      "$extensions": { "com.plenix": { "webOnly": true } },
+      "$description": "A color-mix amount step: the fill of a tinted container in dark mode (ADR 0036)."
+    },
     "mix-amount-xs": {
       "$value": "8%",
       "$extensions": { "com.plenix": { "webOnly": true } },
@@ -1122,6 +1136,11 @@
       "$value": "10%",
       "$extensions": { "com.plenix": { "webOnly": true } },
       "$description": "A color-mix amount step: the state layer while pressed or focused (docs/adr/0004)."
+    },
+    "mix-amount-lg": {
+      "$value": "35%",
+      "$extensions": { "com.plenix": { "webOnly": true } },
+      "$description": "A color-mix amount step: the border of a tinted container in dark mode (ADR 0036)."
     },
     "icon-optical-scale": {
       "$value": 1.2,

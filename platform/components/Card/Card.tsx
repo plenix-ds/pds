@@ -21,6 +21,8 @@
      Panel.defaultExpanded: whether a collapsible panel starts open (default true)
      Panel.expanded: the open state when the parent controls it; onToggle(next) then runs on each press
      Panel.onToggle(next): runs when a collapsible panel opens or closes
+     Panel.toggleOn: "button" (default) | "header": with "header" a click anywhere on the header toggles, as the button does; actions, interactive
+       children and a click that ends a text selection do not; the button stays the only focusable control (ADR 0041)
      Panel.children: the body
      Panel.className: more classes on the <section>
      Panel.surface, Panel.elevation: as Card's
@@ -134,28 +136,44 @@ export type PanelProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & {
   /** the title's heading level (default 2); 0 or null: a div */
   headingLevel?: number | null;
   collapsible?: boolean;
+  /** what toggles a collapsible panel: its button (default) or the whole header */
+  toggleOn?: 'button' | 'header';
   defaultExpanded?: boolean;
   expanded?: boolean;
   onToggle?: (expanded: boolean) => void;
   strings?: Catalog | null;
 };
-export function Panel({ icon, title, description, actions, footer, surface = 'flat', elevation = 'outline', flush = false, headingLevel = 2, collapsible = false, defaultExpanded = true, expanded, onToggle, strings, className, children, ...rest }: PanelProps) {
+export function Panel({ icon, title, description, actions, footer, surface = 'flat', elevation = 'outline', flush = false, headingLevel = 2, collapsible = false, toggleOn = 'button', defaultExpanded = true, expanded, onToggle, strings, className, children, ...rest }: PanelProps) {
   const t = useStrings('card.panel', strings) as { collapse: string; expand: string; section: string };
   const id = useUid('plx-panel');
   const [own, setOwn] = React.useState(defaultExpanded);
   const open = !collapsible || (expanded === undefined ? own : expanded);
   const toggle = () => { if (expanded === undefined) setOwn(!open); if (onToggle) onToggle(!open); };
+  const byHeader = collapsible && toggleOn === 'header';
+  // toggleOn="header": a click on the header toggles unless it is on a control (the button toggles itself) or ends a text selection
+  const CONTROL = 'a, button, input, select, textarea, label, summary, [role=button], [role=menu], [tabindex], .plx-panel__actions';
+  const onControl = (e: React.SyntheticEvent<HTMLElement>) => { const el = e.target as Element; return !!(el.closest && el.closest(CONTROL)); };
+  // the header drives the toggle button's own hover and pressed look (never a header fill); a control inside keeps its own
+  const [hot, setHot] = React.useState<'' | 'hover' | 'press'>('');
+  const headerClick = (e: React.MouseEvent<HTMLElement>) => {
+    if (onControl(e)) return;
+    const sel = typeof getSelection === 'function' ? getSelection() : null;
+    if (sel && !sel.isCollapsed && String(sel).length) return;
+    toggle();
+  };
   return (
-    <section aria-labelledby={title ? id : undefined} className={cx('plx-panel', surface !== 'flat' && 'plx-panel--' + surface, elevation !== 'outline' && 'plx-panel--' + elevation, collapsible && !open && 'is-collapsed', className)} {...rest}>
+    <section aria-labelledby={title ? id : undefined} className={cx('plx-panel', byHeader && 'plx-panel--toggle-header', surface !== 'flat' && 'plx-panel--' + surface, elevation !== 'outline' && 'plx-panel--' + elevation, collapsible && !open && 'is-collapsed', className)} {...rest}>
       {title || actions || collapsible ? (
-        <div className="plx-panel__header">
+        <div className={cx('plx-panel__header', byHeader && 'plx-panel__header--toggle')} onClick={byHeader ? headerClick : undefined}
+          onPointerOver={byHeader ? (e) => setHot(onControl(e) ? '' : 'hover') : undefined} onPointerLeave={byHeader ? () => setHot('') : undefined}
+          onPointerDown={byHeader ? (e) => { if (!onControl(e)) setHot('press'); } : undefined} onPointerUp={byHeader ? (e) => setHot(onControl(e) ? '' : 'hover') : undefined}>
           <div className="plx-panel__heading">
             {title ? <H level={headingLevel} id={id} className={cx('plx-panel__title', icon && 'plx-panel__title--icon')}>{icon ? <span className="plx-panel__icon" aria-hidden="true">{iconElement(icon)}</span> : null}{title}</H> : null}
             {description ? <p className="plx-panel__description">{description}</p> : null}
           </div>
-          {actions ? <div className="plx-panel__actions">{actions}</div> : null}
+          {actions ? <div className={cx('plx-panel__actions', byHeader && 'plx-panel__actions--own-cursor')}>{actions}</div> : null}
           {collapsible ? (
-            <button type="button" className="plx-panel__toggle" aria-expanded={open} aria-controls={id + '-body'} aria-label={(open ? t.collapse : t.expand).split('{title}').join(typeof title === 'string' ? title : t.section)} onClick={toggle}>
+            <button type="button" className={cx('plx-panel__toggle', !open && 'plx-panel__toggle--closed', hot === 'hover' && 'is-hover', hot === 'press' && 'is-pressed')} aria-expanded={open} aria-controls={id + '-body'} aria-label={(open ? t.collapse : t.expand).split('{title}').join(typeof title === 'string' ? title : t.section)} onClick={toggle}>
               <Icon name={ChevronDownIcon} />
             </button>
           ) : null}

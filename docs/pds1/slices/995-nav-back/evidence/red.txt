@@ -1,0 +1,13 @@
+{"link":{"rows":0},"button":{"rows":0},"none":{"rows":0},"rtl":{"rows":0},"folded":{"rows":0,"railFirst":"Expand Case Overview"},"clicked":false}
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+0 !== 1
+
+    at /home/cc/pds1/work/component-engineer-2/tests/secondary-pane-back-995.test.js:53:12 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 0,
+  expected: 1,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
