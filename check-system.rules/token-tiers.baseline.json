@@ -916,7 +916,6 @@
   "plx-comp.search-ws-count-font-size -> plx-ref.font-size-200",
   "plx-comp.search-ws-query-max-width -> plx-ref.size-180u",
   "plx-comp.search-ws-title-font-size -> plx-ref.font-size-600",
-  "plx-comp.secondary-pane-header-font-size -> plx-ref.font-size-100",
   "plx-comp.secondary-pane-width-lg -> plx-ref.size-70u",
   "plx-comp.secondary-pane-width-lg-from-wide -> plx-ref.size-80u",
   "plx-comp.secondary-pane-width-lg-from-ultrawide -> plx-ref.size-100u",

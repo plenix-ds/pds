@@ -2774,6 +2774,14 @@
     "font-weight"
    ]
   },
+  "plx-secondary-pane__back": {
+   "contract": "adjusts",
+   "props": [
+    "font-size",
+    "font-weight",
+    "line-height"
+   ]
+  },
   "plx-secondary-pane__header": {
    "contract": "adjusts",
    "props": [

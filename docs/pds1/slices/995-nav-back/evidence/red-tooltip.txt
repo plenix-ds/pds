@@ -1,0 +1,13 @@
+{"link":{"rows":1,"tag":"A","href":"/cases","text":"Back to cases","before":true,"above":true,"fsBack":12,"fsTitle":15,"fsItem":13,"mirrored":1,"iconStart":12,"titleStart":12},"button":{"rows":1,"tag":"BUTTON","href":null,"text":"Back to cases","before":true,"above":true,"fsBack":12,"fsTitle":15,"fsItem":13,"mirrored":1,"iconStart":12,"titleStart":12},"none":{"rows":0},"rtl":{"rows":1,"tag":"A","href":"/cases","text":"Back to cases","before":true,"above":true,"fsBack":12,"fsTitle":15,"fsItem":13,"mirrored":-1,"iconStart":12,"titleStart":12},"long":{"rows":1,"tag":"A","href":"/cases","text":"Back to a very long list of the parish council cases of the year","before":true,"above":true,"fsBack":12,"fsTitle":15,"fsItem":13,"mirrored":1,"iconStart":12,"titleStart":12},"folded":{"rows":0,"railFirst":"Back to cases"},"clicked":true}
+AssertionError [ERR_ASSERTION]: no native title
+
+true !== false
+
+    at /home/cc/pds1/work/component-engineer-2/tests/secondary-pane-back-995.test.js:55:12 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: true,
+  expected: false,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
