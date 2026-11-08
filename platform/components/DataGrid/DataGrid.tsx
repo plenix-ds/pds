@@ -133,6 +133,10 @@
        useCollectionView supplies this callback and columnWidths, so its collection state owns the view.
      onFilterField(field): the header menu's "Filter by this field" calls it instead of opening the header filter box; useCollectionView
        sets it so the command bar's Filter panel opens on that field (one filter state, shown in one place)
+     columns[].lines: 1 to 4: the most lines the cell shows, then an ellipsis; it implies wrap. The grid uses the smallest row-height step whose rows
+       hold the most lines asked for, at the density's line height (the app's rowHeight or the person's choice wins when taller).
+     columns[].overflow: "tooltip" | "none": the full text in a Tooltip on pointer hover and keyboard focus of the cell, only when the text is cut; the default is
+       "tooltip" for a wrapping column and "none" for the rest. The clamp is visual only, so the full text stays in the accessibility tree.
      columns[].wrap: true starts the column wrapped (as kind "wrap"); people turn Wrap text on or off in the column menu, and
        Wrap all columns in the header's right-click menu. A row with a wrapping column starts every cell at the top, at the
        reading line height; rows without one stay centered. wrapColumns ({ field: true|false }) and onWrapColumnsChange(next)
@@ -313,6 +317,10 @@ export type DataGridColumn<R = Record<string, unknown>> = {
   align?: 'left' | 'center' | 'right';
   resizable?: boolean;
   wrap?: boolean;
+  /** the most lines the cell shows, 1 to 4, then an ellipsis (it implies wrap); the grid picks the smallest row step that fits */
+  lines?: number;
+  /** "tooltip": the full text in a tooltip on hover and keyboard focus when the cell cuts it (the default for a wrapping column); "none": never */
+  overflow?: 'tooltip' | 'none';
   rowHandle?: boolean;
   /** a technical or custom pill for the pill view; false keeps the plain value */
   pill?: false | ((value: unknown, record: R) => { tone?: string; icon?: IconValue | React.ReactNode; variant?: string; data?: boolean; gender?: string; fill?: boolean } | void);
