@@ -1,0 +1,9 @@
+id: D-0128
+date: 2026-11-08
+area: components
+decided_by: agent (pds1-design-director) at G2, owner may switch
+decision: 'Panel header toggle (#999): with the opt-in, hovering or pressing anywhere on the header (not on an action or interactive child) shows the Collapse/Expand button''s own hover (state-hover) or pressed (state-pressed) state and a pointer cursor; the header keeps its glow and divider with no fill; only the button is focusable; a text selection does not toggle. Defect fixed with it: a closed Panel''s chevron turns +90deg in RTL, as Card''s does.'
+why: 'The header carries the D-0106 glow and divider; a hover wash would hide it. Tying the hover to the one chevron keeps a single, consistent affordance (CTM#240). Direction icons flip in RTL (D-0011); Card already does it.'
+options: ['hover and press on the toggle, no header fill (chosen)', 'state-hover wash over the whole header (Fluent Accordion)']
+status: active
+check: 'planned:panel-header-toggle-999 (#999: AC-1..4, header hover gives the toggle its hover background, an action hover does not, RTL closed chevron +90deg, selection does not toggle)'
