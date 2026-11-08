@@ -288,7 +288,7 @@ const ComboboxRender = React.forwardRef(function Combobox({ options = [], value,
                 {it.o.icon ? <span className="plx-combobox__option-icon" aria-hidden="true"><Icon name={it.o.icon} /></span> : null}
                 {it.o.description ? <span className="plx-combobox__option-text"><span className="plx-combobox__option-label">{highlightMatch(it.o.label, text)}</span><span className="plx-combobox__option-description">{highlightMatch(it.o.description, text)}</span></span>
                   : <span className="plx-combobox__option-label">{highlightMatch(it.o.label, text)}</span>}</li>]))
-            : isLoading ? <li className="plx-combobox__loading" role="presentation"><Spinner size="sm" label={t.loading} /><span aria-hidden="true">{t.loading}</span></li>
+            : isLoading ? <li className="plx-combobox__loading" role="option" aria-disabled="true" aria-selected={false}><Spinner size="sm" label={t.loading} /><span aria-hidden="true">{t.loading}</span></li>
             : failed ? <li className="plx-combobox__empty plx-combobox__error" role="option" aria-disabled="true" aria-selected={false}>{t.error}</li>
             : <li className="plx-combobox__empty" role="option" aria-disabled="true" aria-selected={false}>{emptyText}</li>}
         </ul>

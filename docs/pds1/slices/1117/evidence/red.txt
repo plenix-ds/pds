@@ -1,0 +1,9 @@
+AssertionError [ERR_ASSERTION]: loading: the listbox holds an option (["presentation"])
+    at /home/cc/pds1/work/component-engineer-1/tests/combobox-list-roles-1117.test.js:31:14 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
