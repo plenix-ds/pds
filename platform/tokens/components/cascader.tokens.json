@@ -52,9 +52,9 @@
       "$description": "Cascader trigger padding inline end: trigger padding inline end (space-inset-xs)."
     },
     "cascader-placeholder-text": {
-      "$value": "{plx-sys.content-subtle}",
+      "$value": "{plx-sys.content-muted}",
       "$type": "color",
-      "$description": "Cascader placeholder: text color (content-subtle)."
+      "$description": "Cascader placeholder: text color (content-muted: content-subtle reads 3.04:1 on the dark surface, axe #1074)."
     },
     "cascader-chevron-background": {
       "$value": "{plx-sys.content-muted}",

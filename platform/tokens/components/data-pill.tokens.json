@@ -1,6 +1,7 @@
 {
   "$description": "DataPill (platform/components/DataPill): a value shown as a pill (owner, 2026-10-19). Colors come from the category palette ([data-plx-category]).",
   "plx-comp": {
+    "data-pill-plain-hue-amount": { "$value": "{plx-sys.category-plain-amount}", "$type": "number", "$description": "DataPill plain: how much of the category text color the name keeps against the content color (all in light, none in dark)." },
     "data-pill-min-height": { "$value": "{plx-sys.control-height-inline}", "$type": "dimension", "$description": "DataPill: its height, the density's inline control height (it never makes a row taller)." },
     "data-pill-padding-inline": { "$value": "{plx-sys.space-inset-sm}", "$type": "dimension", "$description": "DataPill: its inline padding." },
     "data-pill-md-height": { "$value": "{plx-ref.size-6u}", "$type": "dimension", "$description": "DataPill size md: its height, 24px at every density (owner, 2026-10-22: the pill in a table)." },

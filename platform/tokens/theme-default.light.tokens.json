@@ -4071,6 +4071,17 @@
         }
       }
     },
+    "category-plain-amount": {
+      "$value": "{plx-ref.mix-amount-full}",
+      "$type": "number",
+      "$description": "How much of a category's text color a plain category name (DataPill plain) keeps, against the content color: all of it in light, none in dark, where the category text is dark and would not read on the surface.",
+      "$extensions": {
+        "plenix": {
+          "group": "dataviz",
+          "purpose": "How much of the category color a plain category name keeps."
+        }
+      }
+    },
     "category-tint-amount": {
       "$value": "{plx-ref.mix-amount-none}",
       "$type": "number",
