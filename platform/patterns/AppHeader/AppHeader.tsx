@@ -179,7 +179,7 @@ export type AppHeaderBrand = {
 const isBrandObject = (b: unknown): b is AppHeaderBrand => typeof b === 'object' && b !== null && !React.isValidElement(b) && !Array.isArray(b);
 function BrandLogo({ logo }: { logo: NonNullable<AppHeaderBrand['logo']> }) {
   const [failed, setFailed] = React.useState(false);
-  if (React.isValidElement(logo)) return <span className="plx-app-header__logo-slot">{logo}</span>;
+  if (!('src' in logo)) return <span className="plx-app-header__logo-slot">{logo}</span>;
   if (failed) return null;
   return <img className="plx-app-header__logo" src={logo.src} alt={logo.alt || ''} width={logo.width} height={logo.height} onError={() => setFailed(true)} />;
 }
