@@ -2,7 +2,7 @@ id: D-0112
 date: 2026-11-08
 area: components
 decided_by: agent (pds1-design-director) at G2, owner may switch
-decision: 'Avatar corner action (#977): offered on lg, xl and 2xl only (badge 20 / 24 / 24px, a 24px target); smaller avatars keep a ghost icon Button with a tooltip. With presence set, the action takes the top-end corner and presence keeps the bottom-end. When AvatarUpload is disabled or read-only, the action is not rendered.'
+decision: 'Avatar corner action (#977): offered on lg, xl and 2xl only (badge 20 / 24 / 24px, a 24px target); smaller avatars keep a ghost icon Button with a tooltip (API: AvatarUpload actions="corner", D-0113). With presence set, the action takes the top-end corner and presence keeps the bottom-end. When AvatarUpload is disabled or read-only, the action is not rendered.'
 why: 'CTM owner (CTM#240): the photo change must be discreet; a 24px target (WCAG 2.5.8) on a 28-32px avatar would cover the face. Presence already holds the bottom-end corner. A disabled action that cannot be used is noise on a photo.'
 options: ['lg and up, top-end with presence, hidden when disabled (chosen)', 'also on md (32px) with a 24px target', 'presence hidden while the action shows']
 status: active

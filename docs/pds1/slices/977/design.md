@@ -1,10 +1,10 @@
 # #977 Avatar: a discreet corner action (Change photo) (G2)
 
 - **Request:** the CTM owner (LighthouseCollection/CTM#240, PLX-027): "changing a photo must be discreet, a small icon in the corner", never a full button.
-- **Extends:** the Avatar presence dot (`platform/components/Avatar/avatar.css`, `.plx-avatar__presence`) for its corner, ring and offset, and `AvatarUpload` (`platform/patterns/AvatarUpload`) for the flow (file choice, crop, its messages). It adds one optional part, the **corner action**. The API name is G3's (for example `action` on Avatar, built in on AvatarUpload).
+- **Extends:** the Avatar presence dot (`platform/components/Avatar/avatar.css`, `.plx-avatar__presence`) for its corner, ring and offset, and `AvatarUpload` (`platform/patterns/AvatarUpload`) for the flow (file choice, crop, its messages). The API is G3's (ADR 0034, D-0113, #981): `<AvatarUpload actions="corner" size="lg|xl|2xl">`. `Avatar` itself gets no action prop.
 - **Readings applied (D-0112):**
   - The corner action is only on `lg`, `xl` and `2xl`. A 24px target over a 28–32px avatar would cover most of the face, so it would not be discreet. Smaller avatars, such as the one in a Panel header, keep CTM's ghost `Button size="sm"` (icon-only, with a tooltip).
-  - With `presence` set, the action moves to the **top-end** corner, and presence keeps the bottom-end.
+  - With `presence` set, the action moves to the **top-end** corner, and presence keeps the bottom-end. AvatarUpload shows no presence today, so this only applies if it ever does.
   - When AvatarUpload is `disabled` or read-only, the action is **not rendered**.
 
 ## 1. Look
@@ -19,6 +19,24 @@
 - **Fill:** `surface-raised`. **Ring:** `avatar-presence-ring-color` and `avatar-presence-ring-width`, the same as the presence dot. That is the surface colour, so it reads on any photo.
 - **Icon:** `currentColor`, Material Symbols Sharp, weight 300. It is not mirrored in RTL (a camera has no direction).
 - **Position:** `inset-block-end` and `inset-inline-end` are `avatar-presence-offset`, the presence dot's corner. In RTL it is at the bottom-left. With presence, it uses `inset-block-start` instead.
+- **Token values (G3's `avatar-upload-corner-*`, comp → sys only):**
+
+| Comp token | Value |
+|---|---|
+| `-size` (lg / xl / 2xl) | `plx-ref.size-5u` / `size-6u` / `size-6u` (G3 picks the sys spacing role that resolves to these) |
+| `-icon-size` (lg / xl / 2xl) | `plx-sys` icon xs (12) / sm (16) / sm (16) |
+| `-target-size` | 24px (`size-6u`) |
+| `-radius` | `plx-sys.shape-mark` |
+| `-background` | `plx-sys.surface-raised` |
+| `-background-hover` | `plx-sys.state-hover` |
+| `-background-pressed` | `plx-sys.state-pressed` |
+| `-text` (rest) | `plx-sys.content-muted` |
+| `-text-hover` | `plx-sys.content-default` |
+| `-ring-color` | `plx-sys.surface-default` (= `avatar-presence-ring-color`) |
+| `-ring-width` | `plx-sys.border-width-medium` |
+| `-offset` | `calc(-1 * plx-sys.border-width-medium)` (= `avatar-presence-offset`) |
+| `-duration` | `plx-sys.motion-duration-quick` |
+
 - **This is a control, not an icon in a box.** It is a button with a fill, as the presence dot is a mark with a ring. On a photo, a bare icon would be unreadable.
 
 ## 2. State matrix
@@ -32,13 +50,13 @@
 | disabled | not rendered (D-0112). AvatarUpload's existing disabled look applies to the rest |
 | loading (uploading) | the icon is replaced by Spinner `xs` at the same size, with `aria-busy="true"`. It is not pressable, and the tooltip reads AvatarUpload's existing busy text |
 | error | the badge is unchanged. AvatarUpload's existing messages (`tooLarge`, `notImage`) stay where they are today, per `docs/content/messaging.md`, and focus returns to the badge |
-| selected | n/a (an action, not a choice) |
+| selected (menu open) | with a picture and `removable`, a press opens a Menu (Change photo, Remove photo), D-0113. While it is open, the badge looks as it does on hover and has `aria-expanded="true"`. The menu anchors at the badge, and focus returns to it on close |
 | empty (no picture) | the badge shows over the initials with the label "Add photo". The icon is the same |
 | long text | n/a (icon only). A long translated name wraps in the tooltip, per the Tooltip rule |
 
 - **Motion:** `background-color` and `color` over `plx-sys.motion-duration-quick`. No `transition: all`. The duration is 0 under `prefers-reduced-motion`.
 - **Name:** `aria-label` = `strings.change` or `strings.add`. With a label on the avatar, the badge is a sibling button outside the `role="img"`, so the image name and the button name stay separate.
-- **Press:** it opens AvatarUpload's file choice, then the crop step (existing). On Avatar alone, it calls the app's handler.
+- **Press:** it opens AvatarUpload's file choice, then the crop step (existing). With a picture and `removable`, it opens the Menu instead (D-0113).
 
 ## 3. Densities, themes, Arabic
 
