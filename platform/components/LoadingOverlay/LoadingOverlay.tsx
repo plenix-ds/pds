@@ -23,7 +23,7 @@
      When the work ends, focus returns to the element inside the region that had it.
      The veil is the inverse Scrim (the canvas at the high opacity): the content stays faintly visible, so nothing jumps.
    Notes:
-     For content that loads the first time with a known layout, use skeletons; for work of minutes, run it in the
+     For content that loads the first time with a known layout, use LoadingState (a centred spinner with a label); for work of minutes, run it in the
        background and report it with a toast.
      Other props pass through to the region element.
 */

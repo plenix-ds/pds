@@ -37,7 +37,7 @@ export { List } from './components/List/List.tsx';
 export { CodeBlock } from './components/CodeBlock/CodeBlock.tsx';
 export { SectionHeading } from './components/SectionHeading/SectionHeading.tsx';
 export { CollapsibleSection, ShowMore } from './components/CollapsibleSection/CollapsibleSection.tsx';
-export { Skeleton, Spinner } from './components/Loading/Loading.tsx';
+export { Skeleton, Spinner, LoadingState } from './components/Loading/Loading.tsx';
 export { Chat } from './components/Chat/Chat.tsx';
 export { EmptyState } from './components/EmptyState/EmptyState.tsx';
 export { Pagination } from './components/Pagination/Pagination.tsx';

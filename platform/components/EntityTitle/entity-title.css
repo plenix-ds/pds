@@ -11,8 +11,6 @@
 .plx-entity-title__subtitle{color:var(--plx-comp-entity-title-subtitle-color);font-size:var(--plx-comp-entity-title-subtitle-font-size);line-height:var(--plx-comp-entity-title-subtitle-line-height);min-inline-size:0;overflow-x:hidden;overflow-y:hidden;text-overflow:ellipsis;white-space:nowrap;}
 /* the tooltip around a line (Tooltip's wrapper) is the flex item: it may shrink, so its line can be cut */
 .plx-entity-title__tip{display:flex;min-inline-size:0;}
-/* loading: a bar on each line, in the lines' own heights, so the item is as tall loading as loaded */
-.plx-entity-title__placeholder{display:flex;flex-basis:0%;flex-direction:column;flex-grow:1;flex-shrink:1;min-inline-size:0;}
-.plx-entity-title__bar-line{align-items:center;block-size:var(--plx-comp-entity-title-title-line-height);display:flex;min-inline-size:0;}
-.plx-entity-title__bar-line--subtitle{block-size:var(--plx-comp-entity-title-subtitle-line-height);}
-.plx-entity-title__bar{max-inline-size:100%;}
+/* loading: a small spinner in the title line's place, so the item is as tall loading as loaded */
+.plx-entity-title__placeholder{align-items:center;block-size:var(--plx-comp-entity-title-title-line-height);display:flex;flex-basis:0%;flex-grow:1;flex-shrink:1;min-inline-size:0;}
+.plx-entity-title__placeholder--subtitle{block-size:calc(var(--plx-comp-entity-title-title-line-height) + var(--plx-comp-entity-title-subtitle-line-height));}

@@ -1,0 +1,8 @@
+    at /home/cc/pds1/work/component-engineer-2/tests/loading-state-1032.test.js:43:14 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 2,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
