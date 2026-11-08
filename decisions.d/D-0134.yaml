@@ -1,0 +1,9 @@
+id: D-0134
+date: 2026-11-08
+area: design
+decided_by: agent (pds1-design-director) at G2, owner may switch
+decision: 'Read-only tiles variation (D-0132, #1043): variant="tiles" on PropertyGroup reaches its PropertyList; an explicit layout on that list wins, with a dev warning; it adds no CSS values of its own (it reuses the stacked classes); a status value is an existing Badge with its icon passed as the value; loading uses LoadingState (D-0130), not Skeleton.'
+why: 'The owner asked for the D-0106 look as one named variation; reusing the stacked roles keeps one source of values, and an explicit prop winning is the least surprising rule for apps already on layout="stacked".'
+options: ['A explicit layout wins, with a warning (chosen)', 'B the variation always wins']
+status: active
+check: 'planned:property-group-tiles-1043 tests (AC-1..AC-6, explicit-layout-wins, odd tile count); check 12 visual specimens property-group-tiles (light, dark, compact, RTL)'
