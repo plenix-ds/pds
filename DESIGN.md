@@ -88,6 +88,7 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 - **No action links.** An action is a Button, never a text link. Links only navigate.
 - **Statuses are badges with an icon,** never a bare coloured dot. A dot only shows presence (online/away).
 - **An avatar's photo action** is a small corner button with an icon (camera) on the presence dot's ring and shape, never a full button. It is offered on `lg` and up, at the bottom-end corner, or the top-end when presence is shown (D-0112, `docs/pds1/slices/977/design.md`).
+- **A fact can take a tone** (EntityHeader, D-0118, D-0120): it is the Status tile's tokens, in both header styles. A missing required choice is `tone="danger"` plus the picker's existing `invalid` border, with no message under it. Details: `docs/pds1/slices/990-fact-danger-tone/design.md`.
 - **Table header labels are start-aligned** (left in LTR, right in RTL), including the header of a number column.
 - **Logical properties only:** `inline-start` and `inline-end`, never left and right. That is what makes RTL work.
 - **Colours only through tokens.** No hex, rgb or named colours outside `plx-ref`. No inline styles, except in the rich-text engine and in ECharts options built from token values. No `!important`.
