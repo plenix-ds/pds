@@ -1,0 +1,20 @@
+{
+ "components-cascader--default · dark": {
+  "color-contrast": 1
+ },
+ "components-cascader--focus · dark": {
+  "color-contrast": 1
+ },
+ "components-cascader--searchable · dark": {
+  "color-contrast": 1
+ },
+ "components-cascader--invalid · dark": {
+  "color-contrast": 1
+ },
+ "components-cascader--warning · dark": {
+  "color-contrast": 1
+ },
+ "components-datapill--plain · dark": {
+  "color-contrast": 1
+ }
+}

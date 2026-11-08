@@ -1,0 +1,59 @@
+/* Plenix tests · axe on every story, in light and dark (issue 909, plan §7e item 7; the stories come from #1034).
+   Summary: serves build/storybook (npm run build-storybook), lists its stories from index.json, opens each story's iframe and runs axe-core (WCAG 2.2 A and AA)
+     in light and then in dark (data-plx-mode). Known findings live in tests/baselines/stories-axe.json (story id · mode → rule → number of elements); the test fails only on a
+     rule that is new for a story or hits more elements than recorded, so findings can only go down. A story that cannot be opened fails the run.
+   Usage:
+     npm run build-storybook && node tests/stories-axe-909.test.js            compare
+     node tests/stories-axe-909.test.js --update                              record the current findings (lowers the baseline; never raises it, see changed.shrinkOnly)
+     STORIES_ONLY=badge,button node tests/stories-axe-909.test.js             only story ids that start with these prefixes
+   -> STORIES_AXE_909_OK */
+const fs = require('fs'), path = require('path'), http = require('http');
+const { launch } = require('./lib.js');
+const changed = require('./changed.js');
+const ROOT = path.join(__dirname, '..', 'build', 'storybook'), BASELINE = path.join(__dirname, 'baselines', 'stories-axe.json');
+const TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'];
+const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.mjs': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.png': 'image/png' };
+if (!fs.existsSync(path.join(ROOT, 'index.json'))) { console.error('no build/storybook: run npm run build-storybook first'); process.exit(1); }
+const only = process.env.STORIES_ONLY ? process.env.STORIES_ONLY.split(',') : null;
+const stories = Object.values(JSON.parse(fs.readFileSync(path.join(ROOT, 'index.json'), 'utf8')).entries).filter((e) => e.type === 'story' && (!only || only.some((p) => e.id.startsWith(p))));
+const server = http.createServer((req, res) => {
+  const f = path.join(ROOT, decodeURIComponent(new URL(req.url, 'http://x').pathname).replace(/\/$/, '/index.html'));
+  if (!f.startsWith(ROOT) || !fs.existsSync(f) || fs.statSync(f).isDirectory()) { res.writeHead(404); return res.end(); }
+  res.writeHead(200, { 'content-type': TYPES[path.extname(f)] || 'application/octet-stream' }); fs.createReadStream(f).pipe(res);
+});
+(async () => {
+  await new Promise((r) => server.listen(0, r)); const base = 'http://127.0.0.1:' + server.address().port;
+  const browser = await launch(), page = await browser.newPage(); await page.setViewport({ width: 1000, height: 800 });
+  const axeSrc = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
+  const found = {}, broken = [];
+  for (const s of stories) {
+    try {
+      await page.goto(base + '/iframe.html?id=' + s.id + '&viewMode=story', { waitUntil: 'load', timeout: 30000 });
+      await page.waitForSelector('#storybook-root > *, #storybook-docs', { timeout: 15000 });
+      if (!(await page.evaluate(() => !!window.axe))) await page.evaluate(axeSrc);
+      for (const mode of ['light', 'dark']) {
+        await page.evaluate((m) => { document.documentElement.setAttribute('data-plx-mode', m); }, mode);
+        const out = await page.evaluate(async (tags) => {
+          const r = await window.axe.run(document.querySelector('#storybook-root'), { runOnly: { type: 'tag', values: tags }, resultTypes: ['violations'] });
+          const o = {}; r.violations.forEach((v) => { o[v.id] = { n: v.nodes.length, help: v.help, target: String(v.nodes[0] && v.nodes[0].target) }; }); return o;
+        }, TAGS);
+        if (Object.keys(out).length) found[s.id + ' · ' + mode] = out;
+      }
+    } catch (e) { broken.push(s.id + ': ' + e.message.split('\n')[0]); }
+  }
+  await browser.close(); server.close();
+  const counts = Object.fromEntries(Object.entries(found).map(([k, v]) => [k, Object.fromEntries(Object.entries(v).map(([r, x]) => [r, x.n]))]));
+  if (process.argv.includes('--update')) {
+    if (only) { console.error('--update records the whole set; run it without STORIES_ONLY'); process.exit(1); }
+    changed.shrinkOnly(BASELINE, counts);
+    fs.mkdirSync(path.dirname(BASELINE), { recursive: true }); fs.writeFileSync(BASELINE, JSON.stringify(counts, null, 1) + '\n');
+    console.log('STORIES_AXE_BASELINE written: ' + Object.keys(counts).length + ' story/mode pairs with findings of ' + stories.length * 2 + '; ' + broken.length + ' could not be opened');
+    broken.forEach((b) => console.log('  BROKEN ' + b)); return;
+  }
+  const base0 = fs.existsSync(BASELINE) ? JSON.parse(fs.readFileSync(BASELINE, 'utf8')) : {};
+  const worse = [];
+  Object.entries(found).forEach(([k, v]) => Object.entries(v).forEach(([rule, x]) => { const was = ((base0[k] || {})[rule]) || 0; if (x.n > was) worse.push(k + ': ' + rule + ' ' + was + ' -> ' + x.n + ' · ' + x.help + ' · e.g. ' + x.target); }));
+  broken.forEach((b) => console.log('  BROKEN ' + b)); worse.forEach((w) => console.log('  NEW ' + w));
+  if (broken.length || worse.length) { console.log('STORIES_AXE_FAIL ' + worse.length + ' new findings, ' + broken.length + ' stories that did not open, of ' + stories.length + ' stories'); process.exit(1); }
+  console.log('STORIES_AXE_909_OK ' + stories.length + ' stories, light and dark, ' + Object.keys(counts).length + ' pairs with known findings');
+})().catch((e) => { server.close(); console.error(e); process.exit(1); });
