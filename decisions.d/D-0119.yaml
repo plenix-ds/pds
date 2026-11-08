@@ -1,0 +1,9 @@
+id: D-0119
+date: 2026-11-08
+area: api
+decided_by: agent (pds1-product-lead) at G1, owner may switch
+decision: 'EntityHeader media takes { versus: [partyA, partyB], decorative } (each { name, src, color }): two Avatars with a "vs." mark between, in the single media''s box and height; initials when there is no photo; strings.versus and strings.versusLabel; the order follows the reading direction (#991).'
+why: 'It fits the existing media object and reuses Avatar, so photos, initials, colors and sizes follow the same rules as one person.'
+options: ['media.versus inside media (chosen)', 'a separate parties prop beside media']
+status: active
+check: 'tests/entity-header-versus-991.test.js (AC-1..AC-6 in docs/pds1/slices/991-versus-media/brief.md); G3 API diff on the build PR'

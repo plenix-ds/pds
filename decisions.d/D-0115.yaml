@@ -1,0 +1,9 @@
+id: D-0115
+date: 2026-11-07
+area: components
+decided_by: owner (2026-11-07, via CTM D-0058; plenix-ds/pds#987)
+decision: 'Timeline gets a grouped variation (variant "grouped", groupBy "year"), with the defaults of CTM''s timeline study (CTM#255): year headings 20px bold with a 72x2px soft line, 80px between groups, latest first and reversible; a decorative rotated watermark year beside each event; each event in its own 6px-corner container tinted in its category colour with a same-hue border, title in the category colour, and a category tag; a calendar date icon (category band, two binder rings, month extra-bold uppercase, day large bold; upcoming events grey with "Pending"); an optional category legend filter; RTL mirrored. Categories are a token set category-1 to category-8 (light and dark), mapped to the existing data-colour roles first; any extra hue needed for eight is owner-approved under this decision.'
+why: 'Owner, 2026-11-07: "lock this in as variation in pds, and implement in ctm".'
+options: ['grouped Timeline variation with category tokens (chosen)']
+status: active
+check: 'planned:timeline-grouped (behaviour test: grouping, order toggle, category colours light/dark >= 4.5:1 for title and date text, watermark aria-hidden, RTL; #987)'
