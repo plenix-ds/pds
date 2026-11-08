@@ -20,7 +20,7 @@ require('./limit.js');
         await page.goto('http://localhost:' + PORT + '/Plenix/tests/fixtures/platform-host.html?react=dev', { waitUntil: 'domcontentloaded' });
         await page.waitForFunction(() => window.Plenix && window.ReactDOM, { timeout: 60000 });
         const r = await page.evaluate(async (dir, theme) => {
-          document.documentElement.setAttribute('dir', dir); document.documentElement.setAttribute('data-plx-theme', theme);
+          document.documentElement.setAttribute('dir', dir); document.documentElement.setAttribute('data-plx-mode', theme);
           const host = document.createElement('div'); host.id = 'c'; host.style.inlineSize = '720px'; document.querySelector('main').replaceChildren(host);
           const h = React.createElement, P = window.Plenix;
           ReactDOM.createRoot(host).render(h('div', null,

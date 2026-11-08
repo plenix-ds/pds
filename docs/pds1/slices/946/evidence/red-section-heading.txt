@@ -1,0 +1,4 @@
+AssertionError [ERR_ASSERTION]: ltr light: SectionHeading #s2 has the card heading's type
+  "DM Sans", "IBM Plex Sans Arabic", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif|13px|700|16.9px|1.04px|uppercase|rgb(86, 88, 94)
+  "DM Sans", "Readex Pro", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif|14px|700|20px|0.84px|uppercase|rgb(52, 54, 59)
++ actual - expected

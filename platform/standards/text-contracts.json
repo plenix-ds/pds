@@ -2183,12 +2183,8 @@
   },
   "plx-panel__title": {
    "contract": "establishes",
-   "role": "title",
-   "font": "sans",
-   "adjusts": [
-    "font-size",
-    "font-weight"
-   ]
+   "role": "card-heading",
+   "font": "sans"
   },
   "plx-people-group__description": {
    "contract": "adjusts",
@@ -2783,36 +2779,8 @@
   },
   "plx-section-heading": {
    "contract": "establishes",
-   "role": "eyebrow",
-   "font": "sans",
-   "adjusts": [
-    "font-size",
-    "line-height"
-   ]
-  },
-  "plx-section-heading--level-2": {
-   "contract": "establishes",
-   "role": "eyebrow",
-   "font": "sans",
-   "adjusts": [
-    "font-size"
-   ]
-  },
-  "plx-section-heading--level-3": {
-   "contract": "establishes",
-   "role": "eyebrow",
-   "font": "sans",
-   "adjusts": [
-    "font-size"
-   ]
-  },
-  "plx-section-heading--level-4": {
-   "contract": "establishes",
-   "role": "eyebrow",
-   "font": "sans",
-   "adjusts": [
-    "font-size"
-   ]
+   "role": "card-heading",
+   "font": "sans"
   },
   "plx-section-heading__actions": {
    "contract": "adjusts",
