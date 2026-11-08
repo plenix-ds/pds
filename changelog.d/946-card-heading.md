@@ -5,4 +5,9 @@
 
 ### Added
 
-- `SectionHeading` takes `icon`, like `Panel`'s: an icon name or element before the label, decorative (hidden from assistive technology), with the Panel title icon's size and gap (ADR 0035, D-0114, #946).
+- `SectionHeading` takes `icon`, like `Panel`'s: an icon name or element before the label, decorative (hidden from assistive technology), with the Panel title icon's size and gap, and the class `plx-section-heading--icon` (and `plx-section-heading__toggle--icon` on a collapsible heading's button) (ADR 0035, D-0114, #946).
+
+### Deprecated
+
+- `--plx-comp-panel-header-border-bottom-color`: the Panel header's divider is inset now and reads `--plx-comp-panel-header-divider-color`; the old token is kept and removed in 2.0.0.
+- The classes `plx-section-heading--level-2`, `-3` and `-4` no longer set a size (the heading draws with the card heading's type at every level). `SectionHeading` still emits them; they are removed in 2.0.0.

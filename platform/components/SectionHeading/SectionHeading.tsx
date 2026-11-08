@@ -38,12 +38,16 @@ export type SectionHeadingProps = React.HTMLAttributes<HTMLElement> & {
   /** an icon before the label, as the card heading's (Panel.icon): decorative, hidden from assistive technology (ADR 0035) */
   icon?: IconValue | React.ReactNode;
 };
+// the level classes plx-section-heading--level-2, -3 and -4 no longer set a size (D-0110); they stay on the element for apps that select them, and are removed in 2.0.0
+const LEVEL_CLASSES = [2, 3, 4];
 export function SectionHeading({ level = 3, collapsible = false, expanded = true, onToggle, controls, actions, icon, className, children, ...rest }: SectionHeadingProps) {
   const Tag = (level ? 'h' + level : 'div') as React.ElementType;
+  /** @deprecated plx-section-heading--level-2, -3, -4 no longer change the size; removed in 2.0.0 */
+  const sized = LEVEL_CLASSES.indexOf(level) >= 0 && 'plx-section-heading--level-' + level;
   const mark = icon ? <span className="plx-section-heading__icon" aria-hidden="true">{iconElement(icon)}</span> : null;
   if (collapsible) {
     return (
-      <Tag className={cx('plx-section-heading', icon && 'plx-section-heading--icon', 'plx-section-heading--collapsible', className)} {...rest}>
+      <Tag className={cx('plx-section-heading', sized, icon && 'plx-section-heading--icon', 'plx-section-heading--collapsible', className)} {...rest}>
         <button type="button" className={cx('plx-section-heading__toggle', icon && 'plx-section-heading__toggle--icon')} aria-expanded={expanded} aria-controls={controls} onClick={onToggle}>
           {mark}
           <span className="plx-section-heading__label">{children}</span>
@@ -54,7 +58,7 @@ export function SectionHeading({ level = 3, collapsible = false, expanded = true
     );
   }
   return (
-    <Tag className={cx('plx-section-heading', icon && 'plx-section-heading--icon', className)} {...rest}>
+    <Tag className={cx('plx-section-heading', sized, icon && 'plx-section-heading--icon', className)} {...rest}>
       {mark}
       <span className="plx-section-heading__label">{children}</span>
       {actions ? <span className="plx-section-heading__actions">{actions}</span> : null}

@@ -4531,6 +4531,11 @@
       "$value": "{plx-sys.surface-default}",
       "$type": "color"
     },
+    "panel-header-border-bottom-color": {
+      "$value": "{plx-sys.border-divider}",
+      "$type": "color",
+      "$deprecated": "Use --plx-comp-panel-header-divider-color; removed in 2.0.0"
+    },
     "panel-header-divider-color": {
       "$value": "{plx-sys.border-subtle}",
       "$type": "color"
