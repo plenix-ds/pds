@@ -6,6 +6,37 @@ The batch numbers point to the work log (Plenix - DAM/audit/batches/).
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-11-08
+
+### Upgrading from 1.0.0
+No breaking changes. Read-only fields, card headings and form footers look different (Changed (visual)); two Panel/SectionHeading names are deprecated and stay until 2.0.0.
+
+### Added
+- useCollectionView, Table, SplitWorkspace and ListingPage are generic over the row, as DataGrid is: `useCollectionView<Row>`, `Table<Row>`, `SplitWorkspace<Row>`, `ListingPage<Row>`, and `CollectionField<Row>` types `get(row)`. Each defaults to the old type, so existing code compiles (#923, ADR 0024).
+- `iconNode(icon, options)`: the same icon as `iconMarkup`, as an element, for code that builds DOM nodes and must not write HTML (a browser extension's page, Firefox's add-on linter). `cleanRichTextNodes(html)`: the cleaned rich text as nodes, to append with `replaceChildren` (#940).
+- The site-icon tool ships on the CDN and in its archive (RedSave P-64, #941): `node tools/site-icons.cjs <site> <source folder> --out <folder>` writes `plenix-icons-<site>.js` from a site's source (JavaScript, TypeScript, JSX, TSX and HTML) with no install, because its scan and parser are bundled into the one file. It knows the same icons as `npx plenix-site-icons` from `@plenix-ds/icons`. Every release now proves both run in a fresh app (`tools/publish/site-icons-fixture.sh`).
+- `SectionHeading` takes `icon`, like `Panel`'s: an icon name or element before the label, decorative (hidden from assistive technology), with the Panel title icon's size and gap, and the class `plx-section-heading--icon` (and `plx-section-heading__toggle--icon` on a collapsible heading's button) (ADR 0035, D-0114, #946).
+- `PropertyGroup` (`@plenix-ds/react`): a `<section>` named by its heading, over one `PropertyList`. The heading is 13px medium gold sentence case, and a group that follows another sits 40px below it (#946, ADR 0033, D-0111).
+- `Field` takes `span` (`1 | 2 | 3 | "full"`): the columns it takes as a direct child of a grid (`Columns`). The default is `"full"` for a Field whose control is a `Textarea` or a `RichTextEditor`, otherwise `1`. A spanning Field lets its control fill it, so the single-line fields' 600px cap no longer shortens a Textarea; set `span={1}` to keep it in one column (ADR 0029, #947).
+
+### Changed
+- Trusted Types (#940, RedSave P-47): no code under `platform/` writes HTML any more. `RichText` and the `RichTextEditor`'s start content add the cleaned nodes instead of an HTML string, and the sanitizer parses its input in an inert document through a Trusted Types policy named `plenix`, and `plenix-engines.js` has its own policy, `plenix-engines`, that names only a vendor script on its own origin. Both are private to their files (nothing is put on `window`). A page that sets `require-trusted-types-for 'script'` and restricts policy names must allow both: `trusted-types plenix plenix-engines`. The editing engine under `vendor/` (Tiptap) still parses HTML with plain strings: on such a page the editor shows its content read-only and a development warning says why.
+- Read-only look (owner's preset, D-0106; #946, ADR 0032): a `PropertyList` value sits on the porcelain tile with a same-tint 1px border, its label is 11px regular navy, its value 13px semibold. A `Field` label inside a read-only region takes the same label role. Label and value are at least 4.5:1 on the tile in light and dark.
+
+### Changed (visual)
+- `Panel` header (D-0106, #946): the title is the card heading, 14px bold UPPERCASE in the default ink with its icon; the header paints a soft glow from the top of the card down to the heading line, and the divider under it is inset to the header's padding instead of running edge to edge (a collapsed panel keeps the glow and shows no divider).
+- `SectionHeading` (D-0110, #946): draws with the same card-heading tokens, so a page section heading and a card heading can never drift apart. Its size no longer follows its level.
+- DataGrid: a narrow column ("#", short ids, 1-digit numbers, single pills: under 80px by content) is as wide as its content plus the cell padding, at least 32px, and takes no share of the spare room, which goes to the other columns. Its options button no longer reserves width: it overlays at the header's inline end on hover, on keyboard focus and while its menu is open (touch keeps the reserve). A column with a set `width` or `minWidth` is unchanged (D-0108, #966).
+- Card and form footers have no fill (D-0102, #948): Save and Cancel sit on the surface, with a hairline only where content passes under the footer.
+
+### Deprecated
+- `--plx-comp-panel-header-border-bottom-color`: the Panel header's divider is inset now and reads `--plx-comp-panel-header-divider-color`; the old token is kept and removed in 2.0.0.
+- The classes `plx-section-heading--level-2`, `-3` and `-4` no longer set a size (the heading draws with the card heading's type at every level). `SectionHeading` still emits them; they are removed in 2.0.0.
+- `--plx-comp-property-list-label-font-size`: the PropertyList label takes the field-label role (`--plx-sys-text-field-label-*`) directly. The token keeps working and is removed in 2.0.0. `--plx-comp-property-list-value-font-size` and `--plx-comp-property-list-value-data-font-size` stay, now 13px (`--plx-sys-text-field-value-font-size`) (#946, D-0106).
+
+### Fixed
+- A `Textarea` in a multi-column form now spans the row: it ends exactly at the inline end of the last column instead of stopping at 600px.
+
 ## [1.0.0] - 2026-11-07
 
 ### Upgrading from 0.93.1
