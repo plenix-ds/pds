@@ -125,11 +125,12 @@ function Side({ id, title, items, checked, setChecked, onMove, search, virtual, 
       </div>
       {search ? <div className="plx-transfer-list__search"><SearchField value={text} label={fill(t.search, { title })} placeholder={fill(t.search, { title })} width="fill"
         onChange={(e) => setText(e.target.value)} onClear={() => setText('')} /></div> : null}
-      <div ref={setRefs} role="listbox" aria-multiselectable="true" aria-labelledby={id + '-title'} tabIndex={0} aria-disabled={disabled || undefined}
+      {/* with items it is a listbox; with none (empty, or nothing matches) it is a group holding the message, since a listbox needs options */}
+      <div ref={setRefs} role={shown.length ? 'listbox' : 'group'} aria-multiselectable={shown.length ? 'true' : undefined} aria-labelledby={id + '-title'} tabIndex={0} aria-disabled={disabled ? true : undefined}
         aria-activedescendant={shown.length ? optId(at) : undefined} onKeyDown={onKeyDown}
         className={cx('plx-transfer-list__list', virtual && 'plx-transfer-list__list--virtual')}>
         {virtual && shown.length ? <VirtualProbe /> : null}
-        {!shown.length ? <div className="plx-transfer-list__empty" role="presentation">{q ? t.noMatch : emptyText}</div>
+        {!shown.length ? <div className="plx-transfer-list__empty">{q ? t.noMatch : emptyText}</div>
           : virtual ? v.segments.map((s) => (s.gap ? <VirtualGap key={s.key} count={s.count} /> : option(shown[s.index], s.index, v.itemProps(s.index))))
             : shown.map((o, i) => option(o, i))}
       </div>

@@ -26,7 +26,7 @@
    The page's own head is written here, in order: the theme script, the font preload, fonts.css, the Platform stylesheet,
    React and the Platform bundle; then the style audit (platform/dev/style-audit.js, which reports only on localhost). */
 (function () {
-  var VERSION = '1.2.1';
+  var VERSION = '1.3.0';
   var CDN = 'https://design-system.lighthouseway.org/cdn/';
 
   var pick = (/[?&]plenix=([\w.-]+)/.exec(location.search) || [])[1];

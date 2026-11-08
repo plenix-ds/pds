@@ -1,0 +1,9 @@
+id: D-0139
+date: 2026-11-08
+area: release
+decided_by: agent (pds1-ds-architect) on the Release Architect's issue (#1103), owner may switch
+decision: 'The { DataGrid } one-part import limit goes from 450 KB to 455 KB (minified, Vite, React external). 1.3.0 measures 451.4 KB: the growth is owner-approved code on the default path (columns[].lines and the cut-text Tooltip, ADR 0043; the placeholder row LoadingState, ADR 0042), not a tree-shaking regression. A limit holds the size measured when it was set, with a little room.'
+why: 'The limit exists to catch tree-shaking breaks (#685: hundreds of KB), not 1.4 KB (0.3%) of approved features. Loading the cut-text measuring on first use (option A) would add a lazy chunk and a delay on the first hover or focus of a cut cell to save about 1 KB.'
+options: ['raise the limit to 455 KB with this record (chosen, B)', 'load the cut-text measuring code on first use to get back under 450 KB (A)']
+status: active
+check: 'tools/agent/one-part-sizes.js --check (CASES limit 455), run by check-bundle.js in the release dry run'
