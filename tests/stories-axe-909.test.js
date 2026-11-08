@@ -7,6 +7,9 @@
      node tests/stories-axe-909.test.js --update                              record the current findings (lowers the baseline; never raises it, see changed.shrinkOnly)
      node tests/stories-axe-909.test.js --init                                write the baseline as it is now, raising it: only for adopting the gate (#909) or an owner-listed exception (D-0025)
      STORIES_ONLY=badge,button node tests/stories-axe-909.test.js             only story ids that start with these prefixes
+     STORIES_CHANGED=<file> node tests/stories-axe-909.test.js                <file> lists changed paths, one per line (a pull request): when every path is inside one part
+       (platform/components/<Part>/, platform/patterns/<Part>/ or docs/site/stories/<Part>.stories.tsx) only that part's stories open; any other path (tokens, styles, setup, this test) opens all of them.
+       The full run stays nightly and on tag (ci.yml), so a regression in an untouched dependent part is found there.
    -> STORIES_AXE_909_OK */
 const fs = require('fs'), path = require('path'), http = require('http');
 const { launch } = require('./lib.js');
@@ -16,7 +19,15 @@ const TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'];
 const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.mjs': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.png': 'image/png' };
 if (!fs.existsSync(path.join(ROOT, 'index.json'))) { console.error('no build/storybook: run npm run build-storybook first'); process.exit(1); }
 const only = process.env.STORIES_ONLY ? process.env.STORIES_ONLY.split(',') : null;
-const stories = Object.values(JSON.parse(fs.readFileSync(path.join(ROOT, 'index.json'), 'utf8')).entries).filter((e) => e.type === 'story' && (!only || only.some((p) => e.id.startsWith(p))));
+let parts = null;   // part names touched by the pull request, or null for "all stories"
+if (process.env.STORIES_CHANGED) {
+  const paths = fs.readFileSync(process.env.STORIES_CHANGED, 'utf8').split('\n').map((l) => l.trim()).filter(Boolean).filter((f) => f !== 'tests/baselines/stories-axe.json');
+  const names = paths.map((f) => { const m = /^platform\/(?:components|patterns)\/([^/]+)\//.exec(f) || /^docs\/site\/stories\/([^/.]+)\.stories\.tsx$/.exec(f); return m && m[1]; });
+  if (paths.length && names.every(Boolean)) parts = new Set(names);
+}
+const partOf = (e) => [path.basename(e.importPath || '').replace(/\.stories\.\w+$/, ''), path.basename(path.dirname(e.componentPath || ''))];
+const stories = Object.values(JSON.parse(fs.readFileSync(path.join(ROOT, 'index.json'), 'utf8')).entries).filter((e) => e.type === 'story' && (!only || only.some((p) => e.id.startsWith(p))) && (!parts || partOf(e).some((n) => parts.has(n))));
+if (parts) console.log('pull request touches only ' + [...parts].join(', ') + ': ' + stories.length + ' stories');
 const server = http.createServer((req, res) => {
   const f = path.join(ROOT, decodeURIComponent(new URL(req.url, 'http://x').pathname).replace(/\/$/, '/index.html'));
   if (!f.startsWith(ROOT) || !fs.existsSync(f) || fs.statSync(f).isDirectory()) { res.writeHead(404); return res.end(); }
@@ -51,7 +62,7 @@ const server = http.createServer((req, res) => {
   const sorted = Object.fromEntries(Object.keys(found).sort().map((k) => [k, found[k]]));
   const counts = Object.fromEntries(Object.entries(sorted).map(([k, v]) => [k, Object.fromEntries(Object.entries(v).map(([r, x]) => [r, x.n]))]));
   if (process.argv.includes('--update') || process.argv.includes('--init')) {
-    if (only) { console.error('--update records the whole set; run it without STORIES_ONLY'); process.exit(1); }
+    if (only || parts) { console.error('--update records the whole set; run it without STORIES_ONLY'); process.exit(1); }
     if (!process.argv.includes('--init')) changed.shrinkOnly(BASELINE, counts);
     fs.mkdirSync(path.dirname(BASELINE), { recursive: true }); fs.writeFileSync(BASELINE, JSON.stringify(counts, null, 1) + '\n');
     console.log('STORIES_AXE_BASELINE written: ' + Object.keys(counts).length + ' story/mode pairs with findings of ' + stories.length * 2 + '; ' + broken.length + ' could not be opened');

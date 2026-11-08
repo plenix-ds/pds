@@ -348,6 +348,8 @@ jobs:
         if: steps.scope.outputs.run == 'yes'
         run: |
           command -v google-chrome >/dev/null || { echo "::error::Chrome is missing on the runner: the story axe run cannot run, and a missing browser is a FAIL"; exit 1; }
+          # a pull request opens only the stories of the part it touches (when it touches one part); the nightly and tag run opens all (#909)
+          if [ -n "$BASE_SHA" ]; then git diff --name-only "$(git merge-base "$BASE_SHA" HEAD)" HEAD > "$RUNNER_TEMP/changed.txt"; export STORIES_CHANGED="$RUNNER_TEMP/changed.txt"; fi
           CHROME_PATH="$(command -v google-chrome)" node tests/stories-axe-909.test.js
 
   result:
