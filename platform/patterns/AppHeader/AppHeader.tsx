@@ -12,7 +12,10 @@
    Props:
      tone: "accent" (default) | "frost" | "plain"; sets the bar's colors and those of everything inside it
      appName: the application's name in the header name (default: the current application's name)
-     brand: replaces the header name's content (default: the Plenix mark, then "Plenix" over the application's name)
+     brand: replaces the header name's content (default: the Plenix mark, then "Plenix" over the application's name). An element is drawn as
+       given. An object { logo, organization, application } draws the default's layout with the app's own brand (ADR 0039):
+       logo: { src, alt, width, height } or an element, in the mark's slot (36px tall, up to 108px wide, no box; hidden if it fails; alt defaults to "");
+       organization: the product line (where "Plenix" is); application: the app line (default: the computed app name)
      brandHref: makes the header name a link when there is no switcher
      currentApp: the open application's id (see PLENIX_APPS), or null on a screen that is not an application (Settings);
        when it is given (also null) the header name is the switcher and the pinned header links show
@@ -143,7 +146,7 @@ export type AppHeaderBack = { href?: string; onClick?: React.MouseEventHandler<H
 /** @public what onOpenApp receives; return true when the page opens the application itself */
 export type AppHeaderOpenApp = (app: PlenixApp) => boolean | void;
 export type AppHeaderProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & {
-  tone?: 'accent' | 'frost' | 'plain'; appName?: string; brand?: React.ReactNode; brandHref?: string;
+  tone?: 'accent' | 'frost' | 'plain'; appName?: string; brand?: React.ReactNode | AppHeaderBrand; brandHref?: string;
   /** the open application's id (PLENIX_APPS), or null on a screen that is not an application */
   currentApp?: string | null; appsRoot?: string; onOpenApp?: AppHeaderOpenApp;
   nav?: React.ReactNode; navLabel?: string; action?: React.ReactNode; search?: React.ReactNode;
@@ -166,7 +169,34 @@ export type AppHeaderActionProps = Omit<AppHeaderItemProps, 'icon' | 'label' | '
   /** @deprecated no longer used: the action is an icon item (batch 272) */
   variant?: string;
 };
-export type AppHeaderSwitcherProps = { currentApp?: string | null; appsRoot?: string; onOpenApp?: AppHeaderOpenApp; apps?: PlenixApp[]; brand?: React.ReactNode };
+export type AppHeaderSwitcherProps = { currentApp?: string | null; appsRoot?: string; onOpenApp?: AppHeaderOpenApp; apps?: PlenixApp[]; brand?: React.ReactNode | AppHeaderBrand };
+/** @public an organization's brand for the header name: its logo, organization and application */
+export type AppHeaderBrand = {
+  logo?: { src: string; alt?: string; width?: number; height?: number } | React.ReactElement;
+  organization?: React.ReactNode;
+  application?: React.ReactNode;
+};
+const isBrandObject = (b: unknown): b is AppHeaderBrand => typeof b === 'object' && b !== null && !React.isValidElement(b) && !Array.isArray(b);
+function BrandLogo({ logo }: { logo: NonNullable<AppHeaderBrand['logo']> }) {
+  const [failed, setFailed] = React.useState(false);
+  if (React.isValidElement(logo)) return <span className="plx-app-header__logo-slot">{logo}</span>;
+  if (failed) return null;
+  return <img className="plx-app-header__logo" src={logo.src} alt={logo.alt || ''} width={logo.width} height={logo.height} onError={() => setFailed(true)} />;
+}
+// the object brand, in the default's markup: the logo in the mark's slot, the organization where "Plenix" is, the application under it
+function brandContent(b: AppHeaderBrand, fallbackApp: React.ReactNode, sw: boolean) {
+  const app = b.application !== undefined ? b.application : fallbackApp;
+  return (
+    <>
+      {b.logo ? <BrandLogo logo={b.logo} /> : null}
+      <span className={cx('plx-app-header__name', sw && 'plx-app-header__name--switch')}>
+        {b.organization ? <span className={cx('plx-app-header__product', 'plx-app-header__text-cut', sw && 'plx-app-header__product--switch')} title={typeof b.organization === 'string' ? b.organization : undefined}>{b.organization}</span> : null}
+        {app ? <span className={cx('plx-app-header__app', 'plx-app-header__text-cut', sw && 'plx-app-header__app--switch')} title={typeof app === 'string' ? app : undefined}>{app}</span> : null}
+      </span>
+    </>
+  );
+}
+const brandName = (b: AppHeaderBrand) => [b.organization, b.application].filter((x) => typeof x === 'string').join(' ');
 type Words = Record<string, string>;
 
 export function AppHeader({ tone = 'accent', appName, brand, brandHref, currentApp, appsRoot = '', onOpenApp, nav, navLabel,
@@ -240,7 +270,7 @@ export function AppHeader({ tone = 'accent', appName, brand, brandHref, currentA
   const name = appName || (app ? app.label : null);
   // the name's parts in the switch button give way (--switch: they shrink and end in an ellipsis)
   const sw = (switcher !== undefined ? switcher : currentApp !== undefined) && !title;
-  const brandEl = brand || (name ? <><BrandMark /><span className={cx('plx-app-header__name', sw && 'plx-app-header__name--switch')}><span className={cx('plx-app-header__product', sw && 'plx-app-header__product--switch')}>Plenix</span><span className={cx('plx-app-header__app', sw && 'plx-app-header__app--switch')}>{name}</span></span></> : <><BrandMark />Plenix</>);
+  const brandEl = isBrandObject(brand) ? brandContent(brand, name, sw) : brand || (name ? <><BrandMark /><span className={cx('plx-app-header__name', sw && 'plx-app-header__name--switch')}><span className={cx('plx-app-header__product', sw && 'plx-app-header__product--switch')}>Plenix</span><span className={cx('plx-app-header__app', sw && 'plx-app-header__app--switch')}>{name}</span></span></> : <><BrandMark />Plenix</>);
   const open = (a: PlenixApp) => (e: React.MouseEvent<HTMLElement>) => { if (onOpenApp && onOpenApp(a) === true) e.preventDefault(); };
   const pinned = nav || (inApps ? PLENIX_APPS.filter((a) => pinnedApps.indexOf(a.id) >= 0).map((a) => (
     <AppHeader.Item key={a.id} icon={<Icon name={appIcon(a) as IconValue} />} label={a.label} current={a.id === currentApp} href={appHref(a, appsRoot)} onClick={open(a)} />
@@ -397,9 +427,9 @@ AppHeader.Switcher = function AppHeaderSwitcher({ currentApp, appsRoot = '', onO
     <div ref={wrap} className={cx('plx-app-switcher', brand && 'plx-app-switcher--brand')}>
       {brand ? (
         <button ref={trigger as React.RefObject<HTMLButtonElement>} type="button" className="plx-app-header__brand plx-app-header__brand--switch" aria-haspopup="dialog" aria-expanded={open} aria-controls={id}
-          aria-label={tw.switchApp.replace('{app}', typeof brand === 'string' ? brand : 'Plenix' + (currentApp && appById(currentApp) ? ' ' + appById(currentApp)!.label : ''))}
+          aria-label={tw.switchApp.replace('{app}', typeof brand === 'string' ? brand : isBrandObject(brand) ? brandName(brand) : 'Plenix' + (currentApp && appById(currentApp) ? ' ' + appById(currentApp)!.label : ''))}
           onClick={() => setOpen(!open)}>
-          {brand}<Icon name={ChevronDownIcon} className="plx-app-header__switch-chevron" />
+          {isBrandObject(brand) ? brandContent(brand, null, true) : brand}<Icon name={ChevronDownIcon} className="plx-app-header__switch-chevron" />
         </button>
       ) : (
         <AppHeader.Item ref={trigger} icon={<Icon name={AppSwitcherIcon} />} label={tw.applications} tooltip={false} aria-haspopup="dialog" aria-expanded={open} aria-controls={id}
