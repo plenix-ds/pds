@@ -2,7 +2,7 @@ id: D-0137
 date: 2026-11-08
 area: tokens
 decided_by: agent (pds1-ds-architect) at G3, owner may switch
-decision: 'Dark-mode contrast (#1074, ADR 0046): new sys category-<hue>-on-surface per category (light = category-<hue>-on-soft; dark = the existing 200/300 shade of the hue, 5.10 to 6.78:1 on #444), comp category-on-surface set per [data-plx-category] by build-steps.js, read by DataPill plain only; cascader-placeholder-text remapped to field-placeholder, and sys field-placeholder in light moves gray-600 -> gray-700 (6.01:1 on the invalid danger-soft fill, 7.11:1 on white; dark stays gray-300). No new colors.'
+decision: 'Dark-mode contrast (#1074, ADR 0046): new sys category-<hue>-on-surface per category (light = category-<hue>-on-soft; dark = the existing 200/300 shade of the hue, 5.10 to 6.78:1 on #444), comp category-on-surface set per [data-plx-category] by build-steps.js, read by DataPill plain only; cascader-placeholder-text remapped to field-placeholder; invalid fields get sys field-placeholder-invalid (light gray-700, 6.01:1 on the danger-soft fill; dark = field-placeholder) through comp input-invalid-placeholder-text and cascader-invalid-placeholder-text; the resting field-placeholder is unchanged (G2 B on #1079). No new colors.'
 why: 'A plain pill draws category text on the page surface, where the soft-fill text color (700/800 shades) is about 1.1 to 1.4:1 in dark mode; inheriting would drop the hue the pill exists to show.'
 options: ['category-<hue>-on-surface tokens (chosen)', 'plain pills inherit the text color in dark mode', 'plain pills read soft-border for text']
 status: active

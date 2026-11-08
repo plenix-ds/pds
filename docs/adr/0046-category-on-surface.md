@@ -35,10 +35,15 @@
 ### Cascader and the field placeholder
 
 - `plx-comp.cascader-placeholder-text` -> `{plx-sys.field-placeholder}`, as Combobox and Input do. It is a remap, not a new token.
-- **`plx-sys.field-placeholder` in light: `gray-600` -> `{plx-ref.color-gray-700}`.** Dark stays `gray-300`.
-  - Why (QA's axe run on #1079): an invalid field has the `feedback-danger-soft` fill (#fde7e7 in light). `gray-600` on it measures 4.31:1, which fails. `gray-700` measures 6.01:1 on it and 7.11:1 on white.
-  - Dark `gray-300` measures 6.31:1 on #444 and 4.61:1 on the dark invalid fill (#56585e).
-  - The Cascader's light placeholder is `gray-700` on main today (`content-subtle`), so it doesn't change. Input, Combobox, TreeSelect and every other field that reads `field-placeholder` get a slightly darker placeholder in light, and their invalid state passes too.
+- **Invalid fields get their own placeholder color** (G2 ruling on #1079, D-0137 B). The resting placeholder doesn't change.
+  - Why (QA's axe run on #1079): an invalid field has the `feedback-danger-soft` fill (#fde7e7 in light). `field-placeholder` (`gray-600`) on it measures 4.31:1, which fails.
+  - Darkening `field-placeholder` everywhere (option A) would bring a resting placeholder to 1.70:1 against typed text, so an empty field would read as filled. G2 rejected that.
+  - **New sys `field-placeholder-invalid`:**
+    - light `{plx-ref.color-gray-700}`: 6.01:1 on red-100;
+    - dark `{plx-sys.field-placeholder}` (`gray-300`): 4.61:1 on the dark fill, gray-700.
+  - **New comp `input-invalid-placeholder-text`** -> `{plx-sys.field-placeholder-invalid}`. The shared `.plx-input[aria-invalid="true"]::placeholder` rule reads it. That rule is the only place a field's fill turns to `input-invalid-background`.
+  - **New comp `cascader-invalid-placeholder-text`** -> `{plx-sys.field-placeholder-invalid}`. `.plx-cascader__field[aria-invalid="true"] .plx-cascader__placeholder` reads it. Each part reads its own comp token, never another part's.
+  - `field-placeholder` stays `gray-600` in light (5.10:1 on white).
 
 ### `plx-sys.category-<hue>-on-surface` (new, in both theme files)
 
@@ -75,12 +80,15 @@
 ## Consequences
 
 - **Semver: PATCH** (*Fixed*: dark-mode contrast for Cascader's placeholder and plain DataPills). The new tokens are internal roles with no new prop. They also go in the changelog as *Added* (tokens), so a consumer reading `--plx-sys-category-*` sees them.
-- Light mode doesn't change for categories. Light field placeholders get one step darker (`gray-600` -> `gray-700`).
+- Light mode doesn't change for categories or for a resting field. Only an invalid field's placeholder gets one step darker in light.
 - `tests/baselines/stories-axe.json` drops the two failures (`node tests/stories-axe-909.test.js --update`).
 
 ## Enforced by
 
-- G3 on the build PR: the token diff matches this entry (29 sys entries per theme, one comp entry per category in `build-steps.js`, and the Cascader remap).
+- G3 on the build PR: the token diff matches this entry: 29 sys entries per theme, one comp entry per category in `build-steps.js`, the Cascader remap, `field-placeholder-invalid` and the two invalid-placeholder comp tokens.
 - Checks 6 and 7 on the new tokens.
 - Check 8 (contrast) and the axe story run (#909): no color-contrast failure for Cascader (including invalid) or plain DataPill in light and dark.
-- A build test: every `category-<hue>-on-surface` measures 4.5:1 or more on `surface-default` in both themes.
+- Build tests:
+  - every `category-<hue>-on-surface` measures 4.5:1 or more on `surface-default` in both themes;
+  - an invalid Input placeholder and an invalid Cascader placeholder each measure 4.5:1 or more on their fill in light and dark;
+  - a resting Input placeholder is still `gray-600` in light.
