@@ -57,6 +57,7 @@
   - A missing icon is a type error and a `devWarn`.
 - With both `status` and `children`, a `devWarn` fires and `status` wins.
 - New class: `plx-property-list__status`.
+- Tile classes set by a tiles list on its parts (build #1059): `plx-property-list__item--tile` and `plx-property-list__value--tile`.
 
 ### Tokens (ref -> sys -> comp; no new colors, per the brief's non-goals; G2 §1)
 
