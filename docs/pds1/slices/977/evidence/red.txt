@@ -1,0 +1,3 @@
+AssertionError [ERR_ASSERTION]: ltr: lg: the corner button is drawn
+    at /home/cc/pds1/work/component-engineer-1/tests/avatar-upload-corner-977.test.js:38:16 {
+  generatedMessage: false,
