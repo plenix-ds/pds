@@ -7031,7 +7031,7 @@
       "$type": "dimension"
     },
     "nav-list-count-text": {
-      "$value": "{plx-sys.content-subtle}",
+      "$value": "{plx-sys.content-muted}",
       "$type": "color"
     },
     "nav-list-count-font-size": {
