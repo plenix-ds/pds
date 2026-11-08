@@ -2940,6 +2940,16 @@
      "legend": "التصفية حسب الفئة"
     }
    }
+  },
+  {
+   "source": "owner, chat, 2026-11-08 06:37 UTC: \"yes for A (recommended): ضد, meaning 'against'\" (#1027)",
+   "date": "2026-11-08",
+   "strings": {
+    "entityHeader": {
+     "vs": "ضد",
+     "versus": "{a} ضد {b}"
+    }
+   }
   }
  ]
 }

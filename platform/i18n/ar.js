@@ -8,6 +8,10 @@ export default {
   "overflowList": {
     "more": "عناصر أخرى"
   },
+  "entityHeader": {
+    "vs": "ضد",
+    "versus": "{a} ضد {b}"
+  },
   "timeline": {
     "pending": "معلّق",
     "legend": "التصفية حسب الفئة"
