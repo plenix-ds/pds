@@ -85,8 +85,8 @@ export function CellValue({ column, value: given, strings, record, pill = false,
   // the full text in a Tooltip when the cell cuts it (#1044, ADR 0043): by default for a wrapping column, by overflow: "tooltip" for any, never with "none"
   const dialog = column.overflow === 'dialog';   // the full text in a Dialog from a corner button on the hovered or active cell (#1122, ADR 0047); it replaces the tooltip
   const tip = !dialog && (column.overflow === 'tooltip' || (column.overflow !== 'none' && / \S*__value--wrap\b/.test(' ' + (mods || ''))));
-  if (island) return <CutText tip={tip} dialog={dialog ? column.title : undefined} text={valueText(value)} className={own} hover={fullText}><Isolate dir={island==='data'?'auto':island==='id'?undefined:'ltr'} kind={island==='email'||island==='url'||island==='id'?island:undefined}>{valueText(value)}</Isolate></CutText>;
-  return <CutText tip={tip} dialog={dialog ? column.title : undefined} text={valueText(value)} className={own} hover={fullText}>{localDigits(valueText(value))}</CutText>;
+  if (island) return <CutText tip={tip} dialog={dialog ? (column.title ?? '') : undefined} text={valueText(value)} className={own} hover={fullText}><Isolate dir={island==='data'?'auto':island==='id'?undefined:'ltr'} kind={island==='email'||island==='url'||island==='id'?island:undefined}>{valueText(value)}</Isolate></CutText>;
+  return <CutText tip={tip} dialog={dialog ? (column.title ?? '') : undefined} text={valueText(value)} className={own} hover={fullText}>{localDigits(valueText(value))}</CutText>;
 }
 
 // A text value that may be cut (a line count, an ellipsis): with the tooltip on, the full text shows on hover and on keyboard focus of its cell, only while it is cut.
@@ -139,7 +139,12 @@ let openFullText: string | null = null;
 const fullTextWatchers = new Set<() => void>();
 const fullTextSubscribe = (watch: () => void) => { fullTextWatchers.add(watch); return () => { fullTextWatchers.delete(watch); }; };
 const setFullText = (address: string | null) => { openFullText = address; fullTextWatchers.forEach((watch) => watch()); };
-const cellAddress = (cell: Element) => { const row = cell.closest('[role=row]'); return (row ? row.getAttribute('data-plx-record') : '') + '|' + cell.getAttribute('data-plx-field'); };
+const gridNumbers = new WeakMap<Element, number>();
+const cellAddress = (cell: Element) => {   // the grid, the row and the field: two grids on a page with the same record ids do not open each other's Dialog
+  const grid = cell.closest('[role=grid],[role=treegrid],[role=table]'), row = cell.closest('[role=row]');
+  if (grid && !gridNumbers.has(grid)) gridNumbers.set(grid, gridNumbers.size + 1);
+  return (grid ? gridNumbers.get(grid) : 0) + '|' + (row ? row.getAttribute('data-plx-record') : '') + '|' + cell.getAttribute('data-plx-field');
+};
 function CutTextDialog({ label, text, className, children }: { label: string; text: string; className: string; children: React.ReactNode }) {
   const box = React.useRef<HTMLSpanElement>(null), [cutFor, setCutFor] = React.useState<string | null>(null), [on, setOn] = React.useState(false), [mine, setMine] = React.useState<string | null>(null);
   const words = useStrings('text') as Record<string, string>;
@@ -156,11 +161,18 @@ function CutTextDialog({ label, text, className, children }: { label: string; te
     cell.addEventListener('pointerenter', enter); cell.addEventListener('pointerleave', leave); cell.addEventListener('focus', enter); cell.addEventListener('blur', leave);
     return () => { cell.removeEventListener('pointerenter', enter); cell.removeEventListener('pointerleave', leave); cell.removeEventListener('focus', enter); cell.removeEventListener('blur', leave); };
   }, [measure]);
+  // the cell is the focus stop that a screen reader announces: it says F2 opens the full text while the text is cut
+  React.useEffect(() => {
+    const cell = box.current && box.current.closest('[role=gridcell]');
+    if (!cell) return undefined;
+    if (cutFor === text) cell.setAttribute('aria-keyshortcuts', 'F2'); else cell.removeAttribute('aria-keyshortcuts');
+    return () => cell.removeAttribute('aria-keyshortcuts');
+  }, [cutFor, text]);
   const close = () => { setFullText(null); const cell = box.current && box.current.closest('[role=gridcell]'); if (cell) setTimeout(() => (cell as HTMLElement).focus(), 0); };   // after the Dialog has handed focus back to the button
   return (
     <>
       <span ref={box} className={className}>{children}</span>
-      {cutFor === text && (on || open) ? <Button variant="ghost" size="2xs" iconOnly icon={ExpandIcon} label={fill(words.fullTextOf, { label })} tooltip={words.fullText} tabIndex={-1} aria-haspopup="dialog" aria-keyshortcuts="F2" data-plx-full-text="" className="plx-data-grid__full-text" onClick={() => setFullText(mine)} /> : null}
+      {cutFor === text && (on || open) ? <Button variant="ghost" size="2xs" iconOnly icon={ExpandIcon} label={label ? fill(words.fullTextOf, { label }) : words.fullText} tooltip={words.fullText} tabIndex={-1} aria-haspopup="dialog" aria-keyshortcuts="F2" data-plx-full-text="" className="plx-data-grid__full-text" onClick={() => setFullText(mine)} /> : null}
       {open ? <Rare part="fullTextDialog" args={{ label, text, onClose: close }} /> : null}
     </>
   );

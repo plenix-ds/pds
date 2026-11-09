@@ -50,6 +50,11 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
       // an editable cell keeps F2 = edit
       await mount(true); await page.focus(note); await wait(500); await page.keyboard.press('F2'); await wait(400);
       assert.equal(await dialog(), null, T + 'F2 on an editable cell does not open the dialog'); assert.ok(await page.evaluate(() => !!document.querySelector('#c input')), T + 'F2 on an editable cell starts editing');
+      // the cell says F2 while the text is cut; a column with no title still gets the button, named by the generic words
+      await page.focus(note); await wait(500); assert.equal(await page.evaluate((sel) => document.querySelector(sel).getAttribute('aria-keyshortcuts'), note), 'F2', T + 'the cut cell announces F2');
+      await page.evaluate(async (dir, LONG) => { const h = React.createElement, P = Plenix; window.__root.unmount(); const c = document.getElementById('c'); window.__root = ReactDOM.createRoot(c);
+        window.__root.render(h(P.DataGrid, { label: 'Cases', data: [{ id: 1, note: (dir === 'rtl' ? '\u200f' : '') + LONG }], index: 'id', columns: [{ field: 'note', lines: 2, overflow: 'dialog' }] })); await new Promise((r) => setTimeout(r, 900)); }, dir, LONG);
+      await page.hover(note); await wait(500); b = await buttons(); assert.equal(b.length, 1, T + 'an untitled column still gets the button'); assert.equal(b[0].name, 'Show full text', T + 'named by the generic words');
       await page.close();
     }
     assert.deepEqual(errors, [], 'no script errors: ' + errors.join(' | '));
