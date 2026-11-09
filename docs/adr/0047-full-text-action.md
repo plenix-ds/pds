@@ -3,7 +3,9 @@
 - **Status:** accepted
 - **Date:** 2026-11-09
 - **Deciders:** pds1-ds-architect (G3), on the owner's request relayed on #1122 (chat, 2026-11-09). Decision D-0140 (owner may switch).
-- **Issue:** #1122 (S1). Brief: `docs/pds1/slices/1122/brief.md` (PR #1123).
+- **Issue:** #1122 (S1).
+  - Brief: `docs/pds1/slices/1122/brief.md` (PR #1123).
+  - Design (G2, PR #1125, D-0141): `docs/pds1/slices/1122/design.md`. It owns the look, the corner and the states.
   - G2 (`pds1-design-director`) owns the look: the icon, the corner, the hover and focus states, and whether short overflow expands in place. This entry owns the names, the shared part and the tokens.
 
 ## Context
@@ -35,7 +37,7 @@
   - `useTruncated`, `ExpandableText` and `CutText` all call `isCut`, so the three parts read one measure.
   - This is an internal refactor with no API change.
 - `platform/components/Text/FullTextAction.tsx` holds the internal `FullTextAction`: the icon button and its Dialog. `Text`, `PropertyList.Item` and DataGrid cells import it. It is not in the package index.
-  - The button is the existing `Button` with `size="2xs"`, icon only (`expand`), and the subtle look. It is not an icon in a box. G2 may name another icon from the set.
+  - The look is G2's (D-0141): a ghost `2xs` icon-only `Button` with the `expand` glyph (not mirrored), at the inline-end, block-end corner. It is not an icon in a box.
   - It has `aria-haspopup="dialog"` and the accessible name "Show full text: {label}", or "Show full text" without a label.
   - The Dialog is the existing `Dialog` at `size="md"`. Its title is the label, or "Full text" without one. Its body is the full text, scrolling, with `dir="auto"`, and Close is the Dialog's own. Closing returns focus to the button.
   - **It shows only while the text is cut** (D-0091). The text that fits gets no icon.
@@ -64,7 +66,7 @@
 - `"dialog"` keeps the clamp. The icon shows at the cell's inline end on row hover and while the cell has focus, only when the cell's text is cut.
 - The cut is measured on demand when the cell is hovered or focused, as for `"tooltip"`, with no observer per cell.
 - The label is the column's `title`.
-- **Keyboard:** the button is the cell's one control, so the grid's existing cell-content keys reach it. Closing the Dialog returns focus to the cell.
+- **Keyboard:** the grid has no key that enters a cell's controls (`engine/keys.ts`). F2 on a focused read-only cut cell opens the Dialog, and the cell gets `aria-keyshortcuts="F2"`. F2 still edits an editable cell, and Enter still opens the row. Closing the Dialog returns focus to the cell.
 - `"dialog"` and `"tooltip"` don't combine. The default stays as ADR 0043 set it.
 - This part is P1 in the brief. It may ship in a later PR under this entry.
 
@@ -78,21 +80,21 @@
 
 ### Tokens (ref -> sys -> comp)
 
-- None are expected. The button uses Button's `2xs` tokens, and the Dialog uses its own.
-- If G2's corner placement needs a gap between the text and the icon, the one allowed name is `plx-comp.text-full-action-gap`, pointing at a `plx-sys.space-inline-*` token (never a `plx-ref` token).
-  - It is added in the build PR together with the CSS that reads it, and that PR is labeled `agent:pds1-ds-architect` for the ownership check.
+- **`plx-comp.text-full-action-gap`** -> `{plx-sys.space-inline-xs}` (4px): the gap between the cut text and the corner button in a box (G2).
+  - It is added in the build PR together with the CSS that reads it, because CI rejects a token nothing reads. That PR is labeled `agent:pds1-ds-architect` for the ownership check.
+  - The button and the Dialog use their existing tokens.
   - Any other token needs a new ADR entry.
 
 ### Not in this change
 
-- **In-place expansion from the corner icon.** If G2 chooses it for short overflow, the value `"expand"` is reserved for it on all three props. It is added by a new entry, as a minor.
+- **In-place expansion from the corner icon.** G2 (D-0141) chose the Dialog only for 1.4.0. If the owner picks in-place (G2 option B1), the value `"expand"` is reserved for it on all three props. It is added by a new entry, as a minor.
 - An app-wide default (brief P2).
 - Editing in the Dialog (brief non-goal).
 
 ## Consequences
 
 - **Semver: MINOR (1.4.0).**
-  - *Added:* `Text.overflow`, `Text.overflowLabel`, `PropertyList.Item.lines`, `PropertyList.Item.overflow`, the value `"dialog"` for DataGrid `columns[].overflow`, the classes `plx-text-full` and `plx-text-full__action`, and the three catalog keys.
+  - *Added:* the token `plx-comp.text-full-action-gap`, `Text.overflow`, `Text.overflowLabel`, `PropertyList.Item.lines`, `PropertyList.Item.overflow`, the value `"dialog"` for DataGrid `columns[].overflow`, the classes `plx-text-full` and `plx-text-full__action`, and the three catalog keys.
   - *Changed (internal):* one cut measure (`isCut`) behind `useTruncated`, `ExpandableText` and `CutText`.
 - **No deprecation.** `Text expandable` stays as the "Show more" button under the text.
 - **Bundle:** DataGrid keeps its dialogs out of the default path (`engine/chromeRare.tsx`, `engine/rare.tsx`). The grid's `"dialog"` cell loads the Dialog the same way, on first open, so the `{ DataGrid }` one-part limit (D-0139, 455 KB) gains only the icon button and the measure.
@@ -102,7 +104,7 @@
 ## Enforced by
 
 - G3 on each build PR: the API diff matches this entry, with no other new props, exports or tokens.
-- Check 6 (token tiers) and check 7 (token names) on the build PR, if `plx-comp.text-full-action-gap` is added.
+- Check 6 (token tiers) and check 7 (token names) on the build PR, for `plx-comp.text-full-action-gap` (a comp token pointing at sys, never at ref, with no value in its name).
 - `node tools/ci/adr-index.mjs --check`: this file's heading and status.
 - The build PR's tests (brief AC-1 to AC-5):
   - a cut value shows the icon, and a fitting one shows none;
