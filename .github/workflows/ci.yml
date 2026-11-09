@@ -358,10 +358,68 @@ jobs:
           if [ -n "$BASE_SHA" ]; then git diff --name-only "$(git merge-base "$BASE_SHA" HEAD)" HEAD > "$RUNNER_TEMP/changed.txt"; export STORIES_CHANGED="$RUNNER_TEMP/changed.txt"; fi
           STORIES_SHARD="$SHARD/4" STORIES_WARN_BROKEN=1 CHROME_PATH="$(command -v google-chrome)" node tests/stories-axe-909.test.js
 
+  bundle-budgets:
+    name: Bundle budgets (one-part imports, diff-aware)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      # runs when the code the package is built from, its build or the measure changed (#1144); otherwise it passes without
+      # running. In the merge group the base is main, so PRs that each fit but go over together fail here, not at the deploy
+      # (1.3.0 #1103, 1.4.0 D-0142, 1.5.0 D-0144)
+      - name: Did anything the package is built from change?
+        id: scope
+        run: |
+          if git diff --quiet "$(git merge-base "$BASE_SHA" HEAD)" HEAD -- platform packages build-app.js build-usage.js build-packages.js build-exports.js check-bundle.js tools/agent/one-part-sizes.js tools/agent/one-part-vite.mjs package.json package-lock.json .github/workflows/ci.yml; then
+            echo "run=no" >> "$GITHUB_OUTPUT"
+            echo "package sources, build and measure unchanged: not run for this PR"
+          else
+            echo "run=yes" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        if: steps.scope.outputs.run == 'yes'
+        with:
+          node-version: 22
+          cache: npm
+      - name: Head, install and build the package (npm ci runs build-app.js; as release.yml)
+        if: steps.scope.outputs.run == 'yes'
+        run: |
+          npm ci --no-audit --no-fund
+          node build-usage.js
+          node build-packages.js
+      - name: One-part imports within their limits (tools/agent/one-part-sizes.js --check)
+        id: check
+        if: steps.scope.outputs.run == 'yes'
+        run: |
+          node tools/agent/one-part-sizes.js --check | tee "$RUNNER_TEMP/head.txt"
+      # over a limit: the same imports measured on the base, so the PR shows what it added. The PR then loads the new code
+      # on first use, or carries a decision record that raises the limit, with G3 from the DS Architect (#1144)
+      - name: Over a limit, the base's sizes beside the head's
+        if: failure() && steps.check.outcome == 'failure'
+        run: |
+          git worktree add --detach "$RUNNER_TEMP/base" "$(git merge-base "$BASE_SHA" HEAD)"
+          (cd "$RUNNER_TEMP/base" && npm ci --no-audit --no-fund && node build-usage.js && node build-packages.js) >/dev/null
+          entry="$RUNNER_TEMP/base/release/packages/react/$(node -p "require('$RUNNER_TEMP/base/release/packages/react/package.json').module")"
+          node tools/agent/one-part-sizes.js --entry "$entry" | tee "$RUNNER_TEMP/base.txt"
+          {
+            echo "### Bundle budgets: over a limit"
+            echo "Load the new code on first use, or add a decision record that raises the limit (G3, DS Architect)."
+            echo '```'
+            echo "head:"; cat "$RUNNER_TEMP/head.txt"
+            echo "base (merge base):"; cat "$RUNNER_TEMP/base.txt"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          grep ONE_PART_SIZES_FAIL "$RUNNER_TEMP/head.txt" | sed 's/^/::error::/'
+
   result:
     name: CI result
     if: always()
-    needs: [zizmor, decisions, process, rulesync, generated, trace, design-checks, zero-overlap, story-axe, checks]
+    needs: [zizmor, decisions, process, rulesync, generated, trace, design-checks, zero-overlap, story-axe, bundle-budgets, checks]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
