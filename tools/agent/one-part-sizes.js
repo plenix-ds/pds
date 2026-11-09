@@ -21,7 +21,7 @@ const PKG = path.join(ROOT, 'release', 'packages', 'react');
 const CASES = [
   { name: '{ Button }', code: 'import { Button } from "plenix"; console.log(Button);', limit: 105 },
   { name: '{ Badge }', code: 'import { Badge } from "plenix"; console.log(Badge);', limit: 30 },
-  { name: '{ DataGrid }', code: 'import { DataGrid } from "plenix"; console.log(DataGrid);', limit: 455 }, // 455 (D-0139, #1103): 1.3.0 measures 451.4 KB with columns[].lines, the cut-text Tooltip (ADR 0043) and the placeholder LoadingState (ADR 0042); 450: #714's module split (call objects, about 1.6 KB) and room for #465 cell selection (opt-in)
+  { name: '{ DataGrid }', code: 'import { DataGrid } from "plenix"; console.log(DataGrid);', limit: 460 }, // 460 (D-0142, #1132): 1.4.0 measures 456.9 KB, since Text's cut-text button (FullTextAction, ADR 0047) brings Dialog into the grid's cells; 455 (D-0139, #1103): 1.3.0 measures 451.4 KB with columns[].lines, the cut-text Tooltip (ADR 0043) and the placeholder LoadingState (ADR 0042); 450: #714's module split (call objects, about 1.6 KB) and room for #465 cell selection (opt-in)
   { name: '* as P', code: 'import * as P from "plenix"; console.log(P);', limit: 1450 }, // 1,450 (the DataGrid cell editors, #84: the date editor on main measures 1,434.7); 1,430: the owner-approved #775 and #769 parts add about 1 to 2 KB each (1,420 for the branch loader #814, Anchor, Cascader extras; 1,430 for the visible rows #815, the pickers' time zone #813, EntityTitle #803 and the control cards #804, which measure about 1,424 together)
 ];
 // the module the application imports: the package's ES module entry, as a bundler reads it (package.json "module")
