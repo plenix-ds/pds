@@ -1,0 +1,6 @@
+One import from release/packages/react/dist/index.js (Vite, minified, React external; esbuild beside it as a cross-check):
+  { Button }       95.3 KB    33.6 KB gzipped   limit 105 KB   (esbuild 33.4 KB, cross-check)
+  { Badge }        16.5 KB     6.7 KB gzipped   limit 30 KB   (esbuild 33.4 KB, cross-check)
+  { Text }        102.0 KB    35.9 KB gzipped   limit 105 KB   (esbuild 33.4 KB, cross-check)
+  { DataGrid }    454.3 KB   149.8 KB gzipped   limit 455 KB   (esbuild 33.4 KB, cross-check)
+  * as P         1427.5 KB   454.0 KB gzipped   limit 1450 KB   (esbuild 35.2 KB, cross-check)
