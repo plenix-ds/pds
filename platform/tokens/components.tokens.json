@@ -930,6 +930,11 @@
       "$value": "{plx-sys.space-inset-md}",
       "$type": "dimension"
     },
+    "text-full-action-gap": {
+      "$value": "{plx-sys.space-inline-xs}",
+      "$type": "dimension",
+      "$description": "Text and PropertyList.Item with overflow dialog: the space between the cut text and its corner button (ADR 0047, #1122)."
+    },
     "input-placeholder-text": {
       "$value": "{plx-sys.field-placeholder}",
       "$type": "color"
