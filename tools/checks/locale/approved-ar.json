@@ -2950,6 +2950,17 @@
      "versus": "{a} ضد {b}"
     }
    }
+  },
+  {
+   "source": "D-0078 and the same-English rule (docs/i18n/arabic.md), #1122 (2026-11-09). text.fullText and text.fullTextOf: owner-approved dataGrid.fullText \"Show the full text\" = عرض النص كاملًا. text.fullTextTitle: the same words as a title, النص الكامل; Microsoft Terminology Collection: text = نص.",
+   "date": "2026-11-09",
+   "strings": {
+    "text": {
+     "fullText": "عرض النص كاملًا",
+     "fullTextOf": "عرض النص كاملًا: {label}",
+     "fullTextTitle": "النص الكامل"
+    }
+   }
   }
  ]
 }

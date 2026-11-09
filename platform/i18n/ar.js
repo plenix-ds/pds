@@ -902,7 +902,10 @@ export default {
   },
   "text": {
     "more": "عرض المزيد",
-    "less": "عرض أقل"
+    "less": "عرض أقل",
+    "fullText": "عرض النص كاملًا",
+    "fullTextOf": "عرض النص كاملًا: {label}",
+    "fullTextTitle": "النص الكامل"
   },
   "timePicker": {
     "hour": "الساعة",
