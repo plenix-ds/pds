@@ -14,19 +14,24 @@
 // - a failed CI run of a PR or its merge-queue entry -> the PR's roles
 // - pushes, branch creation and deletion are ignored
 // Delivery: `team.sh wake <window> <text> 20` (only when the session is idle); a busy session keeps its events and gets
-// them in one message when it is next idle. A role with no window triggers `team.sh schedule` (#246) once per round.
+// them in one message when it is next idle. A role with no window triggers `team.sh schedule` (#246) once per round, and
+// its events are held for it in .asks.json (#1130: they used to be dropped) and handed over once its window is up. A
+// mention stays an open ask until the role signs a comment on that item (24 h at most): the scheduler starts a role with
+// an open ask and never idles it out.
 import { execFileSync } from 'node:child_process';
 import http from 'node:http';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { load, roles } from './registry.mjs';
+import * as Asks from './asks.mjs';
 
 const REPO = 'plenix-ds/pds';
 const API = 'https://api.github.com';
 const ROOT = process.env.PDS1_ROOT || path.join(os.homedir(), 'pds1');
 const TEAM = process.env.PDS1_TEAM || path.join(ROOT, 'team.sh');
 const STATE = path.join(ROOT, '.pickup-state.json');
+const ASKS = path.join(ROOT, '.asks.json');
 const LOG = path.join(ROOT, 'team.log');
 const DRY = !!process.env.PICKUP_DRY;
 const IDLE_S = process.env.PICKUP_IDLE_S || '20';
@@ -34,7 +39,9 @@ const IDLE_S = process.env.PICKUP_IDLE_S || '20';
 const log = (msg) => { if (DRY) console.log(msg); else fs.appendFileSync(LOG, `${new Date().toISOString().slice(0, 19)}Z pickup: ${msg}\n`); };
 const token = execFileSync('gh', ['auth', 'token'], { encoding: 'utf8' }).trim(); // kept in memory, never logged
 const state = (() => { try { return JSON.parse(fs.readFileSync(STATE, 'utf8')); } catch { return {}; } })();
-const save = () => { if (!DRY) fs.writeFileSync(STATE, JSON.stringify(state)); };
+const asks = Asks.read(ASKS);
+const nowS = () => Math.floor(Date.now() / 1000);
+const save = () => { if (!DRY) { fs.writeFileSync(STATE, JSON.stringify(state)); Asks.write(ASKS, Asks.prune(asks, nowS())); } };
 
 async function get(url, etagKey) {
   const headers = { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' };
@@ -85,6 +92,8 @@ async function route(ev) {
       if (ev.type === 'IssueCommentEvent' && p.action !== 'created') return null;
       // mentions come from the text without its signature lines; a role is never woken by its own comment
       const mentioned = named(body.replace(/—\s*PDS1-[A-Za-z0-9-]+/g, ''));
+      // a signed comment by a role on this item answers the asks it had there (#1130)
+      if (signer(body) && !DRY) for (const k of Object.keys(asks)) if (k.replace(/-\d+$/, '') === signer(body)) Asks.answer(asks, k, item.number);
       roles = [...new Set([...roles, ...mentioned])].filter((r) => r.replace(/-\d+$/, '') !== signer(body));
       if (mentioned.length) mention = true;
       if (!roles.length && !signer(body)) roles = [INTAKE];
@@ -98,14 +107,36 @@ async function route(ev) {
     default:
       return null;
   }
-  return roles.length ? { roles, line: `${what} #${item.number} "${short(item.title)}" ${item.html_url}` } : null;
+  return roles.length ? { roles, number: item.number, mention, line: `${what} #${item.number} "${short(item.title)}" ${item.html_url}` } : null;
 }
 
 const pending = new Map(); // window -> lines
-function queue(role, line) {
-  const wins = windows().filter((w) => w === role || w.replace(/-\d+$/, '') === role);
-  if (!wins.length) { needSchedule = true; log(`no window for ${role}: ${line}`); return; }
-  for (const w of wins) { const l = pending.get(w) || []; if (!l.includes(line)) l.push(line); pending.set(w, l); }
+const winsOf = (role, all = windows()) => all.filter((w) => w === role || w.replace(/-\d+$/, '') === role);
+function push(w, line) { const l = pending.get(w) || []; if (!l.includes(line)) l.push(line); pending.set(w, l); }
+// meta: { number, mention } from route(); a run failure has no mention
+function queue(role, line, { number = 0, mention = false } = {}) {
+  const wins = winsOf(role);
+  if (!wins.length) {
+    // held, not dropped (#1130): the scheduler starts the role and the lines go to its window once it is up
+    needSchedule = true;
+    if (!DRY) Asks.hold(asks, role, { number, line, mention, delivered: false }, nowS());
+    log(`no window for ${role}: held for its start: ${line}`);
+    return;
+  }
+  if (mention && !DRY) Asks.hold(asks, role, { number, line, mention, delivered: true }, nowS());
+  for (const w of wins) push(w, line);
+}
+// held lines of roles whose window is now up (#1130)
+function release() {
+  const all = windows();
+  for (const role of Object.keys(asks)) {
+    const wins = winsOf(role, all);
+    // still no window: ask the scheduler again every 5 minutes (it may have had no free slot or memory)
+    if (!wins.length) { if (Asks.owed(asks, nowS()).has(role) && nowS() - (state.owedScheduleAt || 0) >= 300) { needSchedule = true; state.owedScheduleAt = nowS(); } continue; }
+    const lines = Asks.take(asks, role);
+    if (lines.length) log(`${role} is up: handing over ${lines.length} held event(s)`);
+    for (const w of wins) for (const line of lines) push(w, line);
+  }
 }
 let needSchedule = false;
 function windows() {
@@ -118,7 +149,13 @@ function deliver() {
     let code = 0;
     try { execFileSync('bash', [TEAM, 'wake', win, text, IDLE_S], { stdio: DRY ? 'inherit' : 'ignore', env: { ...process.env, ...(DRY ? { NUDGE_DRY: '1' } : {}) } }); } catch (e) { code = e.status; }
     if (code === 0) { pending.delete(win); if (!DRY) log(`woke ${win}: ${lines.length} event(s)`); }
-    else if (code === 4) { pending.delete(win); log(`${win} is gone; dropped ${lines.length} event(s)`); }
+    else if (code === 4) {
+      // the window closed between listing and waking: hold the lines for the role's next start (#1130)
+      pending.delete(win);
+      if (!DRY) for (const l of lines) Asks.hold(asks, win, { number: Number((/#(\d+)/.exec(l) || [])[1] || 0), line: l, mention: l.startsWith('you are named'), delivered: false }, nowS());
+      needSchedule = true;
+      log(`${win} is gone; held ${lines.length} event(s) for its next start`);
+    }
     else if (DRY) console.log(`${win} is busy: would deliver later (${lines.length} event(s))`);
   }
   if (needSchedule) {
@@ -150,7 +187,7 @@ async function routeRun(run) {
   const roles = agentRoles(pr.labels);
   const line = `${run.name} failed on PR #${n} "${short(pr.title)}" ${run.html_url}`;
   if (DRY) console.log(`${run.created_at} run failed -> ${roles.join(', ') || '(no agent label: ignored)'}  ${line}`);
-  for (const role of roles) queue(role, line);
+  for (const role of roles) queue(role, line, { number: n });
 }
 
 async function round() {
@@ -169,7 +206,7 @@ async function round() {
     else for (const ev of DRY ? fresh.slice(-15) : fresh) {
       const r = await route(ev);
       if (DRY) { const it = ev.payload?.issue || ev.payload?.pull_request; console.log(`${ev.created_at} ${ev.type}${ev.payload?.action ? '/' + ev.payload.action : ''} #${it?.number ?? '-'} -> ${r ? r.roles.join(', ') : '(ignored)'}${r ? '  ' + r.line : ''}`); }
-      if (r && once(eventKey(ev.type, ev.payload))) for (const role of r.roles) queue(role, r.line);
+      if (r && once(eventKey(ev.type, ev.payload))) for (const role of r.roles) queue(role, r.line, r);
     }
     // remember exactly the ids of the current feed: an event that leaves the feed never returns, and a capped list
     // that drops its oldest entries forgot events still in the feed, so they were delivered again and again (#220:
@@ -184,6 +221,7 @@ async function round() {
     }
     if (runs.workflow_runs[0]) state.lastRunId = Math.max(state.lastRunId || 0, runs.workflow_runs[0].id);
   }
+  if (!DRY) release();
   deliver();
   save();
   return Math.max(60, poll);
@@ -210,9 +248,11 @@ if (WEBHOOK_PORT) {
         } else if (TYPES[kind]) {
           const ev = { type: TYPES[kind], payload };
           const r = await route(ev);
-          if (r && once(eventKey(ev.type, payload))) for (const role of r.roles) queue(role, r.line);
+          if (r && once(eventKey(ev.type, payload))) for (const role of r.roles) queue(role, r.line, r);
         }
+        release();
         deliver();
+        save();
       } catch (e) { log(`webhook failed: ${e.message}`); }
     });
   }).listen(WEBHOOK_PORT, '127.0.0.1', () => log(`webhook listener on 127.0.0.1:${WEBHOOK_PORT}`));

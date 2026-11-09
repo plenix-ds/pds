@@ -19,12 +19,15 @@
 // - Stop: a long-work window idle for long_work.idle_exit_min (from its activity record, .claude/hooks/activity.cjs; a
 //   window without a record falls back to the screen: no "esc to interrupt" and unchanged), whose role has no waiting
 //   issue, no open PR labeled for it and no open PR from the branch checked out in its worktree.
+// - Asks (#1130): a role with an event held for it or a mention it has not answered (pickup's .asks.json, at most 24 h)
+//   is waiting too: it is started like a role with an issue, and idle exit never stops it.
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { load, roles, setting } from './registry.mjs';
 import { idleFor, admit } from './capacity.mjs';
+import { read as readAsks, summary as askSummary } from './asks.mjs';
 
 const REPO = 'plenix-ds/pds';
 const SESSION = process.env.PDS1_SESSION || 'pds1';
@@ -68,6 +71,15 @@ for (const i of issues) {
     r.count++; r.sev = Math.min(r.sev, sev); if (i.createdAt < r.oldest) r.oldest = i.createdAt; r.numbers.push(i.number);
     byRole.set(m[1], r);
   }
+}
+// held events and unanswered mentions (#1130): the role is waiting, with the asked items as its numbers
+for (const [key, a] of askSummary(readAsks(path.join(ROOT, '.asks.json')), Math.floor(Date.now() / 1000))) {
+  const role = key.replace(/-\d+$/, '');
+  const r = byRole.get(role) || { count: 0, sev: 5, oldest: '9999', numbers: [] };
+  r.count += a.count; if (a.oldest < r.oldest) r.oldest = a.oldest;
+  r.numbers.push(...a.numbers.filter((n) => !r.numbers.includes(n)));
+  r.asked = true;
+  byRole.set(role, r);
 }
 const prLabeled = (role) => prs.some((p) => p.labels.some((l) => l.name === `agent:pds1-${role}`));
 const prHeads = new Set(prs.map((p) => p.headRefName));
@@ -130,7 +142,7 @@ const budget = { slots: maxLong - (long.length - stops.length), reservedLeft: Ma
 const withRole = candidates.map((c) => ({ ...c, priority: BY_ID.get(c.role)?.priority, gate: BY_ID.get(c.role)?.gate === true }));
 for (const c of admit(withRole, budget)) {
   const what = `${c.role}${c.n ? ' ' + c.n : ''}`;
-  const why = `${c.count} waiting issue${c.count > 1 ? 's' : ''} (${c.priority || 'no priority'}, ${c.sev < 5 ? 'S' + c.sev : 'no severity'}, oldest ${c.oldest.slice(0, 10)}, e.g. #${c.numbers.slice(0, 3).join(', #')})`;
+  const why = `${c.count} waiting ${c.asked ? 'item' : 'issue'}${c.count > 1 ? 's' : ''}${c.asked ? ', incl. an unanswered mention' : ''} (${c.priority || 'no priority'}, ${c.sev < 5 ? 'S' + c.sev : 'no severity'}, oldest ${c.oldest.slice(0, 10)}, e.g. #${c.numbers.slice(0, 3).join(', #')})`;
   if (c.verdict === 'no-slot') console.log(`note waiting ${what}: no long-work slot (${long.length - stops.length}/${maxLong}) | ${why}`);
   else if (c.verdict === 'reserved') console.log(`note waiting ${what}: the free slots are reserved for gate roles (long_work.reserved_gate_slots) | ${why}`);
   else if (c.verdict === 'memory') console.log(`note waiting ${what}: memory ${c.mem.toFixed(1)} GB free, needs ${minFreeGb} GB after a ${perAgentGb} GB session | ${why}`);
