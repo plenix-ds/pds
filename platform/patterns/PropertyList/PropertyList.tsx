@@ -87,7 +87,9 @@ PropertyList.Item = function PropertyListItem({ label, htmlFor, description, dat
   devWarn('PropertyList.Item', { lines: lines !== undefined && [2, 3, 4].indexOf(Number(lines)) < 0 ? lines : undefined }, { lines: [2, 3, 4] });
   const cutTo = !status && [2, 3, 4].indexOf(Number(lines)) >= 0 ? Number(lines) : null;
   const value = kind === 'id' ? <Isolate kind="id">{children}</Isolate> : data ? <Isolate dir="auto">{children}</Isolate> : children;
-  const cutValue = cutTo ? <Text as="span" lines={cutTo} overflow={(overflow || 'dialog') === 'dialog' ? 'dialog' : 'none'} overflowLabel={typeof label === 'string' ? label : undefined}>{value}</Text> : null;
+  const [labelText, setLabelText] = React.useState<string | undefined>(typeof label === 'string' ? label : undefined);   // a label that is not text names the button by its text content
+  React.useLayoutEffect(() => { setLabelText(typeof label === 'string' ? label : ((textRef.current && textRef.current.textContent) || undefined)); }, [label]);
+  const cutValue = cutTo ? <Text as="span" lines={cutTo} overflow={(overflow || 'dialog') === 'dialog' ? 'dialog' : 'none'} overflowLabel={labelText}>{value}</Text> : null;
   devWarn('PropertyList.Item', { status: status && !status.icon ? 'without an icon' : undefined, children: status && children ? 'beside a status' : undefined }, { status: ['with an icon'], children: ['alone'] });   // a status needs its icon and wins over children
   return (
     <div className={cx('plx-property-list__item', tile && 'plx-property-list__item--tile', span === 'full' && 'plx-property-list__item--full', className)}>

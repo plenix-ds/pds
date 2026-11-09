@@ -42,6 +42,7 @@
 /* a heading stays with what follows it on paper */
 .plx-text:is(h1, h2, h3, h4){break-after:var(--plx-sys-print-keep,auto);}
 /* overflow="dialog" (ADR 0047): the text and its corner button, the button at the inline end, beside the last line */
-.plx-text-full{align-items:end;column-gap:var(--plx-comp-text-full-action-gap);display:grid;grid-template-columns:minmax(0, 1fr) auto;min-inline-size:0;}
+.plx-text-full{align-items:end;display:grid;grid-template-columns:minmax(0, 1fr) auto;min-inline-size:0;}
+.plx-text-full--cut{column-gap:var(--plx-comp-text-full-action-gap);}
 .plx-text-full__text{min-inline-size:0;}
 .plx-text-full__body{overflow-wrap:anywhere;white-space:pre-wrap;}

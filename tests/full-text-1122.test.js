@@ -51,8 +51,18 @@ require('./limit.js');
       await mount(`h(P.PropertyGroup, { heading: 'Case', variant: 'tiles' }, h(P.PropertyList, null, h(I, { label: 'Recommendation', lines: 3 }, LONG + LONG), h(I, { label: 'Short', lines: 3 }, 'Short'), h(I, { label: 'Quiet', lines: 3, overflow: 'none' }, LONG + LONG), h(I, { label: 'Status', lines: 3, status: { label: 'Open', tone: 'active', icon: 'check' } })))`, 420);
       const names = await page.evaluate(() => [...document.querySelectorAll('#c [aria-label^="Show full text"]')].map((b) => b.getAttribute('aria-label')));
       assert.deepEqual(names, ['Show full text: Recommendation'], T + 'only the cut item has the button, named by its label (' + JSON.stringify(names) + ')');
+      // expandable with overflow dialog: the dialog wins; a label that is not text names the button by its text
+      await mount(`h(P.Text, { as: 'p', lines: 2, expandable: true, overflow: 'dialog', overflowLabel: 'Notes' }, LONG)`, 320); s = await state(); assert.equal(s.name, 'Show full text: Notes', T + 'with expandable too the dialog button shows');
+      assert.ok(await page.evaluate(() => !document.querySelector('#c .plx-text-expand')), T + 'and the Show more button does not');
+      await mount(`h(P.PropertyList, null, h(I, { label: h('span', null, 'Rich label'), lines: 3 }, LONG + LONG))`, 420);
+      assert.equal(await page.evaluate(() => (document.querySelector('#c [aria-label^="Show full text"]') || {}).getAttribute && document.querySelector('#c [aria-label^="Show full text"]').getAttribute('aria-label')), 'Show full text: Rich label', T + 'a label that is not text names the button by its text');
+      // the gap only while the button shows
+      await mount(`h(P.Text, { as: 'p', lines: 2, overflow: 'dialog' }, LONG)`, 320);
+      assert.ok(await page.evaluate(() => parseFloat(getComputedStyle(document.querySelector('#c .plx-text-full')).columnGap) > 0), T + 'a 4px gap while the button shows');
+      await mount(`h(P.Text, { as: 'p', lines: 2, overflow: 'dialog' }, 'Short')`, 320);
+      assert.ok(await page.evaluate(() => (parseFloat(getComputedStyle(document.querySelector('#c .plx-text-full')).columnGap) || 0) === 0), T + 'no gap when the text fits');
       // warnings
-      warnings.length = 0; await mount(`h(P.Text, { overflow: 'dialog' }, 'x')`, 320); await mount(`h(P.Text, { lines: 2, expandable: true, overflow: 'dialog' }, 'x')`, 320);
+      await mount(`h(P.Text, { overflow: 'dialog' }, 'x')`, 320); await mount(`h(P.Text, { lines: 2, expandable: true, overflow: 'dialog' }, 'x')`, 320);
       if (dir === 'ltr') assert.ok(warnings.length >= 2, T + 'overflow="dialog" with no lines, and with expandable, each warn (' + warnings.length + ')');
       await page.close();
     }

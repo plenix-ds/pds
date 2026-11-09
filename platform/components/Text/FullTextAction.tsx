@@ -6,7 +6,7 @@
      strings: the words (text.fullText, text.fullTextOf, text.fullTextTitle; Close is dialog.close)
      children: the whole text, shown in the Dialog (its line breaks kept)
    Behavior:
-     The button is the ghost, icon-only Button (the "expand" glyph, which has no direction), at the inline end of the text; click, Enter and Space open the Dialog; closing it returns focus to the button.
+     The button is the ghost, icon-only Button, size 2xs (the "expand" glyph, which has no direction), at the inline end of the text; click, Enter and Space open the Dialog; closing it returns focus to the button.
 */
 import React from 'react';
 import { Button } from '../Button/Button.tsx';
@@ -17,8 +17,8 @@ import { useStrings } from '../../providers/LocaleProvider.tsx';
 import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import ExpandIcon from 'plenix-platform/icons/plenix/expand';
 
-export type FullTextActionProps = { target: React.RefObject<HTMLElement | null>; label?: string; strings?: Catalog | null; children?: React.ReactNode };
-export function FullTextAction({ target, label, strings, children }: FullTextActionProps) {
+export type FullTextActionProps = { target: React.RefObject<HTMLElement | null>; label?: string; strings?: Catalog | null; onCutChange?: (cut: boolean) => void; children?: React.ReactNode };
+export function FullTextAction({ target, label, strings, onCutChange, children }: FullTextActionProps) {
   const words = useStrings('text', strings) as Record<string, string>;
   const [cut, setCut] = React.useState(false);
   const [open, setOpen] = React.useState(false);
@@ -26,7 +26,7 @@ export function FullTextAction({ target, label, strings, children }: FullTextAct
   React.useLayoutEffect(() => {
     const el = target.current;
     if (!el) return undefined;
-    const measure = () => setCut(isCut(el));
+    const measure = () => { const c = isCut(el); setCut(c); if (onCutChange) onCutChange(c); };
     measure();
     if (typeof ResizeObserver === 'undefined') return undefined;
     const watch = new ResizeObserver(measure);
@@ -37,7 +37,7 @@ export function FullTextAction({ target, label, strings, children }: FullTextAct
   const name = label ? fill(words.fullTextOf, { label }) : words.fullText;
   return (
     <>
-      {cut ? <Button ref={button} variant="ghost" size="xs" iconOnly icon={ExpandIcon} label={name} tooltip={words.fullText} aria-haspopup="dialog" className="plx-text-full__action" onClick={() => setOpen(true)} /> : null}
+      {cut ? <Button ref={button} variant="ghost" size="2xs" iconOnly icon={ExpandIcon} label={name} tooltip={words.fullText} aria-haspopup="dialog" className="plx-text-full__action" onClick={() => setOpen(true)} /> : null}
       <Dialog open={open} onClose={close} size="md" title={label || words.fullTextTitle}>
         <div className="plx-text-full__body" dir="auto">{children}</div>
       </Dialog>

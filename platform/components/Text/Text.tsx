@@ -96,7 +96,7 @@ export function Text({ as: As = 'span', variant = 'body', truncate = false, line
   const digits = useDigits();
   const clamp = LINES.indexOf(Number(lines)) >= 0 ? Number(lines) : null;
   devWarn('Text', { overflow, 'overflow with lines or truncate': overflow === 'dialog' && !clamp && !truncate ? 'none' : undefined, 'overflow with expandable': overflow === 'dialog' && expandable ? 'both' : undefined }, { overflow: ['none', 'dialog'], 'overflow with lines or truncate': ['set'], 'overflow with expandable': ['alone'] });
-  if (overflow === 'dialog' && (clamp || truncate) && !expandable) {
+  if (overflow === 'dialog' && (clamp || truncate)) {   // with expandable too: the dialog wins (the warning above says so)
     return <FullText As={As} variant={variant} truncate={truncate} clamp={clamp} tabular={tabular} label={overflowLabel} strings={strings} className={className} rest={rest}>{children}</FullText>;
   }
   if (expandable && clamp) {
@@ -111,12 +111,13 @@ export function Text({ as: As = 'span', variant = 'body', truncate = false, line
 type FullTextProps = { As: React.ElementType; variant: string; truncate: boolean; clamp: number | null; tabular: boolean; label?: string; strings?: Catalog | null; className?: string; rest: React.HTMLAttributes<HTMLElement>; children?: React.ReactNode };
 function FullText({ As, variant, truncate, clamp, tabular, label, strings, className, rest, children }: FullTextProps) {
   const ref = React.useRef<HTMLElement>(null);
+  const [cut, setCut] = React.useState(false);
   const digits = useDigits();
   const dir = variant === 'data' && readsLeftToRight(children) ? 'ltr' : 'auto';
   return (
-    <div className="plx-text-full">
+    <div className={cx('plx-text-full', cut && 'plx-text-full--cut')}>
       <As dir={dir} {...rest} ref={ref} className={textClass(variant, truncate, clamp, false, tabular, cx('plx-text-full__text', className))}>{shownDigits(children, digits)}</As>
-      <FullTextAction target={ref} label={label} strings={strings}>{children}</FullTextAction>
+      <FullTextAction target={ref} label={label} strings={strings} onCutChange={setCut}>{children}</FullTextAction>
     </div>
   );
 }
