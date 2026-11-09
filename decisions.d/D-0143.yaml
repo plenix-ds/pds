@@ -1,0 +1,9 @@
+id: D-0143
+date: 2026-11-09
+area: release
+decided_by: agent (pds1-component-engineer-2) on #1137, the option D-0142 named as A; the Release Architect and the DS Architect may switch
+decision: 'FullTextAction loads its Dialog on first open (React.lazy, FullTextDialog.tsx), so Text and the grid cells do not carry Dialog. The { DataGrid } one-part import limit goes back from 460 KB to 455 KB (it measures 453.6 KB, was 456.9 KB); a { Text } case with a 105 KB limit (102.0 KB, was 123.5 KB) keeps Dialog from coming back unseen.'
+why: 'D-0142 raised the limit only so the S1 could ship, and named loading the Dialog on first use as the alternative. The delay it feared is one short load before the Dialog first opens; the button, the measure and the words stay on the default path. The size budget is back to catching tree-shaking breaks.'
+options: ['load the Dialog on first open and put the limit back to 455 KB (chosen)', 'keep the 460 KB limit of D-0142']
+status: active
+check: 'tools/agent/one-part-sizes.js --check (CASES { DataGrid } 455, { Text } 105), run by check-bundle.js in deploy.sh and the release dry run'

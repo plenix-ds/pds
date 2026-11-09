@@ -1,0 +1,6 @@
+BEFORE (origin/main: FullTextAction imports Dialog statically), node tools/agent/one-part-sizes.js:
+  { Text }        123.5 KB    42.8 KB gzipped   limit 400 KB   (esbuild 477.5 KB, cross-check)
+  { DataGrid }    456.9 KB   150.4 KB gzipped   limit 455 KB   OVER   (esbuild 477.5 KB, cross-check)
+AFTER (Dialog in FullTextDialog.tsx, loaded with React.lazy on first open):
+  { Text }        102.0 KB    35.9 KB gzipped   limit 105 KB   (esbuild 483.5 KB, cross-check)
+  { DataGrid }    453.6 KB   149.4 KB gzipped   limit 455 KB   (esbuild 483.6 KB, cross-check)
