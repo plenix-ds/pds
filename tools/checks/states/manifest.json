@@ -738,5 +738,15 @@
     "loading": "n/a(a card's content is the caller's; a busy button is the Button's loading state)",
     "selected": "n/a(a card is not selectable)",
     "error": "n/a(an error shows in the content; stories arrive with Storybook, P0-11)"
+  },
+  "Text": {
+    "default": "n/a(text is static; the stories arrive with Storybook, P0-11. The corner button of overflow=\"dialog\" is a Button and has its states)",
+    "hover": "n/a(text is static; the stories arrive with Storybook, P0-11. The corner button of overflow=\"dialog\" is a Button and has its states)",
+    "focus": "n/a(text is static; the stories arrive with Storybook, P0-11. The corner button of overflow=\"dialog\" is a Button and has its states)",
+    "active": "n/a(text is static; the stories arrive with Storybook, P0-11. The corner button of overflow=\"dialog\" is a Button and has its states)",
+    "disabled": "n/a(text is static; the stories arrive with Storybook, P0-11. The corner button of overflow=\"dialog\" is a Button and has its states)",
+    "loading": "n/a(text has no loading state; a loading region shows LoadingState, D-0130)",
+    "error": "n/a(text has no value to validate; a failed load is the region's error, not the text's)",
+    "selected": "n/a(text is static; the stories arrive with Storybook, P0-11. The corner button of overflow=\"dialog\" is a Button and has its states)"
   }
 }
