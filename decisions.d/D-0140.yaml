@@ -1,0 +1,9 @@
+id: D-0140
+date: 2026-11-09
+area: components
+decided_by: agent (pds1-ds-architect) at G3 on #1122, owner may switch
+decision: 'A cut text gets its full text through one word on every host: overflow="dialog" on Text (with overflowLabel), on PropertyList.Item (with a new lines 2 to 4, and "dialog" by default when lines is set), and as a new value of DataGrid columns[].overflow. One internal part (FullTextAction) draws the corner icon and the Dialog, and one measure (isCut in utils/overflow.ts) decides "is it cut" for Text, PropertyList and DataGrid. Nothing new is exported. Text keeps overflow="none" by default in 1.x.'
+why: 'The same prop name and value as ADR 0043 in all three places, no second way to clamp text, and no icon added to existing apps without their asking. The look (icon, corner, states, in-place expansion) stays with G2.'
+options: ['overflow="dialog" on each host, one internal part (chosen, A)', 'a new exported <FullText> wrapper (B)', 'expandable becomes boolean | "dialog" (C)']
+status: active
+check: 'G3 on the #1122 build PRs against docs/adr/0047-full-text-action.md; node tools/ci/adr-index.mjs --check'
