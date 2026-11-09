@@ -1,0 +1,9 @@
+id: D-0141
+date: 2026-11-09
+area: components
+decided_by: agent (pds1-ds-architect) at G3 on #1122, owner may switch
+decision: 'A cut text gets its corner icon (G2, D-0140) through one word on every host: overflow="expand" on Text (with overflowLabel), on PropertyList.Item (with a new lines 2 to 4, and "expand" by default when lines is set), and as a new value of DataGrid columns[].overflow. The part decides in place or Dialog by length (sys fit-expand-max-lines = 12), and a grid cell always uses the Dialog. One internal part (FullTextAction) and one measure (isCut in utils/overflow.ts) serve Text, PropertyList and DataGrid. Nothing new is exported. Text keeps overflow="none" by default in 1.x.'
+why: 'The same prop name and value as ADR 0043 in all three places, and named for what the person does whichever outcome the length gives. There is no second way to clamp text, and no icon is added to existing apps without their asking.'
+options: ['overflow="expand" on each host, one internal part (chosen, A)', 'two values "expand" and "dialog" chosen by the app (A2)', 'a new exported <FullText> wrapper (B)', 'expandable becomes boolean | "corner" (C)']
+status: active
+check: 'G3 on the #1122 build PRs against docs/adr/0047-full-text-action.md; token checks 6 and 7 on the two new tokens; node tools/ci/adr-index.mjs --check'
