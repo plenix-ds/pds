@@ -1,4 +1,5 @@
 // States: default, paused/playing autoplay, last page (Next disabled). Hover, focus and active are on the controls: focus is reached by play. Not applicable: loading, error, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { Carousel } from '../../../platform/components/Carousel/Carousel.tsx';

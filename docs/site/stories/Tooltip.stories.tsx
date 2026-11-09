@@ -1,4 +1,5 @@
 // States: hidden (default), shown on hover, shown on keyboard focus, rich (title and body), toggletip (an action, opens on press), disabled, placements. Not applicable: loading, error, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { Tooltip } from '../../../platform/components/Tooltip/Tooltip.tsx';

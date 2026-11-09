@@ -1,4 +1,5 @@
 // States: some selected, all selected, none (hidden), a danger action, a disabled action, summary only. Hover, focus and active are on the buttons: focus is reached by play. Not applicable: loading, error, selected (it is the selection).
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { BulkActions, SelectionSummary } from '../../../platform/patterns/BulkActions/BulkActions.tsx';

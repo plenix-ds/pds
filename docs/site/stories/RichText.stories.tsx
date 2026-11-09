@@ -1,4 +1,5 @@
 // States: article (default), compact, from HTML (cleaned), as a landmark section. Not applicable: hover, focus beyond its links, active, disabled, loading, error, selected (static prose).
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { RichText } from '../../../platform/components/RichText/RichText.tsx';
 import { rtl } from './rtl.tsx';

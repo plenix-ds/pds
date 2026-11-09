@@ -1,4 +1,5 @@
 // States: default (columns), tiles variant (the read-only look), headings at levels, status as a Badge. Not applicable: hover, focus, active, disabled, loading, error, selected (read-only details).
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { PropertyGroup } from '../../../platform/patterns/PropertyGroup/PropertyGroup.tsx';
 import { PropertyList } from '../../../platform/patterns/PropertyList/PropertyList.tsx';

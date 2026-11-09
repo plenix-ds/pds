@@ -1,4 +1,5 @@
 // States: default, row layout, hidden legend. Hover, focus and active belong to the controls inside. Not applicable: disabled is the native fieldset disabled (Disabled), loading, error, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { Fieldset } from '../../../platform/components/Fieldset/Fieldset.tsx';

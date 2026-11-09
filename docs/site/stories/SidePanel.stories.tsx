@@ -1,4 +1,5 @@
 // States: open (default), collapsed to its rail, hover and focus on Collapse, with actions, with a footer. Not applicable: disabled, loading, error, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { SidePanel } from '../../../platform/patterns/SidePanel/SidePanel.tsx';

@@ -1,4 +1,5 @@
 // States: no filters applied, some applied (Clear all), multiple choice, with actions. Hover, focus and active are on the filter buttons: focus is reached by play. Not applicable: disabled, loading, error, selected (an applied filter is the selected state).
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { FilterBar } from '../../../platform/patterns/FilterBar/FilterBar.tsx';

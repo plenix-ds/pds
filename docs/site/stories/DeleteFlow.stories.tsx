@@ -1,4 +1,5 @@
 // States: closed (the trigger), confirm (the question), type to confirm, undo (a toast), move to trash, loading-free: the app deletes. Not applicable: hover and focus beyond its buttons, disabled, error, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent, within } from 'storybook/test';
 import { DeleteFlow } from '../../../platform/patterns/DeleteFlow/DeleteFlow.tsx';

@@ -1,4 +1,5 @@
 // States: default, sizes, filled, labeled (carries meaning), status icons. Not applicable: hover, focus, active, disabled, loading, error, selected (a graphic).
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Icon, StatusIcon } from '../../../platform/components/Icon/Icon.tsx';
 import { rtl } from './rtl.tsx';

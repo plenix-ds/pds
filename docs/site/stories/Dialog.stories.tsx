@@ -1,4 +1,5 @@
 // States: open (default), with a footer, non-modal, not dismissible, confirm (destructive), prompt with an error, drawer. Not applicable: hover/focus beyond its buttons (focus lands in it on open), disabled, loading, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Dialog, ConfirmDialog, PromptDialog, Drawer } from '../../../platform/components/Dialog/Dialog.tsx';
 import { Button } from '../../../platform/components/Button/Button.tsx';

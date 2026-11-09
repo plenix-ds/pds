@@ -1,4 +1,5 @@
 // States: variants, truncate, lines (clamped), expandable (expanded and collapsed), tabular. Not applicable: hover, focus (the expand button only), active, disabled, loading, error, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { Text } from '../../../platform/components/Text/Text.tsx';

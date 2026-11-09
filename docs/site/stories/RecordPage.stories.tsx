@@ -1,4 +1,5 @@
 // States: default (header over the body), with an aside, header alone, sizes and surfaces. Not applicable: hover, focus beyond its content, active, disabled, loading, error, selected (a page structure).
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { RecordPage } from '../../../platform/patterns/RecordPage/RecordPage.tsx';
 import { Badge } from '../../../platform/components/Badge/Badge.tsx';

@@ -1,4 +1,5 @@
 // States: open (image), several items, with actions, closed. Focus: the viewer takes focus when it opens; its controls are reached by play. Not applicable: hover/active are the controls, disabled, loading, error, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { MediaViewer } from '../../../platform/components/MediaViewer/MediaViewer.tsx';

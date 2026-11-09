@@ -1,4 +1,5 @@
 // States: open at the first step (default), next step, validation error (a step that fails keeps its values), loading (a pending completion), error (a failed completion), dirty (close asks first), sizes, closed. Not applicable: hover and focus beyond its buttons, disabled beyond pending, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent, within } from 'storybook/test';
 import { WizardDialog } from '../../../platform/patterns/WizardDialog/WizardDialog.tsx';

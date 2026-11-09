@@ -1,4 +1,5 @@
 // States: default, error (danger tone), dismissible. Not applicable: hover/focus on the banner itself (only its buttons), disabled, loading, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Banner } from '../../../platform/components/Banner/Banner.tsx';
 import { Button } from '../../../platform/components/Button/Button.tsx';

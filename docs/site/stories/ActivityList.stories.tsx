@@ -1,4 +1,5 @@
 // States: default, unread, selected, hover and focus on a row, with actions, stacked, two-line titles, empty. Not applicable: disabled, loading, error.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { ActivityList } from '../../../platform/patterns/ActivityList/ActivityList.tsx';

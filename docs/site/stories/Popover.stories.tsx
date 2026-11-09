@@ -1,4 +1,5 @@
 // States: closed, open (click), hover card, with footer and close button, manual. Focus: the trigger is reached by play; focus moves into the popover when it opens. Not applicable: disabled, loading, error, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { Popover } from '../../../platform/components/Popover/Popover.tsx';

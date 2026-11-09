@@ -1,4 +1,5 @@
 // States: side by side (default), stacked, a divider to resize (hover and focus), stepped sizes, the reading pane with actions and empty. Not applicable: disabled, loading, error, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { SplitView, ReadingPane } from '../../../platform/patterns/SplitView/SplitView.tsx';

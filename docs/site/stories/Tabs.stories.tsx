@@ -1,4 +1,5 @@
 // States: default (first tab selected), another selected, hover and focus on a tab, disabled tab, with counts and icons, variants (folder, segmented), vertical. Not applicable: loading, error.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { Tabs, tabsPanelId } from '../../../platform/components/Tabs/Tabs.tsx';

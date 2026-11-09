@@ -1,4 +1,5 @@
 // States: default, collapsible expanded and collapsed, with icon and actions. Hover, focus and active are on the toggle: focus is reached by play. Not applicable: disabled, loading, error, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { SectionHeading } from '../../../platform/components/SectionHeading/SectionHeading.tsx';

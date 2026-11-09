@@ -1,4 +1,5 @@
 // States: default (a thread with a header and composer), typing (loading), message statuses (sending to read), deleted, with reactions. Not applicable: hover/focus beyond the composer and the action bar, disabled, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { Chat } from '../../../platform/components/Chat/Chat.tsx';

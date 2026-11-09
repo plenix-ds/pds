@@ -1,4 +1,5 @@
 // States: default, with header, footer and rail, wide, start-collapsing. Hover, focus and active belong to the content inside: focus is reached by play. Not applicable: disabled, loading, error, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { NavPane } from '../../../platform/patterns/NavPane/NavPane.tsx';

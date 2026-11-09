@@ -1,4 +1,5 @@
 // States: default, hover and focus on a control (arrow keys move between them), with a truncated summary at the end. Not applicable: disabled, loading, error, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { DataToolbar } from '../../../platform/patterns/DataToolbar/DataToolbar.tsx';

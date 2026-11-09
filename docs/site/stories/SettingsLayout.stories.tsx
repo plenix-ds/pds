@@ -1,4 +1,5 @@
 // States: default (navigation beside sections), a collapsible section (closed and open), rows with controls, with actions. Not applicable: hover and focus beyond its controls, disabled, loading, error, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { SettingsLayout, SettingsSection, SettingsRow } from '../../../platform/patterns/SettingsLayout/SettingsLayout.tsx';
 import { NavList } from '../../../platform/components/NavList/NavList.tsx';

@@ -1,4 +1,5 @@
 // States: default, selected, collapsed/expanded, open (link or button). Hover, focus and active reach the title link: by play. Not applicable: disabled, loading, error.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent, within } from 'storybook/test';
 import { Card, Panel, MediaCard } from '../../../platform/components/Card/Card.tsx';

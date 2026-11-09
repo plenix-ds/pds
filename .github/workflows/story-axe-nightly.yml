@@ -1,0 +1,35 @@
+# Nightly full story axe (#909): pull requests open only the stories of the part they touch (ci.yml, story-axe); this run opens every story in light and dark.
+name: Story axe nightly
+
+on:
+  schedule:
+    - cron: '17 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  story-axe-full:
+    name: Story axe (every story, light and dark)
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          cache: npm
+      - run: |
+          npm ci --no-audit --no-fund
+          npm run build-storybook
+      - name: Axe on every story (Chrome; a missing browser fails)
+        run: |
+          command -v google-chrome >/dev/null || { echo "::error::Chrome is missing on the runner"; exit 1; }
+          CHROME_PATH="$(command -v google-chrome)" node tests/stories-axe-909.test.js

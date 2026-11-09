@@ -1,4 +1,5 @@
 // States: default, required, description, error, warning, inline layout. Hover, focus and active belong to the control inside: focus is reached by play. Not applicable: disabled (set on the control), loading, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { Field } from '../../../platform/components/Field/Field.tsx';

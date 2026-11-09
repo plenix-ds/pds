@@ -1,4 +1,5 @@
 // States: default, hover, focus, open (the calendar), with a value, range, date and time, invalid (error), disabled, read-only. Not applicable: loading, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { DatePicker } from '../../../platform/components/DatePicker/DatePicker.tsx';

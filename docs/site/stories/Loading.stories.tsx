@@ -1,4 +1,5 @@
 // Loading indicators: Spinner (size, label) and Skeleton (opt-in only, D-0130). Not applicable: hover, focus, active, disabled, error, selected (status indicators).
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Spinner, Skeleton } from '../../../platform/components/Loading/Loading.tsx';
 import { rtl } from './rtl.tsx';

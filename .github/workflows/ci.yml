@@ -312,10 +312,55 @@ jobs:
           command -v google-chrome >/dev/null || { echo "::error::Chrome is missing on the runner: zero-overlap cannot run, and a missing browser is a FAIL"; exit 1; }
           CHROME_PATH="$(command -v google-chrome)" node tests/zero-overlap.test.js
 
+  story-axe:
+    name: Story axe (${{ matrix.shard }}/4)
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
+    env:
+      SHARD: ${{ matrix.shard }}
+      BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      # runs only when a part, a story, the Storybook setup, the test or its baseline changed (#909); otherwise it passes without running
+      - name: Did anything the test reads change?
+        id: scope
+        run: |
+          if git diff --quiet "$(git merge-base "$BASE_SHA" HEAD)" HEAD -- platform docs/site/stories .storybook build-app.js .github/workflows/ci.yml tests/stories-axe-909.test.js tests/baselines/stories-axe.json
+          then
+            echo "run=no" >> "$GITHUB_OUTPUT"
+            echo "parts, stories, test and baseline unchanged: not run for this PR"
+          else
+            echo "run=yes" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        if: steps.scope.outputs.run == 'yes'
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install and build Storybook
+        if: steps.scope.outputs.run == 'yes'
+        run: |
+          npm ci --no-audit --no-fund
+          npm run build-storybook
+      - name: Axe on every story (Chrome; a missing browser fails)
+        if: steps.scope.outputs.run == 'yes'
+        run: |
+          command -v google-chrome >/dev/null || { echo "::error::Chrome is missing on the runner: the story axe run cannot run, and a missing browser is a FAIL"; exit 1; }
+          # a pull request opens only the stories of the part it touches (when it touches one part); the nightly and tag run opens all (#909)
+          if [ -n "$BASE_SHA" ]; then git diff --name-only "$(git merge-base "$BASE_SHA" HEAD)" HEAD > "$RUNNER_TEMP/changed.txt"; export STORIES_CHANGED="$RUNNER_TEMP/changed.txt"; fi
+          STORIES_SHARD="$SHARD/4" STORIES_WARN_BROKEN=1 CHROME_PATH="$(command -v google-chrome)" node tests/stories-axe-909.test.js
+
   result:
     name: CI result
     if: always()
-    needs: [zizmor, decisions, process, rulesync, generated, trace, design-checks, zero-overlap, checks]
+    needs: [zizmor, decisions, process, rulesync, generated, trace, design-checks, zero-overlap, story-axe, checks]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:

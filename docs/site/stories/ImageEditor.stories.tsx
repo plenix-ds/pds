@@ -1,5 +1,6 @@
 // The image editor is a set of steps and styles (IMAGE_EDITOR_STEPS and image-editor.css), not a component: this story shows its adjustment sliders from those steps.
 // States: default (every slider at zero). Not applicable: hover, focus beyond the sliders (see Slider), active, disabled, loading, error, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { IMAGE_EDITOR_STEPS } from '../../../platform/patterns/ImageEditor/imageEditorSteps.js';
 import { Slider } from '../../../platform/components/Slider/Slider.tsx';

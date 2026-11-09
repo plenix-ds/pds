@@ -1,4 +1,5 @@
 // States: page (default), inline, dialog, drawer, edit mode, dirty (unsaved-change protection), loading (a pending save), error (a failed save keeps the values), invalid. Not applicable: hover, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent, within } from 'storybook/test';
 import { FormFlow } from '../../../platform/patterns/FormFlow/FormFlow.tsx';

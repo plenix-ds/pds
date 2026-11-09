@@ -1,4 +1,5 @@
 // States: first step, middle, last (Done), free navigation, validation error, with summary. Hover, focus and active are on the buttons and step list: focus is reached by play. Not applicable: disabled (Back on the first step), loading (saving), selected is the current step.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { Wizard } from '../../../platform/patterns/Wizard/Wizard.tsx';

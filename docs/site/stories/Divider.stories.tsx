@@ -1,4 +1,5 @@
 // States: default (horizontal), with text, vertical. Not applicable: hover, focus, active, disabled, loading, error, selected (a rule).
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Divider } from '../../../platform/components/Divider/Divider.tsx';
 import { rtl } from './rtl.tsx';

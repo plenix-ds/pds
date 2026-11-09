@@ -1,4 +1,5 @@
 // States: closed (default), open, hover and focus on an item, disabled item, danger item, checked item, submenu, context menu. Not applicable: loading, error, selected (the checked item is its selected state).
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent, within } from 'storybook/test';
 import { Menu, MenuItem, MenuDivider, MenuRadioGroup, MenuSub, ContextMenu } from '../../../platform/components/Menu/Menu.tsx';

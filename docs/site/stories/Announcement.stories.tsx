@@ -1,4 +1,5 @@
 // States: default (banner), card, dialog, dismissible (the default), loading (dismissal pending), error (dismissal failed). Not applicable: hover/focus on the announcement itself, disabled, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent, within } from 'storybook/test';
 import { Announcement } from '../../../platform/components/Announcement/Announcement.tsx';

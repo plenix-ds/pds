@@ -1,20 +1,275 @@
 {
- "components-cascader--default · dark": {
+ "components-inputgroup--disabled · dark": {
   "color-contrast": 1
  },
- "components-cascader--focus · dark": {
+ "components-inputgroup--disabled · light": {
   "color-contrast": 1
  },
- "components-cascader--searchable · dark": {
+ "components-menubar--default · dark": {
+  "button-name": 1
+ },
+ "components-menubar--default · light": {
+  "button-name": 1
+ },
+ "components-menubar--focus · dark": {
+  "button-name": 1
+ },
+ "components-menubar--focus · light": {
+  "button-name": 1
+ },
+ "components-menubar--long-text · dark": {
+  "button-name": 1
+ },
+ "components-menubar--long-text · light": {
+  "button-name": 1
+ },
+ "components-menubar--narrow · dark": {
+  "button-name": 1
+ },
+ "components-menubar--narrow · light": {
+  "button-name": 1
+ },
+ "components-menubar--open · dark": {
+  "button-name": 1
+ },
+ "components-menubar--open · light": {
+  "button-name": 1
+ },
+ "components-menubar--rtl · dark": {
+  "button-name": 1
+ },
+ "components-menubar--rtl · light": {
+  "button-name": 1
+ },
+ "components-menubar--small · dark": {
+  "button-name": 1
+ },
+ "components-menubar--small · light": {
+  "button-name": 1
+ },
+ "components-metriccard--empty · dark": {
   "color-contrast": 1
  },
- "components-cascader--invalid · dark": {
+ "components-metriccard--stale · dark": {
   "color-contrast": 1
  },
- "components-cascader--warning · dark": {
+ "components-metriccard--trend · dark": {
   "color-contrast": 1
  },
- "components-datapill--plain · dark": {
+ "components-navlist--current · dark": {
   "color-contrast": 1
+ },
+ "components-searchresult--group · dark": {
+  "list": 1
+ },
+ "components-searchresult--group · light": {
+  "list": 1
+ },
+ "components-searchresult--rtl · dark": {
+  "list": 1
+ },
+ "components-searchresult--rtl · light": {
+  "list": 1
+ },
+ "components-sectionheading--collapsible · dark": {
+  "aria-valid-attr-value": 1
+ },
+ "components-sectionheading--collapsible · light": {
+  "aria-valid-attr-value": 1
+ },
+ "components-sectionheading--focus · dark": {
+  "aria-valid-attr-value": 1
+ },
+ "components-sectionheading--focus · light": {
+  "aria-valid-attr-value": 1
+ },
+ "components-sectionheading--rtl · dark": {
+  "aria-valid-attr-value": 1
+ },
+ "components-sectionheading--rtl · light": {
+  "aria-valid-attr-value": 1
+ },
+ "components-timeline--grouped · dark": {
+  "color-contrast": 3
+ },
+ "components-timeline--grouped · light": {
+  "color-contrast": 3
+ },
+ "components-timeline--grouped-focus · dark": {
+  "color-contrast": 3
+ },
+ "components-timeline--grouped-focus · light": {
+  "color-contrast": 3
+ },
+ "components-timeline--grouped-hidden · dark": {
+  "color-contrast": 1
+ },
+ "components-timeline--grouped-hidden · light": {
+  "color-contrast": 1
+ },
+ "components-timezoneselect--by-offset · dark": {
+  "color-contrast": 1
+ },
+ "components-timezoneselect--disabled · dark": {
+  "color-contrast": 1
+ },
+ "components-timezoneselect--focus · dark": {
+  "color-contrast": 4
+ },
+ "components-timezoneselect--open · dark": {
+  "color-contrast": 4
+ },
+ "components-timezoneselect--rtl · dark": {
+  "color-contrast": 1
+ },
+ "components-timezoneselect--selected · dark": {
+  "color-contrast": 1
+ },
+ "patterns-appheader--brand-link · dark": {
+  "color-contrast": 2
+ },
+ "patterns-appheader--frost · light": {
+  "color-contrast": 2
+ },
+ "patterns-appheader--long-text · dark": {
+  "color-contrast": 2
+ },
+ "patterns-appheader--organization-brand · dark": {
+  "color-contrast": 2
+ },
+ "patterns-appheader--plain · dark": {
+  "color-contrast": 2
+ },
+ "patterns-appshell--dashboard · dark": {
+  "color-contrast": 2
+ },
+ "patterns-appshell--default · dark": {
+  "color-contrast": 2
+ },
+ "patterns-appshell--footer · dark": {
+  "color-contrast": 2
+ },
+ "patterns-appshell--inspector · dark": {
+  "color-contrast": 2
+ },
+ "patterns-appshell--long-text · dark": {
+  "color-contrast": 2
+ },
+ "patterns-appshell--rtl · dark": {
+  "color-contrast": 2
+ },
+ "patterns-appshell--settings · dark": {
+  "color-contrast": 2
+ },
+ "patterns-appshell--side-nav · dark": {
+  "color-contrast": 2
+ },
+ "patterns-auth--default · dark": {
+  "color-contrast": 3
+ },
+ "patterns-auth--focus · dark": {
+  "color-contrast": 3
+ },
+ "patterns-auth--long-text · dark": {
+  "color-contrast": 3
+ },
+ "patterns-auth--mfa · dark": {
+  "color-contrast": 1
+ },
+ "patterns-auth--recovery · dark": {
+  "color-contrast": 2
+ },
+ "patterns-auth--reset-new · dark": {
+  "color-contrast": 2
+ },
+ "patterns-auth--reset-request · dark": {
+  "color-contrast": 1
+ },
+ "patterns-auth--rtl · dark": {
+  "color-contrast": 3
+ },
+ "patterns-auth--sign-in-busy · dark": {
+  "color-contrast": 3
+ },
+ "patterns-auth--sign-in-error · dark": {
+  "color-contrast": 3
+ },
+ "patterns-auth--sign-up · dark": {
+  "color-contrast": 2
+ },
+ "patterns-auth--sign-up-errors · dark": {
+  "color-contrast": 2
+ },
+ "patterns-auth--with-sso · dark": {
+  "color-contrast": 3
+ },
+ "patterns-navpane--collapse-at-start · dark": {
+  "color-contrast": 2
+ },
+ "patterns-navpane--default · dark": {
+  "color-contrast": 2
+ },
+ "patterns-navpane--focus · dark": {
+  "color-contrast": 2
+ },
+ "patterns-navpane--long-text · dark": {
+  "color-contrast": 2
+ },
+ "patterns-navpane--rtl · dark": {
+  "color-contrast": 2
+ },
+ "patterns-navpane--slots · dark": {
+  "color-contrast": 2
+ },
+ "patterns-navpane--wide · dark": {
+  "color-contrast": 2
+ },
+ "patterns-usercard--actions · dark": {
+  "color-contrast": 1
+ },
+ "patterns-usercard--away · dark": {
+  "color-contrast": 1
+ },
+ "patterns-usercard--compact · dark": {
+  "color-contrast": 1
+ },
+ "patterns-usercard--default · dark": {
+  "color-contrast": 1
+ },
+ "patterns-usercard--details · dark": {
+  "color-contrast": 1
+ },
+ "patterns-usercard--focus · dark": {
+  "color-contrast": 1
+ },
+ "patterns-usercard--hover · dark": {
+  "color-contrast": 1
+ },
+ "patterns-usercard--link · dark": {
+  "color-contrast": 1
+ },
+ "patterns-usercard--long-text · dark": {
+  "color-contrast": 1
+ },
+ "patterns-usercard--rtl · dark": {
+  "color-contrast": 1
+ },
+ "patterns-versioncompare--default · dark": {
+  "color-contrast": 4
+ },
+ "patterns-versioncompare--focus · dark": {
+  "color-contrast": 4
+ },
+ "patterns-versioncompare--long-text · dark": {
+  "color-contrast": 4
+ },
+ "patterns-versioncompare--rtl · dark": {
+  "color-contrast": 4
+ },
+ "patterns-versioncompare--same-version · dark": {
+  "color-contrast": 4
+ },
+ "patterns-versioncompare--wide · dark": {
+  "color-contrast": 4
  }
 }

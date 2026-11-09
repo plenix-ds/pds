@@ -1,4 +1,5 @@
 // States: default, pressed tool, disabled tool, with labels. Hover, focus and active are on the tools: focus is reached by play (one Tab stop; arrows move). Not applicable: loading, error, selected is pressed.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { ToolRail } from '../../../platform/patterns/ToolRail/ToolRail.tsx';

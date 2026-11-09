@@ -1,4 +1,5 @@
 // States: default (buttons at the end), hover and focus on a button, disabled button, folding into More when narrow, embedded (not sticky). Not applicable: loading, error, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { ActionBar } from '../../../platform/patterns/ActionBar/ActionBar.tsx';

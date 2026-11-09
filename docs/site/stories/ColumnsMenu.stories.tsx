@@ -1,4 +1,5 @@
 // States: closed (default), open, hover and focus, a hidden column (unchecked), the manage dialog open. Not applicable: disabled, loading, error, selected beyond the checked columns.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent, within } from 'storybook/test';
 import { ColumnsMenu, ManageColumnsDialog } from '../../../platform/patterns/ColumnsMenu/ColumnsMenu.tsx';

@@ -1,4 +1,5 @@
 // States: grid (default), sizes, masonry, justified, virtualized, empty. Not applicable: hover, focus beyond its cards, active, disabled, loading, error, selected (a layout).
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ContentGrid } from '../../../platform/patterns/ContentGrid/ContentGrid.tsx';
 import { Card } from '../../../platform/components/Card/Card.tsx';
