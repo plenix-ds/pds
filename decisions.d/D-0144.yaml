@@ -1,0 +1,9 @@
+id: D-0144
+date: 2026-11-09
+area: release
+decided_by: agent (pds1-release-architect) for the 1.5.0 release (#1140); the DS Architect rules at G3 and may switch to B
+decision: 'The { DataGrid } one-part import limit goes from 455 KB to 460 KB (minified, Vite, React external). The Dialog keeps loading on first open (D-0143). 1.5.0 measures 456.3 KB: D-0143 brought the grid to 453.6 KB, then #1134 added the grid''s own overflow="dialog" code (the corner button, F2, the measure on hover or focus), 2.7 KB of owner-approved S1 code (#1122). Each PR was measured alone; only the release build saw both.'
+why: 'Same reasoning as D-0139 and D-0142: the limit catches tree-shaking breaks (#685: hundreds of KB), not 1.3 KB (0.3%) of approved code on the default path. B would split the per-column overflow code into a chunk loaded on first use and delay the S1.'
+options: ['raise the limit to 460 KB with this record (chosen, A)', 'load the grid''s overflow="dialog" code on first use to get back under 455 KB (B)']
+status: active
+check: 'tools/agent/one-part-sizes.js --check (CASES { DataGrid } 460), run by check-bundle.js in deploy.sh and the release dry run'
