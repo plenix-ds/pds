@@ -1,0 +1,10 @@
+id: D-0142
+date: 2026-11-09
+area: release
+decided_by: agent (pds1-release-architect) for the 1.4.0 release (#1132); the DS Architect rules at G3 and may switch to A
+decision: 'The { DataGrid } one-part import limit goes from 455 KB to 460 KB (minified, Vite, React external). 1.4.0 measures 456.9 KB: the growth is the owner-approved S1 corner icon for cut text (#1122, ADR 0047). Text imports FullTextAction, which imports Dialog, and the grid cells use Text. This is approved code on the default path, not a tree-shaking break.'
+why: 'Same reasoning as D-0139: the limit exists to catch tree-shaking breaks (#685: hundreds of KB), not 1.9 KB (0.4%) over the limit from an approved feature. Raising it lets the S1 ship today; loading the Dialog on first use (A) would put a delay before the dialog first opens.'
+options: ['raise the limit to 460 KB with this record (chosen, B)', 'load Dialog in FullTextAction on first use (React.lazy) to get back under 455 KB (A)']
+status: superseded
+superseded_by: D-0143
+check: 'tools/agent/one-part-sizes.js --check (CASES limit 460), run by check-bundle.js in deploy.sh and the release dry run'
