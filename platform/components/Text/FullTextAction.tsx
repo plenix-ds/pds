@@ -17,6 +17,16 @@ import { useStrings } from '../../providers/LocaleProvider.tsx';
 import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import ExpandIcon from 'plenix-platform/icons/plenix/expand';
 
+/** the Dialog alone (the DataGrid cell opens it from its own overlay button) */
+export function FullTextDialog({ open, onClose, label, strings, children }: { open: boolean; onClose: () => void; label?: string; strings?: Catalog | null; children?: React.ReactNode }) {
+  const words = useStrings('text', strings) as Record<string, string>;
+  return (
+    <Dialog open={open} onClose={onClose} size="md" title={label || words.fullTextTitle}>
+      <div className="plx-text-full__body" dir="auto">{children}</div>
+    </Dialog>
+  );
+}
+
 export type FullTextActionProps = { target: React.RefObject<HTMLElement | null>; label?: string; strings?: Catalog | null; onCutChange?: (cut: boolean) => void; children?: React.ReactNode };
 export function FullTextAction({ target, label, strings, onCutChange, children }: FullTextActionProps) {
   const words = useStrings('text', strings) as Record<string, string>;
@@ -38,9 +48,7 @@ export function FullTextAction({ target, label, strings, onCutChange, children }
   return (
     <>
       {cut ? <Button ref={button} variant="ghost" size="2xs" iconOnly icon={ExpandIcon} label={name} tooltip={words.fullText} aria-haspopup="dialog" className="plx-text-full__action" onClick={() => setOpen(true)} /> : null}
-      <Dialog open={open} onClose={close} size="md" title={label || words.fullTextTitle}>
-        <div className="plx-text-full__body" dir="auto">{children}</div>
-      </Dialog>
+      <FullTextDialog open={open} onClose={close} label={label} strings={strings}>{children}</FullTextDialog>
     </>
   );
 }

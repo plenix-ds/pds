@@ -659,3 +659,5 @@ a.plx-data-grid__cell-content{align-items:center;align-self:stretch;display:inli
 .plx-data-grid__value--lines-2{-webkit-line-clamp:round(down, min(2, calc((var(--plx-comp-data-grid-record-height) - var(--plx-comp-data-grid-cell-padding-block) * 2) / var(--plx-comp-data-grid-text-line-height))), 1);}
 .plx-data-grid__value--lines-3{-webkit-line-clamp:round(down, min(3, calc((var(--plx-comp-data-grid-record-height) - var(--plx-comp-data-grid-cell-padding-block) * 2) / var(--plx-comp-data-grid-text-line-height))), 1);}
 .plx-data-grid__value--lines-4{-webkit-line-clamp:round(down, min(4, calc((var(--plx-comp-data-grid-record-height) - var(--plx-comp-data-grid-cell-padding-block) * 2) / var(--plx-comp-data-grid-text-line-height))), 1);}
+/* overflow "dialog" (#1122): the corner button over the cell's inline end, drawn only for the hovered or active cut cell */
+.plx-data-grid__full-text{inset-block-start:50%;inset-inline-end:var(--plx-comp-text-full-action-gap);position:absolute;transform:translateY(-50%);}

@@ -10,6 +10,10 @@
      that follows the table's direction (Isolate; owner, issue 606: a computed identifier reads 01-20261020 in a right-to-left table). Imports no legacy grid implementation. Data still sorts and filters by its raw value. mods: the value classes the
      engine gives every value span (__value--wrap, --sized, --lines). */
 import { isCut } from '../../utils/overflow.ts';
+import { Rare } from './engine/rare.tsx';
+import { Button } from '../Button/Button.tsx';
+import { fill } from '../../utils/fill.ts';
+import ExpandIcon from 'plenix-platform/icons/plenix/expand';
 import React from 'react';
 import { Avatar } from '../Avatar/Avatar.tsx';
 import { Badge } from '../Badge/Badge.tsx';
@@ -79,15 +83,17 @@ export function CellValue({ column, value: given, strings, record, pill = false,
   // by its first strong letter
   const island=ISLANDS.find(k=>kinds.includes(k));
   // the full text in a Tooltip when the cell cuts it (#1044, ADR 0043): by default for a wrapping column, by overflow: "tooltip" for any, never with "none"
-  const tip = column.overflow === 'tooltip' || (column.overflow !== 'none' && / \S*__value--wrap\b/.test(' ' + (mods || '')));
-  if (island) return <CutText tip={tip} text={valueText(value)} className={own} hover={fullText}><Isolate dir={island==='data'?'auto':island==='id'?undefined:'ltr'} kind={island==='email'||island==='url'||island==='id'?island:undefined}>{valueText(value)}</Isolate></CutText>;
-  return <CutText tip={tip} text={valueText(value)} className={own} hover={fullText}>{localDigits(valueText(value))}</CutText>;
+  const dialog = column.overflow === 'dialog';   // the full text in a Dialog from a corner button on the hovered or active cell (#1122, ADR 0047); it replaces the tooltip
+  const tip = !dialog && (column.overflow === 'tooltip' || (column.overflow !== 'none' && / \S*__value--wrap\b/.test(' ' + (mods || ''))));
+  if (island) return <CutText tip={tip} dialog={dialog ? column.title : undefined} text={valueText(value)} className={own} hover={fullText}><Isolate dir={island==='data'?'auto':island==='id'?undefined:'ltr'} kind={island==='email'||island==='url'||island==='id'?island:undefined}>{valueText(value)}</Isolate></CutText>;
+  return <CutText tip={tip} dialog={dialog ? column.title : undefined} text={valueText(value)} className={own} hover={fullText}>{localDigits(valueText(value))}</CutText>;
 }
 
 // A text value that may be cut (a line count, an ellipsis): with the tooltip on, the full text shows on hover and on keyboard focus of its cell, only while it is cut.
 // The cut is measured on demand (ADR 0043, #1067): when the pointer enters the text or its cell takes the focus, never when the cell draws, so a long list costs nothing extra.
 // The cell is the grid's focus stop, so its focus drives the tooltip. The Tooltip is off until a measure says the text is cut; it is then woken with the event that caused the measure.
-export function CutText({ tip, text, className, hover, children }: { tip: boolean; text: string; className: string; hover: (event: any) => void; children: React.ReactNode }) {
+export function CutText({ tip, dialog, text, className, hover, children }: { tip: boolean; dialog?: string; text: string; className: string; hover: (event: any) => void; children: React.ReactNode }) {
+  if (dialog !== undefined) return <CutTextDialog label={dialog} text={text} className={className}>{children}</CutTextDialog>;
   const box = React.useRef<HTMLSpanElement>(null), wake = React.useRef<'pointerover' | 'focusin' | null>(null), [cutFor, setCutFor] = React.useState<string | null>(null);
   const cut = cutFor === text;
   // a line clamp reports its clamped height, so the natural height is read with the clamp lifted for the moment of the measure (written and restored at once)
@@ -124,6 +130,40 @@ export function CutText({ tip, text, className, hover, children }: { tip: boolea
   }, [cut]);
   if (!tip) return <span className={className} onMouseEnter={hover}>{children}</span>;
   return <Tooltip content={text} describe={false} disabled={!cut}><span ref={box} className={className} onPointerEnter={() => measure('pointerover')}>{children}</span></Tooltip>;
+}
+
+// overflow: "dialog" (#1122, ADR 0047, design 1122): the cell's text is clamped as for the tooltip; while the pointer is on the cell or the cell is the active one, and the text is cut, a small
+// button at the cell's inline end opens the whole text in a Dialog titled with the column's title. The cut is measured on demand (hover or focus), never when the row draws. The button is not a Tab stop:
+// the grid keeps one, so F2 on the focused read-only cell opens the Dialog (keys.ts). Closing it returns focus to the cell.
+let openFullText: string | null = null;
+const fullTextWatchers = new Set<() => void>();
+const fullTextSubscribe = (watch: () => void) => { fullTextWatchers.add(watch); return () => { fullTextWatchers.delete(watch); }; };
+const setFullText = (address: string | null) => { openFullText = address; fullTextWatchers.forEach((watch) => watch()); };
+const cellAddress = (cell: Element) => { const row = cell.closest('[role=row]'); return (row ? row.getAttribute('data-plx-record') : '') + '|' + cell.getAttribute('data-plx-field'); };
+function CutTextDialog({ label, text, className, children }: { label: string; text: string; className: string; children: React.ReactNode }) {
+  const box = React.useRef<HTMLSpanElement>(null), [cutFor, setCutFor] = React.useState<string | null>(null), [on, setOn] = React.useState(false), [mine, setMine] = React.useState<string | null>(null);
+  const words = useStrings('text') as Record<string, string>;
+  // the grid draws a cell anew when its row or its active state changes, so the open Dialog is kept outside the cell, by the cell's address (row and field)
+  const shown = React.useSyncExternalStore(fullTextSubscribe, () => openFullText, () => null);
+  const open = mine !== null && shown === mine;
+  const measure = React.useCallback(() => { const el = box.current; if (el) setCutFor(isCut(el) ? text : null); }, [text]);
+  React.useEffect(() => {
+    const el = box.current, cell = el && el.closest('[role=gridcell]');
+    if (!cell) return undefined;
+    setMine(cellAddress(cell));
+    const enter = () => { measure(); setOn(true); }, leave = () => setOn(document.activeElement === cell || cell.matches(':hover'));   // hovered or active: it stays while either holds
+    if (cell.matches(':hover') || document.activeElement === cell) enter();   // the cell may be drawn anew under the pointer (a hover redraws the row): pick the state up
+    cell.addEventListener('pointerenter', enter); cell.addEventListener('pointerleave', leave); cell.addEventListener('focus', enter); cell.addEventListener('blur', leave);
+    return () => { cell.removeEventListener('pointerenter', enter); cell.removeEventListener('pointerleave', leave); cell.removeEventListener('focus', enter); cell.removeEventListener('blur', leave); };
+  }, [measure]);
+  const close = () => { setFullText(null); const cell = box.current && box.current.closest('[role=gridcell]'); if (cell) setTimeout(() => (cell as HTMLElement).focus(), 0); };   // after the Dialog has handed focus back to the button
+  return (
+    <>
+      <span ref={box} className={className}>{children}</span>
+      {cutFor === text && (on || open) ? <Button variant="ghost" size="2xs" iconOnly icon={ExpandIcon} label={fill(words.fullTextOf, { label })} tooltip={words.fullText} tabIndex={-1} aria-haspopup="dialog" aria-keyshortcuts="F2" data-plx-full-text="" className="plx-data-grid__full-text" onClick={() => setFullText(mine)} /> : null}
+      {open ? <Rare part="fullTextDialog" args={{ label, text, onClose: close }} /> : null}
+    </>
+  );
 }
 
 // A tags cell: the tags that fit, then one "+N" Tag for the rest (design 84-cell-editors §2 and §3, issue 477). The fit is useBarFit's (the same step

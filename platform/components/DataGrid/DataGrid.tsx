@@ -135,8 +135,9 @@
        sets it so the command bar's Filter panel opens on that field (one filter state, shown in one place)
      columns[].lines: 1 to 4: the most lines the cell shows, then an ellipsis; it implies wrap. The grid uses the smallest row-height step whose rows
        hold the most lines asked for, at the density's line height (the app's rowHeight or the person's choice wins when taller).
-     columns[].overflow: "tooltip" | "none": the full text in a Tooltip on pointer hover and keyboard focus of the cell, only when the text is cut; the default is
-       "tooltip" for a wrapping column and "none" for the rest. The clamp is visual only, so the full text stays in the accessibility tree.
+     columns[].overflow: "tooltip" | "none" | "dialog": the full text in a Tooltip on pointer hover and keyboard focus of the cell, only when the text is cut; the default is
+       "tooltip" for a wrapping column and "none" for the rest. "dialog" (ADR 0047) replaces the tooltip: while the pointer is on the cell or the cell is active and its text is cut, a small button at the
+       cell's inline end opens the whole text in a Dialog titled with the column title; F2 on the focused read-only cell does the same (Enter still opens the row, an editable cell keeps F2 = edit). The clamp is visual only, so the full text stays in the accessibility tree.
      columns[].wrap: true starts the column wrapped (as kind "wrap"); people turn Wrap text on or off in the column menu, and
        Wrap all columns in the header's right-click menu. A row with a wrapping column starts every cell at the top, at the
        reading line height; rows without one stay centered. wrapColumns ({ field: true|false }) and onWrapColumnsChange(next)
@@ -321,7 +322,7 @@ export type DataGridColumn<R = Record<string, unknown>> = {
   /** the most lines the cell shows, 1 to 4, then an ellipsis (it implies wrap); the grid picks the smallest row step that fits */
   lines?: number;
   /** "tooltip": the full text in a tooltip on hover and keyboard focus when the cell cuts it (the default for a wrapping column); "none": never */
-  overflow?: 'tooltip' | 'none';
+  overflow?: 'tooltip' | 'none' | 'dialog';
   rowHandle?: boolean;
   /** a technical or custom pill for the pill view; false keeps the plain value */
   pill?: false | ((value: unknown, record: R) => { tone?: string; icon?: IconValue | React.ReactNode; variant?: string; data?: boolean; gender?: string; fill?: boolean } | void);

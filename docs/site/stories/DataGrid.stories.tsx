@@ -25,5 +25,6 @@ export const Focus: Story = { play: async () => { await userEvent.tab(); } };
 export const Compact: Story = { args: { density: 'compact' } };
 export const Empty: Story = { args: { data: [], empty: 'No assets yet.' } };
 export const Error: Story = { args: { data: [], error: 'The assets could not be loaded.' } };
+export const FullTextDialog: Story = { args: { data: [{ id: 1, name: 'Case 1', status: 'Approved', size: 1, note: 'The council recommends that the hearing be adjourned until the president has reviewed the full submission, the supporting letters and the new evidence in the case file.' }], columns: [{ title: 'Name', field: 'name', kind: 'name' }, { title: 'Recommendation', field: 'note', lines: 2, overflow: 'dialog' }] } };
 export const LongText: Story = { args: { data: [{ id: 1, name: 'Quarterly summary of expenditure by department and cost centre for every regional office', status: 'Awaiting approval from the finance committee', size: 1 }] } };
 export const Rtl: Story = { decorators: [rtl], args: { selectable: true } };

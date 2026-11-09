@@ -200,6 +200,11 @@ export const cellKeys =
       setEditing({ key: row.id, field: c.field, value });
       return;
     }
+    // F2 on a read-only cell whose text is cut and whose column is overflow: "dialog" opens the full text (#1122, ADR 0047); Enter keeps its meaning (the row). An editable cell keeps F2 = edit.
+    if (event.key === 'F2' && !canEdit) {
+      const full = (event.target as HTMLElement | null)?.closest?.('[role=gridcell]')?.querySelector?.('[data-plx-full-text]') as HTMLElement | null;
+      if (full) { event.preventDefault(); full.click(); return; }
+    }
     // F2 starts editing with the value kept; a printable character starts it with that character in place of the value (issue 737, the APG grid pattern).
     // Neither in a cell that cannot be edited, nor during IME composition, nor with Ctrl, Alt or Meta held (a shortcut). Space keeps choosing the row;
     // a number column takes only a character a number has.

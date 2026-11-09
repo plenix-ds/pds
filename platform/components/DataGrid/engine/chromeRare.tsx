@@ -15,10 +15,16 @@ import React from 'react';
 import { ManageColumnsDialog } from '../../../patterns/ColumnsMenu/ColumnsMenu.tsx';
 import { MenuDivider, MenuItem, MenuRadioGroup } from '../../Menu/Menu.tsx';
 import { typeOf } from './helpers.tsx';
+import { FullTextDialog } from '../../Text/FullTextAction.tsx';
 import SortAscendingIcon from 'plenix-platform/icons/plenix/sort-ascending';
 import SortDescendingIcon from 'plenix-platform/icons/plenix/sort-descending';
 import FilterIcon from 'plenix-platform/icons/plenix/filter';
 import GroupByIcon from 'plenix-platform/icons/plenix/group-by';
+
+// overflow: "dialog" on a column (#1122): the whole text of a cut cell in a Dialog; loaded on first use, so the grid's default path does not carry the Dialog
+export function fullTextDialog({ label, text, onClose }: any) {
+  return <FullTextDialog open onClose={onClose} label={label}>{text}</FullTextDialog>;
+}
 
 export function manageDialog({
   headerMenu,
