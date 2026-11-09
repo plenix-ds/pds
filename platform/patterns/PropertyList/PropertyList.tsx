@@ -21,6 +21,8 @@
      PropertyList.Item.kind: "id" for a computed identifier or case number: it follows the page's direction (01-20261020 in a
        right-to-left page, 20261020-01 in a left-to-right one; owner, issue 606). Pair it with data for the data font
      PropertyList.Item.status: { label, tone, icon }: the value is a Badge with its icon (the icon is required: a status always has one); wins over children
+     PropertyList.Item.lines: 2 | 3 | 4: the value is cut to that many lines (an ellipsis on the last); any other number warns and does not cut (ADR 0047)
+     PropertyList.Item.overflow: "dialog" (default when lines is set) | "none": while the value is cut, a small corner button opens the whole value in a Dialog titled with the label; "none" opts out. Ignored with status
      PropertyList.Item.span: "full": in a tiles list the tile takes the whole row (a long note among short fields); no effect elsewhere (ADR 0045)
      PropertyList.Item.className: more classes on the pair
      PropertyList.Item.children: the value
@@ -36,6 +38,7 @@ import { cx } from '../../utils/cx.ts';
 import { useTruncated } from '../../utils/overflow.ts';
 import { Tooltip } from '../../components/Tooltip/Tooltip.tsx';
 import { Isolate } from '../../components/Isolate/Isolate.tsx';
+import { Text } from '../../components/Text/Text.tsx';
 import { Badge } from '../../components/Badge/Badge.tsx';
 import type { BadgeProps } from '../../components/Badge/Badge.tsx';
 import type { IconValue } from '../../components/Icon/Icon.tsx';
@@ -61,6 +64,10 @@ export type PropertyListItemProps = {
   status?: { label: React.ReactNode; tone: BadgeProps['tone']; icon: IconValue };
   /** "full": the tile takes the whole row in a tiles list */
   span?: 'full';
+  /** the value is cut to this many lines (2, 3 or 4) */
+  lines?: 2 | 3 | 4;
+  /** "dialog" (the default with lines): a corner button opens the whole value while it is cut; "none": no button */
+  overflow?: 'none' | 'dialog';
   className?: string;
   children?: React.ReactNode;
 };
@@ -73,17 +80,21 @@ export function PropertyList({ layout, variant, className, children, ...rest }: 
   return <TilesContext.Provider value={isTiles}><dl className={cx('plx-property-list', 'plx-property-list--' + shown, isTiles && 'plx-property-list--tiles', className)} {...rest}>{children}</dl></TilesContext.Provider>;
 }
 
-PropertyList.Item = function PropertyListItem({ label, htmlFor, description, data = false, kind, status, span, className, children }: PropertyListItemProps) {
+PropertyList.Item = function PropertyListItem({ label, htmlFor, description, data = false, kind, status, span, lines, overflow, className, children }: PropertyListItemProps) {
   const textRef = React.useRef<any>(null);
   const cut = useTruncated(textRef);
   const tile = React.useContext(TilesContext);
+  devWarn('PropertyList.Item', { lines: lines !== undefined && [2, 3, 4].indexOf(Number(lines)) < 0 ? lines : undefined }, { lines: [2, 3, 4] });
+  const cutTo = !status && [2, 3, 4].indexOf(Number(lines)) >= 0 ? Number(lines) : null;
+  const value = kind === 'id' ? <Isolate kind="id">{children}</Isolate> : data ? <Isolate dir="auto">{children}</Isolate> : children;
+  const cutValue = cutTo ? <Text as="span" lines={cutTo} overflow={(overflow || 'dialog') === 'dialog' ? 'dialog' : 'none'} overflowLabel={typeof label === 'string' ? label : undefined}>{value}</Text> : null;
   devWarn('PropertyList.Item', { status: status && !status.icon ? 'without an icon' : undefined, children: status && children ? 'beside a status' : undefined }, { status: ['with an icon'], children: ['alone'] });   // a status needs its icon and wins over children
   return (
     <div className={cx('plx-property-list__item', tile && 'plx-property-list__item--tile', span === 'full' && 'plx-property-list__item--full', className)}>
       <dt className="plx-property-list__label"><Tooltip content={label} disabled={!cut} describe={false} className="plx-property-list__label-tip"><span ref={textRef} className="plx-property-list__label-text">{htmlFor ? <label htmlFor={htmlFor}>{label}</label> : label}</span></Tooltip>
         {description ? <span className="plx-property-list__description" data-plx-text-follow="size">{description}</span> : null}
       </dt>
-      <dd className={cx('plx-property-list__value', tile && 'plx-property-list__value--tile', data && 'plx-property-list__value--data')} data-plx-text-follow="size">{status ? <span className="plx-property-list__status"><Badge tone={status.tone} icon={status.icon}>{status.label}</Badge></span> : kind === 'id' ? <Isolate kind="id">{children}</Isolate> : data ? <Isolate dir="auto">{children}</Isolate> : children}</dd>
+      <dd className={cx('plx-property-list__value', tile && 'plx-property-list__value--tile', data && 'plx-property-list__value--data')} data-plx-text-follow="size">{status ? <span className="plx-property-list__status"><Badge tone={status.tone} icon={status.icon}>{status.label}</Badge></span> : cutValue || value}</dd>
     </div>
   );
 };

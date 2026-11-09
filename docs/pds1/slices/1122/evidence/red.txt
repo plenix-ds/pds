@@ -1,0 +1,1 @@
+AssertionError [ERR_ASSERTION]: ltr: a cut text shows the button

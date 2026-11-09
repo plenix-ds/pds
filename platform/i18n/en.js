@@ -27,7 +27,10 @@ export default {
   },
   "text": {
     "more": "Show more",
-    "less": "Show less"
+    "less": "Show less",
+    "fullText": "Show full text",
+    "fullTextOf": "Show full text: {label}",
+    "fullTextTitle": "Full text"
   },
   "emptyState": {
     "offline": {
