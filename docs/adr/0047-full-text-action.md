@@ -48,7 +48,7 @@
 - `"dialog"` takes effect with `lines` (2 to 4) or `truncate`. Without either, it does nothing and gets a `devWarn`.
 - `overflowLabel` names the button and titles the Dialog. Without it, the generic words are used.
 - With `expandable` also set, a `devWarn` fires and `overflow="dialog"` wins.
-- The text and the icon share a wrapper with the class `plx-text-full`. The button gets `plx-text-full__action`.
+- The text and the icon share a wrapper with the class `plx-text-full`. The text gets `plx-text-full__text`, the button gets `plx-text-full__action`, and the Dialog body gets `plx-text-full__body`.
 - The measure watches the box's size (a ResizeObserver per `Text`, as `ExpandableText` does today), so the icon appears and leaves as the width changes.
 - The default stays `"none"` in 1.x, so no existing `Text lines` gains an icon without the app asking.
 - Panel and Card bodies need no API: a `Text lines={3} overflow="dialog"` inside them is enough (brief AC-5).
@@ -94,7 +94,7 @@
 ## Consequences
 
 - **Semver: MINOR (1.4.0).**
-  - *Added:* the token `plx-comp.text-full-action-gap`, `Text.overflow`, `Text.overflowLabel`, `PropertyList.Item.lines`, `PropertyList.Item.overflow`, the value `"dialog"` for DataGrid `columns[].overflow`, the classes `plx-text-full` and `plx-text-full__action`, and the three catalog keys.
+  - *Added:* the token `plx-comp.text-full-action-gap`, `Text.overflow`, `Text.overflowLabel`, `PropertyList.Item.lines`, `PropertyList.Item.overflow`, the value `"dialog"` for DataGrid `columns[].overflow`, the classes `plx-text-full`, `plx-text-full__text`, `plx-text-full__action` and `plx-text-full__body`, and the three catalog keys.
   - *Changed (internal):* one cut measure (`isCut`) behind `useTruncated`, `ExpandableText` and `CutText`.
 - **No deprecation.** `Text expandable` stays as the "Show more" button under the text.
 - **Bundle:** DataGrid keeps its dialogs out of the default path (`engine/chromeRare.tsx`, `engine/rare.tsx`). The grid's `"dialog"` cell loads the Dialog the same way, on first open, so the `{ DataGrid }` one-part limit (D-0139, 455 KB) gains only the icon button and the measure.
