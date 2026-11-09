@@ -143,7 +143,7 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 - **Columns (`layout="columns"`, the 1.x default):** the same label and value type, with no tiles. The default changes in 2.0.0 (D-0107).
 - **Inside `<ReadOnly>`**, a control takes the tile fill and border. Its label is **field-label**. Heights don't change.
 - The label is always lighter than its value. Label and value stay ≥ 4.5:1 on the tile in light and dark.
-- A value wraps and is never cut.
+- A value wraps and is never cut, unless the app sets a line count. Then, while it is cut, a small icon at the inline-end, block-end corner opens the full text in a Dialog (D-0141, `docs/pds1/slices/1122/design.md`).
 - Details and the state matrix: `docs/pds1/slices/946/design.md`.
 
 ### Named variations (register)
@@ -222,6 +222,7 @@ A named variation sets a whole agreed look with one prop, so an app never gets h
 - **Numbers** (check 10): number, currency, percent and duration cells use `font-variant-numeric: tabular-nums`. Like all cell content they are **start-aligned**, under their start-aligned header (D-0087, owner 2026-11-06; this replaces the earlier end alignment). A column may set `align`.
 - Empty cell: an empty string shows nothing. Use `—` only where the column spec asks for it (the wording is the Technical Writer's).
 - Long text in a cell: one line, ending in an ellipsis, with the full value in a tooltip. Headers follow the table-header ladder in `fit-and-overflow.md`.
+  - With `overflow: "dialog"`, a cut cell shows a corner icon instead of the tooltip, on row hover and on the focused cell. It opens the full text in a Dialog, and F2 does the same on a read-only cell (D-0141).
 - **Column widths (D-0087):**
   - Each column is as wide as the wider of its whole header and its widest value. An app's set width is a minimum for compact columns.
   - Spare room is shared evenly, except with narrow columns (D-0108).
