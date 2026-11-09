@@ -6,6 +6,17 @@ The batch numbers point to the work log (Plenix - DAM/audit/batches/).
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-11-09
+
+### Upgrading from 1.4.0
+Nothing to change. Deprecated names keep working (each says what replaces it). Apps on the CDN loader follow this release by themselves; npm apps update the version as usual.
+
+### Added
+- DataGrid: `columns[].overflow="dialog"`. While the pointer is on a cut cell, or the cell is active, a small button at its inline end opens the whole text in a Dialog titled with the column title; F2 on the focused read-only cell does the same (Enter still opens the row; an editable cell keeps F2 = edit). The cut is measured on hover or focus only (#1122).
+
+### Changed
+- `Text` and `PropertyList.Item`: the full-text Dialog behind the corner icon loads on its first open, so `Text` and the DataGrid no longer carry `Dialog` (`{ Text }` 123.5 → 102.0 KB, `{ DataGrid }` 456.9 → 453.6 KB). No API change (#1137, D-0143).
+
 ## [1.4.0] - 2026-11-09
 
 ### Upgrading from 1.3.0
