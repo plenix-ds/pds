@@ -36,6 +36,7 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
       assert.equal(b.length, 1, T + 'hover on a cut cell shows one button (' + JSON.stringify(b) + ')'); assert.equal(b[0].name, 'Show full text: Recommendation', T + 'named with the column title');
       const cellBox = await page.evaluate((sel) => { const r = document.querySelector(sel).getBoundingClientRect(); return { l: r.left, r: r.right }; }, note);
       assert.ok(dir === 'ltr' ? b[0].x > (cellBox.l + cellBox.r) / 2 : b[0].x < (cellBox.l + cellBox.r) / 2, T + 'the button is at the inline end of the cell');
+      assert.notEqual(await page.evaluate(() => getComputedStyle(document.querySelector('#c .plx-data-grid__full-text')).backgroundColor), 'rgba(0, 0, 0, 0)', T + 'the button has the row fill behind it: the cut text does not show through');
       await page.click('#c [aria-label^="Show full text"]'); await wait(400); let d = await dialog(); assert.ok(d, T + 'click opens the dialog'); assert.equal((d.title || '').trim(), 'Recommendation', T + 'titled with the column title'); assert.ok(d.text.includes('the new evidence in the case file'), T + 'holds the whole text');
       await page.keyboard.press('Escape'); await wait(400); assert.equal(await dialog(), null, T + 'Escape closes it'); assert.ok(await page.evaluate(() => { const a = document.activeElement; return a && a.getAttribute('role') === 'gridcell' && a.getAttribute('data-plx-field') === 'note'; }), T + 'focus returns to the cell');
       // a fitting cell

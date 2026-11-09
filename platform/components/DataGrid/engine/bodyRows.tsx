@@ -627,7 +627,7 @@ export function bodyRows({
                 >
                   {shown}
                 </span>
-              ) : cutAt === row.id + '|' + c.field && !(shown as any)?.props?.tip ? (
+              ) : cutAt === row.id + '|' + c.field && !(shown as any)?.props?.tip && (shown as any)?.props?.dialog === undefined ? (
                 <>
                   {cellDirection(pinned && !isStatic && !kinds(c).includes('id'), shown)}
                   <span className={B + '__cut'}>

@@ -168,11 +168,12 @@ function CutTextDialog({ label, text, className, children }: { label: string; te
     if (cutFor === text) cell.setAttribute('aria-keyshortcuts', 'F2'); else cell.removeAttribute('aria-keyshortcuts');
     return () => cell.removeAttribute('aria-keyshortcuts');
   }, [cutFor, text]);
-  const close = () => { setFullText(null); const cell = box.current && box.current.closest('[role=gridcell]'); if (cell) setTimeout(() => (cell as HTMLElement).focus(), 0); };   // after the Dialog has handed focus back to the button
+  // the cell may have been drawn anew while the Dialog was open, so it is found again by its address
+  const close = () => { const address = mine; setFullText(null); if (address) { const back = () => { const cell = [...document.querySelectorAll('[role=gridcell]')].find((c) => cellAddress(c) === address) as HTMLElement | undefined; if (cell && document.activeElement !== cell) cell.focus(); }; setTimeout(back, 0); setTimeout(back, 250); } };   // after the Dialog has handed focus back to the button
   return (
     <>
       <span ref={box} className={className}>{children}</span>
-      {cutFor === text && (on || open) ? <Button variant="ghost" size="2xs" iconOnly icon={ExpandIcon} label={label ? fill(words.fullTextOf, { label }) : words.fullText} tooltip={words.fullText} tabIndex={-1} aria-haspopup="dialog" aria-keyshortcuts="F2" data-plx-full-text="" className="plx-data-grid__full-text" onClick={() => setFullText(mine)} /> : null}
+      {cutFor === text && (on || open) ? <span className="plx-data-grid__full-text"><Button variant="ghost" size="2xs" iconOnly icon={ExpandIcon} label={label ? fill(words.fullTextOf, { label }) : words.fullText} tooltip={words.fullText} tabIndex={-1} aria-haspopup="dialog" aria-keyshortcuts="F2" data-plx-full-text="" onClick={(event) => { const cell = (event.currentTarget as HTMLElement).closest('[role=gridcell]') as HTMLElement | null; if (cell) cell.focus(); setFullText(mine); }} /></span> : null}
       {open ? <Rare part="fullTextDialog" args={{ label, text, onClose: close }} /> : null}
     </>
   );
