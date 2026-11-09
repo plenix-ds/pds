@@ -10,12 +10,14 @@
 */
 import React from 'react';
 import { Button } from '../Button/Button.tsx';
-import { Dialog } from '../Dialog/Dialog.tsx';
 import { isCut } from '../../utils/overflow.ts';
 import { fill } from '../../utils/fill.ts';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import ExpandIcon from 'plenix-platform/icons/plenix/expand';
+
+// the Dialog is loaded on the first open (D-0142): the button, the measure and the words stay on the default path
+const FullTextDialog = React.lazy(() => import('./FullTextDialog.tsx').then((m) => ({ default: m.FullTextDialog })));
 
 export type FullTextActionProps = { target: React.RefObject<HTMLElement | null>; label?: string; strings?: Catalog | null; onCutChange?: (cut: boolean) => void; children?: React.ReactNode };
 export function FullTextAction({ target, label, strings, onCutChange, children }: FullTextActionProps) {
@@ -38,9 +40,7 @@ export function FullTextAction({ target, label, strings, onCutChange, children }
   return (
     <>
       {cut ? <Button ref={button} variant="ghost" size="2xs" iconOnly icon={ExpandIcon} label={name} tooltip={words.fullText} aria-haspopup="dialog" className="plx-text-full__action" onClick={() => setOpen(true)} /> : null}
-      <Dialog open={open} onClose={close} size="md" title={label || words.fullTextTitle}>
-        <div className="plx-text-full__body" dir="auto">{children}</div>
-      </Dialog>
+      {open ? <React.Suspense fallback={null}><FullTextDialog open onClose={close} label={label} strings={strings}>{children}</FullTextDialog></React.Suspense> : null}
     </>
   );
 }
