@@ -29,7 +29,9 @@
      defaultExpanded: an expandable text starts unfolded; default false
      tabular: digits of equal width (tabular figures), so numbers line up down a column and do not shift as they
        change; default false
-     strings: the words of the expand button: { more: 'Show more', less: 'Show less' }
+     overflow: "none" (default) | "dialog": with lines or truncate, a small button at the inline end while the text is cut opens the whole text in a Dialog (ADR 0047, issue 1122)
+     overflowLabel: the field's name; it names that button ("Show full text: {label}") and titles the Dialog
+     strings: the words of the expand button and the full-text button: { more: 'Show more', less: 'Show less', fullText: 'Show full text', fullTextOf: 'Show full text: {label}', fullTextTitle: 'Full text' }
      className: more classes on the text
      children: the text
      ...rest: other attributes go on the element
@@ -55,10 +57,12 @@ import { devWarn } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
 import { useUid } from '../../utils/layer.ts';
 import { Button } from '../Button/Button.tsx';
+import { isCut } from '../../utils/overflow.ts';
 import { readsLeftToRight } from '../../utils/direction.ts';
 import { useStrings, useDigits } from '../../providers/LocaleProvider.tsx';
 import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import { localDigits } from '../../utils/digits.ts';
+import { FullTextAction } from './FullTextAction.tsx';
 import ChevronDownIcon from 'plenix-platform/icons/plenix/chevron-down';
 import ChevronUpIcon from 'plenix-platform/icons/plenix/chevron-up';
 
@@ -79,20 +83,43 @@ export type TextProps = React.HTMLAttributes<HTMLElement> & {
   /** at most this many lines (2, 3 or 4) */
   lines?: number | string;
   expandable?: boolean;
+  /** "dialog": with lines or truncate, a button shows the whole text in a Dialog while it is cut */
+  overflow?: 'none' | 'dialog';
+  /** names the full-text button and titles its Dialog */
+  overflowLabel?: string;
   defaultExpanded?: boolean;
   tabular?: boolean;
   strings?: Catalog | null;
 };
-export function Text({ as: As = 'span', variant = 'body', truncate = false, lines, expandable = false, defaultExpanded = false, tabular = false, strings, className, children, ...rest }: TextProps) {
+export function Text({ as: As = 'span', variant = 'body', truncate = false, lines, expandable = false, overflow = 'none', overflowLabel, defaultExpanded = false, tabular = false, strings, className, children, ...rest }: TextProps) {
   devWarn('Text', { variant }, { variant: ['body','secondary','caption','data','label','strong','heading','accent','success','eyebrow','danger','link','title','display','lead'] });
   const digits = useDigits();
   const clamp = LINES.indexOf(Number(lines)) >= 0 ? Number(lines) : null;
+  devWarn('Text', { overflow, 'overflow with lines or truncate': overflow === 'dialog' && !clamp && !truncate ? 'none' : undefined, 'overflow with expandable': overflow === 'dialog' && expandable ? 'both' : undefined }, { overflow: ['none', 'dialog'], 'overflow with lines or truncate': ['set'], 'overflow with expandable': ['alone'] });
+  if (overflow === 'dialog' && (clamp || truncate)) {   // with expandable too: the dialog wins (the warning above says so)
+    return <FullText As={As} variant={variant} truncate={truncate} clamp={clamp} tabular={tabular} label={overflowLabel} strings={strings} className={className} rest={rest}>{children}</FullText>;
+  }
   if (expandable && clamp) {
     return <ExpandableText As={As} variant={variant} clamp={clamp} defaultExpanded={defaultExpanded} tabular={tabular} strings={strings} className={className} rest={rest}>{children}</ExpandableText>;
   }
   // a data value with no letter of a right-to-left script is a left-to-right island: its spaced digit groups keep their order in an Arabic page (issue 838)
   const dir = variant === 'data' && readsLeftToRight(children) ? 'ltr' : 'auto';
   return <As dir={dir} className={textClass(variant, truncate, clamp, false, tabular, className)} {...rest}>{shownDigits(children, digits)}</As>;
+}
+
+// a cut text and its corner button (overflow="dialog"): the text and the button share a wrapper, the button at the inline end while the text is cut
+type FullTextProps = { As: React.ElementType; variant: string; truncate: boolean; clamp: number | null; tabular: boolean; label?: string; strings?: Catalog | null; className?: string; rest: React.HTMLAttributes<HTMLElement>; children?: React.ReactNode };
+function FullText({ As, variant, truncate, clamp, tabular, label, strings, className, rest, children }: FullTextProps) {
+  const ref = React.useRef<HTMLElement>(null);
+  const [cut, setCut] = React.useState(false);
+  const digits = useDigits();
+  const dir = variant === 'data' && readsLeftToRight(children) ? 'ltr' : 'auto';
+  return (
+    <div className={cx('plx-text-full', cut && 'plx-text-full--cut')}>
+      <As dir={dir} {...rest} ref={ref} className={textClass(variant, truncate, clamp, false, tabular, cx('plx-text-full__text', className))}>{shownDigits(children, digits)}</As>
+      <FullTextAction target={ref} label={label} strings={strings} onCutChange={setCut}>{children}</FullTextAction>
+    </div>
+  );
 }
 
 // a clamped text and its Show more button: the button shows while the text is cut, and while it is unfolded
@@ -106,7 +133,7 @@ function ExpandableText({ As, variant, clamp, defaultExpanded, tabular, strings,
   React.useLayoutEffect(() => {
     const el = ref.current;
     if (!el || open) return undefined;
-    const measure = () => setCut(el.scrollHeight > el.clientHeight);
+    const measure = () => setCut(isCut(el));
     measure();
     if (typeof ResizeObserver === 'undefined') return undefined;
     const watch = new ResizeObserver(measure);

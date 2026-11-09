@@ -45,13 +45,17 @@ export const splitAt = <T,>(items: T[], fit: number, more?: T | null): T[] => it
    Tooltip: cut across one line (wider than the box) or cut after several lines (taller than the box, issue 502); checked again whenever the element's size changes.
    An <input> is cut when its value is wider than its box (issue 558); it is checked again as people type. `key` (optional): anything that changes the text,
    such as a value set from outside; it is checked again when it changes. `on` (default true): false checks nothing and returns false. */
+/* isCut(el) (ADR 0047): the one measure of "is this text cut": wider than its box (an ellipsis on one line) or taller than it (a line clamp). Text's Show more,
+   the DataGrid cell's full-text Tooltip and the corner icon (FullTextAction) all read it. */
+export const isCut = (el: HTMLElement): boolean => el.scrollWidth > el.clientWidth + 1 || el.scrollHeight > el.clientHeight + 1;
+
 export function useTruncated(ref: React.RefObject<HTMLElement | null>, key?: unknown, on = true): boolean {
   const [cut, setCut] = React.useState(false);
   React.useLayoutEffect(() => {
     const el = ref.current;
     if (!el || !on) { setCut(false); return undefined; }
     const line = el.tagName === 'INPUT';
-    const check = () => setCut(el.scrollWidth > el.clientWidth + 1 || (!line && el.scrollHeight > el.clientHeight + 1));
+    const check = () => setCut(line ? el.scrollWidth > el.clientWidth + 1 : isCut(el));
     check();
     if (line) el.addEventListener('input', check);
     const ro = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(check);

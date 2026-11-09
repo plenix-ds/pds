@@ -9,6 +9,7 @@
    Notes: A value of kind email, url, phone or code is a left-to-right island, of kind data one in its own direction, and of kind id one
      that follows the table's direction (Isolate; owner, issue 606: a computed identifier reads 01-20261020 in a right-to-left table). Imports no legacy grid implementation. Data still sorts and filters by its raw value. mods: the value classes the
      engine gives every value span (__value--wrap, --sized, --lines). */
+import { isCut } from '../../utils/overflow.ts';
 import React from 'react';
 import { Avatar } from '../Avatar/Avatar.tsx';
 import { Badge } from '../Badge/Badge.tsx';
@@ -98,7 +99,7 @@ export function CutText({ tip, text, className, hover, children }: { tip: boolea
     const natural = el.scrollHeight;
     if (clamp) st.setProperty('-webkit-line-clamp', clamp); else st.removeProperty('-webkit-line-clamp');
     if (max) st.setProperty('max-block-size', max); else st.removeProperty('max-block-size');
-    const c = natural > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1;
+    const c = natural > el.clientHeight + 1 || isCut(el);
     if (c && !cut) wake.current = how;
     else if (c && how === 'focusin' && el.parentElement) el.parentElement.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));   // the Tooltip is already on: the cell's focus never reaches it, so tell it
     setCutFor(c ? text : null);
