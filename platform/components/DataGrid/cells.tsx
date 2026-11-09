@@ -140,9 +140,10 @@ const fullTextWatchers = new Set<() => void>();
 const fullTextSubscribe = (watch: () => void) => { fullTextWatchers.add(watch); return () => { fullTextWatchers.delete(watch); }; };
 const setFullText = (address: string | null) => { openFullText = address; fullTextWatchers.forEach((watch) => watch()); };
 const gridNumbers = new WeakMap<Element, number>();
+let gridCount = 0;
 const cellAddress = (cell: Element) => {   // the grid, the row and the field: two grids on a page with the same record ids do not open each other's Dialog
   const grid = cell.closest('[role=grid],[role=treegrid],[role=table]'), row = cell.closest('[role=row]');
-  if (grid && !gridNumbers.has(grid)) gridNumbers.set(grid, gridNumbers.size + 1);
+  if (grid && !gridNumbers.has(grid)) gridNumbers.set(grid, ++gridCount);
   return (grid ? gridNumbers.get(grid) : 0) + '|' + (row ? row.getAttribute('data-plx-record') : '') + '|' + cell.getAttribute('data-plx-field');
 };
 function CutTextDialog({ label, text, className, children }: { label: string; text: string; className: string; children: React.ReactNode }) {
@@ -173,7 +174,7 @@ function CutTextDialog({ label, text, className, children }: { label: string; te
   return (
     <>
       <span ref={box} className={className}>{children}</span>
-      {cutFor === text && (on || open) ? <span className="plx-data-grid__full-text"><Button variant="ghost" size="2xs" iconOnly icon={ExpandIcon} label={label ? fill(words.fullTextOf, { label }) : words.fullText} tooltip={words.fullText} tabIndex={-1} aria-haspopup="dialog" aria-keyshortcuts="F2" data-plx-full-text="" onClick={(event) => { const cell = (event.currentTarget as HTMLElement).closest('[role=gridcell]') as HTMLElement | null; if (cell) cell.focus(); setFullText(mine); }} /></span> : null}
+      {cutFor === text && (on || open) ? <span className="plx-data-grid__full-text-action"><Button variant="ghost" size="2xs" iconOnly icon={ExpandIcon} label={label ? fill(words.fullTextOf, { label }) : words.fullText} tooltip={words.fullText} tabIndex={-1} aria-haspopup="dialog" aria-keyshortcuts="F2" data-plx-full-text="" onClick={(event) => { const cell = (event.currentTarget as HTMLElement).closest('[role=gridcell]') as HTMLElement | null; if (cell) cell.focus(); setFullText(mine); }} /></span> : null}
       {open ? <Rare part="fullTextDialog" args={{ label, text, onClose: close }} /> : null}
     </>
   );
