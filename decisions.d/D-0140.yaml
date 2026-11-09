@@ -1,0 +1,9 @@
+id: D-0140
+date: 2026-11-09
+area: design
+decided_by: owner asked for the corner icon (chat, 2026-11-09 ~02:00 UTC, #1122); agent (pds1-design-director) at G2 applied reading A, owner may switch
+decision: 'Long text (#1122): cut text in a box (a read-only tile, a card or Panel body, a DataGrid cell) shows a ghost xs icon-only button at the inline-end, block-end corner while it is cut. It unfolds in place up to 12 lines (fit-expand-max-lines) and otherwise opens a Dialog titled with the label; grid cells always use the Dialog (F2 on a read-only cut cell). Clamping stays opt-in: a read-only value still wraps and is never cut unless the app sets lines, and Text expandable keeps Show more under prose.'
+why: 'The owner described the corner icon and both behaviours; opt-in keeps the D-0106 rule that a read-only value is never cut, so no existing screen changes without the app asking.'
+options: ['A. opt-in clamp, corner icon in boxes, Show more kept for prose (chosen)', 'B1. read-only values clamp to 3 lines by default', 'B2. the corner icon replaces Show more everywhere']
+status: active
+check: 'G2 on the build PR against docs/pds1/slices/1122/design.md; planned:long-text-corner tests (design §7); check 12 specimen long-text-corner'
