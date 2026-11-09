@@ -6,6 +6,24 @@ The batch numbers point to the work log (Plenix - DAM/audit/batches/).
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-11-09
+
+### Upgrading from 1.3.0
+Nothing to change. Deprecated names keep working (each says what replaces it). Apps on the CDN loader follow this release by themselves; npm apps update the version as usual.
+
+### Added
+- `Text` takes `overflow="dialog"` (with `lines` or `truncate`) and `overflowLabel`: while the text is cut, a small button at the inline end opens the whole text in a Dialog titled with the label. `PropertyList.Item` takes `lines` (2 to 4) and `overflow` (`"dialog"` by default with `lines`) and does the same for a read-only value. New words `text.fullText`, `text.fullTextOf`, `text.fullTextTitle` (#1122).
+
+### Changed
+- One measure of "is this text cut" (`isCut`) now serves `Text`'s Show more, the DataGrid cell's full-text tooltip and the new button. No behaviour change (#1122).
+
+### Fixed
+- `TransferList`: a list with no items (empty, or nothing matches the search) is a group holding its message, not a listbox without options (axe aria-required-children, #1035).
+- `DownloadManager`: each row shows its file's name (the row was given the file name as a string where a file object is expected, so the name was empty and a ready file's link had no text) (#1036).
+- `MillerColumns`: a column that has no items (loading, failed, empty) is a group holding its status or message, not a listbox holding a status (axe aria-required-children, #1085).
+- Select: a `<label for>` (a Field's label) names the Select before the first paint, and a label drawn a moment later is waited for, so the field is never unnamed to assistive technology or an accessibility scan (#1114).
+- `Combobox` (and `CountrySelect`, which uses it): while its options load, the open list shows its loading row as a disabled option, so the listbox is never left without an option (axe aria-required-children, #1117).
+
 ## [1.3.0] - 2026-11-08
 
 ### Upgrading from 1.2.1
