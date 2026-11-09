@@ -1,4 +1,5 @@
 // States: default, a path chosen (selected), hover and focus on an item, loading (children load), error (Try again), checked leaves, preview, disabled item. Not applicable: none.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { MillerColumns } from '../../../platform/components/MillerColumns/MillerColumns.tsx';

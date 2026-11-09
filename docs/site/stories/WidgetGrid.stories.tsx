@@ -1,4 +1,5 @@
 // States: auto columns, fixed columns, reorderable (handles), not reorderable, empty. Hover, focus and active are on the drag handles: focus is reached by play. Not applicable: disabled, loading, error, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { WidgetGrid } from '../../../platform/patterns/WidgetGrid/WidgetGrid.tsx';

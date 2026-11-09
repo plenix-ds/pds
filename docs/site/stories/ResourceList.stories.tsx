@@ -1,4 +1,5 @@
 // States: default, selectable, selected, with a bar, empty. Hover, focus and active are on the rows and their controls: focus is reached by play. Not applicable: disabled, loading, error.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { ResourceList } from '../../../platform/patterns/ResourceList/ResourceList.tsx';

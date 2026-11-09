@@ -1,4 +1,5 @@
 // States: stack (column), inline (row), gaps, alignment, wrap, center. Not applicable: hover, focus, active, disabled, loading, error, selected (a layout).
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Stack, Inline, Center } from '../../../platform/components/Stack/Stack.tsx';
 import { Button } from '../../../platform/components/Button/Button.tsx';

@@ -1,4 +1,5 @@
 // States: default (header, main, footer), with a side navigation, with an inspector panel, dashboard and settings pages, narrow. Not applicable: hover, focus beyond its parts, disabled, loading, error, selected (a page frame).
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { AppShell, PageContent } from '../../../platform/patterns/AppShell/AppShell.tsx';
 import { AppHeader } from '../../../platform/patterns/AppHeader/AppHeader.tsx';

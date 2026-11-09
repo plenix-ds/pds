@@ -1,4 +1,5 @@
 // States: open (inspector), overlay, with context, closed. Focus: reached by play (the chat input and buttons). Not applicable: hover/active are the controls, disabled, error (the chat shows it), selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { AssistantPanel } from '../../../platform/patterns/AssistantPanel/AssistantPanel.tsx';

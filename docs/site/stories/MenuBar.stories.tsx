@@ -1,4 +1,5 @@
 // States: default (closed menus), open, hover and focus on a menu button, overflow ("More menus" when narrow). Not applicable: disabled, loading, error, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent, within } from 'storybook/test';
 import { MenuBar, MenuBarMenu } from '../../../platform/components/MenuBar/MenuBar.tsx';

@@ -1,4 +1,5 @@
 // States: all items fit, items fold into the "…" menu (narrow). Hover, focus and active are on the buttons: focus is reached by play. Not applicable: loading, error, selected; a disabled item is in Disabled.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { OverflowList } from '../../../platform/components/OverflowList/OverflowList.tsx';

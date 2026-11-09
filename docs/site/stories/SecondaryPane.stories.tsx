@@ -1,4 +1,5 @@
 // States: default, collapsible (expanded and collapsed), resizable, with a back row, list-detail (detail open). Hover, focus and active are on the buttons: focus is reached by play. Not applicable: disabled, loading, error, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { SecondaryPane } from '../../../platform/patterns/SecondaryPane/SecondaryPane.tsx';

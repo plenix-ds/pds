@@ -1,4 +1,5 @@
 // States: icons, ordered, steps, bullets, nested, tones. Not applicable: hover, focus, active, disabled, loading, error, selected (a list of text).
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { List } from '../../../platform/components/List/List.tsx';
 import { rtl } from './rtl.tsx';

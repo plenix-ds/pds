@@ -1,4 +1,5 @@
 // States: open, with step (a tour), with media, closed. Focus: reached by play (the bubble's buttons). Not applicable: hover/active are the buttons, disabled, loading, error, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { TeachingBubble } from '../../../platform/components/TeachingBubble/TeachingBubble.tsx';

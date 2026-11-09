@@ -1,4 +1,5 @@
 // States: welcome, checklist with progress, all done, tour. Hover, focus and active are on the checklist and buttons: focus is reached by play. Not applicable: disabled, loading, error, selected (a done task is the checked state).
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { Onboarding } from '../../../platform/patterns/Onboarding/Onboarding.tsx';

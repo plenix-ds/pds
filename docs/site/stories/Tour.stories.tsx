@@ -1,4 +1,5 @@
 // States: open at a step, last step, closed, no spotlight. Hover, focus and active are on the Next, Back and Skip buttons: focus is reached by play. Not applicable: disabled, loading, error, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { Tour } from '../../../platform/patterns/Tour/Tour.tsx';

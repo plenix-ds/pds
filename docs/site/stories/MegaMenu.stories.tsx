@@ -1,4 +1,5 @@
 // States: closed (trigger), open, accordion, with a featured card, current link. Hover and active are the trigger and links; focus is reached by play. Not applicable: disabled, loading, error, selected (current is the selected link).
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { MegaMenu } from '../../../platform/components/MegaMenu/MegaMenu.tsx';

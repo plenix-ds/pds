@@ -1,4 +1,5 @@
 // States: empty (drop zone), with an image (Replace, Remove), multiple, at the maximum, with alt text, cropped, hover and focus on Choose. Not applicable: disabled, loading, error, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { ImageUpload, ImageCrop } from '../../../platform/patterns/ImageUpload/ImageUpload.tsx';

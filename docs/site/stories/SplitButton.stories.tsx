@@ -1,4 +1,5 @@
 // States: default, hover, focus (each part), active, open (the menu), disabled, primary, sizes. Not applicable: loading, error, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent, within } from 'storybook/test';
 import { SplitButton } from '../../../platform/components/SplitButton/SplitButton.tsx';

@@ -1,4 +1,5 @@
 // States: default, with a prefix, a suffix, an icon and a joined button, focus (one focus state for the group), disabled, invalid. Not applicable: loading, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { InputGroup } from '../../../platform/components/InputGroup/InputGroup.tsx';

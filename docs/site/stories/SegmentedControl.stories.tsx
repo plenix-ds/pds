@@ -1,4 +1,5 @@
 // States: default, selected, focus, small, read-only, long labels (fold into a Select). Hover and active are the segments. Not applicable: disabled, loading, error.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { SegmentedControl } from '../../../platform/components/SegmentedControl/SegmentedControl.tsx';

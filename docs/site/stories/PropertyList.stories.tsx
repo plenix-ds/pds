@@ -1,4 +1,5 @@
 // States: columns (default), stacked, tiles (the read-only look), a full-width tile, status Badge, data font, a label naming a control. Not applicable: hover, focus, active, disabled, loading, error, selected (read-only details).
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { PropertyList } from '../../../platform/patterns/PropertyList/PropertyList.tsx';
 import { rtl } from './rtl.tsx';

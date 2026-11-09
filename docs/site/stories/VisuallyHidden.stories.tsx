@@ -1,4 +1,5 @@
 // States: default (hidden text names an icon-only control; shown here beside it for review). Not applicable: hover, focus, active, disabled, loading, error, selected (it has no look).
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { VisuallyHidden } from '../../../platform/components/VisuallyHidden/VisuallyHidden.tsx';
 import { Icon } from '../../../platform/components/Icon/Icon.tsx';

@@ -1,4 +1,5 @@
 // States: in review, read-only, decided history, statuses, human kind, queue (selected). Hover, focus and active are on the decision buttons: focus is reached by play. Not applicable: disabled, loading, error.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { ReviewFlow, ReviewQueue, WorkflowStatus } from '../../../platform/patterns/ReviewFlow/ReviewFlow.tsx';

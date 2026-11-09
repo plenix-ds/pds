@@ -1,4 +1,5 @@
 // States: each tone (info, success, warning, danger as the error), with a title, with actions, dismissible (hover and focus on its button). Not applicable: disabled, loading, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { Notice } from '../../../platform/components/Notice/Notice.tsx';

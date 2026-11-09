@@ -1,4 +1,5 @@
 // States: results, filters applied, selection, empty results, saved search. Hover, focus and active are on the search field, filters and buttons: focus is reached by play. Not applicable: disabled, loading (the app shows it in the results), error, selected is Selection.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { SearchWorkspace } from '../../../platform/patterns/SearchWorkspace/SearchWorkspace.tsx';

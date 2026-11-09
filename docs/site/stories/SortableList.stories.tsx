@@ -1,4 +1,5 @@
 // States: vertical (default), grid, hover and focus on a handle, picked up with the keyboard, move buttons, disabled, a group of two lists. Not applicable: loading, error, selected beyond the picked-up item.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { SortableList } from '../../../platform/patterns/SortableList/SortableList.tsx';

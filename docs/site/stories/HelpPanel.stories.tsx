@@ -1,4 +1,5 @@
 // States: results (default), search with matches, empty search, an article open (Back), external article link, closed. Not applicable: hover and focus beyond its buttons, disabled, loading, error, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent, within } from 'storybook/test';
 import { HelpPanel } from '../../../platform/patterns/HelpPanel/HelpPanel.tsx';

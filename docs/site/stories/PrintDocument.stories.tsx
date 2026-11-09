@@ -1,4 +1,5 @@
 // States: default (an A4 sheet on screen), with header and footer, right to left document. Not applicable: hover, focus, active, disabled, loading, error, selected (a printable page).
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { PrintDocument } from '../../../platform/patterns/PrintDocument/PrintDocument.tsx';
 import { AnswerLines } from '../../../platform/components/AnswerLines/AnswerLines.tsx';

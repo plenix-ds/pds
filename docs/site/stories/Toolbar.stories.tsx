@@ -1,4 +1,5 @@
 // States: default, with groups and a spacer, narrow (folds into More), bar variant. Hover, focus and active are on the buttons: focus is reached by play. Not applicable: disabled (a disabled Button is shown), loading, error, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { Toolbar } from '../../../platform/components/Toolbar/Toolbar.tsx';

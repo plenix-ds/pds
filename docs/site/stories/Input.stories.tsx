@@ -1,4 +1,5 @@
 // States: default, hover, focus, filled (value), disabled, read-only, invalid (error), warning. Not applicable: loading, selected. Textarea and Select are shown below the Input.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { Input, Textarea, Select } from '../../../platform/components/Input/Input.tsx';

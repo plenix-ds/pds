@@ -1,4 +1,5 @@
 // States: default (empty), error, warning, success, system kinds (offline, not found, permission denied), page size. Not applicable: hover, focus beyond its action, disabled, loading, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { EmptyState } from '../../../platform/components/EmptyState/EmptyState.tsx';
 import { Button } from '../../../platform/components/Button/Button.tsx';

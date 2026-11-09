@@ -1,4 +1,5 @@
 // States: default, with icons and badges, horizontal, alternate, grouped with legend, upcoming. Not applicable: hover, focus (the legend buttons in grouped), active, disabled, loading, error, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { Timeline } from '../../../platform/components/Timeline/Timeline.tsx';

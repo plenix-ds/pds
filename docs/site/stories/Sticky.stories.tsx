@@ -1,4 +1,5 @@
 // States: default, stuck (the shadow shows), always shadow, bottom edge, labeled region. Not applicable: hover, focus, active, disabled, loading, error, selected (a layout region).
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Sticky } from '../../../platform/components/Sticky/Sticky.tsx';
 import { Button } from '../../../platform/components/Button/Button.tsx';

@@ -1,4 +1,5 @@
 // States: active spinner, progress, cancel, inactive. Not applicable: hover, focus (the Cancel button only), active, disabled, error, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { LoadingOverlay } from '../../../platform/components/LoadingOverlay/LoadingOverlay.tsx';

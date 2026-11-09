@@ -1,4 +1,5 @@
 // States: default (two columns), three, divided, sidebar ratios, collapsing. Not applicable: hover, focus, active, disabled, loading, error, selected (a layout).
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Columns } from '../../../platform/components/Columns/Columns.tsx';
 import { Stack } from '../../../platform/components/Stack/Stack.tsx';

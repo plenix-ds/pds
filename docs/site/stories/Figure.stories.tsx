@@ -1,4 +1,5 @@
 // States: caption below, caption overlay, credit. Not applicable: hover, focus, active, disabled, loading, error, selected (not interactive).
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Figure } from '../../../platform/components/Figure/Figure.tsx';
 import { Image } from '../../../platform/components/Image/Image.tsx';

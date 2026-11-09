@@ -47,7 +47,7 @@ const server = http.createServer((req, res) => {
       for (let attempt = 1; attempt <= 2; attempt++) try {   // a second try: on a busy runner a page can be slow to load, which is not an accessibility result
         await page.bringToFront();
         await page.goto(base + '/iframe.html?id=' + s.id + '&viewMode=story', { waitUntil: 'domcontentloaded', timeout: 60000 });
-        await page.waitForFunction(() => document.body.classList.contains('sb-show-main') || document.body.classList.contains('sb-show-errordisplay') || !!document.querySelector('#storybook-root > *'), { timeout: 30000 });   // a closed dialog renders nothing in the root, so wait for Storybook's own "shown" flag
+        await page.waitForFunction(() => document.body.classList.contains('sb-show-main') || !!document.querySelector('#storybook-root > *'), { timeout: 30000 });   // a closed dialog renders nothing in the root, so wait for Storybook's own "shown" flag
         if (await page.evaluate(() => document.body.classList.contains('sb-show-errordisplay') && !document.querySelector('#storybook-root > *'))) throw new Error('the story threw while rendering');
         await new Promise((r) => setTimeout(r, 200));
         if (!(await page.evaluate(() => !!window.axe))) await page.evaluate(axeSrc);

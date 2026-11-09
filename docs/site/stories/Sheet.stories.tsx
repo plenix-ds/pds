@@ -1,4 +1,5 @@
 // States: open (medium), large detent, task sheet (Cancel and Done), with footer, closed. Focus: the sheet takes focus when it opens; its buttons are reached by play. Not applicable: hover/active are the buttons, disabled, loading, error, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { Sheet } from '../../../platform/components/Sheet/Sheet.tsx';

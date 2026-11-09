@@ -1,4 +1,5 @@
 // States: page, file, person, selected, with path and snippet, group. Hover, focus and active are on the opener: reached by play. Not applicable: disabled, loading, error.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { SearchResult, SearchResultGroup } from '../../../platform/components/SearchResult/SearchResult.tsx';

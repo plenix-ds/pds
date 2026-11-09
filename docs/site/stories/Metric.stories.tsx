@@ -1,4 +1,5 @@
 // States: default, with a change (success and danger tones), with a trend, as a card, large, a group. Not applicable: hover, focus (unless a link), active, disabled, loading, error, selected (see MetricCard for those states).
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { Metric } from '../../../platform/components/Metric/Metric.tsx';

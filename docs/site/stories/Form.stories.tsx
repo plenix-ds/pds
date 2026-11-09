@@ -1,4 +1,5 @@
 // States: one column (default), two columns, hover and focus on a field, a field with an error, disabled field, the actions bar. Not applicable: loading, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { Form, FormSection, FormActions } from '../../../platform/patterns/Form/Form.tsx';

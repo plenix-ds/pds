@@ -1,4 +1,5 @@
 // States: default, on an accent surface, truncated. Not applicable: hover, focus, active, disabled, loading, error, selected (inline text, not focusable).
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Code } from '../../../platform/components/Code/Code.tsx';
 import { rtl } from './rtl.tsx';

@@ -1,4 +1,5 @@
 // States: list, restore, preview, current version, empty. Hover, focus and active are on the version buttons: focus is reached by play. Not applicable: disabled, loading (restoring), error (a rejection shows the failure), selected is the current version.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { VersionHistory } from '../../../platform/patterns/VersionHistory/VersionHistory.tsx';

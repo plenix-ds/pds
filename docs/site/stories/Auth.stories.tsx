@@ -1,4 +1,5 @@
 // States: sign in (default, error), sign up (errors), password reset steps, MFA, SSO, account recovery. Hover, focus and active are on the fields and buttons: focus is reached by play. Not applicable: disabled, loading (busy), selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { Auth, SignInForm, SignUpForm, PasswordResetForm, MfaChallenge, SsoButtons, AccountRecovery } from '../../../platform/patterns/Auth/Auth.tsx';

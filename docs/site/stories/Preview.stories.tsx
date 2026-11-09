@@ -1,4 +1,5 @@
 // States: default, button (hover/focus by play), fit cover/contain, corner slots. Not applicable: disabled, loading, error, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { Preview } from '../../../platform/components/Preview/Preview.tsx';

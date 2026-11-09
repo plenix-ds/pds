@@ -1,4 +1,5 @@
 // States: default, with facts at both ends, long facts. Not applicable: hover, focus, active, disabled, loading, error, selected (a footer line of facts).
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { StatusBar } from '../../../platform/patterns/StatusBar/StatusBar.tsx';
 import { rtl } from './rtl.tsx';

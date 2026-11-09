@@ -1,4 +1,5 @@
 // States: default, category, removable (hover/focus by play), renamable, chip selected, tag list. Not applicable: disabled, loading, error (a state of the field that holds tags: TagInput).
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { Tag, Chip, TagList } from '../../../platform/components/Tag/Tag.tsx';

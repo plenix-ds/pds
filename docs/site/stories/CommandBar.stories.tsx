@@ -1,4 +1,5 @@
 // States: default (page actions), hover and focus on a command, a selection (count, Clear, selection commands), disabled command, loading command, folding into More when narrow. Not applicable: error (a command reports its own), selected beyond the selection.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { CommandBar } from '../../../platform/patterns/CommandBar/CommandBar.tsx';

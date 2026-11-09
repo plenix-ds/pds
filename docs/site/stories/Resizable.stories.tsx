@@ -1,4 +1,5 @@
 // States: default, hover and focus on the resize edge, horizontal, vertical, both axes, stepped, divider variant. Not applicable: disabled, loading, error, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { Resizable, PanelSplitter } from '../../../platform/components/Resizable/Resizable.tsx';

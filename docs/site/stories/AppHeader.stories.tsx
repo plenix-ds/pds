@@ -1,4 +1,5 @@
 // States: accent (default), frost, plain, with search, with an action, with a brand object, item current, hover and focus on an item, compact. Not applicable: disabled, loading, error.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { AppHeader } from '../../../platform/patterns/AppHeader/AppHeader.tsx';

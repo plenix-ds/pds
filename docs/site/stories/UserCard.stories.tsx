@@ -1,4 +1,5 @@
 // States: default, compact, with details, with actions, link (hover/focus by play), presence. Not applicable: disabled, loading, error, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent, within } from 'storybook/test';
 import { UserCard } from '../../../platform/patterns/UserCard/UserCard.tsx';

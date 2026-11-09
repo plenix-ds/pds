@@ -1,4 +1,5 @@
 // States: default, hover and focus (the name is the card's link), sale, out of stock (the action turned off), list layout, no image. Not applicable: loading, error, selected.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { ProductCard } from '../../../platform/patterns/ProductCard/ProductCard.tsx';

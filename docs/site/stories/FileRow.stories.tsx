@@ -1,4 +1,5 @@
 // States: default, selectable, selected, uploading (progress), error (retry), with actions. Hover, focus and active are on the row's controls: focus is reached by play. Not applicable: disabled, loading is progress.
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { FileRow, FileRowList } from '../../../platform/components/FileRow/FileRow.tsx';
