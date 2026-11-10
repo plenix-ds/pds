@@ -1,0 +1,8 @@
+AssertionError [ERR_ASSERTION]: AC-1: the root carries plx-timeline--compact next to plx-timeline--grouped: plx-timeline plx-timeline--grouped
+    at /home/cc/pds1/work/component-engineer-1/tests/timeline-compact-1152.test.js:42:12 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'

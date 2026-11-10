@@ -99,8 +99,8 @@ require('./limit.js');
       else assert.ok(g.dateEnd < g.dateStart, 'RTL: the date tile is at the right');
       assert.ok(g.wmOutside, dir + ': the watermark sits beside the event, not over it');
     }
-    // densities: the group gap is 80px, 64px compact; the event padding is 12/16, 8/12 compact, 16/16 comfortable
-    for (const [density, gap, pad] of [['standard', 80, '12px 16px'], ['compact', 64, '8px 12px'], ['comfortable', 80, '16px 16px']]) {
+    // densities: the group gap is 80px, 64px compact; the event padding is equal on all sides since #1152 (D-0148): 12, 8 compact, 16 comfortable
+    for (const [density, gap, pad] of [['standard', 80, '12px 12px'], ['compact', 64, '8px 8px'], ['comfortable', 80, '16px 16px']]) {
       await mount({ items }); await page.evaluate((d) => document.documentElement.setAttribute('data-plx-density', d), density);
       const g = await page.evaluate(() => ({ gap: parseFloat(getComputedStyle(document.querySelector('#c .plx-timeline--grouped')).rowGap), pad: ['paddingBlockStart', 'paddingInlineStart'].map((k) => getComputedStyle(document.querySelector('#c .plx-timeline__event'))[k]).join(' ') }));
       assert.equal(g.gap, gap, density + ': group gap'); assert.equal(g.pad, pad, density + ': event padding');

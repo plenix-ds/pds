@@ -78,6 +78,10 @@
       "$value": "{plx-sys.space-inset-lg}",
       "$type": "dimension"
     },
+    "timeline-grouped-event-padding-inline": {
+      "$value": "{plx-sys.space-inset-lg}",
+      "$type": "dimension"
+    },
     "timeline-grouped-event-gap": {
       "$value": "{plx-sys.space-stack-md}",
       "$type": "dimension"

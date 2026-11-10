@@ -520,14 +520,30 @@
       "$type": "dimension",
       "$description": "The calendar date tile of a grouped Timeline: its width and height (56px; ADR 0036)."
     },
+    "size-calendar-tile-sm": {
+      "$value": "{plx-ref.size-10u}",
+      "$type": "dimension",
+      "$description": "The calendar date tile of the compact grouped Timeline: its width and height (40px; ADR 0048)."
+    },
     "size-calendar-band": {
+      "$value": "{plx-ref.size-5u}",
+      "$type": "dimension",
+      "$description": "The calendar date tile: the height of its top band (20px; the month sits inside it)."
+    },
+    "size-calendar-band-sm": {
       "$value": "{plx-ref.size-4u}",
       "$type": "dimension",
-      "$description": "The calendar date tile: the height of its top band (16px)."
+      "$description": "The compact calendar date tile: the height of its top band (16px; ADR 0048)."
+    },
+    "content-max-list": {
+      "$value": "{plx-ref.content-max-sm}",
+      "$type": "dimension",
+      "$description": "The readable maximum inline size of a list of lines, such as the compact grouped Timeline (760px; ADR 0048). Aligned to the inline start."
     },
     "size-section-rule": {
       "$value": "{plx-ref.size-18u}",
       "$type": "dimension",
+      "$deprecated": "The line under a year heading is no longer drawn (ADR 0048). It keeps working and is removed in 2.0.0.",
       "$description": "The soft line under a year heading: its length (72px)."
     },
     "size-watermark": {

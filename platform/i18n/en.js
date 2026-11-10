@@ -70,6 +70,8 @@ export default {
   },
   "timeline": {
     "pending": "Pending",
+    "tagUpcoming": "{category} · upcoming",
+    "tagPending": "{category} · Pending",
     "legend": "Filter by category"
   },
   "pagination": {
