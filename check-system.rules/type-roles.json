@@ -93,6 +93,7 @@
   "plx-comp.media-viewer-meta-font-family": "text",
   "plx-comp.mega-menu-heading-font-family": "text",
   "plx-comp.menu-font-family": "text",
+  "plx-comp.count-font-family": "data",
   "plx-comp.metric-card-delta-font-family": "data",
   "plx-comp.metric-card-person-tile-value-font-family": "data",
   "plx-comp.metric-card-title-font-family": "text",

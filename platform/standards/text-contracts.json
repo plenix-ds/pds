@@ -929,18 +929,23 @@
    ]
   },
   "plx-count--pill": {
-   "contract": "adjusts",
-   "props": [
-    "font-size",
+   "contract": "establishes",
+   "role": "secondary",
+   "font": "mono",
+   "adjusts": [
     "font-weight",
     "line-height"
    ]
   },
+  "plx-count": {
+   "contract": "follows",
+   "font": "mono",
+   "size": true
+  },
   "plx-count--plain": {
-   "contract": "adjusts",
-   "props": [
-    "font-size"
-   ]
+   "contract": "follows",
+   "font": "mono",
+   "size": true
   },
   "plx-data-grid__cell--name": {
    "contract": "adjusts",
