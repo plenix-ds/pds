@@ -1,0 +1,9 @@
+id: D-0155
+date: 2026-11-10
+area: process
+decided_by: owner (via the control desk, 2026-11-10, "only PDS1 - PM on Remote Control"; "most PDS1 agents sit idle and are never stopped")
+decision: 'Only the product-lead session (PDS1 - PM) starts with --remote-control; every other role starts with --name only. A nudge round never wakes every idle session: it wakes the roles with actionable work (an open issue labelled for them without later or blocked) and, while the repo is busy, the coordinators. An open PR waiting on checks or review does not keep a role running; pickup starts it again when its PR needs it. Parked items carry later or blocked. When idle, only the coordinators (product-lead, delivery-lead) stay up (1185).'
+why: 'The wake-all nudge counted as activity, so long_work.idle_exit_min never fired and idle agents ran all day; the owner talks to one session.'
+options: ['coordinators only when idle, PM-only Remote Control (chosen)', 'every role kept running']
+status: active
+check: 'tools/ci/dispatch.test.mjs (no wake-all round: an open PR or a change wakes only the coordinators); team.sh launch-test; review of scheduler.mjs stop rule'
