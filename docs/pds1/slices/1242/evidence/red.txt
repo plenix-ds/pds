@@ -1,0 +1,5 @@
+AssertionError [ERR_ASSERTION]: ltr 1920: the nav is a SecondaryPane in PagePanes, no card frame null
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: null,
+  expected: true,

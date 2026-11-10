@@ -9,7 +9,12 @@
        <SettingsSection title="Advanced" collapsible defaultExpanded={false}>…</SettingsSection>
      </SettingsLayout>
    Props:
-     nav: the navigation (a NavList), drawn in a NavPane beside the content
+     nav: the navigation (a NavList), drawn in a docked SecondaryPane beside the content (ADR 0057): flush against the main
+       navigation, full height, on the page surface, titled, collapsible and resizable (240px to start; remembered per page)
+     navTitle: the pane's title (default "Settings", settingsLayout.navTitle)
+     pane: more props for the SecondaryPane (detailOpen, onBack, back, label, a controlled size or collapsed): at Narrow it
+       is a list-detail with "Back to Settings"
+     strings: { navTitle: "Settings" }
      className: more classes
      children: the settings sections
      SettingsSection.title: the section's heading (an h2 by default); it names the section landmark
@@ -41,7 +46,7 @@
        plenix.<page>-settings.view), so the page opens as the person left it; a parent that controls it (expanded) keeps
        it instead.
      Each row is divided from the next.
-     On a narrow layout the navigation stacks above the content.
+     The navigation pane is the case pane's look; its width and folded state are remembered per page in the page's view state.
      It is a settings page: inside an AppShell it claims the page kind "settings", so the layout standard lays it out
        (contained: one centered column at the form width).
    Notes:
@@ -56,26 +61,46 @@ import { dataWhenText } from '../../utils/dataText.tsx';
 import { useUid } from '../../utils/layer.ts';
 import { useViewState, readView } from '../../providers/ScreenLocation.ts';
 import { Icon } from '../../components/Icon/Icon.tsx';
-import { NavPane } from '../NavPane/NavPane.tsx';
+import { PagePanes, SecondaryPane } from '../SecondaryPane/SecondaryPane.tsx';
+import type { SecondaryPaneProps } from '../SecondaryPane/SecondaryPane.tsx';
 import { ActionBar } from '../ActionBar/ActionBar.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import ChevronDownIcon from 'plenix-platform/icons/plenix/chevron-down';
 
 
 /** @public the prop type of SettingsLayout (ADR 0011) */
-export type SettingsLayoutProps = { nav?: React.ReactNode; className?: string; children?: React.ReactNode };
+export type SettingsLayoutProps = {
+  nav?: React.ReactNode;
+  /** the navigation pane's title (default "Settings") */
+  navTitle?: React.ReactNode;
+  /** more props for the navigation pane */
+  pane?: Omit<SecondaryPaneProps, 'children' | 'title'>;
+  strings?: Record<string, string>;
+  className?: string;
+  children?: React.ReactNode;
+};
 export function SettingsLayout(props: SettingsLayoutProps) {
-  const { nav, className, children } = props as any;
+  const { nav, navTitle, pane, strings, className, children } = props as any;
+  const t: any = useStrings('settingsLayout', strings);
   // a settings page: the layout standard (providers/pageLayouts.js) lays it out, through the shell (batch 218)
   const shell = useAppLayout();
   const claim = shell && shell.claimPage;
   React.useEffect(() => (claim ? claim('settings') : undefined), [claim]);
+  // the pane's width and folded state are kept in the page's view state (beside the sections')
+  const page = React.useMemo(pageOf, []);
+  const [view, update] = useViewState(page);
+  const kept: any = view || {};
   return (
     <div className={cx('plx-settings', className)}>
-      <div className="plx-settings__frame">
-        {nav ? <NavPane as="div" className="plx-settings__nav">{nav}</NavPane> : null}
+      <PagePanes>
+        {nav ? (
+          <SecondaryPane title={navTitle !== undefined ? navTitle : t.navTitle} side="start" width="md" collapsible resizable
+            size={typeof kept.paneSize === 'number' ? kept.paneSize : undefined} onSizeChange={(px: number) => update(() => ({ paneSize: px }))}
+            collapsed={typeof kept.paneCollapsed === 'boolean' ? kept.paneCollapsed : undefined} onCollapsedChange={(next: boolean) => update(() => ({ paneCollapsed: next }))}
+            {...pane}>{nav}</SecondaryPane>
+        ) : null}
         <div className="plx-settings__content">{children}</div>
-      </div>
+      </PagePanes>
     </div>
   );
 }
