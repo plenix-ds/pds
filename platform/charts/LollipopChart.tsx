@@ -50,6 +50,8 @@ const RING = 8;
 export type LollipopPoint = { label: string; value: number };
 /** @public the prop type (ADR 0011) */
 export type LollipopChartProps = {
+  /** how the data table shows: a Dialog (default) or inline under the chart (ADR 0054) */
+  dataView?: 'dialog' | 'inline';
   title: string;
   description?: string;
   data?: LollipopPoint[];
@@ -65,7 +67,7 @@ export type LollipopChartProps = {
   strings?: Record<string, string>;
   className?: string;
 };
-export function LollipopChart({ title, description, data = [], orientation = 'horizontal', sort = 'none', color, showValues = false, format,
+export function LollipopChart({ title, description, dataView, data = [], orientation = 'horizontal', sort = 'none', color, showValues = false, format,
   categoryTitle, valueTitle, size = 'md', strings, className }: LollipopChartProps) {
   const t: any = useStrings('chart.lollipopChart', strings);
   const o = orientation === 'vertical' ? 'vertical' : 'horizontal';
@@ -135,7 +137,7 @@ export function LollipopChart({ title, description, data = [], orientation = 'ho
   };
 
   return (
-    <ChartFrame interaction={keys.interaction} title={title} description={description} size={size} margin={NO_MARGIN} table={table} className={cx('plx-lollipop', 'plx-lollipop--' + o, className)}>
+    <ChartFrame interaction={keys.interaction} title={title} dataView={dataView} description={description} size={size} margin={NO_MARGIN} table={table} className={cx('plx-lollipop', 'plx-lollipop--' + o, className)}>
       {draw}
     </ChartFrame>
   );

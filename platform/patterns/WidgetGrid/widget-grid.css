@@ -3,7 +3,7 @@
 .plx-widget-grid--2{grid-template-columns:repeat(2, minmax(0, 1fr));}
 .plx-widget-grid--3{grid-template-columns:repeat(3, minmax(0, 1fr));}
 .plx-widget-grid--4{grid-template-columns:repeat(4, minmax(0, 1fr));}
-.plx-widget-grid__item{border-bottom-left-radius:var(--plx-comp-widget-grid-item-radius);border-bottom-right-radius:var(--plx-comp-widget-grid-item-radius);border-top-left-radius:var(--plx-comp-widget-grid-item-radius);border-top-right-radius:var(--plx-comp-widget-grid-item-radius);min-inline-size:0;position:relative;}
+.plx-widget-grid__item{display:flex;flex-direction:column;border-bottom-left-radius:var(--plx-comp-widget-grid-item-radius);border-bottom-right-radius:var(--plx-comp-widget-grid-item-radius);border-top-left-radius:var(--plx-comp-widget-grid-item-radius);border-top-right-radius:var(--plx-comp-widget-grid-item-radius);min-inline-size:0;position:relative;}
 .plx-widget-grid__item--wide{grid-column:span 2;}
 .plx-widget-grid__item.is-dragging{opacity:var(--plx-comp-widget-grid-item-dragging-opacity);}
 .plx-widget-grid__item.is-drop-target{outline-color:var(--plx-comp-widget-grid-item-drop-target-outline-color);outline-offset:var(--plx-comp-widget-grid-item-drop-target-outline-offset);outline-style:dashed;outline-width:var(--plx-comp-widget-grid-item-drop-target-outline-width);}

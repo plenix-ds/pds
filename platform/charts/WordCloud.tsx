@@ -84,6 +84,8 @@ export function wordCloudLayout(boxes: Array<{ width: number; height: number }>,
 export type CloudWord = { text: string; value: number; /** the id of one of the groups */ group?: string };
 /** @public */
 export type WordCloudProps = {
+  /** how the data table shows: a Dialog (default) or inline under the chart (ADR 0054) */
+  dataView?: 'dialog' | 'inline';
   title: string;
   description?: string;
   words?: CloudWord[];
@@ -101,7 +103,7 @@ export type WordCloudProps = {
   interactionStrings?: Record<string, string>;
   className?: string;
 };
-export function WordCloud({ title, description, words = [], layout = 'spiral', groups, max = 50, valueLabel, format, size = 'md', margin, interactive = true, onSelect,
+export function WordCloud({ title, description, dataView, words = [], layout = 'spiral', groups, max = 50, valueLabel, format, size = 'md', margin, interactive = true, onSelect,
   strings, frameStrings, interactionStrings, className }: WordCloudProps) {
   const t: any = useStrings('chart.wordCloud', strings);
   const fmt = typeof format === 'function' ? format : (v: any) => formatNumber(v);
@@ -180,7 +182,7 @@ export function WordCloud({ title, description, words = [], layout = 'spiral', g
   };
 
   return (
-    <ChartFrame title={title} description={description} size={size} margin={Object.assign({ top: 8, end: 8, bottom: 8, start: 8 }, margin)} table={table} legend={legendNode}
+    <ChartFrame title={title} dataView={dataView} description={description} size={size} margin={Object.assign({ top: 8, end: 8, bottom: 8, start: 8 }, margin)} table={table} legend={legendNode}
       interaction={interactive ? ia : undefined} strings={frameStrings}
       className={cx('plx-word-cloud', 'plx-word-cloud--' + (layout === 'rectangular' ? 'rectangular' : 'spiral'), className)}>
       {draw}

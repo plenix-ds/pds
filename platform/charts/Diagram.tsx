@@ -68,7 +68,7 @@ export type DiagramEdge = { source: string | number; target: string | number; la
 /** @public a container drawn around its nodes (variant boxes) */
 export type DiagramGroup = { id: string | number; label: string };
 /** @public the prop type (ADR 0011) */
-export type DiagramProps = Pick<ChartFrameProps, 'title' | 'description' | 'size' | 'margin' | 'className'> & {
+export type DiagramProps = Pick<ChartFrameProps, 'title' | 'dataView' | 'description' | 'size' | 'margin' | 'className'> & {
   nodes?: DiagramNode[];
   edges?: DiagramEdge[];
   variant?: 'flowchart' | 'boxes';
@@ -81,7 +81,7 @@ export type DiagramProps = Pick<ChartFrameProps, 'title' | 'description' | 'size
   frameStrings?: ChartFrameProps['strings'];
   interactionStrings?: Record<string, string>;
 };
-export function Diagram({ title, description, nodes = [], edges = [], variant = 'flowchart', groups, direction = 'down', interactive = true, size = 'lg', margin,
+export function Diagram({ title, description, dataView, nodes = [], edges = [], variant = 'flowchart', groups, direction = 'down', interactive = true, size = 'lg', margin,
   onSelect, strings, frameStrings, interactionStrings, className }: DiagramProps) {
   const t: any = useStrings('chart.diagram', strings);
   const uid = 'plx-diagram' + React.useId().replace(/[^a-zA-Z0-9]/g, '');
@@ -203,7 +203,7 @@ export function Diagram({ title, description, nodes = [], edges = [], variant = 
   };
 
   return (
-    <ChartFrame clip title={title} description={description} size={size} margin={Object.assign({ top: 0, end: 0, bottom: 0, start: 0 }, margin)} table={table}
+    <ChartFrame clip title={title} dataView={dataView} description={description} size={size} margin={Object.assign({ top: 0, end: 0, bottom: 0, start: 0 }, margin)} table={table}
       interaction={interactive ? iaz : undefined} actions={interactive ? gv.actions : null} strings={frameStrings} fitHeight={(w) => layout.height * Math.min(1, w / layout.width)}
       className={cx('plx-diagram', 'plx-diagram--' + (boxes ? 'boxes' : 'flowchart'), !interactive && 'plx-diagram--read-only', className)}>
       {draw}

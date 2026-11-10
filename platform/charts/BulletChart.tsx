@@ -47,7 +47,7 @@ const TARGET = 2 / 3;   // the target line's length, a share of the band
 /** @public one measure: its value, an optional target, and the upper ends of up to three bands (poor, fair, good) */
 export type BulletItem = { id?: string | number; label: string; value: number; target?: number; ranges?: number[] };
 /** @public the prop type (ADR 0011) */
-export type BulletChartProps = Pick<ChartFrameProps, 'title' | 'description' | 'hideCaption' | 'size' | 'margin' | 'legend' | 'legendPosition' | 'className'> & {
+export type BulletChartProps = Pick<ChartFrameProps, 'title' | 'dataView' | 'description' | 'hideCaption' | 'size' | 'margin' | 'legend' | 'legendPosition' | 'className'> & {
   items?: BulletItem[];
   orientation?: 'horizontal' | 'vertical';
   max?: number;
@@ -56,7 +56,7 @@ export type BulletChartProps = Pick<ChartFrameProps, 'title' | 'description' | '
   tooltip?: boolean;
   strings?: Record<string, string>;
 };
-export function BulletChart({ title, description, hideCaption, size, items = [], orientation = 'horizontal', max, valueLabel, format, tooltip = true,
+export function BulletChart({ title, description, dataView, hideCaption, size, items = [], orientation = 'horizontal', max, valueLabel, format, tooltip = true,
   legend, legendPosition, margin, strings, className }: BulletChartProps) {
   const t: any = useStrings('chart.bulletChart', strings);
   const o = orientation === 'vertical' ? 'vertical' : 'horizontal';
@@ -140,7 +140,7 @@ export function BulletChart({ title, description, hideCaption, size, items = [],
   };
 
   return (
-    <ChartFrame title={title} description={description} hideCaption={hideCaption} size={size} margin={NO_MARGIN} legend={legend} legendPosition={legendPosition}
+    <ChartFrame title={title} dataView={dataView} description={description} hideCaption={hideCaption} size={size} margin={NO_MARGIN} legend={legend} legendPosition={legendPosition}
       table={table} strings={strings} className={cx('plx-bullet-chart', 'plx-bullet-chart--' + o, className)}>
       {draw}
     </ChartFrame>

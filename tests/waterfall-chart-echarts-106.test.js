@@ -60,9 +60,10 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
         }
         // Show the data
         await page.evaluate(() => { const b = [...document.querySelectorAll('.plx-waterfall-chart summary, .plx-waterfall-chart button')].find((x) => /data/i.test(x.textContent)); if (b) b.click(); }); await wait(700);
-        const rows = await page.evaluate(() => document.querySelectorAll('.plx-waterfall-chart [role=row][data-plx-record], .plx-waterfall-chart table tbody tr').length);
+        const rows = await page.evaluate(() => document.querySelectorAll('.plx-waterfall-chart [role=row][data-plx-record], .plx-waterfall-chart table tbody tr, .plx-dialog [role=row][data-plx-record]').length);
         assert.equal(rows, steps.length, T + name + ': "Show the data" has a row per bar (' + rows + ')');
-        await page.evaluate(() => { const b = [...document.querySelectorAll('.plx-waterfall-chart summary')].find((x) => /data/i.test(x.textContent)); if (b) b.click(); }); await wait(300);
+        await page.keyboard.press('Escape'); await wait(300);
+        // the Dialog is closed above (Escape)
       }
       // keyboard and tooltip
       await mount(SETS['above zero']);

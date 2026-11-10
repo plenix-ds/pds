@@ -4,10 +4,12 @@
 .plx-action-bar{align-items:center;background-color:var(--plx-comp-action-bar-context-background,var(--plx-comp-action-bar-background));border-top-color:var(--plx-comp-action-bar-line);border-top-style:solid;border-top-width:var(--plx-comp-action-bar-line-width);inset-block-end:var(--plx-comp-action-bar-stick);column-gap:var(--plx-comp-action-bar-gap);display:flex;flex-wrap:nowrap;justify-content:flex-end;margin-block-start:var(--plx-comp-action-bar-margin-block-start);padding-block-end:var(--plx-comp-action-bar-padding-block);padding-block-start:var(--plx-comp-action-bar-padding-block);position:sticky;row-gap:var(--plx-comp-action-bar-gap);z-index:var(--plx-comp-action-bar-layer);}
 /* Focus not obscured (WCAG 2.2 SC 2.4.11; Platforms Standard 8.1): a scrolling area that holds a stuck bar keeps the
    bar's height (--plx-comp-action-bar-block-size: one row) clear when focus or a scroll brings an element into view, so
-   the bar never covers the focused element. The header, the footer (StatusBar) and the Narrow bottom bar sit outside
+   the bar never covers the focused element. The page itself (:root) is marked by the bar, in code (class plx-root-action-bar),
+   because a :has() on :root re-checks on every DOM change (issue 1235). The header, the footer (StatusBar) and the Narrow bottom bar sit outside
    the scrolling areas (AppShell), so they never cover what scrolls. */
-:where(:root, .plx-app-shell__main, .plx-page-content, .plx-settings__content, .plx-side-panel__body, .plx-secondary-pane__body, .plx-u-overflow-y-auto):has(.plx-action-bar:not(.plx-action-bar--static)){scroll-padding-block-end:var(--plx-comp-action-bar-block-size);}
+:where(.plx-app-shell__main, .plx-page-content, .plx-settings__content, .plx-side-panel__body, .plx-secondary-pane__body, .plx-u-overflow-y-auto):has(.plx-action-bar:not(.plx-action-bar--static)){scroll-padding-block-end:var(--plx-comp-action-bar-block-size);}
 
+.plx-root-action-bar{scroll-padding-block-end:var(--plx-comp-action-bar-block-size);}
 .plx-action-bar--static{background-color:transparent;position:static;}
 /* a window under 400px (a phone; the same value as --plx-sys-fit-footer-stack-width, which a media query cannot read): the main button and the one beside it stack full width,
    the main one first; More (the other actions) sits on Cancel's row */
