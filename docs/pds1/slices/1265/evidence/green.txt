@@ -1,0 +1,3 @@
+  611 entries; largest (on-demand candidates): AuthenticationPage 299471, FullScreenExperience 299470, FullScreenWorkspace 299469, MasterDetailPage 299469, SinglePaneWorkspace 299469; plenix-loader.js 3280 B
+PERF_BUDGET_OK
+COMMERCE_MODULES_1265_OK

@@ -1,0 +1,319 @@
+{
+  "base": "https://design-system.lighthouseway.org/cdn/1.6.1",
+  "mode": "light",
+  "runs": 5,
+  "pages": {
+    "empty": {
+      "load": {
+        "cssMs": 3.602,
+        "recalcMs": 11.091,
+        "recalcCount": 2,
+        "recalcElements": 12,
+        "layoutMs": 1.849,
+        "paintMs": 0.49900000000000005,
+        "scriptMs": 15.082,
+        "taskMs": 0,
+        "forcedLayouts": 0,
+        "selectorStatsEvents": 0,
+        "longTasks": 0,
+        "longTaskMs": 0
+      },
+      "hover": {
+        "cssMs": 0,
+        "recalcMs": 0,
+        "recalcCount": 0,
+        "recalcElements": 0,
+        "layoutMs": 0,
+        "paintMs": 0,
+        "scriptMs": 0,
+        "taskMs": 0,
+        "forcedLayouts": 0,
+        "selectorStatsEvents": 0
+      },
+      "sort": {
+        "cssMs": 0,
+        "recalcMs": 6.182,
+        "recalcCount": 4,
+        "recalcElements": 18,
+        "layoutMs": 0.166,
+        "paintMs": 0.38899999999999996,
+        "scriptMs": 1.496999999999999,
+        "taskMs": 0,
+        "forcedLayouts": 0,
+        "selectorStatsEvents": 0
+      }
+    },
+    "grid": {
+      "load": {
+        "cssMs": 3.837,
+        "recalcMs": 63.454,
+        "recalcCount": 18,
+        "recalcElements": 461,
+        "layoutMs": 6.821,
+        "paintMs": 2.905,
+        "scriptMs": 132.35499999999996,
+        "taskMs": 0,
+        "forcedLayouts": 28,
+        "selectorStatsEvents": 0,
+        "longTasks": 1,
+        "longTaskMs": 108
+      },
+      "hover": {
+        "cssMs": 0,
+        "recalcMs": 11.789,
+        "recalcCount": 8,
+        "recalcElements": 814,
+        "layoutMs": 0.129,
+        "paintMs": 5.570999999999987,
+        "scriptMs": 15.621000000000015,
+        "taskMs": 0,
+        "forcedLayouts": 9,
+        "selectorStatsEvents": 0
+      },
+      "sort": {
+        "cssMs": 0,
+        "recalcMs": 7.335,
+        "recalcCount": 3,
+        "recalcElements": 157,
+        "layoutMs": 2.764,
+        "paintMs": 2.4330000000000003,
+        "scriptMs": 9.200999999999999,
+        "taskMs": 0,
+        "forcedLayouts": 0,
+        "selectorStatsEvents": 0
+      },
+      "filter": {
+        "cssMs": 0,
+        "recalcMs": 33.789,
+        "recalcCount": 8,
+        "recalcElements": 12,
+        "layoutMs": 1.2369999999999999,
+        "paintMs": 0.266,
+        "scriptMs": 49.666,
+        "taskMs": 0,
+        "forcedLayouts": 16,
+        "selectorStatsEvents": 0
+      },
+      "resize": {
+        "cssMs": 0,
+        "recalcMs": 47.38000000000001,
+        "recalcCount": 22,
+        "recalcElements": 196,
+        "layoutMs": 5.652,
+        "paintMs": 6.937999999999996,
+        "scriptMs": 69.28000000000003,
+        "taskMs": 0,
+        "forcedLayouts": 34,
+        "selectorStatsEvents": 0
+      }
+    },
+    "grid500": {
+      "load": {
+        "cssMs": 3.657,
+        "recalcMs": 59.859,
+        "recalcCount": 18,
+        "recalcElements": 53,
+        "layoutMs": 7.875999999999999,
+        "paintMs": 2.835,
+        "scriptMs": 137.169,
+        "taskMs": 0,
+        "forcedLayouts": 27,
+        "selectorStatsEvents": 0,
+        "longTasks": 1,
+        "longTaskMs": 113
+      },
+      "hover": {
+        "cssMs": 0,
+        "recalcMs": 10.679000000000002,
+        "recalcCount": 8,
+        "recalcElements": 814,
+        "layoutMs": 0.12,
+        "paintMs": 5.745999999999994,
+        "scriptMs": 15.419000000000013,
+        "taskMs": 0,
+        "forcedLayouts": 9,
+        "selectorStatsEvents": 0
+      },
+      "sort": {
+        "cssMs": 0,
+        "recalcMs": 5.394,
+        "recalcCount": 3,
+        "recalcElements": 157,
+        "layoutMs": 1.9289999999999998,
+        "paintMs": 2.133,
+        "scriptMs": 11.029,
+        "taskMs": 0,
+        "forcedLayouts": 0,
+        "selectorStatsEvents": 0
+      },
+      "filter": {
+        "cssMs": 0,
+        "recalcMs": 33.001999999999995,
+        "recalcCount": 8,
+        "recalcElements": 12,
+        "layoutMs": 1.311,
+        "paintMs": 0.321,
+        "scriptMs": 55.916999999999994,
+        "taskMs": 0,
+        "forcedLayouts": 16,
+        "selectorStatsEvents": 0
+      },
+      "resize": {
+        "cssMs": 0,
+        "recalcMs": 46.325,
+        "recalcCount": 22,
+        "recalcElements": 196,
+        "layoutMs": 5.318,
+        "paintMs": 6.947999999999996,
+        "scriptMs": 74.71600000000001,
+        "taskMs": 0,
+        "forcedLayouts": 34,
+        "selectorStatsEvents": 0
+      }
+    },
+    "grids3": {
+      "load": {
+        "cssMs": 3.673,
+        "recalcMs": 250.42599999999996,
+        "recalcCount": 24,
+        "recalcElements": 9862,
+        "layoutMs": 25.171,
+        "paintMs": 13.845999999999998,
+        "scriptMs": 376.4309999999999,
+        "taskMs": 0,
+        "forcedLayouts": 41,
+        "selectorStatsEvents": 0,
+        "longTasks": 1,
+        "longTaskMs": 338
+      },
+      "hover": {
+        "cssMs": 0,
+        "recalcMs": 21.871,
+        "recalcCount": 8,
+        "recalcElements": 3653,
+        "layoutMs": 0,
+        "paintMs": 13.712000000000002,
+        "scriptMs": 25.695000000000004,
+        "taskMs": 0,
+        "forcedLayouts": 8,
+        "selectorStatsEvents": 0
+      },
+      "sort": {
+        "cssMs": 0,
+        "recalcMs": 16.852,
+        "recalcCount": 3,
+        "recalcElements": 2431,
+        "layoutMs": 4.061,
+        "paintMs": 4.887,
+        "scriptMs": 10.565999999999999,
+        "taskMs": 0,
+        "forcedLayouts": 0,
+        "selectorStatsEvents": 0
+      },
+      "filter": {
+        "cssMs": 0,
+        "recalcMs": 389.23499999999996,
+        "recalcCount": 24,
+        "recalcElements": 67272,
+        "layoutMs": 33.967999999999996,
+        "paintMs": 0.5830000000000001,
+        "scriptMs": 473.28499999999997,
+        "taskMs": 0,
+        "forcedLayouts": 48,
+        "selectorStatsEvents": 0
+      },
+      "resize": {
+        "cssMs": 0,
+        "recalcMs": 513.17,
+        "recalcCount": 41,
+        "recalcElements": 79761,
+        "layoutMs": 61.56699999999999,
+        "paintMs": 47.469000000000456,
+        "scriptMs": 671.1129999999999,
+        "taskMs": 0,
+        "forcedLayouts": 76,
+        "selectorStatsEvents": 0
+      }
+    },
+    "record": {
+      "load": {
+        "cssMs": 3.273,
+        "recalcMs": 9.74,
+        "recalcCount": 3,
+        "recalcElements": 14,
+        "layoutMs": 2.697,
+        "paintMs": 0.47200000000000003,
+        "scriptMs": 21.876000000000005,
+        "taskMs": 0,
+        "forcedLayouts": 2,
+        "selectorStatsEvents": 0,
+        "longTasks": 0,
+        "longTaskMs": 0
+      },
+      "hover": {
+        "cssMs": 0,
+        "recalcMs": 0,
+        "recalcCount": 0,
+        "recalcElements": 0,
+        "layoutMs": 0,
+        "paintMs": 0,
+        "scriptMs": 0,
+        "taskMs": 0,
+        "forcedLayouts": 0,
+        "selectorStatsEvents": 0
+      },
+      "sort": {
+        "cssMs": 0,
+        "recalcMs": 4.546,
+        "recalcCount": 4,
+        "recalcElements": 39,
+        "layoutMs": 0.14100000000000001,
+        "paintMs": 0.368,
+        "scriptMs": 1.3279999999999996,
+        "taskMs": 0,
+        "forcedLayouts": 0,
+        "selectorStatsEvents": 0
+      }
+    },
+    "form": {
+      "load": {
+        "cssMs": 3.595,
+        "recalcMs": 11.313,
+        "recalcCount": 3,
+        "recalcElements": 25,
+        "layoutMs": 2.794,
+        "paintMs": 0.49100000000000005,
+        "scriptMs": 25.083000000000002,
+        "taskMs": 0,
+        "forcedLayouts": 2,
+        "selectorStatsEvents": 0,
+        "longTasks": 0,
+        "longTaskMs": 0
+      },
+      "hover": {
+        "cssMs": 0,
+        "recalcMs": 0,
+        "recalcCount": 0,
+        "recalcElements": 0,
+        "layoutMs": 0,
+        "paintMs": 0,
+        "scriptMs": 0,
+        "taskMs": 0,
+        "forcedLayouts": 0,
+        "selectorStatsEvents": 0
+      },
+      "sort": {
+        "cssMs": 0,
+        "recalcMs": 4.744,
+        "recalcCount": 4,
+        "recalcElements": 30,
+        "layoutMs": 0.135,
+        "paintMs": 0.366,
+        "scriptMs": 1.3009999999999993,
+        "taskMs": 0,
+        "forcedLayouts": 0,
+        "selectorStatsEvents": 0
+      }
+    }
+  }
+}

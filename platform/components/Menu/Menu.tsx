@@ -232,7 +232,7 @@ export function MenuItem({ icon, danger = false, disabled = false, checked, type
     <>
       {marked ? <span className={cx('plx-menu__check', radio && 'plx-menu__check--radio', on && 'is-checked')} aria-hidden="true">{on ? <Icon icon={CheckIcon} filled={false} /> : null}</span> : null}
       {icon ? <span className="plx-menu__icon">{asIcon(icon)}</span> : null}
-      <span className="plx-menu__label">{children}</span>
+      <span className="plx-menu__label"><span className="plx-menu__label-text">{children}</span></span>
     </>
   );
   return href && !disabled ? <a href={href} {...props}>{content}</a> : <button type="button" {...props}>{content}</button>;
@@ -307,7 +307,7 @@ export function MenuSub({ label, icon, disabled = false, className, children }: 
         onClick={(e) => { e.preventDefault(); if (open) setOpen(false); else openIt(true); }} onKeyDown={onItemKey}
         onPointerEnter={(e) => { if (e.pointerType === 'mouse' && !open) openIt(false); }}>
         {icon ? <span className="plx-menu__icon">{asIcon(icon)}</span> : null}
-        <span className="plx-menu__label">{label}</span>
+        <span className="plx-menu__label"><span className="plx-menu__label-text">{label}</span></span>
         <span className="plx-menu-sub__arrow" aria-hidden="true"><Icon name={TriangleRightIcon} /></span>
       </button>
       {open ? (

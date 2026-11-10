@@ -100,6 +100,8 @@
   "plx-comp.metric-card-delta-font-family": "data",
   "plx-comp.metric-card-person-tile-value-font-family": "data",
   "plx-comp.metric-card-title-font-family": "text",
+  "plx-comp.metric-card-value-word-font-family": "text",
+  "plx-comp.metric-value-word-font-family": "text",
   "plx-comp.metric-card-value-font-family": "data",
   "plx-comp.metric-change-font-family": "data",
   "plx-comp.metric-value-font-family": "data",
