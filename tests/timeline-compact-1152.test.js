@@ -54,6 +54,10 @@ require('./limit.js');
     assert.equal(s.plain, 'Category 4', 'AC-2: a past event\'s tag is its category'); assert.equal(s.dated, 'Category 5 · upcoming', 'AC-4: a dated upcoming event adds "· upcoming"');
     assert.equal(s.undated, 'Category 6 · Pending', 'AC-2: an undated upcoming event says Pending in its tag'); assert.equal(s.tile, '', 'AC-2: the compact tile has no word, month or day for it');
     assert.equal(s.tileDashed, 'dashed', 'AC-2: the undated tile is dashed'); assert.equal(s.time, null, 'AC-2: no <time> without a date');
+    // the tag words are catalog patterns with a {category} slot (ADR 0048, D-0152): a language can order them as it needs,
+    await mount({ items, strings: { tagUpcoming: 'soon: {category}', tagPending: '{category} (to be set)' } });
+    s = await page.evaluate(() => [...document.querySelectorAll('#c .plx-timeline__event')].map((e) => e.querySelector('.plx-timeline__tag').textContent.trim()).slice(3));
+    assert.deepEqual(s, ['soon: Category 5', 'Category 6 (to be set)'], 'AC-4: the pattern places the label: ' + JSON.stringify(s));
     // AC-3: the padding is equal on all four sides, in both looks and the three densities
     for (const look of ['compact', 'page']) for (const [density, px] of [['standard', look === 'compact' ? 8 : 12], ['compact', 8], ['comfortable', look === 'compact' ? 8 : 16]]) {
       await mount({ items, density: look }); await page.evaluate((d) => document.documentElement.setAttribute('data-plx-density', d), density);

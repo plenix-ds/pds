@@ -30,11 +30,11 @@
        items[].upcoming: a dashed outline and a grey band; the tile shows the month and day, or the word Pending when there is no dateTime
        density: "page" (default; the standard look, its padding following the region density) | "compact" (ADR 0048: the Key Dates look at one fixed size:
          no watermark, one line per event (title, description cut with an ellipsis, category tag at the inline end), a 40px date tile, at most 760px wide at
-         the inline start; an upcoming event's tag adds "· upcoming", or "· Pending" with no date). Ignored, with a development warning, by variant "default".
+         the inline start; an upcoming event's tag adds "· upcoming", or "· Pending" with no date, from the patterns tagUpcoming and tagPending). Ignored, with a development warning, by variant "default".
        legend: a row of toggle buttons that hide a category's events (default false)
        hiddenCategories, onHiddenCategoriesChange: the hidden category ids, to control the legend (without them it keeps its own)
        headingLevel: 2 to 6, the year headings (default 3)
-       strings: the words (pending, upcoming, legend), for other languages
+       strings: the words (pending, tagUpcoming, tagPending, legend), for other languages
      className: more classes on the list
    Behavior:
      The timeline is an ordered list (<ol>): each event is announced with its place (1 of 5), its time and title.
@@ -79,7 +79,7 @@ export type TimelineItem = {
 /** a category slot "1" to "8", or a category hue name (platform/system/steps.css) */
 export type CategoryColor = '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | (string & {});
 export type TimelineCategory = { id: string; label: React.ReactNode; color: CategoryColor };
-type TimelineWords = { pending: string; upcoming: string; legend: string };
+type TimelineWords = { pending: string; tagUpcoming: string; tagPending: string; legend: string };
 export type TimelineProps = Omit<React.HTMLAttributes<HTMLOListElement>, 'children'> & {
   items?: TimelineItem[];
   orientation?: 'vertical' | 'horizontal';
@@ -112,12 +112,13 @@ function CutLine({ as: Tag, className, tip, children }: { as: 'span' | 'p'; clas
     </Tooltip>
   );
 }
-// compact: an upcoming event's tag says so ("Category · upcoming"; undated: "Category · Pending", the tile has no room for the word)
+// compact: an upcoming event's tag says so ("{category} · upcoming"; undated: "{category} · Pending", the tile has no room for the word). The catalog
+// holds the whole pattern with its {category} slot, so each language orders the words as it needs; the label (any node) goes into the slot
 function tagLabel(it: TimelineItem, dated: boolean, t: TimelineWords): React.ReactNode {
   const label = it.category ? it.category.label : null;
   if (!it.upcoming) return label;
-  const suffix = dated ? t.upcoming : t.pending;
-  return typeof label === 'string' ? label + ' · ' + suffix : <>{label} · {suffix}</>;
+  const [before, after] = String(dated ? t.tagUpcoming : t.tagPending).split('{category}');
+  return typeof label === 'string' ? (before || '') + label + (after || '') : <>{before}{label}{after}</>;
 }
 type Row = { it: TimelineItem; key: React.Key; date: Date | null; year: number | null };
 let warnedDates = false, warnedLayout = false;
