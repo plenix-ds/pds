@@ -1,0 +1,2 @@
+### Changed
+- Words stay in the text font and values in the data font (audit #10-#16, ADR 0055): Tree, EntityPicker, MediaCard and MediaViewer `meta` slots and the MediaViewer counter go through `dataWhenText`/`dataPhrase` in the text font; a CodeBlock title is in the data font only when it is a path or file name; VersionCompare lines are in the text font, and the new `textKind="code"` keeps the data font; the Pagination range no longer lays out as a value (#1262).

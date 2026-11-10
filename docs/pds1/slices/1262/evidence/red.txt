@@ -1,0 +1,5 @@
+AssertionError [ERR_ASSERTION]: ltr: the range block no longer lays out as a value
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'tabular-nums',
+  expected: 'tabular-nums',
