@@ -14,6 +14,7 @@ export default {
   },
   "timeline": {
     "pending": "معلّق",
+    "tagUpcoming": "{category} · قادم",
     "tagPending": "{category} · معلّق",
     "legend": "التصفية حسب الفئة"
   },
