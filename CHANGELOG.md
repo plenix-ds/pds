@@ -6,6 +6,38 @@ The batch numbers point to the work log (Plenix - DAM/audit/batches/).
 
 ## [Unreleased]
 
+## [1.7.0] - 2026-11-10
+
+### Upgrading from 1.6.1
+Nothing to change in code. Deprecated names keep working. Apps on the CDN loader follow this release by themselves; npm apps update the version as usual. Three things look different:
+- a Menu now opens end-aligned with its trigger (`placement="bottom-end"`); MenuBar menus stay start-aligned;
+- a Panel that is a WidgetGrid item's own content fills its cell (`fill={false}` opts out);
+- a chart's "Show the data" opens a Dialog (`dataView="inline"` keeps the 1.6 Details line).
+
+This release carries the fixes planned as 1.6.2 (the chart category labels and the row hover); with the features already on main it is a minor release (VERSIONING.md, D-0170).
+
+### Added
+- LoadingState: after about 10 seconds it adds the line "This is taking longer than usual." and, with `onCancel`, a Cancel button (DataGrid and ListingPage `onLoadingCancel`). The wait is the token `motion-loading-long-delay` (#1194).
+- **DataGrid:** `cachedRows(request)` shows the app's cached rows at once while `fetchRows` runs, then replaces them in place with no spinner. A failed refresh keeps the rows and shows Retry.
+- **Icons:** each icon set also comes as an ES module. `plenix-site-icons <site> … --esm [--import <path>]` writes `plenix-icons-<site>.esm.js`, and the build writes `plenix-icons-plenix.esm.js` for every Plenix icon (ADR 0052). The classic scripts are unchanged.
+- **Check `type-roles`:** every font role is declared data (Reddit Mono) or text, and a role at the wrong font fails the build (ADR 0055, D-0164). No visual change.
+- `Panel.fill`: a Panel takes its cell's full height, the body grows and the footer stays at the bottom. `dataView` (`"dialog"` or `"inline"`) on ChartFrame, every chart and Gauge (#1229).
+
+### Changed
+- A Panel that is a WidgetGrid item's own content now fills its cell, so cards in a row end at one height (`fill={false}` opts out).
+- A chart's "Show the data" is now a button that opens a Dialog with the table; `dataView="inline"` keeps the 1.6 Details line (#1229).
+- Menu opens toward the start by default (`placement="bottom-end"`): its end edge on the trigger's end edge; it flips to start-aligned when there is no room. MenuBar's top-level menus stay start-aligned (#1248).
+
+### Fixed
+- **Performance:** an element with a density or interaction attribute (every DataGrid, every ThemeZone) re-declares only the component tokens that depend on density or interaction (512 declarations, was 5,737). Theme-dependent tokens re-resolve on theme elements (`[data-plx-theme]`, `[data-plx-mode]`), and the rest are computed once on `:root`. Style recalculation on pages with grids is much lighter. No token name or value changes (ADR 0050).
+- **DataGrid and Table:** every hovered row tints, also in a read-only grid with no row action. The cursor and the tab stop stay on rows that have an action.
+- **plenix-site-icons:** without `--out` it dropped the site name and failed with its usage text. The file now goes in the current folder, as documented.
+- **Charts:** the labels on a category axis (names, such as the members on a BarChart) are drawn in the text font, not the data font. Value and date axes keep the data font (D-0164).
+- ActionBar no longer uses a `:has()` on `:root`, which restyled the whole page on every DOM change; a sticky bar now marks the page with a class instead (#1235).
+
+### Known issue
+- Arabic pages show two strings in English until the owner approves their Arabic words (D-0012): the compact Timeline's "Upcoming" tag (`timeline.tagUpcoming`, #1171) and LoadingState's "This is taking longer than usual." (`loading.slow`, #1203). Each ships in the next patch after his answer (D-0170).
+
 ## [1.6.1] - 2026-11-10
 
 ### Upgrading from 1.6.0
