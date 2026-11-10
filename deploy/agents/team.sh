@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # PDS1 team launcher (runs on the agent host, VM 131, as cc).
 # Each agent is a Claude Code session in tmux session "pds1", visible in the
-# Claude app through Remote Control as "PDS1 - <Role>", with its own worktree
+# Claude app through Remote Control as "PDS1 · <Role>" ("PDS1 - Product Lead" for the
+# Product Lead, so it sorts first: "-" comes before "·"), with its own worktree
 # and a memory limit from agents.config.yaml.
 #
 #   team.sh start-core          start the coordinators + Phase 0 roles (boot default)
@@ -36,6 +37,8 @@ CORE=(); for r in "${ROLES[@]}"; do IFS='|' read -r id _ _ parked boot _ _ <<<"$
 
 log() { echo "$(date -u +%FT%TZ) $*" >>"$LOG"; }
 display() { field "$1" 2; }
+# the session name: the Product Lead keeps "PDS1 - ", every other role "PDS1 · ", so the Product Lead sorts first (owner)
+session_title() { if [ "$1" = product-lead ]; then echo "PDS1 - $2"; else echo "PDS1 · $2"; fi; }
 mem_limit() { field "$1" 7; }   # the role's memory_limit_gb, else memory.per_agent_limit_gb (registry.mjs; no default here)
 
 worktree_for() {  # role instance -> directory
@@ -55,7 +58,7 @@ start_one() {
   [ "$(field "$role" 4)" = true ] && { echo "$name is parked (agents.config.yaml); not started"; return 3; }
   [ "$(field "$role" 3)" -gt 1 ] && n=${n:-1}
   [ -n "$n" ] && name="$name $n"
-  name="PDS1 - $name"; win=$role${n:+-$n}
+  name=$(session_title "$role" "$name"); win=$role${n:+-$n}
   [ -n "${LAUNCH_DRY:-}" ] && { echo "would start $name: window $win, worktree $(dry_worktree "$role" "$n"), MemoryMax=$(mem_limit "$role")G, claude --agent pds1-$role"; return; }
   tmux has-session -t $S 2>/dev/null || tmux new-session -d -s $S -n shell -c "$ROOT"
   tmux list-windows -t $S -F '#W' | grep -qx "$win" && { echo "$name already running"; return; }
@@ -114,7 +117,7 @@ schedule() {
       start)
         if [ -n "${NUDGE_DRY:-}" ]; then echo "would start $a${b:+ $b} ($why)"; continue; fi
         start_one "$a" "$b" && log "schedule: started $a${b:+ $b}: $why"
-        gh issue comment 178 -R plenix-ds/pds --body "Started **PDS1 - $(display "$a")${b:+ $b}** (scheduler, #246): $why.
+        gh issue comment 178 -R plenix-ds/pds --body "Started **$(session_title "$a" "$(display "$a")${b:+ $b}")** (scheduler, #246): $why.
 
 — PDS1-Release-Architect (team.sh scheduler)" >/dev/null 2>>"$LOG" || log "schedule: could not post on #178" ;;
       stop)

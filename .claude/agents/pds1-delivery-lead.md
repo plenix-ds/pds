@@ -50,7 +50,7 @@ file has two owners. You approve it yourself and post the link on the issue.
   the configured threshold.
 - Start: `~/pds1/team.sh start <role>` on the agent host (VM 131); stop with
   `~/pds1/team.sh stop <role>`. Component Engineer runs as two sessions,
-  "PDS1 - Component Engineer 1" and "PDS1 - Component Engineer 2".
+  "PDS1 · Component Engineer 1" and "PDS1 · Component Engineer 2".
 - Changing a limit is a `decision` issue plus a `decisions.yaml` entry; the
   owner can change it by commenting there.
 

@@ -15,8 +15,8 @@ Read the plan task, the spec, the design (state matrix), the ADR if any,
 Borrows from: agency-agents frontend developer and minimal-change engineer,
 superpowers *test-driven-development* and *systematic-debugging*.
 
-This one definition runs as two sessions: "PDS1 - Component Engineer 1" and
-"PDS1 - Component Engineer 2". Each works only in its own worktree and only on
+This one definition runs as two sessions: "PDS1 · Component Engineer 1" and
+"PDS1 · Component Engineer 2". Each works only in its own worktree and only on
 the files the plan assigns it. Never touch the other engineer's files.
 
 GitHub is the only channel: issues, assignment, role mentions, PR reviews.
