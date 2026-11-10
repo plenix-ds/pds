@@ -71,7 +71,7 @@ export function chartTokens(where: any) {
     return e;
   };
   const line = mk('path', 'plx-chart__line', { 'data-plx-dataviz': 'categorical-1' });
-  const tick = mk('text', 'plx-chart__tick-label'), title = mk('text', 'plx-chart-axis__label');
+  const tick = mk('text', 'plx-chart__tick-label'), category = mk('text', 'plx-chart__category-label'), title = mk('text', 'plx-chart-axis__label');
   const axis = mk('line', 'plx-chart__axis-line'), grid = mk('line', 'plx-chart__grid-line');
   const point = mk('circle', 'plx-chart__point plx-line-chart__point');
   const joined = mk('rect', 'plx-chart__mark plx-bar-chart__bar plx-bar-chart__bar--joined');
@@ -99,7 +99,7 @@ export function chartTokens(where: any) {
   const colorCache: any = {};
   const t: any = {
     lineWidth: num(cs(line).strokeWidth),
-    tick: font(tick), title: font(title),
+    tick: font(tick), category: font(category), title: font(title),
     axis: { color: cs(axis).stroke, width: num(cs(axis).strokeWidth) },
     grid: { color: cs(grid).stroke, width: num(cs(grid).strokeWidth) },
     point: { r: num(cs(point).r), outline: cs(point).stroke, outlineWidth: num(cs(point).strokeWidth) },
@@ -168,9 +168,9 @@ export function chartTokens(where: any) {
 export function plenixTheme(t: any) {
   const label = { color: t.tick.color, fontFamily: t.tick.fontFamily, fontSize: t.tick.fontSize, margin: t.tickOffset, hideOverlap: true };
   const name = { color: t.title.color, fontFamily: t.title.fontFamily, fontSize: t.title.fontSize, fontWeight: t.title.fontWeight };
-  // the data font is for data only (D-0164, #1232): a value or date axis is drawn in it; a category axis holds names and words, so its labels take the text font
-  // (the axis title's, a UI face), with the tick label's size, color and weight
-  const word = Object.assign({}, label, { fontFamily: t.title.fontFamily });
+  // the data font is for data only (D-0164, #1232): a value or date axis is drawn in it; a category axis holds names and words, so its labels take the category
+  // role's font (the text font, plx-chart__category-label), with the tick label's size, color and weight
+  const word = Object.assign({}, label, { fontFamily: t.category.fontFamily });
   const base = { axisLabel: label, nameTextStyle: name, axisTick: { show: false } };
   const rule = { show: true, lineStyle: { color: t.axis.color, width: t.axis.width } };
   const gridLines = { show: true, lineStyle: { color: t.grid.color, width: t.grid.width } };
