@@ -2,7 +2,7 @@
 
 - **Status:** accepted
 - **Date:** 2026-11-10
-- **Deciders:** pds1-ds-architect (G3), on the owner's request (via CTM3 - PM, #1229, CTM#323). G2 (`pds1-design-director`) owns the stretch look, the button and the Dialog.
+- **Deciders:** pds1-ds-architect (G3), on the owner's request (via CTM3 - PM, #1229, CTM#323). G2 (`pds1-design-director`, PR #1231, D-0163) owns the stretch look, the button (ghost `sm`, `table_view` icon, `aria-haspopup="dialog"`) and the Dialog (`md`, no footer).
 - **Issue:** #1229 (S2).
 
 ## Context
@@ -32,6 +32,8 @@
   - **Default:** `true` when the Panel is the direct content of a WidgetGrid item, otherwise `false`.
     - "Direct content" means WidgetGrid's item provides a context, and the Panel reads it and then clears it for its own children, so a Panel nested deeper never fills.
   - `fill={false}` opts out inside a grid, and `fill` opts in elsewhere (any parent with a definite height).
+  - A **collapsed** Panel never fills: it keeps its own height (G2, D-0163).
+  - The extra height goes to the body. A chart in the body is never stretched: its plot keeps its `size` height, and its "Show the data" button sits on the card's bottom edge (the chart frame grows inside the body, and the button is its last row; G2 design 1229 §7).
 - **WidgetGrid:** the item (`plx-widget-grid__item`) becomes a column flex box so its content can fill it. It stays a grid item (stretched by the row). There is no new WidgetGrid prop.
 
 ### Charts
@@ -58,7 +60,8 @@
 - G3 on the build PR: the API diff matches this entry, and `dataView` is on every chart's props (a type test lists them).
 - Behavior tests (#1229):
   - in a WidgetGrid row, the Panels' computed heights are equal and the footers' bottoms align;
-  - a Panel nested inside a widget's Panel doesn't fill;
+  - a Panel nested inside a widget's Panel doesn't fill, and neither does a collapsed one;
+  - the plot keeps its size height in a stretched card;
   - `fill={false}` opts out;
   - "Show the data" is a button, opens a Dialog titled with the chart's title and holding the table, and focus returns to it on close;
   - `dataView="inline"` keeps the Details.
