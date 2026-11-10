@@ -447,7 +447,7 @@ export function MetricCard({ type = 'value', layout = 'stacked', appearance = 'p
       </>
     );
     return (
-      <article {...rootProps} className={cx(rootProps.className, 'plx-metric-card--person-tile')}>
+      <article {...rootProps} className={cx('plx-metric-card', 'plx-metric-card--' + type, 'plx-metric-card--person-tile', 'plx-metric-card--' + appearance, 'plx-metric-card--' + size, href && 'plx-metric-card--link', className)}>
         <div className="plx-metric-card__person-row">
           <Avatar name={person.name} src={person.src} gender={person.gender} size="xl" />
           <div className="plx-metric-card__person-text">

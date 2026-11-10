@@ -1,0 +1,4 @@
+AssertionError [ERR_ASSERTION]: ltr: the person tile is a column {"personDir":"row","plainDir":"row","valueBelow":false,"nameW":92,"cardW":320,"overlap":false}
+
+'row' !== 'column'
+

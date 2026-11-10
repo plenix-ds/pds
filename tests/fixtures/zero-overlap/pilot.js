@@ -71,6 +71,9 @@
     row(...[['bottom-start', false], ['top', false], ['bottom', true], ['top-start', true]].map(([placement, arrow]) =>
       h(P.Popover, { key: placement + arrow, trigger: anchor(placement + (arrow ? ' arrow' : '')), triggerOn: 'manual', open: true, onOpenChange: () => {}, placement, arrow, focusOnOpen: false, title: placement }, h('p', null, 'Popover ' + placement)))));
 
+  // the compact person card (issue 1240): its root must not carry a second layout class that sets the same properties
+  const personTile = section('MetricCard person tile', h('div', { style: { inlineSize: 280 } }, h(P.MetricCard, { type: 'person', layout: 'tile', person: { name: 'Fr. Example Name', role: 'Council member' }, value: '5', unit: 'active' })));
+
   function App() {
     React.useEffect(() => {
       // a hovered, not current NavList row and its pin (the generated rows take the forced state after render)
@@ -79,7 +82,7 @@
       const t = setTimeout(() => document.body.setAttribute('data-pilot-ready', 'true'), 300);
       return () => clearTimeout(t);
     }, []);
-    return h('div', null, buttons, inputs, nav, pop);
+    return h('div', null, buttons, inputs, nav, pop, personTile);
   }
   ReactDOM.createRoot(document.getElementById('pilot')).render(h(App));
 })();
