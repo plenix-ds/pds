@@ -759,7 +759,6 @@
     "error": "n/a(DataPill has no value to validate)",
     "selected": "n/a(DataPill has no selection; the row or cell owns selected)"
   },
-
   "Count": {
     "default": "n/a(a Count is static text; its look is the plain or pill form (docs/site/stories/Count.stories.tsx: Default, Pill, Info))",
     "hover": "n/a(a Count is not interactive; a Count inside a link or button takes that control's hover)",
@@ -769,5 +768,15 @@
     "loading": "n/a(a Count shows a loaded number; the list or tab owns loading)",
     "error": "n/a(a Count has no value to validate)",
     "selected": "n/a(a Count has no selection; the item or tab that holds it owns selected)"
+  },
+  "Persona": {
+    "default": "n/a(stories arrive with Storybook, P0-11)",
+    "hover": "n/a(stories arrive with Storybook, P0-11)",
+    "focus": "n/a(stories arrive with Storybook, P0-11)",
+    "active": "n/a(stories arrive with Storybook, P0-11)",
+    "disabled": "n/a(stories arrive with Storybook, P0-11)",
+    "loading": "n/a(stories arrive with Storybook, P0-11)",
+    "selected": "n/a(stories arrive with Storybook, P0-11)",
+    "error": "n/a(stories arrive with Storybook, P0-11)"
   }
 }

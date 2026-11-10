@@ -18,7 +18,9 @@
 .plx-menu__item--danger{color:var(--plx-comp-menu-item-danger-text);}
 .plx-menu__item[aria-disabled="true"]{color:var(--plx-comp-menu-item-disabled-text);cursor:default;}
 .plx-menu__icon{color:var(--plx-comp-menu-item-icon-color,inherit);display:inline-flex;flex-shrink:0;}
-.plx-menu__label{flex-basis:0%;flex-grow:1;flex-shrink:1;min-inline-size:0;overflow-x:hidden;overflow-y:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.plx-menu__label{flex-basis:0%;flex-grow:1;flex-shrink:1;min-inline-size:0;}
+/* the text is in its own box that does not stretch: unicode-bidi: plaintext on a stretched box would move a short Latin label to the left in RTL (issue 1283) */
+.plx-menu__label-text{display:block;inline-size:fit-content;max-inline-size:100%;overflow-x:hidden;overflow-y:hidden;text-overflow:ellipsis;unicode-bidi:plaintext;white-space:nowrap;}
 .plx-menu__check{--plx-comp-icon-context-show-20:block;--plx-comp-icon-context-show-24:none;--plx-comp-icon-size:var(--plx-comp-menu-check-icon-size);align-items:center;block-size:var(--plx-comp-menu-check-height);display:inline-flex;flex-shrink:0;justify-content:center;inline-size:var(--plx-comp-menu-check-width);}
 .plx-menu__divider{border-top-color:var(--plx-comp-menu-divider-border-top-color);border-top-style:solid;border-top-width:var(--plx-comp-menu-divider-border-top-width);margin-block-end:var(--plx-comp-menu-divider-margin-block);margin-block-start:var(--plx-comp-menu-divider-margin-block);margin-inline-end:var(--plx-comp-menu-divider-margin-inline);margin-inline-start:var(--plx-comp-menu-divider-margin-inline);}
 .plx-menu__group-label{color:var(--plx-comp-menu-group-label-text);font-size:var(--plx-comp-menu-group-label-font-size);font-weight:var(--plx-comp-menu-group-label-font-weight);line-height:var(--plx-comp-menu-group-label-line-height);padding-block-end:var(--plx-comp-menu-group-label-padding-block);padding-block-start:var(--plx-comp-menu-group-label-padding-block);padding-inline-end:var(--plx-comp-menu-group-label-padding-inline);padding-inline-start:var(--plx-comp-menu-group-label-padding-inline);}
