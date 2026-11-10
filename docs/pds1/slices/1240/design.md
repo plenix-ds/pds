@@ -7,7 +7,7 @@
   - 4px grid, corners 2 to 6px (the Avatar keeps its own corner token);
   - logical properties; tokens only.
 - **Readings applied (D-0167, the owner may switch):**
-  - **A. It is the new default for `type="person"`**, in 1.7.0. The owner asked for "an adjustment to our cards", not an option. Recent owner-asked default changes shipped as MINOR with a changelog note (ADR 0054, #1229). The person card is only reflowed shorter, and nothing else moves. Reply **B** for an opt-in `layout="compact"` until 2.0.0 (D-0107's rule for reflowing defaults); CTM would then set one prop.
+  - **Opt-in in 1.x, the default in 2.0.0** (G3, ADR 0056, PR #1246). A reflowing default is MAJOR (VERSIONING.md, D-0107), so the compact card is `type="person" layout="tile"`. Its look is this file. CTM sets `layout="tile"` on its person cards and `itemSize="sm"` on their WidgetGrid. My first reading (the default now) is withdrawn: semver is G3's.
   - **A. A word value is a status, not a figure.** A value with no digits ("Hidden") shows in the unit's small label style, not at the value size. Reply **B** to show it at the value size in DM Sans.
 
 ## 1. Anatomy (LTR; inline start on the left)
@@ -79,7 +79,7 @@
 - **No role:** the name is centred on the Avatar's block axis.
 - **No value, no progress:** no divider and no value row. The card is the first row only (about 73px). In a WidgetGrid row the cards match the tallest (D-0163), so the empty space falls below the first row.
 - **A large number** (10,000+): `formatNumber` as today ("10,240"). The unit cuts before the number.
-- **WidgetGrid:** the minimum card width that fits five to six per row at 1366 to 1920 is G3's (the brief). The card itself fits 200px: Avatar 48 + 12 + about 108 of text + 32 padding.
+- **WidgetGrid `itemSize="sm"`** (ADR 0056): the minimum column width is **`size-50u` (200px)**, in place of `size-70u` (280px). The gaps are unchanged, and it is capped at 6 columns. About 5 fit at 1366 (beside the main nav) and 6 at 1920. The card fits 200px: Avatar 48 + 12 + about 108 of text + 32 padding.
 
 ## 5. Messages
 
@@ -89,7 +89,7 @@
 
 - The anatomy in §1: no header band, Avatar `xl`, 12px gap, name 2 lines (`text-heading`, `content-strong`), role 1 line (`text-secondary`, `content-muted`), inset divider, value row at the inline end, number `font-data` 20px 700, unit `text-eyebrow` `content-muted`, 12px block and 16px inline padding.
 - One size for every `size`. No density.
-- Reading A: the default for `type="person"`; a word value in the unit style.
+- `type="person" layout="tile"` (opt-in in 1.x, the default in 2.0.0; ADR 0056). A word value takes the unit style (reading A). WidgetGrid `itemSize="sm"` is `size-50u`.
 - **Tests (test first):**
   - the Avatar is 48px, beside the name in the same row;
   - with a value the card is ≤ 124px tall at 280px wide;
