@@ -104,6 +104,7 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 - Feedback has five tones: neutral, info, success, warning, danger. Each tone has `solid`, `on-solid`, `solid-label`, `soft`, `soft-border` and `content`.
 - Category colours (19) and status pills follow `docs/pills-and-colors.md`.
 - The grouped Timeline's container categories (`category-1…8`) alias existing category hues (ADR 0036). In dark they read the soft-border shade over a token `color-mix`, not a new colour (D-0117, `docs/pds1/slices/987/design.md`).
+- **Page canvas (light):** `surface-canvas` is `gray-200` (#e8e9ec, owner, D-0149). Light `state-pressed` is `gray-250`, so a press shows on the canvas. EntityHeader fact tiles keep `gray-75` (D-0151, `docs/pds1/slices/1160/design.md`).
 - **Contrast** (check 8): every text role pairs with every surface it can sit on, in light and dark: `surface-canvas`, `-default`, `-raised`, `-sunken`, `state-hover`, `state-selected`. Each pair is at least 4.5:1, or 3:1 for text at 18px and up (or 14px bold and up). Control boundaries (`field-border`, `control-border`) are at least 3:1. Decorative dividers (`border-subtle`, `border-divider`) are exempt.
 
 ### Dark mode (D-0009)
@@ -317,6 +318,7 @@ Every component declares a state manifest (check 9). Each state is a token set o
 | 8 | `category-olive-on` (black) on `category-olive` (green-500), light and dark | 3.91:1 | white: 5.37:1, as the other dark category fills (#251) |
 | 9 | Light `accent-field-placeholder` (blue-300) on `accent-field-background` (blue-600) | 3.44:1 | blue-200: 4.73:1 (#251) |
 | 10 | Dark `content-link-visited` on `state-hover` / `state-selected` (listed, D-0025) | 3.84:1 | dark phase (#251) |
+| 11 | Light `control-border` (gray-500) and `field-border` (gray-400) on a control that sits straight on `surface-canvas` (bar fields) | 2.63:1 and 2.01:1 on gray-200 (2.99 and 2.28 on gray-75) | A canvas-context border for bar fields at gray-600 (4.20:1); DS Architect names the role (#1160) |
 
 - Dark `border-default` and `border-subtle` (1.37:1) are decorative dividers, so they are not a defect. Control boundaries use `field-border` and `control-border`, which measure 4.00:1.
 - Items 1 to 3 wait for the light work to finish (D-0025), tracked in #206. Items 4, 5 and 7 are fixed in #214.

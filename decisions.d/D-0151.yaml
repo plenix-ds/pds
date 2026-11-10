@@ -1,0 +1,9 @@
+id: D-0151
+date: 2026-11-10
+area: design
+decided_by: pds1-design-director (G2 readings of D-0149, #1160; the owner may switch A)
+decision: 'With the light canvas at gray-200 (D-0149): A) EntityHeader fact tiles keep today''s gray-75 fill through their own sys role instead of following the canvas, because their gray-200 border would vanish and the tile would turn grey; B to switch: the tiles follow the canvas. And a defect fixed without asking: light state-pressed moves from gray-200 to gray-250 (#dcddde, the owner-allowed grey), because a press on the gray-200 canvas showed no fill (1.00:1).'
+options: ['A: fact tiles keep gray-75 (applied)', 'B: fact tiles follow the canvas']
+why: 'The owner named the page background only; a pressed state must be visible on the surface it sits on (DESIGN.md section 9).'
+status: active
+check: 'computed-style tests for #1160 (docs/pds1/slices/1160/design.md section 3): canvas #e8e9ec, pressed ghost Button #dcddde, EntityHeader fact tile #f7f7f8, dark unchanged; check 8 pairs on the canvas'
