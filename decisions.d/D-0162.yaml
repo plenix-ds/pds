@@ -1,0 +1,9 @@
+id: D-0162
+date: 2026-11-10
+area: api
+decided_by: agent (pds1-ds-architect, G3) for the owner's performance rule 2 (D-0160, #1201, slice #1207); the owner may switch on #1207
+decision: 'Code loads per screen (ADR 0052): one public ES module entry per export name, npm @plenix-ds/react/<Export> and CDN /cdn/<v>/esm/<Export>.js with esm/index.js, esm/chunks/ and a generated esm/manifest.json; apps without a bundler use plenix-loader.js and Plenix.load(names), which fills window.Plenix; icon sets stay one file per set (plus esm/icons/<set>.js); plenix.js and plenix.esm.js stay through 1.x, deprecated in the shipping minor, removed in 2.0.0; latest.json keeps its shape and pins.'
+options: ['A. one entry per export, plus a loader for script-tag apps (chosen)', 'B. expose internal module paths', 'C. family bundles', 'D. keep one file and only shrink it']
+why: 'CTM loads all 553 KB (brotli) of plenix.js on every screen; npm is already split per part (DataGrid alone 150 KB gzip). Per-export entries are stable names that do not expose the folder layout, and Plenix.load keeps CTM on window.Plenix with one line per screen.'
+status: active
+check: 'the release architect''s entry check (every /api/v1/exports name has dist/parts/<name>.js and esm/<name>.js, nothing else) and per-entry budgets; the publish dry run loads one part with plenix-loader.js; G3 on every export change'
