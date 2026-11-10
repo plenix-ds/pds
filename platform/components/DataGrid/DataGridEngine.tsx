@@ -228,7 +228,7 @@ function NextEngine(rawProps: any) {
 
   // rows from a server: a page at a time ("pages"), appended by Load more ("load-more"), or appended as the person scrolls
   // near the end ("fill", issue 522: one list, no page controls)
-  const { fetching, remoteBusy, remote, remoteError, setRetry, remoteMode, scrollFill } = useRemoteRows({
+  const { fetching, remoteBusy, remote, remoteError, setRetry, remoteMode, scrollFill, cached } = useRemoteRows({
     props,
     mode,
     page,
@@ -1083,8 +1083,9 @@ function NextEngine(rawProps: any) {
           !priorGroups.slice(i + 1).some((next: any) => next.depth === group.depth)
       )
     : [];
-  // a fill grid that already shows rows says a failed next page in its last row (with Retry), not over the table
-  const moreFailed = scrollFill && remoteError && model.length > 0,
+  // a fill grid that already shows rows says a failed next page in its last row (with Retry), not over the table; so does a grid that shows the app's
+  // cached rows (cachedRows, #1219) when its refresh fails: the rows stay
+  const moreFailed = (scrollFill || cached) && remoteError && model.length > 0,
     failed = error || (moreFailed ? null : remoteError);
   // the bar over the template cards (issue 679): the select-all checkbox and the count of records
   const cardBar =
@@ -1176,6 +1177,7 @@ function NextEngine(rawProps: any) {
     loading,
     scrollFill,
     moreFailed,
+    cached,
     displayedTotal,
     page,
     setPageSize,

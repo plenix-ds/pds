@@ -1,0 +1,8 @@
+AssertionError [ERR_ASSERTION]: fill: AC-1: the cached rows draw at once: {"names":[],"spinner":0,"retry":false,"cover":0,"fetches":1}
++ actual - expected
+
++ []
+- [
+-   'Cached one',
+-   'Cached two'
+- ]
