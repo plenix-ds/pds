@@ -84,6 +84,8 @@ import { formatPercent } from '../../utils/format.ts';
 import { Icon, asIcon as iconElement, isIconModule, type IconValue } from '../Icon/Icon.tsx';
 import { Badge } from '../Badge/Badge.tsx';
 import { Avatar } from '../Avatar/Avatar.tsx';
+import { Tooltip } from '../Tooltip/Tooltip.tsx';
+import { useTruncated } from '../../utils/overflow.ts';
 import { Count } from '../Count/Count.tsx';
 import { Button } from '../Button/Button.tsx';
 import { Menu } from '../Menu/Menu.tsx';
@@ -371,6 +373,17 @@ function Month({ month, t }: { month?: MetricMonth; t: Words }) {
   return <div className="plx-metric-card__month" role="img" aria-label={fill(t.month, { done, days: work })}>{cells}</div>;
 }
 
+// the person tile's name (up to 2 lines) and role (1 line): the whole text shows in a Tooltip only while it is cut (fit-and-overflow §5)
+function PersonCut({ as: Tag, className, tip, text, children }: { as: 'h2' | 'p'; className: string; tip?: string; text: string; children?: React.ReactNode } & { id?: string }) {
+  const ref = React.useRef<HTMLElement>(null);
+  const cut = useTruncated(ref, text);
+  return (
+    <Tooltip content={text} disabled={!cut || !text} describe={false} className="plx-metric-card__person-tip">
+      <Tag ref={ref as React.RefObject<never>} id={tip} className={className}>{children}</Tag>
+    </Tooltip>
+  );
+}
+
 function Loading({ label }: { label?: string }) {
   return <LoadingState size="lg" label={label} className="plx-metric-card__placeholder" />;
 }
@@ -407,6 +420,44 @@ export function MetricCard({ type = 'value', layout = 'stacked', appearance = 'p
     'data-plx-gradient-to': appearance === 'gradient' ? gradientTo : undefined,
     'aria-labelledby': id, 'aria-busy': state === 'loading' ? true : undefined, ...rest
   };
+
+  // type="person" layout="tile" (ADR 0056, #1240): the compact person card: the photo beside the name and role, an inset divider, the value at the inline end
+  if (type === 'person' && layout === 'tile' && person) {
+    const hasValue = value !== undefined && value !== null && value !== '';
+    const word = hasValue && typeof value === 'string' && !/\d/.test(value);   // a word value ("Hidden") is a status in the unit's style, never in the data font
+    const hasRow = state === 'loading' || state === 'error' || empty || hasValue || !!progress || !!change || !!shownStatus;
+    let row: React.ReactNode = null;
+    if (state === 'loading') row = <LoadingState size="sm" label={typeof name === 'string' && name ? fill(t.loading, { title: name }) : undefined} className="plx-metric-card__person-loading" />;
+    else if (state === 'error') row = <Notice tone="danger" actions={onRetry ? <Button size="xs" icon={RefreshIcon} onClick={onRetry}>{t.retry}</Button> : undefined}>{errorText || t.error}</Notice>;
+    else if (hasRow) row = (
+      <>
+        <div className="plx-metric-card__person-value">
+          {empty ? null : (change ? <Change change={change} goodWhen={goodWhen} t={t} /> : shownStatus ? <span className="plx-metric-card__person-status"><Badge tone={shownStatus.tone} icon={shownStatus.icon}>{shownStatus.label}</Badge></span> : null)}
+          <div className="plx-metric-card__person-figure">
+            {empty ? <span className="plx-metric-card__person-number plx-metric-card__person-number--empty">–</span>
+              : word ? <span className="plx-metric-card__person-unit">{value}</span>
+              : hasValue ? <span className="plx-metric-card__person-number">{value}</span> : null}
+            {empty || word ? null : (unit ? <span className="plx-metric-card__person-unit">{unit}</span> : null)}
+            {empty || word || !target ? null : <span className="plx-metric-card__person-target">{'/ ' + target}</span>}
+          </div>
+        </div>
+        {progress && !empty ? <div className="plx-metric-card__person-progress"><ProgressBar value={progress.value} max={progress.max} tone={progress.tone} size="sm" label={typeof name === 'string' ? name : ''} labelHidden /></div> : null}
+      </>
+    );
+    return (
+      <article {...rootProps} className={cx(rootProps.className, 'plx-metric-card--person-tile')}>
+        <div className="plx-metric-card__person-row">
+          <Avatar name={person.name} src={person.src} gender={person.gender} size="xl" />
+          <div className="plx-metric-card__person-text">
+            <PersonCut as={H} tip={id} text={typeof name === 'string' ? name : ''} className="plx-metric-card__person-name">{titleText}</PersonCut>
+            {line ? <PersonCut as="p" text={typeof line === 'string' ? line : ''} className="plx-metric-card__person-role">{line}</PersonCut> : null}
+          </div>
+          {actions}
+        </div>
+        {row ? <><div className="plx-metric-card__person-divider" role="presentation" /><div className="plx-metric-card__person-body">{row}</div></> : null}
+      </article>
+    );
+  }
 
   // the two headerless layouts: tile and icon-start
   if (layout === 'tile' || layout === 'icon-start') {

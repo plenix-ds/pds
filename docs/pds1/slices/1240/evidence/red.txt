@@ -1,0 +1,6 @@
+AssertionError [ERR_ASSERTION]: ltr light: the person tile draws a photo and a value: {"l":0,"r":280,"t":0,"b":62.390625,"w":280,"h":62.390625}
+    at /home/cc/pds1/work/component-engineer-1/tests/metric-card-person-tile-1240.test.js:46:14 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: null,
+  expected: true,

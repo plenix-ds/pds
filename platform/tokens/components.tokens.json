@@ -10241,6 +10241,11 @@
       "$value": "{plx-sys.space-inline-md}",
       "$type": "dimension"
     },
+    "widget-grid-item-min-width-sm": {
+      "$value": "{plx-sys.size-widget-min-sm}",
+      "$type": "dimension",
+      "$description": "WidgetGrid itemSize sm: the narrowest a column gets (200px), so 5 to 6 compact cards fit in a row (ADR 0056)."
+    },
     "widget-grid-grid-template-columns": {
       "$value": "repeat(auto-fill, minmax({plx-ref.size-70u}, 1fr))",
       "$type": "dimension",
