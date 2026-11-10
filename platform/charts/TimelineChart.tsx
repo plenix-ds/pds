@@ -56,6 +56,8 @@ export type ChartDate = Date | string | number;
 export type TimelineChartItem = { id: string; lane?: string; label: string; start: ChartDate; end?: ChartDate; /** a data-viz step */ color?: string };
 /** @public */
 export type TimelineChartProps = {
+  /** how the data table shows: a Dialog (default) or inline under the chart (ADR 0054) */
+  dataView?: 'dialog' | 'inline';
   title: string;
   description?: string;
   hideCaption?: boolean;
@@ -73,7 +75,7 @@ export type TimelineChartProps = {
   strings?: Record<string, string>;
   className?: string;
 };
-export function TimelineChart({ title, description, hideCaption, size, items = [], lanes, domain, today, labels = true, formatDate, tooltip = true,
+export function TimelineChart({ title, description, dataView, hideCaption, size, items = [], lanes, domain, today, labels = true, formatDate, tooltip = true,
   legend, legendPosition, margin, strings, className }: TimelineChartProps) {
   const t: any = useStrings('chart.timelineChart', strings);
   const fd = (d: any) => (typeof formatDate === 'function' ? formatDate(new Date(toTime(d))) : fmtDate(new Date(toTime(d))));
@@ -97,7 +99,7 @@ export function TimelineChart({ title, description, hideCaption, size, items = [
     data: list.map((it, i) => ({ id: i + 1, item: it.label, lane: laneOf[it.lane].label, start: fd(it.t0), end: it.t1 === null ? '' : fd(it.t1) }))
   };
   return (
-    <ChartFrame title={title} description={description} hideCaption={hideCaption} size={size} margin={m} legend={legend} legendPosition={legendPosition}
+    <ChartFrame title={title} dataView={dataView} description={description} hideCaption={hideCaption} size={size} margin={m} legend={legend} legendPosition={legendPosition}
       table={table} strings={strings} className={cx('plx-timeline-chart', one && 'plx-timeline-chart--single', className)}>
       {({ inner, margin: fm }) => {
         // items dated by day get day ticks or coarser, never hours (issue 593); today's marker does not count

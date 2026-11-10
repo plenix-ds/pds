@@ -216,7 +216,7 @@ export type NetworkEdge = { source: string | number; target: string | number; la
 /** @public a node group, in the legend's order */
 export type NetworkGroup = { id: string | number; label: string };
 /** @public the prop type (ADR 0011) */
-export type NetworkGraphProps = Pick<ChartFrameProps, 'title' | 'description' | 'size' | 'margin' | 'className'> & {
+export type NetworkGraphProps = Pick<ChartFrameProps, 'title' | 'dataView' | 'description' | 'size' | 'margin' | 'className'> & {
   nodes?: NetworkNode[];
   edges?: NetworkEdge[];
   directed?: boolean;
@@ -231,7 +231,7 @@ export type NetworkGraphProps = Pick<ChartFrameProps, 'title' | 'description' | 
   frameStrings?: ChartFrameProps['strings'];
   interactionStrings?: Record<string, string>;
 };
-export function NetworkGraph({ title, description, nodes = [], edges = [], directed = false, layout = 'force', direction = 'down', groups, zoomable = true,
+export function NetworkGraph({ title, description, dataView, nodes = [], edges = [], directed = false, layout = 'force', direction = 'down', groups, zoomable = true,
   size = 'lg', margin, interactive = true, onSelect, strings, frameStrings, interactionStrings, className }: NetworkGraphProps) {
   const t: any = useStrings('chart.networkGraph', strings);
   const uid = 'plx-graph' + React.useId().replace(/[^a-zA-Z0-9]/g, '');
@@ -310,7 +310,7 @@ export function NetworkGraph({ title, description, nodes = [], edges = [], direc
   };
 
   return (
-    <ChartFrame clip title={title} description={description} size={size} margin={Object.assign({ top: 0, end: 0, bottom: 0, start: 0 }, margin)} table={table} legend={legendNode}
+    <ChartFrame clip title={title} dataView={dataView} description={description} size={size} margin={Object.assign({ top: 0, end: 0, bottom: 0, start: 0 }, margin)} table={table} legend={legendNode}
       interaction={interactive ? iaz : undefined} actions={gv.actions} strings={frameStrings}
       className={cx('plx-network-graph', 'plx-network-graph--' + (layout === 'hierarchical' ? 'hierarchical' : 'force'), className)}>
       {draw}

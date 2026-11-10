@@ -46,6 +46,8 @@ const GROUP_HEAD = 20, RING = 0;
 export type TreemapNode = { label: string; value?: number; children?: { label: string; value: number }[] };
 /** @public the prop type (ADR 0011) */
 export type TreemapProps = {
+  /** how the data table shows: a Dialog (default) or inline under the chart (ADR 0054) */
+  dataView?: 'dialog' | 'inline';
   title: string;
   description?: string;
   data?: TreemapNode[];
@@ -58,7 +60,7 @@ export type TreemapProps = {
   strings?: Record<string, string>;
   className?: string;
 };
-export function Treemap({ title, description, data = [], variant, color, format, valueTitle, size = 'lg', strings, className }: TreemapProps) {
+export function Treemap({ title, description, dataView, data = [], variant, color, format, valueTitle, size = 'lg', strings, className }: TreemapProps) {
   const t: any = useStrings('chart.treemap', strings);
   const nested = variant ? variant === 'nested' : data.some((d) => Array.isArray(d.children));
   const v = nested ? 'nested' : 'flat';
@@ -123,7 +125,7 @@ export function Treemap({ title, description, data = [], variant, color, format,
   };
 
   return (
-    <ChartFrame interaction={keys.interaction} title={title} description={description} size={size} table={table} margin={{ top: 0, end: 0, bottom: 0, start: 0 }} className={cx('plx-treemap', 'plx-treemap--' + v, className)}>
+    <ChartFrame interaction={keys.interaction} title={title} dataView={dataView} description={description} size={size} table={table} margin={{ top: 0, end: 0, bottom: 0, start: 0 }} className={cx('plx-treemap', 'plx-treemap--' + v, className)}>
       {draw}
     </ChartFrame>
   );
