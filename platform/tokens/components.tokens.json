@@ -4839,7 +4839,7 @@
       "$type": "color"
     },
     "media-card-meta-font-family": {
-      "$value": "{plx-sys.font-data}",
+      "$value": "{plx-sys.font-label}",
       "$type": "fontFamily"
     },
     "media-card-meta-font-size": {
@@ -5576,8 +5576,13 @@
       "$type": "color"
     },
     "code-block-title-font-family": {
-      "$value": "{plx-sys.font-data}",
+      "$value": "{plx-sys.font-label}",
       "$type": "fontFamily"
+    },
+    "code-block-title-path-font-family": {
+      "$value": "{plx-sys.font-data}",
+      "$type": "fontFamily",
+      "$description": "CodeBlock title that is a path or file name: the data font (ADR 0055); a caption uses code-block-title-font-family."
     },
     "code-block-title-font-size": {
       "$value": "{plx-ref.font-size-100}",
@@ -6663,7 +6668,7 @@
       "$type": "color"
     },
     "media-viewer-counter-font-family": {
-      "$value": "{plx-sys.font-data}",
+      "$value": "{plx-sys.font-label}",
       "$type": "fontFamily"
     },
     "media-viewer-counter-font-size": {
@@ -6795,7 +6800,7 @@
       "$type": "dimension"
     },
     "media-viewer-meta-font-family": {
-      "$value": "{plx-sys.font-data}",
+      "$value": "{plx-sys.font-label}",
       "$type": "fontFamily"
     },
     "media-viewer-meta-font-size": {
@@ -8423,7 +8428,7 @@
       "$type": "color"
     },
     "tree-meta-font-family": {
-      "$value": "{plx-sys.font-data}",
+      "$value": "{plx-sys.font-label}",
       "$type": "fontFamily"
     },
     "tree-meta-font-size": {

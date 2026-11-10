@@ -40,6 +40,7 @@
      An open folder shows the open-folder icon (batch 239). Icons are outline while closed and open and filled while the item
      is open or selected (batch 241), by the item's own state only: a selected item does not fill the icons of the items inside it (batch 240).
 */
+import { dataWhenText } from '../../utils/dataText.tsx';
 import React from 'react';
 import { isRtl } from '../../utils/direction.ts';
 import { cx } from '../../utils/cx.ts';
@@ -103,7 +104,7 @@ function TreeItem({ n, level, tree, flat, pos, setsize, vprops }: { n: TreeNode;
           onClick={kids ? (e) => { e.stopPropagation(); toggle(n.id); moveTo(n.id); } : undefined}>{kids ? <Icon icon={isOpen ? SquareMinusIcon : SquarePlusIcon} filled={false} /> : null}</span>
         {n.icon ? <span className="plx-tree__icon">{treeIcon(iconOf(n, isOpen || n.id === selected), !!isOpen || n.id === selected)}</span> : null}
         <span className="plx-tree__label">{n.label}</span>
-        {n.meta !== undefined ? <span className="plx-tree__meta">{n.meta}</span> : null}
+        {n.meta !== undefined ? <span className="plx-tree__meta">{dataWhenText(n.meta)}</span> : null}
       </div>
       {flat ? null : isOpen && pending ? (
         <ul role="group" className="plx-tree__group">
