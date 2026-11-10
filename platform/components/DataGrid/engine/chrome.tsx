@@ -124,8 +124,8 @@ export function emptyRow({ model, B, isStatic, ordered, remoteMode, remoteBusy, 
   ) : null;
 }
 
-export function moreRow({ scrollFill, model, remoteBusy, moreFailed, B, semanticRows, ordered, S, setRetry }: any) {
-  return scrollFill && model.length && (remoteBusy || moreFailed) ? (
+export function moreRow({ scrollFill, cached, model, remoteBusy, moreFailed, B, semanticRows, ordered, S, setRetry }: any) {
+  return model.length && ((scrollFill && remoteBusy && !cached) || moreFailed) ? (
     <div className={`${B}__grid-placeholder`} role="row" aria-rowindex={semanticRows.length + 2}>
       <div className={`${B}__grid-placeholder-contents`} role="gridcell" aria-colspan={Math.max(1, ordered.length)}>
         {moreFailed ? (

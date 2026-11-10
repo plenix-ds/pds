@@ -101,6 +101,7 @@ export function gridFrame({
   onLoadingCancel,
   scrollFill,
   moreFailed,
+  cached,
   displayedTotal,
   page,
   setPageSize,
@@ -278,7 +279,7 @@ export function gridFrame({
               <RowGap rows={model.slice(last)} />
             </div>
             {emptyRow({ model, B, isStatic, ordered, remoteMode, remoteBusy, loading, onLoadingCancel, S, empty })}
-            {moreRow({ scrollFill, model, remoteBusy, moreFailed, B, semanticRows, ordered, S, setRetry })}
+            {moreRow({ scrollFill, cached, model, remoteBusy, moreFailed, B, semanticRows, ordered, S, setRetry })}
           </div>
         </div>
         {!isStatic ? <Scrollbars holder={holder} viewportId={viewportId} hideX={isNarrow} /> : null}

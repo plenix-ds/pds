@@ -128,6 +128,9 @@
        more asking at total. In "fill" and "load-more" an empty or short page (fewer rows than size) ends the list, even
        when total says more (issue 614). A sort, filter or search change starts again from page 1, in the same render
        as the change. size is pageSize (default 50)
+     cachedRows(request): the app's cached rows for the same request fetchRows gets, returning { rows, total } or undefined. They show at once,
+       fetchRows still runs, and its answer replaces them in place (no spinner, the focus and scroll stay). A failed refresh keeps them and shows a row with
+       Retry. Not asked for a later page in "fill" and "load-more". The app owns the cache: Plenix keeps no data (memory only, cleared on sign-out)
      storageKey: a string: keeps the person's standalone view (sort, widths, order, hidden columns, row height, wrap, groups).
      onViewChange(patch): delegates view changes to an external controller; its presence disables the grid's own store.
        useCollectionView supplies this callback and columnWidths, so its collection state owns the view.
@@ -426,6 +429,8 @@ export type DataGridProps<R = Record<string, unknown>> = {
   pageSizes?: number[];
   height?: string;
   fetchRows?(request: DataGridFetch): Promise<{ rows: R[]; total: number }>;
+  /** the app's cached rows for a request (the same one fetchRows gets): shown at once while fetchRows runs, then replaced in place by its answer, with no spinner; a failure keeps them and shows Retry. Not asked for a later page in load-more or fill. */
+  cachedRows?(request: DataGridFetch): { rows: R[]; total: number } | undefined;
   search?: string;
   storageKey?: string;
   onViewChange?(patch: Record<string, unknown>): void;
