@@ -5,50 +5,50 @@
   "pages": {
     "grid": {
       "load": {
-        "cssMs": 3.734,
-        "recalcMs": 104.09400000000001,
+        "cssMs": 6.544,
+        "recalcMs": 91.152,
         "recalcCount": 18,
         "recalcElements": 461,
-        "layoutMs": 18.487000000000005,
-        "paintMs": 3.3819999999999997,
-        "scriptMs": 167.93399999999994,
-        "taskMs": 210.21000000000006,
-        "selectorStatsEvents": 18
+        "layoutMs": 11.312999999999999,
+        "paintMs": 4.228,
+        "scriptMs": 176.0489999999999,
+        "taskMs": 0,
+        "selectorStatsEvents": 0
       },
       "hover": {
         "cssMs": 0,
-        "recalcMs": 79.52600000000001,
+        "recalcMs": 14.144,
         "recalcCount": 8,
         "recalcElements": 814,
-        "layoutMs": 0.206,
-        "paintMs": 7.012999999999994,
-        "scriptMs": 84.52900000000001,
-        "taskMs": 105.75599999999999,
-        "selectorStatsEvents": 8
+        "layoutMs": 0.148,
+        "paintMs": 6.260999999999988,
+        "scriptMs": 18.984,
+        "taskMs": 0,
+        "selectorStatsEvents": 0
       },
       "sort": {
         "cssMs": 0,
-        "recalcMs": 18.463,
+        "recalcMs": 7.302,
         "recalcCount": 3,
         "recalcElements": 157,
-        "layoutMs": 27.956,
-        "paintMs": 3.102,
-        "scriptMs": 10.025,
-        "taskMs": 64.03600000000002,
-        "selectorStatsEvents": 3
+        "layoutMs": 1.986,
+        "paintMs": 2.442,
+        "scriptMs": 10.471000000000002,
+        "taskMs": 0,
+        "selectorStatsEvents": 0
       }
     },
     "record": {
       "load": {
-        "cssMs": 4.606,
-        "recalcMs": 18.749,
-        "recalcCount": 3,
-        "recalcElements": 14,
-        "layoutMs": 4.387,
-        "paintMs": 1.024,
-        "scriptMs": 30.287999999999997,
-        "taskMs": 70.113,
-        "selectorStatsEvents": 3
+        "cssMs": 5.028,
+        "recalcMs": 19.437,
+        "recalcCount": 4,
+        "recalcElements": 15,
+        "layoutMs": 7.732,
+        "paintMs": 0.973,
+        "scriptMs": 34.486000000000004,
+        "taskMs": 0,
+        "selectorStatsEvents": 0
       },
       "hover": {
         "cssMs": 0,
@@ -58,32 +58,32 @@
         "layoutMs": 0,
         "paintMs": 0,
         "scriptMs": 0,
-        "taskMs": 2.438999999999999,
+        "taskMs": 0,
         "selectorStatsEvents": 0
       },
       "sort": {
         "cssMs": 0,
-        "recalcMs": 12.533,
+        "recalcMs": 8.697000000000001,
         "recalcCount": 4,
         "recalcElements": 39,
-        "layoutMs": 0.195,
-        "paintMs": 0.886,
-        "scriptMs": 1.3910000000000002,
-        "taskMs": 20.125000000000004,
-        "selectorStatsEvents": 4
+        "layoutMs": 0.15,
+        "paintMs": 0.417,
+        "scriptMs": 1.087,
+        "taskMs": 0,
+        "selectorStatsEvents": 0
       }
     },
     "form": {
       "load": {
-        "cssMs": 4.12,
-        "recalcMs": 19.776,
+        "cssMs": 6.095,
+        "recalcMs": 12.402000000000001,
         "recalcCount": 3,
         "recalcElements": 25,
-        "layoutMs": 3.426,
-        "paintMs": 1.1409999999999998,
-        "scriptMs": 28.938,
-        "taskMs": 70.75000000000003,
-        "selectorStatsEvents": 3
+        "layoutMs": 3.813,
+        "paintMs": 0.48300000000000004,
+        "scriptMs": 33.278999999999996,
+        "taskMs": 0,
+        "selectorStatsEvents": 0
       },
       "hover": {
         "cssMs": 0,
@@ -93,19 +93,19 @@
         "layoutMs": 0,
         "paintMs": 0,
         "scriptMs": 0,
-        "taskMs": 3.4929999999999968,
+        "taskMs": 0,
         "selectorStatsEvents": 0
       },
       "sort": {
         "cssMs": 0,
-        "recalcMs": 8.819,
+        "recalcMs": 5.577999999999999,
         "recalcCount": 4,
         "recalcElements": 30,
-        "layoutMs": 0.15799999999999997,
-        "paintMs": 0.63,
-        "scriptMs": 1.0570000000000002,
-        "taskMs": 14.413999999999998,
-        "selectorStatsEvents": 4
+        "layoutMs": 0.14800000000000002,
+        "paintMs": 0.40299999999999997,
+        "scriptMs": 1.024,
+        "taskMs": 0,
+        "selectorStatsEvents": 0
       }
     }
   }

@@ -1,7 +1,7 @@
 /* Plenix perf harness · Chrome trace split (#1226, D-0160).
    Summary: records a Chrome performance trace of the three reference pages on one Plenix build and splits the main-thread time into Parse CSS, Recalculate Style (count, duration, elements touched), Layout, Paint and JavaScript, for three phases:
      load, hover (over rows; for the other pages over the page's main control), and sort (the DataGrid's Name column; the record and form pages click their button). It also tries Chrome's selector statistics.
-   Usage:  node tests/perf/trace.mjs [--base <url>] [--dir <folder>] [--runs 3] [--mode light|dark] [--json <file>] [--keep <folder>]   (--keep writes the raw .json traces, openable in DevTools)
+   Usage:  node tests/perf/trace.mjs [--base <url>] [--dir <folder>] [--runs 3] [--mode light|dark] [--json <file>] [--keep <folder>] [--debug-categories]   (--keep writes the raw .json traces, openable in DevTools)
    Same page set and server as run.mjs (pages.mjs). Memory: one browser, one page at a time. */
 import http from 'node:http';
 import fs from 'node:fs';
@@ -15,7 +15,8 @@ const RUNS = +arg('runs', 3), MODE = arg('mode', 'light'), DIR = arg('dir', null
 let BASE = arg('base', 'https://design-system.lighthouseway.org/cdn/1.6.1');
 const median = (a) => { const s = [...a].sort((x, y) => x - y); return s[Math.floor(s.length / 2)]; };
 const TYPES = { '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.woff2': 'font/woff2', '.svg': 'image/svg+xml' };
-const CATS = ['-*', 'devtools.timeline', 'disabled-by-default-devtools.timeline', 'blink', 'v8', 'disabled-by-default-blink.debug'];
+const CATS = ['-*', 'devtools.timeline'];   // only this category: extra categories (blink, v8, blink.debug) slow the page while tracing and inflate every number about 1.8x (#1226)
+const DEBUG_CATS = ['disabled-by-default-devtools.timeline', 'blink', 'v8', 'disabled-by-default-blink.debug'];   // --debug-categories adds these (selector statistics)
 
 function serve() {
   return new Promise((resolve) => {
@@ -34,15 +35,15 @@ function serve() {
 // the split: event names -> a bucket; durations in ms. JavaScript is counted once (top-level script events only, so a call inside a call is not added twice).
 const BUCKETS = { css: ['ParseAuthorStyleSheet'], recalc: ['UpdateLayoutTree', 'RecalculateStyles'], layout: ['Layout'], paint: ['Paint', 'PrePaint', 'Layerize', 'Commit', 'CompositeLayers'], script: ['FunctionCall', 'EvaluateScript', 'v8.run', 'v8.compile', 'RunMicrotasks'] };
 function split(events) {
-  const main = new Map();   // the renderer main thread: the (pid,tid) with the most RunTask time
-  for (const e of events) if (e.name === 'RunTask' && e.dur) { const k = e.pid + ':' + e.tid; main.set(k, (main.get(k) || 0) + e.dur); }
-  const top = [...main.entries()].sort((a, b) => b[1] - a[1])[0]; if (!top) return null;
-  const [pid, tid] = top[0].split(':').map(Number), mine = events.filter((e) => e.pid === pid && e.tid === tid && e.ph === 'X');
+  const names = new Set(events.filter((e) => e.name === 'thread_name' && e.args && e.args.name === 'CrRendererMain').map((e) => e.pid + ':' + e.tid)), count = new Map();   // the renderer main thread with the most timed events (a page's own tab)
+  for (const e of events) { const k = e.pid + ':' + e.tid; if (e.ph === 'X' && names.has(k)) count.set(k, (count.get(k) || 0) + 1); }
+  const top = [...count.entries()].sort((a, b) => b[1] - a[1])[0];
+  const [pid, tid] = top ? top[0].split(':').map(Number) : [0, 0], mine = events.filter((e) => e.pid === pid && e.tid === tid && e.ph === 'X');
   const out = { cssMs: 0, recalcMs: 0, recalcCount: 0, recalcElements: 0, layoutMs: 0, paintMs: 0, scriptMs: 0, taskMs: 0, selectorStatsEvents: events.filter((e) => /SelectorStats/.test(e.name)).length };
   const key = { css: 'cssMs', recalc: 'recalcMs', layout: 'layoutMs', paint: 'paintMs', script: 'scriptMs' };
   mine.sort((a, b) => a.ts - b.ts || b.dur - a.dur); let scriptEnd = 0;
   for (const e of mine) {
-    if (e.name === 'RunTask') out.taskMs += e.dur / 1000;
+    if (e.name === 'RunTask') out.taskMs += e.dur / 1000;   // only in the debug categories
     for (const [b, names] of Object.entries(BUCKETS)) if (names.includes(e.name)) {
       if (b === 'script') { if (e.ts < scriptEnd) continue; scriptEnd = e.ts + e.dur; }
       out[key[b]] += e.dur / 1000;
@@ -57,7 +58,7 @@ const browser = await launch(), result = { base: BASE, mode: MODE, runs: RUNS, p
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 async function phase(p, name, tag, fn) {
   const file = KEEP ? path.join(KEEP, tag + '-' + name + '.json') : undefined; if (KEEP) fs.mkdirSync(KEEP, { recursive: true });
-  await p.tracing.start({ categories: CATS, path: file }); await fn(); await wait(600);
+  await p.tracing.start({ categories: arg('debug-categories', false) ? CATS.concat(DEBUG_CATS) : CATS, path: file }); await fn(); await wait(600);
   const t = JSON.parse(Buffer.from(await p.tracing.stop()).toString()); return split(t.traceEvents || t);
 }
 try {

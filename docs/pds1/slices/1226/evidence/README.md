@@ -4,4 +4,4 @@
 - Pages: the three reference pages of `tests/perf/pages.mjs` (DataGrid with 50 rows, record, form). The record page uses a PropertyList, not PropertyGroup tiles.
 - Phases: load; hover over rows 3 to 10 (record and form: no hoverable rows, so nothing happens); sort (grid: click the Name header; record and form: click their button).
 - Numbers: median of 3, main thread, headless Chrome, no throttling, light mode, milliseconds.
-- Selector statistics (Chrome's own, in the trace): the slowest selectors in one grid hover cost 0.14 ms in total each. Selector matching is not the cost.
+- Categories: `-*,devtools.timeline` only. Extra categories slow the page while tracing and inflated the first numbers about 1.8x (found by the debugger, #1226). `--debug-categories` adds them for selector statistics and the task total; compare numbers only within one category set.
