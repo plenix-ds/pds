@@ -45,7 +45,7 @@ density:                         # D-0007; "standard-comfortable" is retired
   table_font_px:       { compact: 12, standard: 13, comfortable: 13 }
 space:
   grid_px: 4
-  scale_px: [4, 6, 8, 10, 12, 16, 20, 24, 28, 32, 40, 48, 64]
+  scale_px: [4, 8, 12, 16, 20, 24, 28, 32, 40, 48, 64]   # 6 and 10 retired (#301, section 5); was listed here in error
 motion:
   durations_s: { instant: 0.08, quick: 0.12, fast: 0.15, base: 0.2, slow: 0.25 }
   loops_s: { fast: 0.7, base: 1.1, slow: 1.4 }
@@ -154,6 +154,7 @@ A named variation sets a whole agreed look with one prop, so an app never gets h
 |---|---|---|---|---|
 | Read-only tiles | `<PropertyGroup variant="tiles">` (name confirmed at G3) | the D-0106 preset above: porcelain tiles 2 per row, gold group heading, navy label, semibold value, statuses as Badges with icons | D-0132 (owner, #1043) | `docs/pds1/slices/1043/design.md` |
 | Grouped Timeline | `Timeline` grouped by year | §8 "Timeline, grouped" | D-0115, D-0117 | `docs/pds1/slices/987/design.md` |
+| Compact grouped Timeline | the grouped `Timeline`'s compact look (prop named at G3) | §8 "Timeline, grouped", compact look | D-0145, D-0148 (owner, #1152) | `docs/pds1/slices/1152/design.md` |
 
 - **Read-only tiles** is the look for every read-only card (case summaries, record details). Use `columns` only in dense panes and inspectors. The 1.x default stays `columns` (D-0107).
 
@@ -247,17 +248,25 @@ A named variation sets a whole agreed look with one prop, so an app never gets h
 - Palettes: categorical 1 to 6, sequential 1 to 7, diverging 1 to 7, and status colours.
 - Axis and label text uses `dataviz-label` at 12px or more. Numbers on axes and in tooltips use `tabular-nums`.
 
-### Timeline, grouped (D-0115, D-0117, #987)
+### Timeline, grouped (D-0115, D-0117, #987; D-0145, D-0148, #1152)
 
 - A variation of `Timeline`, not a new component. Events are grouped by year, latest first (the order is a prop).
-- **Year heading:** the **title** role, `content-default`, with a 72 × 2px `border-strong` line 8px under it. Groups are 80px apart (64px compact), with no divider.
+- **Year heading:** the **title** role, `content-default`, with no line under it (D-0145). Groups are 80px apart (64px compact), with no divider.
 - **Watermark:** the year, rotated, 24px bold, in `content-decorative`. It sits beside each event, in the event's own row, so it never overlaps. It is `aria-hidden`.
 - **Each event is a container:** 6px corners, the category tint and border, the title in the category text colour, the description in `content-muted`, and a category tag (4px, one line) at the inline-end. There are no markers or dots.
-- **Date:** a 56px calendar tile at the inline-start, with a band in the category colour, two binder rings, the month (12px, bold, uppercase) and the day (18px, bold). The tile is `aria-hidden`; a `<time>` carries the full date.
-- **Upcoming:** a dashed outline, a grey band, and "Pending" when there is no date. Events never fade.
-- **Categories `category-1…8`** alias existing category hues (ADR 0036), with no new colours. Light uses the pill roles (soft, soft border, on-soft). Dark uses the soft-border shade for the title and band, over a 5% mix of it into the surface. Text on every fill is ≥ 4.5:1 in light and dark.
+  - **Padding is equal on all four sides:** 12px (8px in a compact region, 16px comfortable).
+  - An upcoming event's tag adds "· upcoming" (D-0145).
+- **Date:** a 56px calendar tile at the inline-start with no binder rings. A 20px band in the category colour holds the month (14px, bold, uppercase, `content-inverse`), and the day (18px, bold) sits under it. The tile is `aria-hidden`; a `<time>` carries the full date.
+- **Upcoming:** a dashed outline, a grey band with a `content-default` month, and "Pending" when there is no date. Events never fade.
+- **Categories `category-1…8`** alias existing category hues (ADR 0036), with no new colours. Light uses the pill roles (soft, soft border, on-soft). Dark uses the soft-border shade for the title and band, over a 5% mix of it into the surface. Text on every fill is ≥ 4.5:1 in light and dark; the month on the band is white in light and black in dark.
 - **Legend (opt-in):** ghost toggle buttons with a swatch. A hidden category has a hollow swatch and `content-muted` text, never reduced opacity.
-- Details, tokens and the state matrix: `docs/pds1/slices/987/design.md`.
+- **Compact look (D-0145, CTM Key Dates):** one size in every density.
+  - At most 760px wide (`content-max-list`), at the inline start. The prop is `density="compact"` (ADR 0048).
+  - The year heading is **surface-title** (15px), with no line and no watermark. Groups are 32px apart and events 4px.
+  - One line per event: the title, then the description, which ends in an ellipsis (a Tooltip shows it while cut), then the tag at the inline end.
+  - 8px padding on every side. A 40px tile with a 16px band, the month 13px and the day 15px.
+  - An undated event shows an empty dashed tile, and its tag reads "{category} · Pending" (D-0148).
+- Details, tokens and the state matrix: `docs/pds1/slices/987/design.md` and, for the compact look and the 1.6.0 tile, `docs/pds1/slices/1152/design.md`.
 
 ## 9. States
 
