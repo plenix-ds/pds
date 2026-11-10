@@ -510,6 +510,11 @@
       "$type": "dimension",
       "$description": "The space between the year groups of a grouped Timeline (80px; ADR 0036)."
     },
+    "size-widget-min-sm": {
+      "$value": "{plx-ref.size-50u}",
+      "$type": "dimension",
+      "$description": "The narrowest column of a compact widget grid (WidgetGrid itemSize sm): 200px, so 5 to 6 compact cards fit in a row (ADR 0056)."
+    },
     "size-field-tile-min": {
       "$value": "{plx-ref.size-60u}",
       "$type": "dimension",

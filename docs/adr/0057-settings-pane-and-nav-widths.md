@@ -36,12 +36,12 @@
 
 ### SettingsLayout
 
-- It renders `<PagePanes><SecondaryPane …>{nav}</SecondaryPane><PageContent>{children}</PageContent></PagePanes>`. The SecondaryPane is `side="start"`, `width="md"`, `collapsible` and `resizable`, and its collapsed state and size are remembered per page (`useViewState`, key `settings`).
+- It renders `<PagePanes><SecondaryPane …>{nav}</SecondaryPane><div class="plx-settings__content">{children}</div></PagePanes>`. The content is a plain div, not `PageContent`, so it has one padding, its own (#1269). The SecondaryPane is `side="start"`, `width="md"`, `collapsible` and `resizable`, and its collapsed state and size are remembered per page (`useViewState`, key `settings`).
 - **New props:**
   - **`navTitle?: React.ReactNode`**, the pane's title. The default is the string `settingsLayout.navTitle`, "Settings". (The i18n Engineer has the Arabic.)
   - **`pane?: Omit<SecondaryPaneProps, 'children' | 'title'>`**, passed to the SecondaryPane: `detailOpen`, `onBack`, `back`, `label`, a controlled `size` or `collapsed`. At Narrow it is list-detail, with "Back to Settings" through SecondaryPane's own `back`.
   - **`strings?`**: `{ navTitle }`.
-- **Classes:** `plx-settings__nav` and `plx-settings__frame` are no longer drawn. `plx-settings` stays on the root, and `plx-settings__content` stays on the `PageContent`. The removed classes are listed in `deprecated-classes` with "SettingsLayout's nav is a SecondaryPane (ADR 0057); removed in 2.0.0". Nothing draws them in 1.x, so an app's CSS on them stops applying, and that is the fix.
+- **Classes:** `plx-settings__nav` and `plx-settings__frame` are no longer drawn. `plx-settings` stays on the root, and `plx-settings__content` on the content div. The removed classes are listed in `deprecated-classes` with "SettingsLayout's nav is a SecondaryPane (ADR 0057); removed in 2.0.0". Nothing draws them in 1.x, so an app's CSS on them stops applying, and that is the fix.
 
 ### Widths (#1243)
 
@@ -57,7 +57,8 @@
 
 ### The resize edge (NavPane in AppShell, and SecondaryPane)
 
-- Arrow keys and dragging move the edge in 8px steps (`shell-splitter-step`), and Home and End go to the limits, as today.
+- Arrow keys and dragging move the edge in 8px steps: `shell-splitter-step` goes `{plx-ref.size-4u}` -> `{plx-ref.size-2u}` (G2). Home and End go to the limits on that grid (Home reaches 184px for the 180px SecondaryPane minimum).
+- **New public prop `PanelSplitter.onReset?(): void`.** Enter and a double-click call it when it is given, else `onCollapse` as before. NavPane in AppShell and SecondaryPane pass it. It is additive (MINOR).
 - **Enter or a double-click resets the width** to the pane's standard width and clears the remembered size. (G2, D-0169 A.) Collapse is the pane's Collapse button and Ctrl+[.
 
 ## Consequences
@@ -70,7 +71,7 @@
     - `secondary-pane-width-md` 220 -> 240;
     - the nav's minimum 140 -> 200;
     - the edge's Enter and double-click (reset, not collapse).
-  - Deprecated: 8 tokens and 2 classes, removed in 2.0.0.
+  - Deprecated: 8 width tokens, `settings-nav-border-bottom-color` and `-width` (only the retired `plx-settings__nav` rule read them), and 2 classes, all removed in 2.0.0. A token is never deleted in 1.x.
 - CTM gets both fixes from the CDN with no change.
 
 ## Enforced by

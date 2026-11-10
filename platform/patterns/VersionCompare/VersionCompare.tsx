@@ -26,6 +26,7 @@
        and the text diff when both have text)
      context: the unchanged lines kept around each change in the text diff; longer runs fold into "Show N unchanged
        lines" (default 3)
+     textKind: "prose" (default: the text diff's lines are in the text font) | "code" (the data font, for compared code)
      ratio: the pictures' shape ("16-9" default, "4-3", "3-2", "1-1")
      scroll: the panes scroll together at a fixed height (ComparisonView; default false)
      label: the view's accessible name (default strings.label)
@@ -95,7 +96,7 @@ export function diffLines(before: any, after: any) {
   return out;
 }
 
-function TextDiff({ base, target, context, t, uid }: any) {
+function TextDiff({ base, target, context, textKind, t, uid }: any) {
   const lines = React.useMemo(() => diffLines(base.text, target.text), [base.text, target.text]);
   const [shown, setShown] = React.useState<any>({});   // the folded runs people opened, by their first index
   const [at, setAt] = React.useState(-1);
@@ -153,7 +154,7 @@ function TextDiff({ base, target, context, t, uid }: any) {
             const x = r.line, isStart = starts.indexOf(r.i) >= 0;
             return (
               <li key={r.i} id={uid + '-l' + r.i} ref={isStart ? (el) => { refs.current[r.i as number] = el; } : undefined} tabIndex={isStart ? -1 : undefined}
-                className={cx('plx-version-compare__line', x.kind === 'add' && 'plx-version-compare__line--added', x.kind === 'del' && 'plx-version-compare__line--removed')}>
+                className={cx('plx-version-compare__line', textKind === 'code' && 'plx-version-compare__line--code', x.kind === 'add' && 'plx-version-compare__line--added', x.kind === 'del' && 'plx-version-compare__line--removed')}>
                 <span className="plx-version-compare__number" aria-hidden="true">{x.a || ''}</span>
                 <span className="plx-version-compare__number" aria-hidden="true">{x.b || ''}</span>
                 <span className="plx-version-compare__sign" aria-hidden="true">{x.kind === 'add' ? '+' : x.kind === 'del' ? '−' : ''}</span>
@@ -183,6 +184,8 @@ export type VersionCompareProps = {
   onModeChange?(mode: 'columns' | 'slider' | 'text'): void;
   modes?: ('columns' | 'slider' | 'text')[];
   context?: number;
+  /** the text diff's lines: "prose" (default, the text font) or "code" (the data font) */
+  textKind?: 'prose' | 'code';
   ratio?: '16-9' | '4-3' | '3-2' | '1-1';
   scroll?: boolean;
   label?: string;
@@ -190,7 +193,7 @@ export type VersionCompareProps = {
   className?: string;
 };
 export function VersionCompare(props: VersionCompareProps) {
-  const { versions = [], attributes = [], base, defaultBase, target, defaultTarget, onChange, mode, defaultMode = 'columns', onModeChange, modes, context = 3,
+  const { versions = [], attributes = [], base, defaultBase, target, defaultTarget, onChange, mode, defaultMode = 'columns', onModeChange, modes, context = 3, textKind = 'prose',
   ratio = '16-9', scroll = false, label, strings, className } = props as any;
   const t: any = useStrings('versionCompare', strings);
   const uid = useUid('plx-version-compare');
@@ -211,7 +214,7 @@ export function VersionCompare(props: VersionCompareProps) {
   const item = (v: any) => ({ id: v.id, title: v.label, meta: metaOf(v), image: v.image, media: v.media, values: v.values || {} });
 
   const body = !a || !b ? <EmptyState icon={DocSearchIcon} title={t.empty} />
-    : current === 'text' ? <TextDiff base={a} target={b} context={context} t={t} uid={uid} />
+    : current === 'text' ? <TextDiff base={a} target={b} context={context} textKind={textKind} t={t} uid={uid} />
       : <ComparisonView label={label || t.label} items={[item(a), item(b)]} attributes={attributes} mode={current} modes={[current]} ratio={ratio} scroll={scroll} />;
   return (
     <section className={cx('plx-version-compare', 'plx-version-compare--' + current, className)} aria-label={label || t.label}>

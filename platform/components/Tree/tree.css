@@ -20,7 +20,7 @@
 /* a row's icon follows its own item, never a selected ancestor (an open selected item holds its whole subtree): outline
    while closed, filled while open (owner, batch 240) or selected (batch 241); the 24px glyphs where the density draws 24px icons */
 .plx-tree__label{flex-basis:0%;flex-grow:1;flex-shrink:1;min-inline-size:0;overflow-x:hidden;overflow-y:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.plx-tree__meta{color:var(--plx-comp-tree-meta-text);flex-shrink:0;font-family:var(--plx-comp-tree-meta-font-family);font-size:var(--plx-comp-tree-meta-font-size);font-weight:var(--plx-sys-text-caption-font-weight);letter-spacing:var(--plx-sys-text-caption-letter-spacing);line-height:var(--plx-sys-text-caption-line-height);word-spacing:var(--plx-sys-font-data-word-spacing);}
+.plx-tree__meta{color:var(--plx-comp-tree-meta-text);flex-shrink:0;font-family:var(--plx-comp-tree-meta-font-family);font-size:var(--plx-comp-tree-meta-font-size);font-weight:var(--plx-sys-text-caption-font-weight);letter-spacing:var(--plx-sys-text-caption-letter-spacing);line-height:var(--plx-sys-text-caption-line-height);word-spacing:var(--plx-sys-text-caption-word-spacing);}
 
 /* its motion (moved from motion.css, Styling Standard 3.6: each component owns its own; reduced motion sets the durations to 0s) */
 /* pressed (batch 238): a step darker than its hover while held (the row's state order, above) */

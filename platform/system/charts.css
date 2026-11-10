@@ -32,6 +32,8 @@
 .plx-chart__grid-line{fill:none;stroke:var(--plx-comp-chart-grid-line-color);stroke-width:var(--plx-comp-chart-grid-line-width);}
 /* tick labels: technical values, the data font */
 .plx-chart__tick-label{fill:var(--plx-comp-chart-tick-label-text);font-family:var(--plx-comp-chart-tick-label-font-family);font-size:var(--plx-comp-chart-tick-label-font-size);word-spacing:var(--plx-sys-font-data-word-spacing);}
+/* category labels: names and words (the labels of a category axis), the text font; the engine reads them from a probe (D-0165) */
+.plx-chart__category-label{fill:var(--plx-comp-chart-tick-label-text);font-family:var(--plx-comp-chart-category-label-font-family);font-size:var(--plx-comp-chart-tick-label-font-size);font-weight:var(--plx-sys-text-body-font-weight);letter-spacing:var(--plx-sys-text-label-letter-spacing);line-height:var(--plx-sys-text-label-line-height);word-spacing:normal;}
 /* tick labels placed by the axis they belong to: the value axis's at its tick, ending before the plot; the category
    axis's centered under it */
 .plx-chart__tick-label--y{dominant-baseline:central;text-anchor:end;}

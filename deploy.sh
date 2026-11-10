@@ -31,6 +31,8 @@ node build-packages.js >/dev/null || { echo "build-packages failed: run node bui
 node check-bundle.js >/dev/null 2>&1 || { echo "STOPPED: bundle budgets: run node check-bundle.js, fix the import over its limit, then deploy again"; exit 1; }
 # performance budgets (#1188): the largest token scope that reaches elements, and plenix.js on the wire
 node tools/checks/perf-budget.mjs >/dev/null || { echo "STOPPED: performance budgets: run node tools/checks/perf-budget.mjs"; exit 1; }
+# code per screen (ADR 0052, #1208): an entry per export on npm and in /cdn/<version>/esm/, every import there resolving
+node tools/checks/esm-entries.mjs >/dev/null || { echo "STOPPED: entries per export: run node tools/checks/esm-entries.mjs"; exit 1; }
 VERSION=$(node -p "require('./package.json').version")
 # SHA256SUMS and version.json at the version root (plan §7c, G8): written from this exact build and verified before anything
 # is uploaded, so the published folder carries its own checksums (tools/publish/manifest.mjs)

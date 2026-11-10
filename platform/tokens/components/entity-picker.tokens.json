@@ -177,9 +177,9 @@
       "$description": "EntityPicker meta: text color (content-muted)."
     },
     "entity-picker-meta-font-family": {
-      "$value": "{plx-sys.font-data}",
+      "$value": "{plx-sys.font-label}",
       "$type": "fontFamily",
-      "$description": "EntityPicker meta: font (font-data)."
+      "$description": "EntityPicker meta: font (font-label); a string goes through dataWhenText, so its numbers are in the data font."
     },
     "entity-picker-meta-font-size": {
       "$value": "{plx-ref.font-size-100}",
