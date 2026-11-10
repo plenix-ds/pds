@@ -4,6 +4,7 @@
 //   Icons          platform/icons/                 → platform/components/Icon/icon.css   (build-icons.js)
 //                                                  → platform/dist/icons/plenix/<name>.svg|.js, index.json (the asset layout, #279)
 //                                                  → platform/dist/plenix-icons-plenix.js (the compatibility file: every Plenix icon, #553)
+//                                                  → platform/dist/plenix-icons-plenix.esm.js (the same set as an ES module, #1209)
 //                                                  → <app>/plenix-icons-<app>.js, dam/plenix-icons-dam.js (each page's icons, #557)
 //   Platform       platform/index.ts               → platform/dist/platform.js       publishes its exports on window.Plenix
 //                                                    (Vite, vite.platform.config.mjs; its hidden source map → build/vite/platform.js.map)
@@ -54,6 +55,9 @@ console.log('Built platform/components/Icon/icon.css (' + ICONS.names + ' icon n
 // the compatibility file (#553): every Plenix icon registered with registerIcons, for a site that loads plenix.js and no icon file of its own
 const COMPAT = require('./tools/icons/site-icons.js').buildCompat(ROOT);
 console.log('Built ' + COMPAT.file + ' (' + COMPAT.icons + ' icons, ' + Math.round(COMPAT.bytes / 1024) + ' KB' + (COMPAT.changed ? '' : ', unchanged') + ')');
+// its ES module form (ADR 0052, #1209): the same set, imported where the icons are drawn; the release copies it to esm/icons/plenix.js
+const COMPAT_ESM = require('./tools/icons/site-icons.js').buildCompatModule(ROOT);
+console.log('Built ' + COMPAT_ESM.file + ' (' + COMPAT_ESM.icons + ' icons, ' + Math.round(COMPAT_ESM.bytes / 1024) + ' KB' + (COMPAT_ESM.changed ? '' : ', unchanged') + ')');
 // each page's own icon file (#557): <app>/plenix-icons-<app>.js and dam/plenix-icons-dam.js, exactly the icons its source names
 const PAGE_ICONS = require('./tools/icons/site-icons.js').buildPages(ROOT);
 console.log('Built ' + PAGE_ICONS.pages + ' page icon files (' + PAGE_ICONS.icons + ' icons' + (PAGE_ICONS.changed ? ', ' + PAGE_ICONS.stale.length + ' changed' : ', unchanged') + '; ' + PAGE_ICONS.unknown.length + ' names that are not icons, such as the suite\'s capability keys)');

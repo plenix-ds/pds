@@ -248,6 +248,8 @@ A named variation sets a whole agreed look with one prop, so an app never gets h
 - Charts use Apache ECharts (D-0027), bundled locally, themed only from tokens (`plx-sys.dataviz-*`, `plx-sys.font-*`). Inline styles are allowed only in ECharts options built from token values.
 - Palettes: categorical 1 to 6, sequential 1 to 7, diverging 1 to 7, and status colours.
 - Axis and label text uses `dataviz-label` at 12px or more. Numbers on axes and in tooltips use `tabular-nums`.
+- **"Show the data"** (D-0163, #1229) is a ghost `sm` Button with the `table_view` icon at the chart's inline start. It opens a `md` Dialog titled with the chart's title and holding the data Table, and focus returns to the button. It is never a link or an inline expansion by default; the inline table is an opt-in.
+- **Dashboard cards** (D-0163): in a WidgetGrid row, every card is as tall as the tallest. The body grows, so the Panel footer and the chart's "Show the data" button sit on the bottom edge. The plot keeps its size height, and a collapsed Panel keeps its own height.
 
 ### Metric cards
 

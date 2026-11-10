@@ -118,6 +118,7 @@ A site that loads Plenix from the CDN (`plenix.js`, `window.Plenix`) registers t
 |---|---|---|---|
 | `plenix-icons-<site>.js` | Exactly the icons the site's source uses | `node tools/icons/site-icons.js <site> <folder or file> …` | Production (recommended) |
 | `plenix-icons-plenix.js` | Every Plenix icon (the 212 names in `map.json`; their symbol spellings answer too) | `node build-app.js` into `platform/dist/`; `build-packages.js` puts it beside `plenix.js` on the CDN | A site without its own file yet |
+| `plenix-icons-<set>.esm.js` | The same set as an ES module: it imports `registerIcons` from the Plenix entry instead of finding `window.Plenix` (ADR 0052). For a site: `node tools/icons/site-icons.js <site> <folder or file> … --esm [--import <path>]` (default import `@plenix-ds/react/registerIcons`). For every Plenix icon: `platform/dist/plenix-icons-plenix.esm.js` from `node build-app.js` (the release puts it at `esm/icons/plenix.js`) | as above | An app that bundles or loads modules |
 
 ```html
 <script src="https://design-system.lighthouseway.org/cdn/<version>/plenix.js"></script>
@@ -125,7 +126,7 @@ A site that loads Plenix from the CDN (`plenix.js`, `window.Plenix`) registers t
 ```
 
 - **For an extension or an offline app, build your site icon file with tools/icons/site-icons.js; don't copy icon files.**
-- **The generator:** `node tools/icons/site-icons.js <site> <folder or file> … [--out <folder>] [--allow-unknown]`
+- **The generator:** `node tools/icons/site-icons.js <site> <folder or file> … [--out <folder>] [--allow-unknown] [--esm [--import <path>]]` (`--esm` writes the ES module form instead of the classic script; without `--out` the file goes in the current folder)
   - **Without a Plenix checkout:** `npx plenix-site-icons <site> <folder or file> …` runs the same tool from `@plenix-ds/icons` (its one dependency is `@babel/parser`). It knows every Plenix icon and the Material symbols the package ships in `svg/`; another Material Symbols name is reported as unknown, and `--allow-unknown` writes the file without it.
   - **What it reads:** `.js`, `.jsx`, `.mjs`, `.cjs`, `.ts`, `.tsx`, `.mts`, `.cts`, `.html` and `.htm`, including a page's inline scripts (TypeScript is read with Babel's own TypeScript parser, as JSX is). It skips `node_modules`, `dist`, `vendor` and dot folders.
   - **Point it at the site's own source,** not at a built file that bundles Plenix.
@@ -138,7 +139,7 @@ A site that loads Plenix from the CDN (`plenix.js`, `window.Plenix`) registers t
 - **Safe:** a file holds data only, as `{ name, set, symbol, fillOutline, mirrored, drawings }` objects passed to `registerIcons`. The Icon component checks every drawing with the allow-list (#285) and draws it as React props, never as HTML. A path used by several icons is written once.
 - **Offline:** the file loads nothing else, so it works offline and from `file://`. Loaded before `plenix.js`, it warns once and registers nothing.
 - **`<Icon name>` keeps working without either file:** from stage 5c a Plenix name with no module loads its files once from the asset layout (online only). Load one of the two files for production and for `file://`.
-- **check-system:** fails when `platform/dist/plenix-icons-plenix.js` differs from what `map.json` generates. The test is `tests/site-icons.test.js`.
+- **check-system:** fails when `platform/dist/plenix-icons-plenix.js` differs from what `map.json` generates. The tests are `tests/site-icons.test.js` and `tests/icon-set-esm-1209.test.js` (the module form, the same set, once each).
 
 ## Icons come only from modules (#557, stage 5c)
 
