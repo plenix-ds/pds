@@ -377,7 +377,7 @@ jobs:
       - name: Did anything the package is built from change?
         id: scope
         run: |
-          if git diff --quiet "$(git merge-base "$BASE_SHA" HEAD)" HEAD -- platform packages build-app.js build-usage.js build-packages.js build-exports.js check-bundle.js tools/agent/one-part-sizes.js tools/agent/one-part-vite.mjs package.json package-lock.json .github/workflows/ci.yml; then
+          if git diff --quiet "$(git merge-base "$BASE_SHA" HEAD)" HEAD -- platform packages build-app.js build-usage.js build-packages.js build-exports.js check-bundle.js tools/agent/one-part-sizes.js tools/agent/one-part-vite.mjs tools/checks/perf-budget.mjs tools/checks/perf-budget.json package.json package-lock.json .github/workflows/ci.yml; then
             echo "run=no" >> "$GITHUB_OUTPUT"
             echo "package sources, build and measure unchanged: not run for this PR"
           else
@@ -399,6 +399,11 @@ jobs:
         if: steps.scope.outputs.run == 'yes'
         run: |
           node tools/agent/one-part-sizes.js --check | tee "$RUNNER_TEMP/head.txt"
+      # performance budgets (#1188): the largest token scope that reaches elements, and plenix.js with brotli 5 (its unit
+      # test, tools/checks/perf-budget.test.mjs, runs in the checks' Vitest job)
+      - name: Performance budgets (tools/checks/perf-budget.mjs)
+        if: steps.scope.outputs.run == 'yes'
+        run: node tools/checks/perf-budget.mjs
       # over a limit: the same imports measured on the base, so the PR shows what it added. The PR then loads the new code
       # on first use, or carries a decision record that raises the limit, with G3 from the DS Architect (#1144)
       - name: Over a limit, the base's sizes beside the head's
