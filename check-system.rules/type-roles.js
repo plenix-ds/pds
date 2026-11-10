@@ -8,7 +8,7 @@
 //   grid     DataGrid column kinds "data", "id" and "code" get the data cell class (engine/bodyRows.tsx); "name" never does.
 // What breaks the rule when it began is the frozen backlog in type-roles.baseline.json (by token or kind, with the font it ends at). It only
 // shrinks: a break not listed fails, and a listed one that now passes fails until it is removed (node check-system.rules/type-roles.js --shrink).
-// The design audit (#1232, docs/pds1/slices/1232/audit.md, D-0165) decides each backlog entry; fixing one is a PR that removes it here.
+// The design audit (#1233, docs/pds1/slices/1233/audit.md) decides each backlog entry; fixing one is a PR that removes it here.
 // Alone: node check-system.rules/type-roles.js [--shrink]   -> TYPE_ROLES_OK, or the findings and exit 1
 const fs = require('fs');
 const path = require('path');

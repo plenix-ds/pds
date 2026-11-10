@@ -1,5 +1,5 @@
 {
- "$description": "Every font-family token and its role (ADR 0055, D-0164): \"data\" is the data font (Reddit Mono: case numbers, IDs, dates, times, amounts, counts, file names, code); \"text\" is the text font (names and words). check-system.rules/type-roles.js fails on a token missing here and on a token whose typeface does not match its role. A new font role is added here in the PR that adds it, with G3. The design audit (#1232, docs/pds1/slices/1232/audit.md, D-0165) corrects roles here.",
+ "$description": "Every font-family token and its role (ADR 0055, D-0164): \"data\" is the data font (Reddit Mono: case numbers, IDs, dates, times, amounts, counts, file names, code); \"text\" is the text font (names and words). check-system.rules/type-roles.js fails on a token missing here and on a token whose typeface does not match its role. A new font role is added here in the PR that adds it, with G3. The design audit (#1233) corrects roles here.",
  "roles": {
   "plx-comp.activity-list-time-font-family": "data",
   "plx-comp.auth-data-font-family": "data",
@@ -28,7 +28,7 @@
   "plx-comp.chat-header-title-font-family": "text",
   "plx-comp.chat-time-font-family": "data",
   "plx-comp.code-block-pre-font-family": "data",
-  "plx-comp.code-block-title-font-family": "text",
+  "plx-comp.code-block-title-font-family": "data",
   "plx-comp.code-editor-font-family": "data",
   "plx-comp.code-font-family": "data",
   "plx-comp.collapsible-section-toggle-font-family": "text",
@@ -87,7 +87,7 @@
   "plx-comp.kbd-font-family": "data",
   "plx-comp.load-more-count-font-family": "data",
   "plx-comp.media-card-meta-font-family": "text",
-  "plx-comp.media-viewer-counter-font-family": "text",
+  "plx-comp.media-viewer-counter-font-family": "data",
   "plx-comp.media-viewer-meta-font-family": "text",
   "plx-comp.mega-menu-heading-font-family": "text",
   "plx-comp.menu-font-family": "text",
