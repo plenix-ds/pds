@@ -9,12 +9,13 @@ The batch numbers point to the work log (Plenix - DAM/audit/batches/).
 ## [1.7.0] - 2026-11-10
 
 ### Upgrading from 1.6.1
-Nothing to change in code. Deprecated names keep working. Apps on the CDN loader follow this release by themselves; npm apps update the version as usual. Three things look different:
+Nothing to change in code. Deprecated names keep working. Apps on the CDN loader follow this release by themselves; npm apps update the version as usual. Four things look different:
 - a Menu now opens end-aligned with its trigger (`placement="bottom-end"`); MenuBar menus stay start-aligned;
 - a Panel that is a WidgetGrid item's own content fills its cell (`fill={false}` opts out);
-- a chart's "Show the data" opens a Dialog (`dataView="inline"` keeps the 1.6 Details line).
+- a chart's "Show the data" opens a Dialog (`dataView="inline"` keeps the 1.6 Details line);
+- more values are in the data font (Count, meta slots, VersionCompare code lines), and words that were in it are back in the text font (ADR 0055).
 
-This release carries the fixes planned as 1.6.2 (the chart category labels and the row hover); with the features already on main it is a minor release (VERSIONING.md, D-0170).
+Pages without a bundler can now load Plenix per screen with `plenix-loader.js` and `Plenix.load()` (ADR 0052); `plenix.js` keeps working. This release carries the fixes planned as 1.6.2 (the chart category labels and the row hover); with the features already on main it is a minor release (VERSIONING.md, D-0170).
 
 ### Added
 - LoadingState: after about 10 seconds it adds the line "This is taking longer than usual." and, with `onCancel`, a Cancel button (DataGrid and ListingPage `onLoadingCancel`). The wait is the token `motion-loading-long-delay` (#1194).
@@ -22,11 +23,23 @@ This release carries the fixes planned as 1.6.2 (the chart category labels and t
 - **Icons:** each icon set also comes as an ES module. `plenix-site-icons <site> … --esm [--import <path>]` writes `plenix-icons-<site>.esm.js`, and the build writes `plenix-icons-plenix.esm.js` for every Plenix icon (ADR 0052). The classic scripts are unchanged.
 - **Check `type-roles`:** every font role is declared data (Reddit Mono) or text, and a role at the wrong font fails the build (ADR 0055, D-0164). No visual change.
 - `Panel.fill`: a Panel takes its cell's full height, the body grows and the footer stays at the bottom. `dataView` (`"dialog"` or `"inline"`) on ChartFrame, every chart and Gauge (#1229).
+- **Code per screen (ADR 0052, owner rule 2):** one ES module entry per public export.
+  - npm: `import { DataGrid } from '@plenix-ds/react/DataGrid'` (the `"./*"` subpath, with its types).
+  - CDN: `/cdn/<version>/esm/<Export>.js`, the barrel `esm/index.js`, the shared code in `esm/chunks/`, and `esm/manifest.json` (each entry's files, for `modulepreload`). The Plenix icon set as a module is `esm/icons/plenix.js`.
+  - `plenix-loader.js` for pages without a bundler: load the vendored React, then this script, then `await Plenix.load(['DataGrid', 'Dialog', 'Button'])` before a screen renders. A grid screen loads about 234 KB (brotli) instead of 553 KB for `plenix.js`.
+  - `vendor/react.esm.js`, `react-dom.esm.js`, `react-dom-client.esm.js` and `react-jsx-runtime.esm.js`: React for the modules, over the page's one React.
+- **MetricCard:** `type="person" layout="tile"` is the compact person card: the photo beside the name and role, a divider, and the value at the inline end (the number in the data font, the unit a small label). The default person card is unchanged (ADR 0056).
+- **WidgetGrid:** `itemSize="sm"` makes columns at least 200px wide and at most 6, so 5 to 6 compact cards fit in a row.
 
 ### Changed
 - A Panel that is a WidgetGrid item's own content now fills its cell, so cards in a row end at one height (`fill={false}` opts out).
 - A chart's "Show the data" is now a button that opens a Dialog with the table; `dataView="inline"` keeps the 1.6 Details line (#1229).
 - Menu opens toward the start by default (`placement="bottom-end"`): its end edge on the trigger's end edge; it flips to start-aligned when there is no room. MenuBar's top-level menus stay start-aligned (#1248).
+- Words stay in the text font and values in the data font (audit #10-#16, ADR 0055): Tree, EntityPicker, MediaCard and MediaViewer `meta` slots and the MediaViewer counter go through `dataWhenText`/`dataPhrase` in the text font; a CodeBlock title is in the data font only when it is a path or file name; VersionCompare lines are in the text font, and the new `textKind="code"` keeps the data font; the Pagination range no longer lays out as a value (#1262).
+- **Count:** the number is drawn in the data font (Reddit Mono), in the pill and the plain form (D-0164). New token `count-font-family`.
+
+### Deprecated
+- The whole-file builds `plenix.js`, `plenix.esm.js` and the npm `plenix.global.js` work unchanged through 1.x and are removed in 2.0.0. Load per screen from `esm/` (CDN) or the per-export entries (npm) instead.
 
 ### Fixed
 - **Performance:** an element with a density or interaction attribute (every DataGrid, every ThemeZone) re-declares only the component tokens that depend on density or interaction (512 declarations, was 5,737). Theme-dependent tokens re-resolve on theme elements (`[data-plx-theme]`, `[data-plx-mode]`), and the rest are computed once on `:root`. Style recalculation on pages with grids is much lighter. No token name or value changes (ADR 0050).
@@ -34,6 +47,7 @@ This release carries the fixes planned as 1.6.2 (the chart category labels and t
 - **plenix-site-icons:** without `--out` it dropped the site name and failed with its usage text. The file now goes in the current folder, as documented.
 - **Charts:** the labels on a category axis (names, such as the members on a BarChart) are drawn in the text font, not the data font. Value and date axes keep the data font (D-0164).
 - ActionBar no longer uses a `:has()` on `:root`, which restyled the whole page on every DOM change; a sticky bar now marks the page with a class instead (#1235).
+- **Build:** `platform/dist/plenix-icons-plenix.esm.js`, a build output, is no longer committed (it is ignored like its classic twin).
 
 ### Known issue
 - Arabic pages show two strings in English until the owner approves their Arabic words (D-0012): the compact Timeline's "Upcoming" tag (`timeline.tagUpcoming`, #1171) and LoadingState's "This is taking longer than usual." (`loading.slow`, #1203). Each ships in the next patch after his answer (D-0170).
