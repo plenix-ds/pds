@@ -40,15 +40,15 @@
   - the value at the inline end: `value` in the data font, sized down from the hero metric, with `unit` as a small label after it;
   - an empty or hidden value shows the existing empty treatment (`–`, or the app's `value="Hidden"` in the muted text);
   - RTL mirrors through logical properties.
-- **Classes:** `plx-metric-card--person-tile` on the root, and the parts `__person-row`, `__person-text` and `__person-value` (the BEM names; G2 may rename them in the design, before the build).
-- **Comp tokens:** `metric-card-person-tile-*` (the photo size, the gaps, the value size, the unit size), comp -> sys over existing refs, to G2's values. The value's font is the data role (`type-roles.json`: data, ADR 0055).
+- **Classes:** `plx-metric-card--person-tile` on the root, and the parts `plx-metric-card__person-*` (row, text, name, role, divider, value, figure, number, unit, target, status, progress, loading, tip; as built in #1258).
+- **Comp tokens:** `metric-card-person-tile-*` (padding, divider gap, name, role, value and unit type, progress gap), comp -> sys, to G2's values. `metric-card-person-tile-value-font-family` -> `font-data` is a data role (`type-roles.json`, ADR 0055).
 - **Other types with `layout="tile"`:** unchanged.
 - **Without `layout`:** the person card is unchanged in 1.x.
 
 ### WidgetGrid
 
 - **`itemSize?: "md" | "sm"`**, default `"md"` (today's 280px minimum, unchanged).
-  - `"sm"`: a smaller minimum column width (new comp token `widget-grid-item-min-width-sm`, over an existing `plx-ref.size-*` step G2 picks, about 176–200px), capped at 6 columns, so 5–6 fit from 1366px to 1920px.
+  - `"sm"`: a smaller minimum column width, capped at 6 columns, so 5–6 fit from 1366px to 1920px. The comp token `widget-grid-item-min-width-sm` reads the new sys role `size-widget-min-sm` -> `{plx-ref.size-50u}` (200px, G2). A comp token never reads a ref directly (check 6).
   - `columns={2|3|4}` still wins when it is set.
 - **Class:** `plx-widget-grid--item-sm`.
 
