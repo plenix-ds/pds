@@ -1,0 +1,9 @@
+id: D-0147
+date: 2026-11-10
+area: design
+decided_by: agent (pds1-product-lead) on the owner's request (chat, 2026-11-10, "in the pill for female, the border here is strong, use a softer dark pink"), owner may switch
+decision: 'The soft female (pink) DataPill border becomes a softer dark pink made from the existing pinks: a role that mixes pink-300 toward pink-700 with the existing color-mix amount tokens (the D-0116 pattern), for that border only, in light and dark; no new color ref (#1155). G2 picks the mix amount.'
+why: 'Pink has no shade between 300 and 700, so the border is the bright pink-300 while the text is dark rose; a mix of existing shades softens it without a new color (DESIGN.md: no new colors).'
+options: ['mix existing pinks, no new ref (chosen)', 'a new pink-400 ref (a new color, owner approval)']
+status: active
+check: 'a computed-style test on #1155 (the soft pink pill border equals the new role, light and dark); G2 before and after screenshots on the build PR'
