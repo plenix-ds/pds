@@ -51,6 +51,8 @@ const isNum = (v: any) => v !== null && v !== undefined && isFinite(Number(v));
 export type ComboSeries = { id: string; label: string; values: Array<number | null>; /** a data-viz step */ color?: string };
 /** @public */
 export type ComboChartProps = {
+  /** how the data table shows: a Dialog (default) or inline under the chart (ADR 0054) */
+  dataView?: 'dialog' | 'inline';
   title: string;
   description?: string;
   hideCaption?: boolean;
@@ -72,7 +74,7 @@ export type ComboChartProps = {
   strings?: Record<string, string>;
   className?: string;
 };
-export function ComboChart({ title, description, hideCaption, size, categories = [], bars = [], lines = [], axis = 'shared', barLabel, lineLabel, categoryLabel,
+export function ComboChart({ title, description, dataView, hideCaption, size, categories = [], bars = [], lines = [], axis = 'shared', barLabel, lineLabel, categoryLabel,
   formatBar, formatLine, showPoints = true, legend, legendPosition, tooltip = true, margin, strings, className }: ComboChartProps) {
   const t: any = useStrings('chart.comboChart', strings);
   const dual = axis === 'dual';
@@ -147,7 +149,7 @@ export function ComboChart({ title, description, hideCaption, size, categories =
   };
 
   return (
-    <ChartFrame title={title} description={description} hideCaption={hideCaption} size={size} margin={NO_MARGIN} legend={key} legendPosition={legendPosition}
+    <ChartFrame title={title} dataView={dataView} description={description} hideCaption={hideCaption} size={size} margin={NO_MARGIN} legend={key} legendPosition={legendPosition}
       table={table} strings={strings} className={cx('plx-combo-chart', dual && 'plx-combo-chart--dual', className)}>
       {draw}
     </ChartFrame>

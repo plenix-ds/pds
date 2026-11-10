@@ -1,0 +1,9 @@
+id: D-0163
+date: 2026-11-10
+area: design
+decided_by: design-director (reading of the owner's "equal-height cards, footers aligned at the bottom", CTM#323, via CTM3 - PM, #1229)
+decision: 'In a WidgetGrid row every widget is as tall as the tallest; the Panel body grows so its footer, and a chart body''s "Show the data" button, sit on the card''s bottom edge; the plot keeps its size height; a collapsed Panel keeps its own height. "Show the data" is a ghost sm Button (table_view) that opens a md Dialog titled with the chart title, holding the Table (docs/pds1/slices/1229/design.md).'
+options: ['A: Panel footer and the chart''s button both at the bottom; collapsed panels not stretched (chosen)', 'B: only the Panel footer at the bottom, the button under its chart; collapsed panels stretched']
+why: 'The owner asked for aligned footers across a row; a chart''s data button is its card''s footer in a dashboard card, and a closed card padded to the row height reads as broken.'
+status: active
+check: 'planned:tests on 1229 (equal heights, equal footer and button bottoms, plot height unchanged, collapsed panel height, Dialog opens and focus returns)'

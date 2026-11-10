@@ -1,0 +1,9 @@
+id: D-0164
+date: 2026-11-10
+area: design
+decided_by: owner (chat, 2026-11-10, via CTM3 - PM, "if this is not going to work consistently, why have it?"; "the CDN has to be updated for this")
+decision: 'One data-font rule in every Plenix part: Reddit Mono for case numbers, IDs, dates, times, amounts and counts; DM Sans for names and words, never the data font (chart category axes, legends and names included). Enforced by a build check (lint-type-roles, D-0006''s planned check). Done means a released CDN version with latest.json bumped (#1232).'
+why: 'The owner saw member names in the data font on a BarChart; D-0006 set the rule but its check was never built.'
+options: ['one rule plus a build check (owner)']
+status: active
+check: 'planned:lint-type-roles (fails when a name or word role uses the data font or a data role the text font), on #1232'

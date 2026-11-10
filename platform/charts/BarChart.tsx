@@ -82,6 +82,8 @@ export { binValues } from './chart-helpers.ts';
 export type BarSeries = { id: string; label: string; values: Array<number | null>; /** a data-viz step */ color?: string };
 /** @public */
 export type BarChartProps = {
+  /** how the data table shows: a Dialog (default) or inline under the chart (ADR 0054) */
+  dataView?: 'dialog' | 'inline';
   title: string;
   description?: string;
   hideCaption?: boolean;
@@ -103,7 +105,7 @@ export type BarChartProps = {
   strings?: Record<string, string>;
   className?: string;
 };
-export function BarChart({ title, description, hideCaption, size, categories = NONE, series = NONE, orientation = 'horizontal', layout = 'grouped',
+export function BarChart({ title, description, dataView, hideCaption, size, categories = NONE, series = NONE, orientation = 'horizontal', layout = 'grouped',
   histogram, valueLabel, categoryLabel, format, showValues = false, legend, legendPosition, tooltip = true, margin, strings, className }: BarChartProps) {
   const t: any = useStrings('chart.barChart', strings);
   const o = orientation === 'vertical' ? 'vertical' : 'horizontal';
@@ -280,7 +282,7 @@ export function BarChart({ title, description, hideCaption, size, categories = N
   };
 
   return (
-    <ChartFrame title={title} description={description} hideCaption={hideCaption} size={size} margin={NO_MARGIN} legend={key} legendPosition={legendPosition}
+    <ChartFrame title={title} dataView={dataView} description={description} hideCaption={hideCaption} size={size} margin={NO_MARGIN} legend={key} legendPosition={legendPosition}
       table={table} interaction={ia} strings={strings} className={cx('plx-bar-chart', 'plx-bar-chart--' + o, 'plx-bar-chart--' + mode, className)}>
       {draw}
     </ChartFrame>

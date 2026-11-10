@@ -24,6 +24,9 @@
      Panel.toggleOn: "button" (default) | "header": with "header" a click anywhere on the header toggles, as the button does; actions, interactive
        children and a click that ends a text selection do not; the button stays the only focusable control (ADR 0041)
      Panel.children: the body
+     Panel.fill: true makes the panel take the full height of its parent, the body grows and the footer stays at the bottom;
+       default: true when the panel is a WidgetGrid item's own content (cards in a row end at one height), otherwise false;
+       a collapsed panel never fills (ADR 0054)
      Panel.className: more classes on the <section>
      Panel.surface, Panel.elevation: as Card's
      Panel.strings: the words it announces, for other languages: { collapse: "Collapse {title}", expand: "Expand {title}",
@@ -107,6 +110,7 @@
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { useUid } from '../../utils/layer.ts';
+import { PanelFillContext } from '../../utils/panelFill.ts';
 import { Icon, asIcon as iconElement } from '../Icon/Icon.tsx';
 import type { IconValue } from '../Icon/Icon.tsx';
 import { Badge } from '../Badge/Badge.tsx';
@@ -123,6 +127,8 @@ const H = ({ level, ...props }: { level?: number | null } & React.HTMLAttributes
 export type CardSurface = 'flat' | 'glow' | 'inset';
 export type CardElevation = 'outline' | 'halo' | 'lifted';
 export type PanelProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & {
+  /** take the parent's full height; default on inside a WidgetGrid item */
+  fill?: boolean;
   /** an icon before the title */
   icon?: IconValue | React.ReactNode;
   title?: React.ReactNode;
@@ -143,11 +149,13 @@ export type PanelProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'> & {
   onToggle?: (expanded: boolean) => void;
   strings?: Catalog | null;
 };
-export function Panel({ icon, title, description, actions, footer, surface = 'flat', elevation = 'outline', flush = false, headingLevel = 2, collapsible = false, toggleOn = 'button', defaultExpanded = true, expanded, onToggle, strings, className, children, ...rest }: PanelProps) {
+export function Panel({ icon, title, description, actions, footer, surface = 'flat', elevation = 'outline', flush = false, fill, headingLevel = 2, collapsible = false, toggleOn = 'button', defaultExpanded = true, expanded, onToggle, strings, className, children, ...rest }: PanelProps) {
   const t = useStrings('card.panel', strings) as { collapse: string; expand: string; section: string };
   const id = useUid('plx-panel');
   const [own, setOwn] = React.useState(defaultExpanded);
   const open = !collapsible || (expanded === undefined ? own : expanded);
+  const inGrid = React.useContext(PanelFillContext);
+  const filled = (fill === undefined ? inGrid : fill) && open;
   const toggle = () => { if (expanded === undefined) setOwn(!open); if (onToggle) onToggle(!open); };
   const byHeader = collapsible && toggleOn === 'header';
   // toggleOn="header": a click on the header toggles unless it is on a control (the button toggles itself) or ends a text selection
@@ -162,7 +170,7 @@ export function Panel({ icon, title, description, actions, footer, surface = 'fl
     toggle();
   };
   return (
-    <section aria-labelledby={title ? id : undefined} className={cx('plx-panel', byHeader && 'plx-panel--toggle-header', surface !== 'flat' && 'plx-panel--' + surface, elevation !== 'outline' && 'plx-panel--' + elevation, collapsible && !open && 'is-collapsed', className)} {...rest}>
+    <section aria-labelledby={title ? id : undefined} className={cx('plx-panel', byHeader && 'plx-panel--toggle-header', surface !== 'flat' && 'plx-panel--' + surface, elevation !== 'outline' && 'plx-panel--' + elevation, collapsible && !open && 'is-collapsed', filled && 'plx-panel--fill', className)} {...rest}>
       {title || actions || collapsible ? (
         <div className={cx('plx-panel__header', byHeader && 'plx-panel__header--toggle')} onClick={byHeader ? headerClick : undefined}
           onPointerOver={byHeader ? (e) => setHot(onControl(e) ? '' : 'hover') : undefined} onPointerLeave={byHeader ? () => setHot('') : undefined}
@@ -179,7 +187,7 @@ export function Panel({ icon, title, description, actions, footer, surface = 'fl
           ) : null}
         </div>
       ) : null}
-      <div id={id + '-body'} hidden={!open} className={cx('plx-panel__body', flush && 'plx-panel__body--flush')}>{children}</div>
+      <div id={id + '-body'} hidden={!open} className={cx('plx-panel__body', flush && 'plx-panel__body--flush', filled && 'plx-panel__body--fill')}><PanelFillContext.Provider value={false}>{children}</PanelFillContext.Provider></div>
       {footer && open ? <div className="plx-panel__footer">{footer}</div> : null}
     </section>
   );

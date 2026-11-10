@@ -38,3 +38,5 @@
 .plx-chart__tick-label--x{dominant-baseline:hanging;text-anchor:middle;}
 /* the data grid under the chart */
 .plx-chart__data{min-inline-size:0;}
+/* "Show the data" opens a Dialog: the button sits at the bottom of a stretched card (ADR 0054) */
+.plx-chart__data-button{align-self:flex-start;margin-block-start:auto;}

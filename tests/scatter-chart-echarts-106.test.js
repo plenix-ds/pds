@@ -45,9 +45,10 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
         await mount(props);
         // Show the data: every point is a row
         await page.evaluate(() => { const b = [...document.querySelectorAll('.plx-scatter summary, .plx-scatter button')].find((x) => /data/i.test(x.textContent)); if (b) b.click(); }); await wait(500);
-        const rows = await page.evaluate(() => document.querySelectorAll('.plx-scatter [role=row][data-plx-record], .plx-scatter table tbody tr').length);
+        const rows = await page.evaluate(() => document.querySelectorAll('.plx-scatter [role=row][data-plx-record], .plx-scatter table tbody tr, .plx-dialog [role=row][data-plx-record]').length);
         assert.equal(rows, total, T + name + ': "Show the data" lists every point (' + rows + ')');
-        await page.evaluate(() => { const b = [...document.querySelectorAll('.plx-scatter summary, .plx-scatter button')].find((x) => /data/i.test(x.textContent)); if (b) b.click(); }); await wait(300);
+        await page.keyboard.press('Escape'); await wait(300);
+        // the Dialog is closed above (Escape)
         // keyboard: the first point, the next, the last
         await page.focus('.plx-scatter [role=group][tabindex="0"]'); await page.keyboard.press('Home'); await wait(300);
         const seen = [];

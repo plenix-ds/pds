@@ -18,6 +18,7 @@
        alert color; the range the value is in shows as a status badge with its label
      size: "sm" (160px wide) | "md" (default, 200px) | "lg" (240px)
      hideCaption: keeps the title and description for assistive technology only (default false)
+     dataView: "dialog" (default: "Show the data" opens a Dialog with the table) | "inline" (a Details line in the card)
      strings: the words it shows, for other languages: { showData: "Show the data", table: "{title}: data",
        measure: "Measure", value: "Value", min: "Minimum", max: "Maximum", ok: "" (a badge for the range under every
        threshold; empty: none) }
@@ -35,8 +36,8 @@ import React from 'react';
 import { cx } from '../utils/cx.ts';
 import { formatNumber } from '../utils/format.ts';
 import { dataWhenText } from '../utils/dataText.tsx';
-import { Details } from '../components/Details/Details.tsx';
-import { Table } from '../components/Table/Table.tsx';
+import { ChartData } from './ChartData.tsx';
+import type { ChartDataView } from './ChartData.tsx';
 import { Badge } from '../components/Badge/Badge.tsx';
 import { seriesColor } from './scales.ts';
 import { EChartsHost } from './echarts/EChartsPlot.tsx';
@@ -87,6 +88,8 @@ export type GaugeThreshold = { value: number; level: 'warning' | 'critical'; lab
 /** @public */
 export type GaugeProps = {
   title: string;
+  /** how the data table shows: a Dialog (default) or inline under the chart (ADR 0054) */
+  dataView?: 'dialog' | 'inline';
   description?: string;
   value: number;
   min?: number;
@@ -99,7 +102,7 @@ export type GaugeProps = {
   strings?: Record<string, string>;
   className?: string;
 };
-export function Gauge({ title, description, value, min = 0, max = 100, format, label, thresholds = [], size = 'md', hideCaption = false, strings, className }: GaugeProps) {
+export function Gauge({ title, description, value, min = 0, max = 100, format, label, thresholds = [], size = 'md', hideCaption = false, dataView = 'dialog', strings, className }: GaugeProps) {
   const t: any = useStrings('chart.gauge', strings);
   const uid = 'plx-gauge' + React.useId().replace(/[^a-zA-Z0-9]/g, '');
   const fmt = typeof format === 'function' ? format : (v: any) => formatNumber(v);
@@ -137,9 +140,7 @@ export function Gauge({ title, description, value, min = 0, max = 100, format, l
         </div>
         {status ? <Badge className="plx-gauge__status" tone={status.tone as any} icon={status.icon}>{status.label}</Badge> : null}
       </div>
-      <Details summary={t.showData} variant="inline" className="plx-chart__data">
-        <Table label={t.table.replace('{title}', title || '')} columns={table.columns} data={table.data} />
-      </Details>
+      <ChartData title={title} summary={t.showData} tableLabel={t.table.replace('{title}', title || '')} columns={table.columns} data={table.data} dataView={dataView} />
     </figure>
   );
 }

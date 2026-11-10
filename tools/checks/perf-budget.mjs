@@ -1,12 +1,15 @@
 // Performance budgets for the built CDN files (#1188). Read-only.
 //   node tools/checks/perf-budget.mjs [--dir release/cdn/<version>]   (default: release/cdn/<package.json version>)
+//   node tools/checks/perf-budget.mjs --traces <file>   checks a trace written by node tests/perf/run.mjs --json <file>
+//                                                        against traces in perf-budget.json (#1213); reads no build
 // Fails (PERF_BUDGET_FAIL, exit 1) when:
 //   - one CSS scope that reaches elements other than :root declares more custom properties than scopeTokens.limit. Every
 //     element such a selector matches recomputes them for its whole subtree, so a big scope on [data-plx-density] makes
 //     style recalculation slow on every grid (#1188);
 //   - the density scope (a selector listing [data-plx-density] or [data-plx-interaction] alone, which every DataGrid
 //     matches) declares more than densityTokens.limit (#1205);
-//   - plenix.js compressed with brotli quality 5 (what the web host sends) is over jsBrotli.limit.
+//   - plenix.js compressed with brotli quality 5 (what the web host sends) is over jsBrotli.limit;
+//   - with --traces: a reference page's LCP or INP is over traces.lcpMs or traces.inpMs, or a page is missing (#1213).
 // It prints, never limits: the size of plenix.css raw, gzip and brotli (owner, plenix-platform#460), and the total count
 // of custom-property declarations. Limits live in tools/checks/perf-budget.json.
 import fs from 'node:fs';
@@ -77,7 +80,32 @@ export function check({ css, js, budget }) {
   return { fails, notes };
 }
 
+// Speed on the reference pages (owner rule 7, D-0160): the harness's JSON (tests/perf/run.mjs --json) against the
+// traces budget. A page with no numbers fails: a trace that measured nothing never passes.
+export function checkTraces(result, traces) {
+  const fails = [], notes = [];
+  for (const page of traces.pages) {
+    const r = result && result.pages && result.pages[page];
+    if (!r || !Number.isFinite(r.lcp) || !Number.isFinite(r.inp)) { fails.push(`${page}: no LCP or INP in the trace`); continue; }
+    notes.push(`${page}: LCP ${Math.round(r.lcp)} ms (limit ${traces.lcpMs}), INP ${Math.round(r.inp)} ms (limit ${traces.inpMs})`);
+    if (r.lcp > traces.lcpMs) fails.push(`${page}: LCP ${Math.round(r.lcp)} ms is over ${traces.lcpMs} ms`);
+    if (r.inp > traces.inpMs) fails.push(`${page}: INP ${Math.round(r.inp)} ms is over ${traces.inpMs} ms`);
+  }
+  return { fails, notes };
+}
+
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  const t = process.argv.indexOf('--traces');
+  if (t > 0) {
+    const budget = JSON.parse(fs.readFileSync(path.join(ROOT, 'tools/checks/perf-budget.json'), 'utf8'));
+    const file = process.argv[t + 1];
+    if (!file || !fs.existsSync(file)) { console.log(`PERF_BUDGET_FAIL: no trace file ${file || ''}: run node tests/perf/run.mjs --json <file>`); process.exit(1); }
+    const { fails, notes } = checkTraces(JSON.parse(fs.readFileSync(file, 'utf8')), budget.traces);
+    notes.forEach((n) => console.log('  ' + n));
+    if (fails.length) { fails.forEach((f) => console.log('PERF_BUDGET_FAIL: ' + f)); process.exit(1); }
+    console.log('PERF_BUDGET_OK (traces)');
+    process.exit(0);
+  }
   const i = process.argv.indexOf('--dir');
   const version = require(path.join(ROOT, 'package.json')).version;
   const dir = i > 0 ? path.resolve(process.argv[i + 1]) : path.join(ROOT, 'release', 'cdn', version);

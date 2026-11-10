@@ -6,7 +6,7 @@
      header, sideNav, footer: AppShell slots; mainId: unique skip-link target when embedded.
      rows, columns: DataGrid data; items: feature cards; onOpen: card action; empty: custom empty state.
      ListingPage (the canonical full-room list, issue 522): label: the grid's name (default: the title); toolbar: a
-       CommandBar above the grid; loading: true while the rows first load, a centred spinner with a label in the grid's room (no Skeleton); grid: more DataGrid props (selected, onRowClick, rowMenu, selectable, …); detail: the
+       CommandBar above the grid; loading: true while the rows first load (onLoadingCancel: a Cancel button from about 10s), a centred spinner with a label in the grid's room (no Skeleton); grid: more DataGrid props (selected, onRowClick, rowMenu, selectable, …); detail: the
        chosen record, in a SidePanel beside the list (detailTitle; onDetailClose runs when it is closed). The grid fills
        the room left below the toolbar and scrolls inside (mode "fill", virtual rows); no page controls unless grid.mode
        asks for them (docs/integration/data-grid.md, "The page shape").
@@ -85,6 +85,8 @@ export type ListingPageProps<R = Record<string, unknown>> = Omit<React.HTMLAttri
   empty?: React.ReactNode;
   /** the first load is under way: the grid shows the region loading state */
   loading?: boolean;
+  /** from the long wait of the first load a Cancel button calls this (ADR 0051) */
+  onLoadingCancel?: () => void;
   strings?: Record<string, string>;
   children?: React.ReactNode;
   label?: unknown;
@@ -94,10 +96,10 @@ export type ListingPageProps<R = Record<string, unknown>> = Omit<React.HTMLAttri
   detailTitle?: React.ReactNode;
   onDetailClose?: () => void;
 };
-export function ListingPage<R = Record<string, unknown>>({ rows = [], columns = [], empty, loading, strings, children, label, toolbar, grid, detail, detailTitle, onDetailClose, ...rest }: ListingPageProps<R>) {
+export function ListingPage<R = Record<string, unknown>>({ rows = [], columns = [], empty, loading, onLoadingCancel, strings, children, label, toolbar, grid, detail, detailTitle, onDetailClose, ...rest }: ListingPageProps<R>) {
   const id = React.useId();
   const t = useWords(strings);
-  const list = rows.length || loading ? <DataGrid<R> label={label || rest.title || t.pane} data={rows} columns={columns} loading={loading} {...grid} /> : <NoRecords empty={empty} strings={strings} />;
+  const list = rows.length || loading ? <DataGrid<R> label={label || rest.title || t.pane} data={rows} columns={columns} loading={loading} onLoadingCancel={onLoadingCancel} {...grid} /> : <NoRecords empty={empty} strings={strings} />;
   if (!detail) return <Frame {...rest}>{children}{toolbar}{list}</Frame>;
   return <AppShell page={rest.page || 'workspace'} header={rest.header} sideNav={rest.sideNav} footer={rest.footer} mainId={rest.mainId || 'plx-template-' + id}>
     <PagePanes>

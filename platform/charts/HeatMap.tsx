@@ -76,7 +76,7 @@ function calendarGrid(data: any) {
 /** @public a day of a calendar heat map */
 export type HeatMapDay = { date: string | number | Date; value: number | null };
 /** @public the prop type (ADR 0011) */
-export type HeatMapProps = Pick<ChartFrameProps, 'title' | 'description' | 'size' | 'margin' | 'className'> & {
+export type HeatMapProps = Pick<ChartFrameProps, 'title' | 'dataView' | 'description' | 'size' | 'margin' | 'className'> & {
   variant?: 'matrix' | 'calendar';
   /** the matrix's row and column names */
   rows?: string[];
@@ -97,7 +97,7 @@ export type HeatMapProps = Pick<ChartFrameProps, 'title' | 'description' | 'size
   frameStrings?: ChartFrameProps['strings'];
   interactionStrings?: Record<string, string>;
 };
-export function HeatMap({ title, description, variant = 'matrix', rows = [], columns = [], values = [], data, valueLabel, scale = 'sequential', min, max,
+export function HeatMap({ title, description, dataView, variant = 'matrix', rows = [], columns = [], values = [], data, valueLabel, scale = 'sequential', min, max,
   format, size, margin, interactive = true, onSelect, strings, frameStrings, interactionStrings, className }: HeatMapProps) {
   const t: any = useStrings('chart.heatMap', strings);
   const calendar = variant === 'calendar';
@@ -225,7 +225,7 @@ export function HeatMap({ title, description, variant = 'matrix', rows = [], col
   };
 
   return (
-    <ChartFrame title={title} description={description} size={size || (calendar ? 'sm' : 'md')} margin={NO_MARGIN} table={table} legend={legend}
+    <ChartFrame title={title} dataView={dataView} description={description} size={size || (calendar ? 'sm' : 'md')} margin={NO_MARGIN} table={table} legend={legend}
       interaction={interactive ? ia : undefined} strings={frameStrings}
       className={cx('plx-heat-map', 'plx-heat-map--' + (calendar ? 'calendar' : 'matrix'), className)}>
       {draw}

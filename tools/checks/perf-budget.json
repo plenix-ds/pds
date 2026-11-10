@@ -12,5 +12,15 @@
     "file": "plenix.js",
     "limit": 570000,
     "why": "plenix.js on the wire, brotli quality 5 (the web host's setting, deploy/web/plenix-compression.conf). 1.6.1: 552,947 B; nginx compresses in chunks, so the wire shows about 3% more (571,727 B live on 2026-11-10)."
+  },
+  "traces": {
+    "lcpMs": 2500,
+    "inpMs": 200,
+    "pages": [
+      "grid",
+      "record",
+      "form"
+    ],
+    "why": "Owner rule 7 (D-0160, #1201): main content within 2.5 s (LCP) and a click answered within 0.2 s (INP) on each reference page (tests/perf/pages.mjs: a DataGrid with 50 rows, a record page, a form), median of the harness's loads on the PR's own build. 1.6.1 baseline (docs/pds1/slices/1201/evidence/baseline-1.6.1.json): grid 248/24, record 72/16, form 76/0 ms. A page missing from the trace fails."
   }
 }

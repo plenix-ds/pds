@@ -68,6 +68,8 @@ const polygonsOf = (g: any) => (!g ? [] : g.type === 'Polygon' ? [g.coordinates]
 export type GeoFeature = { type?: 'Feature'; id?: string | number; properties?: Record<string, unknown>; geometry: { type: string; coordinates: unknown } };
 /** @public */
 export type GeoMapProps = {
+  /** how the data table shows: a Dialog (default) or inline under the chart (ADR 0054) */
+  dataView?: 'dialog' | 'inline';
   title: string;
   description?: string;
   /** a GeoJSON FeatureCollection, or an array of features */
@@ -86,7 +88,7 @@ export type GeoMapProps = {
   strings?: Record<string, string>;
   className?: string;
 };
-export function GeoMap({ title, description, features, idKey = 'id', nameKey = 'name', values, scale = 'sequential', markers = [], projection = 'mercator',
+export function GeoMap({ title, description, dataView, features, idKey = 'id', nameKey = 'name', values, scale = 'sequential', markers = [], projection = 'mercator',
   format, valueTitle, zoom = true, size = 'lg', strings, className }: GeoMapProps) {
   const t: any = useStrings('chart.geoMap', strings);
   const uid = 'plx-geo-map' + React.useId().replace(/[^a-zA-Z0-9]/g, '');
@@ -132,7 +134,7 @@ export function GeoMap({ title, description, features, idKey = 'id', nameKey = '
           </ButtonGroup>
         </div>
       ) : null}
-      <ChartFrame interaction={keys.interaction} title={title} description={description} size={size} table={table} legend={legend} margin={{ top: 0, end: 0, bottom: 0, start: 0 }} className={cx('plx-geo-map', className)}>
+      <ChartFrame interaction={keys.interaction} title={title} dataView={dataView} description={description} size={size} table={table} legend={legend} margin={{ top: 0, end: 0, bottom: 0, start: 0 }} className={cx('plx-geo-map', className)}>
         {({ inner }) => {
           // fit every shape and place into the plot, centered
           let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;

@@ -104,7 +104,7 @@ export type SankeyNode = { id: string | number; label: string; color?: string };
 /** @public a flow between two nodes by id (a value above zero; a flow back to an earlier column is not drawn) */
 export type SankeyLink = { source: string | number; target: string | number; value: number };
 /** @public the prop type (ADR 0011) */
-export type SankeyDiagramProps = Pick<ChartFrameProps, 'title' | 'description' | 'hideCaption' | 'size' | 'margin' | 'legend' | 'legendPosition' | 'className'> & {
+export type SankeyDiagramProps = Pick<ChartFrameProps, 'title' | 'dataView' | 'description' | 'hideCaption' | 'size' | 'margin' | 'legend' | 'legendPosition' | 'className'> & {
   nodes?: SankeyNode[];
   links?: SankeyLink[];
   format?(value: number): string;
@@ -112,7 +112,7 @@ export type SankeyDiagramProps = Pick<ChartFrameProps, 'title' | 'description' |
   tooltip?: boolean;
   strings?: Record<string, string>;
 };
-export function SankeyDiagram({ title, description, hideCaption, size = 'lg', nodes = [], links = [], format, showValues = true, tooltip = true, legend, legendPosition,
+export function SankeyDiagram({ title, description, dataView, hideCaption, size = 'lg', nodes = [], links = [], format, showValues = true, tooltip = true, legend, legendPosition,
   margin, strings, className }: SankeyDiagramProps) {
   const t: any = useStrings('chart.sankeyDiagram', strings);
   const fmt = (v: any) => (typeof format === 'function' ? format(v) : formatNumber(v));
@@ -124,7 +124,7 @@ export function SankeyDiagram({ title, description, hideCaption, size = 'lg', no
     data: links.filter((l) => nameOf[l.source] !== undefined && nameOf[l.target] !== undefined).map((l, i) => ({ id: i + 1, source: nameOf[l.source], target: nameOf[l.target], value: fmt(finite(l.value)) }))
   };
   return (
-    <ChartFrame title={title} description={description} hideCaption={hideCaption} size={size} margin={Object.assign({}, PLOT_MARGIN, margin)} legend={legend}
+    <ChartFrame title={title} dataView={dataView} description={description} hideCaption={hideCaption} size={size} margin={Object.assign({}, PLOT_MARGIN, margin)} legend={legend}
       legendPosition={legendPosition} table={table} strings={strings} className={cx('plx-sankey-diagram', className)}>
       {({ inner }) => {
         const lay = sankeyLayout(nodes, links, { width: inner.width, height: inner.height });
