@@ -1,0 +1,9 @@
+id: D-0167
+date: 2026-11-10
+area: design
+decided_by: design-director (reading of the owner's "an adjustment to our cards", D-0166, #1240)
+decision: 'The compact person card is MetricCard type="person" layout="tile" (opt-in in 1.x, the default in 2.0.0, ADR 0056): Avatar xl (48px) beside the name (2 lines) and role, an inset divider, and the value row at the inline end (number font-data 20px 700, unit text-eyebrow content-muted); a word value shows in the unit style; one size, no density; WidgetGrid itemSize sm columns are at least size-50u (200px) (docs/pds1/slices/1240/design.md).'
+options: ['A: a word value in the unit style (chosen)', 'B: a word value at the value size']
+why: 'Opt-in until 2.0.0 is G3''s semver ruling (a reflowing default is MAJOR, D-0107); a word such as "Hidden" is a status, and the data font never sets words (D-0164).'
+status: active
+check: 'planned:tests on 1240 (48px avatar beside the name, card height <= 124px, number Reddit Mono and unit DM Sans, value row at the inline end in LTR and RTL, name clamp, empty and word values)'
