@@ -81,7 +81,7 @@ An app may fetch data it expects the person to need, only inside these limits:
 - Memory only. Never write prefetched data to local storage, session storage, IndexedDB or a cache the browser keeps across sessions.
 - Permitted data only: prefetch what the person may already open. Never fetch to find out whether they may.
 - Nothing sensitive: no personal, health, financial or confidential records.
-- Plenix stores no app data, so the cache is the app's. For code, `esm/manifest.json` (ADR 0052, not released yet) lists each screen's chunks for `modulepreload` at idle.
+- Plenix stores no app data, so the cache is the app's. For code, `esm/manifest.json` (released in 1.7.0) lists each screen's chunks for `modulepreload` at idle.
 - Clear everything on sign-out and when the person or their role changes.
 
 ## Checking it
