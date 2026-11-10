@@ -9,7 +9,9 @@
 //   - the density scope (a selector listing [data-plx-density] or [data-plx-interaction] alone, which every DataGrid
 //     matches) declares more than densityTokens.limit (#1205);
 //   - plenix.js compressed with brotli quality 5 (what the web host sends) is over jsBrotli.limit;
-//   - with --traces: a reference page's LCP or INP is over traces.lcpMs or traces.inpMs, or a page is missing (#1213).
+//   - with --traces: a reference page's LCP or INP is over traces.lcpMs or traces.inpMs, or a page is missing (#1213);
+//   - an entry esm/<Export>.js with what it imports (esm/manifest.json), brotli 5, is over its bundles limit; a screen's
+//     parts together are over theirs; plenix-loader.js is over bundles.loaderLimit; or esm/manifest.json is missing (#1208).
 // It prints, never limits: the size of plenix.css raw, gzip and brotli (owner, plenix-platform#460), and the total count
 // of custom-property declarations. Limits live in tools/checks/perf-budget.json.
 import fs from 'node:fs';
@@ -80,6 +82,47 @@ export function check({ css, js, budget }) {
   return { fails, notes };
 }
 
+// Code per screen (ADR 0052, #1208): sizes[name] is an entry's brotli 5 bytes with its imports; screens[name] the bytes of
+// a screen's parts together. Prints the largest entries: the on-demand candidates.
+export function checkBundles({ sizes, screens, loader }, bundles) {
+  const fails = [], notes = [];
+  for (const [name, size] of Object.entries(sizes)) {
+    const limit = bundles.limits[name] ?? bundles.entryLimit;
+    if (size > limit) fails.push(`esm/${name}.js loads ${size} B with brotli 5 (limit ${limit})`);
+    else if (bundles.limits[name] !== undefined && size < Math.min(limit * 0.9, bundles.entryLimit)) notes.push(`esm/${name}.js is ${size} B, under the default ${bundles.entryLimit}: drop its own limit`);
+  }
+  for (const name of Object.keys(bundles.limits)) if (!(name in sizes)) fails.push(`bundles.limits names ${name}, which is no entry`);
+  for (const [name, s] of Object.entries(bundles.screens || {})) {
+    const size = screens[name];
+    if (size === undefined) { fails.push(`screen ${name}: a part is no entry (${s.parts.join(', ')})`); continue; }
+    notes.push(`screen ${name} (${s.parts.join(', ')}): ${size} B brotli 5 (limit ${s.limit})`);
+    if (size > s.limit) fails.push(`screen ${name} loads ${size} B with brotli 5 (limit ${s.limit})`);
+  }
+  if (loader > bundles.loaderLimit) fails.push(`plenix-loader.js is ${loader} B (limit ${bundles.loaderLimit})`);
+  const top = Object.entries(sizes).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([n, b]) => `${n} ${b}`).join(', ');
+  notes.push(`${Object.keys(sizes).length} entries; largest (on-demand candidates): ${top}; plenix-loader.js ${loader} B`);
+  return { fails, notes };
+}
+
+// the sizes checkBundles reads, from a CDN folder; null when it has no esm/manifest.json
+export function measureBundles(dir, bundles) {
+  const m = path.join(dir, 'esm', 'manifest.json');
+  if (!fs.existsSync(m)) return null;
+  const entries = JSON.parse(fs.readFileSync(m, 'utf8')).entries;
+  const cache = new Map();
+  const br = (f) => { if (!cache.has(f)) cache.set(f, brotli5(fs.readFileSync(path.join(dir, 'esm', f)))); return cache.get(f); };
+  const files = (n) => [entries[n].file, ...entries[n].imports];
+  const sizes = {};
+  for (const n of Object.keys(entries)) sizes[n] = files(n).reduce((a, f) => a + br(f), 0);
+  const screens = {};
+  for (const [name, s] of Object.entries(bundles.screens || {})) {
+    if (!s.parts.every((n) => entries[n])) continue;
+    screens[name] = [...new Set(s.parts.flatMap(files))].reduce((a, f) => a + br(f), 0);
+  }
+  const lf = path.join(dir, 'plenix-loader.js');
+  return { sizes, screens, loader: fs.existsSync(lf) ? fs.statSync(lf).size : Infinity };
+}
+
 // Speed on the reference pages (owner rule 7, D-0160): the harness's JSON (tests/perf/run.mjs --json) against the
 // traces budget. A page with no numbers fails: a trace that measured nothing never passes.
 export function checkTraces(result, traces) {
@@ -116,6 +159,11 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     return fs.readFileSync(p);
   };
   const { fails, notes } = check({ css: read('plenix.css').toString('utf8'), js: read(budget.jsBrotli.file), budget });
+  if (budget.bundles) {
+    const measured = measureBundles(dir, budget.bundles);
+    if (!measured) fails.push(`${path.relative(ROOT, path.join(dir, 'esm', 'manifest.json'))} is missing: the entries per export (ADR 0052) are built by node build-packages.js`);
+    else { const b = checkBundles(measured, budget.bundles); fails.push(...b.fails); notes.push(...b.notes); }
+  }
   notes.forEach((n) => console.log('  ' + n));
   if (fails.length) { fails.forEach((f) => console.log('PERF_BUDGET_FAIL: ' + f)); process.exit(1); }
   console.log('PERF_BUDGET_OK');

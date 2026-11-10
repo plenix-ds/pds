@@ -377,7 +377,7 @@ jobs:
       - name: Did anything the package is built from change?
         id: scope
         run: |
-          if git diff --quiet "$(git merge-base "$BASE_SHA" HEAD)" HEAD -- platform packages build-app.js build-usage.js build-packages.js build-exports.js check-bundle.js tools/agent/one-part-sizes.js tools/agent/one-part-vite.mjs tools/checks/perf-budget.mjs tools/checks/perf-budget.json tests/perf tests/lib.js package.json package-lock.json .github/workflows/ci.yml; then
+          if git diff --quiet "$(git merge-base "$BASE_SHA" HEAD)" HEAD -- platform packages build-app.js build-usage.js build-packages.js build-exports.js check-bundle.js tools/agent/one-part-sizes.js tools/agent/one-part-vite.mjs tools/checks/perf-budget.mjs tools/checks/perf-budget.json tools/checks/esm-entries.mjs tools/publish/esm-parts.js tests/esm-loader-1208.test.js tests/perf tests/lib.js package.json package-lock.json .github/workflows/ci.yml; then
             echo "run=no" >> "$GITHUB_OUTPUT"
             echo "package sources, build and measure unchanged: not run for this PR"
           else
@@ -404,6 +404,15 @@ jobs:
       - name: Performance budgets (tools/checks/perf-budget.mjs)
         if: steps.scope.outputs.run == 'yes'
         run: node tools/checks/perf-budget.mjs
+      # code per screen (ADR 0052, #1208): the entries equal the exports, every import in esm/ resolves, and a page with
+      # plenix-loader.js renders a DataGrid from Plenix.load() with less JavaScript than plenix.js. No Chrome is a failure
+      - name: Entries per export and Plenix.load (tools/checks/esm-entries.mjs, tests/esm-loader-1208.test.js)
+        if: steps.scope.outputs.run == 'yes'
+        run: |
+          node tools/checks/esm-entries.mjs
+          CHROME_PATH="$(command -v google-chrome || true)"
+          [ -n "$CHROME_PATH" ] || { echo "::error::no Chrome on the runner: the loader test cannot run"; exit 1; }
+          CHROME_PATH="$CHROME_PATH" node tests/esm-loader-1208.test.js | tee -a "$GITHUB_STEP_SUMMARY"
       # speed on the reference pages (owner rule 7, D-0160, #1213): QA's harness (tests/perf, #1212) traces this PR's own
       # build in headless Chrome; LCP and INP per page must stay within traces in perf-budget.json. No Chrome is a failure
       - name: Speed budgets, LCP and INP on the reference pages (tests/perf/run.mjs)

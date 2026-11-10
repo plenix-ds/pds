@@ -115,6 +115,13 @@ jobs:
       - name: Performance budgets (#1188)
         run: node tools/checks/perf-budget.mjs
 
+      - name: Entries per export, and plenix-loader.js loads a named part in a headless page (ADR 0052, #1208)
+        run: |
+          node tools/checks/esm-entries.mjs
+          CHROME_PATH="$(command -v google-chrome || true)"
+          [ -n "$CHROME_PATH" ] || { echo "::error::no Chrome on the runner: the loader test cannot run"; exit 1; }
+          CHROME_PATH="$CHROME_PATH" node tests/esm-loader-1208.test.js
+
       - name: Vendored engine budget, ECharts at most 230 KB gzipped (past it, split into a shared core plus kind files; #106)
         run: |
           f=platform/vendor/echarts/echarts.min.js
