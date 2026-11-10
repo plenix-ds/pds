@@ -16,6 +16,7 @@
   "plx-comp.calendar-week-number-font-family": "data",
   "plx-comp.chart-annotation-label-font-family": "text",
   "plx-comp.chart-axis-label-font-family": "text",
+  "plx-comp.chart-category-label-font-family": "text",
   "plx-comp.chart-data-label-font-family": "data",
   "plx-comp.chart-legend-label-font-family": "text",
   "plx-comp.chart-legend-value-font-family": "data",

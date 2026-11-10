@@ -2979,6 +2979,15 @@
      "navTitle": "الإعدادات"
     }
    }
+  },
+  {
+   "source": "#1194 (2026-11-10). loading.cancel reuses the approved Cancel = إلغاء (dialog.cancel, #427).",
+   "date": "2026-11-10",
+   "strings": {
+    "loading": {
+     "cancel": "إلغاء"
+    }
+   }
   }
  ]
 }

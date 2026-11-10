@@ -120,7 +120,7 @@ export function MenuBar({ label, size = 'md', strings, className, children, ...r
   return (
     <div ref={bar} role="menubar" aria-label={label || undefined} className={cx('plx-menubar', className)} onKeyDown={onBarKey} {...rest}>
       {menus.slice(0, shown).map((m, i) => (
-        <Menu key={m.key || i} label={String(m.props.label)} className="plx-menubar__menu" open={openAt !== null && openAt.index === i} openStart={openAt !== null && openAt.index === i ? openAt.start : undefined}
+        <Menu key={m.key || i} label={String(m.props.label)} placement="bottom-start" className="plx-menubar__menu" open={openAt !== null && openAt.index === i} openStart={openAt !== null && openAt.index === i ? openAt.start : undefined}
           onOpenChange={change(i)} trigger={button(i, m.props.label)}>
           {m.props.children}
         </Menu>
