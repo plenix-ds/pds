@@ -30,12 +30,14 @@ const esm = async (text) => {
 const SPEC = '../registerIcons.js';
 (async () => {
   const compatText = fs.readFileSync(path.join(ROOT, sites.COMPAT), 'utf8');
-  check('AC-1 the compatibility module is a function of the build', () => {
-    assert.strictEqual(typeof sites.buildCompatModule, 'function', 'tools/icons/site-icons.js has no buildCompatModule');
-    const r = sites.buildCompatModule(ROOT, { check: true });
-    assert.deepStrictEqual(r.stale, [], 'platform/dist/plenix-icons-plenix.esm.js is missing or differs: run node build-app.js');
+  // the module is a build output (platform/dist is not committed): the test builds it itself, into its own temporary folder
+  const built = typeof sites.buildCompatModule === 'function' ? sites.buildCompatModule(ROOT, { file: path.join(tmp, 'plenix-icons-plenix.esm.js') }) : null;
+  check('AC-1 the compatibility module is built by the tool, and building it again changes nothing', () => {
+    assert.ok(built, 'tools/icons/site-icons.js has no buildCompatModule');
+    assert.ok(built.bytes > 100000 && built.icons > 200, 'the compatibility module is too small: ' + built.bytes + ' bytes, ' + built.icons + ' icons');
+    assert.deepStrictEqual(sites.buildCompatModule(ROOT, { file: path.join(tmp, 'plenix-icons-plenix.esm.js'), check: true }).stale, [], 'a second build differs');
   });
-  const compatEsm = fs.existsSync(path.join(ROOT, 'platform/dist/plenix-icons-plenix.esm.js')) ? fs.readFileSync(path.join(ROOT, 'platform/dist/plenix-icons-plenix.esm.js'), 'utf8') : '';
+  const compatEsm = built ? built.text : '';
   await check('AC-2 it registers the same modules as the classic file, once each', async () => {
     assert.ok(compatEsm, 'no plenix-icons-plenix.esm.js');
     assert.ok(compatEsm.includes(sites.HEADER), 'no generated header'); assert.ok(/^import \{ registerIcons \} from '[^']+';$/m.test(compatEsm), 'no registerIcons import');

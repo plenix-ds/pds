@@ -262,10 +262,11 @@ const COMPAT_ESM = 'platform/dist/plenix-icons-plenix.esm.js', COMPAT_ESM_IMPORT
 function buildCompatModule(root, opts = {}) {
   const modules = layout.plenixEntries(root).map((e) => layout.moduleObject('plenix', e));
   const text = fileText('plenix', modules, layout.SOURCE.plenix + ': every Plenix icon', null, COMPAT_ESM_IMPORT);
-  const file = path.join(root, COMPAT_ESM), now = fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : null;
+  // opts.file: write there instead of platform/dist (a test builds it into a temporary folder; the file in platform/dist is a build output and is not committed)
+  const file = opts.file || path.join(root, COMPAT_ESM), now = fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : null;
   const stale = now === text ? [] : [COMPAT_ESM];
   if (!opts.check && stale.length) { fs.mkdirSync(path.dirname(file), { recursive: true }); fs.writeFileSync(file, text); }
-  return { file: COMPAT_ESM, icons: modules.length, bytes: Buffer.byteLength(text), stale, changed: !!stale.length };
+  return { file: COMPAT_ESM, text, icons: modules.length, bytes: Buffer.byteLength(text), stale, changed: !!stale.length };
 }
 
 module.exports = { collect, siteFile, catalogData, packageCatalog, buildCompat, buildCompatModule, buildPages, markupOf, PAGES, LOGIN, fileText, inlineScripts, COMPAT, COMPAT_ESM, HEADER };
