@@ -3,7 +3,7 @@
    Usage:
      <CodeBlock title="platform/components/Button/Button.tsx" maxHeight="tall">{text}</CodeBlock>
    Props:
-     title: a file name or caption shown above the code (in the data font)
+     title: a file name or caption shown above the code; a path or file name (it holds / or \\, or ends in .ext) is in the data font, a caption in the text font (ADR 0055)
      maxHeight: "none" (default) | "tall" (a box that scrolls, for whole files)
      copy: false hides the Copy button (default true)
      label: the accessible name of the code region (default the title, else strings.code)
@@ -58,6 +58,8 @@ const RULES: Record<string, [string, RegExp][]> = {
 };
 RULES.jsx = RULES.js; RULES.html = RULES.js;
 
+// a title is a path or file name when it holds a slash or ends in an extension: only then it is in the data font
+const isPath = (title: unknown): boolean => /[\\/]|\.[A-Za-z0-9]{1,8}$/.test(String(title || ''));
 function detect(title: unknown, text: string): string {
   const ext = title ? (String(title).match(/\.(\w+)$/) || [])[1] : null;
   if (ext) return ext === 'css' ? 'css' : /^(jsx?|mjs|tsx?)$/.test(ext) ? 'jsx' : ext === 'html' ? 'html' : 'text';
@@ -120,7 +122,7 @@ export function CodeBlock({ title, maxHeight = 'none', copy = true, label, langu
     <div className={cx('plx-code-block', 'plx-code-block--' + maxHeight, className)}>
       {title || copy ? (
         <div className="plx-code-block__head">
-          {title ? <span className="plx-code-block__title">{title}</span> : <span />}
+          {title ? <span className={cx('plx-code-block__title', isPath(title) && 'plx-code-block__title--path')}>{title}</span> : <span />}
           {copy ? <Button size="xs" variant="ghost" icon={copied ? CheckIcon : undefined} onClick={doCopy}>{copied ? t.copied : t.copy}</Button> : null}
           {copy ? <LiveRegion kind="status">{said}</LiveRegion> : null}
         </div>
