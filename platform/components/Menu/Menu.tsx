@@ -18,7 +18,8 @@
    Props:
      Menu.trigger: the button that opens the menu (one element)
      Menu.label: the accessible name of the menu
-     Menu.placement: "bottom-start" (default) | "bottom-end" | "top-start" | "top-end"
+     Menu.placement: "bottom-end" (default: the menu's end edge on the trigger's end edge, extending toward the start; it flips to
+       start-aligned when there is no room) | "bottom-start" | "top-start" | "top-end" (issue 1248)
      Menu.open: true or false: who is open is the caller's (a MenuBar keeps one of its menus open at a time); leave it out and the menu keeps its own state
      Menu.openStart: "first" | "last": the item that takes focus when the caller opens it; Menu.onOpenChange(open, { start }): runs when it opens or closes, from the trigger or by a key
      Menu.className: more classes on the anchor around the trigger and menu
@@ -139,7 +140,7 @@ export type MenuProps = {
   className?: string;
   children?: React.ReactNode;
 };
-export function Menu({ trigger, label, placement = 'bottom-start', open: openProp, openStart, onOpenChange, className, children }: MenuProps) {
+export function Menu({ trigger, label, placement = 'bottom-end', open: openProp, openStart, onOpenChange, className, children }: MenuProps) {
   const id = useUid('plx-menu');
   // who is open (issue 805): the menu keeps its own open state; a MenuBar passes open and onOpenChange so one of its menus is open at a time
   const [own, setOwn] = React.useState(false);

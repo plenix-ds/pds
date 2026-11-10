@@ -107,6 +107,7 @@
      Without type, status and stack the MediaCard draws exactly what it drew before (library wave 12 added them).
      Other props pass through to the outer element.
 */
+import { dataWhenText } from '../../utils/dataText.tsx';
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { useUid } from '../../utils/layer.ts';
@@ -319,7 +320,7 @@ export function MediaCard({ src, alt = '', icon, title, meta, badge, aspect = '4
       <div className="plx-media-card__info">
         <div className="plx-media-card__text">
           <Opener href={href} onOpen={onOpen} className="plx-media-card__title">{title}</Opener>
-          {line ? <span className="plx-media-card__meta">{line}</span> : null}
+          {line ? <span className="plx-media-card__meta">{dataWhenText(line)}</span> : null}
           {statusEl ? <span className="plx-media-card__status">{statusEl}</span> : null}
         </div>
         {actions ? <div className="plx-card__actions">{actions}</div> : null}

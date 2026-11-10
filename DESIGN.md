@@ -253,6 +253,10 @@ A named variation sets a whole agreed look with one prop, so an app never gets h
 - **"Show the data"** (D-0163, #1229) is a ghost `sm` Button with the `table_view` icon at the chart's inline start. It opens a `md` Dialog titled with the chart's title and holding the data Table, and focus returns to the button. It is never a link or an inline expansion by default; the inline table is an opt-in.
 - **Dashboard cards** (D-0163): in a WidgetGrid row, every card is as tall as the tallest. The body grows, so the Panel footer and the chart's "Show the data" button sit on the bottom edge. The plot keeps its size height, and a collapsed Panel keeps its own height.
 
+### Metric cards
+
+- **Person card** (`type="person" layout="tile"`, opt-in until 2.0.0, D-0167, ADR 0056, #1240): a 48px Avatar beside the name (up to 2 lines) and the role (`content-muted`), an inset divider, then the value row at the inline end. The number is Reddit Mono, 20px, 700; the unit is a small uppercase label in `content-muted`. A word value ("Hidden") takes the unit's style. The card is about 121px tall, with one size and no density. In a WidgetGrid with `itemSize="sm"`, columns are at least 200px.
+
 ### Timeline, grouped (D-0115, D-0117, #987; D-0145, D-0148, #1152)
 
 - A variation of `Timeline`, not a new component. Events are grouped by year, latest first (the order is a prop).

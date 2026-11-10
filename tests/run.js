@@ -20,7 +20,7 @@ const path = require('path');
 const { spawnSync } = require('child_process');
 
 const AUTOMATIC = ['site-coverage', 'site-parts', 'visual', 'layout', 'pages', 'keyboard', 'data-grid', 'typography', 'component-tokens', 'reflow',
-  'formats', 'icon-safety', 'utilities', 'focus-order', 'semantic-html', 'navigation', 'one-primary', 'brand-rules', 'login', 'selector-kinds', 'zero-overlap', 'types', 'fill-693', 'root-has-1226', 'action-bar-root-1235', 'has-custom-props-1226', 'stack-inline-fields-1250',
+  'formats', 'icon-safety', 'utilities', 'focus-order', 'semantic-html', 'navigation', 'one-primary', 'brand-rules', 'login', 'selector-kinds', 'zero-overlap', 'types', 'fill-693', 'data-font-b-1262', 'root-has-1226', 'action-bar-root-1235', 'has-custom-props-1226', 'stack-inline-fields-1250',
   // the ECharts charts and sparklines (owner, codex-q3-27: they join the automatic check; #382 F9)
   'charts-echarts-353', 'sparkline-echarts-353', 'treechart-echarts',
   // tests without a browser that were started by hand only (issue 756): the Arabic catalog, the baseline scanner, the site icon files

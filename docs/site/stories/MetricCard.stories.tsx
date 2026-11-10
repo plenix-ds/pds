@@ -1,4 +1,4 @@
-// States: ready (default), loading, empty, error (with Try again), stale, link (hover and focus), each type. Not applicable: disabled, selected.
+// States: ready (default), loading, empty, error (with Try again), stale, link (hover and focus), each type, the compact person card (ready, progress, status, word value, empty, loading, error, long name, RTL). Not applicable: disabled, selected.
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
 import { MetricCard } from '../../../platform/components/MetricCard/MetricCard.tsx';
@@ -18,5 +18,15 @@ export const Link: Story = { args: { href: '#/cases?assigned=none', layout: 'til
 export const Trend: Story = { args: { type: 'trend', value: '1,284', trend: [38, 41, 40, 44, 47, 52], trendVariant: 'area', change: { amount: '12.5%', direction: 'up', versus: 'vs previous 30 days' }, goodWhen: 'up', footer: 'Updated 5 minutes ago' } };
 export const Progress: Story = { args: { type: 'progress', title: 'Tasks done', value: '36', target: '147', progress: { value: 36, max: 147 }, status: { tone: 'active', label: '24%' } } };
 export const Person: Story = { args: { type: 'person', person: { name: 'Maya Chen', role: 'Designer' }, value: '12', unit: 'open tasks' } };
+const tile = { type: 'person', layout: 'tile', title: undefined, icon: undefined, context: undefined, change: undefined, person: { name: 'Fr. Youhanna Abdelmessih', role: 'Council member' }, value: '5', unit: 'active' } as const;
+export const PersonTile: Story = { args: tile };
+export const PersonTileProgress: Story = { args: { ...tile, value: '5', target: '8', progress: { value: 5, max: 8 } } };
+export const PersonTileStatus: Story = { args: { ...tile, status: { tone: 'warning', label: 'Stale' } } };
+export const PersonTileWordValue: Story = { args: { ...tile, value: 'Hidden', unit: undefined } };
+export const PersonTileEmpty: Story = { args: { ...tile, state: 'empty' } };
+export const PersonTileLoading: Story = { args: { ...tile, state: 'loading' } };
+export const PersonTileError: Story = { args: { ...tile, state: 'error', onRetry: () => {} } };
+export const PersonTileLongName: Story = { args: { ...tile, person: { name: 'Fr. Youhanna Abdelmessih Ghobrial Hanna-Boutros of the Diocese of Los Angeles and the Southwest', role: 'Council member of the Diocese of Los Angeles' }, unit: 'active cases this month' } };
+export const PersonTileRtl: Story = { args: tile, decorators: [rtl] };
 export const LongText: Story = { args: { title: 'Open tasks across every project in every workspace you manage', context: 'All projects, all teams and all offices, including archived ones' } };
 export const Rtl: Story = { decorators: [rtl] };

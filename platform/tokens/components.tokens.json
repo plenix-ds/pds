@@ -1988,6 +1988,11 @@
       "$type": "color",
       "$description": "Badge, negative: the text, shade 700 (800 for negative)."
     },
+    "count-font-family": {
+      "$value": "{plx-sys.font-data}",
+      "$type": "fontFamily",
+      "$description": "Count: a count is a number, so it is drawn in the data font (D-0164, audit item 6 of #1232)."
+    },
     "count-plain-text": {
       "$value": "{plx-sys.content-muted}",
       "$type": "color"
@@ -4833,7 +4838,7 @@
       "$type": "color"
     },
     "media-card-meta-font-family": {
-      "$value": "{plx-sys.font-data}",
+      "$value": "{plx-sys.font-label}",
       "$type": "fontFamily"
     },
     "media-card-meta-font-size": {
@@ -5570,8 +5575,13 @@
       "$type": "color"
     },
     "code-block-title-font-family": {
-      "$value": "{plx-sys.font-data}",
+      "$value": "{plx-sys.font-label}",
       "$type": "fontFamily"
+    },
+    "code-block-title-path-font-family": {
+      "$value": "{plx-sys.font-data}",
+      "$type": "fontFamily",
+      "$description": "CodeBlock title that is a path or file name: the data font (ADR 0055); a caption uses code-block-title-font-family."
     },
     "code-block-title-font-size": {
       "$value": "{plx-ref.font-size-100}",
@@ -6657,7 +6667,7 @@
       "$type": "color"
     },
     "media-viewer-counter-font-family": {
-      "$value": "{plx-sys.font-data}",
+      "$value": "{plx-sys.font-label}",
       "$type": "fontFamily"
     },
     "media-viewer-counter-font-size": {
@@ -6789,7 +6799,7 @@
       "$type": "dimension"
     },
     "media-viewer-meta-font-family": {
-      "$value": "{plx-sys.font-data}",
+      "$value": "{plx-sys.font-label}",
       "$type": "fontFamily"
     },
     "media-viewer-meta-font-size": {
@@ -8417,7 +8427,7 @@
       "$type": "color"
     },
     "tree-meta-font-family": {
-      "$value": "{plx-sys.font-data}",
+      "$value": "{plx-sys.font-label}",
       "$type": "fontFamily"
     },
     "tree-meta-font-size": {
@@ -10235,6 +10245,11 @@
     "widget-grid-gap": {
       "$value": "{plx-sys.space-inline-md}",
       "$type": "dimension"
+    },
+    "widget-grid-item-min-width-sm": {
+      "$value": "{plx-sys.size-widget-min-sm}",
+      "$type": "dimension",
+      "$description": "WidgetGrid itemSize sm: the narrowest a column gets (200px), so 5 to 6 compact cards fit in a row (ADR 0056)."
     },
     "widget-grid-grid-template-columns": {
       "$value": "repeat(auto-fill, minmax({plx-ref.size-70u}, 1fr))",

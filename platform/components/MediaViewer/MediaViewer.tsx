@@ -32,6 +32,7 @@
    Notes:
      The viewer renders in a portal on document.body.
 */
+import { dataWhenText, dataPhrase } from '../../utils/dataText.tsx';
 import React from 'react';
 import { createPortal } from 'react-dom';
 import { cx } from '../../utils/cx.ts';
@@ -108,7 +109,7 @@ export function MediaViewer({ open, onClose, items: itemsProp, count, getItem, i
   return createPortal(
     <div ref={ref} role="dialog" aria-modal="true" aria-label={label || t.label} aria-describedby={id + 'c'} tabIndex={-1}
       className={cx('plx-media-viewer', className)} onKeyDown={onKeyDown}>
-      <div id={id + 'c'} className="plx-media-viewer__counter">{t.counter.split('{index}').join(String(at + 1)).split('{total}').join(String(total))}</div>
+      <div id={id + 'c'} className="plx-media-viewer__counter">{dataPhrase(t.counter.split('{index}').join(String(at + 1)).split('{total}').join(String(total)))}</div>
       <button type="button" className="plx-media-viewer__control plx-media-viewer__close" aria-label={t.close} onClick={onClose}><Icon name={CloseIcon} size="md" /></button>
       {many ? <button type="button" className="plx-media-viewer__control plx-media-viewer__nav plx-media-viewer__nav--previous" aria-label={t.previous} onClick={() => go(at - 1)}><Icon name={ChevronDownIcon} size="md" /></button> : null}
       <figure className="plx-media-viewer__figure">
@@ -120,7 +121,7 @@ export function MediaViewer({ open, onClose, items: itemsProp, count, getItem, i
         {item.title || item.meta ? (
           <figcaption className="plx-media-viewer__info">
             {item.title ? <div className="plx-media-viewer__title">{item.title}</div> : null}
-            {item.meta ? <div className="plx-media-viewer__meta">{item.meta.map((m, i) => <span key={i}>{m}</span>)}</div> : null}
+            {item.meta ? <div className="plx-media-viewer__meta">{item.meta.map((m, i) => <span key={i}>{dataWhenText(m)}</span>)}</div> : null}
           </figcaption>
         ) : null}
         {actions ? <div className="plx-media-viewer__actions">{actions}</div> : null}
