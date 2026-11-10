@@ -2,7 +2,7 @@ id: D-0146
 date: 2026-11-10
 area: api
 decided_by: agent (pds1-ds-architect, G3) on D-0145; the owner may switch to B or C on #1152
-decision: 'The compact grouped Timeline is Timeline density="page" | "compact" (default "page", unchanged), grouped only, like DataGrid''s density prop. "compact" draws the CTM Key Dates look and sets data-plx-density="compact" on the root. The event''s inline padding equals its block padding in every density. New: class plx-timeline--compact, string timeline.upcoming, sys roles size-calendar-tile-sm, size-calendar-band-sm, content-max-list, comp tokens timeline-grouped-compact-* (ADR 0048).'
+decision: 'The compact grouped Timeline is Timeline density="page" | "compact" (default "page"), grouped only, like DataGrid''s density prop. "compact" draws the CTM Key Dates look at one fixed size from timeline-grouped-compact-* tokens. Both looks: equal padding (one token timeline-grouped-event-padding), no heading rule, no tile rings (their tokens deprecated, removed in 2.0.0). New: class plx-timeline--compact, strings timeline.tagUpcoming and timeline.tagPending, sys content-max-list (720px), size-calendar-tile-sm, size-calendar-band-sm, text-calendar-month-font-size (ADR 0048, design PR #1158)'
 why: 'Same name and value as DataGrid; the default does not change, and compact pages do not reshape existing grouped Timelines (option C would). A variant value (B) would mix two axes.'
 options: ['A. density="compact" prop, default "page" (chosen)', 'B. variant="grouped-compact"', 'C. follow the page density']
 status: active
