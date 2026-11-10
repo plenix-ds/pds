@@ -748,5 +748,15 @@
     "loading": "n/a(text has no loading state; a loading region shows LoadingState, D-0130)",
     "error": "n/a(text has no value to validate; a failed load is the region's error, not the text's)",
     "selected": "n/a(text is static; the stories arrive with Storybook, P0-11. The corner button of overflow=\"dialog\" is a Button and has its states)"
+  },
+  "DataPill": {
+    "default": "n/a(no DataPill story yet; default is comp category-soft fill, category-on-soft text, a category-soft-border border mixed by category-soft-border-amount; docs/pds1/slices/1155/design.md section 2)",
+    "hover": "n/a(DataPill is static; a pill inside a link or button takes that control's hover)",
+    "focus": "n/a(DataPill is not focusable; the enclosing control draws focus)",
+    "active": "n/a(DataPill is static; the enclosing control owns pressed)",
+    "disabled": "n/a(DataPill has no disabled state; it shows a value)",
+    "loading": "n/a(DataPill shows a loaded value; the cell or list owns loading)",
+    "error": "n/a(DataPill has no value to validate)",
+    "selected": "n/a(DataPill has no selection; the row or cell owns selected)"
   }
 }

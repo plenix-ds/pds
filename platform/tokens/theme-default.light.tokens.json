@@ -3240,6 +3240,11 @@
         }
       }
     },
+    "category-pink-soft-border-amount": {
+      "$value": "{plx-ref.mix-amount-lg}",
+      "$type": "number",
+      "$description": "The share of pink-700 kept in the pink soft pill's border (the rest is its pink-100 fill): 35%, a muted rose instead of the text's dark rose (owner, 2026-11-10, D-0147, ADR 0049)."
+    },
     "category-pink-on-soft": {
       "$value": "{plx-ref.color-pink-700}",
       "$type": "color",

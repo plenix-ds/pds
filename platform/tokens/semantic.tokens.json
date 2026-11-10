@@ -480,6 +480,11 @@
       "$value": "{plx-ref.space-6u}",
       "$type": "dimension"
     },
+    "category-soft-border-amount": {
+      "$value": "{plx-ref.mix-amount-full}",
+      "$type": "number",
+      "$description": "The share of a soft category pill's border color kept in its border (the rest is the pill's soft fill); 100% keeps the border as is, for every hue but pink (ADR 0049)."
+    },
     "space-stack-field": {
       "$value": "{plx-ref.space-4u}",
       "$type": "dimension",
