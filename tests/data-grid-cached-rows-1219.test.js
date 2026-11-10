@@ -17,8 +17,8 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
     browser = await launch(); const errors = [];
     for (const mode of ['fill', 'pages']) {
       const T = mode + ': ';
-      const page = await browser.newPage(); await page.setViewport({ width: 1000, height: 700 });
-      page.on('pageerror', (e) => errors.push(e.message));
+      const page = await browser.newPage(); await page.setViewport({ width: 1000, height: 700 }); const warns = [];
+      page.on('pageerror', (e) => errors.push(e.message)); page.on('console', (m) => { if (m.type() === 'warn' || m.type() === 'warning') warns.push(m.text()); });
       await page.goto('http://localhost:' + PORT + '/Plenix/tests/fixtures/platform-host.html?react=dev', { waitUntil: 'domcontentloaded' });
       await page.waitForFunction(() => window.Plenix && window.ReactDOM, { timeout: 60000 });
       const mount = (opts) => page.evaluate((mode, opts) => {
@@ -28,7 +28,7 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
         const fresh = [{ id: 1, name: 'Fresh one' }, { id: 2, name: 'Fresh two' }, { id: 3, name: 'Fresh three' }];
         const cached = [{ id: 1, name: 'Cached one' }, { id: 2, name: 'Cached two' }];
         const fetchRows = (req) => { window.__fetches.push({ page: req.page, size: req.size, sort: req.sort, search: req.search || null }); return new Promise((ok, bad) => setTimeout(() => { if (failFirst) { failFirst = false; bad(new Error('Server busy')); } else ok({ rows: fresh, total: 3 }); }, 1500)); };
-        const props = { label: 'Cases', index: 'id', data: [], fetchRows, mode, columns: [{ field: 'name', title: 'Name', kind: 'name' }] };
+        const props = { label: 'Cases', index: 'id', data: [], fetchRows, mode, selectable: !!opts.select, columns: [{ field: 'name', title: 'Name', kind: 'name' }] };
         if (opts.cache === 'rows') props.cachedRows = (req) => { window.__cacheCalls.push({ page: req.page, size: req.size, sort: req.sort, search: req.search || null }); return { rows: cached, total: 2 }; };
         if (opts.cache === 'undefined') props.cachedRows = () => undefined;
         window.__root = ReactDOM.createRoot(document.getElementById('c')); window.__root.render(h(P.DataGrid, props));
@@ -45,7 +45,7 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
       // with a cache: the cached rows at once, no spinner, replaced in place
       await mount({ cache: 'rows' }); await wait(120); s = await look();
       assert.deepEqual(s.names, ['Cached one', 'Cached two'], T + 'AC-1: the cached rows draw at once: ' + JSON.stringify(s));
-      await page.evaluate(() => { const c = document.querySelector('#c [role=row][data-plx-record="number:2"] [data-plx-field=name]') || document.querySelectorAll('#c [role=row][data-plx-record] [data-plx-field=name]')[1]; c.setAttribute('data-probe', ''); c.focus(); });
+      await page.evaluate(() => { const c = document.querySelectorAll('#c [role=row][data-plx-record] [data-plx-field=name]')[1]; c.setAttribute('data-probe', ''); c.focus(); });
       await wait(1100); s = await look();
       assert.equal(s.spinner, 0, T + 'AC-1: no spinner at 1.2 s, the rows stay: ' + JSON.stringify(s)); assert.deepEqual(s.names, ['Cached one', 'Cached two'], T + 'AC-1: the cached rows are still there until the answer');
       await wait(600); s = await look();
@@ -56,11 +56,39 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
       // AC-5: the cache is asked with the request fetchRows gets
       const calls = await page.evaluate(() => ({ cache: window.__cacheCalls, fetch: window.__fetches }));
       assert.ok(calls.cache.length >= 1 && JSON.stringify(calls.cache[0]) === JSON.stringify(calls.fetch[0]), T + 'AC-5: cachedRows gets the same request as fetchRows: ' + JSON.stringify(calls));
+      // the selection is kept by row key through the replacement
+      await mount({ cache: 'rows', select: true }); await wait(150);
+      await page.evaluate(() => { const r = document.querySelectorAll('#c [role=row][data-plx-record]')[1]; (r.querySelector('input[type=checkbox]') || r).click(); }); await wait(200);
+      const sel = () => page.evaluate(() => [...document.querySelectorAll('#c [role=row][data-plx-record][aria-selected=true]')].map((r) => r.textContent.trim()));
+      assert.deepEqual((await sel()).length, 1, T + 'AC-2: a cached row is selected'); await wait(1700);
+      assert.deepEqual(await sel(), ['Fresh two'], T + 'AC-2: the selection stays on the same row after the answer: ' + JSON.stringify(await sel()));
       // AC-3: a failure keeps the cached rows and shows Retry
       await mount({ cache: 'rows', fail: true }); await wait(1900); s = await look();
       assert.deepEqual(s.names, ['Cached one', 'Cached two'], T + 'AC-3: a failed refresh keeps the cached rows: ' + JSON.stringify(s)); assert.ok(s.retry, T + 'AC-3: a Retry shows'); assert.equal(s.cover, 0, T + 'AC-3: nothing covers the table');
       await page.evaluate(() => [...document.querySelectorAll('#c button')].find((b) => /retry/i.test(b.textContent)).click()); await wait(1900); s = await look();
       assert.deepEqual(s.names, ['Fresh one', 'Fresh two', 'Fresh three'], T + 'AC-3: Retry asks again and the rows are replaced'); assert.equal(s.fetches, 2);
+      if (mode === 'fill') {
+        await page.evaluate(() => {
+          const h = React.createElement, P = Plenix; window.__root.unmount(); window.__calls = []; window.__fetch = [];
+          document.querySelector('main').replaceChildren(Object.assign(document.createElement('div'), { id: 'c' }));
+          const rows = (p) => Array.from({ length: 50 }, (_, i) => ({ id: (p - 1) * 50 + i + 1, name: 'Row ' + ((p - 1) * 50 + i + 1) }));
+          window.__root = ReactDOM.createRoot(document.getElementById('c'));
+          window.__root.render(h(P.DataGrid, { label: 'Many', index: 'id', data: [], columns: [{ field: 'name', title: 'Name', kind: 'name' }],
+            fetchRows: (req) => { window.__fetch.push(req.page); return new Promise((ok) => setTimeout(() => ok({ rows: rows(req.page), total: 200 }), 60)); },
+            cachedRows: (req) => { window.__calls.push(req.page); return { rows: rows(req.page), total: 200 }; } }));
+        });
+        await wait(500);
+        await page.evaluate(() => { const sc = document.querySelector('.plx-data-grid__grid-tableholder'); sc.scrollTop = sc.scrollHeight; }); await wait(900);
+        const seen = await page.evaluate(() => ({ cache: window.__calls.slice(), fetch: window.__fetch.slice() }));
+        assert.deepEqual(seen.cache, [1], T + 'cachedRows is not asked for a later page in fill: ' + JSON.stringify(seen)); assert.ok(seen.fetch.includes(2), T + 'the next page is still fetched: ' + JSON.stringify(seen));
+      }
+      // cachedRows without fetchRows is ignored, with a warning
+      warns.length = 0;
+      await page.evaluate(() => { const h = React.createElement, P = Plenix; window.__root.unmount(); document.querySelector('main').replaceChildren(Object.assign(document.createElement('div'), { id: 'c' })); window.__root = ReactDOM.createRoot(document.getElementById('c'));
+        window.__root.render(h(P.DataGrid, { label: 'Plain', index: 'id', data: [{ id: 1, name: 'Own row' }], columns: [{ field: 'name', title: 'Name', kind: 'name' }], cachedRows: () => ({ rows: [{ id: 9, name: 'Cached' }], total: 1 }) })); });
+      await wait(500);
+      assert.ok(warns.some((w) => /cachedRows/.test(w)), T + 'cachedRows without fetchRows warns: ' + JSON.stringify(warns));
+      assert.deepEqual(await page.evaluate(() => [...document.querySelectorAll('#c [data-plx-field=name]')].filter((e) => e.getAttribute('role') === 'gridcell').map((e) => e.textContent.trim())), ['Own row'], T + 'and the grid shows its own data');
       await page.close();
     }
     assert.deepEqual(errors, [], 'no script errors');

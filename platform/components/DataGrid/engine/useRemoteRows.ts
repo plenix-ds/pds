@@ -15,6 +15,7 @@
 */
 import React from 'react';
 import { sorted } from './helpers.tsx';
+import { development } from '../../../utils/devWarn.ts';
 import type { DataRecord } from '../types.ts';
 
 /** what fetchRows is asked for, and what it gives back */
@@ -22,7 +23,9 @@ type RemoteRequest = { page: number; size: number; sort: Array<{ field: string; 
 type RemoteResult = { rows?: DataRecord[]; total?: number };
 type RemoteProps = { fetchRows?: (request: RemoteRequest) => Promise<RemoteResult> | RemoteResult; cachedRows?: (request: RemoteRequest) => { rows: DataRecord[]; total: number } | undefined; search?: string };
 
+let warnedNoFetch = false;
 export function useRemoteRows({ props, mode, page, pageSize, sorting, filters }: { props: RemoteProps; mode: string; page: number; pageSize: number; sorting: Array<{ id: string; desc?: boolean }>; filters: Array<{ id: string; value: unknown }> }) {
+  if (typeof props.cachedRows === 'function' && typeof props.fetchRows !== 'function' && !warnedNoFetch && development()) { warnedNoFetch = true; console.warn('[Plenix] DataGrid: cachedRows is ignored without fetchRows (it caches rows from a server).'); }
   const fetching = React.useRef(false);
   const [remoteBusy, setRemoteBusy] = React.useState(false);
   // the app's cached rows for a request (cachedRows): shown at once, and replaced in place by the answer; not for a later page of a list that appends
