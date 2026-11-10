@@ -758,5 +758,16 @@
     "loading": "n/a(DataPill shows a loaded value; the cell or list owns loading)",
     "error": "n/a(DataPill has no value to validate)",
     "selected": "n/a(DataPill has no selection; the row or cell owns selected)"
+  },
+
+  "DateBadge": {
+    "default": "n/a(a DateBadge is static: the weekday over the day number (docs/site/stories/DateBadge.stories.tsx))",
+    "hover": "n/a(a DateBadge is not interactive; a badge inside a link or button takes that control's hover)",
+    "focus": "n/a(a DateBadge is not focusable; the enclosing control draws focus)",
+    "active": "n/a(a DateBadge is static; the enclosing control owns pressed)",
+    "disabled": "n/a(a DateBadge has no disabled state; it shows a date)",
+    "loading": "n/a(a DateBadge shows a known day; the grid or list owns loading)",
+    "error": "n/a(a DateBadge has no value to validate)",
+    "selected": "n/a(a DateBadge has no selection; today is marked with the action color (the today story), not a selected state)"
   }
 }
