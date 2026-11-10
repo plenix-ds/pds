@@ -353,8 +353,10 @@
    ]
   },
   "plx-calendar__day": {
-   "contract": "adjusts",
-   "props": [
+   "contract": "establishes",
+   "role": "body",
+   "font": "mono",
+   "adjusts": [
     "font-size",
     "font-weight"
    ]
@@ -1103,8 +1105,10 @@
    ]
   },
   "plx-date-badge__day": {
-   "contract": "adjusts",
-   "props": [
+   "contract": "establishes",
+   "role": "body",
+   "font": "mono",
+   "adjusts": [
     "font-size",
     "font-weight"
    ]
@@ -3185,16 +3189,20 @@
    ]
   },
   "plx-timeline__date-day--compact": {
-   "contract": "adjusts",
-   "props": [
+   "contract": "establishes",
+   "role": "calendar-day",
+   "font": "mono",
+   "adjusts": [
     "font-size"
    ]
   },
   "plx-timeline__date-day": {
-   "contract": "adjusts",
-   "props": [
-    "font-size",
+   "contract": "establishes",
+   "role": "calendar-day",
+   "font": "mono",
+   "adjusts": [
     "font-weight",
+    "letter-spacing",
     "line-height"
    ]
   },

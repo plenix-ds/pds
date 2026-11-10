@@ -72,6 +72,7 @@
     "timeline-grouped-date-month-font-size": { "$value": "{plx-sys.text-calendar-month-font-size}", "$type": "dimension", "$description": "Timeline, grouped (ADR 0036): the calendar date tile: the month size." },
     "timeline-grouped-date-month-font-weight": { "$value": "{plx-sys.font-weight-bold}", "$type": "fontWeight", "$description": "Timeline, grouped (ADR 0036): the calendar date tile: the month weight." },
     "timeline-grouped-date-month-text": { "$value": "{plx-sys.content-inverse}", "$type": "color", "$description": "Timeline, grouped (ADR 0036): the calendar date tile: the month." },
+    "timeline-grouped-date-day-font-family": { "$value": "{plx-sys.font-data}", "$type": "fontFamily", "$description": "Timeline, grouped (ADR 0036, D-0164): the calendar date tile: the day number is data, the data font (audit item 8 of #1232). The month stays text." },
     "timeline-grouped-date-day-font-size": { "$value": "{plx-sys.text-calendar-day-font-size}", "$type": "dimension", "$description": "Timeline, grouped (ADR 0036): the calendar date tile: the day size." },
     "timeline-grouped-date-day-font-weight": { "$value": "{plx-sys.font-weight-bold}", "$type": "fontWeight", "$description": "Timeline, grouped (ADR 0036): the calendar date tile: the day weight." },
     "timeline-grouped-date-day-text": { "$value": "{plx-sys.content-strong}", "$type": "color", "$description": "Timeline, grouped (ADR 0036): the calendar date tile: the day." },
