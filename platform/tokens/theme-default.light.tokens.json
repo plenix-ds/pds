@@ -54,6 +54,17 @@
         }
       }
     },
+    "surface-tile": {
+      "$value": "{plx-ref.color-gray-75}",
+      "$type": "color",
+      "$description": "A small read-only tile on a surface (EntityHeader facts): the old page tone, so the tile and its border-subtle border stay visible on the gray-200 canvas (#1160, D-0151).",
+      "$extensions": {
+        "plenix": {
+          "group": "surface",
+          "purpose": "A read-only fact tile's fill."
+        }
+      }
+    },
     "surface-sunken": {
       "$value": "{plx-ref.color-gray-100}",
       "$type": "color",
@@ -139,7 +150,7 @@
       }
     },
     "state-pressed": {
-      "$value": "{plx-ref.color-gray-200}",
+      "$value": "{plx-ref.color-gray-250}",
       "$type": "color",
       "$extensions": {
         "plenix": {
