@@ -9,3 +9,6 @@
 .plx-spinner__label{min-inline-size:0;overflow-wrap:anywhere;}
 .plx-loading-state{align-items:center;block-size:100%;box-sizing:border-box;display:flex;flex:1 1 auto;inline-size:100%;justify-content:center;}
 .plx-loading-state__progress{max-inline-size:100%;}
+/* the long stage (ADR 0051, design 1194): from the long wait the state is a column: the ring and label, a second line, Cancel */
+.plx-loading-state--long{flex-direction:column;row-gap:var(--plx-comp-loading-state-gap);}
+.plx-loading-state__slow{color:var(--plx-comp-loading-state-slow-text);font-size:var(--plx-comp-spinner-label-font-size);line-height:var(--plx-comp-spinner-label-line-height);overflow-wrap:anywhere;text-align:center;}

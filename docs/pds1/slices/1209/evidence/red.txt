@@ -1,0 +1,12 @@
+FAIL AC-1 the compatibility module is a function of the build: tools/icons/site-icons.js has no buildCompatModule
++ actual - expected
+
++ 'undefined'
+- 'function'
+
+FAIL AC-2 it registers the same modules as the classic file, once each: no plenix-icons-plenix.esm.js
+FAIL AC-4 a site's set is its own file and far smaller than the compatibility set: fileText has no module form
+not found: --esm
+FAIL AC-6 the tool's --esm writes the module, with the given import path or the npm entry: Command failed: /usr/bin/node /home/cc/pds1/work/component-engineer-1/tools/icons/site-icons.js two /tmp/plenix-icon-esm-1O8Bii/src2 --out /tmp/pleni
+not found: --esm
+

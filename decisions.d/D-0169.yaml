@@ -1,0 +1,9 @@
+id: D-0169
+date: 2026-11-10
+area: design
+decided_by: design-director (reading of the owner's "a standard fixed width that can be resized", D-0168, #1243, and #1242)
+decision: 'Every navigation pane starts at one standard width, 240px (size-60u): NavPane, and SecondaryPane md (was 220); there are no window steps; resizable in 8px steps (NavPane 200 to 320, SecondaryPane 180 to 400) and remembered per pane; a double-click or Enter on the edge resets to 240; collapse keeps the header button and Ctrl+[. SettingsLayout''s nav is a docked SecondaryPane titled "Settings" (docs/pds1/slices/1242/design.md).'
+options: ['A: 240px for both; double-click and Enter reset (chosen)', 'B: 260px for both; Enter keeps collapsing and only the double-click resets']
+why: 'The main nav already starts at 240px, so the secondary pane lines up with it; the longest CTM labels fit; one reset gesture for pointer and keyboard keeps the edge predictable, and collapse stays one key and one button away.'
+status: active
+check: 'planned:tests on 1242 and 1243 (240px in 1366 and 1920 windows, resize limits and step, persistence, reset, the settings pane docked with no margin)'

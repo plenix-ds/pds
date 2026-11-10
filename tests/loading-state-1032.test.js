@@ -27,7 +27,7 @@ require('./limit.js');
           await new Promise((r) => setTimeout(r, w - at)); at = w;
           const c = document.getElementById('c'), ring = c.querySelector('.plx-spinner'), box = c.querySelector('.plx-loading-state'), label = c.querySelector('.plx-spinner__label');
           const rb = ring && ring.getBoundingClientRect(), lb = label && label.getBoundingClientRect(), bb = box && box.getBoundingClientRect(), hb = c.getBoundingClientRect();
-          out.push({ states: c.querySelectorAll('[role=status]').length, rings: c.querySelectorAll('.plx-spinner').length, boxes: c.querySelectorAll('.plx-loading-state').length, skeleton: c.querySelectorAll('.plx-skeleton').length,
+          out.push({ states: c.querySelectorAll('[role=status]:not(.plx-loading-state__slow)').length, rings: c.querySelectorAll('.plx-spinner').length, boxes: c.querySelectorAll('.plx-loading-state').length, skeleton: c.querySelectorAll('.plx-skeleton').length,
             bars: c.querySelectorAll('progress, [role=progressbar]').length, ringHidden: ring ? ring.getAttribute('aria-hidden') : null, label: label ? label.textContent : null,
             hiddenLabel: !!c.querySelector('.plx-spinner .plx-visually-hidden'), ringX: rb && rb.left, labelX: lb && lb.left,
             cx: bb ? Math.abs((bb.left + bb.width / 2) - (hb.left + hb.width / 2)) : null, text: c.textContent });

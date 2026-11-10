@@ -1300,7 +1300,9 @@ export default {
     }
   },
   "loading": {
-    "label": "Loading"
+    "label": "Loading",
+    "slow": "This is taking longer than usual.",
+    "cancel": "Cancel"
   },
   "loadingOverlay": {
     "loading": "Loading",
