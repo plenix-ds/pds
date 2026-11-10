@@ -1947,6 +1947,35 @@
    "font": "mono",
    "size": true
   },
+  "plx-metric-card__person-name": {
+   "contract": "establishes",
+   "role": "heading",
+   "font": "sans"
+  },
+  "plx-metric-card__person-number": {
+   "contract": "establishes",
+   "role": "title",
+   "font": "mono",
+   "adjusts": [
+    "font-weight",
+    "line-height"
+   ]
+  },
+  "plx-metric-card__person-role": {
+   "contract": "establishes",
+   "role": "secondary",
+   "font": "sans"
+  },
+  "plx-metric-card__person-target": {
+   "contract": "follows",
+   "font": "mono",
+   "size": true
+  },
+  "plx-metric-card__person-unit": {
+   "contract": "establishes",
+   "role": "eyebrow",
+   "font": "sans"
+  },
   "plx-metric-card__rank": {
    "contract": "follows",
    "font": "mono",
