@@ -2,7 +2,7 @@
 
 - **Status:** accepted
 - **Date:** 2026-11-10
-- **Deciders:** pds1-ds-architect (G3), on the CTM owner's approved choices (chat, 2026-11-10, relayed on #1152; D-0145). Decision D-0146 (owner may switch).
+- **Deciders:** pds1-ds-architect (G3), on the CTM owner's approved choices (chat, 2026-11-10, relayed on #1152; D-0145). Decision D-0146, superseded by D-0150 to match the G2 design (owner may switch).
 - **Issue:** #1152 (S2).
   - Brief: `docs/pds1/slices/1152/brief.md` (PR #1153).
   - Design (G2 PASS, PR #1158, D-0148): `docs/pds1/slices/1152/design.md`. It owns the look and the values (§1c). This entry owns the prop, the classes, the strings, the token names and their tiers.
@@ -30,7 +30,7 @@
 
 ## Decision
 
-**Option A** (D-0146; reply B or C on #1152 to switch).
+**Option A** (D-0150, superseding D-0146; reply B or C on #1152 to switch).
 
 ### API (`Timeline`)
 
