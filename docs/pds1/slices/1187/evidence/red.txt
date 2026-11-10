@@ -1,0 +1,1 @@
+AssertionError [ERR_ASSERTION]: ltr light: grid: the hovered row has the hover fill (rgb(255, 255, 255) vs rgb(243, 243, 243))
