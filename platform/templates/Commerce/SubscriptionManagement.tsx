@@ -27,7 +27,7 @@ const PropertyList: any = PropertyListJs;
 const SettingsSection: any = SettingsSectionJs;
 
 /* ── subscription management ── */
-export const SUB_TONES: Record<string, any[]> = { active: ['success', CircleCheckIcon], paused: ['waiting', ScheduleIcon], canceled: ['neutral', DoNotDisturbIcon], paid: ['success', CircleCheckIcon], refunded: ['neutral', EdUndoIcon], failed: ['negative', AlertIcon] };
+const SUB_TONES: Record<string, any[]> = { active: ['success', CircleCheckIcon], paused: ['waiting', ScheduleIcon], canceled: ['neutral', DoNotDisturbIcon], paid: ['success', CircleCheckIcon], refunded: ['neutral', EdUndoIcon], failed: ['negative', AlertIcon] };
 
 /** @public the prop type of SubscriptionManagement (ADR 0011) */
 export type SubscriptionManagementProps = {

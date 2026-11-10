@@ -13,7 +13,7 @@ import LockIcon from 'plenix-platform/icons/plenix/lock';
 import { cardBrand, formatCardNumber } from './card.ts';
 import { money } from './totals.ts';
 
-export const formatExpiry = (v: any) => { const d = String(v || '').replace(/\D/g, '').slice(0, 4); return d.length > 2 ? d.slice(0, 2) + ' / ' + d.slice(2) : d; };
+const formatExpiry = (v: any) => { const d = String(v || '').replace(/\D/g, '').slice(0, 4); return d.length > 2 ? d.slice(0, 2) + ' / ' + d.slice(2) : d; };
 
 /** @public the prop type of PaymentFields (ADR 0011) */
 export type PaymentFieldsProps = {

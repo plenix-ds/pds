@@ -32,7 +32,7 @@ const ViewMenu: any = ViewMenuJs;
 const QuickFilter: any = QuickFilterJs;
 const ProductCard: any = ProductCardJs;
 
-export const SIZES: Record<string, string> = { s: 'sm', m: 'md', l: 'lg' };
+const SIZES: Record<string, string> = { s: 'sm', m: 'md', l: 'lg' };
 
 /** @public a product: id and title, plus whatever the app keeps */
 export type Product = { id: string | number; title?: string; [key: string]: unknown };

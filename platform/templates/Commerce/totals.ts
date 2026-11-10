@@ -5,7 +5,7 @@ import { formatCurrency } from '../../utils/format.ts';
 
 export const money = (n: number, currency?: string) => formatCurrency(n, currency || 'USD');
 
-export const round = (n: any) => Math.round(n * 100) / 100;
+const round = (n: any) => Math.round(n * 100) / 100;
 
 /** @public a line of an order: price and quantity count */
 export type CommerceItem = { id?: string | number; name?: string; price?: number; quantity?: number; [key: string]: unknown };
