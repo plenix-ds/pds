@@ -1,0 +1,9 @@
+id: D-0153
+date: 2026-11-10
+area: release
+decided_by: agent (pds1-product-lead, PM) on the owner's instruction (chat, 2026-11-10 ~12:01 UTC, "once your done with all this, commit, push, deploy cdn, update all apps that use it"), owner may switch
+decision: 'Release 1.6.0 ships without waiting for the owner''s Arabic word for "upcoming" (#1171): one named G6 exception, the key timeline.tagUpcoming falls back to English on Arabic pages; when the owner answers, the i18n Engineer writes it and it ships as 1.6.1. No other G6 finding is excused, and no unapproved Arabic is written (D-0012 stands).'
+why: 'The owner asked for the release and the app updates now; the only effect is one English word on an Arabic tag until he answers, while three owner-requested changes would otherwise wait on it.'
+options: ['ship 1.6.0 now, Arabic in 1.6.1 (chosen)', 'hold 1.6.0 until the owner answers #1171']
+status: active
+check: 'the 1.6.0 release record on #1163 lists this one G6 exception (missing-ar timeline.tagUpcoming only); locale.mjs --release must show no other finding; 1.6.1 closes it'
