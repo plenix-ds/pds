@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # PDS1 team launcher (runs on the agent host, VM 131, as cc).
 # Each agent is a Claude Code session in tmux session "pds1", visible in the
-# Claude app through Remote Control as "PDS1 · <Role>" ("PDS1 - Product Lead" for the
-# Product Lead, so it sorts first: "-" comes before "·"), with its own worktree
+# Claude app through Remote Control as "PDS1 · <Role>" ("PDS1 - PM" for the Product
+# Lead, the project contact, so it sorts first: "-" comes before "·"), with its own worktree
 # and a memory limit from agents.config.yaml.
 #
 #   team.sh start-core          start the coordinators + Phase 0 roles (boot default)
@@ -37,8 +37,9 @@ CORE=(); for r in "${ROLES[@]}"; do IFS='|' read -r id _ _ parked boot _ _ <<<"$
 
 log() { echo "$(date -u +%FT%TZ) $*" >>"$LOG"; }
 display() { field "$1" 2; }
-# the session name: the Product Lead keeps "PDS1 - ", every other role "PDS1 · ", so the Product Lead sorts first (owner)
-session_title() { if [ "$1" = product-lead ]; then echo "PDS1 - $2"; else echo "PDS1 · $2"; fi; }
+# the session name: the Product Lead is "PDS1 - PM", like every project contact; every other role "PDS1 · <Role>",
+# so the PM sorts first (owner)
+session_title() { if [ "$1" = product-lead ]; then echo "PDS1 - PM"; else echo "PDS1 · $2"; fi; }
 mem_limit() { field "$1" 7; }   # the role's memory_limit_gb, else memory.per_agent_limit_gb (registry.mjs; no default here)
 
 worktree_for() {  # role instance -> directory
