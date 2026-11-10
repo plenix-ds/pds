@@ -28,6 +28,7 @@
     "chart-grid-line-width": { "$value": "{plx-sys.border-width-thin}", "$type": "dimension", "$description": "Chart: a grid line's width." },
     "chart-tick-label-text": { "$value": "{plx-sys.content-subtle}", "$type": "color", "$description": "Chart: a tick label (a value, a date, a category)." },
     "chart-tick-label-font-family": { "$value": "{plx-sys.font-data}", "$type": "fontFamily", "$description": "Chart: tick labels are technical values: the data font (Reddit Mono)." },
+    "chart-category-label-font-family": { "$value": "{plx-sys.font-label}", "$type": "fontFamily", "$description": "Chart: the labels of a category axis are names and words: the text font, never the data font (D-0165, ADR 0055)." },
     "chart-tick-label-font-size": { "$value": "{plx-sys.text-label-font-size}", "$type": "dimension", "$description": "Chart: a tick label's size." }
   }
 }
