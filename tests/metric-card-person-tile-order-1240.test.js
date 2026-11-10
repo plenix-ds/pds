@@ -1,7 +1,7 @@
 /* Plenix tests · the person tile is a column, not the plain tile's row (issue 1240, 1.7.0 regression found by CTM#326).
    Summary: MetricCard type="person" layout="tile" in a 320px column at 1366px, English and a long name: the card is a column (flex-direction: column), the value (count and unit) sits below the divider, not beside the name,
      the name is not cut to a few letters and nothing overlaps; the plain tile (no person) stays a row. Left to right and right to left.
-   Proof first: before the fix .plx-metric-card--tile (row) comes after .plx-metric-card--person-tile (column) at the same specificity, so the person tile is a row.
+   Proof first: before the fix the root carried both --tile (row) and --person-tile (column), set on the same properties at the same specificity, so the later rule (the row) won.
    Usage: node tests/metric-card-person-tile-order-1240.test.js   → METRIC_CARD_PERSON_TILE_ORDER_1240_OK */
 const assert = require('assert/strict'), { serve, launch } = require('./lib');
 require('./limit.js');
@@ -23,10 +23,11 @@ require('./limit.js');
         await new Promise((r) => setTimeout(r, 800));
         const cards = [...document.querySelectorAll('.plx-metric-card')], person = cards[0], plain = cards[1];
         const rc = (e) => e.getBoundingClientRect(), div = person.querySelector('.plx-metric-card__person-divider'), val = person.querySelector('.plx-metric-card__person-value'), name = person.querySelector('.plx-metric-card__person-name');
-        return { personDir: getComputedStyle(person).flexDirection, plainDir: getComputedStyle(plain).flexDirection, valueBelow: rc(val).top >= rc(div).bottom - 1, nameW: Math.round(rc(name).width), cardW: Math.round(rc(person).width),
+        return { personPad: getComputedStyle(person).paddingBlockStart, personHasTile: person.classList.contains('plx-metric-card--tile'), personDir: getComputedStyle(person).flexDirection, plainDir: getComputedStyle(plain).flexDirection, valueBelow: rc(val).top >= rc(div).bottom - 1, nameW: Math.round(rc(name).width), cardW: Math.round(rc(person).width),
           overlap: (() => { const a = rc(name), b = rc(val); return a.left < b.right && b.left < a.right && a.top < b.bottom && b.top < a.bottom; })() };
       }, dir);
       assert.equal(r.personDir, 'column', T + 'the person tile is a column ' + JSON.stringify(r));
+      assert.equal(r.personPad, '12px', T + 'the block padding is space-inset-md (12px), not the header padding ' + JSON.stringify(r)); assert.equal(r.personHasTile, false, T + 'the person tile root does not carry the plain tile class (one rule owns its direction)');
       assert.equal(r.plainDir, 'row', T + 'the plain tile stays a row');
       assert.ok(r.valueBelow, T + 'the value sits below the divider ' + JSON.stringify(r)); assert.ok(!r.overlap, T + 'the name and the value do not overlap');
       assert.ok(r.nameW > r.cardW * 0.5, T + 'the name has room (' + r.nameW + ' of ' + r.cardW + ')');
