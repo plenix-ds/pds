@@ -1,34 +1,10 @@
 /* Plenix tests · every one-line truncated text isolates its direction (issue 1283, follow-up of 1281): unicode-bidi: plaintext with text-align: match-parent on each ellipsis rule that holds text.
-   Summary: (1) static: every stylesheet rule with text-overflow: ellipsis has unicode-bidi: plaintext, unless it is in the allowlist below with its reason or on the pending list (tests/fixtures/rtl-truncate-pending-1283.json: the parts still to audit; it only shrinks);
-     (2) browser, in a right-to-left page: in EntityTitle, Persona and a Menu item, a long English label has its first character inside its box (the cut is at its end), a long Arabic one too,
+   Summary: which rules carry the isolation is the style rule bidi-isolate's (check-system.rules/bidi-isolate.js, #1285); this test is the behavior, in a right-to-left page: in EntityTitle, Persona and a Menu item, a long English label has its first character inside its box (the cut is at its end), a long Arabic one too,
      and a short English label in a box wider than its text stays at the inline start (right), not moved to the left.
-   Proof first: before the change the static list has dozens of rules without plaintext and the long English labels start outside their boxes in RTL.
+   Proof first: before the change a long English label starts outside its box in RTL, and a stretched Menu label with plaintext moved a short label to the left.
    Usage: node tests/rtl-truncate-audit-1283.test.js   → RTL_TRUNCATE_AUDIT_1283_OK */
-const assert = require('assert/strict'), fs = require('fs'), path = require('path'), { serve, launch } = require('./lib');
+const assert = require('assert/strict'), { serve, launch } = require('./lib');
 require('./limit.js');
-// the rules that are not a one-line label of user or app text, with the reason (G2, issue 1283)
-const ALLOW = {
-  'plx-combobox__input': 'a form control: the person types, the control is its own paragraph', 'plx-date-picker__input': 'a form control', 'plx-time-picker__input': 'a form control', 'plx-search__input': 'a form control',
-  'plx-stack:has': 'a custom property for a field label (not a text rule)', 'plx-data-pill__value': 'a value (a number is direction-neutral)',
-  'plx-data-grid__': 'DataGrid cells align per column (end for numbers); a bidi change there needs its own pass (follow-up)',
-};
-const ROOT = path.resolve(__dirname, '..', 'platform'); const files = [];
-(function walk(d) { for (const e of fs.readdirSync(d, { withFileTypes: true })) { const p = path.join(d, e.name); if (e.isDirectory()) { if (!/^(node_modules|dist|design-system|tokens)$/.test(e.name) && p !== path.join(ROOT, 'system')) walk(p); } else if (e.name.endsWith('.css')) files.push(p); } })(ROOT);
-const PENDING_FILE = path.join(__dirname, 'fixtures', 'rtl-truncate-pending-1283.json');   // the rules not yet audited (issue 1283); it only shrinks
-const pending = new Set(JSON.parse(fs.readFileSync(PENDING_FILE, 'utf8')).rules);
-const missing = [], seen = new Set();
-for (const f of files) {
-  const css = fs.readFileSync(f, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
-  for (const m of css.matchAll(/([^{};]+)\{([^{}]*text-overflow:\s*ellipsis[^{}]*)\}/g)) {
-    const sel = m[1].trim(); if (sel.startsWith('@') || /unicode-bidi:\s*plaintext/.test(m[2])) continue;
-    if (Object.keys(ALLOW).some((k) => sel.includes(k))) continue;
-    const key = path.relative(ROOT, f) + ': ' + sel.slice(0, 80); seen.add(key);
-    if (!pending.has(key)) missing.push(key);
-  }
-}
-assert.deepEqual(missing, [], 'an ellipsis rule without unicode-bidi: plaintext, an allowlist reason or a place on the pending list:\n  ' + missing.join('\n  '));
-const fixed = [...pending].filter((k) => !seen.has(k));
-assert.deepEqual(fixed, [], 'these rules are fixed: remove them from tests/fixtures/rtl-truncate-pending-1283.json:\n  ' + fixed.join('\n  '));
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 (async () => {
   const PORT = +process.env.TEST_PORT || 9990, server = await serve(PORT); let browser;
