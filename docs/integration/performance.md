@@ -25,8 +25,11 @@ Reference pages for rule 7: a DataGrid with 50 rows, a record page and a form.
 
 ## Rule 2: code per screen
 
-- Until the per-component entry points ship, an app loads `plenix.js` once and the browser caches it.
-- When they ship, import only what a screen uses. This page then lists the entry points. Do not deep-import files from the repository in the meantime.
+- Decided in ADR 0052 (not released yet): one public entry per export name. On npm: `@plenix-ds/react/DataGrid`. On the CDN: `/cdn/<version>/esm/DataGrid.js`.
+- A screen imports only the parts it uses. A router can `import()` a whole screen.
+- `plenix.js` and `plenix.esm.js` stay unchanged through 1.x, are deprecated in the minor that ships the entries, and are removed in 2.0.0.
+- Until the entries are released, load `plenix.js` once and let the browser cache it. Do not deep-import files from the repository.
+- The full guide, with measured sizes, is `docs/integration/code-per-screen.md` (#1210, written after the build ships).
 
 ## Rule 3: one parallel data request per screen
 
