@@ -1,0 +1,9 @@
+id: D-0154
+date: 2026-11-10
+area: release
+decided_by: agent (pds1-product-lead, PM) on #1163 (comment 2026-11-10 15:27 UTC, "Don't hold it for the Arabic upcoming"), applied by pds1-release-architect; owner may switch
+decision: 'Release 1.6.1 (the DataGrid quick-click fix, #1180/#1181) ships without waiting for the owner''s Arabic word for "upcoming" (#1171). The D-0153 G6 exception is extended to 1.6.1 for the same one key, timeline.tagUpcoming (missing-ar only). No other G6 finding is excused and no unapproved Arabic is written (D-0012 stands). The word ships in the next patch after the owner answers.'
+why: 'A DataGrid regression since 1.5.0 loses a quick click on a cut cell, likely in CTM''s grids too; holding the fix for one English word on an Arabic tag costs consumers more than it saves.'
+options: ['ship 1.6.1 now with the same one exception (chosen)', 'hold 1.6.1 until the owner answers #1171']
+status: active
+check: 'tools/checks/locale/g6-exceptions.json has one entry for 1.6.1 citing D-0154; locale.mjs --release shows no other finding; the 1.6.1 release record on #1163 lists the exception'
