@@ -60,6 +60,8 @@ import type { ChartDate } from './TimelineChart.tsx';
 export type GanttTask = { id: string; label: string; start: ChartDate; end?: ChartDate; /** 0 to 1 */ progress?: number; /** the ids of the tasks it waits for */ dependsOn?: string[]; /** a single date (start) */ milestone?: boolean; status?: string };
 /** @public */
 export type GanttChartProps = {
+  /** how the data table shows: a Dialog (default) or inline under the chart (ADR 0054) */
+  dataView?: 'dialog' | 'inline';
   title: string;
   description?: string;
   tasks?: GanttTask[];
@@ -72,7 +74,7 @@ export type GanttChartProps = {
   strings?: Record<string, string>;
   className?: string;
 };
-export function GanttChart({ title, description, tasks = [], today, range, color, size = 'lg', strings, className }: GanttChartProps) {
+export function GanttChart({ title, description, dataView, tasks = [], today, range, color, size = 'lg', strings, className }: GanttChartProps) {
   const t: any = useStrings('chart.ganttChart', strings);
   const uid = 'plx-gantt' + React.useId().replace(/[^a-zA-Z0-9]/g, '');
   const rows: any[] = tasks.map((k, i) => {
@@ -96,7 +98,7 @@ export function GanttChart({ title, description, tasks = [], today, range, color
   const lo = range ? toDate(range[0]) : new Date(Math.min.apply(null, rows.map((r) => r.start.getTime()).concat(now ? [now.getTime()] : [])));
   const hi = range ? toDate(range[1]) : new Date(Math.max.apply(null, rows.map((r) => r.end.getTime()).concat(now ? [now.getTime()] : [])));
   return (
-      <ChartFrame interaction={keys.interaction} title={title} description={description} size={size} table={table} className={cx('plx-gantt', className)}>
+      <ChartFrame interaction={keys.interaction} title={title} dataView={dataView} description={description} size={size} table={table} className={cx('plx-gantt', className)}>
         {({ inner, margin }) => {
           // tasks dated by day get day ticks or coarser, never hours (issue 593); today's marker does not count
           const x: any = scaleTime({ domain: [lo, hi], range: [0, inner.width], nice: !range, unit: wholeDays(rows.map((r) => r.start).concat(rows.map((r) => r.end))) ? 'day' : undefined });

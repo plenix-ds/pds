@@ -83,6 +83,8 @@ const tokenPx = (name: any) => {
 export type TreeNode = { id: string; label: string; /** an optional second line: a role, a count */ detail?: string; children?: TreeNode[] };
 /** @public */
 export type TreeChartProps = {
+  /** how the data table shows: a Dialog (default) or inline under the chart (ADR 0054) */
+  dataView?: 'dialog' | 'inline';
   title: string;
   description?: string;
   hideCaption?: boolean;
@@ -95,7 +97,7 @@ export type TreeChartProps = {
   strings?: Record<string, unknown>;
   className?: string;
 };
-export function TreeChart({ title, description, hideCaption, data, orientation = 'left-to-right', defaultFolded = NONE, folded: foldedProp, onFoldedChange,
+export function TreeChart({ title, description, dataView, hideCaption, data, orientation = 'left-to-right', defaultFolded = NONE, folded: foldedProp, onFoldedChange,
   interactive = true, strings, className }: TreeChartProps) {
   const t: any = useStrings('chart.treeChart', strings);
   const down = orientation === 'top-to-bottom';
@@ -286,7 +288,7 @@ export function TreeChart({ title, description, hideCaption, data, orientation =
   };
 
   return (
-    <ChartFrame title={title} description={description} hideCaption={hideCaption} margin={NO_MARGIN} table={table} fitHeight={fitHeight}
+    <ChartFrame title={title} dataView={dataView} description={description} hideCaption={hideCaption} margin={NO_MARGIN} table={table} fitHeight={fitHeight}
       interaction={interactive ? ia : undefined} strings={strings} className={cx('plx-tree-chart', 'plx-tree-chart--' + (ORIENTATIONS.indexOf(orientation) >= 0 ? orientation : 'left-to-right'), className)}>
       {draw}
     </ChartFrame>

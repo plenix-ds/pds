@@ -1,0 +1,9 @@
+id: D-0166
+date: 2026-11-10
+area: design
+decided_by: owner (chat, 2026-11-10, "it takes up so much space for nothing … i do not want a patch fix but an adjustment to our cards to be more practical with spacing")
+decision: 'MetricCard type="person" gets a compact, practical layout in Plenix for every app: a small photo or initials (about 48px) beside the name and role, a thin divider, the count small at the inline end (number in the data font, unit as a small label); WidgetGrid fits more such cards per row by a minimum card width. G2 decides whether it is the default or an opt-in until 2.0.0 (D-0107) (1240).'
+why: 'The owner finds today''s person card wastes space (a large initials box and a hero-size value, 4 per row).'
+options: ['compact person layout in Plenix (owner)', 'a CTM-only patch (rejected by the owner)']
+status: active
+check: 'tests and visual baselines on 1240 (computed card height and photo size; 5 or more per row at 1366px)'

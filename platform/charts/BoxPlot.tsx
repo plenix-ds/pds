@@ -49,7 +49,7 @@ export type BoxPlotStats = { min: number; q1: number; median: number; q3: number
 /** @public one group: its raw values (the summary is computed) or its summary */
 export type BoxPlotGroup = { id?: string | number; label: string; values?: number[]; stats?: BoxPlotStats };
 /** @public the prop type (ADR 0011) */
-export type BoxPlotProps = Pick<ChartFrameProps, 'title' | 'description' | 'hideCaption' | 'size' | 'margin' | 'legend' | 'legendPosition' | 'className'> & {
+export type BoxPlotProps = Pick<ChartFrameProps, 'title' | 'dataView' | 'description' | 'hideCaption' | 'size' | 'margin' | 'legend' | 'legendPosition' | 'className'> & {
   groups?: BoxPlotGroup[];
   orientation?: 'vertical' | 'horizontal';
   showOutliers?: boolean;
@@ -59,7 +59,7 @@ export type BoxPlotProps = Pick<ChartFrameProps, 'title' | 'description' | 'hide
   tooltip?: boolean;
   strings?: Record<string, string>;
 };
-export function BoxPlot({ title, description, hideCaption, size, groups = [], orientation = 'vertical', showOutliers = true, valueLabel, categoryLabel, format,
+export function BoxPlot({ title, description, dataView, hideCaption, size, groups = [], orientation = 'vertical', showOutliers = true, valueLabel, categoryLabel, format,
   tooltip = true, legend, legendPosition, margin, strings, className }: BoxPlotProps) {
   const t: any = useStrings('chart.boxPlot', strings);
   const o = orientation === 'horizontal' ? 'horizontal' : 'vertical';
@@ -135,7 +135,7 @@ export function BoxPlot({ title, description, hideCaption, size, groups = [], or
   };
 
   return (
-    <ChartFrame title={title} description={description} hideCaption={hideCaption} size={size} margin={NO_MARGIN} legend={legend} legendPosition={legendPosition}
+    <ChartFrame title={title} dataView={dataView} description={description} hideCaption={hideCaption} size={size} margin={NO_MARGIN} legend={legend} legendPosition={legendPosition}
       table={table} strings={strings} className={cx('plx-box-plot', 'plx-box-plot--' + o, className)}>
       {draw}
     </ChartFrame>

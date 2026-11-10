@@ -66,8 +66,9 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
       const tip = await page.evaluate(() => [...document.querySelectorAll('.plx-box-plot .plx-chart-tooltip')].map((e) => e.textContent.replace(/\s+/g, ' ').trim()).join(' | '));
       assert.ok(/Legal/.test(tip) && /15/.test(tip) && /10/.test(tip) && /8/.test(tip) && /7/.test(tip) && /4/.test(tip), T + 'the tooltip lists the five numbers of Legal: ' + tip); await page.mouse.move(5, 5);
       await page.evaluate(() => { const b = [...document.querySelectorAll('.plx-box-plot summary, .plx-box-plot button')].find((x) => /data/i.test(x.textContent)); if (b) b.click(); }); await wait(700);
-      const rows = await page.evaluate(() => document.querySelectorAll('.plx-box-plot [role=row][data-plx-record], .plx-box-plot table tbody tr').length);
+      const rows = await page.evaluate(() => document.querySelectorAll('.plx-box-plot [role=row][data-plx-record], .plx-box-plot table tbody tr, .plx-dialog [role=row][data-plx-record]').length);
       assert.equal(rows, 3, T + '"Show the data" has a row per group (' + rows + ')');
+      await page.keyboard.press('Escape'); await wait(300);
     }
     const bad = problems.filter((p) => !/Failed to load resource|net::|was fetched at run time/.test(p)); if (bad.length) console.log(bad);
     assert.deepEqual(bad, [], 'no errors or warnings');

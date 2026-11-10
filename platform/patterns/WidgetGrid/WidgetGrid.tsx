@@ -19,6 +19,8 @@
        first: "Move to the start", last: "Move to the end" } (widget and widgetLower stand in for a widget without a
        title, in the announcement and in the handle's name)
    Behavior:
+     A Panel that is a widget's own content fills its cell: the cards in one row end at the same height with their footers
+       aligned (Panel.fill; fill={false} opts out) (ADR 0054).
      Drag and drop (batch 271): the handle shows the grab cursor, grabbing while held or while its widget moves.
      Each widget gets a handle (a button) when the grid can be reordered: drag it onto another widget to place it there;
      or focus it and press Arrow Up (earlier) or Arrow Down (later); Arrow Left / Right follow reading order (in a
@@ -39,6 +41,7 @@ import { Menu, MenuItem } from '../../components/Menu/Menu.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import DragIcon from 'plenix-platform/icons/plenix/drag';
 import { fill } from '../../utils/fill.ts';
+import { PanelFillContext } from '../../utils/panelFill.ts';
 
 const move = (ids: any, from: any, to: any) => { const next = ids.slice(); const [x] = next.splice(from, 1); next.splice(to, 0, x); return next; };
 
@@ -105,7 +108,7 @@ export function WidgetGrid<T extends Widget = Widget>(props: WidgetGridProps<T>)
               <MenuItem disabled={i === items.length - 1} onSelect={() => place(i, items.length - 1)}>{t.last}</MenuItem>
             </Menu>
           ) : null;
-          return renderItem && renderItem.length > 1 ? renderItem(it, handle) : <>{handle}{renderItem ? renderItem(it) : null}</>; })()}
+          return <PanelFillContext.Provider value={true}>{renderItem && renderItem.length > 1 ? renderItem(it, handle) : <>{handle}{renderItem ? renderItem(it) : null}</>}</PanelFillContext.Provider>; })()}
         </div>
       ))}
     </div>

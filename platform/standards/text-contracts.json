@@ -1815,6 +1815,13 @@
     "line-height"
    ]
   },
+  "plx-loading-state__slow": {
+   "contract": "adjusts",
+   "props": [
+    "font-size",
+    "line-height"
+   ]
+  },
   "plx-match": {
    "contract": "adjusts",
    "props": [

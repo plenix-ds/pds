@@ -110,7 +110,7 @@ export function viewMenu({ props, B, S, effectiveStep, setRowHeight, effectiveWr
   ) : null;
 }
 
-export function emptyRow({ model, B, isStatic, ordered, remoteMode, remoteBusy, loading, S, empty }: any) {
+export function emptyRow({ model, B, isStatic, ordered, remoteMode, remoteBusy, loading, onLoadingCancel, S, empty }: any) {
   return !model.length ? (
     <div className={cx(`${B}__grid-placeholder`, isStatic && B + '__grid-placeholder--static')} role="row">
       <div
@@ -118,7 +118,7 @@ export function emptyRow({ model, B, isStatic, ordered, remoteMode, remoteBusy, 
         role={isStatic ? 'cell' : 'gridcell'}
         aria-colspan={Math.max(1, ordered.length)}
       >
-        {(remoteMode && remoteBusy) || loading ? <LoadingState size="md" label={S.loading} /> : <span className={B + '__empty'}>{empty || S.empty}</span>}
+        {(remoteMode && remoteBusy) || loading ? <LoadingState size="md" label={S.loading} onCancel={onLoadingCancel} /> : <span className={B + '__empty'}>{empty || S.empty}</span>}
       </div>
     </div>
   ) : null;

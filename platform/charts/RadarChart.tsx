@@ -50,7 +50,7 @@ export type RadarAxis = { key: string; label: string };
 /** @public one item: its values by axis key, or in the axes' order, and an optional data-viz step */
 export type RadarSeries = { id?: string | number; label: string; values: Record<string, number> | number[]; color?: string };
 /** @public the prop type (ADR 0011) */
-export type RadarChartProps = Omit<Pick<ChartFrameProps, 'title' | 'description' | 'hideCaption' | 'size' | 'margin' | 'legend' | 'legendPosition' | 'className'>, 'legend'> & {
+export type RadarChartProps = Omit<Pick<ChartFrameProps, 'title' | 'dataView' | 'description' | 'hideCaption' | 'size' | 'margin' | 'legend' | 'legendPosition' | 'className'>, 'legend'> & {
   axes?: RadarAxis[];
   series?: RadarSeries[];
   max?: number;
@@ -62,7 +62,7 @@ export type RadarChartProps = Omit<Pick<ChartFrameProps, 'title' | 'description'
   tooltip?: boolean;
   strings?: Record<string, string>;
 };
-export function RadarChart({ title, description, hideCaption, size = 'lg', axes = [], series = [], max, rings = 4, format, showPoints = true, legend, legendPosition,
+export function RadarChart({ title, description, dataView, hideCaption, size = 'lg', axes = [], series = [], max, rings = 4, format, showPoints = true, legend, legendPosition,
   tooltip = true, margin, strings, className }: RadarChartProps) {
   const t: any = useStrings('chart.radarChart', strings);
   const fmt = (v: any) => (typeof format === 'function' ? format(v) : formatNumber(v));
@@ -129,7 +129,7 @@ export function RadarChart({ title, description, hideCaption, size = 'lg', axes 
   };
 
   return (
-    <ChartFrame title={title} description={description} hideCaption={hideCaption} size={size} margin={NO_MARGIN} legend={key} legendPosition={legendPosition}
+    <ChartFrame title={title} dataView={dataView} description={description} hideCaption={hideCaption} size={size} margin={NO_MARGIN} legend={key} legendPosition={legendPosition}
       table={table} strings={strings} className={cx('plx-radar-chart', list.length > 1 && 'plx-radar-chart--compare', className)}>
       {draw}
     </ChartFrame>

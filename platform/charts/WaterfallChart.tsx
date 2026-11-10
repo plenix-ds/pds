@@ -54,6 +54,8 @@ const COLORS: Record<string, string> = { up: 'status-positive', down: 'status-ne
 export type WaterfallSelection = { c: number; step: { label: string; kind: string; from: number; to: number; change: number | null } };
 /** @public */
 export type WaterfallChartProps = {
+  /** how the data table shows: a Dialog (default) or inline under the chart (ADR 0054) */
+  dataView?: 'dialog' | 'inline';
   title: string;
   description?: string;
   /** the steps in order; a total (total: true) is a column from zero */
@@ -71,7 +73,7 @@ export type WaterfallChartProps = {
   interactionStrings?: Record<string, string>;
   className?: string;
 };
-export function WaterfallChart({ title, description, data = [], endLabel, format, yLabel, size = 'md', margin, legend = true, interactive = true, onSelect,
+export function WaterfallChart({ title, description, dataView, data = [], endLabel, format, yLabel, size = 'md', margin, legend = true, interactive = true, onSelect,
   strings, frameStrings, interactionStrings, className }: WaterfallChartProps) {
   const t: any = useStrings('chart.waterfallChart', strings);
   const fmt = typeof format === 'function' ? format : (v: any) => formatNumber(v);
@@ -158,7 +160,7 @@ export function WaterfallChart({ title, description, data = [], endLabel, format
   };
 
   return (
-    <ChartFrame title={title} description={description} size={size} margin={NO_MARGIN} table={table} legend={legendNode}
+    <ChartFrame title={title} dataView={dataView} description={description} size={size} margin={NO_MARGIN} table={table} legend={legendNode}
       interaction={interactive ? ia : undefined} strings={frameStrings}
       className={cx('plx-waterfall-chart', bars.some((b, i) => b.kind === 'total' && i > 0 && !b.end) && 'plx-waterfall-chart--subtotals', className)}>
       {draw}

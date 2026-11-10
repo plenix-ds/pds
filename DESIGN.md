@@ -83,6 +83,7 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 
 - Quiet, dense, work-focused UI for data-heavy applications. Fluent-style controls on near-white surfaces, with one blue accent.
 - **Buttons** and menu commands are Fluent 2 style (D-0023): 1px borders, 4px corners; filled primary in the accent colour, outlined secondary, ghost for toolbars.
+- **Menus open toward the start** (#1248): a menu from a trigger (⋮, More, a row menu, a caret button) aligns its end edge with the trigger's end edge (`bottom-end`), so it extends toward the start, and it flips only when there is no room. MenuBar top-level menus, field pickers and Popover stay start-aligned. RTL mirrors.
 - **No icon in a box** (D-0024). By default an icon is never drawn on its own tinted tile; a box stays only where a specific usage calls for it.
 - **Footers have no fill** (D-0102, #948). Save and Cancel sit at the end, on the surface of the card, form or dialog that holds them, never on a grey band. A hairline separates them only where content passes under or scrolls behind them (a sticky bar, a dialog whose body scrolls). Details: `docs/pds1/slices/948/design.md`.
 - **No action links.** An action is a Button, never a text link. Links only navigate.
@@ -115,7 +116,7 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 ## 3. Type (D-0006)
 
 - **DM Sans** for all text. Arabic falls back to IBM Plex Sans Arabic, and Arabic titles to Readex Pro.
-- **Reddit Mono** (`plx-sys.font-data`) is for numbers in data: grid and table cells, metrics, counts in data views, codes and IDs. It is also used for code.
+- **Reddit Mono** (`plx-sys.font-data`) is for data, by one rule in every component (D-0164, D-0165): a number, amount, count, date, time, ID, code, key, file name, path, URL, email or version uses it wherever it stands as a value (a cell, a field value, a metric, a chart value, a date tile, a count, a meta line). A name or a word never does. In a phrase that mixes them, only the data runs are Reddit Mono (`dataPhrase`, `dataWhenText`). It is also used for code. Enforced by `lint-type-roles` (#1232).
 - **Never mono in prose.** "7 events" in a sentence, a heading or a button stays in DM Sans. Numbers there use `font-variant-numeric: tabular-nums` only when they need to line up.
 - Sizes come only from the type roles in the front matter (check 3). No numeric `font-size` in CSS. Nothing below 12px, except the read-only field label (11px, owner, D-0106). `font-size-09`, `-10` and `-11` are retired (section 12).
 - **surface-title** (15px, 700) is the title of a dialog, a sheet or a SecondaryPane (#122; the pane, D-0123). Page and section titles use **title** (20px).
@@ -125,6 +126,7 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 
 - **The SecondaryPane title is the largest text in the pane:** surface-title, 15px, 700, `content-default`. It was 12px, 600 (changed, D-0123). Below it come the NavList item (13px, 400), then the section label (12px, 700, caps, `content-muted`), then the back item (12px, 400, `content-muted`).
 - **A back item** ("Back to {name}", `SecondaryPane back`, ADR 0038) is a link row above the title row, start-aligned, with its arrow on the title's start edge. It is never a filled or centred button. In the folded rail it is the first control. Details: `docs/pds1/slices/995-nav-back/design.md`.
+- **Navigation pane widths** (D-0168, D-0169, #1243): the main NavPane and every SecondaryPane used as navigation start at one standard width, 240px, in every window and frame (no window steps). The person can resize the pane by its edge (drag, or arrow keys in 8px steps) between its min and max, and the width is remembered. A double-click or Enter on the edge resets it. A settings nav is a docked SecondaryPane titled "Settings", never a card in the content (#1242).
 
 ### Read-only fields and card headings (D-0106, #946)
 

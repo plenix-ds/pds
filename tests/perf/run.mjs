@@ -9,7 +9,7 @@ import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
-import { PAGES, TARGETS, html } from './pages.mjs';
+import { PAGES as ALL, REFERENCE as PAGES, TARGETS, html } from './pages.mjs';
 const require = createRequire(import.meta.url);
 const { launch } = require('../lib.js');
 const arg = (n, d) => { const i = process.argv.indexOf('--' + n); return i < 0 ? d : (process.argv[i + 1] && !process.argv[i + 1].startsWith('--') ? process.argv[i + 1] : true); };
@@ -23,7 +23,7 @@ function serve() {   // pages at /page/<name>; with --dir, the build at /cdn/loc
     const s = http.createServer((req, res) => {
       const u = new URL(req.url, 'http://x');
       const m = u.pathname.match(/^\/page\/(\w+)$/);
-      if (m && PAGES.includes(m[1])) { res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' }); res.end(html(m[1], BASE, MODE)); return; }
+      if (m && ALL.includes(m[1])) { res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' }); res.end(html(m[1], BASE, MODE)); return; }
       if (DIR && u.pathname.startsWith('/cdn/local/')) {
         const f = path.join(path.resolve(DIR), path.normalize(u.pathname.slice('/cdn/local/'.length)));
         if (f.startsWith(path.resolve(DIR)) && fs.existsSync(f) && fs.statSync(f).isFile()) { res.writeHead(200, { 'content-type': TYPES[path.extname(f)] || 'application/octet-stream' }); fs.createReadStream(f).pipe(res); return; }

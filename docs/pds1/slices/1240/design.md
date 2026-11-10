@@ -26,7 +26,7 @@
 - **Avatar:** `size="xl"` (48px) with its own corner, initials and gender colours (`Avatar`; `name`, `src`, `gender`). Its block alignment is start, with its top on the name's first line.
 - **Gap**, Avatar to text: 12px (`space-inline-md`, as `metric-card-header-gap`).
 - **Name** (the card title, `title || person.name`):
-  - role `text-heading` (13px, 600), `content-strong`;
+  - role `text-heading` (13px, 600), in the card's text colour (`content-default` on plain; the appearance's text on edge and soft);
   - up to **2 lines**, then an ellipsis, with the full name in the Plenix Tooltip while it is cut (`useTruncated`);
   - it stays the card's heading element (`headingLevel`) and its `aria-labelledby` target;
   - a link when `href` is set (`metric-card__link`, unchanged).
@@ -59,7 +59,7 @@
 | loading (`state="loading"`) | the first row (Avatar, name, role) shows. The value row is the existing `Loading` line (its label "Loading {title}") at the value row's height, so nothing jumps |
 | error (`state="error"`) | the first row shows. Under the divider, the existing Notice (danger) with Retry (`size="xs"`) replaces the value row |
 | selected | n/a (no selection) |
-| empty (`state="empty"`) | the value row shows "–" in `font-data`, 20px, `content-muted`, and no unit |
+| empty (`state="empty"`) | the value row shows "–" in `font-data`, 20px, in the card's subtle text colour (as MetricCard's empty value), and no unit |
 | word value ("Hidden") | the value row shows the word in the unit's style (`text-eyebrow`, `content-muted`, DM Sans) and no number (reading A). The data font never sets a word (D-0164) |
 | stale (`state="stale"`) | as today: the "Stale" status Badge at the inline start of the value row |
 | long text | the name wraps to 2 lines, then ends in an ellipsis with a Tooltip. The role and the unit are one line with an ellipsis and a Tooltip. The number never cuts; the unit cuts first |
@@ -87,7 +87,7 @@
 
 ## 6. Choices the engineer must not invent
 
-- The anatomy in §1: no header band, Avatar `xl`, 12px gap, name 2 lines (`text-heading`, `content-strong`), role 1 line (`text-secondary`, `content-muted`), inset divider, value row at the inline end, number `font-data` 20px 700, unit `text-eyebrow` `content-muted`, 12px block and 16px inline padding.
+- The anatomy in §1: no header band, Avatar `xl`, 12px gap, name 2 lines (`text-heading`, the card's text colour), role 1 line (`text-secondary`, `content-muted`), inset divider, value row at the inline end, number `font-data` 20px 700, unit `text-eyebrow` `content-muted`, 12px block and 16px inline padding.
 - One size for every `size`. No density.
 - `type="person" layout="tile"` (opt-in in 1.x, the default in 2.0.0; ADR 0056). A word value takes the unit style (reading A). WidgetGrid `itemSize="sm"` is `size-50u`.
 - **Tests (test first):**

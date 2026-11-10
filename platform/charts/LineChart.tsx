@@ -88,6 +88,8 @@ const axisTicks = (chart: any, axis: any) => {
 export type ChartSeries = { id: string; label: string; /** the row field; defaults to id */ field?: string };
 /** @public the props every line and area chart takes */
 export type LineChartProps = {
+  /** how the data table shows: a Dialog (default) or inline under the chart (ADR 0054) */
+  dataView?: 'dialog' | 'inline';
   title: string;
   description?: string;
   /** the rows, in the x order; a missing value (null) breaks the line */
@@ -122,7 +124,7 @@ export type LineChartProps = {
 };
 /** @public the area chart's props: the line chart's and how areas stack */
 export type AreaChartProps = LineChartProps & { stack?: 'none' | 'stacked' | 'percent' };
-export function SeriesChart({ kind = 'line', title, description, data = NONE, x = 'x', series = NONE, xType = 'auto', curve = 'linear', step = 'after',
+export function SeriesChart({ kind = 'line', title, description, dataView, data = NONE, x = 'x', series = NONE, xType = 'auto', curve = 'linear', step = 'after',
   points = false, stack = 'none', zero = true, yDomain, format, formatX, xLabel, yLabel, size = 'md', margin, legend = 'auto', legendPosition = 'bottom',
   interactive = true, zoom = false, onSelect, overlay, strings, frameStrings, interactionStrings, className }: LineChartProps & { kind?: 'line' | 'area'; stack?: 'none' | 'stacked' | 'percent' }) {
   const t: any = useStrings('chart.lineChart', strings);
@@ -284,7 +286,7 @@ export function SeriesChart({ kind = 'line', title, description, data = NONE, x 
   };
 
   return (
-    <ChartFrame title={title} description={description} size={size} margin={{ top: 0, end: 0, bottom: 0, start: 0 }} table={table} legend={legendNode} legendPosition={legendPosition}
+    <ChartFrame title={title} dataView={dataView} description={description} size={size} margin={{ top: 0, end: 0, bottom: 0, start: 0 }} table={table} legend={legendNode} legendPosition={legendPosition}
       interaction={interactive ? ia : undefined} strings={frameStrings}
       className={cx(area ? 'plx-area-chart' : 'plx-line-chart', area && stacked && 'plx-area-chart--stacked', className)}>
       {draw}

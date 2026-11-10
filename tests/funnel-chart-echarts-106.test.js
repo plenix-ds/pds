@@ -58,9 +58,10 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
       for (const w of ['12,400', '5,200 · 42%', '3,900 · 75%', '2,100 · 54%']) assert.ok(text.includes(w), T + 'the label ' + w + ' is written at its bar');
       // Show the data
       await page.evaluate(() => { const b = [...document.querySelectorAll('.plx-funnel summary, .plx-funnel button')].find((x) => /data/i.test(x.textContent)); if (b) b.click(); }); await wait(700);
-      const rows = await page.evaluate(() => document.querySelectorAll('.plx-funnel [role=row][data-plx-record], .plx-funnel table tbody tr').length);
+      const rows = await page.evaluate(() => document.querySelectorAll('.plx-funnel [role=row][data-plx-record], .plx-funnel table tbody tr, .plx-dialog [role=row][data-plx-record]').length);
       assert.equal(rows, 4, T + '"Show the data" has a row per stage (' + rows + ')');
-      await page.evaluate(() => { const b = [...document.querySelectorAll('.plx-funnel summary')].find((x) => /data/i.test(x.textContent)); if (b) b.click(); }); await wait(300);
+      await page.keyboard.press('Escape'); await wait(300);
+      // the Dialog is closed above (Escape)
       // keyboard: the ring on the bar, the count said, the tooltip
       await page.focus('.plx-funnel [role=group][tabindex="0"]'); await page.keyboard.press('Home'); await wait(300);
       for (let i = 0; i < 4; i++) {
