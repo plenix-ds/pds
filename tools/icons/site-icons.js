@@ -148,7 +148,7 @@ function resolver(root) {
 }
 
 // the classic script that registers the modules: a path used more than once is written once, as a shared constant
-function fileText(site, modules, source, build) {
+function fileText(site, modules, source, build, esm) {
   const count = new Map();
   for (const m of modules) for (const size of [20, 24]) for (const k of ['outline', 'fill']) { const d = m.drawings[size][k].d; count.set(d, (count.get(d) || 0) + 1); }
   const shared = [...count.keys()].filter((d) => count.get(d) > 1), index = new Map(shared.map((d, i) => [d, i]));
@@ -161,6 +161,13 @@ function fileText(site, modules, source, build) {
     return '    ' + body;
   });
   const sets = [...new Set(modules.map((m) => m.set))].sort();
+  // the module form (ADR 0052, #1209): the same data and shared paths; it imports registerIcons from the Plenix entry (esm is the import path) instead of finding window.Plenix
+  if (esm) return '/*\n * ' + HEADER + '\n * Plenix icons for ' + site + ': ' + modules.length + ' icon' + (modules.length === 1 ? '' : 's') + ' (' + sets.join(', ') + '), registered with registerIcons.\n' +
+    ' * Source: ' + source + '\n * Build: ' + (build || (site === 'plenix' ? 'node build-app.js (tools/icons/site-icons.js)' : COMMAND + ' ' + site + ' <the site\'s source> --esm')) + '\n' +
+    ' * The ES module form of plenix-icons-' + site + '.js: import it where the icons are drawn. The drawings are data (paths), checked by the Icon component before they are drawn.\n */\n' +
+    'import { registerIcons } from ' + JSON.stringify(esm).replace(/^"|"$/g, "'") + ';\n' +
+    'const p = ' + JSON.stringify(shared) + ';\n' +
+    'registerIcons([\n' + lines.join(',\n') + '\n]);\n';
   return '/*\n * ' + HEADER + '\n * Plenix icons for ' + site + ': ' + modules.length + ' icon' + (modules.length === 1 ? '' : 's') + ' (' + sets.join(', ') + '), registered with Plenix.registerIcons.\n' +
     ' * Source: ' + source + '\n * Build: ' + (build || (site === 'plenix' ? 'node build-app.js (tools/icons/site-icons.js)' : COMMAND + ' ' + site + ' <the site\'s source>')) + '\n' +
     ' * Load it after plenix.js. The drawings are data (paths), checked by the Icon component before they are drawn.\n */\n' +
@@ -184,7 +191,7 @@ function siteFile(root, site, inputs, base, opts = {}) {
   }
   const modules = [...chosen.values()].sort((a, b) => (a.set + a.entry.name < b.set + b.entry.name ? -1 : 1)).map((r) => catalog.module(r.set, r.entry));
   const source = opts.source || 'the source of ' + site + ' (' + inputs.length + ' input' + (inputs.length === 1 ? '' : 's') + ')';
-  return { text: fileText(site, modules, source, opts.build), icons: modules.length, unknown, unresolved, unreadable, found: names.size };
+  return { text: fileText(site, modules, source, opts.build, opts.esm), icons: modules.length, unknown, unresolved, unreadable, found: names.size };
 }
 
 // this repository's pages (#557): each suite application and the Asset Manager loads its own icon file after platform.js,
@@ -249,20 +256,35 @@ function buildCompat(root, opts = {}) {
   return { file: COMPAT, icons: modules.length, bytes: Buffer.byteLength(text), stale, changed: !!stale.length };
 }
 
-module.exports = { collect, siteFile, catalogData, packageCatalog, buildCompat, buildPages, markupOf, PAGES, LOGIN, fileText, inlineScripts, COMPAT, HEADER };
+// the compatibility set's module form (ADR 0052, #1209): platform/dist/plenix-icons-plenix.esm.js; the release copies it to esm/icons/plenix.js, where
+// registerIcons is the entry beside it (../registerIcons.js)
+const COMPAT_ESM = 'platform/dist/plenix-icons-plenix.esm.js', COMPAT_ESM_IMPORT = '../registerIcons.js';
+function buildCompatModule(root, opts = {}) {
+  const modules = layout.plenixEntries(root).map((e) => layout.moduleObject('plenix', e));
+  const text = fileText('plenix', modules, layout.SOURCE.plenix + ': every Plenix icon', null, COMPAT_ESM_IMPORT);
+  const file = path.join(root, COMPAT_ESM), now = fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : null;
+  const stale = now === text ? [] : [COMPAT_ESM];
+  if (!opts.check && stale.length) { fs.mkdirSync(path.dirname(file), { recursive: true }); fs.writeFileSync(file, text); }
+  return { file: COMPAT_ESM, icons: modules.length, bytes: Buffer.byteLength(text), stale, changed: !!stale.length };
+}
+
+module.exports = { collect, siteFile, catalogData, packageCatalog, buildCompat, buildCompatModule, buildPages, markupOf, PAGES, LOGIN, fileText, inlineScripts, COMPAT, COMPAT_ESM, HEADER };
 
 if (require.main === module) {
-  const args = process.argv.slice(2), flags = new Set(args.filter((a) => a === '--allow-unknown'));
-  const outAt = args.indexOf('--out'), out = outAt >= 0 ? args[outAt + 1] : '.';
-  const rest = args.filter((a, i) => a !== '--allow-unknown' && i !== outAt && i !== outAt + 1);
+  const args = process.argv.slice(2), flags = new Set(args.filter((a) => a === '--allow-unknown' || a === '--esm'));
+  // (a flag that is absent has index -1: its value's index is not 0, the site's name)
+  const outAt = args.indexOf('--out'), out = outAt >= 0 ? args[outAt + 1] : '.', impAt = args.indexOf('--import');
+  const rest = args.filter((a, i) => a !== '--allow-unknown' && a !== '--esm' && (outAt < 0 || (i !== outAt && i !== outAt + 1)) && (impAt < 0 || (i !== impAt && i !== impAt + 1)));
+  // --esm writes the ES module form (plenix-icons-<site>.esm.js); --import: the module it imports registerIcons from (default the npm entry)
+  const esm = flags.has('--esm') ? (impAt >= 0 ? args[impAt + 1] : '@plenix-ds/react/registerIcons') : null;
   const [site, ...inputs] = rest;
   if (!site || !/^[a-z0-9][a-z0-9-]*$/.test(site) || !inputs.length) {
-    console.error('usage: ' + COMMAND + ' <site> <folder or file> […] [--out <folder>] [--allow-unknown]\n  <site>: lowercase letters, digits and dashes');
+    console.error('usage: ' + COMMAND + ' <site> <folder or file> […] [--out <folder>] [--allow-unknown] [--esm [--import <path>]]\n  <site>: lowercase letters, digits and dashes\n  --esm: write the ES module form (plenix-icons-<site>.esm.js) instead of the classic script; it imports registerIcons from --import (default @plenix-ds/react/registerIcons)');
     process.exit(2);
   }
   if (site === 'plenix') { console.error('"plenix" is the compatibility file\'s name (every Plenix icon; node build-app.js writes it): choose your site\'s own name'); process.exit(2); }
   for (const i of inputs) if (!fs.existsSync(i)) { console.error('not found: ' + i); process.exit(2); }
-  const r = siteFile(PACKAGED ? packageCatalog() : ROOT, site, inputs, process.cwd());
+  const r = siteFile(PACKAGED ? packageCatalog() : ROOT, site, inputs, process.cwd(), { esm });
   for (const u of r.unreadable) console.error('cannot read ' + u);
   for (const u of r.unknown) console.error('unknown icon name: ' + u);
   if (PACKAGED && r.unknown.length) console.error('The package knows every Plenix icon and the Material symbols in its svg/ folder; another Material Symbols name needs a Plenix checkout (node tools/icons/site-icons.js)');
@@ -272,7 +294,7 @@ if (require.main === module) {
     console.error('Nothing written: ' + r.unknown.length + ' unknown and ' + r.unresolved.length + ' run-time name' + (r.unresolved.length === 1 ? '' : 's') + ' (fix them, or pass --allow-unknown to write the file without them)');
     process.exit(1);
   }
-  const file = path.join(out, 'plenix-icons-' + site + '.js');
+  const file = path.join(out, 'plenix-icons-' + site + (esm ? '.esm' : '') + '.js');
   fs.mkdirSync(out, { recursive: true });
   fs.writeFileSync(file, r.text);
   console.log('Wrote ' + file + ': ' + r.icons + ' icon' + (r.icons === 1 ? '' : 's') + ' (' + Math.round(Buffer.byteLength(r.text) / 1024) + ' KB)' +
