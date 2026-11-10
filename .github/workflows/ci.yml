@@ -377,7 +377,7 @@ jobs:
       - name: Did anything the package is built from change?
         id: scope
         run: |
-          if git diff --quiet "$(git merge-base "$BASE_SHA" HEAD)" HEAD -- platform packages build-app.js build-usage.js build-packages.js build-exports.js check-bundle.js tools/agent/one-part-sizes.js tools/agent/one-part-vite.mjs tools/checks/perf-budget.mjs tools/checks/perf-budget.json package.json package-lock.json .github/workflows/ci.yml; then
+          if git diff --quiet "$(git merge-base "$BASE_SHA" HEAD)" HEAD -- platform packages build-app.js build-usage.js build-packages.js build-exports.js check-bundle.js tools/agent/one-part-sizes.js tools/agent/one-part-vite.mjs tools/checks/perf-budget.mjs tools/checks/perf-budget.json tests/perf tests/lib.js package.json package-lock.json .github/workflows/ci.yml; then
             echo "run=no" >> "$GITHUB_OUTPUT"
             echo "package sources, build and measure unchanged: not run for this PR"
           else
@@ -404,6 +404,18 @@ jobs:
       - name: Performance budgets (tools/checks/perf-budget.mjs)
         if: steps.scope.outputs.run == 'yes'
         run: node tools/checks/perf-budget.mjs
+      # speed on the reference pages (owner rule 7, D-0160, #1213): QA's harness (tests/perf, #1212) traces this PR's own
+      # build in headless Chrome; LCP and INP per page must stay within traces in perf-budget.json. No Chrome is a failure
+      - name: Speed budgets, LCP and INP on the reference pages (tests/perf/run.mjs)
+        if: steps.scope.outputs.run == 'yes'
+        run: |
+          CHROME_PATH="$(command -v google-chrome || true)"
+          [ -n "$CHROME_PATH" ] || { echo "::error::no Chrome on the runner: the speed budgets cannot run"; exit 1; }
+          export CHROME_PATH
+          version=$(node -p "require('./package.json').version")
+          node tests/perf/run.mjs --dir "release/cdn/$version" --runs 3 --json "$RUNNER_TEMP/trace.json" | tee "$RUNNER_TEMP/trace.txt"
+          { echo "### Speed on the reference pages"; echo '```'; cat "$RUNNER_TEMP/trace.txt"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          node tools/checks/perf-budget.mjs --traces "$RUNNER_TEMP/trace.json"
       # over a limit: the same imports measured on the base, so the PR shows what it added. The PR then loads the new code
       # on first use, or carries a decision record that raises the limit, with G3 from the DS Architect (#1144)
       - name: Over a limit, the base's sizes beside the head's
