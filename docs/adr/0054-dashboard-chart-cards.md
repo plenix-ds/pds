@@ -39,11 +39,12 @@
 ### Charts
 
 - **`dataView?: "dialog" | "inline"`** on `ChartFrame` and on every chart that passes ChartFrame's props (added to each chart's `Pick<ChartFrameProps, …>`). The default is `"dialog"`.
-  - **`"dialog"`:** a subtle Button "Show the data" (`strings.showData`, the same key) opens a Dialog. The Dialog's title is the chart's `title`, and its body is the same table, built on first open as today. Focus returns to the button on close.
+  - **`"dialog"`:** a ghost (`variant="ghost"`, `sm`) Button "Show the data" (`strings.showData`, the same key) opens a Dialog. The Dialog's title is the chart's `title`, and its body is the same table, built on first open as today. Focus returns to the button on close.
   - **`"inline"`:** today's `Details` under the chart, unchanged.
   - `Gauge` takes the same prop, with the same behavior.
 - **Strings:** `chart.chartFrame.showData` (the button) and `table` (the table's accessible name, "{title}: data") stay. The Dialog's close button uses the Dialog's own strings. No new string, unless G2 words a new one.
 - **Class:** `plx-chart__data-button` (the button). The Dialog uses its own classes.
+- **Type:** `ChartDataView` (`"dialog" | "inline"`), the type of `dataView`, exported with the chart types (#1253).
 
 ## Consequences
 
