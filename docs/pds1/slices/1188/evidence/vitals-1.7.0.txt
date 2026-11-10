@@ -1,0 +1,5 @@
+Plenix perf · https://design-system.lighthouseway.org/cdn/1.7.0 · light · median of 5 loads · budgets: LCP 2500 ms, INP 200 ms
+page    LCP ms  INP ms  recalc ms (count)  click recalc ms  verdict
+grid        80      16      17.5     (26)             6.5   within budget
+record      48       0      12.2      (8)             4.3   within budget
+form        48       0      12.7      (7)             4.2   within budget
