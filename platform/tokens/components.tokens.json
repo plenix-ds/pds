@@ -1,5 +1,5 @@
 {
-  "$description": "components tokens written under :root Written on :root and on every density and interaction context, so a component token that points to a density role is computed where the region sets its density (a custom property is computed where it is declared; batch 221).",
+  "$description": "components tokens. The set's selector is the broad scope, but packages/tokens/sd/assemble.cjs writes each token only where it can change (#1188): a token whose references reach a density or interaction value on :root and on every density and interaction context (so it is computed where a region sets its density; a custom property is computed where it is declared, batch 221); one that reaches a theme value on :root and on every theme context ([data-plx-theme], [data-plx-mode]: a ThemeZone); the rest on :root alone.",
   "$extensions": {
     "com.plenix": {
       "output": "platform/system/tokens/components.css",

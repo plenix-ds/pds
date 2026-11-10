@@ -195,8 +195,38 @@ function load(root = ROOT) {
 // JSON_VALUE (the token's own $value as CSS) only where the text doesn't matter (where each token is written, for the
 // index) or as the regression check of style-dictionary/build.mjs --bytes
 const JSON_VALUE = (set, name, raw) => toCss(raw);
+// The broad scope (#1188): a token set written on ":root,[data-plx-density],[data-plx-interaction]" is re-declared on every
+// element with a density or interaction attribute, so a token that points to a density role is computed where a region
+// sets its density (a custom property is computed where it is declared). Only the tokens whose references reach a
+// density or interaction value need that; the ones that reach a theme value need the theme scope instead (a ThemeZone
+// carries data-plx-theme and data-plx-mode); the rest are computed once, on :root. Re-declaring all of them (5,564) on
+// every DataGrid made style recalculation slow. The dependency is followed through the broad sets' own tokens only: a
+// token declared on :root alone is computed there, so a reference to it is the same everywhere.
+const BROAD = ':root,[data-plx-density],[data-plx-interaction]';
+const SCOPE = { root: ':root', density: BROAD, theme: ':root,[data-plx-theme],[data-plx-mode]', both: BROAD + ',[data-plx-theme],[data-plx-mode]' };
+const REF = /\{(plx-[a-z]+)\.([a-z0-9-]+)\}/g;
+function scopesOf(manifest) {
+  const density = new Set(), theme = new Set(), refs = {}, broad = [];
+  for (const o of manifest.outputs) for (const s of o.sets) {
+    const sel = s.data.$extensions[EXT].selector;
+    for (const { name, token } of tokensOf(s.data)) {
+      if (o.file.includes('/themes/')) theme.add(name);
+      else if (layerOf(sel) !== 'base') density.add(name);
+      if (sel === BROAD) { broad.push(name); refs[name] = [...JSON.stringify(token.$value).matchAll(REF)].map((m) => '--' + m[1] + '-' + m[2]); }
+    }
+  }
+  for (let changed = true; changed;) {
+    changed = false;
+    for (const n of broad) {
+      if (!density.has(n) && refs[n].some((r) => density.has(r))) { density.add(n); changed = true; }
+      if (!theme.has(n) && refs[n].some((r) => theme.has(r))) { theme.add(n); changed = true; }
+    }
+  }
+  return (name) => (density.has(name) ? (theme.has(name) ? 'both' : 'density') : theme.has(name) ? 'theme' : 'root');
+}
 function generate(manifest, value) {
   const files = {}, written = [];
+  const scopeOf = scopesOf(manifest);
   for (const o of manifest.outputs) {
     let text = o.prologue;
     // the tokens several of this stylesheet's sets declare: each set writes its layer's variable instead
@@ -208,7 +238,7 @@ function generate(manifest, value) {
       // a token only this set declares keeps the set's own selector (on :root it is every density's default); a layered
       // token's variable goes under the exclusive selector, after the set's block
       const css = cssSelectorOf(ext.selector), layer = layerOf(ext.selector), ctxLines = [], cond = [];
-      const lines = [], still = [];
+      const lines = [], still = [], split = ext.selector === BROAD ? { density: [], theme: [], both: [] } : null;
       for (const { name, token } of tokensOf(s.data)) {
         const x = (token.$extensions && token.$extensions[EXT]) || {};
         // a token with a motion-off value ("reducedMotion": "0s") is written under exclusive conditions instead (below)
@@ -216,14 +246,23 @@ function generate(manifest, value) {
         // a token with a value for forced colors or more contrast is written under exclusive conditions instead (below)
         if (x.forcedColors !== undefined || x.contrastMore !== undefined || x.print !== undefined) { (x.before || []).forEach((l) => lines.push(l)); cond.push({ name, token, x }); continue; }
         (x.before || []).forEach((l) => lines.push(l));
-        written.push({ name, file: o.file, set: s.tokens, selector: ext.selector, line: text.split('\n').length + lines.length + 1 });
+        const scope = split && count[name] <= 1 ? scopeOf(name) : null;
+        if (scope && scope !== 'root') { split[scope].push({ name, line: '  ' + name + ': ' + value(s.tokens, name, token.$value, '') + ';' + (x.after || '') }); continue; }
+        written.push({ name, file: o.file, set: s.tokens, selector: scope ? SCOPE.root : ext.selector, line: text.split('\n').length + lines.length + 1 });
         if (count[name] > 1) { (layered[name] = layered[name] || new Set()).add(layer); ctxLines.push('  ' + ctxName(layer, name) + ': ' + value(s.tokens, name, token.$value, '') + ';' + (x.after || '')); continue; }
         lines.push('  ' + name + ': ' + value(s.tokens, name, token.$value, '') + ';' + (x.after || ''));
       }
       (ext.tail || []).forEach((l) => lines.push(l));
       const own = lines.some((l) => /^\s*--/.test(l));
-      if (own) text += s.before + ext.opener + '\n' + lines.join('\n') + '\n}';
-      if (ctxLines.length) text += (own ? '\n' : s.before) + css + '{\n' + ctxLines.join('\n') + '\n}';
+      if (own) text += s.before + (split ? SCOPE.root + ' {' : ext.opener) + '\n' + lines.join('\n') + '\n}';
+      let opened = own;
+      if (split) for (const k of ['density', 'theme', 'both']) {
+        if (!split[k].length) continue;
+        text += (opened ? '\n' : s.before) + SCOPE[k] + '{\n'; opened = true;
+        split[k].forEach((t) => { written.push({ name: t.name, file: o.file, set: s.tokens, selector: SCOPE[k], line: text.split('\n').length }); text += t.line + '\n'; });
+        text += '}';
+      }
+      if (ctxLines.length) text += (opened ? '\n' : s.before) + css + '{\n' + ctxLines.join('\n') + '\n}';
       // Motion off (Styling Standard 3.6, condition): the motion values apply only while the person has not asked for
       // reduced motion and no density change is in progress; otherwise the same tokens are 0s. The three blocks are
       // mutually exclusive, so each token has one declaration in every condition, and every component reads the tokens.
