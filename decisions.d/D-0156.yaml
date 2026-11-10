@@ -1,0 +1,9 @@
+id: D-0156
+date: 2026-11-10
+area: design
+decided_by: design-director (reading of the owner's "I need the hover as I go over any of the rows", CTM#310, via CTM3 - PM, #1187)
+decision: 'Every hovered data row tints with the existing DataGrid hover tokens, in DataGrid and in Table (the static grid), whether or not the row is selectable or clickable. Visual only: read-only rows get no cursor, focus or click change (docs/pds1/slices/1187/design.md).'
+options: ['A: DataGrid and Table both tint (chosen)', 'B: DataGrid tints every row; Table stays without a hover tint']
+why: 'Table renders the DataGrid engine with the same row rules, and the owner asked for any row; the spec already says a hovered row tints.'
+status: active
+check: 'planned:tests/data-grid-row-hover-1187.test.js (read-only DataGrid and Table rows compute the hover background)'

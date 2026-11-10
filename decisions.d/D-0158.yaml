@@ -1,0 +1,9 @@
+id: D-0158
+date: 2026-11-10
+area: design
+decided_by: owner (via CTM3 - PM, 2026-11-10, "should only appear if there is actually a real process … or whatever is the designated best practice")
+decision: 'Loading follows the standard response-time thresholds (Nielsen): nothing under about 1 s (as D-0130 already does); a spinner with its label from about 1 s; past about 10 s a "still working" message (announced once) and, when the app can abort, a Cancel button (optional onCancel); known progress shows a ProgressBar throughout (1194).'
+why: 'Owner request; it extends D-0130 with the 10 s stage, which today keeps the same spinner indefinitely.'
+options: ['add the 10 s stage and optional Cancel (chosen)', 'leave the spinner as is past 10 s']
+status: active
+check: 'tests on 1194 (nothing before 1 s, spinner at 1 s, long message at 10 s, Cancel calls onCancel)'

@@ -64,10 +64,8 @@ start_one() {
   tmux has-session -t $S 2>/dev/null || tmux new-session -d -s $S -n shell -c "$ROOT"
   tmux list-windows -t $S -F '#W' | grep -qx "$win" && { echo "$name already running"; return; }
   dir=$(worktree_for "$role" "$n"); mem=$(mem_limit "$role"); trust_dir "$dir"
-  # Remote Control only for the PM (owner, 2026-11-10, D-0155): the owner talks to one session; workers have --name only
-  local rc=''; [ "$role" = product-lead ] && rc=" --remote-control '$name'"
   tmux new-window -d -t $S -n "$win" -c "$dir" \
-    "systemd-run --user --scope -q -p MemoryMax=${mem}G -- env PDS1_ROLE=pds1-$role PDS1_WINDOW=$win claude --agent pds1-$role --name '$name'$rc --permission-mode bypassPermissions 'You are $name. Pull main, read CLAUDE.md, then work your open issues in plenix-ds/pds (gh issue list -R plenix-ds/pds --label agent:pds1-$role --state open), starting with pinned #178 Phase 0 if it names your role. Follow agents.config.yaml.'; echo; echo '$name stopped. Press Enter to close.'; read"
+    "systemd-run --user --scope -q -p MemoryMax=${mem}G -- env PDS1_ROLE=pds1-$role PDS1_WINDOW=$win claude --agent pds1-$role --name '$name' --remote-control '$name' --permission-mode bypassPermissions 'You are $name. Pull main, read CLAUDE.md, then work your open issues in plenix-ds/pds (gh issue list -R plenix-ds/pds --label agent:pds1-$role --state open), starting with pinned #178 Phase 0 if it names your role. Follow agents.config.yaml.'; echo; echo '$name stopped. Press Enter to close.'; read"
   log "start $win ($name) in $dir"; echo "started $name"
 }
 
@@ -175,8 +173,8 @@ nudge() {
   [[ "$updated" < "$last" ]] && changed=0
   # #895: quiet only when no role has open, unblocked, non-later work as well (deploy/agents/dispatch.mjs); a failed
   # read wakes everyone, never nobody
-  plan=$(PDS1_CFG="$CFG" node "$HERE/dispatch.mjs" --open-prs "$open" --changed "$changed" 2>>"$LOG") || { log "nudge: dispatch.mjs failed"; plan="round all"; }
-  mode=$(awk '$1=="round"{print $2}' <<<"$plan"); mode=${mode:-all}
+  plan=$(PDS1_CFG="$CFG" node "$HERE/dispatch.mjs" --open-prs "$open" --changed "$changed" 2>>"$LOG") || { log "nudge: dispatch.mjs failed: waking the coordinators"; plan=$'round roles\ncoordinators'; }  # D-0155: no wake-all; a failed read still wakes the coordinators, never nobody
+  mode=$(awk '$1=="round"{print $2}' <<<"$plan"); mode=${mode:-roles}
   overdue=$(awk '$1=="overdue"{print $2" "$3}' <<<"$plan"); overdue=${overdue:-0}
   rounds=$(cat "$NUDGE_OVERDUE" 2>/dev/null || echo 0)
   if [ "${overdue%% *}" != 0 ]; then rounds=$((rounds + 1)); else rounds=0; fi

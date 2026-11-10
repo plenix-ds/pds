@@ -1,0 +1,8 @@
+AssertionError [ERR_ASSERTION]: light: AC-1: a read-only grid row tints to the hover token (rgb(255, 255, 255) vs rgb(243, 243, 243))
++ actual - expected
+
++ 'rgb(255, 255, 255)'
+- 'rgb(243, 243, 243)'
+        ^
+
+    at /home/cc/pds1/work/component-engineer-1/tests/data-grid-row-hover-1187.test.js:41:14 {

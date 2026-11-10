@@ -1,0 +1,9 @@
+id: D-0160
+date: 2026-11-10
+area: process
+decided_by: owner (chat, 2026-11-10, via CTM3 - PM, "ensure for CTM/PDS and all apps to have the following in place")
+decision: 'Every business database app, and Plenix for its part, follows the 8-rule performance standard: (1) hashed, compressed, immutable caching of the frame and code; (2) code per screen with idle prefetch of likely next screens, so Plenix ships per-component entry points instead of one plenix.js; (3) one parallel data request per screen; (4) seen data shows at once and refreshes in the background; (5) server paging of 25 to 50 rows with server search and sort; (6) optimistic saves with undo, except legal or financial actions; (7) measured speed, LCP within 2.5 s and INP within 0.2 s, with a build check that fails when a page gets slower; (8) bounded idle prefetch (small pages, paused while active, memory only, permitted and non-sensitive data, cleared on sign-out). Plenix owns rules 2 and 7 and documents the rest (#1201).'
+why: 'Owner rule for all apps after the "site feels sluggish" report (#1188).'
+options: ['the 8-rule standard (owner)']
+status: active
+check: 'planned:perf-budget (rule 7 build check: bundle size per entry, CSS custom properties per scope, LCP and INP traces on reference pages), on #1201'
