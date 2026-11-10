@@ -627,27 +627,28 @@ export function bodyRows({
                 >
                   {shown}
                 </span>
-              ) : cutAt === row.id + '|' + c.field && !(shown as any)?.props?.tip && (shown as any)?.props?.dialog === undefined ? (
+              ) : (
+                // one fragment whether or not the cut button shows: the text keeps its element when the pointer arrives, so a click that follows at once is not lost (#1180)
                 <>
                   {cellDirection(pinned && !isStatic && !kinds(c).includes('id'), shown)}
-                  <span className={B + '__cut'}>
-                    <Popover
-                      label={c.title}
-                      title={c.title}
-                      size="sm"
-                      placement="bottom-end"
-                      onOpenChange={(open) => {
-                        cutOpen.current = open;
-                        if (!open) setCutAt(null);
-                      }}
-                      trigger={<Button variant="ghost" size="xs" iconOnly icon={ExpandIcon} label={S.fullText} />}
-                    >
-                      <div className={B + '__full-text'}>{valueText(value)}</div>
-                    </Popover>
-                  </span>
+                  {cutAt === row.id + '|' + c.field && !(shown as any)?.props?.tip && (shown as any)?.props?.dialog === undefined ? (
+                    <span className={B + '__cut'}>
+                      <Popover
+                        label={c.title}
+                        title={c.title}
+                        size="sm"
+                        placement="bottom-end"
+                        onOpenChange={(open) => {
+                          cutOpen.current = open;
+                          if (!open) setCutAt(null);
+                        }}
+                        trigger={<Button variant="ghost" size="xs" iconOnly icon={ExpandIcon} label={S.fullText} />}
+                      >
+                        <div className={B + '__full-text'}>{valueText(value)}</div>
+                      </Popover>
+                    </span>
+                  ) : null}
                 </>
-              ) : (
-                cellDirection(pinned && !isStatic && !kinds(c).includes('id'), shown)
               )}
               {/* the fill handle (editing.fill, ADR 0021): on the selected block's bottom inline-end corner; its own dir is the grid's, not the cell's text direction (dir=auto) */}
               {fill && inRange && inRange.bottom && inRange.end ? <span className={B + '__fill-handle'} dir={isRtl(frame.current) ? 'rtl' : 'ltr'} aria-hidden="true" onPointerDown={fill.start} /> : null}
