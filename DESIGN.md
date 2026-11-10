@@ -261,11 +261,11 @@ A named variation sets a whole agreed look with one prop, so an app never gets h
 - **Categories `category-1…8`** alias existing category hues (ADR 0036), with no new colours. Light uses the pill roles (soft, soft border, on-soft). Dark uses the soft-border shade for the title and band, over a 5% mix of it into the surface. Text on every fill is ≥ 4.5:1 in light and dark; the month on the band is white in light and black in dark.
 - **Legend (opt-in):** ghost toggle buttons with a swatch. A hidden category has a hollow swatch and `content-muted` text, never reduced opacity.
 - **Compact look (D-0145, CTM Key Dates):** one size in every density.
-  - At most 720px wide, at the inline start.
+  - At most 760px wide (`content-max-list`), at the inline start. The prop is `density="compact"` (ADR 0048).
   - The year heading is **surface-title** (15px), with no line and no watermark. Groups are 32px apart and events 4px.
   - One line per event: the title, then the description, which ends in an ellipsis (a Tooltip shows it while cut), then the tag at the inline end.
-  - 8px padding on every side. A 40px tile with a 16px band, the month 12px and the day 15px.
-  - An undated event shows an empty dashed tile, and its tag reads "{category} · pending" (D-0148).
+  - 8px padding on every side. A 40px tile with a 16px band, the month 13px and the day 15px.
+  - An undated event shows an empty dashed tile, and its tag reads "{category} · Pending" (D-0148).
 - Details, tokens and the state matrix: `docs/pds1/slices/987/design.md` and, for the compact look and the 1.6.0 tile, `docs/pds1/slices/1152/design.md`.
 
 ## 9. States
