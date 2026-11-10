@@ -74,7 +74,10 @@ For CommandBar and BarActions, the Dialog takes its words from the action. Keys 
 ## Loading
 
 - Show nothing for the first second. After that, say what is loading ("Loading hearings…"), not "Loading…" alone.
-- Over about 10 seconds, add a way to cancel or a progress value.
+- Past about 10 seconds, the label stays and a second line adds the delay: "This is taking longer than usual." (`loading.slow`). Do not replace the label.
+- When the work can be stopped, pass `onCancel` (DataGrid and ListingPage: `onLoadingCancel`). The Cancel button (`loading.cancel`) shows under the second line.
+- With a progress value, nothing is added: no second line and no Cancel.
+- Arabic for `loading.slow` waits on the owner (#1203). English shows until it is approved.
 
 ## Help and tooltip
 
