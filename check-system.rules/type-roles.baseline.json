@@ -5,8 +5,6 @@
   "css plx-chat__reaction": "tabular-nums (a value) without the data font",
   "css plx-chat__voice-time": "tabular-nums (a value) without the data font",
   "css plx-date-badge__day": "tabular-nums (a value) without the data font",
-  "css plx-timeline__date-day": "tabular-nums (a value) without the data font",
-  "DataGrid kind code": "a data kind without the data cell class",
-  "DataGrid kind id": "a data kind without the data cell class"
+  "css plx-timeline__date-day": "tabular-nums (a value) without the data font"
  }
 }

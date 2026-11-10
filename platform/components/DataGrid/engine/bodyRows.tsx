@@ -488,7 +488,7 @@ export function bodyRows({
                 isTree && row.depth > 0 && B + '__tree-cell--level-' + Math.min(12, row.depth),
                 editing?.key === row.id && editing.field === c.field && '' + B + '__grid-editing',
                 k.map((kind: any) => B + '__cell--' + kind).join(' '),
-                (k.includes('data') || c.type === 'bytes') && B + '__grid-cell--data',
+                (k.includes('data') || k.includes('id') || k.includes('code') || c.type === 'bytes') && B + '__grid-cell--data',   // an id and a code are data too (D-0164, #1263)
                 ([] as any[])
                   .concat(groupBy || [])
                   .some((level) => (typeof level === 'object' ? level.field : level) === c.field) &&
