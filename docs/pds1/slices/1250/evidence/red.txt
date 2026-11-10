@@ -1,0 +1,12 @@
+node:assert:150
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: a :has() rule that sets a custom property restyles its whole subtree on every DOM change below it:
+  components/Stack/stack.css: .plx-stack:has(>.plx-field--inline)
+  components/Stack/stack.css: .plx-stack:has(>.plx-field--inline)>:not(.plx-field--inline)
++ actual - expected
+
++ [
++   'components/Stack/stack.css: .plx-stack:has(>.plx-field--inline)',
++   'components/Stack/stack.css: .plx-stack:has(>.plx-field--inline)>:not(.plx-field--inline)'
