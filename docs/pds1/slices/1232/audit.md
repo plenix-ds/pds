@@ -44,7 +44,9 @@
 | 14 | VersionCompare text lines (`version-compare-line-font-family`) | Reddit Mono | compared document text is words | the text font; Reddit Mono only for `kind="code"` (an existing or new prop, G3) |
 | 15 | Auth `data` (`auth-data-font-family`: "an email and a count in a sentence") | the run is Reddit Mono | conforms only if it is applied to the email or count run, never to the sentence | verify at build; use `dataPhrase` for the sentence |
 | 16 | FilterBar count (`filter-bar-count-font-family`) | Reddit Mono | conforms if it is the number alone | verify that "3 filters" is `dataPhrase`, not the whole label |
+| 17 | DataGrid kinds `id` and `code` (found by the `type-roles` check, #1237) | no data cell class: DM Sans | IDs and codes are data | the data cell class, as kind `data` |
 
+- #4 to #9 have no font-family token today. The `type-roles` token pass (#1237) cannot see them until their fixes add one: `metric` and `metric-card` values already have tokens; the fixes add `count-`, `date-badge-day-`, `timeline-grouped-date-day-` and `calendar-day-font-family`, each declared `data`. #10 to #16 are runtime (`dataPhrase`, `dataWhenText`, a path test), so their tests carry them.
 - #1 to #3 ship in **1.6.2** (the owner's bug). #4 to #16 ship in **1.7.0** with the check.
 - #4, #5, #7, #8 and #9 change what a person sees (DM Sans to Reddit Mono). D-0164 asks for exactly this ("one rule in every component"), so they are not new looks. CI's light and dark shots go on the PR as usual.
 
