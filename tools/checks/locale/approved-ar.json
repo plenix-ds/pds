@@ -2961,6 +2961,15 @@
      "fullTextTitle": "النص الكامل"
     }
    }
+  },
+  {
+   "source": "#1152, ADR 0048 (D-0152), 2026-11-10. timeline.tagPending reuses the approved timeline.pending (\"Pending\" = معلّق, D-0078, #987) inside the {category} pattern.",
+   "date": "2026-11-10",
+   "strings": {
+    "timeline": {
+     "tagPending": "{category} · معلّق"
+    }
+   }
   }
  ]
 }
