@@ -2213,7 +2213,8 @@ export default {
     "save": "حفظ"
   },
   "loading": {
-    "label": "جارٍ التحميل"
+    "label": "جارٍ التحميل",
+    "cancel": "إلغاء"
   },
   "rating": {
     "label": "التقييم",
