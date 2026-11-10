@@ -64,8 +64,10 @@ start_one() {
   tmux has-session -t $S 2>/dev/null || tmux new-session -d -s $S -n shell -c "$ROOT"
   tmux list-windows -t $S -F '#W' | grep -qx "$win" && { echo "$name already running"; return; }
   dir=$(worktree_for "$role" "$n"); mem=$(mem_limit "$role"); trust_dir "$dir"
+  # Remote Control only for the PM (owner, 2026-11-10, D-0155): the owner talks to one session; workers have --name only
+  local rc=''; [ "$role" = product-lead ] && rc=" --remote-control '$name'"
   tmux new-window -d -t $S -n "$win" -c "$dir" \
-    "systemd-run --user --scope -q -p MemoryMax=${mem}G -- env PDS1_ROLE=pds1-$role PDS1_WINDOW=$win claude --agent pds1-$role --name '$name' --remote-control '$name' --permission-mode bypassPermissions 'You are $name. Pull main, read CLAUDE.md, then work your open issues in plenix-ds/pds (gh issue list -R plenix-ds/pds --label agent:pds1-$role --state open), starting with pinned #178 Phase 0 if it names your role. Follow agents.config.yaml.'; echo; echo '$name stopped. Press Enter to close.'; read"
+    "systemd-run --user --scope -q -p MemoryMax=${mem}G -- env PDS1_ROLE=pds1-$role PDS1_WINDOW=$win claude --agent pds1-$role --name '$name'$rc --permission-mode bypassPermissions 'You are $name. Pull main, read CLAUDE.md, then work your open issues in plenix-ds/pds (gh issue list -R plenix-ds/pds --label agent:pds1-$role --state open), starting with pinned #178 Phase 0 if it names your role. Follow agents.config.yaml.'; echo; echo '$name stopped. Press Enter to close.'; read"
   log "start $win ($name) in $dir"; echo "started $name"
 }
 
@@ -188,10 +190,12 @@ nudge() {
   if [ "$mode" = quiet ]; then log "nudge: quiet (no activity since $last, no open PR, no open work)"; echo "$now" >"$NUDGE_STAMP"; heartbeat "$hb" "quiet round, no session woken" "$health"; return; fi
   tmux has-session -t $S 2>/dev/null || { log "nudge: team not running"; heartbeat "$hb" "the team session is not running" "$health"; return; }
   while read -r _ role _; do wake_roles+="$role "; done < <(grep '^work ' <<<"$plan")
+  # D-0155: no wake-all round. While the repo is busy the coordinators are woken too; nobody else without work.
+  if grep -qx coordinators <<<"$plan"; then for c in $(node "$HERE/registry.mjs" get coordinators.roles "$CFG" 2>>"$LOG" | tr -d "[],'" ); do wake_roles+="${c#pds1-} "; done; fi
   while read -r win; do
     [ "$win" = shell ] && continue
     role=${win%-[0-9]*}
-    [ "$mode" = all ] || [[ "$wake_roles" == *" $role "* ]] || continue
+    [[ "$wake_roles" == *" $role "* ]] || continue
     # severity first (#895): an S1/S2 this role has not answered is named, every round, until it is
     sev_text=$(awk -v r="$role" '$1=="unanswered" && $2==r {printf "%s%s (S%s, %s min)", (n++?", ":""), $3, $4, $5}' <<<"$plan")
     text="${NUDGE_TEXT//ROLE/$role}"

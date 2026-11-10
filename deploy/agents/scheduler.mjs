@@ -18,7 +18,7 @@
 // - Parked roles (agents.config.yaml roles: parked: true, for example mobile-app-builder, D-0013) are never started.
 // - Stop: a long-work window idle for long_work.idle_exit_min (from its activity record, .claude/hooks/activity.cjs; a
 //   window without a record falls back to the screen: no "esc to interrupt" and unchanged), whose role has no waiting
-//   issue, no open PR labeled for it and no open PR from the branch checked out in its worktree.
+//   issue (D-0155: an open PR no longer keeps it running; pickup restarts it when its PR needs it).
 // - Asks (#1130): a role with an event held for it or a mention it has not answered (pickup's .asks.json, at most 24 h)
 //   is waiting too: it is started like a role with an issue, and idle exit never stops it.
 import { execFileSync } from 'node:child_process';
@@ -82,7 +82,6 @@ for (const [key, a] of askSummary(readAsks(path.join(ROOT, '.asks.json')), Math.
   byRole.set(role, r);
 }
 const prLabeled = (role) => prs.some((p) => p.labels.some((l) => l.name === `agent:pds1-${role}`));
-const prHeads = new Set(prs.map((p) => p.headRefName));
 
 // tmux: running windows, their last activity and whether Claude is working
 let windows = [];
@@ -110,12 +109,10 @@ for (const w of long) {
   const k = Number((/-(\d+)$/.exec(w.name) || [])[1] || 1);
   if (waiting && !(INSTANCES.get(role) > 1 && k > 1 && waiting.count < k)) continue;
   if (idleSeconds(w) < IDLE_STOP_S) continue;
-  if (prLabeled(role)) continue;
-  let branch = '';
-  try { branch = run('git', ['-C', path.join(ROOT, 'work', w.name), 'rev-parse', '--abbrev-ref', 'HEAD']).trim(); } catch { continue; }
-  if (prHeads.has(branch)) continue;
+  // D-0155 (owner, 2026-11-10): an open PR waiting on checks or a review is not a reason to stay running; pickup starts
+  // the role again when an event on its PR needs it (a failed check, a review, a mention).
   stops.push(w.name);
-  console.log(`stop ${w.name} | no waiting issue, no open PR, idle ${Math.round(idleSeconds(w) / 60)} min (long_work.idle_exit_min)`);
+  console.log(`stop ${w.name} | no waiting issue, idle ${Math.round(idleSeconds(w) / 60)} min (long_work.idle_exit_min)${prLabeled(role) ? '; its open PR waits on checks or review' : ''}`);
 }
 
 // starts: waiting roles without a window, by severity then oldest issue

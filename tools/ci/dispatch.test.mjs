@@ -18,15 +18,15 @@ const now = Date.parse('2026-11-07T15:00:00Z');
 // the 2026-11-07 outage, as a fixture: nothing changed since the last round, no PR open, an S1 open for a role
 const outage = [issue(893, ['type:bug', 'sev:S1', 'agent:pds1-ds-architect'])];
 check('round: an open S1 for a role with no recent updates and no PR is NOT quiet (#895)',
-  round({ issues: outage, openPrs: 0, changedSinceLast: false }), { quiet: false, wakeAll: false, roles: ['ds-architect'] });
+  round({ issues: outage, openPrs: 0, changedSinceLast: false }), { quiet: false, wakeAll: false, coordinators: false, roles: ['ds-architect'] });
 check('round: nothing open, no PR, no change -> quiet',
-  round({ issues: [], openPrs: 0, changedSinceLast: false }), { quiet: true, wakeAll: false, roles: [] });
+  round({ issues: [], openPrs: 0, changedSinceLast: false }), { quiet: true, wakeAll: false, coordinators: false, roles: [] });
 check('round: later and blocked issues are not work -> quiet',
   round({ issues: [issue(1, ['agent:pds1-release-architect', 'later']), issue(2, ['agent:pds1-ds-architect', 'blocked'])], openPrs: 0, changedSinceLast: false }).quiet, true);
-check('round: an open PR wakes every idle session, as before',
-  round({ issues: [], openPrs: 2, changedSinceLast: false }), { quiet: false, wakeAll: true, roles: [] });
-check('round: a change since the last round wakes every idle session, as before',
-  round({ issues: [], openPrs: 0, changedSinceLast: true }).wakeAll, true);
+check('round: an open PR wakes only the coordinators, never every idle session (D-0155)',
+  round({ issues: [], openPrs: 2, changedSinceLast: false }), { quiet: false, wakeAll: false, coordinators: true, roles: [] });
+check('round: a change since the last round wakes the coordinators, not everyone (D-0155)',
+  [round({ issues: [], openPrs: 0, changedSinceLast: true }).wakeAll, round({ issues: [], openPrs: 0, changedSinceLast: true }).coordinators], [false, true]);
 check('round: most severe role first',
   round({ issues: [issue(5, ['sev:S3', 'agent:pds1-i18n-engineer']), issue(6, ['sev:S2', 'agent:pds1-qa-engineer'])], openPrs: 0, changedSinceLast: false }).roles,
   ['qa-engineer', 'i18n-engineer']);

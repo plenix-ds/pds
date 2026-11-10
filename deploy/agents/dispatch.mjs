@@ -12,7 +12,8 @@
 // - The heartbeat shows "Open S1/S2 with no response > 30 min: N"; the watchdog opens a P0 when N > 0 two rounds running.
 //
 //   node deploy/agents/dispatch.mjs --open-prs <n> --changed <0|1> [--now <ISO>]     reads GitHub; prints, one per line:
-//     round quiet | round all | round roles   quiet: wake nobody; all: wake every idle session; roles: only the work lines
+//     round quiet | round roles   quiet: wake nobody; roles: only the work lines (D-0155: there is no wake-all round)
+//     coordinators                     the repo is busy: wake the coordinators (coordinators.roles) as well
 //     work <role> <sev> <#n,#n…>          a role with open work (sev 1-5, 5 = none), most severe role first
 //     unanswered <role> <#n> <sev> <min>  an S1/S2 with no response from its role, minutes since it opened
 //     overdue <count> <#n,#n…>            unanswered for more than OVERDUE_MIN minutes (the heartbeat's health line)
@@ -67,10 +68,14 @@ export function unanswered(issues, prs, nowMs, titles = new Map()) {
 }
 
 // the round: quiet, or which roles to wake ({ quiet, wakeAll, roles: [role…] most severe first })
+// Owner, 2026-11-10 (D-0155): a round never wakes every idle session. Waking a session with nothing to do counted as
+// activity, so long_work.idle_exit_min never fired and idle agents ran all day. A round wakes only the roles with
+// actionable work (an open, unblocked, non-later issue labelled for them) and, while the repo is busy (an open PR or a
+// change since the last round), the coordinators (coordinators.roles), who triage it.
 export function round({ issues, openPrs, changedSinceLast }) {
   const work = [...openWork(issues)].sort((a, b) => a[1].sev - b[1].sev || a[0].localeCompare(b[0]));
   const busy = openPrs > 0 || changedSinceLast;
-  return { quiet: !busy && work.length === 0, wakeAll: busy, roles: work.map(([r]) => r) };
+  return { quiet: !busy && work.length === 0, wakeAll: false, coordinators: busy, roles: work.map(([r]) => r) };
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
@@ -89,7 +94,8 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     titles = new Map(roles(load(process.env.PDS1_CFG || DEFAULT_FILE)).map((r) => [r.id, r.title]));
   } catch { /* signatures by role id still match */ }
   const r = round({ issues, openPrs, changedSinceLast });
-  console.log(`round ${r.quiet ? 'quiet' : r.wakeAll ? 'all' : 'roles'}`);
+  console.log(`round ${r.quiet ? 'quiet' : 'roles'}`);
+  if (r.coordinators) console.log('coordinators');
   for (const [role, w] of [...openWork(issues)].sort((a, b) => a[1].sev - b[1].sev || a[0].localeCompare(b[0]))) {
     console.log(`work ${role} ${w.sev} ${w.numbers.map((n) => '#' + n).join(',')}`);
   }
