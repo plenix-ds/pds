@@ -23,5 +23,6 @@ export function html(page, base, mode = 'light') {
 <body><div id="root"></div><script>
 const h = React.createElement, P = Plenix, ROWS = ${JSON.stringify(rows)};
 ReactDOM.createRoot(document.getElementById('root')).render(h(${BODIES[page]}));
+${page === 'grid' ? "document.addEventListener('click', () => { const t = performance.now(); while (performance.now() - t < 300) {} });" : ''}
 </script></body></html>`;
 }
