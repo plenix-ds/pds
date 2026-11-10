@@ -1,0 +1,9 @@
+id: D-0152
+date: 2026-11-10
+area: api
+decided_by: agent (pds1-ds-architect, G3) on the i18n Engineer's G6 finding on #1152 and the build PR #1169; the owner may switch on #1152
+decision: 'Supersedes D-0150 on two points of ADR 0048; the rest of D-0150 holds. (1) The compact tag text is two catalog patterns with a {category} slot, timeline.tagUpcoming "{category} · upcoming" and timeline.tagPending "{category} · Pending", filled by splitting at {category}; there is no timeline.upcoming and no label joined to a word in code. (2) The parts the compact look restyles carry their own --compact modifier classes (plus __date-month--category and the __title-tip, __description-tip, __tag-tip parts), because the styling standard has no combinators.'
+options: ['A. two {category} patterns and per-part modifier classes (chosen)', 'B. one word timeline.upcoming joined after the label in code']
+why: 'A joined label and word cannot follow Arabic word order (G6); every catalog string with a value uses a {slot}. Zero overlap forbids descendant selectors, so each restyled part needs its own class.'
+status: active
+check: 'G3 API diff on PR #1169 against docs/adr/0048-timeline-grouped-compact.md; G6 locale check: both patterns in en.json with {category}; tests for #1152 AC-2 and AC-4 read the tag text from the patterns'
