@@ -11,6 +11,7 @@ After=network-online.target pds1-pickup.service
 
 [Service]
 Environment=PATH=%h/.local/bin:/usr/local/bin:/usr/bin:/bin
+ExecStartPre=%h/pds1/work/pds/deploy/agents/webhook-clean.sh
 ExecStart=/usr/bin/env gh webhook forward --repo=plenix-ds/pds --events=issues,issue_comment,pull_request_review,pull_request_review_comment,workflow_run --url=http://127.0.0.1:8795/webhook
 Restart=always
 RestartSec=30
