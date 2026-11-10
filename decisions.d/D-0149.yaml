@@ -1,0 +1,9 @@
+id: D-0149
+date: 2026-11-10
+area: design
+decided_by: owner (chat, 2026-11-10 11:58 UTC, "for the page background color.. chaneg it to #e8e9ec")
+decision: 'The light page background (sys surface-canvas) is #e8e9ec, the existing plx-ref.color-gray-200 (was gray-75, #f7f7f8); everything that references the canvas follows it. Dark is unchanged (D-0025).'
+why: 'Owner instruction.'
+options: ['gray-200 #e8e9ec (owner)', 'gray-75 #f7f7f8 (before)']
+status: active
+check: 'a computed-style test on 1160 (light body and AppShell background = gray-200); check 8 contrast pairs on the canvas'
