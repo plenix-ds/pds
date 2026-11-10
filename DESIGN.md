@@ -154,7 +154,7 @@ A named variation sets a whole agreed look with one prop, so an app never gets h
 |---|---|---|---|---|
 | Read-only tiles | `<PropertyGroup variant="tiles">` (name confirmed at G3) | the D-0106 preset above: porcelain tiles 2 per row, gold group heading, navy label, semibold value, statuses as Badges with icons | D-0132 (owner, #1043) | `docs/pds1/slices/1043/design.md` |
 | Grouped Timeline | `Timeline` grouped by year | §8 "Timeline, grouped" | D-0115, D-0117 | `docs/pds1/slices/987/design.md` |
-| Compact grouped Timeline | the grouped `Timeline`'s compact look (prop named at G3) | §8 "Timeline, grouped", compact look | D-0145, D-0147 (owner, #1152) | `docs/pds1/slices/1152/design.md` |
+| Compact grouped Timeline | the grouped `Timeline`'s compact look (prop named at G3) | §8 "Timeline, grouped", compact look | D-0145, D-0148 (owner, #1152) | `docs/pds1/slices/1152/design.md` |
 
 - **Read-only tiles** is the look for every read-only card (case summaries, record details). Use `columns` only in dense panes and inspectors. The 1.x default stays `columns` (D-0107).
 
@@ -248,7 +248,7 @@ A named variation sets a whole agreed look with one prop, so an app never gets h
 - Palettes: categorical 1 to 6, sequential 1 to 7, diverging 1 to 7, and status colours.
 - Axis and label text uses `dataviz-label` at 12px or more. Numbers on axes and in tooltips use `tabular-nums`.
 
-### Timeline, grouped (D-0115, D-0117, #987; D-0145, D-0147, #1152)
+### Timeline, grouped (D-0115, D-0117, #987; D-0145, D-0148, #1152)
 
 - A variation of `Timeline`, not a new component. Events are grouped by year, latest first (the order is a prop).
 - **Year heading:** the **title** role, `content-default`, with no line under it (D-0145). Groups are 80px apart (64px compact), with no divider.
@@ -265,7 +265,7 @@ A named variation sets a whole agreed look with one prop, so an app never gets h
   - The year heading is **surface-title** (15px), with no line and no watermark. Groups are 32px apart and events 4px.
   - One line per event: the title, then the description, which ends in an ellipsis (a Tooltip shows it while cut), then the tag at the inline end.
   - 8px padding on every side. A 40px tile with a 16px band, the month 12px and the day 15px.
-  - An undated event shows an empty dashed tile, and its tag reads "{category} · pending" (D-0147).
+  - An undated event shows an empty dashed tile, and its tag reads "{category} · pending" (D-0148).
 - Details, tokens and the state matrix: `docs/pds1/slices/987/design.md` and, for the compact look and the 1.6.0 tile, `docs/pds1/slices/1152/design.md`.
 
 ## 9. States

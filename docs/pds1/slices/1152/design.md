@@ -3,7 +3,7 @@
 - **Request:** the CTM owner chose this design for CTM's Key Dates card (CTM#239), each choice approved (chat, 2026-11-10, **D-0145**). Brief: `docs/pds1/slices/1152/brief.md`. Approved picture and study: LighthouseCollection/CTM `preview-239/2026-11-10/` at 110f45a (`key-dates-compact.png`, `key-dates-standard.png`, `key-dates-compact-study.html`).
 - **Extends:** the grouped `Timeline` (`variant="grouped"`, #987, D-0115, D-0117, ADR 0036; `docs/pds1/slices/987/design.md`). It is a second look of the same variation, not a new component. The plain (rail) Timeline does not change.
 - **Prop:** G3's (D-0145 proposes `density="compact"`). This file calls it "the compact look".
-- **Readings applied (D-0147, the owner may switch):**
+- **Readings applied (D-0148, the owner may switch):**
   - **A. 6px and 10px are snapped to the 4px grid:** compact padding is **8px** on every side and standard is **12px** on every side. 6px and 10px are retired (DESIGN §5, #301). The owner's intent, equal start and block padding, holds exactly. Reply **B** for 4px compact padding (tighter than the picture).
   - **A. The compact tile shows no "Pending" word:** 12px "Pending" is about 46px wide and does not fit a 40px tile (the study draws it at about 6px, below the 12px minimum). An undated compact event shows an empty dashed page with the grey band, and its tag reads "{category} · pending". Reply **B** to widen every compact tile to 52px so the word fits.
   - **A. The standard look takes the new tile and equal padding too** (brief P1; it matches `key-dates-standard.png`). The year heading's line goes in both looks, and the standard look keeps its watermark. Reply **B** to keep the standard look as built in 1.2.0.
