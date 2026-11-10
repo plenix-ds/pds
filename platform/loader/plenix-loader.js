@@ -1,8 +1,8 @@
 /* Plenix __PLENIX_VERSION__ · plenix-loader.js: load Plenix per screen, for a page without a bundler (ADR 0052, issue 1208).
    Load the version's React first, then this script, both as classic <script src> tags in <head>:
-     <script src="https://design-system.lighthouseway.org/cdn/<v>/vendor/react.production.min.js"></script>
-     <script src="https://design-system.lighthouseway.org/cdn/<v>/vendor/react-dom.production.min.js"></script>
-     <script src="https://design-system.lighthouseway.org/cdn/<v>/plenix-loader.js"></script>
+     <script src="<cdn>/<v>/vendor/react.production.min.js"></script>
+     <script src="<cdn>/<v>/vendor/react-dom.production.min.js"></script>
+     <script src="<cdn>/<v>/plenix-loader.js"></script>
    Then, before a screen renders:  await Plenix.load(['DataGrid', 'Dialog', 'Button']);  and use window.Plenix.<Name> as with
    plenix.js. Each name loads esm/<Name>.js and the shared code it needs, once per page, however often it is asked for.
    An unknown name rejects with its name. The loader writes the import map that resolves React for the modules, so it must
