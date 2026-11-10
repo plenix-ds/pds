@@ -2970,6 +2970,15 @@
      "tagPending": "{category} · معلّق"
     }
    }
+  },
+  {
+   "source": "PENDING: the owner's answer on #1203 (option A prepared). Replace this source with his answer before merging.",
+   "date": "2026-11-10",
+   "strings": {
+    "loading": {
+     "slow": "يستغرق هذا وقتًا أطول من المعتاد."
+    }
+   }
   }
  ]
 }
