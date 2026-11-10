@@ -118,7 +118,7 @@ export function LoadingState({ label, progress, size = 'lg', labelPosition = 'af
         {typeof progress === 'number' ? <ProgressBar value={progress} label={typeof text === 'string' ? text : String(t.label)} showValue className="plx-loading-state__progress" />
           : <Spinner size={size} label={text} labelPosition={labelPosition} />}
         {typeof progress === 'number' ? null : <span className="plx-loading-state__slow" role="status">{long ? (t.slow as React.ReactNode) : null}</span>}
-        {long && onCancel ? <Button size="sm" onClick={onCancel} className="plx-loading-state__cancel">{t.cancel as React.ReactNode}</Button> : null}
+        {long && onCancel && typeof progress !== 'number' ? <Button size="sm" onClick={onCancel} className="plx-loading-state__cancel">{t.cancel as React.ReactNode}</Button> : null}
       </div>
     </InLoadingState.Provider>
   );

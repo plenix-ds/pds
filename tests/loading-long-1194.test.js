@@ -1,7 +1,7 @@
 /* Plenix tests · LoadingState's 10-second stage (issue 1194, D-0158, D-0159, ADR 0051, design 1194): a second line and an optional Cancel after the long wait.
    Summary: the long wait is a token (--plx-sys-motion-loading-long-delay, 10 s); the test shortens it on the page to read it. Nothing is drawn before the region delay; then the ring and label with no second line and no Cancel;
      after the long wait the label stays, a second line "This is taking longer than usual." is filled into its own polite status (announced once), and Cancel shows only with onCancel and calls it once; with progress there is
-     no second line and Cancel still shows; focus never moves; a nested LoadingState shows no stage; reduced motion keeps the wait. Left to right and right to left.
+     no second line and nor Cancel; focus never moves; a nested LoadingState shows no stage; reduced motion keeps the wait. Left to right and right to left.
    Proof first: before the change there is no long stage: the label stays alone for ever, and the token does not exist.
    Usage: node tests/loading-long-1194.test.js   → LOADING_LONG_1194_OK */
 const assert = require('assert/strict'), { serve, launch } = require('./lib');
@@ -40,7 +40,7 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
       // no onCancel: no button
       await mount({}); await wait(4200); r = await look(); assert.ok(r.line && !r.cancel, T + 'without onCancel there is the line and no button');
       // progress
-      await mount({ progress: true, cancel: true }); await wait(4200); r = await look(); assert.equal(r.bars, 1, T + 'with progress the bar shows'); assert.ok(!r.line, T + 'no second line with progress'); assert.ok(r.cancel, T + 'Cancel still shows with progress');
+      await mount({ progress: true, cancel: true }); await wait(4200); r = await look(); assert.equal(r.bars, 1, T + 'with progress the bar shows'); assert.ok(!r.line, T + 'no second line with progress'); assert.ok(!r.cancel, T + 'no Cancel with progress (nothing changes)');
       // nested: only the outer state shows the stage
       await mount({ nested: true, cancel: true }); await wait(4200); r = await look(); assert.equal((r.texts.match(/taking longer/g) || []).length, 1, T + 'a nested state shows one stage');
       await page.close();
