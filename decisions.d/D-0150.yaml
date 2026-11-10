@@ -5,5 +5,6 @@ decided_by: agent (pds1-ds-architect, G3) on D-0145 and the G2 design (PR #1158 
 decision: 'Supersedes D-0146 to match the G2 design. Timeline density="page" | "compact" (default "page"), grouped only. "compact" draws the CTM Key Dates look at one fixed size from timeline-grouped-compact-* tokens and does not set data-plx-density. Both looks: inline padding equals block padding in every density, no heading rule, no tile rings, month content-inverse on the band; the replaced tokens are deprecated and removed in 2.0.0. New: class plx-timeline--compact, string timeline.upcoming (undated compact tag reuses timeline.pending), sys content-max-list (760px), size-calendar-tile-sm, size-calendar-band-sm, text-calendar-month-font-size, text-calendar-month-sm-font-size, text-calendar-day-sm-font-size (ADR 0048).'
 options: ['A. density="compact" prop, default "page" (chosen)', 'B. variant="grouped-compact"', 'C. follow the page density']
 why: 'G2 fixed the compact look at one size in every density, so setting data-plx-density would also resize the Tags and legend Buttons inside; the heading rule and rings go in both looks (D-0148), so their tokens are deprecated rather than kept.'
-status: active
+status: superseded
+superseded_by: D-0152
 check: 'G3 API diff on the #1152 build PR against docs/adr/0048-timeline-grouped-compact.md; token checks 6 and 7; check 8 month-on-band pairs; tests for #1152 AC-1..AC-7 and design section 6'

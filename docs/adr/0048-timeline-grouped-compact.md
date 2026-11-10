@@ -2,7 +2,7 @@
 
 - **Status:** accepted
 - **Date:** 2026-11-10
-- **Deciders:** pds1-ds-architect (G3), on the CTM owner's approved choices (chat, 2026-11-10, relayed on #1152; D-0145). Decision D-0146, superseded by D-0150 to match the G2 design (owner may switch).
+- **Deciders:** pds1-ds-architect (G3), on the CTM owner's approved choices (chat, 2026-11-10, relayed on #1152; D-0145). Decision D-0146, superseded by D-0150 (the G2 design) and D-0152 (the tag strings and the element classes) (owner may switch).
 - **Issue:** #1152 (S2).
   - Brief: `docs/pds1/slices/1152/brief.md` (PR #1153).
   - Design (G2 PASS, PR #1158, D-0148): `docs/pds1/slices/1152/design.md`. It owns the look and the values (§1c). This entry owns the prop, the classes, the strings, the token names and their tiers.
@@ -30,7 +30,7 @@
 
 ## Decision
 
-**Option A** (D-0150, superseding D-0146; reply B or C on #1152 to switch).
+**Option A** (D-0152, superseding D-0150 and D-0146; reply B or C on #1152 to switch).
 
 ### API (`Timeline`)
 
@@ -39,10 +39,14 @@
   - `"compact"`: the compact look (design §1a). It is one size in every region density (design §3), so it reads its own `timeline-grouped-compact-*` tokens and does **not** set `data-plx-density` (that would also resize the Tags and legend Buttons inside).
   - Grouped only. With `variant="default"`, `density` is ignored and `devWarn` says so.
   - `"standard"` and `"comfortable"` are not added now. Adding them later is MINOR.
-- **Class:** `plx-timeline--compact` on the root, next to `plx-timeline--grouped`. The existing element classes are reused. In compact, `__watermark` is not rendered. In both looks, the heading rule (`__year::after`) and the tile rings (`__date::before`, `::after`) are gone.
+- **Classes:** `plx-timeline--compact` on the root, next to `plx-timeline--grouped`. Each part the compact look restyles also carries its own modifier, because the styling standard has no combinators (zero overlap, `platform/standards/styling.md` 3.5): `__group--compact`, `__year--compact`, `__events--compact`, `__event--compact`, `__event-body--compact`, `__heading--compact`, `__event-title--compact`, `__event-description--compact`, `__tag--compact`, `__date--compact`, `__date-band--compact`, `__date-month--compact`, `__date-day--compact`. Also `__date-month--category` (the month on a category band) and the Tooltip parts `__title-tip`, `__description-tip`, `__tag-tip`. They are public class names (MINOR), used only by Plenix's own CSS. In compact, `__watermark` is not rendered. In both looks, the heading rule (`__year::after`) and the tile rings (`__date::before`, `::after`) are gone.
 - **One line (compact):** title, description, tag. A cut title or description shows in full in the Plenix Tooltip while it is cut (`useTruncated`, `describe={false}`), and the full text stays in the accessibility tree. Internal: no new prop.
-- **Strings:** one new, `timeline.upcoming` ("upcoming"). The tag reads "{category} · upcoming" for a dated upcoming event and "{category} · Pending" for an undated compact one, reusing `timeline.pending` (the 40px tile has no room for the word). The suffix takes the tag's own colour.
-  - Through `strings` and the catalog. @pds1-i18n-engineer proposes the Arabic on #1152 (D-0012). Until the owner approves, the Arabic tag shows the category name alone.
+- **Strings: two patterns, each one string with a `{category}` slot** (the catalog's convention, as `{a} versus {b}`), so a language can order the words:
+  - `timeline.tagUpcoming`: "{category} · upcoming" (a dated upcoming event);
+  - `timeline.tagPending`: "{category} · Pending" (an undated compact event; the 40px tile has no room for the word).
+  - The component splits the pattern at `{category}` and puts the category label (a React node) there; it never joins a label and a word in code. The suffix takes the tag's own colour.
+  - There is no `timeline.upcoming`. `timeline.pending` stays for the standard tile and the hidden `<time>` text.
+  - Through `strings` and the catalog. @pds1-i18n-engineer proposes the Arabic (#1171, D-0012). Until the owner approves, the Arabic tag shows the category name alone.
 
 ### Tokens (design §1c; comp -> sys only, no new ref)
 
@@ -87,7 +91,7 @@
 ## Consequences
 
 - **Semver: MINOR.**
-  - Added: `density` on `Timeline`, the class `plx-timeline--compact`, the string `timeline.upcoming`, the six sys roles, the `timeline-grouped-compact-*` tokens, `timeline-grouped-date-month-upcoming-text`.
+  - Added: `density` on `Timeline`, the class `plx-timeline--compact`, the strings `timeline.tagUpcoming` and `timeline.tagPending`, the element modifier classes listed above, the six sys roles, the `timeline-grouped-compact-*` tokens, `timeline-grouped-date-month-upcoming-text`.
   - Changed look of `variant="grouped"` (owner-approved, D-0148 reading 3): no heading rule, no rings, a 20px band with a white (dark: black) 14px month, equal padding. Called out in the changeset.
 - **Deprecated** (ADR 0002 rule: `$deprecated` "… (ADR 0048). It keeps working and is removed in 2.0.0.", a docs note, this MINOR, removal in 2.0.0). The CSS stops reading them:
   - `timeline-grouped-heading-rule-width`, `-height`, `-color`, `-radius`, `-gap`, and the sys `size-section-rule`: no rule;
@@ -96,9 +100,9 @@
 
 ## Enforced by
 
-- G3 on the build PR: the API diff (`TimelineProps.density`, the class, the string, the tokens and the deprecations) matches this entry.
+- G3 on the build PR: the API diff (`TimelineProps.density`, the classes, the two strings, the tokens and the deprecations) matches this entry.
 - Check 6: `timeline-grouped-*` comp -> sys; the new sys roles read refs. Check 7: no values in the names.
 - Check 8: the two new pairs above.
 - `token-definitions`: no new ref.
-- Locale check (G6): `timeline.upcoming` in `en.json`; `ar.js` only after owner approval.
+- Locale check (G6): `timeline.tagUpcoming` and `timeline.tagPending` in `en.json`, each with `{category}`; `ar.js` only after owner approval.
 - Behavior tests: #1152 AC-1..AC-7 and design §6 (equal padding in both looks and three densities; no `::before`/`::after` on the tile; month colour per band; undated compact tag suffix; one-line ellipsis with the Tooltip only while cut; ≤ 720px at the inline start, LTR and RTL; `density` on `variant="default"` warns).
