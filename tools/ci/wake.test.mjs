@@ -19,6 +19,9 @@ case "$1" in
 esac
 `, { mode: 0o755 });
 
+const home = path.join(tmp, 'home');
+fs.mkdirSync(path.join(home, 'pds1'), { recursive: true });   // team.sh logs to $HOME/pds1/team.log, as the launch test's CI step prepares
+
 const BAR = '─'.repeat(50);
 const box = (typed = '') => `${BAR}\n❯ ${typed}\n${BAR}\n  ⏵⏵ bypass permissions on (shift+tab to cycle) · ← 1 agent\n`;
 const rcHistory = '❯ /remote-control PDS1 · i18n Engineer\n\n  /remote-control is active · Continue here, on your phone\n\n';
@@ -34,7 +37,7 @@ const wake = (name, activityAgeS, idleS = 120) => {
   fs.writeFileSync(pane, panes[name]);
   const r = spawnSync('bash', [path.join(root, 'deploy/agents/team.sh'), 'wake', 'i18n-engineer', 'x', String(idleS)], {
     encoding: 'utf8',
-    env: { ...process.env, TEAM_TEST_BIN: tmp, NUDGE_DRY: '1', STUB_PANE: pane, STUB_WIN: 'i18n-engineer',
+    env: { ...process.env, HOME: home, PDS1_CFG: path.join(root, 'agents.config.yaml'), TEAM_TEST_BIN: tmp, NUDGE_DRY: '1', STUB_PANE: pane, STUB_WIN: 'i18n-engineer',
       STUB_ACT: String(Math.floor(Date.now() / 1000) - activityAgeS) },
   });
   return r.status;
