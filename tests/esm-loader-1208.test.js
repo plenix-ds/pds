@@ -45,12 +45,18 @@ window.__ready = Plenix.load(${JSON.stringify(PARTS)}).then(function () {
     const p = await browser.newPage();
     const errors = [], fetched = [];
     p.on('pageerror', (e) => errors.push(e.message));
+    const consoleErrors = [];
+    p.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') consoleErrors.push(m.type() + ': ' + m.text().slice(0, 300)); });
     p.on('requestfinished', (r) => fetched.push(new URL(r.url()).pathname));
     await p.goto(origin + '/page.html', { waitUntil: 'load', timeout: 90000 });
     const ready = await p.evaluate(() => window.__ready.then((x) => x, (e) => 'rejected: ' + e.message));
     await check('AC-1 the grid renders', async () => {
       assert.strictEqual(ready, 'ok');
-      await p.waitForSelector('.plx-data-grid__grid-row', { timeout: 30000 });
+      try { await p.waitForSelector('.plx-data-grid__grid-row', { timeout: 30000 }); } catch (e) {
+        // what the page holds instead, for the log: its console and the start of the rendered tree
+        const dom = await p.evaluate(() => document.getElementById('root').innerHTML.slice(0, 1200));
+        throw new Error(e.message + '\n  console: ' + JSON.stringify(consoleErrors.slice(0, 8)) + '\n  #root: ' + dom);
+      }
       const rows = await p.$$eval('.plx-data-grid__grid-row', (r) => r.length);
       assert.ok(rows >= 10, 'rows drawn: ' + rows);
       assert.deepStrictEqual(errors, []);
