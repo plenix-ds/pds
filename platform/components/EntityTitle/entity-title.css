@@ -6,9 +6,9 @@
 .plx-entity-title__icon{color:var(--plx-comp-entity-title-icon-color);display:inline-flex;flex-shrink:0;}
 .plx-entity-title__text{display:flex;flex-basis:0%;flex-direction:column;flex-grow:1;flex-shrink:1;min-inline-size:0;}
 .plx-entity-title__line{align-items:center;column-gap:var(--plx-comp-entity-title-tag-gap);display:flex;min-block-size:var(--plx-comp-entity-title-title-line-height);min-inline-size:0;}
-.plx-entity-title__title{unicode-bidi:plaintext;color:var(--plx-comp-entity-title-title-color);font-size:var(--plx-comp-entity-title-title-font-size);font-weight:var(--plx-comp-entity-title-title-font-weight);line-height:var(--plx-comp-entity-title-title-line-height);margin-block-end:0;margin-block-start:0;min-inline-size:0;overflow-x:hidden;overflow-y:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.plx-entity-title__title{inline-size:fit-content;max-inline-size:100%;unicode-bidi:plaintext;color:var(--plx-comp-entity-title-title-color);font-size:var(--plx-comp-entity-title-title-font-size);font-weight:var(--plx-comp-entity-title-title-font-weight);line-height:var(--plx-comp-entity-title-title-line-height);margin-block-end:0;margin-block-start:0;min-inline-size:0;overflow-x:hidden;overflow-y:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .plx-entity-title__tag{display:inline-flex;flex-shrink:0;}
-.plx-entity-title__subtitle{unicode-bidi:plaintext;color:var(--plx-comp-entity-title-subtitle-color);font-size:var(--plx-comp-entity-title-subtitle-font-size);line-height:var(--plx-comp-entity-title-subtitle-line-height);min-inline-size:0;overflow-x:hidden;overflow-y:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.plx-entity-title__subtitle{inline-size:fit-content;max-inline-size:100%;unicode-bidi:plaintext;color:var(--plx-comp-entity-title-subtitle-color);font-size:var(--plx-comp-entity-title-subtitle-font-size);line-height:var(--plx-comp-entity-title-subtitle-line-height);min-inline-size:0;overflow-x:hidden;overflow-y:hidden;text-overflow:ellipsis;white-space:nowrap;}
 /* the tooltip around a line (Tooltip's wrapper) is the flex item: it may shrink, so its line can be cut */
 .plx-entity-title__tip{display:flex;min-inline-size:0;}
 /* loading: a small spinner in the title line's place, so the item is as tall loading as loaded */

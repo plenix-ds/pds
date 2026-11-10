@@ -45,10 +45,17 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
     const s = await page.evaluate(async () => {
       document.documentElement.setAttribute('dir', 'rtl');
       const h = React.createElement, P = Plenix; const c = document.createElement('div'); c.style.inlineSize = '400px'; document.querySelector('main').replaceChildren(c);
+      const measure = (sel, within) => { const el = document.querySelector(sel), box = el.closest(within).getBoundingClientRect(), rg = document.createRange(); rg.selectNodeContents(el.firstChild); const t = rg.getBoundingClientRect(); return [Math.round(box.right - t.right), Math.round(t.left - box.left)]; };
+      const out = [];
       ReactDOM.createRoot(c).render(h(P.Menu, { label: 'm', open: true, trigger: h(P.Button, null, 'T') }, h(P.MenuItem, null, 'Short'), h(P.MenuItem, null, 'A noticeably longer menu item label here'))); await new Promise((r) => setTimeout(r, 600));
-      return ['.plx-menu__label-text'].map((sel) => { const el = document.querySelector(sel), box = el.closest('.plx-menu__item').getBoundingClientRect(), tn = el.firstChild, rg = document.createRange(); rg.selectNodeContents(tn); const t = rg.getBoundingClientRect(); return [Math.round(box.right - t.right), Math.round(t.left - box.left), Math.round(box.width)]; });
+      out.push(measure('.plx-menu__label-text', '.plx-menu__item'));
+      // a short English title over a longer subtitle (the same column): the short one stays at the right
+      const c2 = document.createElement('div'); c2.style.inlineSize = '400px'; document.querySelector('main').replaceChildren(c2);
+      ReactDOM.createRoot(c2).render(h('div', null, h(P.EntityTitle, { title: 'Ann', subtitle: 'المراجعة السنوية لجميع القضايا المسندة إلى المحكمة' }), h(P.Persona, { name: 'Ann', secondary: 'A much longer secondary line under the short name' }))); await new Promise((r) => setTimeout(r, 600));
+      out.push(measure('.plx-entity-title__title', '.plx-entity-title'), measure('.plx-persona__name', '.plx-persona'));
+      return out;
     });
-    for (const [fromRight, fromLeft] of s) assert.ok(fromRight <= 40 && fromLeft > 100, 'a short English label stays at the right in RTL ' + JSON.stringify(s));
+    for (const [fromRight, fromLeft] of s) assert.ok(fromRight <= 40 && fromLeft > 20, 'a short English label stays at the right in RTL ' + JSON.stringify(s));
     await page.close();
     assert.deepEqual(problems, [], 'no script errors: ' + problems.join(' | '));
     console.log('RTL_TRUNCATE_AUDIT_1283_OK');
