@@ -4,7 +4,8 @@
 //   - a name in api/v1/exports.json lacks dist/parts/<name>.js or parts/<name>.d.ts (npm), esm/<name>.js or its
 //     esm/manifest.json entry (CDN), or one of those holds a name that is no export;
 //   - a relative import in esm/ (static or a literal import()) names a file that is not there;
-//   - plenix-loader.js or a vendor/*.esm.js React module is missing.
+//   - plenix-loader.js or a vendor/*.esm.js React module is missing;
+//   - a module in esm/ reads process.env (a bundler's name: a page without one has no process).
 import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
@@ -29,6 +30,11 @@ export function specifiers(code) {
   const out = [];
   for (const m of code.matchAll(/(?:\bfrom\s*|\bimport\s*\(?\s*)["'](\.{1,2}\/[^"']+)["']/g)) out.push(m[1]);
   return out;
+}
+
+// the bundler-only names a module reads (process.env.<NAME>)
+export function bundlerOnly(code) {
+  return [...new Set([...code.matchAll(/\bprocess\.env\.\w+/g)].map((m) => m[0]))];
 }
 
 const walk = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap((d) => d.isDirectory() ? walk(path.join(dir, d.name)) : [path.join(dir, d.name)]);
@@ -56,7 +62,9 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   let files = 0;
   for (const f of walk(ESM).filter((x) => x.endsWith('.js'))) {
     files++;
-    for (const s of specifiers(fs.readFileSync(f, 'utf8'))) {
+    const code = fs.readFileSync(f, 'utf8');
+    for (const b of bundlerOnly(code)) findings.push(`${path.relative(CDN, f)} reads ${b}, which a page without a bundler does not have`);
+    for (const s of specifiers(code)) {
       const to = path.resolve(path.dirname(f), s);
       if (!fs.existsSync(to)) findings.push(`${path.relative(CDN, f)} imports ${s}, which is not there`);
     }

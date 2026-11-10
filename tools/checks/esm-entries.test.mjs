@@ -5,7 +5,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { createRequire } from 'node:module';
-import { compare, specifiers } from './esm-entries.mjs';
+import { compare, specifiers, bundlerOnly } from './esm-entries.mjs';
 
 const { exportsOf, staticImports, closure } = createRequire(import.meta.url)('../publish/esm-parts.js');
 
@@ -36,5 +36,9 @@ describe('esm entries (1208)', () => {
       { name: 'FLOATING_PLACEMENTS', local: 'PLACEMENTS', mod: 'utils/floating' },
       { name: 'Floating', local: 'Floating', mod: 'utils/floating' },
     ]);
+  });
+  it('finds process.env reads, which a page without a bundler cannot run', () => {
+    expect(bundlerOnly('const d = process.env.NODE_ENV !== "production" && process.env.NODE_ENV;')).toEqual(['process.env.NODE_ENV']);
+    expect(bundlerOnly('if (typeof process === "object" && process) {}')).toEqual([]);
   });
 });

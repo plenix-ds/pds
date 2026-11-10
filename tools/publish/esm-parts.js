@@ -107,6 +107,13 @@ module.exports = function esmParts({ ROOT, P, R, CDN, VERSION }) {
   const ESM = path.join(CDN, 'esm');
   const skip = new Set(['index.cjs', 'plenix.global.js', 'plenix-engines.js', 'vendor', 'parts']);
   for (const n of fs.readdirSync(dist)) if (!skip.has(n)) fs.cpSync(path.join(dist, n), path.join(ESM, n), { recursive: true });
+  // the npm modules leave process.env.NODE_ENV to the app's bundler; a page without one has no process, so the CDN copies
+  // read "production" (the DataGrid's virtualizer reads it while it renders)
+  const walk = (d) => fs.readdirSync(d, { withFileTypes: true }).flatMap((x) => x.isDirectory() ? walk(path.join(d, x.name)) : [path.join(d, x.name)]);
+  for (const f of walk(ESM).filter((x) => x.endsWith('.js'))) {
+    const code = fs.readFileSync(f, 'utf8');
+    if (code.includes('process.env.NODE_ENV')) fs.writeFileSync(f, code.replace(/process\.env\.NODE_ENV/g, '"production"'));
+  }
   for (const e of list) if (e.mod !== e.name) write(path.join(ESM, e.name + '.js'), reexport(e, './'));
   const icons = path.join(P, 'dist', 'plenix-icons-plenix.esm.js');
   if (!fs.existsSync(icons)) throw new Error('esm-parts: platform/dist/plenix-icons-plenix.esm.js is missing: run node build-app.js (#1209)');
