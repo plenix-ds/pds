@@ -9,7 +9,7 @@
   },
   "plx-sys": {
     "surface-canvas": {
-      "$value": "{plx-ref.color-gray-75}",
+      "$value": "{plx-ref.color-gray-200}",
       "$type": "color",
       "$extensions": {
         "com.plenix": {
