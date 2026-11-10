@@ -39,7 +39,8 @@
   - With `progress` (a number), nothing changes: no long message and no Cancel from this rule. The bar already informs.
 - **`DataGrid`:** `onLoadingCancel?(): void`, passed to its LoadingState as `onCancel`.
 - **`ListingPage`:** `onLoadingCancel?(): void`, passed to its DataGrid.
-- **No new class** beyond what G2's look needs. If the button needs its own spacing, the class is `plx-loading-state__cancel` (the BEM part name; MINOR).
+- **Classes:** `plx-loading-state--long` (the column layout from the long point), `plx-loading-state__slow` (the second line) and `plx-loading-state__cancel` (the button).
+- **New comp tokens** (`components.tokens.json`, comp -> sys): `loading-state-gap` -> `space-stack-sm` (between the label row, the second line and Cancel), and `loading-state-slow-text` -> `content-muted` (the second line). The line's size and line height reuse the spinner label's tokens.
 
 ### Strings (namespace `loading`, through `strings` and the catalog)
 
@@ -50,7 +51,7 @@
 
 ## Consequences
 
-- **Semver: MINOR (1.7.0).** Added: the ref and sys token, `LoadingState.onCancel`, `DataGrid.onLoadingCancel`, `ListingPage.onLoadingCancel`, and the two strings. There is no change before 10 s, and no deprecation.
+- **Semver: MINOR (1.7.0).** Added: the ref and sys token, the two comp tokens and three classes, `LoadingState.onCancel`, `DataGrid.onLoadingCancel`, `ListingPage.onLoadingCancel`, and the two strings. There is no change before 10 s, and no deprecation.
 
 ## Enforced by
 
