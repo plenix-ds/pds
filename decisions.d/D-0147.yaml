@@ -1,0 +1,9 @@
+id: D-0147
+date: 2026-11-10
+area: design
+decided_by: pds1-design-director (G2 readings of D-0145, #1152; the owner may switch each)
+decision: 'Readings of the compact grouped Timeline (D-0145): A) the owner''s 6px and 10px padding snap to the 4px grid, 8px on every side in compact and 12px in standard, keeping start = top = bottom; B to switch: 4px compact. A) a 40px compact tile cannot hold "Pending" at the 12px minimum, so an undated compact event shows an empty dashed tile and its tag reads "{category} · pending"; B to switch: 52px compact tiles. A) the standard grouped look also loses the binder rings and the heading line, takes the month inside a 20px band and equal 12px padding, and keeps its watermark; B to switch: keep 1.2.0''s standard look. The month on the band is content-inverse (white in light; black in dark, where white measures below 2:1, a contrast defect).'
+options: ['A for each reading (applied)', 'B: 4px compact padding', 'B: 52px compact tiles with Pending in the tile', 'B: keep the standard look as built in 1.2.0']
+why: 'DESIGN.md section 5 retires 6px and 10px; DESIGN.md section 3 sets 12px as the minimum text size; key-dates-standard.png shows the new tile and equal padding in the standard look; WCAG 1.4.3 needs 4.5:1 for the month.'
+status: active
+check: 'Timeline tests for #1152 (docs/pds1/slices/1152/design.md section 6: equal computed padding, no tile rings, month colour and contrast for 8 slots light and dark, the undated compact tag); G2 on the build PR'
