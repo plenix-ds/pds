@@ -125,6 +125,7 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 
 - **The SecondaryPane title is the largest text in the pane:** surface-title, 15px, 700, `content-default`. It was 12px, 600 (changed, D-0123). Below it come the NavList item (13px, 400), then the section label (12px, 700, caps, `content-muted`), then the back item (12px, 400, `content-muted`).
 - **A back item** ("Back to {name}", `SecondaryPane back`, ADR 0038) is a link row above the title row, start-aligned, with its arrow on the title's start edge. It is never a filled or centred button. In the folded rail it is the first control. Details: `docs/pds1/slices/995-nav-back/design.md`.
+- **Navigation pane widths** (D-0168, D-0169, #1243): the main NavPane and every SecondaryPane used as navigation start at one standard width, 240px, in every window and frame (no window steps). The person can resize the pane by its edge (drag, or arrow keys in 8px steps) between its min and max, and the width is remembered. A double-click or Enter on the edge resets it. A settings nav is a docked SecondaryPane titled "Settings", never a card in the content (#1242).
 
 ### Read-only fields and card headings (D-0106, #946)
 
