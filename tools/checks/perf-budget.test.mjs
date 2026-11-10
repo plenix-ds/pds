@@ -2,7 +2,7 @@
 // :root-only scope is not, layer copies of one scope add up, and plenix.js is measured with brotli 5. Runs in the checks'
 // Vitest job.
 import { describe, it, expect } from 'vitest';
-import { reachesElements, isDensityScope, scopeTokens, check, checkTraces } from './perf-budget.mjs';
+import { reachesElements, isDensityScope, scopeTokens, check, checkTraces, checkBundles } from './perf-budget.mjs';
 
 const decls = (n, p) => Array.from({ length: n }, (_, i) => `--${p}-${i}: 1px;`).join(' ');
 const css = `@layer t { :root { ${decls(50, 'a')} } :root, [data-plx-density] { ${decls(8, 'b')} color: red; } }
@@ -51,5 +51,17 @@ describe('perf-budget (1188)', () => {
     expect(checkTraces(slow, traces).fails).toEqual(['grid: LCP 2600 ms is over 2500 ms', 'grid: INP 240 ms is over 200 ms']);
     expect(checkTraces({ pages: { grid: ok.pages.grid, record: ok.pages.record } }, traces).fails).toEqual(['form: no LCP or INP in the trace']);
     expect(checkTraces({}, traces).fails).toHaveLength(3);
+  });
+  it('an entry over its limit fails; a named limit replaces the default; screens and the loader are limited (#1208)', () => {
+    const bundles = { entryLimit: 100, limits: { Big: 300 }, screens: { grid: { parts: ['A', 'Big'], limit: 350 } }, loaderLimit: 50 };
+    const ok = { sizes: { A: 90, Big: 280 }, screens: { grid: 340 }, loader: 40 };
+    expect(checkBundles(ok, bundles).fails).toEqual([]);
+    expect(checkBundles({ ...ok, sizes: { A: 101, Big: 280 } }, bundles).fails).toEqual(['esm/A.js loads 101 B with brotli 5 (limit 100)']);
+    expect(checkBundles({ ...ok, sizes: { A: 90, Big: 301 } }, bundles).fails).toEqual(['esm/Big.js loads 301 B with brotli 5 (limit 300)']);
+    expect(checkBundles({ ...ok, screens: { grid: 351 } }, bundles).fails).toEqual(['screen grid loads 351 B with brotli 5 (limit 350)']);
+    expect(checkBundles({ ...ok, screens: {} }, bundles).fails[0]).toMatch(/screen grid: a part is no entry/);
+    expect(checkBundles({ ...ok, loader: 51 }, bundles).fails).toEqual(['plenix-loader.js is 51 B (limit 50)']);
+    expect(checkBundles({ ...ok, sizes: { A: 90 } }, bundles).fails).toContain('bundles.limits names Big, which is no entry');
+    expect(checkBundles({ ...ok, sizes: { A: 90, Big: 50 } }, bundles).notes.some((n) => /Big\.js is 50 B, under the default 100: drop its own limit/.test(n))).toBe(true);
   });
 });
