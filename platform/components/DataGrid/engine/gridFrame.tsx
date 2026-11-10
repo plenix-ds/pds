@@ -98,6 +98,7 @@ export function gridFrame({
   last,
   empty,
   loading,
+  onLoadingCancel,
   scrollFill,
   moreFailed,
   displayedTotal,
@@ -276,7 +277,7 @@ export function gridFrame({
               {cardAfter}
               <RowGap rows={model.slice(last)} />
             </div>
-            {emptyRow({ model, B, isStatic, ordered, remoteMode, remoteBusy, loading, S, empty })}
+            {emptyRow({ model, B, isStatic, ordered, remoteMode, remoteBusy, loading, onLoadingCancel, S, empty })}
             {moreRow({ scrollFill, model, remoteBusy, moreFailed, B, semanticRows, ordered, S, setRetry })}
           </div>
         </div>

@@ -166,6 +166,7 @@
        title, subtitle, primary, secondary, tertiary and date take the next columns in the order of `columns`. A column that fills no slot is not drawn
        in a card that names its layout or template: map every field a person needs while scanning; the rest shows when the row is opened (the default card
        keeps such fields as "Label: value" lines under its last line). Selection, the open row, the keyboard and the row menu work in every layout
+     onLoadingCancel(): from about 10s of the first load the loading state adds a second line and a Cancel button that calls it (ADR 0051)
      loading: true while the first rows load (no rows yet): a centred spinner with strings.loading after about 1s, in place of the empty text; with rows shown it changes nothing (LoadingOverlay is for a refresh)
      empty: shown when no row matches; error and onRetry(): the error state and its one recovery; strings: the words
      strings.cardCount: the count over the template cards names the app's records (issue 679), a plural message in the
@@ -440,6 +441,8 @@ export type DataGridProps<R = Record<string, unknown>> = {
   empty?: React.ReactNode;
   /** the first load is under way and there are no rows yet: shows the region loading state, not the empty text */
   loading?: boolean;
+  /** from the long wait of the first load (about 10 s) the loading state shows Cancel and calls this (ADR 0051) */
+  onLoadingCancel?(): void;
   error?: React.ReactNode;
   onRetry?(): void;
   strings?: Record<string, unknown>;

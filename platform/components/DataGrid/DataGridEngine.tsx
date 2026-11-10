@@ -108,6 +108,7 @@ function NextEngine(rawProps: any) {
     className,
     empty,
     loading,
+    onLoadingCancel,
     error,
     onRetry
   } = props;
@@ -1174,6 +1175,7 @@ function NextEngine(rawProps: any) {
     last,
     empty,
     loading,
+    onLoadingCancel,
     scrollFill,
     moreFailed,
     displayedTotal,

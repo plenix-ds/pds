@@ -1234,6 +1234,10 @@
       "$value": { "value": 1, "unit": "s" },
       "$type": "duration"
     },
+    "motion-delay-loading-long": {
+      "$value": { "value": 10, "unit": "s" },
+      "$type": "duration"
+    },
     "radius-none": {
       "$value": { "value": 0, "unit": "px" },
       "$type": "dimension",

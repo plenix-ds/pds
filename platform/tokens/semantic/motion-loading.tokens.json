@@ -41,6 +41,11 @@
       "$value": "{plx-ref.motion-delay-loading-region}",
       "$type": "duration",
       "$description": "The wait before a region loading state (LoadingState, Spinner delay=\"region\") appears, one second, so a fast load shows nothing (D-0130, ADR 0042). Not motion: the reduced-motion file never sets it to 0. Controls keep motion-loading-delay."
+    },
+    "motion-loading-long-delay": {
+      "$value": "{plx-ref.motion-delay-loading-long}",
+      "$type": "duration",
+      "$description": "The wait after which a region loading state adds a second line (\"This is taking longer than usual.\") and, with onCancel, a Cancel button: ten seconds, the standard response-time step (D-0158, ADR 0051). A wait, not motion: the reduced-motion file never sets it to 0."
     }
   }
 }
