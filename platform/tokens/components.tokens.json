@@ -775,7 +775,7 @@
       }
     },
     "secondary-pane-width-md": {
-      "$value": "{plx-ref.size-60u}",
+      "$value": "{plx-sys.shell-nav-width}",
       "$type": "dimension"
     },
     "secondary-pane-width-min": {
@@ -9934,6 +9934,16 @@
     "settings-rows-field-padding-block": {
       "$value": "{plx-sys.space-inset-md}",
       "$type": "dimension"
+    },
+    "settings-nav-border-bottom-color": {
+      "$value": "{plx-sys.border-default}",
+      "$type": "color",
+      "$deprecated": "SettingsLayout's nav is a SecondaryPane (ADR 0057); nothing reads it; removed in 2.0.0."
+    },
+    "settings-nav-border-bottom-width": {
+      "$value": "{plx-sys.border-width-thin}",
+      "$type": "dimension",
+      "$deprecated": "SettingsLayout's nav is a SecondaryPane (ADR 0057); nothing reads it; removed in 2.0.0."
     },
     "settings-content-narrow-padding-inline": {
       "$value": "{plx-sys.space-layout-sm}",
