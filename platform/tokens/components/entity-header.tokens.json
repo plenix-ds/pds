@@ -118,7 +118,7 @@
       "$description": "EntityHeader: a fact tile's corners."
     },
     "entity-header-fact-background": {
-      "$value": "{plx-sys.surface-canvas}",
+      "$value": "{plx-sys.surface-tile}",
       "$type": "color",
       "$description": "EntityHeader: a fact tile's fill."
     },
