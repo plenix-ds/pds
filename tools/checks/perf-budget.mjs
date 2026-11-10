@@ -10,8 +10,10 @@
 //     matches) declares more than densityTokens.limit (#1205);
 //   - plenix.js compressed with brotli quality 5 (what the web host sends) is over jsBrotli.limit;
 //   - with --traces: a reference page's LCP or INP is over traces.lcpMs or traces.inpMs, or a page is missing (#1213);
-//   - an entry esm/<Export>.js with what it imports (esm/manifest.json), brotli 5, is over its bundles limit; a screen's
-//     parts together are over theirs; plenix-loader.js is over bundles.loaderLimit; or esm/manifest.json is missing (#1208).
+//   - a shared layer chunk (core, grid, shell, forms, charts) is over its bundles.layers limit; what an entry esm/<Export>.js
+//     adds on top of the layers (esm/manifest.json), brotli 5, is over its limit (D-0171); a screen's parts together are
+//     over their bytes or files limit; plenix-loader.js is over bundles.loaderLimit; or esm/manifest.json is missing
+//     (#1208, #1293).
 // It prints, never limits: the size of plenix.css raw, gzip and brotli (owner, plenix-platform#460), and the total count
 // of custom-property declarations. Limits live in tools/checks/perf-budget.json.
 import fs from 'node:fs';
@@ -82,45 +84,59 @@ export function check({ css, js, budget }) {
   return { fails, notes };
 }
 
-// Code per screen (ADR 0052, #1208): sizes[name] is an entry's brotli 5 bytes with its imports; screens[name] the bytes of
-// a screen's parts together. Prints the largest entries: the on-demand candidates.
-export function checkBundles({ sizes, screens, loader }, bundles) {
+// Code per screen (ADR 0052, #1208, #1293). The shared chunks are layers (core, grid, shell, forms, charts) that a page
+// loads once, each limited on its own (layers). sizes[name] is what an entry adds on top of the layers, brotli 5 (D-0171).
+// screens[name] is { bytes, files } for a screen's parts together, layers included. Prints the largest additions: the
+// on-demand candidates.
+export function checkBundles({ sizes, layers, screens, loader }, bundles) {
   const fails = [], notes = [];
+  for (const [name, limit] of Object.entries(bundles.layers || {})) {
+    const size = layers[name];
+    if (size === undefined) { fails.push(`layer ${name}: no chunks/${name}-*.js in esm/`); continue; }
+    notes.push(`layer ${name}: ${size} B brotli 5 (limit ${limit})`);
+    if (size > limit) fails.push(`layer ${name} is ${size} B with brotli 5 (limit ${limit})`);
+  }
   for (const [name, size] of Object.entries(sizes)) {
     const limit = bundles.limits[name] ?? bundles.entryLimit;
-    if (size > limit) fails.push(`esm/${name}.js loads ${size} B with brotli 5 (limit ${limit})`);
-    else if (bundles.limits[name] !== undefined && size < Math.min(limit * 0.9, bundles.entryLimit)) notes.push(`esm/${name}.js is ${size} B, under the default ${bundles.entryLimit}: drop its own limit`);
+    if (size > limit) fails.push(`esm/${name}.js adds ${size} B with brotli 5 to the layers (limit ${limit})`);
+    else if (bundles.limits[name] !== undefined && size < Math.min(limit * 0.9, bundles.entryLimit)) notes.push(`esm/${name}.js adds ${size} B, under the default ${bundles.entryLimit}: drop its own limit`);
   }
   for (const name of Object.keys(bundles.limits)) if (!(name in sizes)) fails.push(`bundles.limits names ${name}, which is no entry`);
   for (const [name, s] of Object.entries(bundles.screens || {})) {
-    const size = screens[name];
-    if (size === undefined) { fails.push(`screen ${name}: a part is no entry (${s.parts.join(', ')})`); continue; }
-    notes.push(`screen ${name} (${s.parts.join(', ')}): ${size} B brotli 5 (limit ${s.limit})`);
-    if (size > s.limit) fails.push(`screen ${name} loads ${size} B with brotli 5 (limit ${s.limit})`);
+    const m = screens[name];
+    if (m === undefined) { fails.push(`screen ${name}: a part is no entry (${s.parts.join(', ')})`); continue; }
+    notes.push(`screen ${name} (${s.parts.length} parts): ${m.bytes} B brotli 5 (limit ${s.limit}), ${m.files} files` + (s.maxFiles ? ` (limit ${s.maxFiles})` : ''));
+    if (m.bytes > s.limit) fails.push(`screen ${name} loads ${m.bytes} B with brotli 5 (limit ${s.limit})`);
+    if (s.maxFiles && m.files > s.maxFiles) fails.push(`screen ${name} loads ${m.files} files (limit ${s.maxFiles})`);
   }
   if (loader > bundles.loaderLimit) fails.push(`plenix-loader.js is ${loader} B (limit ${bundles.loaderLimit})`);
   const top = Object.entries(sizes).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([n, b]) => `${n} ${b}`).join(', ');
-  notes.push(`${Object.keys(sizes).length} entries; largest (on-demand candidates): ${top}; plenix-loader.js ${loader} B`);
+  notes.push(`${Object.keys(sizes).length} entries; largest additions to the layers (on-demand candidates): ${top}; plenix-loader.js ${loader} B`);
   return { fails, notes };
 }
 
-// the sizes checkBundles reads, from a CDN folder; null when it has no esm/manifest.json
+// the sizes checkBundles reads, from a CDN folder; null when it has no esm/manifest.json. A screen's files are those its
+// parts load (the chunk an entry re-exports from, else the entry, and their imports), as Plenix.load fetches them
 export function measureBundles(dir, bundles) {
   const m = path.join(dir, 'esm', 'manifest.json');
   if (!fs.existsSync(m)) return null;
   const entries = JSON.parse(fs.readFileSync(m, 'utf8')).entries;
   const cache = new Map();
   const br = (f) => { if (!cache.has(f)) cache.set(f, brotli5(fs.readFileSync(path.join(dir, 'esm', f)))); return cache.get(f); };
-  const files = (n) => [entries[n].file, ...entries[n].imports];
+  const layerOf = (f) => { const x = /^chunks\/([a-z]+)-[\w-]+\.js$/.exec(f); return x && bundles.layers && x[1] in bundles.layers ? x[1] : null; };
+  const files = (n) => [...new Set([entries[n].chunk || entries[n].file, ...entries[n].imports])];
+  const layers = {};
+  for (const n of Object.keys(entries)) for (const f of files(n)) { const l = layerOf(f); if (l) layers[l] = br(f); }
   const sizes = {};
-  for (const n of Object.keys(entries)) sizes[n] = files(n).reduce((a, f) => a + br(f), 0);
+  for (const n of Object.keys(entries)) sizes[n] = files(n).filter((f) => !layerOf(f)).reduce((a, f) => a + br(f), 0);
   const screens = {};
   for (const [name, s] of Object.entries(bundles.screens || {})) {
     if (!s.parts.every((n) => entries[n])) continue;
-    screens[name] = [...new Set(s.parts.flatMap(files))].reduce((a, f) => a + br(f), 0);
+    const all = [...new Set(s.parts.flatMap(files))];
+    screens[name] = { bytes: all.reduce((a, f) => a + br(f), 0), files: all.length };
   }
   const lf = path.join(dir, 'plenix-loader.js');
-  return { sizes, screens, loader: fs.existsSync(lf) ? fs.statSync(lf).size : Infinity };
+  return { sizes, layers, screens, loader: fs.existsSync(lf) ? fs.statSync(lf).size : Infinity };
 }
 
 // Speed on the reference pages (owner rule 7, D-0160): the harness's JSON (tests/perf/run.mjs --json) against the

@@ -133,4 +133,86 @@ export function packageConfig(name, overrides = {}) {
   };
 }
 
-export default defineConfig(() => packageConfig(process.env.PLENIX_PACKAGE || 'esm'));
+// The CDN's per-screen modules (ADR 0052, #1208, #1293): release/cdn/<version>/esm/. One entry per public export (a file
+// that re-exports its name from a chunk), the barrel index.js and the Arabic opt-in i18n/ar.js, over a few large chunks,
+// so a screen loads a handful of files, not hundreds (CTM's 45-part shell: 7, was 214). The npm package's modules (the esm
+// build above) keep one module per part, for bundlers.
+// The chunks are layers (LAYERS below), from the import graph: each takes the code its parts reach through static imports
+// that no earlier layer holds. What a part reaches, its imports reach too, so a layer imports only itself or an earlier
+// one and no two chunks import each other. A data screen (ThemeProvider, Button, Dialog, DataGrid) loads core and grid
+// only. The rest (rarer parts, page templates, commerce) is chunked by Rollup, so each loads only what it uses; a module
+// only a dynamic import() reaches loads on first use (#1145).
+// process.env.NODE_ENV is "production": a page without a bundler has no process (#1264).
+const ENTRY = 'plenix-entry:';
+// The layers, in order (G3 on #1293): what every screen needs (the theme, buttons, dialogs), the data grid (CTM's
+// screens and most apps draw one), the app shell, the form controls, the charts. Each is the code its parts reach that no earlier layer holds.
+const LAYERS = [
+  ['core', ['ThemeProvider', 'Button', 'Dialog']],
+  ['grid', ['DataGrid']],
+  ['shell', ['AppShell', 'AppHeader', 'NavPane', 'NavList', 'CommandBar', 'CommandBarSearch', 'ToolRail', 'Toolbar', 'SecondaryPane', 'SplitView', 'ReadingPane', 'PagePanes', 'PageContent', 'PageHeader', 'Menu', 'MenuBar', 'Tabs', 'Panel', 'Card', 'Stack', 'Inline', 'Center', 'Text', 'Heading', 'Notice', 'EmptyState', 'LoadingState', 'ToastProvider', 'DirectionProvider', 'Icon', 'Image', 'List', 'Tooltip', 'Badge']],
+  ['forms', ['Field', 'Input', 'Textarea', 'Select', 'Combobox', 'Checkbox', 'RadioGroup', 'Switch', 'DatePicker', 'NumberInput', 'SearchField', 'Form', 'FilterPanel']],
+  ['charts', ['BarChart', 'LineChart', 'AreaChart', 'PieChart', 'DonutChart', 'ChartFrame', 'Gauge']],
+];
+export function cdnEsmConfig() {
+  const names = [];
+  for (const m of fs.readFileSync(path.join(P, 'index.ts'), 'utf8').matchAll(/export \{([^}]+)\} from '\.\/([^']+)'/g)) {
+    for (const part of m[1].split(',').map((x) => x.trim()).filter(Boolean)) {
+      const r = /^(\w+)\s+as\s+(\w+)$/.exec(part);
+      names.push({ name: r ? r[2] : part, local: r ? r[1] : part, file: path.join(P, m[2]) });
+    }
+  }
+  const byName = new Map(names.map((n) => [n.name, n]));
+  const entry = Object.fromEntries(names.map((n) => [n.name, ENTRY + n.name]));
+  entry.index = path.join(P, 'index.ts');
+  entry['i18n/ar'] = path.join(P, 'i18n', 'ar.optin.ts');
+  const entries = {
+    name: 'plenix-entries',
+    enforce: 'pre',
+    // Vite's library mode resolves an entry against the root first, so the name may come with a folder in front of it
+    resolveId(spec) { const i = spec.indexOf(ENTRY); return i >= 0 ? '\0' + spec.slice(i) : null; },
+    load(id) {
+      if (!id.startsWith('\0' + ENTRY)) return null;
+      const n = byName.get(id.slice(ENTRY.length + 1));
+      return 'export { ' + (n.local === n.name ? n.name : n.local + ' as ' + n.name) + " } from '" + n.file.split(path.sep).join('/') + "';\n";
+    },
+  };
+  // each module's group, computed once when the chunks are made. The groups are layers (ORDER): a module's static imports
+  // sit in its own layer or a lower one, so no two chunks import each other (a cycle can run code before what it needs)
+  let groups = null;
+  const assign = (api) => {
+    const reached = (list) => {
+      const seen = new Set(), stack = list.filter((n) => byName.has(n)).map((n) => '\0' + ENTRY + n);
+      while (stack.length) {
+        const id = stack.pop();
+        if (seen.has(id)) continue;
+        seen.add(id);
+        const info = api.getModuleInfo(id);
+        if (info) for (const d of info.importedIds) stack.push(d);
+      }
+      for (const id of [...seen]) if (id.startsWith('\0' + ENTRY)) seen.delete(id);
+      return seen;
+    };
+    groups = new Map();
+    // each layer takes what its parts reach that no lower layer holds. What a part reaches, its imports reach too, so a
+    // layer's code imports only its own layer or a lower one, and no two chunks import each other
+    for (const [layer, parts] of LAYERS) for (const id of reached(parts)) if (!groups.has(id)) groups.set(id, layer);
+    // the rest (rarer parts, the page templates, commerce) is left to Rollup: each loads only what it uses
+  };
+  // a module that only a dynamic import() reaches has no group: it loads on first use, in a chunk of its own
+  const group = (id, api) => { if (!groups) assign(api); return groups.get(id); };
+  const base = packageConfig('esm', {});
+  return Object.assign(base, {
+    plugins: [entries, ...base.plugins],
+    define: Object.assign({}, base.define, { 'process.env.NODE_ENV': JSON.stringify('production') }),
+    build: Object.assign({}, base.build, {
+      outDir: path.join(ROOT, 'release', 'cdn', VERSION, 'esm'),
+      lib: { entry, formats: ['es'], fileName: (format, entryName) => entryName + '.js' },
+      rollupOptions: {
+        external: EXTERNAL,
+        output: { banner: BANNER, chunkFileNames: 'chunks/[name]-[hash].js', manualChunks: group, minifyInternalExports: false },
+      },
+    }),
+  });
+}
+
+export default defineConfig(() => (process.env.PLENIX_PACKAGE === 'cdnesm' ? cdnEsmConfig() : packageConfig(process.env.PLENIX_PACKAGE || 'esm')));
