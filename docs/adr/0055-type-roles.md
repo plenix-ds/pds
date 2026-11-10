@@ -3,7 +3,7 @@
 - **Status:** accepted
 - **Date:** 2026-11-10
 - **Deciders:** pds1-ds-architect (G3), on the owner's rule (chat, 2026-11-10, #1233, D-0164), which builds on D-0006 (DM Sans for text, Reddit Mono for numbers; its check `planned:lint-type-roles` was never built).
-- **Issue:** #1233 (S2). The design audit (G2, `docs/pds1/slices/1233/audit.md`) decides each role. This entry owns the token names and the check.
+- **Issue:** #1232 (S2; #1233 closed as its duplicate). The design audit (G2, `docs/pds1/slices/1233/audit.md`) decides each role. This entry owns the token names and the check.
 
 ## Context
 
