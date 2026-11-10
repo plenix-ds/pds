@@ -1,7 +1,7 @@
 /* Plenix · Metric (platform/components/Metric). Anatomy and API: Metric.jsx. */
 .plx-metric{display:grid;min-inline-size:0;row-gap:var(--plx-comp-metric-context-row-gap,var(--plx-comp-metric-row-gap));}
 .plx-metric__figure{align-items:baseline;column-gap:var(--plx-comp-metric-figure-gap);display:flex;flex-wrap:wrap;}
-.plx-metric__value{color:var(--plx-comp-metric-value-text);font-family:var(--plx-comp-metric-value-font-family);font-size:var(--plx-comp-metric-value-font-size);font-variant-numeric:tabular-nums;font-weight:var(--plx-comp-metric-value-font-weight);letter-spacing:var(--plx-sys-text-label-letter-spacing);line-height:var(--plx-comp-metric-value-line-height);word-spacing:normal;}
+.plx-metric__value{color:var(--plx-comp-metric-value-text);font-family:var(--plx-comp-metric-value-font-family);font-size:var(--plx-comp-metric-value-font-size);font-variant-numeric:tabular-nums;font-weight:var(--plx-comp-metric-value-font-weight);letter-spacing:var(--plx-sys-text-label-letter-spacing);line-height:var(--plx-comp-metric-value-line-height);word-spacing:var(--plx-sys-font-data-word-spacing);}
 .plx-metric--lg .plx-metric__value{font-size:var(--plx-comp-metric-lg-value-font-size);}
 .plx-metric__unit{color:var(--plx-comp-metric-unit-text);font-size:var(--plx-comp-metric-unit-font-size);}
 .plx-metric__change{font-family:var(--plx-comp-metric-change-font-family);font-size:var(--plx-comp-metric-change-font-size);font-variant-numeric:tabular-nums;font-weight:var(--plx-sys-text-caption-font-weight);letter-spacing:var(--plx-sys-text-caption-letter-spacing);line-height:var(--plx-sys-text-caption-line-height);word-spacing:var(--plx-sys-font-data-word-spacing);}

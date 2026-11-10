@@ -2034,7 +2034,7 @@
   "plx-metric-card__summary-value": {
    "contract": "establishes",
    "role": "label",
-   "font": "sans",
+   "font": "mono",
    "adjusts": [
     "font-size",
     "line-height"
@@ -2059,7 +2059,7 @@
   "plx-metric-card__value": {
    "contract": "establishes",
    "role": "label",
-   "font": "sans",
+   "font": "mono",
    "adjusts": [
     "font-size",
     "line-height"
@@ -2091,7 +2091,7 @@
   "plx-metric__value": {
    "contract": "establishes",
    "role": "label",
-   "font": "sans",
+   "font": "mono",
    "adjusts": [
     "font-size",
     "font-weight",

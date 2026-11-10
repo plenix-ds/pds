@@ -6823,7 +6823,7 @@
       "$type": "color"
     },
     "metric-value-font-family": {
-      "$value": "{plx-sys.font-heading}",
+      "$value": "{plx-sys.font-data}",
       "$type": "fontFamily"
     },
     "metric-value-font-size": {
