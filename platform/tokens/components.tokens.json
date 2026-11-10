@@ -6822,6 +6822,11 @@
       "$value": "{plx-sys.content-default}",
       "$type": "color"
     },
+    "metric-value-word-font-family": {
+      "$value": "{plx-sys.font-heading}",
+      "$type": "fontFamily",
+      "$description": "Metric: a figure that is only a word (\"On track\", \"N/A\") is text, not data: the text font (D-0164)."
+    },
     "metric-value-font-family": {
       "$value": "{plx-sys.font-data}",
       "$type": "fontFamily"

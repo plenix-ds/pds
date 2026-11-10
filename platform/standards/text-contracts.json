@@ -2040,6 +2040,11 @@
     "line-height"
    ]
   },
+  "plx-metric-card__value--word": {
+   "contract": "establishes",
+   "role": "label",
+   "font": "sans"
+  },
   "plx-metric-card__title": {
    "contract": "establishes",
    "role": "title",
@@ -2087,6 +2092,11 @@
    "props": [
     "font-size"
    ]
+  },
+  "plx-metric__value--word": {
+   "contract": "establishes",
+   "role": "label",
+   "font": "sans"
   },
   "plx-metric__value": {
    "contract": "establishes",

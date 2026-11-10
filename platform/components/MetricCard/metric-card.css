@@ -75,6 +75,8 @@
 .plx-metric-card__figure{align-items:baseline;column-gap:var(--plx-comp-metric-card-figure-gap);display:flex;flex-wrap:wrap;row-gap:var(--plx-comp-metric-card-heading-row-gap);}
 .plx-metric-card__value{color:var(--_metric-card-text);font-family:var(--plx-comp-metric-card-value-font-family);font-size:var(--_metric-card-value-size);font-variant-numeric:tabular-nums;font-weight:var(--plx-comp-metric-card-value-font-weight);letter-spacing:var(--plx-sys-text-label-letter-spacing);line-height:var(--plx-comp-metric-card-value-line-height);word-spacing:var(--plx-sys-font-data-word-spacing);}
 .plx-metric-card__value--empty{color:var(--_metric-card-subtle);}
+/* a figure that is only a word ("On track", "N/A") is not data (D-0164): the text font */
+.plx-metric-card__value--word{font-family:var(--plx-comp-metric-card-value-word-font-family);word-spacing:normal;}
 .plx-metric-card__unit{color:var(--_metric-card-muted);font-size:var(--plx-comp-metric-card-unit-font-size);}
 .plx-metric-card__status{margin-inline-start:auto;}
 .plx-metric-card__change{align-items:center;color:var(--_metric-card-muted);column-gap:var(--plx-comp-metric-card-change-gap);display:flex;flex-wrap:wrap;font-size:var(--plx-comp-metric-card-change-font-size);}
