@@ -31,6 +31,7 @@ Owner of this plan: PDS1-Delivery-Lead. Parent issue: #1201 (owner rules, D-0160
 | C1 | #1212 | Reference pages and a headless trace harness | qa-engineer | `tests/perf/**` | none | `node tests/perf/run.mjs` prints LCP and INP |
 | C2 | #1213 | CI check: a page slower than its budget fails | release-architect | `tools/checks/perf-budget.*`, `.github/workflows/ci.yml` | C1, A1 | a breaching throwaway PR fails |
 | D1 | #1194, PRs #1199, #1200 | LoadingState 1 s / 10 s thresholds (D-0158) | component-engineer 2 | `platform/components/Loading/**` | none (in flight) | its own §7e tests |
+| F1 | #1219, ADR 0053 (#1220), PR #1223 | DataGrid `cachedRows`: the app's cached rows at once, quiet refresh (rule 4) | ds-architect (ADR), component-engineer 1 | `platform/components/DataGrid/**`, `engine/useRemoteRows.ts`, `docs/adr/0053-*` | E1 | its own §7e tests; G3 |
 | E1 | #1214 | Check the API claims in the performance doc (PR #1204) against the code; gaps filed | ds-architect | none (a comment on #1201 and #1204) | PR #1204 | table on #1201 |
 | E2 | #1215 (closed) | Integration doc for the app-side rules: written as PR #1204 before this plan; E1's table corrects it in the same file | technical-writer | `docs/integration/performance.md` | PR #1204, E1 | linked APIs exist at the paths named |
 
