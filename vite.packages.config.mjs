@@ -109,7 +109,9 @@ export function packageConfig(name, overrides = {}) {
     // every module, the bundled packages included, is lowered to es2019 as it is read (the old builds' target), so the
     // output needs no final esbuild pass (build.target 'esnext'): that pass drops the banner comment
     // the release, as Plenix's version export (#842, platform/version.ts)
-    define: { __PLENIX_VERSION__: JSON.stringify(VERSION) },
+    // the CDN's whole-file module is imported without a bundler too, so its process.env.NODE_ENV reads are "production"
+    // (#1274); the npm builds leave them to the app's bundler
+    define: Object.assign({ __PLENIX_VERSION__: JSON.stringify(VERSION) }, name === 'cdn' ? { 'process.env.NODE_ENV': JSON.stringify('production') } : {}),
     esbuild: { include: /\.[cm]?[jt]sx?$/, exclude: [], charset: 'ascii', target: 'es2019', jsx: 'transform', jsxFactory: 'React.createElement', jsxFragment: 'React.Fragment' },
     build: Object.assign({
       outDir: b.outDir,
