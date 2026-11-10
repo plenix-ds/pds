@@ -1,0 +1,9 @@
+id: D-0171
+date: 2026-11-11
+area: release
+decided_by: agent (pds1-release-architect) for #1293, within the DS Architect's G3 limits on #1293; G3 requested on the PR; owner may switch
+decision: 'The CDN''s per-screen modules (esm/) are built in layers: core (what ThemeProvider, Button and Dialog reach), grid (what DataGrid adds), shell, forms and charts, each the code its parts reach that no earlier layer holds, so no two chunks import each other; rarer parts stay in Rollup''s own small chunks. Plenix.load imports a part''s chunk directly (the manifest gains the optional fields chunk and binding) and preloads every file in one pass. The bundle budget follows the layers: each layer chunk has its own limit, an entry is limited by what it adds on top of the layers (60,000 B), and screens are limited in bytes and files (grid: 210,000 B in 4 files; CTM''s first page: 330,000 B in 28 files). The npm modules are unchanged.'
+options: ['layers from the import graph, per-layer and per-addition budgets (chosen)', 'one module per part (1.7.0: 214 requests for CTM''s first page)', 'a few path-based groups (cycles between chunks, and a grid screen over its 240,000 B limit)']
+why: 'CE2 measured CTM''s first page at 214 requests and 140 ms slower than plenix.js (#1292). With layers it is 21 files and 300,791 B (plenix.js: 553,369 B), and the grid screen is 2 files and 201,318 B (was 86 files, 233,539 B). Counting the shared layers against every entry, as the 1.7.0 budget did, would fail parts that cost a page nothing extra, so each layer is limited once and each entry by its own addition.'
+status: active
+check: 'tools/checks/perf-budget.mjs (bundles.layers, entryLimit, screens with maxFiles; CI "Bundle budgets", the release dry run, deploy.sh); tools/checks/esm-entries.mjs; tests/esm-loader-1208.test.js'

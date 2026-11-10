@@ -377,7 +377,7 @@ jobs:
       - name: Did anything the package is built from change?
         id: scope
         run: |
-          if git diff --quiet "$(git merge-base "$BASE_SHA" HEAD)" HEAD -- platform packages build-app.js build-usage.js build-packages.js build-exports.js check-bundle.js tools/agent/one-part-sizes.js tools/agent/one-part-vite.mjs tools/checks/perf-budget.mjs tools/checks/perf-budget.json tools/checks/esm-entries.mjs tools/publish/esm-parts.js tests/esm-loader-1208.test.js tests/perf tests/lib.js package.json package-lock.json .github/workflows/ci.yml; then
+          if git diff --quiet "$(git merge-base "$BASE_SHA" HEAD)" HEAD -- platform packages build-app.js build-usage.js build-packages.js build-exports.js check-bundle.js tools/agent/one-part-sizes.js tools/agent/one-part-vite.mjs tools/checks/perf-budget.mjs tools/checks/perf-budget.json tools/checks/esm-entries.mjs tools/publish/esm-parts.js vite.packages.config.mjs tests/esm-loader-1208.test.js tests/perf tests/lib.js package.json package-lock.json .github/workflows/ci.yml; then
             echo "run=no" >> "$GITHUB_OUTPUT"
             echo "package sources, build and measure unchanged: not run for this PR"
           else

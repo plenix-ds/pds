@@ -4,15 +4,16 @@
 //   npm  release/packages/react/dist/parts/<Export>.js   export { <Export> } from '../<module>.js'
 //        release/packages/react/parts/<Export>.d.ts      its declaration, from the same types module as index.d.ts
 //        package.json "./*" maps @plenix-ds/react/<Export> to both (build-packages.js)
-//   CDN  release/cdn/<v>/esm/                            the npm ES modules (index.js, the modules, chunks/), plus
-//        esm/<Export>.js                                  one entry per export, the same re-export
-//        esm/manifest.json                                { version, entries: { <Export>: { file, imports } } }: each
-//                                                         entry's static import closure, for <link rel="modulepreload">
+//   CDN  release/cdn/<v>/esm/                            its own Vite build (cdnEsmConfig, #1293): esm/<Export>.js, one
+//                                                         entry per export over a few chunks (esm/chunks/), index.js and
+//                                                         i18n/ar.js
+//        esm/manifest.json                                { version, entries: { <Export>: { file, imports, chunk?,
+//                                                         binding? } } }: each entry's static import closure, for
+//                                                         <link rel="modulepreload">, and the chunk and name it re-exports
 //        esm/icons/plenix.js                              the Plenix icon set as a module (#1209), beside esm/registerIcons.js
 //        vendor/react.esm.js and the others               React as ES modules over the vendored React on the page
 //                                                         (window.React, window.ReactDOM: one copy of React per page)
 //        plenix-loader.js                                 Plenix.load(names) for pages without a bundler
-// An entry whose name is also its module's path (version: platform/version.ts) is that module itself.
 'use strict';
 const fs = require('fs');
 const path = require('path');
@@ -65,6 +66,14 @@ function closure(esmDir, file, cache) {
   return [...seen];
 }
 
+// an entry that only re-exports its name from one chunk: { chunk, binding } (the chunk and the name inside it), so
+// Plenix.load imports the chunk and skips the entry file (one request less per name); {} for any other entry
+function facade(code, name) {
+  const body = code.replace(/\/\*[\s\S]*?\*\//g, '').trim();
+  const m = /^export\s*\{\s*(\w+)(?:\s+as\s+(\w+))?\s*\}\s*from\s*['"]\.\/([^'"]+)['"];?$/.exec(body);
+  return m && (m[2] || m[1]) === name ? { chunk: m[3], binding: m[1] } : {};
+}
+
 // the export names of a vendored UMD React file, read by running it as CommonJS (no page, no network)
 function umdKeys(file, deps = {}) {
   const module = { exports: {} };
@@ -103,18 +112,12 @@ module.exports = function esmParts({ ROOT, P, R, CDN, VERSION }) {
     write(path.join(R, 'parts', e.name + '.d.ts'), 'export { ' + t.spec + ' } from "' + from + '";\nexport type * from "' + from + '";\n');
   }
 
-  // the CDN: the npm ES modules under esm/ (not the CommonJS, the global, the engines or their vendor folder)
+  // the CDN: its own ES module build, one entry per export over a few large chunks (vite.packages.config.mjs, cdnEsmConfig;
+  // #1293), so a screen loads a handful of files. The npm modules above keep one module per part for bundlers
   const ESM = path.join(CDN, 'esm');
-  const skip = new Set(['index.cjs', 'plenix.global.js', 'plenix-engines.js', 'vendor', 'parts']);
-  for (const n of fs.readdirSync(dist)) if (!skip.has(n)) fs.cpSync(path.join(dist, n), path.join(ESM, n), { recursive: true });
-  // the npm modules leave process.env.NODE_ENV to the app's bundler; a page without one has no process, so the CDN copies
-  // read "production" (the DataGrid's virtualizer reads it while it renders)
-  const walk = (d) => fs.readdirSync(d, { withFileTypes: true }).flatMap((x) => x.isDirectory() ? walk(path.join(d, x.name)) : [path.join(d, x.name)]);
-  for (const f of walk(ESM).filter((x) => x.endsWith('.js'))) {
-    const code = fs.readFileSync(f, 'utf8');
-    if (code.includes('process.env.NODE_ENV')) fs.writeFileSync(f, code.replace(/process\.env\.NODE_ENV/g, '"production"'));
-  }
-  for (const e of list) if (e.mod !== e.name) write(path.join(ESM, e.name + '.js'), reexport(e, './'));
+  fs.rmSync(ESM, { recursive: true, force: true });
+  require('child_process').execFileSync(process.execPath, [path.join(ROOT, 'node_modules', 'vite', 'bin', 'vite.js'), 'build', '--config', path.join(ROOT, 'vite.packages.config.mjs')],
+    { cwd: ROOT, stdio: 'inherit', env: Object.assign({}, process.env, { PLENIX_PACKAGE: 'cdnesm' }) });
   const icons = path.join(P, 'dist', 'plenix-icons-plenix.esm.js');
   if (!fs.existsSync(icons)) throw new Error('esm-parts: platform/dist/plenix-icons-plenix.esm.js is missing: run node build-app.js (#1209)');
   write(path.join(ESM, 'icons', 'plenix.js'), fs.readFileSync(icons, 'utf8'));
@@ -123,7 +126,8 @@ module.exports = function esmParts({ ROOT, P, R, CDN, VERSION }) {
   const entries = {};
   for (const e of list.slice().sort((a, b) => a.name.localeCompare(b.name))) {
     const file = e.name + '.js';
-    entries[e.name] = { file, imports: closure(ESM, file, cache).slice(1) };
+    const imports = closure(ESM, file, cache).slice(1);
+    entries[e.name] = Object.assign({ file, imports }, facade(cache.get(file), e.name));
   }
   write(path.join(ESM, 'manifest.json'), JSON.stringify({ version: VERSION, entries }, null, 1) + '\n');
 
@@ -134,3 +138,4 @@ module.exports = function esmParts({ ROOT, P, R, CDN, VERSION }) {
 module.exports.exportsOf = exportsOf;
 module.exports.staticImports = staticImports;
 module.exports.closure = closure;
+module.exports.facade = facade;

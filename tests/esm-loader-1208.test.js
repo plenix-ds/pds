@@ -3,7 +3,8 @@
      then renders a DataGrid with 50 rows from window.Plenix. The JavaScript it fetched is measured against the all-in-one plenix.js.
    Checks (headless Chrome): AC-1 the grid renders its rows with no page error; AC-2 plenix.js is never fetched and every Plenix module comes from esm/; AC-3 the JavaScript fetched
      (React apart, brotli 5 as the web host sends it) is less than plenix.js; AC-4 Plenix.load of a loaded name resolves at once with no new request, and an unknown name rejects
-     with its name; AC-5 the import map resolves React to the vendor ES modules over the page's one React.
+     with its name; AC-5 the import map resolves React to the vendor ES modules over the page's one React; AC-6 CTM's first page (#1293) loads at most 30 Plenix
+     files and fewer bytes than plenix.js, and the ready times of both ways are printed.
    Proof first: before #1208 there is no plenix-loader.js and no esm/ folder, so the page has no Plenix.load and AC-1 fails.
    Usage: node build-packages.js, then node tests/esm-loader-1208.test.js   → ESM_LOADER_1208_OK (with the bytes) */
 const fs = require('fs'), path = require('path'), http = require('http'), zlib = require('zlib'), assert = require('assert');
@@ -13,6 +14,18 @@ const ROOT = path.join(__dirname, '..'), VERSION = require('../package.json').ve
 const br = (buf) => zlib.brotliCompressSync(buf, { params: { [zlib.constants.BROTLI_PARAM_QUALITY]: 5 } }).length;
 const TYPES = { '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.woff2': 'font/woff2', '.svg': 'image/svg+xml', '.html': 'text/html; charset=utf-8' };
 const PARTS = ['DataGrid', 'Dialog', 'Button', 'ThemeProvider'];
+// CTM's first page (#1292, #1293): the parts its shell reads, loaded two ways for the same render
+const CTM = 'AppHeader AppShell Auth Button Card Center Checkbox CommandBar CommandBarSearch DataGrid Dialog DirectionProvider DocumentViewer EmptyState FilterPanel Icon Image Inline List LoadingState MediaPlayer NavList NavPane Notice PageContent Panel RadioGroup ReadingPane RecordPage ResourceList SecondaryPane Select SessionProvider SplitView SsoButtons Stack Tabs Text Textarea ThemeProvider ToastProvider ToolRail Toolbar'.split(' ');
+const shellPage = (v, all) => `<!doctype html><html lang="en" data-plx-mode="light"><head><meta charset="utf-8"><title>ctm shell</title>
+<link rel="stylesheet" href="/cdn/${v}/plenix.css">
+<script src="/cdn/${v}/vendor/react.production.min.js"></script><script src="/cdn/${v}/vendor/react-dom.production.min.js"></script>
+<script src="/cdn/${v}/${all ? 'plenix.js' : 'plenix-loader.js'}"></script></head><body><div id="root"></div><script>
+(${all ? 'Promise.resolve()' : 'Plenix.load(' + JSON.stringify(CTM) + ')'}).then(function () {
+  var h = React.createElement, P = window.Plenix;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(P.ThemeProvider, null, h(P.Panel, { title: 'Case' }, h(P.Button, { id: 'ready' }, 'Open'))));
+  (function wait() { if (document.getElementById('ready')) window.__ready = performance.now(); else requestAnimationFrame(wait); })();
+});
+</script></body></html>`;
 const page = (v) => `<!doctype html><html lang="en" data-plx-mode="light"><head><meta charset="utf-8"><title>esm loader</title>
 <link rel="stylesheet" href="/cdn/${v}/plenix.css">
 <script src="/cdn/${v}/vendor/react.production.min.js"></script><script src="/cdn/${v}/vendor/react-dom.production.min.js"></script>
@@ -31,6 +44,7 @@ window.__ready = Plenix.load(${JSON.stringify(PARTS)}).then(function () {
   const server = http.createServer((req, res) => {
     const u = decodeURIComponent(req.url.split('?')[0]);
     if (u === '/page.html') { res.writeHead(200, { 'content-type': TYPES['.html'] }); res.end(page(VERSION)); return; }
+    if (u === '/shell-loader.html' || u === '/shell-all.html') { res.writeHead(200, { 'content-type': TYPES['.html'] }); res.end(shellPage(VERSION, u === '/shell-all.html')); return; }
     const prefix = '/cdn/' + VERSION + '/';
     const f = u.startsWith(prefix) ? path.join(CDN, path.normalize(u.slice(prefix.length))) : null;
     if (!f || !f.startsWith(CDN) || !fs.existsSync(f) || !fs.statSync(f).isFile()) { res.writeHead(404); res.end(); return; }
@@ -83,6 +97,27 @@ window.__ready = Plenix.load(${JSON.stringify(PARTS)}).then(function () {
       assert.strictEqual(same, true);
     });
     console.log(`  screen ${PARTS.join(', ')}: ${plenixFiles.length} Plenix files, ${bytes} B brotli 5; plenix.js ${all} B (${Math.round((1 - bytes / all) * 100)}% less); React apart`);
+    // CTM's first page: few files (the layers), fewer bytes than plenix.js; the ready times of both are printed (median of 3)
+    const shell = async (all) => {
+      const ctx = await browser.createBrowserContext(); const q = await ctx.newPage(); const got = []; const errs = [];   // a fresh context: no cache
+      q.on('pageerror', (e) => errs.push(e.message));
+      q.on('requestfinished', (r) => got.push(new URL(r.url()).pathname));
+      await q.goto(origin + (all ? '/shell-all.html' : '/shell-loader.html'), { waitUntil: 'load', timeout: 90000 });
+      await q.waitForFunction(() => window.__ready, { timeout: 30000 });
+      const ready = await q.evaluate(() => window.__ready);
+      await ctx.close();
+      const plx = [...new Set(got.filter((f) => /\.(js|json)$/.test(f) && !/\/vendor\/react(-dom)?\.production\.min\.js$/.test(f)))];
+      return { ready, files: plx.length, bytes: plx.reduce((a, f) => a + br(fs.readFileSync(path.join(CDN, f.slice(('/cdn/' + VERSION + '/').length)))), 0), errs };
+    };
+    const runs = { loader: [], all: [] };
+    for (let i = 0; i < 3; i++) { runs.loader.push(await shell(false)); runs.all.push(await shell(true)); }
+    const med = (a, k) => a.map((x) => x[k]).sort((x, y) => x - y)[1];
+    await check('AC-6 CTM first page: at most 30 Plenix files (loader and manifest included), fewer bytes than plenix.js', async () => {
+      assert.deepStrictEqual(runs.loader[0].errs.concat(runs.all[0].errs), []);
+      assert.ok(runs.loader[0].files <= 30, runs.loader[0].files + ' files');
+      assert.ok(runs.loader[0].bytes < runs.all[0].bytes, runs.loader[0].bytes + ' >= ' + runs.all[0].bytes);
+    });
+    console.log(`  CTM first page (${CTM.length} parts): Plenix.load ${runs.loader[0].files} files, ${runs.loader[0].bytes} B brotli 5, ready ${Math.round(med(runs.loader, 'ready'))} ms; plenix.js ${runs.all[0].files} files, ${runs.all[0].bytes} B, ready ${Math.round(med(runs.all, 'ready'))} ms (median of 3, local server, no cache)`);
   } finally { await browser.close(); server.close(); }
   if (failed) { console.log('ESM_LOADER_1208_FAIL (' + failed + ')'); process.exit(1); }
   console.log('ESM_LOADER_1208_OK');

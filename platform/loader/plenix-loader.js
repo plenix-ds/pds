@@ -49,18 +49,29 @@
       document.head.appendChild(link);
     }
   }
+  var has = function (all, name) { return Object.prototype.hasOwnProperty.call(all, name); };
+  // an entry that re-exports one name from a chunk loads the chunk itself (the manifest's chunk and binding)
   function one(name, all) {
     if (!loading[name]) {
-      var entry = Object.prototype.hasOwnProperty.call(all, name) ? all[name] : null;
+      var entry = has(all, name) ? all[name] : null;
       loading[name] = !entry ? Promise.reject(new Error('Plenix.load: no part named ' + name))
-        : (preload(entry.imports), import(esm + entry.file).then(function (m) { Plenix[name] = m[name]; }));
+        : import(esm + (entry.chunk || entry.file)).then(function (m) { Plenix[name] = m[entry.binding || name]; });
     }
     return loading[name];
   }
   Plenix.load = function (names) {
-    var list = [].concat(names || []);
+    var list = [].concat(names || []).map(String);
     return manifest().then(function (all) {
-      return Promise.all(list.map(function (n) { return one(String(n), all); }));
+      // every file the names need, preloaded in one pass before the first import, so nothing waits on another
+      var files = [];
+      for (var i = 0; i < list.length; i++) {
+        if (loading[list[i]] || !has(all, list[i])) continue;
+        var e = all[list[i]];
+        files.push(e.chunk || e.file);
+        files.push.apply(files, e.imports);
+      }
+      preload(files);
+      return Promise.all(list.map(function (n) { return one(n, all); }));
     }).then(function () {});
   };
   Plenix.loaderVersion = '__PLENIX_VERSION__';

@@ -52,16 +52,19 @@ describe('perf-budget (1188)', () => {
     expect(checkTraces({ pages: { grid: ok.pages.grid, record: ok.pages.record } }, traces).fails).toEqual(['form: no LCP or INP in the trace']);
     expect(checkTraces({}, traces).fails).toHaveLength(3);
   });
-  it('an entry over its limit fails; a named limit replaces the default; screens and the loader are limited (#1208)', () => {
-    const bundles = { entryLimit: 100, limits: { Big: 300 }, screens: { grid: { parts: ['A', 'Big'], limit: 350 } }, loaderLimit: 50 };
-    const ok = { sizes: { A: 90, Big: 280 }, screens: { grid: 340 }, loader: 40 };
+  it('layers, what an entry adds, screens in bytes and files, and the loader are each limited (#1208, #1293, D-0171)', () => {
+    const bundles = { layers: { core: 100 }, entryLimit: 50, limits: { Big: 80 }, screens: { s: { parts: ['A', 'Big'], limit: 300, maxFiles: 3 } }, loaderLimit: 40 };
+    const ok = { layers: { core: 90 }, sizes: { A: 10, Big: 70 }, screens: { s: { bytes: 250, files: 3 } }, loader: 30 };
     expect(checkBundles(ok, bundles).fails).toEqual([]);
-    expect(checkBundles({ ...ok, sizes: { A: 101, Big: 280 } }, bundles).fails).toEqual(['esm/A.js loads 101 B with brotli 5 (limit 100)']);
-    expect(checkBundles({ ...ok, sizes: { A: 90, Big: 301 } }, bundles).fails).toEqual(['esm/Big.js loads 301 B with brotli 5 (limit 300)']);
-    expect(checkBundles({ ...ok, screens: { grid: 351 } }, bundles).fails).toEqual(['screen grid loads 351 B with brotli 5 (limit 350)']);
-    expect(checkBundles({ ...ok, screens: {} }, bundles).fails[0]).toMatch(/screen grid: a part is no entry/);
-    expect(checkBundles({ ...ok, loader: 51 }, bundles).fails).toEqual(['plenix-loader.js is 51 B (limit 50)']);
-    expect(checkBundles({ ...ok, sizes: { A: 90 } }, bundles).fails).toContain('bundles.limits names Big, which is no entry');
-    expect(checkBundles({ ...ok, sizes: { A: 90, Big: 50 } }, bundles).notes.some((n) => /Big\.js is 50 B, under the default 100: drop its own limit/.test(n))).toBe(true);
+    expect(checkBundles({ ...ok, layers: { core: 101 } }, bundles).fails).toEqual(['layer core is 101 B with brotli 5 (limit 100)']);
+    expect(checkBundles({ ...ok, layers: {} }, bundles).fails).toEqual(['layer core: no chunks/core-*.js in esm/']);
+    expect(checkBundles({ ...ok, sizes: { A: 51, Big: 70 } }, bundles).fails).toEqual(['esm/A.js adds 51 B with brotli 5 to the layers (limit 50)']);
+    expect(checkBundles({ ...ok, sizes: { A: 10, Big: 81 } }, bundles).fails).toEqual(['esm/Big.js adds 81 B with brotli 5 to the layers (limit 80)']);
+    expect(checkBundles({ ...ok, screens: { s: { bytes: 301, files: 3 } } }, bundles).fails).toEqual(['screen s loads 301 B with brotli 5 (limit 300)']);
+    expect(checkBundles({ ...ok, screens: { s: { bytes: 250, files: 4 } } }, bundles).fails).toEqual(['screen s loads 4 files (limit 3)']);
+    expect(checkBundles({ ...ok, screens: {} }, bundles).fails[0]).toMatch(/screen s: a part is no entry/);
+    expect(checkBundles({ ...ok, loader: 41 }, bundles).fails).toEqual(['plenix-loader.js is 41 B (limit 40)']);
+    expect(checkBundles({ ...ok, sizes: { A: 10 } }, bundles).fails).toContain('bundles.limits names Big, which is no entry');
+    expect(checkBundles({ ...ok, sizes: { A: 10, Big: 20 } }, bundles).notes.some((n) => /Big\.js adds 20 B, under the default 50: drop its own limit/.test(n))).toBe(true);
   });
 });
