@@ -1,10 +1,10 @@
-// Plenix · check-system rule "pane-defaults" (owner, issue 463 option C, step 2): the panes start wider on larger windows, as size tokens.
+// Plenix · check-system rule "pane-defaults" (owner, issue 463 option C, step 2; changed by D-0168 and ADR 0057): only the side panel starts wider on larger windows, as size tokens.
 // What it rejects:
-//   tokens   a missing token: --plx-sys-shell-nav-width-from-wide / -from-ultrawide (1440px / 1920px windows), --plx-comp-side-panel-width-default-from-wide / -from-ultrawide,
-//            --plx-comp-secondary-pane-width-{sm,md,lg}-from-wide / -from-ultrawide; or a value that is not the owner's table
-//   css      system/grid.css without the two media rules (1440px <= width < 1920px, width >= 1920px) that set the tokens
+//   tokens   a missing token: --plx-comp-side-panel-width-default-from-wide / -from-ultrawide; or a value that is not the owner's table
+//   css      system/grid.css without the two media rules (1440px <= width < 1920px, width >= 1920px) that set the side panel's default, or a media rule that sets the width of a
+//            NAVIGATION pane again (the main nav, a secondary pane): a navigation pane keeps one width, 240px, at every window size
 //   decouple the side panel's default or minimum going back to the navigation pane's width (it must be 240px below 1440px), and the secondary
-//            pane's narrowest drag being the small width again (it must be its own 180px token)
+//            pane's narrowest drag being the small width again (it must be its own 180px token); the secondary pane's medium width is the navigation standard, 240px
 // Alone: node check-system.rules/pane-defaults.js     -> PANE_DEFAULTS_OK, or the findings and exit 1
 const fs = require('fs');
 const path = require('path');
@@ -14,11 +14,9 @@ const ROOT = path.join(__dirname, '..');
 const read = (f) => { try { return fs.readFileSync(path.join(ROOT, f), 'utf8'); } catch (e) { return ''; } };
 const json = (f) => { try { return JSON.parse(read(f)); } catch (e) { return {}; } };
 // the owner's table: token -> size (px)
-const SYS = { 'shell-nav-width-from-wide': 272, 'shell-nav-width-from-ultrawide': 320 };
+const SYS = {};
 const COMP = {
   'side-panel-width-default-from-wide': 320, 'side-panel-width-default-from-ultrawide': 400,
-  'secondary-pane-width-sm-from-wide': 220, 'secondary-pane-width-md-from-wide': 260, 'secondary-pane-width-lg-from-wide': 320,
-  'secondary-pane-width-sm-from-ultrawide': 260, 'secondary-pane-width-md-from-ultrawide': 320, 'secondary-pane-width-lg-from-ultrawide': 400,
 };
 // the px a size reference ends at: {plx-ref.size-…} followed to its value in reference.tokens.json (not read from the name:
 // the palette's names say their step, docs/adr/0012)
@@ -44,13 +42,21 @@ function check({ add }) {
   for (const n of ['side-panel-width-default', 'side-panel-width-min']) { const t = comp[n]; if (!t || px(t.$value) !== 240) add(NAME, path.join(ROOT, 'platform/tokens/components.tokens.json'), 0, n + ' must be 240px (its own token, not the navigation pane\'s width)'); }
   const css = read('platform/system/grid.css');
   for (const [re, what] of [[/@media\s*\(1440px\s*<=\s*width\s*<\s*1920px\)/, '(1440px <= width < 1920px)'], [/@media\s*\(width\s*>=\s*1920px\)/, '(width >= 1920px)']]) if (!re.test(css)) add(NAME, path.join(ROOT, 'platform/system/grid.css'), 0, 'the media rule ' + what + ' that sets the starting widths is missing');
-  for (const v of ['--plx-sys-shell-nav-width', '--plx-comp-side-panel-width-default', '--plx-comp-secondary-pane-width-md']) if (!new RegExp(v + ':var\\(' + v + '-from-ultrawide\\)').test(css)) add(NAME, path.join(ROOT, 'platform/system/grid.css'), 0, v + ' is not set to its -from-ultrawide token');
+  for (const v of ['--plx-comp-side-panel-width-default']) if (!new RegExp(v + ':var\\(' + v + '-from-ultrawide\\)').test(css)) add(NAME, path.join(ROOT, 'platform/system/grid.css'), 0, v + ' is not set to its -from-ultrawide token');
 }
-module.exports = { name: NAME, check };
+// a navigation pane keeps one width (D-0168): no media rule sets the nav's or a secondary pane's width, and the medium secondary pane is the standard 240px
+const navCss = read('platform/system/grid.css');
+function navCheck({ add }) {
+  if (/--plx-sys-shell-nav-width\s*:|--plx-comp-secondary-pane-width-(sm|md|lg)\s*:/.test(navCss)) add(NAME, path.join(ROOT, 'platform/system/grid.css'), 0, 'a media rule sets a navigation pane\'s width again: the main nav and the secondary panes keep one width at every window size (D-0168, ADR 0057)');
+  const comp = json('platform/tokens/components.tokens.json')['plx-comp'] || {}, sys = json('platform/tokens/semantic.density-standard.tokens.json')['plx-sys'] || {};
+  if (!sys['shell-nav-width'] || px(sys['shell-nav-width'].$value) !== 240) add(NAME, path.join(ROOT, 'platform/tokens/semantic.density-standard.tokens.json'), 0, 'shell-nav-width must be 240px, the standard navigation width');
+  if (!comp['secondary-pane-width-md'] || comp['secondary-pane-width-md'].$value !== '{plx-sys.shell-nav-width}') add(NAME, path.join(ROOT, 'platform/tokens/components.tokens.json'), 0, 'secondary-pane-width-md must be {plx-sys.shell-nav-width}: the standard navigation width');
+}
+module.exports = { name: NAME, check: (ctx) => { check(ctx); navCheck(ctx); } };
 
 if (require.main === module) {
   const findings = [];
-  check({ add: (rule, file, line, text) => findings.push(path.relative(ROOT, file) + (line ? ':' + line : '') + '  ' + text) });
+  const ctx = { add: (rule, file, line, text) => findings.push(path.relative(ROOT, file) + (line ? ':' + line : '') + '  ' + text) }; module.exports.check(ctx);
   if (findings.length) { findings.forEach((x) => console.log(x)); console.log('PANE_DEFAULTS_FAIL (' + findings.length + ')'); process.exit(1); }
   console.log('PANE_DEFAULTS_OK');
 }

@@ -1,0 +1,6 @@
+AssertionError [ERR_ASSERTION]: ltr: 1366: AC-2: the settings pane is 240px (null)
+
+null !== 240
+
+    at /home/cc/pds1/work/component-engineer-1/tests/nav-panes-1242.test.js:45:92 {
+  generatedMessage: false,

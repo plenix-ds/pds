@@ -110,7 +110,7 @@ export type AppLayoutBack = { label: React.ReactNode; onBack(): void; ref?: Reac
 // what useAppLayout gives the panes (the same shape as useAppLayout.types.d.ts, which build-types.js publishes until #708 slice 20)
 export type AppLayoutState = {
   mode: 'inline' | 'rail' | 'overlay' | 'bar' | 'screen' | 'none'; open: boolean; expanded: boolean; width: number | null;
-  setWidth(width: number): void; toggle(): void; close(): void; small: boolean; narrow: boolean;
+  setWidth(width: number | null): void; toggle(): void; close(): void; small: boolean; narrow: boolean;
   barEl: HTMLElement | null; parentEl: HTMLElement | null; slotEl: HTMLElement | null; hasSideNav: boolean;
   registerPortal(): () => void; page: string; layout: string;
   claimPage(kind: string): () => void; parentRow: boolean; claimParentRow(): () => void;

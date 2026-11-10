@@ -1,7 +1,5 @@
 /* Plenix · SettingsLayout, SettingsSection, SettingsRow. */
 .plx-settings{container-type:inline-size;display:flex;flex-basis:0%;flex-grow:1;flex-shrink:1;min-block-size:0;min-inline-size:0;}
-/* the frame: the navigation pane, full height, beside the content; stacked above it when the layout is narrow */
-.plx-settings__frame{align-items:stretch;display:flex;flex-basis:0%;flex-grow:1;flex-shrink:1;min-block-size:0;min-inline-size:0;}
 
 .plx-settings__content{--plx-comp-action-bar-stick:calc(var(--plx-sys-space-layout-md) * -1);flex-basis:0%;flex-grow:1;flex-shrink:1;min-inline-size:0;overflow-y:auto;padding-block-end:var(--plx-comp-settings-content-padding-block);padding-block-start:var(--plx-comp-settings-content-padding-block);padding-inline-end:var(--plx-comp-settings-context-content-padding-inline-end,var(--plx-comp-settings-content-padding-inline));padding-inline-start:var(--plx-comp-settings-context-content-padding-inline-start,var(--plx-comp-settings-content-padding-inline));}
 /* every section is a card (owner, 2026-10-13: "all the settings pages to have the cards view"): static or collapsible */
@@ -47,8 +45,6 @@
 /* a block that is not a row (a table, a toolbar, a list, a note) keeps the row rhythm: space above and below it */
 .plx-settings__rows>:not(.plx-settings__row):not(.plx-field):not(.plx-action-bar){margin-block-end:var(--plx-comp-settings-section-block-gap);margin-block-start:var(--plx-comp-settings-section-block-gap);}
 @container (max-width: 37.5rem){
-.plx-settings__frame{flex-direction:column;}
-.plx-settings__nav{border-bottom-color:var(--plx-comp-settings-nav-border-bottom-color);border-bottom-style:solid;border-bottom-width:var(--plx-comp-settings-nav-border-bottom-width);border-inline-end-style:none;border-inline-end-width:0;inline-size:100%;}
 .plx-settings__content{--plx-comp-field-inline-context-columns:minmax(0,1fr);--plx-comp-field-inline-context-row-gap:var(--plx-comp-settings-field-inline-row-gap);flex-basis:100%;padding-inline-end:var(--plx-comp-settings-context-content-padding-inline-end,var(--plx-comp-settings-content-narrow-padding-inline));padding-inline-start:var(--plx-comp-settings-context-content-padding-inline-start,var(--plx-comp-settings-content-narrow-padding-inline));}
 }
 /* a section's ActionBar has the card's surface behind it (batch 231) */

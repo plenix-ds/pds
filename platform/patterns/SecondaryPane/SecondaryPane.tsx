@@ -17,8 +17,8 @@
      icon: an icon name or element at the start of the header row
      actions: controls at the end of the header row
      side: "start" (default; before the content) | "end"
-     width: "sm" (180px) | "md" (220px, default) | "lg" (280px), from --plx-comp-secondary-pane-width-*; each steps up one size from a window
-       1440px wide (220 | 260 | 320) and again from 1920px (260 | 320 | 400), set in system/grid.css from the -from-1440 and -from-1920 tokens
+     width: "sm" (180px) | "md" (240px, default: the standard width of a navigation pane) | "lg" (280px), from --plx-comp-secondary-pane-width-*; the
+       same at every window size (ADR 0057: a navigation pane's width does not follow the window)
      collapsible: a Collapse button in the header folds the pane to a rail (an Expand button, then the rail items); default false
      collapsed / onCollapsedChange(next): the folded state, controlled; defaultCollapsed: its first state when not controlled
      rail: the items the folded rail shows under Expand (ToolRail.Item elements)
@@ -26,8 +26,8 @@
        Files pane), left out where the pane is always there (batch 259)
      resizable: the pane's content edge can be dragged (or moved with the arrow keys) between its sm width and
        --plx-comp-secondary-pane-width-max; default false
-     size / onSizeChange(px): the dragged width, controlled (an application keeps it between visits, useViewState);
-       defaultSize: the first dragged width when not controlled
+     size / onSizeChange(px): the dragged width, controlled (an application keeps it between visits, useViewState); onSizeChange(null) is the
+       edge's reset: back to the standard width; defaultSize: the first dragged width when not controlled
      detailOpen: the pane is the list of a list-detail screen (Platforms Standard 5.2): true while an item's detail shows
        beside it. At Narrow (under 600px, --plx-sys-shell-phone-below) one pane shows at a time: the list fills the
        width while detailOpen is false; while it is true the list steps aside and a Back control leads the detail
@@ -44,7 +44,7 @@
      The body scrolls on its own while the content scrolls beside it.
      The resize edge is a separator (role="separator", aria-valuenow); Arrow Left / Right move the edge, mirrored in a
      right-to-left page (as is dragging); Home and End jump to the smallest and largest width;
-     Enter or a double click folds the pane when it is collapsible.
+     Enter or a double click on the edge returns the pane to its standard width (ADR 0057); the header's Collapse button folds it.
      List-detail at Narrow (with detailOpen): the list fills the main region and the panes beside it are hidden; choosing
        an item opens its detail (the application gives it an address and a history entry, so the browser's Back returns
        to the list), the list steps aside (it stays mounted: its state and scroll position are kept) and a bar with
@@ -95,7 +95,7 @@ export type SecondaryPaneProps = Omit<React.HTMLAttributes<HTMLElement>, 'title'
   /** the dragged width in pixels */
   size?: number;
   defaultSize?: number | null;
-  onSizeChange?(px: number): void;
+  onSizeChange?(px: number | null): void;
   /** the pane is the list of a list-detail screen, an item's detail showing beside it */
   detailOpen?: boolean;
   onBack?(): void;
@@ -121,7 +121,8 @@ export function SecondaryPane(props: SecondaryPaneProps) {
   const setFolded = (next: any) => { if (collapsed === undefined) setOwnCollapsed(next); if (onCollapsedChange) onCollapsedChange(next); };
   const [ownSize, setOwnSize] = React.useState(defaultSize);
   const size = sizeProp !== undefined ? sizeProp : ownSize;
-  const setSize = (w: any) => { if (sizeProp === undefined) setOwnSize(w); if (onSizeChange) onSizeChange(w); };
+  // always kept too, so a controlled size that is cleared (the edge's reset) falls back to the standard width, not to an older drag
+  const setSize = (w: any) => { setOwnSize(w); if (onSizeChange) onSizeChange(w); };
   const name = label || title;
   const named = (s: any) => s.split('{name}').join(name);
   // the body's scroll position: restored when the body appears (on load, and when the list comes back at Narrow)
@@ -209,7 +210,7 @@ export function SecondaryPane(props: SecondaryPaneProps) {
       {resizable && !(narrow && listDetail) ? (
         <PanelSplitter label={named(t.resize)} edge={side === 'start' ? 'end' : 'start'} min={min()} max={max}
           value={size || (tokenPx('--plx-comp-secondary-pane-width-' + width) || min())} onChange={setSize}
-          onCollapse={collapsible ? () => setFolded(true) : undefined} />
+          onReset={() => setSize(null)} />
       ) : null}
     </aside>
   );

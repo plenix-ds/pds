@@ -65,8 +65,6 @@
  ".plx-settings__content | padding-inline-end | plx-comp-settings-content-padding-inline": "test-site/index.html#/settings/general: reads 120px on div.plx-settings__content",
  ".plx-settings__content | padding-inline-start | plx-comp-settings-content-narrow-padding-inline": "test-site/index.html#/settings/general: reads 120px on div.plx-settings__content",
  ".plx-settings__content | padding-inline-start | plx-comp-settings-content-padding-inline": "test-site/index.html#/settings/general: reads 120px on div.plx-settings__content",
- ".plx-settings__nav | border-bottom-color | plx-comp-settings-nav-border-bottom-color": "test-site/index.html#/settings/general: reads rgb(0, 0, 0) on div.plx-nav-pane.plx-nav-pane--inline",
- ".plx-settings__nav | border-bottom-width | plx-comp-settings-nav-border-bottom-width": "test-site/index.html#/settings/general: reads 0px on div.plx-nav-pane.plx-nav-pane--inline",
  ".plx-settings__row | row-gap | plx-comp-settings-row-narrow-row-gap": "test-site/index.html#/settings/general: reads normal on div.plx-settings__row",
  ".plx-slider--custom .plx-slider__input::-webkit-slider-thumb | background-color | plx-comp-slider-thumb-background": "test-site/index.html#/event/e10: reads rgba(0, 0, 0, 0) on input.plx-slider__input",
  ".plx-slider--custom .plx-slider__input::-webkit-slider-thumb | block-size | plx-comp-slider-thumb-size": "test-site/index.html#/event/e10: reads 28px on input.plx-slider__input",

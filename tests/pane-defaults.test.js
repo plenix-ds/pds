@@ -1,10 +1,10 @@
-/* Plenix tests · panes start wider on larger windows (issue 463, option C, step 2): the starting width of the navigation pane, the secondary pane
-   (small, medium, large) and the side panel follows the window width, as size tokens: under 1440px 240 | 180, 220, 280 | 240; from 1440px up to
-   1919px 272 | 220, 260, 320 | 320; from 1920px 320 | 260, 320, 400 | 400. A width dragged to or set by an app wins (not tested here). The secondary pane's narrowest drag stays 180px on every window.
+/* Plenix tests · pane starting widths (issue 463, option C; changed by #1243, ADR 0057, D-0168): the navigation panes keep ONE width at every window size, and only the side panel
+   (content, not navigation) starts wider on larger windows: nav 240 | secondary sm 180, md 240, lg 280 | side panel 240 under 1440px, 320 from 1440px up to 1919px,
+   400 from 1920px. A width dragged to or set by an app wins (not tested here). The secondary pane's narrowest drag stays 180px on every window.
    Summary: a NavPane, three SecondaryPanes and a SidePanel with no size set are measured at 1439, 1440, 1919 and 1920px and match the table.
    Usage: node tests/pane-defaults.test.js   (run by layout.test.js when AppShell or a pane of the shell changed) */
 const assert = require('assert/strict'), { serve, launch } = require('./lib');
-const TABLE = [[1439, [240, 180, 220, 280, 240]], [1440, [272, 220, 260, 320, 320]], [1919, [272, 220, 260, 320, 320]], [1920, [320, 260, 320, 400, 400]]];
+const TABLE = [[1439, [240, 180, 240, 280, 240]], [1440, [240, 180, 240, 280, 320]], [1919, [240, 180, 240, 280, 320]], [1920, [240, 180, 240, 280, 400]]];
 (async () => {
   const PORT = +process.env.TEST_PORT || 9617, server = await serve(PORT); let browser;
   try {

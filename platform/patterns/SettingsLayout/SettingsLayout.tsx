@@ -9,7 +9,11 @@
        <SettingsSection title="Advanced" collapsible defaultExpanded={false}>…</SettingsSection>
      </SettingsLayout>
    Props:
-     nav: the navigation (a NavList), drawn in a NavPane beside the content
+     nav: the navigation (a NavList), drawn in a docked SecondaryPane beside the content (ADR 0057): flush beside the main nav, full height, on the page
+       surface, collapsible and resizable (240px at every window size; the width and the folded state are remembered per page)
+     navTitle: the pane's title (default "Settings", strings.navTitle)
+     pane: SecondaryPane's other props for the nav pane: detailOpen, onBack and back (list-detail at Narrow), label, a controlled size or collapsed
+     strings: { navTitle: "Settings" }, the words, for other languages
      className: more classes
      children: the settings sections
      SettingsSection.title: the section's heading (an h2 by default); it names the section landmark
@@ -41,7 +45,7 @@
        plenix.<page>-settings.view), so the page opens as the person left it; a parent that controls it (expanded) keeps
        it instead.
      Each row is divided from the next.
-     On a narrow layout the navigation stacks above the content.
+     At Narrow the navigation is the list of a list-detail screen (SecondaryPane's): the list fills the width, and a section shows with "Back to Settings".
      It is a settings page: inside an AppShell it claims the page kind "settings", so the layout standard lays it out
        (contained: one centered column at the form width).
    Notes:
@@ -50,32 +54,55 @@
      A section with no title is a static card (a collapsible one needs a title to press).
 */
 import React from 'react';
-import { useAppLayout } from '../AppShell/AppShell.tsx';
+import { useAppLayout, PageContent } from '../AppShell/AppShell.tsx';
 import { cx } from '../../utils/cx.ts';
 import { dataWhenText } from '../../utils/dataText.tsx';
 import { useUid } from '../../utils/layer.ts';
 import { useViewState, readView } from '../../providers/ScreenLocation.ts';
 import { Icon } from '../../components/Icon/Icon.tsx';
-import { NavPane } from '../NavPane/NavPane.tsx';
+import { SecondaryPane, PagePanes } from '../SecondaryPane/SecondaryPane.tsx';
+import type { SecondaryPaneProps } from '../SecondaryPane/SecondaryPane.tsx';
 import { ActionBar } from '../ActionBar/ActionBar.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import ChevronDownIcon from 'plenix-platform/icons/plenix/chevron-down';
 
 
 /** @public the prop type of SettingsLayout (ADR 0011) */
-export type SettingsLayoutProps = { nav?: React.ReactNode; className?: string; children?: React.ReactNode };
+export type SettingsLayoutProps = {
+  nav?: React.ReactNode;
+  /** the nav pane's title (default "Settings") */
+  navTitle?: React.ReactNode;
+  /** SecondaryPane's other props for the nav pane (list-detail at Narrow, a controlled size or collapsed) */
+  pane?: Omit<SecondaryPaneProps, 'children' | 'title'>;
+  strings?: Record<string, string>;
+  className?: string;
+  children?: React.ReactNode;
+};
 export function SettingsLayout(props: SettingsLayoutProps) {
-  const { nav, className, children } = props as any;
+  const { nav, navTitle, pane, strings, className, children } = props;
+  const t: any = useStrings('settingsLayout', strings);
+  // the nav pane's width and folded state are kept per page (ADR 0057), in the page's view state beside its sections' states
+  const page = React.useMemo(pageOf, []);
+  const [view, update] = useViewState(page);
+  // at Narrow the nav is the list of a list-detail screen: choosing a section shows it, Back returns to the list (an app that keeps its own state passes pane.detailOpen and pane.onBack)
+  const [detail, setDetail] = React.useState(false);
+  const choose = (e: React.MouseEvent<HTMLElement>) => { const el = e.target as Element; if (el.closest('a,button,[role=menuitem],[role=option],[role=link]') && !el.closest('.plx-secondary-pane__header')) setDetail(true); };
   // a settings page: the layout standard (providers/pageLayouts.js) lays it out, through the shell (batch 218)
   const shell = useAppLayout();
   const claim = shell && shell.claimPage;
   React.useEffect(() => (claim ? claim('settings') : undefined), [claim]);
   return (
     <div className={cx('plx-settings', className)}>
-      <div className="plx-settings__frame">
-        {nav ? <NavPane as="div" className="plx-settings__nav">{nav}</NavPane> : null}
-        <div className="plx-settings__content">{children}</div>
-      </div>
+      <PagePanes>
+        {nav ? (
+          <SecondaryPane title={navTitle !== undefined ? navTitle : t.navTitle} side="start" width="md" collapsible resizable
+            size={typeof view.navSize === 'number' ? view.navSize : undefined} onSizeChange={(px) => update({ navSize: px })}
+            collapsed={typeof view.navCollapsed === 'boolean' ? view.navCollapsed : undefined} onCollapsedChange={(next) => update({ navCollapsed: next })}
+            detailOpen={detail} onBack={() => setDetail(false)} onClick={choose}
+            {...pane}>{nav}</SecondaryPane>
+        ) : null}
+        <PageContent as="div" className="plx-settings__content">{children}</PageContent>
+      </PagePanes>
     </div>
   );
 }

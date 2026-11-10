@@ -31,7 +31,7 @@
        "Reset size" }
      strings.minWidth, maxWidth, minHeight, maxHeight: optional explanations at those limits.
      className: more classes on the box; children: its content
-     PanelSplitter.label, value, min, max() (a function: the widest it can be now), onChange(width), onCollapse(),
+     PanelSplitter.label, value, min, max() (a function: the widest it can be now), onChange(width), onReset(), onCollapse(),
        defaultValue, edge: "end" (an area at the start) | "start" (an area at the end)
    Behavior:
      Pointer: drag an edge (or the corner); the size follows the pointer one drag-grid line (8px, issue 882) at a time within the limits
@@ -43,8 +43,8 @@
        to GRID_PANE_MAX), so a maxWidth past 1600 reports 1600.
      No size menu (owner, 2026-10-16: removed, also for touch): the edge is dragged, or moved with the keyboard.
      PanelSplitter: drag (one grid line at a time, within min and max and never past --plx-sys-shell-pane-window-share, 90%, of the window), or the arrow keys (--plx-sys-shell-splitter-step),
-       Home and End; double-click or Enter collapses the area when it can collapse (onCollapse: the navigation pane folds
-       to its rail).
+       Home and End; double-click or Enter returns the area to its standard width when the application gives onReset (the navigation panes
+       do, ADR 0057), else collapses it when it can collapse (onCollapse: the area folds to its rail).
    Notes:
      The size reaches the stylesheet as data-plx-width and data-plx-height with one rule per size token and one per grid
        line (system/steps.css; never a style attribute or a style element). The content fits itself: it wraps, or scrolls in a region of its own.
@@ -68,7 +68,7 @@ import { fill } from '../../utils/fill.ts';
 const useSizeEffect = typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect;
 
 /* the drag handle on a resizable area's inner edge: drag, or the arrow keys (--plx-sys-shell-splitter-step), Home and End;
-   double-click or Enter collapses the area when it can collapse. While dragged the width moves one grid line at a time
+   double-click or Enter resets the area's width (onReset) or, without it, collapses the area when it can collapse. While dragged the width moves one grid line at a time
    (the drag grid, DRAG_STEP: 8px since issue 882) within the limits, so it lands on the grid when let go (owner, 2026-10-26). edge: "end" (an area at the start: dragging toward the end widens it) or
    "start" (an area at the end). In a right-to-left page the start is on the right, so the drag and Arrow Left / Right
    are mirrored (arrowStep gives the step in reading order). No size menu (owner, 2026-10-16). */
@@ -81,10 +81,13 @@ export type PanelSplitterProps = {
   max: () => number;
   onChange: (width: number) => void;
   onCollapse?: () => void;
+  /** double-click and Enter: back to the area's standard width (the application clears what it remembered); wins over onCollapse */
+  onReset?: () => void;
   /** "end": an area at the start; "start": an area at the end */
   edge?: 'end' | 'start';
 };
-export function PanelSplitter({ label, value, min, max, onChange, onCollapse, edge = 'end' }: PanelSplitterProps) {
+export function PanelSplitter({ label, value, min, max, onChange, onCollapse, onReset, edge = 'end' }: PanelSplitterProps) {
+  const activate = onReset || onCollapse;
   const dir = edge === 'end' ? 1 : -1;
   // a width is always on the drag grid, every DRAG_STEP px (owner, 2026-10-26: smooth, then "the nearest grid line"; 8px
   // since 2026-11-02, issue 882), within the limits
@@ -104,13 +107,13 @@ export function PanelSplitter({ label, value, min, max, onChange, onCollapse, ed
     if (step) { e.preventDefault(); onChange(clamp(value + step * (tokenPx('--plx-sys-shell-splitter-step') || DRAG_STEP))); }
     else if (e.key === 'Home') { e.preventDefault(); onChange(clamp(min)); }
     else if (e.key === 'End') { e.preventDefault(); onChange(clamp(max())); }
-    else if (e.key === 'Enter' && onCollapse) { e.preventDefault(); onCollapse(); }
+    else if (e.key === 'Enter' && activate) { e.preventDefault(); activate(); }
   };
   const top = clamp(max());
   return (
       <div role="separator" aria-orientation="vertical" aria-label={label} aria-valuenow={value} aria-valuemin={clamp(min)} aria-valuemax={top} tabIndex={0}
         className={cx('plx-panel-splitter', 'plx-panel-splitter--' + edge)} onPointerDown={onPointerDown} onKeyDown={onKeyDown}
-        onDoubleClick={onCollapse || undefined} />
+        onDoubleClick={activate || undefined} />
   );
 }
 

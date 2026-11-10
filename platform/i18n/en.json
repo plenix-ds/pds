@@ -2366,6 +2366,7 @@
     }
   },
   "settingsLayout": {
+    "navTitle": "Settings",
     "section": {
       "section": "section"
     }

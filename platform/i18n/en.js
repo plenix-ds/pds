@@ -2367,6 +2367,7 @@ export default {
     }
   },
   "settingsLayout": {
+    "navTitle": "Settings",
     "section": {
       "section": "section"
     }

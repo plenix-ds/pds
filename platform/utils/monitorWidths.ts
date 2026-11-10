@@ -4,7 +4,7 @@
    Usage:
      const [width, setWidth] = useMonitorWidth('side', { legacy: () => oldValue, min: () => px, max: () => px });
      width is the saved width for this monitor when it still fits the window (between min and the window's share, paneMax), else null
-     (the pane starts at its default); setWidth(w) saves w for this monitor.
+     (the pane starts at its default); setWidth(w) saves w for this monitor; setWidth(null) forgets it (the pane is back at its standard width).
    Props: panel: "side" (the side panel) | "nav" (the navigation pane); legacy(): the single value saved before this change (read once);
      min(), max(): the limits now, in pixels (the component's tokens).
    Behavior:
@@ -55,7 +55,7 @@ function read(panel: string, key: string, legacy?: () => unknown): { value: numb
 function write(panel: string, key: string, w: number | null): void { const all = load(); all[panel] = Object.assign({}, all[panel], { [nearest(all[panel], key)]: w }); save(all); }
 
 export type MonitorWidthOptions = { legacy?: () => unknown; min?: () => number; max?: () => number };
-export function useMonitorWidth(panel: 'side' | 'nav' | string, { legacy, min, max }: MonitorWidthOptions): [number | null, (w: number) => void] {
+export function useMonitorWidth(panel: 'side' | 'nav' | string, { legacy, min, max }: MonitorWidthOptions): [number | null, (w: number | null) => void] {
   const [key, setKey] = React.useState(() => monitorKey());
   const [first] = React.useState(() => read(panel, key, legacy));
   const [raw, setRaw] = React.useState(first.value);
@@ -66,7 +66,7 @@ export function useMonitorWidth(panel: 'side' | 'nav' | string, { legacy, min, m
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
   }, [key, panel]);   // eslint-disable-line react-hooks/exhaustive-deps
-  const set = React.useCallback((w: number) => { setRaw(w); write(panel, key, w); }, [panel, key]);
+  const set = React.useCallback((w: number | null) => { setRaw(w); write(panel, key, w); }, [panel, key]);
   const lo = min ? min() : 0, hi = max ? paneMax(max(), lo) : Infinity;
   return [raw && raw >= lo && raw <= hi ? raw : null, set];
 }

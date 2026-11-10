@@ -1,4 +1,4 @@
-// States: default (navigation beside sections), a collapsible section (closed and open), rows with controls, with actions. Not applicable: hover and focus beyond its controls, disabled, loading, error, selected.
+// States: default (the navigation as a docked pane beside sections: titled, collapsible, resizable), the pane folded to its rail, its own title, no navigation, a collapsible section (closed and open), rows with controls, with actions. Not applicable: hover and focus beyond its controls, disabled, loading, error, selected.
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { SettingsLayout, SettingsSection, SettingsRow } from '../../../platform/patterns/SettingsLayout/SettingsLayout.tsx';
@@ -20,5 +20,8 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 export const Expanded: Story = { args: { children: <SettingsSection title="Advanced" collapsible defaultExpanded><SettingsRow label="Debug mode"><Switch aria-label="Debug mode" label="Off" /></SettingsRow></SettingsSection> } };
 export const WithActions: Story = { args: { children: <SettingsSection title="Regional" actions={<><Button>Cancel</Button><Button variant="primary">Save</Button></>}><SettingsRow label="Date format"><Select aria-label="Date format" options={[{ value: 'iso', label: '2026-10-05' }]} /></SettingsRow></SettingsSection> } };
+export const NavCollapsed: Story = { args: { pane: { collapsed: true } } };
+export const NavTitle: Story = { args: { navTitle: 'Case settings' } };
+export const NoNav: Story = { args: { nav: undefined } };
 export const LongText: Story = { args: { children: <SettingsSection title="A section with a very long title that does not fit the width of the page and so wraps" description="And a description that runs on well past the width of the section."><SettingsRow label="A setting with a very long label that wraps onto several lines" description="And a description that is long too, so it wraps beside the control."><Switch aria-label="Setting" label="On" /></SettingsRow></SettingsSection> } };
 export const Rtl: Story = { decorators: [rtl] };

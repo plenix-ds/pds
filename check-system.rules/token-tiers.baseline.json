@@ -917,7 +917,6 @@
   "plx-comp.secondary-pane-width-lg-from-wide -> plx-ref.size-80u",
   "plx-comp.secondary-pane-width-lg-from-ultrawide -> plx-ref.size-100u",
   "plx-comp.secondary-pane-width-max -> plx-ref.size-100u",
-  "plx-comp.secondary-pane-width-md -> plx-ref.size-55u",
   "plx-comp.secondary-pane-width-md-from-wide -> plx-ref.size-65u",
   "plx-comp.secondary-pane-width-md-from-ultrawide -> plx-ref.size-80u",
   "plx-comp.secondary-pane-width-min -> plx-ref.size-45u",

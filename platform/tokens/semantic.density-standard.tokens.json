@@ -93,6 +93,7 @@
     "shell-nav-width-from-wide": {
       "$value": "{plx-ref.size-68u}",
       "$type": "dimension",
+      "$deprecated": "Navigation panes keep one width at every window size (ADR 0057). Nothing reads it; removed in 2.0.0.",
       "$description": "The navigation pane's starting width in a window 1440px wide up to 1919px (owner, issue 463 option C, step 2); grid.css sets --plx-sys-shell-nav-width to it there. Under 1440px the width is shell-nav-width."
     },
     "shell-nav-width-from-1440": {
@@ -103,6 +104,7 @@
     "shell-nav-width-from-ultrawide": {
       "$value": "{plx-ref.size-80u}",
       "$type": "dimension",
+      "$deprecated": "Navigation panes keep one width at every window size (ADR 0057). Nothing reads it; removed in 2.0.0.",
       "$description": "The navigation pane's starting width in a window 1920px wide and wider (owner, issue 463 option C, step 2)."
     },
     "shell-nav-width-from-1920": {
@@ -111,7 +113,7 @@
       "$deprecated": "Renamed: use --plx-sys-shell-nav-width-from-ultrawide (a name says its step, not its value; docs/adr/0002). It keeps working and is removed in 2.0.0."
     },
     "shell-nav-min-width": {
-      "$value": "{plx-ref.size-35u}",
+      "$value": "{plx-ref.size-50u}",
       "$type": "dimension"
     },
     "shell-nav-max-width": {
@@ -125,7 +127,7 @@
       "$extensions": { "com.plenix": { "webOnly": true } }
     },
     "shell-splitter-step": {
-      "$value": "{plx-ref.size-4u}",
+      "$value": "{plx-ref.size-2u}",
       "$type": "dimension"
     },
     "shell-rail-below": {

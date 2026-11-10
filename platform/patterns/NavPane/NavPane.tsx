@@ -24,7 +24,7 @@
    Behavior:
      Its size follows the Layout grid's shell: --plx-sys-shell-nav-width (240px; 272px from a window 1440px wide, 320px from 1920px: the -from-1440 and -from-1920 tokens, set in system/grid.css; its dragged width is remembered per monitor, utils/monitorWidths.ts), resizable 140–320px (dragged, 144–320px: the 8px drag grid inside those limits, issue 882) with the splitter on its
        edge: dragged, it moves one drag-grid line (8px, issue 882) at a time and stays on the grid; the arrow keys move it by
-       --plx-sys-shell-splitter-step; Enter or a double-click on the edge folds the pane to its rail.
+       --plx-sys-shell-splitter-step; Enter or a double-click on the edge returns the pane to its standard width (240px, ADR 0057; Ctrl+[ and the Collapse button fold it to its rail).
      The first row is the same on every pane: the title, the actions, then the Collapse button at the row's end, on the side
        that faces the main region.
      Collapsed, it is a rail (ToolRail) of the page's rail items with Expand always first, at the top, then a divider.
@@ -157,7 +157,7 @@ export function NavPane({ label, title, actions, as = 'nav', header, footer, rai
       {footer ? <div className="plx-nav-pane__footer">{footer}</div> : null}
       {mode === 'inline' ? <PanelSplitter label={label ? t.resize.replace('{name}', label) : t.resizeNavigation} value={layout.width || tokenPx('--plx-sys-shell-nav-width')}
         min={tokenPx('--plx-sys-shell-nav-min-width')} max={() => tokenPx('--plx-sys-shell-nav-max-width')} onChange={layout.setWidth}
-        onCollapse={layout.toggle} edge="end" /> : null}
+        onReset={() => layout.setWidth(null)} edge="end" /> : null}
     </Tag>
   );
   // Narrow: the pane is a screen over the main region, with the bar still below it
