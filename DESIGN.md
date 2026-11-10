@@ -328,6 +328,7 @@ Every component declares a state manifest (check 9). Each state is a token set o
 | 9 | Light `accent-field-placeholder` (blue-300) on `accent-field-background` (blue-600) | 3.44:1 | blue-200: 4.73:1 (#251) |
 | 10 | Dark `content-link-visited` on `state-hover` / `state-selected` (listed, D-0025) | 3.84:1 | dark phase (#251) |
 | 11 | Light `control-border` (gray-500) and `field-border` (gray-400) on a control that sits straight on `surface-canvas` (bar fields) | 2.63:1 and 2.01:1 on gray-200 (2.99 and 2.28 on gray-75) | A canvas-context border for bar fields at gray-600 (4.20:1); DS Architect names the role (#1160) |
+| 12 | Light `content-decorative` (gray-200), the grouped Timeline's watermark year, on `surface-canvas` | 1.00:1 on gray-200: invisible (1.13:1 on gray-75) | gray-250 (1.12:1), the same faint mark as before (#1160) |
 
 - Dark `border-default` and `border-subtle` (1.37:1) are decorative dividers, so they are not a defect. Control boundaries use `field-border` and `control-border`, which measure 4.00:1.
 - Items 1 to 3 wait for the light work to finish (D-0025), tracked in #206. Items 4, 5 and 7 are fixed in #214.

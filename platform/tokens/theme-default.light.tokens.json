@@ -300,7 +300,7 @@
       }
     },
     "content-decorative": {
-      "$value": "{plx-ref.color-gray-200}",
+      "$value": "{plx-ref.color-gray-250}",
       "$type": "color",
       "$description": "The ink of a decorative mark that carries no meaning (the watermark year of a grouped Timeline). Never used for text people must read (ADR 0036).",
       "$extensions": {
