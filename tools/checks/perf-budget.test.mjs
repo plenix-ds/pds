@@ -2,7 +2,7 @@
 // :root-only scope is not, layer copies of one scope add up, and plenix.js is measured with brotli 5. Runs in the checks'
 // Vitest job.
 import { describe, it, expect } from 'vitest';
-import { reachesElements, scopeTokens, check } from './perf-budget.mjs';
+import { reachesElements, isDensityScope, scopeTokens, check } from './perf-budget.mjs';
 
 const decls = (n, p) => Array.from({ length: n }, (_, i) => `--${p}-${i}: 1px;`).join(' ');
 const css = `@layer t { :root { ${decls(50, 'a')} } :root, [data-plx-density] { ${decls(8, 'b')} color: red; } }
@@ -25,6 +25,17 @@ describe('perf-budget (1188)', () => {
     expect(s.total).toBe(63);
     expect(s.scopes[0].count).toBe(50);
     expect(s.scopes.find((x) => x.scope === '@layer t :root, [data-plx-density]').count).toBe(10);
+  });
+  it('a density scope lists the bare density or interaction attribute', () => {
+    expect(isDensityScope(':root, [data-plx-density], [data-plx-interaction]')).toBe(true);
+    expect(isDensityScope(':root, [data-plx-interaction]')).toBe(true);
+    expect(isDensityScope('[data-plx-density=compact], :root[data-plx-density-policy=compact]')).toBe(false);
+    expect(isDensityScope(':root, [data-plx-theme], [data-plx-mode]')).toBe(false);
+  });
+  it('fails when the density scope is over its own limit, even under the general one (#1205)', () => {
+    const b = { ...budget(100, 1e6), densityTokens: { limit: 9 } };
+    expect(check({ css, js, budget: b }).fails[0]).toMatch(/density scope declares 10 custom properties \(limit 9\)/);
+    expect(check({ css, js, budget: { ...b, densityTokens: { limit: 10 } } }).fails).toEqual([]);
   });
   it('fails over a limit and only prints the CSS size', () => {
     expect(check({ css, js, budget: budget(10, 1e6) }).fails).toEqual([]);

@@ -4,6 +4,8 @@
 //   - one CSS scope that reaches elements other than :root declares more custom properties than scopeTokens.limit. Every
 //     element such a selector matches recomputes them for its whole subtree, so a big scope on [data-plx-density] makes
 //     style recalculation slow on every grid (#1188);
+//   - the density scope (a selector listing [data-plx-density] or [data-plx-interaction] alone, which every DataGrid
+//     matches) declares more than densityTokens.limit (#1205);
 //   - plenix.js compressed with brotli quality 5 (what the web host sends) is over jsBrotli.limit.
 // It prints, never limits: the size of plenix.css raw, gzip and brotli (owner, plenix-platform#460), and the total count
 // of custom-property declarations. Limits live in tools/checks/perf-budget.json.
@@ -19,6 +21,11 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 // A selector reaches only the root element when it starts with :root or html (":root[data-plx-mode=dark]" too).
 export function reachesElements(selector) {
   return selector.split(',').map((s) => s.trim()).some((s) => s && !/^(:root|html)(?![\w-])/.test(s));
+}
+
+// A selector that lists the bare density or interaction attribute: every DataGrid and density zone matches it.
+export function isDensityScope(selector) {
+  return selector.split(',').map((s) => s.trim()).some((s) => /^\[data-plx-(density|interaction)\]$/.test(s));
 }
 
 // Custom-property declarations per scope: the selector, plus the at-rules around it (a media or layer copy is the same
@@ -55,6 +62,13 @@ export function check({ css, js, budget }) {
   notes.push(`custom properties: ${total} declarations; largest scope reaching elements: ${topCount}` + (top ? ` (${top.scope.slice(0, 120)})` : ''));
   if (topCount > budget.scopeTokens.limit) fails.push(`one scope declares ${topCount} custom properties (limit ${budget.scopeTokens.limit}): ${top.scope.slice(0, 120)}`);
   else if (topCount < budget.scopeTokens.limit * 0.9) notes.push(`scope tokens ${topCount} are well under the limit ${budget.scopeTokens.limit}: lower it in tools/checks/perf-budget.json`);
+  if (budget.densityTokens) {
+    const d = scopes.find((x) => isDensityScope(x.selector));
+    const dCount = d ? d.count : 0;
+    notes.push(`density scope: ${dCount} (limit ${budget.densityTokens.limit})` + (d ? ` (${d.scope.slice(0, 120)})` : ''));
+    if (dCount > budget.densityTokens.limit) fails.push(`the density scope declares ${dCount} custom properties (limit ${budget.densityTokens.limit}): ${d.scope.slice(0, 120)}`);
+    else if (dCount < budget.densityTokens.limit * 0.7) notes.push(`density tokens ${dCount} are well under the limit ${budget.densityTokens.limit}: lower it in tools/checks/perf-budget.json`);
+  }
   const jsBr = brotli5(js);
   notes.push(`${budget.jsBrotli.file}: ${js.length} B raw, ${jsBr} B brotli 5 (limit ${budget.jsBrotli.limit})`);
   if (jsBr > budget.jsBrotli.limit) fails.push(`${budget.jsBrotli.file} is ${jsBr} B with brotli 5 (limit ${budget.jsBrotli.limit})`);
