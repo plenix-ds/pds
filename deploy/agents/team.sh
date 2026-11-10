@@ -175,8 +175,8 @@ nudge() {
   [[ "$updated" < "$last" ]] && changed=0
   # #895: quiet only when no role has open, unblocked, non-later work as well (deploy/agents/dispatch.mjs); a failed
   # read wakes everyone, never nobody
-  plan=$(PDS1_CFG="$CFG" node "$HERE/dispatch.mjs" --open-prs "$open" --changed "$changed" 2>>"$LOG") || { log "nudge: dispatch.mjs failed"; plan="round all"; }
-  mode=$(awk '$1=="round"{print $2}' <<<"$plan"); mode=${mode:-all}
+  plan=$(PDS1_CFG="$CFG" node "$HERE/dispatch.mjs" --open-prs "$open" --changed "$changed" 2>>"$LOG") || { log "nudge: dispatch.mjs failed: waking the coordinators"; plan=$'round roles\ncoordinators'; }  # D-0155: no wake-all; a failed read still wakes the coordinators, never nobody
+  mode=$(awk '$1=="round"{print $2}' <<<"$plan"); mode=${mode:-roles}
   overdue=$(awk '$1=="overdue"{print $2" "$3}' <<<"$plan"); overdue=${overdue:-0}
   rounds=$(cat "$NUDGE_OVERDUE" 2>/dev/null || echo 0)
   if [ "${overdue%% *}" != 0 ]; then rounds=$((rounds + 1)); else rounds=0; fi
