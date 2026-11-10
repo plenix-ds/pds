@@ -19,7 +19,7 @@
 #                               role in the registry goes through start once without starting anything; parked roles
 #                               are checked for an entry and a definition. Exit 1 when one fails
 set -u
-export PATH="$HOME/.local/bin:$HOME/.bun/bin:/usr/local/bin:/usr/bin:/bin"
+export PATH="${TEAM_TEST_BIN:+$TEAM_TEST_BIN:}$HOME/.local/bin:$HOME/.bun/bin:/usr/local/bin:/usr/bin:/bin"   # TEAM_TEST_BIN: a stub tmux in tools/ci/wake.test.mjs
 S=pds1
 ROOT=$HOME/pds1
 REPO=$ROOT/work/pds                 # main checkout (coordinators)
@@ -138,11 +138,14 @@ wake() {
   act=$(tmux display-message -p -t "$S:$win" '#{window_activity}' 2>/dev/null) || return 4
   [ "$(tmux display-message -p -t "$S:$win" '#W' 2>/dev/null)" = "$win" ] || return 4
   pane=$(tmux capture-pane -p -t "$S:$win" 2>/dev/null | tail -12)
-  grep -q 'esc to interrupt' <<<"$pane" && return 3
-  (( $(date +%s) - act < idle )) && return 3
+  WAKE_WHY=working; grep -q 'esc to interrupt' <<<"$pane" && return 3
+  WAKE_WHY="screen changed less than ${idle}s ago"; (( $(date +%s) - act < idle )) && return 3
   # the box draws "❯" plus a no-break space (UTF-8 c2 a0): drop it and whitespace; only emptiness matters here
-  prompt=$(grep -m1 '^❯' <<<"$pane" | sed 's/^❯//' | tr -d ' \t\302\240')
-  [ -n "$prompt" ] && return 3
+  # the input box is the LAST "❯" line; an earlier one is history (the "❯ /remote-control ..." echo of a session that has
+  # been idle since, which made every such pane look busy for 10 h: #1166)
+  prompt=$(grep '^❯' <<<"$pane" | tail -1 | sed 's/^❯//' | tr -d ' \t\302\240')
+  WAKE_WHY="text in the input box"; [ -n "$prompt" ] && return 3
+  WAKE_WHY=
   if [ -n "${NUDGE_DRY:-}" ]; then echo "would wake $win: ${text:0:100}"; return 0; fi
   tmux send-keys -t "$S:$win" -l "$text"; sleep 1; tmux send-keys -t "$S:$win" Enter
 }
@@ -188,7 +191,10 @@ nudge() {
     sev_text=$(awk -v r="$role" '$1=="unanswered" && $2==r {printf "%s%s (S%s, %s min)", (n++?", ":""), $3, $4, $5}' <<<"$plan")
     text="${NUDGE_TEXT//ROLE/$role}"
     [ -n "$sev_text" ] && text="Severity first: no response from you yet on $sev_text. Comment on it now (signed) and work it before anything else. $text"
-    wake "$win" "$text" && { sent=$((sent + 1)); [ -n "${NUDGE_DRY:-}" ] || log "nudge: $win${sev_text:+ ($sev_text)}"; }
+    wake "$win" "$text" && { sent=$((sent + 1)); [ -n "${NUDGE_DRY:-}" ] || log "nudge: $win${sev_text:+ ($sev_text)}"; continue; }
+    # a session with work that was not woken says why; "working" is the normal case and stays quiet (#1166: a refusal
+    # that was never logged hid a 10 h outage)
+    [ "$WAKE_WHY" = working ] || [ -n "${NUDGE_DRY:-}" ] || log "nudge: $win not woken: ${WAKE_WHY:-no such window}"
   done < <(tmux list-windows -t $S -F '#W')
   [ -n "${NUDGE_DRY:-}" ] || echo "$now" >"$NUDGE_STAMP"; echo "nudged $sent ($mode)"
   heartbeat "$hb" "woke $sent idle session(s) ($mode)" "$health"
