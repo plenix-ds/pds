@@ -1,0 +1,9 @@
+id: D-0159
+date: 2026-11-10
+area: process
+decided_by: 'owner (via the control desk, 2026-11-10, correction: active agents should show in Claude; issue 1196)'
+decision: 'Every role starts with --remote-control again, so every active agent shows in Claude; this replaces only the Remote Control part of D-0155 (PM only). Idle agents leave the list by being stopped, not by being disconnected: D-0155''s idle rules (no wake-all nudge, an open PR does not keep a role running, parked items carry later or blocked, coordinators stay up when idle) stay in force. An agent disconnected by hand gets Remote Control again at its next start.'
+why: 'The owner wants to see the agents that are working; the idle ones disappear from the list when D-0155 stops them.'
+options: ['every role with --remote-control, idle ones stopped (chosen)', 'only the PM on Remote Control (D-0155 part 1, replaced)']
+status: active
+check: 'team.sh launch-test (every role starts through start_one); bash -n deploy/agents/team.sh; review-only for the Remote Control flag (a claude CLI argument)'
