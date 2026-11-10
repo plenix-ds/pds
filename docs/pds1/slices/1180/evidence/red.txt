@@ -1,0 +1,6 @@
+AssertionError [ERR_ASSERTION]: ltr: AC-1: a quick click on the cut text opens the row: {"opened":[],"current":[]}
++ actual - expected
+
++ []
+- [
+-   'a'
