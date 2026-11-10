@@ -7,6 +7,8 @@
 //             that has the rule instead), or it holds only icons or numbers (direction-neutral)
 //   backlog   the rules that broke it when it began (#1283's audit); it only shrinks: a listed rule that now passes, or is gone, fails until
 //             it is removed (node check-system.rules/bidi-isolate.js --shrink)
+//   stretch   the opposite mistake (G2, #1285): plaintext on a box that stretches in the same rule (flex-grow above 0, or inline-size:
+//             100%) moves a short Latin label to the far side in RTL; it fails: put the text in an inner span that does not stretch
 // A rule is named by its file and its first class: "platform/components/Tag/tag.css .plx-tag__label".
 // Alone: node check-system.rules/bidi-isolate.js [--shrink | --baseline]   -> BIDI_ISOLATE_OK, or the findings and exit 1
 const fs = require('fs');
@@ -36,10 +38,11 @@ function rules() {
       const cls = (sel.match(/\.(plx-[a-z0-9_-]+)/) || [])[1] || sel;
       const id = path.relative(ROOT, f).split(path.sep).join('/') + ' .' + cls;
       const isolated = /unicode-bidi:\s*plaintext/.test(body);
+      const stretched = /flex-grow:\s*(?!0(?:\.0+)?\s*[;}]|0$)[0-9.]+/.test(body) || /(?:^|;)\s*inline-size:\s*100%/.test(body);
       // a part with several such rules (a state, a size) counts once: isolated when any of them isolates
       const prev = out.find((r) => r.id === id);
-      if (prev) { prev.isolated = prev.isolated || isolated; continue; }
-      if (!seen.has(id)) { seen.add(id); out.push({ id, file: f, isolated }); }
+      if (prev) { prev.isolated = prev.isolated || isolated; prev.stretchedIsolated = prev.stretchedIsolated || (isolated && stretched); continue; }
+      if (!seen.has(id)) { seen.add(id); out.push({ id, file: f, isolated, stretchedIsolated: isolated && stretched }); }
     }
   }
   return out;
@@ -49,6 +52,7 @@ function check({ add }) {
   const list = read(), allowed = list.allowed || {}, backlog = list.backlog || {};
   const all = rules(), ids = new Set(all.map((r) => r.id));
   for (const r of all) {
+    if (r.stretchedIsolated) add(NAME, r.file, 0, r.id + ': unicode-bidi: plaintext on a box that stretches (flex-grow or inline-size: 100%): a short Latin label moves to the far side in RTL; isolate an inner span that does not stretch instead (#1283)');
     if (r.isolated || allowed[r.id]) continue;
     if (!(r.id in backlog)) add(NAME, r.file, 0, r.id + ': a one-line ellipsis without unicode-bidi: plaintext (a long Latin label is cut at its start in RTL); add it, or name the part in bidi-isolate.json "allowed" with the reason (#1283)');
   }
