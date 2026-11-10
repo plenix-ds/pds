@@ -115,7 +115,7 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 ## 3. Type (D-0006)
 
 - **DM Sans** for all text. Arabic falls back to IBM Plex Sans Arabic, and Arabic titles to Readex Pro.
-- **Reddit Mono** (`plx-sys.font-data`) is for numbers in data: grid and table cells, metrics, counts in data views, codes and IDs. It is also used for code.
+- **Reddit Mono** (`plx-sys.font-data`) is for data, by one rule in every component (D-0164, D-0165): a number, amount, count, date, time, ID, code, key, file name, path, URL, email or version uses it wherever it stands as a value (a cell, a field value, a metric, a chart value, a date tile, a count, a meta line). A name or a word never does. In a phrase that mixes them, only the data runs are Reddit Mono (`dataPhrase`, `dataWhenText`). It is also used for code. Enforced by `lint-type-roles` (#1232).
 - **Never mono in prose.** "7 events" in a sentence, a heading or a button stays in DM Sans. Numbers there use `font-variant-numeric: tabular-nums` only when they need to line up.
 - Sizes come only from the type roles in the front matter (check 3). No numeric `font-size` in CSS. Nothing below 12px, except the read-only field label (11px, owner, D-0106). `font-size-09`, `-10` and `-11` are retired (section 12).
 - **surface-title** (15px, 700) is the title of a dialog, a sheet or a SecondaryPane (#122; the pane, D-0123). Page and section titles use **title** (20px).
