@@ -7,7 +7,7 @@ import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
-import { PAGES, TARGETS, html } from './pages.mjs';
+import { PAGES, GRIDS, TARGETS, html } from './pages.mjs';
 const require = createRequire(import.meta.url);
 const { launch } = require('../lib.js');
 const arg = (n, d) => { const i = process.argv.indexOf('--' + n); return i < 0 ? d : (process.argv[i + 1] && !process.argv[i + 1].startsWith('--') ? process.argv[i + 1] : true); };
@@ -39,9 +39,11 @@ function split(events) {
   for (const e of events) { const k = e.pid + ':' + e.tid; if (e.ph === 'X' && names.has(k)) count.set(k, (count.get(k) || 0) + 1); }
   const top = [...count.entries()].sort((a, b) => b[1] - a[1])[0];
   const [pid, tid] = top ? top[0].split(':').map(Number) : [0, 0], mine = events.filter((e) => e.pid === pid && e.tid === tid && e.ph === 'X');
-  const out = { cssMs: 0, recalcMs: 0, recalcCount: 0, recalcElements: 0, layoutMs: 0, paintMs: 0, scriptMs: 0, taskMs: 0, selectorStatsEvents: events.filter((e) => /SelectorStats/.test(e.name)).length };
+  const out = { cssMs: 0, recalcMs: 0, recalcCount: 0, recalcElements: 0, layoutMs: 0, paintMs: 0, scriptMs: 0, taskMs: 0, forcedLayouts: 0, selectorStatsEvents: events.filter((e) => /SelectorStats/.test(e.name)).length };
   const key = { css: 'cssMs', recalc: 'recalcMs', layout: 'layoutMs', paint: 'paintMs', script: 'scriptMs' };
   mine.sort((a, b) => a.ts - b.ts || b.dur - a.dur); let scriptEnd = 0;
+  const scripts = mine.filter((e) => BUCKETS.script.includes(e.name) && e.dur);   // a Layout or a style recalc that starts inside a script call was asked for by that script: a forced synchronous one
+  out.forcedLayouts = mine.filter((e) => (e.name === 'Layout' || e.name === 'UpdateLayoutTree') && scripts.some((x) => x.ts <= e.ts && e.ts + e.dur <= x.ts + x.dur && x !== e)).length;
   for (const e of mine) {
     if (e.name === 'RunTask') out.taskMs += e.dur / 1000;   // only in the debug categories
     for (const [b, names] of Object.entries(BUCKETS)) if (names.includes(e.name)) {
@@ -66,22 +68,29 @@ try {
     const runs = [];
     for (let i = 0; i < RUNS; i++) {
       const p = await browser.newPage(), tag = page + '-' + i, r = {};
+      await p.evaluateOnNewDocument(() => { window.__long = { n: 0, ms: 0 }; try { new PerformanceObserver((l) => { for (const e of l.getEntries()) { window.__long.n++; window.__long.ms += e.duration; } }).observe({ type: 'longtask', buffered: true }); } catch (e) { /* unsupported */ } });
       r.load = await phase(p, 'load', tag, async () => { await p.goto('http://localhost:' + port + '/page/' + page, { waitUntil: 'load', timeout: 90000 }); await p.waitForSelector(TARGETS[page].ready, { timeout: 30000 }); await wait(1500); });
+      r.load.longTasks = await p.evaluate(() => window.__long.n); r.load.longTaskMs = await p.evaluate(() => window.__long.ms);
+      const isGrid = GRIDS.includes(page);
       r.hover = await phase(p, 'hover', tag, async () => {
-        const els = await p.$$(page === 'grid' ? '.plx-data-grid__grid-row' : TARGETS[page].click);
+        const els = await p.$$(isGrid ? '.plx-data-grid__grid-row' : TARGETS[page].click);
         for (const el of els.slice(2, 10)) { const b = await el.boundingBox(); if (b) { await p.mouse.move(b.x + b.width / 2, b.y + b.height / 2); await wait(60); } }
       });
       r.sort = await phase(p, 'sort', tag, async () => {
-        if (page === 'grid') { const h = await p.evaluateHandle(() => [...document.querySelectorAll('.plx-data-grid [role="columnheader"]')].find((e) => /Name/.test(e.textContent))); const el = h.asElement(); if (el) await el.click(); }
+        if (isGrid) { const h = await p.evaluateHandle(() => [...document.querySelectorAll('.plx-data-grid [role="columnheader"]')].find((e) => /Name/.test(e.textContent))); const el = h.asElement(); if (el) await el.click(); }
         else await (await p.$(TARGETS[page].click)).click();
       });
+      if (isGrid) {
+        r.filter = await phase(p, 'filter', tag, async () => { await p.evaluate(() => window.__setSearch('Mina')); await wait(400); await p.evaluate(() => window.__setSearch('')); });
+        r.resize = await phase(p, 'resize', tag, async () => { const v = p.viewport() || { width: 800, height: 600 }; await p.setViewport({ width: v.width - 200, height: v.height }); await wait(300); await p.setViewport({ width: v.width, height: v.height }); });
+      }
       await p.close(); runs.push(r);
     }
     result.pages[page] = {};
-    for (const ph of ['load', 'hover', 'sort']) { const o = {}; for (const k of Object.keys(runs[0][ph] || {})) o[k] = median(runs.map((r) => r[ph] ? r[ph][k] : 0)); result.pages[page][ph] = o; }
+    for (const ph of Object.keys(runs[0])) { const o = {}; for (const k of Object.keys(runs[0][ph] || {})) o[k] = median(runs.map((r) => r[ph] ? r[ph][k] : 0)); result.pages[page][ph] = o; }
   }
 } finally { await browser.close(); server.close(); }
 console.log('Plenix trace · ' + BASE + ' · ' + MODE + ' · median of ' + RUNS + ' · main thread, ms');
-console.log('page   phase  task   css   recalc (n, elements)   layout  paint  script');
-for (const [n, ph] of Object.entries(result.pages)) for (const [k, o] of Object.entries(ph)) console.log(n.padEnd(6), k.padEnd(6), o.taskMs.toFixed(0).padStart(5), o.cssMs.toFixed(1).padStart(6), o.recalcMs.toFixed(1).padStart(7), ('(' + o.recalcCount + ', ' + o.recalcElements + ')').padStart(14), o.layoutMs.toFixed(1).padStart(9), o.paintMs.toFixed(1).padStart(6), o.scriptMs.toFixed(1).padStart(7), o.selectorStatsEvents ? ' selector-stats:' + o.selectorStatsEvents : '');
+console.log('page    phase   css   recalc (n, elements)   layout  paint  script  forced-layouts  long-tasks');
+for (const [n, ph] of Object.entries(result.pages)) for (const [k, o] of Object.entries(ph)) console.log(n.padEnd(7), k.padEnd(7), o.cssMs.toFixed(1).padStart(5), o.recalcMs.toFixed(1).padStart(8), ('(' + o.recalcCount + ', ' + o.recalcElements + ')').padStart(14), o.layoutMs.toFixed(1).padStart(8), o.paintMs.toFixed(1).padStart(6), o.scriptMs.toFixed(1).padStart(7), String(o.forcedLayouts).padStart(10), o.longTasks === undefined ? '' : String(o.longTasks).padStart(10) + ' (' + o.longTaskMs.toFixed(0) + ' ms)', o.selectorStatsEvents ? ' selector-stats:' + o.selectorStatsEvents : '');
 const j = arg('json', null); if (j && j !== true) { fs.mkdirSync(path.dirname(j), { recursive: true }); fs.writeFileSync(j, JSON.stringify(result, null, 2) + '\n'); }
