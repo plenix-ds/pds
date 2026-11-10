@@ -1,0 +1,5 @@
+AssertionError [ERR_ASSERTION]: ltr light: AC-1: an id cell is in the data font (DM Sans)
++ actual - expected
+
++ 'DM Sans'
+- 'Reddit Mono'

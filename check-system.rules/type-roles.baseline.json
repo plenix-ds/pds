@@ -3,8 +3,6 @@
  "backlog": {
   "css plx-chat__reaction": "tabular-nums (a value) without the data font",
   "css plx-chat__voice-time": "tabular-nums (a value) without the data font",
-  "DataGrid kind code": "a data kind without the data cell class",
-  "DataGrid kind id": "a data kind without the data cell class",
   "plx-comp.metric-card-value-font-family": "a data role at the text font",
   "plx-comp.metric-value-font-family": "a data role at the text font"
  }
