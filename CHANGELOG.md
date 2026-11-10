@@ -6,6 +6,33 @@ The batch numbers point to the work log (Plenix - DAM/audit/batches/).
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-11-10
+
+### Upgrading from 1.5.0
+Nothing to change. Deprecated names keep working (each says what replaces it). Apps on the CDN loader follow this release by themselves; npm apps update the version as usual.
+
+### Added
+- **`--plx-sys-surface-tile`:** the fill of a small read-only tile. Light gray 75; dark follows the canvas. The EntityHeader fact tiles read it, so they look as before (D-0151).
+- Tokens `--plx-ref-mix-amount-full` (100%), `--plx-sys-category-soft-border-amount` and `--plx-sys-category-pink-soft-border-amount`, and the context property `--plx-comp-category-soft-border-amount` on `[data-plx-category]`: the share of a soft pill's border color kept in its border (#1155).
+- **Timeline:** `density="compact"` on `variant="grouped"`, the Key Dates look: one line per event, a 40px date tile, at most 760px wide (ADR 0048). New string `timeline.upcoming`.
+
+### Changed
+- **DataGrid:** the full-text Dialog code of `overflow: "dialog"` columns loads on first use, so a grid without such a column is lighter (`{ DataGrid }` 456.3 to 454.3 KB). No API change.
+- **Page background (light):** `surface-canvas` is now gray 200 (`#e8e9ec`, was gray 75 `#f7f7f8`), at the owner's request (D-0149). Cards and panels stand out more against the page. Dark mode is unchanged.
+- **Pressed fill (light):** `state-pressed` is now gray 250 (`#dcddde`), so a pressed ghost Button still shows on the new page background (D-0151).
+- **InlineEdit:** the prompt of an empty value reads `content-muted` (was the placeholder gray), so it stays at least 4.5:1 on the new page background.
+- The soft pink pill (a female person's DataPill) has a softer rose border (`#ccafba`, pink-700 mixed 35% into its fill) instead of the text's dark rose. Every other hue is pixel-identical (#1155).
+- **Timeline (grouped):** the event box has equal padding on all sides, the year heading has no line under it, and the date tile has no rings: the month sits in a 20px band in the inverse text color.
+
+### Deprecated
+- The `timeline-grouped-heading-rule-*` and `timeline-grouped-date-ring-*` tokens and `size-section-rule` are no longer drawn. They keep working and are removed in 2.0.0.
+
+### Fixed
+- Light mode: the grouped Timeline's watermark year (`--plx-sys-content-decorative`) is gray-250 (#dcddde). It was gray-200, the same color as the new page background, so it could not be seen (#1160).
+
+### Known issue
+- Arabic pages show the compact Timeline's "Upcoming" tag (`timeline.tagUpcoming`) in English until the owner approves its Arabic word (#1171, D-0012). It ships in 1.6.1 (D-0153).
+
 ## [1.5.0] - 2026-11-09
 
 ### Upgrading from 1.4.0

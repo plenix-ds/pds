@@ -348,7 +348,14 @@ export const findingKey = (x) => `${x.rule} | ${x.file} | ${x.message}`;
 export const NON_BLOCKING = new Set(['missing-ar']);
 // G6, the release gate (#902): a release fails on any of these, old or new. unused-key and jsx-literal are reported only.
 export const RELEASE_BLOCKING = new Set(['missing-en', 'missing-ar', 'unapproved-ar', 'placeholder', 'plural-forms', 'duplicate-key', 'catalog']);
-export const g6 = (findings) => findings.filter((x) => RELEASE_BLOCKING.has(x.rule));
+export const g6 = (findings, exceptions = [], version = null) => findings.filter((x) => RELEASE_BLOCKING.has(x.rule) && !excuses(exceptions, version, x));
+// G6 exceptions (D-0153): a recorded ruling may let ONE release ship with a named key's Arabic missing (it shows in
+// English). Only missing-ar, only for the version named, only with a decision; unapproved Arabic is never excused
+// (D-0012). An exception for another version is ignored, so the next release fails until the word lands.
+export const EXCEPTIONS_FILE = 'tools/checks/locale/g6-exceptions.json';
+export const excuses = (exceptions, version, x) => x.rule === 'missing-ar' && !!version
+  && exceptions.some((e) => e.rule === 'missing-ar' && e.version === version && /^D-\d{4}$/.test(e.decision || '') && x.message.startsWith(`${e.key}: `));
+export const g6Excused = (findings, exceptions = [], version = null) => findings.filter((x) => RELEASE_BLOCKING.has(x.rule) && excuses(exceptions, version, x));
 export function newFindings(base, head) {
   const left = new Map();
   for (const x of base) left.set(findingKey(x), (left.get(findingKey(x)) || 0) + 1);
@@ -374,13 +381,20 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     else console.error(`locale: ${x.rule}: ${where(x)} ${x.message}`);
   }
   if (added.length > 300) console.error(`locale: … and ${added.length - 300} more`);
-  const gate = g6(head);
+  const exFile = path.join(ROOT, EXCEPTIONS_FILE);
+  const exceptions = fs.existsSync(exFile) ? JSON.parse(fs.readFileSync(exFile, 'utf8')).exceptions || [] : [];
+  const version = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8')).version;
+  const gate = g6(head, exceptions, version), excused = g6Excused(head, exceptions, version);
+  for (const x of excused) {
+    const e = exceptions.find((y) => x.message.startsWith(`${y.key}: `));
+    console.log(`G6 exception (${e.decision}, ${version} only): ${x.rule}: ${where(x)} ${x.message}`);
+  }
   if (release) for (const x of gate.slice(0, 300)) {
     if (process.env.GITHUB_ACTIONS) console.log(`::error file=${x.file}${x.line ? `,line=${x.line}` : ''},title=G6: ${x.rule}::${x.message}`);
     else console.error(`G6: ${x.rule}: ${where(x)} ${x.message}`);
   }
   console.log(`locale: ${head.length} findings (${byRule(head)})` + (base ? `; ${added.length} new (${byRule(added)})` : '')
-    + `; G6 release state: ${gate.length ? `FAIL (${gate.length}: ${byRule(gate)})` : 'PASS'}`);
+    + `; G6 release state: ${gate.length ? `FAIL (${gate.length}: ${byRule(gate)})` : 'PASS'}` + (excused.length ? ` (${excused.length} excused by a recorded exception)` : ''));
   if (release && process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `### G6 language gate\n\n${gate.length ? '❌ FAIL: ' + byRule(gate) : '✅ PASS: every word a part reads is in English and in approved Arabic'}\n`);
   // --release: G6, any blocking finding fails; with a base ref: only new findings fail; alone: any finding fails
   process.exit(release ? (gate.length ? 1 : 0) : base ? (added.length ? 1 : 0) : head.length ? 1 : 0);
