@@ -162,7 +162,7 @@ selfupdate() {
 }
 
 nudge() {
-  local now last updated open win role sent=0 hb plan mode changed=1 text overdue rounds health wake_roles=" " sev_text=""
+  local now last updated open win role sent=0 hb plan mode changed=1 text overdue rounds health wh wake_roles=" " sev_text=""
   selfupdate
   schedule
   now=$(date -u +%FT%TZ); last=$(cat "$NUDGE_STAMP" 2>/dev/null || echo 1970-01-01T00:00:00Z)
@@ -180,6 +180,11 @@ nudge() {
   if [ "${overdue%% *}" != 0 ]; then rounds=$((rounds + 1)); else rounds=0; fi
   [ -n "${NUDGE_DRY:-}" ] || echo "$rounds" >"$NUDGE_OVERDUE"
   health="open S1/S2 with no response > ${OVERDUE_MIN} min: ${overdue} · rounds in a row: $rounds"
+  # the webhook forwarder (pds1-webhook) is the fast path to a stopped role; the event feed alone is lossy and hours late.
+  # A restart loop went unseen for 2 h (#1182), so its state is on the heartbeat and a dead one is logged every round.
+  wh=$(systemctl --user is-active pds1-webhook 2>/dev/null); wh=${wh:-unknown}
+  [ "$wh" = active ] || log "nudge: pds1-webhook is $wh: webhooks are not reaching pickup (#1182)"
+  health="$health · webhook: $wh"
   if [ "$mode" = quiet ]; then log "nudge: quiet (no activity since $last, no open PR, no open work)"; echo "$now" >"$NUDGE_STAMP"; heartbeat "$hb" "quiet round, no session woken" "$health"; return; fi
   tmux has-session -t $S 2>/dev/null || { log "nudge: team not running"; heartbeat "$hb" "the team session is not running" "$health"; return; }
   while read -r _ role _; do wake_roles+="$role "; done < <(grep '^work ' <<<"$plan")
