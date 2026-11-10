@@ -83,6 +83,7 @@ This file records the PDS design language as it is today (D-0004). It is a recor
 
 - Quiet, dense, work-focused UI for data-heavy applications. Fluent-style controls on near-white surfaces, with one blue accent.
 - **Buttons** and menu commands are Fluent 2 style (D-0023): 1px borders, 4px corners; filled primary in the accent colour, outlined secondary, ghost for toolbars.
+- **Menus open toward the start** (#1248): a menu from a trigger (⋮, More, a row menu, a caret button) aligns its end edge with the trigger's end edge (`bottom-end`), so it extends toward the start, and it flips only when there is no room. MenuBar top-level menus, field pickers and Popover stay start-aligned. RTL mirrors.
 - **No icon in a box** (D-0024). By default an icon is never drawn on its own tinted tile; a box stays only where a specific usage calls for it.
 - **Footers have no fill** (D-0102, #948). Save and Cancel sit at the end, on the surface of the card, form or dialog that holds them, never on a grey band. A hairline separates them only where content passes under or scrolls behind them (a sticky bar, a dialog whose body scrolls). Details: `docs/pds1/slices/948/design.md`.
 - **No action links.** An action is a Button, never a text link. Links only navigate.
