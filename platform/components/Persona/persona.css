@@ -3,9 +3,9 @@
 .plx-persona{align-items:center;display:flex;min-inline-size:0;}
 .plx-persona__text{display:flex;flex-direction:column;min-inline-size:0;}
 .plx-persona__primary{align-items:center;column-gap:var(--plx-comp-persona-role-gap);display:flex;min-inline-size:0;}
-.plx-persona .plx-persona__name{color:var(--plx-comp-persona-name-color);font-weight:var(--plx-comp-persona-name-font-weight);line-height:var(--plx-comp-persona-line-height);min-inline-size:0;overflow-x:hidden;overflow-y:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.plx-persona .plx-persona__name{unicode-bidi:plaintext;color:var(--plx-comp-persona-name-color);font-weight:var(--plx-comp-persona-name-font-weight);line-height:var(--plx-comp-persona-line-height);min-inline-size:0;overflow-x:hidden;overflow-y:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .plx-persona__role{flex-shrink:0;}
-.plx-persona__secondary{color:var(--plx-comp-persona-secondary-color);line-height:var(--plx-comp-persona-line-height);min-inline-size:0;overflow-x:hidden;overflow-y:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.plx-persona__secondary{unicode-bidi:plaintext;color:var(--plx-comp-persona-secondary-color);line-height:var(--plx-comp-persona-line-height);min-inline-size:0;overflow-x:hidden;overflow-y:hidden;text-overflow:ellipsis;white-space:nowrap;}
 /* sizes: the gap after the avatar and the two text sizes */
 .plx-persona--xs{column-gap:var(--plx-comp-persona-xs-gap);}
 .plx-persona--xs .plx-persona__name{font-size:var(--plx-comp-persona-xs-name-font-size);}
