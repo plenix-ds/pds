@@ -7,7 +7,7 @@
     "inline-edit-read-border-width": { "$value": "{plx-comp.input-border-width}", "$type": "dimension", "$description": "InlineEdit read view: the text field's border width." },
     "inline-edit-read-radius": { "$value": "{plx-comp.input-radius}", "$type": "dimension", "$description": "InlineEdit read view: the text field's corners." },
     "inline-edit-read-text": { "$value": "{plx-comp.input-text}", "$type": "color", "$description": "InlineEdit read view: the value's color (the field's text)." },
-    "inline-edit-read-empty-text": { "$value": "{plx-comp.input-placeholder-text}", "$type": "color", "$description": "InlineEdit read view: the prompt shown for an empty value (the placeholder's color)." },
+    "inline-edit-read-empty-text": { "$value": "{plx-sys.content-muted}", "$type": "color", "$description": "InlineEdit read view: the prompt shown for an empty value. It sits on the page, not in a white field, so it is content-muted (5.86:1 on the gray-200 canvas), not the placeholder gray (4.20:1; #1160)." },
     "inline-edit-read-font-family": { "$value": "{plx-comp.input-font-family}", "$type": "fontFamily", "$description": "InlineEdit read view: the text field's font." },
     "inline-edit-read-data-font-family": { "$value": "{plx-sys.font-data}", "$type": "fontFamily", "$description": "InlineEdit read view with data: a technical value, in the data font." },
     "inline-edit-read-font-size": { "$value": "{plx-comp.input-font-size}", "$type": "dimension", "$description": "InlineEdit read view: the text field's size." },

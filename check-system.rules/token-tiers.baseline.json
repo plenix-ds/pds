@@ -562,7 +562,6 @@
   "plx-comp.inline-edit-error-text -> plx-comp.field-error-text",
   "plx-comp.inline-edit-max-width -> plx-comp.input-max-width",
   "plx-comp.inline-edit-read-border-width -> plx-comp.input-border-width",
-  "plx-comp.inline-edit-read-empty-text -> plx-comp.input-placeholder-text",
   "plx-comp.inline-edit-read-font-family -> plx-comp.input-font-family",
   "plx-comp.inline-edit-read-font-size -> plx-comp.input-font-size",
   "plx-comp.inline-edit-read-line-height -> plx-comp.input-line-height",
