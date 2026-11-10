@@ -1,7 +1,7 @@
 /* Plenix tests · #1208 (B2 of #1201, ADR 0052): a page without a bundler loads one screen's parts through plenix-loader.js, and only those.
    Summary: a page loads the vendored React, plenix.css and plenix-loader.js from a built /cdn/<v>/ folder, calls Plenix.load(['DataGrid', 'Dialog', 'Button', 'ThemeProvider']),
      then renders a DataGrid with 50 rows from window.Plenix. The JavaScript it fetched is measured against the all-in-one plenix.js.
-   Checks (headless Chrome): AC-1 the grid renders its rows with no page error; AC-2 plenix.js is never fetched and every Plenix module comes from esm/; AC-3 the JavaScript fetched
+   Checks (headless Chrome): AC-1 the grid renders its rows with no page error; AC-2 plenix.js is never fetched and DataGrid comes from esm/ (its chunk); AC-3 the JavaScript fetched
      (React apart, brotli 5 as the web host sends it) is less than plenix.js; AC-4 Plenix.load of a loaded name resolves at once with no new request, and an unknown name rejects
      with its name; AC-5 the import map resolves React to the vendor ES modules over the page's one React; AC-6 CTM's first page (#1293) loads at most 30 Plenix
      files and fewer bytes than plenix.js, and the ready times of both ways are printed.
@@ -78,7 +78,8 @@ window.__ready = Plenix.load(${JSON.stringify(PARTS)}).then(function () {
     const js = fetched.filter((f) => f.endsWith('.js'));
     await check('AC-2 no plenix.js; modules from esm/', async () => {
       assert.ok(!js.some((f) => /\/plenix(\.esm)?\.js$/.test(f)), 'plenix.js was fetched');
-      assert.ok(js.some((f) => f.endsWith('/esm/DataGrid.js')), 'esm/DataGrid.js was not fetched');
+      // Plenix.load imports a part's chunk (the manifest's chunk), so DataGrid comes from esm/chunks/ (#1293)
+      assert.ok(js.some((f) => /\/esm\/(DataGrid\.js|chunks\/grid-[\w-]+\.js)$/.test(f)), 'DataGrid did not come from esm/');
     });
     const plenixFiles = [...new Set(js.filter((f) => !/\/vendor\/react(-dom)?\.production\.min\.js$/.test(f)))];
     const bytes = plenixFiles.reduce((a, f) => a + br(fs.readFileSync(path.join(CDN, f.slice(('/cdn/' + VERSION + '/').length)))), 0);

@@ -74,5 +74,7 @@
       return Promise.all(list.map(function (n) { return one(n, all); }));
     }).then(function () {});
   };
+  // the manifest is fetched now, while the page goes on parsing, so the first Plenix.load does not wait for it
+  manifest().catch(function () {});
   Plenix.loaderVersion = '__PLENIX_VERSION__';
 })();
