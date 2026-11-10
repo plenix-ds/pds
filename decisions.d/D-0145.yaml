@@ -1,0 +1,9 @@
+id: D-0145
+date: 2026-11-10
+area: design
+decided_by: owner (CTM owner, chat, 2026-11-10, each choice approved; relayed by CTM3 - PM on #1152)
+decision: 'The grouped Timeline gets a compact look (proposed density="compact"; G3 may rename) for CTM Key Dates: year heading with no rule and no watermark; one tinted, 1px category-bordered box per event (dashed when upcoming, Pending when undated); inline-start padding equal to block padding; one line per event (semibold category-colored title, muted description with an ellipsis, category tag at the inline end, "· upcoming" when upcoming); a date tile without rings, a category-colored band with the month in white bold and the day large below, about 40px compact and 56px standard; a readable maximum width aligned to the start. Tokens only, light and dark, RTL.'
+why: 'The CTM owner approved this design for Key Dates (CTM#239) and wants it in Plenix first so CTM uses it from the CDN with no CTM CSS (D-0121).'
+options: ['a compact look of the grouped Timeline (chosen)', 'a separate KeyDates component']
+status: active
+check: 'tests for #1152 AC-1..AC-7 (docs/pds1/slices/1152/brief.md); G2 against the approved picture; G3 API diff on the build PR'
