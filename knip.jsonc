@@ -37,6 +37,8 @@
     // loaded by script tags in pages
     "platform/dev/*.js",
     "platform/providers/theme-boot.js",
+    // the CDN loader (ADR 0052, issue 1208): copied verbatim by build-packages.js and loaded by a plain <script>, so nothing imports it
+    "platform/loader/plenix-loader.js",
     // loaded by script tags in pages; check-system.rules/icon-names.js reads it
     "suite/plenix-app-data.js",
     "suite/settings-data.js",

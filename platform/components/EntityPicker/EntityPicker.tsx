@@ -45,6 +45,7 @@
      The picture in each suggestion is decorative: the name and the detail are the option's text.
      For a few known choices use Select; for anything that is not a record, Combobox.
 */
+import { dataWhenText } from '../../utils/dataText.tsx';
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
 import { Tag } from '../Tag/Tag.tsx';
@@ -212,7 +213,7 @@ export const EntityPicker = React.forwardRef<HTMLInputElement | null, EntityPick
                   <span className="plx-entity-picker__name">{it.o.label}</span>
                   {it.o.description ? <span className="plx-entity-picker__description">{it.o.description}</span> : null}
                 </span>
-                {it.o.meta !== undefined && it.o.meta !== null ? <span className="plx-entity-picker__meta">{it.o.meta}</span> : null}
+                {it.o.meta !== undefined && it.o.meta !== null ? <span className="plx-entity-picker__meta">{dataWhenText(it.o.meta)}</span> : null}
                 {chosen.indexOf(it.o.value) >= 0 ? <span className="plx-entity-picker__check" aria-hidden="true"><Icon name={CheckIcon} /></span> : null}
               </li>)}
         </ul>

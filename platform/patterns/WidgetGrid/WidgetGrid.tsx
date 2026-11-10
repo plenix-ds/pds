@@ -11,6 +11,8 @@
      onReorder(ids): runs with the new order after a drop or a key move; without it the grid cannot be reordered
      label: the accessible name of the grid
      columns: "auto" (default; as many as fit) | 2 | 3 | 4
+     itemSize: "md" (default; a column is at least 280px wide) | "sm" (at least 200px, at most 6 columns: 5 to 6 compact cards, such as person cards, in a row from 1366 to 1920px; ADR 0056);
+       columns still wins when it is set
      className: more classes on the grid
      strings: the words it announces, for other languages: { widget: "Widget", widgetLower: "widget", move: "Move {title}
        (arrow keys)", position: "{title}, position {index} of {total}", earlier: "Move earlier", later: "Move later",
@@ -64,11 +66,13 @@ export type WidgetGridProps<T extends Widget = Widget> = Omit<React.HTMLAttribut
   onReorder?(ids: (string | number)[]): void;
   label?: string;
   columns?: 'auto' | 2 | 3 | 4;
+  /** the smallest a column gets: "md" (default) or "sm" (smaller, at most 6 columns); `columns` wins */
+  itemSize?: 'md' | 'sm';
   strings?: Record<string, string>;
   className?: string;
 };
 export function WidgetGrid<T extends Widget = Widget>(props: WidgetGridProps<T>) {
-  const { items = [], renderItem, onReorder, label, columns = 'auto', strings, className, ...rest } = props as any;
+  const { items = [], renderItem, onReorder, label, columns = 'auto', itemSize = 'md', strings, className, ...rest } = props as any;
   const t: any = useStrings('widgetGrid', strings);
   const [dragging, setDragging] = React.useState<any>(null);
   const [over, setOver] = React.useState<any>(null);
@@ -81,7 +85,7 @@ export function WidgetGrid<T extends Widget = Widget>(props: WidgetGridProps<T>)
   };
   return (
     <>
-    <div className={cx('plx-widget-grid', 'plx-widget-grid--' + columns, className)} role="list" aria-label={label} {...rest}>
+    <div className={cx('plx-widget-grid', 'plx-widget-grid--' + columns, columns === 'auto' && itemSize === 'sm' && 'plx-widget-grid--item-sm', className)} role="list" aria-label={label} {...rest}>
       {items.map((it: any, i: any) => (
         <div key={it.id} role="listitem" className={cx('plx-widget-grid__item', it.span === '2' && 'plx-widget-grid__item--wide', dragging === it.id && 'is-dragging', over === it.id && dragging !== it.id && 'is-drop-target')}
           onDragOver={onReorder ? (e) => { e.preventDefault(); setOver(it.id); } : undefined}

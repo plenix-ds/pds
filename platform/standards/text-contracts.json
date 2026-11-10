@@ -683,10 +683,15 @@
   "plx-code-block__title": {
    "contract": "establishes",
    "role": "secondary",
-   "font": "mono",
+   "font": "sans",
    "adjusts": [
     "font-size"
    ]
+  },
+  "plx-code-block__title--path": {
+   "contract": "establishes",
+   "role": "secondary",
+   "font": "mono"
   },
   "plx-code-editor__gutter": {
    "contract": "establishes",
@@ -926,18 +931,23 @@
    ]
   },
   "plx-count--pill": {
-   "contract": "adjusts",
-   "props": [
-    "font-size",
+   "contract": "establishes",
+   "role": "secondary",
+   "font": "mono",
+   "adjusts": [
     "font-weight",
     "line-height"
    ]
   },
+  "plx-count": {
+   "contract": "follows",
+   "font": "mono",
+   "size": true
+  },
   "plx-count--plain": {
-   "contract": "adjusts",
-   "props": [
-    "font-size"
-   ]
+   "contract": "follows",
+   "font": "mono",
+   "size": true
   },
   "plx-data-grid__cell--name": {
    "contract": "adjusts",
@@ -1358,9 +1368,12 @@
    ]
   },
   "plx-entity-picker__meta": {
-   "contract": "follows",
-   "font": "mono",
-   "size": true
+   "contract": "establishes",
+   "role": "caption",
+   "font": "sans",
+   "adjusts": [
+    "font-size"
+   ]
   },
   "plx-entity-picker__name": {
    "contract": "adjusts",
@@ -1843,7 +1856,7 @@
   "plx-media-card__meta": {
    "contract": "establishes",
    "role": "caption",
-   "font": "mono",
+   "font": "sans",
    "adjusts": [
     "font-size"
    ]
@@ -1862,14 +1875,20 @@
    ]
   },
   "plx-media-viewer__counter": {
-   "contract": "follows",
-   "font": "mono",
-   "size": true
+   "contract": "establishes",
+   "role": "caption",
+   "font": "sans",
+   "adjusts": [
+    "font-size"
+   ]
   },
   "plx-media-viewer__meta": {
-   "contract": "follows",
-   "font": "mono",
-   "size": true
+   "contract": "establishes",
+   "role": "caption",
+   "font": "sans",
+   "adjusts": [
+    "font-size"
+   ]
   },
   "plx-media-viewer__title": {
    "contract": "adjusts",
@@ -1965,6 +1984,35 @@
    "contract": "follows",
    "font": "mono",
    "size": true
+  },
+  "plx-metric-card__person-name": {
+   "contract": "establishes",
+   "role": "heading",
+   "font": "sans"
+  },
+  "plx-metric-card__person-number": {
+   "contract": "establishes",
+   "role": "title",
+   "font": "mono",
+   "adjusts": [
+    "font-weight",
+    "line-height"
+   ]
+  },
+  "plx-metric-card__person-role": {
+   "contract": "establishes",
+   "role": "secondary",
+   "font": "sans"
+  },
+  "plx-metric-card__person-target": {
+   "contract": "follows",
+   "font": "mono",
+   "size": true
+  },
+  "plx-metric-card__person-unit": {
+   "contract": "establishes",
+   "role": "eyebrow",
+   "font": "sans"
   },
   "plx-metric-card__rank": {
    "contract": "follows",
@@ -3353,7 +3401,7 @@
   "plx-tree__meta": {
    "contract": "establishes",
    "role": "caption",
-   "font": "mono",
+   "font": "sans",
    "adjusts": [
     "font-size"
    ]
@@ -3446,10 +3494,15 @@
   "plx-version-compare__line": {
    "contract": "establishes",
    "role": "secondary",
-   "font": "mono",
+   "font": "sans",
    "adjusts": [
     "line-height"
    ]
+  },
+  "plx-version-compare__line--code": {
+   "contract": "establishes",
+   "role": "secondary",
+   "font": "mono"
   },
   "plx-version-compare__summary": {
    "contract": "adjusts",

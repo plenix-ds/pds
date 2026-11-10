@@ -769,5 +769,15 @@
     "loading": "n/a(a DateBadge shows a known day; the grid or list owns loading)",
     "error": "n/a(a DateBadge has no value to validate)",
     "selected": "n/a(a DateBadge has no selection; today is marked with the action color (the today story), not a selected state)"
+  },
+  "Count": {
+    "default": "n/a(a Count is static text; its look is the plain or pill form (docs/site/stories/Count.stories.tsx: Default, Pill, Info))",
+    "hover": "n/a(a Count is not interactive; a Count inside a link or button takes that control's hover)",
+    "focus": "n/a(a Count is not focusable; the enclosing control draws focus)",
+    "active": "n/a(a Count is static; the enclosing control owns pressed)",
+    "disabled": "n/a(a Count has no disabled state; it shows a number)",
+    "loading": "n/a(a Count shows a loaded number; the list or tab owns loading)",
+    "error": "n/a(a Count has no value to validate)",
+    "selected": "n/a(a Count has no selection; the item or tab that holds it owns selected)"
   }
 }
