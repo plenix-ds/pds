@@ -3,7 +3,7 @@
 - **Status:** accepted
 - **Date:** 2026-11-10
 - **Deciders:** pds1-ds-architect (G3), on the owner's rule (chat, 2026-11-10, #1233, D-0164), which builds on D-0006 (DM Sans for text, Reddit Mono for numbers; its check `planned:lint-type-roles` was never built).
-- **Issue:** #1233 (S2). The design audit (G2, `docs/pds1/slices/1233/audit.md`) decides each role. This entry owns the token names and the check.
+- **Issue:** #1232 (S2; #1233 closed as its duplicate). Audit: `docs/pds1/slices/1232/audit.md` (G2, PR #1236, D-0165). The design audit (G2, `docs/pds1/slices/1233/audit.md`) decides each role. This entry owns the token names and the check.
 
 ## Context
 
@@ -34,16 +34,29 @@
 - `chart-tick-label-font-family` stays the data font, for value-axis ticks (numbers, dates, times). Its description says so.
 - The engine reads the category role from a probe class `plx-chart__category-label`, the same way it reads the tick role today. Category axes (and the radar axis names, the TreeChart and Treemap names, the PieChart labels and the legend) use it.
 
+### VersionCompare and CodeBlock (audit items 13–14)
+
+- **`VersionCompare textKind?: "prose" | "code"`**, default `"prose"`.
+  - Prose lines use the text font through `version-compare-line-font-family` -> `{plx-sys.font-label}` (role text).
+  - `"code"` adds `plx-version-compare__line--code` and the new `version-compare-code-font-family` -> `{plx-sys.font-data}` (role data).
+  - MINOR, a visual change owner-asked (D-0164).
+- **CodeBlock `title`:** no prop. The title is in the data font only when it is a path or file name (it holds `/`, `\` or a `.ext`), and otherwise in the text font. The slot token goes to the text role, and the data run gets the data font.
+
 ### The check, `type-roles` (a style rule, `check-common.js` `STYLE_MODULES`)
 
 - **Every token whose key ends in `-font-family`,** in every tier and file, must appear in `type-roles.json` as `"data"` or `"text"`.
   - The check follows the token's references to a `typeface-*`: `typeface-mono` is the data font, and any other typeface is the text font.
   - A data role at the text font, or a text role at the data font, fails.
   - A token with no declared role fails, and so does a declared role whose token is gone.
-- **DataGrid kinds:** `data`, `id` and `code` must get the data cell class, and `name` must not.
+- **DataGrid kinds:** `data`, `id` and `code` must get the data cell class, and `name` and `text` must not.
+- **CSS pass** (audit §5): a rule with `tabular-nums` (a number laid out as a value) and no data-font family is a finding. The exceptions are named in the check with a reason: a heading, a button label, list markers, a decorative watermark, a step marker, grid cells (the `data` kind adds the font), EntityHeader facts (`dataText` picks each run) and the focus-order overlay.
+- **Chart pass:** the ECharts theme reads the category role (`plx-chart__category-label`) for category axes and names.
 - **Backlog** (`type-roles.baseline.json`): the breaks when the rule began, decided by the audit. It only shrinks, and a fixed entry must be removed (`--shrink`).
   - The DataGrid kinds `id` and `code`;
-  - `metric-value-font-family` and `metric-card-value-font-family`, which are amounts at the text font today.
+  - `metric-value-font-family` and `metric-card-value-font-family`, which are amounts at the text font today;
+  - the slots that are words but are Mono as a whole: Tree, EntityPicker, MediaCard and MediaViewer `meta`, the MediaViewer counter, the CodeBlock title, and VersionCompare lines (audit items 11–14);
+  - the CSS values in the text font: Calendar days, Count, DateBadge day, the Timeline tile day, Pagination info, and the Chat reaction count and voice time;
+  - the chart engine's category role (the owner's BarChart report).
 - **The seed:** each token's current role, except the two metric values, which the owner's rule makes data. The audit corrects roles in `type-roles.json` by PR.
 
 ## Consequences

@@ -5,10 +5,14 @@
 //            fails, so a new font role is always decided. The token is followed through its references to a typeface: typeface-mono
 //            is the data font, any other typeface the text font. A data role at the text font, or a text role at the data font, fails.
 //            (A name can't say the role: "data-grid-font-family" is the grid's words, "text-mono-font-family" is the data role.)
-//   grid     DataGrid column kinds "data", "id" and "code" get the data cell class (engine/bodyRows.tsx); "name" never does.
+//   grid     DataGrid column kinds "data", "id" and "code" get the data cell class (engine/bodyRows.tsx); "name" and "text" never do.
+//   css      a rule with tabular-nums (a number laid out as data) and no data-font family is a finding, unless TABULAR_TEXT names its
+//            class (a heading, a button, a marker or a watermark keeps the text font with even digits; audit §5).
+//   chart    the ECharts theme (platform/charts/echarts/engine.ts) reads the category role (plx-chart__category-label) for the
+//            category axis and names, beside the tick role (plx-chart__tick-label) for values.
 // What breaks the rule when it began is the frozen backlog in type-roles.baseline.json (by token or kind, with the font it ends at). It only
 // shrinks: a break not listed fails, and a listed one that now passes fails until it is removed (node check-system.rules/type-roles.js --shrink).
-// The design audit (#1233, docs/pds1/slices/1233/audit.md) decides each backlog entry; fixing one is a PR that removes it here.
+// The design audit (#1232, docs/pds1/slices/1232/audit.md, D-0165) decides each backlog entry; fixing one is a PR that removes it here.
 // Alone: node check-system.rules/type-roles.js [--shrink]   -> TYPE_ROLES_OK, or the findings and exit 1
 const fs = require('fs');
 const path = require('path');
@@ -18,6 +22,19 @@ const ROOT = path.join(__dirname, '..');
 const TOKENS = path.join(ROOT, 'platform', 'tokens');
 const BASELINE = path.join(__dirname, 'type-roles.baseline.json');
 const ROLES = path.join(__dirname, 'type-roles.json');
+const ENGINE = 'platform/charts/echarts/engine.ts';
+// a rule with tabular-nums that keeps the text font on purpose (audit #1232 §5): the class and why
+const TABULAR_TEXT = {
+  'plx-timeline__year': 'a heading (the year), not a value',
+  'plx-timeline__watermark': 'decorative, not read',
+  'plx-progress-steps__marker': 'a step marker inside a circle, a label',
+  'plx-text--tabular': 'Text tabular: even digits in a sentence, the words stay text',
+  'plx-pagination__page': 'a page button: a button label stays text (audit #1232 item 10)',
+  'plx-data-grid__grid-cell': 'every cell, for aligned digits; a data kind adds the data font (grid-cell--data), a name stays text',
+  'plx-list--ordered': 'list markers (1. 2. 3.), not values',
+  'plx-entity-header__fact-value': 'a fact holds words or data; dataText puts each data run in the data font',
+  'plx-focus-order__number': 'a development overlay (the tab order), not part of a page',
+};
 const GRID = 'platform/components/DataGrid/engine/bodyRows.tsx';
 
 function walk(dir, out = []) {
@@ -67,7 +84,33 @@ function findings() {
   // the line that gives a cell the data class: (k.includes('data') || …) && B + '__grid-cell--data'
   const cond = (src.split('\n').find((l) => /&&\s*B \+ '__grid-cell--data'/.test(l)) || '');
   for (const kind of ['data', 'id', 'code']) if (!new RegExp("k\\.includes\\('" + kind + "'\\)").test(cond)) out.push({ id: 'DataGrid kind ' + kind, file: path.join(ROOT, GRID), why: 'a data kind without the data cell class', face: 'text' });
-  if (/k\.includes\('name'\)/.test(cond)) out.push({ id: 'DataGrid kind name', file: path.join(ROOT, GRID), why: 'the name kind with the data cell class', face: 'mono' });
+  for (const kind of ['name', 'text']) if (new RegExp("k\\.includes\\('" + kind + "'\\)").test(cond)) out.push({ id: 'DataGrid kind ' + kind, file: path.join(ROOT, GRID), why: 'a text kind with the data cell class', face: 'mono' });
+  // css: tabular-nums without the data font
+  const sheets = [];
+  (function css(dir) {
+    for (const n of fs.readdirSync(dir).sort()) {
+      const q = path.join(dir, n);
+      if (fs.statSync(q).isDirectory()) { if (!/^(dist|tokens|vendor|node_modules)$/.test(n)) css(q); }
+      else if (/\.css$/.test(n)) sheets.push(q);
+    }
+  })(path.join(ROOT, 'platform'));
+  for (const f of sheets) {
+    const text = fs.readFileSync(f, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+    for (const m of text.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+      const body = m[2];
+      if (!/font-variant-numeric:\s*tabular-nums/.test(body)) continue;
+      const fam = (body.match(/font-family:\s*var\((--plx-[a-z0-9-]+)\)/) || [])[1];
+      const famKey = fam && fam.replace(/^--plx-(comp|sys|ref)-/, (x, t) => 'plx-' + t + '.');
+      if (famKey && (roles[famKey] === 'data' || /font-data$|typeface-mono$/.test(famKey))) continue;
+      const sel = m[1].trim().split(',')[0].trim();
+      const cls = (sel.match(/\.(plx-[a-z0-9_-]+)/) || [])[1] || sel;
+      if (TABULAR_TEXT[cls]) continue;
+      out.push({ id: 'css ' + cls, file: f, why: 'tabular-nums (a value) without the data font', face: 'text' });
+    }
+  }
+  // chart: the engine reads the category role
+  const eng = (() => { try { return fs.readFileSync(path.join(ROOT, ENGINE), 'utf8'); } catch (e) { return ''; } })();
+  if (!/plx-chart__category-label/.test(eng)) out.push({ id: 'chart engine category role', file: path.join(ROOT, ENGINE), why: 'category axes and names read the tick (data) role, not plx-chart__category-label', face: 'mono' });
   return out;
 }
 function check({ add }) {
@@ -82,7 +125,7 @@ if (require.main === module) {
     const now = findings(), old = fs.existsSync(BASELINE) ? JSON.parse(fs.readFileSync(BASELINE, 'utf8')) : {};
     const keep = (process.argv.includes('--baseline') ? now : now.filter((f) => old.backlog && f.id in old.backlog)).filter((f) => !f.missing);
     const backlog = {}; keep.sort((a, b) => a.id.localeCompare(b.id)).forEach((f) => { backlog[f.id] = f.why; });
-    fs.writeFileSync(BASELINE, JSON.stringify({ $description: 'The type-roles backlog (check-system.rules/type-roles.js, ADR 0055): breaks of the data-font rule when it began. It only shrinks; the design audit (#1233) decides each one.', backlog }, null, 1) + '\n');
+    fs.writeFileSync(BASELINE, JSON.stringify({ $description: 'The type-roles backlog (check-system.rules/type-roles.js, ADR 0055): breaks of the data-font rule when it began. It only shrinks; the design audit (#1232, D-0165) decides each one.', backlog }, null, 1) + '\n');
     console.log('type-roles backlog: ' + Object.keys(backlog).length);
   } else {
     let n = 0; check({ add: (r, f, l, m) => { n++; console.log('  ' + path.relative(ROOT, f) + '  ' + m); } });
