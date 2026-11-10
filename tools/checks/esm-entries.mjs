@@ -5,7 +5,8 @@
 //     esm/manifest.json entry (CDN), or one of those holds a name that is no export;
 //   - a relative import in esm/ (static or a literal import()) names a file that is not there;
 //   - plenix-loader.js or a vendor/*.esm.js React module is missing;
-//   - a module in esm/ reads process.env (a bundler's name: a page without one has no process).
+//   - a module in esm/, or the whole-file plenix.esm.js, reads process.env (a bundler's name: a page without one has no
+//     process; #1274).
 import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
@@ -69,6 +70,10 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
       if (!fs.existsSync(to)) findings.push(`${path.relative(CDN, f)} imports ${s}, which is not there`);
     }
   }
+  // the whole-file module is imported without a bundler too (1.x, deprecated by ADR 0052; #1274)
+  const whole = path.join(CDN, 'plenix.esm.js');
+  if (!fs.existsSync(whole)) findings.push('plenix.esm.js is missing');
+  else for (const b of bundlerOnly(fs.readFileSync(whole, 'utf8'))) findings.push(`plenix.esm.js reads ${b}, which a page without a bundler does not have`);
   if (findings.length) { findings.slice(0, 40).forEach((x) => console.log('ESM_ENTRIES_FAIL: ' + x)); if (findings.length > 40) console.log(`… and ${findings.length - 40} more`); process.exit(1); }
   console.log(`ESM_ENTRIES_OK (${names.length} exports: npm parts and types, CDN esm/ and its manifest; ${files} modules, every relative import there)`);
 }
