@@ -1,0 +1,1 @@
+RTL_TRUNCATE_1281_OK (rtl-truncate-1281 passes; check-system, check-style below)
