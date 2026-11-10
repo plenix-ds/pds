@@ -1,4 +1,4 @@
-/* Plenix __PLENIX_VERSION__ · plenix-loader.js: load Plenix per screen, for a page without a bundler (ADR 0052, #1208).
+/* Plenix __PLENIX_VERSION__ · plenix-loader.js: load Plenix per screen, for a page without a bundler (ADR 0052, issue 1208).
    Load the version's React first, then this script, both as classic <script src> tags in <head>:
      <script src="https://design-system.lighthouseway.org/cdn/<v>/vendor/react.production.min.js"></script>
      <script src="https://design-system.lighthouseway.org/cdn/<v>/vendor/react-dom.production.min.js"></script>
