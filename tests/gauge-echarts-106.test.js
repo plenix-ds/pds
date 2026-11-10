@@ -55,9 +55,10 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
         assert.ok(Math.abs(dial.w - widths[size]) <= 4, T + name + ': the dial is as wide as its size (' + dial.w.toFixed(0) + ')');
         if (props.thresholds) assert.ok(out.length >= 3, T + name + ': the track, the fill and a threshold band are drawn (' + out.length + ' arcs)');
         // Show the data
-        await page.evaluate(() => { const b = [...document.querySelectorAll('.plx-gauge summary')].find((x) => /data/i.test(x.textContent)); if (b) b.click(); }); await wait(700);
-        const rows = await page.evaluate(() => document.querySelectorAll('.plx-gauge [role=row][data-plx-record], .plx-gauge table tbody tr').length);
+        await page.evaluate(() => { const b = [...document.querySelectorAll('.plx-gauge summary, button')].find((x) => /data/i.test(x.textContent)); if (b) b.click(); }); await wait(700);
+        const rows = await page.evaluate(() => document.querySelectorAll('.plx-gauge [role=row][data-plx-record], .plx-gauge table tbody tr, .plx-dialog [role=row][data-plx-record]').length);
         assert.equal(rows, 3 + (props.thresholds ? 2 : 0), T + name + ': "Show the data" lists the value, the ends and the thresholds (' + rows + ')');
+        await page.keyboard.press('Escape'); await wait(300);
       }
     }
     const bad = problems.filter((p) => !/Failed to load resource|net::|was fetched at run time/.test(p)); if (bad.length) console.log(bad);

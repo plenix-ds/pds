@@ -71,7 +71,7 @@ export { pieSlices } from './chart-helpers.ts';
 /** @public one part of the whole: its value above zero and an optional data-viz step (default by its order) */
 export type PieSlice = { id?: string | number; label: string; value: number; color?: string };
 /** @public the prop type (ADR 0011) */
-export type PieChartProps = Omit<Pick<ChartFrameProps, 'title' | 'description' | 'hideCaption' | 'size' | 'margin' | 'legend' | 'legendPosition' | 'className'>, 'legend'> & {
+export type PieChartProps = Omit<Pick<ChartFrameProps, 'title' | 'dataView' | 'description' | 'hideCaption' | 'size' | 'margin' | 'legend' | 'legendPosition' | 'className'>, 'legend'> & {
   data?: PieSlice[];
   variant?: 'pie' | 'donut' | 'half';
   centerValue?: React.ReactNode;
@@ -86,7 +86,7 @@ export type PieChartProps = Omit<Pick<ChartFrameProps, 'title' | 'description' |
   interactive?: boolean;
   strings?: Record<string, string>;
 };
-export function PieChart({ title, description, hideCaption, size, data = [], variant = 'pie', centerValue, centerLabel, sort = true, maxSlices = 6,
+export function PieChart({ title, description, dataView, hideCaption, size, data = [], variant = 'pie', centerValue, centerLabel, sort = true, maxSlices = 6,
   format, showValues = false, legend, legendPosition, tooltip = true, interactive = true, margin, strings, className }: PieChartProps) {
   const t: any = useStrings('chart.pieChart', strings);
   const v = VARIANTS.indexOf(variant) >= 0 ? variant : 'pie';
@@ -185,7 +185,7 @@ export function PieChart({ title, description, hideCaption, size, data = [], var
   };
 
   return (
-    <ChartFrame title={title} description={description} hideCaption={hideCaption} size={size} margin={NO_MARGIN} legend={key} legendPosition={legendPosition}
+    <ChartFrame title={title} dataView={dataView} description={description} hideCaption={hideCaption} size={size} margin={NO_MARGIN} legend={key} legendPosition={legendPosition}
       table={table} interaction={interactive ? ia : undefined} strings={strings} className={cx('plx-pie-chart', 'plx-pie-chart--' + v, className)}>
       {draw}
     </ChartFrame>

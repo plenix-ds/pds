@@ -82,13 +82,14 @@ const scales = load(path.join(ROOT, 'platform', 'charts', 'scales.ts'));
         document.getElementById('main').innerHTML = '<div id="c"></div>';
         const tableOf = (id) => { const el = document.getElementById(id); const t = el && el.querySelector('.plx-chart__data'); return t ? t.textContent : ''; };
         ReactDOM.createRoot(document.getElementById('c')).render(h('div', null,
-          h('div', { id: 'gantt' }, h(P.GanttChart, { title: 'Plan', tasks: [{ id: 'a', label: 'Design', start: DAY, end: '2026-10-20' }] })),
-          h('div', { id: 'heat' }, h(P.HeatMap, { variant: 'calendar', title: 'Edits', data: [{ date: DAY, value: 5 }] })),
-          h('div', { id: 'line' }, h(P.LineChart, { title: 'Uploads', x: 'day', xType: 'time', series: [{ id: 'n', label: 'Uploads' }], data: [{ day: DAY, n: 3 }, { day: '2026-10-19', n: 4 }] })),
-          h('div', { id: 'timeline' }, h(P.TimelineChart, { title: 'Events', items: [{ id: 'x', label: 'Launch', start: DAY }] })),
+          h('div', { id: 'gantt' }, h(P.GanttChart, { title: 'Plan', dataView: 'inline', tasks: [{ id: 'a', label: 'Design', start: DAY, end: '2026-10-20' }] })),
+          h('div', { id: 'heat' }, h(P.HeatMap, { variant: 'calendar', title: 'Edits', dataView: 'inline', data: [{ date: DAY, value: 5 }] })),
+          h('div', { id: 'line' }, h(P.LineChart, { title: 'Uploads', dataView: 'inline', x: 'day', xType: 'time', series: [{ id: 'n', label: 'Uploads' }], data: [{ day: DAY, n: 3 }, { day: '2026-10-19', n: 4 }] })),
+          h('div', { id: 'timeline' }, h(P.TimelineChart, { title: 'Events', dataView: 'inline', items: [{ id: 'x', label: 'Launch', start: DAY }] })),
           h('div', { id: 'time' }, h(P.Time, { value: DAY, format: 'date' })),
           h('div', { id: 'pick' }, h(P.DatePicker, { label: 'Day', value: DAY, onChange: () => {} }))));
         await new Promise((r) => setTimeout(r, 1500));
+        document.querySelectorAll('.plx-chart__data summary').forEach((s) => s.click()); await new Promise((r) => setTimeout(r, 600));
         const pick = document.querySelector('#pick input');
         return { gantt: tableOf('gantt'), heat: tableOf('heat'), line: tableOf('line'), timeline: tableOf('timeline'),
           time: (document.querySelector('#time time') || {}).textContent || '', timeAttr: (document.querySelector('#time time') || { getAttribute: () => '' }).getAttribute('datetime'),

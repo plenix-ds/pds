@@ -2265,6 +2265,16 @@
       "$value": "{plx-sys.feedback-info-solid}",
       "$type": "color"
     },
+    "loading-state-gap": {
+      "$value": "{plx-sys.space-stack-sm}",
+      "$type": "dimension",
+      "$description": "LoadingState from the long wait: the space between the label row, the second line and Cancel (ADR 0051, design 1194)."
+    },
+    "loading-state-slow-text": {
+      "$value": "{plx-sys.content-muted}",
+      "$type": "color",
+      "$description": "LoadingState from the long wait: the second line (\"This is taking longer than usual.\"), the muted text color (ADR 0051)."
+    },
     "spinner-label-gap": {
       "$value": "{plx-sys.space-inline-sm}",
       "$type": "dimension",

@@ -60,6 +60,8 @@ const twoLines = (s: any) => {
 export type FunnelStage = { label: string; value: number };
 /** @public the prop type (ADR 0011) */
 export type FunnelChartProps = {
+  /** how the data table shows: a Dialog (default) or inline under the chart (ADR 0054) */
+  dataView?: 'dialog' | 'inline';
   title: string;
   description?: string;
   data?: FunnelStage[];
@@ -72,7 +74,7 @@ export type FunnelChartProps = {
   strings?: Record<string, string>;
   className?: string;
 };
-export function FunnelChart({ title, description, data = [], orientation = 'vertical', color, format, valueTitle, size = 'md', strings, className }: FunnelChartProps) {
+export function FunnelChart({ title, description, dataView, data = [], orientation = 'vertical', color, format, valueTitle, size = 'md', strings, className }: FunnelChartProps) {
   const t: any = useStrings('chart.funnelChart', strings);
   const o = orientation === 'horizontal' ? 'horizontal' : 'vertical';
   const vertical = o === 'vertical';
@@ -140,7 +142,7 @@ export function FunnelChart({ title, description, data = [], orientation = 'vert
   };
 
   return (
-    <ChartFrame interaction={keys.interaction} title={title} description={description} size={size} margin={NO_MARGIN} table={table} className={cx('plx-funnel', 'plx-funnel--' + o, className)}>
+    <ChartFrame interaction={keys.interaction} title={title} dataView={dataView} description={description} size={size} margin={NO_MARGIN} table={table} className={cx('plx-funnel', 'plx-funnel--' + o, className)}>
       {draw}
     </ChartFrame>
   );

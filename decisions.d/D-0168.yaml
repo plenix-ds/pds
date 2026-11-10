@@ -1,0 +1,9 @@
+id: D-0168
+date: 2026-11-10
+area: design
+decided_by: owner (chat, 2026-11-10, "why is the nav so wide???" then "the navs should have a standard fixed with taht can be resized!!")
+decision: 'Nav panes (NavPane and SecondaryPane used as navigation) have one standard fixed width that does not change with the window or the frame (the window-based wide and ultrawide steps are removed for them); the person can resize them by dragging the edge or with the arrow keys between min and max tokens, the width is remembered per person, and a double-click resets it; collapse to the rail stays (#1243).'
+why: 'The panes grew with the window, up to 320px each inside the 1366 frame, far wider than their labels.'
+options: ['standard fixed width plus user resize (owner)', 'widths that step with the window (before)']
+status: active
+check: 'tests on #1243 (width equals the standard token at 1366 and 1920; drag and arrow keys within min and max; persists; double-click resets)'
