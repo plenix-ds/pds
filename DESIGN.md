@@ -249,6 +249,10 @@ A named variation sets a whole agreed look with one prop, so an app never gets h
 - Palettes: categorical 1 to 6, sequential 1 to 7, diverging 1 to 7, and status colours.
 - Axis and label text uses `dataviz-label` at 12px or more. Numbers on axes and in tooltips use `tabular-nums`.
 
+### Metric cards
+
+- **Person card** (`type="person"`, D-0167, #1240): a 48px Avatar beside the name (up to 2 lines) and the role (`content-muted`), an inset divider, then the value row at the inline end. The number is Reddit Mono, 20px, 700; the unit is a small uppercase label in `content-muted`. A word value ("Hidden") takes the unit's style. The card is about 121px tall, with one size and no density.
+
 ### Timeline, grouped (D-0115, D-0117, #987; D-0145, D-0148, #1152)
 
 - A variation of `Timeline`, not a new component. Events are grouped by year, latest first (the order is a prop).

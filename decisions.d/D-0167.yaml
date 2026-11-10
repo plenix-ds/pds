@@ -1,0 +1,9 @@
+id: D-0167
+date: 2026-11-10
+area: design
+decided_by: design-director (reading of the owner's "an adjustment to our cards", D-0166, #1240)
+decision: 'MetricCard type="person" is the compact person card by default in 1.7.0: Avatar xl (48px) beside the name (2 lines) and role, an inset divider, and the value row at the inline end (number font-data 20px 700, unit text-eyebrow content-muted); a word value shows in the unit style; one size, no density (docs/pds1/slices/1240/design.md).'
+options: ['A: the new default for type person; a word value in the unit style (chosen)', 'B: an opt-in layout="compact" until 2.0.0; a word value at the value size']
+why: 'The owner asked for an adjustment to the cards, not an option; owner-asked default changes ship as MINOR with a changelog note (ADR 0054); a word such as "Hidden" is a status, and the data font never sets words (D-0164).'
+status: active
+check: 'planned:tests on 1240 (48px avatar beside the name, card height <= 124px, number Reddit Mono and unit DM Sans, value row at the inline end in LTR and RTL, name clamp, empty and word values)'
