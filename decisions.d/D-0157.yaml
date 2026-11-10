@@ -1,0 +1,9 @@
+id: D-0157
+date: 2026-11-10
+area: release
+decided_by: agent (pds1-release-architect) on the PM's ask in #1188 ("add brotli, and a perf budget check"), owner may switch
+decision: 'Performance budgets (#1188): the largest CSS scope that reaches elements other than :root may declare at most 5,563 custom properties (the 1.6.1 count; lowered as the DS Architect narrows the density scope), and plenix.js may weigh at most 570,000 B with brotli quality 5 (1.6.1: 552,947 B). The total size of plenix.css is printed, never limited, as the owner ruled in plenix-platform#460 (2026-10-28: remove the stylesheet''s growth limit while its size is investigated). The web host sends brotli quality 5, else gzip level 6, compressed on the fly, so no published CDN folder changes.'
+options: ['scope-token and plenix.js budgets; CSS size printed only, per the owner''s #460 ruling (chosen)', 'also limit the total size of plenix.css (would reverse the owner''s #460 ruling)', 'pre-compressed .br files in each CDN folder (smaller, but adds files to published versions)']
+why: 'The scope count is the measured cause of slow style recalculation on grids; a limit stops it growing back. A plenix.js wire-size limit catches growth per PR, as the one-part budgets do (#1144). The owner removed the CSS growth limit himself, so an agent does not put it back.'
+status: active
+check: 'tools/checks/perf-budget.mjs (CI job "Bundle budgets", the release dry run and deploy.sh), limits in tools/checks/perf-budget.json; deploy/web/enable-compression.sh checks the brotli, gzip and plain answers'

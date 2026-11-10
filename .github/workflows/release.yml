@@ -112,6 +112,9 @@ jobs:
       - name: Bundle-size budgets
         run: node check-bundle.js
 
+      - name: Performance budgets (#1188)
+        run: node tools/checks/perf-budget.mjs
+
       - name: Vendored engine budget, ECharts at most 230 KB gzipped (past it, split into a shared core plus kind files; #106)
         run: |
           f=platform/vendor/echarts/echarts.min.js
