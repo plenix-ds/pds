@@ -61,6 +61,13 @@ export function ActionBar({ label, sticky = true, className, children }: ActionB
   const tc: any = useStrings('commandBar');
   const ref = React.useRef<any>(null);
   const phone = useMedia(below('--plx-sys-fit-footer-stack-width'));
+  // a sticky bar marks the page (:root) so it keeps focused content clear of the bar; a :has() on :root would re-check on every DOM change (issue 1235)
+  React.useEffect(() => {
+    if (!sticky) return undefined;
+    const root = document.documentElement, n = Number(root.getAttribute('data-plx-action-bars') || 0) + 1;
+    root.setAttribute('data-plx-action-bars', String(n)); root.classList.add('plx-root-action-bar');
+    return () => { const left = Number(root.getAttribute('data-plx-action-bars') || 1) - 1; if (left <= 0) { root.removeAttribute('data-plx-action-bars'); root.classList.remove('plx-root-action-bar'); } else root.setAttribute('data-plx-action-bars', String(left)); };
+  }, [sticky]);
   const acts = collect(children, []);
   const foldable = acts.filter((a: any) => !a.primary);
   // the key holds the phone state: a bar measured while the window was a phone starts again when the window grows back. The button that folds last never folds on its own

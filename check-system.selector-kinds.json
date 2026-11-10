@@ -849,7 +849,7 @@
    "combinator | .plx-nav-pane__title .ds-platform-select": 1
   },
   "platform/patterns/ActionBar/action-bar.css": {
-   "relational | :where(:root, .plx-app-shell__main, .plx-page-content, .plx-settings__content, .plx-side-panel__body, .plx-secondary-pane__body, .plx-u-overflow-y-auto):has(.plx-action-bar:not(.plx-action-bar--static))": 1
+   "relational | :where(.plx-app-shell__main, .plx-page-content, .plx-settings__content, .plx-side-panel__body, .plx-secondary-pane__body, .plx-u-overflow-y-auto):has(.plx-action-bar:not(.plx-action-bar--static))": 1
   },
   "platform/patterns/ActivityList/activity-list.css": {
    "relational | .plx-activity-list__item.is-interactive:has(.plx-activity-list__opener:focus-visible)": 1,
