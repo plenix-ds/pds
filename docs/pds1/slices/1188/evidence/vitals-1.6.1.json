@@ -1,0 +1,35 @@
+{
+  "base": "https://design-system.lighthouseway.org/cdn/1.6.1",
+  "mode": "light",
+  "runs": 5,
+  "budget": {
+    "lcp": 2500,
+    "inp": 200
+  },
+  "pages": {
+    "grid": {
+      "lcp": 144,
+      "inp": 16,
+      "recalcMs": 66.915,
+      "recalcCount": 28,
+      "clickRecalcMs": 8.277999999999993,
+      "pass": true
+    },
+    "record": {
+      "lcp": 52,
+      "inp": 0,
+      "recalcMs": 15.199,
+      "recalcCount": 8,
+      "clickRecalcMs": 6.180999999999999,
+      "pass": true
+    },
+    "form": {
+      "lcp": 56,
+      "inp": 16,
+      "recalcMs": 16.233,
+      "recalcCount": 7,
+      "clickRecalcMs": 4.9639999999999995,
+      "pass": true
+    }
+  }
+}
