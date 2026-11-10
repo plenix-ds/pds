@@ -298,7 +298,8 @@ Every component declares a state manifest (check 9). Each state is a token set o
   - The label sits after the ring with an 8px gap (`space-inline-sm`). It uses the `body` role in `content-default`.
   - The arc is at least 3:1 in light and dark: `feedback-info-solid` (#1047).
 - **Announcements:** the region is `aria-busy="true"`. The label is the `role="status"` text and is announced once. Only the outermost loading region shows a spinner.
-- **Known progress** uses a `ProgressBar` with its label. Past about 10 seconds, the region adds a Cancel button or a progress value.
+- **Known progress** uses a `ProgressBar` with its label.
+- **Past 10 seconds** (D-0158, D-0159), the label stays and a second line in `content-muted` says the wait is longer than usual. It is a polite status of its own and is announced once. When the app can abort, a `size="sm"` Cancel button shows under it, also with a progress value. Focus is not moved.
 - **Reduced motion:** the ring stands still, and the label still shows.
 - **Skeleton (shimmer bars) is opt-in only.** No Plenix component, pattern, template or default uses it.
 - Details and the state matrix: `docs/pds1/slices/1032/design.md`.
