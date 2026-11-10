@@ -35,6 +35,7 @@ Reference pages for rule 7: a DataGrid with 50 rows, a record page and a form.
 
 - A screen asks for everything it needs in one round, in parallel: start every request when the screen opens, then wait for all of them. Do not chain one request after another unless the second needs the first one's answer.
 - Prefer one endpoint that returns the screen's data (the record, its related lists and its lookups) over six small ones.
+- Plenix itself makes one request per view: `fetchRows` asks once per page, sort, filter or search and aborts the old request (the request carries an `AbortSignal`). A region shows one loader for all its parts, because only the outermost `LoadingState` draws (ADR 0042).
 - Show each region as its own data arrives. Use the region loading state (`loading`, ADR 0042), which shows a spinner only after about 1 second.
 
 ## Rule 4: seen data shows at once and refreshes quietly
@@ -42,6 +43,7 @@ Reference pages for rule 7: a DataGrid with 50 rows, a record page and a form.
 - Keep the last answer for a screen in memory, keyed by the request. On return, draw it at once, then ask again in the background.
 - Replace the rows when the new answer arrives. Do not clear the screen first and do not show a spinner over rows that are already shown: a `DataGrid` with rows changes nothing when `loading` is true, so keep rows in place while the refresh runs.
 - Show a spinner or the empty text only when there is nothing to draw yet.
+- Gap: `fetchRows` cannot start from rows the app already has, so a revisit to a server-paged grid shows the loader again (#1219). Until it is fixed, pass the kept rows as `data` for a screen that fits in memory.
 - When the refresh fails, keep the old data and show a short message with Retry. Say when the data was last updated if it matters to the decision.
 
 ## Rule 5: server paging, search and sort
@@ -50,12 +52,14 @@ Reference pages for rule 7: a DataGrid with 50 rows, a record page and a form.
 - Return 25 to 50 rows per page. `size` is `pageSize` (default 50).
 - Sort, filter and search on the server. A change starts again from page 1.
 - In the default fill mode the grid asks for the next page by itself when the scroll comes within 8 rows of the end. It shows a "Loading records" row while a page is on its way and a row with Retry when a page fails.
+- `fetchRows` receives `signal`: pass it to your request so a stale request is aborted.
 - Give every row a stable `index` so selection holds while pages arrive.
 - Details: [DataGrid and Table in an application](data-grid.md).
 
 ## Rule 6: optimistic saves with undo
 
-- Show the result at once, send the save in the background, and give the person a way back:
+- Editing a cell or a record: `onCellEdit` and `onRecordEdit` may return a promise. The new value shows at once with a busy cell, and a rejection puts the old value back with its message (ADR 0016). `editing: { undo: true }` adds Ctrl+Z and Ctrl+Y (ADR 0021).
+- Bulk actions: show the result at once, send the save in the background, and give the person a way back:
 
   ```js
   const undoable = useUndo();
@@ -78,6 +82,7 @@ An app may fetch data it expects the person to need, only inside these limits:
 - Memory only. Never write prefetched data to local storage, session storage, IndexedDB or a cache the browser keeps across sessions.
 - Permitted data only: prefetch what the person may already open. Never fetch to find out whether they may.
 - Nothing sensitive: no personal, health, financial or confidential records.
+- Plenix stores no app data, so the cache is the app's. For code, `esm/manifest.json` (ADR 0052, not released yet) lists each screen's chunks for `modulepreload` at idle.
 - Clear everything on sign-out and when the person or their role changes.
 
 ## Checking it
