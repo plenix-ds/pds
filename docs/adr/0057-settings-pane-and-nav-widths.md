@@ -2,7 +2,7 @@
 
 - **Status:** accepted
 - **Date:** 2026-11-10
-- **Deciders:** pds1-ds-architect (G3), on the owner's reports (chat, 2026-11-10: "big secondary nav pane is out of place!!", #1242; "why is the nav so wide???", #1243). G2 (`pds1-design-director`, PR #1249, `docs/pds1/slices/1242/design.md`, D-0168, D-0169) owns the look and the widths. This entry owns the API, the tokens and the deprecations.
+- **Deciders:** pds1-ds-architect (G3), on the owner's reports (chat, 2026-11-10: "big secondary nav pane is out of place!!", #1242; "why is the nav so wide???", #1243). G2 (`pds1-design-director`, PR #1249, `docs/pds1/slices/1242/design.md`, D-0169; the owner's request is D-0168) owns the look and the widths. This entry owns the API, the tokens and the deprecations.
 - **Issues:** #1242 and #1243 (S2), fixed together.
 
 ## Context
@@ -58,7 +58,7 @@
 ### The resize edge (NavPane in AppShell, and SecondaryPane)
 
 - Arrow keys and dragging move the edge in 8px steps (`shell-splitter-step`), and Home and End go to the limits, as today.
-- **Enter or a double-click resets the width** to the pane's standard width and clears the remembered size. Collapse is the pane's Collapse button and Ctrl+[.
+- **Enter or a double-click resets the width** to the pane's standard width and clears the remembered size. (G2, D-0169 A.) Collapse is the pane's Collapse button and Ctrl+[.
 
 ## Consequences
 
