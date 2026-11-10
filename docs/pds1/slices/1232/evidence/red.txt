@@ -1,0 +1,6 @@
+AssertionError [ERR_ASSERTION]: ltr light BarChart: AC-1: "Maya Chen" is a word and is drawn in the data font (Reddit Mono)
+    at /home/cc/pds1/work/component-engineer-1/tests/chart-data-font-1232.test.js:42:39 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'Reddit Mono',
+  expected: 'Reddit Mono',

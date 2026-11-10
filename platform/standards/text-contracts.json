@@ -504,6 +504,14 @@
     "line-height"
    ]
   },
+  "plx-chart__category-label": {
+   "contract": "establishes",
+   "role": "label",
+   "font": "sans",
+   "adjusts": [
+    "font-weight"
+   ]
+  },
   "plx-chart__tick-label": {
    "contract": "follows",
    "font": "mono",
