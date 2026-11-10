@@ -66,8 +66,9 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
       assert.ok(/\d|No data/.test(third) && (await tip()).length > 0, T + 'the cell\'s value is said and shown: ' + third + ' | ' + (await tip()));
       await page.keyboard.press('End'); await wait(250); assert.notEqual(await say(), third, T + 'End moves to the end of the row');
       await page.evaluate(() => { const b = [...document.querySelectorAll('.plx-heat-map summary, .plx-heat-map button')].find((x) => /data/i.test(x.textContent)); if (b) b.click(); }); await wait(700);
-      const rows = await page.evaluate(() => document.querySelectorAll('.plx-heat-map [role=row][data-plx-record], .plx-heat-map table tbody tr').length);
+      const rows = await page.evaluate(() => document.querySelectorAll('.plx-heat-map [role=row][data-plx-record], .plx-heat-map table tbody tr, .plx-dialog [role=row][data-plx-record]').length);
       assert.equal(rows, cal ? DAYS.length : 12, T + '"Show the data" lists the cells (' + rows + ')');
+      await page.keyboard.press('Escape'); await wait(300);
     }
     const bad = problems.filter((p) => !/Failed to load resource|net::|was fetched at run time/.test(p)); if (bad.length) console.log(bad);
     assert.deepEqual(bad, [], 'no errors or warnings');

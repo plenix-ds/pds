@@ -62,8 +62,9 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
       }
       assert.equal(new Set(seen).size, parts.length, T + 'every step is a different part');
       await page.evaluate(() => { const b = [...document.querySelectorAll('.plx-treemap summary, .plx-treemap button')].find((x) => /data/i.test(x.textContent)); if (b) b.click(); }); await wait(700);
-      const rows = await page.evaluate(() => document.querySelectorAll('.plx-treemap [role=row][data-plx-record], .plx-treemap table tbody tr').length);
+      const rows = await page.evaluate(() => document.querySelectorAll('.plx-treemap [role=row][data-plx-record], .plx-treemap table tbody tr, .plx-dialog [role=row][data-plx-record]').length);
       assert.equal(rows, parts.length, T + '"Show the data" has a row per part (' + rows + ')');
+      await page.keyboard.press('Escape'); await wait(300);
     }
     const bad = problems.filter((p) => !/Failed to load resource|net::|was fetched at run time/.test(p)); if (bad.length) console.log(bad);
     assert.deepEqual(bad, [], 'no errors or warnings');

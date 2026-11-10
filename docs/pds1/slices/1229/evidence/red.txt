@@ -1,0 +1,8 @@
+AssertionError [ERR_ASSERTION]: ltr/light: the three cards are one height: 338.5, 498.5, 442.5
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}

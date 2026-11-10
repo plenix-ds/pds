@@ -66,6 +66,8 @@ export type ScatterPoint = { x: number; y: number; size?: number; label?: string
 export type ScatterSeries = { id: string; label: string; points: ScatterPoint[] };
 /** @public */
 export type ScatterChartProps = {
+  /** how the data table shows: a Dialog (default) or inline under the chart (ADR 0054) */
+  dataView?: 'dialog' | 'inline';
   title: string;
   description?: string;
   series?: ScatterSeries[];
@@ -81,7 +83,7 @@ export type ScatterChartProps = {
   strings?: Record<string, string>;
   className?: string;
 };
-export function ScatterChart({ title, description, series = [], variant = 'points', trend = false, xTitle, yTitle, sizeTitle, xFormat, yFormat, sizeFormat,
+export function ScatterChart({ title, description, dataView, series = [], variant = 'points', trend = false, xTitle, yTitle, sizeTitle, xFormat, yFormat, sizeFormat,
   size = 'md', strings, className }: ScatterChartProps) {
   const t: any = useStrings('chart.scatterChart', strings);
   const v = variant === 'bubble' ? 'bubble' : 'points';
@@ -159,7 +161,7 @@ export function ScatterChart({ title, description, series = [], variant = 'point
   };
 
   return (
-    <ChartFrame interaction={keys.interaction} title={title} description={description} size={size} margin={NO_MARGIN} table={table} legend={legend} className={cx('plx-scatter', 'plx-scatter--' + v, className)}>
+    <ChartFrame interaction={keys.interaction} title={title} dataView={dataView} description={description} size={size} margin={NO_MARGIN} table={table} legend={legend} className={cx('plx-scatter', 'plx-scatter--' + v, className)}>
       {draw}
     </ChartFrame>
   );

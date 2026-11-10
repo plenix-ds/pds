@@ -17,8 +17,10 @@
      margin: the room around the plot for axes and labels, in pixels: { top, end, bottom, start } (each optional; the
        defaults are the --plx-comp-chart-margin-* tokens); values snap to the 4px grid; start and end follow the writing
        direction
-     table: the data as a table under the chart: { columns, data } as the Table takes them (technical values kind
-       "data"); shown behind a Details line ("Show the data") so it is always one click away
+     table: the data as a table: { columns, data } as the Table takes them (technical values kind "data"); always one
+       click away behind "Show the data"
+     dataView: "dialog" (default: the button opens a Dialog titled with the chart's title and holding the table) |
+       "inline" (a Details line under the chart that expands the table in the card) (ADR 0054)
      legend: the chart's legend (a ChartLegend), placed by legendPosition (chart parts, wave 8)
      legendPosition: "bottom" (default: under the plot) | "top" (between the caption and the plot: tight dashboard
        cards) | "end" (beside the
@@ -59,8 +61,8 @@ import type { useChartInteraction } from './interaction.ts';
 import { cx } from '../utils/cx.ts';
 import { dataWhenText } from '../utils/dataText.tsx';
 import { isRtl } from '../utils/direction.ts';
-import { Details } from '../components/Details/Details.tsx';
-import { Table } from '../components/Table/Table.tsx';
+import { ChartData } from './ChartData.tsx';
+import type { ChartDataView } from './ChartData.tsx';
 import { Button } from '../components/Button/Button.tsx';
 import { snapToGrid } from '../utils/grid.ts';
 import { useStrings } from '../providers/LocaleProvider.tsx';
@@ -80,6 +82,8 @@ export type ChartFrameProps = {
   legend?: React.ReactNode;
   legendPosition?: 'bottom' | 'top' | 'end';
   /** the data as a table under the chart, as Table takes it */
+  /** how the data table shows: a Dialog (default) or inline under the chart */
+  dataView?: ChartDataView;
   table?: { columns: NonNullable<TableProps['columns']>; data: Record<string, unknown>[]; index?: string };
   interaction?: ReturnType<typeof useChartInteraction>;
   actions?: React.ReactNode;
@@ -89,12 +93,10 @@ export type ChartFrameProps = {
   className?: string;
   children?: React.ReactNode | ((draw: ChartFrameDraw) => React.ReactNode);
 };
-export function ChartFrame({ title, description, hideCaption = false, size = 'md', margin, legend, legendPosition = 'bottom', table, interaction, actions, fitHeight, clip = false, strings, className, children }: ChartFrameProps) {
+export function ChartFrame({ title, description, hideCaption = false, size = 'md', margin, legend, legendPosition = 'bottom', dataView = 'dialog', table, interaction, actions, fitHeight, clip = false, strings, className, children }: ChartFrameProps) {
   const t: any = useStrings('chart.chartFrame', strings);
   const uid = 'plx-chart' + React.useId().replace(/[^a-zA-Z0-9]/g, '');
   const frame = React.useRef<any>(null), plot = React.useRef<any>(null);
-  // the data grid is drawn the first time "Show the data" opens (and kept): a closed chart carries no second grid; opened by a click, it mounts in one pass
-  const [dataOpened, setDataOpened] = React.useState(false);
   const [box, setBox] = React.useState({ width: 0, height: 0, rtl: false, tokens: null });
   React.useLayoutEffect(() => {
     const el = plot.current;
@@ -172,9 +174,7 @@ export function ChartFrame({ title, description, hideCaption = false, size = 'md
       {lp === 'end' && key ? <div className="plx-chart__body">{plotArea}{key}</div> : plotArea}
       {lp === 'bottom' ? key : null}
       {table && table.data ? (
-        <Details summary={t.showData} variant="inline" className="plx-chart__data" onToggle={(open) => { if (open) setDataOpened(true); }}>
-          {dataOpened ? <Table label={t.table.replace('{title}', title || '')} columns={table.columns} data={table.data} index={table.index} /> : null}
-        </Details>
+        <ChartData title={title} summary={t.showData} tableLabel={t.table.replace('{title}', title || '')} columns={table.columns} data={table.data} index={table.index} dataView={dataView} />
       ) : null}
     </figure>
   );
