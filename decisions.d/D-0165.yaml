@@ -1,0 +1,9 @@
+id: D-0165
+date: 2026-11-10
+area: design
+decided_by: design-director (reading of the owner's data-font rule, D-0164, #1232)
+decision: 'Technical strings count as data: file names, paths, URLs, emails and versions use Reddit Mono like IDs and codes; names and words never do; a slot that can hold either passes strings through dataWhenText instead of setting Reddit Mono for the whole slot (docs/pds1/slices/1232/audit.md).'
+options: ['A: technical strings are data (chosen)', 'B: only numbers, amounts, counts, dates, times, IDs and codes are data; file names, paths, URLs and emails move to DM Sans']
+why: 'They identify a thing rather than read as language, and DataGrid kind data, File, FileRow, CodeBlock and QRCode already treat them so; the owner''s list names the common cases, not an exhaustive one.'
+status: active
+check: 'planned:lint-type-roles (#1232: token, CSS, chart and DataGrid-kind passes, audit.md section 5)'
