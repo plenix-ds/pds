@@ -1,0 +1,9 @@
+id: D-0159
+date: 2026-11-10
+area: design
+decided_by: design-director (reading of D-0158, the owner's 10-second stage, #1194)
+decision: 'At 10 s a LoadingState keeps its label unchanged and adds a second line (loading.slow, "This is taking longer than usual.", body, content-muted) and, with onCancel, a size sm Cancel button; no {label} pattern (the label is already a phrase); with progress nothing changes. Focus is not moved; the second line is its own polite status (docs/pds1/slices/1194/design.md).'
+options: ['A: keep the label, add a second line (chosen)', 'B: replace the label with a "Still loading {label}" sentence (loading.slowNamed)']
+why: 'A label is already a whole phrase ("Loading cases…"), so wrapping it reads "Still loading Loading cases…"; one app-independent sentence keeps Arabic word order with no composition.'
+status: active
+check: 'planned:tests on 1194 (label unchanged and second line at 10 s, Cancel only with onCancel, nothing new with progress, focus unchanged)'
