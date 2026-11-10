@@ -9,8 +9,6 @@
   "css plx-date-badge__day": "tabular-nums (a value) without the data font",
   "css plx-pagination__info": "tabular-nums (a value) without the data font",
   "css plx-timeline__date-day": "tabular-nums (a value) without the data font",
-  "DataGrid kind code": "a data kind without the data cell class",
-  "DataGrid kind id": "a data kind without the data cell class",
   "plx-comp.code-block-title-font-family": "a text role at the data font",
   "plx-comp.entity-picker-meta-font-family": "a text role at the data font",
   "plx-comp.media-card-meta-font-family": "a text role at the data font",
