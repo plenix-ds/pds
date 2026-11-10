@@ -73,7 +73,7 @@ export function Metric({ value, label, unit, change, changeTone = 'neutral', des
   devWarn('Metric', { size }, { size: ['md','lg'] });
   const figure = (
     <div className="plx-metric__figure">
-      <span className="plx-metric__value">{value}</span>
+      <span className={cx('plx-metric__value', typeof value === 'string' && value !== '' && !/[0-9\u0660-\u0669]/.test(value) && 'plx-metric__value--word')}>{value}</span>
       {unit ? <span className="plx-metric__unit">{unit}</span> : null}
       {change ? <span className={cx('plx-metric__change', 'plx-metric__change--' + changeTone)}>{change}</span> : null}
     </div>

@@ -2034,11 +2034,16 @@
   "plx-metric-card__summary-value": {
    "contract": "establishes",
    "role": "label",
-   "font": "sans",
+   "font": "mono",
    "adjusts": [
     "font-size",
     "line-height"
    ]
+  },
+  "plx-metric-card__value--word": {
+   "contract": "establishes",
+   "role": "label",
+   "font": "sans"
   },
   "plx-metric-card__title": {
    "contract": "establishes",
@@ -2059,7 +2064,7 @@
   "plx-metric-card__value": {
    "contract": "establishes",
    "role": "label",
-   "font": "sans",
+   "font": "mono",
    "adjusts": [
     "font-size",
     "line-height"
@@ -2088,10 +2093,15 @@
     "font-size"
    ]
   },
+  "plx-metric__value--word": {
+   "contract": "establishes",
+   "role": "label",
+   "font": "sans"
+  },
   "plx-metric__value": {
    "contract": "establishes",
    "role": "label",
-   "font": "sans",
+   "font": "mono",
    "adjusts": [
     "font-size",
     "font-weight",
