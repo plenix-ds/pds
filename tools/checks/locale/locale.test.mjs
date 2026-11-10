@@ -1,6 +1,6 @@
 // Unit tests for the locale checks (#192). Each check: a case that passes and a case that fails.
 import { describe, it, expect } from 'vitest';
-import { checkCatalogs, checkJsx, checkUnused, newFindings, approvedMap, parseCatalogModule, entries, duplicateKeys, checkReads, g6 } from './locale.mjs';
+import { checkCatalogs, checkJsx, checkUnused, newFindings, approvedMap, parseCatalogModule, entries, duplicateKeys, checkReads, g6, g6Excused } from './locale.mjs';
 import { pseudoString, pseudoCatalog } from './pseudo.mjs';
 import { formatNumber, formatDate } from '../../../platform/utils/format.ts';
 
@@ -125,6 +125,23 @@ describe('G6, the release gate (#902)', () => {
     const f = (rule) => ({ rule, file: 'x', message: rule });
     expect(g6(['missing-en', 'missing-ar', 'unapproved-ar', 'placeholder', 'plural-forms', 'duplicate-key', 'catalog', 'unused-key', 'jsx-literal'].map(f)).map((x) => x.rule))
       .toEqual(['missing-en', 'missing-ar', 'unapproved-ar', 'placeholder', 'plural-forms', 'duplicate-key', 'catalog']);
+  });
+});
+
+describe('G6 exceptions (D-0153)', () => {
+  const miss = { rule: 'missing-ar', file: 'platform/i18n/ar.js', message: 't.up: no Arabic (English: "Upcoming")' };
+  const other = { rule: 'missing-ar', file: 'platform/i18n/ar.js', message: 't.upper: no Arabic (English: "Up")' };
+  const unapproved = { rule: 'unapproved-ar', file: 'platform/i18n/ar.js', message: 't.up: not approved' };
+  const ex = [{ key: 't.up', rule: 'missing-ar', version: '1.6.0', decision: 'D-0153' }];
+  it('excuses the named missing word for the named version only', () => {
+    expect(g6([miss], ex, '1.6.0')).toEqual([]);
+    expect(g6Excused([miss], ex, '1.6.0')).toEqual([miss]);
+    expect(g6([miss], ex, '1.6.1')).toEqual([miss]);
+  });
+  it('never excuses another key, unapproved Arabic, or an entry without a decision', () => {
+    expect(g6([other], ex, '1.6.0')).toEqual([other]);
+    expect(g6([unapproved], [{ ...ex[0], rule: 'unapproved-ar' }], '1.6.0')).toEqual([unapproved]);
+    expect(g6([miss], [{ ...ex[0], decision: '' }], '1.6.0')).toEqual([miss]);
   });
 });
 
