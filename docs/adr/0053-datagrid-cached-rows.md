@@ -26,7 +26,9 @@
 
 - **`cachedRows?(request: DataGridFetch): { rows: R[]; total: number } | undefined`.**
   - `DataGridFetch` is the existing public request type, `{ page, size, sort, filters, search }`.
-  - It is called, synchronously, before each `fetchRows` call, with the same request.
+  - It is called, synchronously, before each `fetchRows` call that **replaces** the rows, with the same request: the first request (while the first render is drawn, so the rows are there at once), and each new page, sort, filter or search.
+  - It is **not** called for a later page in `"fill"` and `"load-more"`: that answer is appended to the rows, not put in their place (#1223).
+  - A `total` left out defaults to `rows.length`.
 - **With rows returned:**
   - they render at once, and no LoadingState is drawn;
   - `fetchRows` still runs, and its answer replaces them in place: same scroll position, same focus, the selection kept by row key;
@@ -47,6 +49,7 @@
 - Behavior tests (#1219):
   - cached rows render with no LoadingState;
   - `fetchRows` is still called once per request;
+  - `cachedRows` is not asked for a later page in `fill` and `load-more`;
   - fresh rows replace the cached ones with focus and scroll kept;
   - a failure keeps the cached rows and shows Retry;
   - without `cachedRows`, nothing changes;
