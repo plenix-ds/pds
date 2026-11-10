@@ -28,10 +28,13 @@
        items[].dateTime: required (ISO 8601); the year groups and the date tile come from it. An upcoming event may leave it out.
        items[].category: { id, label, color }: the tag at the event's end and its tint; color is "1" to "8" or a category hue name
        items[].upcoming: a dashed outline and a grey band; the tile shows the month and day, or the word Pending when there is no dateTime
+       density: "page" (default; the standard look, its padding following the region density) | "compact" (ADR 0048: the Key Dates look at one fixed size:
+         no watermark, one line per event (title, description cut with an ellipsis, category tag at the inline end), a 40px date tile, at most 760px wide at
+         the inline start; an upcoming event's tag adds "· upcoming", or "· Pending" with no date). Ignored, with a development warning, by variant "default".
        legend: a row of toggle buttons that hide a category's events (default false)
        hiddenCategories, onHiddenCategoriesChange: the hidden category ids, to control the legend (without them it keeps its own)
        headingLevel: 2 to 6, the year headings (default 3)
-       strings: the words (pending, legend), for other languages
+       strings: the words (pending, upcoming, legend), for other languages
      className: more classes on the list
    Behavior:
      The timeline is an ordered list (<ol>): each event is announced with its place (1 of 5), its time and title.
@@ -49,9 +52,11 @@ import { cx } from '../../utils/cx.ts';
 import { Icon } from '../Icon/Icon.tsx';
 import type { IconValue } from '../Icon/Icon.tsx';
 import { Button } from '../Button/Button.tsx';
+import { Tooltip } from '../Tooltip/Tooltip.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import type { Catalog } from '../../providers/LocaleProvider.tsx';
 import { development, devWarn } from '../../utils/devWarn.ts';
+import { useTruncated } from '../../utils/overflow.ts';
 import { formatDate, formatLocale, numeralLocale, parseDate } from '../../utils/format.ts';
 
 export type TimelineItem = {
@@ -74,7 +79,7 @@ export type TimelineItem = {
 /** a category slot "1" to "8", or a category hue name (platform/system/steps.css) */
 export type CategoryColor = '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | (string & {});
 export type TimelineCategory = { id: string; label: React.ReactNode; color: CategoryColor };
-type TimelineWords = { pending: string; legend: string };
+type TimelineWords = { pending: string; upcoming: string; legend: string };
 export type TimelineProps = Omit<React.HTMLAttributes<HTMLOListElement>, 'children'> & {
   items?: TimelineItem[];
   orientation?: 'vertical' | 'horizontal';
@@ -82,19 +87,41 @@ export type TimelineProps = Omit<React.HTMLAttributes<HTMLOListElement>, 'childr
   /** the accessible name (aria-label) */
   label?: string;
   variant?: 'default' | 'grouped';
+  /** grouped: "page" (default) the standard look, its spacing following the region density; "compact" the Key Dates look at one fixed size (ADR 0048) */
+  density?: 'page' | 'compact';
   legend?: boolean;
   hiddenCategories?: string[];
   onHiddenCategoriesChange?: (ids: string[]) => void;
   headingLevel?: 2 | 3 | 4 | 5 | 6;
   strings?: Catalog | null;
 };
-export function Timeline({ variant = 'default', ...props }: TimelineProps) {
-  devWarn('Timeline', { variant }, { variant: ['default', 'grouped'] });
-  return variant === 'grouped' ? <GroupedTimeline {...props} /> : <PlainTimeline {...props} />;
+let warnedDensity = false;
+export function Timeline({ variant = 'default', density = 'page', ...props }: TimelineProps) {
+  devWarn('Timeline', { variant, density }, { variant: ['default', 'grouped'], density: ['page', 'compact'] });
+  if (variant !== 'grouped' && density !== 'page' && development() && !warnedDensity) { warnedDensity = true; console.warn('[Plenix] Timeline: density applies to variant="grouped" only; it is ignored here.'); }
+  return variant === 'grouped' ? <GroupedTimeline density={density} {...props} /> : <PlainTimeline {...props} />;
+}
+// compact: one line that ends in an ellipsis when its box is narrower than its text; the whole text shows in a Tooltip only while it is cut (fit-and-overflow §5)
+function CutLine({ as: Tag, className, tip, children }: { as: 'span' | 'p'; className: string; tip: string; children?: React.ReactNode }) {
+  const ref = React.useRef<HTMLElement>(null);
+  const text = typeof children === 'string' ? children : '';
+  const cut = useTruncated(ref, text);
+  return (
+    <Tooltip content={text} disabled={!cut || !text} describe={false} className={tip}>
+      <Tag ref={ref as React.RefObject<never>} className={className}>{children}</Tag>
+    </Tooltip>
+  );
+}
+// compact: an upcoming event's tag says so ("Category · upcoming"; undated: "Category · Pending", the tile has no room for the word)
+function tagLabel(it: TimelineItem, dated: boolean, t: TimelineWords): React.ReactNode {
+  const label = it.category ? it.category.label : null;
+  if (!it.upcoming) return label;
+  const suffix = dated ? t.upcoming : t.pending;
+  return typeof label === 'string' ? label + ' · ' + suffix : <>{label} · {suffix}</>;
 }
 type Row = { it: TimelineItem; key: React.Key; date: Date | null; year: number | null };
 let warnedDates = false, warnedLayout = false;
-function GroupedTimeline({ items = [], label, className, legend = false, hiddenCategories, onHiddenCategoriesChange, headingLevel = 3, strings, orientation, align, ...rest }: TimelineProps) {
+function GroupedTimeline({ density = 'page', items = [], label, className, legend = false, hiddenCategories, onHiddenCategoriesChange, headingLevel = 3, strings, orientation, align, ...rest }: TimelineProps) {
   const t = useStrings('timeline', strings) as TimelineWords;
   const uid = React.useId();
   const [own, setOwn] = React.useState<string[]>([]);
@@ -119,10 +146,11 @@ function GroupedTimeline({ items = [], label, className, legend = false, hiddenC
     const last = groups[groups.length - 1];
     if (last && (year === null || last.year === year)) last.rows.push(row); else groups.push({ year, rows: [row] });
   });
+  const compact = density === 'compact';
   const H = ('h' + headingLevel) as 'h2';
   const digits = (n: number | string, o?: Intl.NumberFormatOptions) => new Intl.NumberFormat(numerals, { useGrouping: false, ...o }).format(Number(n));
   return (
-    <section aria-label={label} className={cx('plx-timeline', 'plx-timeline--grouped', className)} {...(rest as React.HTMLAttributes<HTMLElement>)}>
+    <section aria-label={label} className={cx('plx-timeline', 'plx-timeline--grouped', compact && 'plx-timeline--compact', className)} {...(rest as React.HTMLAttributes<HTMLElement>)}>
       {legend && kinds.length ? (
         <div role="group" aria-label={t.legend} className="plx-timeline__legend">
           {kinds.map((k) => {
@@ -138,32 +166,36 @@ function GroupedTimeline({ items = [], label, className, legend = false, hiddenC
       {groups.map((g, gi) => {
         const hid = uid + '-' + gi;
         return (
-          <section key={g.year === null ? 'none' + gi : g.year} className="plx-timeline__group" aria-labelledby={g.year === null ? undefined : hid} aria-label={g.year === null ? label : undefined}>
-            {g.year === null ? null : <H id={hid} className="plx-timeline__year">{digits(g.year)}</H>}
-            <ol className="plx-timeline__events">
+          <section key={g.year === null ? 'none' + gi : g.year} className={cx('plx-timeline__group', compact && 'plx-timeline__group--compact')} aria-labelledby={g.year === null ? undefined : hid} aria-label={g.year === null ? label : undefined}>
+            {g.year === null ? null : <H id={hid} className={cx('plx-timeline__year', compact && 'plx-timeline__year--compact')}>{digits(g.year)}</H>}
+            <ol className={cx('plx-timeline__events', compact && 'plx-timeline__events--compact')}>
               {g.rows.map((r) => {
                 const { it, date } = r, year = date ? date.getFullYear() : g.year;
                 const full = date ? formatDate(date, { dateStyle: 'long' }) : '';
                 return (
-                  <li key={r.key} className={cx('plx-timeline__row', year === null && 'plx-timeline__row--bare')}>
-                    {year === null ? null : <span className="plx-timeline__watermark" aria-hidden="true">{digits(year)}</span>}
-                    <div className={cx('plx-timeline__event', it.upcoming && 'plx-timeline__event--upcoming')} data-plx-category={it.category ? it.category.color : undefined}>
-                      <span className={cx('plx-timeline__date', it.upcoming && 'plx-timeline__date--upcoming')} aria-hidden="true">
-                        <span className={cx('plx-timeline__date-band', it.category && 'plx-timeline__date-band--category', it.upcoming && 'plx-timeline__date-band--upcoming')} />
+                  <li key={r.key} className={cx('plx-timeline__row', (year === null || compact) && 'plx-timeline__row--bare')}>
+                    {year === null || compact ? null : <span className="plx-timeline__watermark" aria-hidden="true">{digits(year)}</span>}
+                    <div className={cx('plx-timeline__event', compact && 'plx-timeline__event--compact', it.upcoming && 'plx-timeline__event--upcoming')} data-plx-category={it.category ? it.category.color : undefined}>
+                      <span className={cx('plx-timeline__date', compact && 'plx-timeline__date--compact', it.upcoming && 'plx-timeline__date--upcoming')} aria-hidden="true">
+                        <span className={cx('plx-timeline__date-band', compact && 'plx-timeline__date-band--compact', it.category && 'plx-timeline__date-band--category', it.upcoming && 'plx-timeline__date-band--upcoming')} />
                         {!date
-                          ? <span className="plx-timeline__date-pending">{it.upcoming ? t.pending : ''}</span>
-                          : <><span className="plx-timeline__date-month">{new Intl.DateTimeFormat(numerals, { month: 'short' }).format(date)}</span><span className="plx-timeline__date-day">{digits(date.getDate())}</span></>}
+                          ? (compact ? null : <span className="plx-timeline__date-pending">{it.upcoming ? t.pending : ''}</span>)
+                          : <><span className={cx('plx-timeline__date-month', compact && 'plx-timeline__date-month--compact', it.category && !it.upcoming && 'plx-timeline__date-month--category')}>{new Intl.DateTimeFormat(numerals, { month: 'short' }).format(date)}</span><span className={cx('plx-timeline__date-day', compact && 'plx-timeline__date-day--compact')}>{digits(date.getDate())}</span></>}
                       </span>
-                      <div className="plx-timeline__event-body">
-                        <div className="plx-timeline__heading">
-                          <span className={cx('plx-timeline__event-title', it.category && 'plx-timeline__event-title--category')}>{it.title}</span>
+                      <div className={cx('plx-timeline__event-body', compact && 'plx-timeline__event-body--compact')}>
+                        <div className={cx('plx-timeline__heading', compact && 'plx-timeline__heading--compact')}>
+                          {compact
+                            ? <CutLine as="span" tip="plx-timeline__title-tip" className={cx('plx-timeline__event-title', 'plx-timeline__event-title--compact', it.category && 'plx-timeline__event-title--category')}>{it.title}</CutLine>
+                            : <span className={cx('plx-timeline__event-title', it.category && 'plx-timeline__event-title--category')}>{it.title}</span>}
                           {it.badge ? <span className="plx-timeline__badge">{it.badge}</span> : null}
                         </div>
                         {it.dateTime ? <time className="plx-visually-hidden" dateTime={it.dateTime}>{full}</time> : null}
-                        {it.description ? <p className="plx-timeline__event-description">{it.description}</p> : null}
+                        {it.description ? (compact ? <CutLine as="p" tip="plx-timeline__description-tip" className="plx-timeline__event-description plx-timeline__event-description--compact">{it.description}</CutLine> : <p className="plx-timeline__event-description">{it.description}</p>) : null}
                         {it.content ? <div className="plx-timeline__extra">{it.content}</div> : null}
                       </div>
-                      {it.category ? <span className="plx-timeline__tag plx-timeline__tag--category">{it.category.label}</span> : null}
+                      {it.category ? (compact
+                        ? <CutLine as="span" tip="plx-timeline__tag-tip" className="plx-timeline__tag plx-timeline__tag--compact plx-timeline__tag--category">{tagLabel(it, !!date, t)}</CutLine>
+                        : <span className="plx-timeline__tag plx-timeline__tag--category">{it.category.label}</span>) : null}
                     </div>
                   </li>
                 );

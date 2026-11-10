@@ -299,6 +299,21 @@
       "$type": "dimension",
       "$description": "The day number in a calendar date tile (18px)."
     },
+    "text-calendar-day-sm-font-size": {
+      "$value": "{plx-ref.font-size-400}",
+      "$type": "dimension",
+      "$description": "The day number in the compact calendar date tile (15px; ADR 0048)."
+    },
+    "text-calendar-month-font-size": {
+      "$value": "{plx-ref.font-size-300}",
+      "$type": "dimension",
+      "$description": "The month in a calendar date tile's band (14px; ADR 0048)."
+    },
+    "text-calendar-month-sm-font-size": {
+      "$value": "{plx-ref.font-size-200}",
+      "$type": "dimension",
+      "$description": "The month in the compact calendar date tile's band (13px; ADR 0048)."
+    },
     "text-watermark-font-size": {
       "$value": "{plx-ref.font-size-700}",
       "$type": "dimension",

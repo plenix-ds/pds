@@ -93,7 +93,7 @@
       "$type": "dimension"
     },
     "timeline-grouped-event-padding-inline": {
-      "$value": "{plx-sys.space-inset-md}",
+      "$value": "{plx-sys.space-inset-sm}",
       "$type": "dimension"
     }
   }

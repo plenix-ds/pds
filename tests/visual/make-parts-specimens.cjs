@@ -28,6 +28,12 @@ const parts = {
     h(P.SecondaryPane, { title: 'Case overview', back: { parent: 'all of the cases assigned to the tribunal this year', href: '#cases' } }, ${nav}))`,
   'app-header-brand': `h('div', null, ${brand(logo(64, 64), 'Diocese of Los Angeles')}, ${brand(logo(256, 64), 'Diocese of Los Angeles')}, ${brand(logo(64, 64), 'The Very Long Name of an Organization That Does Not Fit')})`,
   'panel-toggle-header': `h('div', null, h(P.Panel, { title: 'Spouse', collapsible: true, toggleOn: 'header', defaultExpanded: true }, 'Details of the party.'), h(P.Panel, { title: 'Witness', collapsible: true, toggleOn: 'header', defaultExpanded: false }, 'Details of the witness.'))`,
+  'timeline-grouped-compact': `h(P.Timeline, { variant: 'grouped', density: 'compact', label: 'Key dates', items: [
+    { id: 1, dateTime: '2026-11-06T09:00:00Z', title: 'Intake interview', description: 'Fr. Youhanna met the applicant at the parish office to review the file.', category: { id: 'c3', label: 'Interviews and hearings', color: '3' } },
+    { id: 2, dateTime: '2026-09-14T09:00:00Z', title: 'Petition filed', description: 'The petition and the first documents were received.', category: { id: 'c1', label: 'Filing', color: '1' } },
+    { id: 3, dateTime: '2026-12-02T09:00:00Z', title: 'Hearing', description: 'Before the council, in person.', upcoming: true, category: { id: 'c5', label: 'Hearing', color: '5' } },
+    { id: 4, title: 'Decision', description: 'To be set by the council.', upcoming: true, category: { id: 'c4', label: 'Decision', color: '4' } },
+    { id: 5, dateTime: '2025-06-20T09:00:00Z', title: 'Baptism certificate received', description: 'From the parish of the applicant, certified.', category: { id: 'c7', label: 'Records', color: '7' } } ] })`,
   'timeline-grouped': `h(P.Timeline, { variant: 'grouped', label: 'Case history', legend: true, hiddenCategories: ['c3'], onHiddenCategoriesChange: function () {}, items: [
     { id: 5, dateTime: '2027-02-01T09:00:00Z', title: 'Decision due', description: 'A ruling is expected.', upcoming: true, category: { id: 'c5', label: 'Review', color: '5' } },
     { id: 6, title: 'Appeal window', description: 'Opens after the decision.', upcoming: true, category: { id: 'c1', label: 'Filing', color: '1' } },

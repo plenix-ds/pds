@@ -3177,6 +3177,12 @@
     "font-weight"
    ]
   },
+  "plx-timeline__date-day--compact": {
+   "contract": "adjusts",
+   "props": [
+    "font-size"
+   ]
+  },
   "plx-timeline__date-day": {
    "contract": "adjusts",
    "props": [
@@ -3189,7 +3195,14 @@
    "contract": "adjusts",
    "props": [
     "font-size",
-    "font-weight"
+    "font-weight",
+    "line-height"
+   ]
+  },
+  "plx-timeline__date-month--compact": {
+   "contract": "adjusts",
+   "props": [
+    "font-size"
    ]
   },
   "plx-timeline__date-pending": {
@@ -3219,6 +3232,12 @@
    "props": [
     "font-size",
     "font-weight"
+   ]
+  },
+  "plx-timeline__year--compact": {
+   "contract": "adjusts",
+   "props": [
+    "font-size"
    ]
   },
   "plx-toast": {

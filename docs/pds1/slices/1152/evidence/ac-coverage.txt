@@ -1,0 +1,10 @@
+#1152: where each acceptance criterion is checked (tests/timeline-compact-1152.test.js, all green: see green.txt; red.txt is the same run on main)
+AC-1  year heading, no rule under it (::after content none), no watermark node: test "AC-1" assertions
+AC-2  one tinted box, 1px border, dashed when upcoming, undated tag "Category · Pending" and an empty dashed tile: "AC-2"
+AC-3  equal padding on all four sides, both looks, standard / compact / comfortable density (compact look 8px, standard look 12 / 8 / 16): "AC-3"
+AC-4  one line (title, description with an ellipsis, tag at the inline end, "· upcoming"), Tooltip only while cut, event 58px high: "AC-4"
+AC-5  no ::before / ::after rings, band 16px (20px standard), month white bold on the category band, tile 40px (56px standard): "AC-5"
+AC-6  760px at the inline start in LTR and RTL, narrower container narrower: "AC-6"
+AC-7  month on band >= 4.5:1 for 8 slots + the grey upcoming band, light and dark, both looks; RTL mirror: "AC-7"; the same pairs are in CONTRAST_PAIRS (tests/contrast.test.js, 182 checks OK)
+Also green: tests/timeline-grouped-987 (padding expectations now equal, D-0148), -1055, -1023; storybook axe for components-timeline--grouped-compact* (3 stories, light and dark, 0 findings).
+Not run locally: Check 12 visual baselines (CI writes them: D-0092), the full CI.
