@@ -1,0 +1,9 @@
+{
+ "$description": "The type-roles backlog (check-system.rules/type-roles.js, ADR 0055): breaks of the data-font rule when it began. It only shrinks; the design audit (#1233) decides each one.",
+ "backlog": {
+  "DataGrid kind code": "a data kind without the data cell class",
+  "DataGrid kind id": "a data kind without the data cell class",
+  "plx-comp.metric-card-value-font-family": "a data role at the text font",
+  "plx-comp.metric-value-font-family": "a data role at the text font"
+ }
+}
