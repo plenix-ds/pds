@@ -17,7 +17,7 @@
 
 | Option | For | Against |
 |---|---|---|
-| **A. A token for the 10 s point; `LoadingState onCancel` (the LoadingOverlay name); `onLoadingCancel` on DataGrid and ListingPage; three `loading.*` strings** | Same names as the overlay; the delay is a token like the 1 s one; the grid prop reads as a handler of the loading state. | Two names for one idea (`onCancel` on the part, `onLoadingCancel` on the grid). The grid already has other cancel handlers, so a bare `onCancel` there would be ambiguous. |
+| **A. A token for the 10 s point; `LoadingState onCancel` (the LoadingOverlay name); `onLoadingCancel` on DataGrid and ListingPage; two `loading.*` strings** | Same names as the overlay; the delay is a token like the 1 s one; the grid prop reads as a handler of the loading state. | Two names for one idea (`onCancel` on the part, `onLoadingCancel` on the grid). The grid already has other cancel handlers, so a bare `onCancel` there would be ambiguous. |
 | B. `loadingCancel` on the grid (the issue's example) | Short | Not an `on*` handler name, unlike every other callback prop. |
 | C. A `slowAfter` prop instead of a token | Per-region tuning | A timing literal in app code; the 1 s point is already a token. |
 
@@ -35,7 +35,7 @@
 
 - **`LoadingState`:**
   - **`onCancel?(): void`.** From the long point, a Cancel button sits under the message and calls it. Without `onCancel`, there is no button.
-  - From the long point, the label becomes the long message. It is the same `role="status"` text, changed once, so it is announced once.
+  - From the long point, the label stays as it is, and the long message shows as a **second line** under it (`loading.slow`, `content-muted`), in its own polite status filled once, so it is announced once (G2, D-0159 A, PR #1200). A label is already a whole phrase ("Loading cases…"), so it is never rewritten into a sentence.
   - With `progress` (a number), nothing changes: no long message and no Cancel from this rule. The bar already informs.
 - **`DataGrid`:** `onLoadingCancel?(): void`, passed to its LoadingState as `onCancel`.
 - **`ListingPage`:** `onLoadingCancel?(): void`, passed to its DataGrid.
@@ -43,24 +43,23 @@
 
 ### Strings (namespace `loading`, through `strings` and the catalog)
 
-- `loading.slow`: the long message without a name (G2 words it, for example "Still loading. This is taking longer than usual.").
-- `loading.slowNamed`: the same sentence with `{label}` inside, used when the app gives a string `label` (for example "Still loading {label}. This is taking longer than usual."). One string, with the name inside it, never joined.
+- `loading.slow`: the second line, "This is taking longer than usual." (G2). It is one whole sentence, never joined to the label.
 - `loading.cancel`: "Cancel" (the owner-approved إلغاء, as `loadingOverlay.cancel`).
-- A non-string `label` (a node) uses `loading.slow`.
-- Arabic: @pds1-i18n-engineer checks `slow` and `slowNamed` (D-0078) and asks the owner only if needed (D-0012). Until then, the English ships behind it, and G6 holds only the release.
+- There is no `loading.slowNamed`: the label is not rewritten (G2, D-0159).
+- Arabic: @pds1-i18n-engineer checks `slow` (D-0078) and asks the owner only if needed (D-0012). Until then, the English line shows, and G6 holds only the release.
 
 ## Consequences
 
-- **Semver: MINOR (1.7.0).** Added: the ref and sys token, `LoadingState.onCancel`, `DataGrid.onLoadingCancel`, `ListingPage.onLoadingCancel`, and the three strings. There is no change before 10 s, and no deprecation.
+- **Semver: MINOR (1.7.0).** Added: the ref and sys token, `LoadingState.onCancel`, `DataGrid.onLoadingCancel`, `ListingPage.onLoadingCancel`, and the two strings. There is no change before 10 s, and no deprecation.
 
 ## Enforced by
 
 - G3 on the build PR: the API diff matches this entry.
 - Checks 6 and 7: sys -> ref, and no value in a name.
-- Locale check (G6): `loading.slow`, `loading.slowNamed` (with `{label}`) and `loading.cancel` are in `en.json`.
+- Locale check (G6): `loading.slow` and `loading.cancel` are in `en.json`.
 - Behavior tests (#1194):
   - nothing is drawn before 1 s, and the spinner shows at 1 s;
-  - the long message shows at the long delay and is announced once;
+  - the label is unchanged at the long delay, and the second line shows and is announced once;
   - Cancel shows only with `onCancel`, and clicking it calls `onCancel`;
   - with `progress`, there is no long message;
   - `DataGrid onLoadingCancel` reaches the button.
