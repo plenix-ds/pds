@@ -16,6 +16,8 @@ Rule 2 of the performance standard (D-0160, #1201, ADR 0052). Available from Ple
 
 - Sizes are the part, the shared code it imports, and nothing else. React is not counted, in either column.
 - Parts share code, so a second part on the same screen usually costs little.
+- Fewer bytes is not always faster. CTM's first page (many parts) made 214 requests and was ready in about 640 ms, against about 501 ms for `plenix.js`, with 18% fewer bytes (B5, #1211). A screen that uses few parts, such as a grid alone, is 58% smaller and gains. Slice #1293 reduces the request count with fewer, larger chunks; this page is updated when it ships.
+- Measure your own screen before moving it: compare the time to ready and the request count, not only the bytes.
 - `plenix.css` is still one file (183,007 B as sent). Splitting it is a later decision.
 
 ## A page without a bundler (CDN)
