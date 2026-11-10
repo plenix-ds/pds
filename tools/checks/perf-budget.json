@@ -1,8 +1,12 @@
 {
   "$description": "Performance budgets (#1188), read by tools/checks/perf-budget.mjs on the built CDN files. A limit is never raised to pass: lower it in the same PR when a measure drops well below it; raising one needs a decision record with G3 (DS Architect). The total size of plenix.css is printed, never limited (owner, plenix-platform#460).",
   "scopeTokens": {
-    "limit": 5563,
-    "why": "Custom properties declared in one CSS scope that reaches elements other than :root. Each such element recomputes them for its whole subtree. 1.6.1: 5,563 on ':root, [data-plx-density], [data-plx-interaction]'. The DS Architect narrows that scope (#1188); lower this limit with it."
+    "limit": 2400,
+    "why": "Custom properties declared in one CSS scope that reaches elements other than :root. Each such element recomputes them for its whole subtree. After ADR 0050 (#1197) the largest is the theme scope ':root, [data-plx-theme], [data-plx-mode]' at 2,345 (only :root and ThemeZones match it); 1.6.1 had 5,563 on the density scope (#1188, lowered in #1205)."
+  },
+  "densityTokens": {
+    "limit": 400,
+    "why": "The largest scope listing [data-plx-density] or [data-plx-interaction] alone: every DataGrid and density zone matches it, so it is the grid's style-recalculation cost. After ADR 0050 (#1197): 338 on ':root, [data-plx-density], [data-plx-interaction]' (each forced-colors copy, 106, is its own scope). 1.6.1 had 5,563 there (#1188)."
   },
   "jsBrotli": {
     "file": "plenix.js",
