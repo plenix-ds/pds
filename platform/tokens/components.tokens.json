@@ -1988,6 +1988,11 @@
       "$type": "color",
       "$description": "Badge, negative: the text, shade 700 (800 for negative)."
     },
+    "count-font-family": {
+      "$value": "{plx-sys.font-data}",
+      "$type": "fontFamily",
+      "$description": "Count: a count is a number, so it is drawn in the data font (D-0164, audit item 6 of #1232)."
+    },
     "count-plain-text": {
       "$value": "{plx-sys.content-muted}",
       "$type": "color"
