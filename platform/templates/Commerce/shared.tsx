@@ -36,8 +36,7 @@
 */
 import React from 'react';
 import { cx } from '../../utils/cx.ts';
-import { formatCurrency, formatNumber } from '../../utils/format.ts';
-import { useAppLayout } from '../../patterns/AppShell/AppShell.tsx';
+import { formatNumber } from '../../utils/format.ts';
 import { Panel } from '../../components/Card/Card.tsx';
 import { Image } from '../../components/Image/Image.tsx';
 import { Link } from '../../components/Link/Link.tsx';
@@ -46,41 +45,12 @@ import { Icon } from '../../components/Icon/Icon.tsx';
 import { NumberInput } from '../../components/NumberInput/NumberInput.tsx';
 import { Notice } from '../../components/Notice/Notice.tsx';
 import { ProductPrice as ProductPriceJs } from '../../patterns/ProductCard/ProductCard.tsx';
-const ProductPrice: any = ProductPriceJs;
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import ImageBIcon from 'plenix-platform/icons/plenix/image-b';
 import { dataPhrase } from '../../utils/dataText.tsx';
 import { fill } from '../../utils/fill.ts';
-
-export const COMMERCE_PAGES: Record<string, string> = {
-  'product-discovery': 'workspace', 'product-listing': 'workspace', 'product-detail': 'detail', cart: 'workspace', checkout: 'form',
-  payment: 'form', 'order-confirmation': 'detail', 'order-management': 'workspace', 'order-detail': 'detail', 'subscription-management': 'settings', returns: 'form',
-};
-
-// a template claims its kind of page on the AppShell around it (the layout standard lays it out)
-export function useCommercePage(template: string) {
-  const shell = useAppLayout();
-  const claim = shell && shell.claimPage;
-  const kind = COMMERCE_PAGES[template];
-  React.useEffect(() => (claim && kind ? claim(kind) : undefined), [claim, kind]);
-}
-
-export const money = (n: number, currency?: string) => formatCurrency(n, currency || 'USD');
-const round = (n: any) => Math.round(n * 100) / 100;
-
-/** @public a line of an order: price and quantity count */
-export type CommerceItem = { id?: string | number; name?: string; price?: number; quantity?: number; [key: string]: unknown };
-/** @public the options of orderTotals */
-export type OrderTotalsOptions = { discount?: number; shipping?: number; tax?: number; taxRate?: number };
-export function orderTotals(items: CommerceItem[] = [], o: OrderTotalsOptions = {}) {
-  const subtotal = round(items.reduce((s, x) => s + (x.price || 0) * (x.quantity || 0), 0));
-  const count = items.reduce((s, x) => s + (x.quantity || 0), 0);
-  const discount = round(Math.min(subtotal, o.discount || 0));
-  const shipping = round(o.shipping || 0);
-  const tax = o.tax !== undefined ? round(o.tax) : round((subtotal - discount) * (o.taxRate || 0));
-  return { subtotal, discount, shipping, tax, total: round(subtotal - discount + shipping + tax), count };
-}
-
+import { money, orderTotals } from './totals.ts';
+const ProductPrice: any = ProductPriceJs;
 
 /** @public the prop type of CommerceLine (ADR 0011) */
 export type CommerceLineProps = {
@@ -91,6 +61,7 @@ export type CommerceLineProps = {
   strings?: Record<string, string>;
   className?: string;
 };
+
 export function CommerceLine(props: CommerceLineProps) {
   const { item, currency = 'USD', onQuantityChange, remove, strings, className } = props as any;
   const t: any = useStrings('commerce.line', strings);
@@ -118,7 +89,6 @@ export function CommerceLine(props: CommerceLineProps) {
   );
 }
 
-
 /** @public the prop type of OrderSummary (ADR 0011) */
 export type OrderSummaryProps = {
   items?: unknown[];
@@ -132,6 +102,7 @@ export type OrderSummaryProps = {
   strings?: Record<string, string>;
   className?: string;
 };
+
 export function OrderSummary(props: OrderSummaryProps) {
   const { items = [], currency = 'USD', totals, estimated = false, showItems = false, title, headingLevel = 2, children, strings, className } = props as any;
   const t: any = useStrings('commerce.summary', strings);
@@ -165,3 +136,4 @@ export function OrderSummary(props: OrderSummaryProps) {
     </Panel>
   );
 }
+

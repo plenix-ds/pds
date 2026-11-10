@@ -73,8 +73,10 @@
 .plx-metric-card__person{align-items:center;column-gap:var(--plx-comp-metric-card-beside-gap);display:grid;grid-template-columns:auto minmax(0,1fr);}
 .plx-metric-card__placeholder{display:grid;row-gap:var(--plx-comp-metric-card-body-row-gap);}
 .plx-metric-card__figure{align-items:baseline;column-gap:var(--plx-comp-metric-card-figure-gap);display:flex;flex-wrap:wrap;row-gap:var(--plx-comp-metric-card-heading-row-gap);}
-.plx-metric-card__value{color:var(--_metric-card-text);font-family:var(--plx-comp-metric-card-value-font-family);font-size:var(--_metric-card-value-size);font-variant-numeric:tabular-nums;font-weight:var(--plx-comp-metric-card-value-font-weight);letter-spacing:var(--plx-sys-text-label-letter-spacing);line-height:var(--plx-comp-metric-card-value-line-height);word-spacing:normal;}
+.plx-metric-card__value{color:var(--_metric-card-text);font-family:var(--plx-comp-metric-card-value-font-family);font-size:var(--_metric-card-value-size);font-variant-numeric:tabular-nums;font-weight:var(--plx-comp-metric-card-value-font-weight);letter-spacing:var(--plx-sys-text-label-letter-spacing);line-height:var(--plx-comp-metric-card-value-line-height);word-spacing:var(--plx-sys-font-data-word-spacing);}
 .plx-metric-card__value--empty{color:var(--_metric-card-subtle);}
+/* a figure that is only a word ("On track", "N/A") is not data (D-0164): the text font */
+.plx-metric-card__value--word{font-family:var(--plx-comp-metric-card-value-word-font-family);word-spacing:normal;}
 .plx-metric-card__unit{color:var(--_metric-card-muted);font-size:var(--plx-comp-metric-card-unit-font-size);}
 .plx-metric-card__status{margin-inline-start:auto;}
 .plx-metric-card__change{align-items:center;color:var(--_metric-card-muted);column-gap:var(--plx-comp-metric-card-change-gap);display:flex;flex-wrap:wrap;font-size:var(--plx-comp-metric-card-change-font-size);}
@@ -120,7 +122,7 @@
 .plx-metric-card__summary-item{display:grid;padding-inline-end:var(--plx-comp-metric-card-padding-inline);row-gap:var(--plx-comp-metric-card-heading-row-gap);}
 .plx-metric-card__summary-item+.plx-metric-card__summary-item{border-inline-start-color:var(--_metric-card-divider);border-inline-start-style:solid;border-inline-start-width:var(--plx-comp-metric-card-divider-width);padding-inline-start:var(--plx-comp-metric-card-padding-inline);}
 .plx-metric-card__summary-figure{align-items:baseline;column-gap:var(--plx-comp-metric-card-figure-gap);display:flex;}
-.plx-metric-card__summary-value{color:var(--_metric-card-text);font-family:var(--plx-comp-metric-card-value-font-family);font-size:var(--plx-comp-metric-card-value-sm-font-size);font-variant-numeric:tabular-nums;font-weight:var(--plx-comp-metric-card-value-font-weight);letter-spacing:var(--plx-sys-text-label-letter-spacing);line-height:var(--plx-comp-metric-card-value-line-height);word-spacing:normal;}
+.plx-metric-card__summary-value{color:var(--_metric-card-text);font-family:var(--plx-comp-metric-card-value-font-family);font-size:var(--plx-comp-metric-card-value-sm-font-size);font-variant-numeric:tabular-nums;font-weight:var(--plx-comp-metric-card-value-font-weight);letter-spacing:var(--plx-sys-text-label-letter-spacing);line-height:var(--plx-comp-metric-card-value-line-height);word-spacing:var(--plx-sys-font-data-word-spacing);}
 
 /* week and month */
 .plx-metric-card__week,.plx-metric-card__month{column-gap:var(--plx-comp-metric-card-cell-gap);display:grid;grid-template-columns:repeat(7,minmax(0,1fr));row-gap:var(--plx-comp-metric-card-cell-gap);text-align:center;}

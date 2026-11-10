@@ -7,7 +7,7 @@ Owner rule for CTM, PDS and every app (D-0160, #1201). Eight rules for business 
 | Rule | Owner | Status |
 |---|---|---|
 | 1. Hashed, compressed, immutable caching | Plenix CDN | In place |
-| 2. Code loads per screen | Plenix (#1201 slices) | In progress: the all-in-one `plenix.js` stays for one major version |
+| 2. Code loads per screen | Plenix (#1201 slices) | Released in 1.7.0: the all-in-one `plenix.js` stays through 1.x |
 | 3. One parallel data request per screen | The app | Documented below |
 | 4. Seen data shows at once and refreshes quietly | The app | Documented below |
 | 5. Server paging, 25–50 rows, with server search and sort | The app, with `DataGrid fetchRows` | Documented below |
@@ -25,11 +25,10 @@ Reference pages for rule 7: a DataGrid with 50 rows, a record page and a form.
 
 ## Rule 2: code per screen
 
-- Decided in ADR 0052 (not released yet): one public entry per export name. On npm: `@plenix-ds/react/DataGrid`. On the CDN: `/cdn/<version>/esm/DataGrid.js`.
+- Released in 1.7.0 (ADR 0052): one entry per export. On npm: `@plenix-ds/react/DataGrid`. On the CDN: `/cdn/<version>/esm/DataGrid.js`, loaded with `Plenix.load(['DataGrid'])` from `plenix-loader.js`.
 - A screen imports only the parts it uses. A router can `import()` a whole screen.
-- `plenix.js` and `plenix.esm.js` stay unchanged through 1.x, are deprecated in the minor that ships the entries, and are removed in 2.0.0.
-- Until the entries are released, load `plenix.js` once and let the browser cache it. Do not deep-import files from the repository.
-- The full guide, with measured sizes, is `docs/integration/code-per-screen.md` (#1210, written after the build ships).
+- `plenix.js` and `plenix.esm.js` stay unchanged through 1.x, are deprecated, and are removed in 2.0.0.
+- The guide, with measured sizes and samples, is [code-per-screen.md](code-per-screen.md).
 
 ## Rule 3: one parallel data request per screen
 
@@ -43,7 +42,7 @@ Reference pages for rule 7: a DataGrid with 50 rows, a record page and a form.
 - Keep the last answer for a screen in memory, keyed by the request. On return, draw it at once, then ask again in the background.
 - Replace the rows when the new answer arrives. Do not clear the screen first and do not show a spinner over rows that are already shown: a `DataGrid` with rows changes nothing when `loading` is true, so keep rows in place while the refresh runs.
 - Show a spinner or the empty text only when there is nothing to draw yet.
-- Gap: `fetchRows` cannot start from rows the app already has, so a revisit to a server-paged grid shows the loader again (#1219). Until it is fixed, pass the kept rows as `data` for a screen that fits in memory.
+- Use `cachedRows(request)` (1.7.0, ADR 0053): return the app's cached `{ rows, total }` for the same request `fetchRows` gets, or `undefined`. The rows show at once, `fetchRows` still runs, and its answer replaces them in place with no spinner, and focus and scroll stay. A failed refresh keeps the rows and shows a row with Retry. The app owns the cache: keep it in memory and clear it on sign-out.
 - When the refresh fails, keep the old data and show a short message with Retry. Say when the data was last updated if it matters to the decision.
 
 ## Rule 5: server paging, search and sort
@@ -82,7 +81,7 @@ An app may fetch data it expects the person to need, only inside these limits:
 - Memory only. Never write prefetched data to local storage, session storage, IndexedDB or a cache the browser keeps across sessions.
 - Permitted data only: prefetch what the person may already open. Never fetch to find out whether they may.
 - Nothing sensitive: no personal, health, financial or confidential records.
-- Plenix stores no app data, so the cache is the app's. For code, `esm/manifest.json` (ADR 0052, not released yet) lists each screen's chunks for `modulepreload` at idle.
+- Plenix stores no app data, so the cache is the app's. For code, `esm/manifest.json` (released in 1.7.0) lists each screen's chunks for `modulepreload` at idle.
 - Clear everything on sign-out and when the person or their role changes.
 
 ## Checking it

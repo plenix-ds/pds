@@ -102,7 +102,23 @@
      passes them to a payment provider's secure fields or API. Never keep card numbers; never put real card data in
      demos. The page owns the data, the URL (filters, the open product) and every request.
 */
-export { COMMERCE_PAGES, useCommercePage, orderTotals, CommerceLine, OrderSummary } from './shared.tsx';
-export { ProductListing, ProductDiscovery, ProductDetail, productFields } from './Storefront.tsx';
-export { Cart, Checkout, Payment, PaymentFields, OrderConfirmation, cardBrand, formatCardNumber } from './Checkout.tsx';
-export { ORDER_STATUSES, OrderStatus, OrderManagement, OrderDetail, SubscriptionManagement, Returns } from './Account.tsx';
+export { COMMERCE_PAGES } from './pages.ts';
+export { useCommercePage } from './useCommercePage.ts';
+export { orderTotals } from './totals.ts';
+export { CommerceLine, OrderSummary } from './shared.tsx';
+export { productFields } from './productFields.ts';
+export { ProductListing } from './ProductListing.tsx';
+export { ProductDiscovery } from './ProductDiscovery.tsx';
+export { ProductDetail } from './ProductDetail.tsx';
+export { cardBrand, formatCardNumber } from './card.ts';
+export { Cart } from './Cart.tsx';
+export { Checkout } from './Checkout.tsx';
+export { Payment } from './Payment.tsx';
+export { PaymentFields } from './PaymentFields.tsx';
+export { OrderConfirmation } from './OrderConfirmation.tsx';
+export { ORDER_STATUSES } from './statuses.ts';
+export { OrderStatus } from './OrderStatus.tsx';
+export { OrderManagement } from './OrderManagement.tsx';
+export { OrderDetail } from './OrderDetail.tsx';
+export { SubscriptionManagement } from './SubscriptionManagement.tsx';
+export { Returns } from './Returns.tsx';

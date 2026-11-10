@@ -1,0 +1,26 @@
+Plenix trace · https://design-system.lighthouseway.org/cdn/1.7.0 · light · median of 5 · main thread, ms
+page    phase   css   recalc (n, elements)   layout  paint  script  forced-layouts  long-tasks
+empty   load      3.9      9.6        (3, 12)      2.4    0.7    17.1          0          0 (0 ms) 
+empty   hover     0.0      0.0         (0, 0)      0.0    0.0     0.0          0  
+empty   sort      0.0      4.6        (4, 18)      0.1    0.3     1.4          0  
+grid    load      3.9     12.3      (16, 448)      6.6    3.0    73.2         25          1 (55 ms) 
+grid    hover     0.0      9.3       (8, 814)      0.1    5.7    12.8          9  
+grid    sort      0.0      2.0       (3, 477)      1.0    2.3    10.2          0  
+grid    filter    0.0      0.9         (8, 4)      0.9    0.3    17.7         16  
+grid    resize    0.0      4.0      (22, 184)      4.6    7.7    23.9         34  
+grid500 load      3.7     10.0       (16, 40)      7.7    3.4    73.8         25          1 (59 ms) 
+grid500 hover     0.0      8.0       (8, 814)      0.1    4.9    12.1          9  
+grid500 sort      0.0      2.3       (3, 517)      1.0    2.3    11.1          0  
+grid500 filter    0.0      0.9         (8, 4)      0.9    0.3    21.2         16  
+grid500 resize    0.0      3.8      (22, 184)      4.5    6.6    27.6         34  
+grids3  load      3.3     34.8     (22, 6091)     20.4   12.1   138.7         39          1 (122 ms) 
+grids3  hover     0.0     16.0      (8, 3653)      0.0   11.5    19.2          8  
+grids3  sort      0.0      3.5      (3, 1047)      1.8    4.5    10.5          0  
+grids3  filter    0.0    155.4    (24, 67248)     27.7    0.5   232.4         48  
+grids3  resize    0.0    198.7    (41, 79733)     50.8   45.5   323.5         74  
+record  load      3.3      7.2        (2, 13)      2.6    0.4    23.1          2          0 (0 ms) 
+record  hover     0.0      0.0         (0, 0)      0.0    0.0     0.0          0  
+record  sort      0.0      4.4        (4, 39)      0.1    0.3     1.2          0  
+form    load      3.6      7.4        (3, 24)      2.6    0.4    18.8          2          0 (0 ms) 
+form    hover     0.0      0.0         (0, 0)      0.0    0.0     0.0          0  
+form    sort      0.0      4.8        (4, 30)      0.1    0.3     1.4          0  

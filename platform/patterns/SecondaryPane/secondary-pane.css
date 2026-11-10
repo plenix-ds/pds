@@ -16,7 +16,7 @@
 .plx-secondary-pane__back:active{background-color:var(--plx-comp-secondary-pane-back-item-background-pressed);}
 .plx-secondary-pane__back:focus-visible{outline-color:var(--plx-comp-secondary-pane-back-item-focus-outline-color);outline-offset:var(--plx-comp-secondary-pane-back-item-focus-outline-offset);outline-style:solid;outline-width:var(--plx-comp-secondary-pane-back-item-focus-outline-width);}
 .plx-secondary-pane__back-icon{display:inline-flex;flex-shrink:0;--plx-comp-icon-size:var(--plx-comp-secondary-pane-back-item-icon-size);}
-.plx-secondary-pane__back-text{min-inline-size:0;overflow-x:hidden;overflow-y:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.plx-secondary-pane__back-text{unicode-bidi:plaintext;min-inline-size:0;overflow-x:hidden;overflow-y:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .plx-secondary-pane__header--after-back{padding-block-start:0;}
 .plx-secondary-pane__body{display:flex;flex-direction:column;flex-grow:1;min-block-size:0;overflow-y:auto;padding-block-end:var(--plx-comp-secondary-pane-body-padding-block-end);padding-inline-end:var(--plx-comp-secondary-pane-body-padding-inline);padding-inline-start:var(--plx-comp-secondary-pane-body-padding-inline);row-gap:var(--plx-comp-secondary-pane-body-row-gap);}
 /* folded to a rail (collapsible): the divider on its content side, as the pane had */
