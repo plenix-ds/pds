@@ -42,7 +42,7 @@ Reference pages for rule 7: a DataGrid with 50 rows, a record page and a form.
 - Keep the last answer for a screen in memory, keyed by the request. On return, draw it at once, then ask again in the background.
 - Replace the rows when the new answer arrives. Do not clear the screen first and do not show a spinner over rows that are already shown: a `DataGrid` with rows changes nothing when `loading` is true, so keep rows in place while the refresh runs.
 - Show a spinner or the empty text only when there is nothing to draw yet.
-- Gap: `fetchRows` cannot start from rows the app already has, so a revisit to a server-paged grid shows the loader again (#1219). Until it is fixed, pass the kept rows as `data` for a screen that fits in memory.
+- Use `cachedRows(request)` (1.7.0, ADR 0053): return the app's cached `{ rows, total }` for the same request `fetchRows` gets, or `undefined`. The rows show at once, `fetchRows` still runs, and its answer replaces them in place with no spinner, and focus and scroll stay. A failed refresh keeps the rows and shows a row with Retry. The app owns the cache: keep it in memory and clear it on sign-out.
 - When the refresh fails, keep the old data and show a short message with Retry. Say when the data was last updated if it matters to the decision.
 
 ## Rule 5: server paging, search and sort
