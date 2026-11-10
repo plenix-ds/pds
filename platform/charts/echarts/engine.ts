@@ -168,6 +168,9 @@ export function chartTokens(where: any) {
 export function plenixTheme(t: any) {
   const label = { color: t.tick.color, fontFamily: t.tick.fontFamily, fontSize: t.tick.fontSize, margin: t.tickOffset, hideOverlap: true };
   const name = { color: t.title.color, fontFamily: t.title.fontFamily, fontSize: t.title.fontSize, fontWeight: t.title.fontWeight };
+  // the data font is for data only (D-0164, #1232): a value or date axis is drawn in it; a category axis holds names and words, so its labels take the text font
+  // (the axis title's, a UI face), with the tick label's size, color and weight
+  const word = Object.assign({}, label, { fontFamily: t.title.fontFamily });
   const base = { axisLabel: label, nameTextStyle: name, axisTick: { show: false } };
   const rule = { show: true, lineStyle: { color: t.axis.color, width: t.axis.width } };
   const gridLines = { show: true, lineStyle: { color: t.grid.color, width: t.grid.width } };
@@ -175,7 +178,7 @@ export function plenixTheme(t: any) {
     color: t.colors,
     backgroundColor: 'transparent',
     textStyle: { fontFamily: t.tick.fontFamily, color: t.tick.color, fontSize: t.tick.fontSize },
-    categoryAxis: Object.assign({}, base, { axisLine: rule, splitLine: { show: false } }),
+    categoryAxis: Object.assign({}, base, { axisLabel: word, axisLine: rule, splitLine: { show: false } }),
     timeAxis: Object.assign({}, base, { axisLine: rule, splitLine: { show: false } }),
     valueAxis: Object.assign({}, base, { axisLine: { show: false }, splitLine: gridLines }),
     line: { symbol: 'circle', symbolSize: t.point.r * 2, lineStyle: { width: t.lineWidth, cap: 'round', join: 'round' },
