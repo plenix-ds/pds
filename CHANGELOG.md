@@ -6,6 +6,18 @@ The batch numbers point to the work log (Plenix - DAM/audit/batches/).
 
 ## [Unreleased]
 
+## [1.6.1] - 2026-11-10
+
+### Upgrading from 1.6.0
+Nothing to change. Apps on the CDN loader follow this release by themselves; npm apps update the version as usual.
+
+### Fixed
+
+- **DataGrid:** a click on a cut cell's text right after the pointer arrives opens the row. The text no longer remounts when the "show the full text" button appears, so the click is not lost.
+
+### Known issue
+- Arabic pages still show the compact Timeline's "Upcoming" tag (`timeline.tagUpcoming`) in English until the owner approves its Arabic word (#1171, D-0012). It ships in the next patch after his answer (D-0154).
+
 ## [1.6.0] - 2026-11-10
 
 ### Upgrading from 1.5.0
