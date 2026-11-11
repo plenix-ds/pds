@@ -76,6 +76,11 @@
       "$type": "color",
       "$description": "Calendar day: the number."
     },
+    "calendar-day-font-family": {
+      "$value": "{plx-sys.font-data}",
+      "$type": "fontFamily",
+      "$description": "Calendar: a day number is data, drawn in the data font (D-0164, audit item 9 of #1232). The weekday headers and the month title stay text."
+    },
     "calendar-day-font-size": {
       "$value": "{plx-ref.font-size-200}",
       "$type": "dimension",

@@ -6255,6 +6255,11 @@
       "$value": "{plx-sys.content-default}",
       "$type": "color"
     },
+    "date-badge-day-font-family": {
+      "$value": "{plx-sys.font-data}",
+      "$type": "fontFamily",
+      "$description": "DateBadge: the day number is data, drawn in the data font (D-0164, audit item 7 of #1232). The weekday stays text."
+    },
     "date-badge-day-font-size": {
       "$value": "{plx-ref.font-size-300}",
       "$type": "dimension"

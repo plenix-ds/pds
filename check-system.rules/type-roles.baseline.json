@@ -1,10 +1,7 @@
 {
  "$description": "The type-roles backlog (check-system.rules/type-roles.js, ADR 0055): breaks of the data-font rule when it began. It only shrinks; the design audit (#1232, D-0165) decides each one.",
  "backlog": {
-  "css plx-calendar__day": "tabular-nums (a value) without the data font",
   "css plx-chat__reaction": "tabular-nums (a value) without the data font",
-  "css plx-chat__voice-time": "tabular-nums (a value) without the data font",
-  "css plx-date-badge__day": "tabular-nums (a value) without the data font",
-  "css plx-timeline__date-day": "tabular-nums (a value) without the data font"
+  "css plx-chat__voice-time": "tabular-nums (a value) without the data font"
  }
 }
