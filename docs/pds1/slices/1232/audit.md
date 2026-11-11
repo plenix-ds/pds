@@ -45,9 +45,10 @@
 | 15 | Auth `data` (`auth-data-font-family`: "an email and a count in a sentence") | the run is Reddit Mono | conforms only if it is applied to the email or count run, never to the sentence | verify at build; use `dataPhrase` for the sentence |
 | 16 | FilterBar count (`filter-bar-count-font-family`) | Reddit Mono | conforms if it is the number alone | verify that "3 filters" is `dataPhrase`, not the whole label |
 | 17 | DataGrid kinds `id` and `code` (found by the `type-roles` check, #1237) | no data cell class: DM Sans | IDs and codes are data | the data cell class, as kind `data` |
+| 18 | Chat reaction count and voice-message time (`plx-chat__reaction`, `plx-chat__voice-time`; found by `type-roles`, #1232 G3) | DM Sans with `tabular-nums` | a count and a time standing as values, like the message time (`chat-time-font-family` is already `font-data`) | **Reaction:** the count `<span>` gets its own class, `plx-chat__reaction-count`, and a new token `chat-reaction-count-font-family` (`font-data`). The emoji and the button stay in the text font. **Voice time** ("0:12 / 1:04"): the whole run is data, so it gets a new token `chat-voice-time-font-family` (`font-data`) plus `font-data-word-spacing`. The size and colour don't change, and the state matrix is unchanged (font only) |
 
 - #4 to #9 have no font-family token today. The `type-roles` token pass (#1237) cannot see them until their fixes add one: `metric` and `metric-card` values already have tokens; the fixes add `count-`, `date-badge-day-`, `timeline-grouped-date-day-` and `calendar-day-font-family`, each declared `data`. #10 to #16 are runtime (`dataPhrase`, `dataWhenText`, a path test), so their tests carry them.
-- #1 to #3 ship in **1.6.2** (the owner's bug). #4 to #16 ship in **1.7.0** with the check.
+- #1 to #3 ship in **1.6.2** (the owner's bug). #4 to #16 ship in **1.7.0** with the check. #18 ships in the next release after its fix merges.
 - #4, #5, #7, #8 and #9 change what a person sees (DM Sans to Reddit Mono). D-0164 asks for exactly this ("one rule in every component"), so they are not new looks. CI's light and dark shots go on the PR as usual.
 
 ## 4. Reading applied (D-0165, the owner may switch)
