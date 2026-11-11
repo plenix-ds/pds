@@ -57,6 +57,8 @@
 - **Types and props types** come from the same entry: `export type { DataGridProps, DataGridColumn } …` sit in `parts/DataGrid.d.ts`, and all are also in the barrel.
 - **The barrel `.` stays,** for apps that bundle (a bundler tree-shakes it as before).
 - **A manifest:** `/cdn/<version>/esm/manifest.json` (`{ version, entries: { "<Export>": { file, imports: [chunk files] } } }`). It lets a page or the loader preload a screen's chunks (`<link rel="modulepreload">`). It is generated, never edited.
+  - **Optional fields (#1301, D-0171):** an entry may also carry `chunk` (the shared file that holds the part) and `binding` (its name there), so the loader imports the chunk directly. A reader of 1.7.0's shape (`file`, `imports`) keeps working; new fields are only ever added.
+  - **Chunks are layers, not one per part (#1293, D-0171):** the CDN's `esm/` groups shared code by what loads together (core, grid, shell, forms, charts), so a screen is a handful of files. Each layer is limited once in `perf-budget.json`, and each part by what it adds. The npm part modules stay one per part, for bundlers.
 - **React for the CDN modules:** they import `react`, `react-dom` and `react/jsx-runtime` as bare names. The version's own vendor folder provides ES module builds of them (`vendor/react.esm.js` and the others; release architect), and an import map resolves the names.
 - **The CSS stays one file** (`@plenix-ds/styles`, `plenix.css`). Splitting it per part is a later ADR, once #1188's scope fix is measured. A part's CSS is small next to its JS.
 

@@ -1,6 +1,7 @@
 {
   "_doc": "G6 exceptions (D-0153). Each lets ONE release ship with a named key's Arabic missing; it shows in English. Only rule missing-ar, only for the version named, only with a decision record. Unapproved Arabic is never excused (D-0012). Remove an entry when its word lands; an entry for an older version is ignored.",
   "exceptions": [
-    { "key": "timeline.tagUpcoming", "rule": "missing-ar", "version": "1.6.1", "decision": "D-0154", "issue": 1171 }
+    { "key": "timeline.tagUpcoming", "rule": "missing-ar", "version": "1.7.0", "decision": "D-0170", "issue": 1171 },
+    { "key": "loading.slow", "rule": "missing-ar", "version": "1.7.0", "decision": "D-0170", "issue": 1203 }
   ]
 }

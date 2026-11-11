@@ -255,7 +255,7 @@ A named variation sets a whole agreed look with one prop, so an app never gets h
 
 ### Metric cards
 
-- **Person card** (`type="person" layout="tile"`, opt-in until 2.0.0, D-0167, ADR 0056, #1240): a 48px Avatar beside the name (up to 2 lines) and the role (`content-muted`), an inset divider, then the value row at the inline end. The number is Reddit Mono, 20px, 700; the unit is a small uppercase label in `content-muted`. A word value ("Hidden") takes the unit's style. The card is about 121px tall, with one size and no density. In a WidgetGrid with `itemSize="sm"`, columns are at least 200px.
+- **Person card** (`type="person" layout="tile"`, opt-in until 2.0.0, D-0167, ADR 0056, #1240): a 48px Avatar beside the name (up to 2 lines) and the role (`content-muted`), an inset divider, then the value row at the inline end. The number is Reddit Mono, 20px, 700; the unit is a small uppercase label in `content-muted`. A word value ("Hidden") takes the unit's style. The card is about 125px tall (138px with a two-line name), with one size and no density. In a WidgetGrid with `itemSize="sm"`, columns are at least 200px.
 
 ### Timeline, grouped (D-0115, D-0117, #987; D-0145, D-0148, #1152)
 

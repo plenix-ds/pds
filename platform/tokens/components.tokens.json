@@ -1994,6 +1994,11 @@
       "$type": "color",
       "$description": "Badge, negative: the text, shade 700 (800 for negative)."
     },
+    "count-font-family": {
+      "$value": "{plx-sys.font-data}",
+      "$type": "fontFamily",
+      "$description": "Count: a count is a number, so it is drawn in the data font (D-0164, audit item 6 of #1232)."
+    },
     "count-plain-text": {
       "$value": "{plx-sys.content-muted}",
       "$type": "color"
@@ -6823,8 +6828,13 @@
       "$value": "{plx-sys.content-default}",
       "$type": "color"
     },
-    "metric-value-font-family": {
+    "metric-value-word-font-family": {
       "$value": "{plx-sys.font-heading}",
+      "$type": "fontFamily",
+      "$description": "Metric: a figure that is only a word (\"On track\", \"N/A\") is text, not data: the text font (D-0164)."
+    },
+    "metric-value-font-family": {
+      "$value": "{plx-sys.font-data}",
       "$type": "fontFamily"
     },
     "metric-value-font-size": {
@@ -10248,6 +10258,11 @@
     "widget-grid-gap": {
       "$value": "{plx-sys.space-inline-md}",
       "$type": "dimension"
+    },
+    "widget-grid-item-min-width-sm": {
+      "$value": "{plx-sys.size-widget-min-sm}",
+      "$type": "dimension",
+      "$description": "WidgetGrid itemSize sm: the narrowest a column gets (200px), so 5 to 6 compact cards fit in a row (ADR 0056)."
     },
     "widget-grid-grid-template-columns": {
       "$value": "repeat(auto-fill, minmax({plx-ref.size-70u}, 1fr))",

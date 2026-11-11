@@ -1,0 +1,4 @@
+AssertionError [ERR_ASSERTION]: ltr en: back isolates its direction
++ actual - expected
+
++ 'normal'

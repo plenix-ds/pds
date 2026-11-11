@@ -929,18 +929,23 @@
    ]
   },
   "plx-count--pill": {
-   "contract": "adjusts",
-   "props": [
-    "font-size",
+   "contract": "establishes",
+   "role": "secondary",
+   "font": "mono",
+   "adjusts": [
     "font-weight",
     "line-height"
    ]
   },
+  "plx-count": {
+   "contract": "follows",
+   "font": "mono",
+   "size": true
+  },
   "plx-count--plain": {
-   "contract": "adjusts",
-   "props": [
-    "font-size"
-   ]
+   "contract": "follows",
+   "font": "mono",
+   "size": true
   },
   "plx-data-grid__cell--name": {
    "contract": "adjusts",
@@ -1976,6 +1981,35 @@
    "font": "mono",
    "size": true
   },
+  "plx-metric-card__person-name": {
+   "contract": "establishes",
+   "role": "heading",
+   "font": "sans"
+  },
+  "plx-metric-card__person-number": {
+   "contract": "establishes",
+   "role": "title",
+   "font": "mono",
+   "adjusts": [
+    "font-weight",
+    "line-height"
+   ]
+  },
+  "plx-metric-card__person-role": {
+   "contract": "establishes",
+   "role": "secondary",
+   "font": "sans"
+  },
+  "plx-metric-card__person-target": {
+   "contract": "follows",
+   "font": "mono",
+   "size": true
+  },
+  "plx-metric-card__person-unit": {
+   "contract": "establishes",
+   "role": "eyebrow",
+   "font": "sans"
+  },
   "plx-metric-card__rank": {
    "contract": "follows",
    "font": "mono",
@@ -2000,11 +2034,16 @@
   "plx-metric-card__summary-value": {
    "contract": "establishes",
    "role": "label",
-   "font": "sans",
+   "font": "mono",
    "adjusts": [
     "font-size",
     "line-height"
    ]
+  },
+  "plx-metric-card__value--word": {
+   "contract": "establishes",
+   "role": "label",
+   "font": "sans"
   },
   "plx-metric-card__title": {
    "contract": "establishes",
@@ -2025,7 +2064,7 @@
   "plx-metric-card__value": {
    "contract": "establishes",
    "role": "label",
-   "font": "sans",
+   "font": "mono",
    "adjusts": [
     "font-size",
     "line-height"
@@ -2054,10 +2093,15 @@
     "font-size"
    ]
   },
+  "plx-metric__value--word": {
+   "contract": "establishes",
+   "role": "label",
+   "font": "sans"
+  },
   "plx-metric__value": {
    "contract": "establishes",
    "role": "label",
-   "font": "sans",
+   "font": "mono",
    "adjusts": [
     "font-size",
     "font-weight",

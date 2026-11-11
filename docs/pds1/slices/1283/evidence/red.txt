@@ -1,0 +1,6 @@
+node:assert:150
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: an ellipsis rule without unicode-bidi: plaintext (or an allowlist reason):
+  components/Button/button.css: .plx-button__label

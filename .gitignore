@@ -28,6 +28,7 @@ build/sd/
 # A fresh checkout has none of them until `npm ci` (or node build-app.js) has run.
 /platform/dist/platform.js
 /platform/dist/plenix-icons-plenix.js
+/platform/dist/plenix-icons-plenix.esm.js
 /platform/system/tokens/
 /platform/system/themes/default.css
 /platform/system/themes/index.css

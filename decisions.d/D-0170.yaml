@@ -1,0 +1,9 @@
+id: D-0170
+date: 2026-11-10
+area: release
+decided_by: agent (pds1-release-architect) on the PM's ask on #1232 ("release 1.6.2 when #1187 and the BarChart fix are merged") and VERSIONING.md; owner may switch
+decision: 'The release that carries the chart category-label fix (#1244) and the row hover (#1193) is 1.7.0, cut from main, not 1.6.2: main also holds Added and Changed entries (LoadingState long wait, DataGrid cachedRows, icon modules, Panel.fill and dataView, the Menu placement), and VERSIONING.md makes an added prop, token or export a MINOR release. It ships without waiting for the owner''s Arabic words for timeline.tagUpcoming (#1171) and loading.slow (#1203): two named G6 exceptions for 1.7.0 (missing-ar only), which show in English on Arabic pages until he answers; each word then ships in the next patch. No other G6 finding is excused and no unapproved Arabic is written (D-0012 stands).'
+why: 'The owner asked for the chart fix on the CDN ("the CDN has to be updated for this", #1232). A patch 1.6.2 would have to be cut from a branch off 1.6.1, publishing npm, CDN and API from a commit that is not on main; releasing main as the minor it is keeps one version line. Holding for two Arabic words would hold an owner-requested fix, as D-0153 and D-0154 already ruled.'
+options: ['1.7.0 from main now, with two G6 exceptions (chosen)', '1.6.2 from a branch off v1.6.1 with only the two fixes cherry-picked', 'hold until the owner answers #1171 and #1203']
+status: active
+check: 'tools/checks/locale/g6-exceptions.json has exactly the two 1.7.0 entries citing D-0170; locale.mjs --release shows no other finding; tools/ci/check-release-notes.mjs passes for 1.6.1 -> 1.7.0; the 1.7.0 release record on #1232 lists both exceptions'
