@@ -8,7 +8,7 @@ import { recordKey, valueAt } from './state.ts';
 /** a record as the application gave it */
 export type DataRecord = Record<string, unknown>;
 /** a column as grouping reads it */
-import { instantOf } from '../../utils/format.ts';
+import { parseDate } from '../../utils/format.ts';
 export type GroupColumn = { field?: string; type?: string; multi?: boolean; groupBucket?: (value: unknown) => unknown; groupRange?: number; timestamp?: 'ms' | 's' };
 /** a grouping level: a field, a function of the record, or { field, interval, range } */
 export type GroupLevel = string | ((record: DataRecord) => unknown) | { field: string; interval?: string; range?: number };
@@ -43,10 +43,9 @@ export function groupValue(value: unknown, level?: GroupLevel, column: GroupColu
   const config: { interval?: string; range?: number } = typeof level === 'object' ? level : {};
   const interval = config.interval || (column.type === 'date' ? 'day' : undefined);
   if (interval && ['day', 'week', 'month', 'year'].includes(interval)) {
-    const date = new Date(instantOf(value, column.timestamp as any) as string | number | Date); if (!Number.isFinite(date.getTime())) return null;
-    // a bare "YYYY-MM-DD" is its own calendar day (read as UTC, so its UTC parts are the day); a Date or a timestamp is the viewer's local day (issue 161)
-    const local = typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value);
-    const year = local ? date.getFullYear() : date.getUTCFullYear(), month = local ? date.getMonth() : date.getUTCMonth(), dayOfMonth = local ? date.getDate() : date.getUTCDate();
+    // parseDate reads a bare "YYYY-MM-DD" as its own calendar day and a Date or a timestamp as the viewer's local day (issue 161, #342)
+    const date = parseDate(value, { timestamp: column.timestamp as any }); if (!date) return null;
+    const year = date.getFullYear(), month = date.getMonth(), dayOfMonth = date.getDate();
     if (interval === 'year') return String(year);
     if (interval === 'month') return new Date(Date.UTC(year, month, 1)).toISOString().slice(0, 7);
     const day = new Date(Date.UTC(year, month, dayOfMonth));
