@@ -630,9 +630,7 @@
   "plx-chat__voice-time": {
    "contract": "follows",
    "font": "mono",
-   "adjusts": [
-    "font-size"
-   ]
+   "size": true
   },
   "plx-chat__meta": {
    "contract": "adjusts",

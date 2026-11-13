@@ -704,7 +704,6 @@
   display: inline-flex;
   font-family: inherit;
   font-size: var(--plx-comp-chat-reaction-font-size);
-  font-variant-numeric: tabular-nums;
   margin-block-end: 0;
   margin-block-start: 0;
   margin-inline-end: 0;
@@ -716,6 +715,7 @@
 }
 .plx-chat__reaction-count {
   font-family: var(--plx-comp-chat-reaction-count-font-family);
+  font-variant-numeric: tabular-nums;
   word-spacing: var(--plx-sys-font-data-word-spacing);
 }
 .plx-chat__reaction:hover:where(:not(:disabled)) {
