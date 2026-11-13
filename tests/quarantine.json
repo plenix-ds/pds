@@ -227,14 +227,6 @@
   },
   {
    "test": "data-grid",
-   "check": "data-grid-view-169: the child test passes",
-   "issue": 1338,
-   "owner": "engineer",
-   "since": "2026-11-13",
-   "why": "reset() leaves the name column width (timeout after reset)"
-  },
-  {
-   "test": "data-grid",
    "check": "cut-popover: the child test passes",
    "issue": 1343,
    "owner": "engineer",
