@@ -23,4 +23,12 @@ assert.deepEqual(lines("<a href=\"#abc\">x</a>\n"), [], 'an href anchor');
 // a glob or a "/*" in a string does not open a comment that hides the colors after it
 assert.deepEqual(lines("const g = 'platform/**/*.css';\nconst c = '#abc';\n"), ['2:#abc'], 'a glob');
 assert.deepEqual(lines("const s = '/*';\nconst c = '#abc';\n"), ['2:#abc'], 'a "/*" in a string');
+// speed: the text is split once, not once per line (it was quadratic: 22 s on a 20,000-line file of the repo)
+const big = Array.from({ length: 20000 }, (_, i) => (i % 100 === 0 ? "const c = '#abc';" : '  const v' + i + ' = { a: ' + i + ', b: "x" }; // note #1347')).join('\n');
+const t0 = Date.now();
+const found = hexColors(big);
+const ms = Date.now() - t0;
+assert.equal(found.length, 200, 'a 20,000-line file: every real color found');
+assert.equal(found[1].line, 101, 'a 20,000-line file: line numbers kept');
+assert.ok(ms < 1000, 'a 20,000-line file takes ' + ms + ' ms, over the 1000 ms limit');
 console.log('CHECK_STYLE_HEX_1350_OK');

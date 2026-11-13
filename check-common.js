@@ -57,12 +57,13 @@ function collect() {
 function hexColors(text) {
   const blank = text.replace(/(?<![\w'"`/*.-])\/\*[\s\S]*?\*\//g, (c) => c.replace(/[^\n]/g, ' '));
   const out = [];
+  const original = text.split(/\r?\n/); // split once and index: splitting per line is quadratic on a long file
   blank.split(/\r?\n/).forEach((line, i) => {
-    if (/plx-allow-hex/.test(text.split(/\r?\n/)[i])) return;
+    if (/plx-allow-hex/.test(original[i])) return;
     const code = line.replace(/\/\*.*?\*\/|\/\/.*$/g, '');
     for (const m of code.matchAll(/(?:[:(,'"=]\s*)#([0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})\b(?![\w-])/g)) {
       if (/href=|id=|url\(/.test(code.slice(Math.max(0, m.index - 12), m.index + 1))) continue;
-      out.push({ line: i + 1, hex: m[1], text: text.split(/\r?\n/)[i] });
+      out.push({ line: i + 1, hex: m[1], text: original[i] });
     }
   });
   return out;
