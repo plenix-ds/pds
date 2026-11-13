@@ -6,6 +6,7 @@
 //   node tests/pages.test.js                  the pages of what changed (tests/changed.js)
 //   TEST_SCOPE=full node tests/pages.test.js  every page (the final gate)   TEST_PORT=8901: another port
 const { serve, launch, sleep, at } = require('./lib.js');
+const shared = require('./check.js');   // one result per page in the results file (TEST_RESULTS), so CI can quarantine one page (#1327)
 const changed = require('./changed.js');
 const PORT = +process.env.TEST_PORT || 8790, BASE = 'http://127.0.0.1:' + PORT + '/Plenix/';
 const ALLOWED_MISSING = /Plenix%20-%20DAM\/audit\/batches\//;
@@ -87,7 +88,7 @@ let current = '';   // the page being checked
     docs.forEach((d) => d.querySelectorAll('[style]').forEach((el) => { const bad = wrong(el); if (!bad.length || el.closest('[data-plx-probe]')) return; out.other.push(el.tagName.toLowerCase() + '.' + String(el.className).split(' ').slice(0, 2).join('.') + ' ' + bad.join(', ')); }));
     return out; });
     if (r.other.length) errs.push(r.other.length + ' element(s) with an inline style the system does not allow: ' + r.other.slice(0, 2).join(' | ')); };
-  const done = (name) => { n++; if (errs.length) failed.push([name, [...new Set(errs)].slice(0, 4)]); errs = []; };
+  const done = (name) => { n++; shared.record(name + ': passes the page checks', !errs.length, [...new Set(errs)].slice(0, 4).join(' · ')); if (errs.length) failed.push([name, [...new Set(errs)].slice(0, 4)]); errs = []; };
 
   // the style audit tells the allowed from the forbidden (put back from utilities, #382 F7; owner, 2026-10-14: the colors
   // and fonts rule is the interface's, not the person's content): inside .plx-user-content the person's color,
@@ -128,5 +129,6 @@ let current = '';   // the page being checked
   await browser.close(); server.close();
   failed.forEach(([name, e]) => { console.log('FAIL ' + name); e.forEach((x) => console.log('     ' + x)); });
   console.log((failed.length ? 'PAGES_FAIL ' : 'PAGES_OK ') + (n - failed.length) + '/' + n);
+  shared.ended();   // every failure above is a recorded check (G5a I1)
   process.exit(failed.length ? 1 : 0);
 })().catch((e) => { console.error((current ? 'stopped on ' + current + ': ' : '') + e.message); process.exit(1); });
