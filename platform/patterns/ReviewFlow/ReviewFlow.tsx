@@ -52,66 +52,22 @@
      Decisions are final for the reviewer; to change one, decide again (the history keeps both).
 */
 import React from 'react';
-import type { IconValue } from '../../components/Icon/Icon.tsx';
 import { devWarn } from '../../utils/devWarn.ts';
 import { cx } from '../../utils/cx.ts';
 import { announce } from '../../utils/announce.tsx';
-import { formatNumber, formatDate } from '../../utils/format.ts';
-import { Badge } from '../../components/Badge/Badge.tsx';
 import { Button } from '../../components/Button/Button.tsx';
 import { Field } from '../../components/Field/Field.tsx';
 import { Textarea } from '../../components/Input/Input.tsx';
 import { Notice } from '../../components/Notice/Notice.tsx';
 import { Persona } from '../../components/Persona/Persona.tsx';
 import { Avatar } from '../../components/Avatar/Avatar.tsx';
-import { Text } from '../../components/Text/Text.tsx';
-import { PromptDialog } from '../../components/Dialog/Dialog.tsx';
-import { DataGrid } from '../../components/DataGrid/DataGrid.tsx';
 import { useOptionalToast } from '../../components/Toast/Toast.tsx';
 import { ActivityList } from '../ActivityList/ActivityList.tsx';
-import { CommandBar as CommandBarJs } from '../CommandBar/CommandBar.tsx';
-const CommandBar: any = CommandBarJs;
-import { useStrings, useLocale } from '../../providers/LocaleProvider.tsx';
-import english from '../../i18n/en.js';
-import AlertIcon from 'plenix-platform/icons/plenix/alert';
-import CircleCheckIcon from 'plenix-platform/icons/plenix/circle-check';
-import CloseIcon from 'plenix-platform/icons/plenix/close';
-import DocSearchIcon from 'plenix-platform/icons/plenix/doc-search';
-import PencilIcon from 'plenix-platform/icons/plenix/pencil';
-import ScheduleIcon from 'plenix-platform/icons/plenix/schedule';
+import { WorkflowStatus, WORKFLOW_STATUSES } from './WorkflowStatus.tsx';
+import type { WorkflowStatusName, ReviewDecision } from './WorkflowStatus.tsx';
+import { useStrings } from '../../providers/LocaleProvider.tsx';
 import SparkleIcon from 'plenix-platform/icons/plenix/sparkle';
-import VisibilityIcon from 'plenix-platform/icons/plenix/visibility';
 import { fill } from '../../utils/fill.ts';
-
-// the workflow statuses: a Badge variant by meaning, and its icon (owner, 2026-10-15)
-// the labels are the catalog's (reviewFlow.statuses): this constant keeps its shape and its English labels for apps that read it
-const STATUS_LABELS = english.reviewFlow.statuses;
-type WorkflowStatusEntry = { tone: string; icon: IconValue; label: string };
-export const WORKFLOW_STATUSES: Record<string, WorkflowStatusEntry> = {
-  draft: { tone: 'neutral', icon: PencilIcon, label: STATUS_LABELS.draft },
-  'in-review': { tone: 'active', icon: DocSearchIcon, label: STATUS_LABELS['in-review'] },
-  approved: { tone: 'success', icon: CircleCheckIcon, label: STATUS_LABELS.approved },
-  'changes-requested': { tone: 'action-required', icon: AlertIcon, label: STATUS_LABELS['changes-requested'] },
-  rejected: { tone: 'negative', icon: CloseIcon, label: STATUS_LABELS.rejected },
-  published: { tone: 'success', icon: VisibilityIcon, label: STATUS_LABELS.published },
-  scheduled: { tone: 'waiting', icon: ScheduleIcon, label: STATUS_LABELS.scheduled },
-};
-
-/** @public a workflow status */
-export type WorkflowStatusName = 'draft' | 'in-review' | 'approved' | 'changes-requested' | 'rejected' | 'published' | 'scheduled';
-/** @public a reviewer's decision */
-export type ReviewDecision = 'approved' | 'changes-requested' | 'rejected';
-/** @public the prop type of WorkflowStatus (ADR 0011) */
-export type WorkflowStatusProps = Omit<React.HTMLAttributes<HTMLElement>, 'children'> & { status?: WorkflowStatusName; label?: string; size?: 'md' | 'sm'; strings?: Record<string, string>; className?: string };
-export function WorkflowStatus(props: WorkflowStatusProps) {
-  const { status = 'draft', label, size, strings, className, ...rest } = props as any;
-  devWarn('WorkflowStatus', { size }, { size: ['md','sm'] });
-  const s = WORKFLOW_STATUSES[status] || WORKFLOW_STATUSES.draft;
-  const names: any = useStrings('reviewFlow.statuses');
-  const words = label || (strings && strings[status]) || names[status] || s.label;
-  return <Badge tone={s.tone} icon={s.icon} size={size} className={cx('plx-workflow-status', className)} {...rest}>{words}</Badge>;
-}
-
 
 const VERB: Record<string, any> = { approved: 'approve', 'changes-requested': 'changes', rejected: 'reject' };
 const LOOK: Record<string, any> = { approved: 'primary', 'changes-requested': 'secondary', rejected: 'danger-secondary' };
@@ -202,71 +158,5 @@ export function ReviewFlow(props: ReviewFlowProps) {
         </div>
       ) : null}
     </section>
-  );
-}
-
-
-/** @public one item waiting for review (submitted: YYYY-MM-DD) */
-export type ReviewQueueItem = { id: string | number; name: string; type?: string; submittedBy?: string; submitted?: string; status?: WorkflowStatusName };
-/** @public the prop type of ReviewQueue (ADR 0011) */
-export type ReviewQueueProps = Omit<React.HTMLAttributes<HTMLElement>, 'onSelect'> & {
-  items?: ReviewQueueItem[];
-  label?: string;
-  noun?: string;
-  plural?: string;
-  onDecision?(ids: (string | number)[], decision: ReviewDecision, reason: string): unknown;
-  selected?: (string | number)[];
-  onSelectionChange?(ids: (string | number)[]): void;
-  strings?: Record<string, string>;
-  className?: string;
-};
-export function ReviewQueue(props: ReviewQueueProps) {
-  let { items = [], label, noun, plural, onDecision, selected, onSelectionChange,
-  strings, className, ...rest } = props as any;
-  const t: any = useStrings('reviewFlow.queue', strings);
-  const names: any = useStrings('reviewFlow.statuses');
-  const loc = useLocale();
-  const builtIn = !noun && !plural;   // the default words: whole counted phrases with the Arabic plural forms, from the catalog
-  const many = plural || (noun ? noun + 's' : t.plural);   // the default words come from the catalog
-  noun = noun ?? t.noun;
-  label = label ?? t.queueLabel;
-  const counted = (m: any) => (builtIn ? loc.t('reviewFlow.queue.items', { count: m, n: formatNumber(m) }) : null);
-  const toast = useOptionalToast();
-  const [own, setOwn] = React.useState([]);
-  const sel = selected !== undefined ? selected : own;
-  const setSel = (ids: any) => { if (selected === undefined) setOwn(ids); if (onSelectionChange) onSelectionChange(ids); };
-  const [ask, setAsk] = React.useState<any>(null);   // "rejected" | "changes-requested" while its dialog is open
-  const what = (n: any) => counted(n) ?? (n === 1 ? '1 ' + noun : formatNumber(n) + ' ' + many);
-  const run = (decision: any, reason?: any) => {
-    const ids = sel.slice();
-    if (onDecision) onDecision(ids, decision, reason || '');
-    setSel([]); setAsk(null);
-    // the default words: one whole counted sentence per decision (Arabic plural forms); an app's own noun keeps the pieces
-    const whole = builtIn && t.doneItems && t.doneItems[decision];
-    const said = whole ? loc.t('reviewFlow.queue.doneItems.' + decision, { count: ids.length, n: formatNumber(ids.length) })
-      : fill(t.done, { what: what(ids.length), decision: names[decision].toLowerCase() });
-    if (toast) toast.show(said, { tone: decision === 'approved' ? 'success' : 'info' }); else announce(said);
-  };
-  const columns: any[] = [
-    { title: t.name, field: 'name', kind: 'name' },
-    { title: t.type, field: 'type' },
-    { title: t.submittedBy, field: 'submittedBy', type: 'person' },
-    { title: t.submitted, field: 'submitted', kind: 'data', type: 'date', render: (r: any) => <Text variant="data">{formatDate(r.submitted)}</Text> },
-    { title: t.status, field: 'status', kind: 'center', render: (r: any) => <WorkflowStatus status={r.status} strings={strings} /> },
-  ];
-  return (
-    <div className={cx('plx-review-queue', className)} {...rest}>
-      <CommandBar label={label} count={counted(items.length) ?? fill(t.count, { n: formatNumber(items.length), plural: items.length === 1 ? noun : many })}
-        selection={{ count: sel.length, noun, plural: many, onClear: () => setSel([]), actions: [
-          { id: 'approve', label: t.approve, icon: CircleCheckIcon, onSelect: () => run('approved') },
-          { id: 'changes', label: t.changes, icon: AlertIcon, onSelect: () => setAsk('changes-requested') },
-          { id: 'reject', label: t.reject, icon: CloseIcon, danger: true, onSelect: () => setAsk('rejected') },
-        ] }} />
-      <DataGrid label={label} data={items} index="id" selectable selected={sel} onSelectionChange={setSel} columns={columns} />
-      <PromptDialog open={!!ask} title={fill(ask === 'rejected' ? t.rejectTitle : t.changesTitle, { what: what(sel.length) })}
-        label={ask === 'rejected' ? t.reason : t.changesLabel} description={t.reasonHint}
-        confirmLabel={ask === 'rejected' ? t.reject : t.changes} validate={(v) => (v.trim() ? '' : t.needReason)}
-        onSubmit={(v) => run(ask, v.trim())} onCancel={() => setAsk(null)} />
-    </div>
   );
 }
