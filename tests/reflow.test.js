@@ -15,6 +15,7 @@
 const fs = require('fs');
 const path = require('path');
 const { serve, launch, sleep, at } = require('./lib.js');
+const shared = require('./check.js');   // one result per page and kind in the results file (TEST_RESULTS), so CI can quarantine one (#1327)
 const changed = require('./changed.js');
 const PORT = +process.env.REFLOW_PORT || +process.env.TEST_PORT || 8841, BASE = 'http://127.0.0.1:' + PORT + '/Plenix/';
 const BASELINE = path.join(__dirname, 'baselines', 'reflow.json');
@@ -33,7 +34,7 @@ changed.noPartialUpdate();
 {
   for (const [regression, unit] of [['commandbar-find-fold-274.test.js', 'patterns/CommandBar'], ['segmented-fold-276.test.js', 'components/SegmentedControl']]) {
     if (!changed.wants({ units: [unit] }) && !changed.child(regression)) continue;
-    const result = require('child_process').spawnSync(process.execPath, [path.join(__dirname, regression)], { stdio: 'inherit', env: process.env });
+    const result = require('./limit.js').excluding(() => require('child_process').spawnSync(process.execPath, [path.join(__dirname, regression)], { stdio: 'inherit', env: process.env }));   // its own limit (#1327)
     if (result.status !== 0) process.exit(result.status || 1);
   }
 }
@@ -105,10 +106,15 @@ function measure(EXEMPT) {
   }
   const base = fs.existsSync(BASELINE) ? JSON.parse(fs.readFileSync(BASELINE, 'utf8')) : {};
   const worse = []; let better = 0;
-  Object.keys(found).forEach((p) => KINDS.forEach((k) => { const was = (base[p] || {})[k] || 0, now = found[p][k].length; if (now > was) worse.push(p + ': ' + k + ' ' + was + ' -> ' + now + ' · e.g. ' + found[p][k].slice(0, 3).join(' | ')); }));
+  Object.keys(found).forEach((p) => KINDS.forEach((k) => {
+    const was = (base[p] || {})[k] || 0, now = found[p][k].length, detail = k + ' ' + was + ' -> ' + now + ' · e.g. ' + found[p][k].slice(0, 3).join(' | ');
+    shared.record(p + ': no new ' + k + ' at ' + WIDTH + 'px', now <= was, detail);
+    if (now > was) worse.push(p + ': ' + detail);
+  }));
   Object.keys(base).filter((p) => found[p]).forEach((p) => Object.entries(base[p]).forEach(([k, n]) => { if (found[p][k].length < n) better++; }));
   worse.forEach((w) => console.log('  NEW ' + w));
   if (better) console.log('  ' + better + ' known findings went down: run with --update to lower the baseline');
   console.log((worse.length ? 'REFLOW_FAIL ' + worse.length + ' new findings; ' : 'REFLOW_OK ') + total + ' known findings on ' + Object.keys(found).length + ' pages at ' + WIDTH + 'px (' + exempt + ' exempt two-dimensional scrollers)');
+  shared.ended();   // every failure above is a recorded check (G5a I1)
   process.exit(worse.length ? 1 : 0);
 })().catch((e) => { console.error(e); process.exit(1); });
