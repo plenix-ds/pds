@@ -31,6 +31,9 @@
      The child control gets id, aria-describedby, invalid, warning and required, unless it sets its own.
      The error is announced (role="alert"); the warning politely (role="status").
      The (i) button shows and hides the info text under the control (aria-expanded).
+     A label cut short (an inline Field in a Stack, issue 1337) shows its full text in a Tooltip on hover and while focus is anywhere in
+       the Field (its control, the (i) button): the label is not a tab stop, and Escape closes the tip. Its text sits in its own span that
+       isolates its direction (unicode-bidi: plaintext), so it is cut at its end in either writing direction.
      counter: the count updates as people type ("12/100", in the data font) and is part of the control's description.
        People may type past the limit: the native maxLength is not set, so nothing is cut off; past it the count and the
        control turn invalid (the danger color, aria-invalid). Near the limit (the last tenth) and past it, the characters
@@ -46,7 +49,7 @@ import { devWarn } from '../../utils/devWarn.ts';
 import { FieldLabelContext } from '../../utils/fieldLabel.ts';
 import { cx } from '../../utils/cx.ts';
 import { useTruncated } from '../../utils/overflow.ts';
-import { Tooltip } from '../Tooltip/Tooltip.tsx';
+import { Tooltip, TooltipFocusScope } from '../Tooltip/Tooltip.tsx';
 import { announce } from '../../utils/announce.tsx';
 import { formatNumber } from '../../utils/format.ts';
 import { useDescribedBy } from '../../utils/describedBy.ts';
@@ -105,7 +108,7 @@ export function Field({ label, hideLabel = false, description, error, warning, r
   const descId = description ? controlId + '-d' : undefined, errId = error ? controlId + '-e' : undefined;
   const showWarning = !!warning && !error, warnId = showWarning ? controlId + '-w' : undefined;
   const [showInfo, setShowInfo] = React.useState(false);
-  const labelRef = React.useRef<HTMLLabelElement>(null);
+  const labelRef = React.useRef<HTMLSpanElement>(null);   // the label's text: the part that is cut
   const root = React.useRef<HTMLDivElement>(null);
   const cut = useTruncated(labelRef);
   const child = React.Children.only(children) as React.ReactElement<FieldControlProps>;
@@ -149,9 +152,11 @@ export function Field({ label, hideLabel = false, description, error, warning, r
   return (
     <div ref={root} className={cx('plx-field', 'plx-field--' + lay, spans !== 1 && 'plx-field--span-' + spans, spans === 1 && own && 'plx-field--fill', labelWidth && 'plx-field--label-' + labelWidth, error && 'is-invalid', showWarning && 'is-warning', className)} {...rest}>
       <div className={cx('plx-field__head', hideLabel && 'plx-visually-hidden')}>
+        <TooltipFocusScope.Provider value={root}>
         <Tooltip content={label} disabled={!cut} describe={false} className="plx-field__label-tip">
-          <label ref={labelRef} className="plx-field__label" htmlFor={child.props.id || controlId}>{label}{required ? <span className="plx-field__required" aria-hidden="true"> *</span> : null}</label>
+          <label className="plx-field__label" htmlFor={child.props.id || controlId}><span ref={labelRef} className="plx-field__label-text">{label}</span>{required ? <span className="plx-field__required" aria-hidden="true"> *</span> : null}</label>
         </Tooltip>
+        </TooltipFocusScope.Provider>
         {info ? <button type="button" className="plx-field__info" aria-label={infoLabel || about.replace('{label}', label as string)} aria-expanded={showInfo} onClick={() => setShowInfo(!showInfo)}>i</button> : null}
         {lay === 'row' && description ? <div className="plx-field__description" id={descId}>{dataWhenText(description)}</div> : null}
       </div>

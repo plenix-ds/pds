@@ -6,7 +6,9 @@
 .plx-file-browser{container-type:inline-size;display:flex;flex-direction:column;min-inline-size:0;row-gap:var(--plx-comp-file-browser-gap);}
 .plx-file-browser--list,.plx-file-browser--grid,.plx-file-browser--breadcrumbs{min-inline-size:0;}
 .plx-file-browser__path{min-inline-size:0;}
-.plx-file-browser__body{align-items:stretch;column-gap:var(--plx-comp-file-browser-body-gap);display:flex;min-inline-size:0;}
+/* the body's gap shows only between the tree's pane and the content, so it is the tree's (--plx-comp-file-browser-tree-gap); without
+   the tree the body holds the content alone (--plx-comp-file-browser-body-gap moved nothing and is deprecated, #1337) */
+.plx-file-browser__body{align-items:stretch;display:flex;min-inline-size:0;}
 .plx-file-browser--tree .plx-file-browser__body{column-gap:var(--plx-comp-file-browser-tree-gap);}
 /* the tree's pane: a line at its end, the Resizable inside it as tall as the content */
 .plx-file-browser__tree{border-inline-end-color:var(--plx-comp-file-browser-tree-border-color);border-inline-end-style:solid;border-inline-end-width:var(--plx-comp-file-browser-tree-border-width);display:flex;flex-shrink:0;}

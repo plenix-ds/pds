@@ -9,10 +9,13 @@
 .plx-field__head{align-items:center;column-gap:var(--plx-comp-field-head-gap);display:flex;flex-wrap:wrap;min-inline-size:0;}
 .plx-field--row .plx-field__head{align-items:flex-start;flex-direction:column;row-gap:var(--plx-comp-field-row-head-row-gap);}
 .plx-field__label{color:var(--plx-comp-field-readonly-context-label-text,var(--plx-comp-field-label-text));font-family:var(--plx-comp-field-label-font-family);font-size:var(--plx-comp-field-readonly-context-label-font-size,var(--plx-comp-field-label-font-size));font-weight:var(--plx-comp-field-readonly-context-label-font-weight,var(--plx-comp-field-label-font-weight));letter-spacing:var(--plx-sys-text-label-letter-spacing);line-height:var(--plx-comp-field-readonly-context-label-line-height,var(--plx-comp-field-label-line-height));word-spacing:normal;}
-.plx-field--inline .plx-field__label{display:var(--plx-comp-field-grid-label-display,inline);font-size:var(--plx-comp-field-inline-label-context-font-size,var(--plx-comp-field-label-font-size));overflow-x:var(--plx-comp-field-grid-label-overflow,visible);overflow-y:var(--plx-comp-field-grid-label-overflow,visible);text-overflow:var(--plx-comp-field-grid-label-text-overflow,clip);white-space:var(--plx-comp-field-grid-label-white-space,normal);}
+.plx-field--inline .plx-field__label{display:var(--plx-comp-field-grid-label-display,inline);font-size:var(--plx-comp-field-inline-label-context-font-size,var(--plx-comp-field-label-font-size));min-inline-size:0;}
+/* the label's text (its own span, so the required mark stays drawn): cut with an ellipsis in a Stack of inline fields (elsewhere the hooks are unset and nothing is cut); it isolates its direction, so a long
+   Latin label in an RTL page (or an Arabic one in an LTR page) is cut at its end, and it never stretches, so a short label stays at the inline start (#1283, #1337) */
+.plx-field__label-text{min-inline-size:0;overflow-x:var(--plx-comp-field-grid-label-overflow,visible);overflow-y:var(--plx-comp-field-grid-label-overflow,visible);text-align:match-parent;text-overflow:var(--plx-comp-field-grid-label-text-overflow,clip);unicode-bidi:plaintext;white-space:var(--plx-comp-field-grid-label-white-space,normal);}
 .plx-field--inline>.plx-field__head{flex-wrap:var(--plx-comp-field-grid-head-wrap,wrap);}
 .plx-field--row .plx-field__label{font-size:var(--plx-comp-field-row-label-font-size);line-height:var(--plx-comp-field-row-label-line-height);}
-.plx-field__required{color:var(--plx-comp-field-required-text);}
+.plx-field__required{color:var(--plx-comp-field-required-text);white-space:pre;}
 .plx-field__control{display:grid;min-inline-size:0;row-gap:var(--plx-comp-field-control-helper-gap);}
 .plx-field__description{color:var(--plx-comp-field-description-text);font-size:var(--plx-comp-field-description-font-size);}
 .plx-field--row .plx-field__description{font-size:var(--plx-comp-field-row-description-font-size);}
@@ -35,7 +38,8 @@
    When the group is narrow the control keeps its minimum and the label column gives way: a label cut short ends in an
    ellipsis and shows in full in a Tooltip (Field). Only below 180px (the value of --plx-ref-size-45u; a container
    condition cannot read a custom property), when a panel is dragged that narrow, does each label move above its control. */
-.plx-field__label-tip{max-inline-size:var(--plx-comp-field-grid-label-tip-max-width,100%);min-inline-size:0;}
+/* the label tip is a Tooltip, whose own rule (tooltip.css, later in the layer) sets its sizes: they reach it as its context tokens (#1337) */
+.plx-field__label-tip{--plx-comp-tooltip-context-max-inline-size:var(--plx-comp-field-grid-label-tip-max-width,100%);--plx-comp-tooltip-context-min-inline-size:0;}
 /* the character counter (counter, library wave 6): the description and the count on one help line, the count at its end,
    in the data font; past the limit it takes the error color */
 .plx-field__foot{align-items:baseline;column-gap:var(--plx-comp-field-foot-gap);display:flex;min-inline-size:0;}

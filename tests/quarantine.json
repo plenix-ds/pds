@@ -194,38 +194,6 @@
    "why": "the page nests three containers"
   },
   {
-   "test": "component-tokens",
-   "check": ".plx-field__label-tip | max-inline-size | plx-comp-field-grid-label-tip-max-width: moves something on the site",
-   "issue": 1337,
-   "owner": "architect",
-   "since": "2026-11-13",
-   "why": "a component token that moves nothing on the site"
-  },
-  {
-   "test": "component-tokens",
-   "check": ".plx-file-browser__body | column-gap | plx-comp-file-browser-body-gap: moves something on the site",
-   "issue": 1337,
-   "owner": "architect",
-   "since": "2026-11-13",
-   "why": "a component token that moves nothing on the site"
-  },
-  {
-   "test": "component-tokens",
-   "check": ".plx-file__icon | color | plx-comp-file-icon-color: moves something on the site",
-   "issue": 1337,
-   "owner": "architect",
-   "since": "2026-11-13",
-   "why": "a component token that moves nothing on the site"
-  },
-  {
-   "test": "component-tokens",
-   "check": ".plx-split-view--side-by-side .plx-split-view__second | min-block-size | plx-comp-split-view-second-min-height: moves something on the site",
-   "issue": 1337,
-   "owner": "architect",
-   "since": "2026-11-13",
-   "why": "a component token that moves nothing on the site"
-  },
-  {
    "test": "data-grid",
    "check": "data-grid-view-169: the child test passes",
    "issue": 1338,

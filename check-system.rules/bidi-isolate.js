@@ -9,6 +9,7 @@
 //             it is removed (node check-system.rules/bidi-isolate.js --shrink)
 //   stretch   the opposite mistake (G2, #1285): plaintext on a box that stretches in the same rule (flex-grow above 0, or inline-size:
 //             100%) moves a short Latin label to the far side in RTL; it fails: put the text in an inner span that does not stretch
+// A value that comes through var() counts when the custom property is set to it anywhere (or it is the var()'s fallback) (#1337).
 // A rule is named by its file and its first class: "platform/components/Tag/tag.css .plx-tag__label".
 // Alone: node check-system.rules/bidi-isolate.js [--shrink | --baseline]   -> BIDI_ISOLATE_OK, or the findings and exit 1
 const fs = require('fs');
@@ -26,14 +27,28 @@ function sheets(dir, out = []) {
   }
   return out;
 }
+// a declaration's value in a rule body ('' when it has none)
+const decl = (body, prop) => { const m = body.match(new RegExp('(?:^|[;{\\s])' + prop + ':\\s*([^;]+)')); return m ? m[1].trim() : ''; };
+// true when the value is `word`, or reaches it through var(): a custom property some rule sets to it, or a var() fallback (#1337: the
+// Field label's ellipsis comes from --plx-comp-field-grid-label-text-overflow, set by the Stack of inline fields)
+function reaches(value, word, vars, seen = new Set()) {
+  if (new RegExp('(?:^|[\\s,(])' + word + '(?:$|[\\s,)])').test(value)) return true;
+  for (const m of value.matchAll(/var\(\s*(--[\w-]+)/g)) {
+    if (seen.has(m[1])) continue; seen.add(m[1]);
+    if ((vars.get(m[1]) || []).some((v) => reaches(v, word, vars, seen))) return true;
+  }
+  return false;
+}
 // every one-line ellipsis rule: { id, file, isolated }
 function rules() {
-  const out = [], seen = new Set();
-  for (const f of sheets(path.join(ROOT, 'platform'))) {
-    const text = fs.readFileSync(f, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+  const out = [], seen = new Set(), files = sheets(path.join(ROOT, 'platform')).map((f) => [f, fs.readFileSync(f, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '')]);
+  // every value each custom property is set to, in any sheet
+  const vars = new Map();
+  for (const [, text] of files) for (const m of text.matchAll(/(?:^|[;{\s])(--[\w-]+):\s*([^;{}]+)/g)) { if (!vars.has(m[1])) vars.set(m[1], []); vars.get(m[1]).push(m[2].trim()); }
+  for (const [f, text] of files) {
     for (const m of text.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
       const body = m[2];
-      if (!/white-space:\s*nowrap/.test(body) || !/text-overflow:\s*ellipsis/.test(body)) continue;
+      if (!reaches(decl(body, 'white-space'), 'nowrap', vars) || !reaches(decl(body, 'text-overflow'), 'ellipsis', vars)) continue;
       const sel = m[1].trim().split(',')[0].trim();
       const cls = (sel.match(/\.(plx-[a-z0-9_-]+)/) || [])[1] || sel;
       const id = path.relative(ROOT, f).split(path.sep).join('/') + ' .' + cls;
