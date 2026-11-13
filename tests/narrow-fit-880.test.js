@@ -1,9 +1,11 @@
 /* Plenix tests · two narrow-width findings of the reflow job (issue 880): a DataToolbar whose end group holds a summary ran past
    its row (the test site's Directory, 390px at 320), and the bottom navigation bar's fifth item was pushed out of a 310px bar
    (the Document page's "Browse"). Written before the fix: the toolbar's end group did not shrink and the bar's items kept 64px.
+   Updated for issue 1331: change 373 (issues 11, 13, 5 Nov) later made a narrow row wrap, so the end group moves under the start
+   group and its summary shows whole; it no longer ends in an ellipsis. The rule that still holds is that nothing runs past the row.
    Summary (the browser, 320 x 640, left to right and right to left):
      a DataToolbar with two Chips at the start and a Text truncate summary at the end stays within its 320px row; the summary
-       ends in an ellipsis (its text is wider than its box)
+       wraps under the start group and shows whole (it is not cut)
      a bottom bar of five items in a 310px box: every item inside the box, each at least the 44px touch target
      no script errors
    Usage: node tests/narrow-fit-880.test.js   → NARROW_FIT_880_OK */
@@ -43,12 +45,14 @@ require('./limit.js');   // the hard time limit (TEST_TIMEOUT_MS)
         const text = tb.querySelector('.plx-text--truncate');
         const bar = document.querySelector('#bar'), bb = bar.getBoundingClientRect();
         const items = [...bar.querySelectorAll('.plx-nav-bar__item')].map((e) => { const b = e.getBoundingClientRect(); return { l: b.left, r: b.right, w: b.width }; });
-        return { past, cut: text.scrollWidth > text.clientWidth, ellipsis: getComputedStyle(text).textOverflow,
+        const start = tb.querySelector('.plx-data-toolbar__group:not(.plx-data-toolbar__group--end)').getBoundingClientRect();
+        return { past, cut: text.scrollWidth > text.clientWidth, below: text.getBoundingClientRect().top >= start.bottom - 1,
           inside: items.every((i) => i.l >= bb.left - 1 && i.r <= bb.right + 1), narrowest: Math.min(...items.map((i) => i.w)),
           target: parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--plx-sys-control-target-min')) * (getComputedStyle(document.documentElement).getPropertyValue('--plx-sys-control-target-min').includes('rem') ? parseFloat(getComputedStyle(document.documentElement).fontSize) : 1) };
       }, dir);
       assert.deepEqual(r.past, [], d + 'nothing in the DataToolbar runs past its 320px row; got ' + r.past.join(', '));
-      assert.ok(r.cut && r.ellipsis === 'ellipsis', d + 'the summary at the end ends in an ellipsis');
+      assert.ok(!r.cut, d + 'the summary at the end shows whole (it is not cut)');
+      assert.ok(r.below, d + 'the summary at the end wraps under the start group in a narrow row');
       assert.ok(r.inside, d + 'all five items of the bottom bar are inside its 310px box (Browse is not pushed out)');
       assert.ok(r.narrowest >= r.target - 0.5, d + 'each item is at least the touch target (' + r.target + 'px); the narrowest is ' + r.narrowest);
     }
