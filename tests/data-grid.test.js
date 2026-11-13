@@ -70,7 +70,7 @@ const VIEWS = STATES.filter((s) => inScope(s[0]) && (!ONLY || ONLY.test(s[0])));
 const runs = (regression, units) => changed.wants({ units }) || changed.child(regression);
 changed.report(VIEWS.length + ' of ' + STATES.length + ' table views' + (changed.childrenOf().length ? ' · children on: ' + changed.childrenOf().join(', ') : ''));
 if (!ONLY) {
-  for (const regression of ['data-grid-search-149.test.js', 'data-grid-window-184.test.js', 'data-grid-sort-185.test.js', 'data-grid-cell-187.test.js', 'data-grid-select-167.test.js', 'data-grid-pane-150.test.js', 'data-grid-narrow-168.test.js', 'data-grid-state-169.test.js', 'data-grid-view-169.test.js', 'data-grid-group-165.test.js', 'data-grid-group-browser-165.test.js', 'data-grid-unread-164.test.js'].filter((r) => runs(r, ['components/DataGrid']))) {
+  for (const regression of ['data-grid-search-149.test.js', 'data-grid-window-184.test.js', 'data-grid-sort-185.test.js', 'data-grid-cell-187.test.js', 'data-grid-select-167.test.js', 'data-grid-pane-150.test.js', 'data-grid-narrow-168.test.js', 'data-grid-state-169.test.js', 'data-grid-view-169.test.js', 'data-grid-group-165.test.js', 'data-grid-group-browser-165.test.js', 'data-grid-unread-164.test.js', 'data-grid-height-token-1347.test.js'].filter((r) => runs(r, ['components/DataGrid']))) {
   const result = require('child_process').spawnSync(process.execPath, [require('path').join(__dirname, regression)], { stdio: 'inherit', env: process.env });
   if (result.status !== 0) process.exit(result.status || 1);
   }
