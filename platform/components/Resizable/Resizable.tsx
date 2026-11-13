@@ -68,7 +68,7 @@ import { fill } from '../../utils/fill.ts';
 const useSizeEffect = typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect;
 
 /* the drag handle on a resizable area's inner edge: drag, or the arrow keys (--plx-sys-shell-splitter-step), Home and End;
-   double-click or Enter collapses the area when it can collapse. While dragged the width moves one grid line at a time
+   double-click or Enter returns the area to its standard width when it can reset (onReset), else collapses it when it can collapse (issue 1243). While dragged the width moves one grid line at a time
    (the drag grid, DRAG_STEP: 8px since issue 882) within the limits, so it lands on the grid when let go (owner, 2026-10-26). edge: "end" (an area at the start: dragging toward the end widens it) or
    "start" (an area at the end). In a right-to-left page the start is on the right, so the drag and Arrow Left / Right
    are mirrored (arrowStep gives the step in reading order). No size menu (owner, 2026-10-16). */
@@ -81,10 +81,12 @@ export type PanelSplitterProps = {
   max: () => number;
   onChange: (width: number) => void;
   onCollapse?: () => void;
+  /** double-click or Enter: back to the standard width (wins over onCollapse) */
+  onReset?: () => void;
   /** "end": an area at the start; "start": an area at the end */
   edge?: 'end' | 'start';
 };
-export function PanelSplitter({ label, value, min, max, onChange, onCollapse, edge = 'end' }: PanelSplitterProps) {
+export function PanelSplitter({ label, value, min, max, onChange, onCollapse, onReset, edge = 'end' }: PanelSplitterProps) {
   const dir = edge === 'end' ? 1 : -1;
   // a width is always on the drag grid, every DRAG_STEP px (owner, 2026-10-26: smooth, then "the nearest grid line"; 8px
   // since 2026-11-02, issue 882), within the limits
@@ -104,13 +106,13 @@ export function PanelSplitter({ label, value, min, max, onChange, onCollapse, ed
     if (step) { e.preventDefault(); onChange(clamp(value + step * (tokenPx('--plx-sys-shell-splitter-step') || DRAG_STEP))); }
     else if (e.key === 'Home') { e.preventDefault(); onChange(clamp(min)); }
     else if (e.key === 'End') { e.preventDefault(); onChange(clamp(max())); }
-    else if (e.key === 'Enter' && onCollapse) { e.preventDefault(); onCollapse(); }
+    else if (e.key === 'Enter' && (onReset || onCollapse)) { e.preventDefault(); (onReset || onCollapse)!(); }
   };
   const top = clamp(max());
   return (
       <div role="separator" aria-orientation="vertical" aria-label={label} aria-valuenow={value} aria-valuemin={clamp(min)} aria-valuemax={top} tabIndex={0}
         className={cx('plx-panel-splitter', 'plx-panel-splitter--' + edge)} onPointerDown={onPointerDown} onKeyDown={onKeyDown}
-        onDoubleClick={onCollapse || undefined} />
+        onDoubleClick={onReset || onCollapse || undefined} />
   );
 }
 

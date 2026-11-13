@@ -2972,6 +2972,15 @@
    }
   },
   {
+   "source": "D-0078, #1242 (2026-11-10). settingsLayout.navTitle: Microsoft Terminology Collection settings = الإعدادات; the same word is in approved Plenix Arabic (appHeader.account.trigger, appHeader.account.appSettings).",
+   "date": "2026-11-10",
+   "strings": {
+    "settingsLayout": {
+     "navTitle": "الإعدادات"
+    }
+   }
+  },
+  {
    "source": "#1194 (2026-11-10). loading.cancel reuses the approved Cancel = إلغاء (dialog.cancel, #427).",
    "date": "2026-11-10",
    "strings": {

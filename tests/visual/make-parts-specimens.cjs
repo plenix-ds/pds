@@ -26,6 +26,9 @@ const parts = {
   'secondary-pane-back': `h('div', null,
     h(P.SecondaryPane, { title: 'Case overview', back: { parent: 'cases', href: '#cases' } }, ${nav}),
     h(P.SecondaryPane, { title: 'Case overview', back: { parent: 'all of the cases assigned to the tribunal this year', href: '#cases' } }, ${nav}))`,
+  'settings-layout': `h('div', { style: { display: 'flex', height: 520 } }, h(P.SettingsLayout, { nav: h(P.NavList, { label: 'Settings sections', groups: [{ items: [{ id: 'g', label: 'General', current: true }, { id: 'n', label: 'Notifications' }] }], value: 'g', onSelect: function () {} }) },
+    h(P.SettingsSection, { title: 'Regional', description: 'Language and formats.' }, h(P.SettingsRow, { label: 'Date format', description: 'How dates are written.' }, 'Mar 2, 2026')),
+    h(P.SettingsSection, { title: 'Advanced', collapsible: true, defaultExpanded: false, remember: false }, h(P.SettingsRow, { label: 'Cache' }, 'On'))))`,
   'app-header-brand': `h('div', null, ${brand(logo(64, 64), 'Diocese of Los Angeles')}, ${brand(logo(256, 64), 'Diocese of Los Angeles')}, ${brand(logo(64, 64), 'The Very Long Name of an Organization That Does Not Fit')})`,
   'panel-toggle-header': `h('div', null, h(P.Panel, { title: 'Spouse', collapsible: true, toggleOn: 'header', defaultExpanded: true }, 'Details of the party.'), h(P.Panel, { title: 'Witness', collapsible: true, toggleOn: 'header', defaultExpanded: false }, 'Details of the witness.'))`,
   'timeline-grouped-compact': `h(P.Timeline, { variant: 'grouped', density: 'compact', label: 'Key dates', items: [

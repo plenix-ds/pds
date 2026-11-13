@@ -30,7 +30,7 @@ The old global rule "never run a test" conflicted with this repository's test-fi
 ### Required checks and the PDS1 framework
 - `CLAUDE.md` and `AGENTS.md` are generated from `.rulesync/rules/overview.md` (`npx rulesync generate`); edit the source there. CI fails when they differ.
 - The PDS1 registry, `.claude/agents/pds1-*.md` and `deploy/agents/` are still read by the "CI result" checks (13, 15, 16 and the launch test). Retire them in one PR that keeps every required check green.
-- The watchdog workflow and the dashboard's task list assume PDS1 labels (`agent:pds1-*`); the dashboard's decisions view still works.
+- The dashboard's task list assumes PDS1 labels (`agent:pds1-*`); the dashboard's decisions view still works. The hourly PDS1 heartbeat watchdog (`watchdog.yml`, which watched #809) was retired in #1312: the PDS1 poller that rewrote #809 was stopped at the cutover (D-0175), and the host's watcher wakes the PM.
 
 ### Notes from the PDS1 team
 The PDS1 roles' handoffs (2026-11-10) are in the project's notes folder on the agent host (`notes/`). They are history; the rules and decisions win.

@@ -6,7 +6,9 @@
   "plx-u-ml-auto",
   "plx-u-pl-12px",
   "plx-u-pl-16px",
-  "plx-u-right-0"
+  "plx-u-right-0",
+  "plx-settings__frame",
+  "plx-settings__nav"
  ],
  "until": {
   "2.0.0": [
@@ -14,7 +16,9 @@
    "plx-u-ml-auto",
    "plx-u-pl-12px",
    "plx-u-pl-16px",
-   "plx-u-right-0"
+   "plx-u-right-0",
+   "plx-settings__frame",
+   "plx-settings__nav"
   ]
  }
 }

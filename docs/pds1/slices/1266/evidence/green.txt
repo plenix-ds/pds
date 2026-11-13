@@ -1,0 +1,3 @@
+  611 entries; largest additions to the layers (on-demand candidates): AssistantPanel 38800, AIChat 36889, FileBrowser 32997, Chat 26395, MentionInput 26135; plenix-loader.js 3995 B
+PERF_BUDGET_OK
+PAGE_TEMPLATES_MODULES_1266_OK
