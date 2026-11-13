@@ -789,5 +789,15 @@
     "loading": "n/a(stories arrive with Storybook, P0-11)",
     "selected": "n/a(stories arrive with Storybook, P0-11)",
     "error": "n/a(stories arrive with Storybook, P0-11)"
+  },
+  "Stack": {
+    "default": "n/a(a Stack is a layout container with no interactive or data state of its own; the controls inside it own this state)",
+    "hover": "n/a(a Stack is a layout container with no interactive or data state of its own; the controls inside it own this state)",
+    "focus": "n/a(a Stack is a layout container with no interactive or data state of its own; the controls inside it own this state)",
+    "active": "n/a(a Stack is a layout container with no interactive or data state of its own; the controls inside it own this state)",
+    "disabled": "n/a(a Stack is a layout container with no interactive or data state of its own; the controls inside it own this state)",
+    "loading": "n/a(a Stack is a layout container with no interactive or data state of its own; the controls inside it own this state)",
+    "selected": "n/a(a Stack is a layout container with no interactive or data state of its own; the controls inside it own this state)",
+    "error": "n/a(a Stack is a layout container with no interactive or data state of its own; the controls inside it own this state)"
   }
 }
