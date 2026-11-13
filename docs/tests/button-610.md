@@ -1,6 +1,6 @@
 # button-610
 
-Button labels sit exactly in the middle of the button, letters with tails are not cut off, and red Delete buttons visibly darken when pressed.
+Button labels sit exactly in the middle of the button, letters with tails are not cut off, and red Delete buttons show hover and pressed as a state layer over an unchanged red fill.
 
 - File: `tests/button-610.test.js`
 
@@ -8,14 +8,15 @@ Button labels sit exactly in the middle of the button, letters with tails are no
 - Centering: the capital letters sit within half a pixel of the button's middle, at 32px (medium) and 28px (small) button heights.
 - Descenders (letter tails): "gypqjy" and an Arabic label draw as far down as in a version where the label is not clipped at all.
   - The test first proves it can see clipping: with the clip margin taken away, the tails of "gypqjy" are cut at the baseline.
-- Danger pressed color, in the light and the dark theme:
-  - Danger: rest red-700, hover red-800, pressed red-900 (#7a0000), three distinct steps.
-  - Danger secondary: pressed is red-900, not its hover color.
+- Danger state layers (D-0037, #109), in the light and the dark theme:
+  - Danger: the fill stays red-700 at rest, hover and pressed; hover is a white 8% layer and pressed a 10% layer over the rest glow, which runs red-700 to a red-800 rim.
+  - Danger secondary: the fill stays the same in every state; hover is an 8% layer and pressed a 10% layer.
 - No script errors.
 
 ## Why it exists
 - Issue #610 (owner decision: Fluent 2 buttons) and the owner's requests in the button build, 2026-10-29, stated in the file header.
-- Red-900 is "the one new color the owner approved" (file header).
+- Red-900 is "the one new color the owner approved" (file header); it is now the bottom edge of Danger, checked in `button-elevation-610`.
+- #1333: after #109 (D-0037) hover and pressed no longer change the fill, so the 610 steps (red-800 hover, red-900 pressed) were replaced by the state-layer checks.
 - From the file header: before the build, the capitals sat about 1.1px high at 28px, and Danger's pressed color was its hover color.
 - Added in commit 1ad1b3d1 "#610: red-900 for the Danger pressed step, and the button label centered by its capitals".
 
@@ -23,11 +24,11 @@ Button labels sit exactly in the middle of the button, letters with tails are no
 - Opens `tests/fixtures/platform-host.html` and draws Buttons with the real Platform.
 - For centering and descenders, photographs each button at four times the pixels and finds the first and last rows of dark ink.
 - For the descender control, adds a style that removes the clip margin, and another that removes clipping entirely, and compares.
-- For the Danger colors, hovers and presses the mouse on each button and reads its fill color, in light and dark.
+- For the Danger colors, hovers and presses the mouse on each button and reads its fill color and layer image, in light and dark.
 - No baseline file: the expected colors are written in the test.
 
 ## What a failure means
-- Button text could look slightly off-center, letters such as g, y or p (or Arabic letters) could lose their tails, or a Delete button could give no visible feedback when pressed.
+- Button text could look slightly off-center, letters such as g, y or p (or Arabic letters) could lose their tails, or a Delete button could give no visible feedback (its state layer) on hover or press.
 
 ## When it runs
 - A child test of the Layout test (`tests/layout.test.js`), which is AUTOMATIC in `tests/run.js`.
