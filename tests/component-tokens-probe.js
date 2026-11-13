@@ -75,13 +75,14 @@ function check(done) {
       const states = [...new Set((base.match(/:(hover|focus-visible|focus-within|focus|active)\b/g) || []).map((m) => STATE[m.slice(1)]))];
       const plain = base.replace(/:(hover|focus-visible|focus-within|focus|active)\b/g, '');
       let els = [];
-      // up to six elements where the rule holds, each in a different place (the first one wires most rules)
+      // up to six elements where the rule holds: the first three, whatever their place (the first one wires most rules; two
+      // alike siblings differ by :first-child and the like, #1362 CI), then up to three more, each in a place not seen yet
       try {
         const seen = new Set();
         for (const e of document.querySelectorAll(plain || '*')) {
           if (els.length >= 6) break;
           if (!(e.getClientRects().length || pe) || !live(e, x.cq)) continue;
-          const k = place(e); if (seen.has(k)) continue;
+          const k = place(e); if (els.length >= 3 && seen.has(k)) continue;
           seen.add(k); els.push(e);
         }
       } catch (e) { continue; }

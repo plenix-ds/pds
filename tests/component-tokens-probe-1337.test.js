@@ -11,19 +11,24 @@
      AC-4 (FileBrowser) no rule reads --plx-comp-file-browser-body-gap (the body's gap shows only between the tree and the
           content, which is --plx-comp-file-browser-tree-gap), and the token is deprecated, not deleted (1.x).
      AC-5 none of the four rules of the issue is reported as moving nothing on the fixture.
-   Proof first: before the change AC-1 to AC-5 fail (the probe reports the four rules as moving nothing).
+     AC-6 (probe) the first matching elements are still tried, whatever their place: two metric items look the same (same classes,
+          same parents), the first one's :first-child rule wins over the padding token, and the second one still wires it
+          (CI on #1362: a probe that kept one element per place read only the first item on /giving).
+   Proof first: before the change AC-1 to AC-5 fail (the probe reports the four rules as moving nothing); AC-6 fails with a probe
+     that keeps only one element per place.
    Usage: node tests/component-tokens-probe-1337.test.js   → COMPONENT_TOKENS_PROBE_1337_OK */
 const assert = require('assert/strict'), fs = require('fs'), path = require('path'), { serve, launch } = require('./lib');
 const { prepare, check } = require('./component-tokens-probe.js');
 require('./limit.js');
 const ROOT = path.join(__dirname, '..');
 const CSS = ['platform/components/Tooltip/tooltip.css', 'platform/components/Field/field.css', 'platform/components/Stack/stack.css',
-  'platform/components/File/file.css', 'platform/patterns/FileBrowser/file-browser.css', 'platform/patterns/SplitView/split-view.css'];
+  'platform/components/File/file.css', 'platform/patterns/FileBrowser/file-browser.css', 'platform/patterns/SplitView/split-view.css',
+  'platform/components/Metric/metric.css'];
 // the values the fixture needs (the token build is not part of this test): a few comp tokens at their sys values' sizes
 const VARS = ':root{--plx-comp-stack-field-inline-label-tip-max-width:160px;--plx-comp-stack-field-inline-grid-template-columns:minmax(0,max-content) minmax(200px,320px);'
   + '--plx-comp-field-inline-gap:12px;--plx-comp-file-icon-color:rgb(86, 88, 94);--plx-comp-file-folder-icon-color:rgb(86, 88, 94);'
   + '--plx-comp-file-browser-body-gap:12px;--plx-comp-file-browser-tree-gap:12px;--plx-comp-split-view-gap:8px;--plx-comp-split-view-padding:0px;'
-  + '--plx-comp-split-view-second-min-height:240px;--plx-comp-split-view-second-min-width:320px;}';
+  + '--plx-comp-split-view-second-min-height:240px;--plx-comp-split-view-second-min-width:320px;--plx-comp-metric-group-item-padding-inline:16px;}';
 const file = (folder, name) => '<span class="plx-file plx-file--' + (folder ? 'folder' : 'file') + ' plx-file--line"><span class="plx-file__icon" aria-hidden="true"><svg width="16" height="16"></svg></span><span class="plx-file__text"><span class="plx-file__name">' + name + '</span></span></span>';
 // the stylesheets as platform.css loads them: its layer order, and their own order and layer
 const PLATFORM = fs.readFileSync(path.join(ROOT, 'platform/platform.css'), 'utf8');
@@ -41,6 +46,8 @@ const HTML = (base) => '<!doctype html><html><head><style>' + LAYERS + IMPORTS(b
   // AC-1: a wide SplitView side by side (its narrow rule is off) and a narrow one (on: it stacks)
   + '<div style="inline-size:1200px;block-size:300px;display:flex"><div class="plx-split-view plx-split-view--side-by-side" id="wide"><div class="plx-split-view__panels"><div class="plx-split-view__first plx-split-view__first--side-by-side">a</div><div class="plx-split-view__second plx-split-view__second--side-by-side">b</div></div></div></div>'
   + '<div style="inline-size:600px;block-size:600px;display:flex"><div class="plx-split-view plx-split-view--side-by-side" id="narrow"><div class="plx-split-view__panels"><div class="plx-split-view__first plx-split-view__first--side-by-side">a</div><div class="plx-split-view__second plx-split-view__second--side-by-side">b</div></div></div></div>'
+  // AC-6: a metric group, two items alike (the /giving page of the test site)
+  + '<div class="plx-metric-group"><div class="plx-metric-group__item">a</div><div class="plx-metric-group__item">b</div></div>'
   + '</body></html>';
 const SPLIT = '.plx-split-view--side-by-side .plx-split-view__second | min-block-size | plx-comp-split-view-second-min-height';
 
@@ -75,6 +82,9 @@ const SPLIT = '.plx-split-view--side-by-side .plx-split-view__second | min-block
     assert.ok(!(SPLIT in onlyWide.dead) && !onlyWide.wired.includes(SPLIT), 'AC-1: on a wide SplitView only, the narrow rule is neither wired nor dead (its condition is off): ' + JSON.stringify(onlyWide.dead[SPLIT] || ''));
     // AC-2: the file icon's color is found on the file after three folders
     assert.ok(res.wired.includes('.plx-file__icon | color | plx-comp-file-icon-color'), 'AC-2: the file icon color token moves the file\'s icon (after three folders)');
+    // AC-6: the second of two alike metric items wires the padding token that the first one's :first-child rule hides
+    assert.ok(res.wired.includes('.plx-metric-group__item | padding-inline-start | plx-comp-metric-group-item-padding-inline'),
+      'AC-6: the metric item padding token moves the second item: ' + JSON.stringify(res.dead['.plx-metric-group__item | padding-inline-start | plx-comp-metric-group-item-padding-inline'] || ''));
     // AC-5: none of the four rules of the issue moves nothing (the fixture draws one variant of each part, so other rules may)
     const ISSUE = ['.plx-field__label-tip | max-inline-size | plx-comp-field-grid-label-tip-max-width', '.plx-file-browser__body | column-gap | plx-comp-file-browser-body-gap',
       '.plx-file__icon | color | plx-comp-file-icon-color', SPLIT];
