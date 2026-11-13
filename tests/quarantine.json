@@ -243,14 +243,6 @@
   },
   {
    "test": "data-grid",
-   "check": "row-line-559: the child test passes",
-   "issue": 1344,
-   "owner": "engineer",
-   "since": "2026-11-13",
-   "why": "the stylesheet check for the row-line rules fails (1 of 42); hidden on main behind #1338"
-  },
-  {
-   "test": "data-grid",
    "check": "Views: Remaining DataGrid contracts",
    "issue": 1349,
    "owner": "engineer",
