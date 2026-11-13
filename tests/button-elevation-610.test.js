@@ -38,6 +38,12 @@ const contrast = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y
         const out = {};
         for (const e of document.querySelectorAll('#c .plx-button[id]')) { const cs = getComputedStyle(e);
           out[e.id] = { image: cs.backgroundImage, shadow: cs.boxShadow, border: cs.borderTopColor, bottom: cs.borderBottomColor, bg: cs.backgroundColor, text: cs.color }; }
+        // the state layer as the tokens resolve it: the layer colour per kind and the hover and pressed amounts (D-0037, #109), read from the page, not written here
+        const TOK = { neutral: '--plx-comp-button-state-layer-color', primary: '--plx-comp-button-primary-state-layer-color', danger: '--plx-comp-button-danger-state-layer-color' }, AMT = { hover: '--plx-comp-button-state-layer-hover-opacity', pressed: '--plx-comp-button-state-layer-pressed-opacity' };
+        const lp = document.createElement('div'); document.getElementById('c').appendChild(lp); out.layers = {};
+        for (const t of Object.keys(TOK)) { out.layers[t] = {}; for (const a of Object.keys(AMT)) { lp.style.backgroundImage = 'linear-gradient(color-mix(in srgb, var(' + TOK[t] + ') var(' + AMT[a] + '), transparent) 0 0)'; out.layers[t][a] = getComputedStyle(lp).backgroundImage; } }
+        out.tokenAmounts = Object.fromEntries(Object.keys(AMT).map((a) => [a, getComputedStyle(document.documentElement).getPropertyValue(AMT[a]).trim()]));
+        out.tokenColors = Object.fromEntries(Object.keys(TOK).map((t) => { lp.style.color = 'var(' + TOK[t] + ')'; return [t, getComputedStyle(lp).color]; })); lp.remove();
         const probe = document.createElement('div'); probe.style.boxShadow = 'var(--plx-comp-card-elevation-halo-shadow)';
         document.getElementById('c').appendChild(probe); out.halo = getComputedStyle(probe).boxShadow; probe.remove();
         return out;
@@ -46,14 +52,16 @@ const contrast = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y
     for (const mode of ['light', 'dark']) {
       const r = await look(mode);
       for (const k of ['secondary', 'tertiary', 'primary', 'danger']) {
-        const glow = /radial-gradient\(.* 90%, .* 100%\)$/, layer = (a) => new RegExp('^linear-gradient\\(color\\(srgb [\\d. ]+ / ' + a + '\\) 0px, color\\(srgb [\\d. ]+ / ' + a + '\\) 0px\\), ');
+        const kind = k === 'primary' || k === 'danger' ? k : 'neutral', glow = /radial-gradient\(.* 90%, .* 100%\)$/, layer = (a) => new RegExp('^linear-gradient\\(color\\(srgb [\\d. ]+ / ' + a + '\\) 0px, color\\(srgb [\\d. ]+ / ' + a + '\\) 0px\\), ');
         assert.match(r[k + '-rest'].image, new RegExp('^' + glow.source), mode + ' ' + k + ': the subtle glow at rest, no layer (fill to 90%)');
         assert.notEqual(r.halo, 'none', mode + ': the card Halo resolves');
         assert.equal(r[k + "-rest"].shadow, "none", mode + " " + k + ": no shadow at rest (D-0054, #269)");
+        assert.ok(r[k + '-hover'].image.startsWith(r.layers[kind].hover + ', '), mode + ' ' + k + ': the hover layer is the ' + kind + ' state-layer token colour at the hover opacity token, got ' + r[k + '-hover'].image);
         assert.match(r[k + '-hover'].image, layer('0.08'), mode + ' ' + k + ': hover is an 8% state layer (D-0037)');
         assert.match(r[k + '-hover'].image, glow, mode + ' ' + k + ': the glow stays under the hover layer (fill to 90%)');
         assert.equal(r[k + '-hover'].bg, r[k + '-rest'].bg, mode + ' ' + k + ': hover keeps the rest fill (D-0037)');
         assert.equal(r[k + '-hover'].shadow, r.halo, mode + ' ' + k + ': the card Halo on hover, as at rest (#910)');
+        assert.ok(r[k + '-pressed'].image.startsWith(r.layers[kind].pressed + ', '), mode + ' ' + k + ': the pressed layer is the ' + kind + ' state-layer token colour at the pressed opacity token, got ' + r[k + '-pressed'].image);
         assert.match(r[k + '-pressed'].image, layer('0.1'), mode + ' ' + k + ': pressed is a 10% state layer (D-0037)');
         assert.match(r[k + '-pressed'].image, glow, mode + ' ' + k + ': the glow stays under the pressed layer');
         assert.equal(r[k + '-pressed'].bg, r[k + '-rest'].bg, mode + ' ' + k + ': pressed keeps the rest fill (D-0037)');
@@ -61,7 +69,12 @@ const contrast = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y
         assert.deepEqual([r[k + '-disabled'].image, r[k + '-disabled'].shadow], ['none', 'none'], mode + ' ' + k + ' disabled: flat');
       }
       assert.deepEqual([r['ghost-rest'].image, r['ghost-rest'].shadow], ['none', 'none'], mode + ' ghost rest: flat');
-      for (const s of ['hover', 'pressed']) assert.deepEqual([/^linear-gradient\(.*\), none$/.test(r['ghost-' + s].image), r['ghost-' + s].shadow], [true, 'none'], mode + ' ghost ' + s + ': a state layer only, no glow, no shadow');
+      for (const s of ['hover', 'pressed']) {
+        assert.deepEqual([/^linear-gradient\(.*\), none$/.test(r['ghost-' + s].image), r['ghost-' + s].shadow], [true, 'none'], mode + ' ghost ' + s + ': a state layer only, no glow, no shadow');
+        assert.equal(r['ghost-' + s].image, r.layers.neutral[s] + ', none', mode + ' ghost ' + s + ': the neutral state-layer token colour at the ' + s + ' opacity token, over nothing');
+      }
+      assert.deepEqual([r.tokenAmounts.hover, r.tokenAmounts.pressed], ['8%', '10%'], mode + ': the hover and pressed opacity tokens are 8% and 10% (D-0037)');
+      assert.notEqual(r.tokenColors.neutral, r.tokenColors.primary, mode + ': the neutral layer colour differs from the on-accent colour, so a swapped colour is seen');
       for (const id of ['bar-secondary', 'bar-primary', 'small']) assert.deepEqual([r[id].image, r[id].shadow], ['none', 'none'], mode + ' ' + id + ': flat (a bar button, the 2xs size)');
       // primary and danger: the rim border and the deeper bottom edge at rest; hovered, the border stays the rim (D-0037; the same in light and dark)
       assert.deepEqual([r['primary-rest'].border, r['primary-rest'].bottom, r['primary-hover'].border], [rgb('#1F5BB8'), rgb('#005A9E'), rgb('#1F5BB8')], mode + ' primary edges');
