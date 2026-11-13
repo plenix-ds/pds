@@ -2,7 +2,9 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { userEvent } from 'storybook/test';
-import { ReviewFlow, ReviewQueue, WorkflowStatus } from '../../../platform/patterns/ReviewFlow/ReviewFlow.tsx';
+import { ReviewFlow } from '../../../platform/patterns/ReviewFlow/ReviewFlow.tsx';
+import { ReviewQueue } from '../../../platform/patterns/ReviewFlow/ReviewQueue.tsx';
+import { WorkflowStatus } from '../../../platform/patterns/ReviewFlow/WorkflowStatus.tsx';
 import { rtl } from './rtl.tsx';
 
 const reviewers = [{ id: 1, name: 'Maya Chen', decision: 'approved' as const }, { id: 2, name: 'Ana Ruiz' }];

@@ -1,0 +1,25 @@
+# Public type names that the review and MetricCard split (#1268) must keep (published since 0.9x; 1.8.0).
+# tools/checks/published-names.mjs fails when a built release/packages/react/index.d.ts lacks one.
+WorkflowStatusName
+ReviewDecision
+WorkflowStatusProps
+Reviewer
+ReviewEntry
+ReviewFlowProps
+ReviewQueueItem
+ReviewQueueProps
+ApprovalReviewer
+ApprovalStep
+ApprovalWorkflowProps
+MetricCardProps
+MetricStatus
+MetricChange
+MetricRow
+MetricPart
+MetricSide
+MetricItem
+MetricFigure
+MetricPerson
+MetricMonth
+MetricColor
+MetricGauge

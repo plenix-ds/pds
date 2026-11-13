@@ -13,7 +13,8 @@
 */
 import React from 'react';
 import { devWarn } from '../../utils/devWarn.ts';
-import { ReviewFlow, WorkflowStatus } from '../ReviewFlow/ReviewFlow.tsx';
+import { ReviewFlow } from '../ReviewFlow/ReviewFlow.tsx';
+import { WorkflowStatus } from '../ReviewFlow/WorkflowStatus.tsx';
 import { ProgressSteps } from '../../components/ProgressSteps/ProgressSteps.tsx';
 import { Stack, Inline } from '../../components/Stack/Stack.tsx';
 import { Field } from '../../components/Field/Field.tsx';

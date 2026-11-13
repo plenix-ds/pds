@@ -1,0 +1,8 @@
+node:internal/assert/utils:77
+    throw err;
+    ^
+
+AssertionError [ERR_ASSERTION]: AC-2: WorkflowStatus has its own module
+    at Object.<anonymous> (/home/agents/pds/work/core-engineer-1268/tests/review-metric-modules-1268.test.js:15:10)
+    at Module._compile (node:internal/modules/cjs/loader:1781:14)
+    at Object..js (node:internal/modules/cjs/loader:1913:10)

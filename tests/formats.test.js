@@ -62,7 +62,7 @@ check('parseDate: the parts that show dates read them through it, never on their
   // the parts known to show dates: no new Date(<a name>) of their own (Time's bug was new Date(v))
   const NAMED = /new Date\(\s*[A-Za-z_$][\w$.]*\s*\)/;
   for (const f of ['components/Time/Time.tsx', 'components/File/File.tsx', 'components/FileRow/FileRow.tsx', 'patterns/ConnectedAccounts/ConnectedAccounts.tsx',
-    'patterns/VersionCompare/VersionCompare.tsx', 'patterns/FileList/FileList.tsx', 'patterns/ReviewFlow/ReviewFlow.tsx', 'patterns/AssignControl/AssignControl.tsx']) {
+    'patterns/VersionCompare/VersionCompare.tsx', 'patterns/FileList/FileList.tsx', 'patterns/ReviewFlow/ReviewFlow.tsx', 'patterns/ReviewFlow/ReviewQueue.tsx', 'patterns/ReviewFlow/WorkflowStatus.tsx', 'patterns/AssignControl/AssignControl.tsx']) {
     assert.ok(!NAMED.test(fs.readFileSync(path.join(ROOT, 'platform', f), 'utf8')), f + ' builds a Date from a value itself: read it with parseDate (utils/format.ts), or add a reasoned exception here');
   }
   // anywhere in the Platform and the suite: a private date-only rule (a YYYY-MM-DD test beside its own Date or "T00:00"),
