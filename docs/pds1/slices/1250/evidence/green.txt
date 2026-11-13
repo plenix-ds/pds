@@ -1,0 +1,1 @@
+has-custom-props-1226: OK; STACK_INLINE_FIELDS_1250_OK

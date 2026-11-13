@@ -94,11 +94,19 @@ export function Field({ label, hideLabel = false, description, error, warning, r
   const id = React.useId();
   const formLayout = React.useContext(FieldLayoutContext);
   const lay = layout || formLayout || 'stacked';
+  // an inline Field in a Stack marks it, so the Stack's fields share one label column (the Stack's CSS keys on the attribute: a :has() that sets custom properties restyles the whole Stack on every change, issue 1250)
+  React.useLayoutEffect(() => {
+    const el = root.current, parent = el && el.parentElement;
+    if (lay !== 'inline' || !el || !parent || !parent.classList.contains('plx-stack')) return undefined;
+    parent.setAttribute('data-plx-inline-fields', '');
+    return () => { if (!Array.from(parent.children).some((c) => c !== el && c.classList.contains('plx-field--inline'))) parent.removeAttribute('data-plx-inline-fields'); };
+  }, [lay]);
   const controlId = 'plx-f' + id.replace(/[^a-zA-Z0-9]/g, '');
   const descId = description ? controlId + '-d' : undefined, errId = error ? controlId + '-e' : undefined;
   const showWarning = !!warning && !error, warnId = showWarning ? controlId + '-w' : undefined;
   const [showInfo, setShowInfo] = React.useState(false);
   const labelRef = React.useRef<HTMLLabelElement>(null);
+  const root = React.useRef<HTMLDivElement>(null);
   const cut = useTruncated(labelRef);
   const child = React.Children.only(children) as React.ReactElement<FieldControlProps>;
   // ADR 0029: a text area or a rich text editor spans the row by default; any Field can say how many columns it takes
@@ -139,7 +147,7 @@ export function Field({ label, hideLabel = false, description, error, warning, r
   Object.keys(hints).forEach((k) => { if (hints[k] !== undefined && child.props[k] === undefined) props[k] = hints[k]; });
   const control = <FieldLabelContext.Provider value={!!label}>{React.cloneElement(child, props)}</FieldLabelContext.Provider>;
   return (
-    <div className={cx('plx-field', 'plx-field--' + lay, spans !== 1 && 'plx-field--span-' + spans, spans === 1 && own && 'plx-field--fill', labelWidth && 'plx-field--label-' + labelWidth, error && 'is-invalid', showWarning && 'is-warning', className)} {...rest}>
+    <div ref={root} className={cx('plx-field', 'plx-field--' + lay, spans !== 1 && 'plx-field--span-' + spans, spans === 1 && own && 'plx-field--fill', labelWidth && 'plx-field--label-' + labelWidth, error && 'is-invalid', showWarning && 'is-warning', className)} {...rest}>
       <div className={cx('plx-field__head', hideLabel && 'plx-visually-hidden')}>
         <Tooltip content={label} disabled={!cut} describe={false} className="plx-field__label-tip">
           <label ref={labelRef} className="plx-field__label" htmlFor={child.props.id || controlId}>{label}{required ? <span className="plx-field__required" aria-hidden="true"> *</span> : null}</label>

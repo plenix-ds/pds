@@ -549,9 +549,8 @@
    "condition-not-token | .plx-spotlight__beacon": 1
   },
   "platform/components/Stack/stack.css": {
-   "relational | .plx-stack:has(>.plx-field--inline)": 1,
-   "relational | .plx-stack:has(>.plx-field--inline)>*": 1,
-   "relational | .plx-stack:has(>.plx-field--inline)>:not(.plx-field--inline)": 1
+   "combinator | .plx-stack[data-plx-inline-fields]>*": 1,
+   "combinator | .plx-stack[data-plx-inline-fields]>:not(.plx-field--inline)": 1
   },
   "platform/components/StatusDot/status-dot.css": {
    "combinator | .plx-status-dot--md .plx-status-dot__glyph": 1,
