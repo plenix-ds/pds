@@ -6,8 +6,9 @@
      AC-7 (bidi) the label's text sits in an inner span (.plx-field__label-text) that is cut with an ellipsis and isolates its direction:
           a long English label in a right-to-left page and a long Arabic label in a left-to-right page (and each in its own direction) have
           their first character inside the box (the cut is at the end), and a short English label in RTL stays at the inline start.
+     AC-9 (G2 on #1362) in a Stack of inline Fields (label is display:flex) the space before the required "*" survives: the mark's box is wider than the glyph.
      AC-8 (style rule) bidi-isolate sees the Field label's ellipsis although text-overflow and white-space come through var(), and finds it isolated.
-   Proof first: before the change AC-6 fails (focus on the control opens nothing), AC-7 fails (no inner span; a long English label starts
+   Proof first: before the change AC-9 fails (the mark's box equals the "*" glyph: the space collapsed), AC-6 fails (focus on the control opens nothing), AC-7 fails (no inner span; a long English label starts
      outside its box in RTL) and AC-8 fails (the rule is not seen).
    Usage: node tests/field-label-tip-1337.test.js   → FIELD_LABEL_TIP_1337_OK */
 const assert = require('assert/strict'), { serve, launch } = require('./lib');
@@ -79,6 +80,24 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
       assert.ok(r.inside, T + 'the first character is inside the box (cut at the end) ' + JSON.stringify(r));
       const [near, far] = dir === 'rtl' ? r.short : [r.short[1], r.short[0]];
       assert.ok(near <= 8 && far > 20, T + 'a short English label stays at the inline start ' + JSON.stringify(r.short));
+      await page.close();
+    }
+    // AC-9 (G2 on #1362): in a Stack of inline Fields the label is a flex box; the space before the required mark still draws ("Name *", not "Name*")
+    for (const dir of ['ltr', 'rtl']) {
+      const T = 'AC-9 ' + dir + ': ', page = await open(dir);
+      await page.evaluate(async () => {
+        const h = React.createElement, P = Plenix, c = document.createElement('div'); c.style.inlineSize = '600px'; document.querySelector('main').replaceChildren(c);
+        ReactDOM.createRoot(c).render(h(P.Stack, null, h(P.Field, { label: 'Name', layout: 'inline', required: true, id: 'req' }, h(P.Input, { id: 'req-input' }))));
+        await new Promise((r) => setTimeout(r, 700));
+      });
+      const m = await page.evaluate(() => {
+        const el = document.querySelector('#req .plx-field__required'); if (!el) return null;
+        const tn = el.firstChild, star = tn.data.indexOf('*'), rg = document.createRange(); rg.setStart(tn, star); rg.setEnd(tn, star + 1);
+        return { text: tn.data, box: el.getBoundingClientRect().width, glyph: rg.getBoundingClientRect().width, display: getComputedStyle(el.parentElement).display };
+      });
+      assert.ok(m, T + 'the required mark is drawn');
+      assert.equal(m.text, ' *', T + 'the mark is " *"');
+      assert.ok(m.box > m.glyph + 1, T + 'the mark\'s box is wider than the "*" glyph alone (the space survives) ' + JSON.stringify(m));
       await page.close();
     }
     // AC-8: the style rule sees and accepts the Field label's ellipsis

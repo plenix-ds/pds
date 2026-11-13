@@ -15,7 +15,7 @@
 .plx-field__label-text{min-inline-size:0;overflow-x:var(--plx-comp-field-grid-label-overflow,visible);overflow-y:var(--plx-comp-field-grid-label-overflow,visible);text-align:match-parent;text-overflow:var(--plx-comp-field-grid-label-text-overflow,clip);unicode-bidi:plaintext;white-space:var(--plx-comp-field-grid-label-white-space,normal);}
 .plx-field--inline>.plx-field__head{flex-wrap:var(--plx-comp-field-grid-head-wrap,wrap);}
 .plx-field--row .plx-field__label{font-size:var(--plx-comp-field-row-label-font-size);line-height:var(--plx-comp-field-row-label-line-height);}
-.plx-field__required{color:var(--plx-comp-field-required-text);}
+.plx-field__required{color:var(--plx-comp-field-required-text);white-space:pre;}
 .plx-field__control{display:grid;min-inline-size:0;row-gap:var(--plx-comp-field-control-helper-gap);}
 .plx-field__description{color:var(--plx-comp-field-description-text);font-size:var(--plx-comp-field-description-font-size);}
 .plx-field--row .plx-field__description{font-size:var(--plx-comp-field-row-description-font-size);}
