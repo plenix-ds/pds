@@ -3,8 +3,8 @@
      Chat.Group: the photo and the name on the first message of a run only; only Chat.Message children take them (a
        Divider inside the run stays as given)
      Chat.Divider: a date line; unread: "New messages" by default (Arabic: "رسائل جديدة")
-     no time on the message line; a footer at the bottom of the bubble, 10px (smaller than the 11px caption), in the
-       secondary gray: "Sent <time>", and "| Read <time>" once read
+     no time on the message line; a footer at the bottom of the bubble, never above the caption and never under the 12px type
+       floor (#206, check 3; it was 10px before the floor), in the secondary gray: "Sent <time>", and "| Read <time>" once read
      the status after the times: sending a clock, sent one gray check, delivered two gray checks (named "Delivered"), read two
        GREEN checks (green-500 light, green-200 dark); green is never the only sign ("Read" is written)
      dark: theirs gray-900 with a gray-700 outline, yours gray-700 with a gray-500 outline (no blue)
@@ -74,8 +74,10 @@ const contrast = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y
     for (const m of [r.t1, r.read, r.delivered, r.sent]) {
       assert.ok(!m.metaTime, 'no time on the message line');
       assert.ok(m.foot && m.foot.last && m.foot.below, 'the footer is the last line, under the text');
-      assert.equal(m.foot.size, '10px', 'the footer is 10px');
-      assert.ok(parseFloat(m.foot.size) < r.caption, 'the footer is smaller than the caption');
+      // the 12px type floor (#206, #214, check 3) lifted the caption role, and so the footer, from 10px/11px to 12px; no
+      // decision names an exact footer size, so the test holds the two recorded rules: not under the floor, not above the caption
+      assert.ok(parseFloat(m.foot.size) >= 12, 'the footer is not under the 12px type floor');
+      assert.ok(parseFloat(m.foot.size) <= r.caption, 'the footer is not larger than the caption');
       assert.ok(contrast(m.foot.color, m.bg) >= 4.5, 'the footer gray passes 4.5:1 on its message');
       assert.ok(m.foot.mono, 'the times are in the data font (the owner\'s #260: numbers in Mono; typography pattern check)');
     }

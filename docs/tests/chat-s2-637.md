@@ -7,7 +7,7 @@ A chat conversation groups each person's messages, shows date and "New messages"
 ## What it checks
 - Runs (Chat.Group): the photo and the name show on the first message of a run only; a divider inside a run takes none of the run's settings.
 - Lines (Chat.Divider): a date line ("Today"); the unread line says "New messages" by default and is bolder than a date line.
-- The time is not on the message line; a footer is the last line of the bubble, 10px (smaller than the caption), in the data font:
+- The time is not on the message line; a footer is the last line of the bubble, not under the 12px type floor and not larger than the caption (it was 10px before #206), in the data font:
   - "Sent <time>", and "Sent <time> | Read <time>" once read; "Sending" while sending.
 - Status marks after the times (yours only): sending a clock, sent one gray check, delivered two gray checks named "Delivered", read two green checks (green-500 in light, green-200 in dark). "Read" is always written, so green is never the only sign.
 - Contrast: the footer gray passes 4.5:1 and the green checks pass 3:1 on every message fill, light and dark.
