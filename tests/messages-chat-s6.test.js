@@ -43,8 +43,13 @@ const assert = require('assert/strict'), { serve, launch } = require('./lib');
     // the spec page: every part, the rules, the slice 4 place. Only where the design system is checked out: the CI browser
     // jobs never check it out (and the automatic runs keep off the spec, owner 2026-10-25), so there it is a visible skip,
     // never a failure (issue 777, as #762 did for the release tests)
-    if (!require('fs').existsSync(require('path').join(__dirname, '..', 'platform', 'design-system', 'index.html'))) {
-      const why = 'the spec page part skipped: design system not available (platform/design-system is not checked out)';
+    // the automatic runs never open the spec (owner, 2026-10-25): it loads Plenix from the live CDN, so CI timed out on it
+    // (#1327); an on-demand run sets PLENIX_SPEC=1
+    const specOff = process.env.PLENIX_SPEC !== '1' ? 'the automatic runs never open the spec (set PLENIX_SPEC=1 to run it)'
+      : !require('fs').existsSync(require('path').join(__dirname, '..', 'platform', 'design-system', 'index.html'))
+        ? 'design system not available (platform/design-system is not checked out)' : '';
+    if (specOff) {
+      const why = 'the spec page part skipped: ' + specOff;
       console.log('MESSAGES_CHAT_S6_SPEC_SKIPPED ' + why);
       if (process.env.GITHUB_ACTIONS) console.log('::warning title=messages-chat-s6 spec part skipped::' + why);
     } else {

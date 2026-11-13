@@ -35,23 +35,25 @@ Current version: **1.8.0** (live on the CDN, `latest.json` = 1.8.0, checked 2026
 
 | Id | Epic | Outcome | Packages | Milestone | Status |
 |---|---|---|---|---|---|
-| E9 | Performance per screen (#1201): on-demand slices #1266, #1267, #1268; CTM per-screen load #1211 (blocked on its measurement); CDN 429 limit #1287 (blocked on proxy access) | O5 | react, styles | 1.9.0 | #1266 in progress |
-| E10 | Data font (#1232, D-0164): item 18, Chat counts and voice time (#1305, PR #1317) | O1 | styles, react | 1.9.0 | PR waits on G3 (kit K-0151) |
-| E11 | Navigation panes (#1242, #1243, D-0168/D-0169, ADR 0057): PR #1269 | O1 | tokens, styles, react | 1.9.0 | CI fix in progress; G2 re-sign waits on K-0151 |
-| E12 | RTL truncation (#1283): the `bidi-isolate` backlog, part by part | O4 | styles | 1.9.0 | Ready |
-| E13 | PDS2 cutover clean-up: retire the PDS1 watchdog heartbeat (#1312), then the rest of the PDS1 framework in one PR that keeps every required check green (`docs/project-rules.md`) | O2 | none (tooling) | 1.9.0 | #1312 queued for a builder slot |
+| E9 | Performance per screen (#1201): on-demand slices #1266, #1267, #1268 (merged: #1319, #1322, #1324); CTM per-screen load #1211 (blocked on its measurement); CDN 429 limit #1287 (blocked on proxy access) | O5 | react, styles | 1.9.0 | Slices done; #1211 and #1287 blocked |
+| E10 | Data font (#1232, D-0164): item 18, Chat counts and voice time (#1305, PR #1317) | O1 | styles, react | 1.9.0 | Done (#1317 merged); #1232 closes at the release |
+| E11 | Navigation panes (#1242, #1243, D-0168/D-0169, ADR 0057): PR #1269 | O1 | tokens, styles, react | 1.9.0 | Done (#1269 merged) |
+| E12 | RTL truncation (#1283): the `bidi-isolate` backlog, part by part | O4 | styles | 1.9.0 | Part 2 merged (#1321); part 3 PR #1323 blocked by the guard (K-0192, K-0193) |
+| E13 | PDS2 cutover clean-up: retire the PDS1 watchdog heartbeat (#1312), then the rest of the PDS1 framework in one PR that keeps every required check green (`docs/project-rules.md`) | O2 | none (tooling) | 1.9.0 | #1312 done (#1320); the rest is Backlog |
+| E16 | Behavior tests run in CI (#1327, PR #1328), then fix what the first full run found (#1329–#1338, #1343, #1344, #1349; #1335 is S2) | O3 | styles, react | 1.9.0 | #1328 waits on G5d; fixes Ready |
 | E14 | Releases from CI: VM 130 reachable, package publishing (#724), keys off the agent host (#1314) | O2 | all | 1.10.0 | Waits for a member (plan §7.2) |
 | E15 | Repository clean-up (#1309, owner's four-way method) | O3 | none | 1.10.0 | Backlog |
 | E5 | Contrast and minimum sizes (#206, #251, #1085, #1090, #1117, #1120) | O3, O4 | tokens | dark phase | `later` (D-0025) |
 
 ## 6. Lanes and owners
 
-The role registry is `.agents/agents.config.yaml`; roles are listed in `.agents/RULES.md`. One team, `core`. Ready items per active lane (target: `ready_min`), as of 2026-11-13:
+The role registry is `.agents/agents.config.yaml`; roles are listed in `.agents/RULES.md`. One team, `core`. Ready items per active lane (target: `ready_min`), as of 2026-11-13 20:40 UTC:
 
 | Lane (role) | Ready | In progress | Short of `ready_min`? |
 |---|---|---|---|
-| Build (engineer) | #1267, #1268, #1283 | #1266, #1242 (CI fix on PR #1269) | No |
-| Release (release) | #1312, #1288 (app bumps; now to 1.8.0) | — | Yes: E14 waits for a member |
+| Build (engineer) | #1343, #1331, #1332, #1333, #1349 (after #1338) | #1338, #1334; #1283 part 3 (blocked by the guard); #1335 (parked until #1328) | No |
+| Verify (release, qa) | — | #1327 (PR #1328, G5d when CI finishes) | — |
+| Release (release) | #1288 (app bumps; now to 1.8.0) | — | Yes: E14 waits for a member |
 | Locale (i18n-engineer) | — | #1171, #1203 wait for the owner's Arabic | Yes: nothing else recorded |
 | Design (design-director), architecture (architect) | Gate work on PRs #1269, #1317 | — | Gate lanes; no planned items |
 | Delivery (delivery-lead), docs (technical-writer) | — | — | Idle: no recorded need |
@@ -70,13 +72,14 @@ Recorded needs only (§4.5). Each item links its finding. They rank below planne
 
 ## 8. Risks and open decisions
 
-- **Kit launcher:** a lane role can't start on an issue whose engineer already ended (kit log K-0151, K-0153). It blocks G3 on PR #1317 and the G2 re-sign on PR #1269 until a member fixes it.
+- **Kit guard:** it refused an engineer's edit inside its own working copy (K-0192, K-0193), which blocks #1283 part 3 (PR #1323); and read-only gates can't build or link `node_modules`, so G5d browser checks run only in CI (K-0194 to K-0196). Kit 3.4.3 did not change either. A member fixes them.
 - **Releases need a member:** the publish key and package rights are only on the `cc` account (#724, #1314).
 - **One shared GitHub identity:** a gate comment alone stops nothing; gate labels and auto-merge do (D-0056, D-0062, #1068).
 - **Owner answers pending:** Arabic for #1171 and #1203. Both ship in English until answered.
 
 ## 9. Change log
 
+- 2026-11-13 20:40: refreshed by PDS2 - PM: E9 slices, E10, E11 and #1312 done; E16 added for the behavior-test findings; build lane re-filled.
 - 2026-11-13: rewritten by PDS2 - PM for the PDS2 cutover (D-0174, D-0175): current version 1.8.0, milestone 1.9.0, lanes from the PDS2 registry.
 - 2026-11-07: Plenix 1.0.0 shipped (CDN, npm and API; G8 PASS).
 - 2026-11-06: created from template v2.4 by the PDS1 Product Lead.
