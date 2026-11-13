@@ -1,0 +1,125 @@
+# The behavior tests, tests/run.js, in CI (#1327). Called by ci.yml on every PR and in the merge group (changed mode: only
+# the checks for what the PR changed, tests/changed.js, from the merge base) and by tests-nightly.yml (--full: every page).
+# Every automatic test of tests/run.js runs in exactly one group of the matrix (tools/ci/behavior-tests.mjs groups).
+# Only new failures block: a failure already known on main is listed in tests/quarantine.json with its issue and owner
+# (tests are quarantined within 24h, never deleted; docs/lessons.md). A runner that stops before its last line fails.
+# The browser tests open the St. John the Beloved test site, its own public repository on the owner's account, read at a
+# pinned commit (#382 F8): bump SITE_REF here, in the pull request that needs the site's change.
+# Rules: every action pinned to a commit SHA, zizmor clean, every run step in bash with pipefail, no stored secrets.
+name: Behavior tests
+
+on:
+  workflow_call:
+    inputs:
+      full:
+        description: every page (tests/run.js --full) instead of changed mode
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  plan:
+    name: Groups and self-test
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      groups: ${{ steps.groups.outputs.groups }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Self-test of the job's logic (groups, the runner's last line, the quarantine, only new failures block)
+        run: node tools/ci/behavior-tests.test.mjs
+      - name: The groups (every automatic test of tests/run.js exactly once)
+        id: groups
+        run: |
+          set -euo pipefail
+          groups=$(node tools/ci/behavior-tests.mjs groups)
+          echo "$groups" | jq -r '.[] | "\(.name): \(.tests)"'
+          echo "groups=$groups" >> "$GITHUB_OUTPUT"
+
+  run:
+    name: ${{ inputs.full && 'Full' || 'Changed' }} (${{ matrix.name }})
+    needs: plan
+    runs-on: ubuntu-latest
+    # each browser test has its own limit (tests/limit.js: 15 minutes, 90 with --full); a group runs its tests one by one
+    timeout-minutes: ${{ inputs.full && 150 || 60 }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.plan.outputs.groups) }}
+    env:
+      BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
+      FULL: ${{ inputs.full }}
+      GROUP: ${{ matrix.name }}
+      TESTS: ${{ matrix.tests }}
+      SITE_DIR: ${{ github.workspace }}/st-john-test-site
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: The St. John test site (its own public repository; no token needed)
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: LighthouseCollection/st-john-test-site
+          # SITE_REF: the site's revision, pinned (#382 F8), so the same Platform commit always meets the same site
+          ref: c12c3e0af26985ab19d14065b16e340a94138a72
+          path: st-john-test-site
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install and build (npm ci runs build-app.js; the site loads this build from /cdn/local/)
+        run: |
+          npm ci --no-audit --no-fund
+          node build-usage.js
+          node build-packages.js
+      - name: The site's packages and build (its database is PostgreSQL in the process, fresh for every test)
+        working-directory: st-john-test-site
+        run: |
+          npm ci --no-audit --no-fund
+          node build.js
+      - name: Changed mode, what the PR changed (from the merge base)
+        if: ${{ !inputs.full }}
+        run: |
+          set -euo pipefail
+          [ -n "$BASE_SHA" ] || { echo "::error::No base commit for this event: changed mode cannot run"; exit 1; }
+          merge_base=$(git merge-base "$BASE_SHA" HEAD)
+          echo "CHANGED_BASE=$merge_base" >> "$GITHUB_ENV"
+          CHANGED_BASE="$merge_base" node tests/changed.js
+      - name: Tests (${{ matrix.tests }})
+        run: |
+          CHROME_PATH="$(command -v google-chrome || true)"
+          [ -n "$CHROME_PATH" ] || { echo "::error::Chrome is missing on the runner: the browser tests cannot run, and a missing browser is a FAIL"; exit 1; }
+          export CHROME_PATH
+          export TEST_RESULTS="$RUNNER_TEMP/results.json"
+          flag=()
+          [ "$FULL" = true ] && flag=(--full)
+          read -r -a tests <<< "$TESTS"
+          # the runner's own exit code is not the verdict: the next step judges its last line and every recorded check
+          node tests/run.js "${flag[@]}" "${tests[@]}" 2>&1 | tee "$RUNNER_TEMP/run.txt" || echo "tests/run.js exited non-zero: judged in the next step"
+      - name: Only failures outside tests/quarantine.json block
+        run: |
+          set -euo pipefail
+          node tools/ci/behavior-tests.mjs compare --name "$GROUP" --tests "$TESTS" --log "$RUNNER_TEMP/run.txt" --results "$RUNNER_TEMP/results.json" > "$RUNNER_TEMP/report.md" || status=$?
+          tee -a "$GITHUB_STEP_SUMMARY" < "$RUNNER_TEMP/report.md"
+          exit "${status:-0}"
+      - name: The run's log, checks and report
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: behavior-tests-${{ inputs.full && 'full' || 'changed' }}-${{ matrix.name }}
+          path: |
+            ${{ runner.temp }}/run.txt
+            ${{ runner.temp }}/results.json
+            ${{ runner.temp }}/report.md
+          if-no-files-found: ignore
+          retention-days: 30

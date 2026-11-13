@@ -1,0 +1,62 @@
+# The behavior tests on every page, nightly (#1327): tests/run.js --full on main, in the same groups as the PR job
+# (behavior-tests.yml). A failure outside tests/quarantine.json opens, or comments on, one issue, so a failure on main gets an
+# issue and an owner within 24h (docs/lessons.md). A pull request that changes this file runs it too, without the report.
+# Rules: every action pinned to a commit SHA, zizmor clean, every run step in bash with pipefail, no stored secrets.
+name: Behavior tests nightly
+
+on:
+  schedule:
+    - cron: '41 2 * * *'
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - .github/workflows/tests-nightly.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-nightly-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  full:
+    name: Full run
+    uses: ./.github/workflows/behavior-tests.yml
+    with:
+      full: true
+
+  report:
+    name: Report failures outside the quarantine
+    needs: full
+    if: ${{ always() && github.event_name != 'pull_request' && needs.full.result != 'success' && needs.full.result != 'cancelled' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      issues: write
+      actions: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
+      SHA: ${{ github.sha }}
+      RUN_ID: ${{ github.run_id }}
+      RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      TITLE: 'Nightly full test run: failures outside the quarantine'
+    steps:
+      - name: Open, or comment on, the one nightly-failure issue
+        run: |
+          set -euo pipefail
+          failing=$(gh api "repos/$REPO/actions/runs/$RUN_ID/jobs" --paginate --jq '.jobs[] | select(.conclusion == "failure" or .conclusion == "timed_out") | "- " + .name' | sort -u)
+          [ -n "$failing" ] || failing="- (no failing job was named: see the run)"
+          body=$(printf 'The nightly `tests/run.js --full` run on `%s` has failures that are not in `tests/quarantine.json`: %s\n\nFailing groups:\n%s\n\nThe summary of each group lists its new failures. Fix each, or quarantine it within 24h with an issue and an owner (an entry in `tests/quarantine.json`); never delete the test.\n\n— core · Release Architect (nightly run)' "${SHA:0:8}" "$RUN_URL" "$failing")
+          open=$(gh issue list --repo "$REPO" --state open --search "\"$TITLE\" in:title" --json number,title --jq "[.[] | select(.title == \"$TITLE\")][0].number // empty")
+          if [ -n "$open" ]; then
+            gh issue comment "$open" --repo "$REPO" --body "$body"
+          else
+            gh issue create --repo "$REPO" --title "$TITLE" --label type:bug --label area:release --body "$body"
+          fi

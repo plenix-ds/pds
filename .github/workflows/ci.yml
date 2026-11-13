@@ -92,6 +92,7 @@ jobs:
           node tools/ci/wake.test.mjs
           node tools/ci/webhook-clean.test.mjs
           node tools/ci/check-workflows.test.mjs
+          node tools/ci/behavior-tests.test.mjs
       - name: Check 13, every role has a definition, label and trigger
         run: node tools/ci/check-roles.mjs
       - name: Check 15, no document states a setting that differs from agents.config.yaml
@@ -444,10 +445,17 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
           grep ONE_PART_SIZES_FAIL "$RUNNER_TEMP/head.txt" | sed 's/^/::error::/'
 
+  # the behavior tests, tests/run.js, in changed mode (#1327): only failures outside tests/quarantine.json block
+  behavior-tests:
+    name: Behavior tests
+    uses: ./.github/workflows/behavior-tests.yml
+    with:
+      full: false
+
   result:
     name: CI result
     if: always()
-    needs: [zizmor, decisions, process, rulesync, generated, trace, design-checks, zero-overlap, story-axe, bundle-budgets, checks]
+    needs: [zizmor, decisions, process, rulesync, generated, trace, design-checks, zero-overlap, story-axe, bundle-budgets, checks, behavior-tests]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:

@@ -1,0 +1,4 @@
+{
+ "about": "Failures already known on main (#1327). The CI job Behavior tests (tools/ci/behavior-tests.mjs) blocks only failures not listed here. Each entry: test (a tests/run.js name), check (the check's full name; leave it out for the whole test), issue (the issue that tracks the fix), owner (the role that fixes it), since (YYYY-MM-DD). Quarantine within 24h, never delete the test; remove the entry when its check passes again (the job lists stale entries).",
+ "entries": []
+}
