@@ -1,8 +1,8 @@
 # Plenix design system (PDS) — Project Plan
 
-**Written by Fr. Raphael Maher** · Template version 3.4 · Dispatch kit 3.4 · November 12, 2026
+**Written by Fr. Raphael Maher** · Template version 3.4.1 · Dispatch kit 3.4.1 · November 13, 2026
 
-Generated 2026-11-13 from the project intake by dispatch kit 3.4. This file is a generated snapshot of the process; the current state of the project is on the dashboard and GitHub. Do not edit it: change the intake (§0) or the project rules (`docs/project-rules.md`) instead.
+Generated 2026-11-13 from the project intake by dispatch kit 3.4.1. This file is a generated snapshot of the process; the current state of the project is on the dashboard and GitHub. Do not edit it: change the intake (§0) or the project rules (`docs/project-rules.md`) instead.
 
 > **Who works on a project.** One or more **members** (people), all with the same access and permissions, each with their own agent team. All teams work on the same GitHub repository, which is the record for everything. Each team has **one contact agent, its PM** (project manager agent). Members log requests and answer decisions on the **dashboard** (§8.3), directly on GitHub, or by talking to their PM.
 >
@@ -512,6 +512,7 @@ Four short workflow skills are written in Phase 0 into `.agents/skills/` (the ki
 | A PR is ready for review | Adds the label of every **applicable** PR review gate (Code Reviewer always; QA always in Library and Application; Design Critic and Accessibility for UI; Security for sensitive areas) and starts each one with the issue number the PR closes; they use the reserved slots. Gates that do not apply are recorded N/A with a reason |
 | An agent has finished | The agent ends itself |
 | An agent sits idle | The host's idle closer handles it: after `idle_exit_min` without working, the agent gets one nudge; if it is still idle after `idle_exit_min` more, it is closed, its item returns to Ready, and the closer comments on the issue. The PM adds the cause to `docs/lessons.md` when it recurs |
+| An agent stops without finishing | The idle closer finds an agent whose session ended without `agent.sh done` (for example, stopped for using more memory than `memory_gb`). It records why in the kit log, comments on the issue, and returns a builder's item to Ready. The PM starts it again, or splits the work when it ran out of memory |
 | A lane falls below `ready_min` | Refill from the master plan (§4.4) |
 | Backlog and Ready are empty | The lead PM runs a plan review (§4.6); then every agent stops |
 | Work matches no role | Role discovery (§5.9) |
@@ -525,7 +526,7 @@ If a member has to remind the PM to work while Ready items exist, coordination f
 The dashboard's Team view shows, from GitHub: each team's In-progress items and which agent label holds them, Ready depth per lane, and open `reminder` issues (target 0). Which sessions are running right now is shown on the host (`pm.sh status`), not on the dashboard. There is no summary document.
 
 **The kit log.** The host keeps one record of every problem the kit meets, what fixed it, and every change made to the kit or through it: `AGENT_HOME/log/KIT-LOG.md`, written from `kit-log.jsonl`. Each entry has an id, K-NNNN.
-- **Problems the kit records by itself:** guard blocks, refused pushes, launcher failures, PMs the watcher had to restart, GitHub queries that failed, agents the idle closer had to close, and failed builds, checks and launch tests of an enabled project. A problem met again while it is open is counted, not repeated. When the kit sees one of these problems gone, it closes it.
+- **Problems the kit records by itself:** guard blocks, refused pushes, launcher failures, PMs the watcher had to restart (with why, when the host knows), GitHub queries that failed, agents the idle closer had to close, agents that stopped without finishing, and failed builds, checks and launch tests of an enabled project. A problem met again while it is open is counted, not repeated. When the kit sees one of these problems gone, it closes it.
 - **Problems agents report:** an agent or PM that a kit tool stops from normal work records it with `agent.sh report "<what happened>"` and never works around it.
 - **Fixes:** a member records what fixed each problem with `dispatch.py log fix K-NNNN "<what was done>"`, which closes it. When no change was needed, the member says why.
 - **Changes the kit records by itself:** installs and upgrades, host setup, intake changes (`set`, with the old and new values), builds, syncs, stored secrets (never a value), enabling, disabling and restarting. A member records any other change with `dispatch.py log change`.
@@ -538,7 +539,7 @@ Every session runs as an interactive agent session in a terminal multiplexer on 
 
 ### 6.6 The dispatch kit
 
-This plan ships with the **dispatch kit**, which always carries the same version number as this template (3.4). The kit refuses to run if the two differ. A project does not rewrite it.
+This plan ships with the **dispatch kit**, which always carries the same version number as this template (3.4.1). The kit refuses to run if the two differ. A project does not rewrite it.
 
 | Part | What it does |
 |---|---|
@@ -914,7 +915,7 @@ Decisions are recorded in `decisions/`, one file per decision (so two decision P
 |---|---|---|
 | in the project's own log (`decisions.d/`) | Mode, project type, name, prefix (answering the intake authorizes Phase 0) | `Existing` / `Library` / `Plenix design system (PDS)` / `pds` |
 | in the project's own log (`decisions.d/`) | Design system and its published specification (**locked**) | `Plenix` at `https://design-system.lighthouseway.org/`, version `1.8.0 (the design system itself; every release is a new immutable CDN version)` |
-| in the project's own log (`decisions.d/`) | Repository, and for Existing the import source and cutover status | `plenix-ds/pds`. Imported from PDS1 on VM 131 (folder /home/cc/pds1, PM "PDS1 - Product Lead"); old team stopped: not yet (cutover). |
+| in the project's own log (`decisions.d/`) | Repository, and for Existing the import source and cutover status | `plenix-ds/pds`. Imported from PDS1 on VM 131 (folder /home/cc/pds1, PM "PDS1 - Product Lead"); old team stopped: yes. |
 | in the project's own log (`decisions.d/`) | Hosting and environments | `production https://design-system.lighthouseway.org/; registry GitHub Packages (@plenix-ds/tokens, icons, styles, react)` |
 | in the project's own log (`decisions.d/`) | Merge rights | `Self-merge` |
 | in the project's own log (`decisions.d/`) | Members and teams | `Fr. Raphael Maher (@LighthouseCollection, team core)` |

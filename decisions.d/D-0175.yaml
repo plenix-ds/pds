@@ -1,0 +1,9 @@
+id: D-0175
+date: 2026-11-13
+area: process
+decided_by: owner (2026-11-13; "end cutover PDS")
+decision: The PDS1 team on the cc account is stopped, so the PDS2 cutover is over. pds1-team.service, which started the old team at boot, is stopped and disabled, and the pds1-nudge timer stays disabled. PDS2 now changes PRs, labels and files as .agents/RULES.md allows; the intake records the old team as stopped.
+why: Only one team may change the repository at a time (plan §11.2). The owner confirmed the move to PDS2.
+options: [End the cutover now (chosen), Keep PDS2 read-only longer]
+status: active
+check: review-only (the PDS2 guard settings block writes until the intake records the old team as stopped)
