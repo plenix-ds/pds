@@ -75,7 +75,8 @@ export function Pick({ label, value, options, onChange, size = 'field', disabled
   );
 }
 
-export const Pill = ({ color, children }: any) => <span className="plx-find-pill" data-plx-category={color || 'gray'}>{children}</span>;
+// a function declaration, not a const: QuickFilter aliases it at module scope, and a const there is read before it exists when the bundle orders CommandBar first (the CommandBar, QuickFilter and panel-parts import cycle)
+export function Pill({ color, children }: any) { return <span className="plx-find-pill" data-plx-category={color || 'gray'}>{children}</span>; }
 
 // a multi-select: the chosen values as pills, or the placeholder
 export function MultiPick({ label, options, value, onChange, placeholder }: any) {

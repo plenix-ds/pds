@@ -1,6 +1,6 @@
 /* Plenix · ReviewQueue
    Summary: The data review workflow: a DataGrid of items waiting for review under a CommandBar whose selection holds Approve, Request changes and Reject. It is its own
-     module so a screen that draws a review panel or a status badge does not load the grid, the command bar or the prompt dialog (ADR 0052, #1268). Its props, words and
+     module so a screen that draws a review panel or a status badge does not load the grid, the command bar or the prompt dialog (ADR 0052, issue 1268). Its props, words and
      behavior are documented in ReviewFlow.tsx, with the review panel and the status badge.
    Usage:
      <ReviewQueue label="Waiting for review" items={items} noun="item" onDecision={(ids, decision, reason) => …} />

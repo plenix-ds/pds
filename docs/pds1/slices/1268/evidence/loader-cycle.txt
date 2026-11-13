@@ -1,0 +1,8 @@
+#1268 follow-up (PR #1324 head dd08496e): CI "Bundle budgets" failed in tests/esm-loader-1208.test.js
+RED (branch, before): ESM_LOADER_1208_FAIL: Waiting failed: 30000ms exceeded
+  Plenix.load(CTM parts) rejected: "Cannot access 'Pill' before initialization" (esm/chunks/shell: const Pill$1 = Pill ahead of const Pill)
+  cause: CommandBar -> QuickFilter -> panel-parts -> CommandBar cycle; ReviewQueue's import order put CommandBar first in the shell chunk.
+  main (1b10ec81, same command): ESM_LOADER_1208_OK
+FIX: panel-parts.tsx exports Pill as a function declaration (hoisted), so QuickFilter's module-scope alias is safe in any order.
+GREEN: node tests/esm-loader-1208.test.js -> ESM_LOADER_1208_OK; one-part-sizes --check -> ONE_PART_SIZES_OK; perf-budget -> PERF_BUDGET_OK (limits unchanged)
+STYLE: node check-style.js -> STYLE_OK (the two "#1268" in file headers read as hex colors; now "issue 1268")

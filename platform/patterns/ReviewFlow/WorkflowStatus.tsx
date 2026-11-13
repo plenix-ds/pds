@@ -1,6 +1,6 @@
 /* Plenix · WorkflowStatus
    Summary: The status badge the review parts share (10 Patterns › Review and approval): a Badge of the status's meaning with its icon. It is its own module so an
-     import of WorkflowStatus or WORKFLOW_STATUSES loads only this badge, not the review panel or the queue (ADR 0052, #1268). The words, props and behavior are
+     import of WorkflowStatus or WORKFLOW_STATUSES loads only this badge, not the review panel or the queue (ADR 0052, issue 1268). The words, props and behavior are
      documented in ReviewFlow.tsx, with the review panel and the queue.
    Usage:
      <WorkflowStatus status="changes-requested" />
