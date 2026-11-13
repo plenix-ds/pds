@@ -250,14 +250,6 @@
    "why": "the stylesheet check for the row-line rules fails (1 of 42); hidden on main behind #1338"
   },
   {
-   "test": "data-grid",
-   "check": "Views: Remaining DataGrid contracts",
-   "issue": 1349,
-   "owner": "engineer",
-   "since": "2026-11-13",
-   "why": "fails 'Bytes right aligned': a bytes cell's text-align is neither right nor end; hidden on main behind #1338"
-  },
-  {
    "test": "arabic-catalog-427",
    "check": "timeline.tagUpcoming: has its Arabic",
    "issue": 1341,

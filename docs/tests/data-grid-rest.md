@@ -5,7 +5,7 @@ The rest of the table fixes keep working: file sizes, missing values, rich cells
 - File: `tests/data-grid-rest.test.js`
 
 ## What it checks
-- File sizes: a bytes column shows sizes in a readable form, aligned right, in the data font; it sorts by the real number and can be filtered with input such as "10 MB"; a bad input never matches.
+- File sizes: a bytes column shows sizes in a readable form, start-aligned like other cells (D-0087), in the data font; it sorts by the real number and can be filtered with input such as "10 MB"; a bad input never matches.
 - Missing or deleted values: a column's "Unavailable" text is shown; deleted values are italic; zero and false are kept.
 - Rich cells (avatar and name, tags, badges): drawn without a separate React portal; sorted by their visible text; badges centered and with an icon; taller rows keep the avatar and name on one line.
 - Only the rich cells in view are mounted; scrolling mounts new ones and releases old ones; unmounting releases them all.
