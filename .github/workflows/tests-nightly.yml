@@ -26,7 +26,7 @@ defaults:
 jobs:
   full:
     name: Full run
-    uses: ./.github/workflows/behavior-tests.yml
+    uses: $/.github/workflows/behavior-tests.yml
     with:
       full: true
 

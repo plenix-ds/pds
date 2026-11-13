@@ -97,5 +97,23 @@ eq('a test printing TESTS_OK in the middle does not count', parseRun('TESTS_OK 1
     { blocking: [], quarantined: [], stale: [] });
 }
 
+// 4. the environment: the automatic runs never open the design spec (owner, 2026-10-25; tests/run.js). The spec page loads
+// Plenix from the live CDN, so a CI run that opens it waits on the network and times out (baseline run 43481282090:
+// messages-chat-s6, "Navigation timeout of 30000 ms exceeded"). An automatic test, or a child that layout runs, may open it
+// only behind PLENIX_SPEC=1, which an on-demand run sets
+{
+  const fs = require('node:fs'), path = require('node:path');
+  const { AUTOMATIC } = require('../../tests/run.js');
+  const dir = path.join(path.dirname(new URL(import.meta.url).pathname), '..', '..', 'tests');
+  const children = [...fs.readFileSync(path.join(dir, 'layout.test.js'), 'utf8').matchAll(/'([a-z0-9-]+\.test\.js)'/g)].map((m) => m[1]);
+  const files = [...new Set(AUTOMATIC.map((t) => t + '.test.js').concat(children))].filter((f) => fs.existsSync(path.join(dir, f)));
+  eq('layout lists its children', children.length > 5, true);
+  const open = files.filter((f) => {
+    const src = fs.readFileSync(path.join(dir, f), 'utf8');
+    return /platform\/design-system\/index\.html/.test(src) && !/process\.env\.PLENIX_SPEC\b/.test(src);
+  });
+  eq('no automatic test opens the design spec without PLENIX_SPEC=1', open, []);
+}
+
 console.log(failed ? `BEHAVIOR_TESTS_TEST_FAIL (${failed} of ${count})` : `BEHAVIOR_TESTS_TEST_OK (${count})`);
 process.exit(failed ? 1 : 0);

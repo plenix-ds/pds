@@ -1,4 +1,83 @@
 {
  "about": "Failures already known on main (#1327). The CI job Behavior tests (tools/ci/behavior-tests.mjs) blocks only failures not listed here. Each entry: test (a tests/run.js name), check (the check's full name; leave it out for the whole test), issue (the issue that tracks the fix), owner (the role that fixes it), since (YYYY-MM-DD). Quarantine within 24h, never delete the test; remove the entry when its check passes again (the job lists stale entries).",
- "entries": []
+ "entries": [
+  {
+   "test": "visual",
+   "issue": 1329,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "Button baseline predates the IBM Plex Sans Arabic font stack: 2303 differences"
+  },
+  {
+   "test": "site-coverage",
+   "issue": 1330,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "7 Platform names not used by the test site"
+  },
+  {
+   "test": "layout",
+   "issue": 1331,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "whole test: its children have no recorded checks. Causes: narrow-fit-880 #1331, chat-s2-637 #1332, button-610 and button-elevation-610 #1333, entity-header-media-275 #1334 (messages-chat-s6 was the environment, fixed in #1327)"
+  },
+  {
+   "test": "reflow",
+   "issue": 1335,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "#/document/d1 page content scrolls sideways at 320px"
+  },
+  {
+   "test": "pages",
+   "issue": 1336,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "#/member/m1 nests three containers"
+  },
+  {
+   "test": "component-tokens",
+   "issue": 1337,
+   "owner": "architect",
+   "since": "2026-11-13",
+   "why": "4 component tokens move nothing"
+  },
+  {
+   "test": "data-grid",
+   "issue": 1338,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "data-grid-view-169: reset() leaves the name column width"
+  },
+  {
+   "test": "keyboard",
+   "issue": 1339,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "command-actions: Enter does not open the selection action form"
+  },
+  {
+   "test": "formats",
+   "check": "parseDate: the parts that show dates read them through it, never on their own #342: private date-only parsers: use parseDate (utils/format.ts), or add a reasoned exception here",
+   "issue": 1340,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "private date-only parsers outside parseDate"
+  },
+  {
+   "test": "arabic-catalog-427",
+   "issue": 1341,
+   "owner": "i18n-engineer",
+   "since": "2026-11-13",
+   "why": "timeline.tagUpcoming and loading.slow have no approved Arabic (D-0012)"
+  },
+  {
+   "test": "typography",
+   "issue": 1232,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "data phrases set in DM Sans on 15 pages: the data-font rule of #1232"
+  }
+ ]
 }

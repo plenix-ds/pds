@@ -448,7 +448,7 @@ jobs:
   # the behavior tests, tests/run.js, in changed mode (#1327): only failures outside tests/quarantine.json block
   behavior-tests:
     name: Behavior tests
-    uses: ./.github/workflows/behavior-tests.yml
+    uses: $/.github/workflows/behavior-tests.yml
     with:
       full: false
 
