@@ -73,27 +73,33 @@ function readArgs(argv) {
   }
   return out;
 }
-const read = readArgs(process.argv.slice(2));
-if (read.error) { console.error(read.error); process.exit(2); }
-const { full, onDemand, release, parts, flags, names } = read;
-const bad = names.filter((n) => ALL.indexOf(n) < 0);
-if (bad.length) { console.error('No such test: ' + bad.join(', ') + ' (tests: ' + ALL.join(', ') + ')'); process.exit(2); }
-const env = Object.assign({}, process.env, full ? { TEST_SCOPE: 'full' } : {});
-const list = names.length ? names : onDemand ? ON_DEMAND : release ? RELEASE : AUTOMATIC;
-const failed = [], times = [];
-const t0 = Date.now();
-for (const n of list) {
-  const t = Date.now();
-  console.log('\n── ' + n + (full ? ' (full)' : ''));
-  const only = parts[n] && parts[n].length ? parts[n].join(',') : '';
-  if (only) console.log('   parts: ' + only);
-  const own = flags[n] || [];
-  if (own.length) console.log('   flags: ' + own.join(' '));
-  const r = spawnSync(process.execPath, [path.join(__dirname, n + '.test.js')].concat(own), { stdio: 'inherit', env: Object.assign({}, env, { TEST_ONLY: only }) });
-  const s = ((Date.now() - t) / 1000).toFixed(1);
-  times.push(n + ' ' + s + 's');
-  if (r.status !== 0) failed.push(n);
+// the lists, for the CI job that groups the automatic tests (tools/ci/behavior-tests.mjs, #1327); requiring this file runs nothing
+module.exports = { AUTOMATIC, ON_DEMAND, RELEASE, SPEC_ONLY, ALL, readArgs };
+if (require.main === module) main();
+
+function main() {
+  const read = readArgs(process.argv.slice(2));
+  if (read.error) { console.error(read.error); process.exit(2); }
+  const { full, onDemand, release, parts, flags, names } = read;
+  const bad = names.filter((n) => ALL.indexOf(n) < 0);
+  if (bad.length) { console.error('No such test: ' + bad.join(', ') + ' (tests: ' + ALL.join(', ') + ')'); process.exit(2); }
+  const env = Object.assign({}, process.env, full ? { TEST_SCOPE: 'full' } : {});
+  const list = names.length ? names : onDemand ? ON_DEMAND : release ? RELEASE : AUTOMATIC;
+  const failed = [], times = [];
+  const t0 = Date.now();
+  for (const n of list) {
+    const t = Date.now();
+    console.log('\n── ' + n + (full ? ' (full)' : ''));
+    const only = parts[n] && parts[n].length ? parts[n].join(',') : '';
+    if (only) console.log('   parts: ' + only);
+    const own = flags[n] || [];
+    if (own.length) console.log('   flags: ' + own.join(' '));
+    const r = spawnSync(process.execPath, [path.join(__dirname, n + '.test.js')].concat(own), { stdio: 'inherit', env: Object.assign({}, env, { TEST_ONLY: only }) });
+    const s = ((Date.now() - t) / 1000).toFixed(1);
+    times.push(n + ' ' + s + 's');
+    if (r.status !== 0) failed.push(n);
+  }
+  console.log('\nTIMES ' + times.join(' · ') + ' · total ' + ((Date.now() - t0) / 1000).toFixed(1) + 's');
+  console.log(failed.length ? 'TESTS_FAIL ' + failed.join(', ') : 'TESTS_OK ' + list.length + ' tests');
+  process.exit(failed.length ? 1 : 0);
 }
-console.log('\nTIMES ' + times.join(' · ') + ' · total ' + ((Date.now() - t0) / 1000).toFixed(1) + 's');
-console.log(failed.length ? 'TESTS_FAIL ' + failed.join(', ') : 'TESTS_OK ' + list.length + ' tests');
-process.exit(failed.length ? 1 : 0);

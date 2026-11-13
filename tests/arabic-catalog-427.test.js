@@ -5,8 +5,13 @@
      in the spec's parts (a lane's copy in place of the pinned one) is in en.js or in that example's own English catalog.
    Proof first: before #427 dialog.close had no Arabic and the common section was in English only, so those lines fail;
      the pinned w15C.records.js reads common.save with a French catalog only, so the spec line fails without lanes/427-catalog.
+   Every rule is a named check in the results file (tests/check.js): one per English key ("<key>: has its Arabic"), so CI can
+     quarantine the keys that wait for the owner's Arabic (D-0012) and still block on a new key without it (#1327, G5a M1).
    Usage: node tests/arabic-catalog-427.test.js   → ARABIC_CATALOG_427_OK */
-const assert = require('assert/strict'), path = require('path'), { pathToFileURL } = require('url');
+const path = require('path'), { pathToFileURL } = require('url');
+const shared = require('./check.js');
+const bad = [];
+const rule = (name, ok, detail) => { shared.record(name, ok, detail); if (!ok) bad.push(name + (detail ? ': ' + detail : '')); };
 (async () => {
   const load = async (f) => (await import(pathToFileURL(path.join(__dirname, '..', 'platform', 'i18n', f)).href)).default;
   const en = await load('en.js'), ar = await load('ar.js');
@@ -14,11 +19,10 @@ const assert = require('assert/strict'), path = require('path'), { pathToFileURL
   const E = flat(en), A = flat(ar);
   const base = (k) => k.replace(/\.(zero|one|two|few|many|other|=0)$/, '');
   const arBases = new Set(Object.keys(A).map(base));
-  const missing = Object.keys(E).filter((k) => !(k in A) && !arBases.has(base(k)));
-  assert.deepEqual(missing, [], 'every English key has its Arabic: ' + missing.join(', '));
-  assert.equal(ar.dialog.close, 'إغلاق', 'dialog.close is إغلاق');
-  assert.equal(en.common, undefined, 'the unread common section is gone');
-  for (const k of ['wizard.finish', 'wizard.step', 'wizard.error', 'emptyState.title', 'emptyState.description', 'emptyState.action']) assert.ok(!(k in E), k + ' is gone');
+  for (const k of Object.keys(E)) rule(k + ': has its Arabic', k in A || arBases.has(base(k)), 'no Arabic entry in ar.js');
+  rule('dialog.close: is إغلاق', (ar.dialog || {}).close === 'إغلاق', (ar.dialog || {}).close);
+  rule('common: the unread section is gone', en.common === undefined, 'en.js still has common');
+  for (const k of ['wizard.finish', 'wizard.step', 'wizard.error', 'emptyState.title', 'emptyState.description', 'emptyState.action']) rule(k + ': is gone', !(k in E), 'still in en.js');
   // every catalog word a spec example reads is in en.js or in that example's own English catalog (QA on #629: the spec's
   // "Localized content" example read common.save after it was removed). The parts read are the spec's
   // (platform/design-system/parts/*.js) with each lane's copy (lanes/*/design-system/parts/*.js) in place of the pinned one.
@@ -41,6 +45,8 @@ const assert = require('assert/strict'), path = require('path'), { pathToFileURL
     const english = [...src.matchAll(/catalogs:\s*\{[^}]*?\ben:\s*([A-Z][A-Z0-9_]*)/g)].map((m) => defs[m[1]]).filter(Boolean);
     for (const k of keys) if (get(en, k) === undefined && !english.some((c) => get(c, k) !== undefined)) unknown.push(path.relative(root, file) + ': ' + k);
   }
-  assert.deepEqual(unknown, [], 'every word a spec example reads has English: ' + unknown.join(', '));
+  rule('Spec examples: every word a spec example reads has English', !unknown.length, unknown.join(', '));
+  shared.ended();   // every failure above is a recorded check (G5a I1)
+  if (bad.length) { console.log('ARABIC_CATALOG_427_FAIL ' + bad.length + ': ' + bad.join(' · ')); process.exit(1); }
   console.log('ARABIC_CATALOG_427_OK');
 })().catch((e) => { console.error(e); process.exit(1); });
