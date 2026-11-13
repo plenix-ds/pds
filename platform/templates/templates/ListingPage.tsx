@@ -45,3 +45,4 @@ export function ListingPage<R = Record<string, unknown>>({ rows = [], columns = 
     </PagePanes>
   </AppShell>;
 }
+export type { FrameProps } from './shared.tsx';

@@ -1,0 +1,4 @@
+# Public type names that the page-template split (#1266) must keep: FrameProps and FormPageProps are published since 0.93.1 (Templates.tsx, 1.8.0).
+# tools/checks/published-names.mjs fails when a built release/packages/react/index.d.ts lacks one.
+FrameProps
+FormPageProps

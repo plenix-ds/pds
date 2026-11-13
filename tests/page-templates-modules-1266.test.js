@@ -17,6 +17,9 @@ for (const n of NAMES) {
   for (const f of ['platform/index.ts', 'platform/exports/w15A.ts'])
     assert.ok(fs.readFileSync(path.join(root, f), 'utf8').includes("export { " + n + " } from '" + (f.endsWith('index.ts') ? './' : '../') + "templates/templates/" + n + ".tsx'"), 'AC-2: ' + f + ' exports ' + n + ' from its own module');
 }
+// AC-4: FrameProps and FormPageProps are published type names (since 0.93.1). react-types.js publishes only what platform/index.ts re-exports, so each must stay exported from a page module it re-exports
+for (const [type, mod, from] of [['FrameProps', 'ListingPage', 'shared'], ['FormPageProps', 'CreatePage', 'FormPage']])
+  assert.ok(fs.readFileSync(path.join(dir, mod + '.tsx'), 'utf8').includes("export type { " + type + " } from './" + from + ".tsx'"), 'AC-4: ' + mod + '.tsx keeps ' + type + ' public');
 assert.ok(!/^(export )?(function|const) /m.test(doc.replace(/\/\*[\s\S]*?\*\//, '')), 'AC-2: Templates.tsx declares nothing');
 (async () => {
   const PORT = +process.env.TEST_PORT || 9827, server = await serve(PORT); let browser;
