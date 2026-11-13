@@ -145,7 +145,8 @@ module.exports.keyboard = async function keyboard(page) {
     const action = { label: 'Add tag keyboard', icon: 'plus', panel: ({ close }) => h(P.Stack, { gap: 'sm' }, h(P.Input, { 'aria-label': 'Keyboard tag' }), h(P.Button, { onClick: close }, 'Apply keyboard tag')) };
     D.flushSync(() => root.render(h(P.CommandBar, { label: 'Keyboard panel', selection: { count: 2, onClear: () => window.commandPanelKeyboard.clears++, actions: [action] } })));
   });
-  await sleep(500); await page.focus('#command-panel-keyboard button'); await page.keyboard.press('Enter'); await sleep(250);
+  await sleep(500); // the count and Clear lead the bar in add mode (D-0068, #543), so the first button is Clear: aim at the action itself
+  await page.focus('#command-panel-keyboard button[aria-haspopup="dialog"]'); await page.keyboard.press('Enter'); await sleep(250);
   assert(await page.evaluate(() => document.activeElement.getAttribute('aria-label') === 'Keyboard tag'), 'Enter opens selection action form and focuses its first field');
   await page.keyboard.type('Report'); await page.keyboard.press('Home'); await page.keyboard.press('ArrowRight');
   assert(await page.evaluate(() => document.activeElement.selectionStart === 1), 'form Home/arrow keys edit text without toolbar navigation');
