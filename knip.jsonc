@@ -41,6 +41,8 @@
     "platform/loader/plenix-loader.js",
     // the commerce templates' doc header and re-exports (#1265): nothing imports it now that platform/index.ts exports each name from its own module; the spec site reads it (design-system/spec-index.js, spec-parts.js)
     "platform/templates/Commerce/Commerce.tsx",
+    // the page templates' doc header and re-exports (#1266): nothing imports it now that platform/index.ts exports each page from its own module; the spec site reads it (design-system/parts/w15A.records.js)
+    "platform/templates/templates/Templates.tsx",
     // loaded by script tags in pages; check-system.rules/icon-names.js reads it
     "suite/plenix-app-data.js",
     "suite/settings-data.js",

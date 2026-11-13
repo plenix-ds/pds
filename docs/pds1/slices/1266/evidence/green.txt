@@ -1,0 +1,4 @@
+  screen grid (DataGrid, Dialog, Button, ThemeProvider): 233608 B brotli 5 (limit 240000)
+  611 entries; largest (on-demand candidates): FileBrowser 297409, Publish 278126, OrderManagement 270352, ApprovalWorkflow 269468, WORKFLOW_STATUSES 266769; plenix-loader.js 3280 B
+PERF_BUDGET_OK
+TEMPLATES_MODULES_1266_OK

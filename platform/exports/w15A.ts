@@ -1,2 +1,16 @@
 export { AnalyticsProvider, useAnalytics, track } from '../providers/AnalyticsProvider.tsx';
-export { ListingPage, ContentManagementPage, LandingPage, HomePage, CreatePage, EditPage, MasterDetailPage, SplitWorkspace, SinglePaneWorkspace, FullScreenWorkspace, FullScreenExperience, DetailPage, SearchResultsPage, AuthenticationPage, ErrorPage } from '../templates/templates/Templates.tsx';
+export { ListingPage } from '../templates/templates/ListingPage.tsx';
+export { ContentManagementPage } from '../templates/templates/ContentManagementPage.tsx';
+export { LandingPage } from '../templates/templates/LandingPage.tsx';
+export { HomePage } from '../templates/templates/HomePage.tsx';
+export { CreatePage } from '../templates/templates/CreatePage.tsx';
+export { EditPage } from '../templates/templates/EditPage.tsx';
+export { MasterDetailPage } from '../templates/templates/MasterDetailPage.tsx';
+export { SplitWorkspace } from '../templates/templates/SplitWorkspace.tsx';
+export { SinglePaneWorkspace } from '../templates/templates/SinglePaneWorkspace.tsx';
+export { FullScreenWorkspace } from '../templates/templates/FullScreenWorkspace.tsx';
+export { FullScreenExperience } from '../templates/templates/FullScreenExperience.tsx';
+export { DetailPage } from '../templates/templates/DetailPage.tsx';
+export { SearchResultsPage } from '../templates/templates/SearchResultsPage.tsx';
+export { AuthenticationPage } from '../templates/templates/AuthenticationPage.tsx';
+export { ErrorPage } from '../templates/templates/ErrorPage.tsx';
