@@ -12,6 +12,7 @@ const fs = require('fs');
 const path = require('path');
 const { ROOT, launch, sleep } = require('./lib.js');
 const changed = require('./changed.js');
+const limit = require('./limit.js');   // the hard time limit; children are not charged to it (#1327)
 // The child tests, each run as its own process before Layout's own checks. A child runs when what it covers changed
 // (changed.wants), or when its own file or a fixture it loads changed (changed.child; issue 756), and always in a full
 // run. Its file name stays written out ('<name>.test.js'): tests/changed.js finds a group's children by those names.
@@ -20,7 +21,8 @@ const changed = require('./changed.js');
 const failedChildren = [];
 function child(what, file) {
   if (!changed.wants(what) && !changed.child(file)) return;
-  const result = require('child_process').spawnSync(process.execPath, [path.join(__dirname, file)], { stdio: 'inherit', env: process.env });
+  const result = limit.excluding(() => require('child_process').spawnSync(process.execPath, [path.join(__dirname, file)], { stdio: 'inherit', env: process.env }));   // its own limit (#1327)
+  shared.record(shared.childName(file), result.status === 0, 'exit ' + result.status);   // one result per child (#1327)
   if (result.status !== 0) failedChildren.push(file.replace(/\.test\.js$/, ''));
 }
 const childSummary = () => (failedChildren.length ? 'LAYOUT_FAIL children: ' + failedChildren.join(', ') : '');
@@ -162,7 +164,7 @@ child({ units: ['components/DataGrid'] }, 'data-grid-card-count-679.test.js');
 child({ units: ['components/DataGrid'] }, 'data-grid-autofit-929.test.js');
 child({ units: ['patterns/AppShell'], apps: ['dashboard', 'projects', 'messages', 'contacts', 'calendar', 'tasks', 'notes', 'bookmarks', 'files', 'settings', 'dam'] }, 'rtl-whole-page.test.js');
 if (!changed.wants({ units: ['patterns/AppShell', 'patterns/SettingsLayout', 'patterns/SplitView', 'components/Toolbar', 'patterns/ActionBar', 'components/VisuallyHidden', 'providers/DirectionProvider', 'components/Checkbox', 'components/Fieldset', 'components/Icon'] })) {
-  if (failedChildren.length) { console.log(childSummary() + ' (Layout\'s own checks: nothing in scope)'); process.exit(1); }
+  if (failedChildren.length) { console.log(childSummary() + ' (Layout\'s own checks: nothing in scope)'); shared.ended(); process.exit(1); }
   changed.none('LAYOUT_OK 0/0');
 }
 changed.report('every mode');
@@ -386,5 +388,6 @@ async function cleanup() {
   res.forEach(([n, ok, d]) => console.log((ok ? '  ok   ' : '  FAIL ') + n + (ok ? '' : ' · ' + d)));
   console.log((bad.length ? 'LAYOUT_FAIL ' : 'LAYOUT_OK ') + (res.length - bad.length) + '/' + res.length);
   if (failedChildren.length) console.log(childSummary());
+  shared.ended();   // every failure above is a recorded check (G5a I1)
   process.exit(bad.length || failedChildren.length ? 1 : 0);
 })().catch(async (e) => { console.error(e); if (failedChildren.length) console.log(childSummary()); await cleanup(); process.exit(1); });

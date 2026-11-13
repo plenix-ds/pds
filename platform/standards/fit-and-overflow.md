@@ -11,7 +11,7 @@ How every Plenix part behaves when its content does not fit its space (owner, 20
   - then reflow (wrap or stack);
   - cut only last (fold into More, or end in an ellipsis).
 - Every cut keeps a way to see the whole thing.
-- Toolbars, menu bars and action bars skip the reflow step. They are always one row: a bar never wraps.
+- Toolbars, menu bars and action bars skip the reflow step. They are always one row: a bar never wraps. The one exception is a DataToolbar: its end group (a count or a summary, text rather than actions) moves under its start group in a narrow row (D-0176).
 - A step is set by the width of the space the content sits in (a container query), not by the window. A pane at 192px adapts the same way in any window.
 - Where a step depends on how long the content is (four short labels or two long ones), it is measured, with the Platform's own tools: `useOverflow`, `useFold` and `useTruncated` (`platform/utils/overflow.ts`).
 - Every step lands on the 4px grid. A heading on two lines uses a 16px line height; with 4px above and below, two lines are 40px and one line stays 32px.

@@ -1,0 +1,397 @@
+{
+ "about": "Failures already known on main (#1327). The CI job Behavior tests (tools/ci/behavior-tests.mjs) blocks only failures not listed here. Each entry: test (a tests/run.js name), check (the check's full name, as the test records it through tests/check.js), issue (the issue that tracks the fix), owner (the role that fixes it), since (YYYY-MM-DD), why. Name the failing check, so a new failure in the same test still blocks; leave check out only for a test that records no named check, and start its why with 'whole test: ' and the reason. Quarantine within 24h, never delete the test; remove the entry when its check passes again (the job lists stale entries).",
+ "entries": [
+  {
+   "test": "visual",
+   "check": "background-color: every button matches the baseline",
+   "issue": 1329,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "the Button baseline is stale (label colors, border colors, 2xs font size and line height, the IBM Plex Sans Arabic font stack): 10 properties, 2303 differences in runs 43481282090 and 43495763774"
+  },
+  {
+   "test": "visual",
+   "check": "box-shadow: every button matches the baseline",
+   "issue": 1329,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "the Button baseline is stale (label colors, border colors, 2xs font size and line height, the IBM Plex Sans Arabic font stack): 10 properties, 2303 differences in runs 43481282090 and 43495763774"
+  },
+  {
+   "test": "visual",
+   "check": "color: every button matches the baseline",
+   "issue": 1329,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "the Button baseline is stale (label colors, border colors, 2xs font size and line height, the IBM Plex Sans Arabic font stack): 10 properties, 2303 differences in runs 43481282090 and 43495763774"
+  },
+  {
+   "test": "visual",
+   "check": "font-family: every button matches the baseline",
+   "issue": 1329,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "the Button baseline is stale (label colors, border colors, 2xs font size and line height, the IBM Plex Sans Arabic font stack): 10 properties, 2303 differences in runs 43481282090 and 43495763774"
+  },
+  {
+   "test": "visual",
+   "check": "outline-color: every button matches the baseline",
+   "issue": 1329,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "the Button baseline is stale (label colors, border colors, 2xs font size and line height, the IBM Plex Sans Arabic font stack): 10 properties, 2303 differences in runs 43481282090 and 43495763774"
+  },
+  {
+   "test": "visual",
+   "check": ".plx-button__caret color: every button matches the baseline",
+   "issue": 1329,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "the Button baseline is stale (label colors, border colors, 2xs font size and line height, the IBM Plex Sans Arabic font stack): 10 properties, 2303 differences in runs 43481282090 and 43495763774"
+  },
+  {
+   "test": "visual",
+   "check": "border-left-color: every button matches the baseline",
+   "issue": 1329,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "the Button baseline is stale (label colors, border colors, 2xs font size and line height, the IBM Plex Sans Arabic font stack): 10 properties, 2303 differences in runs 43481282090 and 43495763774"
+  },
+  {
+   "test": "visual",
+   "check": "border-top-color: every button matches the baseline",
+   "issue": 1329,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "the Button baseline is stale (label colors, border colors, 2xs font size and line height, the IBM Plex Sans Arabic font stack): 10 properties, 2303 differences in runs 43481282090 and 43495763774"
+  },
+  {
+   "test": "visual",
+   "check": "font-size: every button matches the baseline",
+   "issue": 1329,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "the Button baseline is stale (label colors, border colors, 2xs font size and line height, the IBM Plex Sans Arabic font stack): 10 properties, 2303 differences in runs 43481282090 and 43495763774"
+  },
+  {
+   "test": "visual",
+   "check": "line-height: every button matches the baseline",
+   "issue": 1329,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "the Button baseline is stale (label colors, border colors, 2xs font size and line height, the IBM Plex Sans Arabic font stack): 10 properties, 2303 differences in runs 43481282090 and 43495763774"
+  },
+  {
+   "test": "site-coverage",
+   "check": "AnswerLines: used by the test site",
+   "issue": 1330,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "a Platform name no test-site screen uses"
+  },
+  {
+   "test": "site-coverage",
+   "check": "PageBreak: used by the test site",
+   "issue": 1330,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "a Platform name no test-site screen uses"
+  },
+  {
+   "test": "site-coverage",
+   "check": "LoadingState: used by the test site",
+   "issue": 1330,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "a Platform name no test-site screen uses"
+  },
+  {
+   "test": "site-coverage",
+   "check": "PropertyGroup: used by the test site",
+   "issue": 1330,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "a Platform name no test-site screen uses"
+  },
+  {
+   "test": "site-coverage",
+   "check": "TableSettings: used by the test site",
+   "issue": 1330,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "a Platform name no test-site screen uses"
+  },
+  {
+   "test": "site-coverage",
+   "check": "PrintDocument: used by the test site",
+   "issue": 1330,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "a Platform name no test-site screen uses"
+  },
+  {
+   "test": "site-coverage",
+   "check": "PagePanes: used by the test site",
+   "issue": 1330,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "a Platform name no test-site screen uses"
+  },
+  {
+   "test": "layout",
+   "check": "narrow-fit-880: the child test passes",
+   "issue": 1331,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "ltr: the summary at the end ends in an ellipsis"
+  },
+  {
+   "test": "layout",
+   "check": "chat-s2-637: the child test passes",
+   "issue": 1332,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "the footer is 10px"
+  },
+  {
+   "test": "layout",
+   "check": "button-610: the child test passes",
+   "issue": 1333,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "light: Danger steps red-700, red-800, red-900"
+  },
+  {
+   "test": "layout",
+   "check": "button-elevation-610: the child test passes",
+   "issue": 1333,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "light secondary: the subtle glow on hover"
+  },
+  {
+   "test": "layout",
+   "check": "entity-header-media-275: the child test passes",
+   "issue": 1334,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "the case icon does not fill its square (52.8 of 44)"
+  },
+  {
+   "test": "reflow",
+   "check": "test-site/index.html#/document/d1: no new scroller at 320px",
+   "issue": 1335,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "section.plx-page-content scrolls sideways at 320px (289/270px)"
+  },
+  {
+   "test": "pages",
+   "check": "test-site/index.html#/member/m1: passes the page checks",
+   "issue": 1336,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "the page nests three containers"
+  },
+  {
+   "test": "component-tokens",
+   "check": ".plx-field__label-tip | max-inline-size | plx-comp-field-grid-label-tip-max-width: moves something on the site",
+   "issue": 1337,
+   "owner": "architect",
+   "since": "2026-11-13",
+   "why": "a component token that moves nothing on the site"
+  },
+  {
+   "test": "component-tokens",
+   "check": ".plx-file-browser__body | column-gap | plx-comp-file-browser-body-gap: moves something on the site",
+   "issue": 1337,
+   "owner": "architect",
+   "since": "2026-11-13",
+   "why": "a component token that moves nothing on the site"
+  },
+  {
+   "test": "component-tokens",
+   "check": ".plx-file__icon | color | plx-comp-file-icon-color: moves something on the site",
+   "issue": 1337,
+   "owner": "architect",
+   "since": "2026-11-13",
+   "why": "a component token that moves nothing on the site"
+  },
+  {
+   "test": "component-tokens",
+   "check": ".plx-split-view--side-by-side .plx-split-view__second | min-block-size | plx-comp-split-view-second-min-height: moves something on the site",
+   "issue": 1337,
+   "owner": "architect",
+   "since": "2026-11-13",
+   "why": "a component token that moves nothing on the site"
+  },
+  {
+   "test": "data-grid",
+   "check": "data-grid-view-169: the child test passes",
+   "issue": 1338,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "reset() leaves the name column width (timeout after reset)"
+  },
+  {
+   "test": "data-grid",
+   "check": "cut-popover: the child test passes",
+   "issue": 1343,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "a cut cell shows no expand button on hover; hidden on main behind #1338"
+  },
+  {
+   "test": "data-grid",
+   "check": "row-line-559: the child test passes",
+   "issue": 1344,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "the stylesheet check for the row-line rules fails (1 of 42); hidden on main behind #1338"
+  },
+  {
+   "test": "data-grid",
+   "check": "Views: Remaining DataGrid contracts",
+   "issue": 1349,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "fails 'Bytes right aligned': a bytes cell's text-align is neither right nor end; hidden on main behind #1338"
+  },
+  {
+   "test": "arabic-catalog-427",
+   "check": "timeline.tagUpcoming: has its Arabic",
+   "issue": 1341,
+   "owner": "i18n-engineer",
+   "since": "2026-11-13",
+   "why": "no approved Arabic yet (D-0012); waits for the owner's words (#1171, #1203)"
+  },
+  {
+   "test": "arabic-catalog-427",
+   "check": "loading.slow: has its Arabic",
+   "issue": 1341,
+   "owner": "i18n-engineer",
+   "since": "2026-11-13",
+   "why": "no approved Arabic yet (D-0012); waits for the owner's words (#1171, #1203)"
+  },
+  {
+   "test": "typography",
+   "check": "messages/index.html · light · phrase: no new findings",
+   "issue": 1232,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "data phrases set in DM Sans: the data-font rule of #1232 (run 43481282090)"
+  },
+  {
+   "test": "typography",
+   "check": "settings/index.html#/docs/data-model · light · phrase: no new findings",
+   "issue": 1232,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "data phrases set in DM Sans: the data-font rule of #1232 (run 43481282090)"
+  },
+  {
+   "test": "typography",
+   "check": "test-site/index.html#/member/m1 · light · phrase: no new findings",
+   "issue": 1232,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "data phrases set in DM Sans: the data-font rule of #1232 (run 43481282090)"
+  },
+  {
+   "test": "typography",
+   "check": "test-site/index.html#/families · light · phrase: no new findings",
+   "issue": 1232,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "data phrases set in DM Sans: the data-font rule of #1232 (run 43481282090)"
+  },
+  {
+   "test": "typography",
+   "check": "test-site/index.html#/directory · light · phrase: no new findings",
+   "issue": 1232,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "data phrases set in DM Sans: the data-font rule of #1232 (run 43481282090)"
+  },
+  {
+   "test": "typography",
+   "check": "test-site/index.html#/ministry/sunday-school · light · phrase: no new findings",
+   "issue": 1232,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "data phrases set in DM Sans: the data-font rule of #1232 (run 43481282090)"
+  },
+  {
+   "test": "typography",
+   "check": "test-site/index.html#/servants · light · phrase: no new findings",
+   "issue": 1232,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "data phrases set in DM Sans: the data-font rule of #1232 (run 43481282090)"
+  },
+  {
+   "test": "typography",
+   "check": "test-site/index.html#/event/e10 · light · baseline: no new findings",
+   "issue": 1232,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "Reddit Mono beside DM Sans off the shared baseline (run 43481282090)"
+  },
+  {
+   "test": "typography",
+   "check": "test-site/index.html#/event/e10 · light · phrase: no new findings",
+   "issue": 1232,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "data phrases set in DM Sans: the data-font rule of #1232 (run 43481282090)"
+  },
+  {
+   "test": "typography",
+   "check": "test-site/index.html#/bookstore · light · phrase: no new findings",
+   "issue": 1232,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "data phrases set in DM Sans: the data-font rule of #1232 (run 43481282090)"
+  },
+  {
+   "test": "typography",
+   "check": "test-site/index.html#/document/d1 · light · phrase: no new findings",
+   "issue": 1232,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "data phrases set in DM Sans: the data-font rule of #1232 (run 43481282090)"
+  },
+  {
+   "test": "typography",
+   "check": "test-site/index.html#/media · light · phrase: no new findings",
+   "issue": 1232,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "data phrases set in DM Sans: the data-font rule of #1232 (run 43481282090)"
+  },
+  {
+   "test": "typography",
+   "check": "test-site/index.html#/reports · light · phrase: no new findings",
+   "issue": 1232,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "data phrases set in DM Sans: the data-font rule of #1232 (run 43481282090)"
+  },
+  {
+   "test": "typography",
+   "check": "test-site/index.html#/search?q=girgis · light · phrase: no new findings",
+   "issue": 1232,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "data phrases set in DM Sans: the data-font rule of #1232 (run 43481282090)"
+  },
+  {
+   "test": "typography",
+   "check": "test-site/index.html#/visit · light · phrase: no new findings",
+   "issue": 1232,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "data phrases set in DM Sans: the data-font rule of #1232 (run 43481282090)"
+  }
+ ]
+}
