@@ -203,17 +203,139 @@
   },
   {
    "test": "arabic-catalog-427",
+   "check": "timeline.tagUpcoming: has its Arabic",
    "issue": 1341,
    "owner": "i18n-engineer",
    "since": "2026-11-13",
-   "why": "whole test: it records no named check (it does not use tests/check.js). timeline.tagUpcoming and loading.slow have no approved Arabic (D-0012)"
+   "why": "no approved Arabic yet (D-0012); waits for the owner's words (#1171, #1203)"
+  },
+  {
+   "test": "arabic-catalog-427",
+   "check": "loading.slow: has its Arabic",
+   "issue": 1341,
+   "owner": "i18n-engineer",
+   "since": "2026-11-13",
+   "why": "no approved Arabic yet (D-0012); waits for the owner's words (#1171, #1203)"
   },
   {
    "test": "typography",
+   "check": "messages/index.html · light · phrase: no new findings",
    "issue": 1232,
    "owner": "engineer",
    "since": "2026-11-13",
-   "why": "whole test: it records no named check (it does not use tests/check.js). Data phrases set in DM Sans on 15 pages: the data-font rule of #1232"
+   "why": "data phrases set in DM Sans: the data-font rule of #1232 (run 43481282090)"
+  },
+  {
+   "test": "typography",
+   "check": "settings/index.html#/docs/data-model · light · phrase: no new findings",
+   "issue": 1232,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "data phrases set in DM Sans: the data-font rule of #1232 (run 43481282090)"
+  },
+  {
+   "test": "typography",
+   "check": "test-site/index.html#/member/m1 · light · phrase: no new findings",
+   "issue": 1232,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "data phrases set in DM Sans: the data-font rule of #1232 (run 43481282090)"
+  },
+  {
+   "test": "typography",
+   "check": "test-site/index.html#/families · light · phrase: no new findings",
+   "issue": 1232,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "data phrases set in DM Sans: the data-font rule of #1232 (run 43481282090)"
+  },
+  {
+   "test": "typography",
+   "check": "test-site/index.html#/directory · light · phrase: no new findings",
+   "issue": 1232,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "data phrases set in DM Sans: the data-font rule of #1232 (run 43481282090)"
+  },
+  {
+   "test": "typography",
+   "check": "test-site/index.html#/ministry/sunday-school · light · phrase: no new findings",
+   "issue": 1232,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "data phrases set in DM Sans: the data-font rule of #1232 (run 43481282090)"
+  },
+  {
+   "test": "typography",
+   "check": "test-site/index.html#/servants · light · phrase: no new findings",
+   "issue": 1232,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "data phrases set in DM Sans: the data-font rule of #1232 (run 43481282090)"
+  },
+  {
+   "test": "typography",
+   "check": "test-site/index.html#/event/e10 · light · baseline: no new findings",
+   "issue": 1232,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "Reddit Mono beside DM Sans off the shared baseline (run 43481282090)"
+  },
+  {
+   "test": "typography",
+   "check": "test-site/index.html#/event/e10 · light · phrase: no new findings",
+   "issue": 1232,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "data phrases set in DM Sans: the data-font rule of #1232 (run 43481282090)"
+  },
+  {
+   "test": "typography",
+   "check": "test-site/index.html#/bookstore · light · phrase: no new findings",
+   "issue": 1232,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "data phrases set in DM Sans: the data-font rule of #1232 (run 43481282090)"
+  },
+  {
+   "test": "typography",
+   "check": "test-site/index.html#/document/d1 · light · phrase: no new findings",
+   "issue": 1232,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "data phrases set in DM Sans: the data-font rule of #1232 (run 43481282090)"
+  },
+  {
+   "test": "typography",
+   "check": "test-site/index.html#/media · light · phrase: no new findings",
+   "issue": 1232,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "data phrases set in DM Sans: the data-font rule of #1232 (run 43481282090)"
+  },
+  {
+   "test": "typography",
+   "check": "test-site/index.html#/reports · light · phrase: no new findings",
+   "issue": 1232,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "data phrases set in DM Sans: the data-font rule of #1232 (run 43481282090)"
+  },
+  {
+   "test": "typography",
+   "check": "test-site/index.html#/search?q=girgis · light · phrase: no new findings",
+   "issue": 1232,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "data phrases set in DM Sans: the data-font rule of #1232 (run 43481282090)"
+  },
+  {
+   "test": "typography",
+   "check": "test-site/index.html#/visit · light · phrase: no new findings",
+   "issue": 1232,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "data phrases set in DM Sans: the data-font rule of #1232 (run 43481282090)"
   }
  ]
 }

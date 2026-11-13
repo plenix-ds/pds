@@ -115,5 +115,6 @@ function measure(EXEMPT) {
   worse.forEach((w) => console.log('  NEW ' + w));
   if (better) console.log('  ' + better + ' known findings went down: run with --update to lower the baseline');
   console.log((worse.length ? 'REFLOW_FAIL ' + worse.length + ' new findings; ' : 'REFLOW_OK ') + total + ' known findings on ' + Object.keys(found).length + ' pages at ' + WIDTH + 'px (' + exempt + ' exempt two-dimensional scrollers)');
+  shared.ended();   // every failure above is a recorded check (G5a I1)
   process.exit(worse.length ? 1 : 0);
 })().catch((e) => { console.error(e); process.exit(1); });

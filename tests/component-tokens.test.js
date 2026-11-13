@@ -153,5 +153,6 @@ function check(done) {
   if (fresh.length > 40) console.log('  … and ' + (fresh.length - 40) + ' more');
   if (fixed) console.log('  ' + fixed + ' known rules are wired now: run with --update to lower the baseline');
   console.log((fresh.length ? 'COMPONENT_TOKENS_FAIL ' + fresh.length + ' rule tokens move nothing; ' : 'COMPONENT_TOKENS_OK ') + wired.size + ' wired on ' + PAGES.length + ' pages');
+  shared.ended();   // every failure above is a recorded check (G5a I1)
   process.exit(fresh.length ? 1 : 0);
 })().catch((e) => { console.error(e); process.exit(1); });

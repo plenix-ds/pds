@@ -129,5 +129,6 @@ let current = '';   // the page being checked
   await browser.close(); server.close();
   failed.forEach(([name, e]) => { console.log('FAIL ' + name); e.forEach((x) => console.log('     ' + x)); });
   console.log((failed.length ? 'PAGES_FAIL ' : 'PAGES_OK ') + (n - failed.length) + '/' + n);
+  shared.ended();   // every failure above is a recorded check (G5a I1)
   process.exit(failed.length ? 1 : 0);
 })().catch((e) => { console.error((current ? 'stopped on ' + current + ': ' : '') + e.message); process.exit(1); });

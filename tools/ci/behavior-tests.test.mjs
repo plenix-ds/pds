@@ -7,6 +7,7 @@ import { createRequire } from 'node:module';
 import { groups, parseRun, readQuarantine, compare } from './behavior-tests.mjs';
 
 const require = createRequire(import.meta.url);
+const { END } = require('../../tests/check.js');
 let failed = 0, count = 0;
 const eq = (name, got, want) => {
   count++;
@@ -72,9 +73,27 @@ eq('a test printing TESTS_OK in the middle does not count', parseRun('TESTS_OK 1
     { blocking: [], quarantined: [], stale: [1400] });
   eq('a whole quarantined test failed', short(compare({ ran: ['pages'], failed: ['pages'], results: [r('pages', 'Members: no overlap', false)], quarantine: q })),
     { blocking: [], quarantined: [1400], stale: [] });
-  eq('a quarantined check failed, nothing else', short(compare({ ran: ['keyboard'], failed: ['keyboard'],
-    results: [r('keyboard', 'Toolbar: Arrow Right moves', false), r('keyboard', 'Tabs: Home', true)], quarantine: q })),
+  eq('a quarantined check failed, nothing else (the test ran to its end)', short(compare({ ran: ['keyboard'], failed: ['keyboard'],
+    results: [r('keyboard', 'Toolbar: Arrow Right moves', false), r('keyboard', 'Tabs: Home', true), r('keyboard', END, true)], quarantine: q })),
     { blocking: [], quarantined: [1401], stale: [] });
+  // G5a I1 on PR #1328: a quarantined check must not hide a crash, or a failure the test does not record as a check. A failed
+  // test is judged by its checks only when it recorded that it ran to its end (tests/check.js ended())
+  eq('a quarantined check failed and the test crashed before its end: blocks', short(compare({ ran: ['keyboard'], failed: ['keyboard'],
+    results: [r('keyboard', 'Toolbar: Arrow Right moves', false), r('keyboard', 'Tabs: Home', true)], quarantine: q })),
+    { blocking: ['keyboard'], quarantined: [1401], stale: [] });
+  eq('a quarantined child red plus an unrecorded failure of the parent (data-grid): blocks', short(compare({ ran: ['data-grid'], failed: ['data-grid'],
+    results: [r('data-grid', 'data-grid-view-169: the child test passes', false)], quarantine: q.concat([
+      { test: 'data-grid', check: 'data-grid-view-169: the child test passes', issue: 1338, owner: 'engineer', since: '2026-11-13' }]) })),
+    { blocking: ['data-grid'], quarantined: [1338], stale: [] });
+  eq('the blocking test-level failure says why', compare({ ran: ['keyboard'], failed: ['keyboard'], results: [r('keyboard', 'Toolbar: Arrow Right moves', false)], quarantine: q })
+    .blocking.map((f) => /did not reach its end/.test(f.detail)), [true]);
+  eq('a test that ran to its end but failed with no failing check still blocks', short(compare({ ran: ['keyboard'], failed: ['keyboard'],
+    results: [r('keyboard', 'Toolbar: Arrow Right moves', true), r('keyboard', END, true)], quarantine: q })),
+    { blocking: ['keyboard'], quarantined: [], stale: [1401] });
+  eq('a whole-test entry still covers a crash', short(compare({ ran: ['pages'], failed: ['pages'], results: [r('pages', 'Members: no overlap', false)], quarantine: q })),
+    { blocking: [], quarantined: [1400], stale: [] });
+  eq('the end record is never stale and never blocks', short(compare({ ran: ['reflow'], failed: [], results: [r('reflow', END, true)], quarantine: q })),
+    { blocking: [], quarantined: [], stale: [] });
   eq('a new check failed in a test with a quarantined check', short(compare({ ran: ['keyboard'], failed: ['keyboard'],
     results: [r('keyboard', 'Toolbar: Arrow Right moves', false), r('keyboard', 'Tabs: Home', false)], quarantine: q })),
     { blocking: ['keyboard / Tabs: Home'], quarantined: [1401], stale: [] });
@@ -95,6 +114,12 @@ eq('a test printing TESTS_OK in the middle does not count', parseRun('TESTS_OK 1
     { blocking: ['formats / date: ar'], quarantined: [], stale: [] });
   eq('tests that did not run in this group are not judged', short(compare({ ran: ['formats'], failed: [], results: [], quarantine: q })),
     { blocking: [], quarantined: [], stale: [] });
+
+  // G5a M2: an entry quarantined for more than 14 days is listed in the report, never blocking
+  const aged = (today) => (compare({ ran: ['keyboard'], failed: [], results: [], quarantine: q, today }).old || []).map((e) => e.issue);
+  eq('entries older than 14 days are listed', aged('2026-11-28'), [1400, 1401, 1402]);
+  eq('entries of 14 days or less are not', aged('2026-11-27'), []);
+  eq('no date given: no age report', compare({ ran: [], failed: [], results: [], quarantine: q }).old, []);
 }
 
 // 4. the environment: the automatic runs never open the design spec (owner, 2026-10-25; tests/run.js). The spec page loads
@@ -123,12 +148,17 @@ eq('a test printing TESTS_OK in the middle does not count', parseRun('TESTS_OK 1
   const dir = path.join(path.dirname(new URL(import.meta.url).pathname), '..', '..', 'tests');
   const shared = require('../../tests/check.js');
   eq('check.js names a child test\'s result', typeof shared.childName === 'function' && shared.childName('narrow-fit-880.test.js'), 'narrow-fit-880: the child test passes');
-  const NAMED = ['visual', 'pages', 'reflow', 'site-coverage', 'component-tokens', 'data-grid', 'keyboard', 'layout'];
+  eq('check.js records that a test ran to its end', typeof shared.ended === 'function' && typeof shared.END === 'string' && shared.END.length > 10, true);
+  const NAMED = ['visual', 'pages', 'reflow', 'site-coverage', 'component-tokens', 'data-grid', 'keyboard', 'layout', 'typography', 'arabic-catalog-427'];
   eq('the tests with named findings record them through check.js',
     NAMED.filter((t) => !/require\('\.\/check\.js'\)/.test(fs.readFileSync(path.join(dir, t + '.test.js'), 'utf8'))), []);
   eq('data-grid runs every child, even after one fails (one red child must not hide the others)',
     /if \(result\.status !== 0\) process\.exit/.test(fs.readFileSync(path.join(dir, 'data-grid.test.js'), 'utf8')), false);
   const q = JSON.parse(fs.readFileSync(path.join(dir, 'quarantine.json'), 'utf8')).entries;
+  eq('every test with a named finding records that it ran to its end (G5a I1)',
+    NAMED.filter((t) => !/shared\.ended\(\)/.test(fs.readFileSync(path.join(dir, t + '.test.js'), 'utf8'))), []);
+  eq('data-grid records its own table views as checks, not only its children (G5a I1)',
+    /res\.forEach\(\(\[n, ok, d\]\) => shared\.record\(/.test(fs.readFileSync(path.join(dir, 'data-grid.test.js'), 'utf8')), true);
   eq('a whole-test entry says why it cannot be narrowed', q.filter((e) => !e.check && !/^whole test: /.test(e.why || '')).map((e) => e.test), []);
   eq('the tests with named findings are quarantined by check only', q.filter((e) => !e.check && NAMED.includes(e.test)).map((e) => e.test), []);
   eq('#1340 is fixed on main (#1326) and is not quarantined', q.filter((e) => e.issue === 1340).length, 0);

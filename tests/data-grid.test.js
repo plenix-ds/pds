@@ -111,7 +111,7 @@ if (!ONLY && runs('data-grid-scroll-147.test.js', ['components/DataGrid'])) {
 const IN_PAGE = ['collection-facets', 'multi-groups', 'data-grid-rest', 'data-grid-high'];
 const childSummary = () => (failedChildren.length ? 'DATA_GRIDS_FAIL children: ' + failedChildren.join(', ') : '');
 if (!VIEWS.length && !IN_PAGE.some((m) => changed.child(m))) {
-  if (failedChildren.length) { console.log(childSummary() + ' (the grid\'s own views: nothing in scope)'); process.exit(1); }
+  if (failedChildren.length) { console.log(childSummary() + ' (the grid\'s own views: nothing in scope)'); shared.ended(); process.exit(1); }
   changed.none('DATA_GRIDS_OK 0/0 table views');
 }
 
@@ -434,7 +434,12 @@ if (!VIEWS.length && !IN_PAGE.some((m) => changed.child(m))) {
   await browser.close(); server.close();
   const failed = res.filter((x) => !x[1]);
   res.forEach(([n, ok, d]) => console.log((ok ? '  ok   ' : '  FAIL ') + n + (ok ? '' : ' · ' + d)));
+  // one result per table view in the results file (TEST_RESULTS), not only per child, so a quarantined child never hides a
+  // red view (G5a I1 on PR #1328). The name drops a passing view's check count, so it is the same whether it passes or fails
+  const seen = {}, viewName = (n) => { const b = 'Views: ' + String(n).replace(/ \(\d+ checks\)$/, ''); seen[b] = (seen[b] || 0) + 1; return seen[b] > 1 ? b + ' #' + seen[b] : b; };
+  res.forEach(([n, ok, d]) => shared.record(viewName(n), ok, d));
   console.log((failed.length ? 'DATA_GRIDS_FAIL ' : 'DATA_GRIDS_OK ') + (res.length - failed.length) + '/' + res.length + ' table views');
   if (failedChildren.length) console.log(childSummary());
+  shared.ended();   // every failure above is a recorded check (G5a I1)
   process.exit(failed.length || failedChildren.length ? 1 : 0);
 })().catch((e) => { console.error(e); if (failedChildren.length) console.log(childSummary()); process.exit(1); });

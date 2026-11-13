@@ -71,4 +71,5 @@ if (noFile.length) console.log('Routes without a screen file: ' + noFile.join(',
 if (noRoute.length) console.log('Screen files without a route: ' + noRoute.join(', '));
 if (stubs.length) console.log('Unfinished screens: ' + stubs.join(', '));
 console.log((bad ? 'SITE_COVERAGE_FAIL ' : 'SITE_COVERAGE_OK ') + (required.length - missing.length) + '/' + required.length + ' Platform names used on ' + pages.length + ' pages');
+shared.ended();   // every failure above is a recorded check (G5a I1)
 process.exit(bad ? 1 : 0);

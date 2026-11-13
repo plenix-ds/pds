@@ -208,5 +208,6 @@ changed.report(WANTED.join(', '));
   const bad = results.filter((r) => !r[1]);
   results.forEach(([n, ok, d]) => console.log((ok ? '  ok   ' : '  FAIL ') + n + (ok ? '' : ' · ' + d)));
   console.log((bad.length ? 'KEYBOARD_FAIL ' : 'KEYBOARD_OK ') + (results.length - bad.length) + '/' + results.length);
+  shared.ended();   // every failure above is a recorded check (G5a I1)
   process.exit(bad.length ? 1 : 0);
 })().catch((e) => { console.error(e); process.exit(1); });

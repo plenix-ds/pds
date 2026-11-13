@@ -79,5 +79,6 @@ const SUB = { '.plx-button__icon': ['block-size', 'inline-size', 'background-col
   if (props.length) console.log('  properties that differ: ' + props.map((p) => p + ' (' + byProp[p].length + ')').join(', '));
   diffs.slice(0, 30).forEach((d) => console.log('  ' + d));
   console.log((diffs.length ? 'VISUAL_FAIL ' + diffs.length + ' differences in ' : 'VISUAL_OK ') + n + ' values (' + Object.keys(snap).length + ' buttons)');
+  shared.ended();   // every failure above is a recorded check (G5a I1)
   process.exit(diffs.length ? 1 : 0);
 })().catch((e) => { console.error(e); process.exit(1); });

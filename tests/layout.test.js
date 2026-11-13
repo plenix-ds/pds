@@ -163,7 +163,7 @@ child({ units: ['components/DataGrid'] }, 'data-grid-card-count-679.test.js');
 child({ units: ['components/DataGrid'] }, 'data-grid-autofit-929.test.js');
 child({ units: ['patterns/AppShell'], apps: ['dashboard', 'projects', 'messages', 'contacts', 'calendar', 'tasks', 'notes', 'bookmarks', 'files', 'settings', 'dam'] }, 'rtl-whole-page.test.js');
 if (!changed.wants({ units: ['patterns/AppShell', 'patterns/SettingsLayout', 'patterns/SplitView', 'components/Toolbar', 'patterns/ActionBar', 'components/VisuallyHidden', 'providers/DirectionProvider', 'components/Checkbox', 'components/Fieldset', 'components/Icon'] })) {
-  if (failedChildren.length) { console.log(childSummary() + ' (Layout\'s own checks: nothing in scope)'); process.exit(1); }
+  if (failedChildren.length) { console.log(childSummary() + ' (Layout\'s own checks: nothing in scope)'); shared.ended(); process.exit(1); }
   changed.none('LAYOUT_OK 0/0');
 }
 changed.report('every mode');
@@ -387,5 +387,6 @@ async function cleanup() {
   res.forEach(([n, ok, d]) => console.log((ok ? '  ok   ' : '  FAIL ') + n + (ok ? '' : ' · ' + d)));
   console.log((bad.length ? 'LAYOUT_FAIL ' : 'LAYOUT_OK ') + (res.length - bad.length) + '/' + res.length);
   if (failedChildren.length) console.log(childSummary());
+  shared.ended();   // every failure above is a recorded check (G5a I1)
   process.exit(bad.length || failedChildren.length ? 1 : 0);
 })().catch(async (e) => { console.error(e); if (failedChildren.length) console.log(childSummary()); await cleanup(); process.exit(1); });

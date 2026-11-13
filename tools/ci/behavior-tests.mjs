@@ -9,12 +9,17 @@
 //       judges one group's run: exit 1 on a failure outside the quarantine, on a run that never printed its last line
 //       (TESTS_OK / TESTS_FAIL), or on an invalid quarantine file. Writes a Markdown report to stdout.
 // A check is one result in the TEST_RESULTS file (tests/check.js): { test, part, name, ok, detail }, counted by its last
-// result. A test that failed without a failing check (it crashed, or it does not use check.js) is a test-level failure,
-// covered only by a whole-test entry (an entry with no "check").
+// result. A failed test is judged by its failing checks only when it also recorded END (tests/check.js ended(): it ran to its
+// end and every failure it counts is a check). Otherwise (it crashed, exited early, failed for a reason it never recorded, or
+// does not use check.js) it is a test-level failure, covered only by a whole-test entry (an entry with no "check"): a
+// quarantined check never hides it (G5a I1 on PR #1328). Entries quarantined for more than OLD_DAYS are listed, not blocking.
 import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
+
+const { END } = createRequire(import.meta.url)('../../tests/check.js');
+export const OLD_DAYS = 14;
 
 // the browser tests in their own jobs (as the CI before #197 ran them); every other automatic test runs in "other"
 const FIXED = [
@@ -70,22 +75,30 @@ export function readQuarantine(data, known) {
 }
 
 // ran: the tests this group ran; failed: the runner's failed tests; results: the TEST_RESULTS rows; quarantine: entries
-// -> { blocking: [{ test, check?, detail? }], quarantined: [entry + { check? }], stale: [entry] }
-export function compare({ ran, failed, results, quarantine }) {
+// today: YYYY-MM-DD, for the age report (optional)
+// -> { blocking: [{ test, check?, detail? }], quarantined: [entry], stale: [entry], old: [entry quarantined > OLD_DAYS days] }
+export function compare({ ran, failed, results, quarantine, today }) {
   const last = new Map();
   for (const r of results || []) if (ran.includes(r.test)) last.set(r.test + '\n' + r.name, r);
   const whole = (t) => quarantine.find((e) => e.test === t && !e.check);
   const one = (t, c) => quarantine.find((e) => e.test === t && e.check === c);
   const blocking = [], quarantined = [], stale = [];
-  const failing = [...last.values()].filter((r) => !r.ok);
+  const failing = [...last.values()].filter((r) => !r.ok && r.name !== END);
+  const ended = (t) => { const r = last.get(t + '\n' + END); return !!(r && r.ok); };
   for (const r of failing) {
     const e = one(r.test, r.name) || whole(r.test);
     if (e) { if (!quarantined.includes(e)) quarantined.push(e); } else blocking.push({ test: r.test, check: r.name, detail: r.detail || '' });
   }
   for (const t of failed) {
-    if (!ran.includes(t) || failing.some((r) => r.test === t)) continue;
+    if (!ran.includes(t)) continue;
+    const own = failing.filter((r) => r.test === t);
+    if (own.length && ended(t)) continue;   // every failure is a recorded check, judged above
     const e = whole(t);
-    if (e) { if (!quarantined.includes(e)) quarantined.push(e); } else blocking.push({ test: t });
+    if (e) { if (!quarantined.includes(e)) quarantined.push(e); continue; }
+    if (blocking.some((f) => f.test === t)) continue;   // already blocked by a check of its own
+    blocking.push({ test: t, detail: own.length
+      ? `it did not reach its end, or failed for a reason it did not record, so its ${own.length} failing check(s) do not explain the failure`
+      : 'it failed without a recorded check (a crash, or a test without tests/check.js)' });
   }
   for (const e of quarantine) {
     if (!ran.includes(e.test) || quarantined.includes(e)) continue;
@@ -93,7 +106,9 @@ export function compare({ ran, failed, results, quarantine }) {
     const r = last.get(e.test + '\n' + e.check);
     if (r && r.ok) stale.push(e);
   }
-  return { blocking, quarantined, stale };
+  const day = (d) => Date.parse(d + 'T00:00:00Z');
+  const old = today ? quarantine.filter((e) => (day(today) - day(e.since)) / 864e5 > OLD_DAYS) : [];
+  return { blocking, quarantined, stale, old };
 }
 
 function report({ name, done, c, errors }) {
@@ -101,11 +116,13 @@ function report({ name, done, c, errors }) {
   if (errors.length) out.push('', '**The quarantine file is invalid** (tests/quarantine.json):', ...errors.map((e) => `- ${e}`));
   if (!done) out.push('', '**The runner stopped before its last line** (no TESTS_OK or TESTS_FAIL): the run counts as failed.');
   if (c.blocking.length) out.push('', `**New failures (${c.blocking.length}), not in the quarantine: these block.** Fix them, or, when main already fails them, add an entry with an issue and an owner to tests/quarantine.json.`,
-    ...c.blocking.map((f) => `- \`${f.test}\`${f.check ? ` · ${f.check}` : ' (the test failed without a recorded check)'}${f.detail ? `: ${String(f.detail).split('\n')[0].slice(0, 200)}` : ''}`));
+    ...c.blocking.map((f) => `- \`${f.test}\`${f.check ? ` · ${f.check}` : ' (the whole test)'}${f.detail ? `: ${String(f.detail).split('\n')[0].slice(0, 200)}` : ''}`));
   if (c.quarantined.length) out.push('', `Known failures, quarantined (${c.quarantined.length}; not blocking):`,
     ...c.quarantined.map((e) => `- \`${e.test}\`${e.check ? ` · ${e.check}` : ' (whole test)'}: #${e.issue}, ${e.owner}, since ${e.since}`));
   if (c.stale.length) out.push('', `Quarantined but passing now (${c.stale.length}): remove these entries from tests/quarantine.json.`,
     ...c.stale.map((e) => `- \`${e.test}\`${e.check ? ` · ${e.check}` : ' (whole test)'}: #${e.issue}`));
+  if (c.old.length) out.push('', `Quarantined for more than ${OLD_DAYS} days (${c.old.length}; not blocking): fix them or ask the owner of the issue.`,
+    ...c.old.map((e) => `- \`${e.test}\`${e.check ? ` · ${e.check}` : ' (whole test)'}: #${e.issue}, ${e.owner}, since ${e.since}`));
   if (done && !errors.length && !c.blocking.length) out.push('', 'No new failures.');
   return out.join('\n') + '\n';
 }
@@ -131,7 +148,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     let q;
     try { q = readQuarantine(JSON.parse(fs.readFileSync(qFile, 'utf8')), AUTOMATIC); } catch (e) { q = { entries: [], errors: [`${qFile}: ${e.message}`] }; }
     const { done, failed } = parseRun(log);
-    const c = compare({ ran, failed, results, quarantine: q.errors.length ? [] : q.entries });
+    const c = compare({ ran, failed, results, quarantine: q.errors.length ? [] : q.entries, today: new Date().toISOString().slice(0, 10) });
     process.stdout.write(report({ name: arg('--name') || ran.join(' '), done, c, errors: q.errors }));
     const ok = done && !q.errors.length && !c.blocking.length;
     console.log(ok ? 'BEHAVIOR_TESTS_OK' : 'BEHAVIOR_TESTS_FAIL');
