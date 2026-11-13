@@ -170,14 +170,6 @@
    "why": "light secondary: the subtle glow on hover"
   },
   {
-   "test": "layout",
-   "check": "entity-header-media-275: the child test passes",
-   "issue": 1334,
-   "owner": "engineer",
-   "since": "2026-11-13",
-   "why": "the case icon does not fill its square (52.8 of 44)"
-  },
-  {
    "test": "reflow",
    "check": "test-site/index.html#/document/d1: no new scroller at 320px",
    "issue": 1335,

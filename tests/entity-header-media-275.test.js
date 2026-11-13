@@ -3,7 +3,8 @@
      the box around it as we decided". The decision is D-0024 ("do not put an icon inside a box") as applied to this media
      by D-0036 (design: docs/pds1/slices/108-icon-box/design.md, row 1). Light:
      page and section headers, top-small (default) and top-large: the media tile has no fill (transparent), no border, and
-       the icon fills the square (the Icon is as wide as the tile: 44px, 32px in a section, 72px top-large)
+       the icon fills the square: the Icon is the square times the icon fill scale (D-0059, #418: Material icons keep a margin,
+       so the drawn shape reaches the square's edges), while the square itself stays 44px, 32px in a section, 72px top-large
      the icon is drawn in its hue's on-surface colour (--plx-comp-entity-header-media-<hue>-icon), for every hue
      media { icon, hue, box: true } keeps the tinted, bordered tile (a box stays only where a usage needs it, D-0024),
        with the icon at the tile's icon size, as before
@@ -38,7 +39,8 @@ const HUES = ['blue', 'green', 'purple', 'red', 'brown', 'gray', 'surface'];
       for (const el of document.querySelectorAll('#c > div > div[id]')) {
         const tile = el.querySelector('.plx-entity-header__tile'), icon = tile.querySelector('.plx-icon');
         const cs = getComputedStyle(tile), tr = tile.getBoundingClientRect(), ir = icon.getBoundingClientRect();
-        out[el.id] = { bg: cs.backgroundColor, border: cs.borderTopWidth, color: cs.color, tile: tr.width, icon: ir.width };
+        out[el.id] = { bg: cs.backgroundColor, border: cs.borderTopWidth, color: cs.color, tile: tr.width, icon: ir.width,
+          scale: parseFloat(cs.getPropertyValue('--plx-comp-entity-header-media-icon-fill-scale')) };
       }
       out.expect = {};
       for (const hue of HUES) out.expect[hue] = probe('var(--plx-comp-entity-header-media-' + hue + '-icon)');
@@ -49,7 +51,8 @@ const HUES = ['blue', 'green', 'purple', 'red', 'brown', 'gray', 'surface'];
     for (const id of ['case', 'large', 'section']) {
       assert.ok(clear(r[id].bg), id + ': no fill behind the icon, got ' + r[id].bg);
       assert.equal(r[id].border, '0px', id + ': no border around the icon');
-      assert.ok(Math.abs(r[id].icon - r[id].tile) < 0.5, id + ': the icon fills the square (' + r[id].icon + ' of ' + r[id].tile + ')');
+      assert.ok(r[id].scale > 1, id + ': the icon fill scale token resolves (' + r[id].scale + ')');
+      assert.ok(Math.abs(r[id].icon - r[id].tile * r[id].scale) < 0.5, id + ': the icon is its square times the fill scale (' + r[id].icon + ' of ' + r[id].tile + ' x ' + r[id].scale + ')');
     }
     assert.deepEqual([r.case.tile, r.large.tile, r.section.tile], [44, 72, 32], 'the squares: 44px, 72px top-large, 32px in a section');
     for (const hue of HUES) {
