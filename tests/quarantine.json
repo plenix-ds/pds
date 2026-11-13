@@ -194,14 +194,6 @@
    "why": "reset() leaves the name column width (timeout after reset)"
   },
   {
-   "test": "keyboard",
-   "check": "Command actions: form focus, text keys, Tab, Escape and selection boundary",
-   "issue": 1339,
-   "owner": "engineer",
-   "since": "2026-11-13",
-   "why": "Enter does not open the selection action form"
-  },
-  {
    "test": "arabic-catalog-427",
    "check": "timeline.tagUpcoming: has its Arabic",
    "issue": 1341,
