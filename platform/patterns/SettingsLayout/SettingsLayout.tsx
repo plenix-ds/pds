@@ -96,13 +96,14 @@ export function SettingsLayout(props: SettingsLayoutProps) {
   const narrow = useMedia(below('--plx-sys-shell-phone-below'));
   const stacked = !!narrow && !(pane && pane.detailOpen !== undefined);
   return (
-    <div className={cx('plx-settings', stacked && 'plx-settings--stacked', className)}>
-      <PagePanes>
+    <div className={cx('plx-settings', className)}>
+      <PagePanes className={cx('plx-settings__panes', stacked && 'plx-settings__panes--stacked')}>
         {nav ? (
           <SecondaryPane title={navTitle !== undefined ? navTitle : t.navTitle} side="start" width="md" collapsible resizable
             size={typeof kept.paneSize === 'number' ? kept.paneSize : undefined} onSizeChange={(px: number) => update(() => ({ paneSize: px }))}
             collapsed={typeof kept.paneCollapsed === 'boolean' ? kept.paneCollapsed : undefined} onCollapsedChange={(next: boolean) => update(() => ({ paneCollapsed: next }))}
-            {...pane} {...(stacked ? { collapsible: false, resizable: false } : null)}>{nav}</SecondaryPane>
+            {...pane} {...(stacked ? { collapsible: false, resizable: false } : null)}
+            className={cx('plx-settings__pane', stacked && 'plx-settings__pane--stacked', pane && pane.className)}>{nav}</SecondaryPane>
         ) : null}
         <div className="plx-settings__content">{children}</div>
       </PagePanes>
