@@ -1,0 +1,9 @@
+id: D-0174
+date: 2026-11-13
+area: process
+decided_by: owner (2026-11-13; restart of the agent teams on dispatch kit 3.4)
+decision: PDS is run by the PDS2 agent team, set up with dispatch kit 3.4 (Project Plan 3.4) and led by "PDS2 - PM"; the team follows .agents/RULES.md. Agents still merge their own PRs, through the merge queue once the required checks pass. Releases, deploys, package publishing and tags are run by a member from the cc account (VERSIONING.md), so agents no longer deploy. Where this differs from D-0014, this decision wins.
+why: The owner restarted the agent teams on one shared kit and plan on 2026-11-13. The merge queue and ruleset 26593194 (no bypass) keep every merge behind the required checks; the publish key and package rights stay with a member.
+options: [Self-merge through the merge queue (chosen), PR-only (a member merges)]
+status: active
+check: review-only (ruleset 26593194 on main enforces the merge queue and the required checks)

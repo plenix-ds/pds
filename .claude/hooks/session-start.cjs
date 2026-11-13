@@ -1,9 +1,7 @@
 #!/usr/bin/env node
-// SessionStart: reminds every PDS1 session what to load first.
-const role = process.env.PDS1_ROLE || 'unknown role';
+// SessionStart: reminds every PDS session what to load first (PDS2 team, dispatch kit; D-0174).
 process.stdout.write(
-  `PDS1 session (${role}). Before working: read CLAUDE.md ("Rules for every role"), ` +
-  `docs/lessons.md, and your open GitHub issues: ` +
-  `gh issue list -R plenix-ds/pds --label agent:${role} --state open. ` +
-  `Concurrency limits: agents.config.yaml. Sign GitHub comments "— PDS1-<Role>".\n`
+  'PDS session. Before working, read .agents/RULES.md (the team\'s rules), then docs/project-rules.md, ' +
+  'CLAUDE.md and docs/lessons.md. G2 and G3 verdicts keep the sign-off line the "G2 (design review)" check reads ' +
+  '("— PDS1-Design-Director" or "— PDS1-DS-Architect") above your own signature.\n'
 );
