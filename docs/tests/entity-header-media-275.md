@@ -6,7 +6,7 @@ An EntityHeader icon media shows the icon without a box, filling its square in i
 
 ## What it checks
 - EntityHeader with `media={{ icon, hue }}`, in light, at desktop width:
-  - Page (top-small and top-large) and section headers: the media tile has no fill and no border, and the icon is as wide as its square (44px, 72px top-large, 32px in a section).
+  - Page (top-small and top-large) and section headers: the media tile has no fill and no border, and the square stays 44px (72px top-large, 32px in a section) and the icon is the square times the icon fill scale (D-0059, #418: 52.8px in 44px), so its drawn shape reaches the square's edges.
   - For every hue (blue, green, purple, red, brown, gray, surface): the icon is drawn in `--plx-comp-entity-header-media-<hue>-icon` (the hue's on-surface colour).
   - `media={{ icon, hue, box: true }}`: the tinted tile with its 1px border, the icon smaller than the tile, as before #275.
 - No script errors.
@@ -21,7 +21,7 @@ An EntityHeader icon media shows the icon without a box, filling its square in i
 - No baseline file: the expected values are written in the test.
 
 ## What a failure means
-- The icon is back inside a box by default, does not fill its square, or is drawn in the wrong colour.
+- The icon is back inside a box by default, is not the square times the fill scale, or is drawn in the wrong colour.
 
 ## When it runs
 - A child test of the Layout test (`tests/layout.test.js`), which is AUTOMATIC in `tests/run.js`.
