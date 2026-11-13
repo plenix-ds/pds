@@ -75,7 +75,7 @@ export function Reactions({ reactions, mine, onReact, t }: { reactions: Array<{ 
       {reactions.map((r) => (
         <button key={r.emoji} type="button" className={cx('plx-chat__reaction', r.mine && 'plx-chat__reaction--mine')} aria-pressed={!!r.mine}
           aria-label={fill(t.reactionCount, { name: r.label || nameOf(r.emoji, t), count: r.count })} onClick={onReact ? () => onReact(r.emoji) : undefined} disabled={!onReact}>
-          <span className="plx-chat__emoji" aria-hidden="true">{r.emoji}</span><span aria-hidden="true">{r.count}</span>
+          <span className="plx-chat__emoji" aria-hidden="true">{r.emoji}</span><span className="plx-chat__reaction-count" aria-hidden="true">{r.count}</span>
         </button>
       ))}
       {onReact ? <ReactionPicker onReact={onReact} t={t} trigger={<Button variant="secondary" size="xs" iconOnly icon={AddReactionIcon} label={t.addReaction} />} /> : null}

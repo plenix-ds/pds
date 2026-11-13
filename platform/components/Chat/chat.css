@@ -622,9 +622,11 @@
 }
 .plx-chat__voice-time {
   color: var(--plx-comp-chat-header-meta-text);
+  font-family: var(--plx-comp-chat-voice-time-font-family);
   font-size: var(--plx-comp-chat-voice-time-font-size);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+  word-spacing: var(--plx-sys-font-data-word-spacing);
 }
 /* the record control is a placeholder until voice messages are built (issue 654): drawn disabled, it answers with a tooltip and does nothing */
 .plx-chat__record {
@@ -711,6 +713,10 @@
   padding-block-start: 0;
   padding-inline-end: var(--plx-comp-chat-reaction-padding-inline);
   padding-inline-start: var(--plx-comp-chat-reaction-padding-inline);
+}
+.plx-chat__reaction-count {
+  font-family: var(--plx-comp-chat-reaction-count-font-family);
+  word-spacing: var(--plx-sys-font-data-word-spacing);
 }
 .plx-chat__reaction:hover:where(:not(:disabled)) {
   background-color: var(--plx-comp-chat-reaction-hover-background);

@@ -5360,6 +5360,11 @@
       "$value": "{plx-sys.radius-compact}",
       "$type": "dimension"
     },
+    "chat-voice-time-font-family": {
+      "$value": "{plx-sys.font-data}",
+      "$type": "fontFamily",
+      "$description": "A voice message's time (0:12 / 1:04) is data, drawn in the data font (D-0164, audit item 18 of #1232, #1305)."
+    },
     "chat-voice-time-font-size": {
       "$value": "{plx-sys.text-caption-font-size}",
       "$type": "dimension"
@@ -5427,6 +5432,11 @@
     "chat-reaction-text": {
       "$value": "{plx-sys.content-default}",
       "$type": "color"
+    },
+    "chat-reaction-count-font-family": {
+      "$value": "{plx-sys.font-data}",
+      "$type": "fontFamily",
+      "$description": "A reaction's count is data, drawn in the data font; the emoji and the button stay text (D-0164, audit item 18 of #1232, #1305)."
     },
     "chat-reaction-font-size": {
       "$value": "{plx-ref.font-size-100}",
