@@ -204,10 +204,18 @@ async function inspect() {
     return;
   }
   const base = fs.existsSync(BASELINE) ? JSON.parse(fs.readFileSync(BASELINE, 'utf8')) : {};
+  // one result per page, mode and check in the results file (TEST_RESULTS), so CI can quarantine one page check and still
+  // block on any other (#1327, G5a M1 on PR #1328)
+  const shared = require('./check.js');
   const worse = []; let better = 0;
-  Object.keys(found).forEach((p) => MODES.forEach((m) => CHECKS.forEach((c) => { const was = ((base[p] || {})[m] || {})[c] || 0, now = list(p, m, c).length; if (now > was) worse.push(p + ' · ' + m + ' · ' + c + ': ' + was + ' -> ' + now + ' · e.g. ' + list(p, m, c).slice(0, 3).join(' | ')); else if (now < was) better++; })));
+  Object.keys(found).forEach((p) => MODES.forEach((m) => CHECKS.forEach((c) => {
+    const was = ((base[p] || {})[m] || {})[c] || 0, now = list(p, m, c).length, detail = was + ' -> ' + now + ' · e.g. ' + list(p, m, c).slice(0, 3).join(' | ');
+    shared.record(p + ' · ' + m + ' · ' + c + ': no new findings', now <= was, detail);
+    if (now > was) worse.push(p + ' · ' + m + ' · ' + c + ': ' + detail); else if (now < was) better++;
+  })));
   worse.forEach((w) => console.log('  NEW ' + w));
   if (better) console.log('  ' + better + ' page checks have fewer findings: run with --update to lower the baseline');
   console.log((worse.length ? 'TYPOGRAPHY_FAIL ' + worse.length + ' page checks got worse; ' : 'TYPOGRAPHY_OK ') + summary + ' on ' + Object.keys(found).length + ' pages');
+  shared.ended();   // every failure above is a recorded check (G5a I1)
   process.exit(worse.length ? 1 : 0);
 })().catch((e) => { console.error(e); process.exit(1); });

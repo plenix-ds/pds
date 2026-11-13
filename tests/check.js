@@ -6,6 +6,14 @@
 //                             counts the check, so each test keeps its own output format and still runs once.
 //   wanted(name)              whether the check is in this run's parts (for a check whose result is known only later)
 //   record(name, ok, detail)  records a result without the parts test (after wanted(name) said yes)
+//   childName(file)           the name of a child test's result in its parent ('narrow-fit-880.test.js' -> 'narrow-fit-880: the
+//                             child test passes'); a parent records it with record() for every child it ran, so the CI job
+//                             (tools/ci/behavior-tests.mjs) can quarantine one red child and still block on the others (#1327)
+//   ended()                   records END ("the test ran to its end, every failure recorded"), always passing. A test calls it
+//                             just before its last exit, and only when every failure that exit counts is a recorded check. The
+//                             CI job judges a failed test by its checks only when END is there; without it (a crash, an early
+//                             exit, a failure the test never recorded) the test fails as a whole, so a quarantined check can
+//                             never hide it (G5a I1 on PR #1328)
 // A check's part is the component before the first ": " (a colon and a space) of its name ("Toolbar: Arrow Right moves …" is
 // part Toolbar; "black on white is 21:1" has none).
 //   TEST_ONLY=Toolbar,Tabs    only the checks of these parts count (tests/run.js sets it per test: keyboard:Toolbar,Tabs);
@@ -42,4 +50,9 @@ if (FILE) {
   });
 }
 
-module.exports = { check, wanted, record, partOf, TEST, ONLY };
+const END = 'the test ran to its end, every failure recorded';
+const ended = () => record(END, true, '');
+
+const childName = (file) => String(file).replace(/\.test\.js$/, '') + ': the child test passes';
+
+module.exports = { check, wanted, record, ended, END, childName, partOf, TEST, ONLY };
