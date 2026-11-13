@@ -33,6 +33,10 @@
     },
     "entryLimit": 60000,
     "limits": {
+      "FileBrowser": 33949,
+      "FileList": 18164,
+      "Publish": 9540,
+      "sortFiles": 477,
       "ListingPage": 5464,
       "ContentManagementPage": 3637,
       "LandingPage": 3646,
