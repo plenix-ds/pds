@@ -1,0 +1,13 @@
+  custom properties: 11621 declarations; largest scope reaching elements: 2347 (@layer plx.tokens :root, [data-plx-theme], [data-plx-mode])
+  density scope: 338 (limit 400) (@layer plx.tokens :root, [data-plx-density], [data-plx-interaction])
+  plenix.js: 2702657 B raw, 554907 B brotli 5 (limit 570000)
+  plenix.css: 2074368 B raw, 204028 B gzip 6, 179419 B brotli 5 (printed, not limited: owner, plenix-platform#460)
+  layer core: 60554 B brotli 5 (limit 66000)
+  layer grid: 140910 B brotli 5 (limit 150000)
+  layer shell: 47054 B brotli 5 (limit 52000)
+  layer forms: 16209 B brotli 5 (limit 18000)
+  layer charts: 13472 B brotli 5 (limit 15000)
+  screen grid (4 parts): 201464 B brotli 5 (limit 210000), 2 files (limit 4)
+  screen ctm-shell (43 parts): 300866 B brotli 5 (limit 330000), 21 files (limit 28)
+  611 entries; largest additions to the layers (on-demand candidates): AssistantPanel 38819, AIChat 36908, FileBrowser 33029, Chat 26403, MentionInput 26139; plenix-loader.js 3995 B
+PERF_BUDGET_FAIL: esm/sortFiles.js adds 17562 B with brotli 5 to the layers (limit 477)

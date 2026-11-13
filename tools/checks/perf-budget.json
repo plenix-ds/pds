@@ -32,7 +32,12 @@
       "charts": 15000
     },
     "entryLimit": 60000,
-    "limits": {},
+    "limits": {
+      "FileBrowser": 33949,
+      "FileList": 18164,
+      "Publish": 9540,
+      "sortFiles": 477
+    },
     "screens": {
       "grid": {
         "parts": [

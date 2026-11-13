@@ -89,28 +89,10 @@ import SortAscendingIcon from 'plenix-platform/icons/plenix/sort-ascending';
 import SortDescendingIcon from 'plenix-platform/icons/plenix/sort-descending';
 import TrashIcon from 'plenix-platform/icons/plenix/trash';
 import { fill } from '../../utils/fill.ts';
+import { sortFiles } from './sortFiles.ts';
 
 const FIELDS = ['name', 'size', 'modified', 'owner'];
 const idOf = (f: any) => (f.id === undefined ? f.name : f.id);
-const stamp = (v: any) => (v instanceof Date ? v.toISOString() : String(v || ''));
-
-// the order of the list: folders first, then the field, then the name
-export function sortFiles(files: any, sort: any) {
-  const s = Object.assign({ field: 'name', dir: 'asc' }, sort);
-  const sign = s.dir === 'desc' ? -1 : 1;
-  const byName = (a: any, b: any) => String(a.name || '').localeCompare(String(b.name || ''), undefined, { numeric: true, sensitivity: 'base' });
-  const by = (a: any, b: any) => {
-    if (s.field === 'size') return (a.kind === 'folder' ? a.count || 0 : Number(a.size) || 0) - (b.kind === 'folder' ? b.count || 0 : Number(b.size) || 0);
-    if (s.field === 'modified') return stamp(a.modified).localeCompare(stamp(b.modified));
-    if (s.field === 'owner') return String(a.owner || '').localeCompare(String(b.owner || ''));
-    return byName(a, b);
-  };
-  return files.slice().sort((a: any, b: any) => {
-    const fa = a.kind === 'folder' ? 0 : 1, fb = b.kind === 'folder' ? 0 : 1;
-    if (fa !== fb) return fa - fb;
-    return sign * by(a, b) || byName(a, b);
-  });
-}
 
 // one row of the list: a file drags onto folders, a folder takes files (the engine's props on the <li>)
 function DragRow({ file, dragType, onMove, children }: any) {
