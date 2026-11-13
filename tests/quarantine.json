@@ -235,14 +235,6 @@
   },
   {
    "test": "data-grid",
-   "check": "cut-popover: the child test passes",
-   "issue": 1343,
-   "owner": "engineer",
-   "since": "2026-11-13",
-   "why": "a cut cell shows no expand button on hover; hidden on main behind #1338"
-  },
-  {
-   "test": "data-grid",
    "check": "row-line-559: the child test passes",
    "issue": 1344,
    "owner": "engineer",
