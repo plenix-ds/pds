@@ -19,7 +19,8 @@
      className: more classes on the wrapper
      children: the control it labels (one element)
    Behavior:
-     It shows on hover (a mouse or a pen) and on keyboard focus, and hides on leave, on blur and with Escape.
+     It shows on hover (a mouse or a pen) and on keyboard focus, and hides on leave, on blur and with Escape. Inside a
+       TooltipFocusScope (internal: a Field's cut label) focus anywhere in the scope's element shows it too.
      On touch there is no hover (Platforms Standard 6.5): a long press (--plx-comp-tooltip-long-press-delay) shows it, and
      it hides --plx-comp-tooltip-touch-dismiss-delay after the finger lifts, or when the finger moves away or is cancelled.
      A tap does not show it (focus that follows a touch is ignored; mouse events emulated from touch are not listened to),
@@ -64,6 +65,9 @@ const listen = () => {
   document.addEventListener('keydown', () => { lastInput = 'key'; }, true);
 };
 
+// an element around the trigger whose focus also shows the tooltip (internal; not part of the public API): a Field gives its own element,
+// so a cut label's full text shows while its control has focus, with no new tab stop (issue 1337). Escape still closes it.
+export const TooltipFocusScope = React.createContext<React.RefObject<HTMLElement | null> | null>(null);
 // the props Tooltip reads from, and puts on, its one child (the trigger)
 type TriggerProps = { 'aria-describedby'?: string; onClick?: (e: React.MouseEvent<HTMLElement>) => void };
 export type TooltipProps = {
@@ -107,6 +111,16 @@ export function Tooltip({ content, placement = 'bottom', title, action, rich = f
     if (toggle) document.addEventListener('mousedown', outside);
     return () => { document.removeEventListener('keydown', esc); document.removeEventListener('mousedown', outside); };
   }, [open, toggle]);
+  // focus anywhere in the scope (TooltipFocusScope) opens the tooltip, as focus on the trigger does; leaving the scope closes it
+  const scope = React.useContext(TooltipFocusScope);
+  React.useEffect(() => {
+    const el = scope && scope.current;
+    if (!el || disabled || toggle) return undefined;
+    const enter = () => { if (lastInput !== 'touch') setOpen(true); };
+    const leave = (e: FocusEvent) => { if (!el.contains(e.relatedTarget as Node | null)) setOpen(false); };
+    el.addEventListener('focusin', enter); el.addEventListener('focusout', leave);
+    return () => { el.removeEventListener('focusin', enter); el.removeEventListener('focusout', leave); setOpen(false); };
+  }, [scope, disabled, toggle]);
   const child = React.Children.only(children) as React.ReactElement<TriggerProps>;
   const describedBy = useDescribedBy(child.props['aria-describedby'], id);
   const described = describe ? { 'aria-describedby': describedBy } : {};   // describe={false}: the trigger's own name is the same text, so it is not described by it again

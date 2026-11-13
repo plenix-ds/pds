@@ -33,7 +33,7 @@ const IMPORTS = (base) => CSS.map((c) => { const m = PLATFORM.match(new RegExp('
 const HTML = (base) => '<!doctype html><html><head><style>' + LAYERS + IMPORTS(base) + '</style><style>' + VARS + '</style></head><body>'
   // AC-3: an inline Field in a Stack, its label tip as Field draws it (a Tooltip span around the label)
   + '<div class="plx-stack" data-plx-inline-fields id="stack" style="inline-size:900px"><div class="plx-field plx-field--inline"><div class="plx-field__head">'
-  + '<span class="plx-tooltip plx-field__label-tip" id="tip"><label class="plx-field__label">A label much longer than the label column lets it be, so it is cut</label></span></div>'
+  + '<span class="plx-tooltip plx-field__label-tip" id="tip"><label class="plx-field__label"><span class="plx-field__label-text">A label much longer than the label column lets it be, so it is cut</span></label></span></div>'
   + '<div class="plx-field__control"><input></div></div></div>'
   // AC-2 and AC-4: a FileBrowser with its tree, three folders before a file (the /documents page of the test site)
   + '<section class="plx-file-browser plx-file-browser--list plx-file-browser--tree"><div class="plx-file-browser__body"><div class="plx-file-browser__tree">tree</div>'
