@@ -9,7 +9,7 @@
 // - A round is quiet only when no role has work, no PR is open and nothing changed since the last round.
 // - Severity first: an open S1 or S2 is "unanswered" while its role has posted no signed comment ("— PDS1-<Role>")
 //   after it opened and no PR mentions it. Its role is woken every round, with the issue named, until it answers.
-// - The heartbeat shows "Open S1/S2 with no response > 30 min: N"; the watchdog opens a P0 when N > 0 two rounds running.
+// - The heartbeat shows "Open S1/S2 with no response > 30 min: N" (the watchdog that read it was retired in #1312).
 //
 //   node deploy/agents/dispatch.mjs --open-prs <n> --changed <0|1> [--now <ISO>]     reads GitHub; prints, one per line:
 //     round quiet | round roles   quiet: wake nobody; roles: only the work lines (D-0155: there is no wake-all round)

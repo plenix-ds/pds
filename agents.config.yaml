@@ -28,8 +28,8 @@ memory:
 
 dispatch:
   # The poller (team.sh nudge, deploy/agents/pds1-nudge.timer) runs every heartbeat_min minutes and rewrites the pinned
-  # heartbeat issue; the hourly watchdog (.github/workflows/watchdog.yml) opens a P0 process issue when it is older than
-  # 2 x heartbeat_min (template v2.4 §6.1; #772). Check 15 also compares the timer with heartbeat_min.
+  # heartbeat issue (template v2.4 §6.1; #772). The poller was stopped at the PDS2 cutover (D-0175) and the hourly
+  # watchdog that read the heartbeat was retired (#1312). Check 15 still compares the timer with heartbeat_min.
   heartbeat_min: 10
   heartbeat_issue: 809
 
