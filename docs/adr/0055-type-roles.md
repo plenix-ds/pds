@@ -59,6 +59,15 @@
   - the chart engine's category role (the owner's BarChart report).
 - **The seed:** each token's current role, except the two metric values, which the owner's rule makes data. The audit corrects roles in `type-roles.json` by PR.
 
+### Amendment: audit item 18, Chat values (2026-11-11, #1232)
+
+- The Design Director ruled the two Chat backlog lines in as values (D-0164), audit item 18 (`docs/pds1/slices/1232/audit.md`, PR #1304).
+- **New class `plx-chat__reaction-count`:** the count `<span>` inside a reaction. Only the count is in the data font; the emoji and the button stay in the text font.
+- **New token `chat-reaction-count-font-family`** -> `{plx-sys.font-data}`, role `data`, with `font-data-word-spacing` on the class.
+- **New token `chat-voice-time-font-family`** -> `{plx-sys.font-data}`, role `data`, used by `plx-chat__voice-time` ("0:12 / 1:04"), with `font-data-word-spacing`, like `chat-time-font-family`.
+- Both tokens are comp -> sys. The build PR adds their two `type-roles.json` lines and removes the two `css plx-chat__*` backlog lines (`--shrink`).
+- No prop and no export. **Semver: MINOR** (two new tokens and a class; a visual change the owner asked for).
+
 ## Consequences
 
 - **Semver: none for this PR** (a check and two JSON files). The fixes it drives are their own PRs: the chart category role is MINOR, and the audit's corrections are PATCH or MINOR depending on what they change.
