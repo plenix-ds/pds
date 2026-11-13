@@ -5,7 +5,7 @@
      lengthName('--plx-ref-size-400px') // '400px'  (the px-named alias)
      lengthName('400px')                // '400px'
      lengthName('100%')                 // undefined (fill sizes the holder by flex, not by a rule)
-   Notes: #1347: the size palette moved to grid units (ADR 0012, #302) and this read only px names, so the documented token
+   Notes: issue 1347: the size palette moved to grid units (ADR 0012, issue 302) and this read only px names, so the documented token
      form set no attribute, the holder had no maximum height and a 600-record grid drew every row.
 */
 const UNIT = 4;
