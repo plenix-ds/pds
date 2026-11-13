@@ -24,7 +24,7 @@ const AUTOMATIC = ['site-coverage', 'site-parts', 'visual', 'layout', 'pages', '
   // the ECharts charts and sparklines (owner, codex-q3-27: they join the automatic check; #382 F9)
   'charts-echarts-353', 'sparkline-echarts-353', 'treechart-echarts',
   // tests without a browser that were started by hand only (issue 756): the Arabic catalog, the baseline scanner, the site icon files
-  'arabic-catalog-427', 'baseline-scan-273', 'site-icons'];
+  'check-style-hex-1350', 'arabic-catalog-427', 'baseline-scan-273', 'site-icons'];
 const ON_DEMAND = ['a11y', 'high-contrast', 'contrast', 'theme', 'density'];
 // the tests of the release build (release/packages/ and release/cdn/, written by node build-packages.js), by name or with --release:
 // the CI build job runs them after its release build (issue 756). They are not in the default run, which needs no release build
