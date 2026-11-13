@@ -1,0 +1,9 @@
+id: D-0172
+date: 2026-11-11
+area: release
+decided_by: agent (pds1-release-architect) on the PM's ask on #1294 ("a patch, 1.7.1, as soon as it merges") and VERSIONING.md; owner may switch
+decision: 'The release carrying the MetricCard person-tile fix (#1297) and the plenix.esm.js fix (#1274) is 1.8.0, cut from main, not 1.7.1: main also holds visual changes and new tokens (the data font in Metric, MetricCard, DateBadge, Timeline and Calendar, #1277, #1284), which VERSIONING.md makes a MINOR release. It ships without waiting for the owner''s Arabic words for timeline.tagUpcoming (#1171) and loading.slow (#1203), with the same two named G6 exceptions as D-0170, now for 1.8.0 (missing-ar only). No other G6 finding is excused and no unapproved Arabic is written (D-0012 stands).'
+why: 'CTM#326 waits on the person-tile fix. A 1.7.1 would have to come from a branch off v1.7.0, publishing from a commit that is not on main; releasing main as the minor it is keeps one version line, as D-0170 did for 1.7.0.'
+options: ['1.8.0 from main now, with the two G6 exceptions (chosen)', '1.7.1 from a branch off v1.7.0 with the two fixes cherry-picked', 'hold until the owner answers #1171 and #1203']
+status: active
+check: 'tools/checks/locale/g6-exceptions.json has exactly the two 1.8.0 entries citing D-0172; locale.mjs --release shows no other finding; tools/ci/check-release-notes.mjs passes for 1.7.0 -> 1.8.0; the 1.8.0 release record on #1294 lists both exceptions'

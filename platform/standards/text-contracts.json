@@ -353,8 +353,10 @@
    ]
   },
   "plx-calendar__day": {
-   "contract": "adjusts",
-   "props": [
+   "contract": "establishes",
+   "role": "body",
+   "font": "mono",
+   "adjusts": [
     "font-size",
     "font-weight"
    ]
@@ -1121,8 +1123,10 @@
    ]
   },
   "plx-date-badge__day": {
-   "contract": "adjusts",
-   "props": [
+   "contract": "establishes",
+   "role": "body",
+   "font": "mono",
+   "adjusts": [
     "font-size",
     "font-weight"
    ]
@@ -2034,11 +2038,16 @@
   "plx-metric-card__summary-value": {
    "contract": "establishes",
    "role": "label",
-   "font": "sans",
+   "font": "mono",
    "adjusts": [
     "font-size",
     "line-height"
    ]
+  },
+  "plx-metric-card__value--word": {
+   "contract": "establishes",
+   "role": "label",
+   "font": "sans"
   },
   "plx-metric-card__title": {
    "contract": "establishes",
@@ -2059,7 +2068,7 @@
   "plx-metric-card__value": {
    "contract": "establishes",
    "role": "label",
-   "font": "sans",
+   "font": "mono",
    "adjusts": [
     "font-size",
     "line-height"
@@ -2088,10 +2097,15 @@
     "font-size"
    ]
   },
+  "plx-metric__value--word": {
+   "contract": "establishes",
+   "role": "label",
+   "font": "sans"
+  },
   "plx-metric__value": {
    "contract": "establishes",
    "role": "label",
-   "font": "sans",
+   "font": "mono",
    "adjusts": [
     "font-size",
     "font-weight",
@@ -3241,16 +3255,20 @@
    ]
   },
   "plx-timeline__date-day--compact": {
-   "contract": "adjusts",
-   "props": [
+   "contract": "establishes",
+   "role": "calendar-day",
+   "font": "mono",
+   "adjusts": [
     "font-size"
    ]
   },
   "plx-timeline__date-day": {
-   "contract": "adjusts",
-   "props": [
-    "font-size",
+   "contract": "establishes",
+   "role": "calendar-day",
+   "font": "mono",
+   "adjusts": [
     "font-weight",
+    "letter-spacing",
     "line-height"
    ]
   },

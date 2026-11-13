@@ -45,7 +45,7 @@
   - `change` (a delta) sits at the **inline start** of the value row, with its own tokens (as today).
   - `status` sits at the inline start too, as a Badge with its icon, if there is no `change`.
 - **`progress`:** an `sm` ProgressBar under the value row, the full content width, 8px above it (`space-stack-sm`).
-- **Card:** the MetricCard surface, border and corners, unchanged. Inline padding 16px (`metric-card-padding-inline`). Block padding **12px** (`space-inset-md`), so the card is about 121px tall with a value row, and 73px with none. `appearance` "plain", "edge" and "soft" apply as today; "filled" and "gradient" are already refused for person.
+- **Card:** the MetricCard surface, border and corners, unchanged. Inline padding 16px (`metric-card-padding-inline`). Block padding **12px** (`space-inset-md`), so the card is about 125px tall with a value row and a one-line name, 138px with a two-line name (with the 1px borders and the 20px number's line box; measured on #1297), and about 75px with no value row. `appearance` "plain", "edge" and "soft" apply as today; "filled" and "gradient" are already refused for person.
 
 ## 2. State matrix
 
@@ -75,9 +75,9 @@
 
 ## 4. Edge cases
 
-- **3x English name:** two lines, then an ellipsis; the card height holds at about 121px in a row.
+- **3x English name:** two lines, then an ellipsis; the card is about 138px, and a row matches its tallest card (D-0163).
 - **No role:** the name is centred on the Avatar's block axis.
-- **No value, no progress:** no divider and no value row. The card is the first row only (about 73px). In a WidgetGrid row the cards match the tallest (D-0163), so the empty space falls below the first row.
+- **No value, no progress:** no divider and no value row. The card is the first row only (about 75px). In a WidgetGrid row the cards match the tallest (D-0163), so the empty space falls below the first row.
 - **A large number** (10,000+): `formatNumber` as today ("10,240"). The unit cuts before the number.
 - **WidgetGrid `itemSize="sm"`** (ADR 0056): the minimum column width is **`size-50u` (200px)**, in place of `size-70u` (280px). The gaps are unchanged, and it is capped at 6 columns. About 5 fit at 1366 (beside the main nav) and 6 at 1920. The card fits 200px: Avatar 48 + 12 + about 108 of text + 32 padding.
 
@@ -92,7 +92,7 @@
 - `type="person" layout="tile"` (opt-in in 1.x, the default in 2.0.0; ADR 0056). A word value takes the unit style (reading A). WidgetGrid `itemSize="sm"` is `size-50u`.
 - **Tests (test first):**
   - the Avatar is 48px, beside the name in the same row;
-  - with a value the card is ≤ 124px tall at 280px wide;
+  - with a value the card is at most 126px tall at 280px wide with a one-line name, and at most 140px with a two-line name;
   - the number's computed font is Reddit Mono and the unit's is DM Sans in uppercase;
   - the value row's inline-end edge equals the content's inline-end edge, in LTR and RTL;
   - a 3-line name clamps to 2 lines and shows a Tooltip while cut;

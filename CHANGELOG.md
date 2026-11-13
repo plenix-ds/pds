@@ -6,6 +6,32 @@ The batch numbers point to the work log (Plenix - DAM/audit/batches/).
 
 ## [Unreleased]
 
+## [1.8.0] - 2026-11-11
+
+### Upgrading from 1.7.0
+Nothing to change in code. Apps on the CDN loader follow this release by themselves; npm apps update the version as usual. What looks different:
+- numbers, IDs, codes and day numbers are in the data font (Reddit Mono) in Metric, MetricCard, DateBadge, the grouped Timeline, Calendar and the DataGrid `id` and `code` columns (D-0164);
+- the MetricCard person tile is a column again (the 1.7.0 regression, CTM#326);
+- in right-to-left pages, long English labels are cut at their end.
+
+Pages that load per screen (`plenix-loader.js`, `Plenix.load`) now fetch a few shared files instead of hundreds. This release carries the fixes planned as 1.7.1; with the visual changes and new tokens on main it is a minor release (VERSIONING.md, D-0172).
+
+### Changed
+- **DateBadge, Timeline (grouped) and Calendar:** the day numbers are drawn in the data font (Reddit Mono); the weekday, month and headings stay in the text font (D-0164). New tokens `date-badge-day-font-family`, `timeline-grouped-date-day-font-family` and `calendar-day-font-family`.
+- **Metric and MetricCard:** the figure is drawn in the data font (Reddit Mono), at every size and type; the title, context and unit stay in the text font (D-0164). The tokens `metric-value-font-family` and `metric-card-value-font-family` now read the data font.
+- **Code per screen, faster (CDN `esm/`):** the per-screen modules now share five layer chunks (core, grid, shell, forms, charts) instead of one file per module. CTM's first page loads 21 Plenix files instead of 214, and 301 KB brotli instead of 553 KB for `plenix.js`; a grid screen loads 2 files (201 KB). `Plenix.load` preloads every file a call needs in one pass and imports each part's chunk directly. `esm/<Export>.js`, `esm/manifest.json` (which gains the optional fields `chunk` and `binding`), the npm entries and `Plenix.load` work as before.
+- **Commerce templates:** each page and each helper is its own module, so an import of one commerce export loads only its own code (for example `cardBrand` loads 417 B, not 347 KB). The exports and props are unchanged (ADR 0052).
+
+### Fixed
+- **CDN `plenix.esm.js`:** a page that imports it without a bundler no longer fails when a DataGrid renders. The file read `process.env.NODE_ENV`, a bundler's name; it now reads `"production"`, as `plenix.js` and the per-screen `esm/` modules do. The npm modules are unchanged and keep it for the app's bundler.
+- **DataGrid:** the `id` and `code` column kinds draw in the data font, like `data` (D-0164).
+- A truncated one-line label isolates its own direction (`unicode-bidi: plaintext`): in a right-to-left page a long English SecondaryPane back label, NavList item name or Tag label is cut at its end, not its start (#1281).
+- EntityTitle title and subtitle, Persona name and secondary line, and Menu item labels isolate their own direction in right-to-left pages, so a long English label is cut at its end; the Menu label text sits in its own box (`plx-menu__label-text`) so a short label keeps its place (#1283, first part).
+- MetricCard `type="person" layout="tile"` is a column again: its root no longer carries the plain tile class, whose row rule won over the person tile's column; the count and unit sit under the divider and the name has room (1.7.0 regression, CTM#326, #1294, #1296). The person tile is now in the zero-overlap pilot, and its tooltip wrapper no longer overlaps Tooltip's own rules.
+
+### Known issue
+- Arabic pages show two strings in English until the owner approves their Arabic words (D-0012): the compact Timeline's "Upcoming" tag (`timeline.tagUpcoming`, #1171) and LoadingState's "This is taking longer than usual." (`loading.slow`, #1203). Each ships in the next patch after his answer (D-0172).
+
 ## [1.7.0] - 2026-11-10
 
 ### Upgrading from 1.6.1

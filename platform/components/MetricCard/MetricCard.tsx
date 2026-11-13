@@ -108,6 +108,8 @@ import RefreshIcon from 'plenix-platform/icons/plenix/refresh';
 import { dataPhrase } from '../../utils/dataText.tsx';
 import { fill } from '../../utils/fill.ts';
 
+// a figure that is only a word ("On track", "N/A") is not data: the data font never sets a word (D-0164), so it takes the text font; a figure with a digit ("$1.77M") keeps the data font
+const wordValue = (v: React.ReactNode) => typeof v === 'string' && v !== '' && !/[0-9\u0660-\u0669]/.test(v);
 type Tone = 'good' | 'bad' | 'neutral';
 /** @public a status badge: { tone, icon, label } */
 export type MetricStatus = { tone?: React.ComponentProps<typeof Badge>['tone']; icon?: IconValue; label: React.ReactNode };
@@ -221,7 +223,7 @@ function Figure({ value, unit, target, status, inlineContext, empty }: { value?:
   const none = empty || value === undefined || value === null || value === '';
   return (
     <div className="plx-metric-card__figure">
-      <span className={cx('plx-metric-card__value', none && 'plx-metric-card__value--empty')}>{none ? '–' : value}</span>
+      <span className={cx('plx-metric-card__value', none && 'plx-metric-card__value--empty', !none && wordValue(value) && 'plx-metric-card__value--word')}>{none ? '–' : value}</span>
       {unit ? <span className="plx-metric-card__unit">{unit}</span> : null}
       {target ? <span className="plx-metric-card__unit">{'/ ' + target}</span> : null}
       {inlineContext ? <span className="plx-metric-card__unit">{inlineContext}</span> : null}
@@ -322,7 +324,7 @@ function Summary({ metrics = [] }: { metrics?: MetricFigure[] }) {
       {metrics.map((m, i) => (
         <li key={m.id || i} className="plx-metric-card__summary-item">
           <span className="plx-metric-card__summary-figure">
-            <span className={cx('plx-metric-card__summary-value', (m.value === undefined || m.value === null || m.value === '') && 'plx-metric-card__value--empty')}>{m.value === undefined || m.value === null || m.value === '' ? '–' : m.value}</span>
+            <span className={cx('plx-metric-card__summary-value', (m.value === undefined || m.value === null || m.value === '') && 'plx-metric-card__value--empty', wordValue(m.value) && 'plx-metric-card__value--word')}>{m.value === undefined || m.value === null || m.value === '' ? '–' : m.value}</span>
             {m.unit ? <span className="plx-metric-card__unit">{m.unit}</span> : null}
           </span>
           <span className="plx-metric-card__label">{m.label}</span>
@@ -445,7 +447,7 @@ export function MetricCard({ type = 'value', layout = 'stacked', appearance = 'p
       </>
     );
     return (
-      <article {...rootProps} className={cx(rootProps.className, 'plx-metric-card--person-tile')}>
+      <article {...rootProps} className={cx('plx-metric-card', 'plx-metric-card--' + type, 'plx-metric-card--person-tile', 'plx-metric-card--' + appearance, 'plx-metric-card--' + size, href && 'plx-metric-card--link', className)}>
         <div className="plx-metric-card__person-row">
           <Avatar name={person.name} src={person.src} gender={person.gender} size="xl" />
           <div className="plx-metric-card__person-text">
@@ -465,7 +467,7 @@ export function MetricCard({ type = 'value', layout = 'stacked', appearance = 'p
       <article {...rootProps}>
         {layout === 'icon-start' && icon ? <Icon name={typeof icon === 'string' || isIconModule(icon) ? icon : undefined} size="lg" className="plx-metric-card__lead-icon" data-plx-color={iconHue(hue)} /> : null}
         <div className="plx-metric-card__compact">
-          <span className={cx('plx-metric-card__value', empty && 'plx-metric-card__value--empty')}>{empty || value === undefined ? '–' : value}</span>
+          <span className={cx('plx-metric-card__value', empty && 'plx-metric-card__value--empty', !empty && wordValue(value) && 'plx-metric-card__value--word')}>{empty || value === undefined ? '–' : value}</span>
           <H id={id} className="plx-metric-card__title">{titleText}</H>
         </div>
       </article>
@@ -493,9 +495,9 @@ export function MetricCard({ type = 'value', layout = 'stacked', appearance = 'p
       visual = (
         <>
           <div className="plx-metric-card__compare">
-            <div className="plx-metric-card__side"><span className="plx-metric-card__value">{a.value}</span><span className="plx-metric-card__label">{a.label}</span></div>
+            <div className="plx-metric-card__side"><span className={cx('plx-metric-card__value', wordValue(a.value) && 'plx-metric-card__value--word')}>{a.value}</span><span className="plx-metric-card__label">{a.label}</span></div>
             <span className="plx-metric-card__versus">{t.vs}</span>
-            <div className="plx-metric-card__side plx-metric-card__side--end"><span className="plx-metric-card__value">{b.value}</span><span className="plx-metric-card__label">{b.label}</span></div>
+            <div className="plx-metric-card__side plx-metric-card__side--end"><span className={cx('plx-metric-card__value', wordValue(b.value) && 'plx-metric-card__value--word')}>{b.value}</span><span className="plx-metric-card__label">{b.label}</span></div>
           </div>
           <SplitBar parts={[{ id: 'a', value: a.amount !== undefined ? a.amount : Number(a.value) || 0, color: a.color || 'green' }, { id: 'b', value: b.amount !== undefined ? b.amount : Number(b.value) || 0, color: b.color || 'gray' }]}
             label={fill(t.compare, { a: a.label, av: a.value, b: b.label, bv: b.value })} />

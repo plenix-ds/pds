@@ -7,7 +7,7 @@ import path from 'node:path';
 import { createRequire } from 'node:module';
 import { compare, specifiers, bundlerOnly } from './esm-entries.mjs';
 
-const { exportsOf, staticImports, closure } = createRequire(import.meta.url)('../publish/esm-parts.js');
+const { exportsOf, staticImports, closure, facade } = createRequire(import.meta.url)('../publish/esm-parts.js');
 
 describe('esm entries (1208)', () => {
   it('a name missing from a place, or a place holding a name that is no export, is a finding', () => {
@@ -40,5 +40,11 @@ describe('esm entries (1208)', () => {
   it('finds process.env reads, which a page without a bundler cannot run', () => {
     expect(bundlerOnly('const d = process.env.NODE_ENV !== "production" && process.env.NODE_ENV;')).toEqual(['process.env.NODE_ENV']);
     expect(bundlerOnly('if (typeof process === "object" && process) {}')).toEqual([]);
+  });
+  it('an entry that only re-exports its name from a chunk gives the chunk and the name inside it (#1293)', () => {
+    expect(facade("/* banner */\nexport { DataGrid } from './chunks/grid-AbC_12-x.js';\n", 'DataGrid')).toEqual({ chunk: 'chunks/grid-AbC_12-x.js', binding: 'DataGrid' });
+    expect(facade("export { D as DataGrid } from './chunks/grid-x.js';", 'DataGrid')).toEqual({ chunk: 'chunks/grid-x.js', binding: 'D' });
+    expect(facade("import { a } from './chunks/x.js';\nexport const Badge = a;", 'Badge')).toEqual({});
+    expect(facade("export { Other } from './chunks/x.js';", 'Badge')).toEqual({});
   });
 });
