@@ -236,6 +236,14 @@ A named variation sets a whole agreed look with one prop, so an app never gets h
   - Details: `docs/pds1/slices/800-column-fit/design.md`.
 - 10,000 rows: the grid virtualises (`plx-sys.virtual-*`). Only visible rows are in the DOM. The header stays sticky.
 
+### DataToolbar (D-0176, #1331)
+
+- A DataToolbar holds a start group (chips, filters) and an end group (a count or a summary) in one row while both fit.
+- **In a narrow row the end group moves under the start group**, the same move as a label above its control (`fit-and-overflow.md` §4). Its text shows whole and wraps; it is never cut with an ellipsis.
+- Each group stays one region, and nothing runs past the toolbar, down to 320px, LTR and RTL (D-0092, WCAG 1.4.10).
+- This is the only bar that wraps. A Toolbar, CommandBar or ActionBar of actions stays one row and folds into More (`fit-and-overflow.md` §1).
+- Enforced by `tests/narrow-fit-880.test.js`. Details: `docs/pds1/slices/11-13-reflow/design.md`.
+
 ### Pills (D-0010)
 
 - Pills stay as defined in `docs/pills-and-colors.md`: soft fill, soft border, on-soft text, 4px corners.
