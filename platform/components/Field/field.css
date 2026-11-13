@@ -35,7 +35,8 @@
    When the group is narrow the control keeps its minimum and the label column gives way: a label cut short ends in an
    ellipsis and shows in full in a Tooltip (Field). Only below 180px (the value of --plx-ref-size-45u; a container
    condition cannot read a custom property), when a panel is dragged that narrow, does each label move above its control. */
-.plx-field__label-tip{max-inline-size:var(--plx-comp-field-grid-label-tip-max-width,100%);min-inline-size:0;}
+/* the label tip is a Tooltip, whose own rule (tooltip.css, later in the layer) sets its sizes: they reach it as its context tokens (#1337) */
+.plx-field__label-tip{--plx-comp-tooltip-context-max-inline-size:var(--plx-comp-field-grid-label-tip-max-width,100%);--plx-comp-tooltip-context-min-inline-size:0;}
 /* the character counter (counter, library wave 6): the description and the count on one help line, the count at its end,
    in the data font; past the limit it takes the error color */
 .plx-field__foot{align-items:baseline;column-gap:var(--plx-comp-field-foot-gap);display:flex;min-inline-size:0;}

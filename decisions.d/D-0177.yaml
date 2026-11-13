@@ -1,0 +1,9 @@
+id: D-0177
+date: 2026-11-13
+area: tokens
+decided_by: Design-System Architect (G3, #1337)
+decision: --plx-comp-file-browser-body-gap is deprecated (kept and working until 2.0.0, a token is never deleted in 1.x) and no rule reads it; the FileBrowser body's gap is --plx-comp-file-browser-tree-gap, since the body holds two parts only with the tree. Field hands the label tip's sizes to its Tooltip through Tooltip's context tokens (--plx-comp-tooltip-context-max-inline-size, -min-inline-size), as DataGrid and MetricCard do, so --plx-comp-field-grid-label-tip-max-width takes effect.
+why: The first full run of the component-tokens test found both rules moving nothing (#1337). The body gap rule drew nothing (one part without the tree, the tree's rule with it); tooltip.css loads after field.css in the same layer, so .plx-tooltip's max-inline-size none and min-inline-size auto won over the label tip's.
+options: [Deprecate the body gap and use the Tooltip context tokens (chosen), Use the body gap for both and deprecate the tree gap, Raise the label tip selector's weight over .plx-tooltip]
+status: active
+check: tests/component-tokens-probe-1337.test.js (AC-3, AC-4) and tests/component-tokens.test.js
