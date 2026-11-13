@@ -1,0 +1,6 @@
+AssertionError [ERR_ASSERTION]: AC-4: "css plx-chat__reaction" is out of the type-roles backlog
+    at /home/agents/pds/work/core-engineer-1305/tests/chat-data-font-1305.test.js:12:82
+    at Object.<anonymous> (/home/agents/pds/work/core-engineer-1305/tests/chat-data-font-1305.test.js:47:3)
+    at Module._compile (node:internal/modules/cjs/loader:1781:14)
+    at Object..js (node:internal/modules/cjs/loader:1913:10)
+    at Module.load (node:internal/modules/cjs/loader:1505:32)

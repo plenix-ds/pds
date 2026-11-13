@@ -592,6 +592,10 @@
     "font-size"
    ]
   },
+  "plx-chat__reaction-count": {
+   "contract": "follows",
+   "font": "mono"
+  },
   "plx-chat__time": {
    "contract": "follows",
    "font": "mono"
@@ -624,10 +628,9 @@
    ]
   },
   "plx-chat__voice-time": {
-   "contract": "adjusts",
-   "props": [
-    "font-size"
-   ]
+   "contract": "follows",
+   "font": "mono",
+   "size": true
   },
   "plx-chat__meta": {
    "contract": "adjusts",
