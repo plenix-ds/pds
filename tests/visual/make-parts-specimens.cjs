@@ -5,11 +5,18 @@
 const fs = require('fs'), path = require('path');
 const { serve, launch } = require('../lib');
 
-// each entry: a function returning React.createElement(...) source run in the page (h = createElement, P = Plenix)
+// each entry: React.createElement(...) source run in the page (h = createElement, P = Plenix), or { src, act } where act is a
+// script run in the page after the render (for example focusing a control so a tip opens) before the markup is taken
 // a flat grey logo as a data URI, so the specimen needs no file or network
 const logo = (w, h) => 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '"><rect width="' + w + '" height="' + h + '" fill="gray"/></svg>');
 const brand = (src, org) => `h(P.AppHeader, { appName: 'Cases', brand: { logo: { src: '${src}', alt: 'Logo' }, organization: '${org}', application: 'Clerical Tribunal Management' } })`;
 const nav = `h(P.NavList, { label: 'Case', items: [{ id: 'a', label: 'Summary', current: true }, { id: 'b', label: 'Parties' }, { id: 'c', label: 'Documents' }] })`;
+// FileBrowser (issue 1337): one folder with files and a subfolder; fixed dates so the markup does not change by day
+const files = `[{ id: 'brand', name: 'Brand', kind: 'folder' }, { id: 'press', name: 'Press', kind: 'folder', parent: 'brand' },
+  { id: 'f1', name: 'Logo.svg', kind: 'file', parent: 'brand', size: 18432, modified: '2026-03-02T09:00:00Z', owner: 'Maya Chen', type: 'image/svg+xml' },
+  { id: 'f2', name: 'Guidelines.pdf', kind: 'file', parent: 'brand', size: 2411724, modified: '2026-02-14T09:00:00Z', owner: 'Noor Haddad', type: 'application/pdf' },
+  { id: 'f3', name: 'Colors.txt', kind: 'file', parent: 'brand', size: 912, modified: '2026-01-20T09:00:00Z', owner: 'Maya Chen', type: 'text/plain' }]`;
+const fileBrowser = (tree) => `h(P.FileBrowser, { label: 'Files', root: { name: 'Library' }, defaultFolder: 'brand', selectable: false, tree: ${tree}, items: ${files} })`;
 const parts = {
   'entity-header-fact-tone': `h(P.EntityHeader, { title: 'Case 2026-114', subtitle: 'Council review', status: { tone: 'waiting', icon: 'clock', label: 'Open' },
     facts: [ { label: 'Council member', icon: 'alert', tone: 'negative', value: h(P.Combobox, { 'aria-label': 'Council member', invalid: true, options: [{ value: 'a', label: 'Maya Chen' }, { value: 'b', label: 'Noor Haddad' }], value: null, onChange: function () {} }) },
@@ -45,6 +52,15 @@ const parts = {
     { id: 7, dateTime: '2026-02-03T09:00:00Z', title: 'Note added', description: 'Hidden by the legend.', category: { id: 'c3', label: 'Notes', color: '3' } },
     { id: 3, dateTime: '2025-11-20T09:00:00Z', title: 'Hearing held', description: 'Both sides were heard.', category: { id: 'c6', label: 'Hearing', color: '6' } },
     { id: 4, dateTime: '2025-06-05T09:00:00Z', title: 'Opened', description: 'The case was opened.', category: { id: 'c1', label: 'Filing', color: '1' } } ] })`,
+  // new parts go last: React's ids count across the parts, so a part added earlier would change every later part's markup
+  // a 420px Stack of inline Fields (issue 1337): the long required label is cut at the 160px label column and its tip is open
+  // (focus on its control); the short required label reads "Name *" with its space
+  'field-inline-stack': { src: `h('div', { style: { inlineSize: 420, paddingBlockEnd: 96 } }, h(P.Stack, null,
+      h(P.Field, { label: 'Annual review of all of the cases assigned to the tribunal this year', layout: 'inline', required: true }, h(P.Input, { id: 'field-long-input' })),
+      h(P.Field, { label: 'Name', layout: 'inline', required: true }, h(P.Input, null))))`,
+    act: `document.getElementById('field-long-input').focus()` },
+  'file-browser-tree': fileBrowser(true),
+  'file-browser-list': fileBrowser(false),
 };
 
 (async () => {
@@ -53,14 +69,16 @@ const parts = {
     browser = await launch(); const page = await browser.newPage(); await page.setViewport({ width: 900, height: 700 });
     await page.goto('http://localhost:' + PORT + '/Plenix/tests/fixtures/platform-host.html?react=dev', { waitUntil: 'load' });
     await page.waitForFunction(() => window.Plenix && window.ReactDOM, { timeout: 60000 });
-    for (const [name, src] of Object.entries(parts)) {
-      out[name] = await page.evaluate(async (src) => {
+    for (const [name, part] of Object.entries(parts)) {
+      const { src, act } = typeof part === 'string' ? { src: part, act: '' } : part;
+      out[name] = await page.evaluate(async (src, act) => {
         const h = React.createElement, P = Plenix;
         document.querySelector('main').innerHTML = '<div id="c"></div>';
         const root = ReactDOM.createRoot(document.getElementById('c'));
         root.render(new Function('h', 'P', 'return ' + src)(h, P)); await new Promise((r) => setTimeout(r, 500));
+        if (act) { new Function(act)(); await new Promise((r) => setTimeout(r, 300)); }
         const html = document.getElementById('c').innerHTML; root.unmount(); return html;
-      }, src);
+      }, src, act);
     }
   } finally { if (browser) await browser.close(); server.close(); }
   fs.writeFileSync(path.join(__dirname, 'specimens-parts.json'), JSON.stringify(out, null, 1) + '\n');
