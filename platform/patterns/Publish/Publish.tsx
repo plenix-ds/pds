@@ -50,7 +50,7 @@ import { ConfirmDialog, Dialog } from '../../components/Dialog/Dialog.tsx';
 import { Field } from '../../components/Field/Field.tsx';
 import { DatePicker } from '../../components/DatePicker/DatePicker.tsx';
 import { Text } from '../../components/Text/Text.tsx';
-import { WorkflowStatus } from '../ReviewFlow/ReviewFlow.tsx';
+import { WorkflowStatus } from '../ReviewFlow/WorkflowStatus.tsx';
 import { useOptionalToast } from '../../components/Toast/Toast.tsx';
 import { useStrings } from '../../providers/LocaleProvider.tsx';
 import ScheduleIcon from 'plenix-platform/icons/plenix/schedule';

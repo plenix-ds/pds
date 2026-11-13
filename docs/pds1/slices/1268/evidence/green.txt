@@ -1,0 +1,5 @@
+  custom properties: 11613 declarations; largest scope reaching elements: 2347 (@layer plx.tokens :root, [data-plx-theme], [data-plx-mode])
+  screen grid (4 parts): 201337 B brotli 5 (limit 210000), 2 files (limit 4)
+  screen ctm-shell (43 parts): 300918 B brotli 5 (limit 330000), 21 files (limit 28)
+  611 entries; largest additions to the layers (on-demand candidates): AssistantPanel 38813, AIChat 36905, FileBrowser 33009, Chat 26405, MentionInput 26139; plenix-loader.js 3995 B
+PERF_BUDGET_OK

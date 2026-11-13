@@ -1,0 +1,5 @@
+PERF_BUDGET_FAIL: esm/ApprovalWorkflow.js adds 10244 B with brotli 5 to the layers (limit 9799)
+PERF_BUDGET_FAIL: esm/ReviewFlow.js adds 7707 B with brotli 5 to the layers (limit 7195)
+PERF_BUDGET_FAIL: esm/ReviewQueue.js adds 7707 B with brotli 5 to the layers (limit 4202)
+PERF_BUDGET_FAIL: esm/WORKFLOW_STATUSES.js adds 7707 B with brotli 5 to the layers (limit 2695)
+PERF_BUDGET_FAIL: esm/WorkflowStatus.js adds 7707 B with brotli 5 to the layers (limit 2695)

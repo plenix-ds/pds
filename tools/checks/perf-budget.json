@@ -35,7 +35,7 @@
     "limits": {
       "FileBrowser": 33949,
       "FileList": 18164,
-      "Publish": 9540,
+      "Publish": 4370,
       "sortFiles": 477,
       "ListingPage": 5464,
       "ContentManagementPage": 3637,
@@ -51,7 +51,12 @@
       "DetailPage": 5376,
       "SearchResultsPage": 8157,
       "AuthenticationPage": 14996,
-      "ErrorPage": 5022
+      "ErrorPage": 5022,
+      "WorkflowStatus": 2695,
+      "WORKFLOW_STATUSES": 2695,
+      "ReviewQueue": 4202,
+      "ReviewFlow": 7195,
+      "ApprovalWorkflow": 9799
     },
     "screens": {
       "grid": {
