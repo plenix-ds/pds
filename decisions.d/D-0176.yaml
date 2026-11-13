@@ -1,0 +1,9 @@
+id: D-0176
+date: 2026-11-13
+area: design
+decided_by: 'owner reported the reflow (#11, #13, 2026-11-05); agent (pds1-design-director) set the fix at G2 (docs/pds1/slices/11-13-reflow/design.md, #361), built by #373; recorded by agent (PDS2 Design Director) at G2 of #1356 (#1331)'
+decision: 'DataToolbar in a narrow row (#1331): when its start group and its end group (a count or a summary) do not fit side by side, the end group moves under the start group, the same move as a label above its control (fit-and-overflow §4), and its text shows whole and wraps; it is not cut with an ellipsis. Each group stays one region and nothing runs past the toolbar, down to 320px, LTR and RTL. This is the one exception to "a bar never wraps" (fit-and-overflow §1): a Toolbar, CommandBar or ActionBar of actions still never wraps. It replaces the #880 look, where the end group shrank and its summary ended in an ellipsis.'
+why: 'WCAG 1.4.10 and D-0092: no sideways scroll and nothing cut at 320px. A count or summary is a text label, not an action, so the text label ladder applies (reflow before cut). The look shipped with #373 and was never recorded, so a test still checked the old ellipsis.'
+options: ['A. end group moves under the start group and shows whole (chosen, built by #373)', 'B. one row, the summary ends in an ellipsis (#880, overruled by #373)']
+status: active
+check: 'tests/narrow-fit-880.test.js (its #1331 form from PR #1356: the summary sits under the start group, is not cut, and nothing runs past the 320px row, LTR and RTL)'
