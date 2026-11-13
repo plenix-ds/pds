@@ -98,6 +98,41 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
         await page2.close();
       }
     }
+    // part 3 (result and activity rows): SearchResult title, crumb and meta; ActivityList title and meta. Same checks as part 2.
+    // The meta lines hold the other (longer) text in short mode, so only the title and the crumb are measured as short labels.
+    const PARTS3 = [['resultTitle', '.plx-search-result__title', '.plx-search-result__text'], ['resultCrumb', '.plx-search-result__crumb', '.plx-search-result__path'], ['resultMeta', '.plx-search-result__meta', '.plx-search-result__text'],
+      ['activityTitle', '.plx-activity-list__title', '.plx-activity-list__text'], ['activityMeta', '.plx-activity-list__meta', '.plx-activity-list__text']];
+    for (const dir of ['rtl', 'ltr']) for (const [label, text, short] of [['en', EN, 'Ann'], ['ar', AR + ' ' + AR, 'Ann']]) {
+      for (const [mode, value] of [['long', text], ['short', short]]) {
+        const page3 = await browser.newPage(); page3.on('pageerror', (e) => problems.push(e.message)); await page3.setViewport({ width: 900, height: 700 });
+        await page3.goto('http://localhost:' + PORT + '/Plenix/tests/fixtures/platform-host.html?react=dev', { waitUntil: 'domcontentloaded' });
+        await page3.waitForFunction(() => window.Plenix && window.ReactDOM, { timeout: 60000 });
+        const r3 = await page3.evaluate(async (value, mode, PARTS3, other, dir) => {
+          document.documentElement.setAttribute('dir', dir);
+          const h = React.createElement, P = Plenix, c = document.createElement('div'); c.style.inlineSize = '420px'; document.querySelector('main').replaceChildren(c);
+          const v2 = mode === 'short' ? other : value;
+          ReactDOM.createRoot(c).render(h('div', null,
+            h('ul', null, h(P.SearchResult, { title: value, path: [value, v2], meta: v2 })),
+            h(P.ActivityList, { label: 'a' }, h(P.ActivityList.Item, { title: value, meta: v2, time: '2m' }))));
+          await new Promise((r) => setTimeout(r, 800));
+          const first = (n) => { for (const x of n.childNodes) { if (x.nodeType === 3 && x.textContent.trim()) return x; if (x.nodeType === 1 && !x.classList.contains('plx-visually-hidden')) { const y = first(x); if (y) return y; } } return null; };
+          const out = {};
+          for (const [k, sel, within] of PARTS3) {
+            const el = document.querySelector(sel); if (!el) { out[k] = null; continue; }
+            const box = el.getBoundingClientRect(), col = el.closest(within).getBoundingClientRect(), tn = first(el), rg = document.createRange(); rg.selectNodeContents(tn); const t = rg.getBoundingClientRect(), f0 = document.createRange(); f0.setStart(tn, 0); f0.setEnd(tn, 1); const f = f0.getBoundingClientRect();
+            out[k] = { inside: f.left >= box.left - 1 && f.right <= box.right + 1, clipped: el.scrollWidth > el.clientWidth, fromRight: Math.round(col.right - t.right), fromLeft: Math.round(t.left - col.left) };
+          }
+          return out;
+        }, value, mode, PARTS3, label === 'en' ? 'A much longer neighbouring line under the short text' : AR, dir);
+        for (const [k, v] of Object.entries(r3)) {
+          const T = dir + ' part 3 ' + label + ' ' + mode + ': ' + k + ' ';
+          assert.ok(v, T + 'drawn');
+          if (mode === 'long') { assert.ok(v.clipped, T + 'is truncated ' + JSON.stringify(v)); assert.ok(v.inside, T + 'the first character is inside its box ' + JSON.stringify(v)); }
+          else if (!/Meta/.test(k)) { const [near, far] = dir === 'rtl' ? [v.fromRight, v.fromLeft] : [v.fromLeft, v.fromRight]; assert.ok(near <= 40 && far > 20, T + 'a short English label stays at the start side ' + JSON.stringify(v)); }
+        }
+        await page3.close();
+      }
+    }
     assert.deepEqual(problems, [], 'no script errors: ' + problems.join(' | '));
     console.log('RTL_TRUNCATE_AUDIT_1283_OK');
   } finally { if (browser) await browser.close(); server.close(); }
