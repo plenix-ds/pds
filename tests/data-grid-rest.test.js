@@ -180,7 +180,7 @@ module.exports = async function rest(page) {
     ok(t.getColumn('no').getWidth() === 120, 'CSS clamp width resolves the complete expression');
     let row = t.getRow(1);
     ok(row.getCell('size').getElement().textContent.includes('2.5'), 'Byte cell formats numeric bytes');
-    ok(['right','end'].includes(getComputedStyle(row.getCell('size').getElement()).textAlign), 'Bytes right aligned');
+    ok(['left','start'].includes(getComputedStyle(row.getCell('size').getElement()).textAlign), 'Bytes start-aligned like every cell (D-0087, DESIGN.md numbers)');
     ok(getComputedStyle(row.getCell('size').getElement()).fontFamily.includes('Reddit Mono'), 'Bytes use data font');
     ok(row.getCell('missing').getElement().textContent === 'Unavailable', 'Column missing copy used');
     ok(row.getCell('zero').getElement().textContent === '0' && row.getCell('no').getElement().textContent === 'false', 'Zero and false are retained');
