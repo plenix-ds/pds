@@ -17,6 +17,6 @@
 /* compact: one row; the line is cut with an ellipsis, the actions at the end */
 .plx-user-card--compact .plx-user-card__identity{align-items:center;column-gap:var(--plx-comp-user-card-compact-gap);flex-direction:row;}
 .plx-user-card--compact .plx-user-card__text{flex-basis:0%;flex-grow:1;row-gap:0;}
-.plx-user-card--compact .plx-user-card__name,.plx-user-card--compact .plx-user-card__secondary{overflow-x:hidden;overflow-y:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.plx-user-card--compact .plx-user-card__name,.plx-user-card--compact .plx-user-card__secondary{inline-size:fit-content;max-inline-size:100%;unicode-bidi:plaintext;overflow-x:hidden;overflow-y:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .plx-user-card--compact .plx-user-card__name{font-size:var(--plx-comp-user-card-compact-name-font-size);}
 .plx-user-card--compact .plx-user-card__actions{flex-shrink:0;flex-wrap:nowrap;}

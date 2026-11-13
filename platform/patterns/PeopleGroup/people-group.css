@@ -7,12 +7,12 @@
 .plx-people-group__media--icon{inline-size:var(--plx-comp-people-group-media-size);justify-content:center;}
 .plx-people-group__icon{color:var(--plx-comp-people-group-icon-color);}
 .plx-people-group__body{display:flex;flex-basis:0%;flex-direction:column;flex-grow:1;min-inline-size:0;row-gap:var(--plx-comp-people-group-body-gap);}
-.plx-people-group__name{color:var(--plx-comp-people-group-name-text);font-size:var(--plx-comp-people-group-name-font-size);font-weight:var(--plx-comp-people-group-name-font-weight);overflow-x:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.plx-people-group__name{inline-size:fit-content;max-inline-size:100%;unicode-bidi:plaintext;color:var(--plx-comp-people-group-name-text);font-size:var(--plx-comp-people-group-name-font-size);font-weight:var(--plx-comp-people-group-name-font-weight);overflow-x:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .plx-people-group__meta{align-items:baseline;color:var(--plx-comp-people-group-meta-text);column-gap:var(--plx-comp-people-group-meta-gap);display:flex;font-size:var(--plx-comp-people-group-meta-font-size);min-inline-size:0;}
 .plx-people-group__kind,
 .plx-people-group__count{flex-shrink:0;}
 .plx-people-group__number{font-family:var(--plx-comp-people-group-number-font-family);word-spacing:var(--plx-sys-font-data-word-spacing);}
-.plx-people-group__source{min-inline-size:0;overflow-x:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.plx-people-group__description{color:var(--plx-comp-people-group-description-text);font-size:var(--plx-comp-people-group-description-font-size);overflow-x:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.plx-people-group__source{inline-size:fit-content;max-inline-size:100%;unicode-bidi:plaintext;min-inline-size:0;overflow-x:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.plx-people-group__description{inline-size:fit-content;max-inline-size:100%;unicode-bidi:plaintext;color:var(--plx-comp-people-group-description-text);font-size:var(--plx-comp-people-group-description-font-size);overflow-x:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .plx-people-group__members,
 .plx-people-group__show{flex-shrink:0;}
