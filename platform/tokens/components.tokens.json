@@ -775,7 +775,7 @@
       }
     },
     "secondary-pane-width-md": {
-      "$value": "{plx-ref.size-55u}",
+      "$value": "{plx-sys.shell-nav-width}",
       "$type": "dimension"
     },
     "secondary-pane-width-min": {
@@ -790,7 +790,8 @@
     "secondary-pane-width-sm-from-wide": {
       "$value": "{plx-ref.size-55u}",
       "$type": "dimension",
-      "$description": "The secondary pane widths in a window 1440px wide up to 1919px (owner, issue 463 option C, step 2): each steps up one size; grid.css sets secondary-pane-width-sm, -md and -lg to them there."
+      "$description": "The secondary pane widths in a window 1440px wide up to 1919px (owner, issue 463 option C, step 2): each steps up one size; grid.css sets secondary-pane-width-sm, -md and -lg to them there.",
+      "$deprecated": "Navigation panes keep one width at every window size (ADR 0057). Nothing reads it; removed in 2.0.0."
     },
     "secondary-pane-width-sm-from-1440": {
       "$value": "{plx-comp.secondary-pane-width-sm-from-wide}",
@@ -799,7 +800,8 @@
     },
     "secondary-pane-width-md-from-wide": {
       "$value": "{plx-ref.size-65u}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$deprecated": "Navigation panes keep one width at every window size (ADR 0057). Nothing reads it; removed in 2.0.0."
     },
     "secondary-pane-width-md-from-1440": {
       "$value": "{plx-comp.secondary-pane-width-md-from-wide}",
@@ -808,7 +810,8 @@
     },
     "secondary-pane-width-lg-from-wide": {
       "$value": "{plx-ref.size-80u}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$deprecated": "Navigation panes keep one width at every window size (ADR 0057). Nothing reads it; removed in 2.0.0."
     },
     "secondary-pane-width-lg-from-1440": {
       "$value": "{plx-comp.secondary-pane-width-lg-from-wide}",
@@ -818,7 +821,8 @@
     "secondary-pane-width-sm-from-ultrawide": {
       "$value": "{plx-ref.size-65u}",
       "$type": "dimension",
-      "$description": "The secondary pane widths in a window 1920px wide and wider."
+      "$description": "The secondary pane widths in a window 1920px wide and wider.",
+      "$deprecated": "Navigation panes keep one width at every window size (ADR 0057). Nothing reads it; removed in 2.0.0."
     },
     "secondary-pane-width-sm-from-1920": {
       "$value": "{plx-comp.secondary-pane-width-sm-from-ultrawide}",
@@ -827,7 +831,8 @@
     },
     "secondary-pane-width-md-from-ultrawide": {
       "$value": "{plx-ref.size-80u}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$deprecated": "Navigation panes keep one width at every window size (ADR 0057). Nothing reads it; removed in 2.0.0."
     },
     "secondary-pane-width-md-from-1920": {
       "$value": "{plx-comp.secondary-pane-width-md-from-ultrawide}",
@@ -836,7 +841,8 @@
     },
     "secondary-pane-width-lg-from-ultrawide": {
       "$value": "{plx-ref.size-100u}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$deprecated": "Navigation panes keep one width at every window size (ADR 0057). Nothing reads it; removed in 2.0.0."
     },
     "secondary-pane-width-lg-from-1920": {
       "$value": "{plx-comp.secondary-pane-width-lg-from-ultrawide}",
@@ -9961,11 +9967,13 @@
     },
     "settings-nav-border-bottom-color": {
       "$value": "{plx-sys.border-default}",
-      "$type": "color"
+      "$type": "color",
+      "$deprecated": "SettingsLayout's nav is a SecondaryPane (ADR 0057); nothing reads it; removed in 2.0.0."
     },
     "settings-nav-border-bottom-width": {
       "$value": "{plx-sys.border-width-thin}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$deprecated": "SettingsLayout's nav is a SecondaryPane (ADR 0057); nothing reads it; removed in 2.0.0."
     },
     "settings-content-narrow-padding-inline": {
       "$value": "{plx-sys.space-layout-sm}",

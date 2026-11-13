@@ -2474,6 +2474,7 @@ export default {
     }
   },
   "settingsLayout": {
+    "navTitle": "الإعدادات",
     "section": {
       "section": "قسم"
     }
