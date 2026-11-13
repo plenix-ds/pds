@@ -60,9 +60,16 @@ if (process.argv.includes('--list')) {
   required.forEach((n) => console.log(n.name.padEnd(28) + (used[n.name] ? used[n.name].join(', ') : '-- not used --')));
 }
 const bad = missing.length || noFile.length || noRoute.length || stubs.length;
+// one result per Platform name and per site rule in the results file (TEST_RESULTS), so CI can quarantine one name (#1327)
+const shared = require('./check.js');
+required.forEach((n) => shared.record(n.name + ': used by the test site', !!used[n.name], 'not used by any test-site screen'));
+shared.record('Routes: every route has a screen file', !noFile.length, noFile.join(', '));
+shared.record('Screens: every screen file has a route', !noRoute.length, noRoute.join(', '));
+shared.record('Screens: no unfinished screen', !stubs.length, stubs.join(', '));
 if (missing.length) console.log('Not used by the test site (' + missing.length + ' of ' + required.length + '): ' + missing.map((n) => n.name).join(', '));
 if (noFile.length) console.log('Routes without a screen file: ' + noFile.join(', '));
 if (noRoute.length) console.log('Screen files without a route: ' + noRoute.join(', '));
 if (stubs.length) console.log('Unfinished screens: ' + stubs.join(', '));
 console.log((bad ? 'SITE_COVERAGE_FAIL ' : 'SITE_COVERAGE_OK ') + (required.length - missing.length) + '/' + required.length + ' Platform names used on ' + pages.length + ' pages');
+shared.ended();   // every failure above is a recorded check (G5a I1)
 process.exit(bad ? 1 : 0);

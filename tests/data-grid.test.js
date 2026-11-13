@@ -66,13 +66,22 @@ const APP_URLS = changed.pages(STATES.map((s) => s[0]));
 const inScope = (url) => changed.wants({ units: GRIDS }) || APP_URLS.includes(url);
 const VIEWS = STATES.filter((s) => inScope(s[0]) && (!ONLY || ONLY.test(s[0])));
 
+// Every child runs, even after one fails, and each records its result (tests/check.js childName): the failures are listed at
+// the end and make the grid test fail, so one red child neither hides the others nor the grid's own checks (#1327, as layout
+// does since issue 768)
+const shared = require('./check.js');
+const failedChildren = [];
+function runChild(file) {
+  const result = require('./limit.js').excluding(() => require('child_process').spawnSync(process.execPath, [require('path').join(__dirname, file)], { stdio: 'inherit', env: process.env }));   // its own limit (#1327)
+  shared.record(shared.childName(file), result.status === 0, 'exit ' + result.status);
+  if (result.status !== 0) failedChildren.push(file.replace(/\.test\.js$/, ''));
+}
 // a child regression runs when what it covers changed, or the child itself (or a fixture it loads) did (#382 F1)
 const runs = (regression, units) => changed.wants({ units }) || changed.child(regression);
 changed.report(VIEWS.length + ' of ' + STATES.length + ' table views' + (changed.childrenOf().length ? ' · children on: ' + changed.childrenOf().join(', ') : ''));
 if (!ONLY) {
   for (const regression of ['data-grid-search-149.test.js', 'data-grid-window-184.test.js', 'data-grid-sort-185.test.js', 'data-grid-cell-187.test.js', 'data-grid-select-167.test.js', 'data-grid-pane-150.test.js', 'data-grid-narrow-168.test.js', 'data-grid-state-169.test.js', 'data-grid-view-169.test.js', 'data-grid-group-165.test.js', 'data-grid-group-browser-165.test.js', 'data-grid-unread-164.test.js', 'data-grid-height-token-1347.test.js'].filter((r) => runs(r, ['components/DataGrid']))) {
-  const result = require('child_process').spawnSync(process.execPath, [require('path').join(__dirname, regression)], { stdio: 'inherit', env: process.env });
-  if (result.status !== 0) process.exit(result.status || 1);
+  runChild(regression);
   }
 }
 
@@ -89,20 +98,22 @@ if (!ONLY) {
     'data-grid-responsive-679.test.js',
     // the long card list draws only the cards near the view (issue 809)
     'data-grid-card-chunks-809.test.js'].filter((r) => runs(r, GRIDS))) {
-    const result = require('child_process').spawnSync(process.execPath, [require('path').join(__dirname, regression)], { stdio: 'inherit', env: process.env });
-    if (result.status !== 0) process.exit(result.status || 1);
+    runChild(regression);
   }
 }
 
 // Keep the horizontal header/frozen-column regression in the behavior CI group.
 if (!ONLY && runs('data-grid-scroll-147.test.js', ['components/DataGrid'])) {
-  const result = require('child_process').spawnSync(process.execPath, [require('path').join(__dirname, 'data-grid-scroll-147.test.js')], { stdio: 'inherit', env: process.env });
-  if (result.status !== 0) process.exit(result.status || 1);
+  runChild('data-grid-scroll-147.test.js');
 }
 
 // the modules this test loads into its page (focused fixtures and the high-impact regressions) run with it
 const IN_PAGE = ['collection-facets', 'multi-groups', 'data-grid-rest', 'data-grid-high'];
-if (!VIEWS.length && !IN_PAGE.some((m) => changed.child(m))) changed.none('DATA_GRIDS_OK 0/0 table views');
+const childSummary = () => (failedChildren.length ? 'DATA_GRIDS_FAIL children: ' + failedChildren.join(', ') : '');
+if (!VIEWS.length && !IN_PAGE.some((m) => changed.child(m))) {
+  if (failedChildren.length) { console.log(childSummary() + ' (the grid\'s own views: nothing in scope)'); shared.ended(); process.exit(1); }
+  changed.none('DATA_GRIDS_OK 0/0 table views');
+}
 
 (async () => {
   const server = await serve(PORT);
@@ -119,6 +130,9 @@ if (!VIEWS.length && !IN_PAGE.some((m) => changed.child(m))) changed.none('DATA_
       finally { await focused.close(); }
     }
     await page.goto(BASE + 'tests/fixtures/platform-host.html', { waitUntil: 'domcontentloaded' });
+    // a failed check in this block is a failed view, as with the focused fixtures above, so the grid's views still run and the
+    // failure is a recorded check, not a crash (#1327)
+    try {
     const viewChecks = await page.evaluate(async () => {
       const h=React.createElement,host=document.createElement('div');document.body.appendChild(host);
       const root=ReactDOM.createRoot(host),key='dt126-saved-view',storage='plx-data-grid:'+key,wait=()=>new Promise(r=>setTimeout(r,100));let table,count=0;
@@ -169,6 +183,7 @@ if (!VIEWS.length && !IN_PAGE.some((m) => changed.child(m))) changed.none('DATA_
       } finally {ReactDOM.flushSync(()=>root.unmount());host.remove();localStorage.removeItem(storage);}
     });
     res.push(['Saved and hidden-column views ('+viewChecks+' checks)',true]);
+    } catch (error) { res.push(['Saved and hidden-column views', false, error.message]); }
     const regressions = require('./data-grid-high.test.js');
     try {
       const checks = await regressions(page) + await regressions.warning(page, BASE);
@@ -423,6 +438,12 @@ if (!VIEWS.length && !IN_PAGE.some((m) => changed.child(m))) changed.none('DATA_
   await browser.close(); server.close();
   const failed = res.filter((x) => !x[1]);
   res.forEach(([n, ok, d]) => console.log((ok ? '  ok   ' : '  FAIL ') + n + (ok ? '' : ' · ' + d)));
+  // one result per table view in the results file (TEST_RESULTS), not only per child, so a quarantined child never hides a
+  // red view (G5a I1 on PR #1328). The name drops a passing view's check count, so it is the same whether it passes or fails
+  const seen = {}, viewName = (n) => { const b = 'Views: ' + String(n).replace(/ \(\d+ checks\)$/, ''); seen[b] = (seen[b] || 0) + 1; return seen[b] > 1 ? b + ' #' + seen[b] : b; };
+  res.forEach(([n, ok, d]) => shared.record(viewName(n), ok, d));
   console.log((failed.length ? 'DATA_GRIDS_FAIL ' : 'DATA_GRIDS_OK ') + (res.length - failed.length) + '/' + res.length + ' table views');
-  process.exit(failed.length ? 1 : 0);
-})().catch((e) => { console.error(e); process.exit(1); });
+  if (failedChildren.length) console.log(childSummary());
+  shared.ended();   // every failure above is a recorded check (G5a I1)
+  process.exit(failed.length || failedChildren.length ? 1 : 0);
+})().catch((e) => { console.error(e); if (failedChildren.length) console.log(childSummary()); process.exit(1); });
