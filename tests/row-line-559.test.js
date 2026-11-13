@@ -139,7 +139,7 @@ function first(part, what, m) {
     });
     const of = (block) => rules.filter((r) => r.sel.startsWith('.plx-' + block + '__')).map((r) => ({ sel: r.sel.split('plx-' + block + '__').join('B__'), css: r.css })).sort((a, b) => (a.sel < b.sel ? -1 : 1));
     const grid = of('data-grid'), table = of('table');
-    check('DataGrid: the shadow rule and the first-row rule are in the stylesheet', grid.some((r) => /box-shadow/.test(r.css) && /:not\(\.B__grid-row--first\)/.test(r.sel)) && grid.some((r) => /::after/.test(r.sel) && /B__grid-row--first/.test(r.sel)), rules);
+    check('DataGrid: the shadow rule and the first-row rule are in the stylesheet', grid.some((r) => /box-shadow/.test(r.css) && /:not\(\.B__grid-row--first\b/.test(r.sel)) && grid.some((r) => /::after/.test(r.sel) && /B__grid-row--first/.test(r.sel)), rules);
     check('Table: no copy of the row-line rules of its own (the grid\'s apply)', table.length === 0, table);
     const tableRow = await page.evaluate((s) => { const r = document.querySelector(s); return r ? r.className : null; }, row('t', 'r2'));
     check('Table: its rows carry DataGrid\'s row class, so DataGrid\'s row-line rules draw them', !!tableRow && /\bplx-data-grid__grid-row\b/.test(tableRow) && !/plx-table__/.test(tableRow), tableRow);
