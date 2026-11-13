@@ -7,7 +7,7 @@
    "issue": 1329,
    "owner": "engineer",
    "since": "2026-11-13",
-   "why": "the Button baseline predates the label colors and the IBM Plex Sans Arabic font stack (2303 differences in run 43481282090)"
+   "why": "the Button baseline is stale (label colors, border colors, 2xs font size and line height, the IBM Plex Sans Arabic font stack): 10 properties, 2303 differences in runs 43481282090 and 43495763774"
   },
   {
    "test": "visual",
@@ -15,7 +15,7 @@
    "issue": 1329,
    "owner": "engineer",
    "since": "2026-11-13",
-   "why": "the Button baseline predates the label colors and the IBM Plex Sans Arabic font stack (2303 differences in run 43481282090)"
+   "why": "the Button baseline is stale (label colors, border colors, 2xs font size and line height, the IBM Plex Sans Arabic font stack): 10 properties, 2303 differences in runs 43481282090 and 43495763774"
   },
   {
    "test": "visual",
@@ -23,7 +23,7 @@
    "issue": 1329,
    "owner": "engineer",
    "since": "2026-11-13",
-   "why": "the Button baseline predates the label colors and the IBM Plex Sans Arabic font stack (2303 differences in run 43481282090)"
+   "why": "the Button baseline is stale (label colors, border colors, 2xs font size and line height, the IBM Plex Sans Arabic font stack): 10 properties, 2303 differences in runs 43481282090 and 43495763774"
   },
   {
    "test": "visual",
@@ -31,7 +31,7 @@
    "issue": 1329,
    "owner": "engineer",
    "since": "2026-11-13",
-   "why": "the Button baseline predates the label colors and the IBM Plex Sans Arabic font stack (2303 differences in run 43481282090)"
+   "why": "the Button baseline is stale (label colors, border colors, 2xs font size and line height, the IBM Plex Sans Arabic font stack): 10 properties, 2303 differences in runs 43481282090 and 43495763774"
   },
   {
    "test": "visual",
@@ -39,7 +39,47 @@
    "issue": 1329,
    "owner": "engineer",
    "since": "2026-11-13",
-   "why": "the Button baseline predates the label colors and the IBM Plex Sans Arabic font stack (2303 differences in run 43481282090)"
+   "why": "the Button baseline is stale (label colors, border colors, 2xs font size and line height, the IBM Plex Sans Arabic font stack): 10 properties, 2303 differences in runs 43481282090 and 43495763774"
+  },
+  {
+   "test": "visual",
+   "check": ".plx-button__caret color: every button matches the baseline",
+   "issue": 1329,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "the Button baseline is stale (label colors, border colors, 2xs font size and line height, the IBM Plex Sans Arabic font stack): 10 properties, 2303 differences in runs 43481282090 and 43495763774"
+  },
+  {
+   "test": "visual",
+   "check": "border-left-color: every button matches the baseline",
+   "issue": 1329,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "the Button baseline is stale (label colors, border colors, 2xs font size and line height, the IBM Plex Sans Arabic font stack): 10 properties, 2303 differences in runs 43481282090 and 43495763774"
+  },
+  {
+   "test": "visual",
+   "check": "border-top-color: every button matches the baseline",
+   "issue": 1329,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "the Button baseline is stale (label colors, border colors, 2xs font size and line height, the IBM Plex Sans Arabic font stack): 10 properties, 2303 differences in runs 43481282090 and 43495763774"
+  },
+  {
+   "test": "visual",
+   "check": "font-size: every button matches the baseline",
+   "issue": 1329,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "the Button baseline is stale (label colors, border colors, 2xs font size and line height, the IBM Plex Sans Arabic font stack): 10 properties, 2303 differences in runs 43481282090 and 43495763774"
+  },
+  {
+   "test": "visual",
+   "check": "line-height: every button matches the baseline",
+   "issue": 1329,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "the Button baseline is stale (label colors, border colors, 2xs font size and line height, the IBM Plex Sans Arabic font stack): 10 properties, 2303 differences in runs 43481282090 and 43495763774"
   },
   {
    "test": "site-coverage",
@@ -208,30 +248,6 @@
    "owner": "engineer",
    "since": "2026-11-13",
    "why": "the stylesheet check for the row-line rules fails (1 of 42); hidden on main behind #1338"
-  },
-  {
-   "test": "data-grid",
-   "check": "data-grid-next-capabilities: the child test passes",
-   "issue": 1345,
-   "owner": "engineer",
-   "since": "2026-11-13",
-   "why": "virtual group header and afterprint checks fail; hidden on main behind #1338"
-  },
-  {
-   "test": "data-grid",
-   "check": "data-grid-next-independent: the child test passes",
-   "issue": 1346,
-   "owner": "engineer",
-   "since": "2026-11-13",
-   "why": "independent virtualization fails in the page; hidden on main behind #1338"
-  },
-  {
-   "test": "data-grid",
-   "check": "Views: Saved and hidden-column views",
-   "issue": 1347,
-   "owner": "engineer",
-   "since": "2026-11-13",
-   "why": "the native renderer does not virtualize 600 records; hidden on main behind #1338"
   },
   {
    "test": "data-grid",
