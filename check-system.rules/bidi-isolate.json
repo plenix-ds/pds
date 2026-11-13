@@ -62,13 +62,6 @@
   "platform/patterns/DeleteFlow/delete-flow.css .plx-delete-flow__name": "audit #1283",
   "platform/patterns/ImageUpload/image-upload.css .plx-image-upload__name": "audit #1283",
   "platform/patterns/NavPane/nav-pane.css .plx-nav-pane__title": "audit #1283",
-  "platform/patterns/PeopleGroup/people-group.css .plx-people-group__description": "audit #1283",
-  "platform/patterns/PeopleGroup/people-group.css .plx-people-group__name": "audit #1283",
-  "platform/patterns/PeopleGroup/people-group.css .plx-people-group__source": "audit #1283",
-  "platform/patterns/ProductCard/product-card.css .plx-product-card__meta": "audit #1283",
-  "platform/patterns/PropertyList/property-list.css .plx-property-list--columns": "audit #1283",
-  "platform/patterns/ResourceList/resource-list.css .plx-resource-list__description": "audit #1283",
-  "platform/patterns/ResourceList/resource-list.css .plx-resource-list__name": "audit #1283",
-  "platform/patterns/UserCard/user-card.css .plx-user-card--compact": "audit #1283"
+  "platform/patterns/PropertyList/property-list.css .plx-property-list--columns": "audit #1283"
  }
 }
