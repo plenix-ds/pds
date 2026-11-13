@@ -65,10 +65,7 @@ export const typeOf = (c: GridColumn): string =>
 
 export const sorted = (s: Array<{ id: string; desc?: boolean }>) => s.map((x) => ({ field: x.id, dir: x.desc ? 'desc' : 'asc' }));
 
-export const lengthName = (v: unknown): string | undefined => {
-  const match = /(?:--plx-ref-size-)?(\d+px)/.exec(String(v || ''));
-  return match?.[1];
-};
+export { lengthName } from './lengthName.ts';
 
 const sortCollator = new Intl.Collator(undefined, { numeric: true });
 

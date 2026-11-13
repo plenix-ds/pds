@@ -39,7 +39,7 @@
 //   deprecated-classes (check-system.rules/deprecated-classes.js, issue 882) no new use of a class going away
 //               (platform/standards/deprecated-classes.json)
 const fs = require('fs');
-const { SPEC_PAGE, STYLE_MODULES, collect, reporter } = require('./check-common.js');
+const { SPEC_PAGE, STYLE_MODULES, collect, hexColors, reporter } = require('./check-common.js');
 
 const files = collect();
 const { add, runModules, finish } = reporter();
@@ -77,15 +77,6 @@ for (const { file } of files) {
       if (/^--plx-(ref|sys|comp|state|ctx)-/.test(m[1]) || DECLARED.has(m[1]) || (SPEC_PAGE.test(file) && /^--ds-sample-[a-z-]+$/.test(m[1]))) continue;
       add('tokens', file, n, m[1] + ' in: ' + line);
     }
-    // hex colors: a # with 3, 4, 6 or 8 hex digits where a value starts (after : ( , = or a quote), not in comments or
-    // prose (an issue number); a color a person chose, kept as data, carries a plx-allow-hex comment on its line
-    if (isCode && !/plx-allow-hex/.test(line)) {
-      const code = line.replace(/\/\*.*?\*\/|\/\/.*$/g, '');
-      for (const m of code.matchAll(/(?:[:(,'"=]\s*)#([0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})\b(?![\w-])/g)) {
-        if (/href=|id=|url\(/.test(code.slice(Math.max(0, m.index - 12), m.index + 1))) continue;
-        add('hex', file, n, '#' + m[1] + ' in: ' + line);
-      }
-    }
     // icon sizes written as numbers (Platform and applications)
     if (isCode && /<(Icon|Ico|Avatar)\b[^>]*\bsize=\{\s*\d+\s*\}/.test(line)) add('icon-size', file, n, line);
     // breakpoints written as numbers in code
@@ -96,6 +87,8 @@ for (const { file } of files) {
       if (isCode && /font-size\s*:\s*[0-9.]+(px|rem|em|pt)/.test(line)) add('font-size', file, n, line);
     }
   });
+  // hex colors (check-common.js hexColors): no raw hex color written in code; an issue number in a comment is not one
+  if (isCode) for (const f of hexColors(text)) add('hex', file, f.line, '#' + f.hex + ' in: ' + f.text);
   // fonts: the typefaces are hosted with the Platform (platform/fonts, system/fonts.css, batch 227): no page calls Google
   if (isCode && !/[\\/]dist[\\/]|(^|[\\/])(app|assets)\.js$/.test(file)) {
     for (const m of text.matchAll(/fonts\.(googleapis|gstatic)\.com/g)) add('fonts', file, text.slice(0, m.index).split('\n').length, 'a call to Google Fonts: ' + text.slice(Math.max(0, m.index - 20), m.index + 40).split('\n')[0]);

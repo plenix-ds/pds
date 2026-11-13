@@ -49,6 +49,26 @@ function collect() {
   return files;
 }
 
+// the raw hex colors written in code (the style check's hex rule): [{ line, hex, text }]. A # with 3, 4, 6 or 8 hex digits
+// where a value starts (after : ( , = or a quote), not in a comment or prose (an issue number, issue 1350); a color a person
+// chose, kept as data, carries a plx-allow-hex comment on its line. A block comment is blanked over its lines first, so a
+// multi-line header counts as a comment and every line keeps its number (the check is diff-aware by line); a "/*" glued to a
+// word, a quote or a "." or "*" (a glob like 'a/**/*.css', a string) opens no comment.
+function hexColors(text) {
+  const blank = text.replace(/(?<![\w'"`/*.-])\/\*[\s\S]*?\*\//g, (c) => c.replace(/[^\n]/g, ' '));
+  const out = [];
+  const original = text.split(/\r?\n/); // split once and index: splitting per line is quadratic on a long file
+  blank.split(/\r?\n/).forEach((line, i) => {
+    if (/plx-allow-hex/.test(original[i])) return;
+    const code = line.replace(/\/\*.*?\*\/|\/\/.*$/g, '');
+    for (const m of code.matchAll(/(?:[:(,'"=]\s*)#([0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})\b(?![\w-])/g)) {
+      if (/href=|id=|url\(/.test(code.slice(Math.max(0, m.index - 12), m.index + 1))) continue;
+      out.push({ line: i + 1, hex: m[1], text: original[i] });
+    }
+  });
+  return out;
+}
+
 // a check's findings: add(rule, file, line, text), then finish(OK, FAIL) prints them by rule and exits
 function reporter() {
   const findings = [];
@@ -80,4 +100,4 @@ function reporter() {
   return { add, runModules, finish };
 }
 
-module.exports = { ROOT, DAM, SPEC_PAGE, STYLE_MODULES, rel, collect, reporter };
+module.exports = { ROOT, DAM, SPEC_PAGE, STYLE_MODULES, rel, collect, hexColors, reporter };
