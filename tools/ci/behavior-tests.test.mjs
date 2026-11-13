@@ -115,5 +115,24 @@ eq('a test printing TESTS_OK in the middle does not count', parseRun('TESTS_OK 1
   eq('no automatic test opens the design spec without PLENIX_SPEC=1', open, []);
 }
 
+// 5. narrow entries (#1327, PM note on PR #1328): a quarantine entry names the failing check, so a new failure in the same test
+// still blocks. The tests whose baseline failures are named findings (a page, a property, a token, a Platform name, a child
+// test) record each finding through tests/check.js; a whole-test entry says in its "why" why its test cannot be narrowed
+{
+  const fs = require('node:fs'), path = require('node:path');
+  const dir = path.join(path.dirname(new URL(import.meta.url).pathname), '..', '..', 'tests');
+  const shared = require('../../tests/check.js');
+  eq('check.js names a child test\'s result', typeof shared.childName === 'function' && shared.childName('narrow-fit-880.test.js'), 'narrow-fit-880: the child test passes');
+  const NAMED = ['visual', 'pages', 'reflow', 'site-coverage', 'component-tokens', 'data-grid', 'keyboard', 'layout'];
+  eq('the tests with named findings record them through check.js',
+    NAMED.filter((t) => !/require\('\.\/check\.js'\)/.test(fs.readFileSync(path.join(dir, t + '.test.js'), 'utf8'))), []);
+  eq('data-grid runs every child, even after one fails (one red child must not hide the others)',
+    /if \(result\.status !== 0\) process\.exit/.test(fs.readFileSync(path.join(dir, 'data-grid.test.js'), 'utf8')), false);
+  const q = JSON.parse(fs.readFileSync(path.join(dir, 'quarantine.json'), 'utf8')).entries;
+  eq('a whole-test entry says why it cannot be narrowed', q.filter((e) => !e.check && !/^whole test: /.test(e.why || '')).map((e) => e.test), []);
+  eq('the tests with named findings are quarantined by check only', q.filter((e) => !e.check && NAMED.includes(e.test)).map((e) => e.test), []);
+  eq('#1340 is fixed on main (#1326) and is not quarantined', q.filter((e) => e.issue === 1340).length, 0);
+}
+
 console.log(failed ? `BEHAVIOR_TESTS_TEST_FAIL (${failed} of ${count})` : `BEHAVIOR_TESTS_TEST_OK (${count})`);
 process.exit(failed ? 1 : 0);

@@ -21,6 +21,7 @@ const failedChildren = [];
 function child(what, file) {
   if (!changed.wants(what) && !changed.child(file)) return;
   const result = require('child_process').spawnSync(process.execPath, [path.join(__dirname, file)], { stdio: 'inherit', env: process.env });
+  shared.record(shared.childName(file), result.status === 0, 'exit ' + result.status);   // one result per child (#1327)
   if (result.status !== 0) failedChildren.push(file.replace(/\.test\.js$/, ''));
 }
 const childSummary = () => (failedChildren.length ? 'LAYOUT_FAIL children: ' + failedChildren.join(', ') : '');

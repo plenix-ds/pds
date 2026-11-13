@@ -63,11 +63,20 @@ const SUB = { '.plx-button__icon': ['block-size', 'inline-size', 'background-col
     return;
   }
   const base = JSON.parse(fs.readFileSync(BASELINE, 'utf8'));
-  let n = 0; const diffs = [];
+  let n = 0; const diffs = [], byProp = {};
   for (const k of new Set(Object.keys(base).concat(Object.keys(snap)))) {
     const a = base[k] || {}, b = snap[k] || {};
-    for (const p of new Set(Object.keys(a).concat(Object.keys(b)))) { n++; if (a[p] !== b[p]) diffs.push(k + ' ' + p + ': ' + a[p] + ' -> ' + b[p]); }
+    for (const p of new Set(Object.keys(a).concat(Object.keys(b)))) {
+      n++; byProp[p] = byProp[p] || [];
+      if (a[p] !== b[p]) { diffs.push(k + ' ' + p + ': ' + a[p] + ' -> ' + b[p]); byProp[p].push(k + ': ' + a[p] + ' -> ' + b[p]); }
+    }
   }
+  // one result per style property in the results file (TEST_RESULTS), so CI can quarantine the properties a stale baseline
+  // differs in and still block on any other (#1327)
+  const shared = require('./check.js');
+  Object.keys(byProp).sort().forEach((p) => shared.record(p + ': every button matches the baseline', !byProp[p].length, byProp[p].length + ' buttons differ · e.g. ' + byProp[p].slice(0, 2).join(' | ')));
+  const props = Object.keys(byProp).filter((p) => byProp[p].length).sort();
+  if (props.length) console.log('  properties that differ: ' + props.map((p) => p + ' (' + byProp[p].length + ')').join(', '));
   diffs.slice(0, 30).forEach((d) => console.log('  ' + d));
   console.log((diffs.length ? 'VISUAL_FAIL ' + diffs.length + ' differences in ' : 'VISUAL_OK ') + n + ' values (' + Object.keys(snap).length + ' buttons)');
   process.exit(diffs.length ? 1 : 0);

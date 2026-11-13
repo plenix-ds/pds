@@ -1,83 +1,219 @@
 {
- "about": "Failures already known on main (#1327). The CI job Behavior tests (tools/ci/behavior-tests.mjs) blocks only failures not listed here. Each entry: test (a tests/run.js name), check (the check's full name; leave it out for the whole test), issue (the issue that tracks the fix), owner (the role that fixes it), since (YYYY-MM-DD). Quarantine within 24h, never delete the test; remove the entry when its check passes again (the job lists stale entries).",
+ "about": "Failures already known on main (#1327). The CI job Behavior tests (tools/ci/behavior-tests.mjs) blocks only failures not listed here. Each entry: test (a tests/run.js name), check (the check's full name, as the test records it through tests/check.js), issue (the issue that tracks the fix), owner (the role that fixes it), since (YYYY-MM-DD), why. Name the failing check, so a new failure in the same test still blocks; leave check out only for a test that records no named check, and start its why with 'whole test: ' and the reason. Quarantine within 24h, never delete the test; remove the entry when its check passes again (the job lists stale entries).",
  "entries": [
   {
    "test": "visual",
+   "check": "background-color: every button matches the baseline",
    "issue": 1329,
    "owner": "engineer",
    "since": "2026-11-13",
-   "why": "Button baseline predates the IBM Plex Sans Arabic font stack: 2303 differences"
+   "why": "the Button baseline predates the label colors and the IBM Plex Sans Arabic font stack (2303 differences in run 43481282090)"
+  },
+  {
+   "test": "visual",
+   "check": "box-shadow: every button matches the baseline",
+   "issue": 1329,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "the Button baseline predates the label colors and the IBM Plex Sans Arabic font stack (2303 differences in run 43481282090)"
+  },
+  {
+   "test": "visual",
+   "check": "color: every button matches the baseline",
+   "issue": 1329,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "the Button baseline predates the label colors and the IBM Plex Sans Arabic font stack (2303 differences in run 43481282090)"
+  },
+  {
+   "test": "visual",
+   "check": "font-family: every button matches the baseline",
+   "issue": 1329,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "the Button baseline predates the label colors and the IBM Plex Sans Arabic font stack (2303 differences in run 43481282090)"
+  },
+  {
+   "test": "visual",
+   "check": "outline-color: every button matches the baseline",
+   "issue": 1329,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "the Button baseline predates the label colors and the IBM Plex Sans Arabic font stack (2303 differences in run 43481282090)"
   },
   {
    "test": "site-coverage",
+   "check": "AnswerLines: used by the test site",
    "issue": 1330,
    "owner": "engineer",
    "since": "2026-11-13",
-   "why": "7 Platform names not used by the test site"
+   "why": "a Platform name no test-site screen uses"
+  },
+  {
+   "test": "site-coverage",
+   "check": "PageBreak: used by the test site",
+   "issue": 1330,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "a Platform name no test-site screen uses"
+  },
+  {
+   "test": "site-coverage",
+   "check": "LoadingState: used by the test site",
+   "issue": 1330,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "a Platform name no test-site screen uses"
+  },
+  {
+   "test": "site-coverage",
+   "check": "PropertyGroup: used by the test site",
+   "issue": 1330,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "a Platform name no test-site screen uses"
+  },
+  {
+   "test": "site-coverage",
+   "check": "TableSettings: used by the test site",
+   "issue": 1330,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "a Platform name no test-site screen uses"
+  },
+  {
+   "test": "site-coverage",
+   "check": "PrintDocument: used by the test site",
+   "issue": 1330,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "a Platform name no test-site screen uses"
+  },
+  {
+   "test": "site-coverage",
+   "check": "PagePanes: used by the test site",
+   "issue": 1330,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "a Platform name no test-site screen uses"
   },
   {
    "test": "layout",
+   "check": "narrow-fit-880: the child test passes",
    "issue": 1331,
    "owner": "engineer",
    "since": "2026-11-13",
-   "why": "whole test: its children have no recorded checks. Causes: narrow-fit-880 #1331, chat-s2-637 #1332, button-610 and button-elevation-610 #1333, entity-header-media-275 #1334 (messages-chat-s6 was the environment, fixed in #1327)"
+   "why": "ltr: the summary at the end ends in an ellipsis"
+  },
+  {
+   "test": "layout",
+   "check": "chat-s2-637: the child test passes",
+   "issue": 1332,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "the footer is 10px"
+  },
+  {
+   "test": "layout",
+   "check": "button-610: the child test passes",
+   "issue": 1333,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "light: Danger steps red-700, red-800, red-900"
+  },
+  {
+   "test": "layout",
+   "check": "button-elevation-610: the child test passes",
+   "issue": 1333,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "light secondary: the subtle glow on hover"
+  },
+  {
+   "test": "layout",
+   "check": "entity-header-media-275: the child test passes",
+   "issue": 1334,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "the case icon does not fill its square (52.8 of 44)"
   },
   {
    "test": "reflow",
+   "check": "test-site/index.html#/document/d1: no new scroller at 320px",
    "issue": 1335,
    "owner": "engineer",
    "since": "2026-11-13",
-   "why": "#/document/d1 page content scrolls sideways at 320px"
+   "why": "section.plx-page-content scrolls sideways at 320px (289/270px)"
   },
   {
    "test": "pages",
+   "check": "test-site/index.html#/member/m1: passes the page checks",
    "issue": 1336,
    "owner": "engineer",
    "since": "2026-11-13",
-   "why": "#/member/m1 nests three containers"
+   "why": "the page nests three containers"
   },
   {
    "test": "component-tokens",
+   "check": ".plx-field__label-tip | max-inline-size | plx-comp-field-grid-label-tip-max-width: moves something on the site",
    "issue": 1337,
    "owner": "architect",
    "since": "2026-11-13",
-   "why": "4 component tokens move nothing"
+   "why": "a component token that moves nothing on the site"
+  },
+  {
+   "test": "component-tokens",
+   "check": ".plx-file-browser__body | column-gap | plx-comp-file-browser-body-gap: moves something on the site",
+   "issue": 1337,
+   "owner": "architect",
+   "since": "2026-11-13",
+   "why": "a component token that moves nothing on the site"
+  },
+  {
+   "test": "component-tokens",
+   "check": ".plx-file__icon | color | plx-comp-file-icon-color: moves something on the site",
+   "issue": 1337,
+   "owner": "architect",
+   "since": "2026-11-13",
+   "why": "a component token that moves nothing on the site"
+  },
+  {
+   "test": "component-tokens",
+   "check": ".plx-split-view--side-by-side .plx-split-view__second | min-block-size | plx-comp-split-view-second-min-height: moves something on the site",
+   "issue": 1337,
+   "owner": "architect",
+   "since": "2026-11-13",
+   "why": "a component token that moves nothing on the site"
   },
   {
    "test": "data-grid",
+   "check": "data-grid-view-169: the child test passes",
    "issue": 1338,
    "owner": "engineer",
    "since": "2026-11-13",
-   "why": "data-grid-view-169: reset() leaves the name column width"
+   "why": "reset() leaves the name column width (timeout after reset)"
   },
   {
    "test": "keyboard",
+   "check": "Command actions: form focus, text keys, Tab, Escape and selection boundary",
    "issue": 1339,
    "owner": "engineer",
    "since": "2026-11-13",
-   "why": "command-actions: Enter does not open the selection action form"
-  },
-  {
-   "test": "formats",
-   "check": "parseDate: the parts that show dates read them through it, never on their own #342: private date-only parsers: use parseDate (utils/format.ts), or add a reasoned exception here",
-   "issue": 1340,
-   "owner": "engineer",
-   "since": "2026-11-13",
-   "why": "private date-only parsers outside parseDate"
+   "why": "Enter does not open the selection action form"
   },
   {
    "test": "arabic-catalog-427",
    "issue": 1341,
    "owner": "i18n-engineer",
    "since": "2026-11-13",
-   "why": "timeline.tagUpcoming and loading.slow have no approved Arabic (D-0012)"
+   "why": "whole test: it records no named check (it does not use tests/check.js). timeline.tagUpcoming and loading.slow have no approved Arabic (D-0012)"
   },
   {
    "test": "typography",
    "issue": 1232,
    "owner": "engineer",
    "since": "2026-11-13",
-   "why": "data phrases set in DM Sans on 15 pages: the data-font rule of #1232"
+   "why": "whole test: it records no named check (it does not use tests/check.js). Data phrases set in DM Sans on 15 pages: the data-font rule of #1232"
   }
  ]
 }

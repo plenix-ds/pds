@@ -170,10 +170,12 @@ changed.report(WANTED.join(', '));
   if (want('cmdbar')) {
     at('command action forms'); await open(route('cmdbar'));
     const contextual = require('./command-actions.test.js');
-    const behavior = await contextual(page);
-    check('Command actions: pending, help, contextual sticking and folded forms', behavior >= 18, String(behavior));
-    const formKeys = await contextual.keyboard(page);
-    check('Command actions: form focus, text keys, Tab, Escape and selection boundary', formKeys === 5, String(formKeys));
+    // the module throws on its first failed assertion: that is the named check's failure, and the parts after it still run (#1327)
+    const count = async (run) => { try { return { n: await run() }; } catch (e) { return { error: String(e && e.message || e) }; } };
+    const behavior = await count(() => contextual(page));
+    check('Command actions: pending, help, contextual sticking and folded forms', behavior.n >= 18, behavior.error || String(behavior.n));
+    const formKeys = await count(() => contextual.keyboard(page));
+    check('Command actions: form focus, text keys, Tab, Escape and selection boundary', formKeys.n === 5, formKeys.error || String(formKeys.n));
   }
 
   // a panel row moves with Alt + Arrow Down; the move is announced
