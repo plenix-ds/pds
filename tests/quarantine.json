@@ -194,6 +194,46 @@
    "why": "reset() leaves the name column width (timeout after reset)"
   },
   {
+   "test": "data-grid",
+   "check": "cut-popover: the child test passes",
+   "issue": 1343,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "a cut cell shows no expand button on hover; hidden on main behind #1338"
+  },
+  {
+   "test": "data-grid",
+   "check": "row-line-559: the child test passes",
+   "issue": 1344,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "the stylesheet check for the row-line rules fails (1 of 42); hidden on main behind #1338"
+  },
+  {
+   "test": "data-grid",
+   "check": "data-grid-next-capabilities: the child test passes",
+   "issue": 1345,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "virtual group header and afterprint checks fail; hidden on main behind #1338"
+  },
+  {
+   "test": "data-grid",
+   "check": "data-grid-next-independent: the child test passes",
+   "issue": 1346,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "independent virtualization fails in the page; hidden on main behind #1338"
+  },
+  {
+   "test": "data-grid",
+   "check": "Views: Saved and hidden-column views",
+   "issue": 1347,
+   "owner": "engineer",
+   "since": "2026-11-13",
+   "why": "the native renderer does not virtualize 600 records; hidden on main behind #1338"
+  },
+  {
    "test": "arabic-catalog-427",
    "check": "timeline.tagUpcoming: has its Arabic",
    "issue": 1341,

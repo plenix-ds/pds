@@ -130,6 +130,9 @@ if (!VIEWS.length && !IN_PAGE.some((m) => changed.child(m))) {
       finally { await focused.close(); }
     }
     await page.goto(BASE + 'tests/fixtures/platform-host.html', { waitUntil: 'domcontentloaded' });
+    // a failed check in this block is a failed view, as with the focused fixtures above, so the grid's views still run and the
+    // failure is a recorded check, not a crash (#1327)
+    try {
     const viewChecks = await page.evaluate(async () => {
       const h=React.createElement,host=document.createElement('div');document.body.appendChild(host);
       const root=ReactDOM.createRoot(host),key='dt126-saved-view',storage='plx-data-grid:'+key,wait=()=>new Promise(r=>setTimeout(r,100));let table,count=0;
@@ -180,6 +183,7 @@ if (!VIEWS.length && !IN_PAGE.some((m) => changed.child(m))) {
       } finally {ReactDOM.flushSync(()=>root.unmount());host.remove();localStorage.removeItem(storage);}
     });
     res.push(['Saved and hidden-column views ('+viewChecks+' checks)',true]);
+    } catch (error) { res.push(['Saved and hidden-column views', false, error.message]); }
     const regressions = require('./data-grid-high.test.js');
     try {
       const checks = await regressions(page) + await regressions.warning(page, BASE);
