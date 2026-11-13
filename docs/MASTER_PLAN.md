@@ -1,77 +1,82 @@
-# Master plan — PDS (Plenix Design System)
+# Master plan: PDS (Plenix design system)
 
-Owner of this file: pds1-product-lead. It follows the owner's project plan template v2.4, §4 (`docs/pds1/template/project-plan-template-v2.4.md`). It's reviewed at every release (§4.6). Settings such as slot counts live only in `agents.config.yaml`, so no number from there is repeated here.
+Owner of this file: the lead PM, "PDS2 - PM" (team core). It follows `docs/PROJECT_PLAN.md` §4. It is reviewed at every release and whenever Backlog and Ready are both empty (§4.6). Settings such as slot counts and `ready_min` live only in `.agents/agents.config.yaml`; this file names them and never repeats their numbers.
 
 ## 1. Vision
 
-Plenix is the one design system for the owner's applications: tokens, icons, styles and React components, published together on npm and on the CDN (`design-system.lighthouseway.org/cdn/<version>/`). An app looks and behaves right with no CSS of its own, in English and Arabic. It follows new Plenix versions safely and on its own, and it never needs a person to tell it a release exists.
+Plenix is the one design system for the owner's applications: tokens, icons, styles and React components, published together on GitHub Packages and on the CDN (`design-system.lighthouseway.org/cdn/<version>/`). An app looks and behaves right with no CSS of its own, in English and Arabic. It loads fast, follows new Plenix versions safely and on its own, and never needs a person to tell it a release exists.
 
 ## 2. Users and outcomes
 
 | # | Outcome | Measured by |
 |---|---|---|
-| O1 | CTM 3.0 runs on Plenix with no local CSS | CTM#48's Plenix requests (PLX-…) all closed; CTM's own style audit finds 0 local rules |
-| O2 | Apps follow releases safely and fast | Every release reaches CTM within minutes (D-0083); 0 breaking changes in a minor or patch (VERSIONING.md); class removals are checked against the connected apps first |
-| O3 | Every component is proven by behaviour tests | The plan §7e baseline covered per component; required CI green on `main` |
-| O4 | English and Arabic are always complete | G6 passes at every release: no missing or unapproved string; terms follow D-0078 |
-| O5 | Typed, readable source | All of `platform/` in TypeScript (#57); no `any` in the published props (#61) |
+| O1 | CTM runs on Plenix with no local CSS | CTM's Plenix requests all closed; CTM's own style audit finds 0 local rules |
+| O2 | Apps follow releases safely | 0 breaking changes in a minor or patch (`VERSIONING.md`); "live in Plenix", "the app loads it" and "the app uses it on its screens" checked separately (`docs/lessons.md`) |
+| O3 | Every component is proven by behavior tests | Required CI green on `main`; the §7e baseline covered per component |
+| O4 | English and Arabic are always complete | G6 passes at every release with no exception left open |
+| O5 | Apps feel fast | The owner's performance standard (D-0160, #1201): LCP ≤ 2.5 s, INP ≤ 0.2 s, code per screen, checked in CI |
 
 ## 3. Scope and non-goals
 
-- **In scope:** the four packages (`@plenix-ds/tokens`, `icons`, `styles`, `react`), the CDN and API, the docs and design spec, the St. John test site, and the needs of connected apps (CTM, RedSave).
-- **Non-goals:** mobile (D-0013, parked); dark-mode redesign (dark mode is worked last, D-0024); theming beyond the blue default (D-0008); app features that belong in the apps themselves.
+- **In scope:** the four packages (`@plenix-ds/tokens`, `icons`, `styles`, `react`), the CDN and API, the design specification site, and what connected apps (CTM, RedSave, the dashboard) need from Plenix.
+- **Non-goals:** mobile (D-0013, parked); dark-mode redesign (dark mode is worked last, D-0025); theming beyond the blue default (D-0008); app features that belong in the apps themselves; app-side patches (D-0121: fixes go into Plenix).
 
 ## 4. Milestones
 
-Current version: 0.90.1. The history continues (template §1, principle 6). The next milestone is specified to Ready issues; the ones after it to epic level only (rolling wave, §4.4).
+Current version: **1.8.0** (live on the CDN, `latest.json` = 1.8.0, checked 2026-11-13). The current milestone is specified to Ready issues; the next one to epic level only (§4.4).
 
 | Milestone | Contents (epics) | Status |
 |---|---|---|
-| 0.91.0 to 0.93.1 | E3 TypeScript (done), E4 the class removal, the table fixes (D-0087), the 1366 frame (D-0093), the type fixes (#893) | **Shipped** 2026-11-07 |
-| **1.0.0** | O3 the coverage map (#901, 0 parts with no test, #908); O4 the language gate (#902); G0 closed (#903); no open S1/S2 (D-0095) | **Shipped** 2026-11-07 (G8 PASS) |
-| **1.x** (next) | RedSave typed rows (#923), date filters (#939), no raw HTML sinks (#940); read-only fields (#946), form span (#947), footer with no fill (#948); the coverage gaps below S2 (#909); decisions one file each (#955); dark mode last (D-0025) | Next |
+| 1.0.0 to 1.8.0 | Coverage map, language gate, G0; data font (most items); performance slices A–F; person tile; nav-pane design | **Shipped** (1.8.0, PR #1307) |
+| **1.9.0** (current) | E9 performance per screen (rest), E10 data font (last item), E11 navigation panes, E12 RTL truncation, E13 PDS2 cutover clean-up | In progress |
+| 1.10.0 (next) | E14 releases from CI (#1314), E15 repository clean-up (#1309), E5 contrast (dark phase, `later`) | Epic level |
 
 ## 5. Epics
 
 | Id | Epic | Outcome | Packages | Milestone | Status |
 |---|---|---|---|---|---|
-| E1 | Phase 0 foundation (#178) | O2, O3 | all | 1.0.0 | Most items closed; G0 open |
-| E2 | CTM with no local CSS (CTM#48): print (#87), VoteTally options (#265), RTL coverage (#209), Arabic type (#180), icons (#181), class migration (CTM#144) | O1 | styles, react, icons | continuous | PDS side done; CTM#144 open in CTM |
-| E3 | TypeScript (#57, #61) | O5 | react | 0.91.0 → 0.92.0 | Charts done (#618); patterns next |
-| E4 | Styling cleanup (#122, #125, #723) | O2 | styles | 0.91.0 | Removal merged, waiting for release |
-| E5 | Contrast and minimum sizes (#206, #251, #235) | O3, O4 | tokens | 0.91.0 | Open |
-| E6 | Test coverage (#46, St. John site) | O3 | all | 0.92.0 | Open |
-| E7 | Docs and spec (#353, the remaining #120 batches) | O3 | docs | 0.92.0 | Open |
-| E8 | Process: adopt the owner's template v2.4 (registry, dispatcher rules, board, gates) | O2 | none (tooling) | now | This plan's PR opens it |
+| E9 | Performance per screen (#1201): on-demand slices #1266, #1267, #1268; CTM per-screen load #1211 (blocked on its measurement); CDN 429 limit #1287 (blocked on proxy access) | O5 | react, styles | 1.9.0 | #1266 in progress |
+| E10 | Data font (#1232, D-0164): item 18, Chat counts and voice time (#1305, PR #1317) | O1 | styles, react | 1.9.0 | PR waits on G3 (kit K-0151) |
+| E11 | Navigation panes (#1242, #1243, D-0168/D-0169, ADR 0057): PR #1269 | O1 | tokens, styles, react | 1.9.0 | CI fix in progress; G2 re-sign waits on K-0151 |
+| E12 | RTL truncation (#1283): the `bidi-isolate` backlog, part by part | O4 | styles | 1.9.0 | Ready |
+| E13 | PDS2 cutover clean-up: retire the PDS1 watchdog heartbeat (#1312), then the rest of the PDS1 framework in one PR that keeps every required check green (`docs/project-rules.md`) | O2 | none (tooling) | 1.9.0 | #1312 queued for a builder slot |
+| E14 | Releases from CI: VM 130 reachable, package publishing (#724), keys off the agent host (#1314) | O2 | all | 1.10.0 | Waits for a member (plan §7.2) |
+| E15 | Repository clean-up (#1309, owner's four-way method) | O3 | none | 1.10.0 | Backlog |
+| E5 | Contrast and minimum sizes (#206, #251, #1085, #1090, #1117, #1120) | O3, O4 | tokens | dark phase | `later` (D-0025) |
 
 ## 6. Lanes and owners
 
-The role registry in `agents.config.yaml` is the source (template §5.1). Lanes: spec, product-lead; design, design-director; architecture, ds-architect; plan, delivery-lead; build, component-engineer (one per worktree); locale, i18n-engineer; docs, technical-writer; release, release-architect; verify, qa-engineer, plus the reviewers as task roles.
+The role registry is `.agents/agents.config.yaml`; roles are listed in `.agents/RULES.md`. One team, `core`. Ready items per active lane (target: `ready_min`), as of 2026-11-13:
+
+| Lane (role) | Ready | In progress | Short of `ready_min`? |
+|---|---|---|---|
+| Build (engineer) | #1267, #1268, #1283 | #1266, #1242 (CI fix on PR #1269) | No |
+| Release (release) | #1312, #1288 (app bumps; now to 1.8.0) | — | Yes: E14 waits for a member |
+| Locale (i18n-engineer) | — | #1171, #1203 wait for the owner's Arabic | Yes: nothing else recorded |
+| Design (design-director), architecture (architect) | Gate work on PRs #1269, #1317 | — | Gate lanes; no planned items |
+| Delivery (delivery-lead), docs (technical-writer) | — | — | Idle: no recorded need |
+
+A lane short of Ready items with no recorded need stays idle (§4.5): agents never invent work.
 
 ## 7. Evergreen backlog
 
-Recorded needs only (template §4.5). Each item links its finding. They rank below planned P0/P1 work.
+Recorded needs only (§4.5). Each item links its finding. They rank below planned work.
 
-- Behaviour-test gaps against plan §7e, per component (the QA findings)
-- Contrast and accessibility defects (check 8 baseline, #251)
-- Dead code and unused tokens or keys (Knip; catalog keys #667)
-- Quarantined flaky tests (#25)
-- Arabic proposals that have no Microsoft or other standard term (D-0078)
-- Dependency updates (for example PDF.js, #86 and #384)
-- Lessons in `docs/lessons.md`
+- Behavior-test gaps against plan §7e, per component (QA findings)
+- Contrast and accessibility defects (#251, story axe findings #1085, #1090, #1117, #1120)
+- Dead code and unused tokens or keys (Knip; repository clean-up #1309)
+- Arabic proposals without a Microsoft or other standard term (D-0078; #1171, #1203)
+- Items from `docs/lessons.md`
 
 ## 8. Risks and open decisions
 
-- One shared GitHub identity until the PDS GitHub App exists (D-0019, an owner step). Hand-offs made with `GITHUB_TOKEN` start no workflow (template §6.1).
-- Merge-queue throughput: changes wait on each other's checks.
-- CTM's live site doesn't take new builds until VM 107's deploy runner is installed (CTM#90, an owner step).
-- Numbers in prose drift from the settings. Today `CLAUDE.md` and plan.md say 4 long-work slots while `agents.config.yaml` says otherwise; template check 15 fixes this.
-- The 1.0.0 definition isn't fixed yet; it goes on a decision issue.
+- **Kit launcher:** a lane role can't start on an issue whose engineer already ended (kit log K-0151, K-0153). It blocks G3 on PR #1317 and the G2 re-sign on PR #1269 until a member fixes it.
+- **Releases need a member:** the publish key and package rights are only on the `cc` account (#724, #1314).
+- **One shared GitHub identity:** a gate comment alone stops nothing; gate labels and auto-merge do (D-0056, D-0062, #1068).
+- **Owner answers pending:** Arabic for #1171 and #1203. Both ship in English until answered.
 
 ## 9. Change log
 
-- 2026-11-07: **Plenix 1.0.0 shipped** (CDN, npm and API; G8 PASS). The 1.x milestone is planned.
-
-- 2026-11-07: plan review: 0.91.0 to 0.93.1 shipped; O2 and O5 met; 1.0.0 defined (D-0095); next: #901, #902, #903.
-
-- 2026-11-06: created from template v2.4 (owner's upload) by pds1-product-lead.
+- 2026-11-13: rewritten by PDS2 - PM for the PDS2 cutover (D-0174, D-0175): current version 1.8.0, milestone 1.9.0, lanes from the PDS2 registry.
+- 2026-11-07: Plenix 1.0.0 shipped (CDN, npm and API; G8 PASS).
+- 2026-11-06: created from template v2.4 by the PDS1 Product Lead.
