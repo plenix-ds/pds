@@ -72,7 +72,7 @@ const VIEWS = STATES.filter((s) => inScope(s[0]) && (!ONLY || ONLY.test(s[0])));
 const shared = require('./check.js');
 const failedChildren = [];
 function runChild(file) {
-  const result = require('child_process').spawnSync(process.execPath, [require('path').join(__dirname, file)], { stdio: 'inherit', env: process.env });
+  const result = require('./limit.js').excluding(() => require('child_process').spawnSync(process.execPath, [require('path').join(__dirname, file)], { stdio: 'inherit', env: process.env }));   // its own limit (#1327)
   shared.record(shared.childName(file), result.status === 0, 'exit ' + result.status);
   if (result.status !== 0) failedChildren.push(file.replace(/\.test\.js$/, ''));
 }

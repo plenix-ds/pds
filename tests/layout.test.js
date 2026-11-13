@@ -12,6 +12,7 @@ const fs = require('fs');
 const path = require('path');
 const { ROOT, launch, sleep } = require('./lib.js');
 const changed = require('./changed.js');
+const limit = require('./limit.js');   // the hard time limit; children are not charged to it (#1327)
 // The child tests, each run as its own process before Layout's own checks. A child runs when what it covers changed
 // (changed.wants), or when its own file or a fixture it loads changed (changed.child; issue 756), and always in a full
 // run. Its file name stays written out ('<name>.test.js'): tests/changed.js finds a group's children by those names.
@@ -20,7 +21,7 @@ const changed = require('./changed.js');
 const failedChildren = [];
 function child(what, file) {
   if (!changed.wants(what) && !changed.child(file)) return;
-  const result = require('child_process').spawnSync(process.execPath, [path.join(__dirname, file)], { stdio: 'inherit', env: process.env });
+  const result = limit.excluding(() => require('child_process').spawnSync(process.execPath, [path.join(__dirname, file)], { stdio: 'inherit', env: process.env }));   // its own limit (#1327)
   shared.record(shared.childName(file), result.status === 0, 'exit ' + result.status);   // one result per child (#1327)
   if (result.status !== 0) failedChildren.push(file.replace(/\.test\.js$/, ''));
 }

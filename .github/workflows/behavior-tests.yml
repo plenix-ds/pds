@@ -36,6 +36,8 @@ jobs:
           persist-credentials: false
       - name: Self-test of the job's logic (groups, the runner's last line, the quarantine, only new failures block)
         run: node tools/ci/behavior-tests.test.mjs
+      - name: A parent test's time limit never counts its children's time (tests/limit.js, #1327)
+        run: node tests/limit-children.test.mjs
       - name: The groups (every automatic test of tests/run.js exactly once)
         id: groups
         run: |

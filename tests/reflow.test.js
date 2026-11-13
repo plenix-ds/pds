@@ -34,7 +34,7 @@ changed.noPartialUpdate();
 {
   for (const [regression, unit] of [['commandbar-find-fold-274.test.js', 'patterns/CommandBar'], ['segmented-fold-276.test.js', 'components/SegmentedControl']]) {
     if (!changed.wants({ units: [unit] }) && !changed.child(regression)) continue;
-    const result = require('child_process').spawnSync(process.execPath, [path.join(__dirname, regression)], { stdio: 'inherit', env: process.env });
+    const result = require('./limit.js').excluding(() => require('child_process').spawnSync(process.execPath, [path.join(__dirname, regression)], { stdio: 'inherit', env: process.env }));   // its own limit (#1327)
     if (result.status !== 0) process.exit(result.status || 1);
   }
 }
