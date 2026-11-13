@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-// Self-test of check 16 (tools/ci/check-workflows.mjs) and the watchdog's age rule (tools/ci/watchdog.mjs) (#772;
-// template v2.4 §6.1, §9).
+// Self-test of check 16 (tools/ci/check-workflows.mjs) (#772; template v2.4 §6.1, §9), and that the retired PDS1
+// heartbeat watchdog stays retired (#1312).
 //   node tools/ci/check-workflows.test.mjs        (CI: the Process checks job)
 import { checkWorkflows } from './check-workflows.mjs';
-import { heartbeatAge } from './watchdog.mjs';
+import fs from 'node:fs';
 
 let failed = 0;
 const check = (name, got, want) => {
@@ -29,10 +29,13 @@ check('16: a hand-off that ends with an explicit dispatch passes',
 check('16: a hand-off with another token (the App, a PAT) passes',
   checkWorkflows({ 'x.yml': { on: { schedule: null }, jobs: { a: { steps: [{ env: { GH_TOKEN: '${{ steps.app.outputs.token }}' }, run: 'gh pr edit 3 --add-label qa-passed' }] } } } }, []), []);
 
-const body = (iso) => `Dispatcher heartbeat\n\nLast run: ${iso}\n`;
-const now = Date.parse('2026-11-06T22:00:00Z');
-check('watchdog: age in minutes from "Last run:"', heartbeatAge(body('2026-11-06T21:35:00Z'), now), 25);
-check('watchdog: no "Last run:" line is infinitely old', heartbeatAge('nothing here', now), Infinity);
+// #1312 (D-0175): the PDS1 poller that rewrote the heartbeat issue (#809) was stopped at the PDS2 cutover; the host's
+// watcher wakes the PM instead. No workflow may watch that heartbeat again, or it raises a P0 every hour for nothing.
+const wfDir = new URL('../../.github/workflows/', import.meta.url);
+const watchers = fs.readdirSync(wfDir).filter((f) => /\.ya?ml$/.test(f))
+  .filter((f) => /watchdog\.mjs|heartbeat_issue|dispatcher heartbeat/i.test(fs.readFileSync(new URL(f, wfDir), 'utf8')));
+check('#1312: no workflow watches the retired PDS1 heartbeat', watchers, []);
+check('#1312: the PDS1 watchdog script is gone', fs.existsSync(new URL('./watchdog.mjs', import.meta.url)), false);
 
 console.log(failed ? `WORKFLOWS_TEST_FAIL (${failed})` : 'WORKFLOWS_TEST_OK (9)');
 process.exit(failed ? 1 : 0);

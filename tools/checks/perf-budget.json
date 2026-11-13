@@ -36,7 +36,22 @@
       "FileBrowser": 33949,
       "FileList": 18164,
       "Publish": 9540,
-      "sortFiles": 477
+      "sortFiles": 477,
+      "ListingPage": 5464,
+      "ContentManagementPage": 3637,
+      "LandingPage": 3646,
+      "HomePage": 3855,
+      "CreatePage": 6750,
+      "EditPage": 6748,
+      "MasterDetailPage": 3813,
+      "SplitWorkspace": 4012,
+      "SinglePaneWorkspace": 3624,
+      "FullScreenWorkspace": 3851,
+      "FullScreenExperience": 3600,
+      "DetailPage": 5376,
+      "SearchResultsPage": 8157,
+      "AuthenticationPage": 14996,
+      "ErrorPage": 5022
     },
     "screens": {
       "grid": {

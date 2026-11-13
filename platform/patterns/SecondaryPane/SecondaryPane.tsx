@@ -17,8 +17,8 @@
      icon: an icon name or element at the start of the header row
      actions: controls at the end of the header row
      side: "start" (default; before the content) | "end"
-     width: "sm" (180px) | "md" (220px, default) | "lg" (280px), from --plx-comp-secondary-pane-width-*; each steps up one size from a window
-       1440px wide (220 | 260 | 320) and again from 1920px (260 | 320 | 400), set in system/grid.css from the -from-1440 and -from-1920 tokens
+     width: "sm" (180px) | "md" (240px, default: the standard width of a navigation pane) | "lg" (280px), from --plx-comp-secondary-pane-width-*, the same
+       at every window size (ADR 0057)
      collapsible: a Collapse button in the header folds the pane to a rail (an Expand button, then the rail items); default false
      collapsed / onCollapsedChange(next): the folded state, controlled; defaultCollapsed: its first state when not controlled
      rail: the items the folded rail shows under Expand (ToolRail.Item elements)
@@ -44,7 +44,8 @@
      The body scrolls on its own while the content scrolls beside it.
      The resize edge is a separator (role="separator", aria-valuenow); Arrow Left / Right move the edge, mirrored in a
      right-to-left page (as is dragging); Home and End jump to the smallest and largest width;
-     Enter or a double click folds the pane when it is collapsible.
+     Enter or a double click returns the pane to its standard width (240px for md) and clears a kept size (onSizeChange(0));
+       folding is the Collapse button (issue 1243).
      List-detail at Narrow (with detailOpen): the list fills the main region and the panes beside it are hidden; choosing
        an item opens its detail (the application gives it an address and a history entry, so the browser's Back returns
        to the list), the list steps aside (it stays mounted: its state and scroll position are kept) and a bar with
@@ -118,7 +119,10 @@ export function SecondaryPane(props: SecondaryPaneProps) {
   const listDetail = detailOpen !== undefined;
   const stepAside = narrow && listDetail && !!detailOpen;   // at Narrow the detail shows alone, led by the Back bar
   const folded = collapsible && !(narrow && listDetail) && (collapsed !== undefined ? collapsed : ownCollapsed);
-  const setFolded = (next: any) => { if (collapsed === undefined) setOwnCollapsed(next); if (onCollapsedChange) onCollapsedChange(next); };
+  // folding or unfolding unmounts the pressed button: focus goes to the button that takes its place (the Expand button in the rail, the Collapse button in the header)
+  const refocus = React.useRef<any>(null);
+  const collapseBtn = React.useRef<any>(null);
+  const setFolded = (next: any) => { refocus.current = next ? 'expand' : 'collapse'; if (collapsed === undefined) setOwnCollapsed(next); if (onCollapsedChange) onCollapsedChange(next); };
   const [ownSize, setOwnSize] = React.useState(defaultSize);
   const size = sizeProp !== undefined ? sizeProp : ownSize;
   const setSize = (w: any) => { if (sizeProp === undefined) setOwnSize(w); if (onSizeChange) onSizeChange(w); };
@@ -172,6 +176,15 @@ export function SecondaryPane(props: SecondaryPaneProps) {
     const lost = !ae || ae === document.body || !!(layout && layout.parentEl && layout.parentEl.contains(ae));
     if (item && lost) item.focus();
   }, [stepAside]);
+  React.useEffect(() => {
+    const want = refocus.current; refocus.current = null;
+    if (want === 'collapse' && !folded && collapseBtn.current) collapseBtn.current.focus();
+    else if (want === 'expand' && folded) {
+      const label = named(t.expand), all: any[] = Array.from(document.querySelectorAll('.plx-secondary-pane-expand'));
+      const b = all.find((x) => x.getAttribute('aria-label') === label);
+      if (b) b.focus();
+    }
+  }, [folded]);
   const onBodyClick = (e: any) => {
     const items = body.current ? focusables(body.current) : [];
     chosen.current = items.findIndex((x) => x === e.target || x.contains(e.target));
@@ -180,7 +193,7 @@ export function SecondaryPane(props: SecondaryPaneProps) {
     return (
       <ToolRail label={name} className={cx('plx-secondary-pane-rail', 'plx-secondary-pane-rail--' + side, className)}>
         {backItem ? <ToolRail.Item icon={ArrowLeftIcon} label={backText} onClick={(e: any) => { if (backItem.onClick) backItem.onClick(e); else if (backItem.href) window.location.assign(backItem.href); }} /> : null}
-        <ToolRail.Item icon={side === 'start' ? PanelLeftOpenIcon : PanelRightOpenIcon} label={named(t.expand)} onClick={() => setFolded(false)} />
+        <ToolRail.Item className="plx-secondary-pane-expand" icon={side === 'start' ? PanelLeftOpenIcon : PanelRightOpenIcon} label={named(t.expand)} onClick={() => setFolded(false)} />
         {rail ? <><ToolRail.Divider />{rail}</> : null}
       </ToolRail>
     );
@@ -202,14 +215,14 @@ export function SecondaryPane(props: SecondaryPaneProps) {
         {icon ? iconElement(icon) : null}
         <span className="plx-secondary-pane__title">{title}</span>
         {actions}
-        {collapsible ? <Button size="xs" variant="ghost" iconOnly icon={side === 'start' ? PanelLeftCloseIcon : PanelRightCloseIcon} label={named(t.collapse)} onClick={() => setFolded(true)} /> : null}
+        {collapsible ? <Button ref={collapseBtn} size="xs" variant="ghost" iconOnly icon={side === 'start' ? PanelLeftCloseIcon : PanelRightCloseIcon} label={named(t.collapse)} onClick={() => setFolded(true)} /> : null}
         {onClose ? <Button size="xs" variant="ghost" iconOnly tooltip={false} icon={CloseIcon} label={named(t.close)} onClick={onClose} /> : null}
       </div>
       <div ref={body} className="plx-secondary-pane__body" onScroll={onScroll} onClick={listDetail ? onBodyClick : undefined}>{children}</div>
       {resizable && !(narrow && listDetail) ? (
         <PanelSplitter label={named(t.resize)} edge={side === 'start' ? 'end' : 'start'} min={min()} max={max}
           value={size || (tokenPx('--plx-comp-secondary-pane-width-' + width) || min())} onChange={setSize}
-          onCollapse={collapsible ? () => setFolded(true) : undefined} />
+          onReset={() => setSize(0)} />
       ) : null}
     </aside>
   );

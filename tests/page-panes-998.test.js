@@ -7,7 +7,8 @@ require('./limit.js');
 const root = path.join(__dirname, '..');
 const read = (f) => fs.readFileSync(path.join(root, f), 'utf8');
 // AC-3: the templates and the SecondaryPane usage example use PagePanes, not the raw class
-for (const f of ['platform/templates/templates/Templates.tsx', 'platform/patterns/SecondaryPane/SecondaryPane.tsx'])
+// the templates are one module per page (#1266), so every file of the folder is read
+for (const f of [...fs.readdirSync(path.join(root, 'platform/templates/templates')).filter((n) => n.endsWith('.tsx')).map((n) => 'platform/templates/templates/' + n), 'platform/patterns/SecondaryPane/SecondaryPane.tsx'])
   assert.ok(!/className="plx-page-panes"/.test(read(f)), f + ' writes plx-page-panes by hand');
 assert.ok(/export \{[^}]*\bPagePanes\b[^}]*\}/.test(read('platform/index.ts')), 'PagePanes is exported from platform/index.ts');
 (async () => {

@@ -1,9 +1,8 @@
 #!/usr/bin/env node
-// Self-test of deploy/agents/dispatch.mjs and the watchdog's health rule (#895; template v2.4 §6.2, §6.4): a round with
+// Self-test of deploy/agents/dispatch.mjs (#895; template v2.4 §6.2, §6.4): a round with
 // open work is never quiet, and an unanswered S1/S2 is named to its role until the role answers.
 //   node tools/ci/dispatch.test.mjs        (CI: the Process checks job)
 import { openWork, answered, unanswered, round, OVERDUE_MIN } from '../../deploy/agents/dispatch.mjs';
-import { overdueHealth } from './watchdog.mjs';
 
 let failed = 0;
 const check = (name, got, want) => {
@@ -53,12 +52,6 @@ check('unanswered: S1/S2 only, oldest S1 first, with minutes since it opened',
 check('unanswered: overdue past OVERDUE_MIN', open.filter((u) => u.minutes > OVERDUE_MIN).map((u) => u.number), [893]);
 check('unanswered: a signed answer clears it', unanswered([signed], [], now), []);
 
-// the watchdog reads the heartbeat's health line: P0 when N > 0 two rounds in a row
-const body = (n, k) => `Last run: 2026-11-07T15:00:00Z\nHealth: open S1/S2 with no response > 30 min: ${n} · rounds in a row: ${k}`;
-check('watchdog: N > 0 for 2 rounds -> P0', overdueHealth(body('1 #893', 2)), { count: 1, issues: '#893', rounds: 2, p0: true });
-check('watchdog: N > 0 for 1 round -> not yet', overdueHealth(body('1 #893', 1)).p0, false);
-check('watchdog: N = 0 -> fine', overdueHealth(body('0', 0)).p0, false);
-check('watchdog: no health line (an old poller) -> fine, not measured', overdueHealth('Last run: 2026-11-07T15:00:00Z'), null);
 
 console.log(failed ? `DISPATCH_TEST_FAIL: ${failed} failed` : 'DISPATCH_TEST_OK');
 process.exit(failed ? 1 : 0);

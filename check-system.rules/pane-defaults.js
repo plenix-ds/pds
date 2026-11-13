@@ -1,4 +1,5 @@
-// Plenix · check-system rule "pane-defaults" (owner, issue 463 option C, step 2): the panes start wider on larger windows, as size tokens.
+// Plenix · check-system rule "pane-defaults" (owner, issue 463 option C, step 2): the side panel starts wider on larger windows, as size tokens. Since issue 1243 (ADR 0057)
+// the navigation panes (the main nav, a secondary pane) keep one width at every window size: their -from-* tokens are deprecated and no longer checked.
 // What it rejects:
 //   tokens   a missing token: --plx-sys-shell-nav-width-from-wide / -from-ultrawide (1440px / 1920px windows), --plx-comp-side-panel-width-default-from-wide / -from-ultrawide,
 //            --plx-comp-secondary-pane-width-{sm,md,lg}-from-wide / -from-ultrawide; or a value that is not the owner's table
@@ -14,11 +15,9 @@ const ROOT = path.join(__dirname, '..');
 const read = (f) => { try { return fs.readFileSync(path.join(ROOT, f), 'utf8'); } catch (e) { return ''; } };
 const json = (f) => { try { return JSON.parse(read(f)); } catch (e) { return {}; } };
 // the owner's table: token -> size (px)
-const SYS = { 'shell-nav-width-from-wide': 272, 'shell-nav-width-from-ultrawide': 320 };
+const SYS = {};
 const COMP = {
   'side-panel-width-default-from-wide': 320, 'side-panel-width-default-from-ultrawide': 400,
-  'secondary-pane-width-sm-from-wide': 220, 'secondary-pane-width-md-from-wide': 260, 'secondary-pane-width-lg-from-wide': 320,
-  'secondary-pane-width-sm-from-ultrawide': 260, 'secondary-pane-width-md-from-ultrawide': 320, 'secondary-pane-width-lg-from-ultrawide': 400,
 };
 // the px a size reference ends at: {plx-ref.size-…} followed to its value in reference.tokens.json (not read from the name:
 // the palette's names say their step, docs/adr/0012)
@@ -44,7 +43,7 @@ function check({ add }) {
   for (const n of ['side-panel-width-default', 'side-panel-width-min']) { const t = comp[n]; if (!t || px(t.$value) !== 240) add(NAME, path.join(ROOT, 'platform/tokens/components.tokens.json'), 0, n + ' must be 240px (its own token, not the navigation pane\'s width)'); }
   const css = read('platform/system/grid.css');
   for (const [re, what] of [[/@media\s*\(1440px\s*<=\s*width\s*<\s*1920px\)/, '(1440px <= width < 1920px)'], [/@media\s*\(width\s*>=\s*1920px\)/, '(width >= 1920px)']]) if (!re.test(css)) add(NAME, path.join(ROOT, 'platform/system/grid.css'), 0, 'the media rule ' + what + ' that sets the starting widths is missing');
-  for (const v of ['--plx-sys-shell-nav-width', '--plx-comp-side-panel-width-default', '--plx-comp-secondary-pane-width-md']) if (!new RegExp(v + ':var\\(' + v + '-from-ultrawide\\)').test(css)) add(NAME, path.join(ROOT, 'platform/system/grid.css'), 0, v + ' is not set to its -from-ultrawide token');
+  for (const v of ['--plx-comp-side-panel-width-default']) if (!new RegExp(v + ':var\\(' + v + '-from-ultrawide\\)').test(css)) add(NAME, path.join(ROOT, 'platform/system/grid.css'), 0, v + ' is not set to its -from-ultrawide token');
 }
 module.exports = { name: NAME, check };
 
