@@ -1,17 +1,18 @@
 # narrow-fit-880
 
-This test makes sure two parts fit a phone's width: a data toolbar's summary ends in "…" inside its row, and the bottom navigation bar keeps all five destinations on screen.
+This test makes sure two parts fit a phone's width: a data toolbar's summary stays inside its row, and the bottom navigation bar keeps all five destinations on screen.
 
 - File: `tests/narrow-fit-880.test.js`
 
 ## What it checks
 - At 320 pixels, left to right and right to left:
-  - a DataToolbar with two Chips at the start and a summary at the end (a Text with truncate) stays within its 320-pixel row, and the summary ends in "…";
+  - a DataToolbar with two Chips at the start and a summary at the end (a Text with truncate) stays within its 320-pixel row, and the summary wraps under the start group and shows whole;
   - a bottom navigation bar of five items in a 310-pixel box keeps every item inside the box, each at least the 44-pixel touch target.
 - No script errors.
 
 ## Why it exists
 - Issue #880: the reflow job, once the Gifts timeout was gone (#809's first step), reached two older findings on the test site. The Directory page was 390 pixels wide at 320, because the DataToolbar's end group (its "N households · N people") did not shrink. The Document page cut off "Browse" in the bottom bar, because each of its five items kept a 64-pixel minimum, which needs 320 pixels, in a 310-pixel bar (the page's scrollbar takes 10).
+- Updated for #1331: change #373 (#11, #13, November 5) later made a narrow row wrap, so the summary no longer ends in "…"; the test now checks the wrap and that nothing runs past the row.
 - Written before the fix: the toolbar's end group did not shrink and the bar's items kept 64 pixels.
 
 ## How it checks

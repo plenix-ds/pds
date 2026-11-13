@@ -139,14 +139,6 @@
   },
   {
    "test": "layout",
-   "check": "narrow-fit-880: the child test passes",
-   "issue": 1331,
-   "owner": "engineer",
-   "since": "2026-11-13",
-   "why": "ltr: the summary at the end ends in an ellipsis"
-  },
-  {
-   "test": "layout",
    "check": "chat-s2-637: the child test passes",
    "issue": 1332,
    "owner": "engineer",
