@@ -58,6 +58,54 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
       await page.keyboard.press('Enter'); await wait(250); assert.equal(await w('.plx-nav-pane'), 240, T + 'Enter on the nav edge resets to 240px (not collapse)');
       await page.close();
     }
+    // G5c finding 1 (WCAG 1.4.10 Reflow): at Narrow, without the app's pane.detailOpen, the nav stacks above the content; nothing scrolls sideways
+    for (const dir of ['ltr', 'rtl']) {
+      const T = dir + ' 375: ';
+      const page = await browser.newPage(); page.on('pageerror', (e) => problems.push(e.message));
+      await page.setViewport({ width: 375, height: 800 });
+      await page.goto('http://localhost:' + PORT + '/Plenix/tests/fixtures/platform-host.html?react=dev', { waitUntil: 'domcontentloaded' });
+      await page.waitForFunction(() => window.Plenix && window.ReactDOM, { timeout: 60000 });
+      await page.evaluate(() => { try { localStorage.clear(); } catch (e) { /* none */ } });
+      await page.evaluate(async (dir) => {
+        document.documentElement.setAttribute('dir', dir);
+        const h = React.createElement, P = Plenix;
+        const c = document.createElement('div'); c.id = 'c'; document.querySelector('main').replaceChildren(c); const root = ReactDOM.createRoot(c);
+        const nav = h(P.NavList, { label: 'Settings sections', groups: [{ items: [{ id: 'a', label: 'General' }, { id: 'b', label: 'Notifications' }] }], value: 'a', onSelect() {} });
+        root.render(h('div', { style: { display: 'flex', flexDirection: 'column' } }, h(P.SettingsLayout, { nav }, h(P.SettingsSection, { title: 'Regional' }, h(P.SettingsRow, { label: 'Date format' }, 'x')))));
+        await new Promise((r) => setTimeout(r, 900));
+      }, dir);
+      const m = await page.evaluate(() => { const p = document.querySelector('.plx-secondary-pane'), c = document.querySelector('.plx-settings__content');
+        const pr = p.getBoundingClientRect(), cr = c.getBoundingClientRect();
+        return { paneW: Math.round(pr.width), contentW: Math.round(cr.width), paneBottom: Math.round(pr.bottom), contentTop: Math.round(cr.top), vw: innerWidth,
+          scrollW: document.documentElement.scrollWidth, sep: !!p.querySelector('[role=separator]'), collapse: !!p.querySelector('button[aria-label^="Collapse"]') }; });
+      assert.ok(m.contentW >= m.vw - 48, T + 'the content is not squeezed beside the pane ' + JSON.stringify(m));
+      assert.ok(m.paneBottom <= m.contentTop + 1, T + 'the nav stacks above the content ' + JSON.stringify(m));
+      assert.ok(m.scrollW <= m.vw, T + 'nothing scrolls sideways ' + JSON.stringify(m));
+      assert.ok(!m.sep && !m.collapse, T + 'a stacked nav has no resize edge or Collapse button ' + JSON.stringify(m));
+      await page.close();
+    }
+    // G5c finding 2: folding and unfolding the pane keeps focus on a control (the button that took its place)
+    {
+      const T = 'focus: ';
+      const page = await browser.newPage(); page.on('pageerror', (e) => problems.push(e.message));
+      await page.setViewport({ width: 1366, height: 800 });
+      await page.goto('http://localhost:' + PORT + '/Plenix/tests/fixtures/platform-host.html?react=dev', { waitUntil: 'domcontentloaded' });
+      await page.waitForFunction(() => window.Plenix && window.ReactDOM, { timeout: 60000 });
+      await page.evaluate(() => { try { localStorage.clear(); } catch (e) { /* none */ } });
+      await page.evaluate(async () => {
+        const h = React.createElement, P = Plenix;
+        const c = document.createElement('div'); c.id = 'c'; document.querySelector('main').replaceChildren(c); const root = ReactDOM.createRoot(c);
+        const nav = h(P.NavList, { label: 'Settings sections', groups: [{ items: [{ id: 'a', label: 'General' }] }], value: 'a', onSelect() {} });
+        root.render(h('div', { style: { height: 600, display: 'flex', flexDirection: 'column' } }, h(P.SettingsLayout, { nav }, h(P.SettingsSection, { title: 'Regional' }, 'x'))));
+        await new Promise((r) => setTimeout(r, 900));
+      });
+      const label = () => page.evaluate(() => (document.activeElement && document.activeElement.getAttribute('aria-label')) || null);
+      await page.click('.plx-secondary-pane button[aria-label^="Collapse"]'); await wait(300);
+      assert.match(String(await label()), /^Expand/, T + 'after folding, focus is on the Expand button');
+      await page.keyboard.press('Enter'); await wait(300);
+      assert.match(String(await label()), /^Collapse/, T + 'after unfolding, focus is on the Collapse button');
+      await page.close();
+    }
     assert.deepEqual(problems, [], 'no script errors: ' + problems.join(' | '));
     console.log('NAV_PANES_1243_OK');
   } finally { if (browser) await browser.close(); server.close(); }

@@ -1,0 +1,9 @@
+AssertionError [ERR_ASSERTION]: ltr 375: the content is not squeezed beside the pane {"paneW":240,"contentW":135,"paneBottom":193,"contentTop":0,"vw":375,"scrollW":375,"sep":true,"collapse":true}
+    at /home/agents/pds/work/core-engineer-1242/tests/nav-panes-1243.test.js:81:14 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}

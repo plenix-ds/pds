@@ -119,7 +119,10 @@ export function SecondaryPane(props: SecondaryPaneProps) {
   const listDetail = detailOpen !== undefined;
   const stepAside = narrow && listDetail && !!detailOpen;   // at Narrow the detail shows alone, led by the Back bar
   const folded = collapsible && !(narrow && listDetail) && (collapsed !== undefined ? collapsed : ownCollapsed);
-  const setFolded = (next: any) => { if (collapsed === undefined) setOwnCollapsed(next); if (onCollapsedChange) onCollapsedChange(next); };
+  // folding or unfolding unmounts the pressed button: focus goes to the button that takes its place (the Expand button in the rail, the Collapse button in the header)
+  const refocus = React.useRef<any>(null);
+  const collapseBtn = React.useRef<any>(null);
+  const setFolded = (next: any) => { refocus.current = next ? 'expand' : 'collapse'; if (collapsed === undefined) setOwnCollapsed(next); if (onCollapsedChange) onCollapsedChange(next); };
   const [ownSize, setOwnSize] = React.useState(defaultSize);
   const size = sizeProp !== undefined ? sizeProp : ownSize;
   const setSize = (w: any) => { if (sizeProp === undefined) setOwnSize(w); if (onSizeChange) onSizeChange(w); };
@@ -173,6 +176,15 @@ export function SecondaryPane(props: SecondaryPaneProps) {
     const lost = !ae || ae === document.body || !!(layout && layout.parentEl && layout.parentEl.contains(ae));
     if (item && lost) item.focus();
   }, [stepAside]);
+  React.useEffect(() => {
+    const want = refocus.current; refocus.current = null;
+    if (want === 'collapse' && !folded && collapseBtn.current) collapseBtn.current.focus();
+    else if (want === 'expand' && folded) {
+      const label = named(t.expand), all: any[] = Array.from(document.querySelectorAll('.plx-secondary-pane-expand'));
+      const b = all.find((x) => x.getAttribute('aria-label') === label);
+      if (b) b.focus();
+    }
+  }, [folded]);
   const onBodyClick = (e: any) => {
     const items = body.current ? focusables(body.current) : [];
     chosen.current = items.findIndex((x) => x === e.target || x.contains(e.target));
@@ -181,7 +193,7 @@ export function SecondaryPane(props: SecondaryPaneProps) {
     return (
       <ToolRail label={name} className={cx('plx-secondary-pane-rail', 'plx-secondary-pane-rail--' + side, className)}>
         {backItem ? <ToolRail.Item icon={ArrowLeftIcon} label={backText} onClick={(e: any) => { if (backItem.onClick) backItem.onClick(e); else if (backItem.href) window.location.assign(backItem.href); }} /> : null}
-        <ToolRail.Item icon={side === 'start' ? PanelLeftOpenIcon : PanelRightOpenIcon} label={named(t.expand)} onClick={() => setFolded(false)} />
+        <ToolRail.Item className="plx-secondary-pane-expand" icon={side === 'start' ? PanelLeftOpenIcon : PanelRightOpenIcon} label={named(t.expand)} onClick={() => setFolded(false)} />
         {rail ? <><ToolRail.Divider />{rail}</> : null}
       </ToolRail>
     );
@@ -203,7 +215,7 @@ export function SecondaryPane(props: SecondaryPaneProps) {
         {icon ? iconElement(icon) : null}
         <span className="plx-secondary-pane__title">{title}</span>
         {actions}
-        {collapsible ? <Button size="xs" variant="ghost" iconOnly icon={side === 'start' ? PanelLeftCloseIcon : PanelRightCloseIcon} label={named(t.collapse)} onClick={() => setFolded(true)} /> : null}
+        {collapsible ? <Button ref={collapseBtn} size="xs" variant="ghost" iconOnly icon={side === 'start' ? PanelLeftCloseIcon : PanelRightCloseIcon} label={named(t.collapse)} onClick={() => setFolded(true)} /> : null}
         {onClose ? <Button size="xs" variant="ghost" iconOnly tooltip={false} icon={CloseIcon} label={named(t.close)} onClick={onClose} /> : null}
       </div>
       <div ref={body} className="plx-secondary-pane__body" onScroll={onScroll} onClick={listDetail ? onBodyClick : undefined}>{children}</div>

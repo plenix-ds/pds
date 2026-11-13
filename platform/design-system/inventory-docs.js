@@ -1940,10 +1940,10 @@ window.DSDocs = {
    "Rail — a ToolRail with Expand first, a divider, then `rail` items (collapsed and small screens)"
   ],
   "behavior": {
-   "pointer": "Collapse turns the pane into a rail; Expand opens it again. Dragging the splitter resizes it between 140 and 320px. At Medium (600–839px) Expand opens the expanded rail over the main region, and a click on the scrim closes it; at Narrow (under 600px) the destinations are a bottom navigation bar and Browse opens the pane as a screen of its own.",
-   "keyboard": "Ctrl+[ collapses or expands it (AppShell). The splitter is focusable: Arrow Left and Right resize by the splitter step, Home and End go to the minimum and maximum. Escape closes the overlay.",
+   "pointer": "Collapse turns the pane into a rail; Expand opens it again. Dragging the splitter resizes it between 200 and 320px; a double-click on the edge resets it to 240px. At Medium (600–839px) Expand opens the expanded rail over the main region, and a click on the scrim closes it; at Narrow (under 600px) the destinations are a bottom navigation bar and Browse opens the pane as a screen of its own.",
+   "keyboard": "Ctrl+[ collapses or expands it (AppShell). The splitter is focusable: Arrow Left and Right resize by the splitter step, Home and End go to the minimum and maximum, Enter resets it to 240px. Escape closes the overlay.",
    "focus": "Focus is not moved into the overlay or the pane's screen, and not trapped; Escape closes it. The rail is a vertical toolbar with arrow key movement.",
-   "responsive": "Wide: inline beside the main area at --plx-sys-shell-nav-width: 240px under 1440px, 272px at 1440–1919px, 320px at 1920px and wider; collapsed, a rail. Medium (600–839px): a rail whose expanded rail opens over the main region. Narrow (under 600px): a bottom navigation bar of the page's destinations (or a parent row) and the pane as a screen of its own, never a drawer (Platforms Standard 4.1).",
+   "responsive": "Wide: inline beside the main area at --plx-sys-shell-nav-width: 240px at every window size; collapsed, a rail. Medium (600–839px): a rail whose expanded rail opens over the main region. Narrow (under 600px): a bottom navigation bar of the page's destinations (or a parent row) and the pane as a screen of its own, never a drawer (Platforms Standard 4.1).",
    "motion": "None of its own; the AppShell's scrim fades its background with --plx-sys-motion-duration-fast.",
    "loading": "No loading state of its own; the body shows the page's own loading content.",
    "error": "Not applicable: the pane holds no input."
@@ -3353,8 +3353,8 @@ window.DSDocs = {
    "Footer — the StatusBar across the full width (optional)"
   ],
   "behavior": {
-   "pointer": "Dragging the splitter on the navigation's edge resizes it between its min and max width tokens, one grid line (4px) at a time, and it stays on the grid when let go; it is never wider than 90% of the window (--plx-sys-shell-pane-window-share). The width is remembered per monitor (named by its physical size; a stored size within 10px is the same monitor). A double-click on the edge folds the pane to its rail. The pane's Collapse and Expand buttons fold it to a rail and back; at Medium (600–839px) Expand opens it over the main region and a click on the scrim closes it; at Narrow it is a screen of its own, opened from the bottom bar or the parent row.",
-   "keyboard": "Ctrl+[ (Cmd+[) collapses and expands the navigation from anywhere. The splitter is a separator: Arrow Left / Right move it by --plx-sys-shell-splitter-step, Home and End jump to the limits, Enter collapses. Escape closes the overlay navigation.",
+   "pointer": "Dragging the splitter on the navigation's edge resizes it between its min and max width tokens, one grid line (4px) at a time, and it stays on the grid when let go (8px with the arrow keys); it is never wider than 90% of the window (--plx-sys-shell-pane-window-share). The width is remembered per monitor (named by its physical size; a stored size within 10px is the same monitor). A double-click on the edge resets it to 240px. The pane's Collapse and Expand buttons fold it to a rail and back; at Medium (600–839px) Expand opens it over the main region and a click on the scrim closes it; at Narrow it is a screen of its own, opened from the bottom bar or the parent row.",
+   "keyboard": "Ctrl+[ (Cmd+[) collapses and expands the navigation from anywhere. The splitter is a separator: Arrow Left / Right move it by --plx-sys-shell-splitter-step, Home and End jump to the limits, Enter resets the width to 240px. Escape closes the overlay navigation.",
    "focus": "The skip link moves focus to the main region (tabIndex -1, no outline of its own). The shell does not trap focus; the overlay navigation is a non-modal layer.",
    "responsive": "Below --plx-sys-shell-rail-below (840px, Medium) the navigation is a rail that opens as an overlay; below --plx-sys-shell-phone-below (600px, Narrow) a bottom navigation bar with the pane as its own screen; below --plx-sys-shell-inspector-overlay-below (1024px) the inspector collapses and opens over the main region, and below 600px (Narrow) it opens as a bottom sheet. Overlays stay between the header and the footer; the main region and PageContent scroll on their own.",
    "motion": "The splitter's line fades in on hover and focus with --plx-sys-motion-duration-fast; the shell has no other motion.",
@@ -3385,10 +3385,10 @@ window.DSDocs = {
    "Rail — when folded, a ToolRail with Expand and the `rail` items (optional, with `collapsible`)"
   ],
   "behavior": {
-   "pointer": "Collapse folds the pane to a rail; Expand on the rail opens it again. Dragging the resize edge changes the width between the sm width and --plx-comp-secondary-pane-width-max; a double click on the edge folds the pane when it is collapsible.",
-   "keyboard": "The resize edge is a separator: Arrow Left / Right change the width by --plx-sys-shell-splitter-step, Home and End jump to the smallest and largest width, Enter folds the pane when collapsible. The rail is a vertical toolbar: Arrow Up / Down, Home and End move between items.",
-   "focus": "Focus is not moved when the pane folds or unfolds; the Collapse and Expand buttons replace each other. Nothing is trapped.",
-   "responsive": "The pane takes its width token by window width: under 1440px sm 180px, md 220px, lg 280px; at 1440–1919px 220, 260, 320px; at 1920px and wider 260, 320, 400px. Dragged, it stops at --plx-comp-secondary-pane-width-max (400px) and at 90% of the window. It does not collapse on its own at narrow widths. Use `collapsible` where space is tight.",
+   "pointer": "Collapse folds the pane to a rail; Expand on the rail opens it again. Dragging the resize edge changes the width between 180px and --plx-comp-secondary-pane-width-max (400px); a double click on the edge resets it to the standard width of its size.",
+   "keyboard": "The resize edge is a separator: Arrow Left / Right change the width by --plx-sys-shell-splitter-step, Home and End jump to the smallest and largest width, Enter resets the width. The rail is a vertical toolbar: Arrow Up / Down, Home and End move between items.",
+   "focus": "When the pane folds, focus moves to the Expand button on the rail; when it unfolds, to the Collapse button in the header. Nothing is trapped.",
+   "responsive": "The pane has one width at every window size: sm 180px, md 240px (the same as the navigation pane), lg 280px. Dragged, it stops at --plx-comp-secondary-pane-width-max (400px) and at 90% of the window. It does not collapse on its own at narrow widths. Use `collapsible` where space is tight.",
    "motion": "None of its own; the splitter line fades with --plx-sys-motion-duration-fast.",
    "loading": "Not applicable: no loading state of its own; put a Skeleton or Loading in the body.",
    "error": "Not applicable: no error state of its own; show an EmptyState or Notice in the body."
@@ -3505,20 +3505,20 @@ window.DSDocs = {
   }
  },
  "settings-page": {
-  "purpose": "Lets people find and change settings one at a time: sections of rows with a label, a description and the control, with the sections listed in a navigation pane.",
+  "purpose": "Lets people find and change settings one at a time: sections of rows with a label, a description and the control, with the sections listed in a docked navigation pane titled \"Settings\".",
   "anatomy": [
-   "Frame — SettingsLayout: the navigation beside the content (required)",
-   "Navigation — `nav` (a NavList) drawn in a NavPane (optional)",
+   "Frame — SettingsLayout: the navigation pane beside the content, in PagePanes (required)",
+   "Navigation — `nav` (a NavList) drawn in a docked SecondaryPane: flush against the main navigation, full height, on the page surface, with the title \"Settings\" (`navTitle`), a Collapse button and a resize edge (optional)",
    "Section — SettingsSection: always a card with its title as an h2 (sentence case, the level 2 heading size), an optional description and the rows; static, or collapsible (required)",
    "Collapse toggle — on a collapsible section, the whole header row is one button inside the h2, with a chevron at the end that points down when open (optional)",
    "Row — SettingsRow: label and description at the start, the control at the end, divided from the next (required)",
    "Actions — the section's buttons in an ActionBar under its rows (optional)"
   ],
   "behavior": {
-   "pointer": "A click anywhere on a collapsible section's header opens or closes it; each control works as itself.",
-   "keyboard": "Tab moves through the navigation, then each section: a collapsible header is one stop, and Enter or Space opens or closes it; then each row's control in order.",
+   "pointer": "A click anywhere on a collapsible section's header opens or closes it; each control works as itself. The navigation pane is 240px (180 to 400px, remembered per page); dragging its edge resizes it, and a double-click or Enter on the edge resets it to 240px. The Collapse button folds it to a rail (Ctrl+[ also does).",
+   "keyboard": "Tab moves through the navigation pane (its Collapse button, the resize edge, then the items), then each section: a collapsible header is one stop, and Enter or Space opens or closes it; then each row's control in order.",
    "focus": "Not moved or trapped. Choosing a section in the navigation is the page's job.",
-   "responsive": "It responds to its own width: below 37.5rem, the navigation stacks above the content with a bottom border, the side padding shrinks, and inline Fields put their label above the control. The content is at most --plx-ref-size-225u wide and scrolls on its own.",
+   "responsive": "It responds to its own width: below 37.5rem, the side padding shrinks, and inline Fields put their label above the control. At Narrow (under 600px) the app passes `pane.detailOpen` and `pane.onBack` to make the navigation the list of a list-detail (choosing a section shows it, led by \"Back to Settings\"); without them the navigation stacks above the content as a full-width block with a divider below, with no Collapse button or resize edge, so the page never scrolls sideways. The content is at most --plx-ref-size-225u wide and scrolls on its own.",
    "motion": "The chevron turns when a collapsible section opens or closes (--plx-comp-settings-section-chevron-duration); with reduced motion it turns at once.",
    "loading": "Not applicable: no loading state of its own; the page shows Loading or Skeleton rows.",
    "error": "Not applicable here: errors belong to the controls; use Field rows (`layout` inline or row) for their error text."
@@ -3534,7 +3534,7 @@ window.DSDocs = {
    "labels": "Write row labels as short nouns in sentence case (\"Date format\"), with the effect in one sentence in the description. Section titles are short nouns in sentence case, not uppercased.",
    "actions": "Use section actions only for a group that saves together (\"Save\", \"Cancel\"); otherwise a row's control applies on change.",
    "errors": "Say what is wrong and how to fix it, next to the control, through its Field.",
-   "localization": "Rows use logical properties, so the control moves to the start side in right-to-left. Longer labels wrap; the container query stacks the frame on narrow widths."
+   "localization": "Rows use logical properties, so the control moves to the start side in right-to-left. Longer labels wrap; the navigation pane sits at the start edge (the end edge in right-to-left) and stacks on narrow widths."
   }
  },
  "listing-page": {

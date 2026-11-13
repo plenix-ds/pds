@@ -47,4 +47,7 @@
 @container (max-width: 37.5rem){
 .plx-settings__content{--plx-comp-field-inline-context-columns:minmax(0,1fr);--plx-comp-field-inline-context-row-gap:var(--plx-comp-settings-field-inline-row-gap);flex-basis:100%;padding-inline-end:var(--plx-comp-settings-context-content-padding-inline-end,var(--plx-comp-settings-content-narrow-padding-inline));padding-inline-start:var(--plx-comp-settings-context-content-padding-inline-start,var(--plx-comp-settings-content-narrow-padding-inline));}
 }
+/* Narrow without the app's list-detail: the navigation stacks above the content (the pane is a full-width block, divided below; WCAG 1.4.10) */
+.plx-settings--stacked .plx-page-panes{flex-direction:column;}
+.plx-settings--stacked .plx-secondary-pane{border-block-end-color:var(--plx-comp-secondary-pane-border-inline-end-color);border-block-end-style:solid;border-block-end-width:var(--plx-comp-secondary-pane-start-border-inline-end-width);border-inline-end-width:0;inline-size:100%;}
 /* a section's ActionBar has the card's surface behind it (batch 231) */

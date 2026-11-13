@@ -12,8 +12,9 @@
      nav: the navigation (a NavList), drawn in a docked SecondaryPane beside the content (ADR 0057): flush against the main
        navigation, full height, on the page surface, titled, collapsible and resizable (240px to start; remembered per page)
      navTitle: the pane's title (default "Settings", settingsLayout.navTitle)
-     pane: more props for the SecondaryPane (detailOpen, onBack, back, label, a controlled size or collapsed): at Narrow it
-       is a list-detail with "Back to Settings"
+     pane: more props for the SecondaryPane (detailOpen, onBack, back, label, a controlled size or collapsed): with
+       detailOpen and onBack, Narrow (under 600px) is a list-detail with "Back to Settings"; without them the navigation
+       stacks above the content at Narrow, so nothing scrolls sideways (WCAG 1.4.10)
      strings: { navTitle: "Settings" }
      className: more classes
      children: the settings sections
@@ -46,6 +47,7 @@
        plenix.<page>-settings.view), so the page opens as the person left it; a parent that controls it (expanded) keeps
        it instead.
      Each row is divided from the next.
+     At Narrow without pane.detailOpen the navigation stacks above the content, a full-width block with a divider below.
      The navigation pane is the case pane's look; its width and folded state are remembered per page in the page's view state.
      It is a settings page: inside an AppShell it claims the page kind "settings", so the layout standard lays it out
        (contained: one centered column at the form width).
@@ -55,7 +57,7 @@
      A section with no title is a static card (a collapsible one needs a title to press).
 */
 import React from 'react';
-import { useAppLayout } from '../AppShell/AppShell.tsx';
+import { useAppLayout, useMedia, below } from '../AppShell/AppShell.tsx';
 import { cx } from '../../utils/cx.ts';
 import { dataWhenText } from '../../utils/dataText.tsx';
 import { useUid } from '../../utils/layer.ts';
@@ -90,14 +92,17 @@ export function SettingsLayout(props: SettingsLayoutProps) {
   const page = React.useMemo(pageOf, []);
   const [view, update] = useViewState(page);
   const kept: any = view || {};
+  // Narrow without the app's list-detail (pane.detailOpen): the navigation stacks above the content, whole and fixed (no fold, no resize)
+  const narrow = useMedia(below('--plx-sys-shell-phone-below'));
+  const stacked = !!narrow && !(pane && pane.detailOpen !== undefined);
   return (
-    <div className={cx('plx-settings', className)}>
+    <div className={cx('plx-settings', stacked && 'plx-settings--stacked', className)}>
       <PagePanes>
         {nav ? (
           <SecondaryPane title={navTitle !== undefined ? navTitle : t.navTitle} side="start" width="md" collapsible resizable
             size={typeof kept.paneSize === 'number' ? kept.paneSize : undefined} onSizeChange={(px: number) => update(() => ({ paneSize: px }))}
             collapsed={typeof kept.paneCollapsed === 'boolean' ? kept.paneCollapsed : undefined} onCollapsedChange={(next: boolean) => update(() => ({ paneCollapsed: next }))}
-            {...pane}>{nav}</SecondaryPane>
+            {...pane} {...(stacked ? { collapsible: false, resizable: false } : null)}>{nav}</SecondaryPane>
         ) : null}
         <div className="plx-settings__content">{children}</div>
       </PagePanes>
