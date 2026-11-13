@@ -2,10 +2,11 @@
    Summary: two things the owner asked for in the button build.
      1. The label is centered in the button by its capital letters: the label box is trimmed to the letters (text-box: trim-both cap alphabetic), so the
         capitals sit within half a pixel of the button's middle at 32px and at 28px. Before, the capitals sat about 1.1px high at 28px.
-     2. Danger and Danger secondary have a pressed color of their own, red-900 (#7a0000, the one new color the owner approved): Danger steps rest red-700, hover
-        red-800, pressed red-900 (three distinct steps), and Danger secondary's pressed is red-900, not its hover, in the light and in the dark theme.
-   The probe is proved able to see the old values first: before the build, 28px read 1.13px high and Danger's pressed was its hover color (red-800), so the limits
-     below fail on the old code.
+     2. Danger and Danger secondary hold their fill in every state and show hover and pressed as a state layer (D-0037, #109: an 8% layer on hover, 10% pressed, over
+        the rest glow; this replaced the 610 steps red-800 hover and red-900 pressed, which are now the glow's rim and the bottom edge, checked in
+        button-elevation-610): Danger stays red-700 with the danger state-layer token colour, and Danger secondary keeps its fill with the neutral state-layer token colour (both read from the tokens, with the hover and pressed opacity tokens), in the light and in the dark theme.
+   The probe is proved able to see the old values first: before the build, 28px read 1.13px high, so the centering limits below fail on the old code. Part 2 follows
+     D-0037; it failed after #109 because it still asserted the 610 fill steps (#1333).
    Descenders: gypqjy and an Arabic label draw as far down as in a reference where the label is not clipped at all; the control without the clip margin shows the cut.
    Centering is measured on the picture: the button is photographed at four times the pixels with the text "HEH" (capitals only) and the first and last rows of dark ink
      give the capitals' middle.
@@ -73,7 +74,7 @@ const PORT0 = +process.env.TEST_PORT || 9630;
     const real = await inkBottoms(null), unclipped = await inkBottoms('.plx-button__label{overflow-x:visible !important;overflow-y:visible !important}'), noMargin = await inkBottoms('.plx-button__label{overflow-clip-margin:0px !important}');
     for (const s of ['md', 'sm']) assert.ok(noMargin[s + '-latin'] <= real[s + '-cap'] + 0.25 && real[s + '-latin'] > real[s + '-cap'] + 2, s + ': the probe sees clipping: without the clip margin the tails of gypqjy are cut at the baseline');
     for (const s of ['md', 'sm']) for (const k of ['latin', 'arabic']) assert.ok(real[s + '-' + k] >= unclipped[s + '-' + k] - 0.25, s + ' ' + k + ': the label is not clipped (' + real[s + '-' + k] + ' against ' + unclipped[s + '-' + k] + ' unclipped)');
-    // 2. the Danger pressed steps, in both themes
+    // 2. the Danger fill and its state layers (D-0037), in both themes
     const read = async (mode) => {
       const p = await fresh(mode);
       await p.evaluate(async () => {
@@ -83,18 +84,32 @@ const PORT0 = +process.env.TEST_PORT || 9630;
       });
       const out = {};
       for (const v of ['danger', 'danger-secondary']) {
-        const col = () => p.evaluate((id) => getComputedStyle(document.getElementById(id)).backgroundColor, 'b-' + v);
+        const col = () => p.evaluate((id) => (() => { const cs = getComputedStyle(document.getElementById(id)); return { fill: cs.backgroundColor, image: cs.backgroundImage }; })(), 'b-' + v);
         const rest = await col(); await p.hover('#b-' + v); await wait(250); const hover = await col(); await p.mouse.down(); await wait(250); const pressed = await col(); await p.mouse.up(); await p.mouse.move(2, 2);
         out[v] = { rest, hover, pressed };
       }
+      // the state layer as the tokens resolve it, read from the page: Danger takes the danger layer colour, Danger secondary the neutral one (D-0037, #109)
+      out.layers = await p.evaluate(() => {
+        const TOK = { danger: '--plx-comp-button-danger-state-layer-color', 'danger-secondary': '--plx-comp-button-state-layer-color' }, AMT = { hover: '--plx-comp-button-state-layer-hover-opacity', pressed: '--plx-comp-button-state-layer-pressed-opacity' };
+        const lp = document.createElement('div'); document.body.appendChild(lp); const L = {};
+        for (const v of Object.keys(TOK)) { L[v] = {}; for (const a of Object.keys(AMT)) { lp.style.backgroundImage = 'linear-gradient(color-mix(in srgb, var(' + TOK[v] + ') var(' + AMT[a] + '), transparent) 0 0)'; L[v][a] = getComputedStyle(lp).backgroundImage; } }
+        lp.style.color = 'var(' + TOK.danger + ')'; L.dangerColor = getComputedStyle(lp).color; lp.style.color = 'var(' + TOK['danger-secondary'] + ')'; L.neutralColor = getComputedStyle(lp).color; lp.remove(); return L;
+      });
       await p.close(); return out;
     };
     for (const mode of ['light', 'dark']) {
       const c = await read(mode), d = c.danger, s = c['danger-secondary'];
-      assert.deepEqual([d.rest, d.hover, d.pressed], ['rgb(183, 0, 0)', 'rgb(153, 0, 0)', 'rgb(122, 0, 0)'], mode + ': Danger steps red-700, red-800, red-900');
-      assert.equal(new Set([d.rest, d.hover, d.pressed]).size, 3, mode + ': Danger has three distinct steps');
-      assert.equal(s.pressed, 'rgb(122, 0, 0)', mode + ': Danger secondary pressed is red-900');
-      assert.notEqual(s.pressed, s.hover, mode + ': Danger secondary pressed is not its hover color');
+      const layer = (x) => (x.image.match(/^linear-gradient\(color\(srgb ([\d. ]+) \/ ([\d.]+)\)/) || []).slice(1);
+      assert.deepEqual([d.rest.fill, d.hover.fill, d.pressed.fill], Array(3).fill('rgb(183, 0, 0)'), mode + ': Danger keeps its red-700 fill at rest, hover and pressed (D-0037)');
+      assert.notEqual(c.layers.dangerColor, c.layers.neutralColor, mode + ': the danger and neutral layer colours differ, so a swapped colour is seen');
+      assert.deepEqual([d.hover, d.pressed].map((x) => x.image.split(', radial-gradient')[0]), [c.layers.danger.hover, c.layers.danger.pressed], mode + ': Danger shows hover and pressed as the danger state-layer token colour at the hover (8%) and pressed (10%) opacity tokens');
+      assert.deepEqual([d.hover, d.pressed].map((x) => layer(x)[1]), ['0.08', '0.1'], mode + ': Danger layer amounts are 8% and 10% (D-0037)');
+      assert.equal(d.rest.image.startsWith('radial-gradient('), true, mode + ': Danger rest is the glow alone, no layer');
+      assert.match(d.rest.image, /\(rgb\(183, 0, 0\) 90%, rgb\(153, 0, 0\) 100%\)$/, mode + ': the glow runs from red-700 to a red-800 rim');
+      assert.deepEqual([s.rest.fill, s.hover.fill, s.pressed.fill], Array(3).fill(s.rest.fill), mode + ': Danger secondary keeps its fill in every state (D-0037)');
+      assert.deepEqual([s.hover, s.pressed].map((x) => x.image.split(', radial-gradient')[0]), [c.layers['danger-secondary'].hover, c.layers['danger-secondary'].pressed], mode + ': Danger secondary shows hover and pressed as the neutral state-layer token colour at the hover (8%) and pressed (10%) opacity tokens');
+      assert.deepEqual([s.hover, s.pressed].map((x) => layer(x)[1]), ['0.08', '0.1'], mode + ': Danger secondary layer amounts are 8% and 10% (D-0037)');
+      assert.equal(s.rest.image.startsWith('radial-gradient('), true, mode + ': Danger secondary rest is the glow alone, no layer');
     }
     assert.deepEqual(errors, [], 'no script errors');
     console.log('button-610: OK');

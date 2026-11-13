@@ -1,14 +1,16 @@
 /* Plenix tests · Button elevation (issue 610; the owner's pick G-R4-H, his GO recorded on 610).
    Summary: secondary, tertiary, primary and danger are raised, light and dark:
-     at rest a very subtle glow (a radial gradient, the plain fill to 90%; #910, #269) and the card's Halo shadow
-       (card-elevation-halo-shadow); on hover the glow on the hover fill and the same Halo (#910: hover no longer steps up
-       to Lifted); pressed and disabled flat (no gradient, no shadow)
+     at rest a very subtle glow (a radial gradient, the plain fill to 90%; #910, #269) and no shadow (D-0054); on hover the glow
+       under an 8% state layer and the card's Halo shadow (#910); pressed the glow under a 10% layer and no shadow; disabled flat
+       (no gradient, no shadow). Hover and pressed are state layers over an unchanged fill, border and text (D-0037, #109), so
+       the 610 steps (a deeper hover fill and border, gray-200 and gray-250 fills) are gone (#1333)
      primary and danger: the border is the glow's rim (blue-600, red-800) and the bottom edge one shade deeper (blue-700,
-       red-900); hovered, the border one shade deeper (blue-700, red-900)
-     secondary hover gray-200 and pressed gray-250 (dark gray-700, gray-900); tertiary on the control fill, gray when hovered
-     ghost stays flat; so do buttons in a Toolbar (bar buttons) and the 2xs size
-     tertiary's words pass 4.5:1 on each of its fills
+       red-900) at rest; hovered, the border stays the rim
+     secondary and tertiary keep the control fill in every state
+     ghost stays flat at rest and takes only the state layer (no glow, no shadow); so do buttons in a Toolbar (bar buttons) and the 2xs size
+     tertiary's words pass 4.5:1 on its fill
    Proof first: before 610 every button is flat (no gradient, no shadow) and primary's border is its fill: those lines fail.
+     After #109 the hover, pressed and fill lines of the 610 build failed on the state layer (D-0037); they now follow it (#1333).
    Usage: node tests/button-elevation-610.test.js   → BUTTON_ELEVATION_610_OK */
 const assert = require('assert/strict'), { serve, launch } = require('./lib');
 require('./limit.js');   // the hard time limit (TEST_TIMEOUT_MS)
@@ -36,6 +38,12 @@ const contrast = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y
         const out = {};
         for (const e of document.querySelectorAll('#c .plx-button[id]')) { const cs = getComputedStyle(e);
           out[e.id] = { image: cs.backgroundImage, shadow: cs.boxShadow, border: cs.borderTopColor, bottom: cs.borderBottomColor, bg: cs.backgroundColor, text: cs.color }; }
+        // the state layer as the tokens resolve it: the layer colour per kind and the hover and pressed amounts (D-0037, #109), read from the page, not written here
+        const TOK = { neutral: '--plx-comp-button-state-layer-color', primary: '--plx-comp-button-primary-state-layer-color', danger: '--plx-comp-button-danger-state-layer-color' }, AMT = { hover: '--plx-comp-button-state-layer-hover-opacity', pressed: '--plx-comp-button-state-layer-pressed-opacity' };
+        const lp = document.createElement('div'); document.getElementById('c').appendChild(lp); out.layers = {};
+        for (const t of Object.keys(TOK)) { out.layers[t] = {}; for (const a of Object.keys(AMT)) { lp.style.backgroundImage = 'linear-gradient(color-mix(in srgb, var(' + TOK[t] + ') var(' + AMT[a] + '), transparent) 0 0)'; out.layers[t][a] = getComputedStyle(lp).backgroundImage; } }
+        out.tokenAmounts = Object.fromEntries(Object.keys(AMT).map((a) => [a, getComputedStyle(document.documentElement).getPropertyValue(AMT[a]).trim()]));
+        out.tokenColors = Object.fromEntries(Object.keys(TOK).map((t) => { lp.style.color = 'var(' + TOK[t] + ')'; return [t, getComputedStyle(lp).color]; })); lp.remove();
         const probe = document.createElement('div'); probe.style.boxShadow = 'var(--plx-comp-card-elevation-halo-shadow)';
         document.getElementById('c').appendChild(probe); out.halo = getComputedStyle(probe).boxShadow; probe.remove();
         return out;
@@ -44,22 +52,36 @@ const contrast = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y
     for (const mode of ['light', 'dark']) {
       const r = await look(mode);
       for (const k of ['secondary', 'tertiary', 'primary', 'danger']) {
-        assert.match(r[k + '-rest'].image, /^radial-gradient\(.* 90%, .* 100%\)$/, mode + ' ' + k + ': the subtle glow at rest (fill to 75%)');
+        const kind = k === 'primary' || k === 'danger' ? k : 'neutral', glow = /radial-gradient\(.* 90%, .* 100%\)$/, layer = (a) => new RegExp('^linear-gradient\\(color\\(srgb [\\d. ]+ / ' + a + '\\) 0px, color\\(srgb [\\d. ]+ / ' + a + '\\) 0px\\), ');
+        assert.match(r[k + '-rest'].image, new RegExp('^' + glow.source), mode + ' ' + k + ': the subtle glow at rest, no layer (fill to 90%)');
         assert.notEqual(r.halo, 'none', mode + ': the card Halo resolves');
         assert.equal(r[k + "-rest"].shadow, "none", mode + " " + k + ": no shadow at rest (D-0054, #269)");
-        assert.match(r[k + '-hover'].image, /^radial-gradient\(.* 90%, .* 100%\)$/, mode + ' ' + k + ': the subtle glow on hover (fill to 75%)');
+        assert.ok(r[k + '-hover'].image.startsWith(r.layers[kind].hover + ', '), mode + ' ' + k + ': the hover layer is the ' + kind + ' state-layer token colour at the hover opacity token, got ' + r[k + '-hover'].image);
+        assert.match(r[k + '-hover'].image, layer('0.08'), mode + ' ' + k + ': hover is an 8% state layer (D-0037)');
+        assert.match(r[k + '-hover'].image, glow, mode + ' ' + k + ': the glow stays under the hover layer (fill to 90%)');
+        assert.equal(r[k + '-hover'].bg, r[k + '-rest'].bg, mode + ' ' + k + ': hover keeps the rest fill (D-0037)');
         assert.equal(r[k + '-hover'].shadow, r.halo, mode + ' ' + k + ': the card Halo on hover, as at rest (#910)');
-        for (const s of ['pressed', 'disabled']) assert.deepEqual([r[k + '-' + s].image, r[k + '-' + s].shadow], ['none', 'none'], mode + ' ' + k + ' ' + s + ': flat');
+        assert.ok(r[k + '-pressed'].image.startsWith(r.layers[kind].pressed + ', '), mode + ' ' + k + ': the pressed layer is the ' + kind + ' state-layer token colour at the pressed opacity token, got ' + r[k + '-pressed'].image);
+        assert.match(r[k + '-pressed'].image, layer('0.1'), mode + ' ' + k + ': pressed is a 10% state layer (D-0037)');
+        assert.match(r[k + '-pressed'].image, glow, mode + ' ' + k + ': the glow stays under the pressed layer');
+        assert.equal(r[k + '-pressed'].bg, r[k + '-rest'].bg, mode + ' ' + k + ': pressed keeps the rest fill (D-0037)');
+        assert.equal(r[k + '-pressed'].shadow, 'none', mode + ' ' + k + ': no shadow when pressed');
+        assert.deepEqual([r[k + '-disabled'].image, r[k + '-disabled'].shadow], ['none', 'none'], mode + ' ' + k + ' disabled: flat');
       }
-      for (const s of ['rest', 'hover', 'pressed']) assert.deepEqual([r['ghost-' + s].image, r['ghost-' + s].shadow], ['none', 'none'], mode + ' ghost ' + s + ': flat');
+      assert.deepEqual([r['ghost-rest'].image, r['ghost-rest'].shadow], ['none', 'none'], mode + ' ghost rest: flat');
+      for (const s of ['hover', 'pressed']) {
+        assert.deepEqual([/^linear-gradient\(.*\), none$/.test(r['ghost-' + s].image), r['ghost-' + s].shadow], [true, 'none'], mode + ' ghost ' + s + ': a state layer only, no glow, no shadow');
+        assert.equal(r['ghost-' + s].image, r.layers.neutral[s] + ', none', mode + ' ghost ' + s + ': the neutral state-layer token colour at the ' + s + ' opacity token, over nothing');
+      }
+      assert.deepEqual([r.tokenAmounts.hover, r.tokenAmounts.pressed], ['8%', '10%'], mode + ': the hover and pressed opacity tokens are 8% and 10% (D-0037)');
+      assert.notEqual(r.tokenColors.neutral, r.tokenColors.primary, mode + ': the neutral layer colour differs from the on-accent colour, so a swapped colour is seen');
       for (const id of ['bar-secondary', 'bar-primary', 'small']) assert.deepEqual([r[id].image, r[id].shadow], ['none', 'none'], mode + ' ' + id + ': flat (a bar button, the 2xs size)');
-      // primary and danger: the rim border, the deeper bottom edge, the deeper hover border (the same in light and dark)
-      assert.deepEqual([r['primary-rest'].border, r['primary-rest'].bottom, r['primary-hover'].border], [rgb('#1F5BB8'), rgb('#005A9E'), rgb('#005A9E')], mode + ' primary edges');
-      assert.deepEqual([r['danger-rest'].border, r['danger-rest'].bottom, r['danger-hover'].border], [rgb('#990000'), rgb('#7A0000'), rgb('#7A0000')], mode + ' danger edges');
-      // the fills under the glow
-      const fills = mode === 'light' ? ['#FFFFFF', '#E8E9EC', '#DCDDDE'] : ['#444444', '#56585E', '#34363B'];
-      assert.deepEqual([r['secondary-rest'].bg, r['secondary-hover'].bg, r['secondary-pressed'].bg], fills.map(rgb), mode + ' secondary rest, hover, pressed fills');
-      assert.deepEqual([r['tertiary-rest'].bg, r['tertiary-hover'].bg, r['tertiary-pressed'].bg], fills.map(rgb), mode + ' tertiary rest, hover, pressed fills');
+      // primary and danger: the rim border and the deeper bottom edge at rest; hovered, the border stays the rim (D-0037; the same in light and dark)
+      assert.deepEqual([r['primary-rest'].border, r['primary-rest'].bottom, r['primary-hover'].border], [rgb('#1F5BB8'), rgb('#005A9E'), rgb('#1F5BB8')], mode + ' primary edges');
+      assert.deepEqual([r['danger-rest'].border, r['danger-rest'].bottom, r['danger-hover'].border], [rgb('#990000'), rgb('#7A0000'), rgb('#990000')], mode + ' danger edges');
+      // the fill under the glow, the same in every state
+      const fill = rgb(mode === 'light' ? '#FFFFFF' : '#444444');
+      for (const k of ['secondary', 'tertiary']) assert.deepEqual(['rest', 'hover', 'pressed'].map((s) => r[k + '-' + s].bg), [fill, fill, fill], mode + ' ' + k + ' fill is the same at rest, hover and pressed');
       for (const s of ['rest', 'hover', 'pressed']) assert.ok(contrast(r['tertiary-' + s].text, r['tertiary-' + s].bg) >= 4.5, mode + ' tertiary ' + s + ': its words pass 4.5:1');
     }
     assert.deepEqual(errors, [], 'no script errors');

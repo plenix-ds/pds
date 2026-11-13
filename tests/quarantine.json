@@ -155,22 +155,6 @@
   },
   {
    "test": "layout",
-   "check": "button-610: the child test passes",
-   "issue": 1333,
-   "owner": "engineer",
-   "since": "2026-11-13",
-   "why": "light: Danger steps red-700, red-800, red-900"
-  },
-  {
-   "test": "layout",
-   "check": "button-elevation-610: the child test passes",
-   "issue": 1333,
-   "owner": "engineer",
-   "since": "2026-11-13",
-   "why": "light secondary: the subtle glow on hover"
-  },
-  {
-   "test": "layout",
    "check": "entity-header-media-275: the child test passes",
    "issue": 1334,
    "owner": "engineer",
