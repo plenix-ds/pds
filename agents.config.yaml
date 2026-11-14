@@ -12,8 +12,20 @@ long_work:
   reserved_gate_slots: 2
 
 coordinators:
-  # Always running; they don't use long-work slots.
-  roles: [pds1-product-lead, pds1-delivery-lead]
+  # Always running; they don't use long-work slots. D-0173 (owner, 2026-11-11): one always-on PM; every other role,
+  # the Delivery Lead included, starts when it has work and stops when its lane is empty.
+  roles: [pds1-product-lead]
+
+models:
+  # D-0173 (owner, 2026-11-11): the PM picks the model for each task from its complexity, risk, scope and ambiguity,
+  # and records it on the issue as a label: model:haiku (small, predictable), model:sonnet (normal implementation and
+  # debugging), model:opus (architecture, hard problems, high risk). No label: the role definition's model.
+  # The scheduler starts a session on the model of the task it will take next. A running session is kept for its next
+  # task only when that task needs the same model; otherwise, once it has been idle long_work.idle_exit_min, it is
+  # restarted on the next task's model (on_change: restart). A model is never switched under a working session.
+  label_prefix: "model:"
+  allowed: [haiku, sonnet, opus]
+  on_change: restart
 
 small_tasks:
   # A code review, a lint or typo fix, one test, triaging an issue, a GitHub
@@ -59,7 +71,7 @@ roles:
     label: "agent:pds1-delivery-lead"
     instances: 1
     parked: false
-    boot: true
+    boot: false
     definition: .claude/agents/pds1-delivery-lead.md
     wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
   - id: design-director
@@ -70,7 +82,7 @@ roles:
     label: "agent:pds1-design-director"
     instances: 1
     parked: false
-    boot: true
+    boot: false
     definition: .claude/agents/pds1-design-director.md
     wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
   - id: ds-architect
@@ -81,7 +93,7 @@ roles:
     label: "agent:pds1-ds-architect"
     instances: 1
     parked: false
-    boot: true
+    boot: false
     definition: .claude/agents/pds1-ds-architect.md
     wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
   - id: release-architect
@@ -92,7 +104,7 @@ roles:
     label: "agent:pds1-release-architect"
     instances: 1
     parked: false
-    boot: true
+    boot: false
     definition: .claude/agents/pds1-release-architect.md
     wakes_on: [issue_labeled, comment_mention, ci_failed, heartbeat]
   - id: component-engineer

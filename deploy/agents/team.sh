@@ -6,7 +6,8 @@
 # and a memory limit from agents.config.yaml.
 #
 #   team.sh start-core          start the coordinators + Phase 0 roles (boot default)
-#   team.sh start <role> [n]    start one role (n = instance, for component-engineer)
+#   team.sh start <role> [n] [model]   start one role (n = instance, for component-engineer; model = haiku|sonnet|opus,
+#                               D-0173; default: the role definition's model)
 #   team.sh stop <role> [n]     stop one role
 #   team.sh stop-all            stop the whole team
 #   team.sh status              list running sessions and free memory
@@ -54,19 +55,26 @@ worktree_for() {  # role instance -> directory
 }
 
 start_one() {
-  local role=$1 n=${2:-} name win dir mem
+  local role=$1 n=${2:-} model=${3:-} name win dir mem mflag=""
   name=$(display "$role") || { echo "unknown role: $role (not in the registry, $CFG)"; exit 2; }
+  # D-0173: the model of the task this session takes next (agents.config.yaml models.allowed); empty = the role's own
+  if [ -n "$model" ]; then
+    grep -qx -- "$model" <(node "$HERE/registry.mjs" get models.allowed "$CFG" 2>>"$LOG" | tr -d "[]'\" " | tr ',' '\n') \
+      || { echo "model $model is not in models.allowed ($CFG)"; return 2; }
+    mflag="--model $model"
+  fi
   [ "$(field "$role" 4)" = true ] && { echo "$name is parked (agents.config.yaml); not started"; return 3; }
   [ "$(field "$role" 3)" -gt 1 ] && n=${n:-1}
   [ -n "$n" ] && name="$name $n"
   name=$(session_title "$role" "$name"); win=$role${n:+-$n}
-  [ -n "${LAUNCH_DRY:-}" ] && { echo "would start $name: window $win, worktree $(dry_worktree "$role" "$n"), MemoryMax=$(mem_limit "$role")G, claude --agent pds1-$role"; return; }
+  [ -n "${LAUNCH_DRY:-}" ] && { echo "would start $name: window $win, worktree $(dry_worktree "$role" "$n"), MemoryMax=$(mem_limit "$role")G, claude --agent pds1-$role${mflag:+ $mflag}"; return; }
   tmux has-session -t $S 2>/dev/null || tmux new-session -d -s $S -n shell -c "$ROOT"
   tmux list-windows -t $S -F '#W' | grep -qx "$win" && { echo "$name already running"; return; }
   dir=$(worktree_for "$role" "$n"); mem=$(mem_limit "$role"); trust_dir "$dir"
   tmux new-window -d -t $S -n "$win" -c "$dir" \
-    "systemd-run --user --scope -q -p MemoryMax=${mem}G -- env PDS1_ROLE=pds1-$role PDS1_WINDOW=$win claude --agent pds1-$role --name '$name' --remote-control '$name' --permission-mode bypassPermissions 'You are $name. Pull main, read CLAUDE.md, then work your open issues in plenix-ds/pds (gh issue list -R plenix-ds/pds --label agent:pds1-$role --state open), starting with pinned #178 Phase 0 if it names your role. Follow agents.config.yaml.'; echo; echo '$name stopped. Press Enter to close.'; read"
-  log "start $win ($name) in $dir"; echo "started $name"
+    "systemd-run --user --scope -q -p MemoryMax=${mem}G -- env PDS1_ROLE=pds1-$role PDS1_WINDOW=$win claude --agent pds1-$role $mflag --name '$name' --remote-control '$name' --permission-mode bypassPermissions 'You are $name. Pull main, read CLAUDE.md, then work your open issues in plenix-ds/pds (gh issue list -R plenix-ds/pds --label agent:pds1-$role --state open), starting with pinned #178 Phase 0 if it names your role. Follow agents.config.yaml.'; echo; echo '$name stopped. Press Enter to close.'; read"
+  mkdir -p "$ROOT/.models" && printf '%s\n' "$model" >"$ROOT/.models/$win"   # read by the scheduler (empty = role default)
+  log "start $win ($name) in $dir${model:+ on $model}"; echo "started $name${model:+ on $model}"
 }
 
 dry_worktree() {  # the worktree start would use, without creating it
@@ -107,20 +115,28 @@ OVERDUE_MIN=30                               # deploy/agents/dispatch.mjs OVERDU
 # Start waiting roles and stop finished ones (#246, D-0040): deploy/agents/scheduler.mjs makes the plan from GitHub,
 # tmux, agents.config.yaml and free memory; this carries it out. Each start is logged and posted on #178.
 schedule() {
-  local plan line verb a b why roles=() here=$HERE
+  local plan line verb a b m why roles=() here=$HERE t toks
   for r in "${ROLES[@]}"; do roles+=("${r%%|*}"); done
   plan=$(PDS1_CFG="$CFG" PDS1_ROOT="$ROOT" PDS1_SESSION="$S" node "$here/scheduler.mjs" "${roles[@]}" 2>>"$LOG") \
     || { log "schedule: scheduler.mjs failed"; echo "schedule: scheduler failed (see $LOG)"; return; }
   while IFS= read -r line; do
     [ -n "$line" ] || continue
-    read -r verb a b <<<"${line%% |*}"; why=${line#*| }
+    # "<verb> <a> [<b>] [model=<m>] | why" (D-0173 adds model=)
+    toks=(); m=""; for t in ${line%% |*}; do case $t in model=*) m=${t#model=} ;; *) toks+=("$t") ;; esac; done
+    verb=${toks[0]:-}; a=${toks[1]:-}; b=${toks[2]:-}; why=${line#*| }
     case $verb in
       start)
-        if [ -n "${NUDGE_DRY:-}" ]; then echo "would start $a${b:+ $b} ($why)"; continue; fi
-        start_one "$a" "$b" && log "schedule: started $a${b:+ $b}: $why"
+        if [ -n "${NUDGE_DRY:-}" ]; then echo "would start $a${b:+ $b}${m:+ on $m} ($why)"; continue; fi
+        start_one "$a" "$b" "$m" && log "schedule: started $a${b:+ $b}${m:+ on $m}: $why"
         gh issue comment 178 -R plenix-ds/pds --body "Started **$(session_title "$a" "$(display "$a")${b:+ $b}")** (scheduler, #246): $why.
 
 — PDS1-Release-Architect (team.sh scheduler)" >/dev/null 2>>"$LOG" || log "schedule: could not post on #178" ;;
+      restart)
+        # D-0173: an idle session whose next task needs another model; same window, slot and worktree, new model
+        if [ -n "${NUDGE_DRY:-}" ]; then echo "would restart $a on $m ($why)"; continue; fi
+        local rr=$a rn=""; [[ $a =~ ^(.+)-([0-9]+)$ ]] && field "${BASH_REMATCH[1]}" 2 >/dev/null && { rr=${BASH_REMATCH[1]}; rn=${BASH_REMATCH[2]}; }
+        tmux kill-window -t "$S:$a" 2>/dev/null
+        start_one "$rr" "$rn" "$m" && log "schedule: restarted $a on $m: $why" ;;
       stop)
         if [ -n "${NUDGE_DRY:-}" ]; then echo "would stop $a ($why)"; continue; fi
         tmux kill-window -t "$S:$a" 2>/dev/null && log "schedule: stopped $a: $why" ;;
@@ -232,7 +248,7 @@ case "${1:-status}" in
     [ -d "$REPO/.git" ] || git clone -q https://github.com/plenix-ds/pds.git "$REPO"
     git -C "$REPO" pull -q --ff-only
     for r in "${CORE[@]}"; do start_one "$r"; done ;;
-  start) start_one "${2:?role}" "${3:-}" ;;
+  start) start_one "${2:?role}" "${3:-}" "${4:-}" ;;
   launch-test) launch_test; exit $? ;;
   stop) stop_one "${2:?role}" "${3:-}" ;;
   stop-all) tmux kill-session -t $S 2>/dev/null && { log "stop-all"; echo "team stopped"; } ;;

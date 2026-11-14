@@ -1,0 +1,9 @@
+id: D-0173
+date: 2026-11-11
+area: process
+decided_by: owner (chat with the control desk, 2026-11-10/11; reviewed with Codex)
+decision: One always-on PM (product-lead, the only coordinator and the only boot role); every other role, the Delivery Lead included, starts when it has waiting work and stops when its lane is empty (long_work.idle_exit_min). Role, session and task are separate - the PM picks a model per task from its complexity, risk, scope and ambiguity and labels the issue model:haiku|sonnet|opus (models.allowed; no label = the role definition's model). The scheduler starts a session on the model of the task it takes next, keeps a running session only while its next task needs the same model, and otherwise restarts it on the next task's model once it has been idle long_work.idle_exit_min (models.on_change restart); a working session is never restarted. Gates, reviews, release checks, parallel lanes and reserved gate slots are unchanged.
+why: 'Owner, 2026-11-10: "perhaps a better way to determine is based on what is needed for each task... how complex the task is... when a pm is about to assign a task to an agent, based on that specific task, it chooses the most suited model"; and Option A, "one always-on PM, with specialists started per task". Five roles started at boot and kept running, four of them on Opus, whatever the task.'
+options: [model per task with session reuse only on the same model (chosen), one model per role session for its whole queue, a fresh session for every issue, switching the model inside a running session with /model]
+status: proposed
+check: 'planned:model-per-task (NUDGE_DRY=1 team.sh schedule prints "would start <role> on <model>" and "would restart <window> on <model>"; LAUNCH_DRY start_one prints --model)'
